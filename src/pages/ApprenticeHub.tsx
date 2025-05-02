@@ -1,195 +1,276 @@
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { BookOpen, FileText, Video, Award } from "lucide-react";
-import { Progress } from "@/components/ui/progress";
+import TimeTracker from "@/components/apprentice/TimeTracker";
+import OJTRatioCard from "@/components/apprentice/OJTRatioCard";
+import ResourceCard from "@/components/apprentice/ResourceCard";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 const ApprenticeHub = () => {
+  // Mock EAL resources data
+  const ealResources = [
+    { 
+      id: 1, 
+      title: "EAL Level 2 Diploma Guide",
+      description: "Official qualification guide",
+      type: "document" as const,
+      cta: "Download PDF", 
+      href: "#",
+      duration: "48 pages" 
+    },
+    { 
+      id: 2, 
+      title: "EAL Assessment Method Overview",
+      description: "Understanding your assessment process",
+      type: "document" as const,
+      cta: "View Guide", 
+      href: "#",
+      duration: "12 pages" 
+    },
+    { 
+      id: 3, 
+      title: "Off-The-Job Training Explained",
+      description: "Comprehensive overview of OJT requirements",
+      type: "video" as const,
+      cta: "Watch Video", 
+      href: "#",
+      duration: "15 min" 
+    }
+  ];
+
+  // Mock learning materials
+  const learningMaterials = [
+    { 
+      id: 1, 
+      title: "Electrical Science Fundamentals",
+      description: "Core theory for Level 2 & 3",
+      type: "learning" as const,
+      cta: "Start Learning", 
+      duration: "6 modules" 
+    },
+    { 
+      id: 2, 
+      title: "Installation Methods & Technologies",
+      description: "Practical installation techniques",
+      type: "learning" as const,
+      cta: "Continue Learning", 
+      duration: "8 modules" 
+    },
+    { 
+      id: 3, 
+      title: "Health & Safety in Electrical Work",
+      description: "Essential safety protocols",
+      type: "learning" as const,
+      cta: "Start Learning", 
+      duration: "4 modules" 
+    }
+  ];
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Apprentice Hub</h1>
         <p className="text-muted-foreground">
-          Comprehensive resources for electrical apprentices at any level.
+          EAL-compliant training resources and time tracking for electrical apprentices.
         </p>
       </div>
 
-      {/* Learning Paths Section */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold">Learning Paths</h2>
-          <Button variant="outline" size="sm">View All</Button>
-        </div>
+      {/* Navigation Menu */}
+      <NavigationMenu className="bg-elec-gray border border-elec-yellow/20 rounded-md max-w-full">
+        <NavigationMenuList className="flex-wrap">
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Qualification Levels</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2">
+                <li>
+                  <NavigationMenuLink asChild>
+                    <a
+                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      href="#"
+                    >
+                      <div className="text-sm font-medium">Level 2</div>
+                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                        Electrical Installation Diploma
+                      </p>
+                    </a>
+                  </NavigationMenuLink>
+                </li>
+                <li>
+                  <NavigationMenuLink asChild>
+                    <a
+                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      href="#"
+                    >
+                      <div className="text-sm font-medium">Level 3</div>
+                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                        Electrotechnical Qualification (MOET)
+                      </p>
+                    </a>
+                  </NavigationMenuLink>
+                </li>
+                <li>
+                  <NavigationMenuLink asChild>
+                    <a
+                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      href="#"
+                    >
+                      <div className="text-sm font-medium">Level 3</div>
+                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                        BS 7671 Wiring Regulations
+                      </p>
+                    </a>
+                  </NavigationMenuLink>
+                </li>
+                <li>
+                  <NavigationMenuLink asChild>
+                    <a
+                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      href="#"
+                    >
+                      <div className="text-sm font-medium">Level 4</div>
+                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                        Higher National Certificate (HNC)
+                      </p>
+                    </a>
+                  </NavigationMenuLink>
+                </li>
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Assessment Units</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid gap-3 p-4 md:w-[500px] lg:w-[600px] grid-cols-2">
+                <li>
+                  <NavigationMenuLink asChild>
+                    <a
+                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      href="#"
+                    >
+                      <div className="text-sm font-medium">QELT3/001</div>
+                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                        Health and Safety Legislation
+                      </p>
+                    </a>
+                  </NavigationMenuLink>
+                </li>
+                <li>
+                  <NavigationMenuLink asChild>
+                    <a
+                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      href="#"
+                    >
+                      <div className="text-sm font-medium">QELT3/002</div>
+                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                        Principles of Electrical Science
+                      </p>
+                    </a>
+                  </NavigationMenuLink>
+                </li>
+                <li>
+                  <NavigationMenuLink asChild>
+                    <a
+                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      href="#"
+                    >
+                      <div className="text-sm font-medium">QELT3/003</div>
+                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                        Electrical Installations: Design
+                      </p>
+                    </a>
+                  </NavigationMenuLink>
+                </li>
+                <li>
+                  <NavigationMenuLink asChild>
+                    <a
+                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                      href="#"
+                    >
+                      <div className="text-sm font-medium">QELT3/004</div>
+                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+                        Inspection, Testing and Commissioning
+                      </p>
+                    </a>
+                  </NavigationMenuLink>
+                </li>
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link to="#resources" className={cn(
+              "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
+            )}>
+              EAL Resources
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link to="#time-tracker" className={cn(
+              "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
+            )}>
+              Off-Job Tracker
+            </Link>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {/* Level 2 Path */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Level 2 Electrical Installation</CardTitle>
-              <CardDescription>Beginner to intermediate concepts</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex justify-between text-sm">
-                <span>Progress</span>
-                <span>0%</span>
-              </div>
-              <Progress value={0} className="h-2 bg-elec-dark" />
-              <div className="pt-2">
-                <Button className="w-full">Begin Path</Button>
-              </div>
-            </CardContent>
-          </Card>
+      {/* OJT Progress Card */}
+      <OJTRatioCard />
 
-          {/* Level 3 Path */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Level 3 MOET Qualification</CardTitle>
-              <CardDescription>Advanced electrical theory and practices</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex justify-between text-sm">
-                <span>Progress</span>
-                <span>0%</span>
-              </div>
-              <Progress value={0} className="h-2 bg-elec-dark" />
-              <div className="pt-2">
-                <Button className="w-full">Begin Path</Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Regulations Path */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Wiring Regulations 18th Edition</CardTitle>
-              <CardDescription>BS 7671 regulations and updates</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex justify-between text-sm">
-                <span>Progress</span>
-                <span>0%</span>
-              </div>
-              <Progress value={0} className="h-2 bg-elec-dark" />
-              <div className="pt-2">
-                <Button className="w-full">Begin Path</Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-
-      {/* Study Materials */}
-      <Tabs defaultValue="videos" className="space-y-4">
-        <TabsList className="bg-elec-gray border border-elec-yellow/20">
-          <TabsTrigger value="videos">Video Lessons</TabsTrigger>
-          <TabsTrigger value="notes">Study Notes</TabsTrigger>
-          <TabsTrigger value="quizzes">Practice Quizzes</TabsTrigger>
+      {/* Main Content Tabs */}
+      <Tabs defaultValue="time-tracker" className="space-y-6">
+        <TabsList className="bg-elec-gray border border-elec-yellow/20 w-full sm:w-auto">
+          <TabsTrigger value="time-tracker">Time Tracker</TabsTrigger>
+          <TabsTrigger value="learning">Learning Materials</TabsTrigger>
+          <TabsTrigger value="eal-resources">EAL Resources</TabsTrigger>
         </TabsList>
         
-        <TabsContent value="videos" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <Card key={i} className="border-elec-yellow/20 bg-elec-gray">
-                <div className="aspect-video relative bg-elec-dark flex items-center justify-center">
-                  <Video className="h-8 w-8 text-elec-yellow opacity-50" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                </div>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base">
-                    {["Basic Circuit Principles", "Safety Fundamentals", "Cable Installation Techniques"][i]}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex justify-between items-center text-sm text-muted-foreground">
-                    <span>{["25 min", "18 min", "32 min"][i]}</span>
-                    <Button variant="outline" size="sm">Watch</Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          <Button variant="outline" className="w-full">Load More Videos</Button>
+        <TabsContent value="time-tracker" id="time-tracker" className="space-y-6">
+          <TimeTracker />
         </TabsContent>
         
-        <TabsContent value="notes" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <Card key={i} className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader className="pb-2 flex flex-row items-start gap-3">
-                  <FileText className="h-6 w-6 text-elec-yellow mt-1" />
-                  <div>
-                    <CardTitle className="text-base">
-                      {["Electrical Theory Notes", "Wiring Diagrams Guide", "Testing Procedures"][i]}
-                    </CardTitle>
-                    <CardDescription>{["PDF", "PDF", "PDF"][i]} • {["24 pages", "18 pages", "12 pages"][i]}</CardDescription>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <Button variant="outline" size="sm" className="w-full">Download</Button>
-                </CardContent>
-              </Card>
+        <TabsContent value="learning" className="space-y-6">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {learningMaterials.map((resource) => (
+              <ResourceCard 
+                key={resource.id}
+                title={resource.title}
+                description={resource.description}
+                type={resource.type}
+                cta={resource.cta}
+                duration={resource.duration}
+              />
             ))}
           </div>
+          <Button variant="outline" className="w-full">Load More Learning Resources</Button>
         </TabsContent>
         
-        <TabsContent value="quizzes" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <Card key={i} className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader className="pb-2 flex flex-row items-start gap-3">
-                  <Award className="h-6 w-6 text-elec-yellow mt-1" />
-                  <div>
-                    <CardTitle className="text-base">
-                      {["Basic Electrical Concepts", "Health & Safety", "Circuit Analysis"][i]}
-                    </CardTitle>
-                    <CardDescription>{["10 questions", "15 questions", "12 questions"][i]} • {["Beginner", "Intermediate", "Advanced"][i]}</CardDescription>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <Button variant="outline" size="sm" className="w-full">Start Quiz</Button>
-                </CardContent>
-              </Card>
+        <TabsContent value="eal-resources" id="resources" className="space-y-6">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {ealResources.map((resource) => (
+              <ResourceCard 
+                key={resource.id}
+                title={resource.title}
+                description={resource.description}
+                type={resource.type}
+                cta={resource.cta}
+                href={resource.href}
+                duration={resource.duration}
+              />
             ))}
           </div>
+          <Button variant="outline" className="w-full">Browse All EAL Resources</Button>
         </TabsContent>
       </Tabs>
 
-      {/* Featured Study Resources */}
-      <div className="space-y-4">
-        <h2 className="text-xl font-semibold">Featured Resources</h2>
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <div className="flex items-start gap-4">
-              <BookOpen className="h-8 w-8 text-elec-yellow" />
-              <div>
-                <CardTitle>Level 3 MOET Exam Preparation Guide</CardTitle>
-                <CardDescription>
-                  Comprehensive guide to help you prepare for your Level 3 qualification exams.
-                </CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
-              <ul className="text-sm space-y-1">
-                <li className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow"></span>
-                  Detailed revision checklist
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow"></span>
-                  Practice exam questions
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow"></span>
-                  Topic breakdown with tips
-                </li>
-              </ul>
-              <Button>Access Guide</Button>
-            </div>
-          </CardContent>
-        </Card>
+      {/* EAL Integration Note */}
+      <div className="bg-elec-gray border border-elec-yellow/20 rounded-md p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h3 className="font-semibold">EAL Integration</h3>
+          <p className="text-sm text-muted-foreground">ElecMate is designed to align with EAL's 20% off-the-job training requirements.</p>
+        </div>
+        <Button variant="outline" size="sm">Learn More</Button>
       </div>
     </div>
   );
