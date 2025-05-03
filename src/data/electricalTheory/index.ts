@@ -7,6 +7,7 @@ import { installationPracticesSection } from './section4-installation';
 import { regulationsStandardsSection } from './section5-regulations';
 import { inspectionTestingSection } from './section6-testing';
 import { environmentalConsiderationsSection } from './section7-environmental';
+import { installationMethodsSection } from './section-installation-methods';
 
 export const electricalTheoryContent: SectionData[] = [
   basicElectricalTheorySection,
@@ -15,7 +16,8 @@ export const electricalTheoryContent: SectionData[] = [
   installationPracticesSection,
   regulationsStandardsSection,
   inspectionTestingSection,
-  environmentalConsiderationsSection
+  environmentalConsiderationsSection,
+  installationMethodsSection
 ];
 
 export * from '../healthAndSafety/types';

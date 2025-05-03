@@ -28,6 +28,7 @@ const UnitDetails = ({
   // Determine which content to show based on unit code
   const showHealthSafetyContent = unit.code === "ELEC2/01";
   const showElectricalTheoryContent = unit.code === "ELEC2/04";
+  const showInstallationMethodsContent = unit.code === "ELEC2/05A";
 
   // Load completion status
   useEffect(() => {
@@ -54,7 +55,7 @@ const UnitDetails = ({
               title={section.title}
               isExpanded={false}
               onClick={handleSectionClick}
-              content={<></>} // Content is no longer needed here as we navigate to a new page
+              content={<></>}
               unitCode={unit.code}
               courseSlug={courseSlug}
             />
@@ -69,7 +70,7 @@ const UnitDetails = ({
               handleSectionClick();
               onResourceClick('assessment');
             }}
-            content={<></>} // Content is no longer needed here as we navigate to a new page
+            content={<></>}
             isCompleted={quizCompleted}
             unitCode={unit.code}
             courseSlug={courseSlug}
@@ -80,7 +81,7 @@ const UnitDetails = ({
       {/* Electrical Theory Content - Only for ELEC2/04 */}
       {showElectricalTheoryContent && (
         <div className="space-y-6">
-          {electricalTheoryContent.map((section) => (
+          {electricalTheoryContent.slice(0, 7).map((section) => (
             <SectionBox
               key={section.sectionNumber}
               sectionNumber={section.sectionNumber}
@@ -97,6 +98,38 @@ const UnitDetails = ({
           <SectionBox
             sectionNumber="Q"
             title="Electrical Theory Assessment Quiz"
+            isExpanded={false}
+            onClick={() => {
+              handleSectionClick();
+              onResourceClick('assessment');
+            }}
+            content={<></>}
+            isCompleted={quizCompleted}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+        </div>
+      )}
+
+      {/* Installation Methods Content - Only for ELEC2/05A */}
+      {showInstallationMethodsContent && (
+        <div className="space-y-6">
+          {/* Use the electricalTheoryContent section 7 (installation methods section) */}
+          <SectionBox
+            key="05A"
+            sectionNumber="05A"
+            title="Electrical Installation Methods"
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          
+          {/* Quiz Section */}
+          <SectionBox
+            sectionNumber="Q"
+            title="Installation Methods Assessment Quiz"
             isExpanded={false}
             onClick={() => {
               handleSectionClick();
