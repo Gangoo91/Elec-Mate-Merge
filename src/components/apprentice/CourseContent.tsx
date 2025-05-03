@@ -1,6 +1,4 @@
 
-import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
 import CourseUnitGrid from "@/components/apprentice/CourseUnitGrid";
 import UnitDetails from "@/components/apprentice/UnitDetails";
 import CourseInfoBox from "@/components/apprentice/CourseInfoBox";
@@ -29,8 +27,6 @@ const CourseContent = ({
   onToggleResourceComplete,
   units
 }: CourseContentProps) => {
-  const { toast } = useToast();
-
   return (
     <div className="space-y-6">
       {/* Course units grid - only show on the main course page */}

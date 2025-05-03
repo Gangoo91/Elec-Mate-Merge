@@ -1,8 +1,8 @@
 
 import { GraduationCap } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import ResourceCard from "@/components/apprentice/ResourceCard";
+import UnitProgressBar from "@/components/apprentice/UnitProgressBar";
+import UnitResourceList from "@/components/apprentice/UnitResourceList";
 import type { CourseUnit } from "@/data/courseUnits";
 
 interface UnitDetailsProps {
@@ -36,31 +36,14 @@ const UnitDetails = ({ unit, onResourceClick, completedResources, onToggleResour
         
         <p className="text-muted-foreground">{unit.description}</p>
         
-        <div className="w-full">
-          <div className="flex justify-between items-center mb-1">
-            <span className="text-sm font-medium">Unit Progress</span>
-            <span className="text-sm font-medium">{progressPercent}%</span>
-          </div>
-          <Progress value={progressPercent} className="h-2 bg-elec-yellow/20" />
-        </div>
+        <UnitProgressBar progressPercent={progressPercent} />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-          <h4 className="font-semibold col-span-full">Learning Resources</h4>
-          {unit.resources.map(resource => (
-            <ResourceCard
-              key={resource.id}
-              title={resource.title}
-              description={resource.description}
-              type={resource.type}
-              cta={resource.type === 'video' ? 'Watch Video' : resource.type === 'document' ? 'Read Document' : 'Start Activity'}
-              href={resource.href}
-              duration={resource.duration}
-              onClick={() => onResourceClick(resource.type)}
-              isCompleted={!!completedResources[resource.id]}
-              onToggleComplete={() => onToggleResourceComplete(resource.id)}
-            />
-          ))}
-        </div>
+        <UnitResourceList 
+          resources={unit.resources}
+          onResourceClick={onResourceClick}
+          completedResources={completedResources}
+          onToggleResourceComplete={onToggleResourceComplete}
+        />
       </CardContent>
     </Card>
   );
