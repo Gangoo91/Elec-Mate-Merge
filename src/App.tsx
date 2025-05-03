@@ -28,6 +28,7 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 // Component imports
 import QuizContent from "@/components/apprentice/QuizContent";
+import SectionContent from "@/pages/apprentice/SectionContent";
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
                   <Route path="eal/:courseSlug" element={<CourseDetail />} />
                   <Route path="eal/:courseSlug/unit/:unitSlug" element={<CourseDetail />} />
                   <Route path="eal/:courseSlug/unit/:unitSlug/quiz" element={<QuizContent />} />
+                  <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
                 </Route>
               </Route>
 

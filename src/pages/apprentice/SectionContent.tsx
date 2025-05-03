@@ -8,34 +8,35 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Book } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import type { SectionData } from "@/data/healthAndSafety/types";
 
 const SectionContent = () => {
   const { courseSlug, unitSlug, sectionId } = useParams();
   const navigate = useNavigate();
-  const [sectionData, setSectionData] = useState<any>(null);
+  const [sectionData, setSectionData] = useState<SectionData | null>(null);
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   
   useEffect(() => {
-    if (sectionId) {
-      // Determine which unit we're in to choose the correct content source
-      if (unitSlug && unitSlug.includes("elec2-01")) {
-        // Find the section with matching ID in health and safety content
-        const section = healthAndSafetyContent.find(
+    if (sectionId && unitSlug) {
+      // Determine which content to use based on unit code
+      const isHealthSafetyUnit = unitSlug.includes('elec2-01');
+      const isElectricalTheoryUnit = unitSlug.includes('elec2-04');
+      
+      // Find the section with matching ID from the appropriate content source
+      let section = null;
+      
+      if (isHealthSafetyUnit) {
+        section = healthAndSafetyContent.find(
           section => section.sectionNumber.toLowerCase().replace(/\//g, "-") === sectionId
         );
-        
-        if (section) {
-          setSectionData(section);
-        }
-      } else if (unitSlug && unitSlug.includes("elec2-04")) {
-        // Find the section with matching ID in electrical theory content
-        const section = electricalTheoryContent.find(
-          section => section.sectionNumber.toLowerCase() === sectionId
+      } else if (isElectricalTheoryUnit) {
+        section = electricalTheoryContent.find(
+          section => section.sectionNumber.toLowerCase().replace(/\//g, "-") === sectionId
         );
-        
-        if (section) {
-          setSectionData(section);
-        }
+      }
+      
+      if (section) {
+        setSectionData(section);
       }
     }
   }, [sectionId, unitSlug]);
@@ -80,7 +81,7 @@ const SectionContent = () => {
         </div>
         
         <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
-          {sectionData.content.subsections.map((subsection: any) => (
+          {sectionData.content.subsections.map((subsection) => (
             <Card 
               key={subsection.id}
               className="p-4 bg-elec-dark border border-elec-yellow/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-all group"
