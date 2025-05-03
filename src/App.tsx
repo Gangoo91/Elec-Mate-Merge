@@ -24,6 +24,8 @@ import ApprenticeToolbox from "./pages/apprentice/ApprenticeToolbox";
 import ApprenticeAITools from "./pages/apprentice/ApprenticeAITools";
 import EALCourses from "./pages/apprentice/EALCourses";
 import CourseDetail from "./pages/apprentice/CourseDetail";
+import SectionContent from "./components/apprentice/SectionContent";
+import QuizContent from "./components/apprentice/QuizContent";
 
 // Course category placeholder components
 const CourseCategory = ({ category }: { category: string }) => (
@@ -65,6 +67,8 @@ const App = () => (
               <Route path="/apprentice/study/eal" element={<EALCourses />} />
               <Route path="/apprentice/study/eal/:courseSlug" element={<CourseDetail />} />
               <Route path="/apprentice/study/eal/:courseSlug/unit/:unitSlug" element={<CourseDetail />} />
+              <Route path="/apprentice/study/eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
+              <Route path="/apprentice/study/eal/:courseSlug/unit/:unitSlug/quiz" element={<QuizContent />} />
               <Route path="/apprentice/study/cityGuilds" element={<CourseCategory category="City & Guilds" />} />
               <Route path="/apprentice/study/higher" element={<CourseCategory category="Higher Learning" />} />
               <Route path="/apprentice/study/further" element={<CourseCategory category="Further Learning" />} />

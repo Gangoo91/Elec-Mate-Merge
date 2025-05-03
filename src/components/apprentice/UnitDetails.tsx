@@ -7,6 +7,7 @@ import { healthAndSafetyContent } from "@/data/healthAndSafetyContent";
 import { healthAndSafetyQuizzes } from "@/data/unitQuizzes";
 import type { CourseUnit } from "@/data/courseUnits";
 import { useToast } from "@/components/ui/use-toast";
+import { useParams } from "react-router-dom";
 
 interface UnitDetailsProps {
   unit: CourseUnit;
@@ -24,6 +25,7 @@ const UnitDetails = ({
   const { toast } = useToast();
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const { courseSlug } = useParams();
   
   // Only show Health and Safety content for unit ELEC2/01
   const showHealthSafetyContent = unit.code === "ELEC2/01";
@@ -90,6 +92,8 @@ const UnitDetails = ({
                   ))}
                 </div>
               }
+              unitCode={unit.code}
+              courseSlug={courseSlug}
             />
           ))}
           
@@ -107,6 +111,8 @@ const UnitDetails = ({
               />
             }
             isCompleted={quizCompleted}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
           />
         </div>
       )}
