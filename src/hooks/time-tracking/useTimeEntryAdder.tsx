@@ -18,7 +18,7 @@ export const useTimeEntryAdder = (userId: string | null, setManualEntries: React
       if (userId) {
         try {
           const { data, error } = await supabase
-            .from('time_entries' as any)
+            .from('time_entries')
             .insert({
               user_id: userId,
               date: newEntry.date,

@@ -20,7 +20,7 @@ export const useEntriesLoader = (userId: string | null) => {
           // Fetch manual entries
           try {
             const { data: manualData, error: manualError } = await supabase
-              .from('time_entries' as any)
+              .from('time_entries')
               .select('*')
               .eq('user_id', userId)
               .eq('is_automatic', false)
@@ -47,7 +47,7 @@ export const useEntriesLoader = (userId: string | null) => {
           // Fetch study session entries
           try {
             const { data: studyData, error: studyError } = await supabase
-              .from('study_sessions' as any)
+              .from('study_sessions')
               .select('*')
               .eq('user_id', userId)
               .order('created_at', { ascending: false });
@@ -73,7 +73,7 @@ export const useEntriesLoader = (userId: string | null) => {
           // Fetch quiz entries
           try {
             const { data: quizData, error: quizError } = await supabase
-              .from('quiz_attempts' as any)
+              .from('quiz_attempts')
               .select('*')
               .eq('user_id', userId)
               .order('created_at', { ascending: false });
