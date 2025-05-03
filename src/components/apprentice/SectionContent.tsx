@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { healthAndSafetyContent } from "@/data/healthAndSafetyContent";
 import CourseContentSection from "@/components/apprentice/CourseContentSection";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 const SectionContent = () => {
   const { courseSlug, unitSlug, sectionId } = useParams();
+  const navigate = useNavigate();
   const [sectionData, setSectionData] = useState<any>(null);
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   
@@ -26,6 +27,12 @@ const SectionContent = () => {
     }
   }, [sectionId]);
 
+  const handleBackClick = () => {
+    if (courseSlug && unitSlug) {
+      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`);
+    }
+  };
+
   if (!sectionData) {
     return (
       <div className="text-center py-8">
@@ -41,15 +48,14 @@ const SectionContent = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="mb-6">
-        <Link to={`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`}>
-          <Button 
-            variant="outline" 
-            className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Unit
-          </Button>
-        </Link>
+        <Button 
+          variant="outline" 
+          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+          onClick={handleBackClick}
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Unit
+        </Button>
       </div>
       
       <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
