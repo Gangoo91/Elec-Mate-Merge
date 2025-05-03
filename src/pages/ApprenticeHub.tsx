@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Book, Clock, Heart, Users, WrenchIcon } from "lucide-react";
+import { Book, Clock, Heart, Users, WrenchIcon, Bot } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ApprenticeHub = () => {
@@ -39,6 +39,13 @@ const ApprenticeHub = () => {
       description: "Access practical guides and safety information for on-site work.",
       icon: WrenchIcon,
       link: "/apprentice/toolbox"
+    },
+    {
+      id: 6,
+      title: "AI Tooling",
+      description: "Leverage AI tools to enhance your learning and practical electrical skills.",
+      icon: Bot,
+      link: "/apprentice/ai-tools"
     }
   ];
 
