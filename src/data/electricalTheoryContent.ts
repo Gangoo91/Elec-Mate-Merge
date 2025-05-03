@@ -7,6 +7,10 @@ export const electricalTheoryContent: SectionData[] = [
     title: "Basic Electrical Theory",
     content: {
       icon: "info",
+      sectionNumber: "1",
+      title: "Basic Electrical Theory",
+      description: "Fundamental electrical concepts including voltage, current, and resistance relationships.",
+      isMainSection: true,
       subsections: [
         {
           id: "1.1",
@@ -49,6 +53,10 @@ export const electricalTheoryContent: SectionData[] = [
     title: "AC and DC Supplies",
     content: {
       icon: "construction",
+      sectionNumber: "2",
+      title: "AC and DC Supplies",
+      description: "Understanding alternating and direct current electricity supply systems.",
+      isMainSection: true,
       subsections: [
         {
           id: "2.1",
@@ -91,6 +99,10 @@ export const electricalTheoryContent: SectionData[] = [
     title: "Circuit Types and Components",
     content: {
       icon: "safety",
+      sectionNumber: "3",
+      title: "Circuit Types and Components",
+      description: "Essential circuit configurations and protective components used in electrical installations.",
+      isMainSection: true,
       subsections: [
         {
           id: "3.1",
@@ -133,6 +145,10 @@ export const electricalTheoryContent: SectionData[] = [
     title: "Electrical Installation Practices",
     content: {
       icon: "construction",
+      sectionNumber: "4",
+      title: "Electrical Installation Practices",
+      description: "Practical techniques and methods for electrical installation work.",
+      isMainSection: true,
       subsections: [
         {
           id: "4.1",
@@ -175,6 +191,10 @@ export const electricalTheoryContent: SectionData[] = [
     title: "Regulations and Standards",
     content: {
       icon: "section",
+      sectionNumber: "5",
+      title: "Regulations and Standards",
+      description: "Key regulations and standards governing electrical installations in the UK.",
+      isMainSection: true,
       subsections: [
         {
           id: "5.1",
@@ -217,6 +237,10 @@ export const electricalTheoryContent: SectionData[] = [
     title: "Inspection, Testing & Fault Finding (Introductory)",
     content: {
       icon: "list",
+      sectionNumber: "6",
+      title: "Inspection, Testing & Fault Finding (Introductory)",
+      description: "Basic principles and methods of electrical inspection, testing, and fault finding.",
+      isMainSection: true,
       subsections: [
         {
           id: "6.1",
@@ -259,6 +283,10 @@ export const electricalTheoryContent: SectionData[] = [
     title: "Environmental Considerations",
     content: {
       icon: "info",
+      sectionNumber: "7",
+      title: "Environmental Considerations",
+      description: "Environmental aspects and sustainable practices in electrical installations.",
+      isMainSection: true,
       subsections: [
         {
           id: "7.1",
