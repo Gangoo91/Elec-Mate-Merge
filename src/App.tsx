@@ -28,7 +28,7 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 // Component imports
 import QuizContent from "@/components/apprentice/QuizContent";
-import SectionContent from "@/pages/apprentice/SectionContent";
+import SectionContent from "@/pages/apprentice/SectionContent"; // Make sure this is using the page version
 
 function App() {
   return (

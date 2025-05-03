@@ -1,8 +1,8 @@
 
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { healthAndSafetyContent } from "@/data/healthAndSafetyContent";
-import { electricalTheoryContent } from "@/data/electricalTheoryContent";
+import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
+import { electricalTheoryContent } from "@/data/electricalTheory/index";
 import CourseContentSection from "@/components/apprentice/CourseContentSection";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Book } from "lucide-react";
@@ -21,6 +21,7 @@ const SectionContent = () => {
       // Determine which content to use based on unit code
       const isHealthSafetyUnit = unitSlug.includes('elec2-01');
       const isElectricalTheoryUnit = unitSlug.includes('elec2-04');
+      const isInstallationMethodsUnit = unitSlug.includes('elec2-05a');
       
       // Find the section with matching ID from the appropriate content source
       let section = null;
@@ -33,6 +34,9 @@ const SectionContent = () => {
         section = electricalTheoryContent.find(
           section => section.sectionNumber.toLowerCase().replace(/\//g, "-") === sectionId
         );
+      } else if (isInstallationMethodsUnit) {
+        // For installation methods, we need to specifically grab the installation methods section
+        section = electricalTheoryContent.find(s => s.sectionNumber === "05A");
       }
       
       if (section) {

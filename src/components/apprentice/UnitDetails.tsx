@@ -1,8 +1,8 @@
 
 import { useState, useEffect } from "react";
 import SectionBox from "@/components/apprentice/SectionBox";
-import { healthAndSafetyContent } from "@/data/healthAndSafetyContent";
-import { electricalTheoryContent } from "@/data/electricalTheoryContent";
+import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
+import { electricalTheoryContent } from "@/data/electricalTheory/index";
 import type { CourseUnit } from "@/data/courseUnits";
 import { useToast } from "@/components/ui/use-toast";
 import { useParams } from "react-router-dom";
@@ -114,11 +114,11 @@ const UnitDetails = ({
       {/* Installation Methods Content - Only for ELEC2/05A */}
       {showInstallationMethodsContent && (
         <div className="space-y-6">
-          {/* Use the electricalTheoryContent section 7 (installation methods section) */}
+          {/* Display the installation methods section directly */}
           <SectionBox
-            key="05A"
-            sectionNumber="05A"
-            title="Electrical Installation Methods"
+            key={electricalTheoryContent[7].sectionNumber}
+            sectionNumber={electricalTheoryContent[7].sectionNumber}
+            title={electricalTheoryContent[7].title}
             isExpanded={false}
             onClick={handleSectionClick}
             content={<></>}
