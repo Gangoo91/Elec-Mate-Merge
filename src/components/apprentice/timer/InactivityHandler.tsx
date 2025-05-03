@@ -7,7 +7,7 @@ interface InactivityHandlerProps {
   isStudying: boolean;
   isVideoContent: boolean;
   onStopStudy: () => void;
-  children: ReactNode;
+  children: (isInactive: boolean) => ReactNode; // Updated typing for render prop
 }
 
 const InactivityHandler = ({ 
@@ -33,11 +33,7 @@ const InactivityHandler = ({
     }
   });
 
-  return (
-    <>
-      {children(isInactive)}
-    </>
-  );
+  return <>{children(isInactive)}</>;
 };
 
 export default InactivityHandler;

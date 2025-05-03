@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { formatTime } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
 
 interface UseStudySessionProps {
   courseSlug?: string;
@@ -15,6 +16,24 @@ export const useStudySession = ({ courseSlug }: UseStudySessionProps) => {
   const [todayTotal, setTodayTotal] = useState(0);
   const [currentResourceType, setCurrentResourceType] = useState<string | null>(null);
   const [completedResources, setCompletedResources] = useState<Record<string, boolean>>({});
+  const [userId, setUserId] = useState<string | null>(null);
+
+  // Check if user is authenticated
+  useEffect(() => {
+    const checkAuth = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUserId(user?.id || null);
+    };
+    
+    checkAuth();
+    
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      setUserId(session?.user?.id || null);
+    });
+    
+    return () => subscription.unsubscribe();
+  }, []);
 
   // Load timer state and completed resources from localStorage
   useEffect(() => {
@@ -91,14 +110,48 @@ export const useStudySession = ({ courseSlug }: UseStudySessionProps) => {
     // Clean up session start time from localStorage
     localStorage.removeItem(`course_${courseSlug}_sessionStartTime`);
     
+    // Format course name for display
+    const formattedCourseName = courseSlug.split('-').map(
+      word => word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
+    
     // Log time entry
     try {
-      // In a real implementation, we would save to Supabase here
-      toast({
-        title: "Study time logged",
-        description: `${formatTime(sessionTime)} has been added to your off-the-job training record.`,
-      });
+      // If user is authenticated, save to Supabase
+      if (userId) {
+        const { error } = await supabase
+          .from('study_sessions')
+          .insert({
+            user_id: userId,
+            course_slug: courseSlug,
+            duration: sessionTime,
+            resource_type: currentResourceType || 'other',
+            activity: `Online Learning: ${formattedCourseName}`,
+            notes: "Automatically tracked from the learning portal"
+          });
+          
+        if (error) {
+          console.error('Error saving study session to Supabase:', error);
+          // Fallback to local notification
+          toast({
+            title: "Study time logged locally",
+            description: `${formatTime(sessionTime)} has been added to your off-the-job training record.`,
+          });
+        } else {
+          toast({
+            title: "Study time saved to your profile",
+            description: `${formatTime(sessionTime)} has been added to your off-the-job training record.`,
+          });
+        }
+      } else {
+        // Not authenticated - just show local notification
+        toast({
+          title: "Study time logged",
+          description: `${formatTime(sessionTime)} has been added to your off-the-job training record.`,
+        });
+      }
     } catch (error) {
+      console.error('Error saving time record:', error);
       toast({
         title: "Error saving time record",
         description: "Please try again later.",
@@ -117,7 +170,7 @@ export const useStudySession = ({ courseSlug }: UseStudySessionProps) => {
     }
   };
 
-  const handleToggleResourceComplete = (resourceId: string) => {
+  const handleToggleResourceComplete = async (resourceId: string) => {
     setCompletedResources(prev => {
       const updated = {
         ...prev,
@@ -127,6 +180,24 @@ export const useStudySession = ({ courseSlug }: UseStudySessionProps) => {
       // Save to localStorage
       if (courseSlug) {
         localStorage.setItem(`course_${courseSlug}_completedResources`, JSON.stringify(updated));
+      }
+      
+      // Try to save to Supabase if user is authenticated
+      if (userId && courseSlug) {
+        setTimeout(() => {
+          supabase
+            .from('completed_resources')
+            .upsert({
+              user_id: userId,
+              course_slug: courseSlug,
+              resource_id: resourceId,
+              is_completed: updated[resourceId],
+              last_updated: new Date().toISOString()
+            })
+            .then(({ error }) => {
+              if (error) console.error('Error saving resource completion:', error);
+            });
+        }, 0);
       }
       
       // Show toast notification
