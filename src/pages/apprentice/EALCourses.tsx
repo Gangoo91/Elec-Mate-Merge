@@ -39,10 +39,10 @@ const EALCourses = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in px-4 md:px-6 lg:px-8">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div className="max-w-7xl mx-auto space-y-8 animate-fade-in px-4 md:px-6 lg:px-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-2 sm:mb-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
+          <h1 className="text-3xl font-bold tracking-tight mb-1">
             <span className="gradient-text">EAL Courses</span>
           </h1>
           <p className="text-muted-foreground">
@@ -66,7 +66,7 @@ const EALCourses = () => {
             key={index}
             className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-md shadow-elec-yellow/5 h-full"
           >
-            <CardContent className="flex items-center justify-center p-4 sm:p-6 h-full">
+            <CardContent className="flex items-center justify-center p-5 sm:p-6 h-full min-h-[120px]">
               <h3 className={`text-base sm:text-lg font-medium text-center ${isMobile ? "leading-tight" : ""}`}>
                 {formatCourseTitle(course)}
               </h3>
