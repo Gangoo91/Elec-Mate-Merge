@@ -59,18 +59,20 @@ const CourseDetail = () => {
 
   return (
     <div className="space-y-8 animate-fade-in px-4 md:px-6 lg:px-8">
-      <CourseHeader courseTitle={courseTitle} />
+      {!isUnitPage && <CourseHeader courseTitle={courseTitle} />}
 
-      {/* Timer at the top */}
-      <CourseTimer 
-        courseSlug={courseSlug}
-        isStudying={isStudying}
-        elapsedTime={elapsedTime}
-        todayTotal={todayTotal}
-        currentResourceType={currentResourceType}
-        onStartStudy={handleStartStudy}
-        onStopStudy={handleStopStudy}
-      />
+      {/* Timer at the top - only show on main course page */}
+      {!isUnitPage && (
+        <CourseTimer 
+          courseSlug={courseSlug}
+          isStudying={isStudying}
+          elapsedTime={elapsedTime}
+          todayTotal={todayTotal}
+          currentResourceType={currentResourceType}
+          onStartStudy={handleStartStudy}
+          onStopStudy={handleStopStudy}
+        />
+      )}
       
       <CourseContent 
         isUnitPage={isUnitPage}

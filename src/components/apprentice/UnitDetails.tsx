@@ -1,8 +1,6 @@
 
 import { GraduationCap } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import UnitProgressBar from "@/components/apprentice/UnitProgressBar";
-import UnitResourceList from "@/components/apprentice/UnitResourceList";
 import CourseContentSection from "@/components/apprentice/CourseContentSection";
 import type { CourseUnit } from "@/data/courseUnits";
 
@@ -13,47 +11,16 @@ interface UnitDetailsProps {
   onToggleResourceComplete: (resourceId: string) => void;
 }
 
-const UnitDetails = ({ unit, onResourceClick, completedResources, onToggleResourceComplete }: UnitDetailsProps) => {
-  // Calculate progress for this unit
-  const calculateProgress = () => {
-    if (unit.resources.length === 0) return 0;
-    
-    const completedCount = unit.resources.filter(
-      resource => completedResources[resource.id]
-    ).length;
-    
-    return Math.round((completedCount / unit.resources.length) * 100);
-  };
-
-  const progressPercent = calculateProgress();
-
-  // Health and safety content - only show for unit ELEC2/01
+const UnitDetails = ({ unit }: UnitDetailsProps) => {
+  // Only show Health and Safety content for unit ELEC2/01
   const showHealthSafetyContent = unit.code === "ELEC2/01";
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardContent className="p-6 space-y-6">
-        <div className="flex items-center gap-2 mb-1">
-          <GraduationCap className="h-6 w-6 text-elec-yellow" />
-          <h2 className="text-xl font-semibold">{unit.title} <span className="text-elec-yellow">({unit.code})</span></h2>
-        </div>
-        
-        <p className="text-muted-foreground">{unit.description}</p>
-        
-        <UnitProgressBar progressPercent={progressPercent} />
-        
-        <UnitResourceList 
-          resources={unit.resources}
-          onResourceClick={onResourceClick}
-          completedResources={completedResources}
-          onToggleResourceComplete={onToggleResourceComplete}
-        />
-
         {/* Health and Safety Content - Only for ELEC2/01 */}
         {showHealthSafetyContent && (
-          <div className="mt-8 space-y-8">
-            <h3 className="font-semibold text-xl mb-6">Health and Safety in Electrical Installation</h3>
-            
+          <div className="space-y-8">            
             <CourseContentSection 
               sectionNumber="1"
               title="Health and Safety Legislation in Electrical Work"
