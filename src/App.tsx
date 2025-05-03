@@ -14,6 +14,12 @@ import VideoLessons from "./pages/VideoLessons";
 import Leaderboards from "./pages/Leaderboards";
 import Subscriptions from "./pages/Subscriptions";
 import NotFound from "./pages/NotFound";
+import ApprenticeStudy from "./pages/apprentice/ApprenticeStudy";
+import ApprenticeOJT from "./pages/apprentice/ApprenticeOJT";
+import ApprenticeMentalHealth from "./pages/apprentice/ApprenticeMentalHealth";
+import ApprenticeMentor from "./pages/apprentice/ApprenticeMentor";
+import ApprenticeToolbox from "./pages/apprentice/ApprenticeToolbox";
+import ApprenticeAITools from "./pages/apprentice/ApprenticeAITools";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +35,12 @@ const App = () => (
             <Route element={<Layout />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/apprentice" element={<ApprenticeHub />} />
-              <Route path="/apprentice/ai-tools" element={<NotFound />} />
+              <Route path="/apprentice/study" element={<ApprenticeStudy />} />
+              <Route path="/apprentice/ojt" element={<ApprenticeOJT />} />
+              <Route path="/apprentice/mental-health" element={<ApprenticeMentalHealth />} />
+              <Route path="/apprentice/mentor" element={<ApprenticeMentor />} />
+              <Route path="/apprentice/toolbox" element={<ApprenticeToolbox />} />
+              <Route path="/apprentice/ai-tools" element={<ApprenticeAITools />} />
               <Route path="/electrician" element={<ElectricianTools />} />
               <Route path="/videos" element={<VideoLessons />} />
               <Route path="/leaderboards" element={<Leaderboards />} />
