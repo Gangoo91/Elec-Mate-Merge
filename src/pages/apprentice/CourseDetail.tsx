@@ -20,6 +20,7 @@ const CourseDetail = () => {
   const [todayTotal, setTodayTotal] = useState(0);
   const [currentResourceType, setCurrentResourceType] = useState<string | null>(null);
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
+  const [completedResources, setCompletedResources] = useState<Record<string, boolean>>({});
   
   // Get course title from slug
   const courseTitle = courseSlug?.split('-').map(
@@ -31,6 +32,16 @@ const CourseDetail = () => {
     const storedTime = localStorage.getItem(`course_${courseSlug}_todayTime`);
     if (storedTime) {
       setTodayTotal(parseInt(storedTime));
+    }
+    
+    // Load completed resources from localStorage
+    const storedCompletedResources = localStorage.getItem(`course_${courseSlug}_completedResources`);
+    if (storedCompletedResources) {
+      try {
+        setCompletedResources(JSON.parse(storedCompletedResources));
+      } catch (e) {
+        console.error("Error parsing completed resources from localStorage:", e);
+      }
     }
   }, [courseSlug]);
 
@@ -91,6 +102,27 @@ const CourseDetail = () => {
   const handleUnitSelect = (unitId: string) => {
     setSelectedUnit(unitId === selectedUnit ? null : unitId);
   };
+  
+  // Handler for toggling resource completion
+  const handleToggleResourceComplete = (resourceId: string) => {
+    setCompletedResources(prev => {
+      const updated = {
+        ...prev,
+        [resourceId]: !prev[resourceId]
+      };
+      
+      // Save to localStorage
+      localStorage.setItem(`course_${courseSlug}_completedResources`, JSON.stringify(updated));
+      
+      // Show toast notification
+      toast({
+        title: updated[resourceId] ? "Resource marked as completed" : "Resource marked as incomplete",
+        description: "Your progress has been updated.",
+      });
+      
+      return updated;
+    });
+  };
 
   // Find the selected unit for display
   const selectedUnitData = selectedUnit 
@@ -135,14 +167,17 @@ const CourseDetail = () => {
         <CourseUnitGrid 
           units={ealLevel2Units} 
           selectedUnit={selectedUnit} 
-          onUnitSelect={handleUnitSelect} 
+          onUnitSelect={handleUnitSelect}
+          completedResources={completedResources}
         />
         
         {/* Selected unit details */}
         {selectedUnitData && (
           <UnitDetails 
             unit={selectedUnitData} 
-            onResourceClick={handleResourceClick} 
+            onResourceClick={handleResourceClick}
+            completedResources={completedResources}
+            onToggleResourceComplete={handleToggleResourceComplete}
           />
         )}
 
