@@ -6,7 +6,7 @@ const DashboardQuickAccess = () => {
     <div className="grid gap-4 md:grid-cols-2">
       <QuickAccessCard
         title="Apprentice Hub"
-        description="Access structured learning paths and study materials designed for electrical apprentices."
+        description="Access EAL-compliant training resources, off-the-job learning tracking, and support."
         linkText="Explore Hub"
         linkTo="/apprentice"
       />

@@ -1,70 +1,44 @@
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import TimeTracker from "@/components/apprentice/TimeTracker";
-import OJTRatioCard from "@/components/apprentice/OJTRatioCard";
-import ResourceCard from "@/components/apprentice/ResourceCard";
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Book, Clock, Heart, Users, Toolbox } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ApprenticeHub = () => {
-  // Mock EAL resources data
-  const ealResources = [
-    { 
-      id: 1, 
-      title: "EAL Level 2 Diploma Guide",
-      description: "Official qualification guide",
-      type: "document" as const,
-      cta: "Download PDF", 
-      href: "#",
-      duration: "48 pages" 
+  const apprenticeResources = [
+    {
+      id: 1,
+      title: "Study Centre",
+      description: "Access structured learning paths and study materials designed for electrical apprentices.",
+      icon: Book,
+      link: "/apprentice/study"
     },
-    { 
-      id: 2, 
-      title: "EAL Assessment Method Overview",
-      description: "Understanding your assessment process",
-      type: "document" as const,
-      cta: "View Guide", 
-      href: "#",
-      duration: "12 pages" 
+    {
+      id: 2,
+      title: "Off the Job Learning",
+      description: "Track your 20% off-the-job training hours and access EAL compliant resources.",
+      icon: Clock,
+      link: "/apprentice/ojt"
     },
-    { 
-      id: 3, 
-      title: "Off-The-Job Training Explained",
-      description: "Comprehensive overview of OJT requirements",
-      type: "video" as const,
-      cta: "Watch Video", 
-      href: "#",
-      duration: "15 min" 
-    }
-  ];
-
-  // Mock learning materials
-  const learningMaterials = [
-    { 
-      id: 1, 
-      title: "Electrical Science Fundamentals",
-      description: "Core theory for Level 2 & 3",
-      type: "learning" as const,
-      cta: "Start Learning", 
-      duration: "6 modules" 
+    {
+      id: 3,
+      title: "Mental Health Hub",
+      description: "Resources and support for maintaining wellbeing during your apprenticeship journey.",
+      icon: Heart,
+      link: "/apprentice/mental-health"
     },
-    { 
-      id: 2, 
-      title: "Installation Methods & Technologies",
-      description: "Practical installation techniques",
-      type: "learning" as const,
-      cta: "Continue Learning", 
-      duration: "8 modules" 
+    {
+      id: 4,
+      title: "Mentor Connect",
+      description: "Connect with industry mentors and experienced professionals for guidance.",
+      icon: Users,
+      link: "/apprentice/mentor"
     },
-    { 
-      id: 3, 
-      title: "Health & Safety in Electrical Work",
-      description: "Essential safety protocols",
-      type: "learning" as const,
-      cta: "Start Learning", 
-      duration: "4 modules" 
+    {
+      id: 5,
+      title: "Toolbox Talk",
+      description: "Access practical guides and safety information for on-site work.",
+      icon: Toolbox,
+      link: "/apprentice/toolbox"
     }
   ];
 
@@ -77,192 +51,26 @@ const ApprenticeHub = () => {
         </p>
       </div>
 
-      {/* Navigation Menu */}
-      <NavigationMenu className="bg-elec-gray border border-elec-yellow/20 rounded-md max-w-full">
-        <NavigationMenuList className="flex-wrap">
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>Qualification Levels</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2">
-                <li>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      href="#"
-                    >
-                      <div className="text-sm font-medium">Level 2</div>
-                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                        Electrical Installation Diploma
-                      </p>
-                    </a>
-                  </NavigationMenuLink>
-                </li>
-                <li>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      href="#"
-                    >
-                      <div className="text-sm font-medium">Level 3</div>
-                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                        Electrotechnical Qualification (MOET)
-                      </p>
-                    </a>
-                  </NavigationMenuLink>
-                </li>
-                <li>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      href="#"
-                    >
-                      <div className="text-sm font-medium">Level 3</div>
-                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                        BS 7671 Wiring Regulations
-                      </p>
-                    </a>
-                  </NavigationMenuLink>
-                </li>
-                <li>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      href="#"
-                    >
-                      <div className="text-sm font-medium">Level 4</div>
-                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                        Higher National Certificate (HNC)
-                      </p>
-                    </a>
-                  </NavigationMenuLink>
-                </li>
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuTrigger>Assessment Units</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid gap-3 p-4 md:w-[500px] lg:w-[600px] grid-cols-2">
-                <li>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      href="#"
-                    >
-                      <div className="text-sm font-medium">QELT3/001</div>
-                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                        Health and Safety Legislation
-                      </p>
-                    </a>
-                  </NavigationMenuLink>
-                </li>
-                <li>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      href="#"
-                    >
-                      <div className="text-sm font-medium">QELT3/002</div>
-                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                        Principles of Electrical Science
-                      </p>
-                    </a>
-                  </NavigationMenuLink>
-                </li>
-                <li>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      href="#"
-                    >
-                      <div className="text-sm font-medium">QELT3/003</div>
-                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                        Electrical Installations: Design
-                      </p>
-                    </a>
-                  </NavigationMenuLink>
-                </li>
-                <li>
-                  <NavigationMenuLink asChild>
-                    <a
-                      className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      href="#"
-                    >
-                      <div className="text-sm font-medium">QELT3/004</div>
-                      <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                        Inspection, Testing and Commissioning
-                      </p>
-                    </a>
-                  </NavigationMenuLink>
-                </li>
-              </ul>
-            </NavigationMenuContent>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link to="#resources" className={cn(
-              "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
-            )}>
-              EAL Resources
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <Link to="#time-tracker" className={cn(
-              "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none"
-            )}>
-              Off-Job Tracker
-            </Link>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
-
-      {/* OJT Progress Card */}
-      <OJTRatioCard />
-
-      {/* Main Content Tabs */}
-      <Tabs defaultValue="time-tracker" className="space-y-6">
-        <TabsList className="bg-elec-gray border border-elec-yellow/20 w-full sm:w-auto">
-          <TabsTrigger value="time-tracker">Time Tracker</TabsTrigger>
-          <TabsTrigger value="learning">Learning Materials</TabsTrigger>
-          <TabsTrigger value="eal-resources">EAL Resources</TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="time-tracker" id="time-tracker" className="space-y-6">
-          <TimeTracker />
-        </TabsContent>
-        
-        <TabsContent value="learning" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {learningMaterials.map((resource) => (
-              <ResourceCard 
-                key={resource.id}
-                title={resource.title}
-                description={resource.description}
-                type={resource.type}
-                cta={resource.cta}
-                duration={resource.duration}
-              />
-            ))}
-          </div>
-          <Button variant="outline" className="w-full">Load More Learning Resources</Button>
-        </TabsContent>
-        
-        <TabsContent value="eal-resources" id="resources" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {ealResources.map((resource) => (
-              <ResourceCard 
-                key={resource.id}
-                title={resource.title}
-                description={resource.description}
-                type={resource.type}
-                cta={resource.cta}
-                href={resource.href}
-                duration={resource.duration}
-              />
-            ))}
-          </div>
-          <Button variant="outline" className="w-full">Browse All EAL Resources</Button>
-        </TabsContent>
-      </Tabs>
+      {/* Main Content */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {apprenticeResources.map((resource) => (
+          <Link to={resource.link} key={resource.id} className="focus:outline-none">
+            <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-colors cursor-pointer">
+              <CardHeader className="pb-2">
+                <div className="flex items-center gap-3">
+                  <resource.icon className="h-6 w-6 text-elec-yellow" />
+                  <CardTitle className="text-xl">{resource.title}</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">
+                  {resource.description}
+                </p>
+              </CardContent>
+            </Card>
+          </Link>
+        ))}
+      </div>
 
       {/* EAL Integration Note */}
       <div className="bg-elec-gray border border-elec-yellow/20 rounded-md p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -270,7 +78,6 @@ const ApprenticeHub = () => {
           <h3 className="font-semibold">EAL Integration</h3>
           <p className="text-sm text-muted-foreground">ElecMate is designed to align with EAL's 20% off-the-job training requirements.</p>
         </div>
-        <Button variant="outline" size="sm">Learn More</Button>
       </div>
     </div>
   );
