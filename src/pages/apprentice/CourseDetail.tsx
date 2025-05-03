@@ -1,11 +1,13 @@
 
 import { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import { ealLevel2Units } from "@/data/courseUnits";
 import CourseTimer from "@/components/apprentice/CourseTimer";
 import CourseHeader from "@/components/apprentice/CourseHeader";
 import CourseContent from "@/components/apprentice/CourseContent";
 import { useStudySession } from "@/hooks/useStudySession";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 const CourseDetail = () => {
   const { courseSlug, unitSlug } = useParams();
@@ -60,6 +62,21 @@ const CourseDetail = () => {
   return (
     <div className="space-y-8 animate-fade-in px-4 md:px-6 lg:px-8">
       {!isUnitPage && <CourseHeader courseTitle={courseTitle} />}
+
+      {/* Back button - only show on unit page */}
+      {isUnitPage && courseSlug && (
+        <div className="mb-4">
+          <Link to={`/apprentice/study/eal/${courseSlug}`}>
+            <Button 
+              variant="outline" 
+              className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Units
+            </Button>
+          </Link>
+        </div>
+      )}
 
       {/* Timer at the top - only show on main course page */}
       {!isUnitPage && (
