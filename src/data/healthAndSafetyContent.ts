@@ -1,4 +1,6 @@
 
-import { healthAndSafetyContent, SectionData, SectionContentData, Subsection } from './healthAndSafety';
+import { healthAndSafetyContent } from './healthAndSafety';
+import type { SectionData, SectionContentData, Subsection } from './healthAndSafety';
 
-export { healthAndSafetyContent, SectionData, SectionContentData, Subsection };
+export { healthAndSafetyContent };
+export type { SectionData, SectionContentData, Subsection };
