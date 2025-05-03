@@ -40,41 +40,32 @@ const CourseContentSection = ({
   // Format description for safe isolation section
   const formatDescription = (text: string, id: string | undefined) => {
     if (id === "3.1") {
-      // Split text at the list of steps
-      const beforeSteps = text.split("The five essential steps of safe isolation must be followed without exception:")[0];
-      const afterSteps = text.split("\n\nProper isolation equipment includes")[1];
+      // For the safe isolation section, highlight the steps more clearly
+      const parts = text.split("The essential steps of safe isolation must be followed without exception:");
+      const beforeSteps = parts[0];
+      
+      // Extract the part after the steps
+      const afterPartsRaw = text.split("Proper isolation equipment includes");
+      const afterSteps = "Proper isolation equipment includes" + afterPartsRaw[1];
       
       return (
         <>
           <p className="text-muted-foreground mb-4">{beforeSteps}</p>
           
-          <div className="my-6">
-            <h4 className="text-lg font-bold text-elec-yellow mb-4">The 5 Essential Steps of Safe Isolation:</h4>
-            <ol className="list-none space-y-3 pl-0">
-              <li className="flex gap-3 border border-elec-yellow/30 p-3 rounded-lg bg-elec-dark/70">
-                <span className="flex-shrink-0 bg-elec-yellow text-elec-dark h-8 w-8 rounded-full flex items-center justify-center font-bold">1</span>
-                <span>Identify the circuit or equipment to be worked on, using diagrams and labels to ensure the correct isolation point.</span>
-              </li>
-              <li className="flex gap-3 border border-elec-yellow/30 p-3 rounded-lg bg-elec-dark/70">
-                <span className="flex-shrink-0 bg-elec-yellow text-elec-dark h-8 w-8 rounded-full flex items-center justify-center font-bold">2</span>
-                <span>Isolate the supply by switching off and locking the isolation device.</span>
-              </li>
-              <li className="flex gap-3 border border-elec-yellow/30 p-3 rounded-lg bg-elec-dark/70">
-                <span className="flex-shrink-0 bg-elec-yellow text-elec-dark h-8 w-8 rounded-full flex items-center justify-center font-bold">3</span>
-                <span>Prove the test instrument on a known live source.</span>
-              </li>
-              <li className="flex gap-3 border border-elec-yellow/30 p-3 rounded-lg bg-elec-dark/70">
-                <span className="flex-shrink-0 bg-elec-yellow text-elec-dark h-8 w-8 rounded-full flex items-center justify-center font-bold">4</span>
-                <span>Use the test instrument to verify the circuit is dead.</span>
-              </li>
-              <li className="flex gap-3 border border-elec-yellow/30 p-3 rounded-lg bg-elec-dark/70">
-                <span className="flex-shrink-0 bg-elec-yellow text-elec-dark h-8 w-8 rounded-full flex items-center justify-center font-bold">5</span>
-                <span>Confirm the test instrument still works on a known live source after testing.</span>
-              </li>
+          <div className="my-4 bg-elec-dark/50 border border-elec-yellow/20 rounded-md p-4">
+            <h4 className="text-lg font-semibold text-elec-yellow mb-3">The Essential Steps of Safe Isolation:</h4>
+            <ol className="list-decimal pl-5 space-y-2 text-muted-foreground">
+              <li><span className="font-medium text-white">Identify</span> - Correctly identify the circuit or equipment to be worked on</li>
+              <li><span className="font-medium text-white">Isolate</span> - Switch off and lock the isolation device</li>
+              <li><span className="font-medium text-white">Prove the tester</span> - Test your voltage indicator on a known live source</li>
+              <li><span className="font-medium text-white">Test dead</span> - Verify the circuit or equipment is dead</li>
+              <li><span className="font-medium text-white">Reprove the tester</span> - Test your voltage indicator again on a known live source</li>
+              <li><span className="font-medium text-white">Lock off and tag</span> - Apply locks and warning notices to prevent reconnection</li>
+              <li><span className="font-medium text-white">Issue permit</span> - For complex systems, issue a permit-to-work</li>
             </ol>
           </div>
           
-          <p className="text-muted-foreground">{afterSteps}</p>
+          <p className="text-muted-foreground mt-3">{afterSteps}</p>
         </>
       );
     }
