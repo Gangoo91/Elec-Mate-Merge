@@ -23,7 +23,7 @@ export const useSupabaseSave = () => {
     
     try {
       const { error } = await supabase
-        .from('study_sessions' as any)
+        .from('study_sessions')
         .insert({
           user_id: userId,
           course_slug: courseSlug,
@@ -69,7 +69,7 @@ export const useSupabaseSave = () => {
 
     try {
       const { error } = await supabase
-        .from('completed_resources' as any)
+        .from('completed_resources')
         .upsert({
           user_id: userId,
           course_slug: courseSlug,

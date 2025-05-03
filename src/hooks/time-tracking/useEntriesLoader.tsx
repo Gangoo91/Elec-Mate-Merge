@@ -20,14 +20,14 @@ export const useEntriesLoader = (userId: string | null) => {
           // Fetch manual entries
           try {
             const { data: manualData, error: manualError } = await supabase
-              .from('time_entries' as any)
+              .from('time_entries')
               .select('*')
               .eq('user_id', userId)
               .eq('is_automatic', false)
               .order('date', { ascending: false });
               
             if (!manualError && manualData) {
-              setManualEntries(manualData.map((entry: any) => ({
+              setManualEntries((manualData as any[]).map((entry: any) => ({
                 id: entry.id,
                 date: entry.date,
                 duration: entry.duration,
@@ -47,13 +47,13 @@ export const useEntriesLoader = (userId: string | null) => {
           // Fetch study session entries
           try {
             const { data: studyData, error: studyError } = await supabase
-              .from('study_sessions' as any)
+              .from('study_sessions')
               .select('*')
               .eq('user_id', userId)
               .order('created_at', { ascending: false });
               
             if (!studyError && studyData) {
-              setCourseEntries(studyData.map((entry: any) => ({
+              setCourseEntries((studyData as any[]).map((entry: any) => ({
                 id: entry.id,
                 date: new Date(entry.created_at).toISOString().split('T')[0],
                 duration: Math.ceil(entry.duration / 60), // convert seconds to minutes
@@ -73,13 +73,13 @@ export const useEntriesLoader = (userId: string | null) => {
           // Fetch quiz entries
           try {
             const { data: quizData, error: quizError } = await supabase
-              .from('quiz_attempts' as any)
+              .from('quiz_attempts')
               .select('*')
               .eq('user_id', userId)
               .order('created_at', { ascending: false });
               
             if (!quizError && quizData) {
-              setQuizEntries(quizData.map((entry: any) => ({
+              setQuizEntries((quizData as any[]).map((entry: any) => ({
                 id: entry.id,
                 date: new Date(entry.created_at).toISOString().split('T')[0],
                 duration: Math.ceil(entry.time_taken / 60), // convert seconds to minutes
