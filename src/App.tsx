@@ -23,21 +23,21 @@ import ApprenticeAITools from "./pages/apprentice/ApprenticeAITools";
 
 // Course category placeholder components
 const CourseCategory = ({ category }: { category: string }) => (
-  <div className="space-y-8 animate-fade-in">
-    <div className="flex items-center justify-between">
+  <div className="space-y-8 animate-fade-in px-2 md:px-0">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">{category} Courses</h1>
         <p className="text-muted-foreground">
           Access {category.toLowerCase()} courses and learning materials
         </p>
       </div>
-      <a href="/apprentice/study">
-        <button className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2">
+      <Link to="/apprentice/study" className="flex-shrink-0">
+        <Button variant="outline">
           Back to Study Centre
-        </button>
-      </a>
+        </Button>
+      </Link>
     </div>
-    <div className="p-8 text-center text-muted-foreground">
+    <div className="p-8 text-center text-muted-foreground bg-elec-gray rounded-lg border border-elec-yellow/20">
       <p>Course content for {category} will be available soon.</p>
     </div>
   </div>
