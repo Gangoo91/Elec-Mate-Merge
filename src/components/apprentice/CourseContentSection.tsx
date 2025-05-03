@@ -15,6 +15,7 @@ interface ContentSectionProps {
   }[];
   icon?: "safety" | "info" | "construction" | "warning" | "hardhat" | "list" | "section";
   isMainSection?: boolean;
+  subsectionId?: string;
 }
 
 const CourseContentSection = ({ 
@@ -24,7 +25,8 @@ const CourseContentSection = ({
   keyPoints = [], 
   subsections = [], 
   icon = "info",
-  isMainSection = false
+  isMainSection = false,
+  subsectionId
 }: ContentSectionProps) => {
   // Select the appropriate icon based on the icon prop
   const IconComponent = 
@@ -34,6 +36,51 @@ const CourseContentSection = ({
     icon === "hardhat" ? HardHat :
     icon === "list" ? ListOrdered :
     icon === "section" ? Section : Info;
+
+  // Format description for safe isolation section
+  const formatDescription = (text: string, id: string | undefined) => {
+    if (id === "3.1") {
+      // Split text at the list of steps
+      const beforeSteps = text.split("The five essential steps of safe isolation must be followed without exception:")[0];
+      const afterSteps = text.split("\n\nProper isolation equipment includes")[1];
+      
+      return (
+        <>
+          <p className="text-muted-foreground mb-4">{beforeSteps}</p>
+          
+          <div className="my-6">
+            <h4 className="text-lg font-bold text-elec-yellow mb-4">The 5 Essential Steps of Safe Isolation:</h4>
+            <ol className="list-none space-y-3 pl-0">
+              <li className="flex gap-3 border border-elec-yellow/30 p-3 rounded-lg bg-elec-dark/70">
+                <span className="flex-shrink-0 bg-elec-yellow text-elec-dark h-8 w-8 rounded-full flex items-center justify-center font-bold">1</span>
+                <span>Identify the circuit or equipment to be worked on, using diagrams and labels to ensure the correct isolation point.</span>
+              </li>
+              <li className="flex gap-3 border border-elec-yellow/30 p-3 rounded-lg bg-elec-dark/70">
+                <span className="flex-shrink-0 bg-elec-yellow text-elec-dark h-8 w-8 rounded-full flex items-center justify-center font-bold">2</span>
+                <span>Isolate the supply by switching off and locking the isolation device.</span>
+              </li>
+              <li className="flex gap-3 border border-elec-yellow/30 p-3 rounded-lg bg-elec-dark/70">
+                <span className="flex-shrink-0 bg-elec-yellow text-elec-dark h-8 w-8 rounded-full flex items-center justify-center font-bold">3</span>
+                <span>Prove the test instrument on a known live source.</span>
+              </li>
+              <li className="flex gap-3 border border-elec-yellow/30 p-3 rounded-lg bg-elec-dark/70">
+                <span className="flex-shrink-0 bg-elec-yellow text-elec-dark h-8 w-8 rounded-full flex items-center justify-center font-bold">4</span>
+                <span>Use the test instrument to verify the circuit is dead.</span>
+              </li>
+              <li className="flex gap-3 border border-elec-yellow/30 p-3 rounded-lg bg-elec-dark/70">
+                <span className="flex-shrink-0 bg-elec-yellow text-elec-dark h-8 w-8 rounded-full flex items-center justify-center font-bold">5</span>
+                <span>Confirm the test instrument still works on a known live source after testing.</span>
+              </li>
+            </ol>
+          </div>
+          
+          <p className="text-muted-foreground">{afterSteps}</p>
+        </>
+      );
+    }
+    
+    return <p className="text-muted-foreground">{text}</p>;
+  };
   
   return (
     <div className={`mb-4 ${isMainSection ? 'bg-transparent' : ''}`}>
@@ -49,7 +96,7 @@ const CourseContentSection = ({
           )}
         </div>
         <div className="flex-1">
-          <p className="text-muted-foreground">{description}</p>
+          {formatDescription(description, subsectionId)}
         </div>
       </div>
       

@@ -4,10 +4,9 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { healthAndSafetyContent } from "@/data/healthAndSafetyContent";
 import CourseContentSection from "@/components/apprentice/CourseContentSection";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Book, ChevronRight } from "lucide-react";
+import { ArrowLeft, Book } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 const SectionContent = () => {
   const { courseSlug, unitSlug, sectionId } = useParams();
@@ -44,59 +43,6 @@ const SectionContent = () => {
 
   const toggleSection = (id: string) => {
     setExpandedSection(expandedSection === id ? null : id);
-  };
-
-  // Special rendering for safe isolation steps in section 3.1
-  const renderSafeIsolationSteps = (subsection: any) => {
-    if (subsection.id === "3.1") {
-      return (
-        <div className="mt-6 space-y-6">
-          <h4 className="text-lg font-bold text-elec-yellow">The 5 Essential Steps of Safe Isolation</h4>
-          <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-1">
-            {[
-              {
-                step: 1,
-                title: "Identify the Circuit",
-                description: "Identify the circuit or equipment to be worked on, using diagrams and labels to ensure the correct isolation point."
-              },
-              {
-                step: 2,
-                title: "Isolate the Supply",
-                description: "Isolate the supply by switching off and locking the isolation device."
-              },
-              {
-                step: 3,
-                title: "Prove the Test Instrument",
-                description: "Prove the test instrument on a known live source."
-              },
-              {
-                step: 4,
-                title: "Test the Circuit is Dead",
-                description: "Use the test instrument to verify the circuit is dead."
-              },
-              {
-                step: 5,
-                title: "Confirm Test Instrument",
-                description: "Confirm the test instrument still works on a known live source after testing."
-              }
-            ].map(step => (
-              <div key={step.step} className="flex gap-4 bg-elec-dark p-4 rounded-lg border border-elec-yellow/30">
-                <div className="flex-shrink-0">
-                  <div className="bg-elec-yellow text-elec-dark h-10 w-10 rounded-full flex items-center justify-center font-bold text-lg">
-                    {step.step}
-                  </div>
-                </div>
-                <div>
-                  <h5 className="font-semibold">{step.title}</h5>
-                  <p className="text-muted-foreground text-sm">{step.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      );
-    }
-    return null;
   };
 
   return (
@@ -152,13 +98,13 @@ const SectionContent = () => {
               
               {expandedSection === subsection.id && (
                 <div className="mt-4 pt-4 border-t border-elec-yellow/20 animate-fade-in">
-                  {renderSafeIsolationSteps(subsection)}
                   <CourseContentSection
                     title={subsection.title}
                     description={subsection.content}
                     keyPoints={subsection.keyPoints}
                     icon={sectionData.content.icon}
                     isMainSection={true}
+                    subsectionId={subsection.id}
                   />
                 </div>
               )}
