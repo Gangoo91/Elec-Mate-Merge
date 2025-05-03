@@ -1,4 +1,3 @@
-
 import { Book, GraduationCap, School } from "lucide-react";
 
 export const courseCategories = [
@@ -8,11 +7,12 @@ export const courseCategories = [
     description: "Electrical and technical qualifications certified by Excellence, Achievement & Learning",
     icon: Book,
     courses: [
-      "Electrical Level 2",
-      "Electrical Level 3",
-      "Level 3 MOET",
-      "Electrical Level 4",
-      "Inspection & Testing"
+      "Level 2 Diploma in Electrical Installation",
+      "Level 3 Advanced Diploma in Electrical Installation",
+      "Level 3 NVQ Diploma in Electrotechnical Technology",
+      "Level 3 Award in the Requirements for Electrical Installations (18th Edition)",
+      "Level 3 Award in the Initial Verification and Certification of Electrical Installations",
+      "Level 4 Award in the Design and Verification of Electrical Installations"
     ]
   },
   {
