@@ -12,7 +12,7 @@ import CourseInfoBox from "@/components/apprentice/CourseInfoBox";
 
 const CourseDetail = () => {
   const { toast } = useToast();
-  const { courseSlug } = useParams();
+  const { courseSlug, unitSlug } = useParams();
   const [isStudying, setIsStudying] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [sessionStartTime, setSessionStartTime] = useState<number | null>(null);
@@ -42,7 +42,20 @@ const CourseDetail = () => {
         console.error("Error parsing completed resources from localStorage:", e);
       }
     }
-  }, [courseSlug]);
+    
+    // If there's a unitSlug in the URL, find and select that unit
+    if (unitSlug) {
+      const matchedUnit = ealLevel2Units.find(unit => {
+        const generatedSlug = unit.code.toLowerCase().replace('/', '-') + '-' + 
+          unit.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+        return generatedSlug === unitSlug;
+      });
+      
+      if (matchedUnit) {
+        setSelectedUnit(matchedUnit.id);
+      }
+    }
+  }, [courseSlug, unitSlug]);
 
   const handleStartStudy = () => {
     setIsStudying(true);
@@ -99,7 +112,7 @@ const CourseDetail = () => {
 
   // Handler for unit selection
   const handleUnitSelect = (unitId: string) => {
-    setSelectedUnit(unitId === selectedUnit ? null : unitId);
+    setSelectedUnit(unitId);
   };
   
   // Handler for toggling resource completion
