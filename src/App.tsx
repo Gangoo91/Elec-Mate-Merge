@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 import Layout from "./components/layout/Layout";
 import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard";
