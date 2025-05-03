@@ -14,7 +14,7 @@ const LandingPage = () => {
             Elec-Mate
           </h1>
           <p className="text-xl md:text-2xl mb-8">
-            Your all-in-one platform featuring an electrician's toolkit, community support, mentor connect, and mental health resources
+            The complete platform for electrical professionals and apprentices with learning resources, off-job training tools, electrician's toolkit, community support, mentor connect, and mental health resources
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {user ? (
