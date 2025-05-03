@@ -15,9 +15,9 @@ const DashboardQuickAccess = () => {
           icon={<ArrowRight className="ml-1 h-4 w-4" />}
         />
         <QuickAccessCard
-          title="Electrician Tools"
+          title="Electrical Hub"
           description="Professional calculators and project tools"
-          linkText="View Tools"
+          linkText="View Hub"
           linkTo="/electrician"
           icon={<ArrowRight className="ml-1 h-4 w-4" />}
         />
