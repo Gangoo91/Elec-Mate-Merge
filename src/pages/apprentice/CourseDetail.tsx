@@ -78,18 +78,16 @@ const CourseDetail = () => {
         </div>
       )}
 
-      {/* Timer at the top - only show on main course page */}
-      {!isUnitPage && (
-        <CourseTimer 
-          courseSlug={courseSlug}
-          isStudying={isStudying}
-          elapsedTime={elapsedTime}
-          todayTotal={todayTotal}
-          currentResourceType={currentResourceType}
-          onStartStudy={handleStartStudy}
-          onStopStudy={handleStopStudy}
-        />
-      )}
+      {/* Timer - show on both main course page and unit pages */}
+      <CourseTimer 
+        courseSlug={courseSlug}
+        isStudying={isStudying}
+        elapsedTime={elapsedTime}
+        todayTotal={todayTotal}
+        currentResourceType={currentResourceType}
+        onStartStudy={handleStartStudy}
+        onStopStudy={handleStopStudy}
+      />
       
       <CourseContent 
         isUnitPage={isUnitPage}
