@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import SectionBox from "@/components/apprentice/SectionBox";
 import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
 import { electricalTheoryContent } from "@/data/electricalTheory/index";
+import { installationMethodsContent } from "@/data/installationMethods/index";
 import type { CourseUnit } from "@/data/courseUnits";
 import { useToast } from "@/components/ui/use-toast";
 import { useParams } from "react-router-dom";
@@ -114,17 +115,19 @@ const UnitDetails = ({
       {/* Installation Methods Content - Only for ELEC2/05A */}
       {showInstallationMethodsContent && (
         <div className="space-y-6">
-          {/* Display the installation methods section directly */}
-          <SectionBox
-            key={electricalTheoryContent[7].sectionNumber}
-            sectionNumber={electricalTheoryContent[7].sectionNumber}
-            title={electricalTheoryContent[7].title}
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
+          {/* Display all installation methods sections */}
+          {installationMethodsContent.map((section) => (
+            <SectionBox
+              key={section.sectionNumber}
+              sectionNumber={section.sectionNumber}
+              title={section.title}
+              isExpanded={false}
+              onClick={handleSectionClick}
+              content={<></>}
+              unitCode={unit.code}
+              courseSlug={courseSlug}
+            />
+          ))}
           
           {/* Quiz Section */}
           <SectionBox

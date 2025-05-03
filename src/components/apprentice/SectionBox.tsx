@@ -28,7 +28,7 @@ const SectionBox = ({
   const navigate = useNavigate();
   
   const handleSectionClick = () => {
-    // Navigate to the section page on click
+    // Navigate based on the section and unit type
     if (courseSlug && unitCode) {
       // Use sectionNumber to create the slug
       const sectionSlug = sectionNumber.toLowerCase().replace(/\//g, "-");
@@ -36,8 +36,13 @@ const SectionBox = ({
       // If section is quiz, navigate to quiz page
       if (sectionNumber === "Q") {
         navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/quiz`);
-      } else {
-        // Regular section page
+      } 
+      // If it's installation methods unit (ELEC2/05A), navigate to installation method content
+      else if (unitCode.toLowerCase().includes('05a')) {
+        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/installation-method/${sectionNumber}`);
+      }
+      // Regular section page
+      else {
         navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/${sectionSlug}`);
       }
     }
