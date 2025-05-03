@@ -1,6 +1,6 @@
 
 import { GraduationCap } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import type { CourseUnit } from "@/data/courseUnits";
@@ -44,8 +44,7 @@ const CourseUnitGrid = ({
     
     if (courseSlug) {
       const unitSlug = createUnitSlug(unit);
-      const unitUrl = `/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`;
-      navigate(unitUrl);
+      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`);
     }
   };
 

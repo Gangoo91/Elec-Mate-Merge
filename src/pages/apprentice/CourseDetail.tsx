@@ -1,5 +1,6 @@
+
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
@@ -13,6 +14,9 @@ import CourseInfoBox from "@/components/apprentice/CourseInfoBox";
 const CourseDetail = () => {
   const { toast } = useToast();
   const { courseSlug, unitSlug } = useParams();
+  const location = useLocation();
+  const isUnitPage = location.pathname.includes('/unit/');
+  
   const [isStudying, setIsStudying] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [sessionStartTime, setSessionStartTime] = useState<number | null>(null);
@@ -43,6 +47,22 @@ const CourseDetail = () => {
       }
     }
     
+    // Load timer state from localStorage
+    const storedIsStudying = localStorage.getItem(`course_${courseSlug}_isStudying`);
+    if (storedIsStudying) {
+      setIsStudying(storedIsStudying === 'true');
+    }
+    
+    const storedElapsedTime = localStorage.getItem(`course_${courseSlug}_elapsedTime`);
+    if (storedElapsedTime) {
+      setElapsedTime(parseInt(storedElapsedTime));
+    }
+    
+    const storedSessionStartTime = localStorage.getItem(`course_${courseSlug}_sessionStartTime`);
+    if (storedSessionStartTime) {
+      setSessionStartTime(parseInt(storedSessionStartTime));
+    }
+    
     // If there's a unitSlug in the URL, find and select that unit
     if (unitSlug) {
       const matchedUnit = ealLevel2Units.find(unit => {
@@ -56,6 +76,17 @@ const CourseDetail = () => {
       }
     }
   }, [courseSlug, unitSlug]);
+
+  // Save timer state to localStorage whenever it changes
+  useEffect(() => {
+    if (courseSlug) {
+      localStorage.setItem(`course_${courseSlug}_isStudying`, isStudying ? 'true' : 'false');
+      localStorage.setItem(`course_${courseSlug}_elapsedTime`, elapsedTime.toString());
+      if (sessionStartTime) {
+        localStorage.setItem(`course_${courseSlug}_sessionStartTime`, sessionStartTime.toString());
+      }
+    }
+  }, [isStudying, elapsedTime, sessionStartTime, courseSlug]);
 
   const handleStartStudy = () => {
     setIsStudying(true);
@@ -80,6 +111,9 @@ const CourseDetail = () => {
     
     // Save to localStorage
     localStorage.setItem(`course_${courseSlug}_todayTime`, newTodayTotal.toString());
+    
+    // Clean up session start time from localStorage
+    localStorage.removeItem(`course_${courseSlug}_sessionStartTime`);
     
     // Log time entry
     try {
@@ -175,17 +209,19 @@ const CourseDetail = () => {
       />
       
       <div className="space-y-6">
-        {/* Course units grid */}
-        <CourseUnitGrid 
-          units={ealLevel2Units} 
-          selectedUnit={selectedUnit} 
-          onUnitSelect={handleUnitSelect}
-          completedResources={completedResources}
-          courseSlug={courseSlug}
-        />
+        {/* Course units grid - only show on the main course page */}
+        {!isUnitPage && (
+          <CourseUnitGrid 
+            units={ealLevel2Units} 
+            selectedUnit={selectedUnit} 
+            onUnitSelect={handleUnitSelect}
+            completedResources={completedResources}
+            courseSlug={courseSlug}
+          />
+        )}
         
-        {/* Selected unit details */}
-        {selectedUnitData && (
+        {/* Selected unit details - only show on unit-specific pages */}
+        {isUnitPage && selectedUnitData && (
           <UnitDetails 
             unit={selectedUnitData} 
             onResourceClick={handleResourceClick}
@@ -194,7 +230,8 @@ const CourseDetail = () => {
           />
         )}
 
-        <CourseInfoBox />
+        {/* Only show info box on main course page */}
+        {!isUnitPage && <CourseInfoBox />}
       </div>
     </div>
   );
