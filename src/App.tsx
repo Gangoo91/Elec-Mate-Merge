@@ -21,6 +21,28 @@ import ApprenticeMentor from "./pages/apprentice/ApprenticeMentor";
 import ApprenticeToolbox from "./pages/apprentice/ApprenticeToolbox";
 import ApprenticeAITools from "./pages/apprentice/ApprenticeAITools";
 
+// Course category placeholder components
+const CourseCategory = ({ category }: { category: string }) => (
+  <div className="space-y-8 animate-fade-in">
+    <div className="flex items-center justify-between">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">{category} Courses</h1>
+        <p className="text-muted-foreground">
+          Access {category.toLowerCase()} courses and learning materials
+        </p>
+      </div>
+      <a href="/apprentice/study">
+        <button className="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2">
+          Back to Study Centre
+        </button>
+      </a>
+    </div>
+    <div className="p-8 text-center text-muted-foreground">
+      <p>Course content for {category} will be available soon.</p>
+    </div>
+  </div>
+);
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -36,6 +58,11 @@ const App = () => (
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/apprentice" element={<ApprenticeHub />} />
               <Route path="/apprentice/study" element={<ApprenticeStudy />} />
+              <Route path="/apprentice/study/eal" element={<CourseCategory category="EAL" />} />
+              <Route path="/apprentice/study/cityGuilds" element={<CourseCategory category="City & Guilds" />} />
+              <Route path="/apprentice/study/higher" element={<CourseCategory category="Higher Learning" />} />
+              <Route path="/apprentice/study/further" element={<CourseCategory category="Further Learning" />} />
+              <Route path="/apprentice/study/onJob" element={<CourseCategory category="On the Job" />} />
               <Route path="/apprentice/ojt" element={<ApprenticeOJT />} />
               <Route path="/apprentice/mental-health" element={<ApprenticeMentalHealth />} />
               <Route path="/apprentice/mentor" element={<ApprenticeMentor />} />
