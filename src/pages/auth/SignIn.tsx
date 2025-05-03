@@ -68,7 +68,7 @@ const SignIn = () => {
             <Alert className="mb-4 border-yellow-500 bg-yellow-500/10">
               <AlertTriangle className="h-4 w-4 text-yellow-500" />
               <AlertDescription className="text-yellow-500">
-                Email not confirmed. During development, you can bypass this by disabling email confirmation in the Supabase dashboard (Authentication {'->'} Email Templates {'->'} Turn off "Confirm email").
+                Email not confirmed. During development, you can bypass this by disabling email confirmation in the Supabase dashboard (Authentication {'->'}  Email Templates {'->'}  Turn off "Confirm email").
               </AlertDescription>
             </Alert>
           ) : error ? (
