@@ -4,10 +4,21 @@ import { supabase } from '@/integrations/supabase/client';
 import { Session, User } from '@supabase/supabase-js';
 import { useToast } from '@/components/ui/use-toast';
 
+// Define a type for our profile data that includes the new fields
+type ProfileType = {
+  id: string;
+  username?: string | null;
+  full_name?: string | null;
+  avatar_url?: string | null;
+  updated_at?: string | null;
+  created_at?: string | null;
+  subscribed?: boolean | null;
+};
+
 type AuthContextType = {
   session: Session | null;
   user: User | null;
-  profile: any | null;
+  profile: ProfileType | null;
   isLoading: boolean;
   isTrialActive: boolean;
   trialEndsAt: Date | null;
@@ -22,7 +33,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
-  const [profile, setProfile] = useState<any | null>(null);
+  const [profile, setProfile] = useState<ProfileType | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isTrialActive, setIsTrialActive] = useState(false);
   const [trialEndsAt, setTrialEndsAt] = useState<Date | null>(null);
@@ -85,6 +96,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setProfile(data);
         
         // Check trial status
+        // Use optional chaining to safely access created_at
         const createdAt = new Date(data.created_at || new Date());
         const trialEndDate = new Date(createdAt);
         trialEndDate.setDate(trialEndDate.getDate() + 7); // 7-day trial
