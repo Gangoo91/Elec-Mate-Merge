@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Clock, BookOpen, Save, Plus } from "lucide-react";
+import { Clock, BookOpen, Save, Plus, CheckSquare } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { formatTime } from "@/lib/utils";
 
@@ -15,6 +15,9 @@ type TimeEntry = {
   activity: string;
   notes: string;
   isAutomatic?: boolean;
+  isQuiz?: boolean;
+  score?: number;
+  totalQuestions?: number;
 };
 
 const TimeTracker = () => {
@@ -24,6 +27,7 @@ const TimeTracker = () => {
   const [notes, setNotes] = useState<string>("");
   const [timeEntries, setTimeEntries] = useState<TimeEntry[]>([]);
   const [courseEntries, setCourseEntries] = useState<TimeEntry[]>([]);
+  const [quizEntries, setQuizEntries] = useState<TimeEntry[]>([]);
   
   // On component mount, check localStorage for course time entries
   useEffect(() => {
@@ -47,7 +51,10 @@ const TimeTracker = () => {
     
     // Look for course time entries in localStorage
     const courseTimeEntries: TimeEntry[] = [];
+    const quizAttemptEntries: TimeEntry[] = [];
+    
     Object.keys(localStorage).forEach(key => {
+      // Process course time entries
       if (key.startsWith('course_') && key.endsWith('_todayTime')) {
         const courseName = key.replace('course_', '').replace('_todayTime', '');
         const formattedCourseName = courseName.split('-').map(
@@ -66,13 +73,38 @@ const TimeTracker = () => {
           });
         }
       }
+      
+      // Process quiz attempts
+      if (key.includes('_quiz_attempts')) {
+        try {
+          const unitCode = key.split('_quiz_attempts')[0].replace('unit_', '');
+          const attempts = JSON.parse(localStorage.getItem(key) || '[]');
+          
+          attempts.forEach((attempt: any, index: number) => {
+            quizAttemptEntries.push({
+              id: `quiz-${unitCode}-${index}`,
+              date: new Date(attempt.date).toISOString().split('T')[0],
+              duration: Math.ceil(attempt.timeTaken / 60), // convert seconds to minutes
+              activity: `Quiz: Unit ${unitCode}`,
+              notes: `Assessment Score: ${attempt.score}/${attempt.totalQuestions} (${attempt.percentage}%)`,
+              isAutomatic: true,
+              isQuiz: true,
+              score: attempt.score,
+              totalQuestions: attempt.totalQuestions
+            });
+          });
+        } catch (e) {
+          console.error("Error parsing quiz attempts:", e);
+        }
+      }
     });
     
     setTimeEntries(entries);
     setCourseEntries(courseTimeEntries);
+    setQuizEntries(quizAttemptEntries);
   }, []);
 
-  const totalMinutes = [...timeEntries, ...courseEntries].reduce((total, entry) => total + entry.duration, 0);
+  const totalMinutes = [...timeEntries, ...courseEntries, ...quizEntries].reduce((total, entry) => total + entry.duration, 0);
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
 
@@ -107,7 +139,7 @@ const TimeTracker = () => {
     });
   };
 
-  const allEntries = [...timeEntries, ...courseEntries].sort((a, b) => {
+  const allEntries = [...timeEntries, ...courseEntries, ...quizEntries].sort((a, b) => {
     // Sort by date (newest first)
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
@@ -188,10 +220,21 @@ const TimeTracker = () => {
               <div className="flex items-start justify-between">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    {entry.isAutomatic && <BookOpen className="h-4 w-4 text-elec-yellow" />}
+                    {entry.isQuiz && <CheckSquare className="h-4 w-4 text-elec-yellow" />}
+                    {entry.isAutomatic && !entry.isQuiz && <BookOpen className="h-4 w-4 text-elec-yellow" />}
                     <h4 className="font-medium">{entry.activity}</h4>
                   </div>
                   <p className="text-sm text-muted-foreground">{entry.notes}</p>
+                  {entry.isQuiz && entry.score !== undefined && entry.totalQuestions !== undefined && (
+                    <div className="mt-2 text-sm">
+                      <div className="w-full bg-elec-gray/50 rounded-full h-2 mt-1">
+                        <div 
+                          className={`h-2 rounded-full ${(entry.score / entry.totalQuestions) >= 0.7 ? 'bg-green-500' : 'bg-amber-500'}`} 
+                          style={{ width: `${(entry.score / entry.totalQuestions) * 100}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 <div className="text-right">
                   <div className="font-semibold">

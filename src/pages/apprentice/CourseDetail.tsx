@@ -13,6 +13,7 @@ const CourseDetail = () => {
   const { courseSlug, unitSlug } = useParams();
   const location = useLocation();
   const isUnitPage = location.pathname.includes('/unit/');
+  const isQuizPage = location.pathname.includes('/quiz');
   
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
   
@@ -64,7 +65,7 @@ const CourseDetail = () => {
       {!isUnitPage && <CourseHeader courseTitle={courseTitle} />}
 
       {/* Back button - only show on unit page */}
-      {isUnitPage && courseSlug && (
+      {isUnitPage && courseSlug && !isQuizPage && (
         <div className="mb-4">
           <Link to={`/apprentice/study/eal/${courseSlug}`}>
             <Button 
@@ -78,28 +79,32 @@ const CourseDetail = () => {
         </div>
       )}
 
-      {/* Timer - show on both main course page and unit pages */}
-      <CourseTimer 
-        courseSlug={courseSlug}
-        isStudying={isStudying}
-        elapsedTime={elapsedTime}
-        todayTotal={todayTotal}
-        currentResourceType={currentResourceType}
-        onStartStudy={handleStartStudy}
-        onStopStudy={handleStopStudy}
-      />
+      {/* Timer - show on both main course page and unit pages, but not on quiz pages */}
+      {!isQuizPage && (
+        <CourseTimer 
+          courseSlug={courseSlug}
+          isStudying={isStudying}
+          elapsedTime={elapsedTime}
+          todayTotal={todayTotal}
+          currentResourceType={currentResourceType}
+          onStartStudy={handleStartStudy}
+          onStopStudy={handleStopStudy}
+        />
+      )}
       
-      <CourseContent 
-        isUnitPage={isUnitPage}
-        selectedUnit={selectedUnit}
-        courseSlug={courseSlug}
-        selectedUnitData={selectedUnitData}
-        completedResources={completedResources}
-        onUnitSelect={handleUnitSelect}
-        onResourceClick={handleResourceClick}
-        onToggleResourceComplete={handleToggleResourceComplete}
-        units={ealLevel2Units}
-      />
+      {!isQuizPage && (
+        <CourseContent 
+          isUnitPage={isUnitPage}
+          selectedUnit={selectedUnit}
+          courseSlug={courseSlug}
+          selectedUnitData={selectedUnitData}
+          completedResources={completedResources}
+          onUnitSelect={handleUnitSelect}
+          onResourceClick={handleResourceClick}
+          onToggleResourceComplete={handleToggleResourceComplete}
+          units={ealLevel2Units}
+        />
+      )}
     </div>
   );
 };
