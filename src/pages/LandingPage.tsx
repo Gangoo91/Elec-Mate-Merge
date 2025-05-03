@@ -18,9 +18,9 @@ const LandingPage = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {user ? (
-              <Link to="/apprentice/study">
+              <Link to="/dashboard">
                 <Button size="lg" className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80">
-                  Go to Learning Portal
+                  Go to Dashboard
                 </Button>
               </Link>
             ) : (
