@@ -38,7 +38,7 @@ export const useTimeEntries = () => {
           // Fetch manual entries
           try {
             const { data: manualData, error: manualError } = await supabase
-              .from('time_entries' as any)
+              .from('time_entries')
               .select('*')
               .eq('user_id', userId)
               .eq('is_automatic', false)
@@ -65,7 +65,7 @@ export const useTimeEntries = () => {
           // Fetch study session entries
           try {
             const { data: studyData, error: studyError } = await supabase
-              .from('study_sessions' as any)
+              .from('study_sessions')
               .select('*')
               .eq('user_id', userId)
               .order('created_at', { ascending: false });
@@ -91,7 +91,7 @@ export const useTimeEntries = () => {
           // Fetch quiz entries
           try {
             const { data: quizData, error: quizError } = await supabase
-              .from('quiz_attempts' as any)
+              .from('quiz_attempts')
               .select('*')
               .eq('user_id', userId)
               .order('created_at', { ascending: false });
@@ -233,7 +233,7 @@ export const useTimeEntries = () => {
       if (userId) {
         try {
           const { data, error } = await supabase
-            .from('time_entries' as any)
+            .from('time_entries')
             .insert({
               user_id: userId,
               date: newEntry.date,
@@ -241,18 +241,19 @@ export const useTimeEntries = () => {
               activity: newEntry.activity,
               notes: newEntry.notes,
               is_automatic: false
-            } as any)
+            })
             .select('*')
             .single();
             
           if (!error && data) {
+            const typedData = data as any;
             setManualEntries(prev => [{
-              id: data.id,
-              date: data.date,
-              duration: data.duration,
-              activity: data.activity,
-              notes: data.notes,
-              isAutomatic: data.is_automatic
+              id: typedData.id,
+              date: typedData.date,
+              duration: typedData.duration,
+              activity: typedData.activity,
+              notes: typedData.notes,
+              isAutomatic: typedData.is_automatic
             }, ...prev]);
           } else {
             console.error('Error saving time entry to Supabase:', error);

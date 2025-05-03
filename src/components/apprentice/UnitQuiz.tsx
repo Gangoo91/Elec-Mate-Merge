@@ -106,8 +106,9 @@ const UnitQuiz = ({
       if (user) {
         // If user is authenticated, save to Supabase
         try {
+          // Using type casting to avoid type errors
           const { error } = await supabase
-            .from('quiz_attempts' as any)
+            .from('quiz_attempts')
             .insert({
               user_id: user.id,
               unit_code: unitCode,
@@ -115,7 +116,7 @@ const UnitQuiz = ({
               total_questions: totalQuestions,
               percentage: percentage,
               time_taken: timeTaken
-            } as any);
+            });
             
           if (error) {
             console.error('Error saving quiz attempt to Supabase:', error);

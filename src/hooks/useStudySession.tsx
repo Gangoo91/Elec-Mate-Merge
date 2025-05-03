@@ -120,9 +120,8 @@ export const useStudySession = ({ courseSlug }: UseStudySessionProps) => {
       // If user is authenticated, save to Supabase
       if (userId) {
         try {
-          // Using type assertion to bypass the type error since we know this table exists
           const { error } = await supabase
-            .from('study_sessions' as any)
+            .from('study_sessions')
             .insert({
               user_id: userId,
               course_slug: courseSlug,
@@ -130,7 +129,7 @@ export const useStudySession = ({ courseSlug }: UseStudySessionProps) => {
               resource_type: currentResourceType || 'other',
               activity: `Online Learning: ${formattedCourseName}`,
               notes: "Automatically tracked from the learning portal"
-            } as any);
+            });
             
           if (error) {
             console.error('Error saving study session to Supabase:', error);
@@ -195,16 +194,15 @@ export const useStudySession = ({ courseSlug }: UseStudySessionProps) => {
       if (userId && courseSlug) {
         setTimeout(() => {
           try {
-            // Using type assertion to bypass the type error
             supabase
-              .from('completed_resources' as any)
+              .from('completed_resources')
               .upsert({
                 user_id: userId,
                 course_slug: courseSlug,
                 resource_id: resourceId,
                 is_completed: updated[resourceId],
                 last_updated: new Date().toISOString()
-              } as any)
+              })
               .then(({ error }) => {
                 if (error) console.error('Error saving resource completion:', error);
               });
