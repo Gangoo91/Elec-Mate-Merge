@@ -6,13 +6,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Loader2 } from 'lucide-react';
+import { Loader2, AlertTriangle } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isEmailNotConfirmedError, setIsEmailNotConfirmedError] = useState(false);
   
   const { signIn } = useAuth();
   const navigate = useNavigate();
@@ -22,17 +24,24 @@ const SignIn = () => {
     
     if (!email || !password) {
       setError('Please fill in all fields');
+      setIsEmailNotConfirmedError(false);
       return;
     }
     
     setError(null);
+    setIsEmailNotConfirmedError(false);
     setIsSubmitting(true);
     
     try {
       const { error } = await signIn(email, password);
       
       if (error) {
-        setError(error.message);
+        // Check if it's an "email not confirmed" error
+        if (error.message && error.message.toLowerCase().includes('email not confirmed')) {
+          setIsEmailNotConfirmedError(true);
+        } else {
+          setError(error.message);
+        }
       } else {
         // Navigate to the dashboard on successful login
         navigate('/apprentice/study');
@@ -55,11 +64,18 @@ const SignIn = () => {
         </CardHeader>
         
         <CardContent>
-          {error && (
+          {isEmailNotConfirmedError ? (
+            <Alert className="mb-4 border-yellow-500 bg-yellow-500/10">
+              <AlertTriangle className="h-4 w-4 text-yellow-500" />
+              <AlertDescription className="text-yellow-500">
+                Email not confirmed. During development, you can bypass this by disabling email confirmation in the Supabase dashboard (Authentication > Email Templates > Turn off "Confirm email").
+              </AlertDescription>
+            </Alert>
+          ) : error ? (
             <div className="p-3 mb-4 text-sm rounded border border-red-500 text-red-500 bg-red-500/10">
               {error}
             </div>
-          )}
+          ) : null}
           
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">

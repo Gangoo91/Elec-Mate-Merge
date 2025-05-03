@@ -3,8 +3,22 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Check, X, ChevronRight } from "lucide-react";
+import { useAuth } from '@/contexts/AuthContext';
 
 const Subscriptions = () => {
+  // Get auth context values
+  const { isTrialActive, trialEndsAt } = useAuth();
+  
+  // Calculate days remaining in trial
+  const getDaysRemaining = () => {
+    if (!trialEndsAt) return 0;
+    
+    const now = new Date();
+    const diffTime = trialEndsAt.getTime() - now.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return Math.max(0, diffDays);
+  };
+
   // Mock subscription tiers
   const subscriptions = {
     monthly: [
@@ -142,27 +156,33 @@ const Subscriptions = () => {
       </div>
 
       {/* Current Subscription Status */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className={`border-${isTrialActive ? 'elec-yellow' : 'red-500'}/20 bg-elec-gray`}>
         <CardHeader>
           <CardTitle>Your Current Plan</CardTitle>
           <CardDescription>
-            You're currently in the free trial period, ending in 7 days.
+            {isTrialActive 
+              ? `You're currently in the free trial period, ending in ${getDaysRemaining()} days.`
+              : "Your free trial has expired. Please select a subscription plan to continue."}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
             <div className="space-y-2">
               <div className="text-sm text-muted-foreground">Subscription Status</div>
-              <div className="text-lg font-medium">Free Trial</div>
+              <div className="text-lg font-medium">{isTrialActive ? "Free Trial" : "Expired"}</div>
             </div>
-            <div className="space-y-2">
-              <div className="text-sm text-muted-foreground">Expires In</div>
-              <div className="text-lg font-medium">7 days</div>
-            </div>
-            <div className="space-y-2">
-              <div className="text-sm text-muted-foreground">Trial Features</div>
-              <div className="text-lg font-medium">Full Platform Access</div>
-            </div>
+            {isTrialActive && (
+              <>
+                <div className="space-y-2">
+                  <div className="text-sm text-muted-foreground">Expires In</div>
+                  <div className="text-lg font-medium">{getDaysRemaining()} days</div>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-sm text-muted-foreground">Trial Features</div>
+                  <div className="text-lg font-medium">Full Platform Access</div>
+                </div>
+              </>
+            )}
           </div>
         </CardContent>
       </Card>

@@ -9,6 +9,9 @@ type AuthContextType = {
   user: User | null;
   profile: any | null;
   isLoading: boolean;
+  isTrialActive: boolean;
+  trialEndsAt: Date | null;
+  isSubscribed: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any | null }>;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: any | null }>;
   signOut: () => Promise<void>;
@@ -21,6 +24,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isTrialActive, setIsTrialActive] = useState(false);
+  const [trialEndsAt, setTrialEndsAt] = useState<Date | null>(null);
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const { toast } = useToast();
 
   // Initial session check and listener setup
@@ -40,6 +46,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           }, 0);
         } else {
           setProfile(null);
+          setIsTrialActive(false);
+          setTrialEndsAt(null);
+          setIsSubscribed(false);
         }
       }
     );
@@ -74,6 +83,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         console.error('Error fetching profile:', error);
       } else if (data) {
         setProfile(data);
+        
+        // Check trial status
+        const createdAt = new Date(data.created_at || new Date());
+        const trialEndDate = new Date(createdAt);
+        trialEndDate.setDate(trialEndDate.getDate() + 7); // 7-day trial
+        
+        const now = new Date();
+        const isActive = now < trialEndDate;
+        const isUserSubscribed = data.subscribed || false;
+        
+        setIsTrialActive(isActive && !isUserSubscribed);
+        setTrialEndsAt(trialEndDate);
+        setIsSubscribed(isUserSubscribed);
       }
     } catch (error) {
       console.error('Error in fetchProfile:', error);
@@ -137,7 +159,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       // Success toast
       toast({
         title: 'Signup Successful',
-        description: 'Your account has been created successfully.',
+        description: 'Your account has been created successfully. You now have a 7-day free trial!',
       });
       
       return { error: null };
@@ -164,6 +186,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     user,
     profile,
     isLoading,
+    isTrialActive,
+    trialEndsAt,
+    isSubscribed,
     signIn,
     signUp,
     signOut,
