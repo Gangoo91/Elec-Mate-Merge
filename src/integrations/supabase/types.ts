@@ -9,7 +9,156 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      completed_resources: {
+        Row: {
+          course_slug: string
+          id: string
+          is_completed: boolean | null
+          last_updated: string | null
+          resource_id: string
+          user_id: string
+        }
+        Insert: {
+          course_slug: string
+          id?: string
+          is_completed?: boolean | null
+          last_updated?: string | null
+          resource_id: string
+          user_id: string
+        }
+        Update: {
+          course_slug?: string
+          id?: string
+          is_completed?: boolean | null
+          last_updated?: string | null
+          resource_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          full_name: string | null
+          id: string
+          updated_at: string | null
+          username: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          full_name?: string | null
+          id: string
+          updated_at?: string | null
+          username?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string | null
+          username?: string | null
+        }
+        Relationships: []
+      }
+      quiz_attempts: {
+        Row: {
+          created_at: string | null
+          id: string
+          percentage: number
+          score: number
+          time_taken: number
+          total_questions: number
+          unit_code: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          percentage: number
+          score: number
+          time_taken: number
+          total_questions: number
+          unit_code: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          percentage?: number
+          score?: number
+          time_taken?: number
+          total_questions?: number
+          unit_code?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      study_sessions: {
+        Row: {
+          activity: string
+          course_slug: string
+          created_at: string | null
+          duration: number
+          id: string
+          notes: string | null
+          resource_type: string | null
+          user_id: string
+        }
+        Insert: {
+          activity: string
+          course_slug: string
+          created_at?: string | null
+          duration: number
+          id?: string
+          notes?: string | null
+          resource_type?: string | null
+          user_id: string
+        }
+        Update: {
+          activity?: string
+          course_slug?: string
+          created_at?: string | null
+          duration?: number
+          id?: string
+          notes?: string | null
+          resource_type?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      time_entries: {
+        Row: {
+          activity: string
+          created_at: string | null
+          date: string
+          duration: number
+          id: string
+          is_automatic: boolean | null
+          notes: string | null
+          user_id: string
+        }
+        Insert: {
+          activity: string
+          created_at?: string | null
+          date: string
+          duration: number
+          id?: string
+          is_automatic?: boolean | null
+          notes?: string | null
+          user_id: string
+        }
+        Update: {
+          activity?: string
+          created_at?: string | null
+          date?: string
+          duration?: number
+          id?: string
+          is_automatic?: boolean | null
+          notes?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
