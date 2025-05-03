@@ -41,14 +41,18 @@ const UnitDetails = ({ unit, onResourceClick }: UnitDetailsProps) => {
               isExpanded={expandedSection === section.sectionNumber}
               onClick={() => toggleSection(section.sectionNumber)}
               content={
-                <CourseContentSection 
-                  sectionNumber={section.content.sectionNumber}
-                  title={section.content.title}
-                  description={section.content.description}
-                  icon={section.content.icon}
-                  isMainSection={section.content.isMainSection}
-                  subsections={section.content.subsections}
-                />
+                <div className="space-y-4">
+                  {section.content.subsections.map(subsection => (
+                    <CourseContentSection
+                      key={subsection.id}
+                      title={subsection.title}
+                      description={subsection.content}
+                      keyPoints={subsection.keyPoints}
+                      icon={section.content.icon as "safety" | "info" | "construction" | "warning" | "hardhat" | "list" | "section"}
+                      isMainSection={false}
+                    />
+                  ))}
+                </div>
               }
             />
           ))}

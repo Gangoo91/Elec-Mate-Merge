@@ -1,4 +1,3 @@
-
 export interface Subsection {
   id: string;
   title: string;
@@ -10,7 +9,7 @@ export interface SectionContentData {
   sectionNumber: string;
   title: string;
   description: string;
-  icon: string;
+  icon: "safety" | "info" | "construction" | "warning" | "hardhat" | "list" | "section";
   isMainSection: boolean;
   subsections: Subsection[];
 }
