@@ -1,6 +1,6 @@
 
 import React from "react";
-import { BookOpen, ChevronDown } from "lucide-react";
+import { BookOpen, ChevronDown, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface SectionBoxProps {
@@ -9,6 +9,7 @@ interface SectionBoxProps {
   isExpanded: boolean;
   onClick: () => void;
   content: React.ReactNode;
+  isCompleted?: boolean;
 }
 
 const SectionBox = ({
@@ -16,10 +17,11 @@ const SectionBox = ({
   title,
   isExpanded,
   onClick,
-  content
+  content,
+  isCompleted = false
 }: SectionBoxProps) => {
   return (
-    <div className="border border-elec-yellow/20 rounded-lg overflow-hidden bg-elec-gray">
+    <div className="border border-elec-yellow/20 rounded-lg overflow-hidden bg-elec-gray relative">
       <div
         className={`
           p-4 cursor-pointer transition-all
@@ -54,11 +56,9 @@ const SectionBox = ({
           </div>
         </div>
         
-        {isExpanded && (
-          <div className="absolute -right-1 -top-1">
-            <span className="inline-flex items-center justify-center h-6 w-6 rounded-full bg-elec-yellow text-elec-dark text-xs">
-              ✓
-            </span>
+        {isCompleted && (
+          <div className="absolute right-2 top-2">
+            <CheckCircle className="h-5 w-5 text-green-500" />
           </div>
         )}
       </div>
