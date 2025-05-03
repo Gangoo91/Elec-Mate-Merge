@@ -58,7 +58,7 @@ const CourseDetail = () => {
     }
   });
 
-  // Hardcoded course units for EAL Level 2 diploma
+  // Course units for EAL Level 2 diploma in the specified order: 01, 04, 05A, 05B, 08
   const courseUnits: CourseUnit[] = [
     {
       id: "unit-1",
@@ -85,28 +85,6 @@ const CourseDetail = () => {
           title: "Risk Assessment Quiz",
           description: "Test your knowledge of risk assessment",
           type: "learning",
-          duration: "30 mins"
-        }
-      ]
-    },
-    {
-      id: "unit-2",
-      title: "Electrical Science and Principles",
-      code: "ELEC2/08",
-      description: "This unit explores fundamental electrical concepts including current, voltage, resistance, and power.",
-      resources: [
-        {
-          id: "resource-4",
-          title: "Ohm's Law Calculations",
-          description: "Practice exercises on applying Ohm's Law",
-          type: "learning",
-          duration: "45 mins"
-        },
-        {
-          id: "resource-5",
-          title: "Circuit Theory Explained",
-          description: "Comprehensive guide to electrical circuits",
-          type: "document",
           duration: "30 mins"
         }
       ]
@@ -153,6 +131,28 @@ const CourseDetail = () => {
           description: "Video demonstration of proper cable installation",
           type: "video",
           duration: "35 mins"
+        }
+      ]
+    },
+    {
+      id: "unit-2",
+      title: "Electrical Science and Principles",
+      code: "ELEC2/08",
+      description: "This unit explores fundamental electrical concepts including current, voltage, resistance, and power.",
+      resources: [
+        {
+          id: "resource-4",
+          title: "Ohm's Law Calculations",
+          description: "Practice exercises on applying Ohm's Law",
+          type: "learning",
+          duration: "45 mins"
+        },
+        {
+          id: "resource-5",
+          title: "Circuit Theory Explained",
+          description: "Comprehensive guide to electrical circuits",
+          type: "document",
+          duration: "30 mins"
         }
       ]
     }
