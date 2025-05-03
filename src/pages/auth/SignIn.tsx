@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Loader2, AlertTriangle } from 'lucide-react';
+import { Loader2, AlertTriangle, Info } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const SignIn = () => {
@@ -68,7 +68,12 @@ const SignIn = () => {
             <Alert className="mb-4 border-yellow-500 bg-yellow-500/10">
               <AlertTriangle className="h-4 w-4 text-yellow-500" />
               <AlertDescription className="text-yellow-500">
-                Email not confirmed. During development, you can bypass this by disabling email confirmation in the Supabase dashboard (Authentication {'->'}  Email Templates {'->'}  Turn off "Confirm email").
+                <p className="font-medium mb-1">Email not confirmed</p>
+                <p className="mb-2">Please check your inbox for a confirmation email and click the link to verify your account.</p>
+                <p className="text-xs">
+                  For development, you can bypass this by disabling email confirmation in the Supabase dashboard:
+                  <br />Authentication {'→'} Email Templates {'→'} Turn off "Confirm email"
+                </p>
               </AlertDescription>
             </Alert>
           ) : error ? (
@@ -119,6 +124,19 @@ const SignIn = () => {
               )}
             </Button>
           </form>
+
+          <div className="mt-4">
+            <Alert className="border-blue-500/20 bg-blue-500/5">
+              <Info className="h-4 w-4 text-blue-500" />
+              <AlertDescription className="text-sm">
+                <p className="font-medium">Development Mode Tips:</p>
+                <ul className="list-disc list-inside mt-1 text-xs space-y-1">
+                  <li>To enable quick login without email confirmation, turn off "Confirm email" in Supabase dashboard.</li>
+                  <li>You can use any email/password for testing as long as you sign up first.</li>
+                </ul>
+              </AlertDescription>
+            </Alert>
+          </div>
         </CardContent>
         
         <CardFooter className="flex flex-col gap-4 items-center justify-center">
