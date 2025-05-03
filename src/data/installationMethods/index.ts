@@ -7,6 +7,10 @@ export const installationMethodsContent: SectionData[] = [
     title: "Installation Requirements",
     content: {
       icon: "construction",
+      sectionNumber: "1",
+      title: "Installation Requirements",
+      description: "This section covers the interpretation of installation drawings, selection of installation methods, and understanding of installation zones and cable routing.",
+      isMainSection: true,
       subsections: [
         {
           id: "1.1",
@@ -49,6 +53,10 @@ export const installationMethodsContent: SectionData[] = [
     title: "Equipment and Materials Selection",
     content: {
       icon: "construction",
+      sectionNumber: "2",
+      title: "Equipment and Materials Selection",
+      description: "This section covers the proper selection of cables, enclosures, and other components used in electrical installations.",
+      isMainSection: true,
       subsections: [
         {
           id: "2.1",
@@ -91,6 +99,10 @@ export const installationMethodsContent: SectionData[] = [
     title: "Installation Procedures",
     content: {
       icon: "construction",
+      sectionNumber: "3",
+      title: "Installation Procedures",
+      description: "This section covers the sequencing of installation work, containment methods, and proper termination techniques.",
+      isMainSection: true,
       subsections: [
         {
           id: "3.1",
@@ -133,6 +145,10 @@ export const installationMethodsContent: SectionData[] = [
     title: "Safe Working Practices",
     content: {
       icon: "safety",
+      sectionNumber: "4",
+      title: "Safe Working Practices",
+      description: "This section covers essential safety procedures when working with electrical installations, including isolation, lock-off, and personal protective equipment.",
+      isMainSection: true,
       subsections: [
         {
           id: "4.1",
@@ -175,6 +191,10 @@ export const installationMethodsContent: SectionData[] = [
     title: "Legal and Regulatory Requirements",
     content: {
       icon: "info",
+      sectionNumber: "5",
+      title: "Legal and Regulatory Requirements",
+      description: "This section covers the various regulations and legal requirements governing electrical installations in the UK.",
+      isMainSection: true,
       subsections: [
         {
           id: "5.1",
@@ -217,6 +237,10 @@ export const installationMethodsContent: SectionData[] = [
     title: "Testing and Commissioning",
     content: {
       icon: "info",
+      sectionNumber: "6",
+      title: "Testing and Commissioning",
+      description: "This section covers the procedures for testing and commissioning electrical installations, including visual inspection, pre-functional testing, and documentation.",
+      isMainSection: true,
       subsections: [
         {
           id: "6.1",
