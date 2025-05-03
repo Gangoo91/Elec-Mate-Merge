@@ -1,22 +1,41 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock } from "lucide-react";
+import { Clock, Book } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Progress } from "@/components/ui/progress";
+import TimeTracker from "@/components/apprentice/TimeTracker";
 
 const ApprenticeOJT = () => {
-  const [weeklyHours] = useState(8);
+  const [weeklyHours, setWeeklyHours] = useState(8);
   const [targetHours] = useState(40);
+  const [courseHours, setCourseHours] = useState(0);
   const progress = (weeklyHours / targetHours) * 100;
 
-  const activities = [
-    { id: 1, date: "2025-05-01", description: "Circuit theory workshop", hours: 3 },
-    { id: 2, date: "2025-05-02", description: "Online safety course", hours: 2 },
-    { id: 3, date: "2025-04-29", description: "Practical wiring exercises", hours: 2 },
-    { id: 4, date: "2025-04-27", description: "Industry webinar", hours: 1 },
-  ];
+  // Simulate loading course hours from various course pages
+  useEffect(() => {
+    // In a real implementation, this would come from Supabase
+    // For now, we'll check localStorage for any course times
+    let totalCourseTime = 0;
+    
+    // Loop through localStorage to find any course time entries
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith('course_') && key.endsWith('_todayTime')) {
+        const timeValue = parseInt(localStorage.getItem(key) || '0');
+        totalCourseTime += timeValue;
+      }
+    });
+    
+    // Convert seconds to hours
+    setCourseHours(Math.round(totalCourseTime / 36) / 100); // rounded to 2 decimal places
+    
+    // Update weekly hours with course hours
+    setWeeklyHours(prev => {
+      const newTotal = 8 + (totalCourseTime / 3600);
+      return parseFloat(newTotal.toFixed(1));
+    });
+  }, []);
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -49,7 +68,21 @@ const ApprenticeOJT = () => {
                 </div>
                 <Progress value={progress} className="h-2" />
               </div>
-              <Button className="w-full">Log New Hours</Button>
+              
+              <div className="mt-4 space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="flex items-center">
+                    <Book className="h-4 w-4 text-elec-yellow mr-2" />
+                    Course Learning
+                  </span>
+                  <span>{courseHours} hours</span>
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  Time automatically tracked from online learning
+                </div>
+              </div>
+              
+              <Button className="w-full">Log Manual Hours</Button>
             </div>
           </CardContent>
         </Card>
@@ -59,20 +92,7 @@ const ApprenticeOJT = () => {
             <CardTitle>Recent Activities</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {activities.map((activity) => (
-                <div key={activity.id} className="flex justify-between items-center pb-3 border-b border-elec-yellow/10">
-                  <div>
-                    <p className="font-medium">{activity.description}</p>
-                    <p className="text-sm text-muted-foreground">{activity.date}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-medium">{activity.hours} hours</p>
-                  </div>
-                </div>
-              ))}
-              <Button variant="outline" className="w-full">View All Activity</Button>
-            </div>
+            <TimeTracker />
           </CardContent>
         </Card>
       </div>

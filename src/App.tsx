@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,6 +22,7 @@ import ApprenticeMentor from "./pages/apprentice/ApprenticeMentor";
 import ApprenticeToolbox from "./pages/apprentice/ApprenticeToolbox";
 import ApprenticeAITools from "./pages/apprentice/ApprenticeAITools";
 import EALCourses from "./pages/apprentice/EALCourses";
+import CourseDetail from "./pages/apprentice/CourseDetail";
 
 // Course category placeholder components
 const CourseCategory = ({ category }: { category: string }) => (

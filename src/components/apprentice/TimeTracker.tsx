@@ -1,11 +1,12 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Clock, BookOpen, Save, Plus } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { formatTime } from "@/lib/utils";
 
 type TimeEntry = {
   id: string;
@@ -13,6 +14,7 @@ type TimeEntry = {
   duration: number;
   activity: string;
   notes: string;
+  isAutomatic?: boolean;
 };
 
 const TimeTracker = () => {
@@ -20,24 +22,57 @@ const TimeTracker = () => {
   const [duration, setDuration] = useState<number>(0);
   const [activity, setActivity] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
-  const [timeEntries, setTimeEntries] = useState<TimeEntry[]>([
-    {
-      id: "entry-1",
-      date: new Date().toISOString().split('T')[0],
-      duration: 120, // minutes
-      activity: "Wiring Regulations Study",
-      notes: "Completed chapters 1-3 of the BS 7671 textbook"
-    },
-    {
-      id: "entry-2",
-      date: new Date().toISOString().split('T')[0],
-      duration: 90, // minutes
-      activity: "Practical Workshop",
-      notes: "Practiced ring final circuit installation techniques"
-    }
-  ]);
+  const [timeEntries, setTimeEntries] = useState<TimeEntry[]>([]);
+  const [courseEntries, setCourseEntries] = useState<TimeEntry[]>([]);
+  
+  // On component mount, check localStorage for course time entries
+  useEffect(() => {
+    // In a real implementation, this would come from Supabase
+    const entries: TimeEntry[] = [
+      {
+        id: "entry-1",
+        date: new Date().toISOString().split('T')[0],
+        duration: 120, // minutes
+        activity: "Wiring Regulations Study",
+        notes: "Completed chapters 1-3 of the BS 7671 textbook"
+      },
+      {
+        id: "entry-2",
+        date: new Date().toISOString().split('T')[0],
+        duration: 90, // minutes
+        activity: "Practical Workshop",
+        notes: "Practiced ring final circuit installation techniques"
+      }
+    ];
+    
+    // Look for course time entries in localStorage
+    const courseTimeEntries: TimeEntry[] = [];
+    Object.keys(localStorage).forEach(key => {
+      if (key.startsWith('course_') && key.endsWith('_todayTime')) {
+        const courseName = key.replace('course_', '').replace('_todayTime', '');
+        const formattedCourseName = courseName.split('-').map(
+          word => word.charAt(0).toUpperCase() + word.slice(1)
+        ).join(' ');
+        
+        const timeValue = parseInt(localStorage.getItem(key) || '0');
+        if (timeValue > 0) {
+          courseTimeEntries.push({
+            id: `course-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`,
+            date: new Date().toISOString().split('T')[0],
+            duration: Math.round(timeValue / 60), // convert seconds to minutes
+            activity: `Online Learning: ${formattedCourseName}`,
+            notes: "Automatically tracked from the learning portal",
+            isAutomatic: true
+          });
+        }
+      }
+    });
+    
+    setTimeEntries(entries);
+    setCourseEntries(courseTimeEntries);
+  }, []);
 
-  const totalMinutes = timeEntries.reduce((total, entry) => total + entry.duration, 0);
+  const totalMinutes = [...timeEntries, ...courseEntries].reduce((total, entry) => total + entry.duration, 0);
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
 
@@ -71,6 +106,11 @@ const TimeTracker = () => {
       description: "Your off-the-job training has been logged successfully."
     });
   };
+
+  const allEntries = [...timeEntries, ...courseEntries].sort((a, b) => {
+    // Sort by date (newest first)
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
 
   return (
     <div className="space-y-6">
@@ -142,12 +182,15 @@ const TimeTracker = () => {
 
       <div className="space-y-4">
         <h3 className="text-lg font-semibold">Recent Time Entries</h3>
-        {timeEntries.map((entry) => (
-          <Card key={entry.id} className="border-elec-yellow/20 bg-elec-gray">
+        {allEntries.map((entry) => (
+          <Card key={entry.id} className={`border-elec-yellow/20 ${entry.isAutomatic ? 'bg-elec-dark' : 'bg-elec-gray'}`}>
             <CardContent className="p-4">
               <div className="flex items-start justify-between">
                 <div className="space-y-1">
-                  <h4 className="font-medium">{entry.activity}</h4>
+                  <div className="flex items-center gap-2">
+                    {entry.isAutomatic && <BookOpen className="h-4 w-4 text-elec-yellow" />}
+                    <h4 className="font-medium">{entry.activity}</h4>
+                  </div>
                   <p className="text-sm text-muted-foreground">{entry.notes}</p>
                 </div>
                 <div className="text-right">
