@@ -30,6 +30,7 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import QuizContent from "@/components/apprentice/QuizContent";
 import SectionContent from "@/pages/apprentice/SectionContent";
 import InstallationMethodContent from "@/pages/apprentice/InstallationMethodContent";
+import SubsectionContent from "@/pages/apprentice/SubsectionContent";
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
                   <Route path="eal/:courseSlug/unit/:unitSlug/quiz" element={<QuizContent />} />
                   <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
                   <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId" element={<InstallationMethodContent />} />
+                  <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
                 </Route>
               </Route>
 
