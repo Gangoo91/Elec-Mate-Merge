@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Play, Pause, Save } from "lucide-react";
 import { formatTime } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface LearningTimerProps {
   isRunning: boolean;
@@ -10,6 +11,7 @@ interface LearningTimerProps {
   todayTotal: number;
   onStart: () => void;
   onStop: () => void;
+  className?: string;
 }
 
 const LearningTimer = ({ 
@@ -17,7 +19,8 @@ const LearningTimer = ({
   elapsedTime, 
   todayTotal, 
   onStart, 
-  onStop 
+  onStop,
+  className
 }: LearningTimerProps) => {
   const [displayTime, setDisplayTime] = useState(elapsedTime);
   
@@ -38,7 +41,7 @@ const LearningTimer = ({
   }, [isRunning, elapsedTime]);
   
   return (
-    <div className="space-y-4">
+    <div className={cn("space-y-4", className)}>
       <div className="flex items-center justify-between">
         <div>
           <div className="text-sm text-muted-foreground mb-1">Current session</div>

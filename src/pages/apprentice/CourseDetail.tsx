@@ -10,6 +10,8 @@ import { supabase } from "@/integrations/supabase/client";
 import ResourceCard from "@/components/apprentice/ResourceCard";
 import LearningTimer from "@/components/apprentice/LearningTimer";
 import { formatTime } from "@/lib/utils";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { useInactivityDetection } from "@/hooks/useInactivityDetection";
 
 interface CourseModule {
   id: string;
@@ -33,11 +35,27 @@ const CourseDetail = () => {
   const [elapsedTime, setElapsedTime] = useState(0);
   const [sessionStartTime, setSessionStartTime] = useState<number | null>(null);
   const [todayTotal, setTodayTotal] = useState(0);
+  const [currentResourceType, setCurrentResourceType] = useState<string | null>(null);
   
   // Get course title from slug
   const courseTitle = courseSlug?.split('-').map(
     word => word.charAt(0).toUpperCase() + word.slice(1)
   ).join(' ');
+
+  // Set up inactivity detection - don't stop timer for video content
+  const { isInactive } = useInactivityDetection({
+    timeoutSeconds: 30,
+    isVideoContent: currentResourceType === 'video',
+    onInactive: () => {
+      if (isStudying) {
+        handleStopStudy();
+        toast({
+          title: "Study session paused",
+          description: "Your study session was paused due to inactivity.",
+        });
+      }
+    }
+  });
 
   // Hardcoded course modules for EAL Level 2 diploma
   const courseModules: CourseModule[] = [
@@ -175,6 +193,17 @@ const CourseDetail = () => {
     }
   };
 
+  // Handler for resource clicks to track resource type
+  const handleResourceClick = (type: string) => {
+    setCurrentResourceType(type);
+    if (!isStudying) {
+      toast({
+        title: "Start study timer",
+        description: "Click 'Start Learning' to record your training time for this activity.",
+      });
+    }
+  };
+
   return (
     <div className="space-y-8 animate-fade-in px-4 md:px-6 lg:px-8">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
@@ -196,10 +225,39 @@ const CourseDetail = () => {
           </Button>
         </Link>
       </div>
+
+      {/* Timer at the top */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardContent className="p-4">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-elec-yellow" />
+              <h3 className="font-semibold">Off-the-Job Training Timer</h3>
+              
+              {isInactive && !currentResourceType?.includes('video') && (
+                <span className="text-xs text-amber-500 bg-amber-950/30 px-2 py-1 rounded-full ml-2">
+                  Inactive
+                </span>
+              )}
+            </div>
+            
+            <div className="w-full md:w-auto">
+              <LearningTimer 
+                isRunning={isStudying}
+                elapsedTime={elapsedTime} 
+                todayTotal={todayTotal}
+                onStart={handleStartStudy}
+                onStop={handleStopStudy}
+                className="md:min-w-[280px]"
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
       
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Main content area */}
-        <div className="lg:col-span-3 space-y-6">
+        <div className="lg:col-span-4 space-y-6">
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardContent className="p-6">
               <Tabs defaultValue={courseModules[0].id} className="space-y-6">
@@ -226,14 +284,7 @@ const CourseDetail = () => {
                           cta={resource.type === 'video' ? 'Watch Video' : resource.type === 'document' ? 'Read Document' : 'Start Activity'}
                           href={resource.href}
                           duration={resource.duration}
-                          onClick={() => {
-                            if (!isStudying) {
-                              toast({
-                                title: "Start study timer",
-                                description: "Click 'Start Learning' to record your training time for this activity.",
-                              });
-                            }
-                          }}
+                          onClick={() => handleResourceClick(resource.type)}
                         />
                       ))}
                     </div>
@@ -242,34 +293,17 @@ const CourseDetail = () => {
               </Tabs>
             </CardContent>
           </Card>
-        </div>
-        
-        {/* Sidebar with timer */}
-        <div className="space-y-6">
-          <Card className="border-elec-yellow/20 bg-elec-gray sticky top-6">
-            <CardContent className="p-6 space-y-6">
-              <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-elec-yellow" />
-                <h3 className="font-semibold">Off-the-Job Training Timer</h3>
-              </div>
-              
-              <LearningTimer 
-                isRunning={isStudying}
-                elapsedTime={elapsedTime} 
-                todayTotal={todayTotal}
-                onStart={handleStartStudy}
-                onStop={handleStopStudy}
-              />
-              
-              <div className="text-sm text-muted-foreground mt-4">
-                <p className="mb-2">
-                  <BookOpen className="h-4 w-4 inline mr-2" />
-                  Time spent learning on this course counts toward your required 20% off-the-job training (278 hours/year).
-                </p>
-                <p>All tracked time is automatically added to your personal training record.</p>
-              </div>
-            </CardContent>
-          </Card>
+
+          <div className="text-sm text-muted-foreground bg-elec-gray border border-elec-yellow/20 rounded-md p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <BookOpen className="h-4 w-4 text-elec-yellow" />
+              <p className="font-medium">Off-the-Job Training Info</p>
+            </div>
+            <p>
+              EAL Level 2 electrical courses require a minimum of 20% off-the-job training, equating to at least 278 hours over a 12-month period. 
+              Your time spent learning on this app is automatically tracked in the Off-the-Job Time Keeping section.
+            </p>
+          </div>
         </div>
       </div>
     </div>
