@@ -1,6 +1,6 @@
 
 import React from "react";
-import { BookOpen, ChevronDown, CheckCircle } from "lucide-react";
+import { BookOpen, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
@@ -27,30 +27,28 @@ const SectionBox = ({
 }: SectionBoxProps) => {
   const navigate = useNavigate();
   
-  const handleStudyClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent triggering the parent div's onClick
-    
-    // If we have both course and unit info, navigate to the section page
+  const handleSectionClick = () => {
+    // Navigate to the section page on click
     if (courseSlug && unitCode) {
+      // Use sectionNumber to create the slug
       const sectionSlug = sectionNumber.toLowerCase().replace(/\//g, "-");
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/${sectionSlug}`);
-    } else {
-      // Fall back to original behavior if navigation data is missing
-      onClick();
+      
+      // If section is quiz, navigate to quiz page
+      if (sectionNumber === "Q") {
+        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/quiz`);
+      } else {
+        // Regular section page
+        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/${sectionSlug}`);
+      }
     }
   };
 
   return (
-    <div className="border border-elec-yellow/20 rounded-lg overflow-hidden bg-elec-gray relative">
-      <div
-        className={`
-          p-4 cursor-pointer transition-all
-          ${isExpanded 
-            ? 'border-b border-elec-yellow/30 bg-elec-yellow/10' 
-            : 'hover:bg-elec-yellow/5'}
-        `}
-        onClick={onClick}
-      >
+    <div 
+      className="border border-elec-yellow/20 rounded-lg overflow-hidden bg-elec-gray relative cursor-pointer hover:bg-elec-yellow/5 transition-all"
+      onClick={handleSectionClick}
+    >
+      <div className="p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-elec-yellow text-elec-dark font-bold text-lg shrink-0">
@@ -64,12 +62,14 @@ const SectionBox = ({
               variant="study" 
               size="studyIcon" 
               className="border-elec-yellow/40 bg-elec-gray hover:bg-elec-yellow hover:text-elec-dark"
-              onClick={handleStudyClick}
-              title="Study this section"
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent triggering the parent div's onClick
+                handleSectionClick();
+              }}
+              title="View this section"
             >
               <BookOpen className="h-4 w-4" />
             </Button>
-            <ChevronDown className={`h-5 w-5 transition-transform duration-200 text-elec-yellow/80 ${isExpanded ? 'rotate-180' : ''}`} />
           </div>
         </div>
         
@@ -79,13 +79,6 @@ const SectionBox = ({
           </div>
         )}
       </div>
-      
-      {/* Expandable content area - now only used as a fallback */}
-      {isExpanded && (
-        <div className="p-4 bg-background/40 animate-fade-in">
-          {content}
-        </div>
-      )}
     </div>
   );
 };

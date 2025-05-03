@@ -1,13 +1,11 @@
 
 import { useState, useEffect } from "react";
-import CourseContentSection from "@/components/apprentice/CourseContentSection";
 import SectionBox from "@/components/apprentice/SectionBox";
-import UnitQuiz from "@/components/apprentice/UnitQuiz";
 import { healthAndSafetyContent } from "@/data/healthAndSafetyContent";
-import { healthAndSafetyQuizzes } from "@/data/unitQuizzes";
 import type { CourseUnit } from "@/data/courseUnits";
 import { useToast } from "@/components/ui/use-toast";
 import { useParams } from "react-router-dom";
+import { healthAndSafetyQuizzes } from "@/data/unitQuizzes";
 
 interface UnitDetailsProps {
   unit: CourseUnit;
@@ -23,7 +21,6 @@ const UnitDetails = ({
   onToggleResourceComplete 
 }: UnitDetailsProps) => {
   const { toast } = useToast();
-  const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const { courseSlug } = useParams();
   
@@ -38,32 +35,9 @@ const UnitDetails = ({
     }
   }, [unit.code]);
 
-  const toggleSection = (sectionNumber: string) => {
-    if (expandedSection === sectionNumber) {
-      setExpandedSection(null);
-    } else {
-      setExpandedSection(sectionNumber);
-      // Report study activity when opening a section
-      onResourceClick('learning');
-    }
-  };
-
-  const handleQuizComplete = (score: number) => {
-    // Mark quiz as completed
-    setQuizCompleted(true);
-    localStorage.setItem(`unit_${unit.code}_quiz_completed`, 'true');
-    
-    // Mark resource as completed
-    onToggleResourceComplete(`${unit.code}_quiz`);
-    
-    // Show toast
-    toast({
-      title: "Quiz Completed",
-      description: `You scored ${score} out of 10. Your progress has been saved.`,
-    });
-    
-    // Log activity
-    onResourceClick('assessment');
+  const handleSectionClick = () => {
+    // Report study activity when opening a section
+    onResourceClick('learning');
   };
 
   return (
@@ -76,22 +50,9 @@ const UnitDetails = ({
               key={section.sectionNumber}
               sectionNumber={section.sectionNumber}
               title={section.title}
-              isExpanded={expandedSection === section.sectionNumber}
-              onClick={() => toggleSection(section.sectionNumber)}
-              content={
-                <div className="space-y-6">
-                  {section.content.subsections.map(subsection => (
-                    <CourseContentSection
-                      key={subsection.id}
-                      title={subsection.title}
-                      description={subsection.content}
-                      keyPoints={subsection.keyPoints}
-                      icon={section.content.icon}
-                      isMainSection={false}
-                    />
-                  ))}
-                </div>
-              }
+              isExpanded={false}
+              onClick={handleSectionClick}
+              content={<></>} // Content is no longer needed here as we navigate to a new page
               unitCode={unit.code}
               courseSlug={courseSlug}
             />
@@ -101,15 +62,12 @@ const UnitDetails = ({
           <SectionBox
             sectionNumber="Q"
             title="Knowledge Assessment Quiz"
-            isExpanded={expandedSection === "quiz"}
-            onClick={() => toggleSection("quiz")}
-            content={
-              <UnitQuiz
-                unitCode={unit.code}
-                questions={healthAndSafetyQuizzes.questions}
-                onQuizComplete={handleQuizComplete}
-              />
-            }
+            isExpanded={false}
+            onClick={() => {
+              handleSectionClick();
+              onResourceClick('assessment');
+            }}
+            content={<></>} // Content is no longer needed here as we navigate to a new page
             isCompleted={quizCompleted}
             unitCode={unit.code}
             courseSlug={courseSlug}
