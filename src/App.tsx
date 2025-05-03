@@ -64,6 +64,7 @@ const App = () => (
               <Route path="/apprentice/study" element={<ApprenticeStudy />} />
               <Route path="/apprentice/study/eal" element={<EALCourses />} />
               <Route path="/apprentice/study/eal/:courseSlug" element={<CourseDetail />} />
+              <Route path="/apprentice/study/eal/:courseSlug/unit/:unitSlug" element={<CourseDetail />} />
               <Route path="/apprentice/study/cityGuilds" element={<CourseCategory category="City & Guilds" />} />
               <Route path="/apprentice/study/higher" element={<CourseCategory category="Higher Learning" />} />
               <Route path="/apprentice/study/further" element={<CourseCategory category="Further Learning" />} />

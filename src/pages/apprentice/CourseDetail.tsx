@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
@@ -169,6 +168,7 @@ const CourseDetail = () => {
           selectedUnit={selectedUnit} 
           onUnitSelect={handleUnitSelect}
           completedResources={completedResources}
+          courseSlug={courseSlug}
         />
         
         {/* Selected unit details */}
