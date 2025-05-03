@@ -2,26 +2,31 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import { ReactNode } from "react";
 
 interface QuickAccessCardProps {
   title: string;
   description: string;
   linkText: string;
   linkTo: string;
+  icon?: ReactNode;
 }
 
-const QuickAccessCard = ({ title, description, linkText, linkTo }: QuickAccessCardProps) => {
+const QuickAccessCard = ({ title, description, linkText, linkTo, icon }: QuickAccessCardProps) => {
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
+    <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-lg font-medium">{title}</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <p className="text-sm text-muted-foreground">
+      <CardContent className="space-y-3">
+        <p className="text-sm text-muted-foreground line-clamp-2">
           {description}
         </p>
-        <Button asChild>
-          <Link to={linkTo}>{linkText}</Link>
+        <Button asChild size="sm" className="w-full sm:w-auto">
+          <Link to={linkTo} className="flex items-center justify-center">
+            {linkText}
+            {icon}
+          </Link>
         </Button>
       </CardContent>
     </Card>

@@ -18,6 +18,9 @@ const Dashboard = () => {
         </p>
       </div>
 
+      {/* Quick Access Sections - Moved up for better mobile access */}
+      <DashboardQuickAccess />
+
       {/* Overview Cards */}
       <DashboardOverview user={user} />
 
@@ -26,9 +29,6 @@ const Dashboard = () => {
 
       {/* Course Tabs */}
       <CourseTabs recentCourses={recentCourses} popularCourses={popularCourses} />
-
-      {/* Quick Access Sections */}
-      <DashboardQuickAccess />
     </div>
   );
 };

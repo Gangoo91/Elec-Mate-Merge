@@ -1,21 +1,27 @@
 
 import QuickAccessCard from "@/components/dashboard/QuickAccessCard";
+import { ArrowRight } from "lucide-react";
 
 const DashboardQuickAccess = () => {
   return (
-    <div className="grid gap-4 md:grid-cols-2">
-      <QuickAccessCard
-        title="Apprentice Hub"
-        description="Access EAL-compliant training resources, off-the-job time keeping, and AI tools."
-        linkText="Explore Hub"
-        linkTo="/apprentice"
-      />
-      <QuickAccessCard
-        title="Electrician Tools"
-        description="Boost your efficiency with professional calculators, templates, and project tools."
-        linkText="View Tools"
-        linkTo="/electrician"
-      />
+    <div>
+      <h2 className="text-xl font-semibold mb-4">Quick Access</h2>
+      <div className="grid gap-4 md:grid-cols-2">
+        <QuickAccessCard
+          title="Apprentice Hub"
+          description="Training resources and tools for apprentices"
+          linkText="Access Hub"
+          linkTo="/apprentice"
+          icon={<ArrowRight className="ml-1 h-4 w-4" />}
+        />
+        <QuickAccessCard
+          title="Electrician Tools"
+          description="Professional calculators and project tools"
+          linkText="View Tools"
+          linkTo="/electrician"
+          icon={<ArrowRight className="ml-1 h-4 w-4" />}
+        />
+      </div>
     </div>
   );
 };
