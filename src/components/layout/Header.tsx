@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/use-mobile";
 import UserProfileDropdown from "@/components/auth/UserProfileDropdown";
 
 interface HeaderProps {
@@ -10,7 +10,7 @@ interface HeaderProps {
 }
 
 const Header = ({ toggleSidebar }: HeaderProps) => {
-  const isMobile = useMobile();
+  const isMobile = useIsMobile();
   
   return (
     <header className="flex h-16 items-center justify-between border-b border-elec-yellow/30 px-4 md:px-6">
