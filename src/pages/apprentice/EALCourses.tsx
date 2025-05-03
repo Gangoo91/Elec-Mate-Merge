@@ -14,13 +14,15 @@ const EALCourses = () => {
     <div className="space-y-8 animate-fade-in px-2 md:px-0">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">EAL Courses</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            <span className="gradient-text">EAL Courses</span>
+          </h1>
           <p className="text-muted-foreground">
             Excellence, Achievement & Learning certified electrical qualifications
           </p>
         </div>
         <Link to="/apprentice/study" className="flex-shrink-0">
-          <Button variant="outline">
+          <Button variant="outline" className="border-elec-yellow/30 hover:bg-elec-yellow/10">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Study Centre
           </Button>
@@ -31,10 +33,13 @@ const EALCourses = () => {
         {courses.map((course, index) => (
           <Card 
             key={index}
-            className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors cursor-pointer"
+            className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-md shadow-elec-yellow/5"
           >
             <CardContent className="flex items-center justify-center p-6 h-full">
-              <h3 className="text-lg font-medium text-center">{course}</h3>
+              <h3 className="text-lg font-medium text-center">
+                <span className="text-elec-yellow">{course.split(' ')[0]} </span>
+                {course.split(' ').slice(1).join(' ')}
+              </h3>
             </CardContent>
           </Card>
         ))}
