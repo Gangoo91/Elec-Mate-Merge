@@ -1,6 +1,5 @@
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Shield, Info, Construction, AlertTriangle, HardHat, ListOrdered, Section } from "lucide-react";
 
 interface ContentSectionProps {
@@ -76,8 +75,6 @@ const CourseContentSection = ({
           </AccordionItem>
         </Accordion>
       )}
-
-      {/* Removed subsection rendering as this is now handled in UnitDetails directly */}
     </div>
   );
 };
