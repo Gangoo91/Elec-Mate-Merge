@@ -32,12 +32,12 @@ const SubsectionLearningContent = ({
       
       <section>
         <h2 className="text-xl font-semibold text-elec-yellow mb-3">Common Electrical Symbols</h2>
-        <p>Electrical drawings use standardized symbols to represent different components:</p>
+        <p>Electrical drawings use standardised symbols to represent different components:</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
           <div className="border border-elec-yellow/30 p-3 rounded-md">
             <p className="font-semibold mb-2">Power Symbols:</p>
             <ul className="list-disc pl-5">
-              <li>Socket outlets (single and double)</li>
+              <li>Socket outlets (single and twin)</li>
               <li>Switched socket outlets</li>
               <li>Fused connection units</li>
               <li>Distribution boards</li>
@@ -112,7 +112,7 @@ const SubsectionLearningContent = ({
     <>
       <section>
         <h2 className="text-xl font-semibold text-elec-yellow mb-3">Installation Zones in Buildings</h2>
-        <p>BS 7671 specifies preferred zones for cable routes in walls to minimize the risk of damage:</p>
+        <p>BS 7671 specifies preferred zones for cable routes in walls to minimise the risk of damage:</p>
         <div className="border border-elec-yellow/30 p-4 rounded-md mt-3">
           <h3 className="font-semibold">Horizontal Zones:</h3>
           <ul className="list-disc pl-5 mt-1">
@@ -169,7 +169,7 @@ const SubsectionLearningContent = ({
             <ul className="list-disc pl-5">
               <li><span className="font-semibold">PVC Flat Twin & Earth:</span> Standard domestic wiring</li>
               <li><span className="font-semibold">LSZH (Low Smoke Zero Halogen):</span> For public buildings</li>
-              <li><span className="font-semibold">SWA (Steel Wire Armored):</span> Underground or external use</li>
+              <li><span className="font-semibold">SWA (Steel Wire Armoured):</span> Underground or external use</li>
               <li><span className="font-semibold">FP (Fire Performance):</span> Emergency circuits</li>
               <li><span className="font-semibold">MI (Mineral Insulated):</span> High temperature areas</li>
             </ul>
