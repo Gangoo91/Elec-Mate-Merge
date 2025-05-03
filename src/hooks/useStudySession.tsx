@@ -1,8 +1,10 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { formatTime } from "@/lib/utils";
-import { supabase } from "@/integrations/supabase/client";
+import { useSessionStorage } from "./study-session/useSessionStorage";
+import { useAuthUser } from "./study-session/useAuthUser";
+import { useSupabaseSave } from "./study-session/useSupabaseSave";
 
 interface UseStudySessionProps {
   courseSlug?: string;
@@ -10,78 +12,23 @@ interface UseStudySessionProps {
 
 export const useStudySession = ({ courseSlug }: UseStudySessionProps) => {
   const { toast } = useToast();
-  const [isStudying, setIsStudying] = useState(false);
-  const [elapsedTime, setElapsedTime] = useState(0);
-  const [sessionStartTime, setSessionStartTime] = useState<number | null>(null);
-  const [todayTotal, setTodayTotal] = useState(0);
   const [currentResourceType, setCurrentResourceType] = useState<string | null>(null);
-  const [completedResources, setCompletedResources] = useState<Record<string, boolean>>({});
-  const [userId, setUserId] = useState<string | null>(null);
-
-  // Check if user is authenticated
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUserId(user?.id || null);
-    };
-    
-    checkAuth();
-    
-    // Set up auth state listener
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setUserId(session?.user?.id || null);
-    });
-    
-    return () => subscription.unsubscribe();
-  }, []);
-
-  // Load timer state and completed resources from localStorage
-  useEffect(() => {
-    if (!courseSlug) return;
-
-    // Load today's total from localStorage
-    const storedTime = localStorage.getItem(`course_${courseSlug}_todayTime`);
-    if (storedTime) {
-      setTodayTotal(parseInt(storedTime));
-    }
-    
-    // Load completed resources from localStorage
-    const storedCompletedResources = localStorage.getItem(`course_${courseSlug}_completedResources`);
-    if (storedCompletedResources) {
-      try {
-        setCompletedResources(JSON.parse(storedCompletedResources));
-      } catch (e) {
-        console.error("Error parsing completed resources from localStorage:", e);
-      }
-    }
-    
-    // Load timer state from localStorage
-    const storedIsStudying = localStorage.getItem(`course_${courseSlug}_isStudying`);
-    if (storedIsStudying) {
-      setIsStudying(storedIsStudying === 'true');
-    }
-    
-    const storedElapsedTime = localStorage.getItem(`course_${courseSlug}_elapsedTime`);
-    if (storedElapsedTime) {
-      setElapsedTime(parseInt(storedElapsedTime));
-    }
-    
-    const storedSessionStartTime = localStorage.getItem(`course_${courseSlug}_sessionStartTime`);
-    if (storedSessionStartTime) {
-      setSessionStartTime(parseInt(storedSessionStartTime));
-    }
-  }, [courseSlug]);
-
-  // Save timer state to localStorage whenever it changes
-  useEffect(() => {
-    if (!courseSlug) return;
-    
-    localStorage.setItem(`course_${courseSlug}_isStudying`, isStudying ? 'true' : 'false');
-    localStorage.setItem(`course_${courseSlug}_elapsedTime`, elapsedTime.toString());
-    if (sessionStartTime) {
-      localStorage.setItem(`course_${courseSlug}_sessionStartTime`, sessionStartTime.toString());
-    }
-  }, [isStudying, elapsedTime, sessionStartTime, courseSlug]);
+  
+  const { userId } = useAuthUser();
+  const { saveStudySession, saveResourceCompletion } = useSupabaseSave();
+  const {
+    isStudying,
+    setIsStudying,
+    elapsedTime,
+    setElapsedTime,
+    sessionStartTime,
+    setSessionStartTime,
+    todayTotal,
+    updateTodayTotal,
+    completedResources,
+    setCompletedResources,
+    saveCompletedResources
+  } = useSessionStorage(courseSlug);
 
   const handleStartStudy = () => {
     setIsStudying(true);
@@ -102,54 +49,18 @@ export const useStudySession = ({ courseSlug }: UseStudySessionProps) => {
     
     // Update today's total
     const newTodayTotal = todayTotal + sessionTime;
-    setTodayTotal(newTodayTotal);
-    
-    // Save to localStorage
-    localStorage.setItem(`course_${courseSlug}_todayTime`, newTodayTotal.toString());
+    updateTodayTotal(newTodayTotal);
     
     // Clean up session start time from localStorage
     localStorage.removeItem(`course_${courseSlug}_sessionStartTime`);
-    
-    // Format course name for display
-    const formattedCourseName = courseSlug.split('-').map(
-      word => word.charAt(0).toUpperCase() + word.slice(1)
-    ).join(' ');
     
     // Log time entry
     try {
       // If user is authenticated, save to Supabase
       if (userId) {
-        try {
-          const { error } = await supabase
-            .from('study_sessions')
-            .insert({
-              user_id: userId,
-              course_slug: courseSlug,
-              duration: sessionTime,
-              resource_type: currentResourceType || 'other',
-              activity: `Online Learning: ${formattedCourseName}`,
-              notes: "Automatically tracked from the learning portal"
-            });
-            
-          if (error) {
-            console.error('Error saving study session to Supabase:', error);
-            // Fallback to local notification
-            toast({
-              title: "Study time logged locally",
-              description: `${formatTime(sessionTime)} has been added to your off-the-job training record.`,
-            });
-          } else {
-            toast({
-              title: "Study time saved to your profile",
-              description: `${formatTime(sessionTime)} has been added to your off-the-job training record.`,
-            });
-          }
-        } catch (e) {
-          console.error('Error saving to Supabase:', e);
-          toast({
-            title: "Study time logged locally",
-            description: `${formatTime(sessionTime)} has been added to your off-the-job training record.`,
-          });
+        const saved = await saveStudySession(userId, courseSlug, sessionTime, currentResourceType);
+        if (!saved) {
+          // Already handled in the save function
         }
       } else {
         // Not authenticated - just show local notification
@@ -186,29 +97,12 @@ export const useStudySession = ({ courseSlug }: UseStudySessionProps) => {
       };
       
       // Save to localStorage
-      if (courseSlug) {
-        localStorage.setItem(`course_${courseSlug}_completedResources`, JSON.stringify(updated));
-      }
+      saveCompletedResources(updated);
       
       // Try to save to Supabase if user is authenticated
       if (userId && courseSlug) {
         setTimeout(() => {
-          try {
-            supabase
-              .from('completed_resources')
-              .upsert({
-                user_id: userId,
-                course_slug: courseSlug,
-                resource_id: resourceId,
-                is_completed: updated[resourceId],
-                last_updated: new Date().toISOString()
-              })
-              .then(({ error }) => {
-                if (error) console.error('Error saving resource completion:', error);
-              });
-          } catch (e) {
-            console.error('Error upserting to Supabase:', e);
-          }
+          saveResourceCompletion(userId, courseSlug, resourceId, updated[resourceId]);
         }, 0);
       }
       

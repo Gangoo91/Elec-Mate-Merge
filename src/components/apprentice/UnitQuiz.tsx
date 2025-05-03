@@ -106,7 +106,8 @@ const UnitQuiz = ({
       if (user) {
         // If user is authenticated, save to Supabase
         try {
-          // Using type casting to avoid type errors
+          // Using type assertion to avoid type errors
+          // @ts-ignore - Suppressing TypeScript errors for Supabase tables not in types
           const { error } = await supabase
             .from('quiz_attempts')
             .insert({
