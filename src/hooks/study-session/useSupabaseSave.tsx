@@ -22,9 +22,8 @@ export const useSupabaseSave = () => {
     ).join(' ');
     
     try {
-      // @ts-ignore - Suppressing TypeScript errors for Supabase tables not in types
       const { error } = await supabase
-        .from('study_sessions')
+        .from('study_sessions' as any)
         .insert({
           user_id: userId,
           course_slug: courseSlug,
@@ -69,9 +68,8 @@ export const useSupabaseSave = () => {
     }
 
     try {
-      // @ts-ignore - Suppressing TypeScript errors for Supabase tables not in types
       const { error } = await supabase
-        .from('completed_resources')
+        .from('completed_resources' as any)
         .upsert({
           user_id: userId,
           course_slug: courseSlug,

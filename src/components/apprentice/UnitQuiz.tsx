@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { QuizQuestion } from "@/data/unitQuizzes";
 import { QuizProps } from "@/types/quiz";
@@ -107,9 +106,8 @@ const UnitQuiz = ({
         // If user is authenticated, save to Supabase
         try {
           // Using type assertion to avoid type errors
-          // @ts-ignore - Suppressing TypeScript errors for Supabase tables not in types
           const { error } = await supabase
-            .from('quiz_attempts')
+            .from('quiz_attempts' as any)
             .insert({
               user_id: user.id,
               unit_code: unitCode,
