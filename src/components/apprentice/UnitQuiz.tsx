@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { QuizQuestion } from "@/data/unitQuizzes";
 import { QuizProps } from "@/types/quiz";
@@ -107,7 +106,7 @@ const UnitQuiz = ({
         // If user is authenticated, save to Supabase
         try {
           const { error } = await supabase
-            .from('quiz_attempts')
+            .from('quiz_attempts' as any)
             .insert({
               user_id: user.id,
               unit_code: unitCode,

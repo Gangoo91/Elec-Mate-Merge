@@ -17,8 +17,9 @@ export const useTimeEntryAdder = (userId: string | null, setManualEntries: React
       // If user is authenticated, save to Supabase
       if (userId) {
         try {
+          // Using a type assertion to tell TypeScript about our table structure
           const { data, error } = await supabase
-            .from('time_entries')
+            .from('time_entries' as any)
             .insert({
               user_id: userId,
               date: newEntry.date,
