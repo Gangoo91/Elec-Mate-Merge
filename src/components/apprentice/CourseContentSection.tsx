@@ -36,8 +36,8 @@ const CourseContentSection = ({
     icon === "section" ? Section : Info;
   
   return (
-    <div className={`mb-6 ${isMainSection ? 'bg-elec-gray rounded-lg p-5 border-l-4 border-elec-yellow' : ''}`}>
-      <div className="flex items-start gap-3 mb-3">
+    <div className={`mb-4 ${isMainSection ? 'bg-transparent' : ''}`}>
+      <div className="flex items-start gap-3 mb-2">
         <div className="flex-shrink-0 mt-1">
           {sectionNumber && (
             <span className="inline-flex items-center justify-center h-6 w-6 rounded-full bg-elec-yellow text-elec-dark font-bold text-sm">
@@ -49,10 +49,7 @@ const CourseContentSection = ({
           )}
         </div>
         <div className="flex-1">
-          <h3 className={`${isMainSection ? 'text-xl' : 'text-lg'} font-semibold`}>
-            {title}
-          </h3>
-          <p className="text-muted-foreground mt-1">{description}</p>
+          <p className="text-muted-foreground">{description}</p>
         </div>
       </div>
       
