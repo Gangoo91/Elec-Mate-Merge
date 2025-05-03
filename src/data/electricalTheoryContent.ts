@@ -1,7 +1,7 @@
 
-import { SectionContent } from './healthAndSafety/types';
+import { SectionData } from './healthAndSafety/types';
 
-export const electricalTheoryContent: SectionContent[] = [
+export const electricalTheoryContent: SectionData[] = [
   {
     sectionNumber: "1",
     title: "Basic Electrical Theory",
