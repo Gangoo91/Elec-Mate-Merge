@@ -28,7 +28,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
         )}
         <div className="flex items-center gap-2">
           <Link to="/" className="flex items-center">
-            <span className="text-xl font-bold text-elec-yellow">ElecTrack</span>
+            <span className="text-xl font-bold text-elec-yellow">Elec-Mate</span>
           </Link>
         </div>
       </div>

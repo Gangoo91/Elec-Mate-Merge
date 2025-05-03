@@ -11,7 +11,7 @@ const LandingPage = () => {
       <div className="flex-1 flex flex-col items-center justify-center text-center px-4 py-12">
         <div className="max-w-3xl">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-elec-yellow mb-6">
-            ElecTrack
+            Elec-Mate
           </h1>
           <p className="text-xl md:text-2xl mb-8">
             Your comprehensive training partner for electrical apprenticeships
@@ -43,7 +43,7 @@ const LandingPage = () => {
       
       <footer className="py-6 border-t border-elec-yellow/30 text-center">
         <p className="text-sm text-muted-foreground">
-          © {new Date().getFullYear()} ElecTrack Learning Platform
+          © {new Date().getFullYear()} Elec-Mate Learning Platform
         </p>
       </footer>
     </div>
