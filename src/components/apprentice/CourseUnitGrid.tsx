@@ -49,15 +49,11 @@ const CourseUnitGrid = ({
             key={unit.id}
             to={unitUrl}
             className="block"
-            onClick={(e) => {
-              // Allow the selection functionality to work alongside the Link navigation
-              e.preventDefault();
-              onUnitSelect(unit.id);
-            }}
           >
             <Card 
               className={`border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors cursor-pointer 
                 ${selectedUnit === unit.id ? 'ring-2 ring-elec-yellow' : ''}`}
+              onClick={() => onUnitSelect(unit.id)}
             >
               <CardContent className="p-6">
                 <div className="flex items-start gap-3">
