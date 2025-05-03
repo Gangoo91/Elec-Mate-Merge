@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import SectionBox from "@/components/apprentice/SectionBox";
 import { healthAndSafetyContent } from "@/data/healthAndSafetyContent";
+import { electricalTheoryContent } from "@/data/electricalTheoryContent";
 import type { CourseUnit } from "@/data/courseUnits";
 import { useToast } from "@/components/ui/use-toast";
 import { useParams } from "react-router-dom";
@@ -24,8 +25,9 @@ const UnitDetails = ({
   const [quizCompleted, setQuizCompleted] = useState(false);
   const { courseSlug } = useParams();
   
-  // Only show Health and Safety content for unit ELEC2/01
+  // Determine which content to show based on unit code
   const showHealthSafetyContent = unit.code === "ELEC2/01";
+  const showElectricalTheoryContent = unit.code === "ELEC2/04";
 
   // Load completion status
   useEffect(() => {
@@ -68,6 +70,39 @@ const UnitDetails = ({
               onResourceClick('assessment');
             }}
             content={<></>} // Content is no longer needed here as we navigate to a new page
+            isCompleted={quizCompleted}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+        </div>
+      )}
+
+      {/* Electrical Theory Content - Only for ELEC2/04 */}
+      {showElectricalTheoryContent && (
+        <div className="space-y-6">
+          {electricalTheoryContent.map((section) => (
+            <SectionBox
+              key={section.sectionNumber}
+              sectionNumber={section.sectionNumber}
+              title={section.title}
+              isExpanded={false}
+              onClick={handleSectionClick}
+              content={<></>}
+              unitCode={unit.code}
+              courseSlug={courseSlug}
+            />
+          ))}
+          
+          {/* Quiz Section */}
+          <SectionBox
+            sectionNumber="Q"
+            title="Electrical Theory Assessment Quiz"
+            isExpanded={false}
+            onClick={() => {
+              handleSectionClick();
+              onResourceClick('assessment');
+            }}
+            content={<></>}
             isCompleted={quizCompleted}
             unitCode={unit.code}
             courseSlug={courseSlug}
