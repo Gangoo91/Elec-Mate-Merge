@@ -10,6 +10,27 @@ const EALCourses = () => {
   const ealCategory = courseCategories.find(category => category.id === "eal");
   const courses = ealCategory?.courses || [];
 
+  // Function to colorize the first word and numbers in the course title
+  const formatCourseTitle = (title: string) => {
+    // Split the title into words
+    const words = title.split(' ');
+    
+    // Extract the first word
+    const firstWord = words[0];
+    
+    // Join the rest of the words and colorize any numbers
+    const restOfTitle = words.slice(1).join(' ').replace(/\d+/g, match => 
+      `<span class="text-elec-yellow">${match}</span>`
+    );
+    
+    return (
+      <>
+        <span className="text-elec-yellow">{firstWord} </span>
+        <span dangerouslySetInnerHTML={{ __html: restOfTitle }} />
+      </>
+    );
+  };
+
   return (
     <div className="space-y-8 animate-fade-in px-2 md:px-0">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -37,8 +58,7 @@ const EALCourses = () => {
           >
             <CardContent className="flex items-center justify-center p-6 h-full">
               <h3 className="text-lg font-medium text-center">
-                <span className="text-elec-yellow">{course.split(' ')[0]} </span>
-                {course.split(' ').slice(1).join(' ')}
+                {formatCourseTitle(course)}
               </h3>
             </CardContent>
           </Card>
