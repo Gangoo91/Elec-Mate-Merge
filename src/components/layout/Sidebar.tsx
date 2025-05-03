@@ -37,7 +37,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
       roles: ["visitor", "apprentice", "electrician", "employer"],
     },
     {
-      name: "Electrician Tools",
+      name: "Electrical Hub",
       path: "/electrician",
       icon: <Wrench className="h-5 w-5" />,
       roles: ["visitor", "electrician", "employer"],
