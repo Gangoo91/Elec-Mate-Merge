@@ -105,25 +105,30 @@ const UnitQuiz = ({
       
       if (user) {
         // If user is authenticated, save to Supabase
-        const { error } = await supabase
-          .from('quiz_attempts')
-          .insert({
-            user_id: user.id,
-            unit_code: unitCode,
-            score: finalScore,
-            total_questions: totalQuestions,
-            percentage: percentage,
-            time_taken: timeTaken
-          });
-          
-        if (error) {
-          console.error('Error saving quiz attempt to Supabase:', error);
+        try {
+          const { error } = await supabase
+            .from('quiz_attempts' as any)
+            .insert({
+              user_id: user.id,
+              unit_code: unitCode,
+              score: finalScore,
+              total_questions: totalQuestions,
+              percentage: percentage,
+              time_taken: timeTaken
+            } as any);
+            
+          if (error) {
+            console.error('Error saving quiz attempt to Supabase:', error);
+            saveQuizLocalStorage(unitCode, finalScore, totalQuestions, percentage, timeTaken);
+          } else {
+            toast({
+              title: "Quiz result saved",
+              description: "Your result has been saved to your profile.",
+            });
+          }
+        } catch (e) {
+          console.error('Error inserting to Supabase:', e);
           saveQuizLocalStorage(unitCode, finalScore, totalQuestions, percentage, timeTaken);
-        } else {
-          toast({
-            title: "Quiz result saved",
-            description: "Your result has been saved to your profile.",
-          });
         }
       } else {
         // If not authenticated, save to localStorage

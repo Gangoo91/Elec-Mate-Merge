@@ -36,69 +36,84 @@ export const useTimeEntries = () => {
         // If user is authenticated, try to fetch from Supabase
         if (userId) {
           // Fetch manual entries
-          const { data: manualData, error: manualError } = await supabase
-            .from('time_entries')
-            .select('*')
-            .eq('user_id', userId)
-            .eq('is_automatic', false)
-            .order('date', { ascending: false });
-            
-          if (!manualError && manualData) {
-            setManualEntries(manualData.map(entry => ({
-              id: entry.id,
-              date: entry.date,
-              duration: entry.duration,
-              activity: entry.activity,
-              notes: entry.notes,
-              isAutomatic: entry.is_automatic
-            })));
-          } else {
-            // Fallback to mock data
+          try {
+            const { data: manualData, error: manualError } = await supabase
+              .from('time_entries' as any)
+              .select('*')
+              .eq('user_id', userId)
+              .eq('is_automatic', false)
+              .order('date', { ascending: false });
+              
+            if (!manualError && manualData) {
+              setManualEntries(manualData.map((entry: any) => ({
+                id: entry.id,
+                date: entry.date,
+                duration: entry.duration,
+                activity: entry.activity,
+                notes: entry.notes,
+                isAutomatic: entry.is_automatic
+              })));
+            } else {
+              // Fallback to mock data
+              loadMockEntries();
+            }
+          } catch (e) {
+            console.error("Error fetching manual entries:", e);
             loadMockEntries();
           }
           
           // Fetch study session entries
-          const { data: studyData, error: studyError } = await supabase
-            .from('study_sessions')
-            .select('*')
-            .eq('user_id', userId)
-            .order('created_at', { ascending: false });
-            
-          if (!studyError && studyData) {
-            setCourseEntries(studyData.map(entry => ({
-              id: entry.id,
-              date: new Date(entry.created_at).toISOString().split('T')[0],
-              duration: Math.ceil(entry.duration / 60), // convert seconds to minutes
-              activity: entry.activity,
-              notes: entry.notes || "Automatically tracked from the learning portal",
-              isAutomatic: true
-            })));
-          } else {
-            // Fallback to localStorage
+          try {
+            const { data: studyData, error: studyError } = await supabase
+              .from('study_sessions' as any)
+              .select('*')
+              .eq('user_id', userId)
+              .order('created_at', { ascending: false });
+              
+            if (!studyError && studyData) {
+              setCourseEntries(studyData.map((entry: any) => ({
+                id: entry.id,
+                date: new Date(entry.created_at).toISOString().split('T')[0],
+                duration: Math.ceil(entry.duration / 60), // convert seconds to minutes
+                activity: entry.activity,
+                notes: entry.notes || "Automatically tracked from the learning portal",
+                isAutomatic: true
+              })));
+            } else {
+              // Fallback to localStorage
+              loadCourseEntriesFromLocalStorage();
+            }
+          } catch (e) {
+            console.error("Error fetching study sessions:", e);
             loadCourseEntriesFromLocalStorage();
           }
           
           // Fetch quiz entries
-          const { data: quizData, error: quizError } = await supabase
-            .from('quiz_attempts')
-            .select('*')
-            .eq('user_id', userId)
-            .order('created_at', { ascending: false });
-            
-          if (!quizError && quizData) {
-            setQuizEntries(quizData.map(entry => ({
-              id: entry.id,
-              date: new Date(entry.created_at).toISOString().split('T')[0],
-              duration: Math.ceil(entry.time_taken / 60), // convert seconds to minutes
-              activity: `Quiz: Unit ${entry.unit_code}`,
-              notes: `Assessment Score: ${entry.score}/${entry.total_questions} (${entry.percentage}%)`,
-              isAutomatic: true,
-              isQuiz: true,
-              score: entry.score,
-              totalQuestions: entry.total_questions
-            })));
-          } else {
-            // Fallback to localStorage
+          try {
+            const { data: quizData, error: quizError } = await supabase
+              .from('quiz_attempts' as any)
+              .select('*')
+              .eq('user_id', userId)
+              .order('created_at', { ascending: false });
+              
+            if (!quizError && quizData) {
+              setQuizEntries(quizData.map((entry: any) => ({
+                id: entry.id,
+                date: new Date(entry.created_at).toISOString().split('T')[0],
+                duration: Math.ceil(entry.time_taken / 60), // convert seconds to minutes
+                activity: `Quiz: Unit ${entry.unit_code}`,
+                notes: `Assessment Score: ${entry.score}/${entry.total_questions} (${entry.percentage}%)`,
+                isAutomatic: true,
+                isQuiz: true,
+                score: entry.score,
+                totalQuestions: entry.total_questions
+              })));
+            } else {
+              // Fallback to localStorage
+              loadQuizEntriesFromLocalStorage();
+            }
+          } catch (e) {
+            console.error("Error fetching quiz attempts:", e);
             loadQuizEntriesFromLocalStorage();
           }
         } else {
@@ -216,30 +231,35 @@ export const useTimeEntries = () => {
 
       // If user is authenticated, save to Supabase
       if (userId) {
-        const { data, error } = await supabase
-          .from('time_entries')
-          .insert({
-            user_id: userId,
-            date: newEntry.date,
-            duration: newEntry.duration,
-            activity: newEntry.activity,
-            notes: newEntry.notes,
-            is_automatic: false
-          })
-          .select('*')
-          .single();
-          
-        if (!error && data) {
-          setManualEntries(prev => [{
-            id: data.id,
-            date: data.date,
-            duration: data.duration,
-            activity: data.activity,
-            notes: data.notes,
-            isAutomatic: data.is_automatic
-          }, ...prev]);
-        } else {
-          console.error('Error saving time entry to Supabase:', error);
+        try {
+          const { data, error } = await supabase
+            .from('time_entries' as any)
+            .insert({
+              user_id: userId,
+              date: newEntry.date,
+              duration: newEntry.duration,
+              activity: newEntry.activity,
+              notes: newEntry.notes,
+              is_automatic: false
+            } as any)
+            .select('*')
+            .single();
+            
+          if (!error && data) {
+            setManualEntries(prev => [{
+              id: data.id,
+              date: data.date,
+              duration: data.duration,
+              activity: data.activity,
+              notes: data.notes,
+              isAutomatic: data.is_automatic
+            }, ...prev]);
+          } else {
+            console.error('Error saving time entry to Supabase:', error);
+            setManualEntries(prev => [newEntry, ...prev]);
+          }
+        } catch (e) {
+          console.error('Error inserting to Supabase:', e);
           setManualEntries(prev => [newEntry, ...prev]);
         }
       } else {

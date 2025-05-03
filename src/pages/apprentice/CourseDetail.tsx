@@ -92,19 +92,18 @@ const CourseDetail = () => {
         />
       )}
       
-      {!isQuizPage && (
-        <CourseContent 
-          isUnitPage={isUnitPage}
-          selectedUnit={selectedUnit}
-          courseSlug={courseSlug}
-          selectedUnitData={selectedUnitData}
-          completedResources={completedResources}
-          onUnitSelect={handleUnitSelect}
-          onResourceClick={handleResourceClick}
-          onToggleResourceComplete={handleToggleResourceComplete}
-          units={ealLevel2Units}
-        />
-      )}
+      {/* Course Content - Always show content */}
+      <CourseContent 
+        isUnitPage={isUnitPage}
+        selectedUnit={selectedUnit}
+        courseSlug={courseSlug}
+        selectedUnitData={selectedUnitData}
+        completedResources={completedResources}
+        onUnitSelect={handleUnitSelect}
+        onResourceClick={handleResourceClick}
+        onToggleResourceComplete={handleToggleResourceComplete}
+        units={ealLevel2Units}
+      />
     </div>
   );
 };

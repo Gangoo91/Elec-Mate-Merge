@@ -29,7 +29,7 @@ const CourseContent = ({
 }: CourseContentProps) => {
   return (
     <div className="space-y-6">
-      {/* Course units grid - only show on the main course page */}
+      {/* Course units grid - show on the main course page or if no unit is selected */}
       {!isUnitPage && (
         <CourseUnitGrid 
           units={units} 
