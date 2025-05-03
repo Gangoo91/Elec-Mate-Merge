@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from '@/contexts/AuthContext';
 
 const TrialBanner = () => {
-  const { isTrialActive, trialEndsAt, isSubscribed } = useAuth();
+  const { isTrialActive, trialEndsAt, isSubscribed, isDevelopmentMode } = useAuth();
   
   // Calculate days remaining in trial
   const getDaysRemaining = () => {
@@ -17,8 +17,8 @@ const TrialBanner = () => {
     return Math.max(0, diffDays);
   };
   
-  // If user is subscribed, don't show trial banner
-  if (isSubscribed) {
+  // If user is subscribed or in dev mode, don't show trial banner
+  if (isSubscribed || isDevelopmentMode) {
     return null;
   }
   

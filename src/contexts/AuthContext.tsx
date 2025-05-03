@@ -23,6 +23,8 @@ type AuthContextType = {
   isTrialActive: boolean;
   trialEndsAt: Date | null;
   isSubscribed: boolean;
+  isDevelopmentMode: boolean;
+  toggleDevelopmentMode: () => void;
   signIn: (email: string, password: string) => Promise<{ error: any | null }>;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: any | null }>;
   signOut: () => Promise<void>;
@@ -38,7 +40,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isTrialActive, setIsTrialActive] = useState(false);
   const [trialEndsAt, setTrialEndsAt] = useState<Date | null>(null);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  // Add development mode state
+  const [isDevelopmentMode, setIsDevelopmentMode] = useState(() => {
+    const savedMode = localStorage.getItem('elecmate-dev-mode');
+    return savedMode === 'true';
+  });
   const { toast } = useToast();
+
+  // Toggle development mode function
+  const toggleDevelopmentMode = () => {
+    const newMode = !isDevelopmentMode;
+    setIsDevelopmentMode(newMode);
+    localStorage.setItem('elecmate-dev-mode', newMode.toString());
+    toast({
+      title: newMode ? "Development Mode Enabled" : "Development Mode Disabled",
+      description: newMode 
+        ? "Subscription restrictions have been bypassed for development." 
+        : "Subscription restrictions are now active.",
+    });
+  };
 
   // Initial session check and listener setup
   useEffect(() => {
@@ -201,6 +221,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     isTrialActive,
     trialEndsAt,
     isSubscribed,
+    isDevelopmentMode,
+    toggleDevelopmentMode,
     signIn,
     signUp,
     signOut,

@@ -10,7 +10,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { user, isLoading, isTrialActive, isSubscribed } = useAuth();
+  const { user, isLoading, isTrialActive, isSubscribed, isDevelopmentMode } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -18,8 +18,8 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   // Check if the current route is the subscription page
   const isSubscriptionPage = location.pathname === '/subscriptions';
 
-  // Check if user can access the page based on subscription/trial
-  const canAccess = isSubscribed || isTrialActive || isSubscriptionPage;
+  // Check if user can access the page based on subscription/trial or dev mode
+  const canAccess = isSubscribed || isTrialActive || isDevelopmentMode || isSubscriptionPage;
 
   useEffect(() => {
     // If authenticated but trial expired and not subscribed, show message
@@ -34,7 +34,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
         navigate('/subscriptions');
       }
     }
-  }, [user, isLoading, isTrialActive, isSubscribed, isSubscriptionPage, navigate, toast]);
+  }, [user, isLoading, isTrialActive, isSubscribed, isDevelopmentMode, isSubscriptionPage, navigate, toast]);
 
   // Redirect to sign in if not logged in
   if (!isLoading && !user) {
@@ -51,7 +51,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     );
   }
 
-  // Check if user can access based on trial/subscription status
+  // Check if user can access based on trial/subscription status or dev mode
   if (user && !canAccess) {
     return <Navigate to="/subscriptions" replace />;
   }

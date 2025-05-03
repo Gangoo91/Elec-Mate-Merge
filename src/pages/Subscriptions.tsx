@@ -2,12 +2,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Check, X, ChevronRight } from "lucide-react";
+import { Check, X, ChevronRight, Code } from "lucide-react";
 import { useAuth } from '@/contexts/AuthContext';
 
 const Subscriptions = () => {
   // Get auth context values
-  const { isTrialActive, trialEndsAt } = useAuth();
+  const { isTrialActive, trialEndsAt, isDevelopmentMode, toggleDevelopmentMode } = useAuth();
   
   // Calculate days remaining in trial
   const getDaysRemaining = () => {
@@ -183,6 +183,36 @@ const Subscriptions = () => {
                 </div>
               </>
             )}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Development Mode Card */}
+      <Card className="border-blue-500/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Code size={20} />
+            Development Mode
+          </CardTitle>
+          <CardDescription>
+            Enable development mode to bypass subscription restrictions while building the application.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
+            <div className="space-y-2">
+              <div className="text-sm text-muted-foreground">Current Status</div>
+              <div className="text-lg font-medium">
+                {isDevelopmentMode ? "Enabled" : "Disabled"}
+              </div>
+            </div>
+            <Button 
+              onClick={toggleDevelopmentMode}
+              variant={isDevelopmentMode ? "destructive" : "default"}
+              className={isDevelopmentMode ? "" : "bg-blue-600 hover:bg-blue-700"}
+            >
+              {isDevelopmentMode ? "Disable Development Mode" : "Enable Development Mode"}
+            </Button>
           </div>
         </CardContent>
       </Card>
