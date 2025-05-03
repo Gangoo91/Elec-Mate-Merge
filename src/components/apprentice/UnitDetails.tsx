@@ -147,7 +147,7 @@ const UnitDetails = ({ unit, onResourceClick, completedResources, onToggleResour
               subsections={[
                 {
                   id: "3.1",
-                  title="Safe Isolation Procedures",
+                  title: "Safe Isolation Procedures",
                   content: "Proper isolation is the cornerstone of electrical safety, ensuring power is completely off before work begins.",
                   keyPoints: [
                     "The five essential steps of safe isolation",
