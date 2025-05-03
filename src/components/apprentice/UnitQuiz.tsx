@@ -1,9 +1,8 @@
-
 import { useState, useEffect } from "react";
 import { QuizQuestion } from "@/data/unitQuizzes";
 import { QuizProps } from "@/types/quiz";
 import QuizNavigation from "./quiz/QuizNavigation";
-import QuizQuestion from "./quiz/QuizQuestion";
+import QuestionComponent from "./quiz/QuizQuestion";
 import QuizControls from "./quiz/QuizControls";
 import QuizResults from "./quiz/QuizResults";
 
@@ -139,7 +138,7 @@ const UnitQuiz = ({
       />
       
       {/* Current question */}
-      <QuizQuestion 
+      <QuestionComponent
         question={currentQuestion} 
         selectedAnswer={selectedAnswer} 
         isAnswered={isAnswered} 
