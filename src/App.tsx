@@ -45,6 +45,41 @@ const CourseCategory = ({ category }: { category: string }) => (
   </div>
 );
 
+// Course detail placeholder component
+const CourseDetail = () => {
+  const courseName = window.location.pathname.split('/').pop()?.split('-').map(
+    word => word.charAt(0).toUpperCase() + word.slice(1)
+  ).join(' ');
+  
+  return (
+    <div className="space-y-8 animate-fade-in px-4 md:px-6 lg:px-8">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight mb-1">
+            <span className="gradient-text">{courseName}</span>
+          </h1>
+          <p className="text-muted-foreground">
+            Course materials and learning resources
+          </p>
+        </div>
+        <Link to="/apprentice/study/eal" className="flex-shrink-0 w-full sm:w-auto">
+          <Button 
+            variant="outline" 
+            className="border-elec-yellow/30 hover:bg-elec-yellow/10 w-full sm:w-auto"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to EAL Courses
+          </Button>
+        </Link>
+      </div>
+      
+      <div className="p-8 text-center text-muted-foreground bg-elec-gray rounded-lg border border-elec-yellow/20">
+        <p>Course content for {courseName} will be available soon.</p>
+      </div>
+    </div>
+  );
+};
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -61,6 +96,7 @@ const App = () => (
               <Route path="/apprentice" element={<ApprenticeHub />} />
               <Route path="/apprentice/study" element={<ApprenticeStudy />} />
               <Route path="/apprentice/study/eal" element={<EALCourses />} />
+              <Route path="/apprentice/study/eal/:courseSlug" element={<CourseDetail />} />
               <Route path="/apprentice/study/cityGuilds" element={<CourseCategory category="City & Guilds" />} />
               <Route path="/apprentice/study/higher" element={<CourseCategory category="Higher Learning" />} />
               <Route path="/apprentice/study/further" element={<CourseCategory category="Further Learning" />} />

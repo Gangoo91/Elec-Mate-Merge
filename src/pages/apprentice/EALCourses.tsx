@@ -38,6 +38,14 @@ const EALCourses = () => {
     );
   };
 
+  // Function to create a URL slug from a course title
+  const createSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]+/g, '');
+  };
+
   return (
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in px-4 md:px-6 lg:px-8">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-2 sm:mb-4">
@@ -62,16 +70,21 @@ const EALCourses = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {courses.map((course, index) => (
-          <Card 
+          <Link 
             key={index}
-            className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-md shadow-elec-yellow/5 h-full"
+            to={`/apprentice/study/eal/${createSlug(course)}`}
+            className="block h-full"
           >
-            <CardContent className="flex items-center justify-center p-5 sm:p-6 h-full min-h-[120px]">
-              <h3 className={`text-base sm:text-lg font-medium text-center ${isMobile ? "leading-tight" : ""}`}>
-                {formatCourseTitle(course)}
-              </h3>
-            </CardContent>
-          </Card>
+            <Card 
+              className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-md shadow-elec-yellow/5 h-full"
+            >
+              <CardContent className="flex items-center justify-center p-5 sm:p-6 h-full min-h-[120px]">
+                <h3 className={`text-base sm:text-lg font-medium text-center ${isMobile ? "leading-tight" : ""}`}>
+                  {formatCourseTitle(course)}
+                </h3>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>
