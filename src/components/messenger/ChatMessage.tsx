@@ -18,14 +18,14 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, isCurrentUser }) => 
         className={`max-w-[85%] md:max-w-[75%] rounded-2xl p-3 
           ${isCurrentUser 
             ? 'bg-elec-yellow text-elec-dark ml-auto shadow-md rounded-tr-none' 
-            : 'bg-elec-gray-light/30 shadow-md rounded-tl-none'
+            : 'bg-elec-gray-light/30 text-black shadow-md rounded-tl-none'
           }`
         }
       >
         {!isCurrentUser && (
           <p className="text-xs font-medium mb-1 text-elec-yellow">{message.senderName}</p>
         )}
-        <p className="break-words text-sm md:text-base">{message.content}</p>
+        <p className="break-words text-sm md:text-base text-black">{message.content}</p>
         <div className={`flex items-center gap-1 mt-1 text-xs ${isCurrentUser ? 'justify-end' : ''}`}>
           <span className={isCurrentUser ? 'text-elec-dark/70' : 'text-muted-foreground'}>
             {formatDistanceToNow(message.timestamp, { addSuffix: true })}
