@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
@@ -20,6 +21,7 @@ import EALCourses from "./pages/apprentice/EALCourses";
 import NotFound from "./pages/NotFound";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
+import ElectricianTools from "./pages/ElectricianTools";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
