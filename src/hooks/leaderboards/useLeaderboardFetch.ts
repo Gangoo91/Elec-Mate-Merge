@@ -2,32 +2,8 @@
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { UserActivity, CommunityStats, LeaderboardCategory } from './types';
-import { ensureSubscriberCounted } from './useActivityTracking';
-import { toast } from '@/components/ui/use-toast';
-
-// Define explicit types for our state management to avoid type recursion
-type LeaderboardData = {
-  learning: UserActivity[];
-  community: UserActivity[];
-  safety: UserActivity[];
-  mentor: UserActivity[];
-  mental: UserActivity[];
-};
-
-type UserRankData = {
-  learning: UserActivity | null;
-  community: UserActivity | null;
-  safety: UserActivity | null;
-  mentor: UserActivity | null;
-  mental: UserActivity | null;
-};
-
-// Define a generic helper type for Supabase responses
-type SupabaseResponse<T> = {
-  data: T | null;
-  error: { code: string; message?: string } | null;
-  count?: number;
-};
+import { LeaderboardData, UserRankData } from './supabaseUtils';
+import { fetchCategoryLeaderboard } from './leaderboardDataService';
 
 export function useLeaderboardFetch(userId: string | undefined, isSubscribed: boolean) {
   // Use separate state variables for each category to avoid deep type recursion
@@ -50,154 +26,40 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
 
   // Function to fetch data for a specific category
   const fetchLeaderboardData = useCallback(async (category: LeaderboardCategory = 'learning') => {
-    try {
-      setIsLoading(true);
-      setError(null);
+    setIsLoading(true);
+    setError(null);
 
-      // Fetch top users for the specified category
-      const { data: rankingsData, error: rankingsError } = await supabase
-        .from('user_activity')
-        .select(`
-          id, 
-          user_id, 
-          points, 
-          level, 
-          badge, 
-          streak, 
-          last_active_date, 
-          created_at,
-          updated_at,
-          profiles:user_id(
-            username,
-            full_name,
-            avatar_url
-          )
-        `)
-        .eq('category', category)
-        .order('points', { ascending: false })
-        .limit(10) as SupabaseResponse<any[]>;
-
-      if (rankingsError) {
-        console.error('Error fetching rankings:', rankingsError);
-        throw rankingsError;
-      }
-
-      // Fetch community stats
-      const { data: statsData, error: statsError } = await supabase
-        .from('community_stats')
-        .select('*')
-        .single() as SupabaseResponse<CommunityStats>;
-
-      if (statsError && statsError.code !== 'PGRST116') {
-        console.error('Error fetching community stats:', statsError);
-        throw statsError;
-      }
-
-      // Fetch current user's rank if logged in
-      let userData = null;
-      if (userId) {
-        const { data: userRankData, error: userError } = await supabase
-          .from('user_activity')
-          .select(`
-            id, 
-            user_id, 
-            points, 
-            level, 
-            badge, 
-            streak, 
-            last_active_date, 
-            created_at,
-            updated_at,
-            profiles:user_id(
-              username,
-              full_name,
-              avatar_url
-            )
-          `)
-          .eq('user_id', userId)
-          .eq('category', category)
-          .single() as SupabaseResponse<UserActivity>;
-
-        if (userError && userError.code !== 'PGRST116') {
-          console.error('Error fetching user rank:', userError);
-        } else {
-          userData = userRankData;
-        }
-      }
-
-      // Process the fetched data - add category to each item explicitly 
-      const processedRankingsData = rankingsData ? rankingsData.map(item => ({
-        ...item,
-        category // Add the category property that's missing
-      })) as UserActivity[] : [];
-      
-      // Update the appropriate state based on category - avoid using dynamic property access
-      if (category === 'learning') {
-        setLearningData(processedRankingsData);
-      } else if (category === 'community') {
-        setCommunityData(processedRankingsData);
-      } else if (category === 'safety') {
-        setSafetyData(processedRankingsData);
-      } else if (category === 'mentor') {
-        setMentorData(processedRankingsData);
-      } else if (category === 'mental') {
-        setMentalData(processedRankingsData);
-      }
-
-      // Update community stats
-      if (statsData) {
-        if (isSubscribed && userId) {
-          const todayDate = new Date().toISOString().split('T')[0];
-          const userIsActive = userData?.last_active_date === todayDate;
-          
-          if (!userIsActive) {
-            await ensureSubscriberCounted(statsData.id, userId, isSubscribed);
-            
-            setCommunityStats({
-              ...statsData,
-              active_users: Math.max(1, (statsData.active_users || 0))
-            });
-          } else {
-            setCommunityStats(statsData);
-          }
-        } else {
-          setCommunityStats(statsData);
-        }
-      }
-
-      // Update user's rank for the specific category
-      if (userData) {
-        const processedUserData = {
-          ...userData,
-          category // Add the category property that's missing
-        } as UserActivity;
-        
-        // Update the appropriate user rank state based on category - avoid using dynamic property access
-        if (category === 'learning') {
-          setUserRankLearning(processedUserData);
-        } else if (category === 'community') {
-          setUserRankCommunity(processedUserData);
-        } else if (category === 'safety') {
-          setUserRankSafety(processedUserData);
-        } else if (category === 'mentor') {
-          setUserRankMentor(processedUserData);
-        } else if (category === 'mental') {
-          setUserRankMental(processedUserData);
-        }
-      }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
-      setError(message);
-      console.error('Error fetching leaderboard data:', err);
-      
-      toast({
-        title: "Error loading leaderboard",
-        description: "Could not load leaderboard data. Please try again later.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsLoading(false);
+    const result = await fetchCategoryLeaderboard(category, userId, isSubscribed);
+    
+    // Update the appropriate state based on category
+    if (category === 'learning') {
+      setLearningData(result.rankings);
+      setUserRankLearning(result.userRank);
+    } else if (category === 'community') {
+      setCommunityData(result.rankings);
+      setUserRankCommunity(result.userRank);
+    } else if (category === 'safety') {
+      setSafetyData(result.rankings);
+      setUserRankSafety(result.userRank);
+    } else if (category === 'mentor') {
+      setMentorData(result.rankings);
+      setUserRankMentor(result.userRank);
+    } else if (category === 'mental') {
+      setMentalData(result.rankings);
+      setUserRankMental(result.userRank);
     }
+    
+    // Update community stats if available
+    if (result.communityStats) {
+      setCommunityStats(result.communityStats);
+    }
+    
+    // Update error state if there was an error
+    if (result.error) {
+      setError(result.error);
+    }
+    
+    setIsLoading(false);
   }, [userId, isSubscribed]);
 
   // Function to fetch data for all categories

@@ -1,12 +1,7 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import type { LeaderboardCategory } from './types';
-
-// Define a generic helper type for Supabase responses to avoid deep type instantiation
-type SupabaseResponse<T> = {
-  data: T | null;
-  error: { code: string; message?: string } | null;
-};
+import { SupabaseResponse } from './supabaseUtils';
 
 /**
  * Ensures that a subscriber is counted in community stats
@@ -18,7 +13,6 @@ export async function ensureSubscriberCounted(statsId: string, userId: string, i
     // First check if user already has an activity record for today
     const today = new Date().toISOString().split('T')[0];
     
-    // Use our helper type for Supabase responses
     const { data: existingActivity, error: activityError } = await supabase
       .from('user_activity')
       .select('*')
