@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { UserActivity } from "@/hooks/leaderboards/useLeaderboardData";
 import { getBadgeColor, getLevelBadgeColor } from "@/hooks/leaderboards/useLeaderboardsFilters";
 import { getUserInitials, getUserDisplayName } from "./leaderboardUtils";
+import { LeaderboardFilters } from "@/hooks/leaderboards/filters";
 
 interface UserRankingCardProps {
   currentUserRank: UserActivity | null;

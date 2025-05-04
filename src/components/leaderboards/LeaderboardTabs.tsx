@@ -1,50 +1,78 @@
-
+import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UserActivity } from "@/hooks/leaderboards/useLeaderboardData";
-import { TimeframeOption } from "@/hooks/leaderboards/useLeaderboardsFilters";
-import { LeaderboardTabContent } from "./LeaderboardTabContent";
+import { CardViewIcon, TableViewIcon } from "lucide-react";
+import { useLeaderboardFilters } from "@/hooks/leaderboards/filters";
 
 interface LeaderboardTabsProps {
-  timeframe: TimeframeOption;
-  setTimeframe: (value: TimeframeOption) => void;
-  filteredUsers: UserActivity[];
-  viewMode: 'card' | 'table';
-  maxPoints: number;
-  userRankings: UserActivity[];
-  isMobile: boolean;
+  onViewModeChange: (viewMode: 'card' | 'table') => void;
 }
 
-export const LeaderboardTabs = ({
-  timeframe,
-  setTimeframe,
-  filteredUsers,
-  viewMode,
-  maxPoints,
-  userRankings,
-  isMobile
-}: LeaderboardTabsProps) => {
+const LeaderboardTabs: React.FC<LeaderboardTabsProps> = ({ onViewModeChange }) => {
+  const { setTimeframe, setLevelFilter, setBadgeFilter, setViewMode, timeframe, levelFilter, badgeFilter, uniqueLevels, uniqueBadges } = useLeaderboardFilters();
+
   return (
-    <Tabs defaultValue={timeframe} className="space-y-4" onValueChange={(value) => setTimeframe(value as 'weekly' | 'monthly' | 'alltime')}>
-      <div className="flex justify-between items-center">
-        <TabsList className="bg-elec-gray border border-elec-yellow/20">
-          <TabsTrigger value="weekly" className={isMobile ? "text-xs px-2 py-1.5" : ""}>This Week</TabsTrigger>
-          <TabsTrigger value="monthly" className={isMobile ? "text-xs px-2 py-1.5" : ""}>This Month</TabsTrigger>
-          <TabsTrigger value="alltime" className={isMobile ? "text-xs px-2 py-1.5" : ""}>All Time</TabsTrigger>
-        </TabsList>
+    <Tabs defaultValue="weekly" className="space-y-4">
+      <TabsList>
+        <TabsTrigger value="weekly" onClick={() => setTimeframe('weekly')}>Weekly</TabsTrigger>
+        <TabsTrigger value="monthly" onClick={() => setTimeframe('monthly')}>Monthly</TabsTrigger>
+        <TabsTrigger value="alltime" onClick={() => setTimeframe('alltime')}>All Time</TabsTrigger>
+      </TabsList>
+      
+      <div className="flex items-center space-x-2">
+        <select 
+          className="border rounded px-2 py-1 text-black"
+          value={levelFilter}
+          onChange={(e) => setLevelFilter(e.target.value)}
+        >
+          <option value="all">All Levels</option>
+          {uniqueLevels.map(level => (
+            <option key={level} value={level}>{level}</option>
+          ))}
+        </select>
+        
+        <select
+          className="border rounded px-2 py-1 text-black"
+          value={badgeFilter}
+          onChange={(e) => setBadgeFilter(e.target.value)}
+        >
+          <option value="all">All Badges</option>
+          {uniqueBadges.map(badge => (
+            <option key={badge} value={badge}>{badge}</option>
+          ))}
+        </select>
+        
+        <button 
+          className="p-2 rounded hover:bg-gray-200"
+          onClick={() => {
+            setViewMode('card');
+            onViewModeChange('card');
+          }}
+        >
+          <CardViewIcon className="h-5 w-5" />
+        </button>
+        
+        <button 
+          className="p-2 rounded hover:bg-gray-200"
+          onClick={() => {
+            setViewMode('table');
+            onViewModeChange('table');
+          }}
+        >
+          <TableViewIcon className="h-5 w-5" />
+        </button>
       </div>
 
-      {["weekly", "monthly", "alltime"].map((period) => (
-        <TabsContent key={period} value={period} className="space-y-4 mt-2">
-          <LeaderboardTabContent
-            period={period}
-            filteredUsers={filteredUsers}
-            viewMode={viewMode}
-            maxPoints={maxPoints}
-            userRankings={userRankings}
-            isMobile={isMobile}
-          />
-        </TabsContent>
-      ))}
+      <TabsContent value="weekly">
+        {/* Weekly leaderboard content */}
+      </TabsContent>
+      <TabsContent value="monthly">
+        {/* Monthly leaderboard content */}
+      </TabsContent>
+      <TabsContent value="alltime">
+        {/* All time leaderboard content */}
+      </TabsContent>
     </Tabs>
   );
 };
+
+export default LeaderboardTabs;
