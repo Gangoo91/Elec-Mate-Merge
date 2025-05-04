@@ -22,7 +22,7 @@ const AccountTab = () => {
   const { addNotification } = useNotifications();
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [profileData, setProfileData] = useState({
-    displayName: user?.displayName || 'Electrician Pro',
+    displayName: user?.email?.split('@')[0] || 'Electrician Pro',
     jobTitle: 'Senior Electrician',
     yearsExperience: '5',
     certificates: ['Level 3 Electrical Installation', 'City & Guilds 2365']
