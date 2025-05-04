@@ -1,8 +1,8 @@
 
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle } from "lucide-react";
+import { ArrowLeft, CheckCircle, CalculatorIcon } from "lucide-react";
 import { installationMethodsContent } from "@/data/installationMethods/index";
 import type { Subsection } from "@/data/healthAndSafety/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -89,6 +89,24 @@ const SubsectionContent = () => {
         <div className="space-y-6">
           <div className="text-elec-light/90 leading-relaxed prose prose-invert max-w-none">
             <p className="mb-4">{subsectionData.content}</p>
+            
+            {/* Tools link section - Only show for subsection 2.1 */}
+            {subsectionId === "2.1" && (
+              <div className="my-6 p-4 bg-elec-dark/50 border border-elec-yellow/30 rounded-lg">
+                <h3 className="text-lg font-semibold text-elec-yellow mb-3 flex items-center">
+                  <CalculatorIcon className="mr-2 h-5 w-5" />
+                  Useful Tools
+                </h3>
+                <p className="mb-3">
+                  Use our electrical calculators to help you determine the correct cable sizes and voltage drops for your installations.
+                </p>
+                <Link to="/electrician-tools">
+                  <Button variant="study" className="bg-elec-yellow/20 border border-elec-yellow/60 hover:bg-elec-yellow hover:text-elec-dark">
+                    Open Electrical Calculators
+                  </Button>
+                </Link>
+              </div>
+            )}
             
             {/* Learning content component */}
             <div className="mt-8">
