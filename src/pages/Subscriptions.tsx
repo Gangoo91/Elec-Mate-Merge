@@ -2,12 +2,24 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Check, X, ChevronRight, Code } from "lucide-react";
+import { Check, X, ChevronRight, Code, Loader2, RefreshCcw } from "lucide-react";
 import { useAuth } from '@/contexts/AuthContext';
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const Subscriptions = () => {
   // Get auth context values
-  const { isTrialActive, trialEndsAt, isDevelopmentMode, toggleDevelopmentMode } = useAuth();
+  const { isTrialActive, trialEndsAt, isDevelopmentMode, toggleDevelopmentMode, isSubscribed, checkSubscriptionStatus, isCheckingStatus, subscriptionTier } = useAuth();
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<{[key: string]: boolean}>({});
+  
+  // Auto-check subscription status on page load
+  useEffect(() => {
+    checkSubscriptionStatus();
+  }, []);
   
   // Calculate days remaining in trial
   const getDaysRemaining = () => {
@@ -17,6 +29,83 @@ const Subscriptions = () => {
     const diffTime = trialEndsAt.getTime() - now.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return Math.max(0, diffDays);
+  };
+
+  // Handle subscription checkout
+  const handleSubscribe = async (planId: string, priceId: string, mode: 'subscription', billingPeriod: 'monthly' | 'yearly') => {
+    try {
+      setIsLoading({ ...isLoading, [planId]: true });
+      
+      const { data, error } = await supabase.functions.invoke('create-checkout', {
+        body: { 
+          priceId, 
+          mode, 
+          planId
+        }
+      });
+      
+      if (error) {
+        throw new Error(error.message);
+      }
+      
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error('No checkout URL returned');
+      }
+    } catch (error) {
+      console.error('Checkout error:', error);
+      toast({
+        title: "Checkout Error",
+        description: error instanceof Error ? error.message : "Failed to start checkout process",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading({ ...isLoading, [planId]: false });
+    }
+  };
+  
+  // Handle opening customer portal for subscription management
+  const openCustomerPortal = async () => {
+    try {
+      setIsLoading({ ...isLoading, portal: true });
+      
+      const { data, error } = await supabase.functions.invoke('customer-portal');
+      
+      if (error) {
+        throw new Error(error.message);
+      }
+      
+      if (data?.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error('No portal URL returned');
+      }
+    } catch (error) {
+      console.error('Customer portal error:', error);
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to open subscription management",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading({ ...isLoading, portal: false });
+    }
+  };
+  
+  // Define Stripe price IDs for each plan
+  // These would be your actual Stripe price IDs from the Stripe dashboard
+  const stripePrices = {
+    monthly: {
+      "apprentice": "price_apprentice_monthly", // Replace with actual Stripe price ID
+      "electrician": "price_electrician_monthly", // Replace with actual Stripe price ID
+      "employer": "price_employer_monthly", // Replace with actual Stripe price ID
+    },
+    yearly: {
+      "apprentice": "price_apprentice_yearly", // Replace with actual Stripe price ID
+      "electrician": "price_electrician_yearly", // Replace with actual Stripe price ID
+      "employer": "price_employer_yearly", // Replace with actual Stripe price ID
+    }
   };
 
   // Mock subscription tiers
@@ -42,6 +131,7 @@ const Subscriptions = () => {
         ],
         popular: false,
         color: "bg-elec-gray",
+        priceId: stripePrices.monthly.apprentice,
       },
       {
         id: "electrician-monthly",
@@ -61,6 +151,7 @@ const Subscriptions = () => {
         ],
         popular: true,
         color: "bg-elec-gray border-elec-yellow",
+        priceId: stripePrices.monthly.electrician,
       },
       {
         id: "employer-monthly",
@@ -79,6 +170,7 @@ const Subscriptions = () => {
         popular: false,
         color: "bg-elec-gray",
         coming: true,
+        priceId: stripePrices.monthly.employer,
       },
     ],
     yearly: [
@@ -103,6 +195,7 @@ const Subscriptions = () => {
         popular: false,
         color: "bg-elec-gray",
         savings: "Save £7.89 compared to monthly",
+        priceId: stripePrices.yearly.apprentice,
       },
       {
         id: "electrician-yearly",
@@ -123,6 +216,7 @@ const Subscriptions = () => {
         popular: true,
         color: "bg-elec-gray border-elec-yellow",
         savings: "Save £11.89 compared to monthly",
+        priceId: stripePrices.yearly.electrician,
       },
       {
         id: "employer-yearly",
@@ -142,34 +236,56 @@ const Subscriptions = () => {
         color: "bg-elec-gray",
         coming: true,
         savings: "Save £19.89 compared to monthly",
+        priceId: stripePrices.yearly.employer,
       },
     ],
   };
 
   return (
     <div className="space-y-8 animate-fade-in">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Subscriptions</h1>
-        <p className="text-muted-foreground">
-          Choose the plan that's right for your electrical career stage.
-        </p>
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Subscriptions</h1>
+          <p className="text-muted-foreground">
+            Choose the plan that's right for your electrical career stage.
+          </p>
+        </div>
+        
+        {/* Refresh button */}
+        <Button 
+          variant="outline" 
+          className="flex items-center gap-2" 
+          onClick={checkSubscriptionStatus}
+          disabled={isCheckingStatus}
+        >
+          {isCheckingStatus ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <RefreshCcw className="h-4 w-4" />
+          )}
+          Refresh Status
+        </Button>
       </div>
 
       {/* Current Subscription Status */}
-      <Card className={`border-${isTrialActive ? 'elec-yellow' : 'red-500'}/20 bg-elec-gray`}>
+      <Card className={`border-${isSubscribed ? 'green-500' : isTrialActive ? 'elec-yellow' : 'red-500'}/20 bg-elec-gray`}>
         <CardHeader>
           <CardTitle>Your Current Plan</CardTitle>
           <CardDescription>
-            {isTrialActive 
-              ? `You're currently in the free trial period, ending in ${getDaysRemaining()} days.`
-              : "Your free trial has expired. Please select a subscription plan to continue."}
+            {isSubscribed 
+              ? `You're currently subscribed to the ${subscriptionTier || 'Standard'} plan.`
+              : isTrialActive 
+                ? `You're currently in the free trial period, ending in ${getDaysRemaining()} days.`
+                : "Your free trial has expired. Please select a subscription plan to continue."}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
             <div className="space-y-2">
               <div className="text-sm text-muted-foreground">Subscription Status</div>
-              <div className="text-lg font-medium">{isTrialActive ? "Free Trial" : "Expired"}</div>
+              <div className="text-lg font-medium">
+                {isSubscribed ? "Active Subscription" : isTrialActive ? "Free Trial" : "Expired"}
+              </div>
             </div>
             {isTrialActive && (
               <>
@@ -182,6 +298,19 @@ const Subscriptions = () => {
                   <div className="text-lg font-medium">Full Platform Access</div>
                 </div>
               </>
+            )}
+            {isSubscribed && (
+              <Button
+                onClick={openCustomerPortal}
+                variant="outline"
+                disabled={isLoading.portal}
+                className="ml-auto"
+              >
+                {isLoading.portal ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : null}
+                Manage Subscription
+              </Button>
             )}
           </div>
         </CardContent>
@@ -237,9 +366,14 @@ const Subscriptions = () => {
                   key={plan.id} 
                   className={`border overflow-hidden relative ${
                     plan.popular ? "border-elec-yellow" : "border-elec-yellow/20"
-                  } ${plan.color}`}
+                  } ${plan.color} ${(subscriptionTier === plan.name && isSubscribed) ? "ring-2 ring-green-500" : ""}`}
                 >
-                  {plan.popular && (
+                  {(subscriptionTier === plan.name && isSubscribed) && (
+                    <div className="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold py-1 px-3 rounded-bl-lg">
+                      YOUR PLAN
+                    </div>
+                  )}
+                  {plan.popular && subscriptionTier !== plan.name && (
                     <div className="absolute top-0 right-0 bg-elec-yellow text-elec-dark text-xs font-bold py-1 px-3 rounded-bl-lg">
                       POPULAR
                     </div>
@@ -279,15 +413,25 @@ const Subscriptions = () => {
                   <CardFooter>
                     <Button 
                       className="w-full" 
-                      variant={plan.popular ? "default" : "outline"}
-                      disabled={plan.coming}
+                      variant={(subscriptionTier === plan.name && isSubscribed) ? "outline" : plan.popular ? "default" : "outline"}
+                      disabled={plan.coming || (subscriptionTier === plan.name && isSubscribed) || isLoading[plan.id]}
+                      onClick={() => handleSubscribe(plan.id, plan.priceId, 'subscription', 'monthly')}
                     >
-                      {plan.coming ? "Coming Soon" : (
-                        <>
-                          Choose Plan
-                          <ChevronRight className="h-4 w-4 ml-1" />
-                        </>
-                      )}
+                      {isLoading[plan.id] ? (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      ) : null}
+                      
+                      {(subscriptionTier === plan.name && isSubscribed) 
+                        ? "Current Plan" 
+                        : plan.coming 
+                          ? "Coming Soon" 
+                          : (
+                            <>
+                              Choose Plan
+                              <ChevronRight className="h-4 w-4 ml-1" />
+                            </>
+                          )
+                      }
                     </Button>
                   </CardFooter>
                 </Card>
@@ -303,9 +447,14 @@ const Subscriptions = () => {
                   key={plan.id} 
                   className={`border overflow-hidden relative ${
                     plan.popular ? "border-elec-yellow" : "border-elec-yellow/20"
-                  } ${plan.color}`}
+                  } ${plan.color} ${(subscriptionTier === plan.name && isSubscribed) ? "ring-2 ring-green-500" : ""}`}
                 >
-                  {plan.popular && (
+                  {(subscriptionTier === plan.name && isSubscribed) && (
+                    <div className="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold py-1 px-3 rounded-bl-lg">
+                      YOUR PLAN
+                    </div>
+                  )}
+                  {plan.popular && subscriptionTier !== plan.name && (
                     <div className="absolute top-0 right-0 bg-elec-yellow text-elec-dark text-xs font-bold py-1 px-3 rounded-bl-lg">
                       POPULAR
                     </div>
@@ -348,15 +497,25 @@ const Subscriptions = () => {
                   <CardFooter>
                     <Button 
                       className="w-full" 
-                      variant={plan.popular ? "default" : "outline"}
-                      disabled={plan.coming}
+                      variant={(subscriptionTier === plan.name && isSubscribed) ? "outline" : plan.popular ? "default" : "outline"}
+                      disabled={plan.coming || (subscriptionTier === plan.name && isSubscribed) || isLoading[plan.id]}
+                      onClick={() => handleSubscribe(plan.id, plan.priceId, 'subscription', 'yearly')}
                     >
-                      {plan.coming ? "Coming Soon" : (
-                        <>
-                          Choose Plan
-                          <ChevronRight className="h-4 w-4 ml-1" />
-                        </>
-                      )}
+                      {isLoading[plan.id] ? (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      ) : null}
+                      
+                      {(subscriptionTier === plan.name && isSubscribed) 
+                        ? "Current Plan" 
+                        : plan.coming 
+                          ? "Coming Soon" 
+                          : (
+                            <>
+                              Choose Plan
+                              <ChevronRight className="h-4 w-4 ml-1" />
+                            </>
+                          )
+                      }
                     </Button>
                   </CardFooter>
                 </Card>

@@ -14,6 +14,10 @@ import Subsection5_1 from "./content/Subsection5_1";
 import Subsection6_1 from "./content/Subsection6_1";
 import ElectricalSymbolsDisplay from "./ElectricalSymbolsDisplay";
 import InteractiveLightDemo from "./InteractiveLightDemo";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Lock } from "lucide-react";
+import { Link } from "react-router-dom";
 
 type SubsectionLearningContentProps = {
   subsectionId: string;
@@ -26,6 +30,31 @@ const SubsectionLearningContent = ({
   isCompleted, 
   markAsComplete 
 }: SubsectionLearningContentProps) => {
+  const { isSubscribed, isTrialActive, isDevelopmentMode } = useAuth();
+  
+  // Check if content should be locked (not subscribed, trial expired, and not in dev mode)
+  const isContentLocked = !isSubscribed && !isTrialActive && !isDevelopmentMode;
+  
+  // Premium sections that require subscription after trial
+  const premiumSections = ["3.1", "3.2", "3.3", "4.1", "5.1", "6.1"];
+  const isPremiumContent = premiumSections.includes(subsectionId);
+  
+  // If content is locked and this is premium content, show subscription prompt
+  if (isContentLocked && isPremiumContent) {
+    return (
+      <div className="flex flex-col items-center justify-center p-8 border border-elec-yellow/20 bg-elec-dark/50 rounded-lg space-y-6 text-center">
+        <Lock size={48} className="text-elec-yellow/60" />
+        <h3 className="text-xl font-semibold text-elec-yellow">Premium Content</h3>
+        <p className="text-elec-light/80 max-w-md">
+          This advanced electrical training content is available with a subscription.
+          Upgrade to continue your learning and access all premium materials.
+        </p>
+        <Button asChild className="mt-2">
+          <Link to="/subscriptions">Subscribe Now</Link>
+        </Button>
+      </div>
+    );
+  }
   
   // Render the appropriate content based on subsection ID
   const renderContentBySubsectionId = () => {

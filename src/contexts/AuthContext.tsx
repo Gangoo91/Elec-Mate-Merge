@@ -11,7 +11,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // Combine all our authentication hooks
   const { session, user, profile, isLoading } = useAuthSession();
-  const { isTrialActive, trialEndsAt, isSubscribed } = useSubscriptionStatus(profile);
+  const { isTrialActive, trialEndsAt, isSubscribed, subscriptionTier, isCheckingStatus, checkSubscriptionStatus } = useSubscriptionStatus(profile);
   const { isDevelopmentMode, toggleDevelopmentMode } = useDevelopmentMode();
   const { signIn, signUp, signOut } = useAuthentication();
 
@@ -21,8 +21,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       isAuthenticated: !!user,
       userEmail: user?.email,
       isLoading,
+      isSubscribed,
+      subscriptionTier,
     });
-  }, [user, isLoading]);
+  }, [user, isLoading, isSubscribed, subscriptionTier]);
 
   const value: AuthContextType = {
     session,
@@ -32,6 +34,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     isTrialActive,
     trialEndsAt,
     isSubscribed,
+    subscriptionTier,
+    isCheckingStatus,
+    checkSubscriptionStatus,
     isDevelopmentMode,
     toggleDevelopmentMode,
     signIn,

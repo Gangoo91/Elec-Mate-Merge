@@ -1,11 +1,14 @@
 
 import { useState, useEffect } from 'react';
 import { ProfileType } from './types';
+import { supabase } from '@/integrations/supabase/client';
 
 export function useSubscriptionStatus(profile: ProfileType | null) {
   const [isTrialActive, setIsTrialActive] = useState(false);
   const [trialEndsAt, setTrialEndsAt] = useState<Date | null>(null);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [subscriptionTier, setSubscriptionTier] = useState<string | null>(null);
+  const [isCheckingStatus, setIsCheckingStatus] = useState(false);
 
   useEffect(() => {
     if (profile) {
@@ -28,9 +31,33 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
     }
   }, [profile]);
 
+  // Function to check subscription status with Stripe
+  const checkSubscriptionStatus = async () => {
+    if (!profile) return;
+    
+    try {
+      setIsCheckingStatus(true);
+      const { data, error } = await supabase.functions.invoke('check-subscription');
+      
+      if (error) {
+        console.error('Error checking subscription:', error);
+      } else if (data) {
+        setIsSubscribed(data.subscribed);
+        setSubscriptionTier(data.subscription_tier);
+      }
+    } catch (error) {
+      console.error('Error in checkSubscriptionStatus:', error);
+    } finally {
+      setIsCheckingStatus(false);
+    }
+  };
+
   return {
     isTrialActive,
     trialEndsAt,
     isSubscribed,
+    subscriptionTier,
+    isCheckingStatus,
+    checkSubscriptionStatus
   };
 }

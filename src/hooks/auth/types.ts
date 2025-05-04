@@ -19,6 +19,9 @@ export type AuthContextType = {
   isTrialActive: boolean;
   trialEndsAt: Date | null;
   isSubscribed: boolean;
+  subscriptionTier?: string | null;
+  isCheckingStatus: boolean;
+  checkSubscriptionStatus: () => Promise<void>;
   isDevelopmentMode: boolean;
   toggleDevelopmentMode: () => void;
   signIn: (email: string, password: string) => Promise<{ error: any | null }>;
