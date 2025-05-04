@@ -5,7 +5,7 @@ import type { UserActivity, CommunityStats, LeaderboardCategory } from './types'
 import { ensureSubscriberCounted } from './useActivityTracking';
 import { toast } from '@/components/ui/use-toast';
 
-// Create explicit types that avoid deep nesting
+// Explicit types that avoid deep nesting
 type LeaderboardData = {
   learning: UserActivity[];
   community: UserActivity[];
@@ -23,7 +23,7 @@ type UserRankData = {
 };
 
 export function useLeaderboardFetch(userId: string | undefined, isSubscribed: boolean) {
-  // Initialize state with explicit types
+  // State with explicitly defined types to avoid excessive type recursion
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardData>({
     learning: [],
     community: [],
@@ -122,18 +122,25 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
         }
       }
 
-      // Process the fetched data - add category to each item since it's missing from response
+      // Process the fetched data - add category to each item explicitly
       const processedRankingsData = rankingsData ? rankingsData.map(item => ({
         ...item,
         category // Add the category property that's missing
       })) : [];
       
-      // Update leaderboard data for the specific category
-      setLeaderboardData(prev => {
-        const updated = { ...prev };
-        updated[category] = processedRankingsData as UserActivity[];
-        return updated;
-      });
+      // Update leaderboard data for the specific category using direct property assignment
+      // This avoids deeply nested spread operations that could cause type recursion
+      if (category === 'learning') {
+        setLeaderboardData(prev => ({ ...prev, learning: processedRankingsData as UserActivity[] }));
+      } else if (category === 'community') {
+        setLeaderboardData(prev => ({ ...prev, community: processedRankingsData as UserActivity[] }));
+      } else if (category === 'safety') {
+        setLeaderboardData(prev => ({ ...prev, safety: processedRankingsData as UserActivity[] }));
+      } else if (category === 'mentor') {
+        setLeaderboardData(prev => ({ ...prev, mentor: processedRankingsData as UserActivity[] }));
+      } else if (category === 'mental') {
+        setLeaderboardData(prev => ({ ...prev, mental: processedRankingsData as UserActivity[] }));
+      }
 
       // Update community stats
       if (statsData) {
@@ -156,14 +163,14 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
         }
       }
 
-      // Update user's rank for the specific category
+      // Update user's rank for the specific category using direct property assignment
       if (userData) {
         const processedUserData = {
           ...userData,
           category // Add the category property that's missing
         } as UserActivity;
         
-        // Use direct property assignment to avoid deep types
+        // Use direct property assignment to avoid complex type recursion
         if (category === 'learning') {
           setUserRank(prev => ({ ...prev, learning: processedUserData }));
         } else if (category === 'community') {
