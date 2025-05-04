@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/components/ui/use-toast';
 
 export function useUserActivity() {
-  const { user, isSubscribed } = useAuth();
+  const { user } = useAuth();
   const { toast } = useToast();
 
   // Mark user as active when the component mounts
@@ -14,88 +14,74 @@ export function useUserActivity() {
       if (!user) return;
 
       try {
-        const categories = ['learning', 'community', 'safety', 'mentor', 'mental'];
+        // Check if user already has a record
+        const { data: existingData, error: fetchError } = await supabase
+          .from('user_activity')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+
+        if (fetchError && fetchError.code !== 'PGRST116') {
+          console.error('Error checking user activity:', fetchError);
+          return;
+        }
+
         const today = new Date().toISOString().split('T')[0];
         
-        for (const category of categories) {
-          // Check if user already has a record for this category
-          const { data: existingData, error: fetchError } = await supabase
-            .from('user_activity')
-            .select('*')
-            .eq('user_id', user.id)
-            .eq('category', category)
-            .single();
+        if (existingData) {
+          // If last active date is not today, update the record
+          if (existingData.last_active_date !== today) {
+            const { error: updateError } = await supabase
+              .from('user_activity')
+              .update({
+                last_active_date: today,
+                updated_at: new Date().toISOString()
+              })
+              .eq('user_id', user.id);
 
-          if (fetchError && fetchError.code !== 'PGRST116') {
-            console.error(`Error checking user activity for ${category}:`, fetchError);
-            continue;
+            if (updateError) {
+              console.error('Error updating user activity:', updateError);
+            }
           }
+        } else {
+          // Create a new record for the user
+          const { error: insertError } = await supabase
+            .from('user_activity')
+            .insert({
+              user_id: user.id,
+              points: 10, // Starting points
+              level: 'Apprentice',
+              badge: 'Beginner',
+              streak: 1,
+              last_active_date: today
+            });
 
-          // Prioritize marking subscribed users as active
-          const isNewDay = !existingData || existingData.last_active_date !== today;
-          
-          if (existingData) {
-            // If last active date is not today, update the record
-            if (isNewDay) {
-              const { error: updateError } = await supabase
-                .from('user_activity')
+          if (insertError) {
+            console.error('Error creating user activity record:', insertError);
+          } else {
+            // Increment active users in community stats
+            const { data: statsData } = await supabase
+              .from('community_stats')
+              .select('*')
+              .limit(1)
+              .single();
+
+            if (statsData) {
+              await supabase
+                .from('community_stats')
                 .update({
-                  last_active_date: today,
+                  active_users: (statsData.active_users || 0) + 1,
                   updated_at: new Date().toISOString()
                 })
-                .eq('user_id', user.id)
-                .eq('category', category);
-
-              if (updateError) {
-                console.error(`Error updating user activity for ${category}:`, updateError);
-              }
+                .eq('id', statsData.id);
             }
-          } else {
-            // Create a new record for the user
-            const { error: insertError } = await supabase
-              .from('user_activity')
-              .insert({
-                user_id: user.id,
-                points: 10, // Starting points
-                level: 'Apprentice',
-                badge: 'Beginner',
-                streak: 1,
-                category: category,
-                last_active_date: today
-              });
 
-            if (insertError) {
-              console.error(`Error creating user activity record for ${category}:`, insertError);
-            }
+            // Show welcome toast
+            toast({
+              title: "Welcome to the community!",
+              description: "You've earned your first 10 points. Complete lessons to earn more and climb the leaderboard.",
+            });
           }
-        }
-        
-        // Update community stats if subscribed
-        if (isSubscribed) {
-          // Get stats for updating
-          const { data: statsData } = await supabase
-            .from('community_stats')
-            .select('id')
-            .single();
-          
-          if (statsData) {
-            // Correctly update active users count
-            await supabase
-              .from('community_stats')
-              .update({ 
-                active_users: supabase.rpc('increment_counter', { 
-                  row_id: statsData.id, 
-                  counter_name: 'active_users' 
-                }) 
-              })
-              .eq('id', statsData.id);
-          }
-            
-          // Show welcome toast for new users
-          toast({
-            title: "Welcome to the community!",
-            description: "You've earned your first points. Complete activities to earn more!",
-          });
         }
       } catch (err) {
         console.error('Error tracking user activity:', err);
@@ -103,55 +89,74 @@ export function useUserActivity() {
     };
 
     trackUserActivity();
-  }, [user, isSubscribed, toast]);
+  }, [user]);
 
-  // Function to record activity completion
-  const recordActivity = async (activityType: string, pointsToAdd: number = 10) => {
+  // Function to record lesson completion
+  const recordLessonCompletion = async (lessonId: string) => {
     if (!user) return;
     
     try {
-      // Update user points - fix the RPC call
-      const { error } = await supabase
+      // Update user points
+      const { data: userData, error: userError } = await supabase
         .from('user_activity')
-        .update({
-          points: supabase.rpc('increment_counter', { 
-            row_id: user.id, 
-            counter_name: 'points',
-            increment_by: pointsToAdd 
-          }),
-          updated_at: new Date().toISOString()
-        })
+        .select('*')
         .eq('user_id', user.id)
-        .eq('category', activityType);
+        .single();
 
-      if (error) {
-        console.error(`Error recording ${activityType} completion:`, error);
-        return;
+      if (userError && userError.code !== 'PGRST116') {
+        throw userError;
+      }
+
+      const pointsToAdd = 25;
+      
+      if (userData) {
+        // Update existing record
+        await supabase
+          .from('user_activity')
+          .update({
+            points: userData.points + pointsToAdd,
+            last_active_date: new Date().toISOString().split('T')[0],
+            updated_at: new Date().toISOString()
+          })
+          .eq('user_id', user.id);
+      } else {
+        // Create new record
+        await supabase
+          .from('user_activity')
+          .insert({
+            user_id: user.id,
+            points: pointsToAdd,
+            level: 'Apprentice',
+            badge: 'Beginner',
+            last_active_date: new Date().toISOString().split('T')[0]
+          });
+      }
+
+      // Update community stats
+      const { data: statsData } = await supabase
+        .from('community_stats')
+        .select('*')
+        .single();
+
+      if (statsData) {
+        await supabase
+          .from('community_stats')
+          .update({
+            lessons_completed_today: (statsData.lessons_completed_today || 0) + 1,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', statsData.id);
       }
 
       // Show toast
-      const activityLabels: Record<string, string> = {
-        learning: "lesson",
-        community: "community discussion",
-        safety: "safety share",
-        mentor: "mentor connect session",
-        mental: "wellbeing activity"
-      };
-
       toast({
-        title: `${activityLabels[activityType] || activityType} completed!`,
-        description: `You've earned ${pointsToAdd} points. Keep going to gain more!`,
+        title: "Lesson completed!",
+        description: `You've earned ${pointsToAdd} points. Keep learning to gain more!`,
       });
     } catch (err) {
-      console.error(`Error recording ${activityType} completion:`, err);
+      console.error('Error recording lesson completion:', err);
     }
   };
 
-  return { 
-    recordLessonCompletion: () => recordActivity('learning', 25),
-    recordCommunityActivity: () => recordActivity('community', 15),
-    recordSafetyShare: () => recordActivity('safety', 20),
-    recordMentorSession: () => recordActivity('mentor', 30),
-    recordWellbeingActivity: () => recordActivity('mental', 20)
-  };
+  return { recordLessonCompletion };
 }
