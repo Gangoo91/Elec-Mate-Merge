@@ -6,6 +6,8 @@ import Subsection1_3 from "./content/Subsection1_3";
 import Subsection2_1 from "./content/Subsection2_1";
 import Subsection2_2 from "./content/Subsection2_2";
 import Subsection2_3 from "./content/Subsection2_3";
+import ElectricalSymbolsDisplay from "./ElectricalSymbolsDisplay";
+import InteractiveLightDemo from "./InteractiveLightDemo";
 
 type SubsectionLearningContentProps = {
   subsectionId: string;
@@ -24,11 +26,19 @@ const SubsectionLearningContent = ({
     switch (subsectionId) {
       case "1.1":
         return (
-          <Subsection1_1 
-            subsectionId={subsectionId} 
-            isCompleted={isCompleted} 
-            markAsComplete={markAsComplete}
-          />
+          <>
+            <Subsection1_1 
+              subsectionId={subsectionId} 
+              isCompleted={isCompleted} 
+              markAsComplete={markAsComplete}
+            />
+            <ElectricalSymbolsDisplay subsectionId={subsectionId} />
+            <InteractiveLightDemo 
+              subsectionId={subsectionId}
+              isCompleted={isCompleted}
+              markAsComplete={markAsComplete}
+            />
+          </>
         );
       case "1.2":
         return (
@@ -48,9 +58,12 @@ const SubsectionLearningContent = ({
         );
       case "2.2":
         return (
-          <Subsection2_2 
-            subsectionId={subsectionId}
-          />
+          <>
+            <Subsection2_2 
+              subsectionId={subsectionId}
+            />
+            <ElectricalSymbolsDisplay subsectionId={subsectionId} />
+          </>
         );
       case "2.3":
         return (
