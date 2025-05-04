@@ -21,13 +21,15 @@ export function useAuthentication() {
         return { error };
       }
       
+      console.log('Sign in successful:', data?.user?.email);
+      
       // Success toast
       toast({
         title: 'Login Successful',
         description: 'Welcome back!',
       });
       
-      return { error: null };
+      return { error: null, user: data?.user };
     } catch (error: any) {
       toast({
         title: 'Login Error',

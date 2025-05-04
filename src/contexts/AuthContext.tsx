@@ -1,5 +1,5 @@
 
-import { createContext, useContext, ReactNode } from 'react';
+import { createContext, useContext, ReactNode, useEffect } from 'react';
 import { useAuthSession } from '@/hooks/auth/useAuthSession';
 import { useSubscriptionStatus } from '@/hooks/auth/useSubscriptionStatus';
 import { useDevelopmentMode } from '@/hooks/auth/useDevelopmentMode';
@@ -14,6 +14,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { isTrialActive, trialEndsAt, isSubscribed } = useSubscriptionStatus(profile);
   const { isDevelopmentMode, toggleDevelopmentMode } = useDevelopmentMode();
   const { signIn, signUp, signOut } = useAuthentication();
+
+  // Log auth state for debugging
+  useEffect(() => {
+    console.log('AuthContext state updated:', {
+      isAuthenticated: !!user,
+      userEmail: user?.email,
+      isLoading,
+    });
+  }, [user, isLoading]);
 
   const value: AuthContextType = {
     session,
