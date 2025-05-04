@@ -33,7 +33,7 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
         .from('user_activity')
         .select(`
           *,
-          profiles:profiles(
+          profiles:user_id(
             username,
             full_name,
             avatar_url
@@ -64,7 +64,7 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
           .from('user_activity')
           .select(`
             *,
-            profiles:profiles(
+            profiles:user_id(
               username,
               full_name,
               avatar_url
@@ -82,9 +82,12 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
       }
 
       // Process and set data
+      // Cast the data to UserActivity[] to ensure type safety
+      const typedRankingsData = rankingsData as unknown as UserActivity[];
+      
       setUserRankings(prev => ({
         ...prev,
-        [category]: rankingsData as UserActivity[] || []
+        [category]: typedRankingsData || []
       }));
 
       // Update community stats with subscription status

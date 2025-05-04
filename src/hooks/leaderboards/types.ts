@@ -10,7 +10,7 @@ export type UserActivity = {
   last_active_date: string;
   created_at: string;
   updated_at: string;
-  category: string;
+  category: LeaderboardCategory;
   profiles?: {
     username?: string;
     full_name?: string;
