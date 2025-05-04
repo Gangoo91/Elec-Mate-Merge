@@ -1,3 +1,4 @@
+
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2 } from "lucide-react";
 import { useLeaderboardData } from "@/hooks/leaderboards/useLeaderboardData";
@@ -6,7 +7,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { CommunityStatsCards } from "@/components/leaderboards/CommunityStatsCards";
 import { UserRankingCard } from "@/components/leaderboards/UserRankingCard";
 import { LeaderboardFilters } from "@/components/leaderboards/LeaderboardFilters";
-import { LeaderboardTabs } from "@/components/leaderboards/LeaderboardTabs";
+import LeaderboardTabs from "@/components/leaderboards/LeaderboardTabs";
 import { AchievementsSection } from "@/components/leaderboards/AchievementsSection";
 
 const Leaderboards = () => {
@@ -72,13 +73,7 @@ const Leaderboards = () => {
 
       {/* Main Leaderboard */}
       <LeaderboardTabs
-        timeframe={timeframe}
-        setTimeframe={setTimeframe}
-        filteredUsers={filteredUsers}
-        viewMode={viewMode}
-        maxPoints={maxPoints}
-        userRankings={userRankings}
-        isMobile={isMobile}
+        onViewModeChange={(mode) => setViewMode(mode)}
       />
 
       {/* Achievements */}
