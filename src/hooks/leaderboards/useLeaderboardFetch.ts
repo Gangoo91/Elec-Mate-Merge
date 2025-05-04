@@ -4,15 +4,26 @@ import { supabase } from '@/integrations/supabase/client';
 import type { UserActivity, CommunityStats, LeaderboardCategory } from './types';
 import { ensureSubscriberCounted } from './useActivityTracking';
 
+// Create explicit types that avoid deep nesting
+type LeaderboardData = {
+  learning: UserActivity[];
+  community: UserActivity[];
+  safety: UserActivity[];
+  mentor: UserActivity[];
+  mental: UserActivity[];
+};
+
+type UserRankData = {
+  learning: UserActivity | null;
+  community: UserActivity | null;
+  safety: UserActivity | null;
+  mentor: UserActivity | null;
+  mental: UserActivity | null;
+};
+
 export function useLeaderboardFetch(userId: string | undefined, isSubscribed: boolean) {
-  // Define state with explicit non-recursive types
-  const [userRankings, setUserRankings] = useState<{
-    learning: UserActivity[];
-    community: UserActivity[];
-    safety: UserActivity[];
-    mentor: UserActivity[];
-    mental: UserActivity[];
-  }>({
+  // Initialize state with explicit types
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardData>({
     learning: [],
     community: [],
     safety: [],
@@ -22,13 +33,7 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
   
   const [communityStats, setCommunityStats] = useState<CommunityStats | null>(null);
   
-  const [currentUserRank, setCurrentUserRank] = useState<{
-    learning: UserActivity | null;
-    community: UserActivity | null;
-    safety: UserActivity | null;
-    mentor: UserActivity | null;
-    mental: UserActivity | null;
-  }>({
+  const [userRank, setUserRank] = useState<UserRankData>({
     learning: null,
     community: null,
     safety: null,
@@ -39,12 +44,13 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Function to fetch data for a specific category
   const fetchLeaderboardData = useCallback(async (category: LeaderboardCategory = 'learning') => {
     try {
       setIsLoading(true);
       setError(null);
 
-      // Fetch top users by points for the specified category
+      // Fetch top users for the specified category
       const { data: rankingsData, error: rankingsError } = await supabase
         .from('user_activity')
         .select(`
@@ -74,9 +80,9 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
       }
 
       // Fetch current user's rank if logged in
-      let currentUserData = null;
+      let userData = null;
       if (userId) {
-        const { data: userData, error: userError } = await supabase
+        const { data: userRankData, error: userError } = await supabase
           .from('user_activity')
           .select(`
             *,
@@ -91,28 +97,29 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
           .single();
 
         if (userError && userError.code !== 'PGRST116') {
-          console.error('Error fetching current user data:', userError);
+          console.error('Error fetching user rank:', userError);
         } else {
-          currentUserData = userData;
+          userData = userRankData;
         }
       }
 
-      // Process and set data
-      const typedRankingsData = rankingsData as unknown as UserActivity[];
+      // Process the fetched data
+      const typedRankingsData = rankingsData as UserActivity[];
       
-      // Update rankings with typesafe approach
-      setUserRankings(prev => {
-        const newState = { ...prev };
-        newState[category] = typedRankingsData || [];
-        return newState;
+      // Update leaderboard data for the specific category
+      setLeaderboardData(prev => {
+        const updated = { ...prev };
+        updated[category] = typedRankingsData || [];
+        return updated;
       });
 
-      // Update community stats with subscription status
+      // Update community stats
       if (statsData) {
         if (isSubscribed && userId) {
-          const shouldUpdateStats = !(currentUserData?.last_active_date === new Date().toISOString().split('T')[0]);
+          const todayDate = new Date().toISOString().split('T')[0];
+          const userIsActive = userData?.last_active_date === todayDate;
           
-          if (shouldUpdateStats) {
+          if (!userIsActive) {
             await ensureSubscriberCounted(statsData.id, userId, isSubscribed);
             
             setCommunityStats({
@@ -127,26 +134,20 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
         }
       }
 
-      // Update user rank with typesafe approach
-      const typedUserData = currentUserData as UserActivity | null;
+      // Update user's rank for the specific category
+      const typedUserData = userData as UserActivity | null;
       
-      // Explicitly handle each category case to avoid using computed property access
-      switch (category) {
-        case 'learning':
-          setCurrentUserRank(prev => ({ ...prev, learning: typedUserData }));
-          break;
-        case 'community':
-          setCurrentUserRank(prev => ({ ...prev, community: typedUserData }));
-          break;
-        case 'safety':
-          setCurrentUserRank(prev => ({ ...prev, safety: typedUserData }));
-          break;
-        case 'mentor':
-          setCurrentUserRank(prev => ({ ...prev, mentor: typedUserData }));
-          break;
-        case 'mental':
-          setCurrentUserRank(prev => ({ ...prev, mental: typedUserData }));
-          break;
+      // Use a safer approach to update the specific category
+      if (category === 'learning') {
+        setUserRank(prev => ({ ...prev, learning: typedUserData }));
+      } else if (category === 'community') {
+        setUserRank(prev => ({ ...prev, community: typedUserData }));
+      } else if (category === 'safety') {
+        setUserRank(prev => ({ ...prev, safety: typedUserData }));
+      } else if (category === 'mentor') {
+        setUserRank(prev => ({ ...prev, mentor: typedUserData }));
+      } else if (category === 'mental') {
+        setUserRank(prev => ({ ...prev, mental: typedUserData }));
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
@@ -157,6 +158,7 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
     }
   }, [userId, isSubscribed]);
 
+  // Function to fetch data for all categories
   const fetchAllLeaderboardData = useCallback(async () => {
     const categories: LeaderboardCategory[] = ['learning', 'community', 'safety', 'mentor', 'mental'];
     
@@ -166,9 +168,9 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
   }, [fetchLeaderboardData]);
 
   return {
-    userRankings,
+    userRankings: leaderboardData,
     communityStats,
-    currentUserRank,
+    currentUserRank: userRank,
     isLoading,
     error,
     fetchLeaderboardData,
