@@ -40,7 +40,10 @@ const PlansList = ({ billing }: PlansListProps) => {
       console.log("Checkout response:", data);
       
       if (data?.url) {
-        window.location.href = data.url;
+        // Use window.location.href instead of window.location.replace to ensure proper redirection
+        setTimeout(() => {
+          window.location.href = data.url;
+        }, 300);
       } else {
         throw new Error('No checkout URL returned');
       }
@@ -51,7 +54,6 @@ const PlansList = ({ billing }: PlansListProps) => {
         description: error instanceof Error ? error.message : "Failed to start checkout process",
         variant: "destructive",
       });
-    } finally {
       setIsLoading({ ...isLoading, [planId]: false });
     }
   };
