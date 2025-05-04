@@ -4,9 +4,22 @@ import { supabase } from '@/integrations/supabase/client';
 import type { UserActivity, CommunityStats, LeaderboardCategory } from './types';
 import { ensureSubscriberCounted } from './useActivityTracking';
 
-// Define a type for the rankings object to avoid excessive type instantiation
-type CategoryRankings = Record<LeaderboardCategory, UserActivity[]>;
-type UserRank = Record<LeaderboardCategory, UserActivity | null>;
+// Define concrete types instead of using Record to avoid deep type instantiation
+type CategoryRankings = {
+  learning: UserActivity[];
+  community: UserActivity[];
+  safety: UserActivity[];
+  mentor: UserActivity[];
+  mental: UserActivity[];
+};
+
+type UserRank = {
+  learning: UserActivity | null;
+  community: UserActivity | null;
+  safety: UserActivity | null;
+  mentor: UserActivity | null;
+  mental: UserActivity | null;
+};
 
 export function useLeaderboardFetch(userId: string | undefined, isSubscribed: boolean) {
   const [userRankings, setUserRankings] = useState<CategoryRankings>({
