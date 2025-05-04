@@ -15,7 +15,7 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
         <h3 className="text-lg font-semibold mb-3">Visual Guide to BS7671 Electrical Symbols</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-          {/* Socket symbols - updated to match BS7671 */}
+          {/* Socket symbols - correctly matching BS7671 standard */}
           <div className="bg-elec-gray/50 border border-elec-yellow/20 rounded-lg p-4">
             <h4 className="font-medium text-elec-yellow mb-3">Socket Outlets</h4>
             <div className="space-y-4">
@@ -23,9 +23,8 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 14 L20 14" stroke="white" strokeWidth="1.5"/>
-                    <path d="M14 6 L14 14" stroke="white" strokeWidth="1.5"/>
-                    <path d="M8 14 A6 6 0 0 1 14 8" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <circle cx="14" cy="14" r="8" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <line x1="6" y1="14" x2="22" y2="14" stroke="white" strokeWidth="1.5"/>
                   </svg>
                 </div>
                 <span className="text-sm text-elec-light/80">Single Socket Outlet (BS7671)</span>
@@ -35,11 +34,8 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 14 L24 14" stroke="white" strokeWidth="1.5"/>
-                    <path d="M10 6 L10 14" stroke="white" strokeWidth="1.5"/>
-                    <path d="M18 6 L18 14" stroke="white" strokeWidth="1.5"/>
-                    <path d="M4 14 A6 6 0 0 1 10 8" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <path d="M18 14 A6 6 0 0 1 24 8" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <circle cx="10" cy="14" r="6" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <circle cx="18" cy="14" r="6" stroke="white" strokeWidth="1.5" fill="none"/>
                   </svg>
                 </div>
                 <span className="text-sm text-elec-light/80">Twin Socket Outlet (BS7671)</span>
@@ -49,10 +45,9 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 14 L20 14" stroke="white" strokeWidth="1.5"/>
-                    <path d="M14 6 L14 14" stroke="white" strokeWidth="1.5"/>
-                    <path d="M8 14 A6 6 0 0 1 14 8" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <path d="M17 11 L20 8" stroke="white" strokeWidth="1.5"/>
+                    <circle cx="14" cy="14" r="8" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <line x1="6" y1="14" x2="22" y2="14" stroke="white" strokeWidth="1.5"/>
+                    <line x1="18" y1="10" x2="22" y2="6" stroke="white" strokeWidth="1.5"/>
                   </svg>
                 </div>
                 <span className="text-sm text-elec-light/80">Switched Socket Outlet (BS7671)</span>
@@ -62,13 +57,10 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 14 L24 14" stroke="white" strokeWidth="1.5"/>
-                    <path d="M10 6 L10 14" stroke="white" strokeWidth="1.5"/>
-                    <path d="M18 6 L18 14" stroke="white" strokeWidth="1.5"/>
-                    <path d="M4 14 A6 6 0 0 1 10 8" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <path d="M18 14 A6 6 0 0 1 24 8" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <path d="M7 11 L10 8" stroke="white" strokeWidth="1.5"/>
-                    <path d="M15 11 L18 8" stroke="white" strokeWidth="1.5"/>
+                    <circle cx="10" cy="14" r="6" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <circle cx="18" cy="14" r="6" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <line x1="7" y1="10" x2="10" y2="7" stroke="white" strokeWidth="1.5"/>
+                    <line x1="15" y1="10" x2="18" y2="7" stroke="white" strokeWidth="1.5"/>
                   </svg>
                 </div>
                 <span className="text-sm text-elec-light/80">Twin Switched Socket Outlet (BS7671)</span>
@@ -85,10 +77,10 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="14" cy="14" r="8" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <path d="M18 10 L22 6" stroke="white" strokeWidth="1.5"/>
+                    <line x1="14" y1="6" x2="14" y2="22" stroke="white" strokeWidth="1.5"/>
                   </svg>
                 </div>
-                <span className="text-sm text-elec-light/80">Switch, General Symbol (BS7671)</span>
+                <span className="text-sm text-elec-light/80">Switch, One-way (BS7671)</span>
               </div>
               
               {/* Two-way switch - BS7671 symbol */}
@@ -96,11 +88,11 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="14" cy="14" r="8" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <path d="M18 10 L22 6" stroke="white" strokeWidth="1.5"/>
-                    <path d="M5 18 L9 14" stroke="white" strokeWidth="1.5"/>
+                    <line x1="14" y1="6" x2="14" y2="22" stroke="white" strokeWidth="1.5"/>
+                    <line x1="6" y1="14" x2="22" y2="14" stroke="white" strokeWidth="1.5"/>
                   </svg>
                 </div>
-                <span className="text-sm text-elec-light/80">Two-way Switch, Single Pole (BS7671)</span>
+                <span className="text-sm text-elec-light/80">Two-way Switch (BS7671)</span>
               </div>
               
               {/* Intermediate switch - BS7671 symbol */}
@@ -108,10 +100,9 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="14" cy="14" r="8" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <path d="M18 10 L22 6" stroke="white" strokeWidth="1.5"/>
-                    <path d="M10 18 L6 22" stroke="white" strokeWidth="1.5"/>
-                    <path d="M18 18 L22 22" stroke="white" strokeWidth="1.5"/>
-                    <path d="M10 10 L6 6" stroke="white" strokeWidth="1.5"/>
+                    <line x1="14" y1="6" x2="14" y2="22" stroke="white" strokeWidth="1.5"/>
+                    <line x1="6" y1="14" x2="22" y2="14" stroke="white" strokeWidth="1.5"/>
+                    <line x1="8" y1="8" x2="20" y2="20" stroke="white" strokeWidth="1.5"/>
                   </svg>
                 </div>
                 <span className="text-sm text-elec-light/80">Intermediate Switch (BS7671)</span>
@@ -122,10 +113,11 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="14" cy="14" r="8" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <path d="M14 6 L14 2" stroke="white" strokeWidth="1.5"/>
+                    <line x1="14" y1="6" x2="14" y2="2" stroke="white" strokeWidth="1.5"/>
+                    <line x1="14" y1="14" x2="14" y2="22" stroke="white" strokeWidth="1.5"/>
                   </svg>
                 </div>
-                <span className="text-sm text-elec-light/80">Pull Switch, Single Pole (BS7671)</span>
+                <span className="text-sm text-elec-light/80">Pull Switch (BS7671)</span>
               </div>
             </div>
           </div>
@@ -139,8 +131,7 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="14" cy="14" r="8" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <line x1="14" y1="6" x2="14" y2="22" stroke="white" strokeWidth="1.5"/>
-                    <line x1="6" y1="14" x2="22" y2="14" stroke="white" strokeWidth="1.5"/>
+                    <circle cx="14" cy="14" r="2" stroke="white" strokeWidth="1.5" fill="none"/>
                   </svg>
                 </div>
                 <span className="text-sm text-elec-light/80">Ceiling Light Fitting (BS7671)</span>
@@ -150,8 +141,8 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="5" y="7" width="18" height="14" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <line x1="5" y1="11" x2="23" y2="11" stroke="white" strokeWidth="1.5"/>
+                    <rect x="8" y="8" width="12" height="12" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <line x1="8" y1="12" x2="20" y2="12" stroke="white" strokeWidth="1.5"/>
                     <text x="14" y="18" fill="white" fontSize="5" textAnchor="middle">DB</text>
                   </svg>
                 </div>
@@ -162,11 +153,11 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="10" y="10" width="8" height="8" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <line x1="6" y1="14" x2="10" y2="14" stroke="white" strokeWidth="1.5"/>
-                    <line x1="18" y1="14" x2="22" y2="14" stroke="white" strokeWidth="1.5"/>
-                    <line x1="14" y1="6" x2="14" y2="10" stroke="white" strokeWidth="1.5"/>
-                    <line x1="14" y1="18" x2="14" y2="22" stroke="white" strokeWidth="1.5"/>
+                    <circle cx="14" cy="14" r="6" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <line x1="6" y1="14" x2="8" y2="14" stroke="white" strokeWidth="1.5"/>
+                    <line x1="20" y1="14" x2="22" y2="14" stroke="white" strokeWidth="1.5"/>
+                    <line x1="14" y1="6" x2="14" y2="8" stroke="white" strokeWidth="1.5"/>
+                    <line x1="14" y1="20" x2="14" y2="22" stroke="white" strokeWidth="1.5"/>
                   </svg>
                 </div>
                 <span className="text-sm text-elec-light/80">Junction Box (BS7671)</span>
@@ -182,7 +173,7 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
     );
   }
   
-  // Content for subsection 2.2 (Enclosures and Accessories)
+  // Keep content for subsection 2.2 (Enclosures and Accessories)
   if (subsectionId === "2.2") {
     return (
       <div className="mt-6">

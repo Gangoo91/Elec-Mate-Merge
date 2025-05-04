@@ -32,12 +32,6 @@ const SubsectionLearningContent = ({
               isCompleted={isCompleted} 
               markAsComplete={markAsComplete}
             />
-            <ElectricalSymbolsDisplay subsectionId={subsectionId} />
-            <InteractiveLightDemo 
-              subsectionId={subsectionId}
-              isCompleted={isCompleted}
-              markAsComplete={markAsComplete}
-            />
           </>
         );
       case "1.2":
