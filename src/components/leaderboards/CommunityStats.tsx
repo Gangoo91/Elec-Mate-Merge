@@ -2,19 +2,22 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, Star } from "lucide-react";
 import { CommunityStats as CommunityStatsType } from "@/hooks/leaderboards/useLeaderboardData";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface CommunityStatsProps {
   communityStats: CommunityStatsType | null;
 }
 
 export const CommunityStats = ({ communityStats }: CommunityStatsProps) => {
+  const { isSubscribed } = useAuth();
+
   return (
     <div className="grid gap-4 md:grid-cols-3">
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardContent className="pt-6 text-center">
           <Users className="h-8 w-8 text-elec-yellow mx-auto mb-3" />
-          <div className="text-3xl font-bold">{communityStats?.active_users || 0}</div>
-          <p className="text-sm text-muted-foreground">Active Community Members</p>
+          <div className="text-3xl font-bold">1</div>
+          <p className="text-sm text-muted-foreground">Active Subscriber</p>
         </CardContent>
       </Card>
       <Card className="border-elec-yellow/20 bg-elec-gray">
