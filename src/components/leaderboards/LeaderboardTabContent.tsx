@@ -1,12 +1,10 @@
-
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Clock, Medal, Trophy } from "lucide-react";
-import { UserActivity } from "@/hooks/leaderboards/useLeaderboardData";
-import { format } from "date-fns";
-import { getBadgeColor, getLevelBadgeColor } from "@/hooks/leaderboards/useLeaderboardsFilters";
+import { UserActivity } from "@/hooks/leaderboards/types";
+import { getBadgeColor, getLevelBadgeColor } from "@/hooks/leaderboards/filters";
 import { getUserDisplayName, getUserInitials } from "./leaderboardUtils";
 import { LeaderboardRankCard } from "./LeaderboardRankCard";
 

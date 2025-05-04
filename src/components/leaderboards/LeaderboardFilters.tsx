@@ -2,7 +2,7 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Filter, CalendarCheck, LayoutList, LayoutGrid } from "lucide-react";
-import { TimeframeOption } from "@/hooks/leaderboards/useLeaderboardsFilters";
+import { TimeframeOption } from "@/hooks/leaderboards/filters";
 
 interface LeaderboardFiltersProps {
   timeframe: TimeframeOption;

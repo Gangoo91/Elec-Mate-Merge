@@ -1,8 +1,7 @@
-
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2 } from "lucide-react";
 import { useLeaderboardData } from "@/hooks/leaderboards/useLeaderboardData";
-import { useLeaderboardsFilters } from "@/hooks/leaderboards/useLeaderboardsFilters";
+import { useLeaderboardFilters } from "@/hooks/leaderboards/filters";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { CommunityStatsCards } from "@/components/leaderboards/CommunityStatsCards";
 import { UserRankingCard } from "@/components/leaderboards/UserRankingCard";
@@ -22,7 +21,7 @@ const Leaderboards = () => {
     viewMode, setViewMode,
     uniqueLevels, uniqueBadges,
     filteredUsers
-  } = useLeaderboardsFilters(userRankings);
+  } = useLeaderboardFilters(userRankings);
 
   // Calculate maximum points for progress bar scaling
   const maxPoints = Math.max(...userRankings.map(user => user.points), 100);

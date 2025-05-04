@@ -5,7 +5,7 @@ import { Trophy, Medal, Clock } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { UserActivity } from "@/hooks/leaderboards/types";
 import { format } from "date-fns";
-import { getLevelBadgeColor, getBadgeColor } from "@/hooks/leaderboards/useLeaderboardsFilters";
+import { getLevelBadgeColor, getBadgeColor } from "@/hooks/leaderboards/filters";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useAuth } from '@/contexts/AuthContext';
 
