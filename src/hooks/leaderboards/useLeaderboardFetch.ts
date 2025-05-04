@@ -5,7 +5,7 @@ import type { UserActivity, CommunityStats, LeaderboardCategory } from './types'
 import { ensureSubscriberCounted } from './useActivityTracking';
 import { toast } from '@/components/ui/use-toast';
 
-// Explicit types that avoid deep nesting
+// Define explicit types for our state management to avoid type recursion
 type LeaderboardData = {
   learning: UserActivity[];
   community: UserActivity[];
@@ -23,24 +23,20 @@ type UserRankData = {
 };
 
 export function useLeaderboardFetch(userId: string | undefined, isSubscribed: boolean) {
-  // State with explicitly defined types to avoid excessive type recursion
-  const [leaderboardData, setLeaderboardData] = useState<LeaderboardData>({
-    learning: [],
-    community: [],
-    safety: [],
-    mentor: [],
-    mental: []
-  });
+  // Use separate state variables for each category to avoid deep type recursion
+  const [learningData, setLearningData] = useState<UserActivity[]>([]);
+  const [communityData, setCommunityData] = useState<UserActivity[]>([]);
+  const [safetyData, setSafetyData] = useState<UserActivity[]>([]);
+  const [mentorData, setMentorData] = useState<UserActivity[]>([]);
+  const [mentalData, setMentalData] = useState<UserActivity[]>([]);
   
   const [communityStats, setCommunityStats] = useState<CommunityStats | null>(null);
   
-  const [userRank, setUserRank] = useState<UserRankData>({
-    learning: null,
-    community: null,
-    safety: null,
-    mentor: null,
-    mental: null
-  });
+  const [userRankLearning, setUserRankLearning] = useState<UserActivity | null>(null);
+  const [userRankCommunity, setUserRankCommunity] = useState<UserActivity | null>(null);
+  const [userRankSafety, setUserRankSafety] = useState<UserActivity | null>(null);
+  const [userRankMentor, setUserRankMentor] = useState<UserActivity | null>(null);
+  const [userRankMental, setUserRankMental] = useState<UserActivity | null>(null);
   
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -126,20 +122,25 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
       const processedRankingsData = rankingsData ? rankingsData.map(item => ({
         ...item,
         category // Add the category property that's missing
-      })) : [];
+      })) as UserActivity[] : [];
       
-      // Update leaderboard data for the specific category using direct property assignment
-      // This avoids deeply nested spread operations that could cause type recursion
-      if (category === 'learning') {
-        setLeaderboardData(prev => ({ ...prev, learning: processedRankingsData as UserActivity[] }));
-      } else if (category === 'community') {
-        setLeaderboardData(prev => ({ ...prev, community: processedRankingsData as UserActivity[] }));
-      } else if (category === 'safety') {
-        setLeaderboardData(prev => ({ ...prev, safety: processedRankingsData as UserActivity[] }));
-      } else if (category === 'mentor') {
-        setLeaderboardData(prev => ({ ...prev, mentor: processedRankingsData as UserActivity[] }));
-      } else if (category === 'mental') {
-        setLeaderboardData(prev => ({ ...prev, mental: processedRankingsData as UserActivity[] }));
+      // Update the appropriate state based on category
+      switch (category) {
+        case 'learning':
+          setLearningData(processedRankingsData);
+          break;
+        case 'community':
+          setCommunityData(processedRankingsData);
+          break;
+        case 'safety':
+          setSafetyData(processedRankingsData);
+          break;
+        case 'mentor':
+          setMentorData(processedRankingsData);
+          break;
+        case 'mental':
+          setMentalData(processedRankingsData);
+          break;
       }
 
       // Update community stats
@@ -163,24 +164,30 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
         }
       }
 
-      // Update user's rank for the specific category using direct property assignment
+      // Update user's rank for the specific category
       if (userData) {
         const processedUserData = {
           ...userData,
           category // Add the category property that's missing
         } as UserActivity;
         
-        // Use direct property assignment to avoid complex type recursion
-        if (category === 'learning') {
-          setUserRank(prev => ({ ...prev, learning: processedUserData }));
-        } else if (category === 'community') {
-          setUserRank(prev => ({ ...prev, community: processedUserData }));
-        } else if (category === 'safety') {
-          setUserRank(prev => ({ ...prev, safety: processedUserData }));
-        } else if (category === 'mentor') {
-          setUserRank(prev => ({ ...prev, mentor: processedUserData }));
-        } else if (category === 'mental') {
-          setUserRank(prev => ({ ...prev, mental: processedUserData }));
+        // Update the appropriate user rank state based on category
+        switch (category) {
+          case 'learning':
+            setUserRankLearning(processedUserData);
+            break;
+          case 'community':
+            setUserRankCommunity(processedUserData);
+            break;
+          case 'safety':
+            setUserRankSafety(processedUserData);
+            break;
+          case 'mentor':
+            setUserRankMentor(processedUserData);
+            break;
+          case 'mental':
+            setUserRankMental(processedUserData);
+            break;
         }
       }
     } catch (err) {
@@ -210,6 +217,24 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
       console.error("Error fetching all leaderboard data:", err);
     }
   }, [fetchLeaderboardData]);
+
+  // Construct the full leaderboard data object from individual state pieces
+  const leaderboardData: LeaderboardData = {
+    learning: learningData,
+    community: communityData,
+    safety: safetyData,
+    mentor: mentorData,
+    mental: mentalData
+  };
+
+  // Construct the full user rank data object from individual state pieces
+  const userRank: UserRankData = {
+    learning: userRankLearning,
+    community: userRankCommunity,
+    safety: userRankSafety,
+    mentor: userRankMentor,
+    mental: userRankMental
+  };
 
   return {
     userRankings: leaderboardData,
