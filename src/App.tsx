@@ -16,6 +16,7 @@ import ApprenticeOJT from "./pages/apprentice/ApprenticeOJT";
 import ApprenticeStudy from "./pages/apprentice/ApprenticeStudy";
 import ApprenticeToolbox from "./pages/apprentice/ApprenticeToolbox";
 import ApprenticeMentalHealth from "./pages/apprentice/ApprenticeMentalHealth";
+import CareerProgression from "./pages/apprentice/CareerProgression";
 import CourseDetail from "./pages/apprentice/CourseDetail";
 import EALCourses from "./pages/apprentice/EALCourses";
 import NotFound from "./pages/NotFound";
@@ -75,6 +76,7 @@ function App() {
                 <Route path="ojt" element={<ApprenticeOJT />} />
                 <Route path="toolbox" element={<ApprenticeToolbox />} />
                 <Route path="mental-health" element={<ApprenticeMentalHealth />} />
+                <Route path="career-progression" element={<CareerProgression />} />
                 <Route path="study">
                   <Route index element={<ApprenticeStudy />} />
                   <Route path="eal" element={<EALCourses />} />
