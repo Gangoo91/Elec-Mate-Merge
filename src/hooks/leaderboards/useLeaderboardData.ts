@@ -1,34 +1,18 @@
 
-import { useState, useEffect } from 'react';
-import { supabase } from '@/integrations/supabase/client';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { UserActivity, CommunityStats, LeaderboardData } from './types';
+import { 
+  fetchTopUsers, 
+  fetchCommunityStats, 
+  fetchCurrentUserRank, 
+  updateUserActivity as updateActivity
+} from './leaderboardService';
+import { useLeaderboardRealtime } from './useLeaderboardRealtime';
 
-export type UserActivity = {
-  id: string;
-  user_id: string;
-  points: number;
-  level: string;
-  badge: string;
-  streak: number;
-  last_active_date: string;
-  created_at: string;
-  updated_at: string;
-  profiles?: {
-    username?: string;
-    full_name?: string;
-    avatar_url?: string;
-  };
-}
+export type { UserActivity, CommunityStats };
 
-export type CommunityStats = {
-  id: string;
-  active_users: number;
-  lessons_completed_today: number;
-  longest_streak: number;
-  updated_at: string;
-}
-
-export function useLeaderboardData() {
+export function useLeaderboardData(): LeaderboardData {
   const [userRankings, setUserRankings] = useState<UserActivity[]>([]);
   const [communityStats, setCommunityStats] = useState<CommunityStats | null>(null);
   const [currentUserRank, setCurrentUserRank] = useState<UserActivity | null>(null);
@@ -37,196 +21,45 @@ export function useLeaderboardData() {
   const { user } = useAuth();
 
   // Fetch leaderboard data
-  useEffect(() => {
-    const fetchLeaderboardData = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-
-        // Fetch top users by points
-        const { data: rankingsData, error: rankingsError } = await supabase
-          .from('user_activity')
-          .select('*')
-          .order('points', { ascending: false })
-          .limit(10);
-
-        if (rankingsError) {
-          throw rankingsError;
-        }
-
-        // Get profiles separately to avoid the join error
-        const userIds = rankingsData?.map(user => user.user_id) || [];
-        let profilesData: Record<string, any> = {};
-        
-        if (userIds.length > 0) {
-          const { data: profiles, error: profilesError } = await supabase
-            .from('profiles')
-            .select('id, username, full_name, avatar_url')
-            .in('id', userIds);
-            
-          if (!profilesError && profiles) {
-            // Create a lookup object for profiles
-            profilesData = profiles.reduce((acc, profile) => {
-              acc[profile.id] = profile;
-              return acc;
-            }, {} as Record<string, any>);
-          }
-        }
-        
-        // Combine user activity with profiles
-        const usersWithProfiles = rankingsData?.map(user => ({
-          ...user,
-          profiles: profilesData[user.user_id] || {
-            username: 'Anonymous',
-            full_name: null,
-            avatar_url: null
-          }
-        })) as UserActivity[];
-
-        // Fetch community stats
-        const { data: statsData, error: statsError } = await supabase
-          .from('community_stats')
-          .select('*')
-          .single();
-
-        if (statsError && statsError.code !== 'PGRST116') {
-          throw statsError;
-        }
-
-        // Fetch current user's rank if logged in
-        let currentUserData = null;
-        if (user) {
-          const { data: userData, error: userError } = await supabase
-            .from('user_activity')
-            .select('*')
-            .eq('user_id', user.id)
-            .single();
-
-          if (userError && userError.code !== 'PGRST116') {
-            console.error('Error fetching current user data:', userError);
-          } else if (userData) {
-            // Get the user's profile
-            const { data: userProfile } = await supabase
-              .from('profiles')
-              .select('username, full_name, avatar_url')
-              .eq('id', user.id)
-              .single();
-              
-            currentUserData = {
-              ...userData,
-              profiles: userProfile || {
-                username: 'Anonymous',
-                full_name: null,
-                avatar_url: null
-              }
-            };
-          }
-        }
-
-        // Process and set data
-        setUserRankings(usersWithProfiles || []);
-        setCommunityStats(statsData || null);
-        setCurrentUserRank(currentUserData);
-      } catch (err) {
-        const message = err instanceof Error ? err.message : String(err);
-        setError(message);
-        console.error('Error fetching leaderboard data:', message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchLeaderboardData();
-
-    // Set up realtime subscription
-    const userActivityChannel = supabase
-      .channel('custom-all-channel')
-      .on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: 'user_activity'
-      }, () => {
-        fetchLeaderboardData();
-      })
-      .on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: 'community_stats'
-      }, () => {
-        fetchLeaderboardData();
-      })
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(userActivityChannel);
-    };
-  }, [user]);
-
-  // Function to update user activity (e.g., when completing a lesson)
-  const updateUserActivity = async (pointsToAdd: number = 10) => {
-    if (!user) return;
-
+  const fetchLeaderboardData = useCallback(async () => {
     try {
-      // Check if user already has an activity record
-      const { data: existingRecord, error: fetchError } = await supabase
-        .from('user_activity')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
+      setIsLoading(true);
+      setError(null);
 
-      if (fetchError && fetchError.code !== 'PGRST116') {
-        throw fetchError;
-      }
+      // Fetch top users by points
+      const topUsers = await fetchTopUsers();
+      setUserRankings(topUsers || []);
 
-      if (existingRecord) {
-        // Update existing record
-        const { error: updateError } = await supabase
-          .from('user_activity')
-          .update({
-            points: existingRecord.points + pointsToAdd,
-            last_active_date: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-          })
-          .eq('user_id', user.id);
+      // Fetch community stats
+      const stats = await fetchCommunityStats();
+      setCommunityStats(stats);
 
-        if (updateError) throw updateError;
-      } else {
-        // Create new record
-        const { error: insertError } = await supabase
-          .from('user_activity')
-          .insert({
-            user_id: user.id,
-            points: pointsToAdd,
-            level: 'Apprentice',
-            badge: 'Beginner',
-            streak: 1,
-          });
-
-        if (insertError) throw insertError;
-      }
-
-      // Update community stats
-      const { data: statsData } = await supabase
-        .from('community_stats')
-        .select('*')
-        .limit(1)
-        .single();
-
-      if (statsData) {
-        await supabase
-          .from('community_stats')
-          .update({
-            active_users: statsData.active_users + 1,
-            lessons_completed_today: statsData.lessons_completed_today + 1,
-            updated_at: new Date().toISOString(),
-          })
-          .eq('id', statsData.id);
+      // Fetch current user's rank if logged in
+      if (user) {
+        const currentUser = await fetchCurrentUserRank(user.id);
+        setCurrentUserRank(currentUser);
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
-      console.error('Error updating user activity:', message);
+      setError(message);
+      console.error('Error fetching leaderboard data:', message);
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    fetchLeaderboardData();
+  }, [fetchLeaderboardData]);
+
+  // Set up realtime subscription
+  useLeaderboardRealtime(fetchLeaderboardData);
+
+  // Function to update user activity (e.g., when completing a lesson)
+  const updateUserActivity = useCallback(async (pointsToAdd: number = 10) => {
+    if (!user) return;
+    await updateActivity(user.id, pointsToAdd);
+  }, [user]);
 
   return {
     userRankings,

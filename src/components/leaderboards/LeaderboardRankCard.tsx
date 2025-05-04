@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, Medal, Clock } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
-import { UserActivity } from "@/hooks/leaderboards/useLeaderboardData";
+import { UserActivity } from "@/hooks/leaderboards/types";
 import { format } from "date-fns";
 import { getLevelBadgeColor, getBadgeColor } from "@/hooks/leaderboards/useLeaderboardsFilters";
 import { useIsMobile } from "@/hooks/use-mobile";
