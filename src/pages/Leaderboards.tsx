@@ -316,16 +316,16 @@ const Leaderboards = () => {
       <Tabs defaultValue={timeframe} className="space-y-4" onValueChange={(value) => setTimeframe(value as 'weekly' | 'monthly' | 'alltime')}>
         <div className="flex justify-between items-center">
           <TabsList className="bg-elec-gray border border-elec-yellow/20">
-            <TabsTrigger value="weekly" className={isMobile ? "text-xs px-2" : ""}>This Week</TabsTrigger>
-            <TabsTrigger value="monthly" className={isMobile ? "text-xs px-2" : ""}>This Month</TabsTrigger>
-            <TabsTrigger value="alltime" className={isMobile ? "text-xs px-2" : ""}>All Time</TabsTrigger>
+            <TabsTrigger value="weekly" className={isMobile ? "text-xs px-2 py-1.5" : ""}>This Week</TabsTrigger>
+            <TabsTrigger value="monthly" className={isMobile ? "text-xs px-2 py-1.5" : ""}>This Month</TabsTrigger>
+            <TabsTrigger value="alltime" className={isMobile ? "text-xs px-2 py-1.5" : ""}>All Time</TabsTrigger>
           </TabsList>
         </div>
 
         {["weekly", "monthly", "alltime"].map((period) => (
-          <TabsContent key={period} value={period} className="space-y-4">
+          <TabsContent key={period} value={period} className="space-y-4 mt-2">
             <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader className={isMobile ? "p-4" : ""}>
+              <CardHeader className={isMobile ? "p-4 pb-2" : "pb-2"}>
                 <CardTitle className={isMobile ? "text-xl" : ""}>
                   {period === "weekly" ? "Weekly Leaderboard" : 
                    period === "monthly" ? "Monthly Leaderboard" : "All-Time Leaderboard"}
@@ -335,7 +335,7 @@ const Leaderboards = () => {
                    period === "monthly" ? "Top performers for this month" : "Best performers of all time"}
                 </CardDescription>
               </CardHeader>
-              <CardContent className={isMobile ? "p-4 pt-0" : ""}>
+              <CardContent className={isMobile ? "p-4 pt-2" : "pt-2"}>
                 {filteredUsers.length === 0 ? (
                   <div className="text-center p-8 text-muted-foreground">
                     No leaderboard data available for the selected filters. Try a different combination.
@@ -352,88 +352,90 @@ const Leaderboards = () => {
                     ))}
                   </div>
                 ) : (
-                  <div className="rounded-md border overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className="w-12 text-center">Rank</TableHead>
-                          <TableHead>User</TableHead>
-                          {!isMobile && (
-                            <>
-                              <TableHead>Level</TableHead>
-                              <TableHead>Badge</TableHead>
-                              <TableHead>Streak</TableHead>
-                            </>
-                          )}
-                          <TableHead className="text-right">Points</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {filteredUsers.map((user, index) => (
-                          <TableRow key={user.id} className={index < 3 ? "bg-elec-dark/30" : ""}>
-                            <TableCell className="font-medium w-12 text-center p-2 md:p-4">
-                              <div className="flex items-center justify-center">
-                                {index === 0 ? (
-                                  <Trophy className="h-5 w-5 text-yellow-500" />
-                                ) : index === 1 ? (
-                                  <Medal className="h-5 w-5 text-gray-300" />
-                                ) : index === 2 ? (
-                                  <Medal className="h-5 w-5 text-amber-700" />
-                                ) : (
-                                  <span>{index + 1}</span>
-                                )}
-                              </div>
-                            </TableCell>
-                            <TableCell className="p-2 md:p-4">
-                              <div className="flex items-center gap-2">
-                                <Avatar className="h-6 w-6 md:h-8 md:w-8">
-                                  {user.profiles?.avatar_url ? (
-                                    <AvatarImage src={user.profiles.avatar_url} alt={getUserDisplayName(user)} />
-                                  ) : (
-                                    <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow">
-                                      {getUserInitials(user)}
-                                    </AvatarFallback>
-                                  )}
-                                </Avatar>
-                                <span className="text-xs md:text-sm">{getUserDisplayName(user)}</span>
-                              </div>
-                              {isMobile && (
-                                <div className="flex items-center gap-1 mt-1">
-                                  <Badge variant="outline" className={`text-[10px] px-1 py-0 ${getLevelBadgeColor(user.level)}`}>
-                                    {user.level}
-                                  </Badge>
-                                  <Clock className="h-3 w-3 ml-2 mr-1 text-muted-foreground" />
-                                  <span className="text-[10px] text-muted-foreground">{user.streak}d</span>
-                                </div>
-                              )}
-                            </TableCell>
+                  <div className="rounded-md border overflow-hidden">
+                    <div className="overflow-x-auto">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead className="w-12 text-center">Rank</TableHead>
+                            <TableHead>User</TableHead>
                             {!isMobile && (
                               <>
-                                <TableCell>
-                                  <Badge variant="outline" className={`${getLevelBadgeColor(user.level)}`}>
-                                    {user.level}
-                                  </Badge>
-                                </TableCell>
-                                <TableCell>
-                                  <Badge variant="outline" className={`${getBadgeColor(user.badge)}`}>
-                                    {user.badge}
-                                  </Badge>
-                                </TableCell>
-                                <TableCell>
-                                  <div className="flex items-center">
-                                    <Clock className="h-3 w-3 mr-1 text-muted-foreground" />
-                                    {user.streak} days
-                                  </div>
-                                </TableCell>
+                                <TableHead>Level</TableHead>
+                                <TableHead>Badge</TableHead>
+                                <TableHead>Streak</TableHead>
                               </>
                             )}
-                            <TableCell className="text-right font-medium text-xs md:text-sm p-2 md:p-4">
-                              {user.points.toLocaleString()}
-                            </TableCell>
+                            <TableHead className="text-right">Points</TableHead>
                           </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
+                        </TableHeader>
+                        <TableBody>
+                          {filteredUsers.map((user, index) => (
+                            <TableRow key={user.id} className={index < 3 ? "bg-elec-dark/30" : ""}>
+                              <TableCell className="font-medium w-12 text-center p-2 md:p-4">
+                                <div className="flex items-center justify-center">
+                                  {index === 0 ? (
+                                    <Trophy className="h-5 w-5 text-yellow-500" />
+                                  ) : index === 1 ? (
+                                    <Medal className="h-5 w-5 text-gray-300" />
+                                  ) : index === 2 ? (
+                                    <Medal className="h-5 w-5 text-amber-700" />
+                                  ) : (
+                                    <span>{index + 1}</span>
+                                  )}
+                                </div>
+                              </TableCell>
+                              <TableCell className="p-2 md:p-4">
+                                <div className="flex items-center gap-2">
+                                  <Avatar className="h-6 w-6 md:h-8 md:w-8">
+                                    {user.profiles?.avatar_url ? (
+                                      <AvatarImage src={user.profiles.avatar_url} alt={getUserDisplayName(user)} />
+                                    ) : (
+                                      <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow">
+                                        {getUserInitials(user)}
+                                      </AvatarFallback>
+                                    )}
+                                  </Avatar>
+                                  <span className="text-xs md:text-sm">{getUserDisplayName(user)}</span>
+                                </div>
+                                {isMobile && (
+                                  <div className="flex items-center gap-1 mt-1">
+                                    <Badge variant="outline" className={`text-[10px] px-1 py-0 ${getLevelBadgeColor(user.level)}`}>
+                                      {user.level}
+                                    </Badge>
+                                    <Clock className="h-3 w-3 ml-2 mr-1 text-muted-foreground" />
+                                    <span className="text-[10px] text-muted-foreground">{user.streak}d</span>
+                                  </div>
+                                )}
+                              </TableCell>
+                              {!isMobile && (
+                                <>
+                                  <TableCell>
+                                    <Badge variant="outline" className={`${getLevelBadgeColor(user.level)}`}>
+                                      {user.level}
+                                    </Badge>
+                                  </TableCell>
+                                  <TableCell>
+                                    <Badge variant="outline" className={`${getBadgeColor(user.badge)}`}>
+                                      {user.badge}
+                                    </Badge>
+                                  </TableCell>
+                                  <TableCell>
+                                    <div className="flex items-center">
+                                      <Clock className="h-3 w-3 mr-1 text-muted-foreground" />
+                                      {user.streak} days
+                                    </div>
+                                  </TableCell>
+                                </>
+                              )}
+                              <TableCell className="text-right font-medium text-xs md:text-sm p-2 md:p-4">
+                                {user.points.toLocaleString()}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </div>
                   </div>
                 )}
               </CardContent>
@@ -450,10 +452,10 @@ const Leaderboards = () => {
         <h2 className="text-lg md:text-xl font-semibold">Latest Achievements</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {[
-            { icon: <Award className={`${isMobile ? 'h-6 w-6' : 'h-8 w-8'}`} />, name: "First Lesson", description: "Complete your first video lesson", progress: 100 },
-            { icon: <Clock className={`${isMobile ? 'h-6 w-6' : 'h-8 w-8'}`} />, name: "7-Day Streak", description: "Learn for 7 consecutive days", progress: currentUserRank?.streak ? (currentUserRank.streak / 7) * 100 : 0 },
-            { icon: <Trophy className={`${isMobile ? 'h-6 w-6' : 'h-8 w-8'}`} />, name: "Quiz Master", description: "Score 100% on 5 different quizzes", progress: 60 },
-            { icon: <Star className={`${isMobile ? 'h-6 w-6' : 'h-8 w-8'}`} />, name: "Top Contributor", description: "Help others in the community", progress: 30 },
+            { icon: <Award className={`${isMobile ? 'h-5 w-5' : 'h-8 w-8'}`} />, name: "First Lesson", description: "Complete your first video lesson", progress: 100 },
+            { icon: <Clock className={`${isMobile ? 'h-5 w-5' : 'h-8 w-8'}`} />, name: "7-Day Streak", description: "Learn for 7 consecutive days", progress: currentUserRank?.streak ? (currentUserRank.streak / 7) * 100 : 0 },
+            { icon: <Trophy className={`${isMobile ? 'h-5 w-5' : 'h-8 w-8'}`} />, name: "Quiz Master", description: "Score 100% on 5 different quizzes", progress: 60 },
+            { icon: <Star className={`${isMobile ? 'h-5 w-5' : 'h-8 w-8'}`} />, name: "Top Contributor", description: "Help others in the community", progress: 30 },
           ].map((achievement, i) => (
             <AchievementCard 
               key={i}
