@@ -94,17 +94,17 @@ const Subscriptions = () => {
   };
   
   // Define Stripe price IDs for each plan
-  // IMPORTANT: Replace these with your actual Stripe price IDs from your Stripe dashboard
+  // Using the actual Stripe price IDs you provided
   const stripePrices = {
     monthly: {
-      "apprentice": "price_1RZoXXXXXXXXXXXX", // Replace with your actual Stripe price ID for Apprentice monthly
-      "electrician": "price_1RZoYYYYYYYYYYYY", // Replace with your actual Stripe price ID for Electrician monthly
-      "employer": "price_1RZoZZZZZZZZZZZZ", // Replace with your actual Stripe price ID for Employer monthly
+      "apprentice": "price_1RL1wd2RKw5t5RAms8S0sLAt", // £3.99 Apprentice Monthly
+      "electrician": "price_1RL1zR2RKw5t5RAmVABR93Zy", // £5.99 Electrical Monthly
+      "employer": "price_1RZoZZZZZZZZZZZZ", // Keep placeholder for now
     },
     yearly: {
-      "apprentice": "price_1RZpaXXXXXXXXXXXX", // Replace with your actual Stripe price ID for Apprentice yearly
-      "electrician": "price_1RZpaYYYYYYYYYYYY", // Replace with your actual Stripe price ID for Electrician yearly
-      "employer": "price_1RZpaZZZZZZZZZZZZ", // Replace with your actual Stripe price ID for Employer yearly
+      "apprentice": "price_1RZpaXXXXXXXXXXXX", // Keep placeholder for now
+      "electrician": "price_1RZpaYYYYYYYYYYYY", // Keep placeholder for now
+      "employer": "price_1RZpaZZZZZZZZZZZZ", // Keep placeholder for now
     }
   };
 
