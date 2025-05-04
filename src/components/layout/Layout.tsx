@@ -4,13 +4,9 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 import { useState } from "react";
-import { useUserActivity } from "@/hooks/useUserActivity";
 
 const Layout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  
-  // Track user activity when the app loads
-  useUserActivity();
   
   return (
     <div className="flex h-screen bg-elec-dark text-elec-light overflow-hidden">

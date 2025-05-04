@@ -1,7 +1,6 @@
 
 import { BookOpen, Clock, Trophy, Users } from "lucide-react";
 import OverviewCard from "@/components/dashboard/OverviewCard";
-import { useLeaderboardData } from "@/hooks/leaderboards/useLeaderboardData";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -16,10 +15,8 @@ interface DashboardOverviewProps {
 }
 
 const DashboardOverview = ({ user }: DashboardOverviewProps) => {
-  const { communityStats, currentUserRank } = useLeaderboardData();
   const { user: authUser } = useAuth();
   const [completedLessons, setCompletedLessons] = useState(user.completedLessons);
-  const [activeUsers, setActiveUsers] = useState(0);
 
   // Fetch completed lessons count
   useEffect(() => {
@@ -45,18 +42,6 @@ const DashboardOverview = ({ user }: DashboardOverviewProps) => {
     fetchCompletedLessons();
   }, [authUser]);
 
-  // Set active users count
-  useEffect(() => {
-    if (communityStats?.active_users) {
-      setActiveUsers(communityStats.active_users);
-    }
-  }, [communityStats]);
-
-  // Get user streak from learning category by default
-  const userStreak = currentUserRank?.learning?.streak || 0;
-  // Get user points from learning category by default
-  const userPoints = currentUserRank?.learning?.points || 0;
-
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <OverviewCard 
@@ -67,19 +52,19 @@ const DashboardOverview = ({ user }: DashboardOverviewProps) => {
       />
       <OverviewCard 
         title="Active Streak" 
-        value={`${userStreak} days`}
-        description={userStreak > 0 ? "Keep going!" : "Start learning to build your streak"}
+        value="0 days"
+        description="Start learning to build your streak"
         icon={<Clock className="h-4 w-4" />}
       />
       <OverviewCard 
         title="Leaderboard Rank" 
-        value={userPoints > 0 ? "#1-10" : "--"}
+        value="--"
         description="Complete lessons to rank up"
         icon={<Trophy className="h-4 w-4" />}
       />
       <OverviewCard 
         title="Community" 
-        value={activeUsers.toString()}
+        value="0"
         description="Active users this month"
         icon={<Users className="h-4 w-4" />}
       />
