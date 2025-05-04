@@ -1,5 +1,5 @@
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from "@/components/ui/use-toast";
 import { RefreshCcw } from "lucide-react";
@@ -13,27 +13,76 @@ import SupportSection from "@/components/subscriptions/SupportSection";
 
 const Subscriptions = () => {
   // Get auth context values for subscription status
-  const { checkSubscriptionStatus, isCheckingStatus, isSubscribed, subscriptionTier } = useAuth();
+  const { checkSubscriptionStatus, isCheckingStatus, isSubscribed, subscriptionTier, profile } = useAuth();
   const { toast } = useToast();
+  const [lastAutoCheck, setLastAutoCheck] = useState<Date | null>(null);
+  const [checkCount, setCheckCount] = useState(0);
   
-  // Auto-check subscription status on page load
+  // Auto-check subscription status on page load and periodically
   useEffect(() => {
     const checkStatus = async () => {
       await checkSubscriptionStatus();
       
       // Log the current subscription status
-      console.log('Current subscription status:', { isSubscribed, subscriptionTier });
+      console.log('Current subscription status:', { 
+        isSubscribed, 
+        subscriptionTier,
+        profileId: profile?.id,
+        profileSubscribed: profile?.subscribed,
+        timestamp: new Date().toISOString(),
+        checkCount: checkCount + 1
+      });
+      
+      setCheckCount(prev => prev + 1);
+      setLastAutoCheck(new Date());
     };
     
+    // Initial check
     checkStatus();
     
     // Set up periodic check for subscription status
+    // Use a shorter interval for more frequent checks
     const intervalId = setInterval(() => {
-      checkSubscriptionStatus();
-    }, 10000); // Check every 10 seconds while on this page
+      checkStatus();
+    }, 5000); // Check every 5 seconds while on this page
     
     return () => clearInterval(intervalId);
   }, []);
+
+  // Handle manual refresh click
+  const handleManualRefresh = async () => {
+    try {
+      toast({
+        title: "Refreshing Status",
+        description: "Checking your current subscription status...",
+      });
+      
+      await checkSubscriptionStatus();
+      
+      toast({
+        title: "Status Refreshed",
+        description: isSubscribed 
+          ? `Your ${subscriptionTier || 'active'} subscription is confirmed.` 
+          : "No active subscription found.",
+      });
+      
+      console.log('Manual subscription status check:', { 
+        isSubscribed, 
+        subscriptionTier,
+        timestamp: new Date().toISOString(),
+        checkCount: checkCount + 1
+      });
+      
+      setCheckCount(prev => prev + 1);
+    } catch (error) {
+      console.error('Error during manual refresh:', error);
+      toast({
+        title: "Refresh Error",
+        description: "There was a problem checking your subscription status.",
+        variant: "destructive"
+      });
+    }
+  };
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -49,13 +98,7 @@ const Subscriptions = () => {
         <Button 
           variant="outline" 
           className="flex items-center gap-2" 
-          onClick={() => {
-            checkSubscriptionStatus();
-            toast({
-              title: "Refreshing Status",
-              description: "Checking your current subscription status...",
-            });
-          }}
+          onClick={handleManualRefresh}
           disabled={isCheckingStatus}
         >
           {isCheckingStatus ? (
@@ -81,6 +124,15 @@ const Subscriptions = () => {
 
       {/* Support Section */}
       <SupportSection />
+      
+      {/* Debug info for subscription status */}
+      <div className="text-xs text-muted-foreground mt-4 p-4 border border-border rounded-md bg-muted/20">
+        <p>Last automatic check: {lastAutoCheck?.toLocaleTimeString() || 'None'}</p>
+        <p>Total checks: {checkCount}</p>
+        <p>Profile subscription status: {profile?.subscribed ? 'Subscribed' : 'Not subscribed'}</p>
+        <p>Auth context subscription status: {isSubscribed ? 'Subscribed' : 'Not subscribed'}</p>
+        <p>Subscription tier: {subscriptionTier || 'None'}</p>
+      </div>
     </div>
   );
 };

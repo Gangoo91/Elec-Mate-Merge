@@ -21,6 +21,8 @@ export type AuthContextType = {
   isSubscribed: boolean;
   subscriptionTier?: string | null;
   isCheckingStatus: boolean;
+  lastError?: string | null;
+  lastCheckedAt?: Date | null;
   checkSubscriptionStatus: () => Promise<void>;
   isDevelopmentMode: boolean;
   toggleDevelopmentMode: () => void;

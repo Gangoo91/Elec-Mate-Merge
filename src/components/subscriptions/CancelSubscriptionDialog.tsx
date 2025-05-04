@@ -92,7 +92,7 @@ const CancelSubscriptionDialog = ({
     
     toast({
       title: "Discount Applied!",
-      description: "Your 25% discount has been applied for the next 3 months. Thank you for staying with us!",
+      description: "Your 25% permanent discount has been applied to your subscription. Thank you for staying with us!",
     });
     
     setIsOpen(false);
@@ -107,14 +107,14 @@ const CancelSubscriptionDialog = ({
             <AlertDialogTitle className="text-xl">Wait! Before you go...</AlertDialogTitle>
             <AlertDialogDescription className="text-base">
               <div className="space-y-4 py-2">
-                <p>Would you like to keep your subscription with <strong>25% off</strong> for the next 3 months?</p>
+                <p>Would you like to keep your subscription with <strong>25% off</strong> permanently?</p>
                 
                 <div className="bg-amber-50/10 p-4 rounded-md border border-amber-200/20 mt-2">
                   <h4 className="font-medium text-amber-200 mb-2">Special Offer Just For You</h4>
                   <ul className="text-sm space-y-2">
                     <li className="flex items-start gap-2">
                       <Check className="text-green-400 h-5 w-5 mt-0.5 flex-shrink-0" />
-                      <span>25% discount for the next 3 months</span>
+                      <span>25% discount on your subscription permanently</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <Check className="text-green-400 h-5 w-5 mt-0.5 flex-shrink-0" />
