@@ -54,7 +54,9 @@ const SubsectionLearningContent = ({
         );
       case "2.3":
         return (
-          <Subsection2_3 />
+          <Subsection2_3 
+            subsectionId={subsectionId}
+          />
         );
       default:
         return <p>Content for subsection {subsectionId} is not yet available.</p>;
