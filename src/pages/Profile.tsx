@@ -8,11 +8,13 @@ import ProfileSummary from '@/components/profile/ProfileSummary';
 import AccountTab from '@/components/profile/AccountTab';
 import AchievementsTab from '@/components/profile/AchievementsTab';
 import ActivityTab from '@/components/profile/ActivityTab';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const ProfilePage = () => {
   const { user, profile, fetchProfile } = useAuth();
   const { addNotification } = useNotifications();
   const [isEditing, setIsEditing] = useState(false);
+  const isMobile = useIsMobile();
   const [formData, setFormData] = useState({
     fullName: profile?.full_name || '',
     username: profile?.username || '',
@@ -79,15 +81,15 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="container max-w-5xl mx-auto py-6 space-y-8 animate-fade-in">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Profile</h1>
-        <p className="text-muted-foreground">
+    <div className="container max-w-5xl mx-auto py-4 px-2 sm:px-4 sm:py-6 space-y-6 animate-fade-in">
+      <div className="text-center sm:text-left">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Profile</h1>
+        <p className="text-muted-foreground text-sm sm:text-base">
           Manage your account settings and preferences.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-4 sm:gap-6">
         {/* Profile Summary Card */}
         <ProfileSummary 
           profile={profile} 
@@ -97,15 +99,15 @@ const ProfilePage = () => {
 
         {/* Main Content Area */}
         <div className="space-y-6">
-          <Tabs defaultValue="account">
-            <TabsList className="bg-elec-gray border-b border-elec-yellow/20">
-              <TabsTrigger value="account">Account</TabsTrigger>
-              <TabsTrigger value="achievements">Achievements</TabsTrigger>
-              <TabsTrigger value="activity">Activity</TabsTrigger>
+          <Tabs defaultValue="account" className="w-full">
+            <TabsList className="w-full bg-elec-gray border-b border-elec-yellow/20">
+              <TabsTrigger value="account" className="flex-1">Account</TabsTrigger>
+              <TabsTrigger value="achievements" className="flex-1">Achievements</TabsTrigger>
+              <TabsTrigger value="activity" className="flex-1">Activity</TabsTrigger>
             </TabsList>
             
             {/* Account Tab */}
-            <TabsContent value="account" className="space-y-6 pt-4">
+            <TabsContent value="account" className="space-y-4 sm:space-y-6 pt-4">
               <AccountTab 
                 profile={profile}
                 user={user}
@@ -118,12 +120,12 @@ const ProfilePage = () => {
             </TabsContent>
             
             {/* Achievements Tab */}
-            <TabsContent value="achievements" className="space-y-6 pt-4">
+            <TabsContent value="achievements" className="space-y-4 sm:space-y-6 pt-4">
               <AchievementsTab />
             </TabsContent>
             
             {/* Activity Tab */}
-            <TabsContent value="activity" className="space-y-6 pt-4">
+            <TabsContent value="activity" className="space-y-4 sm:space-y-6 pt-4">
               <ActivityTab />
             </TabsContent>
           </Tabs>

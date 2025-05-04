@@ -6,6 +6,7 @@ import { Edit, User } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import ProfileForm from './ProfileForm';
 import ProfileView from './ProfileView';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface AccountTabProps {
   profile: any;
@@ -30,14 +31,16 @@ const AccountTab = ({
   handleSubmit,
   setIsEditing
 }: AccountTabProps) => {
+  const isMobile = useIsMobile();
+  
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
+        <CardHeader className="p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Account Information</CardTitle>
-              <CardDescription>
+              <CardTitle className="text-lg sm:text-2xl">Account Information</CardTitle>
+              <CardDescription className="text-xs sm:text-sm">
                 Your basic account details
               </CardDescription>
             </div>
@@ -46,16 +49,17 @@ const AccountTab = ({
               <Button 
                 variant="outline" 
                 className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+                size={isMobile ? "sm" : "default"}
                 onClick={() => setIsEditing(true)}
               >
-                <Edit className="mr-2 h-4 w-4" />
-                Edit
+                <Edit className="mr-1 h-3 w-3 sm:mr-2 sm:h-4 sm:w-4" />
+                <span className="text-xs sm:text-sm">Edit</span>
               </Button>
             )}
           </div>
         </CardHeader>
         
-        <CardContent>
+        <CardContent className="p-4 sm:p-6 pt-0">
           {isEditing ? (
             <ProfileForm
               formData={formData}
@@ -71,11 +75,11 @@ const AccountTab = ({
       </Card>
       
       <Alert>
-        <User className="h-4 w-4" />
-        <AlertTitle>Subscription Status</AlertTitle>
-        <AlertDescription>
+        <User className="h-3 w-3 sm:h-4 sm:w-4" />
+        <AlertTitle className="text-xs sm:text-sm">Subscription Status</AlertTitle>
+        <AlertDescription className="text-xs sm:text-sm">
           You are currently on the Free Trial plan. 
-          <Button variant="link" className="h-auto p-0 text-elec-yellow" asChild>
+          <Button variant="link" className="h-auto p-0 text-elec-yellow text-xs sm:text-sm" asChild>
             <a href="/subscriptions" className="ml-1">Upgrade Now</a>
           </Button>
         </AlertDescription>

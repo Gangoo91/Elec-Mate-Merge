@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ProfileFormProps {
   formData: {
@@ -23,11 +24,13 @@ const ProfileForm = ({
   handleSubmit, 
   onCancel 
 }: ProfileFormProps) => {
+  const isMobile = useIsMobile();
+  
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+      <div className="space-y-3 sm:space-y-4">
         <div>
-          <label htmlFor="fullName" className="block text-sm font-medium mb-1">
+          <label htmlFor="fullName" className="block text-xs sm:text-sm font-medium mb-1">
             Full Name
           </label>
           <Input 
@@ -35,11 +38,12 @@ const ProfileForm = ({
             name="fullName" 
             value={formData.fullName} 
             onChange={handleChange} 
+            className="text-sm"
           />
         </div>
         
         <div>
-          <label htmlFor="username" className="block text-sm font-medium mb-1">
+          <label htmlFor="username" className="block text-xs sm:text-sm font-medium mb-1">
             Username
           </label>
           <Input 
@@ -47,11 +51,12 @@ const ProfileForm = ({
             name="username" 
             value={formData.username} 
             onChange={handleChange} 
+            className="text-sm"
           />
         </div>
         
         <div>
-          <label htmlFor="email" className="block text-sm font-medium mb-1">
+          <label htmlFor="email" className="block text-xs sm:text-sm font-medium mb-1">
             Email
           </label>
           <Input 
@@ -59,7 +64,7 @@ const ProfileForm = ({
             name="email" 
             value={user?.email || ''} 
             disabled
-            className="bg-elec-gray/40"
+            className="bg-elec-gray/40 text-sm"
           />
           <p className="text-xs text-muted-foreground mt-1">
             Email cannot be changed
@@ -67,7 +72,7 @@ const ProfileForm = ({
         </div>
         
         <div>
-          <label htmlFor="bio" className="block text-sm font-medium mb-1">
+          <label htmlFor="bio" className="block text-xs sm:text-sm font-medium mb-1">
             Bio
           </label>
           <Textarea 
@@ -75,7 +80,8 @@ const ProfileForm = ({
             name="bio" 
             value={formData.bio} 
             onChange={handleChange}
-            rows={4}
+            rows={3}
+            className="text-sm"
           />
         </div>
       </div>
@@ -83,12 +89,20 @@ const ProfileForm = ({
       <div className="flex justify-end gap-2">
         <Button 
           type="button" 
-          variant="outline" 
+          variant="outline"
+          size={isMobile ? "sm" : "default"}
           onClick={onCancel}
+          className="text-xs sm:text-sm"
         >
           Cancel
         </Button>
-        <Button type="submit">Save Changes</Button>
+        <Button 
+          type="submit"
+          size={isMobile ? "sm" : "default"}
+          className="text-xs sm:text-sm"
+        >
+          Save Changes
+        </Button>
       </div>
     </form>
   );
