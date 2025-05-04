@@ -12,8 +12,35 @@ const OhmsLawCalculator = () => {
   const [resistance, setResistance] = useState("");
   const [power, setPower] = useState("");
   const [calculationResult, setCalculationResult] = useState<string | null>(null);
+  const [errors, setErrors] = useState<{[key: string]: string}>({});
   
+  const validateInputs = () => {
+    const newErrors: {[key: string]: string} = {};
+    let filledCount = 0;
+    
+    if (voltage && parseFloat(voltage) <= 0) newErrors.voltage = "Voltage must be greater than 0";
+    else if (voltage) filledCount++;
+    
+    if (current && parseFloat(current) <= 0) newErrors.current = "Current must be greater than 0";
+    else if (current) filledCount++;
+    
+    if (resistance && parseFloat(resistance) <= 0) newErrors.resistance = "Resistance must be greater than 0";
+    else if (resistance) filledCount++;
+    
+    if (power && parseFloat(power) <= 0) newErrors.power = "Power must be greater than 0";
+    else if (power) filledCount++;
+    
+    if (filledCount !== 2) {
+      newErrors.general = "Please enter exactly two values to calculate the others";
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const calculateOhmsLaw = () => {
+    if (!validateInputs()) return;
+    
     // Basic Ohm's Law calculator
     if (voltage && current && !resistance && !power) {
       const calculatedResistance = parseFloat(voltage) / parseFloat(current);
@@ -52,9 +79,6 @@ const OhmsLawCalculator = () => {
       setVoltage(calculatedVoltage.toFixed(2));
       setCalculationResult(`Current: ${calculatedCurrent.toFixed(2)} A, Voltage: ${calculatedVoltage.toFixed(2)} V`);
     }
-    else {
-      setCalculationResult("Please enter exactly two values to calculate the others");
-    }
   };
 
   const resetCalculator = () => {
@@ -63,6 +87,15 @@ const OhmsLawCalculator = () => {
     setResistance("");
     setPower("");
     setCalculationResult(null);
+    setErrors({});
+  };
+  
+  const clearError = (field: string) => {
+    if (errors[field]) {
+      const newErrors = {...errors};
+      delete newErrors[field];
+      setErrors(newErrors);
+    }
   };
 
   return (
@@ -80,6 +113,11 @@ const OhmsLawCalculator = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
+              {errors.general && (
+                <div className="p-3 bg-destructive/20 border border-destructive/40 rounded-md text-sm mb-3">
+                  {errors.general}
+                </div>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="voltage">Voltage (V)</Label>
                 <Input 
@@ -87,9 +125,14 @@ const OhmsLawCalculator = () => {
                   placeholder="Enter voltage" 
                   type="number"
                   value={voltage} 
-                  onChange={(e) => setVoltage(e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20"
+                  onChange={(e) => {
+                    setVoltage(e.target.value);
+                    clearError('voltage');
+                    clearError('general');
+                  }}
+                  className={`bg-elec-dark border-elec-yellow/20 ${errors.voltage ? "border-destructive" : ""}`}
                 />
+                {errors.voltage && <p className="text-xs text-destructive">{errors.voltage}</p>}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="current">Current (A)</Label>
@@ -98,9 +141,14 @@ const OhmsLawCalculator = () => {
                   placeholder="Enter current" 
                   type="number"
                   value={current} 
-                  onChange={(e) => setCurrent(e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20"
+                  onChange={(e) => {
+                    setCurrent(e.target.value);
+                    clearError('current');
+                    clearError('general');
+                  }}
+                  className={`bg-elec-dark border-elec-yellow/20 ${errors.current ? "border-destructive" : ""}`}
                 />
+                {errors.current && <p className="text-xs text-destructive">{errors.current}</p>}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="resistance">Resistance (Ω)</Label>
@@ -109,9 +157,14 @@ const OhmsLawCalculator = () => {
                   placeholder="Enter resistance" 
                   type="number"
                   value={resistance} 
-                  onChange={(e) => setResistance(e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20"
+                  onChange={(e) => {
+                    setResistance(e.target.value);
+                    clearError('resistance');
+                    clearError('general');
+                  }}
+                  className={`bg-elec-dark border-elec-yellow/20 ${errors.resistance ? "border-destructive" : ""}`}
                 />
+                {errors.resistance && <p className="text-xs text-destructive">{errors.resistance}</p>}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="power">Power (W)</Label>
@@ -120,9 +173,14 @@ const OhmsLawCalculator = () => {
                   placeholder="Enter power" 
                   type="number"
                   value={power} 
-                  onChange={(e) => setPower(e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20"
+                  onChange={(e) => {
+                    setPower(e.target.value);
+                    clearError('power');
+                    clearError('general');
+                  }}
+                  className={`bg-elec-dark border-elec-yellow/20 ${errors.power ? "border-destructive" : ""}`}
                 />
+                {errors.power && <p className="text-xs text-destructive">{errors.power}</p>}
               </div>
             </div>
             
@@ -140,16 +198,16 @@ const OhmsLawCalculator = () => {
                   </div>
                 )}
               </div>
-              <div className="flex gap-3">
-                <Button onClick={calculateOhmsLaw} className="flex-1">Calculate</Button>
-                <Button variant="outline" onClick={resetCalculator}>Reset</Button>
+              <div className="grid grid-cols-2 gap-3">
+                <Button onClick={calculateOhmsLaw} className="w-full">Calculate</Button>
+                <Button variant="outline" onClick={resetCalculator} className="w-full">Reset</Button>
               </div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-elec-gray mt-6">
         <CardHeader>
           <CardTitle className="text-lg">Ohm's Law Reference</CardTitle>
         </CardHeader>

@@ -33,27 +33,29 @@ const OnJobCalculations = () => {
           setCalculatorType={setCalculatorType} 
         />
 
-        {calculatorType === "ohms-law" && <OhmsLawCalculator />}
-        
-        {calculatorType === "voltage-drop" && <VoltageDropCalculator />}
+        <div className="transition-all duration-300">
+          {calculatorType === "ohms-law" && <OhmsLawCalculator />}
+          
+          {calculatorType === "voltage-drop" && <VoltageDropCalculator />}
 
-        {calculatorType === "instrumentation" && <InstrumentationCalculator />}
+          {calculatorType === "instrumentation" && <InstrumentationCalculator />}
 
-        {calculatorType === "power-factor" && (
-          <ComingSoonCalculator 
-            title="Power Factor" 
-            icon={PlugZap} 
-            description="This calculator will help you with power factor calculations." 
-          />
-        )}
+          {calculatorType === "power-factor" && (
+            <ComingSoonCalculator 
+              title="Power Factor" 
+              icon={PlugZap} 
+              description="This calculator will help you with power factor calculations." 
+            />
+          )}
 
-        {calculatorType === "cable-size" && (
-          <ComingSoonCalculator 
-            title="Cable Sizing" 
-            icon={Sigma} 
-            description="This calculator will help you determine appropriate cable sizes based on load requirements." 
-          />
-        )}
+          {calculatorType === "cable-size" && (
+            <ComingSoonCalculator 
+              title="Cable Sizing" 
+              icon={Sigma} 
+              description="This calculator will help you determine appropriate cable sizes based on load requirements." 
+            />
+          )}
+        </div>
       </div>
     </div>
   );

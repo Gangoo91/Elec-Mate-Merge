@@ -9,6 +9,14 @@ interface CalculatorSelectorProps {
 }
 
 const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSelectorProps) => {
+  const calculators = [
+    { value: "ohms-law", label: "Ohm's Law", icon: Zap },
+    { value: "voltage-drop", label: "Voltage Drop", icon: Activity },
+    { value: "power-factor", label: "Power Factor", icon: PlugZap },
+    { value: "cable-size", label: "Cable Sizing", icon: Sigma },
+    { value: "instrumentation", label: "4-20mA Scale", icon: Gauge },
+  ];
+
   return (
     <div className="w-full">
       <Label htmlFor="calculator-type" className="text-lg font-medium mb-2 block">Select Calculator</Label>
@@ -16,37 +24,15 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
         <SelectTrigger className="bg-elec-dark border-elec-yellow/20 w-full md:max-w-xs">
           <SelectValue placeholder="Select calculator type" />
         </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="ohms-law">
-            <div className="flex items-center">
-              <Zap className="mr-2 h-4 w-4 text-elec-yellow" />
-              <span>Ohm's Law</span>
-            </div>
-          </SelectItem>
-          <SelectItem value="voltage-drop">
-            <div className="flex items-center">
-              <Activity className="mr-2 h-4 w-4 text-elec-yellow" />
-              <span>Voltage Drop</span>
-            </div>
-          </SelectItem>
-          <SelectItem value="power-factor">
-            <div className="flex items-center">
-              <PlugZap className="mr-2 h-4 w-4 text-elec-yellow" />
-              <span>Power Factor</span>
-            </div>
-          </SelectItem>
-          <SelectItem value="cable-size">
-            <div className="flex items-center">
-              <Sigma className="mr-2 h-4 w-4 text-elec-yellow" />
-              <span>Cable Sizing</span>
-            </div>
-          </SelectItem>
-          <SelectItem value="instrumentation">
-            <div className="flex items-center">
-              <Gauge className="mr-2 h-4 w-4 text-elec-yellow" />
-              <span>4-20mA Scale</span>
-            </div>
-          </SelectItem>
+        <SelectContent className="bg-elec-dark border-elec-yellow/20">
+          {calculators.map((calc) => (
+            <SelectItem key={calc.value} value={calc.value}>
+              <div className="flex items-center">
+                <calc.icon className="mr-2 h-4 w-4 text-elec-yellow" />
+                <span>{calc.label}</span>
+              </div>
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     </div>

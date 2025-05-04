@@ -5,31 +5,48 @@ import { Gauge } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const InstrumentationCalculator = () => {
   const [minScale, setMinScale] = useState("");
   const [maxScale, setMaxScale] = useState("");
   const [currentValue, setCurrentValue] = useState("");
   const [scaledResult, setScaledResult] = useState<string | null>(null);
+  const [errors, setErrors] = useState<{[key: string]: string}>({});
   
-  const calculateInstrumentation = () => {
-    // 4-20mA scaling calculation
-    if (minScale && maxScale && currentValue) {
+  const validateInputs = () => {
+    const newErrors: {[key: string]: string} = {};
+    
+    if (!minScale) newErrors.minScale = "Minimum scale is required";
+    if (!maxScale) newErrors.maxScale = "Maximum scale is required";
+    if (!currentValue) newErrors.currentValue = "Current value is required";
+    else {
+      const current = parseFloat(currentValue);
+      if (isNaN(current)) newErrors.currentValue = "Please enter a valid number";
+      else if (current < 4 || current > 20) newErrors.currentValue = "Current must be between 4 and 20 mA";
+    }
+    
+    if (minScale && maxScale) {
       const min = parseFloat(minScale);
       const max = parseFloat(maxScale);
-      const current = parseFloat(currentValue);
-      
-      if (current < 4 || current > 20) {
-        setScaledResult("Current value must be between 4 and 20 mA");
-        return;
-      }
-      
-      // Scale calculation: y = min + (max-min)*(x-4)/16
-      const scaled = min + ((max - min) * (current - 4) / 16);
-      setScaledResult(`Scaled value: ${scaled.toFixed(2)}`);
-    } else {
-      setScaledResult("Please enter all required values");
+      if (min >= max) newErrors.maxScale = "Maximum must be greater than minimum";
     }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const calculateInstrumentation = () => {
+    if (!validateInputs()) return;
+    
+    // 4-20mA scaling calculation
+    const min = parseFloat(minScale);
+    const max = parseFloat(maxScale);
+    const current = parseFloat(currentValue);
+    
+    // Scale calculation: y = min + (max-min)*(x-4)/16
+    const scaled = min + ((max - min) * (current - 4) / 16);
+    setScaledResult(scaled.toFixed(2));
   };
 
   const resetCalculator = () => {
@@ -37,6 +54,15 @@ const InstrumentationCalculator = () => {
     setMaxScale("");
     setCurrentValue("");
     setScaledResult(null);
+    setErrors({});
+  };
+  
+  const clearError = (field: string) => {
+    if (errors[field]) {
+      const newErrors = {...errors};
+      delete newErrors[field];
+      setErrors(newErrors);
+    }
   };
 
   return (
@@ -60,9 +86,13 @@ const InstrumentationCalculator = () => {
                 placeholder="E.g. 0 for 0°C" 
                 type="number"
                 value={minScale} 
-                onChange={(e) => setMinScale(e.target.value)}
-                className="bg-elec-dark border-elec-yellow/20"
+                onChange={(e) => {
+                  setMinScale(e.target.value);
+                  clearError('minScale');
+                }}
+                className={`bg-elec-dark border-elec-yellow/20 ${errors.minScale ? "border-destructive" : ""}`}
               />
+              {errors.minScale && <p className="text-xs text-destructive">{errors.minScale}</p>}
               <p className="text-xs text-muted-foreground">The value corresponding to 4mA signal</p>
             </div>
             <div className="space-y-2">
@@ -72,9 +102,13 @@ const InstrumentationCalculator = () => {
                 placeholder="E.g. 100 for 100°C" 
                 type="number"
                 value={maxScale} 
-                onChange={(e) => setMaxScale(e.target.value)}
-                className="bg-elec-dark border-elec-yellow/20"
+                onChange={(e) => {
+                  setMaxScale(e.target.value);
+                  clearError('maxScale');
+                }}
+                className={`bg-elec-dark border-elec-yellow/20 ${errors.maxScale ? "border-destructive" : ""}`}
               />
+              {errors.maxScale && <p className="text-xs text-destructive">{errors.maxScale}</p>}
               <p className="text-xs text-muted-foreground">The value corresponding to 20mA signal</p>
             </div>
             <div className="space-y-2">
@@ -84,9 +118,18 @@ const InstrumentationCalculator = () => {
                 placeholder="Enter value between 4-20 mA" 
                 type="number"
                 value={currentValue} 
-                onChange={(e) => setCurrentValue(e.target.value)}
-                className="bg-elec-dark border-elec-yellow/20"
+                onChange={(e) => {
+                  setCurrentValue(e.target.value);
+                  clearError('currentValue');
+                }}
+                className={`bg-elec-dark border-elec-yellow/20 ${errors.currentValue ? "border-destructive" : ""}`}
               />
+              {errors.currentValue && <p className="text-xs text-destructive">{errors.currentValue}</p>}
+            </div>
+
+            <div className="flex flex-wrap gap-3 mt-6 sm:flex-nowrap">
+              <Button onClick={calculateInstrumentation} className="flex-1 w-full">Calculate</Button>
+              <Button variant="outline" onClick={resetCalculator} className="flex-1 w-full">Reset</Button>
             </div>
           </div>
           
@@ -95,7 +138,16 @@ const InstrumentationCalculator = () => {
               {scaledResult ? (
                 <>
                   <span className="text-elec-yellow text-xl mb-2">Result</span>
-                  <p className="text-lg">{scaledResult}</p>
+                  <div className="text-center">
+                    <div className="text-sm text-muted-foreground">Scaled Value:</div>
+                    <div className="text-3xl font-bold text-elec-yellow">{scaledResult}</div>
+                  </div>
+                  {minScale && maxScale && (
+                    <div className="mt-4 text-sm">
+                      <span className="text-muted-foreground">Range: </span>
+                      <span>{minScale} to {maxScale}</span>
+                    </div>
+                  )}
                 </>
               ) : (
                 <div className="text-muted-foreground">
@@ -104,22 +156,21 @@ const InstrumentationCalculator = () => {
                 </div>
               )}
             </div>
-            <div className="flex gap-3">
-              <Button onClick={calculateInstrumentation} className="flex-1">Calculate</Button>
-              <Button variant="outline" onClick={resetCalculator}>Reset</Button>
-            </div>
+            
+            <Alert className="bg-elec-dark/50 border-elec-yellow/20">
+              <div className="space-y-2">
+                <h3 className="font-medium">4-20mA Scale Information</h3>
+                <p className="text-sm text-elec-light/80">
+                  The 4-20mA current loop is a common method for transmitting sensor information in many industrial applications.
+                </p>
+                <ul className="space-y-2 text-sm text-elec-light/80">
+                  <li><span className="text-elec-yellow">4mA</span> represents the minimum scale value (0%)</li>
+                  <li><span className="text-elec-yellow">20mA</span> represents the maximum scale value (100%)</li>
+                  <li><span className="text-elec-yellow">Formula:</span> Value = Min + (Max-Min)*(mA-4)/16</li>
+                </ul>
+              </div>
+            </Alert>
           </div>
-        </div>
-        <div className="mt-6 p-4 bg-elec-dark/50 rounded-md">
-          <h3 className="font-medium mb-2">4-20mA Scale Information</h3>
-          <p className="text-sm text-elec-light/80 mb-2">
-            The 4-20mA current loop is a common method for transmitting sensor information in many industrial applications.
-          </p>
-          <ul className="space-y-2 text-sm text-elec-light/80">
-            <li><span className="text-elec-yellow">4mA</span> represents the minimum scale value (0%)</li>
-            <li><span className="text-elec-yellow">20mA</span> represents the maximum scale value (100%)</li>
-            <li><span className="text-elec-yellow">Formula:</span> Value = Min + (Max-Min)*(mA-4)/16</li>
-          </ul>
         </div>
       </CardContent>
     </Card>
