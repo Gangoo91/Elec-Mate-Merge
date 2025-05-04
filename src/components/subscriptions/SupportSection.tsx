@@ -73,7 +73,14 @@ const SupportSection = () => {
       const { data, error } = await supabase.functions.invoke('customer-portal');
       
       if (error) {
+        console.error('Customer portal error:', error);
         throw new Error(error.message);
+      }
+      
+      if (data?.error) {
+        // Handle specific error from the function
+        console.error('Customer portal function error:', data.error);
+        throw new Error(data.error);
       }
       
       if (data?.url) {
@@ -90,8 +97,8 @@ const SupportSection = () => {
     } catch (error) {
       console.error('Customer portal error:', error);
       toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to open subscription management",
+        title: "Customer Portal Error",
+        description: "Could not open the customer portal. This usually happens if your Stripe account hasn't set up the Customer Portal in the Stripe Dashboard yet.",
         variant: "destructive",
       });
     } finally {
@@ -129,14 +136,14 @@ const SupportSection = () => {
           </div>
           
           <div className="bg-amber-50/10 p-4 rounded-md border border-amber-200/20 mt-4">
-            <h4 className="font-medium text-amber-200 mb-2">Having Trouble with Stripe Checkout?</h4>
+            <h4 className="font-medium text-amber-200 mb-2">Having Trouble with the Customer Portal?</h4>
             <ul className="text-sm space-y-2 text-muted-foreground">
-              <li>• Make sure your browser allows pop-ups from our site</li>
-              <li>• Try using a different browser like Chrome or Edge</li>
-              <li>• Check that cookies are enabled in your browser settings</li>
-              <li>• Try clicking the "Open in New Window" button above</li>
-              <li>• If Stripe shows a blank page, try refreshing the checkout page</li>
-              <li>• If the issue persists, please contact our support team</li>
+              <li>• If this is a new Stripe account, you need to <a href="https://dashboard.stripe.com/settings/billing/portal" target="_blank" rel="noopener noreferrer" className="underline text-blue-400">configure the Customer Portal</a> in your Stripe Dashboard first</li>
+              <li>• Make sure you've completed the Stripe account setup</li>
+              <li>• Check that your Stripe account is in the correct mode (test/live) matching your API keys</li>
+              <li>• Verify the STRIPE_SECRET_KEY is correctly set in your Supabase Edge Function secrets</li>
+              <li>• Try refreshing your subscription status using the button above</li>
+              <li>• As a last resort, contact Stripe support or check the Edge Function logs for details</li>
             </ul>
           </div>
 
