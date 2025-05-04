@@ -16,8 +16,8 @@ export const CommunityStats = ({ communityStats }: CommunityStatsProps) => {
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardContent className="pt-6 text-center">
           <Users className="h-8 w-8 text-elec-yellow mx-auto mb-3" />
-          <div className="text-3xl font-bold">1</div>
-          <p className="text-sm text-muted-foreground">Active Subscriber</p>
+          <div className="text-3xl font-bold">{communityStats?.active_users || 0}</div>
+          <p className="text-sm text-muted-foreground">Active Subscribers</p>
         </CardContent>
       </Card>
       <Card className="border-elec-yellow/20 bg-elec-gray">
