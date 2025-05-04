@@ -23,6 +23,10 @@ import OnJobTools from "./pages/apprentice/OnJobTools";
 import OnJobCalculations from "./pages/apprentice/OnJobCalculations";
 import OnJobDocuments from "./pages/apprentice/OnJobDocuments";
 import OnJobAssessment from "./pages/apprentice/OnJobAssessment";
+import StressManagement from "./pages/apprentice/mental-health/StressManagement";
+import SupportNetwork from "./pages/apprentice/mental-health/SupportNetwork";
+import WorkLifeBalance from "./pages/apprentice/mental-health/WorkLifeBalance";
+import CrisisResources from "./pages/apprentice/mental-health/CrisisResources";
 import NotFound from "./pages/NotFound";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
@@ -88,6 +92,10 @@ function App() {
                   <Route path="ojt" element={<ApprenticeOJT />} />
                   <Route path="toolbox" element={<ApprenticeToolbox />} />
                   <Route path="mental-health" element={<ApprenticeMentalHealth />} />
+                  <Route path="mental-health/stress-management" element={<StressManagement />} />
+                  <Route path="mental-health/support-network" element={<SupportNetwork />} />
+                  <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
+                  <Route path="mental-health/crisis-resources" element={<CrisisResources />} />
                   <Route path="career-progression" element={<CareerProgression />} />
                   <Route path="on-job-tools" element={<OnJobTools />} />
                   <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
