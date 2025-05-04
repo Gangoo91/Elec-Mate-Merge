@@ -130,10 +130,24 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
         }
       }
 
-      setCurrentUserRank(prev => ({
-        ...prev,
-        [category]: currentUserData as UserActivity | null
-      }));
+      // Explicitly add to the specific category to avoid type recursion issues
+      switch (category) {
+        case 'learning':
+          setCurrentUserRank(prev => ({ ...prev, learning: currentUserData as UserActivity | null }));
+          break;
+        case 'community':
+          setCurrentUserRank(prev => ({ ...prev, community: currentUserData as UserActivity | null }));
+          break;
+        case 'safety':
+          setCurrentUserRank(prev => ({ ...prev, safety: currentUserData as UserActivity | null }));
+          break;
+        case 'mentor':
+          setCurrentUserRank(prev => ({ ...prev, mentor: currentUserData as UserActivity | null }));
+          break;
+        case 'mental':
+          setCurrentUserRank(prev => ({ ...prev, mental: currentUserData as UserActivity | null }));
+          break;
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
       setError(message);
