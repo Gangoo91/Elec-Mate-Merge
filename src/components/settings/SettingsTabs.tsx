@@ -1,105 +1,85 @@
 
-import React from 'react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import React, { useState } from 'react';
+import { ChevronDown } from "lucide-react";
 import { useIsMobile } from '@/hooks/use-mobile';
-import { User, Bell, Lock, Palette } from "lucide-react";
 import AccountTab from './AccountTab';
 import NotificationsTab from './NotificationsTab';
 import AppearanceTab from './AppearanceTab';
 import PrivacyTab from './PrivacyTab';
+import SecurityTab from './SecurityTab';
+import HelpSupportTab from './HelpSupportTab';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { 
+  User, 
+  Bell, 
+  Palette, 
+  Lock, 
+  ShieldCheck,
+  HelpCircle 
+} from "lucide-react";
+
+const TABS = [
+  { id: 'account', label: 'Account', icon: User, component: AccountTab, description: 'Manage your account preferences' },
+  { id: 'notifications', label: 'Notifications', icon: Bell, component: NotificationsTab, description: 'Choose what notifications you want to receive' },
+  { id: 'appearance', label: 'Appearance', icon: Palette, component: AppearanceTab, description: 'Customize how ElecMate looks for you' },
+  { id: 'privacy', label: 'Privacy', icon: Lock, component: PrivacyTab, description: 'Control what information is visible to others' },
+  { id: 'security', label: 'Security', icon: ShieldCheck, component: SecurityTab, description: 'Manage your account security settings' },
+  { id: 'help', label: 'Help & Support', icon: HelpCircle, component: HelpSupportTab, description: 'Find help and contact support' },
+];
 
 const SettingsTabs = () => {
   const isMobile = useIsMobile();
-
-  // Mobile-optimized tab style
-  const tabListClass = isMobile 
-    ? "w-full grid grid-cols-4 gap-1 bg-elec-gray border-b border-elec-yellow/20" 
-    : "bg-elec-gray border-b border-elec-yellow/20";
-    
-  // Mobile-optimized tab content style
-  const tabContentClass = isMobile ? "pt-4 pb-20" : "space-y-6 pt-4";
+  const [activeTab, setActiveTab] = useState('account');
   
+  const activeTabData = TABS.find(tab => tab.id === activeTab) || TABS[0];
+  const TabComponent = activeTabData.component;
+  const TabIcon = activeTabData.icon;
+
   return (
-    <Tabs defaultValue="account" className="w-full">
-      <TabsList className={tabListClass}>
-        <TabsTrigger value="account" className="flex gap-1 items-center text-xs md:text-sm">
-          {!isMobile && <User className="h-4 w-4" />}
-          Account
-        </TabsTrigger>
-        <TabsTrigger value="notifications" className="flex gap-1 items-center text-xs md:text-sm">
-          {!isMobile && <Bell className="h-4 w-4" />}
-          Notifications
-        </TabsTrigger>
-        <TabsTrigger value="appearance" className="flex gap-1 items-center text-xs md:text-sm">
-          {!isMobile && <Palette className="h-4 w-4" />}
-          Appearance
-        </TabsTrigger>
-        <TabsTrigger value="privacy" className="flex gap-1 items-center text-xs md:text-sm">
-          {!isMobile && <Lock className="h-4 w-4" />}
-          Privacy
-        </TabsTrigger>
-      </TabsList>
-        
-      {/* Account Tab */}
-      <TabsContent value="account" className={tabContentClass}>
-        <Card className="border-elec-yellow/20 bg-elec-gray shadow-lg">
-          <CardHeader className="pb-3">
+    <div className="w-full space-y-6">
+      <div className="w-full">
+        <Select value={activeTab} onValueChange={setActiveTab}>
+          <SelectTrigger className="w-full bg-elec-gray border-elec-yellow/20 text-base">
             <div className="flex items-center gap-2">
-              <User className="h-5 w-5 text-elec-yellow" />
-              <CardTitle>Account Settings</CardTitle>
+              <TabIcon className="h-5 w-5 text-elec-yellow" />
+              <SelectValue placeholder="Select setting" />
             </div>
-            <CardDescription>
-              Manage your account preferences
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <AccountTab />
-          </CardContent>
-        </Card>
-      </TabsContent>
-      
-      {/* Notifications Tab */}
-      <TabsContent value="notifications" className={tabContentClass}>
-        <Card className="border-elec-yellow/20 bg-elec-gray shadow-lg">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <Bell className="h-5 w-5 text-elec-yellow" />
-              <CardTitle>Notification Preferences</CardTitle>
-            </div>
-            <CardDescription>
-              Choose what notifications you want to receive
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <NotificationsTab />
-          </CardContent>
-        </Card>
-      </TabsContent>
-      
-      {/* Appearance Tab */}
-      <TabsContent value="appearance" className={tabContentClass}>
-        <Card className="border-elec-yellow/20 bg-elec-gray shadow-lg">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <Palette className="h-5 w-5 text-elec-yellow" />
-              <CardTitle>Appearance Settings</CardTitle>
-            </div>
-            <CardDescription>
-              Customize how ElecMate looks for you
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <AppearanceTab />
-          </CardContent>
-        </Card>
-      </TabsContent>
-      
-      {/* Privacy Tab */}
-      <TabsContent value="privacy" className={tabContentClass}>
-        <PrivacyTab />
-      </TabsContent>
-    </Tabs>
+          </SelectTrigger>
+          <SelectContent className="max-h-[300px] bg-elec-gray border-elec-yellow/20">
+            {TABS.map(tab => (
+              <SelectItem key={tab.id} value={tab.id} className="py-3 focus:bg-elec-yellow/10 focus:text-elec-yellow">
+                <div className="flex items-center gap-2">
+                  <tab.icon className="h-5 w-5 text-elec-yellow" />
+                  <span>{tab.label}</span>
+                </div>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <Card className="border-elec-yellow/20 bg-elec-gray shadow-lg">
+        <CardHeader className="pb-3">
+          <div className="flex items-center gap-2">
+            <TabIcon className="h-5 w-5 text-elec-yellow" />
+            <CardTitle>{activeTabData.label} Settings</CardTitle>
+          </div>
+          <CardDescription>
+            {activeTabData.description}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <TabComponent />
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
