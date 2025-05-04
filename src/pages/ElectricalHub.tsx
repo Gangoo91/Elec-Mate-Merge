@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,7 +11,7 @@ const ElectricalHub = () => {
       title: "Toolbox Talk",
       description: "Access practical guides and safety information for on-site work",
       icon: <Wrench className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/apprentice/toolbox"
+      link: "/electrical-hub" // Updated to link back to electrical hub instead of apprentice toolbox
     },
     {
       id: 2,
