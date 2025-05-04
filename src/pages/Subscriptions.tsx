@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -102,8 +101,8 @@ const Subscriptions = () => {
       "employer": "price_1RZoZZZZZZZZZZZZ", // Keep placeholder for now
     },
     yearly: {
-      "apprentice": "price_1RZpaXXXXXXXXXXXX", // Keep placeholder for now
-      "electrician": "price_1RZpaYYYYYYYYYYYY", // Keep placeholder for now
+      "apprentice": "price_1RL2582RKw5t5RAm2qG45wK0", // £39.99 Yearly Apprentice
+      "electrician": "price_1RL25t2RKw5t5RAmXYxxJivo", // £59.99 Electrical Yearly
       "employer": "price_1RZpaZZZZZZZZZZZZ", // Keep placeholder for now
     }
   };
