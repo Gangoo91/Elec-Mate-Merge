@@ -1,8 +1,9 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Book, Clock, Heart, Users, WrenchIcon, Bot, ArrowLeft } from "lucide-react";
+import { Book, Clock, Heart, Users, WrenchIcon, Bot, ArrowLeft, Calculator, FileText, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import OnTheJobToolsBox from "@/components/apprentice/OnTheJobToolsBox";
 
 const ApprenticeHub = () => {
   const apprenticeResources = [
@@ -44,6 +45,30 @@ const ApprenticeHub = () => {
     }
   ];
 
+  const onJobTools = [
+    {
+      id: 1,
+      title: "Electrical Calculations",
+      icon: Calculator,
+      description: "Cable sizing, load calculations, voltage drop, and more",
+      link: "/apprentice/on-job-tools/calculations"
+    },
+    {
+      id: 2,
+      title: "Documentation Templates",
+      icon: FileText,
+      description: "Forms, certificates, and reports for on-site documentation",
+      link: "/apprentice/on-job-tools/documents"
+    },
+    {
+      id: 3,
+      title: "Site Assessment Tools",
+      icon: Settings,
+      description: "Checklists and guides for job site evaluations",
+      link: "/apprentice/on-job-tools/assessment"
+    }
+  ];
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
@@ -71,6 +96,12 @@ const ApprenticeHub = () => {
             </Card>
           </Link>
         ))}
+      </div>
+
+      {/* On the Job Tools Section */}
+      <div className="mt-10">
+        <h2 className="text-2xl font-bold mb-6">On the Job Tools</h2>
+        <OnTheJobToolsBox tools={onJobTools} />
       </div>
     </div>
   );
