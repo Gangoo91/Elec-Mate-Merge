@@ -3,6 +3,7 @@ import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import type { UserActivity, CommunityStats, LeaderboardCategory } from './types';
 import { ensureSubscriberCounted } from './useActivityTracking';
+import { toast } from '@/components/ui/use-toast';
 
 // Create explicit types that avoid deep nesting
 type LeaderboardData = {
@@ -54,7 +55,15 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
       const { data: rankingsData, error: rankingsError } = await supabase
         .from('user_activity')
         .select(`
-          *,
+          id, 
+          user_id, 
+          points, 
+          level, 
+          badge, 
+          streak, 
+          last_active_date, 
+          created_at,
+          updated_at,
           profiles:user_id(
             username,
             full_name,
@@ -66,6 +75,7 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
         .limit(10);
 
       if (rankingsError) {
+        console.error('Error fetching rankings:', rankingsError);
         throw rankingsError;
       }
 
@@ -76,6 +86,7 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
         .single();
 
       if (statsError && statsError.code !== 'PGRST116') {
+        console.error('Error fetching community stats:', statsError);
         throw statsError;
       }
 
@@ -85,7 +96,15 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
         const { data: userRankData, error: userError } = await supabase
           .from('user_activity')
           .select(`
-            *,
+            id, 
+            user_id, 
+            points, 
+            level, 
+            badge, 
+            streak, 
+            last_active_date, 
+            created_at,
+            updated_at,
             profiles:user_id(
               username,
               full_name,
@@ -103,13 +122,16 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
         }
       }
 
-      // Process the fetched data
-      const typedRankingsData = rankingsData as UserActivity[];
+      // Process the fetched data - add category to each item since it's missing from response
+      const processedRankingsData = rankingsData ? rankingsData.map(item => ({
+        ...item,
+        category // Add the category property that's missing
+      })) : [];
       
       // Update leaderboard data for the specific category
       setLeaderboardData(prev => {
         const updated = { ...prev };
-        updated[category] = typedRankingsData || [];
+        updated[category] = processedRankingsData as UserActivity[];
         return updated;
       });
 
@@ -135,24 +157,35 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
       }
 
       // Update user's rank for the specific category
-      const typedUserData = userData as UserActivity | null;
-      
-      // Use a safer approach to update the specific category
-      if (category === 'learning') {
-        setUserRank(prev => ({ ...prev, learning: typedUserData }));
-      } else if (category === 'community') {
-        setUserRank(prev => ({ ...prev, community: typedUserData }));
-      } else if (category === 'safety') {
-        setUserRank(prev => ({ ...prev, safety: typedUserData }));
-      } else if (category === 'mentor') {
-        setUserRank(prev => ({ ...prev, mentor: typedUserData }));
-      } else if (category === 'mental') {
-        setUserRank(prev => ({ ...prev, mental: typedUserData }));
+      if (userData) {
+        const processedUserData = {
+          ...userData,
+          category // Add the category property that's missing
+        } as UserActivity;
+        
+        // Use direct property assignment to avoid deep types
+        if (category === 'learning') {
+          setUserRank(prev => ({ ...prev, learning: processedUserData }));
+        } else if (category === 'community') {
+          setUserRank(prev => ({ ...prev, community: processedUserData }));
+        } else if (category === 'safety') {
+          setUserRank(prev => ({ ...prev, safety: processedUserData }));
+        } else if (category === 'mentor') {
+          setUserRank(prev => ({ ...prev, mentor: processedUserData }));
+        } else if (category === 'mental') {
+          setUserRank(prev => ({ ...prev, mental: processedUserData }));
+        }
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
       setError(message);
-      console.error('Error fetching leaderboard data:', message);
+      console.error('Error fetching leaderboard data:', err);
+      
+      toast({
+        title: "Error loading leaderboard",
+        description: "Could not load leaderboard data. Please try again later.",
+        variant: "destructive"
+      });
     } finally {
       setIsLoading(false);
     }
@@ -162,8 +195,12 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
   const fetchAllLeaderboardData = useCallback(async () => {
     const categories: LeaderboardCategory[] = ['learning', 'community', 'safety', 'mentor', 'mental'];
     
-    for (const category of categories) {
-      await fetchLeaderboardData(category);
+    try {
+      for (const category of categories) {
+        await fetchLeaderboardData(category);
+      }
+    } catch (err) {
+      console.error("Error fetching all leaderboard data:", err);
     }
   }, [fetchLeaderboardData]);
 
