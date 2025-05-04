@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { MessageSquare, Briefcase, Package, Wrench, Shield, DollarSign } from "lucide-react";
+import { MessageSquare, Briefcase, Package, Wrench, Shield, PoundSterling } from "lucide-react";
 
 const ElectricalToolboxTalk = () => {
   const toolboxCategories = [
@@ -40,7 +40,7 @@ const ElectricalToolboxTalk = () => {
       id: 6,
       title: "Live Pricing",
       description: "Real-time pricing updates for materials and services",
-      icon: <DollarSign className="h-6 w-6 text-elec-yellow" />
+      icon: <PoundSterling className="h-6 w-6 text-elec-yellow" />
     }
   ];
 
