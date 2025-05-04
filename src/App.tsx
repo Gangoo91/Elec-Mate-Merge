@@ -22,6 +22,7 @@ import NotFound from "./pages/NotFound";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import ElectricianTools from "./pages/ElectricianTools";
+import ElectricalHub from "./pages/ElectricalHub";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
@@ -48,6 +49,8 @@ function App() {
               <Route path="subscriptions" element={<Subscriptions />} />
               <Route path="payment-success" element={<PaymentSuccess />} />
               <Route path="electrician-tools" element={<ElectricianTools />} />
+              <Route path="electrical-hub" element={<ElectricalHub />} />
+              <Route path="electrician" element={<Navigate to="/electrical-hub" replace />} />
               <Route path="video-lessons" element={<VideoLessons />} />
               <Route path="leaderboards" element={<Leaderboards />} />
               <Route path="apprentice">

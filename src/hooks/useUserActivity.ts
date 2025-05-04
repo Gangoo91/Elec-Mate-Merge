@@ -89,7 +89,7 @@ export function useUserActivity() {
     };
 
     trackUserActivity();
-  }, [user]);
+  }, [user, toast]);
 
   // Function to record lesson completion
   const recordLessonCompletion = async (lessonId: string) => {
@@ -139,6 +139,7 @@ export function useUserActivity() {
         .single();
 
       if (statsData) {
+        // Fixed the TypeScript errors by correctly handling the community stats update
         await supabase
           .from('community_stats')
           .update({
