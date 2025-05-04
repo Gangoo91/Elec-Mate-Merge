@@ -4,39 +4,38 @@ import { supabase } from '@/integrations/supabase/client';
 import type { UserActivity, CommunityStats, LeaderboardCategory } from './types';
 import { ensureSubscriberCounted } from './useActivityTracking';
 
-// Define concrete types instead of using Record to avoid deep type instantiation
-type CategoryRankings = {
-  learning: UserActivity[];
-  community: UserActivity[];
-  safety: UserActivity[];
-  mentor: UserActivity[];
-  mental: UserActivity[];
-};
-
-type UserRank = {
-  learning: UserActivity | null;
-  community: UserActivity | null;
-  safety: UserActivity | null;
-  mentor: UserActivity | null;
-  mental: UserActivity | null;
-};
-
 export function useLeaderboardFetch(userId: string | undefined, isSubscribed: boolean) {
-  const [userRankings, setUserRankings] = useState<CategoryRankings>({
+  // Define state with explicit non-recursive types
+  const [userRankings, setUserRankings] = useState<{
+    learning: UserActivity[];
+    community: UserActivity[];
+    safety: UserActivity[];
+    mentor: UserActivity[];
+    mental: UserActivity[];
+  }>({
     learning: [],
     community: [],
     safety: [],
     mentor: [],
     mental: []
   });
+  
   const [communityStats, setCommunityStats] = useState<CommunityStats | null>(null);
-  const [currentUserRank, setCurrentUserRank] = useState<UserRank>({
+  
+  const [currentUserRank, setCurrentUserRank] = useState<{
+    learning: UserActivity | null;
+    community: UserActivity | null;
+    safety: UserActivity | null;
+    mentor: UserActivity | null;
+    mental: UserActivity | null;
+  }>({
     learning: null,
     community: null,
     safety: null,
     mentor: null,
     mental: null
   });
+  
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -99,25 +98,23 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
       }
 
       // Process and set data
-      // Cast the data to UserActivity[] to ensure type safety
       const typedRankingsData = rankingsData as unknown as UserActivity[];
       
-      setUserRankings(prev => ({
-        ...prev,
-        [category]: typedRankingsData || []
-      }));
+      // Update rankings with typesafe approach
+      setUserRankings(prev => {
+        const newState = { ...prev };
+        newState[category] = typedRankingsData || [];
+        return newState;
+      });
 
       // Update community stats with subscription status
       if (statsData) {
-        // If the user is subscribed but not counted in active_users, we'll increment
         if (isSubscribed && userId) {
-          // We'll update the community stats in the database to reflect subscribed users
           const shouldUpdateStats = !(currentUserData?.last_active_date === new Date().toISOString().split('T')[0]);
           
           if (shouldUpdateStats) {
             await ensureSubscriberCounted(statsData.id, userId, isSubscribed);
             
-            // Update the local state with the incremented value
             setCommunityStats({
               ...statsData,
               active_users: Math.max(1, (statsData.active_users || 0))
@@ -130,22 +127,25 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
         }
       }
 
-      // Explicitly add to the specific category to avoid type recursion issues
+      // Update user rank with typesafe approach
+      const typedUserData = currentUserData as UserActivity | null;
+      
+      // Explicitly handle each category case to avoid using computed property access
       switch (category) {
         case 'learning':
-          setCurrentUserRank(prev => ({ ...prev, learning: currentUserData as UserActivity | null }));
+          setCurrentUserRank(prev => ({ ...prev, learning: typedUserData }));
           break;
         case 'community':
-          setCurrentUserRank(prev => ({ ...prev, community: currentUserData as UserActivity | null }));
+          setCurrentUserRank(prev => ({ ...prev, community: typedUserData }));
           break;
         case 'safety':
-          setCurrentUserRank(prev => ({ ...prev, safety: currentUserData as UserActivity | null }));
+          setCurrentUserRank(prev => ({ ...prev, safety: typedUserData }));
           break;
         case 'mentor':
-          setCurrentUserRank(prev => ({ ...prev, mentor: currentUserData as UserActivity | null }));
+          setCurrentUserRank(prev => ({ ...prev, mentor: typedUserData }));
           break;
         case 'mental':
-          setCurrentUserRank(prev => ({ ...prev, mental: currentUserData as UserActivity | null }));
+          setCurrentUserRank(prev => ({ ...prev, mental: typedUserData }));
           break;
       }
     } catch (err) {
