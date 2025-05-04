@@ -1,4 +1,3 @@
-
 import React from "react";
 
 type ElectricalSymbolsSectionProps = {
@@ -16,40 +15,40 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
         <h3 className="text-lg font-semibold mb-3">Visual Guide to BS7671 Electrical Symbols</h3>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-          {/* Socket symbols */}
+          {/* Socket symbols - updated to match BS7671 */}
           <div className="bg-elec-gray/50 border border-elec-yellow/20 rounded-lg p-4">
             <h4 className="font-medium text-elec-yellow mb-3">Socket Outlets</h4>
             <div className="space-y-4">
-              {/* Single socket */}
+              {/* Single socket - updated symbol */}
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
-                  <div className="w-8 h-8 border border-white/80 rounded-full flex items-center justify-center">
-                    <div className="w-2 h-5 border-l-2 border-r-2 border-white/80"></div>
-                  </div>
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="14" cy="14" r="12" stroke="white" strokeWidth="1.5" fill="none"/>
+                  </svg>
                 </div>
-                <span className="text-sm text-elec-light/80">Single Socket Outlet</span>
+                <span className="text-sm text-elec-light/80">Single Socket Outlet (BS7671)</span>
               </div>
               
-              {/* Double socket */}
+              {/* Double socket - updated symbol */}
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
-                  <div className="flex space-x-1">
-                    <div className="w-5 h-5 border border-white/80 rounded-full"></div>
-                    <div className="w-5 h-5 border border-white/80 rounded-full"></div>
-                  </div>
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="9" cy="14" r="7" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <circle cx="19" cy="14" r="7" stroke="white" strokeWidth="1.5" fill="none"/>
+                  </svg>
                 </div>
-                <span className="text-sm text-elec-light/80">Twin Socket Outlet</span>
+                <span className="text-sm text-elec-light/80">Twin Socket Outlet (BS7671)</span>
               </div>
               
-              {/* Switched socket */}
+              {/* Switched socket - updated symbol */}
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
-                  <div className="w-8 h-8 border border-white/80 rounded-full flex items-center justify-center relative">
-                    <div className="w-2 h-5 border-l-2 border-r-2 border-white/80"></div>
-                    <div className="w-3 h-3 bg-elec-yellow absolute -top-1 -right-1 rounded-full"></div>
-                  </div>
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="14" cy="14" r="12" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <line x1="14" y1="2" x2="14" y2="6" stroke="white" strokeWidth="1.5"/>
+                  </svg>
                 </div>
-                <span className="text-sm text-elec-light/80">Switched Socket Outlet</span>
+                <span className="text-sm text-elec-light/80">Switched Socket Outlet (BS7671)</span>
               </div>
             </div>
           </div>
@@ -58,103 +57,97 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
           <div className="bg-elec-gray/50 border border-elec-yellow/20 rounded-lg p-4">
             <h4 className="font-medium text-elec-yellow mb-3">Light Switches</h4>
             <div className="space-y-4">
-              {/* One-way switch - Updated symbol */}
+              {/* One-way switch - BS7671 symbol */}
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="16" cy="16" r="10" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <line x1="6" y1="16" x2="12" y2="16" stroke="white" strokeWidth="1.5"/>
-                    <line x1="20" y1="16" x2="26" y2="16" stroke="white" strokeWidth="1.5"/>
-                    <line x1="12" y1="16" x2="20" y2="22" stroke="white" strokeWidth="1.5"/>
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="4" y1="14" x2="11" y2="14" stroke="white" strokeWidth="1.5"/>
+                    <line x1="17" y1="14" x2="24" y2="14" stroke="white" strokeWidth="1.5"/>
+                    <line x1="11" y1="14" x2="17" y2="8" stroke="white" strokeWidth="1.5"/>
                   </svg>
                 </div>
-                <span className="text-sm text-elec-light/80">One-way Switch</span>
+                <span className="text-sm text-elec-light/80">One-way Switch (BS7671)</span>
               </div>
               
-              {/* Two-way switch - Updated symbol */}
+              {/* Two-way switch - BS7671 symbol */}
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="16" cy="16" r="10" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <line x1="6" y1="12" x2="11" y2="12" stroke="white" strokeWidth="1.5"/>
-                    <line x1="6" y1="20" x2="11" y2="20" stroke="white" strokeWidth="1.5"/>
-                    <line x1="21" y1="16" x2="26" y2="16" stroke="white" strokeWidth="1.5"/>
-                    <line x1="11" y1="12" x2="21" y2="16" stroke="white" strokeWidth="1.5"/>
-                    <line x1="11" y1="20" x2="21" y2="16" stroke="white" strokeWidth="1.5"/>
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="4" y1="10" x2="9" y2="10" stroke="white" strokeWidth="1.5"/>
+                    <line x1="4" y1="18" x2="9" y2="18" stroke="white" strokeWidth="1.5"/>
+                    <line x1="19" y1="14" x2="24" y2="14" stroke="white" strokeWidth="1.5"/>
+                    <path d="M9 10L19 14" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <path d="M9 18L19 14" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <circle cx="9" cy="10" r="1.5" fill="white"/>
+                    <circle cx="9" cy="18" r="1.5" fill="white"/>
+                    <circle cx="19" cy="14" r="1.5" fill="white"/>
                   </svg>
                 </div>
-                <span className="text-sm text-elec-light/80">Two-way Switch</span>
+                <span className="text-sm text-elec-light/80">Two-way Switch (BS7671)</span>
               </div>
               
-              {/* Dimmer switch - Updated symbol */}
+              {/* Dimmer switch - BS7671 symbol */}
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="16" cy="16" r="10" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <line x1="6" y1="16" x2="12" y2="16" stroke="white" strokeWidth="1.5"/>
-                    <line x1="20" y1="16" x2="26" y2="16" stroke="white" strokeWidth="1.5"/>
-                    <path d="M12 16C12 16 14 10 20 16" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <circle cx="16" cy="16" r="3" fill="#d9a52080"/>
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <line x1="4" y1="14" x2="10" y2="14" stroke="white" strokeWidth="1.5"/>
+                    <line x1="18" y1="14" x2="24" y2="14" stroke="white" strokeWidth="1.5"/>
+                    <path d="M10 14C10 14 14 8 18 14" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <rect x="12" y="12" width="4" height="4" fill="#d9a52050"/>
                   </svg>
                 </div>
-                <span className="text-sm text-elec-light/80">Dimmer Switch</span>
+                <span className="text-sm text-elec-light/80">Dimmer Switch (BS7671)</span>
               </div>
             </div>
           </div>
           
-          {/* Other common symbols */}
+          {/* Other common symbols - BS7671 compliant */}
           <div className="bg-elec-gray/50 border border-elec-yellow/20 rounded-lg p-4">
             <h4 className="font-medium text-elec-yellow mb-3">Other Common Symbols</h4>
             <div className="space-y-4">
-              {/* Light fitting - Updated symbol */}
+              {/* Light fitting - BS7671 symbol */}
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="16" cy="16" r="8" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <circle cx="16" cy="16" r="4" fill="#d9a52050"/>
-                    <line x1="16" y1="6" x2="16" y2="8" stroke="white" strokeWidth="1.5"/>
-                    <line x1="16" y1="24" x2="16" y2="26" stroke="white" strokeWidth="1.5"/>
-                    <line x1="6" y1="16" x2="8" y2="16" stroke="white" strokeWidth="1.5"/>
-                    <line x1="24" y1="16" x2="26" y2="16" stroke="white" strokeWidth="1.5"/>
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="14" cy="14" r="8" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <line x1="14" y1="6" x2="14" y2="22" stroke="white" strokeWidth="1.5"/>
+                    <line x1="6" y1="14" x2="22" y2="14" stroke="white" strokeWidth="1.5"/>
                   </svg>
                 </div>
-                <span className="text-sm text-elec-light/80">Ceiling Light Fitting</span>
+                <span className="text-sm text-elec-light/80">Ceiling Light Fitting (BS7671)</span>
               </div>
               
-              {/* Consumer unit */}
+              {/* Consumer unit - BS7671 symbol */}
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
-                  <div className="w-10 h-8 border border-white/80 flex flex-col p-1">
-                    <div className="border-b border-white/80 h-3 text-xs flex items-center justify-center">
-                      CU
-                    </div>
-                    <div className="flex-1 flex items-center justify-center">
-                      <div className="w-6 h-2 bg-elec-yellow/40"></div>
-                    </div>
-                  </div>
-                </div>
-                <span className="text-sm text-elec-light/80">Consumer Unit</span>
-              </div>
-              
-              {/* Junction box - Updated symbol */}
-              <div className="flex flex-col items-center">
-                <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="10" y="10" width="12" height="12" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <line x1="16" y1="4" x2="16" y2="10" stroke="white" strokeWidth="1.5"/>
-                    <line x1="16" y1="22" x2="16" y2="28" stroke="white" strokeWidth="1.5"/>
-                    <line x1="4" y1="16" x2="10" y2="16" stroke="white" strokeWidth="1.5"/>
-                    <line x1="22" y1="16" x2="28" y2="16" stroke="white" strokeWidth="1.5"/>
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="5" y="7" width="18" height="14" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <line x1="5" y1="11" x2="23" y2="11" stroke="white" strokeWidth="1.5"/>
+                    <text x="12" y="10" fill="white" fontSize="5" textAnchor="middle">DB</text>
                   </svg>
                 </div>
-                <span className="text-sm text-elec-light/80">Junction Box</span>
+                <span className="text-sm text-elec-light/80">Consumer Unit/Distribution Board (BS7671)</span>
+              </div>
+              
+              {/* Junction box - BS7671 symbol */}
+              <div className="flex flex-col items-center">
+                <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="8" height="8" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <line x1="6" y1="14" x2="10" y2="14" stroke="white" strokeWidth="1.5"/>
+                    <line x1="18" y1="14" x2="22" y2="14" stroke="white" strokeWidth="1.5"/>
+                    <line x1="14" y1="6" x2="14" y2="10" stroke="white" strokeWidth="1.5"/>
+                    <line x1="14" y1="18" x2="14" y2="22" stroke="white" strokeWidth="1.5"/>
+                  </svg>
+                </div>
+                <span className="text-sm text-elec-light/80">Junction Box (BS7671)</span>
               </div>
             </div>
           </div>
         </div>
         
         <div className="mt-4 p-3 bg-elec-gray/30 border border-elec-yellow/10 rounded text-sm text-elec-light/80">
-          <p>Note: These symbols conform to BS7671 (IET Wiring Regulations) standards used in the UK. Always refer to the drawing legend for the specific meanings of symbols in a given electrical schematic.</p>
+          <p>Note: These symbols conform to BS7671 (IET Wiring Regulations 18th Edition) standards used in UK electrical installations. Always refer to the drawing legend for the specific meanings of symbols in a given electrical schematic.</p>
         </div>
       </div>
     );
