@@ -118,29 +118,23 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
         }
       }
 
-      // Process the fetched data - add category to each item explicitly
+      // Process the fetched data - add category to each item explicitly 
       const processedRankingsData = rankingsData ? rankingsData.map(item => ({
         ...item,
         category // Add the category property that's missing
       })) as UserActivity[] : [];
       
-      // Update the appropriate state based on category
-      switch (category) {
-        case 'learning':
-          setLearningData(processedRankingsData);
-          break;
-        case 'community':
-          setCommunityData(processedRankingsData);
-          break;
-        case 'safety':
-          setSafetyData(processedRankingsData);
-          break;
-        case 'mentor':
-          setMentorData(processedRankingsData);
-          break;
-        case 'mental':
-          setMentalData(processedRankingsData);
-          break;
+      // Update the appropriate state based on category - avoid using dynamic property access
+      if (category === 'learning') {
+        setLearningData(processedRankingsData);
+      } else if (category === 'community') {
+        setCommunityData(processedRankingsData);
+      } else if (category === 'safety') {
+        setSafetyData(processedRankingsData);
+      } else if (category === 'mentor') {
+        setMentorData(processedRankingsData);
+      } else if (category === 'mental') {
+        setMentalData(processedRankingsData);
       }
 
       // Update community stats
@@ -171,23 +165,17 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
           category // Add the category property that's missing
         } as UserActivity;
         
-        // Update the appropriate user rank state based on category
-        switch (category) {
-          case 'learning':
-            setUserRankLearning(processedUserData);
-            break;
-          case 'community':
-            setUserRankCommunity(processedUserData);
-            break;
-          case 'safety':
-            setUserRankSafety(processedUserData);
-            break;
-          case 'mentor':
-            setUserRankMentor(processedUserData);
-            break;
-          case 'mental':
-            setUserRankMental(processedUserData);
-            break;
+        // Update the appropriate user rank state based on category - avoid using dynamic property access
+        if (category === 'learning') {
+          setUserRankLearning(processedUserData);
+        } else if (category === 'community') {
+          setUserRankCommunity(processedUserData);
+        } else if (category === 'safety') {
+          setUserRankSafety(processedUserData);
+        } else if (category === 'mentor') {
+          setUserRankMentor(processedUserData);
+        } else if (category === 'mental') {
+          setUserRankMental(processedUserData);
         }
       }
     } catch (err) {

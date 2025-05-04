@@ -12,7 +12,8 @@ export async function ensureSubscriberCounted(statsId: string, userId: string, i
     // First check if user already has an activity record for today
     const today = new Date().toISOString().split('T')[0];
     
-    const { data: existingActivity } = await supabase
+    // Using explicit type annotation to avoid deep type instantiation
+    const { data: existingActivity, error: activityError } = await supabase
       .from('user_activity')
       .select('*')
       .eq('user_id', userId)
@@ -20,14 +21,24 @@ export async function ensureSubscriberCounted(statsId: string, userId: string, i
       .eq('category', 'learning')
       .single();
     
+    if (activityError && activityError.code !== 'PGRST116') {
+      console.error('Error checking user activity:', activityError);
+      return;
+    }
+    
     // If no activity record for today, we need to update the community stats
     if (!existingActivity) {
       // Update community stats to increment active users
-      const { data: statsData } = await supabase
+      const { data: statsData, error: statsError } = await supabase
         .from('community_stats')
         .select('active_users')
         .eq('id', statsId)
         .single();
+        
+      if (statsError) {
+        console.error('Error fetching community stats:', statsError);
+        return;
+      }
         
       if (statsData) {
         await supabase
@@ -40,12 +51,17 @@ export async function ensureSubscriberCounted(statsId: string, userId: string, i
       }
       
       // Create or update user activity record to mark them as active today
-      const { data: activityData } = await supabase
+      const { data: activityData, error: fetchError } = await supabase
         .from('user_activity')
         .select('*')
         .eq('user_id', userId)
         .eq('category', 'learning')
         .single();
+      
+      if (fetchError && fetchError.code !== 'PGRST116') {
+        console.error('Error fetching user activity:', fetchError);
+        return;
+      }
       
       if (activityData) {
         await supabase
