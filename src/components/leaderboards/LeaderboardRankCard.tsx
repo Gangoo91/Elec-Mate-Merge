@@ -7,6 +7,7 @@ import { UserActivity } from "@/hooks/leaderboards/useLeaderboardData";
 import { format } from "date-fns";
 import { getLevelBadgeColor, getBadgeColor } from "@/hooks/leaderboards/useLeaderboardsFilters";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useAuth } from '@/contexts/AuthContext';
 
 interface LeaderboardRankCardProps {
   user: UserActivity;
@@ -16,6 +17,10 @@ interface LeaderboardRankCardProps {
 
 export const LeaderboardRankCard = ({ user, position, maxPoints }: LeaderboardRankCardProps) => {
   const isMobile = useIsMobile();
+  const { user: currentUser, subscriptionTier, isSubscribed } = useAuth();
+  
+  // Check if this is the current user
+  const isCurrentUser = currentUser && user.user_id === currentUser.id;
 
   // Helper function to get user initials from profile data
   const getUserInitials = (user: UserActivity): string => {
@@ -64,7 +69,7 @@ export const LeaderboardRankCard = ({ user, position, maxPoints }: LeaderboardRa
     <div 
       className={`
         flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 sm:p-4 rounded-lg relative
-        ${position <= 3 ? "bg-elec-dark/70" : "bg-elec-dark/40"}
+        ${position <= 3 ? "bg-elec-dark/70" : isCurrentUser ? "bg-elec-yellow/10" : "bg-elec-dark/40"}
         transition-all hover:bg-elec-dark/80
       `}
     >
@@ -108,11 +113,20 @@ export const LeaderboardRankCard = ({ user, position, maxPoints }: LeaderboardRa
 
         {/* User Info */}
         <div className="flex-1 min-w-0 pr-8 sm:pr-0">
-          <h4 className="font-medium text-sm sm:text-base truncate">{getUserDisplayName(user)}</h4>
+          <h4 className="font-medium text-sm sm:text-base truncate">
+            {getUserDisplayName(user)}
+            {isCurrentUser && <span className="ml-1.5 text-xs text-elec-yellow">(You)</span>}
+          </h4>
           <div className="flex flex-wrap items-center gap-1 mt-1">
-            <Badge variant="outline" className={`text-xs ${getLevelBadgeColor(user.level)}`}>
-              {user.level}
-            </Badge>
+            {isCurrentUser && isSubscribed ? (
+              <Badge variant="gold" className="text-xs">
+                {subscriptionTier || 'Standard'}
+              </Badge>
+            ) : (
+              <Badge variant="outline" className={`text-xs ${getLevelBadgeColor(user.level)}`}>
+                {user.level}
+              </Badge>
+            )}
             <Badge variant="outline" className={`text-xs ${getBadgeColor(user.badge)}`}>
               {user.badge}
             </Badge>
