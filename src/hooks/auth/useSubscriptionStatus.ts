@@ -42,8 +42,11 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
       if (error) {
         console.error('Error checking subscription:', error);
       } else if (data) {
+        // Make sure to update state with the latest subscription data
         setIsSubscribed(data.subscribed);
         setSubscriptionTier(data.subscription_tier);
+        
+        console.log('Subscription check result:', data);
       }
     } catch (error) {
       console.error('Error in checkSubscriptionStatus:', error);

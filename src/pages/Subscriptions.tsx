@@ -13,11 +13,26 @@ import SupportSection from "@/components/subscriptions/SupportSection";
 
 const Subscriptions = () => {
   // Get auth context values for subscription status
-  const { checkSubscriptionStatus, isCheckingStatus } = useAuth();
+  const { checkSubscriptionStatus, isCheckingStatus, isSubscribed, subscriptionTier } = useAuth();
+  const { toast } = useToast();
   
   // Auto-check subscription status on page load
   useEffect(() => {
-    checkSubscriptionStatus();
+    const checkStatus = async () => {
+      await checkSubscriptionStatus();
+      
+      // Log the current subscription status
+      console.log('Current subscription status:', { isSubscribed, subscriptionTier });
+    };
+    
+    checkStatus();
+    
+    // Set up periodic check for subscription status
+    const intervalId = setInterval(() => {
+      checkSubscriptionStatus();
+    }, 10000); // Check every 10 seconds while on this page
+    
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
@@ -34,7 +49,13 @@ const Subscriptions = () => {
         <Button 
           variant="outline" 
           className="flex items-center gap-2" 
-          onClick={checkSubscriptionStatus}
+          onClick={() => {
+            checkSubscriptionStatus();
+            toast({
+              title: "Refreshing Status",
+              description: "Checking your current subscription status...",
+            });
+          }}
           disabled={isCheckingStatus}
         >
           {isCheckingStatus ? (
