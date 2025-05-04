@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
-import { FormDescription, FormLabel } from '@/components/ui/form';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 
 const AppearanceTab = () => {
@@ -33,10 +32,10 @@ const AppearanceTab = () => {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <FormLabel>Dark Mode</FormLabel>
-          <FormDescription className="text-xs text-muted-foreground">
+          <label className="text-sm font-medium">Dark Mode</label>
+          <p className="text-xs text-muted-foreground">
             Toggle dark mode on or off
-          </FormDescription>
+          </p>
         </div>
         <Switch
           checked={appearanceSettings.darkMode}
@@ -48,10 +47,10 @@ const AppearanceTab = () => {
       
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <FormLabel>High Contrast</FormLabel>
-          <FormDescription className="text-xs text-muted-foreground">
+          <label className="text-sm font-medium">High Contrast</label>
+          <p className="text-xs text-muted-foreground">
             Increase contrast for better visibility
-          </FormDescription>
+          </p>
         </div>
         <Switch
           checked={appearanceSettings.highContrast}
@@ -62,10 +61,10 @@ const AppearanceTab = () => {
       <Separator className="my-4" />
       
       <div className="space-y-2">
-        <FormLabel>Font Size</FormLabel>
-        <FormDescription className="text-xs text-muted-foreground">
+        <label className="text-sm font-medium">Font Size</label>
+        <p className="text-xs text-muted-foreground">
           Adjust the text size throughout the app
-        </FormDescription>
+        </p>
         <div className="flex gap-2 flex-wrap">
           {['small', 'medium', 'large'].map(size => (
             <Button

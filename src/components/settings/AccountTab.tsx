@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
-import { FormDescription, FormLabel } from '@/components/ui/form';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { LogOut, Globe, User } from "lucide-react";
 
@@ -34,7 +33,7 @@ const AccountTab = () => {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <FormLabel>Email Address</FormLabel>
+        <label className="text-sm font-medium">Email Address</label>
         <Input value={user?.email || ''} disabled className="bg-elec-gray/40" />
       </div>
       
@@ -42,10 +41,10 @@ const AccountTab = () => {
       
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <FormLabel>Language</FormLabel>
-          <FormDescription className="text-xs text-muted-foreground">
+          <label className="text-sm font-medium">Language</label>
+          <p className="text-xs text-muted-foreground">
             Select your preferred language
-          </FormDescription>
+          </p>
         </div>
         <div className="flex items-center gap-2 text-sm">
           <Globe className="h-4 w-4" />
@@ -57,10 +56,10 @@ const AccountTab = () => {
       
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <FormLabel>Development Mode</FormLabel>
-          <FormDescription className="text-xs text-muted-foreground">
+          <label className="text-sm font-medium">Development Mode</label>
+          <p className="text-xs text-muted-foreground">
             Enable additional developer features
-          </FormDescription>
+          </p>
         </div>
         <Switch
           checked={isDevelopmentMode}

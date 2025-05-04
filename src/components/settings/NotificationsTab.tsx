@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
-import { FormDescription, FormLabel } from '@/components/ui/form';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 
 const NotificationsTab = () => {
@@ -33,10 +32,10 @@ const NotificationsTab = () => {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <FormLabel>Email Updates</FormLabel>
-          <FormDescription className="text-xs text-muted-foreground">
+          <label className="text-sm font-medium">Email Updates</label>
+          <p className="text-xs text-muted-foreground">
             Receive important updates via email
-          </FormDescription>
+          </p>
         </div>
         <Switch
           checked={notificationSettings.emailUpdates}
@@ -48,10 +47,10 @@ const NotificationsTab = () => {
       
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <FormLabel>Mentor Messages</FormLabel>
-          <FormDescription className="text-xs text-muted-foreground">
+          <label className="text-sm font-medium">Mentor Messages</label>
+          <p className="text-xs text-muted-foreground">
             Get notified when mentors send you messages
-          </FormDescription>
+          </p>
         </div>
         <Switch
           checked={notificationSettings.mentorMessages}
@@ -63,10 +62,10 @@ const NotificationsTab = () => {
       
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <FormLabel>Course Completions</FormLabel>
-          <FormDescription className="text-xs text-muted-foreground">
+          <label className="text-sm font-medium">Course Completions</label>
+          <p className="text-xs text-muted-foreground">
             Notifications when you complete courses
-          </FormDescription>
+          </p>
         </div>
         <Switch
           checked={notificationSettings.courseCompletions}
@@ -78,10 +77,10 @@ const NotificationsTab = () => {
       
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
-          <FormLabel>App Updates</FormLabel>
-          <FormDescription className="text-xs text-muted-foreground">
+          <label className="text-sm font-medium">App Updates</label>
+          <p className="text-xs text-muted-foreground">
             Information about new features and updates
-          </FormDescription>
+          </p>
         </div>
         <Switch
           checked={notificationSettings.appUpdates}

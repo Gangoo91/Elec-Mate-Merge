@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
-import { FormDescription, FormLabel } from '@/components/ui/form';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { Shield, EyeOff } from "lucide-react";
 
@@ -47,10 +46,10 @@ const PrivacyTab = () => {
         <CardContent className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <FormLabel>Show Online Status</FormLabel>
-              <FormDescription className="text-xs text-muted-foreground">
+              <label className="text-sm font-medium">Show Online Status</label>
+              <p className="text-xs text-muted-foreground">
                 Let others see when you're online
-              </FormDescription>
+              </p>
             </div>
             <Switch
               checked={privacySettings.showOnline}
@@ -62,10 +61,10 @@ const PrivacyTab = () => {
           
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <FormLabel>Activity Visibility</FormLabel>
-              <FormDescription className="text-xs text-muted-foreground">
+              <label className="text-sm font-medium">Activity Visibility</label>
+              <p className="text-xs text-muted-foreground">
                 Share your learning progress with others
-              </FormDescription>
+              </p>
             </div>
             <Switch
               checked={privacySettings.showActivity}
@@ -77,10 +76,10 @@ const PrivacyTab = () => {
           
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <FormLabel>Public Profile</FormLabel>
-              <FormDescription className="text-xs text-muted-foreground">
+              <label className="text-sm font-medium">Public Profile</label>
+              <p className="text-xs text-muted-foreground">
                 Make your profile visible to other users
-              </FormDescription>
+              </p>
             </div>
             <Switch
               checked={privacySettings.showProfile}
