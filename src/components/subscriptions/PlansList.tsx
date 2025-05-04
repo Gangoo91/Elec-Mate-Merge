@@ -22,6 +22,8 @@ const PlansList = ({ billing }: PlansListProps) => {
     try {
       setIsLoading({ ...isLoading, [planId]: true });
       
+      console.log("Starting checkout process for:", { planId, priceId, mode });
+      
       const { data, error } = await supabase.functions.invoke('create-checkout', {
         body: { 
           priceId, 
@@ -31,8 +33,11 @@ const PlansList = ({ billing }: PlansListProps) => {
       });
       
       if (error) {
+        console.error("Checkout error:", error);
         throw new Error(error.message);
       }
+      
+      console.log("Checkout response:", data);
       
       if (data?.url) {
         window.location.href = data.url;
@@ -115,10 +120,11 @@ const PlansList = ({ billing }: PlansListProps) => {
               onClick={() => handleSubscribe(plan.id, plan.priceId, 'subscription')}
             >
               {isLoading[plan.id] ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : null}
-              
-              {(subscriptionTier === plan.name && isSubscribed) 
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Processing...
+                </>
+              ) : (subscriptionTier === plan.name && isSubscribed) 
                 ? "Current Plan" 
                 : plan.coming 
                   ? "Coming Soon" 

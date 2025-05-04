@@ -8,11 +8,19 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Helper logging function
+const logStep = (step: string, details?: any) => {
+  const detailsStr = details ? ` - ${JSON.stringify(details)}` : '';
+  console.log(`[CREATE-CHECKOUT] ${step}${detailsStr}`);
+};
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
+
+  logStep("Function started");
 
   // Create a Supabase client
   const supabaseClient = createClient(
@@ -25,6 +33,8 @@ serve(async (req) => {
     const body = await req.json();
     const { priceId, mode, planId } = body;
     
+    logStep("Request body received", { priceId, mode, planId });
+    
     if (!priceId || !mode || !planId) {
       throw new Error("Missing required parameters: priceId, mode, or planId");
     }
@@ -32,16 +42,35 @@ serve(async (req) => {
     // Authenticate user
     const authHeader = req.headers.get("Authorization")!;
     const token = authHeader.replace("Bearer ", "");
+    logStep("Authenticating user with token");
+    
     const { data: userData, error: authError } = await supabaseClient.auth.getUser(token);
     
-    if (authError) throw new Error(`Authentication error: ${authError.message}`);
+    if (authError) {
+      logStep("Authentication error", { error: authError.message });
+      throw new Error(`Authentication error: ${authError.message}`);
+    }
+    
     const user = userData.user;
-    if (!user?.email) throw new Error("User not authenticated or email not available");
+    if (!user?.email) {
+      logStep("User not authenticated or email not available");
+      throw new Error("User not authenticated or email not available");
+    }
+    
+    logStep("User authenticated", { userId: user.id, email: user.email });
 
     // Initialize Stripe
-    const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
+    const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
+    if (!stripeKey) {
+      logStep("STRIPE_SECRET_KEY is not set");
+      throw new Error("STRIPE_SECRET_KEY is not set");
+    }
+    
+    const stripe = new Stripe(stripeKey, {
       apiVersion: "2023-10-16",
     });
+    
+    logStep("Stripe initialized");
 
     // Check if a Stripe customer record exists for this user
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
@@ -49,6 +78,7 @@ serve(async (req) => {
     
     if (customers.data.length > 0) {
       customerId = customers.data[0].id;
+      logStep("Existing customer found", { customerId });
     } else {
       // Create a new customer if one doesn't exist
       const newCustomer = await stripe.customers.create({
@@ -58,9 +88,10 @@ serve(async (req) => {
         }
       });
       customerId = newCustomer.id;
+      logStep("New customer created", { customerId });
     }
 
-    // Create checkout options based on mode (subscription or one-time)
+    // Create checkout options based on mode
     const checkoutOptions: any = {
       customer: customerId,
       line_items: [
@@ -69,7 +100,7 @@ serve(async (req) => {
           quantity: 1,
         },
       ],
-      mode: mode, // 'subscription' or 'payment'
+      mode: mode,
       success_url: `${req.headers.get("origin")}/payment-success?plan=${planId}`,
       cancel_url: `${req.headers.get("origin")}/subscriptions`,
       client_reference_id: user.id,
@@ -78,9 +109,12 @@ serve(async (req) => {
         planId: planId,
       },
     };
+    
+    logStep("Creating checkout session with options", checkoutOptions);
 
     // Create checkout session
     const session = await stripe.checkout.sessions.create(checkoutOptions);
+    logStep("Checkout session created", { sessionId: session.id, url: session.url });
 
     // Return the checkout URL
     return new Response(JSON.stringify({ url: session.url }), {
@@ -89,7 +123,7 @@ serve(async (req) => {
     });
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    console.error("Error creating checkout session:", errorMessage);
+    logStep("Error creating checkout session", { error: errorMessage });
     
     return new Response(JSON.stringify({ error: errorMessage }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
