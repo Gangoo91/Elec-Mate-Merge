@@ -34,7 +34,7 @@ export function useLeaderboardData() {
   const [currentUserRank, setCurrentUserRank] = useState<UserActivity | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { user } = useAuth();
+  const { user, isSubscribed } = useAuth();
 
   // Fetch leaderboard data
   useEffect(() => {
@@ -100,7 +100,32 @@ export function useLeaderboardData() {
         } else {
           setUserRankings([]);
         }
-        setCommunityStats(statsData || null);
+
+        // Update community stats with subscription status
+        if (statsData) {
+          // If the user is subscribed but not counted in active_users, we'll increment
+          if (isSubscribed && user) {
+            // We'll update the community stats in the database to reflect subscribed users
+            const shouldUpdateStats = !(currentUserData?.last_active_date === new Date().toISOString().split('T')[0]);
+            
+            if (shouldUpdateStats) {
+              await ensureSubscriberCounted(statsData.id);
+              
+              // Update the local state with the incremented value
+              setCommunityStats({
+                ...statsData,
+                active_users: Math.max(1, (statsData.active_users || 0))
+              });
+            } else {
+              setCommunityStats(statsData);
+            }
+          } else {
+            setCommunityStats(statsData);
+          }
+        } else {
+          setCommunityStats(null);
+        }
+
         setCurrentUserRank(currentUserData as UserActivity | null);
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
@@ -135,7 +160,66 @@ export function useLeaderboardData() {
     return () => {
       supabase.removeChannel(userActivityChannel);
     };
-  }, [user]);
+  }, [user, isSubscribed]);
+
+  // Function to ensure subscriber is counted in community stats
+  const ensureSubscriberCounted = async (statsId: string) => {
+    if (!user || !isSubscribed) return;
+    
+    try {
+      // First check if user already has an activity record for today
+      const today = new Date().toISOString().split('T')[0];
+      
+      const { data: existingActivity } = await supabase
+        .from('user_activity')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('last_active_date', today)
+        .single();
+      
+      // If no activity record for today, we need to update the community stats
+      if (!existingActivity) {
+        // Update community stats to increment active users
+        await supabase
+          .from('community_stats')
+          .update({
+            active_users: supabase.rpc('increment', { row_id: statsId, increment_by: 1 }),
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', statsId);
+        
+        // Create or update user activity record to mark them as active today
+        const { data: activityData } = await supabase
+          .from('user_activity')
+          .select('*')
+          .eq('user_id', user.id)
+          .single();
+        
+        if (activityData) {
+          await supabase
+            .from('user_activity')
+            .update({
+              last_active_date: today,
+              updated_at: new Date().toISOString()
+            })
+            .eq('user_id', user.id);
+        } else {
+          await supabase
+            .from('user_activity')
+            .insert({
+              user_id: user.id,
+              points: 10, // Starting points
+              level: 'Apprentice',
+              badge: 'Beginner',
+              streak: 1,
+              last_active_date: today
+            });
+        }
+      }
+    } catch (err) {
+      console.error('Error ensuring subscriber is counted:', err);
+    }
+  };
 
   // Function to update user activity (e.g., when completing a lesson)
   const updateUserActivity = async (pointsToAdd: number = 10) => {

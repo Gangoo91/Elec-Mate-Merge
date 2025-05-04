@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/components/ui/use-toast';
 
 export function useUserActivity() {
-  const { user } = useAuth();
+  const { user, isSubscribed } = useAuth();
   const { toast } = useToast();
 
   // Mark user as active when the component mounts
@@ -28,9 +28,12 @@ export function useUserActivity() {
 
         const today = new Date().toISOString().split('T')[0];
         
+        // Prioritize marking subscribed users as active
+        const isNewDay = !existingData || existingData.last_active_date !== today;
+        
         if (existingData) {
           // If last active date is not today, update the record
-          if (existingData.last_active_date !== today) {
+          if (isNewDay) {
             const { error: updateError } = await supabase
               .from('user_activity')
               .update({
@@ -41,6 +44,9 @@ export function useUserActivity() {
 
             if (updateError) {
               console.error('Error updating user activity:', updateError);
+            } else if (isSubscribed) {
+              // If subscribed user becomes active on a new day, update community stats
+              updateCommunityStats();
             }
           }
         } else {
@@ -60,21 +66,7 @@ export function useUserActivity() {
             console.error('Error creating user activity record:', insertError);
           } else {
             // Increment active users in community stats
-            const { data: statsData } = await supabase
-              .from('community_stats')
-              .select('*')
-              .limit(1)
-              .single();
-
-            if (statsData) {
-              await supabase
-                .from('community_stats')
-                .update({
-                  active_users: (statsData.active_users || 0) + 1,
-                  updated_at: new Date().toISOString()
-                })
-                .eq('id', statsData.id);
-            }
+            updateCommunityStats();
 
             // Show welcome toast
             toast({
@@ -88,8 +80,31 @@ export function useUserActivity() {
       }
     };
 
+    // Helper function to update community stats
+    const updateCommunityStats = async () => {
+      try {
+        const { data: statsData } = await supabase
+          .from('community_stats')
+          .select('*')
+          .limit(1)
+          .single();
+
+        if (statsData) {
+          await supabase
+            .from('community_stats')
+            .update({
+              active_users: statsData.active_users + 1,
+              updated_at: new Date().toISOString()
+            })
+            .eq('id', statsData.id);
+        }
+      } catch (err) {
+        console.error('Error updating community stats:', err);
+      }
+    };
+
     trackUserActivity();
-  }, [user]);
+  }, [user, isSubscribed]);
 
   // Function to record lesson completion
   const recordLessonCompletion = async (lessonId: string) => {
