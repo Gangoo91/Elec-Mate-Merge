@@ -1,3 +1,4 @@
+
 import React from "react";
 
 type ElectricalSymbolsSectionProps = {
@@ -19,11 +20,12 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
           <div className="bg-elec-gray/50 border border-elec-yellow/20 rounded-lg p-4">
             <h4 className="font-medium text-elec-yellow mb-3">Socket Outlets</h4>
             <div className="space-y-4">
-              {/* Single socket - updated symbol */}
+              {/* Single socket - corrected symbol */}
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="14" cy="14" r="12" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <path d="M8 14 L20 14" stroke="white" strokeWidth="1.5"/>
+                    <path d="M14 14 A5 5 0 0 0 14 4" stroke="white" strokeWidth="1.5" fill="none"/>
                   </svg>
                 </div>
                 <span className="text-sm text-elec-light/80">Single Socket Outlet (BS7671)</span>
@@ -33,8 +35,9 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="9" cy="14" r="7" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <circle cx="19" cy="14" r="7" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <path d="M4 14 L24 14" stroke="white" strokeWidth="1.5"/>
+                    <path d="M10 14 A4 4 0 0 0 10 6" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <path d="M18 14 A4 4 0 0 0 18 6" stroke="white" strokeWidth="1.5" fill="none"/>
                   </svg>
                 </div>
                 <span className="text-sm text-elec-light/80">Twin Socket Outlet (BS7671)</span>
@@ -44,8 +47,9 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
               <div className="flex flex-col items-center">
                 <div className="w-14 h-14 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="14" cy="14" r="12" stroke="white" strokeWidth="1.5" fill="none"/>
-                    <line x1="14" y1="2" x2="14" y2="6" stroke="white" strokeWidth="1.5"/>
+                    <path d="M8 14 L20 14" stroke="white" strokeWidth="1.5"/>
+                    <path d="M14 14 A5 5 0 0 0 14 4" stroke="white" strokeWidth="1.5" fill="none"/>
+                    <path d="M14 14 L14 18" stroke="white" strokeWidth="1.5"/>
                   </svg>
                 </div>
                 <span className="text-sm text-elec-light/80">Switched Socket Outlet (BS7671)</span>
@@ -123,7 +127,7 @@ const ElectricalSymbolsDisplay = ({ subsectionId }: ElectricalSymbolsSectionProp
                   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="5" y="7" width="18" height="14" stroke="white" strokeWidth="1.5" fill="none"/>
                     <line x1="5" y1="11" x2="23" y2="11" stroke="white" strokeWidth="1.5"/>
-                    <text x="12" y="10" fill="white" fontSize="5" textAnchor="middle">DB</text>
+                    <text x="14" y="18" fill="white" fontSize="5" textAnchor="middle">DB</text>
                   </svg>
                 </div>
                 <span className="text-sm text-elec-light/80">Consumer Unit/Distribution Board (BS7671)</span>
