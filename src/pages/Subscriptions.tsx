@@ -37,16 +37,25 @@ const Subscriptions = () => {
       setLastAutoCheck(new Date());
     };
     
-    // Initial check
+    // Initial check - check multiple times to ensure we get the latest data
     checkStatus();
+    
+    // Extra initial checks to ensure we have the correct status
+    const initialChecks = [
+      setTimeout(() => checkStatus(), 1000),
+      setTimeout(() => checkStatus(), 3000)
+    ];
     
     // Set up periodic check for subscription status
     // Use a shorter interval for more frequent checks
     const intervalId = setInterval(() => {
       checkStatus();
-    }, 5000); // Check every 5 seconds while on this page
+    }, 3000); // Check every 3 seconds while on this page
     
-    return () => clearInterval(intervalId);
+    return () => {
+      clearInterval(intervalId);
+      initialChecks.forEach(clearTimeout);
+    };
   }, []);
 
   // Handle manual refresh click
@@ -116,8 +125,8 @@ const Subscriptions = () => {
       {/* Development Mode Card */}
       <DevelopmentModeCard />
 
-      {/* Plan Selection */}
-      <PlanSelection />
+      {/* Only show Plan Selection if not subscribed */}
+      {!isSubscribed && <PlanSelection />}
 
       {/* Frequently Asked Questions */}
       <SubscriptionFAQ />

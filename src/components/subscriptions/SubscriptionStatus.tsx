@@ -1,3 +1,4 @@
+
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Loader2, CheckCircle, Calendar, Tag, ExternalLink, X } from "lucide-react";
@@ -14,16 +15,6 @@ const SubscriptionStatus = () => {
   const [isCanceling, setIsCanceling] = useState(false);
   const [showCancelDialog, setShowCancelDialog] = useState(false);
   
-  // Calculate days remaining in trial
-  const getDaysRemaining = () => {
-    if (!trialEndsAt) return 0;
-    
-    const now = new Date();
-    const diffTime = trialEndsAt.getTime() - now.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    return Math.max(0, diffDays);
-  };
-
   // Handle opening customer portal for subscription management
   const openCustomerPortal = async () => {
     try {
@@ -130,7 +121,8 @@ const SubscriptionStatus = () => {
                 </div>
               )}
               
-              {isTrialActive && (
+              {/* Only show trial information when subscribed is false and trial is active */}
+              {!isSubscribed && isTrialActive && (
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
                   <div className="p-4 rounded-lg border border-amber-500/30 bg-amber-500/10">
                     <div className="text-sm text-muted-foreground mb-1">Expires In</div>
@@ -187,6 +179,17 @@ const SubscriptionStatus = () => {
       />
     </>
   );
+};
+
+// Helper function to calculate days remaining in trial
+const getDaysRemaining = () => {
+  const trialEndsAt = useAuth().trialEndsAt;
+  if (!trialEndsAt) return 0;
+  
+  const now = new Date();
+  const diffTime = trialEndsAt.getTime() - now.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return Math.max(0, diffDays);
 };
 
 export default SubscriptionStatus;

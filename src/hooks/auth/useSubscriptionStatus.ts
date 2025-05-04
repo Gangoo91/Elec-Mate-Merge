@@ -32,7 +32,13 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
         subscriptionFromProfile: profile.subscribed
       });
       
-      setIsTrialActive(isActive && !isUserSubscribed);
+      // If the user is subscribed, ensure trial status is false
+      if (isUserSubscribed) {
+        setIsTrialActive(false);
+      } else {
+        setIsTrialActive(isActive && !isUserSubscribed);
+      }
+      
       setTrialEndsAt(trialEndDate);
       setIsSubscribed(isUserSubscribed);
     } else {
@@ -61,12 +67,21 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
       if (error) {
         console.error('Error checking subscription:', error);
         setLastError(error.message);
-      } else if (data) {
+        // Don't update subscription status if there's an error
+        return;
+      } 
+      
+      if (data) {
         console.log('Subscription check result:', data);
         
-        // Make sure to update state with the latest subscription data
+        // Always update state with the latest subscription data from Stripe
         setIsSubscribed(data.subscribed);
         setSubscriptionTier(data.subscription_tier);
+        
+        // If the user is subscribed according to Stripe, ensure trial is inactive
+        if (data.subscribed) {
+          setIsTrialActive(false);
+        }
         
         // Check if the subscription status differs from the profile
         if (data.subscribed !== profile.subscribed) {
@@ -82,6 +97,7 @@ export function useSubscriptionStatus(profile: ProfileType | null) {
       const message = error instanceof Error ? error.message : String(error);
       console.error('Error in checkSubscriptionStatus:', message);
       setLastError(message);
+      // Don't update subscription status if there's an error
     } finally {
       setIsCheckingStatus(false);
     }
