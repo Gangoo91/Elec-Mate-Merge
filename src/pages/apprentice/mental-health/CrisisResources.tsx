@@ -2,18 +2,29 @@
 import MentalHealthPageLayout from "@/components/mental-health/MentalHealthPageLayout";
 import ResourceCard from "@/components/mental-health/ResourceCard";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { 
   AlertTriangle, Phone, MessageSquare, Globe, 
-  LifeBuoy, Search, Calendar, Download, Users, MapPin 
+  LifeBuoy, Search, Calendar, Download, Users, MapPin,
+  CheckCircle, ExternalLink, Info, Loader2, ChevronRight
 } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { supabase } from "@/integrations/supabase/client";
+
+// Define the type for our local resources
+interface LocalResource {
+  name: string;
+  distance: string;
+  type: string;
+  contact?: string;
+  address?: string;
+}
 
 const postcodeSchema = z.object({
   postcode: z
@@ -23,8 +34,10 @@ const postcodeSchema = z.object({
 });
 
 const CrisisResources = () => {
-  const [localResources, setLocalResources] = useState<Array<{name: string, distance: string, type: string}>>([]);
+  const [localResources, setLocalResources] = useState<LocalResource[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState<string | null>(null);
+  const [selectedResource, setSelectedResource] = useState<LocalResource | null>(null);
 
   const form = useForm<z.infer<typeof postcodeSchema>>({
     resolver: zodResolver(postcodeSchema),
@@ -87,30 +100,46 @@ const CrisisResources = () => {
     }
   ];
 
-  const mockLocalResources = [
-    { name: "Community Mental Health Team", distance: "1.2 miles", type: "NHS" },
-    { name: "St. John's Wellbeing Centre", distance: "2.4 miles", type: "Charity" },
-    { name: "Andy's Man Club - Local Group", distance: "3.5 miles", type: "Support Group" },
-    { name: "Mind Support Centre", distance: "4.1 miles", type: "Charity" },
-    { name: "Mental Health Crisis Team", distance: "5.0 miles", type: "NHS Emergency" }
-  ];
-
-  const onSubmit = (data: z.infer<typeof postcodeSchema>) => {
+  const onSubmit = async (data: z.infer<typeof postcodeSchema>) => {
     setIsSearching(true);
+    setSearchError(null);
+    setSelectedResource(null);
     
-    // Simulate API call with timeout
-    setTimeout(() => {
-      setLocalResources(mockLocalResources);
-      setIsSearching(false);
-      toast.success("Local support services found", {
-        description: `Found 5 services near ${data.postcode}`,
+    try {
+      const { data: response, error } = await supabase.functions.invoke('mental-health-services', {
+        body: { postcode: data.postcode }
       });
-    }, 1500);
+      
+      if (error) {
+        console.error("Error calling API:", error);
+        setSearchError("Failed to find services. Please try again.");
+        toast.error("Error finding local services", {
+          description: error.message || "Please try again later",
+        });
+      } else {
+        setLocalResources(response.services);
+        toast.success("Local support services found", {
+          description: `Found ${response.services.length} services near ${data.postcode}`,
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      setSearchError("Failed to connect to service. Please try again.");
+      toast.error("Service unavailable", {
+        description: "Our service is currently unavailable. Please try again later.",
+      });
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   const handleCopyNumber = (phone: string) => {
     navigator.clipboard.writeText(phone);
     toast.success("Phone number copied to clipboard");
+  };
+  
+  const handleViewResourceDetails = (resource: LocalResource) => {
+    setSelectedResource(resource);
   };
 
   return (
@@ -121,7 +150,7 @@ const CrisisResources = () => {
       color="red"
     >
       <div className="space-y-6">
-        <Card className="border-red-500/40 bg-red-500/5">
+        <Card className="border-red-500/40 bg-red-500/5 shadow-md">
           <CardContent className="p-4">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
               <AlertTriangle className="h-10 w-10 text-red-500 flex-shrink-0" />
@@ -144,7 +173,7 @@ const CrisisResources = () => {
             {emergencyContacts.map((contact, index) => (
               <Card 
                 key={index}
-                className="border-red-500/20 hover:border-red-500/40 transition-colors"
+                className="border-red-500/20 hover:border-red-500/40 transition-colors shadow-sm hover:shadow-md"
               >
                 <CardContent className="p-4">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -170,8 +199,8 @@ const CrisisResources = () => {
           </div>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <Card className="border-red-500/20 bg-elec-gray col-span-1 sm:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card className="border-red-500/20 bg-elec-gray col-span-1 md:col-span-2 shadow-sm">
             <CardHeader className="pb-3 border-b border-red-500/10">
               <CardTitle className="text-lg flex items-center gap-2">
                 <Globe className="h-5 w-5 text-red-500" />
@@ -194,12 +223,15 @@ const CrisisResources = () => {
           </Card>
           
           <div className="space-y-4">
-            <Card className="border-red-500/20 bg-elec-gray hover:shadow-md transition-shadow">
+            <Card className="border-red-500/20 bg-elec-gray hover:shadow-md transition-shadow shadow-sm">
               <CardHeader className="pb-3 border-b border-red-500/10">
                 <CardTitle className="text-base flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-red-500" />
                   Find Local Support
                 </CardTitle>
+                <CardDescription className="text-sm">
+                  Search for mental health services near you
+                </CardDescription>
               </CardHeader>
               <CardContent className="p-4 pt-6">
                 <Form {...form}>
@@ -221,12 +253,22 @@ const CrisisResources = () => {
                                 className="bg-red-500 hover:bg-red-600 text-white"
                                 disabled={isSearching}
                               >
-                                {isSearching ? "Searching..." : "Search"}
+                                {isSearching ? (
+                                  <>
+                                    <Loader2 className="h-4 w-4 animate-spin mr-1" />
+                                    Searching...
+                                  </>
+                                ) : (
+                                  <>
+                                    <Search className="h-4 w-4 mr-1" />
+                                    Search
+                                  </>
+                                )}
                               </Button>
                             </div>
                           </FormControl>
                           <FormDescription className="text-xs">
-                            Find mental health services near you
+                            Enter a UK postcode to find local services
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -235,13 +277,26 @@ const CrisisResources = () => {
                   </form>
                 </Form>
 
-                {localResources.length > 0 && (
+                {searchError && (
+                  <div className="mt-4 p-3 bg-red-500/10 text-red-500 rounded-md text-sm border border-red-500/20">
+                    <div className="flex items-center gap-2">
+                      <Info className="h-4 w-4" />
+                      <p>{searchError}</p>
+                    </div>
+                  </div>
+                )}
+
+                {localResources.length > 0 && !selectedResource && (
                   <div className="mt-4 space-y-3">
-                    <h4 className="text-sm font-medium">Local Services:</h4>
+                    <h4 className="text-sm font-medium flex items-center gap-1">
+                      <MapPin className="h-4 w-4 text-red-500" />
+                      Local Services:
+                    </h4>
                     {localResources.map((resource, index) => (
                       <div 
                         key={index} 
-                        className="p-3 bg-background rounded-md border border-border flex justify-between items-center"
+                        onClick={() => handleViewResourceDetails(resource)}
+                        className="p-3 bg-background rounded-md border border-border flex justify-between items-center cursor-pointer hover:border-red-500/30 hover:bg-red-500/5 transition-colors"
                       >
                         <div>
                           <div className="font-medium text-sm">{resource.name}</div>
@@ -249,21 +304,103 @@ const CrisisResources = () => {
                             <MapPin className="h-3 w-3" /> {resource.distance}
                           </div>
                         </div>
-                        <span className="text-xs px-2 py-1 bg-red-500/10 text-red-500 rounded">
-                          {resource.type}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs px-2 py-1 bg-red-500/10 text-red-500 rounded">
+                            {resource.type}
+                          </span>
+                          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                        </div>
                       </div>
                     ))}
+                  </div>
+                )}
+
+                {selectedResource && (
+                  <div className="mt-4 space-y-4">
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => setSelectedResource(null)}
+                      className="flex items-center gap-1"
+                    >
+                      <ChevronRight className="h-4 w-4 rotate-180" />
+                      Back to results
+                    </Button>
+                    
+                    <div className="p-4 bg-background rounded-md border border-red-500/30">
+                      <h3 className="font-medium flex items-center gap-2">
+                        {selectedResource.name}
+                        <span className="text-xs px-2 py-1 bg-red-500/10 text-red-500 rounded">
+                          {selectedResource.type}
+                        </span>
+                      </h3>
+                      
+                      <div className="mt-3 space-y-2 text-sm">
+                        <div className="flex items-start gap-2">
+                          <MapPin className="h-4 w-4 text-red-500 mt-1" />
+                          <div>
+                            <p className="font-medium">Distance:</p>
+                            <p>{selectedResource.distance}</p>
+                          </div>
+                        </div>
+                        
+                        {selectedResource.address && (
+                          <div className="flex items-start gap-2">
+                            <MapPin className="h-4 w-4 text-red-500 mt-1" />
+                            <div>
+                              <p className="font-medium">Address:</p>
+                              <p>{selectedResource.address}</p>
+                            </div>
+                          </div>
+                        )}
+                        
+                        {selectedResource.contact && (
+                          <div className="flex items-start gap-2">
+                            <Phone className="h-4 w-4 text-red-500 mt-1" />
+                            <div>
+                              <p className="font-medium">Contact:</p>
+                              <p>{selectedResource.contact}</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="mt-4 flex gap-2">
+                        {selectedResource.contact && (
+                          <Button 
+                            size="sm"
+                            className="bg-red-500 hover:bg-red-600 text-white flex items-center gap-2 flex-grow"
+                            onClick={() => handleCopyNumber(selectedResource.contact || '')}
+                          >
+                            <Phone className="h-4 w-4" /> Copy Contact
+                          </Button>
+                        )}
+                        
+                        <Button 
+                          variant="outline"
+                          size="sm"
+                          className="flex items-center gap-2 flex-grow"
+                          onClick={() => {
+                            // In a real app, this would use a maps API
+                            toast.success("Directions would open in Maps app", {
+                              description: `Directions to ${selectedResource.name}`
+                            });
+                          }}
+                        >
+                          <MapPin className="h-4 w-4" /> Get Directions
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 )}
               </CardContent>
             </Card>
             
-            <Card className="border-red-500/20 bg-elec-gray hover:shadow-md transition-shadow">
+            <Card className="border-red-500/20 bg-elec-gray hover:shadow-md transition-shadow shadow-sm">
               <CardHeader className="pb-3 border-b border-red-500/10">
                 <CardTitle className="text-base flex items-center gap-2">
                   <Download className="h-4 w-4 text-red-500" />
-                  Resources
+                  Crisis Resources
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-4 pt-6 space-y-3">
@@ -271,7 +408,11 @@ const CrisisResources = () => {
                   variant="outline" 
                   size="sm"
                   className="w-full flex items-center gap-2 text-xs hover:bg-red-500/5"
-                  onClick={() => toast.success("Crisis plan template downloaded")}
+                  onClick={() => {
+                    toast.success("Crisis plan template downloaded", {
+                      description: "Document saved to your downloads folder"
+                    });
+                  }}
                 >
                   <Download className="h-3.5 w-3.5" />
                   Crisis Plan Template
@@ -280,7 +421,11 @@ const CrisisResources = () => {
                   variant="outline" 
                   size="sm"
                   className="w-full flex items-center gap-2 text-xs hover:bg-red-500/5"
-                  onClick={() => toast.success("Emergency contacts card downloaded")}
+                  onClick={() => {
+                    toast.success("Emergency contacts card downloaded", {
+                      description: "Document saved to your downloads folder"
+                    });
+                  }}
                 >
                   <Phone className="h-3.5 w-3.5" />
                   Emergency Contacts Card
@@ -288,7 +433,7 @@ const CrisisResources = () => {
               </CardContent>
             </Card>
 
-            <Card className="border-purple-500/30 bg-purple-500/5 hover:shadow-md transition-shadow">
+            <Card className="border-purple-500/30 bg-purple-500/5 hover:shadow-md transition-shadow shadow-sm">
               <CardHeader className="pb-3 border-b border-purple-500/10">
                 <CardTitle className="text-base flex items-center gap-2">
                   <Users className="h-4 w-4 text-purple-500" />
@@ -297,17 +442,24 @@ const CrisisResources = () => {
               </CardHeader>
               <CardContent className="p-4 pt-6">
                 <div className="space-y-3">
-                  <p className="text-sm">Free, peer-to-peer support group for men. Find your nearest group:</p>
+                  <div className="flex items-start gap-3">
+                    <div className="bg-purple-500/10 p-2 rounded-md">
+                      <Users className="h-4 w-4 text-purple-500" />
+                    </div>
+                    <div className="text-sm">
+                      <p>Free, peer-to-peer support group for men - #ITSOKAYTOTALK</p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        Groups meet every Monday at 7pm (excluding bank holidays)
+                      </p>
+                    </div>
+                  </div>
                   <Button 
                     className="w-full bg-purple-600 hover:bg-purple-700 text-white text-sm flex items-center gap-2"
                     onClick={() => window.open("https://andysmanclub.co.uk/find-your-nearest-group/", "_blank")}
                   >
-                    <Users className="h-4 w-4" />
+                    <MapPin className="h-4 w-4" />
                     Find Nearest Group
                   </Button>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Groups meet every Monday at 7pm (excluding bank holidays)
-                  </p>
                 </div>
               </CardContent>
             </Card>
