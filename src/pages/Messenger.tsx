@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, User, Users, Heart, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ConversationsList from '@/components/messenger/ConversationsList';
 import ConversationView from '@/components/messenger/ConversationView';
