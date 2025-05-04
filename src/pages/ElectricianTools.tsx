@@ -24,6 +24,7 @@ const ElectricianTools = () => {
           <TabsTrigger value="projects">Project Management</TabsTrigger>
         </TabsList>
         
+        {/* Calculators Tab */}
         <TabsContent value="calculators" className="space-y-6">
           <div className="grid gap-6 md:grid-cols-2">
             {/* Voltage Drop Calculator */}
@@ -146,96 +147,6 @@ const ElectricianTools = () => {
               </CardContent>
             </Card>
           </div>
-          
-          {/* Cable Size Calculator - Added specifically for subsection 2.1 reference */}
-          <Card className="border-elec-yellow/30 bg-elec-gray">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Calculator className="h-5 w-5 text-elec-yellow" />
-                <CardTitle>Cable Size Calculator</CardTitle>
-              </div>
-              <CardDescription>
-                Determine the correct cable size based on load, distance and installation method.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="design-current">Design Current (A)</Label>
-                  <Input 
-                    id="design-current" 
-                    type="number" 
-                    placeholder="Enter design current" 
-                    className="bg-elec-dark border-elec-yellow/20"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="installation-method">Installation Method</Label>
-                  <Select>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                      <SelectValue placeholder="Select method" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="method-a">Method A (Enclosed in conduit)</SelectItem>
-                      <SelectItem value="method-b">Method B (Enclosed in trunking)</SelectItem>
-                      <SelectItem value="method-c">Method C (Clipped direct)</SelectItem>
-                      <SelectItem value="method-d">Method D (Direct burial)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="ambient-temp">Ambient Temperature (°C)</Label>
-                  <Input 
-                    id="ambient-temp" 
-                    type="number" 
-                    defaultValue="30" 
-                    className="bg-elec-dark border-elec-yellow/20"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="cable-length">Route Length (m)</Label>
-                  <Input 
-                    id="cable-length" 
-                    type="number" 
-                    placeholder="Enter length" 
-                    className="bg-elec-dark border-elec-yellow/20"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="grouping-factor">Grouping Factor</Label>
-                  <Select>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                      <SelectValue placeholder="Select factor" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1">1 circuit (1.0)</SelectItem>
-                      <SelectItem value="0.8">2 circuits (0.8)</SelectItem>
-                      <SelectItem value="0.7">3 circuits (0.7)</SelectItem>
-                      <SelectItem value="0.65">4+ circuits (0.65)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              <Button className="w-full">Calculate Required Cable Size</Button>
-              <div className="rounded-md bg-elec-dark p-4">
-                <div className="grid grid-cols-2 gap-4 text-center">
-                  <div>
-                    <div className="text-sm text-muted-foreground">Minimum Cable Size:</div>
-                    <div className="text-xl font-bold text-elec-yellow">-- mm²</div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-muted-foreground">Voltage Drop:</div>
-                    <div className="text-xl font-bold text-elec-yellow">-- V (--% of 230V)</div>
-                  </div>
-                </div>
-                <div className="text-xs text-center mt-3 text-muted-foreground">
-                  Based on BS 7671:2018 Amendment 2:2022 Tables
-                </div>
-              </div>
-            </CardContent>
-          </Card>
 
           {/* Additional Calculators */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -251,6 +162,7 @@ const ElectricianTools = () => {
           </div>
         </TabsContent>
         
+        {/* Documents Tab */}
         <TabsContent value="documents" className="space-y-6">
           <div className="grid gap-4 md:grid-cols-3">
             {["Invoice Template", "Job Estimate", "Client Contract", "Electrical Test Report", "EICR Template", "Material List"].map((doc, i) => (
@@ -290,6 +202,7 @@ const ElectricianTools = () => {
           </Card>
         </TabsContent>
         
+        {/* Projects Tab */}
         <TabsContent value="projects" className="space-y-4">
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
