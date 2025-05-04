@@ -180,13 +180,22 @@ export function useLeaderboardData() {
       // If no activity record for today, we need to update the community stats
       if (!existingActivity) {
         // Update community stats to increment active users
-        await supabase
+        // Fix: Don't use supabase.rpc here as it's causing type issues
+        const { data: statsData } = await supabase
           .from('community_stats')
-          .update({
-            active_users: supabase.rpc('increment', { row_id: statsId, increment_by: 1 }),
-            updated_at: new Date().toISOString()
-          })
-          .eq('id', statsId);
+          .select('active_users')
+          .eq('id', statsId)
+          .single();
+          
+        if (statsData) {
+          await supabase
+            .from('community_stats')
+            .update({
+              active_users: statsData.active_users + 1,
+              updated_at: new Date().toISOString()
+            })
+            .eq('id', statsId);
+        }
         
         // Create or update user activity record to mark them as active today
         const { data: activityData } = await supabase
@@ -243,7 +252,7 @@ export function useLeaderboardData() {
           .from('user_activity')
           .update({
             points: existingRecord.points + pointsToAdd,
-            last_active_date: new Date().toISOString(),
+            last_active_date: new Date().toISOString().split('T')[0],
             updated_at: new Date().toISOString(),
           })
           .eq('user_id', user.id);
@@ -259,6 +268,7 @@ export function useLeaderboardData() {
             level: 'Apprentice',
             badge: 'Beginner',
             streak: 1,
+            last_active_date: new Date().toISOString().split('T')[0]
           });
 
         if (insertError) throw insertError;
