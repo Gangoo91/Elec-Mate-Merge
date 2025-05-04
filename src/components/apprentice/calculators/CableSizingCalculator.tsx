@@ -25,7 +25,7 @@ const CableSizingCalculator = () => {
     if (result.recommendedCable && !result.errors) {
       toast({
         title: "Cable Size Calculated",
-        description: `Recommended ${result.recommendedCable.size}mm² ${result.recommendedCable.cableType} cable`,
+        description: `Recommended ${result.recommendedCable.size} cable`,
         variant: "default",
       });
     }
@@ -44,15 +44,15 @@ const CableSizingCalculator = () => {
   }, [result.errors, toast]);
 
   const handleCalculate = () => {
-    const result = calculateCableSize();
-    if (!result) {
+    calculateCableSize();
+    
+    if (!inputs.current || !inputs.length) {
       toast({
         title: "Input Required",
         description: "Please fill in all required fields to calculate cable size.",
         variant: "destructive",
       });
     }
-    return result;
   };
 
   return (
