@@ -1,141 +1,26 @@
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLeaderboardFetch } from './useLeaderboardFetch';
+import { updateUserActivity } from './useActivityTracking';
+import { UserActivity, CommunityStats } from './types';
 
-export type UserActivity = {
-  id: string;
-  user_id: string;
-  points: number;
-  level: string;
-  badge: string;
-  streak: number;
-  last_active_date: string;
-  created_at: string;
-  updated_at: string;
-  profiles?: {
-    username?: string;
-    full_name?: string;
-    avatar_url?: string;
-  };
-}
-
-export type CommunityStats = {
-  id: string;
-  active_users: number;
-  lessons_completed_today: number;
-  longest_streak: number;
-  updated_at: string;
-}
+export { UserActivity, CommunityStats };
 
 export function useLeaderboardData() {
-  const [userRankings, setUserRankings] = useState<UserActivity[]>([]);
-  const [communityStats, setCommunityStats] = useState<CommunityStats | null>(null);
-  const [currentUserRank, setCurrentUserRank] = useState<UserActivity | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const { user, isSubscribed } = useAuth();
+  const { 
+    userRankings, 
+    communityStats, 
+    currentUserRank, 
+    isLoading, 
+    error, 
+    fetchLeaderboardData 
+  } = useLeaderboardFetch(user?.id, isSubscribed);
 
-  // Fetch leaderboard data
+  // Fetch leaderboard data and set up realtime subscription
   useEffect(() => {
-    const fetchLeaderboardData = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-
-        // Fetch top users by points
-        const { data: rankingsData, error: rankingsError } = await supabase
-          .from('user_activity')
-          .select(`
-            *,
-            profiles:profiles(
-              username,
-              full_name,
-              avatar_url
-            )
-          `)
-          .order('points', { ascending: false })
-          .limit(10);
-
-        if (rankingsError) {
-          throw rankingsError;
-        }
-
-        // Fetch community stats
-        const { data: statsData, error: statsError } = await supabase
-          .from('community_stats')
-          .select('*')
-          .single();
-
-        if (statsError && statsError.code !== 'PGRST116') {
-          throw statsError;
-        }
-
-        // Fetch current user's rank if logged in
-        let currentUserData = null;
-        if (user) {
-          const { data: userData, error: userError } = await supabase
-            .from('user_activity')
-            .select(`
-              *,
-              profiles:profiles(
-                username,
-                full_name,
-                avatar_url
-              )
-            `)
-            .eq('user_id', user.id)
-            .single();
-
-          if (userError && userError.code !== 'PGRST116') {
-            console.error('Error fetching current user data:', userError);
-          } else {
-            currentUserData = userData;
-          }
-        }
-
-        // Process and set data
-        if (rankingsData) {
-          setUserRankings(rankingsData as UserActivity[]);
-        } else {
-          setUserRankings([]);
-        }
-
-        // Update community stats with subscription status
-        if (statsData) {
-          // If the user is subscribed but not counted in active_users, we'll increment
-          if (isSubscribed && user) {
-            // We'll update the community stats in the database to reflect subscribed users
-            const shouldUpdateStats = !(currentUserData?.last_active_date === new Date().toISOString().split('T')[0]);
-            
-            if (shouldUpdateStats) {
-              await ensureSubscriberCounted(statsData.id);
-              
-              // Update the local state with the incremented value
-              setCommunityStats({
-                ...statsData,
-                active_users: Math.max(1, (statsData.active_users || 0))
-              });
-            } else {
-              setCommunityStats(statsData);
-            }
-          } else {
-            setCommunityStats(statsData);
-          }
-        } else {
-          setCommunityStats(null);
-        }
-
-        setCurrentUserRank(currentUserData as UserActivity | null);
-      } catch (err) {
-        const message = err instanceof Error ? err.message : String(err);
-        setError(message);
-        console.error('Error fetching leaderboard data:', message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchLeaderboardData();
 
     // Set up realtime subscription
@@ -160,142 +45,7 @@ export function useLeaderboardData() {
     return () => {
       supabase.removeChannel(userActivityChannel);
     };
-  }, [user, isSubscribed]);
-
-  // Function to ensure subscriber is counted in community stats
-  const ensureSubscriberCounted = async (statsId: string) => {
-    if (!user || !isSubscribed) return;
-    
-    try {
-      // First check if user already has an activity record for today
-      const today = new Date().toISOString().split('T')[0];
-      
-      const { data: existingActivity } = await supabase
-        .from('user_activity')
-        .select('*')
-        .eq('user_id', user.id)
-        .eq('last_active_date', today)
-        .single();
-      
-      // If no activity record for today, we need to update the community stats
-      if (!existingActivity) {
-        // Update community stats to increment active users
-        // Fix: Don't use supabase.rpc here as it's causing type issues
-        const { data: statsData } = await supabase
-          .from('community_stats')
-          .select('active_users')
-          .eq('id', statsId)
-          .single();
-          
-        if (statsData) {
-          await supabase
-            .from('community_stats')
-            .update({
-              active_users: statsData.active_users + 1,
-              updated_at: new Date().toISOString()
-            })
-            .eq('id', statsId);
-        }
-        
-        // Create or update user activity record to mark them as active today
-        const { data: activityData } = await supabase
-          .from('user_activity')
-          .select('*')
-          .eq('user_id', user.id)
-          .single();
-        
-        if (activityData) {
-          await supabase
-            .from('user_activity')
-            .update({
-              last_active_date: today,
-              updated_at: new Date().toISOString()
-            })
-            .eq('user_id', user.id);
-        } else {
-          await supabase
-            .from('user_activity')
-            .insert({
-              user_id: user.id,
-              points: 10, // Starting points
-              level: 'Apprentice',
-              badge: 'Beginner',
-              streak: 1,
-              last_active_date: today
-            });
-        }
-      }
-    } catch (err) {
-      console.error('Error ensuring subscriber is counted:', err);
-    }
-  };
-
-  // Function to update user activity (e.g., when completing a lesson)
-  const updateUserActivity = async (pointsToAdd: number = 10) => {
-    if (!user) return;
-
-    try {
-      // Check if user already has an activity record
-      const { data: existingRecord, error: fetchError } = await supabase
-        .from('user_activity')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
-
-      if (fetchError && fetchError.code !== 'PGRST116') {
-        throw fetchError;
-      }
-
-      if (existingRecord) {
-        // Update existing record
-        const { error: updateError } = await supabase
-          .from('user_activity')
-          .update({
-            points: existingRecord.points + pointsToAdd,
-            last_active_date: new Date().toISOString().split('T')[0],
-            updated_at: new Date().toISOString(),
-          })
-          .eq('user_id', user.id);
-
-        if (updateError) throw updateError;
-      } else {
-        // Create new record
-        const { error: insertError } = await supabase
-          .from('user_activity')
-          .insert({
-            user_id: user.id,
-            points: pointsToAdd,
-            level: 'Apprentice',
-            badge: 'Beginner',
-            streak: 1,
-            last_active_date: new Date().toISOString().split('T')[0]
-          });
-
-        if (insertError) throw insertError;
-      }
-
-      // Update community stats
-      const { data: statsData } = await supabase
-        .from('community_stats')
-        .select('*')
-        .limit(1)
-        .single();
-
-      if (statsData) {
-        await supabase
-          .from('community_stats')
-          .update({
-            active_users: statsData.active_users + 1,
-            lessons_completed_today: statsData.lessons_completed_today + 1,
-            updated_at: new Date().toISOString(),
-          })
-          .eq('id', statsData.id);
-      }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
-      console.error('Error updating user activity:', message);
-    }
-  };
+  }, [user, isSubscribed, fetchLeaderboardData]);
 
   return {
     userRankings,
@@ -303,6 +53,10 @@ export function useLeaderboardData() {
     currentUserRank,
     isLoading,
     error,
-    updateUserActivity
+    updateUserActivity: (pointsToAdd: number = 10) => {
+      if (user) {
+        return updateUserActivity(user.id, pointsToAdd);
+      }
+    }
   };
 }

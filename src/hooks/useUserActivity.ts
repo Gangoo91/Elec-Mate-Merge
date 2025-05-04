@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/components/ui/use-toast';
+import { ensureSubscriberCounted, updateUserActivity } from './leaderboards/useActivityTracking';
 
 export function useUserActivity() {
   const { user, isSubscribed } = useAuth();
@@ -46,7 +47,14 @@ export function useUserActivity() {
               console.error('Error updating user activity:', updateError);
             } else if (isSubscribed) {
               // If subscribed user becomes active on a new day, update community stats
-              updateCommunityStats();
+              const { data: statsData } = await supabase
+                .from('community_stats')
+                .select('id')
+                .single();
+              
+              if (statsData) {
+                updateCommunityStats(statsData.id);
+              }
             }
           }
         } else {
@@ -66,7 +74,14 @@ export function useUserActivity() {
             console.error('Error creating user activity record:', insertError);
           } else {
             // Increment active users in community stats
-            updateCommunityStats();
+            const { data: statsData } = await supabase
+              .from('community_stats')
+              .select('id')
+              .single();
+            
+            if (statsData) {
+              updateCommunityStats(statsData.id);
+            }
 
             // Show welcome toast
             toast({
@@ -81,22 +96,10 @@ export function useUserActivity() {
     };
 
     // Helper function to update community stats
-    const updateCommunityStats = async () => {
+    const updateCommunityStats = async (statsId: string) => {
       try {
-        const { data: statsData } = await supabase
-          .from('community_stats')
-          .select('*')
-          .limit(1)
-          .single();
-
-        if (statsData) {
-          await supabase
-            .from('community_stats')
-            .update({
-              active_users: statsData.active_users + 1,
-              updated_at: new Date().toISOString()
-            })
-            .eq('id', statsData.id);
+        if (user && isSubscribed) {
+          await ensureSubscriberCounted(statsId, user.id, isSubscribed);
         }
       } catch (err) {
         console.error('Error updating community stats:', err);
@@ -104,69 +107,20 @@ export function useUserActivity() {
     };
 
     trackUserActivity();
-  }, [user, isSubscribed]);
+  }, [user, isSubscribed, toast]);
 
   // Function to record lesson completion
   const recordLessonCompletion = async (lessonId: string) => {
     if (!user) return;
     
     try {
-      // Update user points
-      const { data: userData, error: userError } = await supabase
-        .from('user_activity')
-        .select('*')
-        .eq('user_id', user.id)
-        .single();
-
-      if (userError && userError.code !== 'PGRST116') {
-        throw userError;
-      }
-
-      const pointsToAdd = 25;
-      
-      if (userData) {
-        // Update existing record
-        await supabase
-          .from('user_activity')
-          .update({
-            points: userData.points + pointsToAdd,
-            last_active_date: new Date().toISOString().split('T')[0],
-            updated_at: new Date().toISOString()
-          })
-          .eq('user_id', user.id);
-      } else {
-        // Create new record
-        await supabase
-          .from('user_activity')
-          .insert({
-            user_id: user.id,
-            points: pointsToAdd,
-            level: 'Apprentice',
-            badge: 'Beginner',
-            last_active_date: new Date().toISOString().split('T')[0]
-          });
-      }
-
-      // Update community stats
-      const { data: statsData } = await supabase
-        .from('community_stats')
-        .select('*')
-        .single();
-
-      if (statsData) {
-        await supabase
-          .from('community_stats')
-          .update({
-            lessons_completed_today: (statsData.lessons_completed_today || 0) + 1,
-            updated_at: new Date().toISOString()
-          })
-          .eq('id', statsData.id);
-      }
+      // Update user points using the shared function
+      await updateUserActivity(user.id, 25);
 
       // Show toast
       toast({
         title: "Lesson completed!",
-        description: `You've earned ${pointsToAdd} points. Keep learning to gain more!`,
+        description: `You've earned 25 points. Keep learning to gain more!`,
       });
     } catch (err) {
       console.error('Error recording lesson completion:', err);
