@@ -8,8 +8,6 @@ const SupportSection = () => {
   const { toast } = useToast();
   
   const handleContactSupport = () => {
-    // This would ideally open a support modal or redirect to a support page
-    // For now, we'll just show a toast with contact information
     toast({
       title: "Contact Support",
       description: "Please email support@elecmate.com for assistance with payments or subscription issues.",
@@ -17,8 +15,6 @@ const SupportSection = () => {
   };
   
   const handleViewFAQ = () => {
-    // This would ideally scroll to the FAQ section or open a modal
-    // For now, we'll just show a toast
     toast({
       title: "Billing FAQ",
       description: "Scroll down to view our frequently asked questions about billing and subscriptions.",

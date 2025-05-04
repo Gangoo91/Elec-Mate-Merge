@@ -22,12 +22,6 @@ serve(async (req) => {
 
   logStep("Function started");
 
-  // Create a Supabase client
-  const supabaseClient = createClient(
-    Deno.env.get("SUPABASE_URL") ?? "",
-    Deno.env.get("SUPABASE_ANON_KEY") ?? ""
-  );
-
   try {
     // Get request body
     const body = await req.json();
@@ -40,9 +34,20 @@ serve(async (req) => {
     }
 
     // Authenticate user
-    const authHeader = req.headers.get("Authorization")!;
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      logStep("No authorization header provided");
+      throw new Error("No authorization header provided");
+    }
+    
     const token = authHeader.replace("Bearer ", "");
     logStep("Authenticating user with token");
+    
+    // Create a Supabase client
+    const supabaseClient = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_ANON_KEY") ?? ""
+    );
     
     const { data: userData, error: authError } = await supabaseClient.auth.getUser(token);
     
@@ -108,7 +113,6 @@ serve(async (req) => {
         userId: user.id,
         planId: planId,
       },
-      // Make Stripe checkout more compatible with various browsers
       payment_method_types: ['card'],
       billing_address_collection: 'auto',
       allow_promotion_codes: true,

@@ -20,7 +20,8 @@ const PlansList = ({ billing }: PlansListProps) => {
   // Handle subscription checkout
   const handleSubscribe = async (planId: string, priceId: string, mode: 'subscription') => {
     try {
-      setIsLoading({ ...isLoading, [planId]: true });
+      // Set loading state for this specific plan
+      setIsLoading(prev => ({ ...prev, [planId]: true }));
       
       console.log("Starting checkout process for:", { planId, priceId, mode });
       
@@ -40,14 +41,16 @@ const PlansList = ({ billing }: PlansListProps) => {
       console.log("Checkout response:", data);
       
       if (data?.url) {
-        // More robust checkout redirection
         toast({
           title: "Redirecting to checkout",
           description: "You'll be redirected to the secure Stripe checkout page.",
         });
         
-        // Use direct window.location change for better compatibility
-        window.location.href = data.url;
+        // Small delay to show the toast before redirecting
+        setTimeout(() => {
+          // Try opening in same window first
+          window.location.href = data.url;
+        }, 500);
       } else {
         throw new Error('No checkout URL returned');
       }
@@ -58,7 +61,8 @@ const PlansList = ({ billing }: PlansListProps) => {
         description: error instanceof Error ? error.message : "Failed to start checkout process",
         variant: "destructive",
       });
-      setIsLoading({ ...isLoading, [planId]: false });
+    } finally {
+      setIsLoading(prev => ({ ...prev, [planId]: false }));
     }
   };
 
