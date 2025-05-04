@@ -24,6 +24,12 @@ import SignUp from "./pages/auth/SignUp";
 import ElectricianTools from "./pages/ElectricianTools";
 import ElectricalHub from "./pages/ElectricalHub";
 import ElectricalToolboxTalk from "./pages/electrician/ElectricalToolboxTalk";
+import ElectricalChat from "./pages/electrician/ElectricalChat";
+import JobVacancies from "./pages/electrician/JobVacancies";
+import ElectricalMaterials from "./pages/electrician/ElectricalMaterials";
+import ElectricalTools from "./pages/electrician/ElectricalTools";
+import SafetyShares from "./pages/electrician/SafetyShares";
+import LivePricing from "./pages/electrician/LivePricing";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
@@ -53,6 +59,12 @@ function App() {
               <Route path="electrical-hub" element={<ElectricalHub />} />
               <Route path="electrician" element={<Navigate to="/electrical-hub" replace />} />
               <Route path="electrician/toolbox-talk" element={<ElectricalToolboxTalk />} />
+              <Route path="electrician/chat" element={<ElectricalChat />} />
+              <Route path="electrician/job-vacancies" element={<JobVacancies />} />
+              <Route path="electrician/materials" element={<ElectricalMaterials />} />
+              <Route path="electrician/tools" element={<ElectricalTools />} />
+              <Route path="electrician/safety-shares" element={<SafetyShares />} />
+              <Route path="electrician/live-pricing" element={<LivePricing />} />
               <Route path="video-lessons" element={<VideoLessons />} />
               <Route path="leaderboards" element={<Leaderboards />} />
               <Route path="apprentice">
