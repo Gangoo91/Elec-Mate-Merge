@@ -53,20 +53,50 @@ serve(async (req) => {
 
     const origin = req.headers.get("origin") || "http://localhost:3000";
     
-    // Make sure the return_url points to the subscriptions page
-    const portalSession = await stripe.billingPortal.sessions.create({
-      customer: customerId,
-      return_url: `${origin}/subscriptions`,
-      // Add configuration to ensure the portal is set up correctly
-      configuration: Deno.env.get("STRIPE_PORTAL_CONFIGURATION") || undefined,
-    });
-    
-    logStep("Customer portal session created", { sessionId: portalSession.id });
-
-    return new Response(JSON.stringify({ url: portalSession.url }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 200,
-    });
+    // Try creating a simple portal session without configuration first
+    try {
+      const portalSession = await stripe.billingPortal.sessions.create({
+        customer: customerId,
+        return_url: `${origin}/subscriptions`,
+      });
+      
+      logStep("Customer portal session created successfully", { sessionId: portalSession.id });
+      
+      return new Response(JSON.stringify({ url: portalSession.url }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
+    } catch (portalError: any) {
+      // If this is a configuration error, try direct subscription cancellation
+      if (portalError.message && portalError.message.includes("configuration")) {
+        logStep("Portal configuration error, attempting direct subscription management", { error: portalError.message });
+        
+        // Get customer's active subscriptions
+        const subscriptions = await stripe.subscriptions.list({
+          customer: customerId,
+          status: 'active',
+          limit: 1,
+        });
+        
+        if (subscriptions.data.length === 0) {
+          throw new Error("No active subscriptions found for this customer");
+        }
+        
+        return new Response(JSON.stringify({ 
+          subscriptionId: subscriptions.data[0].id,
+          customerId: customerId,
+          customerEmail: user.email,
+          directManagement: true,
+          message: "Customer portal not configured. Use direct subscription management."
+        }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          status: 200,
+        });
+      } else {
+        // If it's some other error, throw it
+        throw portalError;
+      }
+    }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     logStep("ERROR in customer-portal", { message: errorMessage });
@@ -74,8 +104,8 @@ serve(async (req) => {
     // Return a more detailed error response
     return new Response(JSON.stringify({ 
       error: errorMessage,
-      message: "There was an issue accessing the Stripe Customer Portal. Make sure your Stripe configuration is set up correctly in the Stripe dashboard.",
-      hint: "If this is a new Stripe account, you may need to set up the Customer Portal in your Stripe dashboard first."
+      message: "There was an issue accessing the Stripe Customer Portal.",
+      hint: "Please try the direct cancel button instead, or contact support."
     }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 500,

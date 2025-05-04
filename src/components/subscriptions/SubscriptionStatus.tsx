@@ -1,16 +1,17 @@
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Loader2, CheckCircle, Calendar, Tag, ExternalLink } from "lucide-react";
+import { Loader2, CheckCircle, Calendar, Tag, ExternalLink, X } from "lucide-react";
 import { useAuth } from '@/contexts/AuthContext';
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 
 const SubscriptionStatus = () => {
-  const { isTrialActive, trialEndsAt, isSubscribed, subscriptionTier } = useAuth();
+  const { isTrialActive, trialEndsAt, isSubscribed, subscriptionTier, checkSubscriptionStatus } = useAuth();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [isCanceling, setIsCanceling] = useState(false);
   
   // Calculate days remaining in trial
   const getDaysRemaining = () => {
@@ -20,6 +21,70 @@ const SubscriptionStatus = () => {
     const diffTime = trialEndsAt.getTime() - now.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return Math.max(0, diffDays);
+  };
+
+  // Handle direct subscription cancellation
+  const cancelSubscription = async () => {
+    try {
+      setIsCanceling(true);
+      
+      toast({
+        title: "Processing Cancellation",
+        description: "Please wait while we process your cancellation request...",
+      });
+      
+      // First, get subscription info from customer portal function
+      const { data, error } = await supabase.functions.invoke('customer-portal');
+      
+      if (error) {
+        console.error('Cancellation error:', error);
+        throw new Error(error.message);
+      }
+      
+      if (data?.error) {
+        console.error('Cancellation function error:', data.error);
+        throw new Error(data.error);
+      }
+      
+      if (data?.directManagement && data?.subscriptionId) {
+        // Create a new edge function call to cancel the subscription directly
+        const { data: cancelData, error: cancelError } = await supabase.functions.invoke('cancel-subscription', {
+          body: { subscriptionId: data.subscriptionId }
+        });
+        
+        if (cancelError) {
+          throw new Error(cancelError.message);
+        }
+        
+        if (cancelData?.success) {
+          toast({
+            title: "Subscription Cancelled",
+            description: "Your subscription has been successfully cancelled.",
+            variant: "default",
+          });
+          
+          // Refresh subscription status after cancellation
+          await checkSubscriptionStatus();
+          setTimeout(() => window.location.reload(), 1000);
+        } else {
+          throw new Error(cancelData?.message || 'Unknown error during cancellation');
+        }
+      } else if (data?.url) {
+        // If customer portal is available, use it
+        window.open(data.url, '_blank') || window.location.assign(data.url);
+      } else {
+        throw new Error('Unable to process cancellation');
+      }
+    } catch (error) {
+      console.error('Cancellation error:', error);
+      toast({
+        title: "Cancellation Error",
+        description: error instanceof Error ? error.message : "Failed to cancel subscription",
+        variant: "destructive",
+      });
+    } finally {
+      setIsCanceling(false);
+    }
   };
 
   // Handle opening customer portal for subscription management
@@ -44,6 +109,12 @@ const SubscriptionStatus = () => {
             window.location.href = data.url;
           }, 500);
         }
+      } else if (data?.directManagement) {
+        // If we got back directManagement data, show cancellation option
+        toast({
+          title: "Direct Management Mode",
+          description: "Please use the Cancel Subscription button.",
+        });
       } else {
         throw new Error('No portal URL returned');
       }
@@ -51,7 +122,7 @@ const SubscriptionStatus = () => {
       console.error('Customer portal error:', error);
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to open subscription management",
+        description: "Couldn't open subscription management portal. Please try the Cancel Subscription button instead.",
         variant: "destructive",
       });
     } finally {
@@ -137,16 +208,27 @@ const SubscriptionStatus = () => {
           </div>
           
           {isSubscribed && (
-            <Button
-              onClick={openCustomerPortal}
-              variant="outline"
-              disabled={isLoading}
-              className="border-green-500/50 hover:border-green-500 hover:bg-green-500/20 flex items-center gap-2"
-              size="lg"
-            >
-              {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <ExternalLink size={18} />}
-              Manage Subscription
-            </Button>
+            <div className="flex flex-col gap-3">
+              <Button
+                onClick={openCustomerPortal}
+                variant="outline"
+                disabled={isLoading}
+                className="border-green-500/50 hover:border-green-500 hover:bg-green-500/20 flex items-center gap-2"
+              >
+                {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <ExternalLink size={18} />}
+                Manage Subscription
+              </Button>
+              
+              <Button
+                onClick={cancelSubscription}
+                variant="destructive"
+                disabled={isCanceling}
+                className="flex items-center gap-2"
+              >
+                {isCanceling ? <Loader2 className="h-4 w-4 animate-spin" /> : <X size={18} />}
+                Cancel Subscription
+              </Button>
+            </div>
           )}
           
           {!isSubscribed && !isTrialActive && (

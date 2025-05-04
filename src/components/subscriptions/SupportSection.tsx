@@ -1,7 +1,7 @@
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, HelpCircle, ExternalLink, RefreshCw, Link as LinkIcon, AlertTriangle } from "lucide-react";
+import { Mail, HelpCircle, ExternalLink, RefreshCw, AlertTriangle, X } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
 import { useState } from "react";
@@ -9,8 +9,9 @@ import { supabase } from "@/integrations/supabase/client";
 
 const SupportSection = () => {
   const { toast } = useToast();
-  const { checkSubscriptionStatus } = useAuth();
+  const { checkSubscriptionStatus, isSubscribed } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const [isCanceling, setIsCanceling] = useState(false);
   
   const handleContactSupport = () => {
     toast({
@@ -60,6 +61,70 @@ const SupportSection = () => {
     window.location.href = "https://buy.stripe.com/test_6oEcP74bc25oclG000";
   };
   
+  // Handle direct subscription cancellation
+  const handleCancelSubscription = async () => {
+    try {
+      setIsCanceling(true);
+      
+      toast({
+        title: "Processing Cancellation",
+        description: "Please wait while we process your cancellation request...",
+      });
+      
+      // First, get subscription info from customer portal function
+      const { data, error } = await supabase.functions.invoke('customer-portal');
+      
+      if (error) {
+        console.error('Cancellation error:', error);
+        throw new Error(error.message);
+      }
+      
+      if (data?.error) {
+        console.error('Cancellation function error:', data.error);
+        throw new Error(data.error);
+      }
+      
+      if (data?.directManagement && data?.subscriptionId) {
+        // Create a new edge function call to cancel the subscription directly
+        const { data: cancelData, error: cancelError } = await supabase.functions.invoke('cancel-subscription', {
+          body: { subscriptionId: data.subscriptionId }
+        });
+        
+        if (cancelError) {
+          throw new Error(cancelError.message);
+        }
+        
+        if (cancelData?.success) {
+          toast({
+            title: "Subscription Cancelled",
+            description: "Your subscription has been successfully cancelled.",
+            variant: "default",
+          });
+          
+          // Refresh subscription status after cancellation
+          await checkSubscriptionStatus();
+          setTimeout(() => window.location.reload(), 1000);
+        } else {
+          throw new Error(cancelData?.message || 'Unknown error during cancellation');
+        }
+      } else if (data?.url) {
+        // If customer portal is available, use it
+        window.open(data.url, '_blank') || window.location.assign(data.url);
+      } else {
+        throw new Error('Unable to process cancellation');
+      }
+    } catch (error) {
+      console.error('Cancellation error:', error);
+      toast({
+        title: "Cancellation Error",
+        description: error instanceof Error ? error.message : "Failed to cancel subscription",
+        variant: "destructive",
+      });
+    } finally {
+      setIsCanceling(false);
+    }
+  };
+  
   // Handle opening customer portal
   const handleOpenCustomerPortal = async () => {
     try {
@@ -91,6 +156,12 @@ const SupportSection = () => {
         if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
           window.location.href = data.url;
         }
+      } else if (data?.directManagement) {
+        // If we got back directManagement data, show cancellation option
+        toast({
+          title: "Direct Management Required",
+          description: "Please use the Cancel Subscription button below.",
+        });
       } else {
         throw new Error('No portal URL returned');
       }
@@ -98,7 +169,7 @@ const SupportSection = () => {
       console.error('Customer portal error:', error);
       toast({
         title: "Customer Portal Error",
-        description: "Could not open the customer portal. This usually happens if your Stripe account hasn't set up the Customer Portal in the Stripe Dashboard yet.",
+        description: "Could not open the customer portal. Please use the Cancel Subscription button below instead.",
         variant: "destructive",
       });
     } finally {
@@ -135,30 +206,46 @@ const SupportSection = () => {
             </Button>
           </div>
           
+          {/* Direct Cancel Button for Subscribed Users */}
+          {isSubscribed && (
+            <div className="pt-4 border-t border-border">
+              <Button 
+                variant="destructive" 
+                className="w-full flex items-center justify-center gap-2"
+                onClick={handleCancelSubscription}
+                disabled={isCanceling}
+              >
+                {isCanceling ? <RefreshCw className="animate-spin h-4 w-4" /> : <X size={16} />}
+                Cancel Subscription
+              </Button>
+              <p className="text-xs text-muted-foreground mt-2 text-center">
+                Cancel your subscription immediately. You'll still have access until the end of your billing period.
+              </p>
+            </div>
+          )}
+          
           <div className="bg-amber-50/10 p-4 rounded-md border border-amber-200/20 mt-4">
-            <h4 className="font-medium text-amber-200 mb-2">Having Trouble with the Customer Portal?</h4>
+            <h4 className="font-medium text-amber-200 mb-2">Subscription Management Options</h4>
             <ul className="text-sm space-y-2 text-muted-foreground">
-              <li>• If this is a new Stripe account, you need to <a href="https://dashboard.stripe.com/settings/billing/portal" target="_blank" rel="noopener noreferrer" className="underline text-blue-400">configure the Customer Portal</a> in your Stripe Dashboard first</li>
-              <li>• Make sure you've completed the Stripe account setup</li>
-              <li>• Check that your Stripe account is in the correct mode (test/live) matching your API keys</li>
-              <li>• Verify the STRIPE_SECRET_KEY is correctly set in your Supabase Edge Function secrets</li>
-              <li>• Try refreshing your subscription status using the button above</li>
-              <li>• As a last resort, contact Stripe support or check the Edge Function logs for details</li>
+              <li>• If you need to cancel your subscription, use the Cancel button above</li>
+              <li>• For other changes like updating payment methods, please contact support</li>
+              <li>• You can refresh your subscription status anytime using the Refresh button</li>
+              <li>• If you're having technical issues, try the direct cancellation option</li>
             </ul>
           </div>
 
           <div className="text-center pt-4">
             <Button 
-              variant="destructive" 
+              variant="outline" 
               size="sm" 
               className="flex items-center gap-2"
               onClick={handleOpenDirectStripe}
             >
-              <AlertTriangle size={16} />
-              Emergency Bypass - Direct Stripe Link
+              <ExternalLink size={16} />
+              Open Stripe Dashboard
             </Button>
             <p className="text-xs text-muted-foreground mt-2">
-              Use this only if normal checkout isn't working
+              Manage your subscription directly in Stripe
             </p>
           </div>
         </div>
