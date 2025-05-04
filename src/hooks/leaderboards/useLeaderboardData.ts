@@ -95,9 +95,13 @@ export function useLeaderboardData() {
         }
 
         // Process and set data
-        setUserRankings(rankingsData || []);
+        if (rankingsData) {
+          setUserRankings(rankingsData as UserActivity[]);
+        } else {
+          setUserRankings([]);
+        }
         setCommunityStats(statsData || null);
-        setCurrentUserRank(currentUserData);
+        setCurrentUserRank(currentUserData as UserActivity | null);
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
         setError(message);
