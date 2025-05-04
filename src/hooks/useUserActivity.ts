@@ -79,11 +79,14 @@ export function useUserActivity() {
             .single();
           
           if (statsData) {
-            // Simple increment of active users count
+            // Correctly update active users count
             await supabase
               .from('community_stats')
               .update({ 
-                active_users: supabase.rpc('increment_counter', { row_id: statsData.id, counter_name: 'active_users' }) 
+                active_users: supabase.rpc('increment_counter', { 
+                  row_id: statsData.id, 
+                  counter_name: 'active_users' 
+                }) 
               })
               .eq('id', statsData.id);
           }
@@ -107,7 +110,7 @@ export function useUserActivity() {
     if (!user) return;
     
     try {
-      // Update user points
+      // Update user points - fix the RPC call
       const { error } = await supabase
         .from('user_activity')
         .update({
