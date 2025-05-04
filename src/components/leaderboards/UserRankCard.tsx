@@ -7,9 +7,16 @@ import { UserActivity } from "@/hooks/leaderboards/useLeaderboardData";
 interface UserRankCardProps {
   currentUserRank: UserActivity | null;
   userRankings: UserActivity[];
+  categoryName?: string;
+  prizeAmount?: string;
 }
 
-export const UserRankCard = ({ currentUserRank, userRankings }: UserRankCardProps) => {
+export const UserRankCard = ({ 
+  currentUserRank, 
+  userRankings,
+  categoryName = "Leaderboard",
+  prizeAmount = "£50"
+}: UserRankCardProps) => {
   const getUserInitials = (user: UserActivity): string => {
     if (user.profiles?.full_name) {
       return user.profiles.full_name.split(' ')
@@ -27,12 +34,19 @@ export const UserRankCard = ({ currentUserRank, userRankings }: UserRankCardProp
     return user.profiles?.full_name || user.profiles?.username || 'Anonymous User';
   };
 
+  // Calculate position or distance to next rank
+  const userRankIndex = userRankings.findIndex(user => 
+    currentUserRank && user.user_id === currentUserRank.user_id);
+  
+  const nextRankUser = userRankIndex > 0 ? userRankings[userRankIndex - 1] : null;
+  const pointsToNextRank = nextRankUser && currentUserRank ? nextRankUser.points - currentUserRank.points : null;
+
   return (
     <Card className="border-elec-yellow bg-elec-gray">
       <CardHeader>
-        <CardTitle>Your Leaderboard Stats</CardTitle>
+        <CardTitle>Your {categoryName} Stats</CardTitle>
         <CardDescription>
-          Complete lessons and engage with the platform to improve your ranking.
+          Complete activities to improve your ranking and qualify for the monthly {prizeAmount} voucher.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -65,8 +79,7 @@ export const UserRankCard = ({ currentUserRank, userRankings }: UserRankCardProp
                 <span className="font-medium text-sm">Rank</span>
               </div>
               <div className="text-lg font-bold">
-                {userRankings?.findIndex(user => 
-                  currentUserRank && user.user_id === currentUserRank.user_id) + 1 || '--'}
+                {userRankIndex !== -1 ? userRankIndex + 1 : '--'}
               </div>
             </div>
             <div className="p-3 bg-elec-gray rounded-lg">
@@ -79,12 +92,19 @@ export const UserRankCard = ({ currentUserRank, userRankings }: UserRankCardProp
             <div className="p-3 bg-elec-gray rounded-lg">
               <div className="flex items-center justify-center mb-1">
                 <Clock className="h-4 w-4 text-elec-yellow mr-1" />
-                <span className="font-medium text-sm">Streak</span>
+                <span className="font-medium text-sm">To Next</span>
               </div>
-              <div className="text-lg font-bold">{currentUserRank?.streak || 0}</div>
+              <div className="text-lg font-bold">
+                {pointsToNextRank !== null ? pointsToNextRank : '--'}
+              </div>
             </div>
           </div>
         </div>
+        {userRankIndex === 0 && currentUserRank && (
+          <div className="mt-4 bg-gradient-to-r from-amber-900/30 to-amber-700/30 border border-amber-500/50 p-3 rounded-lg text-center">
+            <span className="font-bold text-amber-400">🏆 Congratulations!</span> You're currently in the top position to win this month's {prizeAmount} voucher!
+          </div>
+        )}
       </CardContent>
     </Card>
   );

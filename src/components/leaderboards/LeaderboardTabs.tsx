@@ -2,17 +2,20 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LeaderboardTabContent } from "./LeaderboardTabContent";
 import { UserActivity } from "@/hooks/leaderboards/useLeaderboardData";
+import { ReactNode } from "react";
 
 interface LeaderboardTabsProps {
   userRankings: UserActivity[];
   timeframe: 'weekly' | 'monthly' | 'alltime';
   onTimeframeChange: (value: 'weekly' | 'monthly' | 'alltime') => void;
+  categoryIcon?: ReactNode;
 }
 
 export const LeaderboardTabs = ({
   userRankings,
   timeframe,
-  onTimeframeChange
+  onTimeframeChange,
+  categoryIcon
 }: LeaderboardTabsProps) => {
   return (
     <Tabs
@@ -33,6 +36,7 @@ export const LeaderboardTabs = ({
           <LeaderboardTabContent
             userRankings={userRankings}
             timeframe={period as 'weekly' | 'monthly' | 'alltime'}
+            categoryIcon={categoryIcon}
           />
         </TabsContent>
       ))}

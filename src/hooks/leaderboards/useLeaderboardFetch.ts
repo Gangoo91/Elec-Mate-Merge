@@ -1,22 +1,34 @@
 
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import type { UserActivity, CommunityStats } from './types';
+import type { UserActivity, CommunityStats, LeaderboardCategory } from './types';
 import { ensureSubscriberCounted } from './useActivityTracking';
 
 export function useLeaderboardFetch(userId: string | undefined, isSubscribed: boolean) {
-  const [userRankings, setUserRankings] = useState<UserActivity[]>([]);
+  const [userRankings, setUserRankings] = useState<{[key in LeaderboardCategory]: UserActivity[]}>({
+    learning: [],
+    community: [],
+    safety: [],
+    mentor: [],
+    mental: []
+  });
   const [communityStats, setCommunityStats] = useState<CommunityStats | null>(null);
-  const [currentUserRank, setCurrentUserRank] = useState<UserActivity | null>(null);
+  const [currentUserRank, setCurrentUserRank] = useState<{[key in LeaderboardCategory]: UserActivity | null}>({
+    learning: null,
+    community: null,
+    safety: null,
+    mentor: null,
+    mental: null
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchLeaderboardData = useCallback(async () => {
+  const fetchLeaderboardData = useCallback(async (category: LeaderboardCategory = 'learning') => {
     try {
       setIsLoading(true);
       setError(null);
 
-      // Fetch top users by points
+      // Fetch top users by points for the specified category
       const { data: rankingsData, error: rankingsError } = await supabase
         .from('user_activity')
         .select(`
@@ -27,6 +39,7 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
             avatar_url
           )
         `)
+        .eq('category', category)
         .order('points', { ascending: false })
         .limit(10);
 
@@ -58,6 +71,7 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
             )
           `)
           .eq('user_id', userId)
+          .eq('category', category)
           .single();
 
         if (userError && userError.code !== 'PGRST116') {
@@ -68,11 +82,10 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
       }
 
       // Process and set data
-      if (rankingsData) {
-        setUserRankings(rankingsData as UserActivity[]);
-      } else {
-        setUserRankings([]);
-      }
+      setUserRankings(prev => ({
+        ...prev,
+        [category]: rankingsData as UserActivity[] || []
+      }));
 
       // Update community stats with subscription status
       if (statsData) {
@@ -95,11 +108,12 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
         } else {
           setCommunityStats(statsData);
         }
-      } else {
-        setCommunityStats(null);
       }
 
-      setCurrentUserRank(currentUserData as UserActivity | null);
+      setCurrentUserRank(prev => ({
+        ...prev,
+        [category]: currentUserData as UserActivity | null
+      }));
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
       setError(message);
@@ -109,12 +123,21 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
     }
   }, [userId, isSubscribed]);
 
+  const fetchAllLeaderboardData = useCallback(async () => {
+    const categories: LeaderboardCategory[] = ['learning', 'community', 'safety', 'mentor', 'mental'];
+    
+    for (const category of categories) {
+      await fetchLeaderboardData(category);
+    }
+  }, [fetchLeaderboardData]);
+
   return {
     userRankings,
     communityStats,
     currentUserRank,
     isLoading,
     error,
-    fetchLeaderboardData
+    fetchLeaderboardData,
+    fetchAllLeaderboardData
   };
 }

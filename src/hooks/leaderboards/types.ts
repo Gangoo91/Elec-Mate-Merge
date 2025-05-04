@@ -10,6 +10,7 @@ export type UserActivity = {
   last_active_date: string;
   created_at: string;
   updated_at: string;
+  category: string;
   profiles?: {
     username?: string;
     full_name?: string;
@@ -24,4 +25,14 @@ export type CommunityStats = {
   lessons_completed_today: number;
   longest_streak: number;
   updated_at: string;
+}
+
+// Define leaderboard category
+export type LeaderboardCategory = 'learning' | 'community' | 'safety' | 'mentor' | 'mental';
+
+// Define prize information
+export type PrizeInfo = {
+  amount: string;
+  currency: string;
+  period: string;
 }

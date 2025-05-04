@@ -4,13 +4,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Trophy, Medal, Award, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { UserActivity } from "@/hooks/leaderboards/useLeaderboardData";
+import { ReactNode } from "react";
 
 interface LeaderboardTabContentProps {
   userRankings: UserActivity[];
   timeframe: 'weekly' | 'monthly' | 'alltime';
+  categoryIcon?: ReactNode;
 }
 
-export const LeaderboardTabContent = ({ userRankings, timeframe }: LeaderboardTabContentProps) => {
+export const LeaderboardTabContent = ({ userRankings, timeframe, categoryIcon }: LeaderboardTabContentProps) => {
   // Function to render rank badges with different designs and colors
   const getRankBadge = (position: number) => {
     if (position === 1) {
@@ -57,19 +59,21 @@ export const LeaderboardTabContent = ({ userRankings, timeframe }: LeaderboardTa
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
-        <CardTitle>
+        <CardTitle className="flex items-center gap-2">
+          {categoryIcon && <span>{categoryIcon}</span>}
           {timeframe === "weekly" ? "Weekly Leaderboard" : 
            timeframe === "monthly" ? "Monthly Leaderboard" : "All-Time Leaderboard"}
         </CardTitle>
         <CardDescription>
           {timeframe === "weekly" ? "Top performers for this week" : 
            timeframe === "monthly" ? "Top performers for this month" : "Best performers of all time"}
+          {timeframe === "monthly" && <span className="ml-1 text-amber-500">• Prize eligible</span>}
         </CardDescription>
       </CardHeader>
       <CardContent>
         {userRankings.length === 0 ? (
           <div className="text-center p-8 text-muted-foreground">
-            No leaderboard data available yet. Be the first to start learning!
+            No leaderboard data available yet. Be the first to start contributing!
           </div>
         ) : (
           <div className="space-y-4">
@@ -79,6 +83,7 @@ export const LeaderboardTabContent = ({ userRankings, timeframe }: LeaderboardTa
                 className={`
                   flex items-center gap-4 p-4 rounded-lg relative
                   ${index < 3 ? "bg-elec-dark/70" : "bg-elec-dark/40"}
+                  ${index === 0 && timeframe === 'monthly' ? "border border-amber-500/50" : ""}
                 `}
               >
                 {/* Rank */}
@@ -112,6 +117,11 @@ export const LeaderboardTabContent = ({ userRankings, timeframe }: LeaderboardTa
                     >
                       {user.level}
                     </Badge>
+                    {index === 0 && timeframe === 'monthly' && (
+                      <Badge className="bg-amber-600 text-black text-xs">
+                        Current Winner
+                      </Badge>
+                    )}
                   </div>
                   <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
                     <span className="flex items-center">

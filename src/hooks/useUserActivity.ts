@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/components/ui/use-toast';
 import { ensureSubscriberCounted, updateUserActivity } from './leaderboards/useActivityTracking';
+import { LeaderboardCategory } from './leaderboards/types';
 
 export function useUserActivity() {
   const { user, isSubscribed } = useAuth();
@@ -15,117 +16,119 @@ export function useUserActivity() {
       if (!user) return;
 
       try {
-        // Check if user already has a record
-        const { data: existingData, error: fetchError } = await supabase
-          .from('user_activity')
-          .select('*')
-          .eq('user_id', user.id)
-          .single();
-
-        if (fetchError && fetchError.code !== 'PGRST116') {
-          console.error('Error checking user activity:', fetchError);
-          return;
-        }
-
+        const categories: LeaderboardCategory[] = ['learning', 'community', 'safety', 'mentor', 'mental'];
         const today = new Date().toISOString().split('T')[0];
         
-        // Prioritize marking subscribed users as active
-        const isNewDay = !existingData || existingData.last_active_date !== today;
-        
-        if (existingData) {
-          // If last active date is not today, update the record
-          if (isNewDay) {
-            const { error: updateError } = await supabase
-              .from('user_activity')
-              .update({
-                last_active_date: today,
-                updated_at: new Date().toISOString()
-              })
-              .eq('user_id', user.id);
+        for (const category of categories) {
+          // Check if user already has a record for this category
+          const { data: existingData, error: fetchError } = await supabase
+            .from('user_activity')
+            .select('*')
+            .eq('user_id', user.id)
+            .eq('category', category)
+            .single();
 
-            if (updateError) {
-              console.error('Error updating user activity:', updateError);
-            } else if (isSubscribed) {
-              // If subscribed user becomes active on a new day, update community stats
-              const { data: statsData } = await supabase
-                .from('community_stats')
-                .select('id')
-                .single();
-              
-              if (statsData) {
-                updateCommunityStats(statsData.id);
+          if (fetchError && fetchError.code !== 'PGRST116') {
+            console.error(`Error checking user activity for ${category}:`, fetchError);
+            continue;
+          }
+
+          // Prioritize marking subscribed users as active
+          const isNewDay = !existingData || existingData.last_active_date !== today;
+          
+          if (existingData) {
+            // If last active date is not today, update the record
+            if (isNewDay) {
+              const { error: updateError } = await supabase
+                .from('user_activity')
+                .update({
+                  last_active_date: today,
+                  updated_at: new Date().toISOString()
+                })
+                .eq('user_id', user.id)
+                .eq('category', category);
+
+              if (updateError) {
+                console.error(`Error updating user activity for ${category}:`, updateError);
               }
             }
-          }
-        } else {
-          // Create a new record for the user
-          const { error: insertError } = await supabase
-            .from('user_activity')
-            .insert({
-              user_id: user.id,
-              points: 10, // Starting points
-              level: 'Apprentice',
-              badge: 'Beginner',
-              streak: 1,
-              last_active_date: today
-            });
-
-          if (insertError) {
-            console.error('Error creating user activity record:', insertError);
           } else {
-            // Increment active users in community stats
-            const { data: statsData } = await supabase
-              .from('community_stats')
-              .select('id')
-              .single();
-            
-            if (statsData) {
-              updateCommunityStats(statsData.id);
-            }
+            // Create a new record for the user
+            const { error: insertError } = await supabase
+              .from('user_activity')
+              .insert({
+                user_id: user.id,
+                points: 10, // Starting points
+                level: 'Apprentice',
+                badge: 'Beginner',
+                streak: 1,
+                category: category,
+                last_active_date: today
+              });
 
-            // Show welcome toast
-            toast({
-              title: "Welcome to the community!",
-              description: "You've earned your first 10 points. Complete lessons to earn more and climb the leaderboard.",
-            });
+            if (insertError) {
+              console.error(`Error creating user activity record for ${category}:`, insertError);
+            }
           }
+        }
+        
+        // Update community stats if subscribed
+        if (isSubscribed) {
+          // Get stats for updating
+          const { data: statsData } = await supabase
+            .from('community_stats')
+            .select('id')
+            .single();
+          
+          if (statsData) {
+            await ensureSubscriberCounted(statsData.id, user.id, isSubscribed);
+          }
+            
+          // Show welcome toast for new users
+          toast({
+            title: "Welcome to the community!",
+            description: "You've earned your first points. Complete activities to earn more and climb the leaderboard.",
+          });
         }
       } catch (err) {
         console.error('Error tracking user activity:', err);
       }
     };
 
-    // Helper function to update community stats
-    const updateCommunityStats = async (statsId: string) => {
-      try {
-        if (user && isSubscribed) {
-          await ensureSubscriberCounted(statsId, user.id, isSubscribed);
-        }
-      } catch (err) {
-        console.error('Error updating community stats:', err);
-      }
-    };
-
     trackUserActivity();
   }, [user, isSubscribed, toast]);
 
-  // Function to record lesson completion
-  const recordLessonCompletion = async (lessonId: string) => {
+  // Function to record activity completion
+  const recordActivity = async (activityType: LeaderboardCategory, pointsToAdd: number = 10) => {
     if (!user) return;
     
     try {
       // Update user points using the shared function
-      await updateUserActivity(user.id, 25);
+      await updateUserActivity(user.id, pointsToAdd, activityType);
 
       // Show toast
+      const activityLabels = {
+        learning: "lesson",
+        community: "community discussion",
+        safety: "safety share",
+        mentor: "mentor connect session",
+        mental: "wellbeing activity"
+      };
+
       toast({
-        title: "Lesson completed!",
-        description: `You've earned 25 points. Keep learning to gain more!`,
+        title: `${activityLabels[activityType]} completed!`,
+        description: `You've earned ${pointsToAdd} points. Keep going to gain more!`,
       });
     } catch (err) {
-      console.error('Error recording lesson completion:', err);
+      console.error(`Error recording ${activityType} completion:`, err);
     }
   };
 
-  return { recordLessonCompletion };
+  return { 
+    recordLessonCompletion: () => recordActivity('learning', 25),
+    recordCommunityActivity: () => recordActivity('community', 15),
+    recordSafetyShare: () => recordActivity('safety', 20),
+    recordMentorSession: () => recordActivity('mentor', 30),
+    recordWellbeingActivity: () => recordActivity('mental', 20)
+  };
 }

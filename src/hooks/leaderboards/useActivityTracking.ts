@@ -1,5 +1,6 @@
 
 import { supabase } from '@/integrations/supabase/client';
+import type { LeaderboardCategory } from './types';
 
 /**
  * Ensures that a subscriber is counted in community stats
@@ -42,6 +43,7 @@ export async function ensureSubscriberCounted(statsId: string, userId: string, i
         .from('user_activity')
         .select('*')
         .eq('user_id', userId)
+        .eq('category', 'learning')
         .single();
       
       if (activityData) {
@@ -51,7 +53,8 @@ export async function ensureSubscriberCounted(statsId: string, userId: string, i
             last_active_date: today,
             updated_at: new Date().toISOString()
           })
-          .eq('user_id', userId);
+          .eq('user_id', userId)
+          .eq('category', 'learning');
       } else {
         await supabase
           .from('user_activity')
@@ -61,6 +64,7 @@ export async function ensureSubscriberCounted(statsId: string, userId: string, i
             level: 'Apprentice',
             badge: 'Beginner',
             streak: 1,
+            category: 'learning',
             last_active_date: today
           });
       }
@@ -73,7 +77,7 @@ export async function ensureSubscriberCounted(statsId: string, userId: string, i
 /**
  * Updates user activity and community stats when completing activities like lessons
  */
-export async function updateUserActivity(userId: string, pointsToAdd: number = 10) {
+export async function updateUserActivity(userId: string, pointsToAdd: number = 10, category: LeaderboardCategory = 'learning') {
   if (!userId) return;
 
   try {
@@ -82,6 +86,7 @@ export async function updateUserActivity(userId: string, pointsToAdd: number = 1
       .from('user_activity')
       .select('*')
       .eq('user_id', userId)
+      .eq('category', category)
       .single();
 
     if (fetchError && fetchError.code !== 'PGRST116') {
@@ -97,7 +102,8 @@ export async function updateUserActivity(userId: string, pointsToAdd: number = 1
           last_active_date: new Date().toISOString().split('T')[0],
           updated_at: new Date().toISOString(),
         })
-        .eq('user_id', userId);
+        .eq('user_id', userId)
+        .eq('category', category);
 
       if (updateError) throw updateError;
     } else {
@@ -110,6 +116,7 @@ export async function updateUserActivity(userId: string, pointsToAdd: number = 1
           level: 'Apprentice',
           badge: 'Beginner',
           streak: 1,
+          category: category,
           last_active_date: new Date().toISOString().split('T')[0]
         });
 
@@ -117,21 +124,23 @@ export async function updateUserActivity(userId: string, pointsToAdd: number = 1
     }
 
     // Update community stats
-    const { data: statsData } = await supabase
-      .from('community_stats')
-      .select('*')
-      .limit(1)
-      .single();
-
-    if (statsData) {
-      await supabase
+    if (category === 'learning') {
+      const { data: statsData } = await supabase
         .from('community_stats')
-        .update({
-          active_users: statsData.active_users + 1,
-          lessons_completed_today: statsData.lessons_completed_today + 1,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', statsData.id);
+        .select('*')
+        .limit(1)
+        .single();
+
+      if (statsData) {
+        await supabase
+          .from('community_stats')
+          .update({
+            active_users: statsData.active_users + 1,
+            lessons_completed_today: statsData.lessons_completed_today + 1,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', statsData.id);
+      }
     }
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
