@@ -1,8 +1,7 @@
 
 import { useState } from "react";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Loader2, Check, X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -10,17 +9,14 @@ interface CancelSubscriptionDialogProps {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   onCancelled?: () => Promise<void>;
-  onDiscountAccepted?: () => void;
 }
 
 const CancelSubscriptionDialog = ({
   isOpen,
   setIsOpen,
-  onCancelled,
-  onDiscountAccepted
+  onCancelled
 }: CancelSubscriptionDialogProps) => {
   const [isProcessing, setIsProcessing] = useState(false);
-  const [showDiscountConfirmation, setShowDiscountConfirmation] = useState(false);
   const { toast } = useToast();
 
   const handleCancel = async () => {
@@ -84,101 +80,56 @@ const CancelSubscriptionDialog = ({
     }
   };
 
-  const handleDiscountOffer = () => {
-    // Handle the discount acceptance logic
-    if (onDiscountAccepted) {
-      onDiscountAccepted();
-    }
-    
-    toast({
-      title: "Discount Applied!",
-      description: "Your 25% permanent discount has been applied to your subscription. Thank you for staying with us!",
-    });
-    
-    setIsOpen(false);
-    setShowDiscountConfirmation(false);
-  };
-
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      {!showDiscountConfirmation ? (
-        <AlertDialogContent className="max-w-md">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-xl">Wait! Before you go...</AlertDialogTitle>
-            <AlertDialogDescription className="text-base">
-              <div className="space-y-4 py-2">
-                <p>Would you like to keep your subscription with <strong>25% off</strong> permanently?</p>
-                
-                <div className="bg-amber-50/10 p-4 rounded-md border border-amber-200/20 mt-2">
-                  <h4 className="font-medium text-amber-200 mb-2">Special Offer Just For You</h4>
-                  <ul className="text-sm space-y-2">
-                    <li className="flex items-start gap-2">
-                      <Check className="text-green-400 h-5 w-5 mt-0.5 flex-shrink-0" />
-                      <span>25% discount on your subscription permanently</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check className="text-green-400 h-5 w-5 mt-0.5 flex-shrink-0" />
-                      <span>Continue with full access to all features</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check className="text-green-400 h-5 w-5 mt-0.5 flex-shrink-0" />
-                      <span>You can still cancel anytime</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          
-          <AlertDialogFooter className="flex-col space-y-2 sm:space-y-0">
-            <Button 
-              onClick={handleDiscountOffer}
-              className="w-full sm:w-auto"
-              variant="default"
-            >
-              Yes, Give Me 25% Off
-            </Button>
-            <Button 
-              onClick={() => setShowDiscountConfirmation(true)} 
-              variant="outline"
-              className="w-full sm:w-auto"
-            >
-              No, Continue Cancellation
-            </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      ) : (
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
+      <AlertDialogContent className="max-w-lg">
+        <AlertDialogHeader>
+          <AlertDialogTitle className="text-xl">Are you sure you want to cancel?</AlertDialogTitle>
+          <AlertDialogDescription className="text-base space-y-4">
+            <p>
               You're about to cancel your subscription. You'll still have access until the end of your billing period.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel onClick={() => setShowDiscountConfirmation(false)}>
-              Back
-            </AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleCancel}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-              disabled={isProcessing}
-            >
-              {isProcessing ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Processing...
-                </>
-              ) : (
-                <>
-                  <X className="mr-2 h-4 w-4" />
-                  Cancel Subscription
-                </>
-              )}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      )}
+            </p>
+            
+            <div className="bg-slate-800/50 p-4 rounded-md border border-slate-700 mt-2">
+              <h4 className="font-medium text-slate-200 mb-2">Coming Soon</h4>
+              <ul className="text-sm space-y-2">
+                <li className="flex items-start gap-2">
+                  <span>• Advanced project management tools</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>• Enhanced learning materials and certifications</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>• Expanded calculator suite with new features</span>
+                </li>
+              </ul>
+            </div>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        
+        <AlertDialogFooter>
+          <AlertDialogCancel>
+            Keep My Subscription
+          </AlertDialogCancel>
+          <AlertDialogAction
+            onClick={handleCancel}
+            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            disabled={isProcessing}
+          >
+            {isProcessing ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Processing...
+              </>
+            ) : (
+              <>
+                <X className="mr-2 h-4 w-4" />
+                Yes, Cancel Subscription
+              </>
+            )}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
     </AlertDialog>
   );
 };
