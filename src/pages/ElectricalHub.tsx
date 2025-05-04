@@ -1,8 +1,7 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tools, LayoutGrid, Heart, Users, Brain, GraduationCap } from "lucide-react";
+import { Wrench, LayoutGrid, Heart, Users, Brain, GraduationCap } from "lucide-react";
 
 const ElectricalHub = () => {
   const hubCards = [
@@ -10,7 +9,7 @@ const ElectricalHub = () => {
       id: 1,
       title: "Toolbox Talk",
       description: "Access practical guides and safety information for on-site work",
-      icon: <Tools className="h-12 w-12 text-elec-yellow opacity-80" />,
+      icon: <Wrench className="h-12 w-12 text-elec-yellow opacity-80" />,
       link: "/apprentice/toolbox"
     },
     {
