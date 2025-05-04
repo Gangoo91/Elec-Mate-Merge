@@ -48,7 +48,7 @@ export function useLeaderboardData() {
           .from('user_activity')
           .select(`
             *,
-            profiles:user_id (
+            profiles:profiles(
               username,
               full_name,
               avatar_url
@@ -78,7 +78,7 @@ export function useLeaderboardData() {
             .from('user_activity')
             .select(`
               *,
-              profiles:user_id (
+              profiles:profiles(
                 username,
                 full_name,
                 avatar_url
