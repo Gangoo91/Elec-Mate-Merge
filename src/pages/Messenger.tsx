@@ -16,7 +16,9 @@ import {
   Users, 
   Heart, 
   GraduationCap,
-  Plus
+  Plus,
+  CheckCheck,
+  Check
 } from "lucide-react";
 import { formatDistanceToNow } from 'date-fns';
 
@@ -257,27 +259,27 @@ const MessengerPage = () => {
       
       <div className="grid md:grid-cols-[350px_1fr] gap-6 h-[75vh]">
         {/* Left panel - Conversations List */}
-        <Card className="border-elec-yellow/20 bg-elec-gray overflow-hidden flex flex-col">
-          <div className="p-4 border-b border-elec-yellow/20">
+        <Card className="border-elec-yellow/20 bg-elec-gray overflow-hidden flex flex-col shadow-md">
+          <div className="p-4 border-b border-elec-yellow/20 bg-elec-gray-light/10">
             <Tabs
               value={activeTab}
               onValueChange={handleTabChange}
               className="w-full"
             >
-              <TabsList className="grid grid-cols-4 w-full">
-                <TabsTrigger value="private" className="flex gap-1 items-center">
+              <TabsList className="grid grid-cols-4 w-full bg-elec-gray-light/20">
+                <TabsTrigger value="private" className="flex gap-1 items-center data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
                   <User className="h-4 w-4" />
                   <span className="hidden sm:inline">Private</span>
                 </TabsTrigger>
-                <TabsTrigger value="team" className="flex gap-1 items-center">
+                <TabsTrigger value="team" className="flex gap-1 items-center data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
                   <Users className="h-4 w-4" />
                   <span className="hidden sm:inline">Team</span>
                 </TabsTrigger>
-                <TabsTrigger value="mental-health" className="flex gap-1 items-center">
+                <TabsTrigger value="mental-health" className="flex gap-1 items-center data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
                   <Heart className="h-4 w-4" />
                   <span className="hidden sm:inline">Support</span>
                 </TabsTrigger>
-                <TabsTrigger value="mentor" className="flex gap-1 items-center">
+                <TabsTrigger value="mentor" className="flex gap-1 items-center data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
                   <GraduationCap className="h-4 w-4" />
                   <span className="hidden sm:inline">Mentor</span>
                 </TabsTrigger>
@@ -285,12 +287,12 @@ const MessengerPage = () => {
             </Tabs>
           </div>
           
-          <div className="p-4 border-b border-elec-yellow/20">
+          <div className="p-4 border-b border-elec-yellow/20 bg-elec-gray-light/5">
             <div className="relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input 
                 placeholder="Search messages..." 
-                className="pl-9"
+                className="pl-9 bg-elec-gray-light/10 border-elec-yellow/30 focus:border-elec-yellow focus:ring-elec-yellow/20"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -313,8 +315,8 @@ const MessengerPage = () => {
               filteredConversations.map(conversation => (
                 <div
                   key={conversation.id}
-                  className={`p-4 border-b border-elec-yellow/10 cursor-pointer ${
-                    activeConversation?.id === conversation.id ? 'bg-elec-yellow/10' : 'hover:bg-elec-gray-light'
+                  className={`p-4 border-b border-elec-yellow/10 cursor-pointer transition-colors ${
+                    activeConversation?.id === conversation.id ? 'bg-elec-yellow/10' : 'hover:bg-elec-gray-light/10'
                   }`}
                   onClick={() => handleSelectConversation(conversation)}
                 >
@@ -327,14 +329,16 @@ const MessengerPage = () => {
                         </AvatarFallback>
                       </Avatar>
                       {conversation.unreadCount > 0 && (
-                        <span className="absolute -top-1 -right-1 bg-elec-yellow text-elec-dark text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                        <span className="absolute -top-1 -right-1 bg-elec-yellow text-elec-dark text-xs rounded-full w-5 h-5 flex items-center justify-center shadow-sm">
                           {conversation.unreadCount}
                         </span>
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        <h3 className="font-medium truncate">{conversation.participantName}</h3>
+                        <h3 className={`font-medium truncate ${conversation.unreadCount > 0 ? 'text-elec-yellow' : ''}`}>
+                          {conversation.participantName}
+                        </h3>
                         {conversation.lastMessageTime && (
                           <span className="text-xs text-muted-foreground">
                             {formatDistanceToNow(conversation.lastMessageTime, { addSuffix: true })}
@@ -342,7 +346,11 @@ const MessengerPage = () => {
                         )}
                       </div>
                       {conversation.lastMessage && (
-                        <p className="text-sm text-muted-foreground truncate">
+                        <p className={`text-sm truncate ${
+                          conversation.unreadCount > 0 
+                            ? 'text-elec-light font-medium' 
+                            : 'text-muted-foreground'
+                        }`}>
                           {conversation.lastMessage}
                         </p>
                       )}
@@ -353,23 +361,23 @@ const MessengerPage = () => {
             )}
           </div>
           
-          <div className="p-4 border-t border-elec-yellow/20">
+          <div className="p-4 border-t border-elec-yellow/20 bg-elec-gray-light/5">
             <Button
               variant="outline"
-              className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10"
+              className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10 group"
             >
-              <Plus className="mr-2 h-4 w-4" />
+              <Plus className="mr-2 h-4 w-4 group-hover:text-elec-yellow transition-colors" />
               New Message
             </Button>
           </div>
         </Card>
         
         {/* Right panel - Messages */}
-        <Card className="border-elec-yellow/20 bg-elec-gray overflow-hidden flex flex-col">
+        <Card className="border-elec-yellow/20 bg-elec-gray overflow-hidden flex flex-col shadow-md relative">
           {activeConversation ? (
             <>
               {/* Conversation header */}
-              <div className="p-4 border-b border-elec-yellow/20 flex items-center gap-3">
+              <div className="p-4 border-b border-elec-yellow/20 bg-elec-gray-light/10 flex items-center gap-3 sticky top-0 z-10">
                 <Avatar>
                   <AvatarImage src={activeConversation.participantAvatar} />
                   <AvatarFallback className="bg-elec-yellow text-elec-dark">
@@ -379,32 +387,32 @@ const MessengerPage = () => {
                 <div>
                   <h3 className="font-medium">{activeConversation.participantName}</h3>
                   <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                    <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
                     <span className="text-xs text-muted-foreground">Online</span>
                   </div>
                 </div>
               </div>
               
               {/* Messages area */}
-              <div className="flex-1 p-4 overflow-y-auto flex flex-col gap-4">
+              <div className="flex-1 p-4 overflow-y-auto flex flex-col gap-4 bg-gradient-to-b from-elec-gray to-elec-gray-light/5">
                 {messages.map(message => {
                   const isMe = message.senderId === (profile?.id || 'me');
                   
                   return (
                     <div
                       key={message.id}
-                      className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}
+                      className={`flex ${isMe ? 'justify-end' : 'justify-start'} animate-fade-in`}
                     >
                       <div 
                         className={`max-w-[75%] rounded-lg p-3 
                           ${isMe 
-                            ? 'bg-elec-yellow text-elec-dark ml-auto' 
-                            : 'bg-elec-gray-light'
+                            ? 'bg-elec-yellow text-elec-dark ml-auto shadow-md' 
+                            : 'bg-elec-gray-light/20 shadow-md'
                           }`
                         }
                       >
                         {!isMe && (
-                          <p className="text-xs font-medium mb-1">{message.senderName}</p>
+                          <p className="text-xs font-medium mb-1 text-elec-yellow">{message.senderName}</p>
                         )}
                         <p className="break-words">{message.content}</p>
                         <div className={`flex items-center gap-1 mt-1 text-xs ${isMe ? 'justify-end' : ''}`}>
@@ -412,7 +420,9 @@ const MessengerPage = () => {
                             {formatDistanceToNow(message.timestamp, { addSuffix: true })}
                           </span>
                           {isMe && (
-                            <span>{message.read ? '✓✓' : '✓'}</span>
+                            <span className="text-elec-dark/70 flex items-center">
+                              {message.read ? <CheckCheck className="h-3 w-3" /> : <Check className="h-3 w-3" />}
+                            </span>
                           )}
                         </div>
                       </div>
@@ -422,11 +432,11 @@ const MessengerPage = () => {
               </div>
               
               {/* Message input */}
-              <div className="p-4 border-t border-elec-yellow/20">
+              <div className="p-4 border-t border-elec-yellow/20 bg-elec-gray-light/5 sticky bottom-0">
                 <form onSubmit={handleSendMessage} className="flex gap-2">
                   <Textarea
                     placeholder="Type your message..."
-                    className="min-h-10 resize-none"
+                    className="min-h-10 resize-none bg-elec-gray-light/10 border-elec-yellow/30 focus:border-elec-yellow focus:ring-elec-yellow/20"
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
                     onKeyDown={(e) => {
@@ -436,18 +446,22 @@ const MessengerPage = () => {
                       }
                     }}
                   />
-                  <Button type="submit" className="shrink-0">
+                  <Button 
+                    type="submit" 
+                    className="shrink-0 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80 transition-colors"
+                    disabled={!newMessage.trim() || !activeConversation}
+                  >
                     <Send className="h-4 w-4" />
                   </Button>
                 </form>
               </div>
             </>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-              <div className="bg-elec-yellow/10 p-6 rounded-full mb-4">
+            <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-gradient-to-b from-elec-gray to-elec-gray-light/5">
+              <div className="bg-elec-yellow/10 p-6 rounded-full mb-4 shadow-inner">
                 {getTabIcon(activeTab)}
               </div>
-              <h3 className="text-lg font-medium mb-2">
+              <h3 className="text-lg font-medium mb-2 text-elec-yellow">
                 {activeTab === 'private' && 'Private Messages'}
                 {activeTab === 'team' && 'Team Communication'}
                 {activeTab === 'mental-health' && 'Mental Health Support'}
@@ -461,7 +475,7 @@ const MessengerPage = () => {
               </p>
               <Button
                 variant="outline"
-                className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+                className="border-elec-yellow hover:bg-elec-yellow hover:text-elec-dark transition-colors"
               >
                 <Plus className="mr-2 h-4 w-4" />
                 {activeTab === 'private' && 'Start New Conversation'}
