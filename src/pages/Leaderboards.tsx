@@ -1,104 +1,17 @@
 
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Trophy, Medal, Clock, Award, Star } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Trophy, Medal, Clock, Award, Star, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useLeaderboardData, UserActivity } from "@/hooks/leaderboards/useLeaderboardData";
+import { format } from "date-fns";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const Leaderboards = () => {
-  // Mock user data for leaderboards
-  const userRankings = [
-    {
-      id: 1,
-      name: "Thomas Wilson",
-      initials: "TW",
-      points: 2850,
-      level: "Electrician",
-      badge: "Master",
-      streak: 65,
-    },
-    {
-      id: 2,
-      name: "Sarah Johnson",
-      initials: "SJ",
-      points: 2720,
-      level: "Electrician",
-      badge: "Expert",
-      streak: 42,
-    },
-    {
-      id: 3,
-      name: "Mark Davis",
-      initials: "MD",
-      points: 2685,
-      level: "Apprentice",
-      badge: "Rising Star",
-      streak: 38,
-    },
-    {
-      id: 4,
-      name: "Emma Lewis",
-      initials: "EL",
-      points: 2540,
-      level: "Electrician",
-      badge: "Specialist",
-      streak: 29,
-    },
-    {
-      id: 5,
-      name: "David Thompson",
-      initials: "DT",
-      points: 2390,
-      level: "Apprentice",
-      badge: "Dedicated",
-      streak: 21,
-    },
-    {
-      id: 6,
-      name: "Alice Parker",
-      initials: "AP",
-      points: 2260,
-      level: "Apprentice",
-      badge: "Enthusiast",
-      streak: 18,
-    },
-    {
-      id: 7,
-      name: "Robert Johnson",
-      initials: "RJ",
-      points: 2150,
-      level: "Electrician",
-      badge: "Professional",
-      streak: 15,
-    },
-    {
-      id: 8,
-      name: "James Smith",
-      initials: "JS",
-      points: 1980,
-      level: "Apprentice",
-      badge: "Learner",
-      streak: 12,
-    },
-    {
-      id: 9,
-      name: "Laura Miller",
-      initials: "LM",
-      points: 1840,
-      level: "Apprentice",
-      badge: "Newcomer",
-      streak: 9,
-    },
-    {
-      id: 10,
-      name: "Michael Brown",
-      initials: "MB",
-      points: 1720,
-      level: "Apprentice",
-      badge: "Beginner",
-      streak: 7,
-    },
-  ];
+  const { userRankings, communityStats, currentUserRank, isLoading, error } = useLeaderboardData();
+  const [timeframe, setTimeframe] = useState<'weekly' | 'monthly' | 'alltime'>('weekly');
 
   // Function to render rank badges with different designs and colors
   const getRankBadge = (position: number) => {
@@ -124,6 +37,43 @@ const Leaderboards = () => {
     return <div className="w-6 text-center font-bold">{position}</div>;
   };
 
+  // Helper function to get user initials from profile data
+  const getUserInitials = (user: UserActivity): string => {
+    if (user.profiles?.full_name) {
+      return user.profiles.full_name.split(' ')
+        .map(name => name.charAt(0))
+        .join('')
+        .slice(0, 2)
+        .toUpperCase();
+    } else if (user.profiles?.username) {
+      return user.profiles.username.substring(0, 2).toUpperCase();
+    }
+    return 'US';
+  };
+
+  // Helper function to get user display name
+  const getUserDisplayName = (user: UserActivity): string => {
+    return user.profiles?.full_name || user.profiles?.username || 'Anonymous User';
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
+        <span className="ml-2 text-muted-foreground">Loading leaderboard data...</span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <Alert variant="destructive" className="my-8">
+        <AlertTitle>Error loading leaderboard data</AlertTitle>
+        <AlertDescription>{error}</AlertDescription>
+      </Alert>
+    );
+  }
+
   return (
     <div className="space-y-8 animate-fade-in">
       <div>
@@ -138,21 +88,21 @@ const Leaderboards = () => {
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardContent className="pt-6 text-center">
             <Users className="h-8 w-8 text-elec-yellow mx-auto mb-3" />
-            <div className="text-3xl font-bold">1,452</div>
+            <div className="text-3xl font-bold">{communityStats?.active_users || 0}</div>
             <p className="text-sm text-muted-foreground">Active Community Members</p>
           </CardContent>
         </Card>
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardContent className="pt-6 text-center">
             <Video className="h-8 w-8 text-elec-yellow mx-auto mb-3" />
-            <div className="text-3xl font-bold">267</div>
+            <div className="text-3xl font-bold">{communityStats?.lessons_completed_today || 0}</div>
             <p className="text-sm text-muted-foreground">Lessons Completed Today</p>
           </CardContent>
         </Card>
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardContent className="pt-6 text-center">
             <Star className="h-8 w-8 text-elec-yellow mx-auto mb-3" />
-            <div className="text-3xl font-bold">65 Days</div>
+            <div className="text-3xl font-bold">{communityStats?.longest_streak || 0} Days</div>
             <p className="text-sm text-muted-foreground">Longest Active Streak</p>
           </CardContent>
         </Card>
@@ -170,13 +120,23 @@ const Leaderboards = () => {
           <div className="flex flex-col md:flex-row items-center md:justify-between gap-6 p-4 bg-elec-dark rounded-lg">
             <div className="flex items-center gap-4">
               <Avatar className="h-14 w-14 border-2 border-elec-yellow">
-                <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow">
-                  GU
-                </AvatarFallback>
+                {currentUserRank?.profiles?.avatar_url ? (
+                  <AvatarImage src={currentUserRank.profiles.avatar_url} />
+                ) : (
+                  <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow">
+                    {currentUserRank ? getUserInitials(currentUserRank) : 'GU'}
+                  </AvatarFallback>
+                )}
               </Avatar>
               <div>
-                <h3 className="font-semibold">Guest User</h3>
-                <p className="text-sm text-muted-foreground">Start your journey to rank on the leaderboard</p>
+                <h3 className="font-semibold">
+                  {currentUserRank ? getUserDisplayName(currentUserRank) : 'Guest User'}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {currentUserRank 
+                    ? `${currentUserRank.level} - ${currentUserRank.badge}`
+                    : 'Start your journey to rank on the leaderboard'}
+                </p>
               </div>
             </div>
             <div className="grid grid-cols-3 gap-4 text-center">
@@ -185,21 +145,24 @@ const Leaderboards = () => {
                   <Trophy className="h-4 w-4 text-elec-yellow mr-1" />
                   <span className="font-medium text-sm">Rank</span>
                 </div>
-                <div className="text-lg font-bold">--</div>
+                <div className="text-lg font-bold">
+                  {userRankings?.findIndex(user => 
+                    currentUserRank && user.user_id === currentUserRank.user_id) + 1 || '--'}
+                </div>
               </div>
               <div className="p-3 bg-elec-gray rounded-lg">
                 <div className="flex items-center justify-center mb-1">
                   <Award className="h-4 w-4 text-elec-yellow mr-1" />
                   <span className="font-medium text-sm">Points</span>
                 </div>
-                <div className="text-lg font-bold">0</div>
+                <div className="text-lg font-bold">{currentUserRank?.points || 0}</div>
               </div>
               <div className="p-3 bg-elec-gray rounded-lg">
                 <div className="flex items-center justify-center mb-1">
                   <Clock className="h-4 w-4 text-elec-yellow mr-1" />
                   <span className="font-medium text-sm">Streak</span>
                 </div>
-                <div className="text-lg font-bold">0</div>
+                <div className="text-lg font-bold">{currentUserRank?.streak || 0}</div>
               </div>
             </div>
           </div>
@@ -207,7 +170,7 @@ const Leaderboards = () => {
       </Card>
 
       {/* Main Leaderboard */}
-      <Tabs defaultValue="weekly" className="space-y-4">
+      <Tabs defaultValue={timeframe} className="space-y-4" onValueChange={(value) => setTimeframe(value as 'weekly' | 'monthly' | 'alltime')}>
         <div className="flex justify-between items-center">
           <TabsList className="bg-elec-gray border border-elec-yellow/20">
             <TabsTrigger value="weekly">This Week</TabsTrigger>
@@ -230,63 +193,73 @@ const Leaderboards = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {userRankings.map((user, index) => (
-                    <div 
-                      key={user.id} 
-                      className={`
-                        flex items-center gap-4 p-4 rounded-lg relative
-                        ${index < 3 ? "bg-elec-dark/70" : "bg-elec-dark/40"}
-                      `}
-                    >
-                      {/* Rank */}
-                      {getRankBadge(index + 1)}
+                {userRankings.length === 0 ? (
+                  <div className="text-center p-8 text-muted-foreground">
+                    No leaderboard data available yet. Be the first to start learning!
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {userRankings.map((user, index) => (
+                      <div 
+                        key={user.id} 
+                        className={`
+                          flex items-center gap-4 p-4 rounded-lg relative
+                          ${index < 3 ? "bg-elec-dark/70" : "bg-elec-dark/40"}
+                        `}
+                      >
+                        {/* Rank */}
+                        {getRankBadge(index + 1)}
 
-                      {/* User Avatar */}
-                      <Avatar className="h-10 w-10">
-                        <AvatarFallback 
-                          className={
-                            index === 0 ? "bg-yellow-500/20 text-yellow-500" : 
-                            index === 1 ? "bg-gray-300/20 text-gray-300" : 
-                            index === 2 ? "bg-amber-700/20 text-amber-700" : 
-                            "bg-elec-yellow/10 text-elec-yellow"
-                          }
-                        >
-                          {user.initials}
-                        </AvatarFallback>
-                      </Avatar>
+                        {/* User Avatar */}
+                        <Avatar className="h-10 w-10">
+                          {user.profiles?.avatar_url ? (
+                            <AvatarImage src={user.profiles.avatar_url} />
+                          ) : (
+                            <AvatarFallback 
+                              className={
+                                index === 0 ? "bg-yellow-500/20 text-yellow-500" : 
+                                index === 1 ? "bg-gray-300/20 text-gray-300" : 
+                                index === 2 ? "bg-amber-700/20 text-amber-700" : 
+                                "bg-elec-yellow/10 text-elec-yellow"
+                              }
+                            >
+                              {getUserInitials(user)}
+                            </AvatarFallback>
+                          )}
+                        </Avatar>
 
-                      {/* User Info */}
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <h4 className="font-medium">{user.name}</h4>
-                          <Badge 
-                            variant="outline" 
-                            className="text-xs border-elec-yellow/30 text-elec-yellow/90"
-                          >
-                            {user.level}
-                          </Badge>
+                        {/* User Info */}
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <h4 className="font-medium">{getUserDisplayName(user)}</h4>
+                            <Badge 
+                              variant="outline" 
+                              className="text-xs border-elec-yellow/30 text-elec-yellow/90"
+                            >
+                              {user.level}
+                            </Badge>
+                          </div>
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
+                            <span className="flex items-center">
+                              <Award className="h-3 w-3 mr-1" />
+                              {user.badge}
+                            </span>
+                            <span className="flex items-center">
+                              <Clock className="h-3 w-3 mr-1" />
+                              {user.streak} day streak
+                            </span>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
-                          <span className="flex items-center">
-                            <Award className="h-3 w-3 mr-1" />
-                            {user.badge}
-                          </span>
-                          <span className="flex items-center">
-                            <Clock className="h-3 w-3 mr-1" />
-                            {user.streak} day streak
-                          </span>
+
+                        {/* Points */}
+                        <div className="text-right">
+                          <div className="font-bold">{user.points.toLocaleString()}</div>
+                          <div className="text-xs text-muted-foreground">points</div>
                         </div>
                       </div>
-
-                      {/* Points */}
-                      <div className="text-right">
-                        <div className="font-bold">{user.points.toLocaleString()}</div>
-                        <div className="text-xs text-muted-foreground">points</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>

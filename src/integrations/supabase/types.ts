@@ -9,6 +9,30 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      community_stats: {
+        Row: {
+          active_users: number | null
+          id: string
+          lessons_completed_today: number | null
+          longest_streak: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          active_users?: number | null
+          id?: string
+          lessons_completed_today?: number | null
+          longest_streak?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          active_users?: number | null
+          id?: string
+          lessons_completed_today?: number | null
+          longest_streak?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       completed_resources: {
         Row: {
           course_slug: string
@@ -161,6 +185,42 @@ export type Database = {
           id?: string
           is_automatic?: boolean | null
           notes?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_activity: {
+        Row: {
+          badge: string | null
+          created_at: string | null
+          id: string
+          last_active_date: string | null
+          level: string | null
+          points: number | null
+          streak: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          badge?: string | null
+          created_at?: string | null
+          id?: string
+          last_active_date?: string | null
+          level?: string | null
+          points?: number | null
+          streak?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          badge?: string | null
+          created_at?: string | null
+          id?: string
+          last_active_date?: string | null
+          level?: string | null
+          points?: number | null
+          streak?: number | null
+          updated_at?: string | null
           user_id?: string
         }
         Relationships: []
