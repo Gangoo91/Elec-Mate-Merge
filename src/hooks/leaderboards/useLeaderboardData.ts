@@ -4,9 +4,10 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLeaderboardFetch } from './useLeaderboardFetch';
 import { updateUserActivity } from './useActivityTracking';
-import { UserActivity, CommunityStats } from './types';
+import type { UserActivity, CommunityStats } from './types';
 
-export { UserActivity, CommunityStats };
+// Re-export the types correctly with 'export type'
+export type { UserActivity, CommunityStats };
 
 export function useLeaderboardData() {
   const { user, isSubscribed } = useAuth();

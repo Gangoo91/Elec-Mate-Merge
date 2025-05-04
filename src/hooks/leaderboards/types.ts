@@ -1,4 +1,5 @@
 
+// Define user activity type
 export type UserActivity = {
   id: string;
   user_id: string;
@@ -16,6 +17,7 @@ export type UserActivity = {
   };
 }
 
+// Define community stats type
 export type CommunityStats = {
   id: string;
   active_users: number;

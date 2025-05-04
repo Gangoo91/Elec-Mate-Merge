@@ -1,7 +1,7 @@
 
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-import { UserActivity, CommunityStats } from './types';
+import type { UserActivity, CommunityStats } from './types';
 import { ensureSubscriberCounted } from './useActivityTracking';
 
 export function useLeaderboardFetch(userId: string | undefined, isSubscribed: boolean) {
