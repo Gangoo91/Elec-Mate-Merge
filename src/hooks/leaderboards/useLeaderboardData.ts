@@ -46,20 +46,42 @@ export function useLeaderboardData() {
         // Fetch top users by points
         const { data: rankingsData, error: rankingsError } = await supabase
           .from('user_activity')
-          .select(`
-            *,
-            profiles:user_id (
-              username,
-              full_name,
-              avatar_url
-            )
-          `)
+          .select('*')
           .order('points', { ascending: false })
           .limit(10);
 
         if (rankingsError) {
           throw rankingsError;
         }
+
+        // Get profiles separately to avoid the join error
+        const userIds = rankingsData?.map(user => user.user_id) || [];
+        let profilesData: Record<string, any> = {};
+        
+        if (userIds.length > 0) {
+          const { data: profiles, error: profilesError } = await supabase
+            .from('profiles')
+            .select('id, username, full_name, avatar_url')
+            .in('id', userIds);
+            
+          if (!profilesError && profiles) {
+            // Create a lookup object for profiles
+            profilesData = profiles.reduce((acc, profile) => {
+              acc[profile.id] = profile;
+              return acc;
+            }, {} as Record<string, any>);
+          }
+        }
+        
+        // Combine user activity with profiles
+        const usersWithProfiles = rankingsData?.map(user => ({
+          ...user,
+          profiles: profilesData[user.user_id] || {
+            username: 'Anonymous',
+            full_name: null,
+            avatar_url: null
+          }
+        })) as UserActivity[];
 
         // Fetch community stats
         const { data: statsData, error: statsError } = await supabase
@@ -76,26 +98,33 @@ export function useLeaderboardData() {
         if (user) {
           const { data: userData, error: userError } = await supabase
             .from('user_activity')
-            .select(`
-              *,
-              profiles:user_id (
-                username,
-                full_name,
-                avatar_url
-              )
-            `)
+            .select('*')
             .eq('user_id', user.id)
             .single();
 
           if (userError && userError.code !== 'PGRST116') {
             console.error('Error fetching current user data:', userError);
-          } else {
-            currentUserData = userData;
+          } else if (userData) {
+            // Get the user's profile
+            const { data: userProfile } = await supabase
+              .from('profiles')
+              .select('username, full_name, avatar_url')
+              .eq('id', user.id)
+              .single();
+              
+            currentUserData = {
+              ...userData,
+              profiles: userProfile || {
+                username: 'Anonymous',
+                full_name: null,
+                avatar_url: null
+              }
+            };
           }
         }
 
         // Process and set data
-        setUserRankings(rankingsData || []);
+        setUserRankings(usersWithProfiles || []);
         setCommunityStats(statsData || null);
         setCurrentUserRank(currentUserData);
       } catch (err) {
