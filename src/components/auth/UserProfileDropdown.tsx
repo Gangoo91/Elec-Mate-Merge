@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { LogOut, User, Settings } from 'lucide-react';
+import { LogOut, User, Settings, MessageSquare } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const UserProfileDropdown = () => {
@@ -73,6 +73,10 @@ const UserProfileDropdown = () => {
         <DropdownMenuItem onClick={() => navigate('/profile')}>
           <User className="mr-2 h-4 w-4" />
           <span>Profile</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => navigate('/messages')}>
+          <MessageSquare className="mr-2 h-4 w-4" />
+          <span>Messages</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => navigate('/settings')}>
           <Settings className="mr-2 h-4 w-4" />

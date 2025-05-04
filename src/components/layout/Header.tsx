@@ -4,6 +4,7 @@ import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import UserProfileDropdown from "@/components/auth/UserProfileDropdown";
+import NotificationDropdown from "@/components/notifications/NotificationDropdown";
 
 interface HeaderProps {
   toggleSidebar: () => void;
@@ -33,7 +34,8 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
         </div>
       </div>
       
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
+        <NotificationDropdown />
         <UserProfileDropdown />
       </div>
     </header>

@@ -37,6 +37,10 @@ import SafetyShares from "./pages/electrician/SafetyShares";
 import LivePricing from "./pages/electrician/LivePricing";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import { NotificationProvider } from "@/components/notifications/NotificationProvider";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
+import Messenger from "./pages/Messenger";
 
 // Component imports
 import QuizContent from "./components/apprentice/QuizContent";
@@ -48,61 +52,66 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <AuthProvider>
-        <Router>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/auth/signin" element={<SignIn />} />
-            <Route path="/auth/signup" element={<SignUp />} />
+        <NotificationProvider>
+          <Router>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/auth/signin" element={<SignIn />} />
+              <Route path="/auth/signup" element={<SignUp />} />
 
-            {/* Protected Routes */}
-            <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-              <Route path="dashboard" element={<Dashboard />} />
-              <Route path="subscriptions" element={<Subscriptions />} />
-              <Route path="payment-success" element={<PaymentSuccess />} />
-              <Route path="electrician-tools" element={<ElectricianTools />} />
-              <Route path="electrical-hub" element={<ElectricalHub />} />
-              <Route path="electrician" element={<Navigate to="/electrical-hub" replace />} />
-              <Route path="electrician/toolbox-talk" element={<ElectricalToolboxTalk />} />
-              <Route path="electrician/chat" element={<ElectricalChat />} />
-              <Route path="electrician/job-vacancies" element={<JobVacancies />} />
-              <Route path="electrician/materials" element={<ElectricalMaterials />} />
-              <Route path="electrician/tools" element={<ElectricalTools />} />
-              <Route path="electrician/safety-shares" element={<SafetyShares />} />
-              <Route path="electrician/live-pricing" element={<LivePricing />} />
-              <Route path="video-lessons" element={<VideoLessons />} />
-              <Route path="leaderboards" element={<Leaderboards />} />
-              <Route path="apprentice">
-                <Route index element={<Navigate to="/apprentice/hub" replace />} />
-                <Route path="hub" element={<ApprenticeHub />} />
-                <Route path="ai-tools" element={<ApprenticeAITools />} />
-                <Route path="mentor" element={<ApprenticeMentor />} />
-                <Route path="ojt" element={<ApprenticeOJT />} />
-                <Route path="toolbox" element={<ApprenticeToolbox />} />
-                <Route path="mental-health" element={<ApprenticeMentalHealth />} />
-                <Route path="career-progression" element={<CareerProgression />} />
-                <Route path="on-job-tools" element={<OnJobTools />} />
-                <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
-                <Route path="on-job-tools/documents" element={<OnJobDocuments />} />
-                <Route path="on-job-tools/assessment" element={<OnJobAssessment />} />
-                <Route path="study">
-                  <Route index element={<ApprenticeStudy />} />
-                  <Route path="eal" element={<EALCourses />} />
-                  <Route path="eal/:courseSlug" element={<CourseDetail />} />
-                  <Route path="eal/:courseSlug/unit/:unitSlug" element={<CourseDetail />} />
-                  <Route path="eal/:courseSlug/unit/:unitSlug/quiz" element={<QuizContent />} />
-                  <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
-                  <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId" element={<InstallationMethodContent />} />
-                  <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
+              {/* Protected Routes */}
+              <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+                <Route path="dashboard" element={<Dashboard />} />
+                <Route path="profile" element={<Profile />} />
+                <Route path="settings" element={<Settings />} />
+                <Route path="messages" element={<Messenger />} />
+                <Route path="subscriptions" element={<Subscriptions />} />
+                <Route path="payment-success" element={<PaymentSuccess />} />
+                <Route path="electrician-tools" element={<ElectricianTools />} />
+                <Route path="electrical-hub" element={<ElectricalHub />} />
+                <Route path="electrician" element={<Navigate to="/electrical-hub" replace />} />
+                <Route path="electrician/toolbox-talk" element={<ElectricalToolboxTalk />} />
+                <Route path="electrician/chat" element={<ElectricalChat />} />
+                <Route path="electrician/job-vacancies" element={<JobVacancies />} />
+                <Route path="electrician/materials" element={<ElectricalMaterials />} />
+                <Route path="electrician/tools" element={<ElectricalTools />} />
+                <Route path="electrician/safety-shares" element={<SafetyShares />} />
+                <Route path="electrician/live-pricing" element={<LivePricing />} />
+                <Route path="video-lessons" element={<VideoLessons />} />
+                <Route path="leaderboards" element={<Leaderboards />} />
+                <Route path="apprentice">
+                  <Route index element={<Navigate to="/apprentice/hub" replace />} />
+                  <Route path="hub" element={<ApprenticeHub />} />
+                  <Route path="ai-tools" element={<ApprenticeAITools />} />
+                  <Route path="mentor" element={<ApprenticeMentor />} />
+                  <Route path="ojt" element={<ApprenticeOJT />} />
+                  <Route path="toolbox" element={<ApprenticeToolbox />} />
+                  <Route path="mental-health" element={<ApprenticeMentalHealth />} />
+                  <Route path="career-progression" element={<CareerProgression />} />
+                  <Route path="on-job-tools" element={<OnJobTools />} />
+                  <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
+                  <Route path="on-job-tools/documents" element={<OnJobDocuments />} />
+                  <Route path="on-job-tools/assessment" element={<OnJobAssessment />} />
+                  <Route path="study">
+                    <Route index element={<ApprenticeStudy />} />
+                    <Route path="eal" element={<EALCourses />} />
+                    <Route path="eal/:courseSlug" element={<CourseDetail />} />
+                    <Route path="eal/:courseSlug/unit/:unitSlug" element={<CourseDetail />} />
+                    <Route path="eal/:courseSlug/unit/:unitSlug/quiz" element={<QuizContent />} />
+                    <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
+                    <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId" element={<InstallationMethodContent />} />
+                    <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
+                  </Route>
                 </Route>
-              </Route>
 
-              {/* Catch-all route */}
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
-          <Toaster />
-        </Router>
+                {/* Catch-all route */}
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+            <Toaster />
+          </Router>
+        </NotificationProvider>
       </AuthProvider>
     </ThemeProvider>
   );

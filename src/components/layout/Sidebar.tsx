@@ -8,7 +8,10 @@ import {
   Video, 
   Trophy, 
   CreditCard, 
-  X 
+  X,
+  User,
+  Settings,
+  MessageSquare
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -28,6 +31,18 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
       name: "Dashboard",
       path: "/dashboard",
       icon: <Home className="h-5 w-5" />,
+      roles: ["visitor", "apprentice", "electrician", "employer"],
+    },
+    {
+      name: "Profile",
+      path: "/profile",
+      icon: <User className="h-5 w-5" />,
+      roles: ["visitor", "apprentice", "electrician", "employer"],
+    },
+    {
+      name: "Messages",
+      path: "/messages",
+      icon: <MessageSquare className="h-5 w-5" />,
       roles: ["visitor", "apprentice", "electrician", "employer"],
     },
     {
@@ -58,6 +73,12 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
       name: "Subscriptions",
       path: "/subscriptions",
       icon: <CreditCard className="h-5 w-5" />,
+      roles: ["visitor", "apprentice", "electrician", "employer"],
+    },
+    {
+      name: "Settings",
+      path: "/settings",
+      icon: <Settings className="h-5 w-5" />,
       roles: ["visitor", "apprentice", "electrician", "employer"],
     },
   ];
