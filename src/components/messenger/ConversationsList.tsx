@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Plus } from "lucide-react";
+import { Search, Plus, User, Users, Heart, GraduationCap } from "lucide-react";
 import ConversationItem from './ConversationItem';
 import { Conversation } from './types';
 
@@ -13,6 +13,8 @@ interface ConversationsListProps {
   onSearchChange: (query: string) => void;
   onSelectConversation: (conversation: Conversation) => void;
   getInitials: (name: string) => string;
+  activeTab: string;
+  onTabChange: (tab: string) => void;
 }
 
 const ConversationsList: React.FC<ConversationsListProps> = ({ 
@@ -21,23 +23,51 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
   searchQuery,
   onSearchChange,
   onSelectConversation,
-  getInitials
+  getInitials,
+  activeTab,
+  onTabChange
 }) => {
+  const tabs = [
+    { id: 'private', label: 'Private', icon: <User className="h-5 w-5" /> },
+    { id: 'team', label: 'Team', icon: <Users className="h-5 w-5" /> },
+    { id: 'mental-health', label: 'Support', icon: <Heart className="h-5 w-5" /> },
+    { id: 'mentor', label: 'Mentor', icon: <GraduationCap className="h-5 w-5" /> }
+  ];
+  
   return (
-    <>
-      <div className="p-4 border-b border-elec-yellow/20 bg-elec-gray-light/5">
+    <div className="flex flex-col h-full">
+      {/* Tab buttons */}
+      <div className="flex border-b border-elec-yellow/10 bg-elec-gray-dark">
+        {tabs.map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => onTabChange(tab.id)}
+            className={`flex-1 py-4 flex justify-center items-center ${
+              activeTab === tab.id 
+                ? 'bg-elec-yellow text-elec-dark' 
+                : 'text-elec-gray-light hover:bg-elec-gray-light/10'
+            }`}
+          >
+            {tab.icon}
+          </button>
+        ))}
+      </div>
+      
+      {/* Search box */}
+      <div className="p-3 border-b border-elec-yellow/10 bg-elec-gray">
         <div className="relative">
           <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
           <Input 
             placeholder="Search messages..." 
-            className="pl-9 bg-elec-gray-light/10 border-elec-yellow/30 focus:border-elec-yellow focus:ring-elec-yellow/20"
+            className="pl-9 bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow focus:ring-elec-yellow/20 rounded-full"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
           />
         </div>
       </div>
       
-      <div className="flex-1 overflow-y-auto">
+      {/* Conversations list */}
+      <div className="flex-1 overflow-y-auto bg-elec-gray">
         {conversations.length === 0 ? (
           <div className="p-6 text-center text-muted-foreground">
             <p>No conversations found</p>
@@ -62,16 +92,17 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
         )}
       </div>
       
-      <div className="p-4 border-t border-elec-yellow/20 bg-elec-gray-light/5">
+      {/* New Message button */}
+      <div className="p-3 border-t border-elec-yellow/10 bg-elec-gray">
         <Button
-          variant="outline"
-          className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10 group"
+          variant="ghost"
+          className="w-full flex items-center justify-center gap-2 text-white hover:bg-elec-yellow/10 group"
         >
-          <Plus className="mr-2 h-4 w-4 group-hover:text-elec-yellow transition-colors" />
+          <Plus className="h-4 w-4 group-hover:text-elec-yellow transition-colors" />
           New Message
         </Button>
       </div>
-    </>
+    </div>
   );
 };
 

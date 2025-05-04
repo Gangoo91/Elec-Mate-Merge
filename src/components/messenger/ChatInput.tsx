@@ -21,8 +21,8 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled }) => {
   };
   
   return (
-    <div className="p-3 border-t border-elec-yellow/20 bg-elec-gray-light/5 sticky bottom-0">
-      <form onSubmit={handleSend} className="flex gap-2">
+    <div className="p-2 border-t border-elec-yellow/10 bg-elec-gray sticky bottom-0">
+      <form onSubmit={handleSend} className="flex gap-2 items-center">
         <Button
           type="button"
           variant="ghost"
@@ -33,7 +33,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled }) => {
         </Button>
         <Textarea
           placeholder="Type your message..."
-          className="min-h-10 max-h-24 resize-none bg-elec-gray-light/10 border-elec-yellow/30 focus:border-elec-yellow focus:ring-elec-yellow/20 text-sm md:text-base rounded-xl"
+          className="min-h-10 max-h-20 resize-none bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow focus:ring-elec-yellow/20 text-sm rounded-xl"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => {

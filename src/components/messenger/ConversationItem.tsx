@@ -20,15 +20,15 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
   return (
     <div
       className={`p-4 border-b border-elec-yellow/10 cursor-pointer transition-colors ${
-        activeConversationId === conversation.id ? 'bg-elec-yellow/10' : 'hover:bg-elec-gray-light/10'
+        activeConversationId === conversation.id ? 'bg-elec-gray-light/10' : 'hover:bg-elec-gray-light/5'
       }`}
       onClick={() => onSelect(conversation)}
     >
       <div className="flex items-center gap-3">
         <div className="relative">
-          <Avatar>
+          <Avatar className="bg-elec-yellow text-elec-dark h-12 w-12">
             <AvatarImage src={conversation.participantAvatar} />
-            <AvatarFallback className="bg-elec-yellow text-elec-dark">
+            <AvatarFallback className="bg-elec-yellow text-elec-dark text-base">
               {getInitials(conversation.participantName)}
             </AvatarFallback>
           </Avatar>
@@ -40,7 +40,7 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
-            <h3 className={`font-medium truncate ${conversation.unreadCount > 0 ? 'text-elec-yellow' : ''}`}>
+            <h3 className={`font-medium truncate text-base ${conversation.unreadCount > 0 ? 'text-elec-yellow' : 'text-white'}`}>
               {conversation.participantName}
             </h3>
             {conversation.lastMessageTime && (

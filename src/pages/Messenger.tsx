@@ -1,9 +1,7 @@
 
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { User, Users, Heart, GraduationCap, ArrowLeft } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ConversationsList from '@/components/messenger/ConversationsList';
 import ConversationView from '@/components/messenger/ConversationView';
@@ -23,7 +21,6 @@ const MessengerPage = () => {
     setSearchQuery,
     handleSelectConversation,
     handleSendMessage,
-    getTabIcon,
     getInitials,
   } = useMessenger();
   
@@ -42,21 +39,14 @@ const MessengerPage = () => {
   };
   
   return (
-    <div className="container max-w-7xl mx-auto py-4 md:py-6 space-y-6 md:space-y-8 animate-fade-in">
-      <div>
-        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Messages</h1>
-        <p className="text-muted-foreground">
-          Chat with team members, mentors and support advisors.
-        </p>
-      </div>
-      
-      <div className="grid h-[calc(100vh-200px)] md:h-[75vh]">
+    <div className="animate-fade-in h-[calc(100vh-64px)]">
+      <div className="grid h-full">
         {/* Mobile view with conditional rendering */}
         {isMobile ? (
-          <Card className="border-elec-yellow/20 bg-elec-gray overflow-hidden flex flex-col shadow-md">
+          <Card className="border-none bg-elec-gray overflow-hidden flex flex-col shadow-md h-full rounded-none">
             {showConversationOnMobile && activeConversation ? (
               <div className="flex flex-col h-full">
-                <div className="p-3 border-b border-elec-yellow/20 bg-elec-gray-light/10 flex items-center">
+                <div className="p-3 border-b border-elec-yellow/10 bg-elec-gray flex items-center">
                   <Button 
                     variant="ghost" 
                     size="icon" 
@@ -78,93 +68,37 @@ const MessengerPage = () => {
                 </div>
               </div>
             ) : (
-              <>
-                <div className="p-3 border-b border-elec-yellow/20 bg-elec-gray-light/10">
-                  <Tabs
-                    value={activeTab}
-                    onValueChange={handleTabChange}
-                    className="w-full"
-                  >
-                    <TabsList className="grid grid-cols-4 w-full bg-elec-gray-light/20">
-                      <TabsTrigger value="private" className="flex gap-1 items-center data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
-                        <User className="h-4 w-4" />
-                        <span className="hidden sm:inline">Private</span>
-                      </TabsTrigger>
-                      <TabsTrigger value="team" className="flex gap-1 items-center data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
-                        <Users className="h-4 w-4" />
-                        <span className="hidden sm:inline">Team</span>
-                      </TabsTrigger>
-                      <TabsTrigger value="mental-health" className="flex gap-1 items-center data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
-                        <Heart className="h-4 w-4" />
-                        <span className="hidden sm:inline">Support</span>
-                      </TabsTrigger>
-                      <TabsTrigger value="mentor" className="flex gap-1 items-center data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
-                        <GraduationCap className="h-4 w-4" />
-                        <span className="hidden sm:inline">Mentor</span>
-                      </TabsTrigger>
-                    </TabsList>
-                  </Tabs>
-                </div>
-                
-                <ScrollArea className="flex-1">
-                  <ConversationsList 
-                    conversations={filteredConversations}
-                    activeConversationId={activeConversation?.id}
-                    searchQuery={searchQuery}
-                    onSearchChange={setSearchQuery}
-                    onSelectConversation={handleConversationSelect}
-                    getInitials={getInitials}
-                  />
-                </ScrollArea>
-              </>
+              <ConversationsList 
+                conversations={filteredConversations}
+                activeConversationId={activeConversation?.id}
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                onSelectConversation={handleConversationSelect}
+                getInitials={getInitials}
+                activeTab={activeTab}
+                onTabChange={handleTabChange}
+              />
             )}
           </Card>
         ) : (
           // Desktop view with side-by-side layout
-          <div className="grid md:grid-cols-[350px_1fr] gap-6">
+          <div className="grid md:grid-cols-[350px_1fr] gap-3 h-full">
             {/* Left panel - Conversations List */}
-            <Card className="border-elec-yellow/20 bg-elec-gray overflow-hidden flex flex-col shadow-md">
-              <div className="p-4 border-b border-elec-yellow/20 bg-elec-gray-light/10">
-                <Tabs
-                  value={activeTab}
-                  onValueChange={handleTabChange}
-                  className="w-full"
-                >
-                  <TabsList className="grid grid-cols-4 w-full bg-elec-gray-light/20">
-                    <TabsTrigger value="private" className="flex gap-1 items-center data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
-                      <User className="h-4 w-4" />
-                      <span className="hidden sm:inline">Private</span>
-                    </TabsTrigger>
-                    <TabsTrigger value="team" className="flex gap-1 items-center data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
-                      <Users className="h-4 w-4" />
-                      <span className="hidden sm:inline">Team</span>
-                    </TabsTrigger>
-                    <TabsTrigger value="mental-health" className="flex gap-1 items-center data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
-                      <Heart className="h-4 w-4" />
-                      <span className="hidden sm:inline">Support</span>
-                    </TabsTrigger>
-                    <TabsTrigger value="mentor" className="flex gap-1 items-center data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark">
-                      <GraduationCap className="h-4 w-4" />
-                      <span className="hidden sm:inline">Mentor</span>
-                    </TabsTrigger>
-                  </TabsList>
-                </Tabs>
-              </div>
-              
-              <ScrollArea className="flex-1">
-                <ConversationsList 
-                  conversations={filteredConversations}
-                  activeConversationId={activeConversation?.id}
-                  searchQuery={searchQuery}
-                  onSearchChange={setSearchQuery}
-                  onSelectConversation={handleConversationSelect}
-                  getInitials={getInitials}
-                />
-              </ScrollArea>
+            <Card className="border-none bg-elec-gray overflow-hidden flex flex-col shadow-md h-full">
+              <ConversationsList 
+                conversations={filteredConversations}
+                activeConversationId={activeConversation?.id}
+                searchQuery={searchQuery}
+                onSearchChange={setSearchQuery}
+                onSelectConversation={handleConversationSelect}
+                getInitials={getInitials}
+                activeTab={activeTab}
+                onTabChange={handleTabChange}
+              />
             </Card>
             
             {/* Right panel - Messages */}
-            <Card className="border-elec-yellow/20 bg-elec-gray overflow-hidden flex flex-col shadow-md relative">
+            <Card className="border-none bg-elec-gray overflow-hidden flex flex-col shadow-md h-full">
               {activeConversation ? (
                 <ConversationView
                   conversation={activeConversation}
@@ -176,7 +110,15 @@ const MessengerPage = () => {
               ) : (
                 <EmptyState
                   activeTab={activeTab}
-                  getTabIcon={getTabIcon}
+                  getTabIcon={(tab) => {
+                    switch (tab) {
+                      case 'private': return <User className="h-6 w-6" />;
+                      case 'team': return <Users className="h-6 w-6" />;
+                      case 'mental-health': return <Heart className="h-6 w-6" />;
+                      case 'mentor': return <GraduationCap className="h-6 w-6" />;
+                      default: return null;
+                    }
+                  }}
                 />
               )}
             </Card>

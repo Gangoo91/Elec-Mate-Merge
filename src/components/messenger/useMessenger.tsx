@@ -11,7 +11,6 @@ export const useMessenger = () => {
   
   const [activeTab, setActiveTab] = useState<'private' | 'team' | 'mental-health' | 'mentor'>('private');
   const [activeConversation, setActiveConversation] = useState<Conversation | null>(null);
-  const [newMessage, setNewMessage] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   
   // Mock conversations

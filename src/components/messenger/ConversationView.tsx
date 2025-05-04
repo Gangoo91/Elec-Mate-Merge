@@ -30,15 +30,15 @@ const ConversationView: React.FC<ConversationViewProps> = ({
   return (
     <>
       {/* Conversation header */}
-      <div className="p-3 border-b border-elec-yellow/20 bg-elec-gray-light/10 flex items-center gap-3 sticky top-0 z-10">
-        <Avatar>
+      <div className="p-3 border-b border-elec-yellow/20 bg-elec-gray flex items-center gap-3 sticky top-0 z-10">
+        <Avatar className="bg-elec-yellow text-elec-dark h-10 w-10">
           <AvatarImage src={conversation.participantAvatar} />
           <AvatarFallback className="bg-elec-yellow text-elec-dark">
             {getInitials(conversation.participantName)}
           </AvatarFallback>
         </Avatar>
         <div>
-          <h3 className="font-medium">{conversation.participantName}</h3>
+          <h3 className="font-medium text-white">{conversation.participantName}</h3>
           <div className="flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
             <span className="text-xs text-muted-foreground">Online</span>
@@ -47,7 +47,7 @@ const ConversationView: React.FC<ConversationViewProps> = ({
       </div>
       
       {/* Messages area */}
-      <div className="flex-1 p-3 md:p-4 overflow-y-auto flex flex-col gap-3 bg-gradient-to-b from-elec-gray to-elec-gray-light/5 h-full">
+      <div className="flex-1 p-3 overflow-y-auto flex flex-col gap-3 bg-elec-gray">
         {messages.map(message => (
           <ChatMessage 
             key={message.id} 
