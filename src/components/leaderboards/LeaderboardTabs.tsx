@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CardViewIcon, TableViewIcon } from "lucide-react";
+import { LayoutGrid, LayoutList } from "lucide-react";
 import { useLeaderboardFilters } from "@/hooks/leaderboards/filters";
 
 interface LeaderboardTabsProps {
@@ -8,7 +9,7 @@ interface LeaderboardTabsProps {
 }
 
 const LeaderboardTabs: React.FC<LeaderboardTabsProps> = ({ onViewModeChange }) => {
-  const { setTimeframe, setLevelFilter, setBadgeFilter, setViewMode, timeframe, levelFilter, badgeFilter, uniqueLevels, uniqueBadges } = useLeaderboardFilters();
+  const { setTimeframe, setLevelFilter, setBadgeFilter, setViewMode, timeframe, levelFilter, badgeFilter, uniqueLevels, uniqueBadges } = useLeaderboardFilters([]);
 
   return (
     <Tabs defaultValue="weekly" className="space-y-4">
@@ -48,7 +49,7 @@ const LeaderboardTabs: React.FC<LeaderboardTabsProps> = ({ onViewModeChange }) =
             onViewModeChange('card');
           }}
         >
-          <CardViewIcon className="h-5 w-5" />
+          <LayoutGrid className="h-5 w-5" />
         </button>
         
         <button 
@@ -58,7 +59,7 @@ const LeaderboardTabs: React.FC<LeaderboardTabsProps> = ({ onViewModeChange }) =
             onViewModeChange('table');
           }}
         >
-          <TableViewIcon className="h-5 w-5" />
+          <LayoutList className="h-5 w-5" />
         </button>
       </div>
 

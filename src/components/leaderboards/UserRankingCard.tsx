@@ -1,12 +1,13 @@
+
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, Award, Clock } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
-import { UserActivity } from "@/hooks/leaderboards/useLeaderboardData";
-import { getBadgeColor, getLevelBadgeColor } from "@/hooks/leaderboards/useLeaderboardsFilters";
+import { UserActivity } from "@/hooks/leaderboards/types";
+import { getBadgeColor, getLevelBadgeColor } from "@/hooks/leaderboards/filters/filterUtils";
 import { getUserInitials, getUserDisplayName } from "./leaderboardUtils";
-import { LeaderboardFilters } from "@/hooks/leaderboards/filters";
+import { LeaderboardFilters } from "@/hooks/leaderboards/filters/types";
 
 interface UserRankingCardProps {
   currentUserRank: UserActivity | null;
