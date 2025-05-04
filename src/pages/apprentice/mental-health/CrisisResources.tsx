@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { 
   AlertTriangle, Phone, MessageSquare, Globe, 
-  LifeBuoy, Search, Calendar, Download 
+  LifeBuoy, Search, Calendar, Download, Users 
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -44,6 +44,12 @@ const CrisisResources = () => {
       description: "NHS guidance on accessing urgent mental health support",
       type: "website" as const,
       url: "https://www.nhs.uk/nhs-services/mental-health-services/where-to-get-urgent-help-for-mental-health/"
+    },
+    {
+      title: "Andy's Man Club",
+      description: "Free, non-judgmental talking groups for men - #ITSOKAYTOTALK",
+      type: "website" as const,
+      url: "https://andysmanclub.co.uk/"
     },
     {
       title: "CALM - Campaign Against Living Miserably",
@@ -183,6 +189,28 @@ const CrisisResources = () => {
                   <Phone className="h-3.5 w-3.5" />
                   Emergency Contacts Card
                 </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="border-purple-500/20 bg-elec-gray">
+              <CardContent className="p-4">
+                <h3 className="text-base font-medium flex items-center gap-2 mb-3">
+                  <Users className="h-4 w-4 text-purple-500" />
+                  Andy's Man Club
+                </h3>
+                <div className="space-y-2">
+                  <p className="text-sm">Free, peer-to-peer support group for men. Find your nearest group:</p>
+                  <Button 
+                    className="w-full bg-purple-600 hover:bg-purple-700 text-white text-sm flex items-center gap-2"
+                    onClick={() => window.open("https://andysmanclub.co.uk/find-your-nearest-group/", "_blank")}
+                  >
+                    <Users className="h-4 w-4" />
+                    Find Nearest Group
+                  </Button>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Groups meet every Monday at 7pm (excluding bank holidays)
+                  </p>
+                </div>
               </CardContent>
             </Card>
           </div>
