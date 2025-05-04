@@ -6,6 +6,12 @@ import Subsection1_3 from "./content/Subsection1_3";
 import Subsection2_1 from "./content/Subsection2_1";
 import Subsection2_2 from "./content/Subsection2_2";
 import Subsection2_3 from "./content/Subsection2_3";
+import Subsection3_1 from "./content/Subsection3_1";
+import Subsection3_2 from "./content/Subsection3_2";
+import Subsection3_3 from "./content/Subsection3_3";
+import Subsection4_1 from "./content/Subsection4_1";
+import Subsection5_1 from "./content/Subsection5_1";
+import Subsection6_1 from "./content/Subsection6_1";
 import ElectricalSymbolsDisplay from "./ElectricalSymbolsDisplay";
 import InteractiveLightDemo from "./InteractiveLightDemo";
 
@@ -63,6 +69,54 @@ const SubsectionLearningContent = ({
         return (
           <Subsection2_3 
             subsectionId={subsectionId}
+          />
+        );
+      case "3.1":
+        return (
+          <Subsection3_1
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "3.2":
+        return (
+          <Subsection3_2
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "3.3":
+        return (
+          <Subsection3_3
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "4.1":
+        return (
+          <Subsection4_1
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "5.1":
+        return (
+          <Subsection5_1
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "6.1":
+        return (
+          <Subsection6_1
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
           />
         );
       default:
