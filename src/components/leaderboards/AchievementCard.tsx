@@ -21,8 +21,8 @@ export const AchievementCard = ({ icon, name, description, progress }: Achieveme
             {icon}
           </div>
         </div>
-        <h3 className={`font-medium ${isMobile ? 'text-xs' : ''} mb-1`}>{name}</h3>
-        <p className={`${isMobile ? 'text-[10px] leading-tight' : 'text-xs'} text-muted-foreground`}>{description}</p>
+        <h3 className={`font-medium ${isMobile ? 'text-sm' : ''} mb-1`}>{name}</h3>
+        <p className={`${isMobile ? 'text-xs' : 'text-xs'} text-muted-foreground`}>{description}</p>
         <div className="w-full mt-2">
           <Progress value={progress} className="h-2" />
           <p className="text-xs text-right mt-1">{Math.round(progress)}%</p>
