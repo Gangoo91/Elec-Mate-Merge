@@ -3,8 +3,6 @@ import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/components/ui/use-toast';
-import { ensureSubscriberCounted, updateUserActivity } from './leaderboards/useActivityTracking';
-import { LeaderboardCategory } from './leaderboards/types';
 
 export function useUserActivity() {
   const { user, isSubscribed } = useAuth();
@@ -16,7 +14,7 @@ export function useUserActivity() {
       if (!user) return;
 
       try {
-        const categories: LeaderboardCategory[] = ['learning', 'community', 'safety', 'mentor', 'mental'];
+        const categories = ['learning', 'community', 'safety', 'mentor', 'mental'];
         const today = new Date().toISOString().split('T')[0];
         
         for (const category of categories) {
@@ -81,13 +79,19 @@ export function useUserActivity() {
             .single();
           
           if (statsData) {
-            await ensureSubscriberCounted(statsData.id, user.id, isSubscribed);
+            // Simple increment of active users count
+            await supabase
+              .from('community_stats')
+              .update({ 
+                active_users: supabase.rpc('increment_counter', { row_id: statsData.id, counter_name: 'active_users' }) 
+              })
+              .eq('id', statsData.id);
           }
             
           // Show welcome toast for new users
           toast({
             title: "Welcome to the community!",
-            description: "You've earned your first points. Complete activities to earn more and climb the leaderboard.",
+            description: "You've earned your first points. Complete activities to earn more!",
           });
         }
       } catch (err) {
@@ -99,15 +103,31 @@ export function useUserActivity() {
   }, [user, isSubscribed, toast]);
 
   // Function to record activity completion
-  const recordActivity = async (activityType: LeaderboardCategory, pointsToAdd: number = 10) => {
+  const recordActivity = async (activityType: string, pointsToAdd: number = 10) => {
     if (!user) return;
     
     try {
-      // Update user points using the shared function
-      await updateUserActivity(user.id, pointsToAdd, activityType);
+      // Update user points
+      const { error } = await supabase
+        .from('user_activity')
+        .update({
+          points: supabase.rpc('increment_counter', { 
+            row_id: user.id, 
+            counter_name: 'points',
+            increment_by: pointsToAdd 
+          }),
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', user.id)
+        .eq('category', activityType);
+
+      if (error) {
+        console.error(`Error recording ${activityType} completion:`, error);
+        return;
+      }
 
       // Show toast
-      const activityLabels = {
+      const activityLabels: Record<string, string> = {
         learning: "lesson",
         community: "community discussion",
         safety: "safety share",
@@ -116,7 +136,7 @@ export function useUserActivity() {
       };
 
       toast({
-        title: `${activityLabels[activityType]} completed!`,
+        title: `${activityLabels[activityType] || activityType} completed!`,
         description: `You've earned ${pointsToAdd} points. Keep going to gain more!`,
       });
     } catch (err) {
