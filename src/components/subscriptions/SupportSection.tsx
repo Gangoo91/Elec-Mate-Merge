@@ -3,9 +3,14 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Button } from "@/components/ui/button";
 import { Mail, HelpCircle, ExternalLink, RefreshCw, Link as LinkIcon, AlertTriangle } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { useAuth } from '@/contexts/AuthContext';
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const SupportSection = () => {
   const { toast } = useToast();
+  const { checkSubscriptionStatus } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   
   const handleContactSupport = () => {
     toast({
@@ -21,13 +26,17 @@ const SupportSection = () => {
     });
   };
 
-  const handleTryAgain = () => {
+  const handleTryAgain = async () => {
     toast({
-      title: "Refreshing Page",
-      description: "The page will refresh in a moment to resolve potential loading issues.",
+      title: "Refreshing Subscription Status",
+      description: "Checking your current subscription status...",
     });
-    // Refresh the page after a short delay
-    setTimeout(() => window.location.reload(), 1500);
+    
+    // First check subscription status
+    await checkSubscriptionStatus();
+    
+    // Then refresh the page after a short delay
+    setTimeout(() => window.location.reload(), 1000);
   };
 
   const handleOpenInNewWindow = () => {
@@ -51,6 +60,45 @@ const SupportSection = () => {
     window.location.href = "https://buy.stripe.com/test_6oEcP74bc25oclG000";
   };
   
+  // Handle opening customer portal
+  const handleOpenCustomerPortal = async () => {
+    try {
+      setIsLoading(true);
+      
+      toast({
+        title: "Opening Customer Portal",
+        description: "Redirecting to Stripe customer portal...",
+      });
+      
+      const { data, error } = await supabase.functions.invoke('customer-portal');
+      
+      if (error) {
+        throw new Error(error.message);
+      }
+      
+      if (data?.url) {
+        // Try to open in a new tab first
+        const newWindow = window.open(data.url, '_blank');
+        
+        // If opening in a new window fails, redirect the current window
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+          window.location.href = data.url;
+        }
+      } else {
+        throw new Error('No portal URL returned');
+      }
+    } catch (error) {
+      console.error('Customer portal error:', error);
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to open subscription management",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
@@ -69,14 +117,14 @@ const SupportSection = () => {
             </Button>
             <Button variant="outline" className="flex items-center gap-2" onClick={handleTryAgain}>
               <RefreshCw size={16} />
-              Refresh Page
+              Refresh Status
             </Button>
             <Button variant="outline" onClick={handleViewFAQ}>
               View Billing FAQ
             </Button>
-            <Button variant="outline" className="flex items-center gap-2" onClick={handleOpenInNewWindow}>
+            <Button variant="outline" className="flex items-center gap-2" onClick={handleOpenCustomerPortal}>
               <ExternalLink size={16} />
-              Open in New Window
+              Manage Subscription
             </Button>
           </div>
           

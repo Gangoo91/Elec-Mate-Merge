@@ -1,7 +1,7 @@
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { Loader2, CheckCircle, Calendar, Tag, ExternalLink } from "lucide-react";
 import { useAuth } from '@/contexts/AuthContext';
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
@@ -34,7 +34,16 @@ const SubscriptionStatus = () => {
       }
       
       if (data?.url) {
-        window.location.href = data.url;
+        // Try to open in a new tab first
+        const newWindow = window.open(data.url, '_blank');
+        
+        // If opening in a new window fails, redirect the current window
+        if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+          // Small delay to show the toast before redirecting
+          setTimeout(() => {
+            window.location.href = data.url;
+          }, 500);
+        }
       } else {
         throw new Error('No portal URL returned');
       }
@@ -50,11 +59,36 @@ const SubscriptionStatus = () => {
     }
   };
 
+  // Set background color based on subscription status
+  const getBgColor = () => {
+    if (isSubscribed) {
+      return "bg-gradient-to-br from-green-900/30 to-green-800/10";
+    } else if (isTrialActive) {
+      return "bg-gradient-to-br from-amber-900/30 to-amber-800/10";
+    } else {
+      return "bg-gradient-to-br from-red-900/30 to-red-800/10";
+    }
+  };
+  
+  // Set border color based on subscription status
+  const getBorderColor = () => {
+    if (isSubscribed) {
+      return "border-green-500/50";
+    } else if (isTrialActive) {
+      return "border-elec-yellow/50";
+    } else {
+      return "border-red-500/50";
+    }
+  };
+
   return (
-    <Card className={`border-${isSubscribed ? 'green-500' : isTrialActive ? 'elec-yellow' : 'red-500'}/20 bg-elec-gray`}>
+    <Card className={`${getBgColor()} ${getBorderColor()} border-2 shadow-xl`}>
       <CardHeader>
-        <CardTitle>Your Current Plan</CardTitle>
-        <CardDescription>
+        <CardTitle className="text-2xl flex items-center gap-2">
+          {isSubscribed && <CheckCircle className="text-green-500" size={24} />}
+          Your Current Plan
+        </CardTitle>
+        <CardDescription className="text-lg">
           {isSubscribed 
             ? `You're currently subscribed to the ${subscriptionTier || 'Standard'} plan.`
             : isTrialActive 
@@ -63,37 +97,63 @@ const SubscriptionStatus = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col sm:flex-row gap-4 sm:items-center justify-between">
-          <div className="space-y-2">
-            <div className="text-sm text-muted-foreground">Subscription Status</div>
-            <div className="text-lg font-medium">
-              {isSubscribed ? "Active Subscription" : isTrialActive ? "Free Trial" : "Expired"}
-            </div>
+        <div className="flex flex-col sm:flex-row gap-6 sm:items-center justify-between">
+          <div className="space-y-6">
+            {isSubscribed && (
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                <div className="p-4 rounded-lg border border-green-500/30 bg-green-500/10">
+                  <div className="text-sm text-muted-foreground mb-1 flex items-center gap-1">
+                    <Tag size={14} /> Plan Type
+                  </div>
+                  <div className="text-xl font-bold text-green-400">
+                    {subscriptionTier || 'Standard'} Plan
+                  </div>
+                </div>
+                
+                <div className="p-4 rounded-lg border border-green-500/30 bg-green-500/10">
+                  <div className="text-sm text-muted-foreground mb-1 flex items-center gap-1">
+                    <Calendar size={14} /> Status
+                  </div>
+                  <div className="text-xl font-bold text-green-400">
+                    Active
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {isTrialActive && (
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                <div className="p-4 rounded-lg border border-amber-500/30 bg-amber-500/10">
+                  <div className="text-sm text-muted-foreground mb-1">Expires In</div>
+                  <div className="text-xl font-bold text-amber-400">{getDaysRemaining()} days</div>
+                </div>
+                
+                <div className="p-4 rounded-lg border border-amber-500/30 bg-amber-500/10">
+                  <div className="text-sm text-muted-foreground mb-1">Trial Features</div>
+                  <div className="text-xl font-bold text-amber-400">Full Platform Access</div>
+                </div>
+              </div>
+            )}
           </div>
-          {isTrialActive && (
-            <>
-              <div className="space-y-2">
-                <div className="text-sm text-muted-foreground">Expires In</div>
-                <div className="text-lg font-medium">{getDaysRemaining()} days</div>
-              </div>
-              <div className="space-y-2">
-                <div className="text-sm text-muted-foreground">Trial Features</div>
-                <div className="text-lg font-medium">Full Platform Access</div>
-              </div>
-            </>
-          )}
+          
           {isSubscribed && (
             <Button
               onClick={openCustomerPortal}
               variant="outline"
               disabled={isLoading}
-              className="ml-auto"
+              className="border-green-500/50 hover:border-green-500 hover:bg-green-500/20 flex items-center gap-2"
+              size="lg"
             >
-              {isLoading ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : null}
+              {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <ExternalLink size={18} />}
               Manage Subscription
             </Button>
+          )}
+          
+          {!isSubscribed && !isTrialActive && (
+            <div className="p-4 rounded-lg border border-red-500/30 bg-red-500/10 w-full">
+              <div className="text-sm text-muted-foreground mb-1">Status</div>
+              <div className="text-xl font-bold text-red-400">Expired</div>
+            </div>
           )}
         </div>
       </CardContent>

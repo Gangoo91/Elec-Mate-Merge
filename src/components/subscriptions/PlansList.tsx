@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check, X, ChevronRight, Loader2, ExternalLink } from "lucide-react";
+import { Check, X, ChevronRight, Loader2, ExternalLink, CheckCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
@@ -13,9 +13,14 @@ interface PlansListProps {
 }
 
 const PlansList = ({ billing }: PlansListProps) => {
-  const { isSubscribed, subscriptionTier } = useAuth();
+  const { isSubscribed, subscriptionTier, checkSubscriptionStatus } = useAuth();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<{[key: string]: boolean}>({});
+  
+  // Check subscription status when component mounts or billing type changes
+  useEffect(() => {
+    checkSubscriptionStatus();
+  }, [billing]);
   
   // Handle subscription checkout
   const handleSubscribe = async (planId: string, priceId: string, mode: 'subscription') => {
@@ -94,97 +99,108 @@ const PlansList = ({ billing }: PlansListProps) => {
 
   return (
     <div className="grid md:grid-cols-3 gap-6">
-      {plans.map((plan: PlanDetails) => (
-        <Card 
-          key={plan.id} 
-          className={`border overflow-hidden relative ${
-            plan.popular ? "border-elec-yellow" : "border-elec-yellow/20"
-          } ${plan.color} ${(subscriptionTier === plan.name && isSubscribed) ? "ring-2 ring-green-500" : ""}`}
-        >
-          {(subscriptionTier === plan.name && isSubscribed) && (
-            <div className="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold py-1 px-3 rounded-bl-lg">
-              YOUR PLAN
-            </div>
-          )}
-          {plan.popular && subscriptionTier !== plan.name && (
-            <div className="absolute top-0 right-0 bg-elec-yellow text-elec-dark text-xs font-bold py-1 px-3 rounded-bl-lg">
-              POPULAR
-            </div>
-          )}
-          {plan.coming && (
-            <div className="absolute top-0 right-0 bg-elec-yellow/50 text-elec-dark text-xs font-bold py-1 px-3 rounded-bl-lg">
-              COMING SOON
-            </div>
-          )}
-          
-          <CardHeader>
-            <CardTitle>{plan.name}</CardTitle>
-            <CardDescription>{plan.description}</CardDescription>
-            <div className="mt-4">
-              <span className="text-3xl font-bold">{plan.price}</span>
-              <span className="text-muted-foreground">{plan.period}</span>
-              {plan.savings && (
-                <div className="mt-1 text-xs text-elec-yellow">{plan.savings}</div>
-              )}
-            </div>
-          </CardHeader>
-          
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              {plan.features.map((feature, i) => (
-                <div key={i} className="flex items-start gap-2">
-                  <Check className="h-4 w-4 text-elec-yellow mt-0.5" />
-                  <span className="text-sm">{feature}</span>
+      {plans.map((plan: PlanDetails) => {
+        // Check if this is the user's current plan
+        const isCurrentPlan = subscriptionTier === plan.name && isSubscribed;
+        
+        return (
+          <Card 
+            key={plan.id} 
+            className={`border-2 overflow-hidden relative transition-all duration-300 hover:shadow-xl 
+              ${plan.popular ? "border-elec-yellow" : "border-elec-yellow/20"} 
+              ${plan.color} 
+              ${isCurrentPlan ? "ring-4 ring-green-500 shadow-lg shadow-green-500/20" : ""}
+              ${isCurrentPlan ? "transform scale-[1.02]" : ""}
+            `}
+          >
+            {isCurrentPlan && (
+              <div className="absolute top-0 right-0 left-0 bg-green-500 text-white text-sm font-bold py-1.5 px-3 text-center">
+                <div className="flex items-center justify-center gap-2">
+                  <CheckCircle className="h-4 w-4" />
+                  CURRENT PLAN
                 </div>
-              ))}
-              {plan.notIncluded.map((feature, i) => (
-                <div key={i} className="flex items-start gap-2 text-muted-foreground">
-                  <X className="h-4 w-4 mt-0.5" />
-                  <span className="text-sm">{feature}</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-          
-          <CardFooter className="flex flex-col gap-2">
-            <Button 
-              className="w-full" 
-              variant={(subscriptionTier === plan.name && isSubscribed) ? "outline" : plan.popular ? "default" : "outline"}
-              disabled={plan.coming || (subscriptionTier === plan.name && isSubscribed) || isLoading[plan.id]}
-              onClick={() => handleSubscribe(plan.id, plan.priceId, 'subscription')}
-            >
-              {isLoading[plan.id] ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Processing...
-                </>
-              ) : (subscriptionTier === plan.name && isSubscribed) 
-                ? "Current Plan" 
-                : plan.coming 
-                  ? "Coming Soon" 
-                  : (
-                    <>
-                      Choose Plan
-                      <ChevronRight className="h-4 w-4 ml-1" />
-                    </>
-                  )
-              }
-            </Button>
-            
-            {!plan.coming && subscriptionTier !== plan.name && (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="w-full flex items-center justify-center gap-2" 
-                onClick={() => handleDirectStripeLink(plan.priceId, plan.name)}
-              >
-                <ExternalLink className="h-3 w-3" />
-                Direct Stripe Checkout
-              </Button>
+              </div>
             )}
-          </CardFooter>
-        </Card>
-      ))}
+            {plan.popular && !isCurrentPlan && (
+              <div className="absolute top-0 right-0 bg-elec-yellow text-elec-dark text-xs font-bold py-1 px-3 rounded-bl-lg">
+                POPULAR
+              </div>
+            )}
+            {plan.coming && (
+              <div className="absolute top-0 right-0 bg-elec-yellow/50 text-elec-dark text-xs font-bold py-1 px-3 rounded-bl-lg">
+                COMING SOON
+              </div>
+            )}
+            
+            <CardHeader className={isCurrentPlan ? "pt-12" : ""}>
+              <CardTitle>{plan.name}</CardTitle>
+              <CardDescription>{plan.description}</CardDescription>
+              <div className="mt-4">
+                <span className="text-3xl font-bold">{plan.price}</span>
+                <span className="text-muted-foreground">{plan.period}</span>
+                {plan.savings && (
+                  <div className="mt-1 text-xs text-elec-yellow">{plan.savings}</div>
+                )}
+              </div>
+            </CardHeader>
+            
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                {plan.features.map((feature, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <Check className="h-4 w-4 text-elec-yellow mt-0.5" />
+                    <span className="text-sm">{feature}</span>
+                  </div>
+                ))}
+                {plan.notIncluded.map((feature, i) => (
+                  <div key={i} className="flex items-start gap-2 text-muted-foreground">
+                    <X className="h-4 w-4 mt-0.5" />
+                    <span className="text-sm">{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+            
+            <CardFooter className="flex flex-col gap-2">
+              <Button 
+                className="w-full" 
+                variant={isCurrentPlan ? "outline" : plan.popular ? "default" : "outline"}
+                disabled={plan.coming || isCurrentPlan || isLoading[plan.id]}
+                onClick={() => handleSubscribe(plan.id, plan.priceId, 'subscription')}
+              >
+                {isLoading[plan.id] ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Processing...
+                  </>
+                ) : isCurrentPlan 
+                  ? "Current Plan" 
+                  : plan.coming 
+                    ? "Coming Soon" 
+                    : (
+                      <>
+                        Choose Plan
+                        <ChevronRight className="h-4 w-4 ml-1" />
+                      </>
+                    )
+                }
+              </Button>
+              
+              {!plan.coming && !isCurrentPlan && (
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full flex items-center justify-center gap-2" 
+                  onClick={() => handleDirectStripeLink(plan.priceId, plan.name)}
+                >
+                  <ExternalLink className="h-3 w-3" />
+                  Direct Stripe Checkout
+                </Button>
+              )}
+            </CardFooter>
+          </Card>
+        );
+      })}
     </div>
   );
 };
