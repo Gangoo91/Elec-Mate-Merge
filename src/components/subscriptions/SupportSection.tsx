@@ -1,7 +1,7 @@
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Mail, HelpCircle, ExternalLink, RefreshCw } from "lucide-react";
+import { Mail, HelpCircle, ExternalLink, RefreshCw, Link as LinkIcon, AlertTriangle } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 const SupportSection = () => {
@@ -33,12 +33,22 @@ const SupportSection = () => {
   const handleOpenInNewWindow = () => {
     toast({
       title: "Opening Checkout",
-      description: "Trying to open checkout in a new window which may resolve popup blocking issues.",
+      description: "Opening checkout in a new window which may resolve popup blocking issues.",
     });
     
-    // Attempt to open a checkout directly in a new window
-    const checkoutUrl = window.location.href;
-    window.open(checkoutUrl, '_blank', 'noopener,noreferrer');
+    // Show direct Stripe checkout URL for support
+    const stripePublicCheckoutUrl = "https://checkout.stripe.com";
+    window.open(stripePublicCheckoutUrl, '_blank', 'noopener,noreferrer');
+  };
+  
+  const handleOpenDirectStripe = () => {
+    toast({
+      title: "Opening Stripe Direct",
+      description: "Redirecting to Stripe checkout directly.",
+    });
+    
+    // This is a fallback for last-resort troubleshooting
+    window.location.href = "https://buy.stripe.com/test_6oEcP74bc25oclG000";
   };
   
   return (
@@ -80,6 +90,21 @@ const SupportSection = () => {
               <li>• If Stripe shows a blank page, try refreshing the checkout page</li>
               <li>• If the issue persists, please contact our support team</li>
             </ul>
+          </div>
+
+          <div className="text-center pt-4">
+            <Button 
+              variant="destructive" 
+              size="sm" 
+              className="flex items-center gap-2"
+              onClick={handleOpenDirectStripe}
+            >
+              <AlertTriangle size={16} />
+              Emergency Bypass - Direct Stripe Link
+            </Button>
+            <p className="text-xs text-muted-foreground mt-2">
+              Use this only if normal checkout isn't working
+            </p>
           </div>
         </div>
       </CardContent>

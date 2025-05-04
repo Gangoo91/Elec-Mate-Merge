@@ -97,6 +97,8 @@ serve(async (req) => {
     }
 
     // Create checkout options based on mode
+    const origin = req.headers.get("origin") || "https://f214c814-3a85-4c4a-8139-3d81ec8b7efb.lovableproject.com";
+    
     const checkoutOptions: any = {
       customer: customerId,
       line_items: [
@@ -106,8 +108,8 @@ serve(async (req) => {
         },
       ],
       mode: mode,
-      success_url: `${req.headers.get("origin")}/payment-success?plan=${planId}`,
-      cancel_url: `${req.headers.get("origin")}/subscriptions`,
+      success_url: `${origin}/payment-success?plan=${planId}`,
+      cancel_url: `${origin}/subscriptions`,
       client_reference_id: user.id,
       metadata: {
         userId: user.id,
