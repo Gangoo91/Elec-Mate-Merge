@@ -1,6 +1,6 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, Video, Star } from "lucide-react";
+import { Users, Star } from "lucide-react";
 import { CommunityStats as CommunityStatsType } from "@/hooks/leaderboards/useLeaderboardData";
 
 interface CommunityStatsProps {
@@ -19,7 +19,7 @@ export const CommunityStats = ({ communityStats }: CommunityStatsProps) => {
       </Card>
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardContent className="pt-6 text-center">
-          <Video className="h-8 w-8 text-elec-yellow mx-auto mb-3" />
+          <VideoIcon className="h-8 w-8 text-elec-yellow mx-auto mb-3" />
           <div className="text-3xl font-bold">{communityStats?.lessons_completed_today || 0}</div>
           <p className="text-sm text-muted-foreground">Lessons Completed Today</p>
         </CardContent>
@@ -36,7 +36,7 @@ export const CommunityStats = ({ communityStats }: CommunityStatsProps) => {
 };
 
 // Custom Icon components
-const Video = ({ className }: { className?: string }) => (
+const VideoIcon = ({ className }: { className?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
