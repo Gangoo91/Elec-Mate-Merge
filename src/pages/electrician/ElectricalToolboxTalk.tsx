@@ -60,18 +60,21 @@ const ElectricalToolboxTalk = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {toolboxCategories.map((category) => (
-          <Card key={category.id} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all">
+          <Card 
+            key={category.id} 
+            className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all flex flex-col h-full"
+          >
             <CardHeader className="pb-2">
               <CardTitle className="text-xl flex items-center gap-2">
                 {category.icon}
                 {category.title}
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="flex flex-col flex-1 justify-between">
               <CardDescription className="text-sm mb-4">
                 {category.description}
               </CardDescription>
-              <Button className="w-full">View Details</Button>
+              <Button className="w-full mt-auto">View Details</Button>
             </CardContent>
           </Card>
         ))}
