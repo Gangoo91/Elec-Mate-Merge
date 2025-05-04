@@ -16,6 +16,8 @@ interface CableSizeOption {
     xlpe: number;
   };
   voltageDropPerAmpereMeter: number;
+  calculatedVoltageDrop?: number; // Added property
+  meetsVoltageDrop?: boolean;     // Added property
 }
 
 const CableSizingCalculator = () => {
@@ -143,7 +145,7 @@ const CableSizingCalculator = () => {
       // If no cables meet criteria, recommend parallel cables or higher voltage
       setRecommendedCable(null);
       setAlternativeCables(cablesWithVoltageDrop.sort((a, b) => 
-        a.calculatedVoltageDrop - b.calculatedVoltageDrop
+        a.calculatedVoltageDrop! - b.calculatedVoltageDrop!
       ));
       setErrors({
         general: "No single cable meets both current capacity and voltage drop requirements. Consider parallel cables or a higher voltage system."
