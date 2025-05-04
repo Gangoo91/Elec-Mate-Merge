@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
@@ -20,10 +20,17 @@ const ConversationView: React.FC<ConversationViewProps> = ({
   getInitials,
   onSendMessage
 }) => {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  
+  // Scroll to bottom when messages change
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+  
   return (
     <>
       {/* Conversation header */}
-      <div className="p-4 border-b border-elec-yellow/20 bg-elec-gray-light/10 flex items-center gap-3 sticky top-0 z-10">
+      <div className="p-3 border-b border-elec-yellow/20 bg-elec-gray-light/10 flex items-center gap-3 sticky top-0 z-10">
         <Avatar>
           <AvatarImage src={conversation.participantAvatar} />
           <AvatarFallback className="bg-elec-yellow text-elec-dark">
@@ -40,7 +47,7 @@ const ConversationView: React.FC<ConversationViewProps> = ({
       </div>
       
       {/* Messages area */}
-      <div className="flex-1 p-4 overflow-y-auto flex flex-col gap-4 bg-gradient-to-b from-elec-gray to-elec-gray-light/5">
+      <div className="flex-1 p-3 md:p-4 overflow-y-auto flex flex-col gap-3 bg-gradient-to-b from-elec-gray to-elec-gray-light/5 h-full">
         {messages.map(message => (
           <ChatMessage 
             key={message.id} 
@@ -48,6 +55,7 @@ const ConversationView: React.FC<ConversationViewProps> = ({
             isCurrentUser={message.senderId === currentUserId} 
           />
         ))}
+        <div ref={messagesEndRef} />
       </div>
       
       {/* Message input */}

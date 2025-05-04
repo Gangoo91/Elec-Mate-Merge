@@ -12,20 +12,20 @@ interface ChatMessageProps {
 const ChatMessage: React.FC<ChatMessageProps> = ({ message, isCurrentUser }) => {
   return (
     <div
-      className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'} animate-fade-in`}
+      className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'} animate-fade-in mb-2`}
     >
       <div 
-        className={`max-w-[75%] rounded-lg p-3 
+        className={`max-w-[85%] md:max-w-[75%] rounded-2xl p-3 
           ${isCurrentUser 
-            ? 'bg-elec-yellow text-elec-dark ml-auto shadow-md' 
-            : 'bg-elec-gray-light/20 shadow-md'
+            ? 'bg-elec-yellow text-elec-dark ml-auto shadow-md rounded-tr-none' 
+            : 'bg-elec-gray-light/30 shadow-md rounded-tl-none'
           }`
         }
       >
         {!isCurrentUser && (
           <p className="text-xs font-medium mb-1 text-elec-yellow">{message.senderName}</p>
         )}
-        <p className="break-words">{message.content}</p>
+        <p className="break-words text-sm md:text-base">{message.content}</p>
         <div className={`flex items-center gap-1 mt-1 text-xs ${isCurrentUser ? 'justify-end' : ''}`}>
           <span className={isCurrentUser ? 'text-elec-dark/70' : 'text-muted-foreground'}>
             {formatDistanceToNow(message.timestamp, { addSuffix: true })}

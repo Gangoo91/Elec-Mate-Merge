@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { Conversation, Message } from './types';
+import { User, Users, Heart, GraduationCap } from "lucide-react";
 
 export const useMessenger = () => {
   const { profile } = useAuth();
