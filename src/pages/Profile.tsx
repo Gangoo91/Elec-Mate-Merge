@@ -83,13 +83,13 @@ const ProfilePage = () => {
   return (
     <div className="container max-w-5xl mx-auto py-4 px-2 sm:px-4 sm:py-6 space-y-6 animate-fade-in">
       <div className="text-center sm:text-left">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Profile</h1>
-        <p className="text-muted-foreground text-sm sm:text-base">
-          Manage your account settings and preferences.
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight gradient-text">Your Profile</h1>
+        <p className="text-muted-foreground text-sm sm:text-base mt-1">
+          Manage your account information and track your progress
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_3fr] gap-6">
         {/* Profile Summary Card */}
         <ProfileSummary 
           profile={profile} 
@@ -100,10 +100,10 @@ const ProfilePage = () => {
         {/* Main Content Area */}
         <div className="space-y-6">
           <Tabs defaultValue="account" className="w-full">
-            <TabsList className="w-full bg-elec-gray border-b border-elec-yellow/20">
-              <TabsTrigger value="account" className="flex-1">Account</TabsTrigger>
-              <TabsTrigger value="achievements" className="flex-1">Achievements</TabsTrigger>
-              <TabsTrigger value="activity" className="flex-1">Activity</TabsTrigger>
+            <TabsList className="w-full bg-elec-gray border-b border-elec-yellow/20 rounded-t-lg">
+              <TabsTrigger value="account" className="flex-1 data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow">Account</TabsTrigger>
+              <TabsTrigger value="achievements" className="flex-1 data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow">Achievements</TabsTrigger>
+              <TabsTrigger value="activity" className="flex-1 data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow">Activity</TabsTrigger>
             </TabsList>
             
             {/* Account Tab */}

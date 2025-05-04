@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Edit, User } from "lucide-react";
+import { Edit, User, Calendar, Mail, AtSign, FileText, Shield } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import ProfileForm from './ProfileForm';
 import ProfileView from './ProfileView';
@@ -47,16 +47,27 @@ const AccountTab = ({
     }
   };
   
+  const getSubscriptionIcon = () => {
+    if (isSubscribed) return <Shield className="h-4 w-4 text-green-500" />;
+    if (isTrialActive) return <Calendar className="h-4 w-4 text-amber-500" />;
+    return <User className="h-4 w-4 text-red-500" />;
+  };
+  
   return (
-    <div className="space-y-4 sm:space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader className="p-4 sm:p-6">
+    <div className="space-y-6">
+      <Card className="border-elec-yellow/20 bg-elec-gray overflow-hidden">
+        <CardHeader className="p-4 sm:p-6 bg-gradient-to-r from-elec-yellow/5 to-transparent">
           <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="text-lg sm:text-2xl">Account Information</CardTitle>
-              <CardDescription className="text-xs sm:text-sm">
-                Your basic account details
-              </CardDescription>
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-full bg-elec-yellow/10">
+                <User className="h-5 w-5 text-elec-yellow" />
+              </div>
+              <div>
+                <CardTitle className="text-lg sm:text-2xl">Account Information</CardTitle>
+                <CardDescription className="text-xs sm:text-sm mt-1">
+                  Your basic profile and account details
+                </CardDescription>
+              </div>
             </div>
             
             {!isEditing && (
@@ -73,7 +84,7 @@ const AccountTab = ({
           </div>
         </CardHeader>
         
-        <CardContent className="p-4 sm:p-6 pt-0">
+        <CardContent className="p-4 sm:p-6">
           {isEditing ? (
             <ProfileForm
               formData={formData}
@@ -88,18 +99,74 @@ const AccountTab = ({
         </CardContent>
       </Card>
       
-      <Alert className={isSubscribed ? "border-green-500/30 bg-green-500/10" : isTrialActive ? "border-elec-yellow/30 bg-amber-500/10" : "border-red-500/30 bg-red-500/10"}>
-        <User className="h-3 w-3 sm:h-4 sm:w-4" />
-        <AlertTitle className="text-xs sm:text-sm">Subscription Status</AlertTitle>
-        <AlertDescription className="text-xs sm:text-sm">
-          {getSubscriptionMessage()}
-          {!isSubscribed && (
-            <Button variant="link" className="h-auto p-0 text-elec-yellow text-xs sm:text-sm" asChild>
-              <a href="/subscriptions" className="ml-1">Upgrade Now</a>
-            </Button>
-          )}
-        </AlertDescription>
-      </Alert>
+      {/* Account Security Card */}
+      <Card className="border-elec-yellow/20 bg-elec-gray overflow-hidden">
+        <CardHeader className="p-4 sm:p-6 bg-gradient-to-r from-elec-yellow/5 to-transparent">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-full bg-elec-yellow/10">
+              <Shield className="h-5 w-5 text-elec-yellow" />
+            </div>
+            <div>
+              <CardTitle className="text-lg sm:text-2xl">Account Security</CardTitle>
+              <CardDescription className="text-xs sm:text-sm mt-1">
+                Manage your password and security settings
+              </CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+        
+        <CardContent className="p-4 sm:p-6">
+          <Button 
+            variant="outline" 
+            className="border-elec-yellow/30 hover:bg-elec-yellow/10 text-sm"
+          >
+            Change Password
+          </Button>
+        </CardContent>
+      </Card>
+      
+      {/* Subscription Status Card */}
+      <Card className={`overflow-hidden border-2 ${
+        isSubscribed 
+          ? "border-green-500/30 bg-green-500/5" 
+          : isTrialActive 
+            ? "border-amber-500/30 bg-amber-500/5" 
+            : "border-red-500/30 bg-red-500/5"
+      }`}>
+        <CardContent className="p-4 sm:p-6">
+          <div className="flex items-start gap-4">
+            <div className={`p-3 rounded-full ${
+              isSubscribed 
+                ? "bg-green-500/10 text-green-500" 
+                : isTrialActive 
+                  ? "bg-amber-500/10 text-amber-500" 
+                  : "bg-red-500/10 text-red-500"
+            }`}>
+              {getSubscriptionIcon()}
+            </div>
+            
+            <div className="flex-1">
+              <h3 className="font-semibold text-base sm:text-lg">
+                {isSubscribed ? "Active Subscription" : isTrialActive ? "Free Trial" : "Trial Expired"}
+              </h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                {getSubscriptionMessage()}
+              </p>
+              
+              {!isSubscribed && (
+                <Button 
+                  variant="default" 
+                  className="mt-4 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+                  size={isMobile ? "sm" : "default"}
+                  asChild
+                >
+                  <a href="/subscriptions">Upgrade Now</a>
+                </Button>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
