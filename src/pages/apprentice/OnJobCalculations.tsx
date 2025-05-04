@@ -8,6 +8,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
 import OhmsLawCalculator from "@/components/apprentice/calculators/OhmsLawCalculator";
 import InstrumentationCalculator from "@/components/apprentice/calculators/InstrumentationCalculator";
+import VoltageDropCalculator from "@/components/apprentice/calculators/VoltageDropCalculator";
 import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoonCalculator";
 
 const OnJobCalculations = () => {
@@ -33,16 +34,10 @@ const OnJobCalculations = () => {
         />
 
         {calculatorType === "ohms-law" && <OhmsLawCalculator />}
+        
+        {calculatorType === "voltage-drop" && <VoltageDropCalculator />}
 
         {calculatorType === "instrumentation" && <InstrumentationCalculator />}
-
-        {calculatorType === "voltage-drop" && (
-          <ComingSoonCalculator 
-            title="Voltage Drop" 
-            icon={Activity} 
-            description="This calculator will help you determine voltage drop in electrical circuits." 
-          />
-        )}
 
         {calculatorType === "power-factor" && (
           <ComingSoonCalculator 
