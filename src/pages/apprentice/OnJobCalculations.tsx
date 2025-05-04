@@ -3,13 +3,13 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Activity, PlugZap, Sigma } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
 import OhmsLawCalculator from "@/components/apprentice/calculators/OhmsLawCalculator";
 import InstrumentationCalculator from "@/components/apprentice/calculators/InstrumentationCalculator";
 import VoltageDropCalculator from "@/components/apprentice/calculators/VoltageDropCalculator";
-import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoonCalculator";
+import PowerFactorCalculator from "@/components/apprentice/calculators/PowerFactorCalculator";
+import CableSizingCalculator from "@/components/apprentice/calculators/CableSizingCalculator";
 
 const OnJobCalculations = () => {
   const [calculatorType, setCalculatorType] = useState("ohms-law");
@@ -40,21 +40,9 @@ const OnJobCalculations = () => {
 
           {calculatorType === "instrumentation" && <InstrumentationCalculator />}
 
-          {calculatorType === "power-factor" && (
-            <ComingSoonCalculator 
-              title="Power Factor" 
-              icon={PlugZap} 
-              description="This calculator will help you with power factor calculations." 
-            />
-          )}
+          {calculatorType === "power-factor" && <PowerFactorCalculator />}
 
-          {calculatorType === "cable-size" && (
-            <ComingSoonCalculator 
-              title="Cable Sizing" 
-              icon={Sigma} 
-              description="This calculator will help you determine appropriate cable sizes based on load requirements." 
-            />
-          )}
+          {calculatorType === "cable-size" && <CableSizingCalculator />}
         </div>
       </div>
     </div>
