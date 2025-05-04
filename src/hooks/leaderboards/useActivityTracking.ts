@@ -1,7 +1,6 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import type { LeaderboardCategory } from './types';
-import { SupabaseResponse } from './supabaseUtils';
 
 /**
  * Ensures that a subscriber is counted in community stats
@@ -19,7 +18,7 @@ export async function ensureSubscriberCounted(statsId: string, userId: string, i
       .eq('user_id', userId)
       .eq('last_active_date', today)
       .eq('category', 'learning')
-      .single() as { data: { id: string } | null; error: { code: string } | null };
+      .single();
     
     if (activityError && activityError.code !== 'PGRST116') {
       console.error('Error checking user activity:', activityError);
@@ -33,7 +32,7 @@ export async function ensureSubscriberCounted(statsId: string, userId: string, i
         .from('community_stats')
         .select('active_users')
         .eq('id', statsId)
-        .single() as { data: { active_users: number } | null; error: { code: string } | null };
+        .single();
         
       if (statsError) {
         console.error('Error fetching community stats:', statsError);
@@ -56,7 +55,7 @@ export async function ensureSubscriberCounted(statsId: string, userId: string, i
         .select('*')
         .eq('user_id', userId)
         .eq('category', 'learning')
-        .single() as { data: { id: string } | null; error: { code: string } | null };
+        .single();
       
       if (fetchError && fetchError.code !== 'PGRST116') {
         console.error('Error fetching user activity:', fetchError);
@@ -104,7 +103,7 @@ export async function updateUserActivity(userId: string, pointsToAdd: number = 1
       .select('*')
       .eq('user_id', userId)
       .eq('category', category)
-      .single() as { data: { points: number } | null; error: { code: string } | null };
+      .single();
 
     if (fetchError && fetchError.code !== 'PGRST116') {
       throw fetchError;
@@ -146,11 +145,7 @@ export async function updateUserActivity(userId: string, pointsToAdd: number = 1
         .from('community_stats')
         .select('*')
         .limit(1)
-        .single() as { data: {
-          id: string;
-          active_users: number;
-          lessons_completed_today: number;
-        } | null };
+        .single();
 
       if (statsData) {
         await supabase
