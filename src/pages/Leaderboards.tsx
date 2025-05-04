@@ -12,50 +12,27 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { ResponsiveBar } from "recharts";
+import { BarChart } from "recharts";  // Fixed import from 'recharts'
 import { Button } from "@/components/ui/button";
+import { LeaderboardRankCard } from "@/components/leaderboards/LeaderboardRankCard";
+import { AchievementCard } from "@/components/leaderboards/AchievementCard";
+import { useLeaderboardsFilters, getLevelBadgeColor, getBadgeColor } from "@/hooks/leaderboards/useLeaderboardsFilters";
 
 const Leaderboards = () => {
   const { userRankings, communityStats, currentUserRank, isLoading, error } = useLeaderboardData();
-  const [timeframe, setTimeframe] = useState<'weekly' | 'monthly' | 'alltime'>('weekly');
-  const [levelFilter, setLevelFilter] = useState<string>("all");
-  const [badgeFilter, setBadgeFilter] = useState<string>("all");
-  const [viewMode, setViewMode] = useState<'card' | 'table'>('card');
   
-  // Filter users based on selected filters
-  const filteredRankings = userRankings.filter(user => {
-    if (levelFilter !== "all" && user.level !== levelFilter) return false;
-    if (badgeFilter !== "all" && user.badge !== badgeFilter) return false;
-    return true;
-  });
+  // Use our custom hook for filters
+  const { 
+    timeframe, setTimeframe,
+    levelFilter, setLevelFilter,
+    badgeFilter, setBadgeFilter,
+    viewMode, setViewMode,
+    uniqueLevels, uniqueBadges,
+    filteredUsers
+  } = useLeaderboardsFilters(userRankings);
 
-  // Get unique levels and badges for filter options
-  const uniqueLevels = Array.from(new Set(userRankings.map(user => user.level)));
-  const uniqueBadges = Array.from(new Set(userRankings.map(user => user.badge)));
-
-  // Function to render rank badges with different designs and colors
-  const getRankBadge = (position: number) => {
-    if (position === 1) {
-      return (
-        <div className="absolute -left-1 -top-1 h-8 w-8 rounded-full bg-yellow-500 flex items-center justify-center shadow-lg">
-          <Trophy className="h-4 w-4 text-elec-dark" />
-        </div>
-      );
-    } else if (position === 2) {
-      return (
-        <div className="absolute -left-1 -top-1 h-7 w-7 rounded-full bg-gray-300 flex items-center justify-center shadow-lg">
-          <Medal className="h-4 w-4 text-elec-dark" />
-        </div>
-      );
-    } else if (position === 3) {
-      return (
-        <div className="absolute -left-1 -top-1 h-7 w-7 rounded-full bg-amber-700 flex items-center justify-center shadow-lg">
-          <Medal className="h-4 w-4 text-elec-dark" />
-        </div>
-      );
-    }
-    return <div className="w-6 text-center font-bold">{position}</div>;
-  };
+  // Calculate maximum points for progress bar scaling
+  const maxPoints = Math.max(...userRankings.map(user => user.points), 100);
 
   // Helper function to get user initials from profile data
   const getUserInitials = (user: UserActivity): string => {
@@ -75,31 +52,6 @@ const Leaderboards = () => {
   const getUserDisplayName = (user: UserActivity): string => {
     return user.profiles?.full_name || user.profiles?.username || 'Anonymous User';
   };
-
-  // Function to get level color badge
-  const getLevelBadgeColor = (level: string) => {
-    switch(level) {
-      case 'Apprentice': return 'bg-blue-500/20 text-blue-500';
-      case 'Journeyman': return 'bg-green-500/20 text-green-500';
-      case 'Expert': return 'bg-purple-500/20 text-purple-500';
-      case 'Master': return 'bg-yellow-500/20 text-yellow-500';
-      default: return 'bg-gray-500/20 text-gray-500';
-    }
-  };
-
-  // Function to get badge color
-  const getBadgeColor = (badge: string) => {
-    switch(badge) {
-      case 'Beginner': return 'bg-blue-500/20 text-blue-500';
-      case 'Intermediate': return 'bg-green-500/20 text-green-500';
-      case 'Advanced': return 'bg-purple-500/20 text-purple-500';
-      case 'Expert': return 'bg-yellow-500/20 text-yellow-500';
-      default: return 'bg-gray-500/20 text-gray-500';
-    }
-  };
-
-  // Calculate maximum points for progress bar scaling
-  const maxPoints = Math.max(...userRankings.map(user => user.points), 100);
 
   if (isLoading) {
     return (
@@ -331,85 +283,19 @@ const Leaderboards = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {filteredRankings.length === 0 ? (
+                {filteredUsers.length === 0 ? (
                   <div className="text-center p-8 text-muted-foreground">
                     No leaderboard data available for the selected filters. Try a different combination.
                   </div>
                 ) : viewMode === 'card' ? (
                   <div className="space-y-4">
-                    {filteredRankings.map((user, index) => (
-                      <div 
-                        key={user.id} 
-                        className={`
-                          flex items-center gap-4 p-4 rounded-lg relative
-                          ${index < 3 ? "bg-elec-dark/70" : "bg-elec-dark/40"}
-                          transition-all hover:bg-elec-dark/80
-                        `}
-                      >
-                        {/* Rank */}
-                        {getRankBadge(index + 1)}
-
-                        {/* User Avatar */}
-                        <Avatar className="h-10 w-10">
-                          {user.profiles?.avatar_url ? (
-                            <AvatarImage src={user.profiles.avatar_url} alt={getUserDisplayName(user)} />
-                          ) : (
-                            <AvatarFallback 
-                              className={
-                                index === 0 ? "bg-yellow-500/20 text-yellow-500" : 
-                                index === 1 ? "bg-gray-300/20 text-gray-300" : 
-                                index === 2 ? "bg-amber-700/20 text-amber-700" : 
-                                "bg-elec-yellow/10 text-elec-yellow"
-                              }
-                            >
-                              {getUserInitials(user)}
-                            </AvatarFallback>
-                          )}
-                        </Avatar>
-
-                        {/* User Info */}
-                        <div className="flex-1">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <h4 className="font-medium">{getUserDisplayName(user)}</h4>
-                            <Badge 
-                              variant="outline" 
-                              className={`text-xs ${getLevelBadgeColor(user.level)}`}
-                            >
-                              {user.level}
-                            </Badge>
-                            <Badge 
-                              variant="outline" 
-                              className={`text-xs ${getBadgeColor(user.badge)}`}
-                            >
-                              {user.badge}
-                            </Badge>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground mt-1">
-                            <span className="flex items-center">
-                              <Clock className="h-3 w-3 mr-1" />
-                              {user.streak} day streak
-                            </span>
-                            <span className="text-muted-foreground">•</span>
-                            <span className="text-xs">Last active: {
-                              user.last_active_date ? format(new Date(user.last_active_date), 'MMM dd, yyyy') : 'Unknown'
-                            }</span>
-                          </div>
-                          
-                          {/* Progress bar */}
-                          <div className="mt-2 w-full">
-                            <Progress 
-                              value={(user.points / maxPoints) * 100} 
-                              className="h-1.5"
-                            />
-                          </div>
-                        </div>
-
-                        {/* Points */}
-                        <div className="text-right">
-                          <div className="font-bold">{user.points.toLocaleString()}</div>
-                          <div className="text-xs text-muted-foreground">points</div>
-                        </div>
-                      </div>
+                    {filteredUsers.map((user, index) => (
+                      <LeaderboardRankCard 
+                        key={user.id}
+                        user={user}
+                        position={index + 1}
+                        maxPoints={maxPoints}
+                      />
                     ))}
                   </div>
                 ) : (
@@ -426,7 +312,7 @@ const Leaderboards = () => {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {filteredRankings.map((user, index) => (
+                        {filteredUsers.map((user, index) => (
                           <TableRow key={user.id} className={index < 3 ? "bg-elec-dark/30" : ""}>
                             <TableCell className="font-medium w-16">
                               <div className="flex items-center justify-center">
@@ -480,7 +366,7 @@ const Leaderboards = () => {
                 )}
               </CardContent>
               <CardFooter className="text-sm text-muted-foreground border-t pt-4">
-                Showing {filteredRankings.length} users from total {userRankings.length} users
+                Showing {filteredUsers.length} users from total {userRankings.length} users
               </CardFooter>
             </Card>
           </TabsContent>
@@ -497,19 +383,13 @@ const Leaderboards = () => {
             { icon: <Trophy className="h-8 w-8" />, name: "Quiz Master", description: "Score 100% on 5 different quizzes", progress: 60 },
             { icon: <Star className="h-8 w-8" />, name: "Top Contributor", description: "Help others in the community", progress: 30 },
           ].map((achievement, i) => (
-            <Card key={i} className="border-elec-yellow/20 bg-elec-gray">
-              <CardContent className="pt-6 flex flex-col items-center text-center">
-                <div className="h-16 w-16 rounded-full bg-elec-dark flex items-center justify-center mb-3">
-                  <div className="text-elec-yellow/50">{achievement.icon}</div>
-                </div>
-                <h3 className="font-medium mb-1">{achievement.name}</h3>
-                <p className="text-xs text-muted-foreground">{achievement.description}</p>
-                <div className="w-full mt-3">
-                  <Progress value={achievement.progress} className="h-2" />
-                  <p className="text-xs text-right mt-1">{Math.round(achievement.progress)}%</p>
-                </div>
-              </CardContent>
-            </Card>
+            <AchievementCard 
+              key={i}
+              icon={achievement.icon}
+              name={achievement.name}
+              description={achievement.description}
+              progress={achievement.progress}
+            />
           ))}
         </div>
       </div>
@@ -517,7 +397,7 @@ const Leaderboards = () => {
   );
 };
 
-// Mock data for community stats
+// Video icon component for the community stats
 const Video = ({ className }: { className?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
