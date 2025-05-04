@@ -49,7 +49,7 @@ const SafetyShares = () => {
         <div>
           <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
             <Shield className="h-8 w-8 text-elec-yellow" />
-            Safety Shares & Industry Updates
+            Safety & Industry Updates
           </h1>
           <p className="text-muted-foreground">
             Safety information and lessons from experience

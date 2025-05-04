@@ -36,7 +36,7 @@ const ElectricalToolboxTalk = () => {
     },
     {
       id: 5,
-      title: "Safety Shares & Industry Updates",
+      title: "Safety & Industry Updates",
       description: "Safety information and lessons from experience",
       icon: <Shield className="h-6 w-6 text-elec-yellow" />,
       link: "/electrician/safety-shares"
