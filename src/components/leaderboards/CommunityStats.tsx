@@ -10,13 +10,18 @@ interface CommunityStatsProps {
 
 export const CommunityStats = ({ communityStats }: CommunityStatsProps) => {
   const { isSubscribed } = useAuth();
+  
+  // Calculate active subscribers count - ensure it's at least 1 if user is subscribed
+  const activeSubscribersCount = isSubscribed 
+    ? Math.max((communityStats?.active_users || 0), 1)
+    : (communityStats?.active_users || 0);
 
   return (
     <div className="grid gap-4 md:grid-cols-3">
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardContent className="pt-6 text-center">
           <Users className="h-8 w-8 text-elec-yellow mx-auto mb-3" />
-          <div className="text-3xl font-bold">{communityStats?.active_users || 0}</div>
+          <div className="text-3xl font-bold">{activeSubscribersCount}</div>
           <p className="text-sm text-muted-foreground">Active Subscribers</p>
         </CardContent>
       </Card>
