@@ -19,6 +19,7 @@ import ApprenticeMentalHealth from "./pages/apprentice/ApprenticeMentalHealth";
 import CareerProgression from "./pages/apprentice/CareerProgression";
 import CourseDetail from "./pages/apprentice/CourseDetail";
 import EALCourses from "./pages/apprentice/EALCourses";
+import OnJobTools from "./pages/apprentice/OnJobTools";
 import OnJobCalculations from "./pages/apprentice/OnJobCalculations";
 import OnJobDocuments from "./pages/apprentice/OnJobDocuments";
 import OnJobAssessment from "./pages/apprentice/OnJobAssessment";
@@ -80,6 +81,7 @@ function App() {
                 <Route path="toolbox" element={<ApprenticeToolbox />} />
                 <Route path="mental-health" element={<ApprenticeMentalHealth />} />
                 <Route path="career-progression" element={<CareerProgression />} />
+                <Route path="on-job-tools" element={<OnJobTools />} />
                 <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
                 <Route path="on-job-tools/documents" element={<OnJobDocuments />} />
                 <Route path="on-job-tools/assessment" element={<OnJobAssessment />} />
