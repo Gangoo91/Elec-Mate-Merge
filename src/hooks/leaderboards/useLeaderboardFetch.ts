@@ -22,6 +22,13 @@ type UserRankData = {
   mental: UserActivity | null;
 };
 
+// Define a generic helper type for Supabase responses
+type SupabaseResponse<T> = {
+  data: T | null;
+  error: { code: string; message?: string } | null;
+  count?: number;
+};
+
 export function useLeaderboardFetch(userId: string | undefined, isSubscribed: boolean) {
   // Use separate state variables for each category to avoid deep type recursion
   const [learningData, setLearningData] = useState<UserActivity[]>([]);
@@ -68,7 +75,7 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
         `)
         .eq('category', category)
         .order('points', { ascending: false })
-        .limit(10);
+        .limit(10) as SupabaseResponse<any[]>;
 
       if (rankingsError) {
         console.error('Error fetching rankings:', rankingsError);
@@ -79,7 +86,7 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
       const { data: statsData, error: statsError } = await supabase
         .from('community_stats')
         .select('*')
-        .single();
+        .single() as SupabaseResponse<CommunityStats>;
 
       if (statsError && statsError.code !== 'PGRST116') {
         console.error('Error fetching community stats:', statsError);
@@ -109,7 +116,7 @@ export function useLeaderboardFetch(userId: string | undefined, isSubscribed: bo
           `)
           .eq('user_id', userId)
           .eq('category', category)
-          .single();
+          .single() as SupabaseResponse<UserActivity>;
 
         if (userError && userError.code !== 'PGRST116') {
           console.error('Error fetching user rank:', userError);
