@@ -5,8 +5,12 @@ import { useCableSizing } from "./cable-sizing/useCableSizing";
 import CableSizingForm from "./cable-sizing/CableSizingInputs";
 import CableSizingResult from "./cable-sizing/CableSizingResult";
 import CableSizingInfo from "./cable-sizing/CableSizingInfo";
+import { useToast } from "@/components/ui/use-toast";
+import { useEffect } from "react";
 
 const CableSizingCalculator = () => {
+  const { toast } = useToast();
+  
   const {
     inputs,
     result,
@@ -15,6 +19,41 @@ const CableSizingCalculator = () => {
     calculateCableSize,
     resetCalculator,
   } = useCableSizing();
+
+  // Show success toast when we get a valid calculation result
+  useEffect(() => {
+    if (result.recommendedCable && !result.errors) {
+      toast({
+        title: "Cable Size Calculated",
+        description: `Recommended ${result.recommendedCable.size}mm² ${result.recommendedCable.cableType} cable`,
+        variant: "default",
+      });
+    }
+  }, [result.recommendedCable, result.errors, toast]);
+
+  // Show error toast when validation fails
+  useEffect(() => {
+    if (result.errors && Object.keys(result.errors).length > 0) {
+      const errorMessages = Object.values(result.errors).join(', ');
+      toast({
+        title: "Calculation Error",
+        description: errorMessages,
+        variant: "destructive",
+      });
+    }
+  }, [result.errors, toast]);
+
+  const handleCalculate = () => {
+    const result = calculateCableSize();
+    if (!result) {
+      toast({
+        title: "Input Required",
+        description: "Please fill in all required fields to calculate cable size.",
+        variant: "destructive",
+      });
+    }
+    return result;
+  };
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
@@ -34,7 +73,7 @@ const CableSizingCalculator = () => {
             errors={result.errors}
             updateInput={updateInput}
             setInstallationType={setInstallationType}
-            calculateCableSize={calculateCableSize}
+            calculateCableSize={handleCalculate}
             resetCalculator={resetCalculator}
           />
           
