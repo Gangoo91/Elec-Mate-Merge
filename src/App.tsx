@@ -23,6 +23,7 @@ import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import ElectricianTools from "./pages/ElectricianTools";
 import ElectricalHub from "./pages/ElectricalHub";
+import ElectricalToolboxTalk from "./pages/electrician/ElectricalToolboxTalk";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
@@ -51,6 +52,7 @@ function App() {
               <Route path="electrician-tools" element={<ElectricianTools />} />
               <Route path="electrical-hub" element={<ElectricalHub />} />
               <Route path="electrician" element={<Navigate to="/electrical-hub" replace />} />
+              <Route path="electrician/toolbox-talk" element={<ElectricalToolboxTalk />} />
               <Route path="video-lessons" element={<VideoLessons />} />
               <Route path="leaderboards" element={<Leaderboards />} />
               <Route path="apprentice">

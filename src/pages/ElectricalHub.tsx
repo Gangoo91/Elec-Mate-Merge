@@ -11,7 +11,7 @@ const ElectricalHub = () => {
       title: "Toolbox Talk",
       description: "Access practical guides and safety information for on-site work",
       icon: <Wrench className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/electrical-hub" // Updated to link back to electrical hub instead of apprentice toolbox
+      link: "/electrician/toolbox-talk"
     },
     {
       id: 2,
