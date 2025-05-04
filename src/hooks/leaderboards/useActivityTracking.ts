@@ -19,7 +19,7 @@ export async function ensureSubscriberCounted(statsId: string, userId: string, i
       .eq('user_id', userId)
       .eq('last_active_date', today)
       .eq('category', 'learning')
-      .single() as SupabaseResponse<{ id: string }>;
+      .single() as { data: { id: string } | null; error: { code: string } | null };
     
     if (activityError && activityError.code !== 'PGRST116') {
       console.error('Error checking user activity:', activityError);
@@ -33,7 +33,7 @@ export async function ensureSubscriberCounted(statsId: string, userId: string, i
         .from('community_stats')
         .select('active_users')
         .eq('id', statsId)
-        .single() as SupabaseResponse<{ active_users: number }>;
+        .single() as { data: { active_users: number } | null; error: { code: string } | null };
         
       if (statsError) {
         console.error('Error fetching community stats:', statsError);
@@ -56,7 +56,7 @@ export async function ensureSubscriberCounted(statsId: string, userId: string, i
         .select('*')
         .eq('user_id', userId)
         .eq('category', 'learning')
-        .single() as SupabaseResponse<{ id: string }>;
+        .single() as { data: { id: string } | null; error: { code: string } | null };
       
       if (fetchError && fetchError.code !== 'PGRST116') {
         console.error('Error fetching user activity:', fetchError);
@@ -104,7 +104,7 @@ export async function updateUserActivity(userId: string, pointsToAdd: number = 1
       .select('*')
       .eq('user_id', userId)
       .eq('category', category)
-      .single() as SupabaseResponse<{ points: number }>;
+      .single() as { data: { points: number } | null; error: { code: string } | null };
 
     if (fetchError && fetchError.code !== 'PGRST116') {
       throw fetchError;
@@ -146,11 +146,11 @@ export async function updateUserActivity(userId: string, pointsToAdd: number = 1
         .from('community_stats')
         .select('*')
         .limit(1)
-        .single() as SupabaseResponse<{
+        .single() as { data: {
           id: string;
           active_users: number;
           lessons_completed_today: number;
-        }>;
+        } | null };
 
       if (statsData) {
         await supabase
