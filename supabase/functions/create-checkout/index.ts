@@ -108,6 +108,10 @@ serve(async (req) => {
         userId: user.id,
         planId: planId,
       },
+      // Make Stripe checkout more compatible with various browsers
+      payment_method_types: ['card'],
+      billing_address_collection: 'auto',
+      allow_promotion_codes: true,
     };
     
     logStep("Creating checkout session with options", checkoutOptions);

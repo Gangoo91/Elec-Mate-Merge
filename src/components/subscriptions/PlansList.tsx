@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, X, ChevronRight, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
@@ -40,10 +40,14 @@ const PlansList = ({ billing }: PlansListProps) => {
       console.log("Checkout response:", data);
       
       if (data?.url) {
-        // Use window.location.href instead of window.location.replace to ensure proper redirection
-        setTimeout(() => {
-          window.location.href = data.url;
-        }, 300);
+        // More robust checkout redirection
+        toast({
+          title: "Redirecting to checkout",
+          description: "You'll be redirected to the secure Stripe checkout page.",
+        });
+        
+        // Use direct window.location change for better compatibility
+        window.location.href = data.url;
       } else {
         throw new Error('No checkout URL returned');
       }
