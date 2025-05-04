@@ -33,7 +33,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, disabled }) => {
         </Button>
         <Textarea
           placeholder="Type your message..."
-          className="min-h-10 max-h-20 resize-none bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow focus:ring-elec-yellow/20 text-sm rounded-xl"
+          className="min-h-10 max-h-20 resize-none bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow focus:ring-elec-yellow/20 text-sm rounded-xl text-black"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => {
