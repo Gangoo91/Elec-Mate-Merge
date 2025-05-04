@@ -1,6 +1,7 @@
 
 import React, { useRef, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import ChatMessage from './ChatMessage';
 import ChatInput from './ChatInput';
 import { Conversation, Message } from './types';
@@ -28,7 +29,7 @@ const ConversationView: React.FC<ConversationViewProps> = ({
   }, [messages]);
   
   return (
-    <>
+    <div className="flex flex-col h-full">
       {/* Conversation header */}
       <div className="p-3 border-b border-elec-yellow/20 bg-elec-gray flex items-center gap-3 sticky top-0 z-10">
         <Avatar className="bg-elec-yellow text-elec-dark h-10 w-10">
@@ -46,23 +47,31 @@ const ConversationView: React.FC<ConversationViewProps> = ({
         </div>
       </div>
       
-      {/* Messages area */}
-      <div className="flex-1 p-3 overflow-y-auto flex flex-col gap-3 bg-elec-gray">
-        {messages.map(message => (
-          <ChatMessage 
-            key={message.id} 
-            message={message} 
-            isCurrentUser={message.senderId === currentUserId} 
-          />
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
+      {/* Messages area with improved positioning */}
+      <ScrollArea className="flex-1 p-0">
+        <div className="flex flex-col p-3 pb-6 min-h-[calc(100vh-170px)]">
+          {/* Add some top space to improve message positioning */}
+          {messages.length > 5 && <div className="py-6"></div>}
+          
+          {/* Messages */}
+          <div className="flex-1 flex flex-col justify-end gap-3">
+            {messages.map(message => (
+              <ChatMessage 
+                key={message.id} 
+                message={message} 
+                isCurrentUser={message.senderId === currentUserId} 
+              />
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
+        </div>
+      </ScrollArea>
       
       {/* Message input */}
       <ChatInput 
         onSendMessage={onSendMessage} 
       />
-    </>
+    </div>
   );
 };
 
