@@ -26,6 +26,11 @@ interface LocalResource {
   address?: string;
 }
 
+interface SearchResult {
+  services: LocalResource[];
+  source?: string; // New field to track data source
+}
+
 const postcodeSchema = z.object({
   postcode: z
     .string()
@@ -35,6 +40,7 @@ const postcodeSchema = z.object({
 
 const CrisisResources = () => {
   const [localResources, setLocalResources] = useState<LocalResource[]>([]);
+  const [dataSource, setDataSource] = useState<string | null>(null); // Track API source
   const [isSearching, setIsSearching] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
   const [selectedResource, setSelectedResource] = useState<LocalResource | null>(null);
@@ -104,6 +110,7 @@ const CrisisResources = () => {
     setIsSearching(true);
     setSearchError(null);
     setSelectedResource(null);
+    setDataSource(null);
     
     try {
       const { data: response, error } = await supabase.functions.invoke('mental-health-services', {
@@ -118,6 +125,8 @@ const CrisisResources = () => {
         });
       } else {
         setLocalResources(response.services);
+        setDataSource(response.source || "Unknown Source"); // Save the data source
+        
         toast.success("Local support services found", {
           description: `Found ${response.services.length} services near ${data.postcode}`,
         });
@@ -288,10 +297,19 @@ const CrisisResources = () => {
 
                 {localResources.length > 0 && !selectedResource && (
                   <div className="mt-4 space-y-3">
-                    <h4 className="text-sm font-medium flex items-center gap-1">
-                      <MapPin className="h-4 w-4 text-red-500" />
-                      Local Services:
-                    </h4>
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-sm font-medium flex items-center gap-1">
+                        <MapPin className="h-4 w-4 text-red-500" />
+                        Local Services:
+                      </h4>
+                      
+                      {dataSource && (
+                        <span className="text-xs text-muted-foreground bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded-full">
+                          Source: {dataSource}
+                        </span>
+                      )}
+                    </div>
+                    
                     {localResources.map((resource, index) => (
                       <div 
                         key={index} 
