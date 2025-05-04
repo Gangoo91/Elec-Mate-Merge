@@ -17,6 +17,7 @@ export async function ensureSubscriberCounted(statsId: string, userId: string, i
       .select('*')
       .eq('user_id', userId)
       .eq('last_active_date', today)
+      .eq('category', 'learning')
       .single();
     
     // If no activity record for today, we need to update the community stats

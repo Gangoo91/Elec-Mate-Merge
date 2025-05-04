@@ -52,6 +52,11 @@ const DashboardOverview = ({ user }: DashboardOverviewProps) => {
     }
   }, [communityStats]);
 
+  // Get user streak from learning category by default
+  const userStreak = currentUserRank?.learning?.streak || 0;
+  // Get user points from learning category by default
+  const userPoints = currentUserRank?.learning?.points || 0;
+
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <OverviewCard 
@@ -62,13 +67,13 @@ const DashboardOverview = ({ user }: DashboardOverviewProps) => {
       />
       <OverviewCard 
         title="Active Streak" 
-        value={`${currentUserRank?.streak || 0} days`}
-        description={currentUserRank?.streak ? "Keep going!" : "Start learning to build your streak"}
+        value={`${userStreak} days`}
+        description={userStreak > 0 ? "Keep going!" : "Start learning to build your streak"}
         icon={<Clock className="h-4 w-4" />}
       />
       <OverviewCard 
         title="Leaderboard Rank" 
-        value={currentUserRank ? "#" + (currentUserRank?.points > 0 ? "1-10" : "--") : "--"}
+        value={userPoints > 0 ? "#1-10" : "--"}
         description="Complete lessons to rank up"
         icon={<Trophy className="h-4 w-4" />}
       />
