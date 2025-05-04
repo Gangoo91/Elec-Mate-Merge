@@ -1,10 +1,13 @@
 
 import { Link } from "react-router-dom";
-import { Menu } from "lucide-react";
+import { Menu, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import UserProfileDropdown from "@/components/auth/UserProfileDropdown";
 import NotificationDropdown from "@/components/notifications/NotificationDropdown";
+import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
   toggleSidebar: () => void;
@@ -12,6 +15,7 @@ interface HeaderProps {
 
 const Header = ({ toggleSidebar }: HeaderProps) => {
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
   
   return (
     <header className="flex h-16 items-center justify-between border-b border-elec-yellow/30 px-4 md:px-6">
@@ -35,6 +39,29 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
       </div>
       
       <div className="flex items-center gap-3">
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="relative"
+                onClick={() => navigate('/messages')}
+              >
+                <MessageSquare className="h-5 w-5" />
+                <Badge 
+                  className="absolute -top-1 -right-1 bg-elec-yellow text-elec-dark text-xs h-5 w-5 flex items-center justify-center p-0"
+                  variant="outline"
+                >
+                  2
+                </Badge>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Messages</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         <NotificationDropdown />
         <UserProfileDropdown />
       </div>

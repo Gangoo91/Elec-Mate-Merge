@@ -6,6 +6,7 @@ export type ProfileType = {
   username?: string | null;
   full_name?: string | null;
   avatar_url?: string | null;
+  bio?: string | null;
   updated_at?: string | null;
   created_at?: string | null;
   subscribed?: boolean | null;
@@ -24,6 +25,7 @@ export type AuthContextType = {
   lastError?: string | null;
   lastCheckedAt?: Date | null;
   checkSubscriptionStatus: () => Promise<void>;
+  fetchProfile?: (userId: string) => Promise<ProfileType | null>;
   isDevelopmentMode: boolean;
   toggleDevelopmentMode: () => void;
   signIn: (email: string, password: string) => Promise<{ error: any | null }>;
