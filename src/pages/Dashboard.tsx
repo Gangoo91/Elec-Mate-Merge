@@ -54,11 +54,11 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {/* Quick Access Section - moved higher in the layout */}
+      <DashboardQuickAccess />
+
       {/* Overview Cards */}
       <DashboardOverview user={userData} />
-
-      {/* Quick Access Section - positioned prominently */}
-      <DashboardQuickAccess />
 
       {/* Trial Status */}
       <TrialBanner />
