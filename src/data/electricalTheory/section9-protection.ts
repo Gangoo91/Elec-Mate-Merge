@@ -8,7 +8,7 @@ export const overcurrentProtectionSection: SectionData = {
     sectionNumber: "9",
     title: "Overcurrent Protection",
     description: "Overcurrent protection is essential to safeguard electrical installations from damage and fire risks caused by excessive current flow.",
-    icon: "shield",
+    icon: "safety", // Changed from "shield" to "safety"
     isMainSection: true,
     subsections: [
       {
