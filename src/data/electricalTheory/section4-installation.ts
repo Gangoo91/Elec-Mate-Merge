@@ -1,47 +1,47 @@
 
 import { SectionData } from '../healthAndSafety/types';
 
-export const installationPracticesSection: SectionData = {
+export const servicePositionSection: SectionData = {
   sectionNumber: "4",
-  title: "Electrical Installation Practices",
+  title: "Service Position Equipment",
   content: {
     sectionNumber: "4",
-    title: "Electrical Installation Practices",
-    description: "Practical techniques and methods for electrical installation work.",
+    title: "Service Position Equipment",
+    description: "The service position is where electricity enters a building, containing critical components for safe power distribution.",
     icon: "construction",
     isMainSection: true,
     subsections: [
       {
         id: "4.1",
-        title: "Cable Types and Selection",
-        content: "Selecting the appropriate cable for an installation is critical for safety and performance. Common types include flat twin and earth (6242Y), single core (6491X), and armored cables (SWA). Factors influencing selection include current-carrying capacity, voltage drop, installation method, environmental conditions, and mechanical protection requirements. Cables must be sized correctly to carry the design current without excessive voltage drop or overheating. BS 7671 provides detailed tables for determining appropriate cable sizes based on installation conditions.",
+        title: "Main Components and Layout",
+        content: "The service position is where the electrical supply enters a premises and typically includes several key components. The service head is where the supply cable enters the building. The meter equipment measures electrical consumption and is typically owned by the energy supplier. The consumer unit or distribution board houses protective devices and distributes electricity to final circuits. The main switch provides a means of isolating the entire installation. These components must be arranged in an accessible, logical layout that complies with regulations and allows for safe operation and maintenance.",
         keyPoints: [
-          "Common domestic cables: 6242Y (flat twin and earth), 6491X (singles in conduit)",
-          "SWA (Steel Wire Armored) for external or harsh environments",
-          "Cable selection factors: current capacity, voltage drop, installation method, environment",
-          "Conductor identification: brown (live), blue (neutral), green/yellow (earth)"
+          "Service head provides the entry point for supply cables",
+          "Meter equipment must be accessible for reading and maintenance",
+          "Consumer unit houses protective devices for circuit distribution",
+          "Main switch must be easily accessible for emergency isolation"
         ]
       },
       {
         id: "4.2",
-        title: "Installation Methods (Trunking, Conduit, Cable Tray)",
-        content: "Electrical containment systems provide physical protection and organized routing for cables. Trunking is a rectangular enclosure with a removable lid, available in various sizes and materials. Conduit is a tube system for cable protection, available in metal or plastic variants. Cable tray provides an open support system for larger cable runs. Each system has specific installation requirements regarding supports, bends, and accessories. Selection depends on the environment, aesthetics, future expansion needs, and protection requirements.",
+        title: "Consumer Units and Distribution Boards",
+        content: "Consumer units (also called distribution boards) are central to domestic and small commercial electrical installations. Modern units feature a main switch, RCDs (Residual Current Devices) for additional protection, and circuit breakers for individual circuits. They must comply with BS EN 61439-3 and have specific fire-resistant enclosure requirements. Distribution in larger installations may involve multiple distribution boards arranged in a hierarchical system. Understanding the selection, installation and arrangement of these units is essential for creating safe, compliant electrical installations that meet the needs of the building and its occupants.",
         keyPoints: [
-          "Trunking: rectangular PVC or metal enclosure with removable cover",
-          "Conduit: PVC or metal tubing system with various fittings",
-          "Cable tray: open support system for larger installations",
-          "Factors in selection: environment, appearance, future expansion, protection level required"
+          "Modern consumer units must have metal enclosures for fire safety",
+          "RCD protection arrangements depend on installation requirements",
+          "Proper circuit identification and labeling is essential",
+          "Adequate space must be maintained around units for access and cooling"
         ]
       },
       {
         id: "4.3",
-        title: "Enclosures and Containment Systems",
-        content: "Electrical enclosures house connection points, control devices, and distribution equipment. They provide protection against environmental factors and prevent access to live parts. Enclosures are rated using IP (Ingress Protection) codes that indicate protection against solid objects and water. For example, IP44 provides protection against objects over 1mm and splashing water. The first digit (0-6) indicates protection against solid objects, while the second digit (0-8) indicates protection against liquids. Selection should consider the installation environment, access requirements, and protection needs.",
+        title: "Supply Characteristics",
+        content: "Understanding electrical supply characteristics is fundamental to proper installation design. UK standard domestic supplies are typically 230V single-phase, while commercial and industrial premises often have 400V three-phase supplies. Supply capacity is defined by the maximum current that can be drawn, often limited by the cut-out fuse rating (typically 80A or 100A in domestic properties). Supply systems are classified by earthing arrangements (TN-S, TN-C-S, TT). External factors such as prospective fault current and supply impedance affect protection design. These characteristics form the foundation for all subsequent decisions about an electrical installation.",
         keyPoints: [
-          "IP ratings specify enclosure protection: first digit for solids, second for liquids",
-          "Common ratings: IP20 (indoor), IP44 (splash-proof), IP65 (dust-tight and water jets)",
-          "Consumer units require specific fireproof enclosures",
-          "Enclosure selection based on environment, accessibility, and equipment requirements"
+          "UK standard voltage is 230V single-phase, 400V three-phase",
+          "Maximum demand calculations determine required supply capacity",
+          "Earth system type affects protection arrangements",
+          "External network characteristics influence fault protection design"
         ]
       }
     ]

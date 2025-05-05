@@ -7,9 +7,21 @@ import { installationMethodsContent } from "@/data/installationMethods/index";
 import type { Subsection } from "@/data/healthAndSafety/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import SubsectionLearningContent from "@/components/apprentice/SubsectionLearningContent";
+import { 
+  basicElectricalTheorySection,
+  technicalInformationSection,
+  wiringSectionsSection,
+  servicePositionSection,
+  lightingCircuitsSection,
+  ringRadialCircuitsSection,
+  circuitRequirementsSection,
+  earthingBondingSection,
+  overcurrentProtectionSection,
+  circuitDesignSection
+} from "@/data/electricalTheory";
 
 const SubsectionContent = () => {
-  const { sectionId, subsectionId } = useParams();
+  const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
   const navigate = useNavigate();
   const [subsectionData, setSubsectionData] = useState<Subsection | null>(null);
   const [sectionTitle, setSectionTitle] = useState("");
@@ -17,29 +29,85 @@ const SubsectionContent = () => {
   
   useEffect(() => {
     if (sectionId && subsectionId) {
-      // Find the section
-      const section = installationMethodsContent.find(
-        section => section.sectionNumber === sectionId
-      );
+      // Determine which unit we're working with
+      const isElectricalTheoryUnit = unitSlug?.includes('elec2-04');
+      const isInstallationMethodsUnit = unitSlug?.includes('elec2-05a');
       
-      if (section) {
-        setSectionTitle(section.title);
-        // Find the subsection
-        const subsection = section.content.subsections.find(
-          sub => sub.id === subsectionId
+      let section;
+      let foundSubsection;
+      
+      // Find the section based on unit type
+      if (isElectricalTheoryUnit) {
+        // For electrical theory, find the parent section based on the first part of the subsectionId
+        const parentSectionNumber = subsectionId.split('.')[0]; 
+        
+        switch(parentSectionNumber) {
+          case "1": 
+            section = basicElectricalTheorySection;
+            break;
+          case "2":
+            section = technicalInformationSection;
+            break;
+          case "3":
+            section = wiringSectionsSection;
+            break;
+          case "4":
+            section = servicePositionSection;
+            break;
+          case "5":
+            section = lightingCircuitsSection;
+            break;
+          case "6":
+            section = ringRadialCircuitsSection;
+            break;
+          case "7":
+            section = circuitRequirementsSection;
+            break;
+          case "8":
+            section = earthingBondingSection;
+            break;
+          case "9":
+            section = overcurrentProtectionSection;
+            break;
+          case "10":
+            section = circuitDesignSection;
+            break;
+          default:
+            section = null;
+        }
+        
+        if (section) {
+          setSectionTitle(section.title);
+          // Find the subsection
+          foundSubsection = section.content.subsections.find(
+            sub => sub.id === subsectionId
+          );
+        }
+      } else if (isInstallationMethodsUnit) {
+        // For installation methods, use existing code
+        section = installationMethodsContent.find(
+          section => section.sectionNumber === sectionId
         );
         
-        if (subsection) {
-          setSubsectionData(subsection);
-          
-          // Check local storage for completion status
-          const storageKey = `completion_${sectionId}_${subsectionId}`;
-          const storedCompletion = localStorage.getItem(storageKey);
-          setIsCompleted(storedCompletion === 'true');
+        if (section) {
+          setSectionTitle(section.title);
+          // Find the subsection
+          foundSubsection = section.content.subsections.find(
+            sub => sub.id === subsectionId
+          );
         }
       }
+      
+      if (foundSubsection) {
+        setSubsectionData(foundSubsection);
+        
+        // Check local storage for completion status
+        const storageKey = `completion_${sectionId}_${subsectionId}`;
+        const storedCompletion = localStorage.getItem(storageKey);
+        setIsCompleted(storedCompletion === 'true');
+      }
     }
-  }, [sectionId, subsectionId]);
+  }, [sectionId, subsectionId, unitSlug]);
 
   const handleBackClick = () => {
     navigate(-1);

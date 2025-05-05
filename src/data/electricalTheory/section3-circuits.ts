@@ -1,47 +1,47 @@
 
 import { SectionData } from '../healthAndSafety/types';
 
-export const circuitTypesSection: SectionData = {
+export const wiringSectionsSection: SectionData = {
   sectionNumber: "3",
-  title: "Circuit Types and Components",
+  title: "Wiring Systems",
   content: {
     sectionNumber: "3",
-    title: "Circuit Types and Components",
-    description: "Essential circuit configurations and protective components used in electrical installations.",
-    icon: "safety",
+    title: "Wiring Systems",
+    description: "Wiring systems form the backbone of electrical installations, each with specific properties, applications, and limitations.",
+    icon: "cable",
     isMainSection: true,
     subsections: [
       {
         id: "3.1",
-        title: "Ring and Radial Circuits",
-        content: "Domestic and commercial electrical installations typically use ring or radial circuit configurations. Ring circuits (or ring mains) start and end at the same point in the consumer unit, forming a loop. They are common in the UK and allow more socket outlets on a single circuit. Radial circuits branch out from the consumer unit to serve a specific area or purpose. They're simpler but generally allow fewer outlets per circuit. Understanding the design requirements and limitations of each type is essential for safe and compliant installations.",
+        title: "Cable Types and Properties",
+        content: "Various cable types are used in electrical installations, each with specific properties suited to different applications. Common types include PVC insulated and sheathed cables (flat twin & earth), XLPE insulated cables, mineral insulated copper clad cables (MICC), and armored cables. Selection factors include current-carrying capacity, voltage drop characteristics, mechanical strength, fire performance, and environmental resistance. Understanding the properties of different cable types is essential for making appropriate selections that ensure safety, compliance with regulations, and optimal performance for the specific installation environment.",
         keyPoints: [
-          "Ring circuits: form a complete loop, typically fused at 32A, common for socket outlets",
-          "Radial circuits: extend from the consumer unit without returning, typically fused at 20A or 32A",
-          "Circuit selection depends on load requirements, accessibility, and regional practices",
-          "Floor area limitations apply to both circuit types according to BS 7671"
+          "PVC cables offer good general-purpose properties at lower cost",
+          "XLPE insulation provides better temperature resistance",
+          "MICC cables offer superior fire resistance and durability",
+          "Armored cables provide protection against mechanical damage"
         ]
       },
       {
         id: "3.2",
-        title: "Protective Devices (Fuses, MCBs, RCDs)",
-        content: "Protective devices are essential components that safeguard electrical installations against overcurrent, short circuits, and earth leakage. Fuses contain a wire that melts when excessive current flows. Miniature Circuit Breakers (MCBs) are automatic switches that trip when detecting an overcurrent. Residual Current Devices (RCDs) detect imbalances between live and neutral conductors, indicating a potential earth leakage, and disconnect the supply. Modern installations often use Residual Current Circuit Breakers with Overcurrent protection (RCBOs) which combine MCB and RCD functions.",
+        title: "Containment Systems",
+        content: "Containment systems provide physical protection and support for cables. Common types include conduit (metal or PVC), trunking, cable tray, and basket systems. Each system has specific installation requirements regarding supports, bends, and accessories. Selection depends on the installation environment, aesthetics, ease of future modifications, and level of protection required. Proper installation of containment systems is crucial for the long-term integrity of the electrical installation, ensuring cables are protected from damage and properly supported throughout their length.",
         keyPoints: [
-          "Fuses: sacrificial devices that melt under overcurrent conditions",
-          "MCBs: resettable protective devices that trip under overcurrent conditions",
-          "RCDs: detect earth leakage current to prevent electric shock",
-          "RCBOs: combine overcurrent and earth leakage protection in one device"
+          "Conduit provides high mechanical protection in a sealed system",
+          "Trunking offers easy access and capacity for multiple cables",
+          "Cable tray provides economical support for larger cable runs",
+          "Proper support spacing and fixing methods are essential for all systems"
         ]
       },
       {
         id: "3.3",
-        title: "Earthing and Bonding Methods",
-        content: "Earthing and bonding are fundamental safety measures in electrical installations. Earthing connects exposed conductive parts to the general mass of earth through an earth electrode system. This ensures that in case of a fault, current has a path to earth, which activates protective devices. Bonding connects extraneous conductive parts together, ensuring they remain at the same potential, reducing the risk of electric shock. The three main earthing systems are TN-S, TN-C-S (PME), and TT, each with specific requirements and applications.",
+        title: "Installation Methods and Techniques",
+        content: "Proper installation techniques are crucial for the integrity and safety of wiring systems. This includes correct cable routing practices, maintaining separation from other services, proper support methods, and appropriate termination techniques. Installation must comply with the manufacturer's instructions and relevant regulations from BS 7671. Factors such as fire barriers, expansion provisions, and protection against mechanical damage must be considered. The correct application of these techniques ensures the longevity, safety, and compliance of the electrical installation, as well as minimizing the risk of future failures.",
         keyPoints: [
-          "Main earthing systems: TN-S, TN-C-S (PME), and TT",
-          "Main bonding connects water pipes, gas pipes, and other services to the main earthing terminal",
-          "Supplementary bonding may be required in special locations like bathrooms",
-          "Protective conductors must be properly sized according to the main conductor"
+          "Maintain minimum bending radii to prevent cable damage",
+          "Provide adequate support intervals based on cable type and route",
+          "Ensure proper separation from other services to prevent interference",
+          "Apply correct termination techniques for reliable connections"
         ]
       }
     ]

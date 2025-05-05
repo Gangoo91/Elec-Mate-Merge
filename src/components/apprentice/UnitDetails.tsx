@@ -2,7 +2,19 @@
 import { useState, useEffect } from "react";
 import SectionBox from "@/components/apprentice/SectionBox";
 import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
-import { electricalTheorySection } from "@/data/electricalTheory/section-electrical-theory";
+import { 
+  electricalTheorySection, 
+  basicElectricalTheorySection,
+  technicalInformationSection,
+  wiringSectionsSection,
+  servicePositionSection,
+  lightingCircuitsSection,
+  ringRadialCircuitsSection,
+  circuitRequirementsSection,
+  earthingBondingSection,
+  overcurrentProtectionSection,
+  circuitDesignSection
+} from "@/data/electricalTheory";
 import { installationMethodsSection } from "@/data/electricalTheory/section-installation-methods";
 import { craftSkillsContent } from "@/data/craftSkills/index";  // Import craft skills content
 import type { CourseUnit } from "@/data/courseUnits";
@@ -102,6 +114,7 @@ const UnitDetails = ({
       {/* Electrical Theory Content - Only for ELEC2/04 */}
       {showElectricalTheoryContent && (
         <div className="space-y-6">
+          {/* Main section */}
           <SectionBox
             key={electricalTheorySection.sectionNumber}
             sectionNumber={electricalTheorySection.sectionNumber}
@@ -113,8 +126,116 @@ const UnitDetails = ({
             courseSlug={courseSlug}
           />
           
-          {/* Render subsections */}
-          {createSectionBoxes(electricalTheorySection)}
+          {/* Individual topic sections */}
+          <SectionBox
+            key={basicElectricalTheorySection.sectionNumber}
+            sectionNumber={basicElectricalTheorySection.sectionNumber}
+            title={basicElectricalTheorySection.title}
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          
+          <SectionBox
+            key={technicalInformationSection.sectionNumber}
+            sectionNumber={technicalInformationSection.sectionNumber}
+            title={technicalInformationSection.title}
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          
+          <SectionBox
+            key={wiringSectionsSection.sectionNumber}
+            sectionNumber={wiringSectionsSection.sectionNumber}
+            title={wiringSectionsSection.title}
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          
+          <SectionBox
+            key={servicePositionSection.sectionNumber}
+            sectionNumber={servicePositionSection.sectionNumber}
+            title={servicePositionSection.title}
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          
+          <SectionBox
+            key={lightingCircuitsSection.sectionNumber}
+            sectionNumber={lightingCircuitsSection.sectionNumber}
+            title={lightingCircuitsSection.title}
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          
+          <SectionBox
+            key={ringRadialCircuitsSection.sectionNumber}
+            sectionNumber={ringRadialCircuitsSection.sectionNumber}
+            title={ringRadialCircuitsSection.title}
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          
+          <SectionBox
+            key={circuitRequirementsSection.sectionNumber}
+            sectionNumber={circuitRequirementsSection.sectionNumber}
+            title={circuitRequirementsSection.title}
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          
+          <SectionBox
+            key={earthingBondingSection.sectionNumber}
+            sectionNumber={earthingBondingSection.sectionNumber}
+            title={earthingBondingSection.title}
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          
+          <SectionBox
+            key={overcurrentProtectionSection.sectionNumber}
+            sectionNumber={overcurrentProtectionSection.sectionNumber}
+            title={overcurrentProtectionSection.title}
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          
+          <SectionBox
+            key={circuitDesignSection.sectionNumber}
+            sectionNumber={circuitDesignSection.sectionNumber}
+            title={circuitDesignSection.title}
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
           
           {/* Quiz Section */}
           <SectionBox

@@ -2,7 +2,19 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
-import { electricalTheorySection } from "@/data/electricalTheory/section-electrical-theory";
+import { 
+  electricalTheorySection,
+  basicElectricalTheorySection,
+  technicalInformationSection,
+  wiringSectionsSection,
+  servicePositionSection,
+  lightingCircuitsSection,
+  ringRadialCircuitsSection,
+  circuitRequirementsSection,
+  earthingBondingSection,
+  overcurrentProtectionSection,
+  circuitDesignSection
+} from "@/data/electricalTheory";
 import { installationMethodsSection } from "@/data/electricalTheory/section-installation-methods";
 import CourseContentSection from "@/components/apprentice/CourseContentSection";
 import { Button } from "@/components/ui/button";
@@ -32,27 +44,78 @@ const SectionContent = () => {
           section => section.sectionNumber.toLowerCase().replace(/\//g, "-") === sectionId
         );
       } else if (isElectricalTheoryUnit) {
-        // For electrical theory, use the main section data
-        if (sectionId === "04") {
-          section = electricalTheorySection;
-        } else {
-          // For subsections, we need to get the data from the main section
-          const subsectionId = sectionId;
-          const foundSubsection = electricalTheorySection.content.subsections.find(
-            sub => sub.id === subsectionId
-          );
-          
-          if (foundSubsection) {
-            // Create a section-like structure for the subsection
-            section = {
-              sectionNumber: subsectionId,
-              title: foundSubsection.title,
-              content: {
-                subsections: [foundSubsection],
-                icon: electricalTheorySection.content.icon
+        // For electrical theory, match the section by ID
+        switch(sectionId) {
+          case "1":
+            section = basicElectricalTheorySection;
+            break;
+          case "2":
+            section = technicalInformationSection;
+            break;
+          case "3":
+            section = wiringSectionsSection;
+            break;
+          case "4":
+            section = servicePositionSection;
+            break;
+          case "5":
+            section = lightingCircuitsSection;
+            break;
+          case "6":
+            section = ringRadialCircuitsSection;
+            break;
+          case "7":
+            section = circuitRequirementsSection;
+            break;
+          case "8":
+            section = earthingBondingSection;
+            break;
+          case "9":
+            section = overcurrentProtectionSection;
+            break;
+          case "10":
+            section = circuitDesignSection;
+            break;
+          case "04": // Main section
+            section = electricalTheorySection;
+            break;
+          default:
+            // For subsections (like "1.1"), we need to find the parent section and then the subsection
+            const sectionNumber = sectionId.split('.')[0];
+            const subsectionId = sectionId;
+            let parentSection;
+            
+            switch(sectionNumber) {
+              case "1": parentSection = basicElectricalTheorySection; break;
+              case "2": parentSection = technicalInformationSection; break;
+              case "3": parentSection = wiringSectionsSection; break;
+              case "4": parentSection = servicePositionSection; break;
+              case "5": parentSection = lightingCircuitsSection; break;
+              case "6": parentSection = ringRadialCircuitsSection; break;
+              case "7": parentSection = circuitRequirementsSection; break;
+              case "8": parentSection = earthingBondingSection; break;
+              case "9": parentSection = overcurrentProtectionSection; break;
+              case "10": parentSection = circuitDesignSection; break;
+              default: parentSection = null;
+            }
+            
+            if (parentSection) {
+              const foundSubsection = parentSection.content.subsections.find(
+                sub => sub.id === subsectionId
+              );
+              
+              if (foundSubsection) {
+                // Create a section-like structure for the subsection
+                section = {
+                  sectionNumber: subsectionId,
+                  title: foundSubsection.title,
+                  content: {
+                    subsections: [foundSubsection],
+                    icon: parentSection.content.icon
+                  }
+                };
               }
-            };
-          }
+            }
         }
       } else if (isInstallationMethodsUnit) {
         // For installation methods, use the main section data

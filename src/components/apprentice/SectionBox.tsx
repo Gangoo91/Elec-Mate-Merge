@@ -63,12 +63,12 @@ const SectionBox = ({
     // If it's the electrical theory unit and we have a subsection
     if (unitCode.toLowerCase().includes('04') && sectionNumber !== "04" && sectionNumber !== "Q") {
       switch(sectionNumber) {
-        case "1": return <Lightbulb className="h-4 w-4" />; // Legislation and Regulations
+        case "1": return <Info className="h-4 w-4" />; // Legislation and Regulations
         case "2": return <Info className="h-4 w-4" />; // Technical Information
         case "3": return <Cable className="h-4 w-4" />; // Wiring Systems
         case "4": return <Construction className="h-4 w-4" />; // Service Position Equipment
         case "5": return <Lightbulb className="h-4 w-4" />; // Lighting Circuits
-        case "6": return <CircleDashed className="h-4 w-4" />; // Ring and Radial Circuits
+        case "6": return <Cable className="h-4 w-4" />; // Ring and Radial Circuits
         case "7": return <CircuitBoard className="h-4 w-4" />; // Circuit Requirements
         case "8": return <Shield className="h-4 w-4" />; // Earthing and Bonding
         case "9": return <Shield className="h-4 w-4" />; // Overcurrent Protection
