@@ -2,14 +2,16 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useTimeEntries } from "@/hooks/useTimeEntries";
-import { Pencil, Save, Trash2 } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
+import { Pencil, Save, Trash2, Plus } from "lucide-react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
+import TimeEntryForm from "./TimeEntryForm";
 
 const DigitalLogbook = () => {
-  const { entries, totalTime } = useTimeEntries();
+  const { entries, totalTime, addTimeEntry } = useTimeEntries();
   const { toast } = useToast();
   const [editingEntryId, setEditingEntryId] = useState<string | null>(null);
   const [editedDuration, setEditedDuration] = useState<number>(0);
@@ -51,7 +53,7 @@ const DigitalLogbook = () => {
     // In a real implementation, this would update the entry in the database
     toast({
       title: "Entry updated",
-      description: "Your time entry has been updated successfully.",
+      description: "Your time entry has been updated successfully."
     });
     setEditingEntryId(null);
   };
@@ -79,33 +81,75 @@ const DigitalLogbook = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h3 className="text-lg font-semibold">Digital Logbook</h3>
-        <div className="flex items-center gap-2">
-          <span className="text-sm whitespace-nowrap">Filter by month:</span>
-          <Select value={filterMonth} onValueChange={setFilterMonth}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="All entries" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All entries</SelectItem>
-              {months.map((month) => {
-                const [year, monthNum] = month.split('-');
-                const monthName = new Date(parseInt(year), parseInt(monthNum) - 1).toLocaleString('default', { month: 'long' });
-                return (
-                  <SelectItem key={month} value={month}>
-                    {monthName} {year}
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
+        <div>
+          <h3 className="text-lg font-semibold">Digital Logbook</h3>
+          <p className="text-sm text-muted-foreground">
+            View, edit and manage all your training activities
+          </p>
+        </div>
+        
+        <div className="flex flex-col sm:flex-row items-center gap-2">
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button size="sm" className="gap-1 mb-2 sm:mb-0">
+                <Plus className="h-4 w-4" />
+                Add New Entry
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>Log Training Hours</DialogTitle>
+              </DialogHeader>
+              <TimeEntryForm onAddEntry={addTimeEntry} />
+            </DialogContent>
+          </Dialog>
+          
+          <div className="flex items-center gap-2">
+            <span className="text-sm whitespace-nowrap">Filter by month:</span>
+            <Select value={filterMonth} onValueChange={setFilterMonth}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="All entries" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All entries</SelectItem>
+                {months.map((month) => {
+                  const [year, monthNum] = month.split('-');
+                  const monthName = new Date(parseInt(year), parseInt(monthNum) - 1).toLocaleString('default', { month: 'long' });
+                  return (
+                    <SelectItem key={month} value={month}>
+                      {monthName} {year}
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
 
       {Object.keys(groupedEntries).length === 0 ? (
-        <div className="text-center p-10">
-          <p className="text-muted-foreground">No entries found for the selected period.</p>
-        </div>
+        <Card className="border-dashed border-2 border-elec-yellow/20 bg-elec-dark">
+          <CardContent className="flex flex-col items-center justify-center py-10">
+            <h3 className="text-xl font-medium mb-2">No entries found</h3>
+            <p className="text-muted-foreground text-center max-w-md mb-4">
+              No training entries found for the selected period. Start by adding your first training activity.
+            </p>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="gap-1">
+                  <Plus className="h-4 w-4" />
+                  Log Your First Training Activity
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle>Log Training Hours</DialogTitle>
+                </DialogHeader>
+                <TimeEntryForm onAddEntry={addTimeEntry} />
+              </DialogContent>
+            </Dialog>
+          </CardContent>
+        </Card>
       ) : (
         <div className="space-y-6">
           {Object.entries(groupedEntries)

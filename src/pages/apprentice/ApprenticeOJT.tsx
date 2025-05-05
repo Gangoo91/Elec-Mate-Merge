@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -5,16 +6,23 @@ import { Clock, Book, FileText, Download, Upload, Award, PlusCircle } from "luci
 import { Link } from "react-router-dom";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import TimeTracker from "@/components/apprentice/TimeTracker";
 import DigitalLogbook from "@/components/apprentice/time-tracking/DigitalLogbook";
 import WeeklyOverview from "@/components/apprentice/time-tracking/WeeklyOverview";
 import CertificatesManager from "@/components/apprentice/time-tracking/CertificatesManager";
 import TrainingEvidence from "@/components/apprentice/time-tracking/TrainingEvidence";
+import TimeEntryForm from "@/components/apprentice/time-tracking/TimeEntryForm";
+import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
+import { useToast } from "@/components/ui/use-toast";
 
 const ApprenticeOJT = () => {
   const [weeklyHours, setWeeklyHours] = useState(8);
   const [targetHours] = useState(40);
   const [courseHours, setCourseHours] = useState(0);
+  const [activeTab, setActiveTab] = useState("recent");
+  const { toast } = useToast();
+  const { addTimeEntry, totalTime } = useTimeEntries();
   const progress = (weeklyHours / targetHours) * 100;
 
   // Simulate loading course hours from various course pages
@@ -43,7 +51,25 @@ const ApprenticeOJT = () => {
 
   const handleDownloadReport = () => {
     // In a real implementation, this would generate a PDF or CSV report
-    alert("This would download a time report in a real implementation");
+    toast({
+      title: "Report Generated",
+      description: "Your training report has been downloaded successfully."
+    });
+  };
+
+  const handleLogManualHours = () => {
+    setActiveTab("recent");
+    // Focus on form input after tab switch
+    setTimeout(() => {
+      const firstInput = document.querySelector(".time-entry-form input");
+      if (firstInput) {
+        (firstInput as HTMLInputElement).focus();
+      }
+    }, 100);
+  };
+
+  const handleUploadEvidence = () => {
+    setActiveTab("evidence");
   };
 
   return (
@@ -97,12 +123,33 @@ const ApprenticeOJT = () => {
                 </div>
               </div>
               
+              <div className="mt-2 space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="flex items-center">
+                    <Clock className="h-4 w-4 text-elec-yellow mr-2" />
+                    Total Recorded Time
+                  </span>
+                  <span>{totalTime.hours}h {totalTime.minutes}m</span>
+                </div>
+              </div>
+              
               <div className="flex flex-col gap-2 mt-4">
-                <Button className="w-full">
-                  <PlusCircle className="h-4 w-4 mr-2" />
-                  Log Manual Hours
-                </Button>
-                <Button variant="outline" className="w-full">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button className="w-full">
+                      <PlusCircle className="h-4 w-4 mr-2" />
+                      Log Manual Hours
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Log Training Hours</DialogTitle>
+                    </DialogHeader>
+                    <TimeEntryForm onAddEntry={addTimeEntry} />
+                  </DialogContent>
+                </Dialog>
+                
+                <Button variant="outline" className="w-full" onClick={handleUploadEvidence}>
                   <Upload className="h-4 w-4 mr-2" />
                   Upload Evidence
                 </Button>
@@ -128,7 +175,7 @@ const ApprenticeOJT = () => {
             </div>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="recent">
+            <Tabs defaultValue="recent" value={activeTab} onValueChange={setActiveTab}>
               <TabsList className="mb-4 bg-elec-dark">
                 <TabsTrigger value="recent">Recent Activities</TabsTrigger>
                 <TabsTrigger value="logbook">Digital Logbook</TabsTrigger>

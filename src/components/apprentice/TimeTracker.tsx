@@ -1,9 +1,11 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Clock, Plus } from "lucide-react";
 import TimeEntryForm from "./time-tracking/TimeEntryForm";
 import EntriesList from "./time-tracking/EntriesList";
-import { useTimeEntries } from "@/hooks/useTimeEntries";
+import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
 
 const TimeTracker = () => {
   const { entries, totalTime, addTimeEntry } = useTimeEntries();
@@ -27,11 +29,42 @@ const TimeTracker = () => {
           </div>
         </CardHeader>
         <CardContent>
-          <TimeEntryForm onAddEntry={addTimeEntry} />
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-medium">Recent Training Activities</h3>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button size="sm" className="gap-1">
+                  <Plus className="h-4 w-4" />
+                  Add New Entry
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle>Log Training Hours</DialogTitle>
+                </DialogHeader>
+                <TimeEntryForm onAddEntry={addTimeEntry} />
+              </DialogContent>
+            </Dialog>
+          </div>
+          
+          <div className="time-entry-form">
+            <TimeEntryForm onAddEntry={addTimeEntry} />
+          </div>
+          
+          <div className="mt-6">
+            <h4 className="text-sm font-medium mb-3">Recent Entries</h4>
+            <EntriesList entries={entries.slice(0, 5)} />
+            
+            {entries.length > 5 && (
+              <div className="mt-4 flex justify-center">
+                <Button variant="outline" size="sm" className="text-sm">
+                  View All Entries
+                </Button>
+              </div>
+            )}
+          </div>
         </CardContent>
       </Card>
-
-      <EntriesList entries={entries} />
     </div>
   );
 };

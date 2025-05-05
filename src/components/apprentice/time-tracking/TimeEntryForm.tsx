@@ -57,8 +57,7 @@ const TimeEntryForm = ({ onAddEntry }: TimeEntryFormProps) => {
 
       toast({
         title: "Time entry added",
-        description: "Your off-the-job training has been logged successfully.",
-        icon: <Check className="h-4 w-4 text-green-500" />
+        description: "Your off-the-job training has been logged successfully."
       });
     }, 600);
   };
