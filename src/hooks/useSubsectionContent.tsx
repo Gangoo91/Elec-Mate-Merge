@@ -47,6 +47,8 @@ export function useSubsectionContent({
   const [parentSectionNumber, setParentSectionNumber] = useState("");
 
   useEffect(() => {
+    console.log("useSubsectionContent params:", { courseSlug, unitSlug, sectionId, subsectionId });
+    
     if (sectionId && subsectionId) {
       // Determine which unit we're working with
       const isElectricalTheoryUnit = unitSlug?.includes('elec2-01') || unitSlug?.includes('elec2-04');
@@ -55,13 +57,14 @@ export function useSubsectionContent({
       let section;
       let foundSubsection;
       
+      console.log("Unit types:", { isElectricalTheoryUnit, isInstallationMethodsUnit });
+      
       // Find the section based on unit type
       if (isElectricalTheoryUnit) {
-        // For electrical theory, find the parent section based on the first part of the subsectionId
-        const parentSection = subsectionId.split('.')[0]; 
-        setParentSectionNumber(parentSection);
+        // For electrical theory, set parent section number
+        setParentSectionNumber(sectionId);
         
-        switch(parentSection) {
+        switch(sectionId) {
           case "1": 
             section = basicElectricalTheorySection;
             break;
@@ -98,10 +101,14 @@ export function useSubsectionContent({
         
         if (section) {
           setSectionTitle(section.title);
+          console.log("Found section:", section.title);
+          
           // Find the subsection
           foundSubsection = section.content.subsections.find(
             sub => sub.id === subsectionId
           );
+          
+          console.log("Found subsection:", foundSubsection?.title);
           
           // Store all sibling subsections for navigation
           setSiblingSubsections(section.content.subsections);
@@ -131,6 +138,8 @@ export function useSubsectionContent({
         const storageKey = `completion_${sectionId}_${subsectionId}`;
         const storedCompletion = localStorage.getItem(storageKey);
         setIsCompleted(storedCompletion === 'true');
+      } else {
+        console.error("Subsection not found:", subsectionId);
       }
     }
   }, [sectionId, subsectionId, unitSlug]);
@@ -145,6 +154,8 @@ export function useSubsectionContent({
   
   const navigateToSubsection = (subId: string) => {
     if (courseSlug && unitSlug && sectionId) {
+      console.log("Navigating to subsection:", subId);
+      
       // Based on unit type, navigate to the appropriate path
       const isElectricalTheoryUnit = unitSlug?.includes('elec2-01') || unitSlug?.includes('elec2-04');
       

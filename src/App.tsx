@@ -49,8 +49,8 @@ import Messenger from "./pages/Messenger";
 // Component imports
 import QuizContent from "./components/apprentice/QuizContent";
 import SectionContent from "./pages/apprentice/SectionContent";
-import InstallationMethodContent from "./pages/apprentice/InstallationMethodContent";
 import SubsectionContent from "./pages/apprentice/SubsectionContent";
+import InstallationMethodContent from "./pages/apprentice/InstallationMethodContent";
 
 // New craft skills content components
 import CraftSkillsContent from "./pages/apprentice/CraftSkillsContent";
@@ -111,10 +111,16 @@ function App() {
                     <Route path="eal/:courseSlug" element={<CourseDetail />} />
                     <Route path="eal/:courseSlug/unit/:unitSlug" element={<CourseDetail />} />
                     <Route path="eal/:courseSlug/unit/:unitSlug/quiz" element={<QuizContent />} />
+                    
+                    {/* Updated route paths for electrical theory sections */}
                     <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
+                    <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
+                    
+                    {/* Installation method routes */}
                     <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId" element={<InstallationMethodContent />} />
                     <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
-                    {/* New routes for craft skills */}
+                    
+                    {/* Craft skills routes */}
                     <Route path="eal/:courseSlug/unit/:unitSlug/craft-skills/:sectionId" element={<CraftSkillsContent />} />
                     <Route path="eal/:courseSlug/unit/:unitSlug/craft-skills/:sectionId/subsection/:subsectionId" element={<CraftSkillsSubsection />} />
                   </Route>

@@ -21,6 +21,8 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
 
   const handleBackClick = () => {
     if (course && unit && section) {
+      console.log("Back button clicked with params:", { course, unit, section });
+      
       // Determine the correct back navigation path based on unit type
       const isElectricalTheoryUnit = unit.includes('elec2-01') || unit.includes('elec2-04');
       const isInstallationMethodsUnit = unit.includes('elec2-05a');
