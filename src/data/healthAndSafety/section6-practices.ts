@@ -10,17 +10,20 @@ export const safeWorkingPracticesSection: SectionData = {
       {
         id: "1",
         title: "Safe Isolation Procedures",
-        route: "/subsection/6/1"
+        content: "Safe isolation is essential before working on electrical installations to prevent electric shock.",
+        keyPoints: ["Follow the proper isolation sequence", "Verify isolation with approved testing equipment", "Use lock-off devices"]
       },
       {
         id: "2",
         title: "Personal Protective Equipment",
-        route: "/subsection/6/2"
+        content: "Appropriate PPE provides a critical layer of protection against electrical and other hazards.",
+        keyPoints: ["Select the correct PPE for the task", "Inspect PPE before each use", "Maintain and store PPE properly"]
       },
       {
         id: "3",
         title: "Manual Handling Techniques",
-        route: "/subsection/6/3"
+        content: "Proper manual handling techniques prevent injuries when moving equipment and materials.",
+        keyPoints: ["Assess loads before lifting", "Use proper lifting techniques", "Utilize mechanical aids when available"]
       }
     ]
   }

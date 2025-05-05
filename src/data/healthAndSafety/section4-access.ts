@@ -10,17 +10,20 @@ export const accessEquipmentSection: SectionData = {
       {
         id: "1",
         title: "Ladder Safety",
-        route: "/subsection/4/1"
+        content: "Proper ladder selection, inspection, and use is critical to preventing falls and injuries.",
+        keyPoints: ["Always inspect ladders before use", "Maintain three points of contact", "Position ladders at the correct angle"]
       },
       {
         id: "2",
         title: "Scaffolding and Platforms",
-        route: "/subsection/4/2"
+        content: "Scaffolding and platforms must be properly erected, inspected, and maintained to ensure worker safety.",
+        keyPoints: ["Only use scaffolding erected by trained personnel", "Inspect scaffolding before each use", "Ensure platforms are fully boarded"]
       },
       {
         id: "3",
         title: "Equipment Inspection",
-        route: "/subsection/4/3"
+        content: "Regular inspection of access equipment helps identify defects and prevent accidents.",
+        keyPoints: ["Follow manufacturer's inspection guidelines", "Document all inspections", "Remove defective equipment from service"]
       }
     ]
   }

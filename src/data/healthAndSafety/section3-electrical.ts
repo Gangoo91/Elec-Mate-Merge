@@ -10,17 +10,20 @@ export const electricalSafetySection: SectionData = {
       {
         id: "1",
         title: "Electrical Safety Fundamentals",
-        route: "/subsection/3/1"
+        content: "Understanding electrical hazards and safety principles is fundamental to preventing accidents in electrical work.",
+        keyPoints: ["Understand electrical shock risks", "Apply proper isolation procedures", "Use appropriate safety equipment"]
       },
       {
         id: "2",
         title: "Risk Assessment in Electrical Work",
-        route: "/subsection/3/2"
+        content: "Thorough risk assessments help identify and mitigate electrical hazards before work begins.",
+        keyPoints: ["Identify all potential hazards", "Evaluate risks systematically", "Implement appropriate control measures"]
       },
       {
         id: "3",
         title: "Special Installations",
-        route: "/subsection/3/3"
+        content: "Special installations require additional safety considerations due to their unique hazards.",
+        keyPoints: ["Follow specific regulations for special locations", "Implement enhanced safety measures", "Conduct specialized risk assessments"]
       }
     ]
   }

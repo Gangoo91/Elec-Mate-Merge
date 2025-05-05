@@ -10,17 +10,20 @@ export const safeWorkingEnvironmentSection: SectionData = {
       {
         id: "1",
         title: "Workplace Inspection Procedures",
-        route: "/subsection/2/1"
+        content: "Regular workplace inspections help identify potential hazards and ensure compliance with health and safety regulations.",
+        keyPoints: ["Document all inspection findings", "Address identified hazards promptly", "Review inspection procedures regularly"]
       },
       {
         id: "2",
         title: "Documentation and Record-Keeping",
-        route: "/subsection/2/2"
+        content: "Proper documentation is essential for maintaining safety standards and demonstrating compliance with regulations.",
+        keyPoints: ["Maintain up-to-date risk assessments", "Keep records of all safety training", "Document incident investigations"]
       },
       {
         id: "3",
         title: "Safety Communication Systems",
-        route: "/subsection/2/3"
+        content: "Effective communication systems ensure that safety information is shared throughout the workplace.",
+        keyPoints: ["Implement clear reporting procedures", "Use visual safety indicators", "Conduct regular safety briefings"]
       }
     ]
   }
