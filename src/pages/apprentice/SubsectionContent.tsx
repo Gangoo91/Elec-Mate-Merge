@@ -29,8 +29,8 @@ const SubsectionContent = () => {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in bg-[#121212]">
-      <div className="mb-6">
+    <div className="space-y-6 animate-fade-in bg-[#121212] px-4 md:px-6 max-w-4xl mx-auto">
+      <div className="mb-6 pt-4">
         <BackButton 
           courseSlug={courseSlug} 
           unitSlug={unitSlug} 

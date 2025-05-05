@@ -28,40 +28,40 @@ const Subsection1_3 = ({
           subsectionId={subsectionId}
         />
         
-        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-4 md:p-6 space-y-4">
           <h3 className="text-xl font-bold text-elec-yellow flex items-center">
             <Home className="h-5 w-5 mr-2" />
             Notifiable Work
           </h3>
           
           <div className="space-y-4">
-            <p>
+            <p className="text-sm md:text-base">
               The following electrical work must be notified to building control unless carried out by a registered competent person:
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div className="border border-elec-yellow/20 rounded p-3">
+              <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
                 <h4 className="font-semibold text-white mb-2">Installation of New Circuits</h4>
                 <p className="text-sm">
                   Any new circuit installation in a domestic property, regardless of the intended use.
                 </p>
               </div>
               
-              <div className="border border-elec-yellow/20 rounded p-3">
+              <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
                 <h4 className="font-semibold text-white mb-2">Consumer Unit Replacements</h4>
                 <p className="text-sm">
                   Replacing a consumer unit or distribution board.
                 </p>
               </div>
               
-              <div className="border border-elec-yellow/20 rounded p-3">
+              <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
                 <h4 className="font-semibold text-white mb-2">Work in Special Locations</h4>
                 <p className="text-sm">
                   Any work in bathrooms, shower rooms, swimming pools, or hot tub installations.
                 </p>
               </div>
               
-              <div className="border border-elec-yellow/20 rounded p-3">
+              <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
                 <h4 className="font-semibold text-white mb-2">Alterations to Existing Circuits</h4>
                 <p className="text-sm">
                   In special locations or when adding significant loads to existing circuits.
@@ -71,36 +71,38 @@ const Subsection1_3 = ({
           </div>
         </div>
         
-        <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
+        <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-4 md:p-6">
           <h3 className="text-xl font-bold text-elec-yellow mb-4">Competent Person Schemes</h3>
           
           <div className="space-y-4">
-            <p>
+            <p className="text-sm md:text-base">
               Registered competent persons can self-certify their work without needing building control notification. Main schemes include:
             </p>
             
             <ul className="list-disc pl-5 space-y-2">
               <li>
-                <span className="font-medium">NICEIC</span>
+                <span className="font-medium text-white">NICEIC</span>
                 <p className="text-sm mt-1">National Inspection Council for Electrical Installation Contracting</p>
               </li>
               <li>
-                <span className="font-medium">ELECSA</span>
+                <span className="font-medium text-white">ELECSA</span>
                 <p className="text-sm mt-1">Part of Certsure LLP alongside NICEIC</p>
               </li>
               <li>
-                <span className="font-medium">NAPIT</span>
+                <span className="font-medium text-white">NAPIT</span>
                 <p className="text-sm mt-1">National Association of Professional Inspectors and Testers</p>
               </li>
               <li>
-                <span className="font-medium">STROMA</span>
+                <span className="font-medium text-white">STROMA</span>
                 <p className="text-sm mt-1">Certification services for building standards</p>
               </li>
             </ul>
             
-            <p className="mt-4 bg-elec-dark/50 p-3 rounded border border-elec-yellow/20">
-              <strong>Note:</strong> Upon completion of notifiable work, registered competent persons must issue an Electrical Installation Certificate or Minor Works Certificate to the customer and register the work with their scheme provider.
-            </p>
+            <div className="mt-4 bg-elec-dark/50 p-3 rounded border border-elec-yellow/20">
+              <p className="text-sm">
+                <strong>Note:</strong> Upon completion of notifiable work, registered competent persons must issue an Electrical Installation Certificate or Minor Works Certificate to the customer and register the work with their scheme provider.
+              </p>
+            </div>
           </div>
         </div>
       </div>

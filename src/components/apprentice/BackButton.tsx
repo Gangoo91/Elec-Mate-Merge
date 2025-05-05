@@ -48,11 +48,11 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
   return (
     <Button 
       variant="outline" 
-      className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+      className="border-elec-yellow/30 hover:bg-elec-yellow/10 px-4 py-2 h-auto text-sm md:text-base flex items-center gap-2 w-full md:w-auto"
       onClick={handleBackClick}
     >
-      <ArrowLeft className="mr-2 h-4 w-4" />
-      Back to Section
+      <ArrowLeft className="h-4 w-4 flex-shrink-0" />
+      <span>Back to Section</span>
     </Button>
   );
 };

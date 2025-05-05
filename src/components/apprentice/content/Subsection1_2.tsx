@@ -28,7 +28,7 @@ const Subsection1_2 = ({
           subsectionId={subsectionId}
         />
         
-        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-4 md:p-6 space-y-4">
           <h3 className="text-xl font-bold text-elec-yellow flex items-center">
             <Book className="h-5 w-5 mr-2" />
             Structure of BS 7671
@@ -37,53 +37,53 @@ const Subsection1_2 = ({
           <div className="space-y-4">
             <div>
               <h4 className="font-semibold text-white mb-2">Part 1: Scope, Object and Fundamental Principles</h4>
-              <p>
+              <p className="text-sm md:text-base">
                 Establishes the purpose of the regulations and fundamental safety principles.
               </p>
             </div>
             
             <div>
               <h4 className="font-semibold text-white mb-2">Part 4: Protection for Safety</h4>
-              <p>
+              <p className="text-sm md:text-base">
                 Covers protection against electric shock, thermal effects, overcurrent, and more.
               </p>
             </div>
             
             <div>
               <h4 className="font-semibold text-white mb-2">Part 6: Inspection and Testing</h4>
-              <p>
+              <p className="text-sm md:text-base">
                 Details requirements for initial verification and periodic inspection of electrical installations.
               </p>
             </div>
             
             <div>
               <h4 className="font-semibold text-white mb-2">Part 7: Special Installations or Locations</h4>
-              <p>
+              <p className="text-sm md:text-base">
                 Provides additional requirements for installations in special locations like bathrooms, swimming pools, etc.
               </p>
             </div>
           </div>
         </div>
         
-        <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
+        <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-4 md:p-6">
           <h3 className="text-xl font-bold text-elec-yellow mb-4">Legal Status</h3>
           
           <div className="space-y-4">
-            <p>
+            <p className="text-sm md:text-base">
               Though BS 7671 is not statutory law, it is the recognized standard for demonstrating compliance with legal requirements established by:
             </p>
             
             <ul className="list-disc pl-5 space-y-2">
               <li>
-                <span className="font-medium">Electricity at Work Regulations 1989</span>
+                <span className="font-medium text-white">Electricity at Work Regulations 1989</span>
                 <p className="text-sm mt-1">Following BS 7671 helps satisfy the "prevention of danger" requirements.</p>
               </li>
               <li>
-                <span className="font-medium">Building Regulations</span>
+                <span className="font-medium text-white">Building Regulations</span>
                 <p className="text-sm mt-1">Specifically Part P for domestic installations in England and Wales.</p>
               </li>
               <li>
-                <span className="font-medium">Electricity Safety, Quality and Continuity Regulations 2002</span>
+                <span className="font-medium text-white">Electricity Safety, Quality and Continuity Regulations 2002</span>
                 <p className="text-sm mt-1">For connections to distribution networks.</p>
               </li>
             </ul>

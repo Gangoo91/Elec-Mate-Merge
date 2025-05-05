@@ -76,7 +76,7 @@ const CourseContentSection = ({
       );
     }
     
-    return <p className="text-muted-foreground">{text}</p>;
+    return <p className="text-muted-foreground text-sm md:text-base">{text}</p>;
   };
   
   return (
