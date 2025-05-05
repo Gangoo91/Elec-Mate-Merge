@@ -100,20 +100,19 @@ const CourseDetail = () => {
         />
       )}
       
-      {/* Course Content - Only show on main course page and unit pages, not on section pages */}
-      {!(isSubsectionPage) && (
-        <CourseContent 
-          isUnitPage={isUnitPage}
-          selectedUnit={selectedUnit}
-          courseSlug={courseSlug}
-          selectedUnitData={selectedUnitData}
-          completedResources={completedResources}
-          onUnitSelect={handleUnitSelect}
-          onResourceClick={handleResourceClick}
-          onToggleResourceComplete={handleToggleResourceComplete}
-          units={ealLevel2Units}
-        />
-      )}
+      {/* Course Content - show on all pages including section pages */}
+      <CourseContent 
+        isUnitPage={isUnitPage}
+        selectedUnit={selectedUnit}
+        courseSlug={courseSlug}
+        selectedUnitData={selectedUnitData}
+        completedResources={completedResources}
+        onUnitSelect={handleUnitSelect}
+        onResourceClick={handleResourceClick}
+        onToggleResourceComplete={handleToggleResourceComplete}
+        units={ealLevel2Units}
+        showOnSectionPages={isSubsectionPage} // New prop to control visibility on section pages
+      />
     </div>
   );
 };

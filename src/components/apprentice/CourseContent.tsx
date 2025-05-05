@@ -14,6 +14,7 @@ interface CourseContentProps {
   onResourceClick: (type: string) => void;
   onToggleResourceComplete: (resourceId: string) => void;
   units: CourseUnit[];
+  showOnSectionPages?: boolean;
 }
 
 const CourseContent = ({
@@ -25,8 +26,14 @@ const CourseContent = ({
   onUnitSelect,
   onResourceClick,
   onToggleResourceComplete,
-  units
+  units,
+  showOnSectionPages = false
 }: CourseContentProps) => {
+  // If we're on a section page and showOnSectionPages is false, don't render anything
+  if (!showOnSectionPages && isUnitPage && location.pathname.includes('/section/')) {
+    return null;
+  }
+
   return (
     <div className="space-y-6">
       {/* Course units grid - show on the main course page or if no unit is selected */}

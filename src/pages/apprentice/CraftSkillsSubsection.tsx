@@ -8,7 +8,7 @@ import type { Subsection } from "@/data/healthAndSafety/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const CraftSkillsSubsection = () => {
-  const { sectionId, subsectionId } = useParams();
+  const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
   const navigate = useNavigate();
   const [subsectionData, setSubsectionData] = useState<Subsection | null>(null);
   const [sectionTitle, setSectionTitle] = useState("");
@@ -41,7 +41,12 @@ const CraftSkillsSubsection = () => {
   }, [sectionId, subsectionId]);
 
   const handleBackClick = () => {
-    navigate(-1);
+    if (courseSlug && unitSlug) {
+      // Navigate directly back to unit page
+      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`);
+    } else {
+      navigate(-1);
+    }
   };
   
   const markAsComplete = () => {
@@ -69,7 +74,7 @@ const CraftSkillsSubsection = () => {
           onClick={handleBackClick}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
+          Back to Unit
         </Button>
       </div>
       

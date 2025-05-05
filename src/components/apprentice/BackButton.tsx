@@ -6,20 +6,17 @@ import { useNavigate } from "react-router-dom";
 interface BackButtonProps {
   courseSlug?: string;
   unitSlug?: string;
-  sectionId?: string;
 }
 
-const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
+const BackButton = ({ courseSlug, unitSlug }: BackButtonProps) => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
-    if (courseSlug && unitSlug && sectionId) {
-      // Navigate back to section
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}`);
-    } else if (courseSlug && unitSlug) {
-      // Fallback to course home
+    if (courseSlug && unitSlug) {
+      // Always navigate back to unit page directly
       navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`);
     } else {
+      // Fallback to going back one step
       navigate(-1);
     }
   };
@@ -31,7 +28,7 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
       onClick={handleBackClick}
     >
       <ArrowLeft className="mr-2 h-4 w-4" />
-      Back to Section
+      Back to Unit
     </Button>
   );
 };
