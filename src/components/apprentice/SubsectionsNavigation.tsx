@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
@@ -20,10 +20,18 @@ const SubsectionsNavigation = ({
   currentSubsectionId,
   navigateToSubsection 
 }: SubsectionsNavigationProps) => {
+  const { courseSlug, unitSlug, sectionId } = useParams();
+  
   // Find current subsection index
   const currentIndex = subsections.findIndex(sub => sub.id === currentSubsectionId);
   const prevSubsection = currentIndex > 0 ? subsections[currentIndex - 1] : null;
   const nextSubsection = currentIndex < subsections.length - 1 ? subsections[currentIndex + 1] : null;
+  
+  // Determine the "All Subsections" link based on the unit type
+  const isElectricalTheoryUnit = unitSlug?.includes('elec2-01') || unitSlug?.includes('elec2-04');
+  const allSubsectionsLink = isElectricalTheoryUnit
+    ? `/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}`
+    : `/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/installation-method/${sectionId}`;
   
   return (
     <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-4">
@@ -46,7 +54,7 @@ const SubsectionsNavigation = ({
           className="border-elec-yellow/30 hover:bg-elec-yellow/10"
           asChild
         >
-          <Link to="../">All Subsections</Link>
+          <Link to={allSubsectionsLink}>All Subsections</Link>
         </Button>
       </div>
       

@@ -49,7 +49,7 @@ export function useSubsectionContent({
   useEffect(() => {
     if (sectionId && subsectionId) {
       // Determine which unit we're working with
-      const isElectricalTheoryUnit = unitSlug?.includes('elec2-04');
+      const isElectricalTheoryUnit = unitSlug?.includes('elec2-01') || unitSlug?.includes('elec2-04');
       const isInstallationMethodsUnit = unitSlug?.includes('elec2-05a');
       
       let section;
@@ -145,8 +145,16 @@ export function useSubsectionContent({
   
   const navigateToSubsection = (subId: string) => {
     if (courseSlug && unitSlug && sectionId) {
-      // Navigate to another subsection within the same section
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subId}`);
+      // Based on unit type, navigate to the appropriate path
+      const isElectricalTheoryUnit = unitSlug?.includes('elec2-01') || unitSlug?.includes('elec2-04');
+      
+      if (isElectricalTheoryUnit) {
+        // For electrical theory units
+        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subId}`);
+      } else {
+        // For installation methods unit
+        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/installation-method/${sectionId}/subsection/${subId}`);
+      }
     }
   };
 

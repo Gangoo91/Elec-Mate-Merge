@@ -1,9 +1,9 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
+import type { SectionData, Subsection } from "@/data/healthAndSafety/types";
+import { installationMethodsContent } from "@/data/installationMethods/index";
 import { 
-  electricalTheorySection,
   basicElectricalTheorySection,
   technicalInformationSection,
   wiringSectionsSection,
@@ -15,8 +15,6 @@ import {
   overcurrentProtectionSection,
   circuitDesignSection
 } from "@/data/electricalTheory";
-import { installationMethodsSection } from "@/data/electricalTheory/section-installation-methods";
-import type { SectionData, Subsection } from "@/data/healthAndSafety/types";
 
 interface UseSectionContentProps {
   courseSlug?: string;
@@ -24,33 +22,35 @@ interface UseSectionContentProps {
   sectionId?: string;
 }
 
+interface UseSectionContentResult {
+  sectionData: SectionData | null;
+  loading: boolean;
+  handleBackClick: () => void;
+  navigateToSubsection: (subsection: Subsection) => void;
+}
+
 export function useSectionContent({
-  courseSlug, 
-  unitSlug, 
+  courseSlug,
+  unitSlug,
   sectionId
-}: UseSectionContentProps) {
+}: UseSectionContentProps): UseSectionContentResult {
   const navigate = useNavigate();
   const [sectionData, setSectionData] = useState<SectionData | null>(null);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     if (sectionId && unitSlug) {
-      // Determine which content to use based on unit code
-      const isHealthSafetyUnit = unitSlug.includes('elec2-01');
-      const isElectricalTheoryUnit = unitSlug.includes('elec2-04');
+      // Determine which unit we're working with
+      const isElectricalTheoryUnit = unitSlug.includes('elec2-01') || unitSlug.includes('elec2-04');
       const isInstallationMethodsUnit = unitSlug.includes('elec2-05a');
-      
-      // Find the section with matching ID from the appropriate content source
-      let section = null;
-      
-      if (isHealthSafetyUnit) {
-        section = healthAndSafetyContent.find(
-          section => section.sectionNumber.toLowerCase().replace(/\//g, "-") === sectionId
-        );
-      } else if (isElectricalTheoryUnit) {
-        // For electrical theory, match the section by ID
+
+      let section;
+
+      // Find the section based on unit type
+      if (isElectricalTheoryUnit) {
+        // For electrical theory, find the section based on the sectionId
         switch(sectionId) {
-          case "1":
+          case "1": 
             section = basicElectricalTheorySection;
             break;
           case "2":
@@ -80,82 +80,26 @@ export function useSectionContent({
           case "10":
             section = circuitDesignSection;
             break;
-          case "04": // Main section
-            section = electricalTheorySection;
-            break;
           default:
-            // For subsections (like "1.1"), we need to find the parent section and then the subsection
-            const sectionNumber = sectionId.split('.')[0];
-            const subsectionId = sectionId;
-            let parentSection;
-            
-            switch(sectionNumber) {
-              case "1": parentSection = basicElectricalTheorySection; break;
-              case "2": parentSection = technicalInformationSection; break;
-              case "3": parentSection = wiringSectionsSection; break;
-              case "4": parentSection = servicePositionSection; break;
-              case "5": parentSection = lightingCircuitsSection; break;
-              case "6": parentSection = ringRadialCircuitsSection; break;
-              case "7": parentSection = circuitRequirementsSection; break;
-              case "8": parentSection = earthingBondingSection; break;
-              case "9": parentSection = overcurrentProtectionSection; break;
-              case "10": parentSection = circuitDesignSection; break;
-              default: parentSection = null;
-            }
-            
-            if (parentSection) {
-              const foundSubsection = parentSection.content.subsections.find(
-                sub => sub.id === subsectionId
-              );
-              
-              if (foundSubsection) {
-                // Create a section-like structure for the subsection
-                section = {
-                  sectionNumber: subsectionId,
-                  title: foundSubsection.title,
-                  content: {
-                    subsections: [foundSubsection],
-                    icon: parentSection.content.icon
-                  }
-                };
-              }
-            }
+            section = null;
         }
       } else if (isInstallationMethodsUnit) {
-        // For installation methods, use the main section data
-        if (sectionId === "05a") {
-          section = installationMethodsSection;
-        } else {
-          // For subsections, get the data from the main section
-          const subsectionId = sectionId;
-          const foundSubsection = installationMethodsSection.content.subsections.find(
-            sub => sub.id === subsectionId
-          );
-          
-          if (foundSubsection) {
-            // Create a section-like structure for the subsection
-            section = {
-              sectionNumber: subsectionId,
-              title: foundSubsection.title,
-              content: {
-                subsections: [foundSubsection],
-                icon: installationMethodsSection.content.icon
-              }
-            };
-          }
-        }
+        // For installation methods, find the section by sectionNumber
+        section = installationMethodsContent.find(
+          section => section.sectionNumber === sectionId
+        );
       }
-      
+
       if (section) {
         setSectionData(section);
       }
+      
       setLoading(false);
     }
   }, [sectionId, unitSlug]);
 
   const handleBackClick = () => {
     if (courseSlug && unitSlug) {
-      // Navigate back to the unit page rather than the main course page
       navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`);
     } else {
       navigate(-1);
@@ -164,8 +108,17 @@ export function useSectionContent({
 
   const navigateToSubsection = (subsection: Subsection) => {
     if (courseSlug && unitSlug && sectionId) {
-      // Updated navigation - go to subsection page instead of section page
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subsection.id}`);
+      // Determine the correct navigation path based on unit type
+      const isElectricalTheoryUnit = unitSlug.includes('elec2-01') || unitSlug.includes('elec2-04');
+      const isInstallationMethodsUnit = unitSlug.includes('elec2-05a');
+      
+      if (isElectricalTheoryUnit) {
+        // For electrical theory units
+        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subsection.id}`);
+      } else if (isInstallationMethodsUnit) {
+        // For installation methods unit
+        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/installation-method/${sectionId}/subsection/${subsection.id}`);
+      }
     }
   };
 
@@ -173,6 +126,6 @@ export function useSectionContent({
     sectionData,
     loading,
     handleBackClick,
-    navigateToSubsection,
+    navigateToSubsection
   };
 }
