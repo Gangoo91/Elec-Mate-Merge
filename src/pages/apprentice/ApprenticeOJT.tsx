@@ -3,9 +3,9 @@ import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
 import OJTHeader from "@/components/apprentice/time-tracking/ojt/OJTHeader";
-import WeeklyProgressCard from "@/components/apprentice/time-tracking/ojt/WeeklyProgressCard";
 import TrainingManagementCard from "@/components/apprentice/time-tracking/ojt/TrainingManagementCard";
 import TrainingGuideCard from "@/components/apprentice/time-tracking/ojt/TrainingGuideCard";
+import OJTRatioCard from "@/components/apprentice/OJTRatioCard";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const ApprenticeOJT = () => {
@@ -42,22 +42,10 @@ const ApprenticeOJT = () => {
   }, []);
 
   const handleDownloadReport = () => {
-    // In a real implementation, this would generate a PDF or CSV report
     toast({
       title: "Report Generated",
       description: "Your training report has been downloaded successfully."
     });
-  };
-
-  const handleLogManualHours = () => {
-    setActiveTab("recent");
-    // Focus on form input after tab switch
-    setTimeout(() => {
-      const firstInput = document.querySelector(".time-entry-form input");
-      if (firstInput) {
-        (firstInput as HTMLInputElement).focus();
-      }
-    }, 100);
   };
 
   const handleUploadEvidence = () => {
@@ -65,28 +53,27 @@ const ApprenticeOJT = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in pb-8">
+    <div className="space-y-4 pb-8 animate-fade-in">
       <OJTHeader handleDownloadReport={handleDownloadReport} />
 
-      {/* Training Guide Card - Moved to the top */}
-      <TrainingGuideCard />
-
-      {/* Responsive grid layout that stacks on mobile */}
-      <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-3'} gap-6`}>
-        <WeeklyProgressCard 
-          weeklyHours={weeklyHours}
-          targetHours={targetHours}
-          courseHours={courseHours}
-          totalTime={totalTime}
-          addTimeEntry={addTimeEntry}
-          handleUploadEvidence={handleUploadEvidence}
-        />
-
+      {/* Mobile View shows both cards stacked */}
+      <div className="space-y-4">
+        {/* OJT Ratio Card - only mobile */}
+        {isMobile && (
+          <OJTRatioCard />
+        )}
+        
+        {/* Training Management Card - Main Card */}
         <TrainingManagementCard 
-          initialActiveTab={activeTab} 
-          className={isMobile ? "" : "lg:col-span-2"}
+          initialActiveTab={activeTab}
+          className="border-elec-yellow/20"
         />
       </div>
+
+      {/* Guide Card Hidden on Mobile */}
+      {!isMobile && (
+        <TrainingGuideCard />
+      )}
     </div>
   );
 };

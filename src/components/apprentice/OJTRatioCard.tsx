@@ -1,16 +1,16 @@
 
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { BookOpen } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Clock } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const OJTRatioCard = () => {
   const [totalOJTTime, setTotalOJTTime] = useState(0);
+  const isMobile = useIsMobile();
   
   // Mock data - would come from time tracking system
   const totalWorkTime = 1600; // 40 hours * 40 weeks = 1600 hours per year
   const requiredOJTTime = totalWorkTime * 0.2; // 20% of total time = 320 hours
-  const requiredWeekly = Math.round(requiredOJTTime / 52); // 6.15 hours per week
   
   // Load course time from localStorage
   useEffect(() => {
@@ -29,41 +29,36 @@ const OJTRatioCard = () => {
     // Add to mock data (120 hours) plus course hours
     setTotalOJTTime(120 + courseHours);
   }, []);
-  
-  const percentageComplete = Math.min(100, Math.round((totalOJTTime / requiredOJTTime) * 100));
 
-  return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader className="pb-2">
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle>20% Off-The-Job Training</CardTitle>
-            <CardDescription>EAL Level 2 requirement: 278 hours per year</CardDescription>
+  if (!isMobile) {
+    // Original desktop version
+    return (
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardContent className="pt-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-elec-yellow" />
+              <span className="text-xl font-bold">OJT Progress</span>
+            </div>
+            <div className="text-sm text-muted-foreground">20% requirement</div>
           </div>
-          <BookOpen className="h-5 w-5 text-elec-yellow" />
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          <div className="flex justify-between text-sm">
-            <span>Progress toward required 20%</span>
-            <span className="font-medium">{percentageComplete}%</span>
-          </div>
-          <Progress value={percentageComplete} className="h-2 bg-elec-dark" />
-          <div className="grid grid-cols-2 gap-4 pt-2">
+          <div className="mt-4 grid grid-cols-2 gap-4">
             <div className="rounded-md bg-elec-dark p-2 text-center">
               <div className="text-2xl font-bold text-elec-yellow">{totalOJTTime.toFixed(1)}</div>
               <p className="text-xs text-muted-foreground">Hours logged</p>
             </div>
             <div className="rounded-md bg-elec-dark p-2 text-center">
-              <div className="text-2xl font-bold">{requiredWeekly}</div>
-              <p className="text-xs text-muted-foreground">Hours per week</p>
+              <div className="text-2xl font-bold">{Math.round(requiredOJTTime)}</div>
+              <p className="text-xs text-muted-foreground">Hours required</p>
             </div>
           </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
+        </CardContent>
+      </Card>
+    );
+  }
+  
+  // Mobile version (much simpler as per the screenshot)
+  return null; // We've moved this functionality to the TrainingManagementCard for mobile
 };
 
 export default OJTRatioCard;
