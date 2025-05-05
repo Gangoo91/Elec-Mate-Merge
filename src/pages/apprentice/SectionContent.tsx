@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
@@ -148,7 +147,11 @@ const SectionContent = () => {
 
   const handleBackClick = () => {
     if (courseSlug && unitSlug) {
+      // Fix the navigation path to go back to unit page with the correct URL
       navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`);
+    } else {
+      // Fallback to previous page if parameters are missing
+      navigate(-1);
     }
   };
 
