@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, PlugZap, Power, Socket } from "lucide-react";
+import { CheckCircle, PlugZap, Power, Pocket } from "lucide-react";
 
 interface Subsection7_2Props {
   subsectionId: string;
@@ -23,7 +23,7 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
-              <Socket className="h-5 w-5 mr-2" />
+              <Pocket className="h-5 w-5 mr-2" />
               Socket Outlet Circuits
             </h3>
             <div className="space-y-3">
