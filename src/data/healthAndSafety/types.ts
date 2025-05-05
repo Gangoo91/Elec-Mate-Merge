@@ -9,13 +9,14 @@ export interface Subsection {
 export interface SectionContentData {
   subsections: Subsection[];
   icon: "safety" | "info" | "construction" | "warning" | "hardhat" | "list" | "section" | "cable" | "socket" | "bulb" | "test" | "tools";
+  sectionNumber?: string;
+  title?: string;
+  description?: string;
+  isMainSection?: boolean;
 }
 
 export interface SectionData {
   sectionNumber: string;
   title: string;
-  content: {
-    subsections: Subsection[];
-    icon: "safety" | "info" | "construction" | "warning" | "hardhat" | "list" | "section" | "cable" | "socket" | "bulb" | "test" | "tools";
-  };
+  content: SectionContentData;
 }

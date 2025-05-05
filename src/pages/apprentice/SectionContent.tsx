@@ -121,7 +121,7 @@ const SectionContent = () => {
                     description={subsection.content}
                     keyPoints={subsection.keyPoints}
                     icon={sectionData.content.icon}
-                    isMainSection={true}
+                    isMainSection={sectionData.content.isMainSection || false}
                     subsectionId={subsection.id}
                   />
                 </div>
