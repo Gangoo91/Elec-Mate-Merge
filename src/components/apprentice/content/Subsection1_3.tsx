@@ -24,7 +24,7 @@ const Subsection1_3 = ({
             "Registered competent persons can self-certify work",
             "Special locations have additional requirements"
           ]}
-          icon="home"
+          icon="section"
           subsectionId={subsectionId}
         />
         
