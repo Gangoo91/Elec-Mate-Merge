@@ -10,8 +10,26 @@ import Subsection3_1 from "./content/Subsection3_1";
 import Subsection3_2 from "./content/Subsection3_2";
 import Subsection3_3 from "./content/Subsection3_3";
 import Subsection4_1 from "./content/Subsection4_1";
+import Subsection4_2 from "./content/Subsection4_2";
+import Subsection4_3 from "./content/Subsection4_3";
 import Subsection5_1 from "./content/Subsection5_1";
+import Subsection5_2 from "./content/Subsection5_2";
+import Subsection5_3 from "./content/Subsection5_3";
 import Subsection6_1 from "./content/Subsection6_1";
+import Subsection6_2 from "./content/Subsection6_2";
+import Subsection6_3 from "./content/Subsection6_3";
+import Subsection7_1 from "./content/Subsection7_1";
+import Subsection7_2 from "./content/Subsection7_2";
+import Subsection7_3 from "./content/Subsection7_3";
+import Subsection8_1 from "./content/Subsection8_1";
+import Subsection8_2 from "./content/Subsection8_2";
+import Subsection8_3 from "./content/Subsection8_3";
+import Subsection9_1 from "./content/Subsection9_1";
+import Subsection9_2 from "./content/Subsection9_2";
+import Subsection9_3 from "./content/Subsection9_3";
+import Subsection10_1 from "./content/Subsection10_1";
+import Subsection10_2 from "./content/Subsection10_2";
+import Subsection10_3 from "./content/Subsection10_3";
 import ElectricalSymbolsDisplay from "./ElectricalSymbolsDisplay";
 import InteractiveLightDemo from "./InteractiveLightDemo";
 import { useAuth } from "@/contexts/AuthContext";
@@ -36,7 +54,7 @@ const SubsectionLearningContent = ({
   const isContentLocked = !isSubscribed && !isTrialActive && !isDevelopmentMode;
   
   // Premium sections that require subscription after trial
-  const premiumSections = ["3.1", "3.2", "3.3", "4.1", "5.1", "6.1"];
+  const premiumSections = ["3.1", "3.2", "3.3", "4.1", "4.2", "4.3", "5.2", "5.3", "6.2", "6.3", "7.2", "7.3", "8.1", "8.2", "8.3", "9.1", "9.2", "9.3", "10.1", "10.2", "10.3"];
   const isPremiumContent = premiumSections.includes(subsectionId);
   
   // If content is locked and this is premium content, show subscription prompt
@@ -61,13 +79,11 @@ const SubsectionLearningContent = ({
     switch (subsectionId) {
       case "1.1":
         return (
-          <>
-            <Subsection1_1 
-              subsectionId={subsectionId} 
-              isCompleted={isCompleted} 
-              markAsComplete={markAsComplete}
-            />
-          </>
+          <Subsection1_1 
+            subsectionId={subsectionId} 
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
         );
       case "1.2":
         return (
@@ -144,6 +160,22 @@ const SubsectionLearningContent = ({
             markAsComplete={markAsComplete}
           />
         );
+      case "4.2":
+        return (
+          <Subsection4_2
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "4.3":
+        return (
+          <Subsection4_3
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
       case "5.1":
         return (
           <Subsection5_1
@@ -152,9 +184,137 @@ const SubsectionLearningContent = ({
             markAsComplete={markAsComplete}
           />
         );
+      case "5.2":
+        return (
+          <Subsection5_2
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "5.3":
+        return (
+          <Subsection5_3
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
       case "6.1":
         return (
           <Subsection6_1
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "6.2":
+        return (
+          <Subsection6_2
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "6.3":
+        return (
+          <Subsection6_3
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "7.1":
+        return (
+          <Subsection7_1
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "7.2":
+        return (
+          <Subsection7_2
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "7.3":
+        return (
+          <Subsection7_3
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "8.1":
+        return (
+          <Subsection8_1
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "8.2":
+        return (
+          <Subsection8_2
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "8.3":
+        return (
+          <Subsection8_3
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "9.1":
+        return (
+          <Subsection9_1
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "9.2":
+        return (
+          <Subsection9_2
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "9.3":
+        return (
+          <Subsection9_3
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "10.1":
+        return (
+          <Subsection10_1
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "10.2":
+        return (
+          <Subsection10_2
+            subsectionId={subsectionId}
+            isCompleted={isCompleted} 
+            markAsComplete={markAsComplete}
+          />
+        );
+      case "10.3":
+        return (
+          <Subsection10_3
             subsectionId={subsectionId}
             isCompleted={isCompleted} 
             markAsComplete={markAsComplete}

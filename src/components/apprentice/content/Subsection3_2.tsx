@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Wrench, AlertTriangle } from "lucide-react";
+import { CheckCircle, Box, Layers, CableMeasure } from "lucide-react";
 
 interface Subsection3_2Props {
   subsectionId: string;
@@ -12,74 +12,84 @@ interface Subsection3_2Props {
 const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection3_2Props) => {
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-elec-yellow">Termination and Connection Methods</h2>
+      <h2 className="text-2xl font-bold text-elec-yellow">Containment Systems</h2>
       
-      <div className="space-y-5">
+      <div className="space-y-4">
         <p>
-          Proper termination and connection techniques are critical for electrical safety and system reliability.
-          Incorrect terminations can lead to high resistance joints that overheat and potentially cause fires.
+          Containment systems provide physical protection and support for cables in electrical installations.
+          Understanding the different types of containment systems and their applications is essential for proper installation.
         </p>
         
-        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-5 mt-6">
-          <h3 className="text-xl font-bold text-elec-yellow">Common Termination Methods</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+            <h3 className="text-xl font-bold text-elec-yellow flex items-center">
+              <Box className="h-5 w-5 mr-2" />
+              Conduit Systems
+            </h3>
+            <div className="space-y-3">
+              <h4 className="font-semibold">Metal Conduit</h4>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>High mechanical protection and electromagnetic shielding</li>
+                <li>Class 1 - standard steel conduit (BS 4568)</li>
+                <li>Class 4 - galvanized for corrosion resistance</li>
+                <li>Requires appropriate bending tools and techniques</li>
+                <li>Must be earthed for safety</li>
+              </ul>
+              
+              <h4 className="font-semibold mt-4">PVC Conduit</h4>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Excellent corrosion resistance and lower cost</li>
+                <li>Available in light, medium, and heavy grades</li>
+                <li>Can be heated for bending</li>
+                <li>Less mechanical protection than metal</li>
+                <li>Expands/contracts with temperature changes</li>
+              </ul>
+              
+              <div className="mt-4 pt-4 border-t border-elec-yellow/20">
+                <h4 className="font-semibold text-elec-yellow mb-2">Installation Considerations:</h4>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>Maximum support spacing: 1.2m for PVC, 1.5m for metal</li>
+                  <li>Minimum bend radius typically 4x external diameter</li>
+                  <li>Use appropriate fittings for changes in direction</li>
+                  <li>Allow for expansion joints in long PVC runs</li>
+                  <li>Space requirement: 45% maximum fill ratio for new installations</li>
+                </ul>
+              </div>
+            </div>
+          </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3 border-l-2 border-elec-yellow/40 pl-4">
-              <h4 className="font-semibold text-white">Screw Terminals</h4>
-              <p>Widely used in wiring accessories and distribution boards. The conductor is inserted into a terminal and secured with a screw.</p>
+          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+            <h3 className="text-xl font-bold text-elec-yellow flex items-center">
+              <Layers className="h-5 w-5 mr-2" />
+              Trunking and Cable Tray
+            </h3>
+            <div className="space-y-3">
+              <h4 className="font-semibold">Metal and PVC Trunking</h4>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Rectangular containment with removable lids</li>
+                <li>Various sizes and compartmented options</li>
+                <li>Metal trunking requires earthing</li>
+                <li>Mini-trunking for smaller cable runs</li>
+                <li>Special types: skirting, dado, floor, etc.</li>
+              </ul>
               
-              <div className="bg-elec-dark/70 p-3 rounded-md">
-                <h5 className="text-sm font-semibold text-elec-yellow mb-2">Key Points:</h5>
-                <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li>Ensure correct stripping length (typically 10-12mm)</li>
-                  <li>Terminal screws should be tightened to manufacturer's torque specification</li>
-                  <li>Check that no copper strands remain outside the terminal</li>
-                  <li>Avoid over-tightening that can damage conductors</li>
-                </ul>
-              </div>
-            </div>
-            
-            <div className="space-y-3 border-l-2 border-elec-yellow/40 pl-4">
-              <h4 className="font-semibold text-white">Spring-Loaded Terminals</h4>
-              <p>Push-fit terminations that use spring pressure to maintain contact with the conductor.</p>
+              <h4 className="font-semibold mt-4">Cable Tray and Basket</h4>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Open support system for larger cable installations</li>
+                <li>Perforated or ladder types for different applications</li>
+                <li>Cable basket offers flexibility for complex routes</li>
+                <li>High load capacity when properly supported</li>
+                <li>Requires cable fixing at appropriate intervals</li>
+              </ul>
               
-              <div className="bg-elec-dark/70 p-3 rounded-md">
-                <h5 className="text-sm font-semibold text-elec-yellow mb-2">Key Points:</h5>
-                <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li>Ensure correct stripping length as specified</li>
-                  <li>Insert the conductor fully into the terminal</li>
-                  <li>For stranded conductors, consider ferrules for better connection</li>
-                  <li>Check the release mechanism if conductor removal is needed</li>
-                </ul>
-              </div>
-            </div>
-            
-            <div className="space-y-3 border-l-2 border-elec-yellow/40 pl-4">
-              <h4 className="font-semibold text-white">Crimped Connections</h4>
-              <p>Used for more permanent connections, especially in industrial settings or where vibration is present.</p>
-              
-              <div className="bg-elec-dark/70 p-3 rounded-md">
-                <h5 className="text-sm font-semibold text-elec-yellow mb-2">Key Points:</h5>
-                <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li>Use the correct crimping tool for the terminal type</li>
-                  <li>Match crimp terminal size to conductor size</li>
-                  <li>Ensure the crimp deforms the terminal barrel correctly</li>
-                  <li>Test the connection by pulling gently on the conductor</li>
-                </ul>
-              </div>
-            </div>
-            
-            <div className="space-y-3 border-l-2 border-elec-yellow/40 pl-4">
-              <h4 className="font-semibold text-white">Maintenance-Free Connectors</h4>
-              <p>Connectors that don't require periodic retightening, such as Wago connectors.</p>
-              
-              <div className="bg-elec-dark/70 p-3 rounded-md">
-                <h5 className="text-sm font-semibold text-elec-yellow mb-2">Key Points:</h5>
-                <ul className="list-disc pl-5 space-y-1 text-sm">
-                  <li>Select appropriate connector for the number and size of conductors</li>
-                  <li>Follow manufacturer's guidelines for insertion</li>
-                  <li>Ensure conductors are fully inserted into the connector</li>
-                  <li>Verify the connection by gently pulling on each conductor</li>
+              <div className="mt-4 pt-4 border-t border-elec-yellow/20">
+                <h4 className="font-semibold text-elec-yellow mb-2">Installation Considerations:</h4>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>Support spacing based on load and manufacturer specifications</li>
+                  <li>Maintain separation between power and data cables</li>
+                  <li>Use appropriate fittings for changes in direction</li>
+                  <li>Proper earthing essential for metal systems</li>
+                  <li>Ensure secure fixing to building structure</li>
                 </ul>
               </div>
             </div>
@@ -87,93 +97,65 @@ const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </div>
         
         <div className="mt-8 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <AlertTriangle className="h-6 w-6 text-elec-yellow" />
-            <h3 className="text-xl font-bold text-elec-yellow">Common Termination Errors</h3>
-          </div>
+          <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
+            <CableMeasure className="h-5 w-5 mr-2" />
+            Containment Selection Factors
+          </h3>
           
           <div className="space-y-4">
-            <p>Be aware of these common termination issues that can lead to failures:</p>
+            <p>Selecting the appropriate containment system depends on several factors:</p>
             
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <div className="bg-red-500/20 p-1 rounded-full mt-1">
-                  <Wrench className="h-4 w-4 text-red-400" />
-                </div>
-                <div>
-                  <span className="font-semibold text-white">Insufficient Tightening</span>
-                  <p className="mt-1">Loose connections create high resistance points that can overheat and potentially cause fires.</p>
-                </div>
-              </li>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-3">
+                <h4 className="font-semibold text-white">Environmental Considerations</h4>
+                <ul className="list-disc pl-5 space-y-2">
+                  <li>
+                    <span className="font-medium">Moisture and water exposure</span>
+                    <p className="text-sm mt-1">Use galvanized or non-metallic systems in wet areas</p>
+                  </li>
+                  <li>
+                    <span className="font-medium">Corrosive environments</span>
+                    <p className="text-sm mt-1">PVC or specially coated systems may be required</p>
+                  </li>
+                  <li>
+                    <span className="font-medium">Temperature extremes</span>
+                    <p className="text-sm mt-1">Consider expansion/contraction and material limitations</p>
+                  </li>
+                  <li>
+                    <span className="font-medium">Fire risk areas</span>
+                    <p className="text-sm mt-1">Metal systems or fire-rated non-metallic containment</p>
+                  </li>
+                </ul>
+              </div>
               
-              <li className="flex items-start gap-3">
-                <div className="bg-red-500/20 p-1 rounded-full mt-1">
-                  <Wrench className="h-4 w-4 text-red-400" />
-                </div>
-                <div>
-                  <span className="font-semibold text-white">Over-Tightening</span>
-                  <p className="mt-1">Can damage terminals and conductors, leading to eventual failure of the connection.</p>
-                </div>
-              </li>
-              
-              <li className="flex items-start gap-3">
-                <div className="bg-red-500/20 p-1 rounded-full mt-1">
-                  <Wrench className="h-4 w-4 text-red-400" />
-                </div>
-                <div>
-                  <span className="font-semibold text-white">Improper Stripping</span>
-                  <p className="mt-1">Too much insulation removed can leave bare conductors exposed; too little prevents proper contact.</p>
-                </div>
-              </li>
-              
-              <li className="flex items-start gap-3">
-                <div className="bg-red-500/20 p-1 rounded-full mt-1">
-                  <Wrench className="h-4 w-4 text-red-400" />
-                </div>
-                <div>
-                  <span className="font-semibold text-white">Mixed Metals</span>
-                  <p className="mt-1">Connecting dissimilar metals can lead to galvanic corrosion and eventual connection failure.</p>
-                </div>
-              </li>
-              
-              <li className="flex items-start gap-3">
-                <div className="bg-red-500/20 p-1 rounded-full mt-1">
-                  <Wrench className="h-4 w-4 text-red-400" />
-                </div>
-                <div>
-                  <span className="font-semibold text-white">Damaged Conductors</span>
-                  <p className="mt-1">Nicked or partially cut conductors have reduced cross-sectional area, creating high resistance points.</p>
-                </div>
-              </li>
-            </ul>
+              <div className="space-y-3">
+                <h4 className="font-semibold text-white">Practical Considerations</h4>
+                <ul className="list-disc pl-5 space-y-2">
+                  <li>
+                    <span className="font-medium">Cable capacity and future expansion</span>
+                    <p className="text-sm mt-1">Allow 30-50% spare capacity for future needs</p>
+                  </li>
+                  <li>
+                    <span className="font-medium">Accessibility requirements</span>
+                    <p className="text-sm mt-1">Trunking offers better access than conduit</p>
+                  </li>
+                  <li>
+                    <span className="font-medium">Aesthetic considerations</span>
+                    <p className="text-sm mt-1">Surface or concealed installation options</p>
+                  </li>
+                  <li>
+                    <span className="font-medium">Budget constraints</span>
+                    <p className="text-sm mt-1">Balance between initial cost and long-term reliability</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-sm">
+              <p className="font-medium mb-1 text-elec-yellow">Regulatory Note:</p>
+              <p>BS 7671 (18th Edition) requires containment systems to be selected and erected to prevent damage to cables and to consider external influences. Regulation 521.10.1 requires cables to be supported continuously or at appropriate intervals.</p>
+            </div>
           </div>
-        </div>
-        
-        <div className="mt-6 bg-elec-dark/40 border border-elec-yellow/20 rounded-lg p-6">
-          <h3 className="text-xl font-bold text-elec-yellow mb-4">Best Practices for Reliable Connections</h3>
-          
-          <ol className="list-decimal pl-5 space-y-3">
-            <li>
-              <span className="font-semibold text-white">Use appropriate tools</span>
-              <p className="mt-1">Always use the correct tools for stripping, crimping, and tightening connections.</p>
-            </li>
-            <li>
-              <span className="font-semibold text-white">Follow manufacturer specifications</span>
-              <p className="mt-1">Adhere to torque settings and installation methods specified by equipment manufacturers.</p>
-            </li>
-            <li>
-              <span className="font-semibold text-white">Perform visual inspections</span>
-              <p className="mt-1">Check for correct stripping, proper seating, and absence of stray strands before finalizing connections.</p>
-            </li>
-            <li>
-              <span className="font-semibold text-white">Conduct pull tests</span>
-              <p className="mt-1">Gently tug on terminated conductors to ensure they're securely connected.</p>
-            </li>
-            <li>
-              <span className="font-semibold text-white">Check for temperature rise</span>
-              <p className="mt-1">After energizing, monitor terminals for abnormal temperature increases that could indicate poor connections.</p>
-            </li>
-          </ol>
         </div>
       </div>
       
