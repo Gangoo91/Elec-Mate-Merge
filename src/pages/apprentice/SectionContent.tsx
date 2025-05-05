@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
@@ -146,11 +147,10 @@ const SectionContent = () => {
   }, [sectionId, unitSlug]);
 
   const handleBackClick = () => {
-    if (courseSlug && unitSlug) {
-      // Fix the navigation path to go back to unit page with the correct URL
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`);
+    if (courseSlug) {
+      // Always return to the course units page, not the specific unit
+      navigate(`/apprentice/study/eal/${courseSlug}`);
     } else {
-      // Fallback to previous page if parameters are missing
       navigate(-1);
     }
   };
@@ -182,7 +182,7 @@ const SectionContent = () => {
           onClick={handleBackClick}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Unit
+          Back to Course
         </Button>
       </div>
       

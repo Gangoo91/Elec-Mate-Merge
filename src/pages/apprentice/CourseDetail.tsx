@@ -14,6 +14,7 @@ const CourseDetail = () => {
   const location = useLocation();
   const isUnitPage = location.pathname.includes('/unit/');
   const isQuizPage = location.pathname.includes('/quiz');
+  const isSubsectionPage = location.pathname.includes('/section/');
   
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
   
@@ -60,12 +61,19 @@ const CourseDetail = () => {
     ? ealLevel2Units.find(unit => unit.id === selectedUnit) 
     : null;
 
+  // Automatically trigger learning mode when viewing sections or subsections
+  useEffect(() => {
+    if ((isUnitPage || isSubsectionPage) && !isStudying && !currentResourceType) {
+      handleResourceClick('learning');
+    }
+  }, [isUnitPage, isSubsectionPage, location.pathname]);
+
   return (
     <div className="space-y-8 animate-fade-in px-4 md:px-6 lg:px-8">
       {!isUnitPage && <CourseHeader courseTitle={courseTitle} />}
 
       {/* Back button - only show on unit page */}
-      {isUnitPage && courseSlug && !isQuizPage && (
+      {isUnitPage && courseSlug && !isQuizPage && !isSubsectionPage && (
         <div className="mb-4">
           <Link to={`/apprentice/study/eal/${courseSlug}`}>
             <Button 
@@ -79,7 +87,7 @@ const CourseDetail = () => {
         </div>
       )}
 
-      {/* Timer - show on both main course page and unit pages, but not on quiz pages */}
+      {/* Timer - show on all pages but quiz */}
       {!isQuizPage && (
         <CourseTimer 
           courseSlug={courseSlug}
@@ -92,18 +100,20 @@ const CourseDetail = () => {
         />
       )}
       
-      {/* Course Content - Always show content */}
-      <CourseContent 
-        isUnitPage={isUnitPage}
-        selectedUnit={selectedUnit}
-        courseSlug={courseSlug}
-        selectedUnitData={selectedUnitData}
-        completedResources={completedResources}
-        onUnitSelect={handleUnitSelect}
-        onResourceClick={handleResourceClick}
-        onToggleResourceComplete={handleToggleResourceComplete}
-        units={ealLevel2Units}
-      />
+      {/* Course Content - Only show on main course page and unit pages, not on section pages */}
+      {!(isSubsectionPage) && (
+        <CourseContent 
+          isUnitPage={isUnitPage}
+          selectedUnit={selectedUnit}
+          courseSlug={courseSlug}
+          selectedUnitData={selectedUnitData}
+          completedResources={completedResources}
+          onUnitSelect={handleUnitSelect}
+          onResourceClick={handleResourceClick}
+          onToggleResourceComplete={handleToggleResourceComplete}
+          units={ealLevel2Units}
+        />
+      )}
     </div>
   );
 };

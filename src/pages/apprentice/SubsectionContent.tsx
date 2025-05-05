@@ -119,7 +119,15 @@ const SubsectionContent = () => {
   }, [sectionId, subsectionId, unitSlug]);
 
   const handleBackClick = () => {
-    navigate(-1);
+    if (courseSlug && sectionId) {
+      // Navigate back to section
+      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}`);
+    } else if (courseSlug) {
+      // Fallback to course home
+      navigate(`/apprentice/study/eal/${courseSlug}`);
+    } else {
+      navigate(-1);
+    }
   };
   
   const markAsComplete = () => {
@@ -153,7 +161,7 @@ const SubsectionContent = () => {
           onClick={handleBackClick}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
+          Back to Section
         </Button>
       </div>
       
