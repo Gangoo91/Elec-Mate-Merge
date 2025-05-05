@@ -1,10 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { Conversation, Message } from './types';
 import { User, Users, Heart, GraduationCap } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/components/ui/use-toast";
 
 export const useMessenger = () => {
   const { profile } = useAuth();
