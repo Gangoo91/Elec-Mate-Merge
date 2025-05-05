@@ -52,6 +52,10 @@ import SectionContent from "./pages/apprentice/SectionContent";
 import InstallationMethodContent from "./pages/apprentice/InstallationMethodContent";
 import SubsectionContent from "./pages/apprentice/SubsectionContent";
 
+// New craft skills content components
+import CraftSkillsContent from "./pages/apprentice/CraftSkillsContent";
+import CraftSkillsSubsection from "./pages/apprentice/CraftSkillsSubsection";
+
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -110,6 +114,9 @@ function App() {
                     <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
                     <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId" element={<InstallationMethodContent />} />
                     <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
+                    {/* New routes for craft skills */}
+                    <Route path="eal/:courseSlug/unit/:unitSlug/craft-skills/:sectionId" element={<CraftSkillsContent />} />
+                    <Route path="eal/:courseSlug/unit/:unitSlug/craft-skills/:sectionId/subsection/:subsectionId" element={<CraftSkillsSubsection />} />
                   </Route>
                 </Route>
 

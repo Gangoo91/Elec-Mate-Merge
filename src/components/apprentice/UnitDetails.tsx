@@ -1,9 +1,9 @@
-
 import { useState, useEffect } from "react";
 import SectionBox from "@/components/apprentice/SectionBox";
 import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
 import { electricalTheoryContent } from "@/data/electricalTheory/index";
 import { installationMethodsContent } from "@/data/installationMethods/index";
+import { craftSkillsContent } from "@/data/craftSkills/index";  // Import new craft skills content
 import type { CourseUnit } from "@/data/courseUnits";
 import { useToast } from "@/components/ui/use-toast";
 import { useParams } from "react-router-dom";
@@ -30,6 +30,7 @@ const UnitDetails = ({
   const showHealthSafetyContent = unit.code === "ELEC2/01";
   const showElectricalTheoryContent = unit.code === "ELEC2/04";
   const showInstallationMethodsContent = unit.code === "ELEC2/05A";
+  const showCraftSkillsContent = unit.code === "ELEC2/05B";  // Add condition for craft skills
 
   // Load completion status
   useEffect(() => {
@@ -133,6 +134,40 @@ const UnitDetails = ({
           <SectionBox
             sectionNumber="Q"
             title="Installation Methods Assessment Quiz"
+            isExpanded={false}
+            onClick={() => {
+              handleSectionClick();
+              onResourceClick('assessment');
+            }}
+            content={<></>}
+            isCompleted={quizCompleted}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+        </div>
+      )}
+
+      {/* Craft Skills Content - Only for ELEC2/05B */}
+      {showCraftSkillsContent && (
+        <div className="space-y-6">
+          {/* Display all craft skills sections */}
+          {craftSkillsContent.map((section) => (
+            <SectionBox
+              key={section.sectionNumber}
+              sectionNumber={section.sectionNumber}
+              title={section.title}
+              isExpanded={false}
+              onClick={handleSectionClick}
+              content={<></>}
+              unitCode={unit.code}
+              courseSlug={courseSlug}
+            />
+          ))}
+          
+          {/* Quiz Section */}
+          <SectionBox
+            sectionNumber="Q"
+            title="Electrical Installation Craft Skills Quiz"
             isExpanded={false}
             onClick={() => {
               handleSectionClick();
