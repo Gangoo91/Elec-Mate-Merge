@@ -10,3 +10,12 @@ export type TimeEntry = {
   score?: number;
   totalQuestions?: number;
 };
+
+export type TrainingEvidenceItem = {
+  id: string;
+  title: string;
+  type: string;
+  date: string;
+  description: string;
+  files: string[];
+};
