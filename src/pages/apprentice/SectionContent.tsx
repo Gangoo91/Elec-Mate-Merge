@@ -18,9 +18,7 @@ import {
 import { installationMethodsSection } from "@/data/electricalTheory/section-installation-methods";
 import CourseContentSection from "@/components/apprentice/CourseContentSection";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Book } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { ArrowLeft, BookOpen } from "lucide-react";
 import type { SectionData } from "@/data/healthAndSafety/types";
 
 const SectionContent = () => {
@@ -166,6 +164,12 @@ const SectionContent = () => {
     setExpandedSection(expandedSection === id ? null : id);
   };
 
+  const navigateToSubsection = (subsection: any) => {
+    if (courseSlug && unitSlug && sectionData) {
+      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${subsection.id}`);
+    }
+  };
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="mb-6">
@@ -179,60 +183,76 @@ const SectionContent = () => {
         </Button>
       </div>
       
-      <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-elec-yellow text-elec-dark font-bold text-lg">
-            {sectionData.sectionNumber}
-          </span>
-          <h2 className="text-2xl font-bold">{sectionData.title}</h2>
-        </div>
-        
-        <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
-          {sectionData.content.subsections.map((subsection) => (
-            <Card 
-              key={subsection.id}
-              className="p-4 bg-elec-dark border border-elec-yellow/20 hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-all group"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-elec-yellow font-semibold">{subsection.id}</span>
-                  <h3 className="font-semibold">{subsection.title}</h3>
-                </div>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        className="text-elec-yellow hover:bg-elec-yellow/10"
-                        onClick={() => toggleSection(subsection.id)}
-                      >
-                        <Book className="h-5 w-5" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      <p>View content</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-              
-              {expandedSection === subsection.id && (
-                <div className="mt-4 pt-4 border-t border-elec-yellow/20 animate-fade-in">
-                  <CourseContentSection
-                    title={subsection.title}
-                    description={subsection.content}
-                    keyPoints={subsection.keyPoints}
-                    icon={sectionData.content.icon}
-                    isMainSection={sectionData.content.isMainSection || false}
-                    subsectionId={subsection.id}
-                  />
-                </div>
-              )}
-            </Card>
-          ))}
+      {/* Main section header with number in circle */}
+      <div className="flex items-center justify-center mb-8">
+        <div className="inline-flex items-center flex-col">
+          <div className="flex justify-center items-center w-20 h-20 bg-elec-yellow rounded-full mb-4">
+            <span className="text-3xl font-bold text-elec-dark">{sectionData.sectionNumber}</span>
+          </div>
+          <h1 className="text-3xl font-bold text-center">{sectionData.title}</h1>
         </div>
       </div>
+      
+      {/* Subsections list */}
+      <div className="space-y-4 max-w-4xl mx-auto">
+        {sectionData.content.subsections.map((subsection) => (
+          <div 
+            key={subsection.id}
+            className="border border-elec-yellow/20 rounded-lg p-4 flex justify-between items-center cursor-pointer hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-all group"
+            onClick={() => navigateToSubsection(subsection)}
+          >
+            <div className="flex items-center gap-2">
+              <span className="text-xl font-semibold text-elec-yellow">{subsection.id}</span>
+              <h3 className="text-xl font-semibold">{subsection.title}</h3>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="text-elec-yellow hover:bg-elec-yellow/10"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleSection(subsection.id);
+              }}
+            >
+              <BookOpen className="h-6 w-6" />
+            </Button>
+          </div>
+        ))}
+      </div>
+      
+      {/* Expanded section content */}
+      {expandedSection && (
+        <div className="mt-6 bg-elec-gray border border-elec-yellow/20 rounded-lg p-6 animate-fade-in">
+          {sectionData.content.subsections
+            .filter(subsection => subsection.id === expandedSection)
+            .map(subsection => (
+              <div key={subsection.id}>
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="text-elec-yellow text-xl font-bold">{subsection.id}</span>
+                  <h2 className="text-2xl font-bold">{subsection.title}</h2>
+                </div>
+                <CourseContentSection
+                  title={subsection.title}
+                  description={subsection.content}
+                  keyPoints={subsection.keyPoints}
+                  icon={sectionData.content.icon}
+                  isMainSection={false}
+                  subsectionId={subsection.id}
+                />
+                <div className="mt-4 pt-4 border-t border-elec-yellow/20 text-right">
+                  <Button 
+                    variant="study" 
+                    className="hover:bg-elec-yellow hover:text-elec-dark"
+                    onClick={() => navigateToSubsection(subsection)}
+                  >
+                    Go To Full Content
+                    <BookOpen className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+        </div>
+      )}
     </div>
   );
 };
