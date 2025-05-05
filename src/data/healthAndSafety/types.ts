@@ -8,7 +8,7 @@ export interface Subsection {
 
 export interface SectionContentData {
   subsections: Subsection[];
-  icon: "safety" | "info" | "construction" | "warning" | "hardhat" | "list" | "section" | "cable" | "socket" | "bulb" | "test" | "tools";
+  icon: "safety" | "info" | "construction" | "warning" | "hardhat" | "list" | "section" | "cable" | "socket" | "bulb" | "test" | "tools" | "shield-alert";
   sectionNumber?: string;
   title?: string;
   description?: string;

@@ -1,6 +1,6 @@
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Shield, Info, Construction, AlertTriangle, HardHat, ListOrdered, Section, Cable, Lightbulb, TestTube } from "lucide-react";
+import { Shield, Info, Construction, AlertTriangle, HardHat, ListOrdered, Section, Cable, Lightbulb, TestTube, ShieldAlert } from "lucide-react";
 
 interface ContentSectionProps {
   sectionNumber?: string;
@@ -13,7 +13,7 @@ interface ContentSectionProps {
     content: string;
     keyPoints?: string[];
   }[];
-  icon?: "safety" | "info" | "construction" | "warning" | "hardhat" | "list" | "section" | "cable" | "socket" | "bulb" | "test" | "tools";
+  icon?: "safety" | "info" | "construction" | "warning" | "hardhat" | "list" | "section" | "cable" | "socket" | "bulb" | "test" | "tools" | "shield-alert";
   isMainSection?: boolean;
   subsectionId?: string;
 }
@@ -31,6 +31,7 @@ const CourseContentSection = ({
   // Select the appropriate icon based on the icon prop
   const IconComponent = 
     icon === "safety" ? Shield :
+    icon === "shield-alert" ? ShieldAlert :
     icon === "construction" ? Construction :
     icon === "warning" ? AlertTriangle :
     icon === "hardhat" ? HardHat :
