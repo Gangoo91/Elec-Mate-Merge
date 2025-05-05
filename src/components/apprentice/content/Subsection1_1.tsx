@@ -1,12 +1,9 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
-import TypesOfDrawings from "./subsection1_1/TypesOfDrawings";
-import ElectricalSymbols from "./subsection1_1/ElectricalSymbols";
-import FloorPlanReading from "./subsection1_1/FloorPlanReading";
+import { CheckCircle, Shield } from "lucide-react";
 import { SubsectionProps } from "./subsection1_1/types";
-import InteractiveLightDemo from "../InteractiveLightDemo";
+import CourseContentSection from "../CourseContentSection";
 
 const Subsection1_1 = ({ 
   subsectionId, 
@@ -15,26 +12,76 @@ const Subsection1_1 = ({
 }: SubsectionProps) => {
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-elec-yellow">Understanding Electrical Drawings and Diagrams</h2>
+      <h2 className="text-2xl font-bold text-elec-yellow">Electricity at Work Regulations 1989</h2>
       
       <div className="space-y-5">
-        <p>
-          Electrical drawings and diagrams are the foundation of any successful installation. They provide critical information 
-          about circuit layouts, component locations, and connection details required for accurate and safe electrical installations.
-        </p>
+        <CourseContentSection
+          title="Electricity at Work Regulations 1989"
+          description="The Electricity at Work Regulations 1989 is a key piece of legislation that establishes legal duties for employers and electricians. It requires that all electrical systems are maintained to prevent danger, work activities are carried out safely, and those working on electrical systems are competent. The regulations apply to all aspects of electrical work and cover both fixed installations and portable equipment. Compliance with these regulations is a legal requirement for all electrical workers."
+          keyPoints={[
+            "Legal requirement for safe working with electricity",
+            "Applies to all electrical systems and work activities",
+            "Requires systems to be maintained in a safe condition",
+            "Mandates competence for those working on electrical systems"
+          ]}
+          icon="shield-alert"
+          subsectionId={subsectionId}
+        />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          <TypesOfDrawings />
-          <ElectricalSymbols />
+        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+          <h3 className="text-xl font-bold text-elec-yellow flex items-center">
+            <Shield className="h-5 w-5 mr-2" />
+            Key Requirements
+          </h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-semibold text-white mb-2">Regulation 4: Systems, Work Activities and Protective Equipment</h4>
+              <p>
+                All electrical systems must be constructed and maintained to prevent danger, and all work activities must be carried out safely.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold text-white mb-2">Regulation 14: Work on Equipment Made Dead</h4>
+              <p>
+                Electrical equipment must be disconnected from all sources of supply and proven dead before work begins, unless it is unreasonable to do so.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold text-white mb-2">Regulation 16: Competence to Prevent Danger</h4>
+              <p>
+                No person shall engage in work where technical knowledge or experience is necessary to prevent danger, unless they have such knowledge or experience.
+              </p>
+            </div>
+          </div>
         </div>
         
-        <FloorPlanReading />
-        
-        <InteractiveLightDemo 
-          subsectionId={subsectionId}
-          isCompleted={isCompleted}
-          markAsComplete={markAsComplete}
-        />
+        <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
+          <h3 className="text-xl font-bold text-elec-yellow mb-4">Enforcement and Penalties</h3>
+          
+          <div className="space-y-4">
+            <p>
+              The Health and Safety Executive (HSE) enforces the Electricity at Work Regulations 1989. Breaches can result in:
+            </p>
+            
+            <ul className="list-disc pl-5 space-y-2">
+              <li>
+                <span className="font-medium">Improvement Notices</span>
+                <p className="text-sm mt-1">Requiring remedial action within a specified time period.</p>
+              </li>
+              <li>
+                <span className="font-medium">Prohibition Notices</span>
+                <p className="text-sm mt-1">Stopping work immediately until hazards are remedied.</p>
+              </li>
+              <li>
+                <span className="font-medium">Prosecutions</span>
+                <p className="text-sm mt-1">Resulting in unlimited fines and/or imprisonment for serious breaches.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
       
       <div className="flex justify-end pt-6 border-t border-elec-yellow/20">
