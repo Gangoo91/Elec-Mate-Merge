@@ -43,7 +43,7 @@ const ApprenticeMentor = () => {
     {
       id: 4,
       name: "Emma Thompson",
-      specialty: "Residential Wiring",
+      specialty: "Domestic Wiring", // Changed from "Residential Wiring" to "Domestic Wiring"
       experience: "8 years",
       availability: "Available",
       avatar: "ET"
@@ -103,7 +103,7 @@ const ApprenticeMentor = () => {
         <CardContent>
           <p className="mb-4">
             Browse our network of experienced electricians who volunteer their time to support apprentices. 
-            You can schedule one-on-one sessions, ask questions, or join group mentoring.
+            You can schedule one-to-one sessions, ask questions, or join group mentoring.
           </p>
         </CardContent>
       </Card>
