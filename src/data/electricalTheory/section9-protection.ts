@@ -1,4 +1,3 @@
-
 import { SectionData } from '../healthAndSafety/types';
 
 export const overcurrentProtectionSection: SectionData = {
@@ -8,18 +7,18 @@ export const overcurrentProtectionSection: SectionData = {
     sectionNumber: "9",
     title: "Overcurrent Protection",
     description: "Overcurrent protection is essential to safeguard electrical installations from damage and fire risks caused by excessive current flow.",
-    icon: "safety", // Changed from "shield" to "safety"
+    icon: "shield-alert", // Changed from "safety" to "shield-alert"
     isMainSection: true,
     subsections: [
       {
         id: "9.1",
-        title: "Overload and Short Circuit Protection",
-        content: "Overcurrent protection safeguards against two types of excessive current: overloads and short-circuits. Overload occurs when too many appliances or excessive load draws more current than the circuit's rated capacity over an extended period. Short-circuit occurs when there is a direct fault between live conductors or a live conductor and earth, causing very high current. Protection devices must be rated to carry the design current indefinitely while protecting against both conditions. BS 7671 requires that protective devices interrupt overcurrent before it causes danger due to thermal or mechanical effects. The selection of appropriate protective devices considers their breaking capacity, discrimination with other devices, and coordination with the cables they protect.",
+        title: "Principles of Overcurrent Protection",
+        content: "Overcurrent protection is designed to protect circuits and equipment from damage caused by excessive current flow due to overloads or short-circuits. Overloads occur when too many devices are connected to a circuit, causing a sustained current above the rated value. Short-circuits happen when live conductors come into direct contact, resulting in a very high current flow. Protection devices must be sized correctly according to the circuit's current-carrying capacity and installed at appropriate points in the system. The type of protection required depends on the nature of the circuit and the potential fault conditions, with proper selection crucial for maintaining both safety and continuity of supply.",
         keyPoints: [
-          "Overload protection prevents damage from excess current over time",
-          "Short-circuit protection must operate rapidly for very high currents",
-          "Breaking capacity of devices must exceed maximum prospective fault current",
-          "Protection must coordinate with cable size and characteristics"
+          "Circuit protection must respond to both overloads and short-circuits",
+          "Protective devices must be rated according to circuit conductor capacity",
+          "Time/current characteristics determine device response to different faults",
+          "Coordination between protective devices ensures discrimination"
         ]
       },
       {

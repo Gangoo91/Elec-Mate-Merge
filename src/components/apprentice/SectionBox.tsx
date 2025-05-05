@@ -1,6 +1,6 @@
 
 import React from "react";
-import { BookOpen, CheckCircle, Lightbulb, Info, Cable, Construction, CircleDashed, Safety } from "lucide-react";
+import { BookOpen, CheckCircle, Lightbulb, Info, Cable, Construction, CircleDashed, ShieldAlert } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
@@ -70,8 +70,8 @@ const SectionBox = ({
         case "5": return <Lightbulb className="h-4 w-4" />; // Lighting Circuits
         case "6": return <Cable className="h-4 w-4" />; // Ring and Radial Circuits
         case "7": return <Cable className="h-4 w-4" />; // Circuit Requirements - Changed from CircuitBoard
-        case "8": return <Safety className="h-4 w-4" />; // Earthing and Bonding - Changed from Shield
-        case "9": return <Safety className="h-4 w-4" />; // Overcurrent Protection - Changed from Shield
+        case "8": return <ShieldAlert className="h-4 w-4" />; // Earthing and Bonding - Changed from Safety
+        case "9": return <ShieldAlert className="h-4 w-4" />; // Overcurrent Protection - Changed from Safety
         case "10": return <Cable className="h-4 w-4" />; // Circuit Design - Changed from CircuitBoard
         default: return <BookOpen className="h-4 w-4" />;
       }

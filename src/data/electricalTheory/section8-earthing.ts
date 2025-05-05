@@ -8,7 +8,7 @@ export const earthingBondingSection: SectionData = {
     sectionNumber: "8",
     title: "Earthing and Bonding",
     description: "Earthing and bonding are critical safety systems in electrical installations, providing protection against electric shock and fire risks from fault conditions.",
-    icon: "safety", // Changed from "shield" to "safety"
+    icon: "shield-alert", // Changed from "safety" to "shield-alert"
     isMainSection: true,
     subsections: [
       {
