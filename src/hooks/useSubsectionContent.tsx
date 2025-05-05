@@ -52,9 +52,9 @@ export function useSubsectionContent({
     
     if (sectionId && subsectionId) {
       // Determine which unit we're working with
-      const isHealthSafetyUnit = unitSlug?.includes('elec2-01');
-      const isElectricalTheoryUnit = unitSlug?.includes('elec2-04');
-      const isInstallationMethodsUnit = unitSlug?.includes('elec2-05a');
+      const isHealthSafetyUnit = unitSlug === 'elec2-01';
+      const isElectricalTheoryUnit = unitSlug === 'elec2-04';
+      const isInstallationMethodsUnit = unitSlug === 'elec2-05a';
       
       let section;
       let foundSubsection;
@@ -182,7 +182,7 @@ export function useSubsectionContent({
       console.log("Navigating to subsection:", subId);
       
       // Based on unit type, navigate to the appropriate path
-      const isInstallationMethodsUnit = unitSlug?.includes('elec2-05a');
+      const isInstallationMethodsUnit = unitSlug === 'elec2-05a';
       
       if (isInstallationMethodsUnit) {
         // For installation methods unit
