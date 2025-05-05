@@ -36,20 +36,17 @@ const MentorCard = ({ mentor, onConnect, isRequesting }: MentorCardProps) => {
     <Card key={mentor.id} className="border-elec-yellow/20 bg-elec-gray transition-all hover:shadow-md hover:border-elec-yellow/40">
       <CardHeader className="pb-3">
         <div className="flex items-center gap-4">
-          <Avatar className="h-12 w-12 border-2 border-elec-yellow/50">
+          <Avatar className="h-12 w-12">
             <AvatarImage src="" />
-            <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow">
+            <AvatarFallback className="bg-elec-gray text-elec-yellow border border-elec-yellow/50">
               {mentor.avatar}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1">
-            <CardTitle className="text-xl flex items-center justify-between">
+            <CardTitle className="text-xl">
               {mentor.name}
-              <Badge variant="outline" className="ml-2 bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
-                {mentor.specialty}
-              </Badge>
             </CardTitle>
-            <CardDescription className="text-sm">{mentor.specialty}</CardDescription>
+            <CardDescription className="text-sm text-elec-light/80">{mentor.specialty}</CardDescription>
           </div>
         </div>
       </CardHeader>
