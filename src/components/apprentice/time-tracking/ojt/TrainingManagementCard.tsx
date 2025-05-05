@@ -7,18 +7,22 @@ import DigitalLogbook from "@/components/apprentice/time-tracking/DigitalLogbook
 import WeeklyOverview from "@/components/apprentice/time-tracking/WeeklyOverview";
 import CertificatesManager from "@/components/apprentice/time-tracking/CertificatesManager";
 import TrainingEvidence from "@/components/apprentice/time-tracking/TrainingEvidence";
+import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface TrainingManagementCardProps {
   initialActiveTab?: string;
+  className?: string;
 }
 
-const TrainingManagementCard = ({ initialActiveTab = "recent" }: TrainingManagementCardProps) => {
+const TrainingManagementCard = ({ initialActiveTab = "recent", className }: TrainingManagementCardProps) => {
   const [activeTab, setActiveTab] = useState(initialActiveTab);
+  const isMobile = useIsMobile();
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray lg:col-span-2">
+    <Card className={cn("border-elec-yellow/20 bg-elec-gray", className)}>
       <CardHeader>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-4">
           <CardTitle>Training Management</CardTitle>
           <div className="flex items-center gap-2 text-sm">
             <div className="flex items-center">
@@ -34,12 +38,12 @@ const TrainingManagementCard = ({ initialActiveTab = "recent" }: TrainingManagem
       </CardHeader>
       <CardContent>
         <Tabs defaultValue={activeTab} value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="mb-4 bg-elec-dark">
-            <TabsTrigger value="recent">Recent Activities</TabsTrigger>
-            <TabsTrigger value="logbook">Digital Logbook</TabsTrigger>
-            <TabsTrigger value="weekly">Weekly Overview</TabsTrigger>
+          <TabsList className={`mb-4 bg-elec-dark ${isMobile ? 'flex flex-wrap gap-2' : ''}`}>
+            <TabsTrigger value="recent">Recent</TabsTrigger>
+            <TabsTrigger value="logbook">Logbook</TabsTrigger>
+            <TabsTrigger value="weekly">Weekly</TabsTrigger>
             <TabsTrigger value="certificates">Certificates</TabsTrigger>
-            <TabsTrigger value="evidence">Training Evidence</TabsTrigger>
+            <TabsTrigger value="evidence">Evidence</TabsTrigger>
           </TabsList>
           
           <TabsContent value="recent">

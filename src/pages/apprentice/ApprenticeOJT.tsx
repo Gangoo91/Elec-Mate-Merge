@@ -6,6 +6,7 @@ import OJTHeader from "@/components/apprentice/time-tracking/ojt/OJTHeader";
 import WeeklyProgressCard from "@/components/apprentice/time-tracking/ojt/WeeklyProgressCard";
 import TrainingManagementCard from "@/components/apprentice/time-tracking/ojt/TrainingManagementCard";
 import TrainingGuideCard from "@/components/apprentice/time-tracking/ojt/TrainingGuideCard";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const ApprenticeOJT = () => {
   const [weeklyHours, setWeeklyHours] = useState(8);
@@ -14,6 +15,7 @@ const ApprenticeOJT = () => {
   const [activeTab, setActiveTab] = useState("recent");
   const { toast } = useToast();
   const { addTimeEntry, totalTime } = useTimeEntries();
+  const isMobile = useIsMobile();
 
   // Simulate loading course hours from various course pages
   useEffect(() => {
@@ -63,10 +65,14 @@ const ApprenticeOJT = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-6 animate-fade-in pb-8">
       <OJTHeader handleDownloadReport={handleDownloadReport} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      {/* Training Guide Card - Moved to the top */}
+      <TrainingGuideCard />
+
+      {/* Responsive grid layout that stacks on mobile */}
+      <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-3'} gap-6`}>
         <WeeklyProgressCard 
           weeklyHours={weeklyHours}
           targetHours={targetHours}
@@ -76,10 +82,11 @@ const ApprenticeOJT = () => {
           handleUploadEvidence={handleUploadEvidence}
         />
 
-        <TrainingManagementCard initialActiveTab={activeTab} />
+        <TrainingManagementCard 
+          initialActiveTab={activeTab} 
+          className={isMobile ? "" : "lg:col-span-2"}
+        />
       </div>
-
-      <TrainingGuideCard />
     </div>
   );
 };
