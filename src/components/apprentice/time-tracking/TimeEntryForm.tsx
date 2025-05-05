@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { Plus, Calendar, Clock, FileText } from "lucide-react";
+import { Plus, Calendar, Clock, FileText, Check } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { format } from "date-fns";
 
 interface TimeEntryFormProps {
   onAddEntry: (duration: number, activity: string, notes: string) => void;
@@ -13,12 +14,13 @@ interface TimeEntryFormProps {
 
 const TimeEntryForm = ({ onAddEntry }: TimeEntryFormProps) => {
   const { toast } = useToast();
-  const [duration, setDuration] = useState<number>(0);
   const [hours, setHours] = useState<number>(0);
   const [minutes, setMinutes] = useState<number>(0);
   const [activity, setActivity] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
   const [activityCategory, setActivityCategory] = useState<string>("");
+  const [date, setDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'));
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,23 +37,30 @@ const TimeEntryForm = ({ onAddEntry }: TimeEntryFormProps) => {
       return;
     }
 
+    setIsSubmitting(true);
+
     // Format the activity with category if selected
     const formattedActivity = activityCategory ? `${activityCategory}: ${activity}` : activity;
     
-    onAddEntry(totalMinutes, formattedActivity, notes);
-    
-    // Reset form
-    setHours(0);
-    setMinutes(0);
-    setDuration(0);
-    setActivity("");
-    setNotes("");
-    setActivityCategory("");
+    // Simulate a small delay for better UX
+    setTimeout(() => {
+      onAddEntry(totalMinutes, formattedActivity, notes);
+      
+      // Reset form
+      setHours(0);
+      setMinutes(0);
+      setActivity("");
+      setNotes("");
+      setActivityCategory("");
+      setDate(format(new Date(), 'yyyy-MM-dd'));
+      setIsSubmitting(false);
 
-    toast({
-      title: "Time entry added",
-      description: "Your off-the-job training has been logged successfully."
-    });
+      toast({
+        title: "Time entry added",
+        description: "Your off-the-job training has been logged successfully.",
+        icon: <Check className="h-4 w-4 text-green-500" />
+      });
+    }, 600);
   };
 
   const activityCategories = [
@@ -76,6 +85,20 @@ const TimeEntryForm = ({ onAddEntry }: TimeEntryFormProps) => {
         </h3>
         
         <div className="space-y-4">
+          <div className="space-y-2">
+            <label htmlFor="entry-date" className="text-sm font-medium flex items-center">
+              <Calendar className="h-4 w-4 mr-2 text-elec-yellow" />
+              Date
+            </label>
+            <Input
+              type="date"
+              id="entry-date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="border-elec-yellow/20 bg-elec-gray"
+            />
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label htmlFor="activity-category" className="text-sm font-medium">
@@ -157,11 +180,20 @@ const TimeEntryForm = ({ onAddEntry }: TimeEntryFormProps) => {
               placeholder="What did you learn? How does this relate to your job role?"
               className="min-h-[80px] border-elec-yellow/20 bg-elec-gray"
             />
+            <p className="text-xs text-muted-foreground mt-1">
+              Describe what you learned and how it relates to your apprenticeship standards
+            </p>
           </div>
           
-          <Button type="submit" className="w-full gap-2">
-            <Plus className="h-4 w-4" />
-            Add Time Entry
+          <Button type="submit" className="w-full gap-2" disabled={isSubmitting}>
+            {isSubmitting ? (
+              <>Saving Entry...</>
+            ) : (
+              <>
+                <Plus className="h-4 w-4" />
+                Add Time Entry
+              </>
+            )}
           </Button>
         </div>
       </div>

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TimeEntry } from "@/types/time-tracking";
 import { useAuthState } from "./useAuthState";
 import { useEntriesLoader } from "./useEntriesLoader";
@@ -19,11 +19,11 @@ export const useTimeEntries = () => {
   const { addTimeEntry } = useTimeEntryAdder(userId, setManualEntries);
 
   // Update manual entries when loaded from Supabase/localStorage
-  useState(() => {
+  useEffect(() => {
     if (loadedManualEntries.length > 0) {
       setManualEntries(loadedManualEntries);
     }
-  });
+  }, [loadedManualEntries]);
   
   // Combine all entries
   const allEntries = [...manualEntries, ...courseEntries, ...quizEntries];

@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
-import { Certificate, Upload, Calendar, Trash2, Eye } from "lucide-react";
+import { Award, Upload, Calendar, Trash2, Eye } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 // Mock data for certificates
@@ -141,7 +141,7 @@ const CertificatesManager = () => {
       {certificates.length === 0 ? (
         <Card className="border-dashed border-2 border-elec-yellow/20 bg-elec-dark">
           <CardContent className="flex flex-col items-center justify-center py-10">
-            <Certificate className="h-12 w-12 text-elec-yellow/40 mb-4" />
+            <Award className="h-12 w-12 text-elec-yellow/40 mb-4" />
             <h3 className="text-xl font-medium mb-2">No certificates yet</h3>
             <p className="text-muted-foreground text-center max-w-md mb-4">
               Upload your professional certificates and qualifications to keep track of them in one place.
@@ -163,7 +163,7 @@ const CertificatesManager = () => {
               <CardContent className="p-4">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <Certificate className="h-8 w-8 text-elec-yellow" />
+                    <Award className="h-8 w-8 text-elec-yellow" />
                     <div>
                       <h4 className="font-medium">{certificate.name}</h4>
                       <p className="text-sm text-muted-foreground">{certificate.issuedBy}</p>
