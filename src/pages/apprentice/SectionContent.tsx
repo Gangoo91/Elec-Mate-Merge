@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
@@ -146,9 +145,9 @@ const SectionContent = () => {
   }, [sectionId, unitSlug]);
 
   const handleBackClick = () => {
-    if (courseSlug) {
-      // Always return to the course units page, not the specific unit
-      navigate(`/apprentice/study/eal/${courseSlug}`);
+    if (courseSlug && unitSlug) {
+      // Navigate back to the unit page rather than the main course page
+      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`);
     } else {
       navigate(-1);
     }
