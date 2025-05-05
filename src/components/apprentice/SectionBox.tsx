@@ -1,6 +1,6 @@
 
 import React from "react";
-import { BookOpen, CheckCircle } from "lucide-react";
+import { BookOpen, CheckCircle, Lightbulb, Info, Cable, Construction, CircleDashed, CircuitBoard, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
@@ -58,6 +58,28 @@ const SectionBox = ({
     }
   };
 
+  // Function to render appropriate icon based on section type
+  const renderSectionIcon = () => {
+    // If it's the electrical theory unit and we have a subsection
+    if (unitCode.toLowerCase().includes('04') && sectionNumber !== "04" && sectionNumber !== "Q") {
+      switch(sectionNumber) {
+        case "1": return <Lightbulb className="h-4 w-4" />; // Legislation and Regulations
+        case "2": return <Info className="h-4 w-4" />; // Technical Information
+        case "3": return <Cable className="h-4 w-4" />; // Wiring Systems
+        case "4": return <Construction className="h-4 w-4" />; // Service Position Equipment
+        case "5": return <Lightbulb className="h-4 w-4" />; // Lighting Circuits
+        case "6": return <CircleDashed className="h-4 w-4" />; // Ring and Radial Circuits
+        case "7": return <CircuitBoard className="h-4 w-4" />; // Circuit Requirements
+        case "8": return <Shield className="h-4 w-4" />; // Earthing and Bonding
+        case "9": return <Shield className="h-4 w-4" />; // Overcurrent Protection
+        case "10": return <CircuitBoard className="h-4 w-4" />; // Circuit Design
+        default: return <BookOpen className="h-4 w-4" />;
+      }
+    }
+    
+    return <BookOpen className="h-4 w-4" />;
+  };
+
   return (
     <div 
       className="border border-elec-yellow/20 rounded-lg overflow-hidden bg-elec-gray relative cursor-pointer hover:bg-elec-yellow/5 transition-all"
@@ -83,7 +105,7 @@ const SectionBox = ({
               }}
               title="View this section"
             >
-              <BookOpen className="h-4 w-4" />
+              {renderSectionIcon()}
             </Button>
           </div>
         </div>

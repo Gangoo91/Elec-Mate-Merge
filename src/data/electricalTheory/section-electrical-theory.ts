@@ -13,82 +13,114 @@ export const electricalTheorySection: SectionData = {
     subsections: [
       {
         id: "1",
-        title: "Basic Electrical Principles",
-        content: "Electrical theory is built on fundamental principles about how electricity works. Electrical current is the flow of electrons through a conductor, measured in amperes (A). Voltage, measured in volts (V), is the electrical pressure that drives current flow. Resistance, measured in ohms (Ω), opposes the flow of current. These three quantities are related by Ohm's Law, which states that voltage equals current multiplied by resistance (V = I × R). Electrical power, measured in watts (W), is calculated by multiplying voltage and current (P = V × I). Understanding these relationships is essential for designing, installing, and troubleshooting electrical systems safely and effectively.",
+        title: "Legislation and Regulations",
+        content: "Understanding the laws and guidelines that govern electrical installation work is fundamental to being an electrician. Legislation such as the Electricity at Work Regulations 1989 establishes legal duties for employers and electricians. BS 7671 (IET Wiring Regulations) provides comprehensive technical standards for electrical installations in the UK. Building Regulations Part P covers domestic electrical installations, requiring notification of certain work. Health and Safety at Work Act 1974 sets out general duties for workplace safety. The Electricity Safety, Quality and Continuity Regulations 2002 govern the supply of electricity to premises. Understanding these regulations is essential for compliant and safe electrical work.",
         keyPoints: [
-          "Define electrical current, voltage, and resistance",
-          "Apply Ohm's Law to calculate circuit values",
-          "Calculate electrical power using relevant formulas",
-          "Understand the relationship between electrical quantities"
+          "Understand the Electricity at Work Regulations 1989",
+          "Apply requirements of BS 7671 (IET Wiring Regulations)",
+          "Comply with Building Regulations Part P",
+          "Follow Health and Safety legislation"
         ]
       },
       {
         id: "2",
-        title: "AC and DC Systems",
-        content: "Electrical systems operate using either alternating current (AC) or direct current (DC). AC is characterised by current that periodically changes direction, typically in a sinusoidal waveform at 50Hz in the UK. Most power distribution and domestic systems use AC because it can be efficiently transmitted over long distances and its voltage can be easily changed using transformers. DC flows in one direction only and is used in batteries, electronic devices, and some specialised applications. Understanding the differences between these systems is crucial for electricians, as they require different installation methods, protection devices, and calculation approaches. Modern installations often include both AC mains supply and DC components such as LED lighting, solar photovoltaic systems, and battery storage.",
+        title: "Technical Information",
+        content: "Interpreting and utilizing technical data is essential for electrical installation work. Electricians must be able to read and understand wiring diagrams, circuit schematics, equipment specifications, and installation manuals. Technical information includes electrical symbols that represent components in diagrams, calculation tables for determining cable sizes and voltage drop, manufacturers' data sheets for specific products, and installation guides. The ability to access, interpret and apply this technical information ensures installations are performed correctly, safely, and in compliance with standards. Keeping up-to-date with technical developments is also important as products and standards evolve.",
         keyPoints: [
-          "Differentiate between alternating current (AC) and direct current (DC)",
-          "Explain the generation and characteristics of single-phase and three-phase supplies",
-          "Calculate values in AC circuits including power factor and reactive components",
-          "Identify applications suitable for AC and DC systems"
+          "Interpret wiring diagrams and circuit schematics",
+          "Read and understand electrical symbols",
+          "Apply manufacturers' technical specifications",
+          "Use calculation tables for installation design"
         ]
       },
       {
         id: "3",
-        title: "Electrical Circuits",
-        content: "Electrical circuits provide controlled paths for current flow to perform useful work. Series circuits have components connected end-to-end, sharing the same current but dividing the voltage. Parallel circuits have components connected across the same voltage points, with current dividing between paths. Circuit design must consider both normal operation and fault conditions. Protective devices like fuses, circuit breakers, and RCDs (Residual Current Devices) are integrated into circuits to provide overload, short-circuit, and shock protection. Understanding circuit principles allows electricians to properly size conductors, select appropriate protection devices, and ensure the safe and efficient operation of electrical systems.",
+        title: "Wiring Systems",
+        content: "Wiring systems form the backbone of electrical installations, each with specific properties, applications, and limitations. Common systems include PVC-insulated cable installations in conduit or trunking, mineral-insulated copper-clad cables for fire-resistant circuits, armored cables for external or harsh environments, and cable tray or basket systems for multiple cable runs. Selection factors include environmental conditions, installation requirements, fire performance needs, and cost considerations. Each system has specific installation methods and fixing requirements to ensure safety and longevity. Understanding the appropriate application of different wiring systems is crucial for creating safe and effective electrical installations that meet the specific needs of each project.",
         keyPoints: [
-          "Design and analyse series and parallel circuits",
-          "Calculate values in complex circuits using Kirchhoff's Laws",
-          "Identify appropriate protective devices for different circuit applications",
-          "Troubleshoot common circuit faults using systematic procedures"
+          "Compare properties of different cable types and wiring systems",
+          "Select appropriate wiring systems for specific applications",
+          "Understand installation methods for various systems",
+          "Identify limitations and environmental considerations"
         ]
       },
       {
         id: "4",
-        title: "Installation Methods",
-        content: "Electrical installation methods encompass the techniques, materials, and practices used to safely and effectively install electrical systems in buildings. Proper installation begins with selecting the appropriate wiring systems for the environment and application, such as conduit, trunking, or cable trays. Cable selection is based on factors including current-carrying capacity, voltage drop, and environmental conditions. Installation must follow specific zones in walls and ceilings to prevent damage to concealed cables. All work must comply with BS 7671 (IET Wiring Regulations) requirements for selection and erection of equipment, ensuring systems are safe from mechanical damage, environmental hazards, and electrical faults.",
+        title: "Service Position Equipment",
+        content: "The service position is where electricity enters a building, containing critical components for safe power distribution. Typical equipment includes the service head (where the supply cable enters), meter equipment (for measuring consumption), distribution boards (consumer units), main switches, and protective devices. The layout must provide safe access for operation and maintenance. The service position must be located to minimize fire risk, be easily accessible, and contain equipment suitable for the installation's maximum demand. Understanding the general layout and function of service position equipment is essential for ensuring a safe electrical installation from the point of supply to the final circuits.",
         keyPoints: [
-          "Select appropriate wiring systems and enclosures for different environments",
-          "Install cables according to regulatory requirements and best practices",
-          "Apply proper termination techniques to ensure reliable connections",
-          "Test installations to verify compliance with safety standards"
+          "Identify the main components at a typical service position",
+          "Understand the function of consumer units/distribution boards",
+          "Recognize metering arrangements and supply characteristics",
+          "Apply regulations related to service position installations"
         ]
       },
       {
         id: "5",
-        title: "Regulations and Standards",
-        content: "Electrical installations are governed by extensive regulations and standards to ensure safety and performance. BS 7671 (IET Wiring Regulations) provides comprehensive requirements for electrical installations and is the primary technical standard in the UK. It covers all aspects from design and selection to inspection and testing. The Electricity at Work Regulations 1989 places legal duties on employers and individuals to ensure electrical safety in workplaces. Building Regulations Part P governs domestic electrical installations, requiring notification of certain work to building control authorities. Professional bodies like the IET and NICEIC provide additional guidance documents and maintain registration schemes for competent persons. Understanding and applying these regulations is fundamental to compliant electrical installation work.",
+        title: "Lighting Circuits",
+        content: "Lighting circuits are fundamental components of electrical installations, providing illumination throughout buildings. Standard configurations include one-way switching (control from a single location), two-way switching (control from two locations), and intermediate switching (control from three or more locations). Circuits typically operate at 230V and are protected by MCBs or fuses, usually rated at 6A or 10A. Circuit design must consider factors such as the number of lighting points, switching arrangements, control systems (such as dimmers or presence detectors), and energy efficiency. Modern installations increasingly incorporate LED lighting and smart control systems, which present different electrical characteristics and design considerations compared to traditional lighting methods.",
         keyPoints: [
-          "Apply requirements of BS 7671 to electrical installations",
-          "Understand the legal framework established by the Electricity at Work Regulations",
-          "Follow Building Regulations Part P requirements for domestic installations",
-          "Access and interpret appropriate guidance documents and standards"
+          "Understand one-way, two-way, and intermediate switching arrangements",
+          "Identify different lighting circuit configurations",
+          "Calculate maximum number of lighting points per circuit",
+          "Apply energy efficiency considerations to lighting design"
         ]
       },
       {
         id: "6",
-        title: "Testing and Verification",
-        content: "Testing and verification ensure that electrical installations are safe to use and comply with relevant regulations. The process includes both visual inspection and instrument testing. Visual inspection identifies obvious defects and non-compliance before power is applied. Initial verification testing includes continuity testing of protective conductors, insulation resistance measurement, polarity verification, earth fault loop impedance testing, and RCD operation verification. All test results must be recorded on appropriate certification, including the Electrical Installation Certificate or Minor Works Certificate. The testing regime follows a logical sequence designed to first confirm safety before progressively applying power to the installation. Understanding proper test procedures and interpretation of results is essential for electricians.",
+        title: "Ring and Radial Circuits",
+        content: "Ring and radial final circuits are the two main configurations used for socket outlets in UK electrical installations. Ring circuits (also called ring mains) start and end at the same point in the consumer unit, forming a loop through socket outlets, and are typically protected by a 30/32A device. They allow for more socket outlets than radial circuits due to their design. Radial circuits branch out from the consumer unit in a single line and are usually protected by a 20A or 32A device depending on the installation requirements. Each type has specific advantages, limitations, and installation requirements regarding cable sizes, number of socket outlets permitted, and floor area coverage. Understanding these circuit types is essential for designing effective power distribution systems within buildings.",
         keyPoints: [
-          "Conduct comprehensive visual inspection before instrument testing",
-          "Perform required tests in the correct sequence using appropriate test equipment",
-          "Interpret test results against acceptable parameters",
-          "Complete required certification documentation accurately"
+          "Compare ring and radial circuit configurations and applications",
+          "Calculate the number of socket outlets permitted on different circuits",
+          "Determine appropriate circuit protective device ratings",
+          "Recognize the advantages and limitations of each circuit type"
         ]
       },
       {
         id: "7",
-        title: "Environmental Technology",
-        content: "Environmental technology in electrical installations focuses on energy efficiency and renewable systems. Modern electrical installations increasingly incorporate technologies like LED lighting, which uses up to 90% less energy than traditional incandescent lighting while providing longer service life. Renewable energy systems such as solar photovoltaic installations convert sunlight directly into electricity, reducing carbon emissions and energy costs. Heat pumps use electrical energy efficiently to move heat from one place to another, typically providing 3-4 units of heat energy for each unit of electrical energy consumed. Smart control systems optimise energy usage by scheduling loads during off-peak periods or when renewable generation is available. Understanding these technologies enables electricians to contribute to more sustainable building services.",
+        title: "Circuit Requirements",
+        content: "Basic requirements for circuit design and implementation ensure electrical systems function safely and effectively. Circuits must be sized according to their intended load, with appropriate cable sizing to prevent overheating. Protection devices must be correctly rated to protect against overcurrent while allowing normal operation. Disconnection times for fault protection must meet regulatory requirements to ensure safety. Circuits should be divided logically to prevent widespread outages from single faults and to facilitate maintenance. Installation practices must follow regulations regarding cable routes, support methods, and protection from mechanical damage. Understanding these requirements is fundamental to creating safe, reliable electrical installations that comply with BS 7671.",
         keyPoints: [
-          "Explain principles of energy efficiency in electrical installations",
-          "Understand renewable energy systems including solar photovoltaic installations",
-          "Describe heat pump technology and applications",
-          "Implement smart control systems for energy management"
+          "Determine appropriate cable sizes based on load and installation method",
+          "Select correct protective devices for different circuit types",
+          "Apply disconnection time requirements for fault protection",
+          "Follow regulatory requirements for circuit installation"
+        ]
+      },
+      {
+        id: "8",
+        title: "Earthing and Bonding",
+        content: "Earthing and bonding are critical safety systems in electrical installations, providing protection against electric shock and fire risks from fault conditions. Earthing connects exposed conductive parts of electrical equipment to the general mass of Earth, creating a path for fault current. Main protective bonding connects extraneous conductive parts (like metal pipes) to the main earthing terminal, preventing dangerous potential differences during fault conditions. The earthing system type (TN-S, TN-C-S, TT) determines specific installation requirements. Supplementary bonding may be required in special locations such as bathrooms. Proper testing of earthing and bonding connections is essential to verify their effectiveness. These systems are fundamental to electrical safety and must be correctly designed, installed, and maintained.",
+        keyPoints: [
+          "Understand different earthing system types (TN-S, TN-C-S, TT)",
+          "Identify requirements for main protective bonding",
+          "Apply supplementary bonding in special locations",
+          "Test earthing and bonding systems for effectiveness"
+        ]
+      },
+      {
+        id: "9",
+        title: "Overcurrent Protection",
+        content: "Overcurrent protection is essential to safeguard electrical installations from damage and fire risks caused by excessive current flow. Protection devices include fuses and circuit breakers that automatically disconnect the supply when current exceeds safe levels. Overcurrent can occur due to overload (too many appliances) or short-circuit (direct connection between live conductors). Protection devices must be correctly rated for the circuit's current-carrying capacity and coordinated to ensure discrimination (selective operation). Modern installations often use RCBOs (Residual Current Circuit Breakers with Overcurrent protection) that combine overcurrent protection with additional personal protection against electric shock. Understanding the principles and correct application of overcurrent protection is vital for creating safe electrical installations.",
+        keyPoints: [
+          "Distinguish between overload and short-circuit protection",
+          "Select appropriate protective devices based on circuit characteristics",
+          "Apply discrimination principles in protection schemes",
+          "Understand the operation of different types of protective devices"
+        ]
+      },
+      {
+        id: "10",
+        title: "Circuit Design",
+        content: "Electrical circuit design involves creating systems that safely and efficiently distribute power to meet the needs of a building's occupants. Fundamental design considerations include determining maximum demand, diversity factors, and load assessment to correctly size the supply and distribution equipment. Cable sizing calculations must account for current-carrying capacity, voltage drop, and thermal constraints. Protection schemes must provide appropriate overcurrent protection and fault protection that meets required disconnection times. Circuit arrangement should provide logical separation of loads, with consideration for maintainability and future expansion. Special locations like bathrooms or external areas have additional design requirements. Good circuit design balances safety, regulatory compliance, efficiency, and cost-effectiveness.",
+        keyPoints: [
+          "Calculate maximum demand and apply diversity factors",
+          "Design circuits to meet voltage drop requirements",
+          "Apply protection requirements for different installation types",
+          "Create logical circuit arrangements for effective distribution"
         ]
       }
     ]
   }
 };
-
