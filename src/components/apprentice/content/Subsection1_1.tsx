@@ -6,6 +6,7 @@ import TypesOfDrawings from "./subsection1_1/TypesOfDrawings";
 import ElectricalSymbols from "./subsection1_1/ElectricalSymbols";
 import FloorPlanReading from "./subsection1_1/FloorPlanReading";
 import { SubsectionProps } from "./subsection1_1/types";
+import InteractiveLightDemo from "../InteractiveLightDemo";
 
 const Subsection1_1 = ({ 
   subsectionId, 
@@ -28,6 +29,12 @@ const Subsection1_1 = ({
         </div>
         
         <FloorPlanReading />
+        
+        <InteractiveLightDemo 
+          subsectionId={subsectionId}
+          isCompleted={isCompleted}
+          markAsComplete={markAsComplete}
+        />
       </div>
       
       <div className="flex justify-end pt-6 border-t border-elec-yellow/20">

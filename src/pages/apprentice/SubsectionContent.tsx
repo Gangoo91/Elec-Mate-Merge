@@ -5,8 +5,6 @@ import SectionHeader from "@/components/apprentice/SectionHeader";
 import SubsectionDisplay from "@/components/apprentice/SubsectionDisplay";
 import SubsectionsNavigation from "@/components/apprentice/SubsectionsNavigation";
 import { useSubsectionContent } from "@/hooks/useSubsectionContent";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
 
 const SubsectionContent = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId = "" } = useParams();
@@ -22,18 +20,6 @@ const SubsectionContent = () => {
     navigateToSubsection
   } = useSubsectionContent({ courseSlug, unitSlug, sectionId, subsectionId });
 
-  const handleBackClick = () => {
-    if (courseSlug && unitSlug && sectionId) {
-      // Navigate back to the section page instead of directly to unit
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}`);
-    } else if (courseSlug && unitSlug) {
-      // Fallback to unit page
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`);
-    } else {
-      navigate(-1);
-    }
-  };
-
   if (!subsectionData) {
     return (
       <div className="text-center py-8">
@@ -45,14 +31,11 @@ const SubsectionContent = () => {
   return (
     <div className="space-y-6 animate-fade-in bg-[#121212]">
       <div className="mb-6">
-        <Button 
-          variant="outline" 
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-          onClick={handleBackClick}
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Section
-        </Button>
+        <BackButton 
+          courseSlug={courseSlug} 
+          unitSlug={unitSlug} 
+          sectionId={sectionId}
+        />
       </div>
       
       <SectionHeader 
