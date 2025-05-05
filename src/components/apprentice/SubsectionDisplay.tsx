@@ -24,6 +24,7 @@ const SubsectionDisplay = ({
   return (
     <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4 md:p-6 animate-fade-in">
       <div className="prose prose-invert max-w-none">
+        <h1 className="text-2xl md:text-3xl font-bold text-elec-yellow mb-6">{subsectionData.title}</h1>
         <SubsectionLearningContent 
           subsectionId={subsectionId}
           isCompleted={isCompleted}

@@ -1,8 +1,7 @@
 
 import React from "react";
-import { Plug2, PowerOff, BellElectric } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, FileText, ClipboardList, FileCheck } from "lucide-react";
 
 type Subsection2_3Props = {
   subsectionId: string;
@@ -13,106 +12,110 @@ type Subsection2_3Props = {
 const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection2_3Props) => {
   return (
     <>
-      <section>
-        <h2 className="text-xl font-semibold text-elec-yellow mb-3">Component Compatibility</h2>
-        <p>Ensuring component compatibility is essential for a safe and effective installation. Manufacturers' specifications, industry standards, and regulatory requirements guide the selection of compatible components.</p>
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-elec-yellow mb-4">Installation Specifications and Documentation</h2>
         
-        <div className="mt-6 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="border border-elec-yellow/30 p-4 rounded-md">
-              <h3 className="flex items-center text-lg font-medium text-elec-yellow mb-3">
-                <Plug2 className="mr-2 h-5 w-5" />
-                Circuit Protection Coordination
-              </h3>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Ensure protective devices are correctly rated for the circuit load</li>
-                <li>RCD and MCB types must be compatible with the circuit characteristics</li>
-                <li>Verify coordination between upstream and downstream protective devices</li>
-                <li>Consider fault current ratings and disconnection times</li>
+        <p className="text-base">
+          Comprehensive documentation is crucial for electrical installations. These documents ensure the installation 
+          meets client requirements, regulatory standards, and provides reference for future maintenance.
+        </p>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
+            <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
+              <FileText className="h-5 w-5 mr-2" />
+              Specification Documents
+            </h3>
+            <div className="space-y-3">
+              <p className="text-sm">Installation specifications provide detailed information about required materials, methods, and standards:</p>
+              
+              <ul className="list-disc pl-5 space-y-2 text-sm mt-2">
+                <li><span className="font-medium">Material Specifications:</span> Detail required components, including brands, models, and quality standards</li>
+                <li><span className="font-medium">Performance Requirements:</span> Define expected outcomes and operational parameters</li>
+                <li><span className="font-medium">Method Statements:</span> Outline how work should be performed and sequence of operations</li>
+                <li><span className="font-medium">Compliance References:</span> Cite applicable regulations, codes, and standards to be followed</li>
+                <li><span className="font-medium">Testing Requirements:</span> Specify verification procedures and acceptance criteria</li>
               </ul>
-              <div className="mt-4 p-3 bg-elec-gray/50 rounded text-sm">
-                <p className="font-medium mb-1">Example:</p>
-                <p>A Type B MCB would be appropriate for purely resistive loads, while motor circuits typically require Type C or D to handle inrush current without nuisance tripping.</p>
-              </div>
-            </div>
-            
-            <div className="border border-elec-yellow/30 p-4 rounded-md">
-              <h3 className="flex items-center text-lg font-medium text-elec-yellow mb-3">
-                <PowerOff className="mr-2 h-5 w-5" />
-                Environmental Compatibility
-              </h3>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Components must have appropriate IP ratings for their environment</li>
-                <li>Consider temperature ranges for installation location</li>
-                <li>Special materials may be required in corrosive environments</li>
-                <li>UV protection needed for outdoor components</li>
-              </ul>
-              <div className="mt-4 p-3 bg-elec-gray/50 rounded text-sm">
-                <p className="font-medium mb-1">Example:</p>
-                <p>In a swimming pool area, all accessories must be at least IP44 rated, with higher ratings required for splash zones (min. IP55) and underwater fittings (IP68).</p>
+              
+              <div className="mt-4 p-3 bg-elec-dark/70 rounded-lg">
+                <p className="text-xs text-gray-300 italic">
+                  Specifications establish the quality standards and compliance requirements that must be met by the installation. They form a contractual document between client and contractor.
+                </p>
               </div>
             </div>
           </div>
           
-          <div className="border border-elec-yellow/30 p-4 rounded-md">
-            <h3 className="flex items-center text-lg font-medium text-elec-yellow mb-3">
-              <BellElectric className="mr-2 h-5 w-5" />
-              Component Selection Criteria
+          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
+            <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
+              <ClipboardList className="h-5 w-5 mr-2" />
+              Schedules and Lists
             </h3>
-            
-            <div className="overflow-x-auto mt-3">
-              <table className="min-w-full border-collapse">
-                <thead>
-                  <tr>
-                    <th className="bg-elec-gray/70 text-white p-2 text-left border border-elec-yellow/20">Compatibility Factor</th>
-                    <th className="bg-elec-gray/70 text-white p-2 text-left border border-elec-yellow/20">Consideration Points</th>
-                    <th className="bg-elec-gray/70 text-white p-2 text-left border border-elec-yellow/20">BS7671 Reference</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td className="p-2 border border-elec-yellow/20">Voltage Rating</td>
-                    <td className="p-2 border border-elec-yellow/20">Components must be rated for the system voltage or higher</td>
-                    <td className="p-2 border border-elec-yellow/20">Section 512</td>
-                  </tr>
-                  <tr>
-                    <td className="p-2 border border-elec-yellow/20">Current Capacity</td>
-                    <td className="p-2 border border-elec-yellow/20">Must handle maximum load current with appropriate derating factors</td>
-                    <td className="p-2 border border-elec-yellow/20">Section 523</td>
-                  </tr>
-                  <tr>
-                    <td className="p-2 border border-elec-yellow/20">Mechanical Protection</td>
-                    <td className="p-2 border border-elec-yellow/20">Impact resistance appropriate for installation location</td>
-                    <td className="p-2 border border-elec-yellow/20">Section 522</td>
-                  </tr>
-                  <tr>
-                    <td className="p-2 border border-elec-yellow/20">Fire Performance</td>
-                    <td className="p-2 border border-elec-yellow/20">Fire resistance, flame propagation characteristics</td>
-                    <td className="p-2 border border-elec-yellow/20">Section 527</td>
-                  </tr>
-                  <tr>
-                    <td className="p-2 border border-elec-yellow/20">EMC</td>
-                    <td className="p-2 border border-elec-yellow/20">Electromagnetic compatibility between systems</td>
-                    <td className="p-2 border border-elec-yellow/20">Section 444</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="space-y-3">
+              <p className="text-sm">Schedules provide organized information about system components and parameters:</p>
+              
+              <ul className="list-disc pl-5 space-y-2 text-sm mt-2">
+                <li><span className="font-medium">Cable Schedules:</span> List cable types, sizes, routes, and termination details</li>
+                <li><span className="font-medium">Distribution Board Schedules:</span> Document circuit allocations, protection devices, and ratings</li>
+                <li><span className="font-medium">Lighting Schedules:</span> Detail fixture types, locations, controls, and lamp specifications</li>
+                <li><span className="font-medium">Equipment Lists:</span> Catalog all electrical equipment with ratings and specifications</li>
+                <li><span className="font-medium">Circuit Charts:</span> Provide reference for circuit identification and allocation</li>
+              </ul>
+              
+              <div className="mt-4 p-3 bg-elec-dark/70 rounded-lg">
+                <p className="text-xs text-gray-300 italic">
+                  Schedules transform complex information into accessible formats for installation and maintenance. They are essential reference tools during commissioning and testing.
+                </p>
+              </div>
             </div>
           </div>
         </div>
         
-        <div className="mt-6 p-4 bg-elec-dark/50 border border-elec-yellow/30 rounded-lg">
-          <h3 className="text-lg font-semibold text-elec-yellow mb-2">Key Component Compatibility Requirements</h3>
-          <p className="mb-3">When selecting components for an electrical installation, always verify:</p>
-          <ol className="list-decimal pl-6 space-y-2">
-            <li>All components meet or exceed BS7671 requirements</li>
-            <li>Components are compatible with system voltage and frequency</li>
-            <li>All parts have appropriate certification (UKCA, BS EN standards)</li>
-            <li>Protective devices provide adequate coordination</li>
-            <li>Environmental conditions have been considered</li>
-          </ol>
-          <div className="mt-4 text-sm text-elec-light/80 italic">
-            <p>Remember that component compatibility is not just about physical fit - it's about ensuring all elements work together as a coherent, safe, and efficient system throughout the installation's lifecycle.</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
+            <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
+              <FileCheck className="h-5 w-5 mr-2" />
+              Certification and Test Records
+            </h3>
+            <div className="space-y-3">
+              <p className="text-sm">Documentation that provides evidence of safety verification and compliance:</p>
+              
+              <ul className="list-disc pl-5 space-y-2 text-sm mt-2">
+                <li><span className="font-medium">Electrical Installation Certificate (EIC):</span> Confirms the installation meets BS 7671 requirements</li>
+                <li><span className="font-medium">Minor Works Certificate:</span> Used for smaller additions or alterations to an existing installation</li>
+                <li><span className="font-medium">Periodic Inspection Report:</span> Documents condition of existing installations</li>
+                <li><span className="font-medium">Test Results:</span> Record measurements from verification testing procedures</li>
+                <li><span className="font-medium">Commissioning Records:</span> Document system performance during initial operation</li>
+              </ul>
+              
+              <div className="mt-4 p-3 bg-elec-dark/70 rounded-lg">
+                <p className="text-xs text-gray-300 italic">
+                  These documents provide legal evidence that an installation is safe to use and complies with regulations. They must be completed accurately and retained for future reference.
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
+            <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
+              <FileText className="h-5 w-5 mr-2" />
+              Operation and Maintenance Documentation
+            </h3>
+            <div className="space-y-3">
+              <p className="text-sm">Information for end users and maintenance personnel:</p>
+              
+              <ul className="list-disc pl-5 space-y-2 text-sm mt-2">
+                <li><span className="font-medium">As-Built Drawings:</span> Show the actual installation details, reflecting any changes from design</li>
+                <li><span className="font-medium">Operation Manuals:</span> Provide instructions for system use and operation</li>
+                <li><span className="font-medium">Maintenance Schedules:</span> Outline required maintenance tasks and frequencies</li>
+                <li><span className="font-medium">Component Data Sheets:</span> Technical information on installed equipment</li>
+                <li><span className="font-medium">Warranty Information:</span> Details of guarantees and service agreements</li>
+              </ul>
+              
+              <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg">
+                <p className="font-medium mb-1 text-elec-yellow">Professional Tip:</p>
+                <p className="text-sm">Create a comprehensive handover pack for clients that includes all essential documentation. This shows professionalism and ensures the client has all information needed for future maintenance and modifications.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

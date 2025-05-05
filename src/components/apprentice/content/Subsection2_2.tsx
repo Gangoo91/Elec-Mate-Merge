@@ -1,8 +1,7 @@
 
 import React from "react";
-import ElectricalSymbolsDisplay from "../ElectricalSymbolsDisplay";
 import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, CircleDashed, AlertCircle, ShieldAlert } from "lucide-react";
 
 type Subsection2_2Props = {
   subsectionId: string;
@@ -13,129 +12,108 @@ type Subsection2_2Props = {
 const Subsection2_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection2_2Props) => {
   return (
     <>
-      <section>
-        <h2 className="text-2xl font-bold text-elec-yellow mb-3">Enclosures and Their Applications</h2>
-        <p>Electrical enclosures protect equipment from environmental conditions and prevent accidental contact with live parts. The selection process involves careful consideration of the installation environment and specific requirements:</p>
+      <section className="space-y-6">
+        <h2 className="text-2xl font-bold text-elec-yellow mb-4">Electrical Symbols and Notation</h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
-          <div className="border border-elec-yellow/30 p-3 rounded-md">
-            <p className="font-semibold mb-2">Primary Functions of Enclosures:</p>
-            <ul className="list-disc pl-5">
-              <li>Protection against electric shock (basic protection)</li>
-              <li>Physical protection of contained equipment</li>
-              <li>Environmental protection (dust, moisture, etc.)</li>
-              <li>Containment of potential fire or electrical faults</li>
-              <li>Prevention of unauthorised access to equipment</li>
-            </ul>
-          </div>
-          <div className="border border-elec-yellow/30 p-3 rounded-md">
-            <p className="font-semibold mb-2">Common Types of Enclosures:</p>
-            <ul className="list-disc pl-5">
-              <li>Distribution boards and consumer units</li>
-              <li>Junction boxes and connection enclosures</li>
-              <li>Industrial control panels and motor starters</li>
-              <li>Switch and socket back boxes</li>
-              <li>Exterior equipment housings and cabinets</li>
-            </ul>
-          </div>
-        </div>
+        <p className="text-base">
+          Electrical symbols provide a standardized visual language for communicating technical information. 
+          Understanding these symbols is essential for correctly interpreting installation requirements.
+        </p>
         
-        <p className="mt-3">BS 7671 requires all electrical connections to be contained within appropriate enclosures that provide the necessary degree of protection for the location and maintain the required ingress protection rating.</p>
-      </section>
-      
-      <section>
-        <h2 className="text-xl font-semibold text-elec-yellow mb-3">IP Ratings and Environmental Protection</h2>
-        <p>IP (Ingress Protection) ratings define the level of protection provided by electrical enclosures against solid objects and liquids. Understanding these ratings is critical for selecting appropriate enclosures for different environments:</p>
-        
-        <div className="border border-elec-yellow/30 p-4 rounded-md mt-3">
-          <h3 className="font-semibold">First Digit (Protection against Solid Objects):</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 mt-1">
-            <div className="text-sm"><span className="font-medium">0:</span> No protection</div>
-            <div className="text-sm"><span className="font-medium">1:</span> &gt;50mm objects</div>
-            <div className="text-sm"><span className="font-medium">2:</span> &gt;12.5mm objects</div>
-            <div className="text-sm"><span className="font-medium">3:</span> &gt;2.5mm objects</div>
-            <div className="text-sm"><span className="font-medium">4:</span> &gt;1mm objects</div>
-            <div className="text-sm"><span className="font-medium">5:</span> Dust protected</div>
-            <div className="text-sm"><span className="font-medium">6:</span> Dust tight</div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5 col-span-1 lg:col-span-2">
+            <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
+              <CircleDashed className="h-5 w-5 mr-2" />
+              British Standard Symbols
+            </h3>
+            <div className="space-y-3">
+              <p className="text-sm">BS EN 60617 provides the standardized electrical symbols used in the UK. These symbols represent various components including:</p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                <div className="border-l-2 border-elec-yellow/30 pl-3">
+                  <h4 className="font-medium">Power Components</h4>
+                  <ul className="list-disc pl-5 space-y-1 text-sm mt-1">
+                    <li>Switches (single-pole, double-pole, etc.)</li>
+                    <li>Socket outlets (standard, switched, specialized)</li>
+                    <li>Distribution equipment (consumer units, boards)</li>
+                    <li>Circuit protection devices (MCBs, RCDs, fuses)</li>
+                    <li>Transformers and power supplies</li>
+                  </ul>
+                </div>
+                
+                <div className="border-l-2 border-elec-yellow/30 pl-3">
+                  <h4 className="font-medium">Lighting and Control</h4>
+                  <ul className="list-disc pl-5 space-y-1 text-sm mt-1">
+                    <li>Light fittings (various types and mounting)</li>
+                    <li>Emergency lighting fixtures</li>
+                    <li>Sensors and detectors</li>
+                    <li>Control devices and actuators</li>
+                    <li>Dimmers and controllers</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
           
-          <h3 className="font-semibold mt-3">Second Digit (Protection against Liquids):</h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1">
-            <div className="text-sm"><span className="font-medium">0:</span> No protection</div>
-            <div className="text-sm"><span className="font-medium">1:</span> Dripping water</div>
-            <div className="text-sm"><span className="font-medium">2:</span> Dripping water (15° tilted)</div>
-            <div className="text-sm"><span className="font-medium">3:</span> Spraying water</div>
-            <div className="text-sm"><span className="font-medium">4:</span> Splashing water</div>
-            <div className="text-sm"><span className="font-medium">5:</span> Water jets</div>
-            <div className="text-sm"><span className="font-medium">6:</span> Powerful water jets</div>
-            <div className="text-sm"><span className="font-medium">7:</span> Temporary immersion</div>
-            <div className="text-sm"><span className="font-medium">8:</span> Continuous immersion</div>
+          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
+            <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
+              <AlertCircle className="h-5 w-5 mr-2" />
+              Symbol Variations
+            </h3>
+            <div className="space-y-3">
+              <p className="text-sm">Symbols may vary slightly between different drawing systems and conventions:</p>
+              
+              <ul className="list-disc pl-5 space-y-2 text-sm mt-2">
+                <li><span className="font-medium">Industry Differences:</span> Industrial, commercial, and domestic drawings may use different symbol variants</li>
+                <li><span className="font-medium">Company Standards:</span> Some organizations adopt modified symbols for internal use</li>
+                <li><span className="font-medium">International Variations:</span> Projects with international collaboration may use IEC or other standards</li>
+                <li><span className="font-medium">Legacy Drawings:</span> Older installations may use superseded symbol standards</li>
+              </ul>
+            </div>
           </div>
         </div>
         
-        <p className="mt-3">BS 7671 requires specific minimum IP ratings for different installation environments. For example, zone 1 in bathrooms requires at least IPX4, while outdoor installations typically require IP65 or higher.</p>
-      </section>
-      
-      <section>
-        <h2 className="text-xl font-semibold text-elec-yellow mb-3">Material Selection and Considerations</h2>
-        <p>The choice of enclosure material affects its suitability for specific environments and applications:</p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
-          <div className="border border-elec-yellow/30 p-3 rounded-md">
-            <p className="font-semibold mb-2">Metal Enclosures:</p>
-            <ul className="list-disc pl-5">
-              <li>Steel (painted, galvanised, or stainless)</li>
-              <li>Aluminium (lightweight, corrosion resistant)</li>
-              <li>Advantages: Strength, EMI shielding, heat dissipation</li>
-              <li>Disadvantages: Conductivity requires earthing, corrosion risk</li>
-            </ul>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
+            <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
+              <ShieldAlert className="h-5 w-5 mr-2" />
+              Circuit References and Notation
+            </h3>
+            <div className="space-y-3">
+              <p className="text-sm">Electrical drawings use standardized notation to convey detailed technical information:</p>
+              
+              <ul className="list-disc pl-5 space-y-2 text-sm mt-2">
+                <li><span className="font-medium">Circuit References:</span> Unique identifiers for circuits (e.g., L1, L2, P1, P2) that link to schedules and details</li>
+                <li><span className="font-medium">Cable Type Notation:</span> Indicates conductor size, number, and insulation (e.g., 2.5mm² T&E)</li>
+                <li><span className="font-medium">Protective Device Marking:</span> Shows type and rating of protection (e.g., 32A B MCB)</li>
+                <li><span className="font-medium">Height Notation:</span> Indicates mounting heights for accessories (e.g., SW+1200mm)</li>
+                <li><span className="font-medium">Special Requirements:</span> Notes specific installation details or compliance requirements</li>
+              </ul>
+            </div>
           </div>
-          <div className="border border-elec-yellow/30 p-3 rounded-md">
-            <p className="font-semibold mb-2">Non-metallic Enclosures:</p>
-            <ul className="list-disc pl-5">
-              <li>ABS (Acrylonitrile Butadiene Styrene)</li>
-              <li>Polycarbonate (impact resistant)</li>
-              <li>GRP (Glass Reinforced Plastic) for outdoor use</li>
-              <li>Advantages: Insulating, lightweight, corrosion resistant</li>
-              <li>Disadvantages: Lower impact resistance, UV degradation risk</li>
-            </ul>
-          </div>
-        </div>
-        
-        <div className="mt-4 border border-elec-yellow/30 p-3 rounded-md">
-          <p className="font-semibold mb-2">Material Selection Factors:</p>
-          <ul className="list-disc pl-5">
-            <li><span className="font-medium">Environmental exposure:</span> Temperature extremes, UV radiation, corrosive atmospheres</li>
-            <li><span className="font-medium">Mechanical requirements:</span> Impact resistance, load-bearing capability</li>
-            <li><span className="font-medium">Fire performance:</span> Flame retardance, non-toxic emissions</li>
-            <li><span className="font-medium">Operational factors:</span> Heat dissipation needs, EMI/RFI shielding requirements</li>
-            <li><span className="font-medium">Regulatory compliance:</span> Specific material requirements for certain locations</li>
-          </ul>
-        </div>
-      </section>
-      
-      <section>
-        <h2 className="text-xl font-semibold text-elec-yellow mb-3">Regulatory Requirements for Enclosures</h2>
-        <p>Electrical enclosures must comply with various regulations and standards to ensure safety and performance:</p>
-        
-        <div className="border border-elec-yellow/30 p-4 rounded-md mt-3">
-          <h3 className="font-semibold">Key British Standards for Enclosures:</h3>
-          <ul className="list-disc pl-5 mt-1">
-            <li><span className="font-medium">BS EN 62208</span> - Empty enclosures for low-voltage switchgear and controlgear assemblies</li>
-            <li><span className="font-medium">BS EN 60529</span> - Specification for degrees of protection provided by enclosures (IP code)</li>
-            <li><span className="font-medium">BS EN 61439</span> - Low-voltage switchgear and controlgear assemblies</li>
-          </ul>
           
-          <h3 className="font-semibold mt-3">BS 7671 Requirements:</h3>
-          <ul className="list-disc pl-5 mt-1">
-            <li>Regulation 416.2 - Basic protection by enclosures</li>
-            <li>Regulation 526 - Electrical connections must ensure continuity</li>
-            <li>Section 559 - Requirements for luminaire supporting couplers</li>
-            <li>Regulation 513.1 - Accessibility for inspection and maintenance</li>
-          </ul>
+          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
+            <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
+              <AlertCircle className="h-5 w-5 mr-2" />
+              Reading Composite Symbols
+            </h3>
+            <div className="space-y-3">
+              <p className="text-sm">Many symbols combine multiple elements to convey complex information:</p>
+              
+              <ul className="list-disc pl-5 space-y-2 text-sm mt-2">
+                <li><span className="font-medium">Composite Switch Symbols:</span> Show multiple switching positions or special functions</li>
+                <li><span className="font-medium">Accessory Combinations:</span> Represent multi-function accessories (e.g., switch+socket)</li>
+                <li><span className="font-medium">Control System Elements:</span> Show both the device and its function in the system</li>
+                <li><span className="font-medium">Connection Methods:</span> Indicate special termination requirements or connection types</li>
+              </ul>
+              
+              <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg">
+                <p className="font-medium mb-1 text-elec-yellow">Important Note:</p>
+                <p className="text-sm">Always refer to the drawing legend when interpreting symbols, as slight variations can significantly change installation requirements.</p>
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <p className="mt-3">Electricians must ensure that all enclosures are properly selected, installed, and maintained in accordance with manufacturer's instructions and relevant regulations.</p>
       </section>
 
       <div className="flex justify-end pt-6 border-t border-elec-yellow/20 mt-6">
