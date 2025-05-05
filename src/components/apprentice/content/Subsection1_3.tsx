@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Home } from "lucide-react";
+import { CheckCircle, AlertTriangle } from "lucide-react";
 import { SubsectionProps } from "./subsection1_1/types";
 import CourseContentSection from "../CourseContentSection";
 
@@ -12,59 +12,60 @@ const Subsection1_3 = ({
 }: SubsectionProps) => {
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-elec-yellow">Building Regulations Part P</h2>
+      <h2 className="text-2xl font-bold text-elec-yellow">RIDDOR and Incident Reporting</h2>
       
       <div className="space-y-5">
         <CourseContentSection
-          title="Building Regulations Part P"
-          description="Building Regulations Part P applies specifically to domestic electrical installations in England and Wales. It requires that electrical installations are designed and installed to protect people from fire and electric shock. Under Part P, certain electrical work must be notified to local building control authorities unless carried out by a registered competent person who can self-certify their work. Work requiring notification includes new circuits, consumer unit replacements, and work in special locations such as bathrooms and swimming pools. It is essential for electricians working in domestic settings to understand these requirements."
+          title="RIDDOR and Incident Reporting"
+          description="The Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (RIDDOR) creates a legal duty to report certain workplace incidents to the Health and Safety Executive (HSE). For electrical workers, this includes reporting any electrical accident that results in a fatality, specified injury, or incapacitation for more than seven days. RIDDOR also requires reporting of dangerous occurrences related to electrical work, even if no injury results, such as electrical short circuits or overloads which cause significant damage or fire. Occupational diseases that may affect electrical workers, such as hand-arm vibration syndrome or occupational dermatitis, must also be reported when diagnosed."
           keyPoints={[
-            "Applies to domestic electrical installations in England and Wales",
-            "Requires notification of certain electrical work",
-            "Registered competent persons can self-certify work",
-            "Special locations have additional requirements"
+            "Mandates reporting of work-related accidents resulting in serious injury",
+            "Covers dangerous occurrences even if no injury results",
+            "Requires reporting of certain occupational diseases",
+            "Specifies timeframes for different types of reports",
+            "Reports contribute to national statistics and help identify industry-wide safety trends"
           ]}
-          icon="section"
+          icon="safety"
           subsectionId={subsectionId}
         />
         
         <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-4 md:p-6 space-y-4">
           <h3 className="text-xl font-bold text-elec-yellow flex items-center">
-            <Home className="h-5 w-5 mr-2" />
-            Notifiable Work
+            <AlertTriangle className="h-5 w-5 mr-2" />
+            Reportable Incidents
           </h3>
           
           <div className="space-y-4">
             <p className="text-sm md:text-base">
-              The following electrical work must be notified to building control unless carried out by a registered competent person:
+              Under RIDDOR, the following types of incidents must be reported to the HSE:
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
               <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-                <h4 className="font-semibold text-white mb-2">Installation of New Circuits</h4>
+                <h4 className="font-semibold text-white mb-2">Deaths</h4>
                 <p className="text-sm">
-                  Any new circuit installation in a domestic property, regardless of the intended use.
+                  All deaths to workers and non-workers that arise from a work-related accident.
                 </p>
               </div>
               
               <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-                <h4 className="font-semibold text-white mb-2">Consumer Unit Replacements</h4>
+                <h4 className="font-semibold text-white mb-2">Specified Injuries</h4>
                 <p className="text-sm">
-                  Replacing a consumer unit or distribution board.
+                  Including fractures, amputations, serious burns, loss of sight, and any injury leading to unconsciousness.
                 </p>
               </div>
               
               <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-                <h4 className="font-semibold text-white mb-2">Work in Special Locations</h4>
+                <h4 className="font-semibold text-white mb-2">Over-7-day Injuries</h4>
                 <p className="text-sm">
-                  Any work in bathrooms, shower rooms, swimming pools, or hot tub installations.
+                  Injuries that result in a worker being away from work or unable to perform normal duties for more than 7 days.
                 </p>
               </div>
               
               <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-                <h4 className="font-semibold text-white mb-2">Alterations to Existing Circuits</h4>
+                <h4 className="font-semibold text-white mb-2">Dangerous Occurrences</h4>
                 <p className="text-sm">
-                  In special locations or when adding significant loads to existing circuits.
+                  Near-miss events with potential for serious injury, such as electrical short circuits causing significant damage.
                 </p>
               </div>
             </div>
@@ -72,35 +73,35 @@ const Subsection1_3 = ({
         </div>
         
         <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-4 md:p-6">
-          <h3 className="text-xl font-bold text-elec-yellow mb-4">Competent Person Schemes</h3>
+          <h3 className="text-xl font-bold text-elec-yellow mb-4">RIDDOR Reporting Procedures</h3>
           
           <div className="space-y-4">
             <p className="text-sm md:text-base">
-              Registered competent persons can self-certify their work without needing building control notification. Main schemes include:
+              When a RIDDOR reportable incident occurs, specific procedures must be followed:
             </p>
             
             <ul className="list-disc pl-5 space-y-2">
               <li>
-                <span className="font-medium text-white">NICEIC</span>
-                <p className="text-sm mt-1">National Inspection Council for Electrical Installation Contracting</p>
+                <span className="font-medium text-white">Immediate Actions</span>
+                <p className="text-sm mt-1">Secure the scene, provide first aid, and notify appropriate personnel.</p>
               </li>
               <li>
-                <span className="font-medium text-white">ELECSA</span>
-                <p className="text-sm mt-1">Part of Certsure LLP alongside NICEIC</p>
+                <span className="font-medium text-white">Reporting Timeframes</span>
+                <p className="text-sm mt-1">Deaths and specified injuries must be reported immediately. Over-7-day injuries must be reported within 15 days.</p>
               </li>
               <li>
-                <span className="font-medium text-white">NAPIT</span>
-                <p className="text-sm mt-1">National Association of Professional Inspectors and Testers</p>
+                <span className="font-medium text-white">Online Reporting</span>
+                <p className="text-sm mt-1">Most incidents can be reported via the HSE website using the appropriate online form.</p>
               </li>
               <li>
-                <span className="font-medium text-white">STROMA</span>
-                <p className="text-sm mt-1">Certification services for building standards</p>
+                <span className="font-medium text-white">Record Keeping</span>
+                <p className="text-sm mt-1">Records of all reportable incidents must be kept for at least three years.</p>
               </li>
             </ul>
             
             <div className="mt-4 bg-elec-dark/50 p-3 rounded border border-elec-yellow/20">
               <p className="text-sm">
-                <strong>Note:</strong> Upon completion of notifiable work, registered competent persons must issue an Electrical Installation Certificate or Minor Works Certificate to the customer and register the work with their scheme provider.
+                <strong>Important:</strong> For fatal and specified injuries only, the Incident Contact Centre can be contacted by telephone at 0345 300 9923 (Monday to Friday 8:30am to 5pm).
               </p>
             </div>
           </div>
