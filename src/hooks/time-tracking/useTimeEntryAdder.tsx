@@ -1,7 +1,6 @@
 
 import { supabase } from "@/integrations/supabase/client";
 import { TimeEntry } from "@/types/time-tracking";
-import { Database } from "@/integrations/supabase/types";
 
 export const useTimeEntryAdder = (userId: string | null, setManualEntries: React.Dispatch<React.SetStateAction<TimeEntry[]>>) => {
   // Function to add a new time entry
