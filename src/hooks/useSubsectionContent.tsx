@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Subsection } from "@/data/healthAndSafety/types";
+import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
 import { installationMethodsContent } from "@/data/installationMethods/index";
 import { 
   basicElectricalTheorySection,
@@ -51,17 +52,41 @@ export function useSubsectionContent({
     
     if (sectionId && subsectionId) {
       // Determine which unit we're working with
-      const isElectricalTheoryUnit = unitSlug?.includes('elec2-01') || unitSlug?.includes('elec2-04');
+      const isHealthSafetyUnit = unitSlug?.includes('elec2-01');
+      const isElectricalTheoryUnit = unitSlug?.includes('elec2-04');
       const isInstallationMethodsUnit = unitSlug?.includes('elec2-05a');
       
       let section;
       let foundSubsection;
       
-      console.log("Unit types:", { isElectricalTheoryUnit, isInstallationMethodsUnit });
+      console.log("Unit types:", { isHealthSafetyUnit, isElectricalTheoryUnit, isInstallationMethodsUnit });
       
       // Find the section based on unit type
-      if (isElectricalTheoryUnit) {
-        // For electrical theory, set parent section number
+      if (isHealthSafetyUnit) {
+        // For health and safety unit
+        setParentSectionNumber(sectionId);
+        
+        // Find the section in the health and safety content
+        section = healthAndSafetyContent.find(
+          sec => sec.sectionNumber === sectionId
+        );
+        
+        if (section) {
+          setSectionTitle(section.title);
+          console.log("Found section:", section.title);
+          
+          // Find the subsection
+          foundSubsection = section.content.subsections.find(
+            sub => sub.id === subsectionId
+          );
+          
+          console.log("Found subsection:", foundSubsection?.title);
+          
+          // Store all sibling subsections for navigation
+          setSiblingSubsections(section.content.subsections);
+        }
+      } else if (isElectricalTheoryUnit) {
+        // For electrical theory unit
         setParentSectionNumber(sectionId);
         
         switch(sectionId) {
@@ -157,14 +182,14 @@ export function useSubsectionContent({
       console.log("Navigating to subsection:", subId);
       
       // Based on unit type, navigate to the appropriate path
-      const isElectricalTheoryUnit = unitSlug?.includes('elec2-01') || unitSlug?.includes('elec2-04');
+      const isInstallationMethodsUnit = unitSlug?.includes('elec2-05a');
       
-      if (isElectricalTheoryUnit) {
-        // For electrical theory units
-        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subId}`);
-      } else {
+      if (isInstallationMethodsUnit) {
         // For installation methods unit
         navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/installation-method/${sectionId}/subsection/${subId}`);
+      } else {
+        // For other units (health & safety or electrical theory)
+        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subId}`);
       }
     }
   };

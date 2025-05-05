@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, FileText, ClipboardList, FileCheck } from "lucide-react";
+import { CheckCircle, Megaphone, MessageSquare, ShieldAlert } from "lucide-react";
 
 type Subsection2_3Props = {
   subsectionId: string;
@@ -13,33 +13,33 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
   return (
     <>
       <section className="space-y-6">
-        <h2 className="text-2xl font-bold text-elec-yellow mb-4">Installation Specifications and Documentation</h2>
+        <h2 className="text-2xl font-bold text-elec-yellow mb-4">Safety Communication Systems</h2>
         
         <p className="text-base">
-          Comprehensive documentation is crucial for electrical installations. These documents ensure the installation 
-          meets client requirements, regulatory standards, and provides reference for future maintenance.
+          Effective safety communication is vital to preventing accidents in electrical work.
+          Clear communication ensures hazards are reported promptly and safety information reaches everyone who needs it.
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
             <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
-              <FileText className="h-5 w-5 mr-2" />
-              Specification Documents
+              <MessageSquare className="h-5 w-5 mr-2" />
+              Communication Structures
             </h3>
             <div className="space-y-3">
-              <p className="text-sm">Installation specifications provide detailed information about required materials, methods, and standards:</p>
+              <p className="text-sm">Organized systems for safety information flow:</p>
               
               <ul className="list-disc pl-5 space-y-2 text-sm mt-2">
-                <li><span className="font-medium">Material Specifications:</span> Detail required components, including brands, models, and quality standards</li>
-                <li><span className="font-medium">Performance Requirements:</span> Define expected outcomes and operational parameters</li>
-                <li><span className="font-medium">Method Statements:</span> Outline how work should be performed and sequence of operations</li>
-                <li><span className="font-medium">Compliance References:</span> Cite applicable regulations, codes, and standards to be followed</li>
-                <li><span className="font-medium">Testing Requirements:</span> Specify verification procedures and acceptance criteria</li>
+                <li><span className="font-medium">Reporting Hierarchies:</span> Clear chains of communication for different types of safety concerns</li>
+                <li><span className="font-medium">Emergency Communication:</span> Procedures for immediate response to serious hazards</li>
+                <li><span className="font-medium">Safety Representatives:</span> Designated individuals to facilitate safety communication</li>
+                <li><span className="font-medium">Feedback Loops:</span> Systems to ensure reported issues are addressed and reporters informed</li>
+                <li><span className="font-medium">Cross-Team Communication:</span> Methods to share safety information between different work groups</li>
               </ul>
               
               <div className="mt-4 p-3 bg-elec-dark/70 rounded-lg">
                 <p className="text-xs text-gray-300 italic">
-                  Specifications establish the quality standards and compliance requirements that must be met by the installation. They form a contractual document between client and contractor.
+                  Communication systems should be designed to ensure critical safety information reaches everyone affected, regardless of their position in the organization hierarchy.
                 </p>
               </div>
             </div>
@@ -47,23 +47,23 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
             <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
-              <ClipboardList className="h-5 w-5 mr-2" />
-              Schedules and Lists
+              <Megaphone className="h-5 w-5 mr-2" />
+              Communication Methods
             </h3>
             <div className="space-y-3">
-              <p className="text-sm">Schedules provide organized information about system components and parameters:</p>
+              <p className="text-sm">Effective approaches to delivering safety messages:</p>
               
               <ul className="list-disc pl-5 space-y-2 text-sm mt-2">
-                <li><span className="font-medium">Cable Schedules:</span> List cable types, sizes, routes, and termination details</li>
-                <li><span className="font-medium">Distribution Board Schedules:</span> Document circuit allocations, protection devices, and ratings</li>
-                <li><span className="font-medium">Lighting Schedules:</span> Detail fixture types, locations, controls, and lamp specifications</li>
-                <li><span className="font-medium">Equipment Lists:</span> Catalog all electrical equipment with ratings and specifications</li>
-                <li><span className="font-medium">Circuit Charts:</span> Provide reference for circuit identification and allocation</li>
+                <li><span className="font-medium">Toolbox Talks:</span> Brief, focused discussions on specific safety topics before work begins</li>
+                <li><span className="font-medium">Safety Briefings:</span> More detailed sessions when tasks change or new hazards emerge</li>
+                <li><span className="font-medium">Visual Communication:</span> Signage, color coding, and warning systems in work areas</li>
+                <li><span className="font-medium">Digital Tools:</span> Apps, messaging systems, and alerts for immediate hazard notification</li>
+                <li><span className="font-medium">Anonymous Reporting:</span> Confidential channels for reporting concerns without fear</li>
               </ul>
               
               <div className="mt-4 p-3 bg-elec-dark/70 rounded-lg">
                 <p className="text-xs text-gray-300 italic">
-                  Schedules transform complex information into accessible formats for installation and maintenance. They are essential reference tools during commissioning and testing.
+                  Use multiple communication channels to ensure messages reach everyone. Different people respond better to different communication styles (visual, verbal, written).
                 </p>
               </div>
             </div>
@@ -73,23 +73,23 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
             <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
-              <FileCheck className="h-5 w-5 mr-2" />
-              Certification and Test Records
+              <ShieldAlert className="h-5 w-5 mr-2" />
+              Safety Meeting Structure
             </h3>
             <div className="space-y-3">
-              <p className="text-sm">Documentation that provides evidence of safety verification and compliance:</p>
+              <p className="text-sm">Organized safety discussions for team engagement:</p>
               
               <ul className="list-disc pl-5 space-y-2 text-sm mt-2">
-                <li><span className="font-medium">Electrical Installation Certificate (EIC):</span> Confirms the installation meets BS 7671 requirements</li>
-                <li><span className="font-medium">Minor Works Certificate:</span> Used for smaller additions or alterations to an existing installation</li>
-                <li><span className="font-medium">Periodic Inspection Report:</span> Documents condition of existing installations</li>
-                <li><span className="font-medium">Test Results:</span> Record measurements from verification testing procedures</li>
-                <li><span className="font-medium">Commissioning Records:</span> Document system performance during initial operation</li>
+                <li><span className="font-medium">Regular Schedule:</span> Consistent timing to establish safety as a priority</li>
+                <li><span className="font-medium">Clear Agenda:</span> Structured format covering incidents, inspections, and upcoming risks</li>
+                <li><span className="font-medium">Documented Attendance:</span> Record of who received the information</li>
+                <li><span className="font-medium">Interactive Format:</span> Encourage questions and discussion rather than one-way communication</li>
+                <li><span className="font-medium">Action Items:</span> Assign specific tasks with deadlines and follow-up</li>
               </ul>
               
               <div className="mt-4 p-3 bg-elec-dark/70 rounded-lg">
                 <p className="text-xs text-gray-300 italic">
-                  These documents provide legal evidence that an installation is safe to use and complies with regulations. They must be completed accurately and retained for future reference.
+                  Effective safety meetings include reviewing recent incidents or near-misses to extract lessons, not to assign blame. This creates a learning culture rather than a blame culture.
                 </p>
               </div>
             </div>
@@ -97,23 +97,23 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
             <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
-              <FileText className="h-5 w-5 mr-2" />
-              Operation and Maintenance Documentation
+              <MessageSquare className="h-5 w-5 mr-2" />
+              Inclusive Communication
             </h3>
             <div className="space-y-3">
-              <p className="text-sm">Information for end users and maintenance personnel:</p>
+              <p className="text-sm">Ensuring safety messages reach and are understood by everyone:</p>
               
               <ul className="list-disc pl-5 space-y-2 text-sm mt-2">
-                <li><span className="font-medium">As-Built Drawings:</span> Show the actual installation details, reflecting any changes from design</li>
-                <li><span className="font-medium">Operation Manuals:</span> Provide instructions for system use and operation</li>
-                <li><span className="font-medium">Maintenance Schedules:</span> Outline required maintenance tasks and frequencies</li>
-                <li><span className="font-medium">Component Data Sheets:</span> Technical information on installed equipment</li>
-                <li><span className="font-medium">Warranty Information:</span> Details of guarantees and service agreements</li>
+                <li><span className="font-medium">Language Considerations:</span> Materials in languages understood by all workers</li>
+                <li><span className="font-medium">Literacy Awareness:</span> Visual aids and verbal communication for those with limited reading ability</li>
+                <li><span className="font-medium">Accessibility:</span> Ensuring communication methods work for people with disabilities</li>
+                <li><span className="font-medium">Cultural Sensitivity:</span> Awareness of how cultural differences affect communication</li>
+                <li><span className="font-medium">Verification of Understanding:</span> Checking that messages have been correctly understood</li>
               </ul>
               
               <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg">
-                <p className="font-medium mb-1 text-elec-yellow">Professional Tip:</p>
-                <p className="text-sm">Create a comprehensive handover pack for clients that includes all essential documentation. This shows professionalism and ensures the client has all information needed for future maintenance and modifications.</p>
+                <p className="font-medium mb-1 text-elec-yellow">Important Note:</p>
+                <p className="text-sm">Communication is only effective if it leads to action. Always include clear instructions about what workers should do with the information provided, and check that appropriate actions are being taken.</p>
               </div>
             </div>
           </div>

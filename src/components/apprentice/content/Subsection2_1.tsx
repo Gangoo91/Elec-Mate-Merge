@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, FileText, Lightbulb, Scale } from "lucide-react";
+import { CheckCircle, ClipboardCheck, Eye, ShieldAlert } from "lucide-react";
 
 type Subsection2_1Props = {
   subsectionId: string;
@@ -13,60 +13,60 @@ const Subsection2_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
   return (
     <>
       <section className="space-y-6">
-        <h2 className="text-2xl font-bold text-elec-yellow mb-4">Reading Electrical Drawings and Diagrams</h2>
+        <h2 className="text-2xl font-bold text-elec-yellow mb-4">Workplace Inspection Procedures</h2>
         
         <p className="text-base">
-          Electrical drawings and diagrams are essential communication tools that use standardized symbols to represent 
-          components and connections. Understanding these visual representations is fundamental to proper installation work.
+          Regular workplace inspections are a cornerstone of maintaining safety in electrical work environments.
+          A systematic approach to inspections helps identify and address hazards before they cause accidents.
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
             <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
-              <FileText className="h-5 w-5 mr-2" />
-              Types of Electrical Drawings
+              <ClipboardCheck className="h-5 w-5 mr-2" />
+              Inspection Types and Frequency
             </h3>
             <ul className="space-y-3">
               <li className="border-l-2 border-elec-yellow/30 pl-3">
-                <span className="font-medium block">Schematic Diagrams</span>
-                <p className="text-sm text-gray-300 mt-1">Show the operation principles of circuits using symbolic representation rather than physical layout. Used to understand how a circuit functions.</p>
+                <span className="font-medium block">Daily Pre-Work Checks</span>
+                <p className="text-sm text-gray-300 mt-1">Quick inspection of work area, tools, and equipment before beginning tasks. Look for trip hazards, damaged tools, and obvious safety concerns.</p>
               </li>
               <li className="border-l-2 border-elec-yellow/30 pl-3">
-                <span className="font-medium block">Wiring Diagrams</span>
-                <p className="text-sm text-gray-300 mt-1">Show the actual wire connections and physical relationships between components. Used for installation and troubleshooting.</p>
+                <span className="font-medium block">Weekly Documented Inspections</span>
+                <p className="text-sm text-gray-300 mt-1">More thorough checks with formal checklists covering electrical equipment, access paths, fire safety provisions, and first aid facilities.</p>
               </li>
               <li className="border-l-2 border-elec-yellow/30 pl-3">
-                <span className="font-medium block">Layout Drawings</span>
-                <p className="text-sm text-gray-300 mt-1">Show the physical placement of components within a building or space. Often drawn to scale and include dimensions.</p>
+                <span className="font-medium block">Monthly Safety Audits</span>
+                <p className="text-sm text-gray-300 mt-1">Comprehensive reviews conducted by supervisors or safety officers examining physical conditions, work practices, procedures, and documentation.</p>
               </li>
               <li className="border-l-2 border-elec-yellow/30 pl-3">
-                <span className="font-medium block">Block Diagrams</span>
-                <p className="text-sm text-gray-300 mt-1">Simplified representations showing major system components and their relationships without detailed connections.</p>
+                <span className="font-medium block">Quarterly System Reviews</span>
+                <p className="text-sm text-gray-300 mt-1">Evaluate the effectiveness of the inspection program itself and update to reflect new hazards or changing work conditions.</p>
               </li>
             </ul>
           </div>
           
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
             <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
-              <Scale className="h-5 w-5 mr-2" />
-              Scale and Conventions
+              <Eye className="h-5 w-5 mr-2" />
+              What to Inspect
             </h3>
             <ul className="space-y-3">
               <li className="border-l-2 border-elec-yellow/30 pl-3">
-                <span className="font-medium block">Drawing Scales</span>
-                <p className="text-sm text-gray-300 mt-1">Layouts typically use standard scales (1:50, 1:100). Understanding scale is critical for accurate installations and measurements.</p>
+                <span className="font-medium block">Work Environment</span>
+                <p className="text-sm text-gray-300 mt-1">Access/egress routes, lighting levels, ventilation, temperature, housekeeping, and storage practices.</p>
               </li>
               <li className="border-l-2 border-elec-yellow/30 pl-3">
-                <span className="font-medium block">Line Types</span>
-                <p className="text-sm text-gray-300 mt-1">Different line styles represent different circuit types (power, lighting, communication) or physical elements (existing vs. new work).</p>
+                <span className="font-medium block">Tools and Equipment</span>
+                <p className="text-sm text-gray-300 mt-1">Condition of hand tools, test equipment, PPE, electrical equipment, and machinery including maintenance records.</p>
               </li>
               <li className="border-l-2 border-elec-yellow/30 pl-3">
-                <span className="font-medium block">Drawing Conventions</span>
-                <p className="text-sm text-gray-300 mt-1">Vary between domestic, commercial, and industrial installations. Each sector has specific conventional practices for representing systems.</p>
+                <span className="font-medium block">Safety Systems</span>
+                <p className="text-sm text-gray-300 mt-1">Fire protection equipment, first aid supplies, emergency lighting, safety signage, and emergency procedures.</p>
               </li>
               <li className="border-l-2 border-elec-yellow/30 pl-3">
-                <span className="font-medium block">Title Blocks</span>
-                <p className="text-sm text-gray-300 mt-1">Contain critical information including project details, drawing number, revision history, and approval signatures.</p>
+                <span className="font-medium block">Documentation</span>
+                <p className="text-sm text-gray-300 mt-1">Risk assessments, method statements, training records, permits to work, and previous inspection findings.</p>
               </li>
             </ul>
           </div>
@@ -74,37 +74,37 @@ const Subsection2_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         
         <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5 mt-6">
           <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
-            <Lightbulb className="h-5 w-5 mr-2" />
-            Reading and Interpreting Skills
+            <ShieldAlert className="h-5 w-5 mr-2" />
+            Effective Inspection Procedures
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <h4 className="font-medium">Key Skills for Electricians:</h4>
+              <h4 className="font-medium">Documentation Process:</h4>
               <ul className="list-disc pl-5 space-y-1 text-sm">
-                <li>Identifying different types of drawings and their purpose</li>
-                <li>Understanding symbolic representation of components</li>
-                <li>Interpreting cable types and connection requirements</li>
-                <li>Recognizing circuit protection and control elements</li>
-                <li>Reading dimensions and scales accurately</li>
+                <li>Use standardized forms with clear evaluation criteria</li>
+                <li>Record all findings, even minor issues</li>
+                <li>Take photographs of hazards as evidence</li>
+                <li>Assign responsibility for corrective actions</li>
+                <li>Set deadlines for issue resolution</li>
               </ul>
             </div>
             
             <div className="space-y-2">
-              <h4 className="font-medium">Common Challenges:</h4>
+              <h4 className="font-medium">Follow-up Actions:</h4>
               <ul className="list-disc pl-5 space-y-1 text-sm">
-                <li>Reconciling discrepancies between drawings and site conditions</li>
-                <li>Understanding cross-references between multiple drawings</li>
-                <li>Interpreting drawing revisions and updates</li>
-                <li>Reading legacy drawings with outdated conventions</li>
-                <li>Coordinating electrical work with other services</li>
+                <li>Verify that corrective actions have been completed</li>
+                <li>Communicate findings to all relevant personnel</li>
+                <li>Update risk assessments based on findings</li>
+                <li>Review trends to identify recurring issues</li>
+                <li>Modify inspection procedures as needed</li>
               </ul>
             </div>
           </div>
           
           <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-sm">
-            <p className="font-medium mb-1 text-elec-yellow">Professional Tip:</p>
-            <p>Always cross-reference between different drawing types to build a complete understanding of the installation requirements. Check schematic diagrams for circuit operation, wiring diagrams for connection details, and layout drawings for physical placement and routing.</p>
+            <p className="font-medium mb-1 text-elec-yellow">Legal Requirement:</p>
+            <p>The Management of Health and Safety at Work Regulations 1999 require employers to have arrangements for the effective planning, organization, control, monitoring and review of preventive and protective measures. Regular workplace inspections are a key part of meeting this obligation.</p>
           </div>
         </div>
       </section>

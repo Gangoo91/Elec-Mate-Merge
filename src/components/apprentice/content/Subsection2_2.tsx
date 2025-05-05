@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, CircleDashed, AlertCircle, ShieldAlert } from "lucide-react";
+import { CheckCircle, ClipboardList, FileText, ShieldAlert } from "lucide-react";
 
 type Subsection2_2Props = {
   subsectionId: string;
@@ -13,62 +13,59 @@ const Subsection2_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
   return (
     <>
       <section className="space-y-6">
-        <h2 className="text-2xl font-bold text-elec-yellow mb-4">Electrical Symbols and Notation</h2>
+        <h2 className="text-2xl font-bold text-elec-yellow mb-4">Documentation and Record-Keeping</h2>
         
         <p className="text-base">
-          Electrical symbols provide a standardized visual language for communicating technical information. 
-          Understanding these symbols is essential for correctly interpreting installation requirements.
+          Proper documentation is essential for both legal compliance and effective safety management in electrical work.
+          Good record-keeping provides evidence of compliance and helps identify areas for improvement.
         </p>
         
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5 col-span-1 lg:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
             <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
-              <CircleDashed className="h-5 w-5 mr-2" />
-              British Standard Symbols
+              <ShieldAlert className="h-5 w-5 mr-2" />
+              Key Safety Documents
             </h3>
             <div className="space-y-3">
-              <p className="text-sm">BS EN 60617 provides the standardized electrical symbols used in the UK. These symbols represent various components including:</p>
+              <p className="text-sm">Core documentation required for electrical work includes:</p>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-                <div className="border-l-2 border-elec-yellow/30 pl-3">
-                  <h4 className="font-medium">Power Components</h4>
-                  <ul className="list-disc pl-5 space-y-1 text-sm mt-1">
-                    <li>Switches (single-pole, double-pole, etc.)</li>
-                    <li>Socket outlets (standard, switched, specialized)</li>
-                    <li>Distribution equipment (consumer units, boards)</li>
-                    <li>Circuit protection devices (MCBs, RCDs, fuses)</li>
-                    <li>Transformers and power supplies</li>
-                  </ul>
-                </div>
-                
-                <div className="border-l-2 border-elec-yellow/30 pl-3">
-                  <h4 className="font-medium">Lighting and Control</h4>
-                  <ul className="list-disc pl-5 space-y-1 text-sm mt-1">
-                    <li>Light fittings (various types and mounting)</li>
-                    <li>Emergency lighting fixtures</li>
-                    <li>Sensors and detectors</li>
-                    <li>Control devices and actuators</li>
-                    <li>Dimmers and controllers</li>
-                  </ul>
-                </div>
+              <ul className="list-disc pl-5 space-y-2 text-sm mt-2">
+                <li><span className="font-medium">Risk Assessments:</span> Identify hazards and control measures for specific tasks and environments</li>
+                <li><span className="font-medium">Method Statements:</span> Outline how work will be completed safely with step-by-step procedures</li>
+                <li><span className="font-medium">Equipment Inspection Records:</span> Track testing dates, results, and future inspection schedules</li>
+                <li><span className="font-medium">Training Records:</span> Document all safety-related instruction, certification, and competency assessments</li>
+                <li><span className="font-medium">Incident Reports:</span> Record accidents and near-misses with root cause analysis and corrective actions</li>
+              </ul>
+              
+              <div className="mt-4 p-3 bg-elec-dark/70 rounded-lg">
+                <p className="text-xs text-gray-300 italic">
+                  Documents should be task-specific, not generic, addressing the particular circumstances of each job. Generic documentation may miss critical site-specific hazards.
+                </p>
               </div>
             </div>
           </div>
           
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
             <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
-              <AlertCircle className="h-5 w-5 mr-2" />
-              Symbol Variations
+              <FileText className="h-5 w-5 mr-2" />
+              Document Management
             </h3>
             <div className="space-y-3">
-              <p className="text-sm">Symbols may vary slightly between different drawing systems and conventions:</p>
+              <p className="text-sm">Effective systems for organizing and maintaining documentation:</p>
               
               <ul className="list-disc pl-5 space-y-2 text-sm mt-2">
-                <li><span className="font-medium">Industry Differences:</span> Industrial, commercial, and domestic drawings may use different symbol variants</li>
-                <li><span className="font-medium">Company Standards:</span> Some organizations adopt modified symbols for internal use</li>
-                <li><span className="font-medium">International Variations:</span> Projects with international collaboration may use IEC or other standards</li>
-                <li><span className="font-medium">Legacy Drawings:</span> Older installations may use superseded symbol standards</li>
+                <li><span className="font-medium">Document Control:</span> Ensure workers have access to latest versions with clear version control</li>
+                <li><span className="font-medium">Storage Systems:</span> Secure, accessible storage with appropriate backup and protection</li>
+                <li><span className="font-medium">Retention Periods:</span> Follow legal requirements for how long different documents must be kept</li>
+                <li><span className="font-medium">Accessibility:</span> Make relevant documents available at point of use (e.g., on-site)</li>
+                <li><span className="font-medium">Digital Solutions:</span> Electronic systems for improved searchability and data analysis</li>
               </ul>
+              
+              <div className="mt-4 p-3 bg-elec-dark/70 rounded-lg">
+                <p className="text-xs text-gray-300 italic">
+                  Digital record-keeping systems offer advantages in searchability and analysis but must have appropriate backup and security measures to prevent data loss.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -76,40 +73,47 @@ const Subsection2_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
             <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
-              <ShieldAlert className="h-5 w-5 mr-2" />
-              Circuit References and Notation
+              <ClipboardList className="h-5 w-5 mr-2" />
+              Compliance Documentation
             </h3>
             <div className="space-y-3">
-              <p className="text-sm">Electrical drawings use standardized notation to convey detailed technical information:</p>
+              <p className="text-sm">Legal requirements for record-keeping in electrical work:</p>
               
               <ul className="list-disc pl-5 space-y-2 text-sm mt-2">
-                <li><span className="font-medium">Circuit References:</span> Unique identifiers for circuits (e.g., L1, L2, P1, P2) that link to schedules and details</li>
-                <li><span className="font-medium">Cable Type Notation:</span> Indicates conductor size, number, and insulation (e.g., 2.5mm² T&E)</li>
-                <li><span className="font-medium">Protective Device Marking:</span> Shows type and rating of protection (e.g., 32A B MCB)</li>
-                <li><span className="font-medium">Height Notation:</span> Indicates mounting heights for accessories (e.g., SW+1200mm)</li>
-                <li><span className="font-medium">Special Requirements:</span> Notes specific installation details or compliance requirements</li>
+                <li><span className="font-medium">Certificates of Compliance:</span> Legal documents verifying work meets standards like BS 7671</li>
+                <li><span className="font-medium">Statutory Inspection Records:</span> Required for certain equipment (e.g., lifting equipment)</li>
+                <li><span className="font-medium">COSHH Assessments:</span> For hazardous substances used in electrical work</li>
+                <li><span className="font-medium">HSE Notifications:</span> For certain types of work or incidents</li>
+                <li><span className="font-medium">Insurance Documentation:</span> Evidence of appropriate liability coverage</li>
               </ul>
+              
+              <div className="mt-4 p-3 bg-elec-dark/70 rounded-lg">
+                <p className="text-xs text-gray-300 italic">
+                  Employers with five or more employees must record significant findings of risk assessments. Smaller employers are still advised to maintain documentation as best practice.
+                </p>
+              </div>
             </div>
           </div>
           
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-5">
             <h3 className="flex items-center text-lg font-semibold text-elec-yellow mb-3">
-              <AlertCircle className="h-5 w-5 mr-2" />
-              Reading Composite Symbols
+              <FileText className="h-5 w-5 mr-2" />
+              Documentation Auditing
             </h3>
             <div className="space-y-3">
-              <p className="text-sm">Many symbols combine multiple elements to convey complex information:</p>
+              <p className="text-sm">Regular reviews to ensure documentation effectiveness:</p>
               
               <ul className="list-disc pl-5 space-y-2 text-sm mt-2">
-                <li><span className="font-medium">Composite Switch Symbols:</span> Show multiple switching positions or special functions</li>
-                <li><span className="font-medium">Accessory Combinations:</span> Represent multi-function accessories (e.g., switch+socket)</li>
-                <li><span className="font-medium">Control System Elements:</span> Show both the device and its function in the system</li>
-                <li><span className="font-medium">Connection Methods:</span> Indicate special termination requirements or connection types</li>
+                <li><span className="font-medium">Regular Audits:</span> Systematic review of documentation completeness and accuracy</li>
+                <li><span className="font-medium">Gap Analysis:</span> Identify missing or outdated documentation</li>
+                <li><span className="font-medium">Quality Assessment:</span> Evaluate whether documents are sufficiently detailed and specific</li>
+                <li><span className="font-medium">Implementation Check:</span> Verify that documented procedures are being followed</li>
+                <li><span className="font-medium">Improvement Process:</span> System for updating documentation based on audit findings</li>
               </ul>
               
               <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg">
-                <p className="font-medium mb-1 text-elec-yellow">Important Note:</p>
-                <p className="text-sm">Always refer to the drawing legend when interpreting symbols, as slight variations can significantly change installation requirements.</p>
+                <p className="font-medium mb-1 text-elec-yellow">Professional Tip:</p>
+                <p className="text-sm">Schedule document reviews alongside other business processes, such as after workplace inspections, following incidents, or when introducing new equipment or procedures. This ensures documentation remains current and relevant.</p>
               </div>
             </div>
           </div>

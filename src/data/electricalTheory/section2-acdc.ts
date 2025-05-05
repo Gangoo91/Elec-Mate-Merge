@@ -1,6 +1,7 @@
 
 import { SectionData } from '../healthAndSafety/types';
 
+// This file is for the electrical theory unit (ELEC2/04), not the health and safety unit (ELEC2/01)
 export const technicalInformationSection: SectionData = {
   sectionNumber: "2",
   title: "Technical Information",
