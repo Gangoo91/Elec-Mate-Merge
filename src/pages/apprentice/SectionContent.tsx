@@ -29,7 +29,8 @@ const SectionContent = () => {
         <BackButton 
           courseSlug={courseSlug} 
           unitSlug={unitSlug} 
-          sectionId={sectionId} 
+          // We don't pass sectionId here so BackButton will navigate back to unit page
+          // instead of trying to navigate to a specific section
         />
       </div>
       
