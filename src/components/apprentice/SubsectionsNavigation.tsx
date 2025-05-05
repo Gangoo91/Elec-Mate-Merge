@@ -1,47 +1,66 @@
 
 import React from "react";
-import { BookOpen } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import type { Subsection } from "@/data/healthAndSafety/types";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
-interface SubsectionsNavigationProps {
-  subsections: Subsection[];
+type SubsectionData = {
+  id: string;
+  title: string;
+};
+
+type SubsectionsNavigationProps = {
+  subsections: SubsectionData[];
   currentSubsectionId: string;
   navigateToSubsection: (subsectionId: string) => void;
-}
+};
 
 const SubsectionsNavigation = ({ 
   subsections, 
   currentSubsectionId,
   navigateToSubsection 
 }: SubsectionsNavigationProps) => {
-  const otherSubsections = subsections.filter(sub => sub.id !== currentSubsectionId);
-  
-  if (otherSubsections.length === 0) return null;
+  // Find current subsection index
+  const currentIndex = subsections.findIndex(sub => sub.id === currentSubsectionId);
+  const prevSubsection = currentIndex > 0 ? subsections[currentIndex - 1] : null;
+  const nextSubsection = currentIndex < subsections.length - 1 ? subsections[currentIndex + 1] : null;
   
   return (
-    <div className="mt-6">
-      <h3 className="text-lg font-semibold mb-3">Other Sections</h3>
-      <div className="space-y-2">
-        {otherSubsections.map((subsection) => (
-          <div 
-            key={subsection.id}
-            className="border border-elec-yellow/20 rounded-lg p-3 flex justify-between items-center cursor-pointer hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-all group bg-[#1a1a1a]"
-            onClick={() => navigateToSubsection(subsection.id)}
+    <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-4">
+      <div className="w-full sm:w-1/3">
+        {prevSubsection && (
+          <Button 
+            variant="outline" 
+            className="w-full justify-start border-elec-yellow/30 hover:bg-elec-yellow/10"
+            onClick={() => navigateToSubsection(prevSubsection.id)}
           >
-            <div className="flex items-center gap-2">
-              <span className="text-elec-yellow font-semibold">{subsection.id}</span>
-              <h3 className="font-medium">{subsection.title}</h3>
-            </div>
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="text-elec-yellow hover:bg-elec-yellow/10"
-            >
-              <BookOpen className="h-4 w-4" />
-            </Button>
-          </div>
-        ))}
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Previous: {prevSubsection.title}
+          </Button>
+        )}
+      </div>
+      
+      <div className="w-full sm:w-1/3 text-center">
+        <Button 
+          variant="outline"
+          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+          asChild
+        >
+          <Link to="../">All Subsections</Link>
+        </Button>
+      </div>
+      
+      <div className="w-full sm:w-1/3">
+        {nextSubsection && (
+          <Button 
+            variant="outline" 
+            className="w-full justify-end border-elec-yellow/30 hover:bg-elec-yellow/10"
+            onClick={() => navigateToSubsection(nextSubsection.id)}
+          >
+            Next: {nextSubsection.title}
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        )}
       </div>
     </div>
   );

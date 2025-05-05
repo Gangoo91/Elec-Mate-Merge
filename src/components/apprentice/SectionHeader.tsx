@@ -1,19 +1,19 @@
 
 import React from "react";
 
-interface SectionHeaderProps {
-  sectionNumber: string;
+type SectionHeaderProps = {
+  sectionNumber: number | string;
   title: string;
-}
+};
 
 const SectionHeader = ({ sectionNumber, title }: SectionHeaderProps) => {
   return (
-    <div className="flex items-center justify-center mb-8">
-      <div className="inline-flex items-center flex-col">
-        <div className="flex justify-center items-center w-20 h-20 bg-elec-yellow rounded-full mb-4">
-          <span className="text-3xl font-bold text-elec-dark">{sectionNumber}</span>
+    <div className="mb-6">
+      <div className="flex items-center gap-2">
+        <div className="bg-elec-yellow text-elec-dark font-bold px-3 py-1 rounded">
+          Section {sectionNumber}
         </div>
-        <h1 className="text-3xl font-bold text-center">{title}</h1>
+        <h1 className="text-xl md:text-2xl font-bold text-white">{title}</h1>
       </div>
     </div>
   );

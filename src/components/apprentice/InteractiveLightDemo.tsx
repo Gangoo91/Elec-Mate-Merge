@@ -1,6 +1,6 @@
 
-import React from "react";
-import { Switch } from "@/components/ui/switch";
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 type InteractiveLightDemoProps = {
   subsectionId: string;
@@ -8,43 +8,82 @@ type InteractiveLightDemoProps = {
   markAsComplete: () => void;
 };
 
-const InteractiveLightDemo = ({ 
-  subsectionId, 
-  isCompleted, 
-  markAsComplete 
-}: InteractiveLightDemoProps) => {
-  // Only show for specific subsections
-  if (subsectionId !== "1.1") return null;
+const InteractiveLightDemo = ({ subsectionId }: InteractiveLightDemoProps) => {
+  const [isLightOn, setIsLightOn] = useState(false);
+  const [circuitComplete, setCircuitComplete] = useState(false);
+  
+  const toggleCircuit = () => {
+    setCircuitComplete(!circuitComplete);
+  };
+  
+  const toggleLight = () => {
+    if (circuitComplete) {
+      setIsLightOn(!isLightOn);
+    }
+  };
   
   return (
-    <div className="mt-6 p-4 border border-elec-yellow/20 rounded-lg">
-      <h3 className="text-lg font-semibold mb-3">Interactive Demo: Light Switch Circuit</h3>
-      <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-        <div className="flex flex-col items-center">
-          <div className="w-16 h-16 border-2 border-white/80 rounded-md flex items-center justify-center mb-2">
-            <div className="w-10 h-10 border border-white/80 rounded-full flex items-center justify-center">
-              <div className="w-6 h-6 rounded-full" style={{ backgroundColor: `${isCompleted ? '#EAAA08' : '#3F3F3F'}` }}></div>
-            </div>
+    <div className="mt-8 border border-elec-yellow/30 rounded-lg p-6">
+      <h3 className="text-xl font-bold text-elec-yellow mb-4">Interactive Light Circuit Demonstration</h3>
+      
+      <div className="mb-4">
+        <p className="mb-3">
+          This interactive demonstration shows how a basic lighting circuit works. Complete the circuit to allow 
+          the switch to control the light.
+        </p>
+      </div>
+      
+      <div className="flex flex-col md:flex-row gap-6 items-center justify-center py-4">
+        <div className="text-center">
+          <div 
+            className={`w-20 h-20 rounded-md flex items-center justify-center cursor-pointer
+              ${circuitComplete ? 'bg-elec-yellow/20 border-2 border-elec-yellow' : 'bg-elec-dark/70 border-2 border-elec-yellow/30'}`}
+            onClick={toggleCircuit}
+          >
+            <span className="text-sm font-medium">
+              {circuitComplete ? 'Circuit Complete' : 'Circuit Open'}
+            </span>
           </div>
-          <span className="text-sm text-elec-light/80">Light Fitting</span>
+          <p className="mt-2 text-sm">Click to toggle circuit</p>
         </div>
         
-        <div className="h-0.5 w-16 bg-white/70"></div>
+        <div className="h-0.5 w-20 md:w-32 bg-elec-yellow/50"></div>
         
-        <div className="flex flex-col items-center">
-          <div className="flex items-center gap-2">
-            <span className="text-sm">Off</span>
-            <Switch 
-              checked={isCompleted}
-              onCheckedChange={markAsComplete}
-              className="data-[state=checked]:bg-elec-yellow"
-            />
-            <span className="text-sm">On</span>
+        <div className="text-center">
+          <div 
+            className={`w-16 h-16 rounded-md flex items-center justify-center cursor-pointer
+              ${circuitComplete ? 'bg-elec-yellow/20 border-2 border-elec-yellow hover:bg-elec-yellow/40' : 'bg-elec-dark/70 border-2 border-elec-yellow/30'}`}
+            onClick={toggleLight}
+          >
+            <span className="text-sm font-medium">Switch</span>
           </div>
-          <span className="text-sm text-elec-light/80 mt-2">Light Switch</span>
+          <p className="mt-2 text-sm">Click to toggle switch</p>
+        </div>
+        
+        <div className="h-0.5 w-20 md:w-32 bg-elec-yellow/50"></div>
+        
+        <div className="text-center">
+          <div 
+            className={`w-24 h-24 rounded-full flex items-center justify-center
+              ${isLightOn && circuitComplete ? 'bg-elec-yellow shadow-lg shadow-elec-yellow/50' : 'bg-elec-dark/70 border-2 border-elec-yellow/30'}`}
+          >
+            <span className="text-sm font-medium">
+              {isLightOn && circuitComplete ? 'ON' : 'OFF'}
+            </span>
+          </div>
+          <p className="mt-2 text-sm">Light bulb</p>
         </div>
       </div>
-      <p className="text-sm mt-4 text-center">Click the switch to turn the light on and mark this section as complete</p>
+      
+      <div className="bg-elec-dark/50 p-4 rounded-md mt-6">
+        <h4 className="font-semibold text-white mb-2">How it works:</h4>
+        <ol className="list-decimal pl-5 space-y-2">
+          <li>The circuit must be complete for electricity to flow</li>
+          <li>When the circuit is complete, the switch can control the light</li>
+          <li>The switch acts as a break in the circuit, controlling current flow</li>
+          <li>This demonstrates a simple lighting circuit as shown in electrical diagrams</li>
+        </ol>
+      </div>
     </div>
   );
 };
