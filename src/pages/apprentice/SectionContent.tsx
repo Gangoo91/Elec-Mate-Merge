@@ -25,7 +25,6 @@ const SectionContent = () => {
   const { courseSlug, unitSlug, sectionId } = useParams();
   const navigate = useNavigate();
   const [sectionData, setSectionData] = useState<SectionData | null>(null);
-  const [expandedSection, setExpandedSection] = useState<string | null>(null);
   
   useEffect(() => {
     if (sectionId && unitSlug) {
@@ -163,10 +162,6 @@ const SectionContent = () => {
     );
   }
 
-  const toggleSection = (id: string) => {
-    setExpandedSection(expandedSection === id ? null : id);
-  };
-
   const navigateToSubsection = (subsection: any) => {
     if (courseSlug && unitSlug && sectionData) {
       navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${subsection.id}`);
@@ -196,66 +191,48 @@ const SectionContent = () => {
         </div>
       </div>
       
-      {/* Subsections list */}
-      <div className="space-y-4 max-w-4xl mx-auto">
+      {/* Directly show all subsections content without requiring clicks */}
+      <div className="space-y-8 max-w-4xl mx-auto">
         {sectionData.content.subsections.map((subsection) => (
           <div 
             key={subsection.id}
-            className="border border-elec-yellow/20 rounded-lg p-4 flex justify-between items-center cursor-pointer hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-all group bg-[#1a1a1a]"
-            onClick={() => navigateToSubsection(subsection)}
+            className="bg-[#1a1a1a] border border-elec-yellow/20 rounded-lg p-6"
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3 mb-4">
               <span className="text-xl font-semibold text-elec-yellow">{subsection.id}</span>
               <h3 className="text-xl font-semibold">{subsection.title}</h3>
             </div>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="text-elec-yellow hover:bg-elec-yellow/10"
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleSection(subsection.id);
-              }}
-            >
-              <BookOpen className="h-6 w-6" />
-            </Button>
+            
+            <div className="prose prose-invert max-w-none">
+              <p>{subsection.content}</p>
+            </div>
+            
+            {/* Show key points if available */}
+            {subsection.keyPoints && subsection.keyPoints.length > 0 && (
+              <div className="mt-4 pt-4 border-t border-elec-yellow/20">
+                <h4 className="text-lg font-semibold text-elec-yellow mb-2">Key Points</h4>
+                <ul className="list-disc pl-5 space-y-1 text-elec-light/80">
+                  {subsection.keyPoints.map((point, index) => (
+                    <li key={index}>{point}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            
+            {/* Button to view detailed content */}
+            <div className="mt-4 pt-4 border-t border-elec-yellow/20 text-right">
+              <Button 
+                variant="study" 
+                className="hover:bg-elec-yellow hover:text-elec-dark"
+                onClick={() => navigateToSubsection(subsection)}
+              >
+                View Full Content
+                <BookOpen className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
           </div>
         ))}
       </div>
-      
-      {/* Expanded section content */}
-      {expandedSection && (
-        <div className="mt-6 bg-[#1a1a1a] border border-elec-yellow/20 rounded-lg p-6 animate-fade-in">
-          {sectionData.content.subsections
-            .filter(subsection => subsection.id === expandedSection)
-            .map(subsection => (
-              <div key={subsection.id}>
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="text-elec-yellow text-xl font-bold">{subsection.id}</span>
-                  <h2 className="text-2xl font-bold">{subsection.title}</h2>
-                </div>
-                <CourseContentSection
-                  title={subsection.title}
-                  description={subsection.content}
-                  keyPoints={subsection.keyPoints}
-                  icon={sectionData.content.icon}
-                  isMainSection={false}
-                  subsectionId={subsection.id}
-                />
-                <div className="mt-4 pt-4 border-t border-elec-yellow/20 text-right">
-                  <Button 
-                    variant="study" 
-                    className="hover:bg-elec-yellow hover:text-elec-dark"
-                    onClick={() => navigateToSubsection(subsection)}
-                  >
-                    Go To Full Content
-                    <BookOpen className="ml-2 h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            ))}
-        </div>
-      )}
     </div>
   );
 };

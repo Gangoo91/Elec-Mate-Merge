@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -175,106 +174,107 @@ const SubsectionContent = () => {
         </div>
       </div>
       
-      {/* Subsections list */}
-      <div className="space-y-4 max-w-4xl mx-auto">
-        {siblingSubsections.map((subsection) => (
-          <div 
-            key={subsection.id}
-            className={`border ${subsection.id === subsectionId ? 'border-elec-yellow' : 'border-elec-yellow/20'} 
-                      rounded-lg p-4 flex justify-between items-center cursor-pointer hover:border-elec-yellow/50 
-                      hover:bg-elec-yellow/5 transition-all group bg-[#1a1a1a]`}
-            onClick={() => navigateToSubsection(subsection.id)}
-          >
-            <div className="flex items-center gap-2">
-              <span className="text-xl font-semibold text-elec-yellow">{subsection.id}</span>
-              <h3 className="text-xl font-semibold">{subsection.title}</h3>
-            </div>
-            <Button 
-              variant="ghost" 
-              size="icon" 
-              className="text-elec-yellow hover:bg-elec-yellow/10"
-            >
-              <BookOpen className="h-6 w-6" />
-            </Button>
+      {/* Selected subsection content - Always displayed directly without needing to click */}
+      <div className="bg-[#1a1a1a] border border-elec-yellow/20 rounded-lg p-6">
+        <div className="flex flex-col mb-8">
+          <div className="flex items-center gap-3 mb-1">
+            <span className="text-elec-yellow text-xl font-bold">{subsectionData.id}</span>
+            <h2 className="text-2xl font-bold">{subsectionData.title}</h2>
+            {isCompleted && <CheckCircle className="h-5 w-5 text-green-500 ml-2" />}
           </div>
-        ))}
-      </div>
-      
-      {/* Selected subsection content */}
-      {subsectionId === subsectionData.id && (
-        <div className="bg-[#1a1a1a] border border-elec-yellow/20 rounded-lg p-6 mt-8">
-          <div className="flex flex-col mb-8">
-            <div className="flex items-center gap-3 mb-1">
-              <span className="text-elec-yellow text-xl font-bold">{subsectionData.id}</span>
-              <h2 className="text-2xl font-bold">{subsectionData.title}</h2>
-              {isCompleted && <CheckCircle className="h-5 w-5 text-green-500 ml-2" />}
+        </div>
+        
+        <div className="space-y-6">
+          <div className="text-elec-light/90 leading-relaxed prose prose-invert max-w-none">
+            <p className="mb-4">{subsectionData.content}</p>
+            
+            {/* Tools link section - Only show for subsection 2.1 */}
+            {subsectionId === "2.1" && (
+              <div className="my-6 p-4 bg-elec-dark/50 border border-elec-yellow/30 rounded-lg">
+                <h3 className="text-lg font-semibold text-elec-yellow mb-3 flex items-center">
+                  <CalculatorIcon className="mr-2 h-5 w-5" />
+                  Useful Tools
+                </h3>
+                <p className="mb-3">
+                  Use our electrical calculators to help you determine the correct cable sizes and voltage drops for your installations.
+                </p>
+                <Link to="/electrician-tools">
+                  <Button variant="study" className="bg-elec-yellow/20 border border-elec-yellow/60 hover:bg-elec-yellow hover:text-elec-dark">
+                    Open Electrical Calculators
+                  </Button>
+                </Link>
+              </div>
+            )}
+            
+            {/* Learning content component - Always displayed */}
+            <div className="mt-8">
+              <SubsectionLearningContent 
+                subsectionId={subsectionData.id}
+                isCompleted={isCompleted}
+                markAsComplete={markAsComplete}
+              />
             </div>
           </div>
           
-          <div className="space-y-6">
-            <div className="text-elec-light/90 leading-relaxed prose prose-invert max-w-none">
-              <p className="mb-4">{subsectionData.content}</p>
-              
-              {/* Tools link section - Only show for subsection 2.1 */}
-              {subsectionId === "2.1" && (
-                <div className="my-6 p-4 bg-elec-dark/50 border border-elec-yellow/30 rounded-lg">
-                  <h3 className="text-lg font-semibold text-elec-yellow mb-3 flex items-center">
-                    <CalculatorIcon className="mr-2 h-5 w-5" />
-                    Useful Tools
-                  </h3>
-                  <p className="mb-3">
-                    Use our electrical calculators to help you determine the correct cable sizes and voltage drops for your installations.
-                  </p>
-                  <Link to="/electrician-tools">
-                    <Button variant="study" className="bg-elec-yellow/20 border border-elec-yellow/60 hover:bg-elec-yellow hover:text-elec-dark">
-                      Open Electrical Calculators
-                    </Button>
-                  </Link>
-                </div>
-              )}
-              
-              {/* Learning content component */}
-              <div className="mt-8">
-                <SubsectionLearningContent 
-                  subsectionId={subsectionData.id}
-                  isCompleted={isCompleted}
-                  markAsComplete={markAsComplete}
-                />
-              </div>
-            </div>
-            
-            {subsectionData.keyPoints && subsectionData.keyPoints.length > 0 && (
-              <Accordion type="single" collapsible className="border-t border-elec-yellow/20 pt-4">
-                <AccordionItem value="key-points" className="border-b-0">
-                  <AccordionTrigger className="py-3 text-elec-yellow hover:no-underline">
-                    Key Learning Points
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <ul className="space-y-2 list-disc pl-5 text-elec-light/80">
-                      {subsectionData.keyPoints.map((point, index) => (
-                        <li key={index}>{point}</li>
-                      ))}
-                    </ul>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            )}
-            
-            {/* Mark as Complete button */}
-            <div className="flex justify-end pt-4 border-t border-elec-yellow/20">
-              <Button 
-                variant="study"
-                className={`${isCompleted ? 'bg-green-600/20 border-green-500/50 text-green-400' : 'hover:bg-elec-yellow hover:text-elec-dark'}`}
-                onClick={markAsComplete}
-                disabled={isCompleted}
-              >
-                {isCompleted ? 'Completed' : 'Mark as Complete'}
-                {isCompleted && <CheckCircle className="ml-2 h-4 w-4" />}
-              </Button>
-            </div>
+          {subsectionData.keyPoints && subsectionData.keyPoints.length > 0 && (
+            <Accordion type="single" collapsible className="border-t border-elec-yellow/20 pt-4">
+              <AccordionItem value="key-points" className="border-b-0">
+                <AccordionTrigger className="py-3 text-elec-yellow hover:no-underline">
+                  Key Learning Points
+                </AccordionTrigger>
+                <AccordionContent>
+                  <ul className="space-y-2 list-disc pl-5 text-elec-light/80">
+                    {subsectionData.keyPoints.map((point, index) => (
+                      <li key={index}>{point}</li>
+                    ))}
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          )}
+          
+          {/* Mark as Complete button */}
+          <div className="flex justify-end pt-4 border-t border-elec-yellow/20">
+            <Button 
+              variant="study"
+              className={`${isCompleted ? 'bg-green-600/20 border-green-500/50 text-green-400' : 'hover:bg-elec-yellow hover:text-elec-dark'}`}
+              onClick={markAsComplete}
+              disabled={isCompleted}
+            >
+              {isCompleted ? 'Completed' : 'Mark as Complete'}
+              {isCompleted && <CheckCircle className="ml-2 h-4 w-4" />}
+            </Button>
           </div>
         </div>
-      )}
+      </div>
+
+      {/* Other subsections navigation - list of links below the main content */}
+      <div className="mt-6">
+        <h3 className="text-lg font-semibold mb-3">Other Sections</h3>
+        <div className="space-y-2">
+          {siblingSubsections
+            .filter(sub => sub.id !== subsectionId) // Only show other subsections
+            .map((subsection) => (
+              <div 
+                key={subsection.id}
+                className="border border-elec-yellow/20 rounded-lg p-3 flex justify-between items-center cursor-pointer hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-all group bg-[#1a1a1a]"
+                onClick={() => navigateToSubsection(subsection.id)}
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-elec-yellow font-semibold">{subsection.id}</span>
+                  <h3 className="font-medium">{subsection.title}</h3>
+                </div>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="text-elec-yellow hover:bg-elec-yellow/10"
+                >
+                  <BookOpen className="h-4 w-4" />
+                </Button>
+              </div>
+            ))}
+        </div>
+      </div>
     </div>
   );
 };
