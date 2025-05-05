@@ -174,7 +174,7 @@ const SectionContent = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in bg-[#121212]">
       <div className="mb-6">
         <Button 
           variant="outline" 
@@ -201,7 +201,7 @@ const SectionContent = () => {
         {sectionData.content.subsections.map((subsection) => (
           <div 
             key={subsection.id}
-            className="border border-elec-yellow/20 rounded-lg p-4 flex justify-between items-center cursor-pointer hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-all group"
+            className="border border-elec-yellow/20 rounded-lg p-4 flex justify-between items-center cursor-pointer hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-all group bg-[#1a1a1a]"
             onClick={() => navigateToSubsection(subsection)}
           >
             <div className="flex items-center gap-2">
@@ -225,7 +225,7 @@ const SectionContent = () => {
       
       {/* Expanded section content */}
       {expandedSection && (
-        <div className="mt-6 bg-elec-gray border border-elec-yellow/20 rounded-lg p-6 animate-fade-in">
+        <div className="mt-6 bg-[#1a1a1a] border border-elec-yellow/20 rounded-lg p-6 animate-fade-in">
           {sectionData.content.subsections
             .filter(subsection => subsection.id === expandedSection)
             .map(subsection => (

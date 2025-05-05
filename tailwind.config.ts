@@ -68,6 +68,7 @@ export default {
 				'elec-dark': '#121212',
 				'elec-gray': '#2A2A2A',
 				'elec-light': '#F5F5F5',
+				'elec-card': '#1a1a1a',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

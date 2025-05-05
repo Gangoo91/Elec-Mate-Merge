@@ -153,7 +153,7 @@ const SubsectionContent = () => {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in bg-[#121212]">
       <div className="mb-6">
         <Button 
           variant="outline" 
@@ -182,7 +182,7 @@ const SubsectionContent = () => {
             key={subsection.id}
             className={`border ${subsection.id === subsectionId ? 'border-elec-yellow' : 'border-elec-yellow/20'} 
                       rounded-lg p-4 flex justify-between items-center cursor-pointer hover:border-elec-yellow/50 
-                      hover:bg-elec-yellow/5 transition-all group`}
+                      hover:bg-elec-yellow/5 transition-all group bg-[#1a1a1a]`}
             onClick={() => navigateToSubsection(subsection.id)}
           >
             <div className="flex items-center gap-2">
@@ -202,7 +202,7 @@ const SubsectionContent = () => {
       
       {/* Selected subsection content */}
       {subsectionId === subsectionData.id && (
-        <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6 mt-8">
+        <div className="bg-[#1a1a1a] border border-elec-yellow/20 rounded-lg p-6 mt-8">
           <div className="flex flex-col mb-8">
             <div className="flex items-center gap-3 mb-1">
               <span className="text-elec-yellow text-xl font-bold">{subsectionData.id}</span>

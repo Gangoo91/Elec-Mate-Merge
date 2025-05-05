@@ -82,7 +82,7 @@ const SectionBox = ({
 
   return (
     <div 
-      className="border border-elec-yellow/20 rounded-lg overflow-hidden bg-elec-gray relative cursor-pointer hover:bg-elec-yellow/5 transition-all"
+      className="border border-elec-yellow/20 rounded-lg overflow-hidden bg-[#1a1a1a] relative cursor-pointer hover:bg-elec-yellow/5 transition-all"
       onClick={handleSectionClick}
     >
       <div className="p-4">
@@ -98,7 +98,7 @@ const SectionBox = ({
             <Button 
               variant="study" 
               size="studyIcon" 
-              className="border-elec-yellow/40 bg-elec-gray hover:bg-elec-yellow hover:text-elec-dark"
+              className="border-elec-yellow/40 bg-[#1a1a1a] hover:bg-elec-yellow hover:text-elec-dark"
               onClick={(e) => {
                 e.stopPropagation(); // Prevent triggering the parent div's onClick
                 handleSectionClick();
