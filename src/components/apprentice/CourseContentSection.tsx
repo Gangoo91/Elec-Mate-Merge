@@ -1,6 +1,5 @@
-
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Shield, Info, Construction, AlertTriangle, HardHat, ListOrdered, Section, Cable, Socket, Lightbulb, TestTube, Tools } from "lucide-react";
+import { Shield, Info, Construction, AlertTriangle, HardHat, ListOrdered, Section, Cable, Lightbulb, TestTube } from "lucide-react";
 
 interface ContentSectionProps {
   sectionNumber?: string;
@@ -37,10 +36,10 @@ const CourseContentSection = ({
     icon === "list" ? ListOrdered :
     icon === "section" ? Section :
     icon === "cable" ? Cable :
-    icon === "socket" ? Socket :
+    icon === "socket" ? Cable : // Using Cable as a fallback for socket since it doesn't exist
     icon === "bulb" ? Lightbulb :
     icon === "test" ? TestTube :
-    icon === "tools" ? Tools : Info;
+    icon === "tools" ? Construction : Info; // Using Construction as a fallback for tools
 
   // Format description for safe isolation section
   const formatDescription = (text: string, id: string | undefined) => {
