@@ -7,16 +7,15 @@ export interface Subsection {
 }
 
 export interface SectionContentData {
-  sectionNumber: string;
-  title: string;
-  description: string;
-  icon: "safety" | "info" | "construction" | "warning" | "hardhat" | "list" | "section";
-  isMainSection: boolean;
   subsections: Subsection[];
+  icon: "safety" | "info" | "construction" | "warning" | "hardhat" | "list" | "section" | "cable" | "socket" | "bulb" | "test" | "tools";
 }
 
 export interface SectionData {
   sectionNumber: string;
   title: string;
-  content: SectionContentData;
+  content: {
+    subsections: Subsection[];
+    icon: "safety" | "info" | "construction" | "warning" | "hardhat" | "list" | "section" | "cable" | "socket" | "bulb" | "test" | "tools";
+  };
 }
