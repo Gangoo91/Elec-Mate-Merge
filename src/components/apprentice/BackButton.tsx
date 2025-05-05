@@ -20,10 +20,13 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
   const section = sectionId || params.sectionId;
 
   const handleBackClick = () => {
-    if (course && unit && section) {
-      console.log("Back button clicked with params:", { course, unit, section });
-      
-      // Determine the correct back navigation path based on unit type
+    console.log("Back button clicked with params:", { course, unit, section });
+    
+    // Check if we're on a subsection page
+    const isSubsectionPage = window.location.pathname.includes('/subsection/');
+    
+    if (course && unit && section && isSubsectionPage) {
+      // We're on a subsection page, navigate back to the section page
       const isElectricalTheoryUnit = unit.includes('elec2-01') || unit.includes('elec2-04');
       const isInstallationMethodsUnit = unit.includes('elec2-05a');
       
@@ -31,16 +34,17 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
         // Navigate back to the electrical theory section page
         navigate(`/apprentice/study/eal/${course}/unit/${unit}/section/${section}`);
       } else if (isInstallationMethodsUnit) {
-        // Navigate back to the installation methods section page
+        // Navigate back to the installation methods section page  
         navigate(`/apprentice/study/eal/${course}/unit/${unit}/installation-method/${section}`);
       } else {
         // Fallback to unit page
         navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
       }
     } else if (course && unit) {
-      // Fallback to unit page
+      // If we're on a section page or somewhere else, go back to the unit page
       navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
     } else {
+      // Last resort fallback - just go back in history
       navigate(-1);
     }
   };
