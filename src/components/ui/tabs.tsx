@@ -29,8 +29,8 @@ const TabsTrigger = React.forwardRef<
     ref={ref}
     className={cn(
       "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm",
-      // Mobile optimized active state with underline instead of background change
-      "data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow data-[state=active]:rounded-none",
+      // Mobile optimized active state - use bottom border for active state instead of background change
+      "data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow data-[state=active]:rounded-none data-[state=active]:shadow-none",
       className
     )}
     {...props}

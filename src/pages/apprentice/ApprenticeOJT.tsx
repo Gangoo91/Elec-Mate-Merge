@@ -53,26 +53,30 @@ const ApprenticeOJT = () => {
   };
 
   return (
-    <div className="space-y-4 pb-8 animate-fade-in">
+    <div className="space-y-4 pb-20 animate-fade-in">
+      {/* Only show header on desktop */}
       <OJTHeader handleDownloadReport={handleDownloadReport} />
-
-      {/* Mobile View shows both cards stacked */}
-      <div className="space-y-4">
-        {/* OJT Ratio Card - only mobile */}
-        {isMobile && (
-          <OJTRatioCard />
-        )}
-        
-        {/* Training Management Card - Main Card */}
-        <TrainingManagementCard 
-          initialActiveTab={activeTab}
-          className="border-elec-yellow/20"
-        />
-      </div>
-
-      {/* Guide Card Hidden on Mobile */}
-      {!isMobile && (
-        <TrainingGuideCard />
+      
+      {/* Mobile layout has a different structure */}
+      {isMobile ? (
+        <div>
+          {/* Training Management Card - Main Card for Mobile */}
+          <TrainingManagementCard 
+            initialActiveTab={activeTab}
+            className="border-elec-yellow/20"
+          />
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {/* Desktop layout - Guide Card first */}
+          <TrainingGuideCard />
+          
+          {/* Training Management Card */}
+          <TrainingManagementCard 
+            initialActiveTab={activeTab}
+            className="border-elec-yellow/20"
+          />
+        </div>
       )}
     </div>
   );

@@ -33,20 +33,23 @@ const TimeTracker = () => {
   if (isMobile) {
     return (
       <div className="space-y-4">
-        {/* Recent Entries section */}
-        <div>
-          <h3 className="text-xl font-semibold mb-2">Recent</h3>
-          <EntriesList entries={recentEntries} isLoading={isLoading} />
+        {/* Recent Entries title */}
+        <div className="mb-4">
+          <h2 className="text-2xl font-bold">Recent</h2>
+          <h3 className="text-xl mt-2">Recent Time Entries</h3>
         </div>
+        
+        {/* Entries List */}
+        <EntriesList entries={recentEntries} isLoading={isLoading} />
         
         {/* Fixed button at the bottom */}
         <Dialog>
           <DialogTrigger asChild>
             <Button 
-              className="fixed bottom-20 right-4 rounded-full w-12 h-12 shadow-lg flex items-center justify-center"
+              className="fixed bottom-20 right-4 rounded-full w-14 h-14 shadow-lg flex items-center justify-center"
               size="icon"
             >
-              <PlusCircle className="h-6 w-6" />
+              <PlusCircle className="h-8 w-8" />
             </Button>
           </DialogTrigger>
           <DialogContent>

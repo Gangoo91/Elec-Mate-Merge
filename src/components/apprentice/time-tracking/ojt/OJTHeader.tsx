@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -10,7 +11,7 @@ interface OJTHeaderProps {
 const OJTHeader = ({ handleDownloadReport }: OJTHeaderProps) => {
   const isMobile = useIsMobile();
   
-  // For mobile, we'll simplify the header since the design shows we don't need this
+  // For mobile, we'll completely hide the header as per the screenshot
   if (isMobile) {
     return null;
   }

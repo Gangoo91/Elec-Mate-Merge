@@ -9,7 +9,14 @@ import CertificatesManager from "@/components/apprentice/time-tracking/Certifica
 import TrainingEvidence from "@/components/apprentice/time-tracking/TrainingEvidence";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Clock } from "lucide-react";
+import { Clock, ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 interface TrainingManagementCardProps {
   initialActiveTab?: string;
@@ -19,6 +26,18 @@ interface TrainingManagementCardProps {
 const TrainingManagementCard = ({ initialActiveTab = "recent", className }: TrainingManagementCardProps) => {
   const [activeTab, setActiveTab] = useState(initialActiveTab);
   const isMobile = useIsMobile();
+
+  // Function to get tab display name
+  const getTabDisplayName = (tabValue: string) => {
+    switch (tabValue) {
+      case "recent": return "Recent";
+      case "logbook": return "Logbook";
+      case "weekly": return "Weekly";
+      case "certificates": return "Certificates";
+      case "evidence": return "Evidence";
+      default: return tabValue;
+    }
+  };
 
   return (
     <Card className={cn("bg-elec-gray", className)}>
@@ -64,13 +83,43 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
         )}
         
         <Tabs defaultValue={activeTab} value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className={`mb-4 bg-elec-dark ${isMobile ? 'w-full' : ''}`}>
-            <TabsTrigger value="recent" className="flex-1">Recent</TabsTrigger>
-            <TabsTrigger value="logbook" className="flex-1">Logbook</TabsTrigger>
-            <TabsTrigger value="weekly" className="flex-1">Weekly</TabsTrigger>
-            <TabsTrigger value="certificates" className="flex-1">Certificates</TabsTrigger>
-            <TabsTrigger value="evidence" className="flex-1">Evidence</TabsTrigger>
-          </TabsList>
+          {isMobile ? (
+            <div className="mb-4 bg-elec-dark rounded-md p-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="w-full justify-between bg-transparent text-white">
+                    {getTabDisplayName(activeTab)}
+                    <ChevronDown className="h-4 w-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="center" className="w-full min-w-[200px] bg-elec-dark border-elec-gray/40">
+                  <DropdownMenuItem onClick={() => setActiveTab("recent")} className="justify-center">
+                    Recent
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setActiveTab("logbook")} className="justify-center">
+                    Logbook
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setActiveTab("weekly")} className="justify-center">
+                    Weekly
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setActiveTab("certificates")} className="justify-center">
+                    Certificates
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setActiveTab("evidence")} className="justify-center">
+                    Evidence
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          ) : (
+            <TabsList className="mb-4 bg-elec-dark w-full">
+              <TabsTrigger value="recent" className="flex-1">Recent</TabsTrigger>
+              <TabsTrigger value="logbook" className="flex-1">Logbook</TabsTrigger>
+              <TabsTrigger value="weekly" className="flex-1">Weekly</TabsTrigger>
+              <TabsTrigger value="certificates" className="flex-1">Certificates</TabsTrigger>
+              <TabsTrigger value="evidence" className="flex-1">Evidence</TabsTrigger>
+            </TabsList>
+          )}
           
           <TabsContent value="recent">
             <TimeTracker />
