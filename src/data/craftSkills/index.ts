@@ -16,7 +16,7 @@ export const craftSkillsContent: SectionData[] = [
             "Cable sizing and current ratings",
             "PVC vs. XLPE insulation",
             "Single core vs. multicore cables",
-            "Armored cables and their applications"
+            "Armoured cables and their applications"
           ]
         },
         {

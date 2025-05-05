@@ -14,7 +14,7 @@ export const installationMethodsSection: SectionData = {
       {
         id: "1",
         title: "Installation Requirements",
-        content: "Understanding installation requirements involves the interpretation of installation drawings, specifications, and diagrams to accurately implement electrical systems. Electricians must be able to identify suitable installation methods based on building type and purpose, as different structures have varying requirements. For example, domestic installations differ significantly from commercial or industrial settings in terms of load requirements and circuit types. Knowledge of installation zones and cable routing regulations according to BS 7671 is essential, as these dictate where cables can be safely run within walls, floors, and ceilings to minimize risk of damage and ensure accessibility for future maintenance.",
+        content: "Understanding installation requirements involves the interpretation of installation drawings, specifications, and diagrams to accurately implement electrical systems. Electricians must be able to identify suitable installation methods based on building type and purpose, as different structures have varying requirements. For example, domestic installations differ significantly from commercial or industrial settings in terms of load requirements and circuit types. Knowledge of installation zones and cable routing regulations according to BS 7671 is essential, as these dictate where cables can be safely run within walls, floors, and ceilings to minimise risk of damage and ensure accessibility for future maintenance.",
         keyPoints: [
           "Interpret installation drawings, specifications, and diagrams correctly",
           "Identify suitable installation methods based on building type and purpose",
@@ -47,10 +47,10 @@ export const installationMethodsSection: SectionData = {
       {
         id: "4",
         title: "Safe Working Practices",
-        content: "Safe working practices are paramount in electrical installation work. Proper isolation procedures must be followed before working on any electrical system, including identification, isolation, proving dead, and securing against reconnection. Application of lock-off devices and warning tags is essential to prevent accidental re-energization of circuits being worked on. Identification and correct use of appropriate Personal Protective Equipment (PPE) such as insulated tools, voltage-rated gloves, eye protection, and appropriate footwear is necessary to protect against electrical and other workplace hazards. All work must be risk-assessed and carried out in accordance with safe systems of work.",
+        content: "Safe working practices are paramount in electrical installation work. Proper isolation procedures must be followed before working on any electrical system, including identification, isolation, proving dead, and securing against reconnection. Application of lock-off devices and warning tags is essential to prevent accidental re-energisation of circuits being worked on. Identification and correct use of appropriate Personal Protective Equipment (PPE) such as insulated tools, voltage-rated gloves, eye protection, and appropriate footwear is necessary to protect against electrical and other workplace hazards. All work must be risk-assessed and carried out in accordance with safe systems of work.",
         keyPoints: [
           "Follow proper isolation procedures before working on electrical installations",
-          "Apply lock-off devices and warning tags to prevent accidental re-energization",
+          "Apply lock-off devices and warning tags to prevent accidental re-energisation",
           "Identify and use appropriate Personal Protective Equipment (PPE)",
           "Complete risk assessments and follow safe systems of work"
         ]

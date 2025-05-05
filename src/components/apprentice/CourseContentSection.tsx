@@ -1,3 +1,4 @@
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Shield, Info, Construction, AlertTriangle, HardHat, ListOrdered, Section, Cable, Lightbulb, TestTube } from "lucide-react";
 
