@@ -42,7 +42,7 @@ const MentorGrid = ({ mentors, isLoading, error, requestingMentor, onConnectMent
           key={mentor.id}
           mentor={mentor}
           onConnect={onConnectMentor}
-          isRequesting={requestingMentor === mentor.id}
+          isRequesting={requestingMentor}
         />
       ))}
     </div>

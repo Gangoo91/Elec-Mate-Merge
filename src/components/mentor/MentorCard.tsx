@@ -14,7 +14,7 @@ interface MentorCardProps {
     avatar?: string;
   };
   onConnect: (mentor: any) => void;
-  isRequesting: boolean;
+  isRequesting: string | null;
 }
 
 const MentorCard = ({ mentor, onConnect, isRequesting }: MentorCardProps) => {
