@@ -11,6 +11,11 @@ export type TimeEntry = {
   totalQuestions?: number;
 };
 
+export type TimeEntryTotal = {
+  hours: number;
+  minutes: number;
+};
+
 export type TrainingEvidenceItem = {
   id: string;
   title: string;
