@@ -2,10 +2,13 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock, Book } from "lucide-react";
+import { Clock, Book, FileText, Download } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Progress } from "@/components/ui/progress";
 import TimeTracker from "@/components/apprentice/TimeTracker";
+import DigitalLogbook from "@/components/apprentice/time-tracking/DigitalLogbook";
+import WeeklyOverview from "@/components/apprentice/time-tracking/WeeklyOverview";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const ApprenticeOJT = () => {
   const [weeklyHours, setWeeklyHours] = useState(8);
@@ -37,18 +40,29 @@ const ApprenticeOJT = () => {
     });
   }, []);
 
+  const handleDownloadReport = () => {
+    // In a real implementation, this would generate a PDF or CSV report
+    alert("This would download a time report in a real implementation");
+  };
+
   return (
     <div className="space-y-8 animate-fade-in">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Off the Job Time Keeping</h1>
           <p className="text-muted-foreground">
             Track your 20% off-the-job training hours and access EAL compliant resources
           </p>
         </div>
-        <Link to="/apprentice">
-          <Button variant="outline">Back to Apprentice Hub</Button>
-        </Link>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={handleDownloadReport} className="flex items-center gap-2">
+            <Download className="h-4 w-4" />
+            Download Report
+          </Button>
+          <Link to="/apprentice">
+            <Button variant="outline">Back to Apprentice Hub</Button>
+          </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -89,10 +103,40 @@ const ApprenticeOJT = () => {
 
         <Card className="border-elec-yellow/20 bg-elec-gray lg:col-span-2">
           <CardHeader>
-            <CardTitle>Recent Activities</CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle>Training Activity</CardTitle>
+              <div className="flex items-center gap-2 text-sm">
+                <div className="flex items-center">
+                  <div className="w-3 h-3 bg-elec-yellow/70 rounded-full mr-1.5"></div>
+                  <span>Automatic</span>
+                </div>
+                <div className="flex items-center ml-3">
+                  <div className="w-3 h-3 bg-elec-gray rounded-full border border-elec-yellow/40 mr-1.5"></div>
+                  <span>Manual</span>
+                </div>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
-            <TimeTracker />
+            <Tabs defaultValue="recent">
+              <TabsList className="mb-4 bg-elec-dark">
+                <TabsTrigger value="recent">Recent Activities</TabsTrigger>
+                <TabsTrigger value="logbook">Digital Logbook</TabsTrigger>
+                <TabsTrigger value="weekly">Weekly Overview</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="recent">
+                <TimeTracker />
+              </TabsContent>
+              
+              <TabsContent value="logbook">
+                <DigitalLogbook />
+              </TabsContent>
+              
+              <TabsContent value="weekly">
+                <WeeklyOverview />
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
       </div>
