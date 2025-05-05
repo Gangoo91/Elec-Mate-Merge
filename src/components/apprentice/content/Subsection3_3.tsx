@@ -1,58 +1,53 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Cable, PlugZap, ShieldAlert } from "lucide-react";
+import { CheckCircle, Home, Building, Plug } from "lucide-react";
+import { SubsectionProps } from "./subsection1_1/types";
 
-interface Subsection3_3Props {
-  subsectionId: string;
-  isCompleted: boolean;
-  markAsComplete: () => void;
-}
-
-const Subsection3_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection3_3Props) => {
+const Subsection3_3 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-elec-yellow">Installation Methods and Techniques</h2>
+      <h2 className="text-2xl font-bold text-elec-yellow">Special Installations</h2>
       
       <div className="space-y-4">
         <p>
-          Proper installation techniques are crucial for the integrity and safety of wiring systems.
-          Following established methods ensures compliance with regulations and the long-term reliability of the installation.
+          Certain locations and installations require special considerations due to increased risks or specific requirements.
+          Understanding these requirements is essential for compliant and safe electrical work.
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
-              <Cable className="h-5 w-5 mr-2" />
-              Cable Installation Methods
+              <Home className="h-5 w-5 mr-2" />
+              Bathrooms and Shower Rooms
             </h3>
             <div className="space-y-3">
-              <h4 className="font-semibold">Cable Routing Practices</h4>
+              <h4 className="font-semibold">Zone Classifications</h4>
               <ul className="list-disc pl-5 space-y-2">
-                <li>Run cables horizontally or vertically (not diagonally) in walls</li>
-                <li>Maintain minimum bending radii (typically 8× cable diameter for fixed wiring)</li>
-                <li>Use appropriate cable ties and fixings without compressing cables</li>
-                <li>Avoid excessive tension during installation (max 25N/mm² for copper)</li>
-                <li>Route cables away from heat sources and sharp edges</li>
+                <li>Zone 0: Interior of bath or shower basin</li>
+                <li>Zone 1: Area directly above bath/shower up to 2.25m</li>
+                <li>Zone 2: Area extending 0.6m beyond Zone 1, height 2.25m</li>
+                <li>Outside zones: Remainder of bathroom</li>
+                <li>Different electrical equipment permitted in each zone</li>
               </ul>
               
-              <h4 className="font-semibold mt-4">Separation from Other Services</h4>
+              <h4 className="font-semibold mt-4">Protection Requirements</h4>
               <ul className="list-disc pl-5 space-y-2">
-                <li>Maintain minimum distances from water/gas pipes (typically 150mm)</li>
-                <li>Separate power and data/telecoms cables (min 200mm unless shielded)</li>
-                <li>Cross other services at right angles when necessary</li>
-                <li>Use metallic barriers where required separation cannot be achieved</li>
-                <li>Consider electromagnetic compatibility requirements</li>
+                <li>All circuits require 30mA RCD protection</li>
+                <li>IPX7 equipment in Zone 0</li>
+                <li>IPX4 equipment in Zone 1 (IPX5 for water jets)</li>
+                <li>IPX4 equipment in Zone 2</li>
+                <li>Equipotential bonding of all extraneous-conductive-parts</li>
               </ul>
               
               <div className="mt-4 pt-4 border-t border-elec-yellow/20">
-                <h4 className="font-semibold text-elec-yellow mb-2">Support Requirements:</h4>
+                <h4 className="font-semibold text-elec-yellow mb-2">Equipment Restrictions:</h4>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li>Flat twin & earth cable: max 400mm horizontal, 400mm vertical</li>
-                  <li>Armored cable: typically 350mm horizontal, 450mm vertical</li>
-                  <li>Additional support needed near terminations</li>
-                  <li>Account for cable weight and environmental factors</li>
-                  <li>Use fire-rated supports in escape routes</li>
+                  <li>Zone 0: SELV 12V AC or 30V DC equipment only</li>
+                  <li>Zone 1: Electric showers, SELV equipment, or specially protected appliances</li>
+                  <li>Zone 2: Shaver units, SELV equipment, and specific luminaires</li>
+                  <li>Outside zones: Standard equipment with RCD protection</li>
+                  <li>No socket outlets allowed in Zones 0, 1, or 2 (except shaver units)</li>
                 </ul>
               </div>
             </div>
@@ -60,36 +55,36 @@ const Subsection3_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
-              <PlugZap className="h-5 w-5 mr-2" />
-              Termination Techniques
+              <Building className="h-5 w-5 mr-2" />
+              Other Special Locations
             </h3>
             <div className="space-y-3">
-              <h4 className="font-semibold">Proper Connection Methods</h4>
+              <h4 className="font-semibold">Swimming Pools</h4>
               <ul className="list-disc pl-5 space-y-2">
-                <li>Remove appropriate length of outer sheath (avoid nicking inner insulation)</li>
-                <li>Ensure conductors are straight and undamaged before termination</li>
-                <li>Strip inner insulation to correct length (no bare conductor exposed)</li>
-                <li>Terminate conductors with correct torque (typically 1.2-1.5Nm for larger terminals)</li>
-                <li>Maintain correct polarity and conductor identification</li>
+                <li>Extended zone classifications (0, 1, 2)</li>
+                <li>SELV (max 12V AC) in Zone 0</li>
+                <li>IPX8 rating for Zone 0 equipment</li>
+                <li>Enhanced supplementary bonding</li>
+                <li>Specific spacing requirements from pool edge</li>
               </ul>
               
-              <h4 className="font-semibold mt-4">Common Connection Types</h4>
+              <h4 className="font-semibold mt-4">Agricultural Locations</h4>
               <ul className="list-disc pl-5 space-y-2">
-                <li>Screw terminals: ensure conductor fully inserted, no stray strands</li>
-                <li>Spring-loaded terminals: ensure proper strip length and full insertion</li>
-                <li>Crimped connections: use correct crimping tool and die size</li>
-                <li>Insulation displacement: follow manufacturer's instructions precisely</li>
-                <li>Terminal blocks: ensure rating matches or exceeds circuit requirements</li>
+                <li>Additional protection against fire (AFDDs recommended)</li>
+                <li>Increased IP ratings for dust/water protection</li>
+                <li>Animal-resistant enclosures and cable protection</li>
+                <li>Enhanced equipotential bonding</li>
+                <li>Special considerations for livestock areas</li>
               </ul>
               
               <div className="mt-4 pt-4 border-t border-elec-yellow/20">
-                <h4 className="font-semibold text-elec-yellow mb-2">Critical Issues:</h4>
+                <h4 className="font-semibold text-elec-yellow mb-2">Temporary Installations:</h4>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li>High-resistance connections cause overheating and fire risk</li>
-                  <li>Double terminations in single terminals not generally permitted</li>
-                  <li>Secure terminations essential in areas subject to vibration</li>
-                  <li>Consider temperature rating of terminals for high-current applications</li>
-                  <li>Maintain correct conductor color coding throughout</li>
+                  <li>Construction sites: reduced LV system (110V center-tapped)</li>
+                  <li>Exhibitions: enhanced mechanical protection for cables</li>
+                  <li>BS 7909 requirements for temporary events</li>
+                  <li>Frequent inspection requirements</li>
+                  <li>Enhanced RCD protection (30mA, time-delayed types)</li>
                 </ul>
               </div>
             </div>
@@ -98,54 +93,54 @@ const Subsection3_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         
         <div className="mt-8 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
-            <ShieldAlert className="h-5 w-5 mr-2" />
-            Special Installation Considerations
+            <Plug className="h-5 w-5 mr-2" />
+            Embedded Electrical Systems
           </h3>
           
           <div className="space-y-4">
-            <p>Certain situations require additional installation considerations to maintain safety and compliance:</p>
+            <p>Modern buildings often include embedded or concealed electrical systems with special requirements:</p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-3">
-                <h4 className="font-semibold text-white">Fire Safety Measures</h4>
+                <h4 className="font-semibold text-white">Floor and Ceiling Heating</h4>
                 <ul className="list-disc pl-5 space-y-2">
                   <li>
-                    <span className="font-medium">Fire barriers and penetration seals</span>
-                    <p className="text-sm mt-1">Maintain fire compartmentation with appropriate sealing systems</p>
+                    <span className="font-medium">Underfloor heating systems</span>
+                    <p className="text-sm mt-1">RCD protection required, specific cable routing</p>
                   </li>
                   <li>
-                    <span className="font-medium">Fire-rated cables</span>
-                    <p className="text-sm mt-1">Required for emergency systems and escape routes</p>
+                    <span className="font-medium">Embedded heating elements</span>
+                    <p className="text-sm mt-1">Earth screen requirements, control system limitations</p>
                   </li>
                   <li>
-                    <span className="font-medium">Fixing methods</span>
-                    <p className="text-sm mt-1">Fire-resistant fixings for critical systems</p>
+                    <span className="font-medium">Temperature limitations</span>
+                    <p className="text-sm mt-1">Controls to prevent overheating of cables/surroundings</p>
                   </li>
                   <li>
-                    <span className="font-medium">Escape route protection</span>
-                    <p className="text-sm mt-1">Special requirements for wiring in escape routes</p>
+                    <span className="font-medium">Testing requirements</span>
+                    <p className="text-sm mt-1">Special testing procedures before and after installation</p>
                   </li>
                 </ul>
               </div>
               
               <div className="space-y-3">
-                <h4 className="font-semibold text-white">Mechanical Protection</h4>
+                <h4 className="font-semibold text-white">Concealed Cables</h4>
                 <ul className="list-disc pl-5 space-y-2">
                   <li>
-                    <span className="font-medium">Protection against impact damage</span>
-                    <p className="text-sm mt-1">Additional protection in vulnerable areas</p>
+                    <span className="font-medium">Cables in walls</span>
+                    <p className="text-sm mt-1">RCD protection or mechanical protection requirements</p>
                   </li>
                   <li>
-                    <span className="font-medium">Protection from building materials</span>
-                    <p className="text-sm mt-1">Avoid damage during plastering, drilling, etc.</p>
+                    <span className="font-medium">Embedded conduit systems</span>
+                    <p className="text-sm mt-1">Depth requirements and routing considerations</p>
                   </li>
                   <li>
-                    <span className="font-medium">Expansion provisions</span>
-                    <p className="text-sm mt-1">Allow for building movement in long runs</p>
+                    <span className="font-medium">Cable routes</span>
+                    <p className="text-sm mt-1">Documentation and "safe zones" for installation</p>
                   </li>
                   <li>
-                    <span className="font-medium">Protection in transit floors/walls</span>
-                    <p className="text-sm mt-1">Sleeves and bushings for cable protection</p>
+                    <span className="font-medium">Detection systems</span>
+                    <p className="text-sm mt-1">Use of cable detectors before drilling or cutting</p>
                   </li>
                 </ul>
               </div>
@@ -153,7 +148,7 @@ const Subsection3_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             
             <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-sm">
               <p className="font-medium mb-1 text-elec-yellow">Regulatory Note:</p>
-              <p>BS 7671 Section 522 details requirements for selection and erection of wiring systems based on external influences, including mechanical stress, presence of water or corrosive substances, and building construction. Regulation 527 specifically covers fire barriers and protection against thermal effects.</p>
+              <p>BS 7671 Section 701 covers requirements for bathrooms, Section 702 for swimming pools, and Section 705 for agricultural locations. Regulation 522.6 details the requirements for cables embedded in walls. All special installations require enhanced documentation including clear marking of concealed cables or equipment locations.</p>
             </div>
           </div>
         </div>

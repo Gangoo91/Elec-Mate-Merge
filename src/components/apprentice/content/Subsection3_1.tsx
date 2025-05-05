@@ -1,105 +1,155 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, Zap, Shield, AlertOctagon } from "lucide-react";
+import { SubsectionProps } from "./subsection1_1/types";
 
-interface Subsection3_1Props {
-  subsectionId: string;
-  isCompleted: boolean;
-  markAsComplete: () => void;
-}
-
-const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection3_1Props) => {
+const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-elec-yellow">First-Fix and Second-Fix Installation Process</h2>
+      <h2 className="text-2xl font-bold text-elec-yellow">Electrical Safety Fundamentals</h2>
       
       <div className="space-y-4">
         <p>
-          Installation work is typically divided into two main phases: first-fix and second-fix.
-          Understanding this workflow is essential for efficient and effective electrical installations.
+          Electrical safety is paramount in the electrical industry. Understanding the basic principles and hazards
+          helps prevent accidents and ensures compliance with health and safety regulations.
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
-            <h3 className="text-xl font-bold text-elec-yellow">First-Fix</h3>
-            <p>First-fix work is completed before plastering and decorating:</p>
-            <ul className="list-disc pl-5 space-y-2">
-              <li>Installation of cable containment systems (trunking, conduit)</li>
-              <li>Routing cables through walls, floors and ceilings</li>
-              <li>Positioning and fixing back boxes for outlets and switches</li>
-              <li>Installation of consumer unit housings</li>
-              <li>Running all necessary cables to their approximate positions</li>
-            </ul>
-            <div className="mt-4 pt-4 border-t border-elec-yellow/20">
-              <h4 className="font-semibold text-elec-yellow mb-2">Key Considerations:</h4>
-              <ul className="list-disc pl-5 space-y-1">
-                <li>Plan cable routes to avoid damage and minimize lengths</li>
-                <li>Maintain appropriate separation from other services</li>
-                <li>Leave sufficient slack for connections</li>
-                <li>Label cables clearly for second-fix identification</li>
+            <h3 className="text-xl font-bold text-elec-yellow flex items-center">
+              <Zap className="h-5 w-5 mr-2" />
+              Electrical Hazards
+            </h3>
+            <div className="space-y-3">
+              <h4 className="font-semibold">Electric Shock</h4>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Current passing through the body</li>
+                <li>Effects range from tingling sensation to death</li>
+                <li>As little as 50mA can be fatal</li>
+                <li>Path through the heart is most dangerous</li>
+                <li>Wet conditions increase severity</li>
               </ul>
+              
+              <h4 className="font-semibold mt-4">Electrical Fire and Burns</h4>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Thermal burns from heated equipment</li>
+                <li>Arc flash burns from electrical explosions</li>
+                <li>Fires from ignition of combustible materials</li>
+                <li>Explosions in flammable atmospheres</li>
+                <li>Secondary fires from damaged equipment</li>
+              </ul>
+              
+              <div className="mt-4 pt-4 border-t border-elec-yellow/20">
+                <h4 className="font-semibold text-elec-yellow mb-2">Danger Statistics:</h4>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>Approximately 1000 electrical accidents at work annually in the UK</li>
+                  <li>Around 30 people die from electrical accidents each year</li>
+                  <li>Electricians are 4x more likely to be injured at work</li>
+                  <li>Most common sources: faulty plugs, sockets and wiring</li>
+                  <li>Improper isolation procedures are a leading cause</li>
+                </ul>
+              </div>
             </div>
           </div>
           
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
-            <h3 className="text-xl font-bold text-elec-yellow">Second-Fix</h3>
-            <p>Second-fix work is completed after plastering and decorating:</p>
-            <ul className="list-disc pl-5 space-y-2">
-              <li>Installation of wiring accessories (switches, sockets)</li>
-              <li>Connection and termination of all circuits</li>
-              <li>Mounting and wiring of consumer units</li>
-              <li>Connection of lighting fixtures and other final accessories</li>
-              <li>Final labeling of circuits and distribution boards</li>
-            </ul>
-            <div className="mt-4 pt-4 border-t border-elec-yellow/20">
-              <h4 className="font-semibold text-elec-yellow mb-2">Key Considerations:</h4>
-              <ul className="list-disc pl-5 space-y-1">
-                <li>Maintain consistent termination methods</li>
-                <li>Ensure proper torque settings for terminals</li>
-                <li>Apply clear and permanent circuit identification</li>
-                <li>Complete visual inspections before power-up</li>
+            <h3 className="text-xl font-bold text-elec-yellow flex items-center">
+              <Shield className="h-5 w-5 mr-2" />
+              Safety Principles
+            </h3>
+            <div className="space-y-3">
+              <h4 className="font-semibold">Safe Isolation Procedures</h4>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Identify circuit to be isolated</li>
+                <li>Gain permission to isolate</li>
+                <li>Switch off and lock off</li>
+                <li>Prove dead using approved voltage indicator</li>
+                <li>Post warning signs and secure the area</li>
               </ul>
+              
+              <h4 className="font-semibold mt-4">Working Safely</h4>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>Never work on live equipment (unless justified)</li>
+                <li>Use the correct tools and equipment</li>
+                <li>Wear appropriate PPE</li>
+                <li>Maintain good housekeeping</li>
+                <li>Follow safe systems of work</li>
+              </ul>
+              
+              <div className="mt-4 pt-4 border-t border-elec-yellow/20">
+                <h4 className="font-semibold text-elec-yellow mb-2">Essential Safety Equipment:</h4>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>Approved voltage indicator (test lamp or meter)</li>
+                  <li>Proving unit for testing the indicator</li>
+                  <li>Locking off devices and padlocks</li>
+                  <li>Warning signs and barriers</li>
+                  <li>Insulated tools and protective equipment</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
         
         <div className="mt-8 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
-          <h3 className="text-xl font-bold text-elec-yellow mb-4">Work Sequencing Best Practices</h3>
+          <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
+            <AlertOctagon className="h-5 w-5 mr-2" />
+            Safety Legislation
+          </h3>
           
           <div className="space-y-4">
-            <p>Effective sequencing of work can minimize rework and damage to finished surfaces:</p>
+            <p>Key legislation that governs electrical safety in the workplace:</p>
             
-            <ol className="list-decimal pl-5 space-y-3">
-              <li>
-                <span className="font-semibold text-white">Site Assessment</span>
-                <p className="mt-1">Conduct thorough site surveys and understand building plans before beginning any work.</p>
-              </li>
-              <li>
-                <span className="font-semibold text-white">Planning</span>
-                <p className="mt-1">Create detailed plans for cable routes, outlet positions, and circuit arrangements.</p>
-              </li>
-              <li>
-                <span className="font-semibold text-white">First-Fix Installation</span>
-                <p className="mt-1">Install all containment systems and cable runs before building work is completed.</p>
-              </li>
-              <li>
-                <span className="font-semibold text-white">Interim Testing</span>
-                <p className="mt-1">Perform continuity and insulation resistance tests on cables before they're covered.</p>
-              </li>
-              <li>
-                <span className="font-semibold text-white">Second-Fix Installation</span>
-                <p className="mt-1">Complete all terminations and fit accessories after decorating is finished.</p>
-              </li>
-              <li>
-                <span className="font-semibold text-white">Final Testing</span>
-                <p className="mt-1">Conduct full inspection and testing according to BS 7671 requirements.</p>
-              </li>
-              <li>
-                <span className="font-semibold text-white">Certification</span>
-                <p className="mt-1">Provide appropriate certification documentation for the installation.</p>
-              </li>
-            </ol>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-3">
+                <h4 className="font-semibold text-white">Primary Legislation</h4>
+                <ul className="list-disc pl-5 space-y-2">
+                  <li>
+                    <span className="font-medium">Health and Safety at Work Act 1974</span>
+                    <p className="text-sm mt-1">Overarching duty to ensure safety of employees and others</p>
+                  </li>
+                  <li>
+                    <span className="font-medium">Electricity at Work Regulations 1989</span>
+                    <p className="text-sm mt-1">Specific requirements for electrical safety</p>
+                  </li>
+                  <li>
+                    <span className="font-medium">Management of Health and Safety at Work Regulations 1999</span>
+                    <p className="text-sm mt-1">Requirements for risk assessment and management</p>
+                  </li>
+                  <li>
+                    <span className="font-medium">Provision and Use of Work Equipment Regulations 1998</span>
+                    <p className="text-sm mt-1">Requirements for electrical equipment safety</p>
+                  </li>
+                </ul>
+              </div>
+              
+              <div className="space-y-3">
+                <h4 className="font-semibold text-white">Guidance and Standards</h4>
+                <ul className="list-disc pl-5 space-y-2">
+                  <li>
+                    <span className="font-medium">BS 7671 (IET Wiring Regulations)</span>
+                    <p className="text-sm mt-1">Technical standard for electrical installations</p>
+                  </li>
+                  <li>
+                    <span className="font-medium">HSE Guidance Notes</span>
+                    <p className="text-sm mt-1">HSG85, HSG230, INDG354 for electrical safety</p>
+                  </li>
+                  <li>
+                    <span className="font-medium">ENA publications</span>
+                    <p className="text-sm mt-1">Guidance for working on distribution networks</p>
+                  </li>
+                  <li>
+                    <span className="font-medium">Employer safety policies</span>
+                    <p className="text-sm mt-1">Company-specific rules and procedures</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-sm">
+              <p className="font-medium mb-1 text-elec-yellow">Competence Requirement:</p>
+              <p>Regulation 16 of the Electricity at Work Regulations 1989 requires that no person shall engage in work that requires technical knowledge or experience to prevent danger unless they have that knowledge or experience, or are under appropriate supervision. This places legal responsibility on both employers and individuals to ensure competence for electrical work.</p>
+            </div>
           </div>
         </div>
       </div>

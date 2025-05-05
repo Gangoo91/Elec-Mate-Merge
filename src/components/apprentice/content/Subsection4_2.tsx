@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, ShieldAlert, SwitchCamera, CircuitBoard } from "lucide-react";
+import { CheckCircle, Construction, PenTool, ShieldAlert } from "lucide-react";
 
 interface Subsection4_2Props {
   subsectionId: string;
@@ -12,84 +12,69 @@ interface Subsection4_2Props {
 const Subsection4_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection4_2Props) => {
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-elec-yellow">Consumer Units and Distribution Boards</h2>
+      <h2 className="text-2xl font-bold text-elec-yellow">Scaffolding and Platforms</h2>
       
       <div className="space-y-4">
         <p>
-          Consumer units (also called distribution boards) are central components of electrical installations,
-          providing protection, isolation, and distribution for all circuits in a property.
+          When electrical work requires extended time at height or heavy equipment, scaffolding and 
+          work platforms provide a safer alternative to ladders. Understanding the different types and 
+          safety requirements is essential.
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
-              <CircuitBoard className="h-5 w-5 mr-2" />
-              Modern Consumer Unit Requirements
+              <Construction className="h-5 w-5 mr-2" />
+              Types of Scaffolding
             </h3>
             <div className="space-y-3">
-              <h4 className="font-semibold">Key Components</h4>
+              <h4 className="font-semibold">Fixed Scaffolding</h4>
               <ul className="list-disc pl-5 space-y-2">
-                <li>Main switch (double-pole isolation)</li>
-                <li>RCDs (Residual Current Devices) for additional protection</li>
-                <li>Circuit breakers (MCBs) for individual circuit protection</li>
-                <li>RCBOs (combined RCD and MCB protection)</li>
-                <li>Neutral and earth terminal bars</li>
+                <li>Tube and fitting - versatile but labor-intensive</li>
+                <li>System scaffolding - modular for faster assembly</li>
+                <li>Frame and brace - simple for lower heights</li>
+                <li>Only to be erected by competent persons</li>
+                <li>Must be inspected before use and weekly thereafter</li>
               </ul>
               
-              <h4 className="font-semibold mt-4">Regulatory Requirements</h4>
+              <h4 className="font-semibold mt-4">Mobile Scaffolding</h4>
               <ul className="list-disc pl-5 space-y-2">
-                <li>Must comply with BS EN 61439-3</li>
-                <li>Metal enclosures required for fire safety (Amendment 3, BS 7671)</li>
-                <li>IP rating appropriate for location (typically minimum IP2X)</li>
-                <li>Sufficient capacity for number of circuits</li>
-                <li>RCD protection arrangements as required by BS 7671</li>
+                <li>Mobile access towers - lightweight aluminum construction</li>
+                <li>Height adjustable for various tasks</li>
+                <li>Must have brakes on all wheels</li>
+                <li>Never move with people or materials on tower</li>
+                <li>Requires level, firm ground for stability</li>
               </ul>
-              
-              <div className="mt-4 pt-4 border-t border-elec-yellow/20">
-                <h4 className="font-semibold text-elec-yellow mb-2">Protection Arrangements:</h4>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>Single RCD: all circuits protected by one RCD (not recommended for new installations)</li>
-                  <li>Dual RCD: circuits split between two RCDs</li>
-                  <li>High Integrity: main switch plus RCBOs for each circuit</li>
-                  <li>Mixed: combination of RCDs and RCBOs for specific protection needs</li>
-                </ul>
-              </div>
             </div>
           </div>
           
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
-              <SwitchCamera className="h-5 w-5 mr-2" />
-              Installation and Arrangement
+              <PenTool className="h-5 w-5 mr-2" />
+              Mobile Elevated Work Platforms
             </h3>
             <div className="space-y-3">
-              <h4 className="font-semibold">Positioning Requirements</h4>
+              <h4 className="font-semibold">Types of MEWPs</h4>
               <ul className="list-disc pl-5 space-y-2">
-                <li>Accessible location for operation and maintenance</li>
-                <li>Mounting height typically 1350-1500mm from floor to center</li>
-                <li>Not in bathrooms or locations with fire risk</li>
-                <li>Avoid positions above sinks or cookers</li>
-                <li>Secure fixing to solid wall structure</li>
+                <li>Scissor lifts - vertical elevation on stable base</li>
+                <li>Boom lifts - greater reach and flexibility</li>
+                <li>Cherry pickers - for access over obstacles</li>
+                <li>Vehicle-mounted - for road and street works</li>
+                <li>Push-around vertical platforms - for indoor work</li>
               </ul>
               
-              <h4 className="font-semibold mt-4">Circuit Arrangement</h4>
+              <h4 className="font-semibold mt-4">MEWP Safety</h4>
               <ul className="list-disc pl-5 space-y-2">
-                <li>Logical grouping of similar circuits</li>
-                <li>Balanced loading across phases in three-phase systems</li>
-                <li>Clear identification of all circuits</li>
-                <li>Consider discrimination between protective devices</li>
-                <li>Allow for future expansion (spare ways)</li>
+                <li>Operator must be trained and competent</li>
+                <li>Pre-use checks essential</li>
+                <li>Ground conditions must be suitable</li>
+                <li>Harness and lanyard required on boom-type MEWPs</li>
+                <li>Awareness of overhead hazards especially power lines</li>
               </ul>
               
               <div className="mt-4 pt-4 border-t border-elec-yellow/20">
-                <h4 className="font-semibold text-elec-yellow mb-2">Accessibility Considerations:</h4>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>Minimum 100mm clearance each side for access</li>
-                  <li>Adequate space for cable entry and termination</li>
-                  <li>Avoid mounting directly on combustible surfaces</li>
-                  <li>Ensure sufficient cooling air circulation</li>
-                  <li>Consider access requirements for disabled users</li>
-                </ul>
+                <h4 className="font-semibold text-elec-yellow mb-2">Electrical Hazards:</h4>
+                <p className="text-sm">Always maintain safe distances from overhead power lines when using MEWPs. For lines up to 33kV, maintain at least 3m clearance, and seek specialist advice for work near higher voltage lines.</p>
               </div>
             </div>
           </div>
@@ -98,53 +83,53 @@ const Subsection4_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         <div className="mt-8 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
             <ShieldAlert className="h-5 w-5 mr-2" />
-            Advanced Distribution Systems
+            Safety Requirements
           </h3>
           
           <div className="space-y-4">
-            <p>Larger installations often require more complex distribution arrangements:</p>
+            <p>All scaffolding and platforms must meet these essential safety requirements:</p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-3">
-                <h4 className="font-semibold text-white">Hierarchical Distribution</h4>
+                <h4 className="font-semibold text-white">Construction and Stability</h4>
                 <ul className="list-disc pl-5 space-y-2">
                   <li>
-                    <span className="font-medium">Main distribution boards</span>
-                    <p className="text-sm mt-1">Primary distribution point receiving supply from service position</p>
+                    <span className="font-medium">Guard rails and toe boards</span>
+                    <p className="text-sm mt-1">Required on all open sides where someone could fall 2m or more</p>
                   </li>
                   <li>
-                    <span className="font-medium">Sub-distribution boards</span>
-                    <p className="text-sm mt-1">Fed from main distribution to serve specific areas or floors</p>
+                    <span className="font-medium">Stable base</span>
+                    <p className="text-sm mt-1">Base plates, sole boards on soft ground, adequate ties to structure</p>
                   </li>
                   <li>
-                    <span className="font-medium">Final distribution boards</span>
-                    <p className="text-sm mt-1">Closest to the point of use, serving final circuits</p>
+                    <span className="font-medium">Safe access</span>
+                    <p className="text-sm mt-1">Proper ladders or stairways to access working platforms</p>
                   </li>
                   <li>
-                    <span className="font-medium">Load balancing</span>
-                    <p className="text-sm mt-1">Distributing load evenly across phases in three-phase systems</p>
+                    <span className="font-medium">Sufficient width</span>
+                    <p className="text-sm mt-1">Working platforms minimum 600mm wide</p>
                   </li>
                 </ul>
               </div>
               
               <div className="space-y-3">
-                <h4 className="font-semibold text-white">Advanced Protection Features</h4>
+                <h4 className="font-semibold text-white">Inspection and Management</h4>
                 <ul className="list-disc pl-5 space-y-2">
                   <li>
-                    <span className="font-medium">Surge protection devices (SPDs)</span>
-                    <p className="text-sm mt-1">Protection against transient overvoltages from lightning or switching</p>
+                    <span className="font-medium">Competent person</span>
+                    <p className="text-sm mt-1">Erection, alteration and dismantling only by trained persons</p>
                   </li>
                   <li>
-                    <span className="font-medium">Selective coordination</span>
-                    <p className="text-sm mt-1">Ensuring only the device closest to a fault operates</p>
+                    <span className="font-medium">Regular inspection</span>
+                    <p className="text-sm mt-1">Before first use, every 7 days, and after any event that may affect stability</p>
                   </li>
                   <li>
-                    <span className="font-medium">Power monitoring systems</span>
-                    <p className="text-sm mt-1">Tracking energy usage and system health</p>
+                    <span className="font-medium">Tagging system</span>
+                    <p className="text-sm mt-1">Clear indication of inspection status (green tag for safe to use)</p>
                   </li>
                   <li>
-                    <span className="font-medium">Remote operation</span>
-                    <p className="text-sm mt-1">Motorized switches for remote control or automation</p>
+                    <span className="font-medium">Documentation</span>
+                    <p className="text-sm mt-1">Inspection records must be maintained on site</p>
                   </li>
                 </ul>
               </div>
@@ -152,7 +137,7 @@ const Subsection4_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             
             <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-sm">
               <p className="font-medium mb-1 text-elec-yellow">Regulatory Note:</p>
-              <p>BS 7671 requires clear and accurate circuit identification (Regulation 514.9). Amendment 2 introduced mandatory requirements for RCD protection of socket outlet circuits, lighting circuits, and cables concealed in walls or partitions at depths less than 50mm.</p>
+              <p>The Work at Height Regulations 2005 require that work platforms are appropriately selected, all equipment is inspected, and all work at height is properly planned and carried out by competent people. For scaffold towers, follow the manufacturer's instructions and the PASMA guidance for safe assembly and use.</p>
             </div>
           </div>
         </div>
