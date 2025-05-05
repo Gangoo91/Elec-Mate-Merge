@@ -19,3 +19,6 @@ export type TrainingEvidenceItem = {
   description: string;
   files: string[];
 };
+
+// Re-export the Certificate type for backward compatibility
+export type { Certificate } from "./certificates";
