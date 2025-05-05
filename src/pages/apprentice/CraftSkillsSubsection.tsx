@@ -1,15 +1,15 @@
 
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, CheckCircle } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { CheckCircle } from "lucide-react";
 import { craftSkillsContent } from "@/data/craftSkills/index";
 import type { Subsection } from "@/data/healthAndSafety/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import BackButton from "@/components/apprentice/BackButton";
 
 const CraftSkillsSubsection = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
-  const navigate = useNavigate();
   const [subsectionData, setSubsectionData] = useState<Subsection | null>(null);
   const [sectionTitle, setSectionTitle] = useState("");
   const [isCompleted, setIsCompleted] = useState(false);
@@ -39,15 +39,6 @@ const CraftSkillsSubsection = () => {
       }
     }
   }, [sectionId, subsectionId]);
-
-  const handleBackClick = () => {
-    if (courseSlug && unitSlug) {
-      // Navigate directly back to unit page
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`);
-    } else {
-      navigate(-1);
-    }
-  };
   
   const markAsComplete = () => {
     if (sectionId && subsectionId) {
@@ -68,14 +59,11 @@ const CraftSkillsSubsection = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="mb-6">
-        <Button 
-          variant="outline" 
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-          onClick={handleBackClick}
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Unit
-        </Button>
+        <BackButton 
+          courseSlug={courseSlug}
+          unitSlug={unitSlug}
+          sectionId={sectionId}
+        />
       </div>
       
       <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">

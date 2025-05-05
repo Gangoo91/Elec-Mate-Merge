@@ -2,22 +2,14 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BookOpen, ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowLeft, BookOpen } from "lucide-react";
 import { craftSkillsContent } from "@/data/craftSkills/index";
 import type { SectionData, Subsection } from "@/data/healthAndSafety/types";
-import { useIsMobile } from "@/hooks/use-mobile";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger
-} from "@/components/ui/collapsible";
 
 const CraftSkillsContent = () => {
   const { sectionId, courseSlug, unitSlug } = useParams();
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
   const [sectionData, setSectionData] = useState<SectionData | null>(null);
-  const [openSubsection, setOpenSubsection] = useState<string | null>(null);
   
   useEffect(() => {
     if (sectionId) {
@@ -50,10 +42,6 @@ const CraftSkillsContent = () => {
     }
   };
 
-  const toggleSubsection = (subsectionId: string) => {
-    setOpenSubsection(openSubsection === subsectionId ? null : subsectionId);
-  };
-
   return (
     <div className="space-y-6 animate-fade-in px-4 md:px-0">
       <div className="mb-6">
@@ -79,62 +67,23 @@ const CraftSkillsContent = () => {
         
         <div className="space-y-4 max-w-4xl mx-auto">
           {sectionData.content.subsections.map((subsection) => (
-            isMobile ? (
-              // Collapsible card for mobile
-              <Collapsible
-                key={subsection.id}
-                open={openSubsection === subsection.id}
-                onOpenChange={() => toggleSubsection(subsection.id)}
-                className="border border-elec-yellow/20 rounded-lg bg-[#1a1a1a] overflow-hidden"
-              >
-                <CollapsibleTrigger className="flex items-center justify-between w-full p-4 text-left">
-                  <div className="flex items-center">
-                    <div className="text-xl font-bold text-elec-yellow mr-4">
-                      {subsection.id}
-                    </div>
-                    <div className="text-xl font-medium">
-                      {subsection.title}
-                    </div>
+            <div 
+              key={subsection.id} 
+              className="border border-elec-yellow/20 rounded-lg p-5 hover:bg-elec-yellow/5 transition-all cursor-pointer"
+              onClick={() => handleSubsectionClick(subsection)}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="text-xl font-bold text-elec-yellow mr-4">
+                    {subsection.id}
                   </div>
-                  {openSubsection === subsection.id ? 
-                    <ChevronUp className="h-5 w-5 text-elec-yellow" /> : 
-                    <ChevronDown className="h-5 w-5 text-elec-yellow" />
-                  }
-                </CollapsibleTrigger>
-                <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20">
-                  <p className="mb-4 text-elec-light/80">{subsection.content.substring(0, 150)}...</p>
-                  <div className="flex justify-end">
-                    <Button 
-                      variant="study" 
-                      className="hover:bg-elec-yellow hover:text-elec-dark"
-                      onClick={() => handleSubsectionClick(subsection)}
-                    >
-                      View Full Content
-                      <BookOpen className="ml-2 h-4 w-4" />
-                    </Button>
+                  <div className="text-xl font-medium">
+                    {subsection.title}
                   </div>
-                </CollapsibleContent>
-              </Collapsible>
-            ) : (
-              // Regular card for desktop
-              <div 
-                key={subsection.id} 
-                className="border border-elec-yellow/20 rounded-lg p-5 hover:bg-elec-yellow/5 transition-all cursor-pointer"
-                onClick={() => handleSubsectionClick(subsection)}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <div className="text-xl font-bold text-elec-yellow mr-4">
-                      {subsection.id}
-                    </div>
-                    <div className="text-xl font-medium">
-                      {subsection.title}
-                    </div>
-                  </div>
-                  <BookOpen className="h-5 w-5 text-elec-yellow" />
                 </div>
+                <BookOpen className="h-5 w-5 text-elec-yellow" />
               </div>
-            )
+            </div>
           ))}
         </div>
       </div>

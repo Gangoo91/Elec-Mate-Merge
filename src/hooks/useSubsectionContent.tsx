@@ -145,7 +145,8 @@ export function useSubsectionContent({
   
   const navigateToSubsection = (subId: string) => {
     if (courseSlug && unitSlug && sectionId) {
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}`);
+      // Navigate to another subsection within the same section
+      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subId}`);
     }
   };
 

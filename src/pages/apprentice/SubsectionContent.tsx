@@ -23,8 +23,11 @@ const SubsectionContent = () => {
   } = useSubsectionContent({ courseSlug, unitSlug, sectionId, subsectionId });
 
   const handleBackClick = () => {
-    if (courseSlug && unitSlug) {
-      // Navigate directly back to unit page instead of section page
+    if (courseSlug && unitSlug && sectionId) {
+      // Navigate back to the section page instead of directly to unit
+      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}`);
+    } else if (courseSlug && unitSlug) {
+      // Fallback to unit page
       navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`);
     } else {
       navigate(-1);
@@ -48,7 +51,7 @@ const SubsectionContent = () => {
           onClick={handleBackClick}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Unit
+          Back to Section
         </Button>
       </div>
       

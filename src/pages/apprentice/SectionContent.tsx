@@ -31,8 +31,6 @@ const SectionContent = () => {
         <BackButton 
           courseSlug={courseSlug} 
           unitSlug={unitSlug} 
-          // We don't pass sectionId here so BackButton will navigate back to unit page
-          // instead of trying to navigate to a specific section
         />
       </div>
       
@@ -41,14 +39,13 @@ const SectionContent = () => {
         title={sectionData.title} 
       />
       
-      {/* Use collapsible mode on mobile, regular cards on desktop */}
       <div className="space-y-4 max-w-4xl mx-auto">
         {sectionData.content.subsections.map((subsection) => (
           <SectionSubsectionCard
             key={subsection.id}
             subsection={subsection}
             navigateToSubsection={navigateToSubsection}
-            collapsible={isMobile}
+            collapsible={false} // Always use clickable cards instead of collapsible content
           />
         ))}
       </div>

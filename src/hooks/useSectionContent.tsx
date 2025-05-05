@@ -163,8 +163,9 @@ export function useSectionContent({
   };
 
   const navigateToSubsection = (subsection: Subsection) => {
-    if (courseSlug && unitSlug && sectionData) {
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${subsection.id}`);
+    if (courseSlug && unitSlug && sectionId) {
+      // Updated navigation - go to subsection page instead of section page
+      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subsection.id}`);
     }
   };
 
