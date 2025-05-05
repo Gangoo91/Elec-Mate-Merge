@@ -1,8 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, User, Users, Heart, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLocation } from 'react-router-dom';
 import ConversationsList from '@/components/messenger/ConversationsList';
 import ConversationView from '@/components/messenger/ConversationView';
 import EmptyState from '@/components/messenger/EmptyState';
@@ -10,6 +11,9 @@ import { useMessenger } from '@/components/messenger/useMessenger';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const MessengerPage = () => {
+  const location = useLocation();
+  const initialConversationId = location.state?.conversationId;
+  
   const {
     activeTab,
     activeConversation,
@@ -26,6 +30,19 @@ const MessengerPage = () => {
   
   const isMobile = useIsMobile();
   const [showConversationOnMobile, setShowConversationOnMobile] = useState(false);
+  
+  // Effect to handle initial conversation from navigation
+  useEffect(() => {
+    if (initialConversationId) {
+      const conversation = filteredConversations.find(c => c.id === initialConversationId);
+      if (conversation) {
+        handleSelectConversation(conversation);
+        if (isMobile) {
+          setShowConversationOnMobile(true);
+        }
+      }
+    }
+  }, [initialConversationId, filteredConversations]);
   
   const handleConversationSelect = (conversation) => {
     handleSelectConversation(conversation);

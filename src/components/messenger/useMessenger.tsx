@@ -180,6 +180,64 @@ export const useMessenger = () => {
     }, 3000);
   };
   
+  // New function to add a mentor conversation
+  const addMentorConversation = ({mentorId, mentorName, mentorAvatar}: {mentorId: string, mentorName: string, mentorAvatar?: string}) => {
+    // Check if conversation already exists
+    const existingConversation = conversations.find(c => 
+      c.participantId === mentorId && c.type === 'mentor'
+    );
+    
+    if (existingConversation) {
+      // Switch to the mentor tab
+      setActiveTab('mentor');
+      
+      // Select the existing conversation
+      handleSelectConversation(existingConversation);
+      
+      return existingConversation.id;
+    }
+    
+    // Create new conversation
+    const newConversation: Conversation = {
+      id: `mentor-${Date.now()}`,
+      participantId: mentorId,
+      participantName: mentorName,
+      participantAvatar: mentorAvatar,
+      lastMessage: "Connected successfully! Send a message to start the conversation.",
+      lastMessageTime: new Date(),
+      unreadCount: 1,
+      type: 'mentor'
+    };
+    
+    // Add to conversations
+    setConversations(prev => [newConversation, ...prev]);
+    
+    // Create welcome message
+    setMessages(prev => [
+      ...prev,
+      {
+        id: `welcome-${newConversation.id}`,
+        content: `Hi there! I'm ${mentorName}, your new mentor. Feel free to ask me any questions about your electrical apprenticeship journey.`,
+        senderId: mentorId,
+        senderName: mentorName,
+        timestamp: new Date(),
+        read: false
+      }
+    ]);
+    
+    // Switch to the mentor tab
+    setActiveTab('mentor');
+    
+    // Notify the user
+    addNotification({
+      title: 'Mentor Connected',
+      message: `You are now connected with ${mentorName}`,
+      type: 'success'
+    });
+    
+    return newConversation.id;
+  };
+  
   const filteredConversations = conversations
     .filter(c => c.type === activeTab)
     .filter(c => 
@@ -218,5 +276,6 @@ export const useMessenger = () => {
     handleSendMessage,
     getTabIcon,
     getInitials,
+    addMentorConversation,
   };
 };

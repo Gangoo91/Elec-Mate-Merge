@@ -2,10 +2,19 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Users } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { toast } from "@/components/ui/use-toast";
+import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useMessenger } from "@/components/messenger/useMessenger";
 
 const ApprenticeMentor = () => {
+  const navigate = useNavigate();
+  const { profile } = useAuth();
+  const { addMentorConversation } = useMessenger();
+  const [requestingMentor, setRequestingMentor] = useState<number | null>(null);
+
   const mentors = [
     {
       id: 1,
@@ -40,6 +49,32 @@ const ApprenticeMentor = () => {
       avatar: "ET"
     }
   ];
+
+  const handleConnectMentor = (mentor) => {
+    setRequestingMentor(mentor.id);
+    
+    // Simulate a delay to show loading state
+    setTimeout(() => {
+      // Create a new conversation with this mentor in the messenger system
+      const conversationId = addMentorConversation({
+        mentorId: `mentor-${mentor.id}`,
+        mentorName: mentor.name,
+        mentorAvatar: mentor.avatar
+      });
+
+      setRequestingMentor(null);
+      
+      // Show success notification
+      toast({
+        title: "Mentoring Request Sent",
+        description: `Your request to connect with ${mentor.name} has been sent successfully.`,
+        duration: 5000,
+      });
+      
+      // Navigate to the messenger with the conversation open
+      navigate('/messages', { state: { conversationId } });
+    }, 1000);
+  };
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -103,7 +138,13 @@ const ApprenticeMentor = () => {
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full">Request Mentoring</Button>
+              <Button 
+                className="w-full"
+                onClick={() => handleConnectMentor(mentor)}
+                disabled={requestingMentor === mentor.id}
+              >
+                {requestingMentor === mentor.id ? 'Connecting...' : 'Request Mentoring'}
+              </Button>
             </CardFooter>
           </Card>
         ))}
