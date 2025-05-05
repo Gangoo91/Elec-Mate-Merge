@@ -5,64 +5,102 @@ import { Users } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "@/components/ui/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useMessenger } from "@/components/messenger/useMessenger";
+import { supabase } from "@/integrations/supabase/client";
 
 const ApprenticeMentor = () => {
   const navigate = useNavigate();
   const { profile } = useAuth();
   const { addMentorConversation } = useMessenger();
-  const [requestingMentor, setRequestingMentor] = useState<number | null>(null);
+  const [requestingMentor, setRequestingMentor] = useState<string | null>(null);
+  const [mentors, setMentors] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const mentors = [
-    {
-      id: 1,
-      name: "Sarah Williams",
-      specialty: "Commercial Electrical",
-      experience: "15 years",
-      availability: "Available",
-      avatar: "SW"
-    },
-    {
-      id: 2,
-      name: "David Chen",
-      specialty: "Industrial Systems",
-      experience: "12 years",
-      availability: "Available next week",
-      avatar: "DC"
-    },
-    {
-      id: 3,
-      name: "Michael Rodriguez",
-      specialty: "Renewable Energy",
-      experience: "10 years",
-      availability: "Limited availability",
-      avatar: "MR"
-    },
-    {
-      id: 4,
-      name: "Emma Thompson",
-      specialty: "Domestic Wiring", // Changed from "Residential Wiring" to "Domestic Wiring"
-      experience: "8 years",
-      availability: "Available",
-      avatar: "ET"
+  // Fetch mentors from Supabase
+  useEffect(() => {
+    const fetchMentors = async () => {
+      try {
+        setIsLoading(true);
+        const { data, error } = await supabase
+          .from('mentors')
+          .select('*')
+          .eq('is_active', true);
+          
+        if (error) throw error;
+        
+        setMentors(data || []);
+      } catch (err) {
+        console.error("Error fetching mentors:", err);
+        setError("Failed to load mentors. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMentors();
+  }, []);
+
+  const handleConnectMentor = async (mentor) => {
+    if (!profile?.id) {
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in to connect with a mentor.",
+        duration: 5000,
+      });
+      return;
     }
-  ];
-
-  const handleConnectMentor = (mentor) => {
+    
     setRequestingMentor(mentor.id);
     
-    // Simulate a delay to show loading state
-    setTimeout(() => {
+    try {
+      // Check if connection already exists
+      const { data: existingConnection } = await supabase
+        .from('mentor_connections')
+        .select('id')
+        .eq('apprentice_id', profile.id)
+        .eq('mentor_id', mentor.id)
+        .single();
+      
+      let connectionId;
+      
+      if (existingConnection) {
+        connectionId = existingConnection.id;
+      } else {
+        // Create a new connection in Supabase
+        const { data: newConnection, error } = await supabase
+          .from('mentor_connections')
+          .insert({
+            apprentice_id: profile.id,
+            mentor_id: mentor.id,
+            status: 'pending'
+          })
+          .select('id')
+          .single();
+        
+        if (error) throw error;
+        connectionId = newConnection.id;
+        
+        // Create initial welcome message from mentor
+        await supabase
+          .from('mentor_messages')
+          .insert({
+            connection_id: connectionId,
+            sender_type: 'mentor',
+            sender_id: mentor.id,
+            content: `Hi there! I'm ${mentor.name}, your new mentor. Feel free to ask me any questions about your electrical apprenticeship journey.`
+          });
+      }
+      
       // Create a new conversation with this mentor in the messenger system
       const conversationId = addMentorConversation({
-        mentorId: `mentor-${mentor.id}`,
+        mentorId: mentor.id,
         mentorName: mentor.name,
-        mentorAvatar: mentor.avatar
+        mentorAvatar: mentor.avatar,
+        dbConnectionId: connectionId
       });
-
-      setRequestingMentor(null);
       
       // Show success notification
       toast({
@@ -73,7 +111,18 @@ const ApprenticeMentor = () => {
       
       // Navigate to the messenger with the conversation open
       navigate('/messages', { state: { conversationId } });
-    }, 1000);
+      
+    } catch (err) {
+      console.error("Error connecting with mentor:", err);
+      toast({
+        title: "Connection Failed",
+        description: "There was a problem connecting with the mentor. Please try again later.",
+        variant: "destructive",
+        duration: 5000,
+      });
+    } finally {
+      setRequestingMentor(null);
+    }
   };
 
   return (
@@ -108,47 +157,64 @@ const ApprenticeMentor = () => {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {mentors.map((mentor) => (
-          <Card key={mentor.id} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <div className="flex items-center gap-4">
-                <Avatar className="h-12 w-12 border-2 border-elec-yellow/50">
-                  <AvatarImage src="" />
-                  <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow">
-                    {mentor.avatar}
-                  </AvatarFallback>
-                </Avatar>
-                <div>
-                  <CardTitle className="text-xl">{mentor.name}</CardTitle>
-                  <CardDescription className="text-sm">{mentor.specialty}</CardDescription>
+      {isLoading ? (
+        <div className="flex justify-center py-12">
+          <div className="animate-spin h-8 w-8 border-4 border-elec-yellow/20 border-t-elec-yellow rounded-full"></div>
+        </div>
+      ) : error ? (
+        <Card className="border-red-500/20 bg-red-500/5 text-center p-6">
+          <p className="text-lg font-medium">{error}</p>
+          <Button 
+            variant="outline" 
+            className="mt-4"
+            onClick={() => window.location.reload()}
+          >
+            Try Again
+          </Button>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {mentors.map((mentor) => (
+            <Card key={mentor.id} className="border-elec-yellow/20 bg-elec-gray">
+              <CardHeader className="pb-3">
+                <div className="flex items-center gap-4">
+                  <Avatar className="h-12 w-12 border-2 border-elec-yellow/50">
+                    <AvatarImage src="" />
+                    <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow">
+                      {mentor.avatar}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <CardTitle className="text-xl">{mentor.name}</CardTitle>
+                    <CardDescription className="text-sm">{mentor.specialty}</CardDescription>
+                  </div>
                 </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-2 text-sm mb-4">
-                <div>
-                  <p className="text-muted-foreground">Experience</p>
-                  <p className="font-medium">{mentor.experience}</p>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 gap-2 text-sm mb-4">
+                  <div>
+                    <p className="text-muted-foreground">Experience</p>
+                    <p className="font-medium">{mentor.experience}</p>
+                  </div>
+                  <div>
+                    <p className="text-muted-foreground">Availability</p>
+                    <p className="font-medium">{mentor.availability}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-muted-foreground">Availability</p>
-                  <p className="font-medium">{mentor.availability}</p>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button 
-                className="w-full"
-                onClick={() => handleConnectMentor(mentor)}
-                disabled={requestingMentor === mentor.id}
-              >
-                {requestingMentor === mentor.id ? 'Connecting...' : 'Request Mentoring'}
-              </Button>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
+              </CardContent>
+              <CardFooter>
+                <Button 
+                  className="w-full"
+                  onClick={() => handleConnectMentor(mentor)}
+                  disabled={requestingMentor === mentor.id}
+                >
+                  {requestingMentor === mentor.id ? 'Connecting...' : 'Request Mentoring'}
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

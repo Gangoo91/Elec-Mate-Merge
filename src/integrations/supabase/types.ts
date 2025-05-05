@@ -60,6 +60,115 @@ export type Database = {
         }
         Relationships: []
       }
+      mentor_connections: {
+        Row: {
+          apprentice_id: string
+          created_at: string
+          id: string
+          mentor_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          apprentice_id: string
+          created_at?: string
+          id?: string
+          mentor_id: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          apprentice_id?: string
+          created_at?: string
+          id?: string
+          mentor_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentor_connections_mentor_id_fkey"
+            columns: ["mentor_id"]
+            isOneToOne: false
+            referencedRelation: "mentors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mentor_messages: {
+        Row: {
+          connection_id: string
+          content: string
+          created_at: string
+          id: string
+          is_read: boolean
+          sender_id: string
+          sender_type: string
+        }
+        Insert: {
+          connection_id: string
+          content: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          sender_id: string
+          sender_type: string
+        }
+        Update: {
+          connection_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          sender_id?: string
+          sender_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mentor_messages_connection_id_fkey"
+            columns: ["connection_id"]
+            isOneToOne: false
+            referencedRelation: "mentor_connections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      mentors: {
+        Row: {
+          availability: string
+          avatar: string | null
+          created_at: string
+          experience: string
+          id: string
+          is_active: boolean
+          name: string
+          specialty: string
+          updated_at: string
+        }
+        Insert: {
+          availability: string
+          avatar?: string | null
+          created_at?: string
+          experience: string
+          id?: string
+          is_active?: boolean
+          name: string
+          specialty: string
+          updated_at?: string
+        }
+        Update: {
+          availability?: string
+          avatar?: string | null
+          created_at?: string
+          experience?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          specialty?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
