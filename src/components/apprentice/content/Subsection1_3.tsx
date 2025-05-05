@@ -1,170 +1,260 @@
 
 import React from "react";
+import { Button } from "@/components/ui/button";
+import { CheckCircle, Ruler, Droplet } from "lucide-react";
 
 type Subsection1_3Props = {
   subsectionId: string;
+  isCompleted: boolean;
+  markAsComplete: () => void;
 };
 
-const Subsection1_3 = ({ subsectionId }: Subsection1_3Props) => {
+const Subsection1_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection1_3Props) => {
   return (
-    <>
-      <section>
-        <h2 className="text-xl font-semibold text-elec-yellow mb-3">Installation Zones in Buildings</h2>
-        <p>BS 7671 specifies preferred zones for cable routes in walls to minimise the risk of damage:</p>
-        <div className="border border-elec-yellow/30 p-4 rounded-md mt-3">
-          <h3 className="font-semibold">Horizontal Zones:</h3>
-          <ul className="list-disc pl-5 mt-1">
-            <li>0-150mm from ceiling</li>
-            <li>150-450mm from ceiling</li>
-            <li>0-150mm from floor</li>
-          </ul>
-          
-          <h3 className="font-semibold mt-4">Vertical Zones:</h3>
-          <ul className="list-disc pl-5 mt-1">
-            <li>0-150mm from corners</li>
-            <li>150-450mm from openings (doors, windows)</li>
-          </ul>
-        </div>
-        <p className="mt-3">Cables run outside these zones should be at least 50mm deep or have additional mechanical protection.</p>
-      </section>
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold text-elec-yellow">Installation Zones and Special Locations</h2>
       
-      <section>
-        <h2 className="text-xl font-semibold text-elec-yellow mb-3">Special Location Considerations</h2>
-        <p>Certain locations have specific zone requirements that affect cable routing:</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
-          <div className="border border-elec-yellow/30 p-3 rounded-md">
-            <p className="font-semibold mb-2">Bathrooms:</p>
-            <ul className="list-disc pl-5">
-              <li>Divided into zones 0, 1, 2, and outside zones</li>
-              <li>Specific IP ratings required in each zone</li>
-              <li>Restrictions on equipment in zones 0 and 1</li>
-              <li>SELV devices preferred in wet zones</li>
-            </ul>
-          </div>
-          <div className="border border-elec-yellow/30 p-3 rounded-md">
-            <p className="font-semibold mb-2">Kitchens:</p>
-            <ul className="list-disc pl-5">
-              <li>Socket outlets at least 150mm above worktops</li>
-              <li>Avoidance of areas behind appliances</li>
-              <li>Special considerations for cooker circuits</li>
-              <li>Higher rating for circuits supplying fixed appliances</li>
-            </ul>
-          </div>
-        </div>
+      <div className="space-y-5">
+        <p>
+          BS 7671 defines specific installation zones to ensure safe cable routing and equipment placement. 
+          Understanding these zones is essential for compliant installations that minimise the risk of cables 
+          being damaged by nails, screws or drills during subsequent work.
+        </p>
         
-        {/* New detailed bathroom zones content */}
-        <div className="mt-6 border border-elec-yellow/30 p-4 rounded-md bg-elec-gray/30">
-          <h3 className="text-lg font-semibold text-elec-yellow mb-3">Bathroom Zones in Detail (BS 7671)</h3>
+        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-5 mt-6">
+          <h3 className="text-xl font-bold text-elec-yellow flex items-center">
+            <Ruler className="h-5 w-5 mr-2" />
+            Standard Installation Zones
+          </h3>
           
-          <div className="mb-5">
-            <p className="mb-3">Bathrooms are classified into specific zones based on proximity to water sources, with each zone having distinct requirements for electrical equipment:</p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="relative min-h-[260px] border border-elec-yellow/20 rounded-md bg-elec-dark/50 p-3">
-                <h4 className="font-medium text-elec-yellow mb-2">Bathroom Zones Diagram</h4>
-                <div className="w-full h-[220px] relative">
-                  {/* Bath outline */}
-                  <div className="absolute bottom-4 left-4 right-4 h-16 border-2 border-white/60 rounded-b-lg"></div>
-                  
-                  {/* Zone 0 */}
-                  <div className="absolute bottom-4 left-4 right-4 h-12 bg-blue-500/20 border border-blue-400/40 flex items-center justify-center">
-                    <span className="text-xs font-bold text-blue-300">ZONE 0</span>
-                  </div>
-                  
-                  {/* Zone 1 */}
-                  <div className="absolute bottom-4 left-4 right-4 h-32 border border-red-400/40 flex items-end pb-14 justify-center">
-                    <span className="text-xs font-bold text-red-300">ZONE 1</span>
-                  </div>
-                  
-                  {/* Zone 2 */}
-                  <div className="absolute bottom-4 left-[-12px] right-[-12px] h-32 border border-yellow-400/40 flex items-start pt-2 justify-center">
-                    <span className="text-xs font-bold text-yellow-300">ZONE 2</span>
-                  </div>
-                  
-                  {/* Shower head */}
-                  <div className="absolute top-12 right-8 w-4 h-4 bg-gray-300 rounded-full"></div>
-                  <div className="absolute top-16 right-8 w-0.5 h-12 bg-gray-300"></div>
-                </div>
-                <p className="text-xs text-elec-light/70 mt-1 absolute bottom-1 right-2">Simplified diagram (not to scale)</p>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <h4 className="font-semibold text-white">Horizontal Zones</h4>
+              <p>Horizontal cable runs should be installed within these zones:</p>
               
-              <div className="space-y-3 text-sm">
-                <div>
-                  <h4 className="font-medium text-blue-300">Zone 0</h4>
-                  <p className="text-elec-light/90">The interior of the bath or shower basin. Only SELV (max 12V AC) equipment with a minimum rating of IPX7 can be installed here.</p>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-red-300">Zone 1</h4>
-                  <p className="text-elec-light/90">Area directly above the bath/shower up to a height of 2.25m from the floor. Equipment must be at least IPX4 and generally limited to water heaters, shower pumps, and SELV equipment.</p>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-yellow-300">Zone 2</h4>
-                  <p className="text-elec-light/90">Area extending 0.6m beyond zone 1, to a height of 2.25m from the floor. Equipment must be IPX4 rated or better. More options permitted including lighting.</p>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium text-green-300">Outside Zones</h4>
-                  <p className="text-elec-light/90">All other areas of the bathroom. Standard restrictions apply, all accessories must be suitable for the location, typically IPX2 in wet environments.</p>
-                </div>
+              <ul className="list-disc pl-5 space-y-2 mt-2">
+                <li><span className="font-medium">0-150mm</span> from ceiling</li>
+                <li><span className="font-medium">150-450mm</span> from ceiling</li>
+                <li><span className="font-medium">0-150mm</span> from floor</li>
+                <li><span className="font-medium">150-450mm</span> from floor</li>
+              </ul>
+              
+              <div className="bg-elec-dark/70 p-3 rounded-md mt-3 text-sm">
+                <p className="font-semibold text-elec-yellow mb-1">Safety Reminder:</p>
+                <p>Cable runs outside these zones should either be installed at least 50mm deep or have additional mechanical protection to prevent damage from drilling or fixings.</p>
+              </div>
+            </div>
+            
+            <div className="space-y-3">
+              <h4 className="font-semibold text-white">Vertical Zones</h4>
+              <p>Vertical cable runs should be installed within these zones:</p>
+              
+              <ul className="list-disc pl-5 space-y-2 mt-2">
+                <li><span className="font-medium">0-150mm</span> from internal corners</li>
+                <li><span className="font-medium">150-450mm</span> from openings (doors, windows)</li>
+                <li><span className="font-medium">In-line</span> with accessories (vertical drop from socket to floor)</li>
+              </ul>
+              
+              <div className="bg-elec-dark/70 p-3 rounded-md mt-3 text-sm">
+                <p className="font-semibold text-elec-yellow mb-1">RCD Protection:</p>
+                <p>If cables must run outside these zones, consider additional RCD protection to provide enhanced safety against potential damage.</p>
               </div>
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
-            <div>
-              <h4 className="font-medium text-elec-yellow mb-2">Equipment Restrictions by Zone</h4>
-              <table className="w-full border-collapse text-sm">
+          <div className="pt-5 border-t border-elec-yellow/20 mt-4">
+            <h4 className="font-semibold text-white mb-3">Standard Mounting Heights</h4>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border-collapse text-sm">
                 <thead>
                   <tr className="border-b border-elec-yellow/30">
-                    <th className="py-2 px-2 text-left text-elec-yellow/90">Zone</th>
-                    <th className="py-2 px-2 text-left text-elec-yellow/90">Permitted Equipment</th>
+                    <th className="py-2 px-2 text-left text-elec-yellow">Component</th>
+                    <th className="py-2 px-2 text-left text-elec-yellow">Standard Height (from FFL)</th>
+                    <th className="py-2 px-2 text-left text-elec-yellow">Accessibility Considerations</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr className="border-b border-elec-yellow/10">
-                    <td className="py-2 px-2 text-blue-300">Zone 0</td>
-                    <td className="py-2 px-2 text-elec-light/90">SELV 12V AC devices designed for the zone (IPX7)</td>
-                  </tr>
-                  <tr className="border-b border-elec-yellow/10">
-                    <td className="py-2 px-2 text-red-300">Zone 1</td>
-                    <td className="py-2 px-2 text-elec-light/90">SELV devices, shower pumps, water heaters (IPX4)</td>
-                  </tr>
-                  <tr className="border-b border-elec-yellow/10">
-                    <td className="py-2 px-2 text-yellow-300">Zone 2</td>
-                    <td className="py-2 px-2 text-elec-light/90">As Zone 1 plus luminaires, radiant heaters, towel rails, sockets for shavers/toothbrushes (IPX4)</td>
+                <tbody className="divide-y divide-elec-yellow/10">
+                  <tr>
+                    <td className="py-2 px-2">Light switches</td>
+                    <td className="py-2 px-2">1200mm (centre)</td>
+                    <td className="py-2 px-2">900-1000mm for wheelchair users</td>
                   </tr>
                   <tr>
-                    <td className="py-2 px-2 text-green-300">Outside</td>
-                    <td className="py-2 px-2 text-elec-light/90">Standard accessories suitable for location</td>
+                    <td className="py-2 px-2">Socket outlets</td>
+                    <td className="py-2 px-2">450mm (centre)</td>
+                    <td className="py-2 px-2">400-1000mm for wheelchair users</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 px-2">Consumer units</td>
+                    <td className="py-2 px-2">1350-1500mm (top)</td>
+                    <td className="py-2 px-2">900-1100mm for wheelchair users</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 px-2">Cooker control units</td>
+                    <td className="py-2 px-2">1050-1200mm (centre)</td>
+                    <td className="py-2 px-2">Avoid positioning above the hob</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2 px-2">Distribution boards</td>
+                    <td className="py-2 px-2">2000mm (maximum)</td>
+                    <td className="py-2 px-2">Operating height not to exceed 2m</td>
                   </tr>
                 </tbody>
               </table>
             </div>
+          </div>
+        </div>
+        
+        <div className="mt-8 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
+          <h3 className="text-xl font-bold text-elec-yellow flex items-center">
+            <Droplet className="h-5 w-5 mr-2" />
+            Special Locations
+          </h3>
+          
+          <div className="space-y-5 mt-4">
+            <p>
+              Certain locations have specific requirements due to increased risks. These are covered in Part 7 of BS 7671 
+              and require careful consideration of zoning, IP ratings, and equipment selection.
+            </p>
             
-            <div>
-              <h4 className="font-medium text-elec-yellow mb-2">IP Rating Requirements</h4>
-              <ul className="list-disc pl-5 text-sm space-y-2">
-                <li><span className="font-medium text-blue-300">Zone 0:</span> Minimum IPX7 (protected against immersion)</li>
-                <li><span className="font-medium text-red-300">Zone 1:</span> Minimum IPX4 (protected against water splashes)</li>
-                <li><span className="font-medium text-yellow-300">Zone 2:</span> Minimum IPX4 (protected against water splashes)</li>
-                <li><span className="font-medium text-green-300">Outside Zones:</span> Standard regulations apply</li>
-              </ul>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+              <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-3">Bathroom Zones</h4>
+                
+                <div className="space-y-3">
+                  <div>
+                    <h5 className="font-medium text-white">Zone 0</h5>
+                    <p className="text-sm mt-1">Inside the bath or shower basin. Only SELV (max 12V AC) equipment with minimum IPX7 rating.</p>
+                  </div>
+                  
+                  <div>
+                    <h5 className="font-medium text-white">Zone 1</h5>
+                    <p className="text-sm mt-1">Above the bath/shower to 2.25m from floor level. Minimum IPX4 rating, limited to shower pumps, water heaters, SELV equipment.</p>
+                  </div>
+                  
+                  <div>
+                    <h5 className="font-medium text-white">Zone 2</h5>
+                    <p className="text-sm mt-1">Area extending 0.6m beyond Zone 1 and to 2.25m above floor. Minimum IPX4 rating, greater equipment options including luminaires.</p>
+                  </div>
+                  
+                  <div className="bg-elec-dark/70 p-3 rounded-md mt-3 text-sm">
+                    <p className="font-semibold text-elec-yellow mb-1">Important Requirement:</p>
+                    <p>All circuits in bathrooms must be protected by a 30mA RCD. Switches must be cord-operated or outside the room except for SELV switches.</p>
+                  </div>
+                </div>
+              </div>
               
-              <div className="mt-4 border border-elec-yellow/30 p-3 rounded-md bg-elec-yellow/10">
-                <h5 className="font-medium mb-1">Important Safety Note</h5>
-                <p className="text-sm text-elec-light/90">All bathroom circuits must be protected by a 30mA RCD. Switches must be either outside the bathroom or cord-operated within the room (except SELV switches).</p>
+              <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-3">Swimming Pool Zones</h4>
+                
+                <div className="space-y-3">
+                  <div>
+                    <h5 className="font-medium text-white">Zone 0</h5>
+                    <p className="text-sm mt-1">Inside the pool basin. Only SELV equipment (max 12V AC) with IPX8 rating permitted.</p>
+                  </div>
+                  
+                  <div>
+                    <h5 className="font-medium text-white">Zone 1</h5>
+                    <p className="text-sm mt-1">2.5m horizontally from pool edge and 2.5m above. Very limited equipment, minimum IPX4 rating.</p>
+                  </div>
+                  
+                  <div>
+                    <h5 className="font-medium text-white">Zone 2</h5>
+                    <p className="text-sm mt-1">1.5m beyond Zone 1 and 2.5m above floor. Minimum IPX2 rating (IPX4 if water jets used for cleaning).</p>
+                  </div>
+                  
+                  <div className="bg-elec-dark/70 p-3 rounded-md mt-3 text-sm">
+                    <p className="font-semibold text-elec-yellow mb-1">Additional Protection:</p>
+                    <p>All circuits in Zones 0, 1 and 2 must be protected by a 30mA RCD. Supplementary equipotential bonding required for all extraneous-conductive-parts.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+              <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-3">Kitchens</h4>
+                
+                <div className="space-y-3">
+                  <p className="text-sm">While not formally zoned like bathrooms, kitchens have specific requirements:</p>
+                  
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li><span className="font-medium">Socket positioning</span> - At least 150mm above worktops, away from sinks</li>
+                    <li><span className="font-medium">Appliance circuits</span> - Dedicated circuits for major appliances</li>
+                    <li><span className="font-medium">RCD protection</span> - Required for socket outlets likely to supply portable equipment outdoors</li>
+                    <li><span className="font-medium">IP ratings</span> - Increased protection near sinks and water sources</li>
+                  </ul>
+                </div>
+              </div>
+              
+              <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-4">
+                <h4 className="font-semibold text-elec-yellow mb-3">Agricultural Installations</h4>
+                
+                <div className="space-y-3">
+                  <p className="text-sm">Specific requirements for farms and agricultural buildings:</p>
+                  
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li><span className="font-medium">Protection against fire</span> - AFDDs often required</li>
+                    <li><span className="font-medium">IP ratings</span> - Minimum IP44 for most areas, higher in wash-down zones</li>
+                    <li><span className="font-medium">Additional protection</span> - 30mA RCD protection typically required</li>
+                    <li><span className="font-medium">Equipotential bonding</span> - Comprehensive bonding requirements</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-6 pt-6 border-t border-elec-yellow/20">
+              <h4 className="font-semibold text-white mb-3">Other Special Locations</h4>
+              <p className="mb-3">BS 7671 Section 7 covers many other special locations with specific requirements:</p>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <div className="bg-elec-dark/70 p-3 rounded-md text-sm">
+                  <p className="font-medium text-elec-yellow">Saunas</p>
+                  <p>Temperature resistance, zoning based on heat levels</p>
+                </div>
+                
+                <div className="bg-elec-dark/70 p-3 rounded-md text-sm">
+                  <p className="font-medium text-elec-yellow">Marinas</p>
+                  <p>Corrosion resistance, specific RCD requirements</p>
+                </div>
+                
+                <div className="bg-elec-dark/70 p-3 rounded-md text-sm">
+                  <p className="font-medium text-elec-yellow">Medical Locations</p>
+                  <p>Backup power, equipotential bonding</p>
+                </div>
+                
+                <div className="bg-elec-dark/70 p-3 rounded-md text-sm">
+                  <p className="font-medium text-elec-yellow">Exhibition Halls</p>
+                  <p>Flexible distribution, additional RCD protection</p>
+                </div>
+                
+                <div className="bg-elec-dark/70 p-3 rounded-md text-sm">
+                  <p className="font-medium text-elec-yellow">Solar Installations</p>
+                  <p>DC systems, specialised protection, weather resistance</p>
+                </div>
+                
+                <div className="bg-elec-dark/70 p-3 rounded-md text-sm">
+                  <p className="font-medium text-elec-yellow">Construction Sites</p>
+                  <p>Robust protection, regular inspection, temporary installations</p>
+                </div>
               </div>
             </div>
           </div>
-          
-          <div className="mt-4 text-sm text-elec-light/80">
-            <p><strong>Note:</strong> Bathroom zones are measured from the edge of baths, shower basins, or in the case of showers without trays, from the fixed water outlet. Dimensions are important and should be precisely measured during installation planning.</p>
-          </div>
         </div>
-      </section>
-    </>
+      </div>
+      
+      <div className="flex justify-end pt-6 border-t border-elec-yellow/20">
+        <Button
+          variant="study"
+          className={`${isCompleted ? 'bg-green-600/20 border-green-500/50 text-green-400' : 'hover:bg-elec-yellow hover:text-elec-dark'}`}
+          onClick={markAsComplete}
+          disabled={isCompleted}
+        >
+          {isCompleted ? 'Completed' : 'Mark as Complete'}
+          {isCompleted && <CheckCircle className="ml-2 h-4 w-4" />}
+        </Button>
+      </div>
+    </div>
   );
 };
 
