@@ -1,9 +1,10 @@
+
 import { useState, useEffect } from "react";
 import SectionBox from "@/components/apprentice/SectionBox";
 import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
-import { electricalTheoryContent } from "@/data/electricalTheory/index";
-import { installationMethodsContent } from "@/data/installationMethods/index";
-import { craftSkillsContent } from "@/data/craftSkills/index";  // Import new craft skills content
+import { electricalTheorySection } from "@/data/electricalTheory/section-electrical-theory";
+import { installationMethodsSection } from "@/data/electricalTheory/section-installation-methods";
+import { craftSkillsContent } from "@/data/craftSkills/index";  // Import craft skills content
 import type { CourseUnit } from "@/data/courseUnits";
 import { useToast } from "@/components/ui/use-toast";
 import { useParams } from "react-router-dom";
@@ -45,6 +46,24 @@ const UnitDetails = ({
     onResourceClick('learning');
   };
 
+  // Helper function to create section boxes from section data
+  const createSectionBoxes = (section: any) => {
+    if (!section || !section.content || !section.content.subsections) return null;
+    
+    return section.content.subsections.map((subsection: any) => (
+      <SectionBox
+        key={subsection.id}
+        sectionNumber={subsection.id}
+        title={subsection.title}
+        isExpanded={false}
+        onClick={handleSectionClick}
+        content={<></>}
+        unitCode={unit.code}
+        courseSlug={courseSlug}
+      />
+    ));
+  };
+
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Health and Safety Content - Only for ELEC2/01 */}
@@ -83,18 +102,19 @@ const UnitDetails = ({
       {/* Electrical Theory Content - Only for ELEC2/04 */}
       {showElectricalTheoryContent && (
         <div className="space-y-6">
-          {electricalTheoryContent.slice(0, 7).map((section) => (
-            <SectionBox
-              key={section.sectionNumber}
-              sectionNumber={section.sectionNumber}
-              title={section.title}
-              isExpanded={false}
-              onClick={handleSectionClick}
-              content={<></>}
-              unitCode={unit.code}
-              courseSlug={courseSlug}
-            />
-          ))}
+          <SectionBox
+            key={electricalTheorySection.sectionNumber}
+            sectionNumber={electricalTheorySection.sectionNumber}
+            title={electricalTheorySection.title}
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          
+          {/* Render subsections */}
+          {createSectionBoxes(electricalTheorySection)}
           
           {/* Quiz Section */}
           <SectionBox
@@ -116,19 +136,19 @@ const UnitDetails = ({
       {/* Installation Methods Content - Only for ELEC2/05A */}
       {showInstallationMethodsContent && (
         <div className="space-y-6">
-          {/* Display all installation methods sections */}
-          {installationMethodsContent.map((section) => (
-            <SectionBox
-              key={section.sectionNumber}
-              sectionNumber={section.sectionNumber}
-              title={section.title}
-              isExpanded={false}
-              onClick={handleSectionClick}
-              content={<></>}
-              unitCode={unit.code}
-              courseSlug={courseSlug}
-            />
-          ))}
+          <SectionBox
+            key={installationMethodsSection.sectionNumber}
+            sectionNumber={installationMethodsSection.sectionNumber}
+            title={installationMethodsSection.title}
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          
+          {/* Render subsections */}
+          {createSectionBoxes(installationMethodsSection)}
           
           {/* Quiz Section */}
           <SectionBox

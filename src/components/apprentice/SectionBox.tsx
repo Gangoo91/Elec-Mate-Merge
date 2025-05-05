@@ -41,6 +41,16 @@ const SectionBox = ({
       else if (unitCode.toLowerCase().includes('05a')) {
         navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/installation-method/${sectionNumber}`);
       }
+      // If it's electrical theory unit (ELEC2/04), handle differently based on section number
+      else if (unitCode.toLowerCase().includes('04')) {
+        if (sectionNumber === "04") {
+          // Main section - navigate to unit page
+          navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}`);
+        } else {
+          // Subsection - navigate to section page
+          navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/${sectionSlug}`);
+        }
+      }
       // Regular section page
       else {
         navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/${sectionSlug}`);

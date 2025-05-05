@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
-import { electricalTheoryContent } from "@/data/electricalTheory/index";
+import { electricalTheorySection } from "@/data/electricalTheory/section-electrical-theory";
+import { installationMethodsSection } from "@/data/electricalTheory/section-installation-methods";
 import CourseContentSection from "@/components/apprentice/CourseContentSection";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Book } from "lucide-react";
@@ -31,12 +32,51 @@ const SectionContent = () => {
           section => section.sectionNumber.toLowerCase().replace(/\//g, "-") === sectionId
         );
       } else if (isElectricalTheoryUnit) {
-        section = electricalTheoryContent.find(
-          section => section.sectionNumber.toLowerCase().replace(/\//g, "-") === sectionId
-        );
+        // For electrical theory, use the main section data
+        if (sectionId === "04") {
+          section = electricalTheorySection;
+        } else {
+          // For subsections, we need to get the data from the main section
+          const subsectionId = sectionId;
+          const foundSubsection = electricalTheorySection.content.subsections.find(
+            sub => sub.id === subsectionId
+          );
+          
+          if (foundSubsection) {
+            // Create a section-like structure for the subsection
+            section = {
+              sectionNumber: subsectionId,
+              title: foundSubsection.title,
+              content: {
+                subsections: [foundSubsection],
+                icon: electricalTheorySection.content.icon
+              }
+            };
+          }
+        }
       } else if (isInstallationMethodsUnit) {
-        // For installation methods, we need to specifically grab the installation methods section
-        section = electricalTheoryContent.find(s => s.sectionNumber === "05A");
+        // For installation methods, use the main section data
+        if (sectionId === "05a") {
+          section = installationMethodsSection;
+        } else {
+          // For subsections, get the data from the main section
+          const subsectionId = sectionId;
+          const foundSubsection = installationMethodsSection.content.subsections.find(
+            sub => sub.id === subsectionId
+          );
+          
+          if (foundSubsection) {
+            // Create a section-like structure for the subsection
+            section = {
+              sectionNumber: subsectionId,
+              title: foundSubsection.title,
+              content: {
+                subsections: [foundSubsection],
+                icon: installationMethodsSection.content.icon
+              }
+            };
+          }
+        }
       }
       
       if (section) {
