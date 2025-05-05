@@ -6,6 +6,7 @@ export const technicalInformationSection: SectionData = {
   sectionNumber: "2",
   title: "Technical Information",
   content: {
+    introduction: "Interpreting and utilizing technical data is essential for electrical installation work.",
     sectionNumber: "2",
     title: "Technical Information",
     description: "Interpreting and utilizing technical data is essential for electrical installation work.",

@@ -5,6 +5,7 @@ export const servicePositionSection: SectionData = {
   sectionNumber: "4",
   title: "Service Position Equipment",
   content: {
+    introduction: "The service position is where electricity enters a building, containing critical components for safe power distribution.",
     sectionNumber: "4",
     title: "Service Position Equipment",
     description: "The service position is where electricity enters a building, containing critical components for safe power distribution.",

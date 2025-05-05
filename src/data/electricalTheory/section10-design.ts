@@ -5,10 +5,11 @@ export const circuitDesignSection: SectionData = {
   sectionNumber: "10",
   title: "Circuit Design",
   content: {
+    introduction: "Electrical circuit design involves creating systems that safely and efficiently distribute power to meet the needs of a building's occupants.",
     sectionNumber: "10",
     title: "Circuit Design",
     description: "Electrical circuit design involves creating systems that safely and efficiently distribute power to meet the needs of a building's occupants.",
-    icon: "cable", // Changed from "circuit-board" to "cable"
+    icon: "cable",
     isMainSection: true,
     subsections: [
       {

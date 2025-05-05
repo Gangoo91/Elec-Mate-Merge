@@ -7,6 +7,7 @@ export const craftSkillsContent: SectionData[] = [
     sectionNumber: "1",
     title: "Cable Installation Techniques",
     content: {
+      introduction: "Learn essential techniques for installing and terminating different types of cables in electrical systems.",
       subsections: [
         {
           id: "1.1",
@@ -49,6 +50,7 @@ export const craftSkillsContent: SectionData[] = [
     sectionNumber: "2",
     title: "Wiring Accessories Installation",
     content: {
+      introduction: "Master the techniques for correctly installing common wiring accessories in domestic and commercial settings.",
       subsections: [
         {
           id: "2.1",
@@ -80,6 +82,7 @@ export const craftSkillsContent: SectionData[] = [
     sectionNumber: "3",
     title: "Lighting Installation",
     content: {
+      introduction: "Develop skills to install various lighting systems and controls for optimal functionality and energy efficiency.",
       subsections: [
         {
           id: "3.1",
@@ -111,6 +114,7 @@ export const craftSkillsContent: SectionData[] = [
     sectionNumber: "4",
     title: "Testing and Verification",
     content: {
+      introduction: "Learn essential testing procedures to verify the safety and functionality of electrical installations.",
       subsections: [
         {
           id: "4.1",
@@ -142,6 +146,7 @@ export const craftSkillsContent: SectionData[] = [
     sectionNumber: "5",
     title: "Workshop Practical Skills",
     content: {
+      introduction: "Develop practical workshop skills essential for effective electrical installation work.",
       subsections: [
         {
           id: "5.1",

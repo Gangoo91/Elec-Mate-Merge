@@ -5,6 +5,7 @@ export const wiringSectionsSection: SectionData = {
   sectionNumber: "3",
   title: "Wiring Systems",
   content: {
+    introduction: "Wiring systems form the backbone of electrical installations, each with specific properties, applications, and limitations.",
     sectionNumber: "3",
     title: "Wiring Systems",
     description: "Wiring systems form the backbone of electrical installations, each with specific properties, applications, and limitations.",

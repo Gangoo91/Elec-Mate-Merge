@@ -5,6 +5,7 @@ export const environmentalConsiderationsSection: SectionData = {
   sectionNumber: "7",
   title: "Environmental Considerations",
   content: {
+    introduction: "Environmental aspects and sustainable practices in electrical installations.",
     sectionNumber: "7",
     title: "Environmental Considerations",
     description: "Environmental aspects and sustainable practices in electrical installations.",

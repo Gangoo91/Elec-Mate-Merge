@@ -5,10 +5,11 @@ export const circuitRequirementsSection: SectionData = {
   sectionNumber: "7",
   title: "Circuit Requirements",
   content: {
+    introduction: "Basic requirements for circuit design and implementation ensure electrical systems function safely and effectively.",
     sectionNumber: "7",
     title: "Circuit Requirements",
     description: "Basic requirements for circuit design and implementation ensure electrical systems function safely and effectively.",
-    icon: "cable", // Changed from "circuit-board" to "cable"
+    icon: "cable",
     isMainSection: true,
     subsections: [
       {

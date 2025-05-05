@@ -5,6 +5,7 @@ export const ringRadialCircuitsSection: SectionData = {
   sectionNumber: "6",
   title: "Ring and Radial Circuits",
   content: {
+    introduction: "Ring and radial final circuits are the two main configurations used for socket outlets in UK electrical installations.",
     sectionNumber: "6",
     title: "Ring and Radial Circuits",
     description: "Ring and radial final circuits are the two main configurations used for socket outlets in UK electrical installations.",

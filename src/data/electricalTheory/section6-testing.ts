@@ -5,6 +5,7 @@ export const inspectionTestingSection: SectionData = {
   sectionNumber: "6",
   title: "Inspection, Testing & Fault Finding (Introductory)",
   content: {
+    introduction: "Basic principles and methods of electrical inspection, testing, and fault finding.",
     sectionNumber: "6",
     title: "Inspection, Testing & Fault Finding (Introductory)",
     description: "Basic principles and methods of electrical inspection, testing, and fault finding.",

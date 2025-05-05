@@ -5,6 +5,7 @@ export const lightingCircuitsSection: SectionData = {
   sectionNumber: "5",
   title: "Lighting Circuits",
   content: {
+    introduction: "Lighting circuits are fundamental components of electrical installations, providing illumination throughout buildings.",
     sectionNumber: "5",
     title: "Lighting Circuits",
     description: "Lighting circuits are fundamental components of electrical installations, providing illumination throughout buildings.",

@@ -5,6 +5,7 @@ export const basicElectricalTheorySection: SectionData = {
   sectionNumber: "1",
   title: "Legislation and Regulations",
   content: {
+    introduction: "Understanding the laws and guidelines that govern electrical installation work is fundamental to being an electrician.",
     sectionNumber: "1",
     title: "Legislation and Regulations",
     description: "Understanding the laws and guidelines that govern electrical installation work is fundamental to being an electrician.",

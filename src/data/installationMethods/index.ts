@@ -1,15 +1,15 @@
-
-import type { SectionData } from "@/data/healthAndSafety/types";
+import { SectionData } from '../healthAndSafety/types';
 
 export const installationMethodsContent: SectionData[] = [
   {
     sectionNumber: "1",
-    title: "Installation Requirements",
+    title: "Cable Installation",
     content: {
+      introduction: "Proper cable installation is fundamental to electrical work, ensuring safety and functionality.",
       icon: "construction",
       sectionNumber: "1",
-      title: "Installation Requirements",
-      description: "This section covers the interpretation of installation drawings, selection of installation methods, and understanding of installation zones and cable routing.",
+      title: "Cable Installation",
+      description: "Proper cable installation is fundamental to electrical work, ensuring safety and functionality.",
       isMainSection: true,
       subsections: [
         {
@@ -50,12 +50,13 @@ export const installationMethodsContent: SectionData[] = [
   },
   {
     sectionNumber: "2",
-    title: "Equipment and Materials Selection",
+    title: "Containment Systems",
     content: {
+      introduction: "Containment systems provide protection and support for electrical cables throughout an installation.",
       icon: "construction",
       sectionNumber: "2",
-      title: "Equipment and Materials Selection",
-      description: "This section covers the proper selection of cables, enclosures, and other components used in electrical installations.",
+      title: "Containment Systems",
+      description: "Containment systems provide protection and support for electrical cables throughout an installation.",
       isMainSection: true,
       subsections: [
         {
@@ -96,12 +97,13 @@ export const installationMethodsContent: SectionData[] = [
   },
   {
     sectionNumber: "3",
-    title: "Installation Procedures",
+    title: "Wiring Systems",
     content: {
+      introduction: "Understanding different wiring systems is essential for creating safe and effective electrical installations.",
       icon: "construction",
       sectionNumber: "3",
-      title: "Installation Procedures",
-      description: "This section covers the sequencing of installation work, containment methods, and proper termination techniques.",
+      title: "Wiring Systems",
+      description: "Understanding different wiring systems is essential for creating safe and effective electrical installations.",
       isMainSection: true,
       subsections: [
         {
@@ -144,10 +146,11 @@ export const installationMethodsContent: SectionData[] = [
     sectionNumber: "4",
     title: "Safe Working Practices",
     content: {
+      introduction: "Safe working practices are essential to prevent accidents and injuries during electrical installation work.",
       icon: "safety",
       sectionNumber: "4",
       title: "Safe Working Practices",
-      description: "This section covers essential safety procedures when working with electrical installations, including isolation, lock-off, and personal protective equipment.",
+      description: "Safe working practices are essential to prevent accidents and injuries during electrical installation work.",
       isMainSection: true,
       subsections: [
         {
@@ -188,12 +191,13 @@ export const installationMethodsContent: SectionData[] = [
   },
   {
     sectionNumber: "5",
-    title: "Legal and Regulatory Requirements",
+    title: "Technical Documentation",
     content: {
+      introduction: "Proper documentation is crucial for planning, implementing, and maintaining electrical installations.",
       icon: "info",
       sectionNumber: "5",
-      title: "Legal and Regulatory Requirements",
-      description: "This section covers the various regulations and legal requirements governing electrical installations in the UK.",
+      title: "Technical Documentation",
+      description: "Proper documentation is crucial for planning, implementing, and maintaining electrical installations.",
       isMainSection: true,
       subsections: [
         {
@@ -234,12 +238,13 @@ export const installationMethodsContent: SectionData[] = [
   },
   {
     sectionNumber: "6",
-    title: "Testing and Commissioning",
+    title: "Testing and Verification",
     content: {
+      introduction: "Testing and verification ensure that electrical installations are safe and comply with regulations.",
       icon: "info",
       sectionNumber: "6",
-      title: "Testing and Commissioning",
-      description: "This section covers the procedures for testing and commissioning electrical installations, including visual inspection, pre-functional testing, and documentation.",
+      title: "Testing and Verification",
+      description: "Testing and verification ensure that electrical installations are safe and comply with regulations.",
       isMainSection: true,
       subsections: [
         {
@@ -266,7 +271,7 @@ export const installationMethodsContent: SectionData[] = [
         },
         {
           id: "6.3",
-          title: "Documentation and Certification",
+ title: "Documentation and Certification",
           content: "Proper documentation of test results and installation certification is a legal requirement. This provides evidence of compliance and creates a baseline for future reference and maintenance.",
           keyPoints: [
             "Electrical Installation Certificate structure",

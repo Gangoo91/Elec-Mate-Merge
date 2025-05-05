@@ -3,11 +3,12 @@ import { SectionData } from './types';
 
 export const legislationSection: SectionData = {
   sectionNumber: "1",
-  title: "Health and Safety Legislation",
+  title: "Legislation and Regulations",
   content: {
+    introduction: "Understanding the legal framework that governs electrical safety is essential for all electrical workers.",
     sectionNumber: "1",
-    title: "Health and Safety Legislation in Electrical Work",
-    description: "Understanding how health and safety applies to electrotechnical operations and the relevance of health and safety legislation in electrical work.",
+    title: "Legislation and Regulations",
+    description: "Understanding the legal framework that governs electrical safety is essential for all electrical workers.",
     icon: "safety",
     isMainSection: true,
     subsections: [

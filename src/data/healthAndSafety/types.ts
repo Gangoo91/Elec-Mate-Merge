@@ -7,7 +7,7 @@ export interface Subsection {
 }
 
 export interface SectionContentData {
-  introduction: string;
+  introduction?: string; // Make introduction optional
   subsections: {
     id: string;
     title: string;

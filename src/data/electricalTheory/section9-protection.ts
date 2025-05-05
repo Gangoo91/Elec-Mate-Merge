@@ -1,13 +1,15 @@
+
 import { SectionData } from '../healthAndSafety/types';
 
 export const overcurrentProtectionSection: SectionData = {
   sectionNumber: "9",
   title: "Overcurrent Protection",
   content: {
+    introduction: "Overcurrent protection is essential to safeguard electrical installations from damage and fire risks caused by excessive current flow.",
     sectionNumber: "9",
     title: "Overcurrent Protection",
     description: "Overcurrent protection is essential to safeguard electrical installations from damage and fire risks caused by excessive current flow.",
-    icon: "shield-alert", // Changed from "safety" to "shield-alert"
+    icon: "shield-alert",
     isMainSection: true,
     subsections: [
       {

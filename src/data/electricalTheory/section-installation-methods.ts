@@ -5,6 +5,7 @@ export const installationMethodsSection: SectionData = {
   sectionNumber: "05A",
   title: "Electrical Installation Methods, Procedures and Requirements",
   content: {
+    introduction: "This unit focuses on specific techniques, regulatory requirements and standard procedures for electrical installations.",
     sectionNumber: "05A",
     title: "Electrical Installation Methods, Procedures and Requirements",
     description: "This unit focuses on specific techniques, regulatory requirements and standard procedures for electrical installations.",
