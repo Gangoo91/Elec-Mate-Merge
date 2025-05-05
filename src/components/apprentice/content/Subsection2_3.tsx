@@ -1,12 +1,16 @@
 
 import React from "react";
 import { Plug2, PowerOff, BellElectric } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CheckCircle } from "lucide-react";
 
 type Subsection2_3Props = {
-  subsectionId?: string;
+  subsectionId: string;
+  isCompleted: boolean;
+  markAsComplete: () => void;
 };
 
-const Subsection2_3 = ({ subsectionId }: Subsection2_3Props) => {
+const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection2_3Props) => {
   return (
     <>
       <section>
@@ -112,6 +116,18 @@ const Subsection2_3 = ({ subsectionId }: Subsection2_3Props) => {
           </div>
         </div>
       </section>
+
+      <div className="flex justify-end pt-6 border-t border-elec-yellow/20 mt-6">
+        <Button
+          variant="study"
+          className={`${isCompleted ? 'bg-green-600/20 border-green-500/50 text-green-400' : 'hover:bg-elec-yellow hover:text-elec-dark'}`}
+          onClick={markAsComplete}
+          disabled={isCompleted}
+        >
+          {isCompleted ? 'Completed' : 'Mark as Complete'}
+          {isCompleted && <CheckCircle className="ml-2 h-4 w-4" />}
+        </Button>
+      </div>
     </>
   );
 };

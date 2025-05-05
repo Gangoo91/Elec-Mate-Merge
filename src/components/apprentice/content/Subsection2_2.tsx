@@ -1,16 +1,20 @@
 
 import React from "react";
 import ElectricalSymbolsDisplay from "../ElectricalSymbolsDisplay";
+import { Button } from "@/components/ui/button";
+import { CheckCircle } from "lucide-react";
 
 type Subsection2_2Props = {
   subsectionId: string;
+  isCompleted: boolean;
+  markAsComplete: () => void;
 };
 
-const Subsection2_2 = ({ subsectionId }: Subsection2_2Props) => {
+const Subsection2_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection2_2Props) => {
   return (
     <>
       <section>
-        <h2 className="text-xl font-semibold text-elec-yellow mb-3">Enclosures and Their Applications</h2>
+        <h2 className="text-2xl font-bold text-elec-yellow mb-3">Enclosures and Their Applications</h2>
         <p>Electrical enclosures protect equipment from environmental conditions and prevent accidental contact with live parts. The selection process involves careful consideration of the installation environment and specific requirements:</p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
@@ -70,8 +74,6 @@ const Subsection2_2 = ({ subsectionId }: Subsection2_2Props) => {
         </div>
         
         <p className="mt-3">BS 7671 requires specific minimum IP ratings for different installation environments. For example, zone 1 in bathrooms requires at least IPX4, while outdoor installations typically require IP65 or higher.</p>
-        
-        <ElectricalSymbolsDisplay subsectionId={subsectionId} />
       </section>
       
       <section>
@@ -135,6 +137,18 @@ const Subsection2_2 = ({ subsectionId }: Subsection2_2Props) => {
         
         <p className="mt-3">Electricians must ensure that all enclosures are properly selected, installed, and maintained in accordance with manufacturer's instructions and relevant regulations.</p>
       </section>
+
+      <div className="flex justify-end pt-6 border-t border-elec-yellow/20 mt-6">
+        <Button
+          variant="study"
+          className={`${isCompleted ? 'bg-green-600/20 border-green-500/50 text-green-400' : 'hover:bg-elec-yellow hover:text-elec-dark'}`}
+          onClick={markAsComplete}
+          disabled={isCompleted}
+        >
+          {isCompleted ? 'Completed' : 'Mark as Complete'}
+          {isCompleted && <CheckCircle className="ml-2 h-4 w-4" />}
+        </Button>
+      </div>
     </>
   );
 };
