@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Box, Layers, CableMeasure } from "lucide-react";
+import { CheckCircle, Box, Layers, Cable } from "lucide-react";
 
 interface Subsection3_2Props {
   subsectionId: string;
@@ -98,7 +98,7 @@ const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         
         <div className="mt-8 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
           <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
-            <CableMeasure className="h-5 w-5 mr-2" />
+            <Cable className="h-5 w-5 mr-2" />
             Containment Selection Factors
           </h3>
           
