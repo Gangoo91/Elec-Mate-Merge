@@ -1,14 +1,15 @@
 
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Route, Routes } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, GraduationCap } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ealLevel2Units } from "@/data/courseUnits";
+import UnitDetails from "@/components/apprentice/UnitDetails";
 
 const CourseDetail = () => {
-  const { courseSlug } = useParams();
+  const { courseSlug, unitSlug } = useParams();
   const isMobile = useIsMobile();
   
   // Format the course title from the slug
@@ -28,6 +29,27 @@ const CourseDetail = () => {
       title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
   };
 
+  // If we have a unitSlug parameter, show the unit details instead of the course listing
+  if (unitSlug) {
+    // Find the unit that matches the unitSlug
+    const unit = ealLevel2Units.find(unit => {
+      const generatedSlug = createUnitSlug(unit.code, unit.title);
+      return generatedSlug === unitSlug;
+    });
+
+    if (unit) {
+      return (
+        <UnitDetails 
+          unit={unit} 
+          onResourceClick={() => {}} 
+          completedResources={{}} 
+          onToggleResourceComplete={() => {}} 
+        />
+      );
+    }
+  }
+
+  // Show the course listing if no unitSlug or if the unit wasn't found
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8 animate-fade-in">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
