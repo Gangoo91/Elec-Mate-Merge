@@ -6,6 +6,8 @@ import { legislationSubsections, rolesResponsibilitiesSubsections } from "@/data
 import LegislationRegulationsPage from "@/pages/apprentice/LegislationRegulationsPage";
 import RolesResponsibilitiesPage from "@/pages/apprentice/RolesResponsibilitiesPage";
 import SubsectionContentPage from "@/pages/apprentice/SubsectionContentPage";
+import Index from "@/pages/Index";
+import HealthSafetyDashboard from "@/pages/HealthSafetyDashboard";
 
 // HealthSafetyUnit is a component that requires unitCode and onResourceClick props
 const App = () => {
@@ -16,6 +18,10 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Add root route to show the Index page */}
+        <Route path="/" element={<Index />} />
+        <Route path="/health-safety" element={<HealthSafetyDashboard />} />
+        
         {/* Health & Safety Module Routes */}
         <Route path="/apprentice/study/eal/:courseSlug/unit/:unitSlug/legislation" element={<LegislationRegulationsPage />} />
         <Route path="/apprentice/study/eal/:courseSlug/unit/:unitSlug/roles" element={<RolesResponsibilitiesPage />} />

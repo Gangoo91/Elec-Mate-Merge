@@ -20,21 +20,21 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl mt-4">
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Apprentice Resources</CardTitle>
+                <CardTitle className="text-lg">Health & Safety</CardTitle>
               </CardHeader>
               <CardContent>
                 <Button asChild size="sm" variant="outline" className="w-full">
-                  <Link to="/apprentice/hub">Access Hub</Link>
+                  <Link to="/health-safety">Access Health & Safety</Link>
                 </Button>
               </CardContent>
             </Card>
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Electrical Tools</CardTitle>
+                <CardTitle className="text-lg">Apprentice Resources</CardTitle>
               </CardHeader>
               <CardContent>
                 <Button asChild size="sm" variant="outline" className="w-full">
-                  <Link to="/electrical-hub">Access Tools</Link>
+                  <Link to="/apprentice/hub">Access Hub</Link>
                 </Button>
               </CardContent>
             </Card>
