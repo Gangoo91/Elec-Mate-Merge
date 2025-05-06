@@ -56,6 +56,12 @@ import InstallationMethodContent from "./pages/apprentice/InstallationMethodCont
 import CraftSkillsContent from "./pages/apprentice/CraftSkillsContent";
 import CraftSkillsSubsection from "./pages/apprentice/CraftSkillsSubsection";
 
+// Import new resource pages
+import CommunicationStructures from "./components/apprentice/resources/CommunicationStructures";
+import CommunicationMethods from "./components/apprentice/resources/CommunicationMethods";
+import SafetyMeetings from "./components/apprentice/resources/SafetyMeetings";
+import DocumentationSystems from "./components/apprentice/resources/DocumentationSystems";
+
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -123,6 +129,12 @@ function App() {
                     {/* Craft skills routes */}
                     <Route path="eal/:courseSlug/unit/:unitSlug/craft-skills/:sectionId" element={<CraftSkillsContent />} />
                     <Route path="eal/:courseSlug/unit/:unitSlug/craft-skills/:sectionId/subsection/:subsectionId" element={<CraftSkillsSubsection />} />
+                    
+                    {/* Resource pages */}
+                    <Route path="resources/communication-structures" element={<CommunicationStructures />} />
+                    <Route path="resources/communication-methods" element={<CommunicationMethods />} />
+                    <Route path="resources/safety-meetings" element={<SafetyMeetings />} />
+                    <Route path="resources/documentation-systems" element={<DocumentationSystems />} />
                   </Route>
                 </Route>
 
