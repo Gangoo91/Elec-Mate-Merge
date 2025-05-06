@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Clock, Calendar, ClipboardCheck } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, AlertTriangle, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const InspectionTypes = () => {
@@ -18,133 +18,99 @@ const InspectionTypes = () => {
       <div className="space-y-8">
         <div className="text-center mb-8">
           <h1 className="text-2xl md:text-3xl font-bold text-elec-yellow mb-2">
-            Inspection Types and Frequency
+            Types of Workplace Safety Inspections
           </h1>
           <p className="text-elec-light/80 max-w-2xl mx-auto">
-            Different types of inspections should be conducted at varying frequencies to ensure comprehensive coverage of all safety concerns.
+            Different types of inspections serve various purposes and should be conducted at appropriate intervals.
           </p>
         </div>
         
         {/* Content sections */}
-        <div className="space-y-6">
-          <section className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center">
-              <Clock className="mr-3 h-5 w-5" /> Daily Pre-Work Checks
+              <Clock className="mr-3 h-5 w-5" /> Routine Inspections
             </h2>
             <div className="space-y-4">
               <p className="text-elec-light/90">
-                Daily pre-work checks are the first line of defense against workplace hazards. They should be conducted before work begins each day to identify any immediate safety concerns.
+                Regular scheduled inspections form the backbone of a preventative safety program.
               </p>
               
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
-                <h3 className="font-medium text-elec-yellow mb-2">What to Check:</h3>
-                <ul className="list-disc pl-5 space-y-2 text-elec-light/90">
-                  <li>Work area for trip hazards or obstructions</li>
-                  <li>Tools and equipment for visible damage</li>
-                  <li>Electrical cords and connections</li>
-                  <li>Personal protective equipment (PPE) condition</li>
-                  <li>Emergency exits and access routes</li>
-                </ul>
-              </div>
-              
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
-                <h3 className="font-medium text-elec-yellow mb-2">Documentation:</h3>
-                <p className="text-elec-light/90">
-                  While daily checks may be less formal, it's good practice to use a simple checklist and record any issues found. This creates an audit trail and ensures issues are addressed.
-                </p>
-              </div>
+              <ul className="list-disc pl-5 space-y-2 text-sm text-elec-light/90">
+                <li><span className="font-medium text-white">Daily Inspections</span>: Quick checks of work areas, tools and equipment before starting work</li>
+                <li><span className="font-medium text-white">Weekly Inspections</span>: More thorough examination of specific areas or equipment on rotation</li>
+                <li><span className="font-medium text-white">Monthly Inspections</span>: Comprehensive inspections of all workplace areas and systems</li>
+                <li><span className="font-medium text-white">Quarterly/Annual Audits</span>: Deep reviews of safety systems, documentation and compliance</li>
+              </ul>
             </div>
-          </section>
+          </div>
           
-          <section className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <div className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center">
-              <Calendar className="mr-3 h-5 w-5" /> Weekly Documented Inspections
+              <AlertTriangle className="mr-3 h-5 w-5" /> Incident-Triggered Inspections
             </h2>
             <div className="space-y-4">
               <p className="text-elec-light/90">
-                Weekly inspections provide a more thorough examination of workplace conditions. These should be formal, documented inspections conducted by supervisors or designated safety personnel.
+                Special inspections conducted following an incident or near-miss to identify causes and prevent recurrence.
               </p>
               
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
-                <h3 className="font-medium text-elec-yellow mb-2">What to Check:</h3>
-                <ul className="list-disc pl-5 space-y-2 text-elec-light/90">
-                  <li>Electrical equipment and installations</li>
-                  <li>Access paths and work areas</li>
-                  <li>Fire safety provisions</li>
-                  <li>First aid facilities</li>
-                  <li>Storage practices for materials and equipment</li>
-                  <li>Waste management systems</li>
-                </ul>
-              </div>
-              
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
-                <h3 className="font-medium text-elec-yellow mb-2">Documentation:</h3>
-                <p className="text-elec-light/90">
-                  Use standardized inspection forms that include space for observations, corrective actions, and follow-up responsibilities. These records should be reviewed regularly to identify recurring issues.
-                </p>
-              </div>
+              <ul className="list-disc pl-5 space-y-2 text-sm text-elec-light/90">
+                <li><span className="font-medium text-white">Post-Accident Investigation</span>: Detailed examination of accident scene and contributing factors</li>
+                <li><span className="font-medium text-white">Near-Miss Follow-up</span>: Investigation of conditions that almost caused an incident</li>
+                <li><span className="font-medium text-white">Complaint Response</span>: Inspection following worker or public safety concerns</li>
+                <li><span className="font-medium text-white">Return to Work</span>: Special inspections before resuming work after significant incidents</li>
+              </ul>
             </div>
-          </section>
+          </div>
           
-          <section className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <div className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center">
-              <ClipboardCheck className="mr-3 h-5 w-5" /> Monthly Safety Audits
+              <CheckCircle className="mr-3 h-5 w-5" /> Focused Inspections
             </h2>
             <div className="space-y-4">
               <p className="text-elec-light/90">
-                Monthly safety audits are comprehensive reviews conducted by supervisors or safety officers. These examine both physical conditions and procedural adherence.
+                Targeted inspections that concentrate on specific aspects of workplace safety.
               </p>
               
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
-                <h3 className="font-medium text-elec-yellow mb-2">What to Check:</h3>
-                <ul className="list-disc pl-5 space-y-2 text-elec-light/90">
-                  <li>Physical workplace conditions</li>
-                  <li>Work practices and procedures</li>
-                  <li>Safety documentation and records</li>
-                  <li>Training records and requirements</li>
-                  <li>Risk assessments and method statements</li>
-                  <li>Previous inspection findings and corrective actions</li>
-                </ul>
-              </div>
-              
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
-                <h3 className="font-medium text-elec-yellow mb-2">Documentation:</h3>
-                <p className="text-elec-light/90">
-                  Monthly audits should result in formal reports that are shared with management and relevant team members. These reports should include trend analysis and recommendations for improvement.
-                </p>
-              </div>
+              <ul className="list-disc pl-5 space-y-2 text-sm text-elec-light/90">
+                <li><span className="font-medium text-white">Equipment-Specific</span>: Detailed inspection of critical equipment or machinery</li>
+                <li><span className="font-medium text-white">Task-Specific</span>: Inspection focused on particular high-risk tasks or procedures</li>
+                <li><span className="font-medium text-white">System-Specific</span>: Review of particular safety systems like fire protection or emergency response</li>
+                <li><span className="font-medium text-white">Compliance-Focused</span>: Inspection targeting specific regulatory requirements</li>
+              </ul>
             </div>
-          </section>
+          </div>
           
-          <section className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
+          <div className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center">
-              <Calendar className="mr-3 h-5 w-5" /> Quarterly System Reviews
+              <Calendar className="mr-3 h-5 w-5" /> Project Phase Inspections
             </h2>
             <div className="space-y-4">
               <p className="text-elec-light/90">
-                Quarterly reviews focus on evaluating the effectiveness of the inspection program itself. These reviews should be conducted by senior management or safety specialists.
+                Inspections conducted at critical points in electrical project lifecycles.
               </p>
               
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
-                <h3 className="font-medium text-elec-yellow mb-2">What to Review:</h3>
-                <ul className="list-disc pl-5 space-y-2 text-elec-light/90">
-                  <li>Effectiveness of inspection procedures</li>
-                  <li>Frequency and coverage of inspections</li>
-                  <li>Implementation of corrective actions</li>
-                  <li>Accident and near-miss trends</li>
-                  <li>Changes in regulations or industry standards</li>
-                  <li>New hazards or changing work conditions</li>
-                </ul>
-              </div>
-              
-              <div className="bg-elec-dark/50 p-4 rounded-md border border-elec-yellow/10">
-                <h3 className="font-medium text-elec-yellow mb-2">Documentation:</h3>
-                <p className="text-elec-light/90">
-                  Quarterly reviews should produce strategic recommendations for improving the overall safety inspection program. These might include changes to inspection forms, frequencies, or training requirements.
-                </p>
-              </div>
+              <ul className="list-disc pl-5 space-y-2 text-sm text-elec-light/90">
+                <li><span className="font-medium text-white">Pre-Start Inspections</span>: Before beginning work on a new project or site</li>
+                <li><span className="font-medium text-white">Installation Phase</span>: During critical stages of electrical installation work</li>
+                <li><span className="font-medium text-white">Pre-Commissioning</span>: Before energizing new electrical systems</li>
+                <li><span className="font-medium text-white">Handover Inspections</span>: Final safety checks before client acceptance</li>
+              </ul>
             </div>
-          </section>
+          </div>
+        </div>
+        
+        <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6 mt-8">
+          <h2 className="text-xl font-semibold text-elec-yellow mb-4">Key Principles for Effective Inspections</h2>
+          <ul className="list-disc pl-6 space-y-2 text-elec-light/90">
+            <li>Use standardized checklists appropriate for each inspection type</li>
+            <li>Ensure inspections are conducted by qualified individuals</li>
+            <li>Maintain consistent frequency according to established schedules</li>
+            <li>Document all findings thoroughly with evidence</li>
+            <li>Follow up on all identified issues with appropriate corrective actions</li>
+            <li>Review inspection processes regularly for continued effectiveness</li>
+            <li>Communicate findings and lessons learned throughout the organization</li>
+          </ul>
         </div>
       </div>
     </div>
