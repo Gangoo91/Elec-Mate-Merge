@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, User, Users, Heart, GraduationCap } from "lucide-react";
