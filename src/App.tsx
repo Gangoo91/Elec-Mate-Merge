@@ -61,10 +61,6 @@ import CommunicationStructures from "./components/apprentice/resources/Communica
 import CommunicationMethods from "./components/apprentice/resources/CommunicationMethods";
 import SafetyMeetings from "./components/apprentice/resources/SafetyMeetings";
 import DocumentationSystems from "./components/apprentice/resources/DocumentationSystems";
-import InspectionTypes from "./components/apprentice/resources/InspectionTypes";
-import InspectionAreas from "./components/apprentice/resources/InspectionAreas";
-import InspectionDocumentation from "./components/apprentice/resources/InspectionDocumentation";
-import InspectionRegulations from "./components/apprentice/resources/InspectionRegulations";
 
 function App() {
   return (
@@ -139,12 +135,6 @@ function App() {
                     <Route path="resources/communication-methods" element={<CommunicationMethods />} />
                     <Route path="resources/safety-meetings" element={<SafetyMeetings />} />
                     <Route path="resources/documentation-systems" element={<DocumentationSystems />} />
-                    
-                    {/* Resource pages for Subsection 2.1 */}
-                    <Route path="resources/inspection-types" element={<InspectionTypes />} />
-                    <Route path="resources/inspection-areas" element={<InspectionAreas />} />
-                    <Route path="resources/inspection-documentation" element={<InspectionDocumentation />} />
-                    <Route path="resources/inspection-regulations" element={<InspectionRegulations />} />
                   </Route>
                 </Route>
 
