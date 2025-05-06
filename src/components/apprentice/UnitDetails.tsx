@@ -20,7 +20,6 @@ import { craftSkillsContent } from "@/data/craftSkills/index";  // Import craft 
 import type { CourseUnit } from "@/data/courseUnits";
 import { useToast } from "@/components/ui/use-toast";
 import { useParams } from "react-router-dom";
-import { healthAndSafetyQuizzes } from "@/data/unitQuizzes";
 
 interface UnitDetailsProps {
   unit: CourseUnit;
@@ -43,7 +42,8 @@ const UnitDetails = ({
   const showHealthSafetyContent = unit.code === "ELEC2/01";
   const showElectricalTheoryContent = unit.code === "ELEC2/04";
   const showInstallationMethodsContent = unit.code === "ELEC2/05A";
-  const showCraftSkillsContent = unit.code === "ELEC2/05B";  // Add condition for craft skills
+  const showCraftSkillsContent = unit.code === "ELEC2/05B";
+  const showScienceContent = unit.code === "ELEC2/08";
 
   // Load completion status
   useEffect(() => {
@@ -97,7 +97,7 @@ const UnitDetails = ({
           {/* Quiz Section */}
           <SectionBox
             sectionNumber="Q"
-            title="Knowledge Assessment Quiz"
+            title="Health & Safety Assessment Quiz"
             isExpanded={false}
             onClick={() => {
               handleSectionClick();
@@ -309,6 +309,72 @@ const UnitDetails = ({
           <SectionBox
             sectionNumber="Q"
             title="Electrical Installation Craft Skills Quiz"
+            isExpanded={false}
+            onClick={() => {
+              handleSectionClick();
+              onResourceClick('assessment');
+            }}
+            content={<></>}
+            isCompleted={quizCompleted}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+        </div>
+      )}
+
+      {/* Science and Principles Content - Only for ELEC2/08 */}
+      {showScienceContent && (
+        <div className="space-y-6">
+          <SectionBox
+            sectionNumber="1"
+            title="Fundamental Electrical Concepts"
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          <SectionBox
+            sectionNumber="2"
+            title="Electrical Circuits and Ohm's Law"
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          <SectionBox
+            sectionNumber="3"
+            title="Power and Energy in Electrical Systems"
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          <SectionBox
+            sectionNumber="4"
+            title="Magnetism and Electromagnetism"
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          <SectionBox
+            sectionNumber="5"
+            title="AC Theory and Principles"
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          
+          {/* Quiz Section */}
+          <SectionBox
+            sectionNumber="Q"
+            title="Electrical Science Assessment Quiz"
             isExpanded={false}
             onClick={() => {
               handleSectionClick();
