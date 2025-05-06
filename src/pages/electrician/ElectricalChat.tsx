@@ -1,32 +1,16 @@
 
-import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { ArrowLeft, MessageSquare } from "lucide-react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "@/components/ui/use-toast";
+import { ChatMessage as ChatMessageType } from "@/components/messenger/types";
+import { Search } from "lucide-react";
 import ChatMessage from "@/components/chat/ChatMessage";
 import ChatComposer from "@/components/chat/ChatComposer";
-import { ChatMessage as ChatMessageType } from "@/components/messenger/types";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useConversationUtils } from "@/components/messenger/useConversationUtils";
 
 const ElectricalChat = () => {
   const { profile } = useAuth();
-  const [sortBy, setSortBy] = useState<"latest" | "popular">("latest");
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const isMobile = useIsMobile();
-  const { getInitials } = useConversationUtils();
-  
-  // Auto-scroll to bottom when new message is added
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [messages]);
   
   // Simulating API load for message data
   useEffect(() => {
@@ -37,23 +21,13 @@ const ElectricalChat = () => {
         {
           id: "1",
           authorId: "user1",
-          authorName: "John Smith",
+          authorName: "Andrew Moore",
           authorAvatar: "https://i.pravatar.cc/150?img=1",
-          content: "Has anyone used the new Milwaukee cordless multimeter? Wondering if it's worth the investment.",
+          content: "Welcome to Elec-Mate.",
           createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
-          upvotes: 12,
+          upvotes: 0,
           category: "General",
-          comments: [
-            {
-              id: "c1",
-              authorId: "user2",
-              authorName: "Sarah Williams",
-              authorAvatar: "https://i.pravatar.cc/150?img=2",
-              content: "I've been using it for a month. Great battery life and very accurate readings!",
-              createdAt: new Date(Date.now() - 1000 * 60 * 30), // 30 min ago
-              parentId: "1"
-            }
-          ]
+          comments: []
         },
         {
           id: "2",
@@ -116,11 +90,6 @@ const ElectricalChat = () => {
           : msg
       )
     );
-    
-    toast({
-      title: "Vote recorded",
-      description: "Your vote has been recorded successfully.",
-    });
   };
   
   // Handle posting a new message
@@ -192,106 +161,73 @@ const ElectricalChat = () => {
       description: "Your comment has been added successfully.",
     });
   };
-  
-  // Sort messages based on sort option
-  const sortedMessages = [...messages].sort((a, b) => {
-    if (sortBy === "latest") {
-      return b.createdAt.getTime() - a.createdAt.getTime();
-    } else {
-      return b.upvotes - a.upvotes;
-    }
-  });
 
   return (
-    <div className="flex flex-col min-h-screen bg-black animate-fade-in">
-      {/* Fixed header */}
-      <div className="sticky top-0 z-30 w-full bg-black px-4 py-3 border-b border-elec-yellow">
-        <div className="flex items-center justify-between max-w-3xl mx-auto">
-          <div className="flex items-center">
-            <MessageSquare className="h-6 w-6 text-elec-yellow mr-2" />
-            <h1 className="text-xl font-bold text-white">Electrician Chat</h1>
-          </div>
-          <Link to="/electrician/toolbox-talk">
-            <Button variant="ghost" size="sm" className="text-elec-yellow">
-              <ArrowLeft className="h-4 w-4 mr-1" /> Back
-            </Button>
-          </Link>
+    <div className="flex flex-col min-h-screen bg-black">
+      {/* Header */}
+      <div className="text-center py-8">
+        <h1 className="text-4xl font-bold text-elec-yellow mb-2">Electricians Chat Room</h1>
+        <p className="text-xl text-elec-yellow/80 max-w-2xl mx-auto">
+          Connect with fellow electricians, share experiences, and discuss industry topics.
+        </p>
+      </div>
+
+      {/* Search Bar */}
+      <div className="max-w-3xl mx-auto w-full px-4 mb-6">
+        <div className="relative w-full">
+          <input
+            type="text"
+            placeholder="Search messages..."
+            className="w-full bg-[#2c2c2c] border border-elec-yellow/30 rounded-lg py-3 px-4 text-white focus:outline-none focus:border-elec-yellow"
+          />
+          <button className="absolute right-4 top-1/2 -translate-y-1/2">
+            <Search className="h-6 w-6 text-elec-yellow" />
+          </button>
         </div>
       </div>
       
-      {/* Main content area */}
-      <div className="flex-1 w-full max-w-3xl mx-auto px-3 sm:px-4 pb-20">
-        {/* Composer at top */}
-        <div className="sticky top-16 pt-4 pb-2 bg-black z-20 w-full">
+      {/* Chat composer - Simplified, we won't show this at the top */}
+      
+      {/* Message feed */}
+      <div className="flex-1 max-w-3xl mx-auto w-full px-4 pb-20">
+        {isLoading ? (
+          <div className="space-y-4">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="bg-[#2c2c2c] animate-pulse p-6 rounded-lg border border-elec-yellow/20">
+                <div className="h-4 bg-elec-gray-light/20 rounded w-1/4 mb-4"></div>
+                <div className="h-3 bg-elec-gray-light/20 rounded w-full mb-2"></div>
+                <div className="h-3 bg-elec-gray-light/20 rounded w-full mb-2"></div>
+                <div className="h-3 bg-elec-gray-light/20 rounded w-3/4"></div>
+              </div>
+            ))}
+          </div>
+        ) : messages.length > 0 ? (
+          <div className="space-y-4">
+            {messages.map(message => (
+              <ChatMessage
+                key={message.id}
+                message={message}
+                currentUserId={profile?.id}
+                onUpvote={handleUpvote}
+                onPostComment={handlePostComment}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-10 bg-[#2c2c2c] rounded-lg border border-elec-yellow/20">
+            <h3 className="text-lg font-medium mb-2 text-white">No messages yet</h3>
+            <p className="text-gray-400">
+              Be the first to start a discussion!
+            </p>
+          </div>
+        )}
+      </div>
+      
+      {/* Compose message - Fixed at bottom */}
+      <div className="sticky bottom-0 w-full bg-black py-4">
+        <div className="max-w-3xl mx-auto px-4">
           <ChatComposer onSubmit={handlePostMessage} />
-          
-          {/* Sort toggle */}
-          <div className="flex justify-between items-center my-4">
-            <div className="text-sm text-elec-yellow font-medium">
-              {sortedMessages.length} posts
-            </div>
-            <div className="flex gap-2">
-              <Button 
-                variant={sortBy === "latest" ? "default" : "outline"} 
-                size="sm"
-                onClick={() => setSortBy("latest")}
-                className={sortBy === "latest" ? "bg-elec-yellow text-elec-dark" : ""}
-              >
-                Latest
-              </Button>
-              <Button 
-                variant={sortBy === "popular" ? "default" : "outline"} 
-                size="sm"
-                onClick={() => setSortBy("popular")}
-                className={sortBy === "popular" ? "bg-elec-yellow text-elec-dark" : ""}
-              >
-                Most Liked
-              </Button>
-            </div>
-          </div>
         </div>
-        
-        {/* Message feed */}
-        <div className="w-full">
-          {isLoading ? (
-            <div className="space-y-4 mt-4">
-              {[1, 2, 3].map(i => (
-                <div key={i} className="bg-elec-gray-light/10 animate-pulse p-6 rounded-xl">
-                  <div className="h-4 bg-elec-gray-light/20 rounded w-1/4 mb-4"></div>
-                  <div className="h-3 bg-elec-gray-light/20 rounded w-full mb-2"></div>
-                  <div className="h-3 bg-elec-gray-light/20 rounded w-full mb-2"></div>
-                  <div className="h-3 bg-elec-gray-light/20 rounded w-3/4"></div>
-                </div>
-              ))}
-            </div>
-          ) : sortedMessages.length > 0 ? (
-            <div className="space-y-4 pb-20">
-              {sortedMessages.map(message => (
-                <ChatMessage
-                  key={message.id}
-                  message={message}
-                  currentUserId={profile?.id}
-                  onUpvote={handleUpvote}
-                  onPostComment={handlePostComment}
-                />
-              ))}
-              <div ref={scrollRef} />
-            </div>
-          ) : (
-            <div className="text-center py-10 mt-4 bg-elec-gray-light/5 rounded-lg border border-elec-yellow/10">
-              <MessageSquare className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-lg font-medium mb-2 text-white">No posts yet</h3>
-              <p className="text-muted-foreground">
-                Be the first to start a discussion!
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
-      
-      {/* Contest reminder - fixed at bottom */}
-      <div className="bg-elec-yellow text-elec-dark p-3 text-center text-sm font-medium sticky bottom-0 left-0 right-0 shadow-lg">
-        Most liked comment and most active participant each win a £50 voucher!
       </div>
     </div>
   );
