@@ -2,7 +2,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { BookOpen, Tool, MessageSquare, Sparkles, Brain, Heart } from 'lucide-react';
+import { BookOpen, Wrench, MessageSquare, Sparkles, Brain, Heart } from 'lucide-react';
 
 const LandingPage = () => {
   const { user } = useAuth();
@@ -56,7 +56,7 @@ const LandingPage = () => {
               description="Access comprehensive study materials, video lessons, and practice tests for apprentices and professionals."
             />
             <FeatureCard 
-              icon={Tool} 
+              icon={Wrench} 
               title="Electrician's Toolkit" 
               description="Essential calculation tools, code references, and job aids to make your work easier and more efficient."
             />
