@@ -45,8 +45,14 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
         navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
       }
     } else if (course && unit) {
-      // If we're on a section page or somewhere else, go back to the unit page
-      navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
+      // Fix for section pages: We need to navigate back to section list, not unit list
+      if (window.location.pathname.includes('/section/')) {
+        // We're on a section page, navigate to the appropriate unit content page
+        navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
+      } else {
+        // Navigate to course page as fallback
+        navigate(`/apprentice/study/eal/${course}`);
+      }
     } else {
       // Last resort fallback - just go back in history
       navigate(-1);
