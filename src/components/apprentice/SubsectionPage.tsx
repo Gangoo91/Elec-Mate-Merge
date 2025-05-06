@@ -1,9 +1,9 @@
 
 import React from "react";
 import { useParams } from "react-router-dom";
-import SubsectionNavigation from "./SubsectionNavigation";
 import { useSubsectionContent } from "@/hooks/useSubsectionContent";
 import SubsectionLearningContent from "./subsection/SubsectionLearningContent";
+import SubsectionsNavigation from "./SubsectionsNavigation";
 
 const SubsectionPage = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
@@ -44,11 +44,10 @@ const SubsectionPage = () => {
         </div>
       </div>
       
-      <SubsectionNavigation
+      <SubsectionsNavigation
         currentSubsectionId={subsectionId || ""}
         subsections={siblingSubsections}
         navigateToSubsection={navigateToSubsection}
-        parentSectionNumber={parentSectionNumber}
       />
     </div>
   );
