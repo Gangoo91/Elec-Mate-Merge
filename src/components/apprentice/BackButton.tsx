@@ -25,34 +25,17 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
     // Check if we're on a subsection page
     const isSubsectionPage = window.location.pathname.includes('/subsection/');
     
-    if (course && unit && section && isSubsectionPage) {
-      // We're on a subsection page, navigate back to the section page
-      const isHealthSafetyUnit = unit.includes('elec2-01');
-      const isElectricalTheoryUnit = unit.includes('elec2-04');
-      const isInstallationMethodsUnit = unit.includes('elec2-05a');
-      
-      if (isHealthSafetyUnit) {
-        // Navigate back to the health and safety section page
+    if (course && unit && section) {
+      if (isSubsectionPage) {
+        // We're on a subsection page, navigate back to the section page
         navigate(`/apprentice/study/eal/${course}/unit/${unit}/section/${section}`);
-      } else if (isElectricalTheoryUnit) {
-        // Navigate back to the electrical theory section page
-        navigate(`/apprentice/study/eal/${course}/unit/${unit}/section/${section}`);
-      } else if (isInstallationMethodsUnit) {
-        // Navigate back to the installation methods section page  
-        navigate(`/apprentice/study/eal/${course}/unit/${unit}/installation-method/${section}`);
       } else {
-        // Fallback to unit page
+        // We're on a section page, navigate back to the unit page
         navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
       }
     } else if (course && unit) {
-      // Fix for section pages: We need to navigate back to section list, not unit list
-      if (window.location.pathname.includes('/section/')) {
-        // We're on a section page, navigate to the appropriate unit content page
-        navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
-      } else {
-        // Navigate to course page as fallback
-        navigate(`/apprentice/study/eal/${course}`);
-      }
+      // We're on a unit page, navigate back to course
+      navigate(`/apprentice/study/eal/${course}`);
     } else if (course) {
       // If we only have a course but no unit (e.g., on the unit listing page)
       navigate(`/apprentice/study/eal/${course}`);
@@ -62,7 +45,16 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
     }
   };
 
-  const buttonText = sectionId ? "Back to Section" : (unitSlug ? "Back to Unit" : "Back to Course");
+  // Determine button text based on context
+  const getButtonText = () => {
+    if (window.location.pathname.includes('/subsection/')) {
+      return "Back to Section";
+    } else if (window.location.pathname.includes('/section/')) {
+      return "Back to Unit";
+    } else {
+      return "Back to Course";
+    }
+  };
 
   return (
     <Button 
@@ -71,7 +63,7 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
       onClick={handleBackClick}
     >
       <ArrowLeft className="h-4 w-4 flex-shrink-0" />
-      <span>{buttonText}</span>
+      <span>{getButtonText()}</span>
     </Button>
   );
 };
