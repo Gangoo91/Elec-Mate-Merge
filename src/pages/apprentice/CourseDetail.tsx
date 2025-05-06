@@ -51,25 +51,28 @@ const CourseDetail = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {ealLevel2Units.map((unit, index) => (
-          <Link 
-            key={index}
-            to={`/apprentice/study/eal/${courseSlug}/unit/${createUnitSlug(unit.code, unit.title)}`}
-            className="block h-full transition-transform hover:scale-102 duration-200"
-          >
-            <Card 
-              className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full"
+        {ealLevel2Units.map((unit, index) => {
+          const unitSlug = createUnitSlug(unit.code, unit.title);
+          return (
+            <Link 
+              key={index}
+              to={`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`}
+              className="block h-full transition-transform hover:scale-102 duration-200"
             >
-              <CardContent className="flex flex-col items-center justify-center p-6 h-full">
-                <GraduationCap className="h-8 w-8 text-elec-yellow mb-4 opacity-80" />
-                <p className="text-elec-yellow text-sm mb-2">{unit.code}</p>
-                <h3 className={`text-base sm:text-lg font-medium text-center ${isMobile ? "leading-tight" : ""}`}>
-                  {unit.title}
-                </h3>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
+              <Card 
+                className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full"
+              >
+                <CardContent className="flex flex-col items-center justify-center p-6 h-full">
+                  <GraduationCap className="h-8 w-8 text-elec-yellow mb-4 opacity-80" />
+                  <p className="text-elec-yellow text-sm mb-2">{unit.code}</p>
+                  <h3 className={`text-base sm:text-lg font-medium text-center ${isMobile ? "leading-tight" : ""}`}>
+                    {unit.title}
+                  </h3>
+                </CardContent>
+              </Card>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
