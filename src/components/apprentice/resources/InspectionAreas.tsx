@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Eye, Tool, ShieldCheck, FileText } from "lucide-react";
+import { ArrowLeft, Eye, Wrench, ShieldCheck, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const InspectionAreas = () => {
@@ -82,7 +82,7 @@ const InspectionAreas = () => {
           
           <section className="bg-elec-dark p-6 rounded-lg border border-elec-yellow/20">
             <h2 className="text-xl font-semibold text-elec-yellow mb-4 flex items-center">
-              <Tool className="mr-3 h-5 w-5" /> Tools and Equipment
+              <Wrench className="mr-3 h-5 w-5" /> Tools and Equipment
             </h2>
             <div className="space-y-4">
               <p className="text-elec-light/90">
