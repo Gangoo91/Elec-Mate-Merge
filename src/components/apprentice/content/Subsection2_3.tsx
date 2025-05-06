@@ -3,9 +3,9 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Megaphone, MessageSquare, ShieldAlert, FileText } from "lucide-react";
 import { SubsectionProps } from "./subsection1_1/types";
-import CourseContentSection from "../CourseContentSection";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Link } from "react-router-dom";
 
 const Subsection2_3 = ({ 
   subsectionId, 
@@ -15,171 +15,126 @@ const Subsection2_3 = ({
   const isMobile = useIsMobile();
 
   return (
-    <div className="space-y-6 mx-auto">
-      <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow text-center">Safety Communication Systems</h2>
+    <div className="space-y-8">
+      <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow text-center mb-6">
+        Safety Communication Systems
+      </h2>
       
-      <Accordion type="single" collapsible defaultValue="overview" className="space-y-4">
-        {/* Overview Section */}
-        <AccordionItem value="overview" className="border-none">
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg">
-            <AccordionTrigger className="px-4 py-3 hover:no-underline">
-              <div className="flex items-center">
-                <h3 className="text-lg sm:text-xl text-elec-yellow font-medium">Overview</h3>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="px-4 pb-4 pt-2">
-              <CourseContentSection
-                title="Safety Communication Systems"
-                description="Effective safety communication is vital to preventing accidents in electrical work. Clear communication ensures hazards are reported promptly and safety information reaches everyone who needs it. Communication structures should include clear reporting hierarchies, emergency communication procedures, designated safety representatives, feedback loops, and cross-team communication methods. Various communication methods should be employed, including toolbox talks, safety briefings, visual communication, digital tools, and anonymous reporting channels. Regular safety meetings with a structured format help maintain safety awareness and address emerging concerns. Communication must be inclusive, considering language needs, literacy levels, accessibility, and cultural factors."
-                keyPoints={[
-                  "Clear communication structures prevent accidents by ensuring hazards are reported promptly",
-                  "Multiple communication methods reach different people effectively",
-                  "Regular structured safety meetings maintain awareness and address concerns",
-                  "Inclusive communication considers language, literacy, and cultural factors",
-                  "Effective communication must lead to appropriate action"
-                ]}
-                icon="info"
-                subsectionId={subsectionId}
-              />
-            </AccordionContent>
+      {/* Overview Card */}
+      <Card className="bg-elec-dark/50 border border-elec-yellow/30 shadow-md hover:shadow-lg transition-shadow duration-300">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg text-elec-yellow flex items-center">
+            <ShieldAlert className="h-5 w-5 mr-2 inline" />
+            Overview
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm md:text-base mb-4">
+            Effective safety communication is vital to preventing accidents in electrical work. Clear communication ensures hazards are reported promptly and safety information reaches everyone who needs it.
+          </p>
+          
+          <div className="pl-4 border-l-2 border-elec-yellow/30 mt-4">
+            <p className="text-sm italic">Key points:</p>
+            <ul className="list-disc pl-5 mt-2 space-y-1 text-sm">
+              <li>Clear communication structures prevent accidents</li>
+              <li>Multiple communication methods reach different people effectively</li>
+              <li>Regular structured safety meetings maintain awareness</li>
+              <li>Inclusive communication considers language and cultural factors</li>
+            </ul>
           </div>
-        </AccordionItem>
-
-        {/* Communication Structures Section */}
-        <AccordionItem value="communication-structures" className="border-none">
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg">
-            <AccordionTrigger className="px-4 py-3 hover:no-underline">
-              <div className="flex items-center">
-                <MessageSquare className="h-5 w-5 mr-2 text-elec-yellow" />
-                <h3 className="text-lg sm:text-xl font-medium">Communication Structures</h3>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="px-4 pb-4 pt-2">
-              <div className="space-y-4">
-                <p className="text-sm md:text-base">
-                  Organised systems for safety information flow:
-                </p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                  <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-                    <h4 className="font-semibold text-white mb-2">Reporting Hierarchies</h4>
-                    <p className="text-sm">
-                      Clear chains of communication for different types of safety concerns. Everyone should know who to report to for various issues, and backup contacts should be established.
-                    </p>
-                  </div>
-                  
-                  <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-                    <h4 className="font-semibold text-white mb-2">Emergency Communication</h4>
-                    <p className="text-sm">
-                      Procedures for immediate response to serious hazards. These should be simple, practised regularly, and include multiple communication methods in case primary systems fail.
-                    </p>
-                  </div>
-                  
-                  <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-                    <h4 className="font-semibold text-white mb-2">Safety Representatives</h4>
-                    <p className="text-sm">
-                      Designated individuals to facilitate safety communication. They serve as points of contact for safety concerns and help ensure information flows in both directions.
-                    </p>
-                  </div>
-                  
-                  <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-                    <h4 className="font-semibold text-white mb-2">Feedback Loops</h4>
-                    <p className="text-sm">
-                      Systems to ensure reported issues are addressed and reporters informed. This maintains trust in the communication system and encourages continued reporting.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </AccordionContent>
-          </div>
-        </AccordionItem>
-
-        {/* Communication Methods Section */}
-        <AccordionItem value="communication-methods" className="border-none">
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg">
-            <AccordionTrigger className="px-4 py-3 hover:no-underline">
-              <div className="flex items-center">
-                <Megaphone className="h-5 w-5 mr-2 text-elec-yellow" />
-                <h3 className="text-lg sm:text-xl font-medium">Communication Methods</h3>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="px-4 pb-4 pt-2">
-              <div className="space-y-4">
-                <p className="text-sm md:text-base">
-                  Effective approaches to delivering safety messages:
-                </p>
-                
-                <div className="border border-elec-yellow/20 rounded-lg p-4 bg-elec-dark/30">
-                  <ul className="list-disc pl-5 space-y-2">
-                    <li>
-                      <span className="font-medium text-white">Toolbox Talks</span>
-                      <p className="text-sm mt-1">Brief, focused discussions on specific safety topics before work begins. These should be relevant to the day's tasks and current site conditions.</p>
-                    </li>
-                    <li>
-                      <span className="font-medium text-white">Safety Briefings</span>
-                      <p className="text-sm mt-1">More detailed sessions when tasks change or new hazards emerge. These provide comprehensive information about potential risks and control measures.</p>
-                    </li>
-                    <li>
-                      <span className="font-medium text-white">Visual Communication</span>
-                      <p className="text-sm mt-1">Signage, colour coding, and warning systems in work areas. Visual cues provide immediate reminders of hazards and required precautions.</p>
-                    </li>
-                    <li>
-                      <span className="font-medium text-white">Digital Tools</span>
-                      <p className="text-sm mt-1">Apps, messaging systems, and alerts for immediate hazard notification. These can reach multiple workers simultaneously and provide documentation of communication.</p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </AccordionContent>
-          </div>
-        </AccordionItem>
-
-        {/* Safety Meeting Structure */}
-        <AccordionItem value="safety-meeting" className="border-none">
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg">
-            <AccordionTrigger className="px-4 py-3 hover:no-underline">
-              <div className="flex items-center">
-                <ShieldAlert className="h-5 w-5 mr-2 text-elec-yellow" />
-                <h3 className="text-lg sm:text-xl font-medium">Safety Meeting Structure</h3>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="px-4 pb-4 pt-2">
-              <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-                    <h4 className="font-semibold text-white mb-2">Meeting Components:</h4>
-                    <ul className="list-disc pl-5 space-y-1 text-sm">
-                      <li>Regular schedule (weekly or bi-weekly)</li>
-                      <li>Clear agenda covering key safety topics</li>
-                      <li>Review of recent incidents or near-misses</li>
-                      <li>Discussion of upcoming work and associated risks</li>
-                      <li>Time for questions and open discussion</li>
-                    </ul>
-                  </div>
-                  
-                  <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-                    <h4 className="font-semibold text-white mb-2">Inclusive Communication:</h4>
-                    <ul className="list-disc pl-5 space-y-1 text-sm">
-                      <li>Materials in languages understood by all workers</li>
-                      <li>Visual aids for those with limited reading ability</li>
-                      <li>Accessibility considerations for people with disabilities</li>
-                      <li>Cultural sensitivity in communication approaches</li>
-                      <li>Verification that messages have been understood</li>
-                    </ul>
-                  </div>
-                </div>
-                
-                <div className="p-4 bg-elec-dark/70 rounded-lg border border-elec-yellow/20 text-sm">
-                  <p className="font-medium mb-1 text-elec-yellow">Important Note:</p>
-                  <p>Communication is only effective if it leads to action. Always include clear instructions about what workers should do with the information provided, and check that appropriate actions are being taken. Create a culture where safety communication is valued and acted upon at all levels of the organisation.</p>
-                </div>
-              </div>
-            </AccordionContent>
-          </div>
-        </AccordionItem>
-      </Accordion>
+        </CardContent>
+      </Card>
       
-      <div className="flex justify-center pt-4 border-t border-elec-yellow/20">
+      {/* Content Cards Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Communication Structures Card */}
+        <Card className="bg-elec-dark/50 border border-elec-yellow/30 shadow-md hover:shadow-lg transition-shadow duration-300">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg text-elec-yellow flex items-center">
+              <MessageSquare className="h-5 w-5 mr-2 inline" />
+              Communication Structures
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm md:text-base mb-4">
+              Organised systems for safety information flow include reporting hierarchies, emergency procedures, safety representatives, and feedback loops.
+            </p>
+            <Link to={`/apprentice/resources/communication-structures`} className="text-elec-yellow hover:text-elec-yellow/80 text-sm font-medium underline underline-offset-4 mt-2 inline-block">
+              Learn more about communication structures →
+            </Link>
+          </CardContent>
+        </Card>
+
+        {/* Communication Methods Card */}
+        <Card className="bg-elec-dark/50 border border-elec-yellow/30 shadow-md hover:shadow-lg transition-shadow duration-300">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg text-elec-yellow flex items-center">
+              <Megaphone className="h-5 w-5 mr-2 inline" />
+              Communication Methods
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm md:text-base mb-4">
+              Effective approaches to delivering safety messages include toolbox talks, safety briefings, visual communication, and digital tools.
+            </p>
+            <Link to={`/apprentice/resources/communication-methods`} className="text-elec-yellow hover:text-elec-yellow/80 text-sm font-medium underline underline-offset-4 mt-2 inline-block">
+              Explore communication methods →
+            </Link>
+          </CardContent>
+        </Card>
+
+        {/* Safety Meeting Structure Card */}
+        <Card className="bg-elec-dark/50 border border-elec-yellow/30 shadow-md hover:shadow-lg transition-shadow duration-300 md:col-span-2">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-lg text-elec-yellow flex items-center">
+              <FileText className="h-5 w-5 mr-2 inline" />
+              Safety Meeting Structure
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <h4 className="font-medium text-white mb-2">Meeting Components:</h4>
+                <ul className="list-disc pl-5 space-y-1 text-sm">
+                  <li>Regular schedule (weekly or bi-weekly)</li>
+                  <li>Clear agenda covering key safety topics</li>
+                  <li>Review of recent incidents or near-misses</li>
+                  <li>Discussion of upcoming work and associated risks</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="font-medium text-white mb-2">Inclusive Communication:</h4>
+                <ul className="list-disc pl-5 space-y-1 text-sm">
+                  <li>Materials in languages understood by all workers</li>
+                  <li>Visual aids for those with limited reading ability</li>
+                  <li>Cultural sensitivity in communication approaches</li>
+                  <li>Verification that messages have been understood</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="mt-4">
+              <Link to={`/apprentice/resources/safety-meetings`} className="text-elec-yellow hover:text-elec-yellow/80 text-sm font-medium underline underline-offset-4 inline-block">
+                View complete safety meeting guide →
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+      
+      {/* Important Note Card */}
+      <Card className="bg-elec-dark/70 border border-elec-yellow/40 shadow-md">
+        <CardContent className="pt-4">
+          <p className="font-medium mb-2 text-elec-yellow">Important Note:</p>
+          <p className="text-sm">
+            Communication is only effective if it leads to action. Always include clear instructions about what workers should do with the information provided, and check that appropriate actions are being taken. Create a culture where safety communication is valued and acted upon at all levels of the organisation.
+          </p>
+        </CardContent>
+      </Card>
+      
+      {/* Mark as Complete Button */}
+      <div className="flex justify-center pt-6 border-t border-elec-yellow/20">
         <Button
           variant="study"
           className={`${isCompleted ? 'bg-green-600/20 border-green-500/50 text-green-400' : 'hover:bg-elec-yellow hover:text-elec-dark'}`}
