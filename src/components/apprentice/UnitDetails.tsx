@@ -1,25 +1,11 @@
 
-import { useState, useEffect } from "react";
-import SectionBox from "@/components/apprentice/SectionBox";
-import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
-import { 
-  electricalTheorySection, 
-  basicElectricalTheorySection,
-  technicalInformationSection,
-  wiringSectionsSection,
-  servicePositionSection,
-  lightingCircuitsSection,
-  ringRadialCircuitsSection,
-  circuitRequirementsSection,
-  earthingBondingSection,
-  overcurrentProtectionSection,
-  circuitDesignSection
-} from "@/data/electricalTheory";
-import { installationMethodsSection } from "@/data/electricalTheory/section-installation-methods";
-import { craftSkillsContent } from "@/data/craftSkills/index";  // Import craft skills content
-import type { CourseUnit } from "@/data/courseUnits";
-import { useToast } from "@/components/ui/use-toast";
 import { useParams } from "react-router-dom";
+import type { CourseUnit } from "@/data/courseUnits";
+import HealthSafetyUnit from "./units/HealthSafetyUnit";
+import ElectricalTheoryUnit from "./units/ElectricalTheoryUnit";
+import InstallationMethodsUnit from "./units/InstallationMethodsUnit";
+import CraftSkillsUnit from "./units/CraftSkillsUnit";
+import ElectricalScienceUnit from "./units/ElectricalScienceUnit";
 
 interface UnitDetailsProps {
   unit: CourseUnit;
@@ -34,8 +20,6 @@ const UnitDetails = ({
   completedResources,
   onToggleResourceComplete 
 }: UnitDetailsProps) => {
-  const { toast } = useToast();
-  const [quizCompleted, setQuizCompleted] = useState(false);
   const { courseSlug } = useParams();
   
   // Determine which content to show based on unit code
@@ -45,347 +29,41 @@ const UnitDetails = ({
   const showCraftSkillsContent = unit.code === "ELEC2/05B";
   const showScienceContent = unit.code === "ELEC2/08";
 
-  // Load completion status
-  useEffect(() => {
-    const storedQuizStatus = localStorage.getItem(`unit_${unit.code}_quiz_completed`);
-    if (storedQuizStatus === 'true') {
-      setQuizCompleted(true);
-    }
-  }, [unit.code]);
-
-  const handleSectionClick = () => {
-    // Report study activity when opening a section
-    onResourceClick('learning');
-  };
-
-  // Helper function to create section boxes from section data
-  const createSectionBoxes = (section: any) => {
-    if (!section || !section.content || !section.content.subsections) return null;
-    
-    return section.content.subsections.map((subsection: any) => (
-      <SectionBox
-        key={subsection.id}
-        sectionNumber={subsection.id}
-        title={subsection.title}
-        isExpanded={false}
-        onClick={handleSectionClick}
-        content={<></>}
-        unitCode={unit.code}
-        courseSlug={courseSlug}
-      />
-    ));
-  };
-
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Health and Safety Content - Only for ELEC2/01 */}
       {showHealthSafetyContent && (
-        <div className="space-y-6">
-          {healthAndSafetyContent.map((section) => (
-            <SectionBox
-              key={section.sectionNumber}
-              sectionNumber={section.sectionNumber}
-              title={section.title}
-              isExpanded={false}
-              onClick={handleSectionClick}
-              content={<></>}
-              unitCode={unit.code}
-              courseSlug={courseSlug}
-            />
-          ))}
-          
-          {/* Quiz Section */}
-          <SectionBox
-            sectionNumber="Q"
-            title="Health & Safety Assessment Quiz"
-            isExpanded={false}
-            onClick={() => {
-              handleSectionClick();
-              onResourceClick('assessment');
-            }}
-            content={<></>}
-            isCompleted={quizCompleted}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-        </div>
+        <HealthSafetyUnit 
+          unitCode={unit.code} 
+          onResourceClick={onResourceClick} 
+        />
       )}
 
-      {/* Electrical Theory Content - Only for ELEC2/04 */}
       {showElectricalTheoryContent && (
-        <div className="space-y-6">
-          {/* Main section */}
-          <SectionBox
-            key={electricalTheorySection.sectionNumber}
-            sectionNumber={electricalTheorySection.sectionNumber}
-            title={electricalTheorySection.title}
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          
-          {/* Individual topic sections */}
-          <SectionBox
-            key={basicElectricalTheorySection.sectionNumber}
-            sectionNumber={basicElectricalTheorySection.sectionNumber}
-            title={basicElectricalTheorySection.title}
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          
-          <SectionBox
-            key={technicalInformationSection.sectionNumber}
-            sectionNumber={technicalInformationSection.sectionNumber}
-            title={technicalInformationSection.title}
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          
-          <SectionBox
-            key={wiringSectionsSection.sectionNumber}
-            sectionNumber={wiringSectionsSection.sectionNumber}
-            title={wiringSectionsSection.title}
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          
-          <SectionBox
-            key={servicePositionSection.sectionNumber}
-            sectionNumber={servicePositionSection.sectionNumber}
-            title={servicePositionSection.title}
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          
-          <SectionBox
-            key={lightingCircuitsSection.sectionNumber}
-            sectionNumber={lightingCircuitsSection.sectionNumber}
-            title={lightingCircuitsSection.title}
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          
-          <SectionBox
-            key={ringRadialCircuitsSection.sectionNumber}
-            sectionNumber={ringRadialCircuitsSection.sectionNumber}
-            title={ringRadialCircuitsSection.title}
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          
-          <SectionBox
-            key={circuitRequirementsSection.sectionNumber}
-            sectionNumber={circuitRequirementsSection.sectionNumber}
-            title={circuitRequirementsSection.title}
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          
-          <SectionBox
-            key={earthingBondingSection.sectionNumber}
-            sectionNumber={earthingBondingSection.sectionNumber}
-            title={earthingBondingSection.title}
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          
-          <SectionBox
-            key={overcurrentProtectionSection.sectionNumber}
-            sectionNumber={overcurrentProtectionSection.sectionNumber}
-            title={overcurrentProtectionSection.title}
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          
-          <SectionBox
-            key={circuitDesignSection.sectionNumber}
-            sectionNumber={circuitDesignSection.sectionNumber}
-            title={circuitDesignSection.title}
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          
-          {/* Quiz Section */}
-          <SectionBox
-            sectionNumber="Q"
-            title="Electrical Theory Assessment Quiz"
-            isExpanded={false}
-            onClick={() => {
-              handleSectionClick();
-              onResourceClick('assessment');
-            }}
-            content={<></>}
-            isCompleted={quizCompleted}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-        </div>
+        <ElectricalTheoryUnit 
+          unitCode={unit.code} 
+          onResourceClick={onResourceClick} 
+        />
       )}
 
-      {/* Installation Methods Content - Only for ELEC2/05A */}
       {showInstallationMethodsContent && (
-        <div className="space-y-6">
-          <SectionBox
-            key={installationMethodsSection.sectionNumber}
-            sectionNumber={installationMethodsSection.sectionNumber}
-            title={installationMethodsSection.title}
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          
-          {/* Render subsections */}
-          {createSectionBoxes(installationMethodsSection)}
-          
-          {/* Quiz Section */}
-          <SectionBox
-            sectionNumber="Q"
-            title="Installation Methods Assessment Quiz"
-            isExpanded={false}
-            onClick={() => {
-              handleSectionClick();
-              onResourceClick('assessment');
-            }}
-            content={<></>}
-            isCompleted={quizCompleted}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-        </div>
+        <InstallationMethodsUnit 
+          unitCode={unit.code} 
+          onResourceClick={onResourceClick} 
+        />
       )}
 
-      {/* Craft Skills Content - Only for ELEC2/05B */}
       {showCraftSkillsContent && (
-        <div className="space-y-6">
-          {/* Display all craft skills sections */}
-          {craftSkillsContent.map((section) => (
-            <SectionBox
-              key={section.sectionNumber}
-              sectionNumber={section.sectionNumber}
-              title={section.title}
-              isExpanded={false}
-              onClick={handleSectionClick}
-              content={<></>}
-              unitCode={unit.code}
-              courseSlug={courseSlug}
-            />
-          ))}
-          
-          {/* Quiz Section */}
-          <SectionBox
-            sectionNumber="Q"
-            title="Electrical Installation Craft Skills Quiz"
-            isExpanded={false}
-            onClick={() => {
-              handleSectionClick();
-              onResourceClick('assessment');
-            }}
-            content={<></>}
-            isCompleted={quizCompleted}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-        </div>
+        <CraftSkillsUnit 
+          unitCode={unit.code} 
+          onResourceClick={onResourceClick} 
+        />
       )}
 
-      {/* Science and Principles Content - Only for ELEC2/08 */}
       {showScienceContent && (
-        <div className="space-y-6">
-          <SectionBox
-            sectionNumber="1"
-            title="Fundamental Electrical Concepts"
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          <SectionBox
-            sectionNumber="2"
-            title="Electrical Circuits and Ohm's Law"
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          <SectionBox
-            sectionNumber="3"
-            title="Power and Energy in Electrical Systems"
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          <SectionBox
-            sectionNumber="4"
-            title="Magnetism and Electromagnetism"
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          <SectionBox
-            sectionNumber="5"
-            title="AC Theory and Principles"
-            isExpanded={false}
-            onClick={handleSectionClick}
-            content={<></>}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-          
-          {/* Quiz Section */}
-          <SectionBox
-            sectionNumber="Q"
-            title="Electrical Science Assessment Quiz"
-            isExpanded={false}
-            onClick={() => {
-              handleSectionClick();
-              onResourceClick('assessment');
-            }}
-            content={<></>}
-            isCompleted={quizCompleted}
-            unitCode={unit.code}
-            courseSlug={courseSlug}
-          />
-        </div>
+        <ElectricalScienceUnit 
+          unitCode={unit.code} 
+          onResourceClick={onResourceClick} 
+        />
       )}
     </div>
   );
