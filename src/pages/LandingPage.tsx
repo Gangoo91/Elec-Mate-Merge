@@ -38,13 +38,6 @@ const LandingPage = () => {
               </>
             )}
           </div>
-          <div className="mt-6">
-            <Link to="/app-overview">
-              <Button variant="ghost" className="text-elec-yellow hover:bg-elec-yellow/10">
-                View App Overview
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
       

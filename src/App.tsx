@@ -45,7 +45,6 @@ import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import Messenger from "./pages/Messenger";
 import Index from "./pages/Index";
-import AppOverview from "./pages/AppOverview";
 
 // Component imports
 import QuizContent from "./components/apprentice/QuizContent";
@@ -77,7 +76,6 @@ function App() {
               {/* Public Routes */}
               <Route path="/" element={<LandingPage />} />
               <Route path="/index" element={<Index />} />
-              <Route path="/app-overview" element={<AppOverview />} />
               <Route path="/auth/signin" element={<SignIn />} />
               <Route path="/auth/signup" element={<SignUp />} />
 
