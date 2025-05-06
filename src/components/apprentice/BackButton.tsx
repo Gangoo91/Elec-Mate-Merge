@@ -27,10 +27,14 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
     
     if (course && unit && section && isSubsectionPage) {
       // We're on a subsection page, navigate back to the section page
-      const isElectricalTheoryUnit = unit.includes('elec2-01') || unit.includes('elec2-04');
+      const isHealthSafetyUnit = unit.includes('elec2-01');
+      const isElectricalTheoryUnit = unit.includes('elec2-04');
       const isInstallationMethodsUnit = unit.includes('elec2-05a');
       
-      if (isElectricalTheoryUnit) {
+      if (isHealthSafetyUnit) {
+        // Navigate back to the health and safety section page
+        navigate(`/apprentice/study/eal/${course}/unit/${unit}/section/${section}`);
+      } else if (isElectricalTheoryUnit) {
         // Navigate back to the electrical theory section page
         navigate(`/apprentice/study/eal/${course}/unit/${unit}/section/${section}`);
       } else if (isInstallationMethodsUnit) {
