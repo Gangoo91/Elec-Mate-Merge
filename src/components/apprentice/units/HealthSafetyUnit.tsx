@@ -1,9 +1,10 @@
+
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { CheckCircle, BookOpen, Shield, Users } from "lucide-react";
-import { Link } from "react-router-dom";
 import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
+import BackButton from "../BackButton";
 
 interface HealthSafetyUnitProps {
   unitCode: string;
@@ -104,6 +105,11 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
 
   return (
     <div className="space-y-6 animate-fade-in">
+      {/* Add Back Button at the top */}
+      <div className="mb-6">
+        <BackButton courseSlug={courseSlug} />
+      </div>
+      
       {/* Display Section 1 specific content if we're on section 1 */}
       {sectionId === "1" && renderSection1Content()}
       

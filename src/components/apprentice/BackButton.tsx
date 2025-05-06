@@ -53,11 +53,16 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
         // Navigate to course page as fallback
         navigate(`/apprentice/study/eal/${course}`);
       }
+    } else if (course) {
+      // If we only have a course but no unit (e.g., on the unit listing page)
+      navigate(`/apprentice/study/eal/${course}`);
     } else {
       // Last resort fallback - just go back in history
       navigate(-1);
     }
   };
+
+  const buttonText = sectionId ? "Back to Section" : (unitSlug ? "Back to Unit" : "Back to Course");
 
   return (
     <Button 
@@ -66,7 +71,7 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
       onClick={handleBackClick}
     >
       <ArrowLeft className="h-4 w-4 flex-shrink-0" />
-      <span>Back to Section</span>
+      <span>{buttonText}</span>
     </Button>
   );
 };
