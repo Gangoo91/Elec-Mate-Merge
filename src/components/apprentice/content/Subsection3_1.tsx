@@ -1,211 +1,174 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Zap, Shield, AlertOctagon } from "lucide-react";
+import { CheckCircle, ShieldAlert, Zap, List } from "lucide-react";
 import { SubsectionProps } from "./subsection1_1/types";
-import CourseContentSection from "../CourseContentSection";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { useIsMobile } from "@/hooks/use-mobile";
 
-const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
-  const isMobile = useIsMobile();
-
+const Subsection3_1 = ({ 
+  subsectionId, 
+  isCompleted, 
+  markAsComplete 
+}: SubsectionProps) => {
   return (
-    <div className="space-y-6 mx-auto">
-      <h2 className="text-xl sm:text-2xl font-bold text-elec-yellow text-center">Electrical Safety Fundamentals</h2>
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold text-elec-yellow">Safe Isolation Procedures</h2>
       
-      <Accordion type="single" collapsible defaultValue="overview" className="space-y-4">
-        {/* Overview Section */}
-        <AccordionItem value="overview" className="border-none">
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg">
-            <AccordionTrigger className="px-4 py-3 hover:no-underline">
-              <div className="flex items-center">
-                <h3 className="text-lg sm:text-xl text-elec-yellow font-medium">Overview</h3>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="px-4 pb-4 pt-2">
-              <CourseContentSection
-                title="Electrical Safety Fundamentals"
-                description="Electrical safety is fundamental to preventing accidents in electrical work. Understanding the dangers posed by electricity and taking appropriate precautions is essential for all electrical workers. The Electricity at Work Regulations 1989 place legal responsibilities on both employers and individuals to ensure competence for electrical work."
-                keyPoints={[
-                  "Electric shock can cause effects ranging from tingling to death, with 50mA potentially fatal",
-                  "Safe isolation procedures must be followed without exception before working on electrical equipment",
-                  "Electrical fires can result from overheating, arcing, or ignition of combustible materials",
-                  "The Electricity at Work Regulations 1989 require competence for all electrical work",
-                  "Appropriate PPE and insulated tools must be used for electrical work"
-                ]}
-                icon="shield-alert"
-                subsectionId={subsectionId}
-              />
-            </AccordionContent>
+      <div className="space-y-6">
+        <p className="text-elec-light/80">
+          Safe isolation is one of the most critical safety procedures in electrical work. It ensures that electrical equipment 
+          or circuits are made dead before work begins, preventing the risk of electric shock, burns, or fatalities. 
+          The essential steps of safe isolation must be followed without exception:
+        </p>
+        
+        <div className="bg-elec-dark/50 border-l-4 border-amber-500 rounded-lg p-6 space-y-4">
+          <h3 className="text-xl font-semibold text-amber-400 flex items-center">
+            <ShieldAlert className="mr-2 h-5 w-5" /> The Essential Steps of Safe Isolation
+          </h3>
+          
+          <ol className="list-decimal pl-6 space-y-4 text-elec-light/80">
+            <li>
+              <span className="font-semibold text-white">Identify</span> 
+              <p className="mt-1">Correctly identify the circuit or equipment to be worked on, using diagrams, labels or drawings.</p>
+            </li>
+            <li>
+              <span className="font-semibold text-white">Isolate</span> 
+              <p className="mt-1">Switch off and securely lock the appropriate isolation device. This might be a circuit breaker, fused switch disconnector or plug.</p>
+            </li>
+            <li>
+              <span className="font-semibold text-white">Prove the voltage indicator</span> 
+              <p className="mt-1">Test your voltage indication device on a known live source to ensure it's working correctly.</p>
+            </li>
+            <li>
+              <span className="font-semibold text-white">Test dead</span> 
+              <p className="mt-1">Use the proven voltage indicator to verify the circuit or equipment is dead at all possible points of supply.</p>
+            </li>
+            <li>
+              <span className="font-semibold text-white">Reprove the voltage indicator</span> 
+              <p className="mt-1">Test your voltage indication device again on a known live source to confirm it was working during your test.</p>
+            </li>
+            <li>
+              <span className="font-semibold text-white">Lock off and apply warning labels</span> 
+              <p className="mt-1">Secure isolation devices with locks and place appropriate warning notices to prevent reconnection.</p>
+            </li>
+            <li>
+              <span className="font-semibold text-white">Issue permit-to-work (if required)</span> 
+              <p className="mt-1">For complex systems or where multiple parties are involved, issue formal documentation.</p>
+            </li>
+          </ol>
+        </div>
+        
+        <div className="bg-elec-dark/60 border border-elec-yellow/20 rounded-lg p-6">
+          <h3 className="text-xl font-semibold text-elec-yellow flex items-center mb-4">
+            <Zap className="mr-2 h-5 w-5" /> Isolation Equipment
+          </h3>
+          
+          <p className="text-elec-light/80 mb-4">
+            Proper isolation equipment includes:
+          </p>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-semibold text-white">Voltage Indication Devices</h4>
+              <ul className="list-disc pl-6 text-elec-light/80 mt-1">
+                <li>Must comply with GS38 requirements</li>
+                <li>Suitable for the voltage range being tested</li>
+                <li>Incorporate built-in test functionality</li>
+                <li>Properly insulated probes with finger guards</li>
+                <li>Regularly calibrated and inspected before use</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold text-white">Locking Off Equipment</h4>
+              <ul className="list-disc pl-6 text-elec-light/80 mt-1">
+                <li>MCB lock-off devices</li>
+                <li>Hasp and staple locks</li>
+                <li>Padlocks with unique keys</li>
+                <li>Circuit breaker locking kits</li>
+                <li>Multi-lock hasps for group isolation</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold text-white">Warning Notices</h4>
+              <ul className="list-disc pl-6 text-elec-light/80 mt-1">
+                <li>"Do Not Switch On" signs</li>
+                <li>"Danger - Work in Progress" notices</li>
+                <li>"Men at Work" warnings</li>
+                <li>Custom signs with contact information</li>
+                <li>Lockout tags attached to locks</li>
+              </ul>
+            </div>
           </div>
-        </AccordionItem>
-
-        {/* Electrical Hazards Section */}
-        <AccordionItem value="hazards" className="border-none">
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg">
-            <AccordionTrigger className="px-4 py-3 hover:no-underline">
-              <div className="flex items-center">
-                <Zap className="h-5 w-5 mr-2 text-elec-yellow" />
-                <h3 className="text-lg sm:text-xl font-medium">Electrical Hazards</h3>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="px-4 pb-4 pt-2">
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-semibold">Electric Shock</h4>
-                  <ul className="list-disc pl-5 space-y-1 mt-2">
-                    <li>Current passing through the body</li>
-                    <li>Effects range from tingling sensation to death</li>
-                    <li>As little as 50mA can be fatal</li>
-                    <li>Path through the heart is most dangerous</li>
-                    <li>Wet conditions increase severity</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold mt-3">Electrical Fire and Burns</h4>
-                  <ul className="list-disc pl-5 space-y-1 mt-2">
-                    <li>Thermal burns from heated equipment</li>
-                    <li>Arc flash burns from electrical explosions</li>
-                    <li>Fires from ignition of combustible materials</li>
-                    <li>Explosions in flammable atmospheres</li>
-                    <li>Secondary fires from damaged equipment</li>
-                  </ul>
-                </div>
-                
-                <div className="mt-3 pt-3 border-t border-elec-yellow/20">
-                  <h4 className="font-semibold text-elec-yellow mb-2">Danger Statistics:</h4>
-                  <ul className="list-disc pl-5 space-y-1">
-                    <li>Approximately 1000 electrical accidents at work annually in the UK</li>
-                    <li>Around 30 people die from electrical accidents each year</li>
-                    <li>Electricians are 4x more likely to be injured at work</li>
-                    <li>Most common sources: faulty plugs, sockets and wiring</li>
-                    <li>Improper isolation procedures are a leading cause</li>
-                  </ul>
-                </div>
-              </div>
-            </AccordionContent>
+        </div>
+        
+        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6">
+          <h3 className="text-xl font-semibold text-elec-yellow flex items-center mb-4">
+            <List className="mr-2 h-5 w-5" /> Special Considerations
+          </h3>
+          
+          <div className="space-y-4">
+            <div>
+              <h4 className="font-semibold text-white">Multiple Points of Supply</h4>
+              <p className="text-elec-light/80 mt-1">
+                Some circuits or equipment may have multiple sources of electrical energy:
+              </p>
+              <ul className="list-disc pl-6 text-elec-light/80 mt-2">
+                <li>Backup generators or UPS systems</li>
+                <li>Solar PV or other embedded generation</li>
+                <li>Dual supply arrangements</li>
+                <li>Voltage transformers</li>
+                <li>Capacitors that may hold charge</li>
+              </ul>
+              <p className="text-elec-light/80 mt-2">
+                All potential sources must be identified and isolated before work begins.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold text-white">Proving Units</h4>
+              <p className="text-elec-light/80 mt-1">
+                When a known live source is not available for proving your voltage indicator:
+              </p>
+              <ul className="list-disc pl-6 text-elec-light/80 mt-2">
+                <li>Use a dedicated proving unit that generates a suitable test voltage</li>
+                <li>Follow the same procedure: prove, test, reprove</li>
+                <li>Ensure the proving unit is within calibration</li>
+                <li>Check batteries are adequately charged</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold text-white">Remote or Concealed Equipment</h4>
+              <p className="text-elec-light/80 mt-1">
+                For equipment where isolation points may be remote or accessible to others:
+              </p>
+              <ul className="list-disc pl-6 text-elec-light/80 mt-2">
+                <li>Use additional locks and warning notices at all access points</li>
+                <li>Consider using barriers to prevent access to isolated areas</li>
+                <li>Implement a formal permit-to-work system</li>
+                <li>Ensure clear communication between all affected parties</li>
+              </ul>
+            </div>
           </div>
-        </AccordionItem>
-
-        {/* Safe Isolation Section */}
-        <AccordionItem value="isolation" className="border-none">
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg">
-            <AccordionTrigger className="px-4 py-3 hover:no-underline">
-              <div className="flex items-center">
-                <Shield className="h-5 w-5 mr-2 text-elec-yellow" />
-                <h3 className="text-lg sm:text-xl font-medium">Safe Isolation</h3>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="px-4 pb-4 pt-2">
-              <div className="text-center sm:text-left">
-                <p>The essential steps of safe isolation must be followed without exception:</p>
-                
-                <ol className="list-decimal pl-5 space-y-1 mt-3 mx-auto text-left max-w-md">
-                  <li><span className="font-medium">Identify</span> - Correctly identify the circuit or equipment</li>
-                  <li><span className="font-medium">Isolate</span> - Switch off and lock the isolation device</li>
-                  <li><span className="font-medium">Prove the tester</span> - Test your voltage indicator</li>
-                  <li><span className="font-medium">Test dead</span> - Verify the circuit or equipment is dead</li>
-                  <li><span className="font-medium">Reprove the tester</span> - Test your voltage indicator again</li>
-                  <li><span className="font-medium">Lock off and tag</span> - Apply locks and warning notices</li>
-                  <li><span className="font-medium">Issue permit</span> - For complex systems, issue a permit-to-work</li>
-                </ol>
-                
-                <h4 className="font-semibold mt-4 text-left">Working Safely</h4>
-                <ul className="list-disc pl-5 space-y-1 mt-2 mx-auto text-left max-w-md">
-                  <li>Never work on live equipment (unless justified)</li>
-                  <li>Use the correct tools and equipment</li>
-                  <li>Wear appropriate PPE</li>
-                  <li>Maintain good housekeeping</li>
-                  <li>Follow safe systems of work</li>
-                </ul>
-                
-                <div className="mt-4 pt-3 border-t border-elec-yellow/20 text-left">
-                  <h4 className="font-semibold text-elec-yellow mb-2">Essential Safety Equipment:</h4>
-                  <ul className="list-disc pl-5 space-y-1 mx-auto text-left max-w-md">
-                    <li>Approved voltage indicator (test lamp or meter)</li>
-                    <li>Proving unit for testing the indicator</li>
-                    <li>Locking off devices and padlocks</li>
-                    <li>Warning signs and barriers</li>
-                    <li>Insulated tools and protective equipment</li>
-                  </ul>
-                </div>
-              </div>
-            </AccordionContent>
+          
+          <div className="bg-amber-900/20 border-l-4 border-amber-500 p-4 mt-6 rounded-r-lg">
+            <p className="text-amber-400 font-semibold">IMPORTANT:</p>
+            <p className="text-elec-light/80 mt-1">
+              Never work on live electrical systems unless it is unavoidable, properly justified and 
+              authorised through risk assessment. The Electricity at Work Regulations 1989 require that 
+              work on or near live conductors should not be undertaken unless:
+            </p>
+            <ul className="list-disc pl-6 text-elec-light/80 mt-2">
+              <li>It is unreasonable for the equipment to be dead</li>
+              <li>It is reasonable for the work to be done live</li>
+              <li>Suitable precautions are taken to prevent injury</li>
+            </ul>
           </div>
-        </AccordionItem>
-
-        {/* Safety Legislation Section */}
-        <AccordionItem value="legislation" className="border-none">
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg">
-            <AccordionTrigger className="px-4 py-3 hover:no-underline">
-              <div className="flex items-center">
-                <AlertOctagon className="h-5 w-5 mr-2 text-elec-yellow" />
-                <h3 className="text-lg sm:text-xl font-medium">Safety Legislation</h3>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="px-4 pb-4 pt-2">
-              <div className="text-center sm:text-left">
-                <p>Key legislation that governs electrical safety in the workplace:</p>
-                
-                <div className="mt-3 space-y-3">
-                  <div>
-                    <h4 className="font-semibold text-white">Primary Legislation</h4>
-                    <ul className="list-disc pl-5 space-y-2 mt-2 mx-auto text-left max-w-md">
-                      <li>
-                        <span className="font-medium">Health and Safety at Work Act 1974</span>
-                        <p className="text-sm mt-1">Overarching duty to ensure safety of employees and others</p>
-                      </li>
-                      <li>
-                        <span className="font-medium">Electricity at Work Regulations 1989</span>
-                        <p className="text-sm mt-1">Specific requirements for electrical safety</p>
-                      </li>
-                      <li>
-                        <span className="font-medium">Management of Health and Safety at Work Regulations 1999</span>
-                        <p className="text-sm mt-1">Requirements for risk assessment and management</p>
-                      </li>
-                      <li>
-                        <span className="font-medium">Provision and Use of Work Equipment Regulations 1998</span>
-                        <p className="text-sm mt-1">Requirements for electrical equipment safety</p>
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div className="mt-3">
-                    <h4 className="font-semibold text-white">Guidance and Standards</h4>
-                    <ul className="list-disc pl-5 space-y-2 mt-2 mx-auto text-left max-w-md">
-                      <li>
-                        <span className="font-medium">BS 7671 (IET Wiring Regulations)</span>
-                        <p className="text-sm mt-1">Technical standard for electrical installations</p>
-                      </li>
-                      <li>
-                        <span className="font-medium">HSE Guidance Notes</span>
-                        <p className="text-sm mt-1">HSG85, HSG230, INDG354 for electrical safety</p>
-                      </li>
-                      <li>
-                        <span className="font-medium">ENA publications</span>
-                        <p className="text-sm mt-1">Guidance for working on distribution networks</p>
-                      </li>
-                      <li>
-                        <span className="font-medium">Employer safety policies</span>
-                        <p className="text-sm mt-1">Company-specific rules and procedures</p>
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div className="mt-4 p-3 bg-elec-dark/70 rounded-lg text-sm mx-auto max-w-md">
-                    <p className="font-medium mb-1 text-elec-yellow">Competence Requirement:</p>
-                    <p>Regulation 16 of the Electricity at Work Regulations 1989 requires that no person shall engage in work that requires technical knowledge or experience to prevent danger unless they have that knowledge or experience, or are under appropriate supervision.</p>
-                  </div>
-                </div>
-              </div>
-            </AccordionContent>
-          </div>
-        </AccordionItem>
-      </Accordion>
+        </div>
+      </div>
       
-      <div className="flex justify-center pt-4 border-t border-elec-yellow/20">
+      <div className="flex justify-end pt-6 border-t border-elec-yellow/20">
         <Button
           variant="study"
           className={`${isCompleted ? 'bg-green-600/20 border-green-500/50 text-green-400' : 'hover:bg-elec-yellow hover:text-elec-dark'}`}
