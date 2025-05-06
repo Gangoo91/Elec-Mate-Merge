@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import SectionBox from "@/components/apprentice/SectionBox";
 import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
@@ -15,7 +16,6 @@ import {
   circuitDesignSection
 } from "@/data/electricalTheory";
 import { installationMethodsSection } from "@/data/electricalTheory/section-installation-methods";
-import { installationMethodsContent } from "@/data/installationMethods/index";
 import { craftSkillsContent } from "@/data/craftSkills/index";  // Import craft skills content
 import type { CourseUnit } from "@/data/courseUnits";
 import { useToast } from "@/components/ui/use-toast";
@@ -78,10 +78,10 @@ const UnitDetails = ({
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Health and Safety Content - Only for ELEC2/01 - NOW SHOWING INSTALLATION METHODS */}
+      {/* Health and Safety Content - Only for ELEC2/01 */}
       {showHealthSafetyContent && (
         <div className="space-y-6">
-          {installationMethodsContent.map((section) => (
+          {healthAndSafetyContent.map((section) => (
             <SectionBox
               key={section.sectionNumber}
               sectionNumber={section.sectionNumber}
@@ -111,7 +111,7 @@ const UnitDetails = ({
         </div>
       )}
 
-      {/* Electrical Theory Content - Only for ELEC2/04 - UNCHANGED */}
+      {/* Electrical Theory Content - Only for ELEC2/04 */}
       {showElectricalTheoryContent && (
         <div className="space-y-6">
           {/* Main section */}
@@ -254,21 +254,22 @@ const UnitDetails = ({
         </div>
       )}
 
-      {/* Installation Methods Content - Only for ELEC2/05A - NOW SHOWING HEALTH & SAFETY */}
+      {/* Installation Methods Content - Only for ELEC2/05A */}
       {showInstallationMethodsContent && (
         <div className="space-y-6">
-          {healthAndSafetyContent.map((section) => (
-            <SectionBox
-              key={section.sectionNumber}
-              sectionNumber={section.sectionNumber}
-              title={section.title}
-              isExpanded={false}
-              onClick={handleSectionClick}
-              content={<></>}
-              unitCode={unit.code}
-              courseSlug={courseSlug}
-            />
-          ))}
+          <SectionBox
+            key={installationMethodsSection.sectionNumber}
+            sectionNumber={installationMethodsSection.sectionNumber}
+            title={installationMethodsSection.title}
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unit.code}
+            courseSlug={courseSlug}
+          />
+          
+          {/* Render subsections */}
+          {createSectionBoxes(installationMethodsSection)}
           
           {/* Quiz Section */}
           <SectionBox
@@ -287,7 +288,7 @@ const UnitDetails = ({
         </div>
       )}
 
-      {/* Craft Skills Content - Only for ELEC2/05B - UNCHANGED */}
+      {/* Craft Skills Content - Only for ELEC2/05B */}
       {showCraftSkillsContent && (
         <div className="space-y-6">
           {/* Display all craft skills sections */}

@@ -1,12 +1,14 @@
 
-export interface QuizQuestion {
-  id: string;
-  text: string;
-  options: { id: string; text: string }[];
-  correctOptionId: string;
-  // For compatibility with existing components
-  question?: string;
-  correctAnswer?: number;
+import { QuizQuestion } from "@/data/unitQuizzes";
+
+export interface QuizProps {
+  unitCode: string;
+  questions: QuizQuestion[];
+  onQuizComplete: (score: number, totalQuestions: number) => void;
+  questionCount?: number;
+  timeLimit?: number;
+  currentTime?: number;
+  isSubmitted?: boolean;
 }
 
 export interface QuizNavigationProps {
@@ -17,10 +19,18 @@ export interface QuizNavigationProps {
 }
 
 export interface QuestionProps {
-  question: any;
+  question: QuizQuestion;
   selectedAnswer: number | null;
   isAnswered: boolean;
-  onAnswer: (selectedIndex: number) => void;
+  onAnswer: (index: number) => void;
+}
+
+export interface QuizResultsProps {
+  score: number;
+  totalQuestions: number;
+  questions: QuizQuestion[];
+  userAnswers: (number | null)[];
+  onRetry: () => void;
 }
 
 export interface QuizControlsProps {
@@ -30,22 +40,4 @@ export interface QuizControlsProps {
   totalQuestions: number;
   onNext: () => void;
   onSubmit: () => void;
-}
-
-export interface QuizResultsProps {
-  score: number;
-  totalQuestions: number;
-  questions: any[];
-  userAnswers: (number | null)[];
-  onRetry: () => void;
-}
-
-export interface QuizProps {
-  unitCode: string;
-  questions: any[];
-  onQuizComplete: (score: number, totalQuestions: number) => void;
-  questionCount?: number;
-  timeLimit?: number;
-  currentTime?: number;
-  isSubmitted?: boolean;
 }

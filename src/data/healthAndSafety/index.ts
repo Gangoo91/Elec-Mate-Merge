@@ -1,5 +1,19 @@
 
-import type { SectionData } from './types';
+import { SectionData } from './types';
+import { legislationSection } from './section1-legislation';
+import { safeWorkingEnvironmentSection } from './section2-environment';
+import { electricalSafetySection } from './section3-electrical';
+import { accessEquipmentSection } from './section4-access';
+import { hazardsSection } from './section5-hazards';
+import { safeWorkingPracticesSection } from './section6-practices';
 
-// Empty array to prevent errors
-export const healthAndSafetyContent: SectionData[] = [];
+export const healthAndSafetyContent: SectionData[] = [
+  legislationSection,
+  safeWorkingEnvironmentSection,
+  electricalSafetySection,
+  accessEquipmentSection,
+  hazardsSection,
+  safeWorkingPracticesSection
+];
+
+export * from './types';

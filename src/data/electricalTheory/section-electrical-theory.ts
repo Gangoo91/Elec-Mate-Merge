@@ -1,3 +1,4 @@
+
 import { SectionData } from '../healthAndSafety/types';
 
 export const electricalTheorySection: SectionData = {
@@ -5,6 +6,11 @@ export const electricalTheorySection: SectionData = {
   title: "Electrical Theory and Technology",
   content: {
     introduction: "This unit explores the fundamental principles of electrical theory, technology, and applications for electrical installation work.",
+    sectionNumber: "04",
+    title: "Electrical Theory and Technology",
+    description: "This unit explores the fundamental principles of electrical theory, technology, and applications for electrical installation work.",
+    icon: "bulb",
+    isMainSection: true,
     subsections: [
       {
         id: "1",

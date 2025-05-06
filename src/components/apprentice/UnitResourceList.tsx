@@ -26,7 +26,7 @@ const UnitResourceList = ({
           type={resource.type}
           cta={resource.type === 'video' ? 'Watch Video' : resource.type === 'document' ? 'Read Document' : 'Start Activity'}
           href={resource.href}
-          duration={resource.duration ? String(resource.duration) : undefined}
+          duration={resource.duration}
           onClick={() => onResourceClick(resource.type)}
           isCompleted={!!completedResources[resource.id]}
           onToggleComplete={() => onToggleResourceComplete(resource.id)}

@@ -168,7 +168,7 @@ const QuizContent = () => {
             <div className="mt-6">
               <UnitQuiz
                 unitCode={unitCode}
-                questions={(healthAndSafetyQuizzes.questions || [])}
+                questions={healthAndSafetyQuizzes.questions}
                 onQuizComplete={handleQuizComplete}
                 questionCount={30}
                 timeLimit={30 * 60}

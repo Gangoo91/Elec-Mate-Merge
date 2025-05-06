@@ -1,21 +1,28 @@
 
-// This file is intentionally minimal as we've removed all EAL content
-// It exists to prevent build errors from missing imports
-
 export interface Subsection {
   id: string;
   title: string;
   content: string;
-  keyPoints?: string[];
+  keyPoints: string[];
 }
 
-export interface SectionContent {
-  subsections: Subsection[];
-  introduction?: string;
+export interface SectionContentData {
+  introduction?: string; // Make introduction optional
+  subsections: {
+    id: string;
+    title: string;
+    content: string;
+    keyPoints: string[];
+  }[];
+  icon?: "safety" | "info" | "construction" | "warning" | "hardhat" | "list" | "section" | "cable" | "socket" | "bulb" | "test" | "tools" | "shield-alert";
+  sectionNumber?: string;
+  title?: string;
+  description?: string;
+  isMainSection?: boolean;
 }
 
 export interface SectionData {
   sectionNumber: string;
   title: string;
-  content: SectionContent;
+  content: SectionContentData;
 }
