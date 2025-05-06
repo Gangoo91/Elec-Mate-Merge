@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -46,7 +45,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
         {/* Subsections for Section 1 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
           {/* Legislation and Regulations subsection */}
-          <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20">
+          <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
             <Link 
               to={`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/1/subsection/1.1`}
               onClick={handleSectionClick}
@@ -73,7 +72,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
           </Card>
           
           {/* Roles and Responsibilities subsection */}
-          <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20">
+          <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
             <Link 
               to={`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/1/subsection/1.2`}
               onClick={handleSectionClick}
@@ -114,7 +113,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
       {sectionId === "1" && renderSection1Content()}
       
       {/* Original Health and Safety Content - keep this for other sections */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {healthAndSafetyContent.map((section) => {
           const sectionSlug = createSectionSlug(section.sectionNumber);
           return (
@@ -122,10 +121,10 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
               key={section.sectionNumber}
               to={`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/${sectionSlug}`}
               onClick={handleSectionClick}
-              className="block transition-transform hover:scale-102 duration-200"
+              className="block transition-transform hover:scale-102 duration-200 h-full"
             >
               <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-                <CardContent className="flex flex-col p-4 h-full">
+                <CardContent className="flex flex-col p-6 h-full">
                   <div className="flex items-center gap-3">
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
                       <span className="text-elec-dark font-bold text-lg">{section.sectionNumber}</span>
@@ -145,10 +144,10 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
             handleSectionClick();
             onResourceClick('assessment');
           }}
-          className="block transition-transform hover:scale-102 duration-200"
+          className="block transition-transform hover:scale-102 duration-200 h-full"
         >
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-            <CardContent className="flex flex-col p-4 h-full relative">
+            <CardContent className="flex flex-col p-6 h-full relative">
               <div className="flex items-center gap-3">
                 <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
                   <span className="text-elec-dark font-bold text-lg">Q</span>
@@ -161,10 +160,6 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
                   <CheckCircle className="h-5 w-5 text-green-500" />
                 </div>
               )}
-              
-              <div className="flex justify-end mt-auto pt-2">
-                <BookOpen className="h-5 w-5 text-elec-yellow opacity-70" />
-              </div>
             </CardContent>
           </Card>
         </Link>
