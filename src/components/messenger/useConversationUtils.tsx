@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { User, Users, Heart, GraduationCap } from "lucide-react";
 import { MessengerTabType } from './constants';
 
