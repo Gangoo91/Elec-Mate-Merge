@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, BookOpen } from "lucide-react";
 import { courseCategories } from "@/data/courseCategories";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -47,17 +47,17 @@ const EALCourses = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 animate-fade-in px-4 md:px-6 lg:px-8">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-2 sm:mb-4">
+    <div className="max-w-6xl mx-auto px-4 py-8 space-y-8 animate-fade-in">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight mb-1">
+          <h1 className="text-3xl font-bold tracking-tight mb-2">
             <span className="gradient-text">EAL Courses</span>
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-sm sm:text-base">
             Excellence, Achievement & Learning certified electrical qualifications
           </p>
         </div>
-        <Link to="/apprentice/study" className="flex-shrink-0 w-full sm:w-auto">
+        <Link to="/apprentice/study" className="w-full sm:w-auto">
           <Button 
             variant="outline" 
             className="border-elec-yellow/30 hover:bg-elec-yellow/10 w-full sm:w-auto"
@@ -68,17 +68,18 @@ const EALCourses = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {courses.map((course, index) => (
           <Link 
             key={index}
             to={`/apprentice/study/eal/${createSlug(course)}`}
-            className="block h-full"
+            className="block h-full transition-transform hover:scale-102 duration-200"
           >
             <Card 
-              className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-md shadow-elec-yellow/5 h-full"
+              className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full"
             >
-              <CardContent className="flex items-center justify-center p-5 sm:p-6 h-full min-h-[120px]">
+              <CardContent className="flex flex-col items-center justify-center p-6 h-full">
+                <BookOpen className="h-8 w-8 text-elec-yellow mb-4 opacity-80" />
                 <h3 className={`text-base sm:text-lg font-medium text-center ${isMobile ? "leading-tight" : ""}`}>
                   {formatCourseTitle(course)}
                 </h3>
