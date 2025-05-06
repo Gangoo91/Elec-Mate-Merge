@@ -24,28 +24,17 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
     console.log("Back button clicked with params:", { course, unit, section });
     console.log("Current path:", location.pathname);
     
-    // If on Health & Safety Unit section 1 page, navigate back to the unit page that shows all sections
-    if (unit === 'elec2-01' && section === '1' && location.pathname.includes('/section/')) {
-      navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
-      return;
-    }
-    
     // Check if we're on a subsection page
     const isSubsectionPage = location.pathname.includes('/subsection/');
-    // Check if we're on a section page
-    const isSectionPage = location.pathname.includes('/section/') && !isSubsectionPage;
     
     if (isSubsectionPage && course && unit && section) {
       // We're on a subsection page, navigate back to the section page
       navigate(`/apprentice/study/eal/${course}/unit/${unit}/section/${section}`);
-    } else if (isSectionPage && course && unit) {
-      // We're on a section page, navigate back to the unit page with all sections
+    } else if (location.pathname.includes('/section/') && course && unit) {
+      // We're on a section page, always navigate back to the unit page with all sections
       navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
-    } else if (course && unit) {
-      // We're on a unit page, navigate back to course
-      navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
-    } else if (course) {
-      // If we only have a course but no unit (e.g., on the unit listing page)
+    } else if (location.pathname.includes('/unit/') && course) {
+      // We're on the unit sections page, navigate back to the courses page
       navigate(`/apprentice/study/eal/${course}`);
     } else {
       // Last resort fallback - just go back in history
@@ -58,9 +47,11 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
     if (location.pathname.includes('/subsection/')) {
       return "Back to Section";
     } else if (location.pathname.includes('/section/')) {
-      return "Back to Unit";
-    } else {
+      return "Back to Unit Sections";
+    } else if (location.pathname.includes('/unit/')) {
       return "Back to Course";
+    } else {
+      return "Back";
     }
   };
 
