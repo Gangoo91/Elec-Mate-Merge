@@ -7,17 +7,17 @@ const MainLayout = () => {
     <div className="flex flex-col min-h-screen">
       <header className="bg-slate-800 text-white p-4">
         <div className="container mx-auto">
-          <h1 className="text-2xl font-bold">Application</h1>
+          <h1 className="text-2xl font-bold">My Application</h1>
         </div>
       </header>
       
-      <main className="flex-grow container mx-auto px-4">
+      <main className="flex-grow container mx-auto px-4 py-6">
         <Outlet />
       </main>
       
       <footer className="bg-slate-800 text-white p-4 mt-8">
         <div className="container mx-auto text-center">
-          <p>© {new Date().getFullYear()} Application</p>
+          <p>© {new Date().getFullYear()} My Application</p>
         </div>
       </footer>
     </div>
