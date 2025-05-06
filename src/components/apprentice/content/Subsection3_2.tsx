@@ -3,17 +3,27 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, AlertTriangle, ShieldAlert, Hammer } from "lucide-react";
 import { SubsectionProps } from "./subsection1_1/types";
+import CourseContentSection from "../CourseContentSection";
 
 const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-elec-yellow">Risk Assessment in Electrical Work</h2>
       
-      <div className="space-y-4">
-        <p>
-          Risk assessment is a fundamental process for identifying hazards and implementing control measures
-          in electrical installation work. A systematic approach ensures the safety of workers and others.
-        </p>
+      <div className="space-y-5">
+        <CourseContentSection
+          title="Risk Assessment in Electrical Work"
+          description="Risk assessment is a fundamental process for identifying hazards and implementing control measures in electrical installation work. A systematic approach ensures the safety of workers and others. The Management of Health and Safety at Work Regulations 1999 require suitable and sufficient risk assessments that are regularly reviewed."
+          keyPoints={[
+            "The five steps of risk assessment include identifying hazards, determining who might be harmed, evaluating risks, recording findings, and reviewing regularly",
+            "Common electrical hazards include shock, burns, fire, explosion, and environmental factors",
+            "The hierarchy of control prioritizes elimination and substitution over PPE",
+            "Specific control measures include isolation procedures, safe working distances, and insulated tools",
+            "Task-specific risk assessments are required for non-standard or high-risk electrical work"
+          ]}
+          icon="shield-alert"
+          subsectionId={subsectionId}
+        />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
@@ -23,13 +33,13 @@ const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </h3>
             <div className="space-y-3">
               <h4 className="font-semibold">Five Steps to Risk Assessment</h4>
-              <ul className="list-disc pl-5 space-y-2">
+              <ol className="list-decimal pl-5 space-y-2">
                 <li>Identify the hazards</li>
                 <li>Determine who might be harmed and how</li>
                 <li>Evaluate the risks and decide on precautions</li>
                 <li>Record your findings and implement them</li>
                 <li>Review your assessment and update if necessary</li>
-              </ul>
+              </ol>
               
               <h4 className="font-semibold mt-4">Common Electrical Hazards</h4>
               <ul className="list-disc pl-5 space-y-2">
@@ -60,13 +70,13 @@ const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </h3>
             <div className="space-y-3">
               <h4 className="font-semibold">Hierarchy of Control</h4>
-              <ul className="list-disc pl-5 space-y-2">
+              <ol className="list-decimal pl-5 space-y-2">
                 <li>Elimination - Remove the hazard completely</li>
                 <li>Substitution - Replace with a safer alternative</li>
                 <li>Engineering controls - Physical safeguards</li>
                 <li>Administrative controls - Safe working procedures</li>
                 <li>Personal Protective Equipment (PPE) - Last line of defense</li>
-              </ul>
+              </ol>
               
               <h4 className="font-semibold mt-4">Specific Control Measures</h4>
               <ul className="list-disc pl-5 space-y-2">

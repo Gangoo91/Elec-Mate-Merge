@@ -3,17 +3,27 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Zap, Shield, AlertOctagon } from "lucide-react";
 import { SubsectionProps } from "./subsection1_1/types";
+import CourseContentSection from "../CourseContentSection";
 
 const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-elec-yellow">Electrical Safety Fundamentals</h2>
       
-      <div className="space-y-4">
-        <p>
-          Electrical safety is paramount in the electrical industry. Understanding the basic principles and hazards
-          helps prevent accidents and ensures compliance with health and safety regulations.
-        </p>
+      <div className="space-y-5">
+        <CourseContentSection
+          title="Electrical Safety Fundamentals"
+          description="Electrical safety is fundamental to preventing accidents in electrical work. Understanding the dangers posed by electricity and taking appropriate precautions is essential for all electrical workers. The Electricity at Work Regulations 1989 place legal responsibilities on both employers and individuals to ensure competence for electrical work."
+          keyPoints={[
+            "Electric shock can cause effects ranging from tingling to death, with 50mA potentially fatal",
+            "Safe isolation procedures must be followed without exception before working on electrical equipment",
+            "Electrical fires can result from overheating, arcing, or ignition of combustible materials",
+            "The Electricity at Work Regulations 1989 require competence for all electrical work",
+            "Appropriate PPE and insulated tools must be used for electrical work"
+          ]}
+          icon="shield-alert"
+          subsectionId={subsectionId}
+        />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
@@ -56,17 +66,20 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
             <h3 className="text-xl font-bold text-elec-yellow flex items-center">
               <Shield className="h-5 w-5 mr-2" />
-              Safety Principles
+              Safe Isolation
             </h3>
             <div className="space-y-3">
-              <h4 className="font-semibold">Safe Isolation Procedures</h4>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Identify circuit to be isolated</li>
-                <li>Gain permission to isolate</li>
-                <li>Switch off and lock off</li>
-                <li>Prove dead using approved voltage indicator</li>
-                <li>Post warning signs and secure the area</li>
-              </ul>
+              <p>The essential steps of safe isolation must be followed without exception:</p>
+              
+              <ol className="list-decimal pl-5 space-y-2">
+                <li><span className="font-medium">Identify</span> - Correctly identify the circuit or equipment to be worked on</li>
+                <li><span className="font-medium">Isolate</span> - Switch off and lock the isolation device</li>
+                <li><span className="font-medium">Prove the tester</span> - Test your voltage indicator on a known live source</li>
+                <li><span className="font-medium">Test dead</span> - Verify the circuit or equipment is dead</li>
+                <li><span className="font-medium">Reprove the tester</span> - Test your voltage indicator again on a known live source</li>
+                <li><span className="font-medium">Lock off and tag</span> - Apply locks and warning notices to prevent reconnection</li>
+                <li><span className="font-medium">Issue permit</span> - For complex systems, issue a permit-to-work</li>
+              </ol>
               
               <h4 className="font-semibold mt-4">Working Safely</h4>
               <ul className="list-disc pl-5 space-y-2">

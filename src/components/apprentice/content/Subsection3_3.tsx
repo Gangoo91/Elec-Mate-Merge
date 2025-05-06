@@ -3,17 +3,27 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Home, Building, Plug } from "lucide-react";
 import { SubsectionProps } from "./subsection1_1/types";
+import CourseContentSection from "../CourseContentSection";
 
 const Subsection3_3 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-elec-yellow">Special Installations</h2>
       
-      <div className="space-y-4">
-        <p>
-          Certain locations and installations require special considerations due to increased risks or specific requirements.
-          Understanding these requirements is essential for compliant and safe electrical work.
-        </p>
+      <div className="space-y-5">
+        <CourseContentSection
+          title="Special Installations"
+          description="Certain locations and installations require special considerations due to increased risks or specific requirements. Understanding these requirements is essential for compliant and safe electrical work. Special locations include bathrooms, swimming pools, agricultural locations, and temporary installations, each with their own specific requirements defined in BS 7671."
+          keyPoints={[
+            "Bathroom zones (0, 1, 2) require different levels of protection and equipment ratings",
+            "All bathroom circuits require 30mA RCD protection",
+            "Swimming pools need SELV (max 12V AC) in Zone 0 and enhanced supplementary bonding",
+            "Agricultural locations require additional fire protection and animal-resistant equipment",
+            "Temporary installations often use 110V center-tapped systems for increased safety"
+          ]}
+          icon="shield-alert"
+          subsectionId={subsectionId}
+        />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
