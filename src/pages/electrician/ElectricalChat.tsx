@@ -2,33 +2,23 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ArrowLeft, MessageSquare, ThumbsUp, User, Send } from "lucide-react";
+import { ArrowLeft, MessageSquare, ThumbsUp, Send, Image } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "@/components/ui/use-toast";
 import ChatMessage from "@/components/chat/ChatMessage";
 import ChatComposer from "@/components/chat/ChatComposer";
 import { ChatMessage as ChatMessageType } from "@/components/messenger/types";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const ElectricalChat = () => {
   const { profile } = useAuth();
   const [sortBy, setSortBy] = useState<"latest" | "popular">("latest");
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedCategory, setSelectedCategory] = useState("All Topics");
   const scrollRef = useRef<HTMLDivElement>(null);
-  
-  const categories = [
-    "All Topics",
-    "Technical Questions",
-    "Industry News",
-    "Tools & Equipment",
-    "Apprentice Support",
-    "Business Development"
-  ];
+  const isMobile = useIsMobile();
   
   // Scroll to bottom when new message is added
   useEffect(() => {
@@ -51,7 +41,7 @@ const ElectricalChat = () => {
           content: "Has anyone used the new Milwaukee cordless multimeter? Wondering if it's worth the investment.",
           createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
           upvotes: 12,
-          category: "Tools & Equipment",
+          category: "General",
           comments: [
             {
               id: "c1",
@@ -72,7 +62,7 @@ const ElectricalChat = () => {
           content: "New regulations coming into effect next month regarding residential EV charging installations. Anyone attended the webinar about it?",
           createdAt: new Date(Date.now() - 1000 * 60 * 60 * 5), // 5 hours ago
           upvotes: 8,
-          category: "Industry News",
+          category: "General",
           comments: []
         },
         {
@@ -83,7 +73,7 @@ const ElectricalChat = () => {
           content: "First year apprentice here. Any tips for preparing for the upcoming practical assessment?",
           createdAt: new Date(Date.now() - 1000 * 60 * 60 * 10), // 10 hours ago
           upvotes: 15,
-          category: "Apprentice Support",
+          category: "General",
           comments: [
             {
               id: "c2",
@@ -154,7 +144,7 @@ const ElectricalChat = () => {
       createdAt: new Date(),
       upvotes: 0,
       comments: [],
-      category: selectedCategory === "All Topics" ? "General Discussion" : selectedCategory
+      category: "General"
     };
     
     setMessages(prev => [newMessage, ...prev]);
@@ -202,22 +192,20 @@ const ElectricalChat = () => {
     });
   };
   
-  // Filter messages based on active category and sort option
-  const filteredMessages = messages
-    .filter(msg => selectedCategory === "All Topics" || msg.category === selectedCategory)
-    .sort((a, b) => {
-      if (sortBy === "latest") {
-        return b.createdAt.getTime() - a.createdAt.getTime();
-      } else {
-        return b.upvotes - a.upvotes;
-      }
-    });
+  // Sort messages based on sort option
+  const sortedMessages = [...messages].sort((a, b) => {
+    if (sortBy === "latest") {
+      return b.createdAt.getTime() - a.createdAt.getTime();
+    } else {
+      return b.upvotes - a.upvotes;
+    }
+  });
 
   return (
-    <div className="flex flex-col min-h-[calc(100vh-80px)] animate-fade-in bg-elec-dark">
+    <div className="flex flex-col min-h-[100vh] bg-black animate-fade-in">
       {/* Fixed header */}
-      <div className="sticky top-0 z-30 bg-elec-dark border-b border-elec-yellow/20 p-4">
-        <div className="flex items-center justify-between">
+      <div className="sticky top-0 z-30 bg-black px-4 py-3 border-b border-elec-yellow">
+        <div className="flex items-center justify-between max-w-3xl mx-auto">
           <div className="flex items-center">
             <MessageSquare className="h-6 w-6 text-elec-yellow mr-2" />
             <h1 className="text-xl font-bold text-white">Electrical Chat</h1>
@@ -230,29 +218,8 @@ const ElectricalChat = () => {
         </div>
       </div>
       
-      {/* Category selector - scrollable horizontally */}
-      <div className="overflow-x-auto sticky top-[65px] z-20 bg-elec-gray-dark p-2 border-b border-elec-yellow/10">
-        <div className="flex gap-2 py-1">
-          {categories.map((category) => (
-            <Button
-              key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedCategory(category)}
-              className={`whitespace-nowrap ${
-                selectedCategory === category 
-                ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
-                : "border-elec-yellow/30 hover:bg-elec-yellow/10"
-              }`}
-            >
-              {category}
-            </Button>
-          ))}
-        </div>
-      </div>
-      
       {/* Main content area */}
-      <div className="flex-1 p-4">
+      <div className="flex-1 px-4 pb-20 pt-4 max-w-3xl mx-auto w-full">
         {/* Composer */}
         <div className="mb-6">
           <ChatComposer onSubmit={handlePostMessage} />
@@ -261,7 +228,7 @@ const ElectricalChat = () => {
         {/* Sort toggle */}
         <div className="flex justify-between items-center mb-4">
           <div className="text-sm text-elec-yellow font-medium">
-            {filteredMessages.length} posts
+            {sortedMessages.length} posts
           </div>
           <div className="flex gap-2">
             <Button 
@@ -295,9 +262,9 @@ const ElectricalChat = () => {
               </div>
             ))}
           </div>
-        ) : filteredMessages.length > 0 ? (
+        ) : sortedMessages.length > 0 ? (
           <div className="space-y-6 pb-20">
-            {filteredMessages.map(message => (
+            {sortedMessages.map(message => (
               <ChatMessage
                 key={message.id}
                 message={message}
@@ -313,15 +280,15 @@ const ElectricalChat = () => {
             <MessageSquare className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
             <h3 className="text-lg font-medium mb-2 text-white">No posts yet</h3>
             <p className="text-muted-foreground">
-              Be the first to start a discussion in this category!
+              Be the first to start a discussion!
             </p>
           </div>
         )}
       </div>
       
-      {/* Contest reminder */}
-      <div className="p-4 bg-elec-yellow/10 border-t border-elec-yellow/20 text-center text-sm sticky bottom-0">
-        <p className="text-elec-yellow">Most liked comment and most active participant each win a £50 voucher!</p>
+      {/* Contest reminder - fixed at bottom */}
+      <div className="bg-elec-yellow text-elec-dark p-3 text-center text-sm font-medium sticky bottom-0 left-0 right-0 shadow-lg">
+        Most liked comment and most active participant each win a £50 voucher!
       </div>
     </div>
   );

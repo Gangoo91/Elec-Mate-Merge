@@ -57,10 +57,10 @@ const ChatMessage = ({ message, currentUserId, onUpvote, onPostComment }: ChatMe
   };
   
   return (
-    <div className="bg-elec-gray-light/5 border border-elec-yellow/10 rounded-lg overflow-hidden shadow-md">
+    <div className="bg-black border border-elec-yellow/20 rounded-xl overflow-hidden shadow-md">
       {/* Message header */}
-      <div className="p-4 pb-2">
-        <div className="flex items-center space-x-3 mb-2">
+      <div className="p-4 pb-3">
+        <div className="flex items-center space-x-3 mb-3">
           <Avatar className="h-10 w-10 border-2 border-elec-yellow/20">
             <AvatarImage src={message.authorAvatar} alt={message.authorName} />
             <AvatarFallback className="bg-elec-yellow text-elec-dark font-medium">
@@ -69,22 +69,15 @@ const ChatMessage = ({ message, currentUserId, onUpvote, onPostComment }: ChatMe
           </Avatar>
           
           <div className="flex-1">
-            <div className="flex justify-between">
-              <div>
-                <p className="font-medium text-white">{message.authorName}</p>
-                <p className="text-xs text-muted-foreground">
-                  {formatDistanceToNow(message.createdAt, { addSuffix: true })}
-                </p>
-              </div>
-              <span className="text-xs px-2 py-1 rounded-full bg-elec-yellow/20 text-elec-yellow">
-                {message.category}
-              </span>
-            </div>
+            <p className="font-medium text-white">{message.authorName}</p>
+            <p className="text-xs text-muted-foreground">
+              {formatDistanceToNow(message.createdAt, { addSuffix: true })}
+            </p>
           </div>
         </div>
         
         {/* Message content */}
-        <div className="text-white text-sm mt-1 mb-3">{message.content}</div>
+        <div className="text-white text-sm mt-1 mb-3 whitespace-pre-wrap">{message.content}</div>
       </div>
       
       {/* Message actions */}
@@ -115,10 +108,10 @@ const ChatMessage = ({ message, currentUserId, onUpvote, onPostComment }: ChatMe
       
       {/* Comments section */}
       {(message.comments.length > 0 || showCommentInput) && (
-        <div className="bg-elec-gray-dark/30 px-4 py-3 border-t border-elec-yellow/10">
+        <div className="bg-black/50 px-4 py-3 border-t border-elec-yellow/10">
           {/* Show existing comments */}
           {message.comments.length > 0 && (
-            <div className="space-y-4 mb-4">
+            <div className="space-y-3 mb-3">
               {message.comments.map((comment) => (
                 <div key={comment.id} className="flex gap-3">
                   <Avatar className="h-8 w-8 mt-0.5">
@@ -128,9 +121,9 @@ const ChatMessage = ({ message, currentUserId, onUpvote, onPostComment }: ChatMe
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1">
-                    <div className="bg-elec-gray-light/20 rounded-lg p-3 inline-block">
+                    <div className="bg-elec-gray-light/10 rounded-xl p-3 inline-block">
                       <div className="font-medium text-sm text-white">{comment.authorName}</div>
-                      <div className="text-sm text-white">{comment.content}</div>
+                      <div className="text-sm text-white whitespace-pre-wrap">{comment.content}</div>
                     </div>
                     <div className="text-xs text-muted-foreground mt-1 ml-1">
                       {formatDistanceToNow(comment.createdAt, { addSuffix: true })}
@@ -156,11 +149,17 @@ const ChatMessage = ({ message, currentUserId, onUpvote, onPostComment }: ChatMe
                     placeholder="Write a comment..."
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
-                    className="min-h-[60px] bg-elec-gray-light/10 border-elec-yellow/20 focus:border-elec-yellow focus:ring-elec-yellow/20 text-white rounded-lg pr-10"
+                    className="min-h-[60px] bg-black border-elec-yellow/20 focus:border-elec-yellow focus:ring-elec-yellow/20 text-white rounded-xl pr-10"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        handleSubmitComment();
+                      }
+                    }}
                   />
                   <Button
                     size="icon"
-                    className="absolute right-2 bottom-2 h-7 w-7 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80"
+                    className="absolute right-2 bottom-2 h-8 w-8 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
                     disabled={!commentText.trim()}
                     onClick={handleSubmitComment}
                   >

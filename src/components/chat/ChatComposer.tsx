@@ -32,10 +32,10 @@ const ChatComposer = ({ onSubmit }: ChatComposerProps) => {
   };
 
   return (
-    <div className="bg-elec-gray-dark border border-elec-yellow/10 rounded-lg p-4 shadow-lg">
+    <div className="bg-black border border-elec-yellow/20 rounded-xl p-3 shadow-lg">
       <form onSubmit={handleSubmit}>
         <div className="flex items-start gap-3">
-          <Avatar className="h-10 w-10 mt-1 border-2 border-elec-yellow/10">
+          <Avatar className="h-10 w-10 mt-1 border-2 border-elec-yellow/20">
             <AvatarImage src={profile?.avatar_url} alt={profile?.full_name || "User"} />
             <AvatarFallback className="bg-elec-yellow text-elec-dark">
               {getInitials(profile?.full_name)}
@@ -44,10 +44,16 @@ const ChatComposer = ({ onSubmit }: ChatComposerProps) => {
           
           <div className="flex-1">
             <Textarea
-              placeholder="Share your thoughts or ask questions about electrical topics..."
+              placeholder="Share your thoughts or ask questions..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              className="min-h-[80px] bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow focus:ring-elec-yellow/20 text-white mb-2 resize-none"
+              className="min-h-[80px] bg-black border-elec-yellow/20 focus:border-elec-yellow focus:ring-elec-yellow/20 text-white mb-2 resize-none rounded-xl"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSubmit(e);
+                }
+              }}
             />
             
             <div className="flex items-center justify-between">
@@ -63,7 +69,7 @@ const ChatComposer = ({ onSubmit }: ChatComposerProps) => {
               <Button
                 type="submit"
                 disabled={!message.trim()}
-                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80 px-5"
+                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 px-5"
               >
                 <Send className="h-4 w-4 mr-2" /> Post
               </Button>
