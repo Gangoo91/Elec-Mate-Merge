@@ -61,13 +61,13 @@ export function useSubsectionContent({
       
       console.log("Unit types:", { isHealthSafetyUnit, isElectricalTheoryUnit, isInstallationMethodsUnit });
       
-      // Find the section based on unit type
+      // Find the section based on unit type - SWAPPED CONTENT HERE
       if (isHealthSafetyUnit) {
-        // For health and safety unit
+        // For health and safety unit - NOW SHOWS INSTALLATION METHODS CONTENT
         setParentSectionNumber(sectionId);
         
-        // Find the section in the health and safety content
-        section = healthAndSafetyContent.find(
+        // Find the section in the INSTALLATION METHODS content
+        section = installationMethodsContent.find(
           sec => sec.sectionNumber === sectionId
         );
         
@@ -139,8 +139,8 @@ export function useSubsectionContent({
           setSiblingSubsections(section.content.subsections);
         }
       } else if (isInstallationMethodsUnit) {
-        // For installation methods, use existing code
-        section = installationMethodsContent.find(
+        // For installation methods - NOW SHOWS HEALTH & SAFETY CONTENT
+        section = healthAndSafetyContent.find(
           section => section.sectionNumber === sectionId
         );
         

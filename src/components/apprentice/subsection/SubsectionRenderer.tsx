@@ -1,4 +1,3 @@
-
 import React from "react";
 import { SubsectionProps } from "../content/subsection1_1/types";
 import ElectricalSymbolsDisplay from "../ElectricalSymbolsDisplay";
@@ -39,9 +38,10 @@ import Subsection10_3 from "../content/Subsection10_3";
 const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   // Render the appropriate content based on subsection ID
   switch (subsectionId) {
+    // ELEC2/01 Health and Safety (now showing installation methods content)
     case "1.1":
       return (
-        <Subsection1_1 
+        <Subsection3_1 
           subsectionId={subsectionId} 
           isCompleted={isCompleted} 
           markAsComplete={markAsComplete}
@@ -49,7 +49,7 @@ const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: Subse
       );
     case "1.2":
       return (
-        <Subsection1_2 
+        <Subsection3_2 
           subsectionId={subsectionId}
           isCompleted={isCompleted}
           markAsComplete={markAsComplete}
@@ -57,7 +57,7 @@ const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: Subse
       );
     case "1.3":
       return (
-        <Subsection1_3 
+        <Subsection2_3 
           subsectionId={subsectionId}
           isCompleted={isCompleted}
           markAsComplete={markAsComplete}
@@ -84,15 +84,17 @@ const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: Subse
       );
     case "2.3":
       return (
-        <Subsection2_3 
+        <Subsection3_3 
           subsectionId={subsectionId}
           isCompleted={isCompleted}
           markAsComplete={markAsComplete}
         />
       );
+    
+    // ELEC2/05A Installation Methods (now showing health and safety content)
     case "3.1":
       return (
-        <Subsection3_1
+        <Subsection1_1
           subsectionId={subsectionId}
           isCompleted={isCompleted} 
           markAsComplete={markAsComplete}
@@ -100,7 +102,7 @@ const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: Subse
       );
     case "3.2":
       return (
-        <Subsection3_2
+        <Subsection1_2
           subsectionId={subsectionId}
           isCompleted={isCompleted} 
           markAsComplete={markAsComplete}
@@ -108,12 +110,13 @@ const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: Subse
       );
     case "3.3":
       return (
-        <Subsection3_3
+        <Subsection1_3
           subsectionId={subsectionId}
           isCompleted={isCompleted} 
           markAsComplete={markAsComplete}
         />
       );
+
     case "4.1":
       return (
         <Subsection4_1
