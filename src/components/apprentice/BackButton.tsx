@@ -24,14 +24,17 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
     console.log("Back button clicked with params:", { course, unit, section });
     console.log("Current path:", location.pathname);
     
+    // Check if we're on a section page
+    const isSectionPage = location.pathname.includes('/section/') && !location.pathname.includes('/subsection/');
+    
     // Check if we're on a subsection page
     const isSubsectionPage = location.pathname.includes('/subsection/');
     
     if (isSubsectionPage && course && unit && section) {
       // We're on a subsection page, navigate back to the section page
       navigate(`/apprentice/study/eal/${course}/unit/${unit}/section/${section}`);
-    } else if (location.pathname.includes('/section/') && course && unit) {
-      // We're on a section page, always navigate back to the unit page with all sections
+    } else if (isSectionPage && course && unit) {
+      // We're on a section page, go back to the unit SECTIONS page
       navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
     } else if (location.pathname.includes('/unit/') && course) {
       // We're on the unit sections page, navigate back to the courses page

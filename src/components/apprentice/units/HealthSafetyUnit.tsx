@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -106,7 +107,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
     <div className="space-y-6 animate-fade-in">
       {/* Add Back Button at the top */}
       <div className="mb-6">
-        <BackButton courseSlug={courseSlug} />
+        <BackButton courseSlug={courseSlug} unitSlug={unitCode.toLowerCase().replace('/', '-')} />
       </div>
       
       {/* Display Section 1 specific content if we're on section 1 */}

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, BookOpen } from "lucide-react";
 import { installationMethodsContent } from "@/data/installationMethods/index";
 import type { SectionData, Subsection } from "@/data/healthAndSafety/types";
+import BackButton from "@/components/apprentice/BackButton";
 
 const InstallationMethodContent = () => {
   const { sectionId, courseSlug, unitSlug } = useParams();
@@ -24,8 +25,10 @@ const InstallationMethodContent = () => {
     }
   }, [sectionId]);
 
-  const handleBackClick = () => {
-    navigate(-1);
+  const handleSubsectionClick = (subsection: Subsection) => {
+    if (courseSlug && unitSlug && sectionId) {
+      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/installation-method/${sectionId}/subsection/${subsection.id}`);
+    }
   };
 
   if (!sectionData) {
@@ -36,23 +39,10 @@ const InstallationMethodContent = () => {
     );
   }
 
-  const handleSubsectionClick = (subsection: Subsection) => {
-    if (courseSlug && unitSlug && sectionId) {
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/installation-method/${sectionId}/subsection/${subsection.id}`);
-    }
-  };
-
   return (
     <div className="space-y-6 animate-fade-in px-4 md:px-0">
       <div className="mb-6">
-        <Button 
-          variant="outline" 
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-          onClick={handleBackClick}
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
-        </Button>
+        <BackButton courseSlug={courseSlug} unitSlug={unitSlug} sectionId={sectionId} />
       </div>
       
       <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
