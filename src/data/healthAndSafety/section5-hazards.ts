@@ -1,4 +1,3 @@
-
 import { SectionData } from './types';
 
 export const hazardsSection: SectionData = {

@@ -3,7 +3,7 @@ import { SectionData } from './types';
 
 export const electricalSafetySection: SectionData = {
   sectionNumber: "3",
-  title: "Understanding Basic Electrical Safety Requirements",
+  title: "Basic Electrical Safety Requirements",
   content: {
     introduction: "Essential requirements for electrical safety including safe isolation procedures, test equipment usage, and safe working practices.",
     subsections: [

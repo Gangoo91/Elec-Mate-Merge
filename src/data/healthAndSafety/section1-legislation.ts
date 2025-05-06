@@ -3,7 +3,7 @@ import { SectionData } from './types';
 
 export const legislationSection: SectionData = {
   sectionNumber: "1",
-  title: "Understanding How Health and Safety Applies to Electrotechnical Operations",
+  title: "How Health and Safety Applies to Electrotechnical Operations",
   content: {
     introduction: "This section covers the key legislation and regulations that govern health and safety in electrical work, along with the roles and responsibilities of different stakeholders.",
     subsections: [
