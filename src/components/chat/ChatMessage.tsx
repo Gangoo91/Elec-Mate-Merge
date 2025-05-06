@@ -58,9 +58,9 @@ const ChatMessage = ({ message, currentUserId, onUpvote, onPostComment }: ChatMe
   
   return (
     <div className="bg-black border border-elec-yellow/20 rounded-xl overflow-hidden shadow-md">
-      {/* Message header */}
-      <div className="p-4 pb-3">
-        <div className="flex items-center space-x-3 mb-3">
+      {/* Message header with author info */}
+      <div className="p-3 pb-2">
+        <div className="flex items-center space-x-3 mb-2">
           <Avatar className="h-10 w-10 border-2 border-elec-yellow/20">
             <AvatarImage src={message.authorAvatar} alt={message.authorName} />
             <AvatarFallback className="bg-elec-yellow text-elec-dark font-medium">
@@ -82,10 +82,10 @@ const ChatMessage = ({ message, currentUserId, onUpvote, onPostComment }: ChatMe
       
       {/* Message actions */}
       <div className="border-t border-elec-yellow/10">
-        <div className="flex px-3">
+        <div className="flex">
           <Button 
             variant="ghost" 
-            className={`flex-1 flex items-center justify-center gap-2 rounded-none py-3 ${
+            className={`flex-1 flex items-center justify-center gap-1 rounded-none py-2 ${
               message.hasUserUpvoted ? 'text-elec-yellow' : 'text-muted-foreground hover:text-elec-yellow'
             }`}
             onClick={() => onUpvote(message.id)}
@@ -97,7 +97,7 @@ const ChatMessage = ({ message, currentUserId, onUpvote, onPostComment }: ChatMe
           </Button>
           <Button 
             variant="ghost" 
-            className="flex-1 flex items-center justify-center gap-2 text-muted-foreground hover:text-elec-yellow rounded-none py-3"
+            className="flex-1 flex items-center justify-center gap-1 text-muted-foreground hover:text-elec-yellow rounded-none py-2"
             onClick={() => setShowCommentInput(!showCommentInput)}
           >
             <MessageSquare className="h-4 w-4" />
@@ -108,24 +108,24 @@ const ChatMessage = ({ message, currentUserId, onUpvote, onPostComment }: ChatMe
       
       {/* Comments section */}
       {(message.comments.length > 0 || showCommentInput) && (
-        <div className="bg-black/50 px-4 py-3 border-t border-elec-yellow/10">
+        <div className="bg-elec-gray-light/5 px-3 py-2 border-t border-elec-yellow/10">
           {/* Show existing comments */}
           {message.comments.length > 0 && (
-            <div className="space-y-3 mb-3">
+            <div className="space-y-2 mb-2">
               {message.comments.map((comment) => (
-                <div key={comment.id} className="flex gap-3">
-                  <Avatar className="h-8 w-8 mt-0.5">
+                <div key={comment.id} className="flex gap-2">
+                  <Avatar className="h-7 w-7 flex-shrink-0 mt-0.5">
                     <AvatarImage src={comment.authorAvatar} alt={comment.authorName} />
                     <AvatarFallback className="bg-elec-gray-light text-white text-xs">
                       {getInitials(comment.authorName)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1">
-                    <div className="bg-elec-gray-light/10 rounded-xl p-3 inline-block">
-                      <div className="font-medium text-sm text-white">{comment.authorName}</div>
-                      <div className="text-sm text-white whitespace-pre-wrap">{comment.content}</div>
+                    <div className="bg-elec-gray-light/10 rounded-xl p-2 inline-block">
+                      <div className="font-medium text-xs text-white">{comment.authorName}</div>
+                      <div className="text-xs text-white whitespace-pre-wrap">{comment.content}</div>
                     </div>
-                    <div className="text-xs text-muted-foreground mt-1 ml-1">
+                    <div className="text-xs text-muted-foreground mt-0.5 ml-1">
                       {formatDistanceToNow(comment.createdAt, { addSuffix: true })}
                     </div>
                   </div>
@@ -136,8 +136,8 @@ const ChatMessage = ({ message, currentUserId, onUpvote, onPostComment }: ChatMe
           
           {/* Comment input */}
           {showCommentInput && (
-            <div className="flex gap-3 mt-3">
-              <Avatar className="h-8 w-8 mt-0.5">
+            <div className="flex gap-2 mt-2">
+              <Avatar className="h-7 w-7 flex-shrink-0 mt-0.5">
                 <AvatarImage src={currentUserId ? "https://i.pravatar.cc/150?img=9" : undefined} alt="You" />
                 <AvatarFallback className="bg-elec-yellow text-elec-dark text-xs">
                   YOU
@@ -149,7 +149,7 @@ const ChatMessage = ({ message, currentUserId, onUpvote, onPostComment }: ChatMe
                     placeholder="Write a comment..."
                     value={commentText}
                     onChange={(e) => setCommentText(e.target.value)}
-                    className="min-h-[60px] bg-black border-elec-yellow/20 focus:border-elec-yellow focus:ring-elec-yellow/20 text-white rounded-xl pr-10"
+                    className="min-h-[50px] max-h-20 bg-black border-elec-yellow/20 focus:border-elec-yellow focus:ring-elec-yellow/20 text-white rounded-xl text-xs pr-10"
                     onKeyDown={(e) => {
                       if (e.key === 'Enter' && !e.shiftKey) {
                         e.preventDefault();
@@ -159,14 +159,14 @@ const ChatMessage = ({ message, currentUserId, onUpvote, onPostComment }: ChatMe
                   />
                   <Button
                     size="icon"
-                    className="absolute right-2 bottom-2 h-8 w-8 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                    className="absolute right-2 bottom-2 h-6 w-6 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 p-1"
                     disabled={!commentText.trim()}
                     onClick={handleSubmitComment}
                   >
                     <Send className="h-3 w-3" />
                   </Button>
                 </div>
-                <div className="flex justify-end mt-2">
+                <div className="flex justify-end mt-1">
                   <Button 
                     variant="ghost" 
                     size="sm"
@@ -174,7 +174,7 @@ const ChatMessage = ({ message, currentUserId, onUpvote, onPostComment }: ChatMe
                       setShowCommentInput(false);
                       setCommentText('');
                     }}
-                    className="text-muted-foreground text-xs"
+                    className="text-muted-foreground text-xs h-6 px-2"
                   >
                     Cancel
                   </Button>
