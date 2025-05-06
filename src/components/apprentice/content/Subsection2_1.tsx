@@ -1,9 +1,10 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, ClipboardCheck, Eye, ShieldAlert } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { CheckCircle, FileText, ClipboardCheck, Eye, ShieldAlert, ArrowRight } from "lucide-react";
 import { SubsectionProps } from "./subsection1_1/types";
-import CourseContentSection from "../CourseContentSection";
+import { Link } from "react-router-dom";
 
 const Subsection2_1 = ({ 
   subsectionId, 
@@ -11,131 +12,115 @@ const Subsection2_1 = ({
   markAsComplete 
 }: SubsectionProps) => {
   return (
-    <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-elec-yellow">Workplace Inspection Procedures</h2>
+    <div className="space-y-8 animate-fade-in">
+      <div className="text-center mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold text-elec-yellow mb-2">
+          Workplace Inspection Procedures
+        </h1>
+        <p className="text-elec-light/80 max-w-2xl mx-auto">
+          Regular inspections are essential to identify and address hazards before they cause accidents in electrical work environments.
+        </p>
+      </div>
       
-      <div className="space-y-5">
-        <CourseContentSection
-          title="Workplace Inspection Procedures"
-          description="Regular workplace inspections are a cornerstone of maintaining safety in electrical work environments. A systematic approach to inspections helps identify and address hazards before they cause accidents or injuries. Electrical contractors and workers should follow a structured inspection program that includes daily pre-work checks, weekly documented inspections, monthly safety audits, and quarterly system reviews. These inspections should cover the work environment, tools and equipment, safety systems, and relevant documentation. The Management of Health and Safety at Work Regulations 1999 require employers to have arrangements for effective planning, organization, control, monitoring, and review of preventive and protective measures."
-          keyPoints={[
-            "Regular inspections identify hazards before they cause accidents",
-            "Inspections should follow a structured frequency (daily, weekly, monthly)",
-            "Document all findings and assign responsibility for corrective actions",
-            "Follow up on identified issues to ensure they are properly resolved",
-            "Review trends to identify recurring safety concerns"
-          ]}
-          icon="safety"
-          subsectionId={subsectionId}
-        />
-        
-        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-4 md:p-6 space-y-4">
-          <h3 className="text-xl font-bold text-elec-yellow flex items-center">
-            <ClipboardCheck className="h-5 w-5 mr-2" />
-            Inspection Types and Frequency
-          </h3>
-          
-          <div className="space-y-4">
-            <p className="text-sm md:text-base">
-              Different types of inspections should be conducted at varying frequencies:
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="bg-elec-dark border-elec-yellow/20 hover:border-elec-yellow/40 transition-all">
+          <CardContent className="p-6 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="bg-elec-yellow/10 p-2 rounded-lg">
+                <ClipboardCheck className="h-6 w-6 text-elec-yellow" />
+              </div>
+              <h2 className="text-xl font-semibold text-elec-yellow">Inspection Types</h2>
+            </div>
+            
+            <p className="text-elec-light/80">
+              Different types of inspections should be conducted at varying frequencies to ensure comprehensive coverage of all safety concerns.
             </p>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-                <h4 className="font-semibold text-white mb-2">Daily Pre-Work Checks</h4>
-                <p className="text-sm">
-                  Quick inspection of work area, tools, and equipment before beginning tasks. Look for trip hazards, damaged tools, and obvious safety concerns.
-                </p>
-              </div>
-              
-              <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-                <h4 className="font-semibold text-white mb-2">Weekly Documented Inspections</h4>
-                <p className="text-sm">
-                  More thorough checks with formal checklists covering electrical equipment, access paths, fire safety provisions, and first aid facilities.
-                </p>
-              </div>
-              
-              <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-                <h4 className="font-semibold text-white mb-2">Monthly Safety Audits</h4>
-                <p className="text-sm">
-                  Comprehensive reviews conducted by supervisors or safety officers examining physical conditions, work practices, procedures, and documentation.
-                </p>
-              </div>
-              
-              <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-                <h4 className="font-semibold text-white mb-2">Quarterly System Reviews</h4>
-                <p className="text-sm">
-                  Evaluate the effectiveness of the inspection program itself and update to reflect new hazards or changing work conditions.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+            <Button asChild variant="study" className="w-full justify-between mt-2">
+              <Link to="/apprentice/study/resources/inspection-types">
+                View Inspection Types
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
         
-        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-4 md:p-6 space-y-4">
-          <h3 className="text-xl font-bold text-elec-yellow flex items-center">
-            <Eye className="h-5 w-5 mr-2" />
-            What to Inspect
-          </h3>
-          
-          <div className="space-y-4">
-            <p className="text-sm md:text-base">
-              Comprehensive workplace inspections should cover these key areas:
+        <Card className="bg-elec-dark border-elec-yellow/20 hover:border-elec-yellow/40 transition-all">
+          <CardContent className="p-6 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="bg-elec-yellow/10 p-2 rounded-lg">
+                <Eye className="h-6 w-6 text-elec-yellow" />
+              </div>
+              <h2 className="text-xl font-semibold text-elec-yellow">What to Inspect</h2>
+            </div>
+            
+            <p className="text-elec-light/80">
+              Comprehensive workplace inspections should cover key areas including work environment, tools, safety systems and documentation.
             </p>
             
-            <ul className="list-disc pl-5 space-y-2">
-              <li>
-                <span className="font-medium text-white">Work Environment</span>
-                <p className="text-sm mt-1">Access/egress routes, lighting levels, ventilation, temperature, housekeeping, and storage practices.</p>
-              </li>
-              <li>
-                <span className="font-medium text-white">Tools and Equipment</span>
-                <p className="text-sm mt-1">Condition of hand tools, test equipment, PPE, electrical equipment, and machinery including maintenance records.</p>
-              </li>
-              <li>
-                <span className="font-medium text-white">Safety Systems</span>
-                <p className="text-sm mt-1">Fire protection equipment, first aid supplies, emergency lighting, safety signage, and emergency procedures.</p>
-              </li>
-              <li>
-                <span className="font-medium text-white">Documentation</span>
-                <p className="text-sm mt-1">Risk assessments, method statements, training records, permits to work, and previous inspection findings.</p>
-              </li>
-            </ul>
-          </div>
-        </div>
+            <Button asChild variant="study" className="w-full justify-between mt-2">
+              <Link to="/apprentice/study/resources/inspection-areas">
+                View Inspection Areas
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
         
-        <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-4 md:p-6">
-          <h3 className="text-xl font-bold text-elec-yellow mb-4">Effective Inspection Procedures</h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <h4 className="font-medium">Documentation Process:</h4>
-              <ul className="list-disc pl-5 space-y-1 text-sm">
-                <li>Use standardized forms with clear evaluation criteria</li>
-                <li>Record all findings, even minor issues</li>
-                <li>Take photographs of hazards as evidence</li>
-                <li>Assign responsibility for corrective actions</li>
-                <li>Set deadlines for issue resolution</li>
-              </ul>
+        <Card className="bg-elec-dark border-elec-yellow/20 hover:border-elec-yellow/40 transition-all">
+          <CardContent className="p-6 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="bg-elec-yellow/10 p-2 rounded-lg">
+                <FileText className="h-6 w-6 text-elec-yellow" />
+              </div>
+              <h2 className="text-xl font-semibold text-elec-yellow">Documentation Process</h2>
             </div>
             
-            <div className="space-y-2">
-              <h4 className="font-medium">Follow-up Actions:</h4>
-              <ul className="list-disc pl-5 space-y-1 text-sm">
-                <li>Verify that corrective actions have been completed</li>
-                <li>Communicate findings to all relevant personnel</li>
-                <li>Update risk assessments based on findings</li>
-                <li>Review trends to identify recurring issues</li>
-                <li>Modify inspection procedures as needed</li>
-              </ul>
+            <p className="text-elec-light/80">
+              Learn how to properly document inspections, record findings, and track corrective actions to ensure safety issues are addressed.
+            </p>
+            
+            <Button asChild variant="study" className="w-full justify-between mt-2">
+              <Link to="/apprentice/study/resources/inspection-documentation">
+                View Documentation Process
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+        
+        <Card className="bg-elec-dark border-elec-yellow/20 hover:border-elec-yellow/40 transition-all">
+          <CardContent className="p-6 space-y-4">
+            <div className="flex items-center gap-3">
+              <div className="bg-elec-yellow/10 p-2 rounded-lg">
+                <ShieldAlert className="h-6 w-6 text-elec-yellow" />
+              </div>
+              <h2 className="text-xl font-semibold text-elec-yellow">Legal Requirements</h2>
             </div>
-          </div>
-          
-          <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-sm">
-            <p className="font-medium mb-1 text-elec-yellow">Legal Requirement:</p>
-            <p>The Management of Health and Safety at Work Regulations 1999 require employers to have arrangements for the effective planning, organization, control, monitoring and review of preventive and protective measures. Regular workplace inspections are a key part of meeting this obligation.</p>
-          </div>
-        </div>
+            
+            <p className="text-elec-light/80">
+              Understand the regulatory framework that governs workplace inspections, including the Management of Health and Safety at Work Regulations.
+            </p>
+            
+            <Button asChild variant="study" className="w-full justify-between mt-2">
+              <Link to="/apprentice/study/resources/inspection-regulations">
+                View Legal Requirements
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+      
+      <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 mt-8">
+        <h2 className="text-xl font-semibold text-elec-yellow mb-4">Key Points to Remember</h2>
+        <ul className="list-disc pl-6 space-y-2 text-elec-light/90">
+          <li>Regular inspections identify hazards before they cause accidents</li>
+          <li>Inspections should follow a structured frequency (daily, weekly, monthly)</li>
+          <li>Document all findings and assign responsibility for corrective actions</li>
+          <li>Follow up on identified issues to ensure they are properly resolved</li>
+          <li>Review trends to identify recurring safety concerns</li>
+        </ul>
       </div>
       
       <div className="flex justify-end pt-6 border-t border-elec-yellow/20">
