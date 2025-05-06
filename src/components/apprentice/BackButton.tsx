@@ -45,9 +45,8 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
       isSubsectionPage
     });
     
-    // Handle subsection pages
+    // Handle subsection pages - navigate back to the section page
     if (isSubsectionPage && course && unit && section) {
-      // We're on a subsection page, navigate back to the section page
       if (isInstallationMethodPage) {
         navigate(`/apprentice/study/eal/${course}/unit/${unit}/installation-method/${section}`);
       } else if (isCraftSkillsPage) {
@@ -58,21 +57,21 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
       return;
     }
     
-    // Handle section pages - ALWAYS go back to the unit page
-    if ((isSectionPage || isInstallationMethodPage || isCraftSkillsPage) && course && unit) {
-      console.log("Navigating back to unit:", `/apprentice/study/eal/${course}/unit/${unit}`);
-      navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
-      return;
+    // Handle section pages - navigate to the unit page
+    if (isSectionPage || isInstallationMethodPage || isCraftSkillsPage) {
+      if (course && unit) {
+        navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
+        return;
+      }
     }
     
     // Handle unit page - go back to courses
-    if (location.pathname.includes('/unit/') && course) {
+    if (location.pathname.includes('/unit/') && !isSectionPage && !isSubsectionPage && course) {
       navigate(`/apprentice/study/eal/${course}`);
       return;
     }
     
     // Last resort fallback - just go back in history
-    console.log("Using fallback navigation");
     navigate(-1);
   };
 
