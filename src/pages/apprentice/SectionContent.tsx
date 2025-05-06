@@ -109,9 +109,13 @@ const SectionContent = () => {
   
   return (
     <div className="space-y-6 animate-fade-in bg-[#121212] px-4 md:px-0">
-      {/* Back button to go to the unit sections page */}
+      {/* Back button to go to the unit sections page - making sure props get passed correctly */}
       <div className="max-w-4xl mx-auto pt-6">
-        <BackButton courseSlug={courseSlug} unitSlug={unitSlug} sectionId={sectionId} />
+        <BackButton 
+          courseSlug={courseSlug} 
+          unitSlug={unitSlug} 
+          sectionId={sectionId}
+        />
       </div>
       {renderUnitContent()}
     </div>

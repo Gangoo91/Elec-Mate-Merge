@@ -1,7 +1,5 @@
 
-import { useParams, Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { useParams } from "react-router-dom";
 import SubsectionLearningContent from "@/components/apprentice/subsection/SubsectionLearningContent";
 import { useState, useEffect } from "react";
 import BackButton from "@/components/apprentice/BackButton";
@@ -29,8 +27,12 @@ const SubsectionContent = () => {
   
   return (
     <div className="space-y-6 animate-fade-in bg-[#121212] px-4 md:px-6 max-w-4xl mx-auto py-8">
-      {/* Back button */}
-      <BackButton courseSlug={courseSlug} unitSlug={unitSlug} sectionId={sectionId} />
+      {/* Back button - explicitly passing all params for clarity */}
+      <BackButton 
+        courseSlug={courseSlug} 
+        unitSlug={unitSlug} 
+        sectionId={sectionId} 
+      />
       
       {/* Subsection content */}
       {subsectionId && (
