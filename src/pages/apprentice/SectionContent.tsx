@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Shield, BookOpen, Users } from "lucide-react";
 import { HealthSafetyUnit } from "@/components/apprentice/units";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import BackButton from "@/components/apprentice/BackButton";
 
 const SectionContent = () => {
   const { courseSlug, unitSlug, sectionId } = useParams();
@@ -108,6 +109,10 @@ const SectionContent = () => {
   
   return (
     <div className="space-y-6 animate-fade-in bg-[#121212] px-4 md:px-0">
+      {/* Add Back Button here */}
+      <div className="max-w-4xl mx-auto pt-6">
+        <BackButton courseSlug={courseSlug} unitSlug={unitSlug} />
+      </div>
       {renderUnitContent()}
     </div>
   );

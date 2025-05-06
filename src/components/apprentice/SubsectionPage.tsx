@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useSubsectionContent } from "@/hooks/useSubsectionContent";
 import SubsectionLearningContent from "./subsection/SubsectionLearningContent";
 import SubsectionsNavigation from "./SubsectionsNavigation";
+import BackButton from "./BackButton";
 
 const SubsectionPage = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
@@ -33,13 +34,17 @@ const SubsectionPage = () => {
       </div>
       
       <div className="flex-1 overflow-auto">
-        <div className="max-w-4xl mx-auto py-8 px-4 md:px-8">
+        <div className="max-w-4xl mx-auto py-4 px-4 md:px-8">
+          <BackButton courseSlug={courseSlug} unitSlug={unitSlug} sectionId={sectionId} />
+          
           {subsectionId && (
-            <SubsectionLearningContent
-              subsectionId={subsectionId}
-              isCompleted={isCompleted}
-              markAsComplete={markAsComplete}
-            />
+            <div className="mt-4">
+              <SubsectionLearningContent
+                subsectionId={subsectionId}
+                isCompleted={isCompleted}
+                markAsComplete={markAsComplete}
+              />
+            </div>
           )}
         </div>
       </div>
