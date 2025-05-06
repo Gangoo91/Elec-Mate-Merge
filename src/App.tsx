@@ -45,6 +45,7 @@ import { NotificationProvider } from "@/components/notifications/NotificationPro
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import Messenger from "./pages/Messenger";
+import Index from "./pages/Index";
 
 // Component imports
 import QuizContent from "./components/apprentice/QuizContent";
