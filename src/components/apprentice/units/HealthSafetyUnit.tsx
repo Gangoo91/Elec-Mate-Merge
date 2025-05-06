@@ -49,10 +49,10 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
               <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
                 <CardContent className="flex flex-col p-4 h-full">
                   <div className="flex items-center gap-3">
-                    <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-elec-yellow text-elec-dark font-bold text-lg">
-                      {section.sectionNumber}
-                    </span>
-                    <h3 className="text-lg font-medium">{section.title}</h3>
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                      <span className="text-elec-dark font-bold text-lg">{section.sectionNumber}</span>
+                    </div>
+                    <h3 className="text-base sm:text-lg font-medium leading-tight">{section.title}</h3>
                   </div>
                 </CardContent>
               </Card>
@@ -72,10 +72,10 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
             <CardContent className="flex flex-col p-4 h-full relative">
               <div className="flex items-center gap-3">
-                <span className="inline-flex items-center justify-center h-8 w-8 rounded-full bg-elec-yellow text-elec-dark font-bold text-lg">
-                  Q
-                </span>
-                <h3 className="text-lg font-medium">Health & Safety Assessment Quiz</h3>
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                  <span className="text-elec-dark font-bold text-lg">Q</span>
+                </div>
+                <h3 className="text-base sm:text-lg font-medium leading-tight">Health & Safety Assessment Quiz</h3>
               </div>
               
               {quizCompleted && (
@@ -96,3 +96,4 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
 };
 
 export default HealthSafetyUnit;
+
