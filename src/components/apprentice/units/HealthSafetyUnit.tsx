@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
+import { legislationSubsections, rolesResponsibilitiesSubsections } from "@/data/healthAndSafety/subsections";
 
 interface HealthSafetyUnitProps {
   unitCode: string;
@@ -35,7 +36,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Health and Safety Content */}
+      {/* Main Health and Safety Content */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {healthAndSafetyContent.map((section) => {
           const sectionSlug = createSectionSlug(section.sectionNumber);
@@ -59,6 +60,50 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
             </Link>
           );
         })}
+        
+        {/* Legislation and Regulations Section */}
+        <Link
+          to={`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/legislation`}
+          onClick={handleSectionClick}
+          className="block transition-transform hover:scale-102 duration-200"
+        >
+          <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
+            <CardContent className="flex flex-col p-4 h-full">
+              <div className="flex items-center gap-3">
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                  <span className="text-elec-dark font-bold text-lg">L</span>
+                </div>
+                <h3 className="text-base sm:text-lg font-medium leading-tight">Legislation and Regulations</h3>
+              </div>
+              
+              <div className="flex justify-end mt-auto pt-2">
+                <BookOpen className="h-5 w-5 text-elec-yellow opacity-70" />
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
+        
+        {/* Roles and Responsibilities Section */}
+        <Link
+          to={`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/roles`}
+          onClick={handleSectionClick}
+          className="block transition-transform hover:scale-102 duration-200"
+        >
+          <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
+            <CardContent className="flex flex-col p-4 h-full">
+              <div className="flex items-center gap-3">
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                  <span className="text-elec-dark font-bold text-lg">R</span>
+                </div>
+                <h3 className="text-base sm:text-lg font-medium leading-tight">Roles and Responsibilities</h3>
+              </div>
+              
+              <div className="flex justify-end mt-auto pt-2">
+                <BookOpen className="h-5 w-5 text-elec-yellow opacity-70" />
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
         
         {/* Quiz Section */}
         <Link
@@ -96,4 +141,3 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
 };
 
 export default HealthSafetyUnit;
-
