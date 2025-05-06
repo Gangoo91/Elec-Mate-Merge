@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
@@ -13,6 +13,7 @@ type BackButtonProps = {
 const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
   const navigate = useNavigate();
   const params = useParams();
+  const location = useLocation();
   
   // Use provided props or fallback to params from router
   const course = courseSlug || params.courseSlug;
@@ -21,18 +22,19 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
 
   const handleBackClick = () => {
     console.log("Back button clicked with params:", { course, unit, section });
+    console.log("Current path:", location.pathname);
     
     // Check if we're on a subsection page
-    const isSubsectionPage = window.location.pathname.includes('/subsection/');
+    const isSubsectionPage = location.pathname.includes('/subsection/');
+    // Check if we're on a section page
+    const isSectionPage = location.pathname.includes('/section/') && !isSubsectionPage;
     
-    if (course && unit && section) {
-      if (isSubsectionPage) {
-        // We're on a subsection page, navigate back to the section page
-        navigate(`/apprentice/study/eal/${course}/unit/${unit}/section/${section}`);
-      } else {
-        // We're on a section page, navigate back to the unit page
-        navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
-      }
+    if (isSubsectionPage && course && unit && section) {
+      // We're on a subsection page, navigate back to the section page
+      navigate(`/apprentice/study/eal/${course}/unit/${unit}/section/${section}`);
+    } else if (isSectionPage && course && unit) {
+      // We're on a section page, navigate back to the unit page with all sections
+      navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
     } else if (course && unit) {
       // We're on a unit page, navigate back to course
       navigate(`/apprentice/study/eal/${course}`);
@@ -47,9 +49,9 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
 
   // Determine button text based on context
   const getButtonText = () => {
-    if (window.location.pathname.includes('/subsection/')) {
+    if (location.pathname.includes('/subsection/')) {
       return "Back to Section";
-    } else if (window.location.pathname.includes('/section/')) {
+    } else if (location.pathname.includes('/section/')) {
       return "Back to Unit";
     } else {
       return "Back to Course";
