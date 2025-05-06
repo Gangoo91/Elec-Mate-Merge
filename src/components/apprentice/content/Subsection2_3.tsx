@@ -220,3 +220,4 @@ const Subsection2_3 = ({
 };
 
 export default Subsection2_3;
+
