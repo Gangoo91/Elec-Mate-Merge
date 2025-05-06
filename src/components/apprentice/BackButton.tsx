@@ -24,6 +24,12 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
     console.log("Back button clicked with params:", { course, unit, section });
     console.log("Current path:", location.pathname);
     
+    // If on Health & Safety Unit section 1 page, navigate back to the unit page that shows all sections
+    if (unit === 'elec2-01' && section === '1' && location.pathname.includes('/section/')) {
+      navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
+      return;
+    }
+    
     // Check if we're on a subsection page
     const isSubsectionPage = location.pathname.includes('/subsection/');
     // Check if we're on a section page
@@ -37,7 +43,7 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
       navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
     } else if (course && unit) {
       // We're on a unit page, navigate back to course
-      navigate(`/apprentice/study/eal/${course}`);
+      navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
     } else if (course) {
       // If we only have a course but no unit (e.g., on the unit listing page)
       navigate(`/apprentice/study/eal/${course}`);
