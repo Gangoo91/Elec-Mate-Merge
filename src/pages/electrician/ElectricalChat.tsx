@@ -35,13 +35,15 @@ const ElectricalChat = () => {
       
       <ChatSearchBar />
       
-      <ChatMessageFeed
-        messages={messages}
-        isLoading={isLoading}
-        currentUserId={profile?.id}
-        onUpvote={handleUpvote}
-        onPostComment={handlePostComment}
-      />
+      <div className="mt-2 flex-1">
+        <ChatMessageFeed
+          messages={messages}
+          isLoading={isLoading}
+          currentUserId={profile?.id}
+          onUpvote={handleUpvote}
+          onPostComment={handlePostComment}
+        />
+      </div>
       
       <ChatComposer 
         onSubmit={handleSubmitPost} 

@@ -10,22 +10,23 @@ interface ChatHeaderProps {
 
 const ChatHeader = ({ title, subtitle, onNewPost }: ChatHeaderProps) => {
   return (
-    <div className="bg-black border-b border-elec-yellow/20 sticky top-0 z-10 pb-4">
-      <div className="text-center py-6">
-        <h1 className="text-4xl font-bold text-elec-yellow mb-2">{title}</h1>
-        {subtitle && (
-          <p className="text-xl text-elec-yellow/80 max-w-2xl mx-auto">
-            {subtitle}
-          </p>
-        )}
-      </div>
-      
-      <div className="flex justify-center">
+    <div className="bg-black border-b border-elec-yellow/20 sticky top-0 z-10 py-3">
+      <div className="flex justify-between items-center px-4 max-w-3xl mx-auto">
+        <div>
+          <h1 className="text-2xl font-bold text-elec-yellow">{title}</h1>
+          {subtitle && (
+            <p className="text-sm text-elec-yellow/80 line-clamp-1">
+              {subtitle}
+            </p>
+          )}
+        </div>
+        
         <Button
           onClick={onNewPost}
+          size="sm"
           className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
         >
-          <PlusCircle className="mr-2 h-4 w-4" />
+          <PlusCircle className="mr-1 h-4 w-4" />
           New Post
         </Button>
       </div>
