@@ -1,304 +1,215 @@
 
-import { useState, useEffect, useRef } from 'react';
-import { useToast } from '@/components/ui/use-toast';
-import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
-import { useAuthState } from '@/hooks/time-tracking/useAuthState';
-import { formatTime } from '@/lib/utils';
-import { useLocation } from 'react-router-dom';
+import { useState, useEffect, useCallback, useRef } from "react";
+import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
+import { useAuthState } from "@/hooks/time-tracking/useAuthState";
+import { useToast } from "@/components/ui/use-toast";
 
-// Inactivity timeout in milliseconds
-const INACTIVITY_TIMEOUT = 60000; // 1 minute
-const SAVE_INTERVAL = 300000; // Save every 5 minutes
-
-// Routes that should auto-start tracking
-const AUTO_TRACK_ROUTES = [
-  '/apprentice/study', // Study area route
-  '/video-lessons' // Video lessons route
-];
-
-export const useAutomatedTraining = (autoStart = true) => {
+export const useAutomatedTraining = (autoStart = false) => {
   const [isTracking, setIsTracking] = useState(false);
   const [sessionTime, setSessionTime] = useState(0);
   const [currentActivity, setCurrentActivity] = useState<string | null>(null);
-  const [lastSaveTime, setLastSaveTime] = useState(0);
-  const { toast } = useToast();
-  const { userId } = useAuthState();
-  const { addTimeEntry } = useTimeEntries();
-  const location = useLocation();
-  
-  const timerRef = useRef<number | null>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const lastActivityRef = useRef<number>(Date.now());
-  const activityLogRef = useRef<{timestamp: number, action: string}[]>([]);
-  const hasAutoStartedRef = useRef<boolean>(false);
+  const { addTimeEntry } = useTimeEntries();
+  const { userId } = useAuthState();
+  const { toast } = useToast();
   
-  // Auto-start tracking when entering certain routes
+  // Auto-save interval (5 minutes in milliseconds)
+  const AUTO_SAVE_INTERVAL = 5 * 60 * 1000;
+  const autoSaveRef = useRef<NodeJS.Timeout | null>(null);
+  const lastAutoSaveRef = useRef<number>(0);
+
+  // Track user inactivity
   useEffect(() => {
-    if (!autoStart || isTracking || !location.pathname) return;
+    const handleActivity = () => {
+      lastActivityRef.current = Date.now();
+    };
+
+    window.addEventListener('mousemove', handleActivity);
+    window.addEventListener('keypress', handleActivity);
+    window.addEventListener('click', handleActivity);
+    window.addEventListener('scroll', handleActivity);
     
-    const shouldAutoStart = AUTO_TRACK_ROUTES.some(route => 
-      location.pathname.includes(route) || location.pathname.startsWith(route)
-    );
-    
-    if (shouldAutoStart && !hasAutoStartedRef.current) {
-      const activityType = location.pathname.includes('video') ? 
-        'Video Learning' : 
-        'Online Study';
-        
-      setTimeout(() => {
-        startTracking(activityType);
-        hasAutoStartedRef.current = true;
-      }, 1000); // Small delay to ensure page is fully loaded
-    }
-    
-    // Reset auto-start flag when leaving tracked routes
-    if (!shouldAutoStart) {
-      hasAutoStartedRef.current = false;
-    }
-  }, [location.pathname, isTracking, autoStart]);
-  
-  // Function to log user activity
-  const logActivity = (action: string) => {
-    lastActivityRef.current = Date.now();
-    
-    activityLogRef.current.push({
-      timestamp: Date.now(),
-      action
-    });
-    
-    // Limit activity log size
-    if (activityLogRef.current.length > 100) {
-      activityLogRef.current = activityLogRef.current.slice(-100);
-    }
-  };
-  
-  // Function to start tracking time
-  const startTracking = (activity: string) => {
-    if (isTracking) return;
-    
-    setCurrentActivity(activity);
-    setIsTracking(true);
-    setSessionTime(0);
-    lastActivityRef.current = Date.now();
-    activityLogRef.current = [];
-    setLastSaveTime(Date.now());
-    
-    logActivity(`Started ${activity}`);
-    
-    toast({
-      title: "Time tracking started",
-      description: `Your ${activity} time is now being tracked.`
-    });
-    
-    // Start timer
-    timerRef.current = window.setInterval(() => {
-      // Check for inactivity
-      const currentTime = Date.now();
-      const timeSinceLastActivity = currentTime - lastActivityRef.current;
-      
-      if (timeSinceLastActivity > INACTIVITY_TIMEOUT) {
-        logActivity('Inactivity detected');
-        pauseTracking();
-        return;
-      }
-      
-      setSessionTime(prev => prev + 1);
-      
-      // Save progress periodically
-      if (currentTime - lastSaveTime > SAVE_INTERVAL) {
-        saveTempProgress();
-        setLastSaveTime(currentTime);
-      }
-    }, 1000);
-  };
-  
-  // Function to pause tracking
-  const pauseTracking = () => {
-    if (!isTracking) return;
-    
-    if (timerRef.current) {
-      window.clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-    
-    setIsTracking(false);
-    
-    logActivity('Paused tracking');
-    
-    toast({
-      title: "Time tracking paused",
-      description: "Your training time tracking has been paused due to inactivity."
-    });
-  };
-  
-  // Function to resume tracking
-  const resumeTracking = () => {
-    if (isTracking || !currentActivity) return;
-    
-    setIsTracking(true);
-    lastActivityRef.current = Date.now();
-    
-    logActivity('Resumed tracking');
-    
-    toast({
-      title: "Time tracking resumed",
-      description: `Your ${currentActivity} time tracking has been resumed.`
-    });
-    
-    // Restart timer
-    timerRef.current = window.setInterval(() => {
-      const currentTime = Date.now();
-      const timeSinceLastActivity = currentTime - lastActivityRef.current;
-      
-      if (timeSinceLastActivity > INACTIVITY_TIMEOUT) {
-        pauseTracking();
-        return;
-      }
-      
-      setSessionTime(prev => prev + 1);
-      
-      // Save progress periodically
-      if (currentTime - lastSaveTime > SAVE_INTERVAL) {
-        saveTempProgress();
-        setLastSaveTime(currentTime);
-      }
-    }, 1000);
-  };
-  
-  // Function to stop tracking and save time
-  const stopTracking = () => {
-    if (!isTracking && !currentActivity) return;
-    
-    if (timerRef.current) {
-      window.clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-    
-    const finalActivity = currentActivity || 'training';
-    const finalTime = sessionTime;
-    
-    setIsTracking(false);
-    setCurrentActivity(null);
-    setSessionTime(0);
-    
-    // Only save if there's actually time to record
-    if (finalTime > 0) {
-      // Convert seconds to minutes for the time entry
-      const durationInMinutes = Math.ceil(finalTime / 60);
-      
-      logActivity(`Completed ${finalActivity} - ${formatTime(finalTime)}`);
-      
-      // Add the time entry
-      addTimeEntry(
-        durationInMinutes, 
-        finalActivity, 
-        `Automatically tracked: ${formatTime(finalTime)} of ${finalActivity} with activity verification`
-      );
-      
-      toast({
-        title: "Time saved",
-        description: `${formatTime(finalTime)} of ${finalActivity} has been added to your training log with verification.`
-      });
-    }
-    
-    // Clear activity log
-    activityLogRef.current = [];
-  };
-  
-  // Function to save temporary progress without stopping
-  const saveTempProgress = () => {
-    if (!isTracking || sessionTime === 0 || !currentActivity) return;
-    
-    // Convert seconds to minutes for the time entry
-    const durationInMinutes = Math.ceil(sessionTime / 60);
-    
-    logActivity(`Auto-saved progress: ${formatTime(sessionTime)}`);
-    
-    // Add the time entry
-    addTimeEntry(
-      durationInMinutes, 
-      currentActivity, 
-      `Auto-saved progress: ${formatTime(sessionTime)} of ${currentActivity} with activity verification`
-    );
-    
-    // Reset the session time but continue tracking
-    setSessionTime(0);
-    
-    toast({
-      title: "Progress saved",
-      description: `${formatTime(sessionTime)} of ${currentActivity} has been saved to your training log.`,
-    });
-  };
-  
-  // User activity detection
+    return () => {
+      window.removeEventListener('mousemove', handleActivity);
+      window.removeEventListener('keypress', handleActivity);
+      window.removeEventListener('click', handleActivity);
+      window.removeEventListener('scroll', handleActivity);
+    };
+  }, []);
+
+  // Check for inactivity every minute and pause tracking if inactive
   useEffect(() => {
-    const trackUserActivity = () => {
-      // Only update if we're currently tracking
+    const checkActivity = () => {
       if (isTracking) {
-        lastActivityRef.current = Date.now();
+        const now = Date.now();
+        const inactiveTime = now - lastActivityRef.current;
         
-        // If we were paused due to inactivity, resume
-        if (!timerRef.current) {
-          resumeTracking();
+        // If inactive for more than 1 minute (60000 ms), pause tracking
+        if (inactiveTime > 60000) {
+          pauseTracking();
+          
+          toast({
+            title: "Training paused",
+            description: "Tracking paused due to inactivity",
+          });
         }
       }
     };
     
-    // Events to track for user activity
-    const events = ['mousemove', 'mousedown', 'keypress', 'scroll', 'touchstart'];
-    
-    // Add event listeners
-    events.forEach(event => {
-      document.addEventListener(event, trackUserActivity);
-    });
-    
-    // Cleanup event listeners
-    return () => {
-      events.forEach(event => {
-        document.removeEventListener(event, trackUserActivity);
-      });
-    };
-  }, [isTracking]);
-  
-  // Cleanup on unmount
+    const activityInterval = setInterval(checkActivity, 60000);
+    return () => clearInterval(activityInterval);
+  }, [isTracking, toast]);
+
+  // Timer logic
   useEffect(() => {
+    if (isTracking) {
+      timerRef.current = setInterval(() => {
+        setSessionTime(prev => prev + 1);
+      }, 1000);
+      
+      // Set up auto-save
+      if (!autoSaveRef.current) {
+        autoSaveRef.current = setInterval(() => {
+          if (sessionTime > lastAutoSaveRef.current && sessionTime - lastAutoSaveRef.current >= 60) {
+            // Only auto-save if at least 1 minute has passed since the last save
+            const minutesToSave = Math.floor((sessionTime - lastAutoSaveRef.current) / 60);
+            if (minutesToSave > 0 && currentActivity) {
+              // Convert seconds to minutes for storage
+              addTimeEntry(minutesToSave, currentActivity, "Auto-saved training time");
+              lastAutoSaveRef.current = sessionTime;
+              
+              toast({
+                title: "Progress saved",
+                description: `${minutesToSave} minutes of training time recorded`,
+                variant: "default",
+              });
+            }
+          }
+        }, AUTO_SAVE_INTERVAL);
+      }
+    } else {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+      
+      if (autoSaveRef.current) {
+        clearInterval(autoSaveRef.current);
+        autoSaveRef.current = null;
+      }
+    }
+    
     return () => {
       if (timerRef.current) {
-        window.clearInterval(timerRef.current);
+        clearInterval(timerRef.current);
+      }
+      if (autoSaveRef.current) {
+        clearInterval(autoSaveRef.current);
+      }
+    };
+  }, [isTracking, sessionTime, addTimeEntry, currentActivity, toast]);
+
+  // Auto-start based on the autoStart prop
+  useEffect(() => {
+    if (autoStart && userId) {
+      startTracking("Application Study");
+    }
+  }, [autoStart, userId]);
+
+  // Start tracking function
+  const startTracking = useCallback((activity: string) => {
+    if (!userId) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to track your training time",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setIsTracking(true);
+    setCurrentActivity(activity);
+    lastActivityRef.current = Date.now();
+    console.log(`Started tracking: ${activity}`);
+  }, [userId, toast]);
+
+  // Pause tracking function
+  const pauseTracking = useCallback(() => {
+    setIsTracking(false);
+    
+    // Save progress when paused
+    if (sessionTime > lastAutoSaveRef.current && currentActivity) {
+      const minutesToSave = Math.floor((sessionTime - lastAutoSaveRef.current) / 60);
+      if (minutesToSave > 0) {
+        addTimeEntry(minutesToSave, currentActivity, "Paused training time");
+        lastAutoSaveRef.current = sessionTime;
+      }
+    }
+    
+    console.log("Tracking paused");
+  }, [sessionTime, currentActivity, addTimeEntry]);
+
+  // Resume tracking function
+  const resumeTracking = useCallback(() => {
+    if (!userId) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to track your training time",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    if (currentActivity) {
+      setIsTracking(true);
+      lastActivityRef.current = Date.now();
+      console.log("Tracking resumed");
+    }
+  }, [currentActivity, userId, toast]);
+
+  // Stop and save tracking function
+  const stopTracking = useCallback(() => {
+    setIsTracking(false);
+    
+    // Calculate minutes to save (convert seconds to minutes)
+    if (currentActivity && sessionTime > 0) {
+      // Add the time that hasn't been auto-saved yet
+      const minutesToSave = Math.max(1, Math.floor((sessionTime - lastAutoSaveRef.current) / 60));
+      
+      if (minutesToSave > 0) {
+        addTimeEntry(minutesToSave, currentActivity, "Manually saved training time");
+      }
+      
+      toast({
+        title: "Training complete",
+        description: `${minutesToSave} minutes of training time saved`,
+      });
+    }
+    
+    // Reset values
+    setSessionTime(0);
+    setCurrentActivity(null);
+    lastAutoSaveRef.current = 0;
+    
+    console.log("Tracking stopped and saved");
+  }, [sessionTime, currentActivity, addTimeEntry, toast]);
+
+  // Handle cleanup when component unmounts
+  useEffect(() => {
+    return () => {
+      // If still tracking when unmounting, save the remaining time
+      if (isTracking && currentActivity && sessionTime > lastAutoSaveRef.current) {
+        const minutesToSave = Math.max(1, Math.floor((sessionTime - lastAutoSaveRef.current) / 60));
         
-        // If we have time tracked, save it before unmounting
-        if (sessionTime > 0 && currentActivity) {
-          const durationInMinutes = Math.ceil(sessionTime / 60);
-          addTimeEntry(
-            durationInMinutes, 
-            currentActivity, 
-            `Session ended: ${formatTime(sessionTime)} of ${currentActivity}`
-          );
+        if (minutesToSave > 0) {
+          addTimeEntry(minutesToSave, currentActivity, "Session ended training time");
+          console.log(`Saved ${minutesToSave} minutes before unmounting`);
         }
       }
     };
-  }, [sessionTime, currentActivity, addTimeEntry]);
-  
-  // Check for page changes to log activity
-  useEffect(() => {
-    // Log page navigation
-    logActivity(`Navigated to ${window.location.pathname}`);
-    
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        if (isTracking) pauseTracking();
-        logActivity('Left page');
-      } else {
-        logActivity('Returned to page');
-      }
-    };
-    
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, [isTracking]);
-  
+  }, [isTracking, sessionTime, currentActivity, addTimeEntry]);
+
   return {
     isTracking,
     sessionTime,
@@ -307,6 +218,6 @@ export const useAutomatedTraining = (autoStart = true) => {
     pauseTracking,
     resumeTracking,
     stopTracking,
-    activityLog: activityLogRef.current
+    isAuthenticated: !!userId
   };
 };

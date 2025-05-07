@@ -1,6 +1,8 @@
 
 import { useEffect } from 'react';
 import { useAutomatedTraining } from '@/hooks/useAutomatedTraining';
+import { useToast } from '@/components/ui/use-toast';
+import { useAuthState } from "@/hooks/time-tracking/useAuthState";
 
 export const useVideoTracking = () => {
   const { 
@@ -8,8 +10,12 @@ export const useVideoTracking = () => {
     startTracking,
     pauseTracking,
     stopTracking,
-    currentActivity 
+    currentActivity,
+    isAuthenticated
   } = useAutomatedTraining(true); // Enable auto-start
+  
+  const { toast } = useToast();
+  const { userId } = useAuthState();
   
   // Handle cleanup when component unmounts
   useEffect(() => {
@@ -23,8 +29,21 @@ export const useVideoTracking = () => {
   
   // Manually trigger video tracking if needed
   const trackVideoView = (videoTitle: string) => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Sign in to track progress",
+        description: "Sign in to keep track of your learning progress",
+        variant: "default"
+      });
+      return;
+    }
+    
     if (!isTracking) {
       startTracking(`Video: ${videoTitle}`);
+      toast({
+        title: "Video tracking started",
+        description: "Your learning time is being tracked automatically",
+      });
     }
   };
   
@@ -32,6 +51,7 @@ export const useVideoTracking = () => {
     isTracking,
     trackVideoView,
     pauseTracking,
-    currentActivity
+    currentActivity,
+    isAuthenticated
   };
 };

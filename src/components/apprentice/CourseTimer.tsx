@@ -5,6 +5,7 @@ import TimerHeader from "./timer/TimerHeader";
 import InactivityHandler from "./timer/InactivityHandler";
 import { useEffect } from "react";
 import { useAutomatedTraining } from "@/hooks/useAutomatedTraining";
+import { useToast } from "@/components/ui/use-toast";
 
 interface CourseTimerProps {
   courseSlug: string | undefined;
@@ -26,16 +27,36 @@ const CourseTimer = ({
   onStopStudy
 }: CourseTimerProps) => {
   const isVideoContent = currentResourceType === 'video';
+  const { toast } = useToast();
   
   // Connect with the automated tracking system
-  const { isTracking, startTracking, stopTracking } = useAutomatedTraining();
+  const { 
+    isTracking, 
+    startTracking, 
+    stopTracking, 
+    isAuthenticated 
+  } = useAutomatedTraining();
   
   // When manual study is started or stopped, sync with auto tracking
   useEffect(() => {
-    if (isStudying && !isTracking) {
+    if (isStudying && !isTracking && isAuthenticated) {
       startTracking(`Course: ${courseSlug || 'Unknown'}`);
     }
-  }, [isStudying, isTracking, startTracking, courseSlug]);
+  }, [isStudying, isTracking, startTracking, courseSlug, isAuthenticated]);
+
+  // Handle study start with authentication check
+  const handleStartStudy = () => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Sign in required",
+        description: "Please sign in to track your study time",
+        variant: "default"
+      });
+      return;
+    }
+    
+    onStartStudy();
+  };
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
@@ -57,7 +78,7 @@ const CourseTimer = ({
                   isRunning={isStudying}
                   elapsedTime={elapsedTime} 
                   todayTotal={todayTotal}
-                  onStart={onStartStudy}
+                  onStart={handleStartStudy}
                   onStop={onStopStudy}
                   className="md:min-w-[280px]"
                 />
