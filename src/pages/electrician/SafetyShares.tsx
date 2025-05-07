@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Badge } from "@/components/ui/badge";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const SafetyShares = () => {
   // Simulating a notification when page loads
@@ -97,6 +98,28 @@ const SafetyShares = () => {
         </Link>
       </div>
 
+      {/* Navigation Tabs - Added for better visibility */}
+      <Tabs defaultValue="all" className="w-full mt-4">
+        <TabsList className="w-full justify-start overflow-auto">
+          <TabsTrigger value="all" className="px-4 py-2">All Updates</TabsTrigger>
+          {categories.map(category => (
+            <TabsTrigger 
+              key={category.id}
+              value={category.id}
+              className="px-4 py-2"
+              onClick={() => window.location.href = category.linkTo}
+            >
+              {category.title}
+              {category.badge && (
+                <span className={`ml-2 text-xs px-1.5 py-0.5 rounded ${category.badgeColor.split(' ')[0]}`}>
+                  {category.badge}
+                </span>
+              )}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
+
       {/* Featured Alert Banner */}
       <Card className="bg-gradient-to-r from-red-900/40 to-red-800/20 border-red-500/30">
         <CardContent className="p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -121,7 +144,7 @@ const SafetyShares = () => {
         {categories.map((category) => (
           <Card 
             key={category.id}
-            className={`overflow-hidden border-elec-yellow/20 bg-gradient-to-br ${category.color} hover:shadow-md transition-all duration-200`}
+            className={`overflow-hidden border-elec-yellow/20 bg-gradient-to-br ${category.color} hover:shadow-md transition-all duration-200 group`}
           >
             <CardHeader className="pb-2">
               <div className="flex justify-between items-start">
@@ -143,12 +166,14 @@ const SafetyShares = () => {
               <div className="h-1 bg-white/10 rounded-full w-full" />
             </CardContent>
             <CardFooter>
-              <Button asChild className="w-full flex items-center gap-2 bg-elec-gray/30 hover:bg-elec-gray/50 border border-white/10">
-                <Link to={category.linkTo}>
+              <Link to={category.linkTo} className="w-full">
+                <Button 
+                  className="w-full flex items-center gap-2 bg-elec-gray/30 hover:bg-elec-gray/50 border border-white/10 group-hover:bg-opacity-80 group-hover:scale-[1.02] transition-all"
+                >
                   {category.linkText}
-                  <ExternalLink className="h-4 w-4" />
-                </Link>
-              </Button>
+                  <ExternalLink className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
             </CardFooter>
           </Card>
         ))}
