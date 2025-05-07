@@ -143,6 +143,7 @@ export const useJobListings = () => {
     currentJobs,
     isLoading,
     selectedJob, 
+    setSelectedJob, // <-- Added this to expose it
     locationFilter,
     jobTypeFilter,
     locations,

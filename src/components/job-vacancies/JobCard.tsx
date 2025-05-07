@@ -37,9 +37,12 @@ const JobCard: React.FC<JobCardProps> = ({ job, selectedJob, handleApply }) => {
   const isSelected = selectedJob === job.id;
 
   return (
-    <Card className={`bg-elec-card border-elec-yellow/20 transition-shadow hover:shadow-md ${
-      isSelected ? 'ring-2 ring-elec-yellow' : ''
-    }`}>
+    <Card 
+      id={`job-${job.id}`}
+      className={`bg-elec-card border-elec-yellow/20 transition-shadow hover:shadow-md ${
+        isSelected ? 'ring-2 ring-elec-yellow' : ''
+      }`}
+    >
       <CardHeader className="p-4 pb-2">
         <div className="flex justify-between items-start">
           <div className="space-y-1">

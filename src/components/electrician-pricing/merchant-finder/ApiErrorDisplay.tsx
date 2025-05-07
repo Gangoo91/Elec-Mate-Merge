@@ -8,7 +8,7 @@ interface ApiErrorDisplayProps {
 }
 
 export const ApiErrorDisplay = ({ apiStatus, apiErrorMessage }: ApiErrorDisplayProps) => {
-  if (!apiStatus) return null;
+  if (!apiStatus && !apiErrorMessage) return null;
   
   switch(apiStatus) {
     case 'REQUEST_DENIED':
@@ -52,7 +52,7 @@ export const ApiErrorDisplay = ({ apiStatus, apiErrorMessage }: ApiErrorDisplayP
         <Alert className="mt-4 bg-amber-500/10 border-amber-500/30 text-amber-500">
           <Info className="h-4 w-4" />
           <AlertDescription className="text-sm">
-            An error occurred with status: {apiStatus}
+            An error occurred with status: {apiStatus || "Unknown"}
             {apiErrorMessage && (
               <p className="mt-1 italic text-xs">{apiErrorMessage}</p>
             )}
