@@ -1,14 +1,16 @@
 
 project_id = "jtwygbeceundfgnkirof"
-
 [api]
 enabled = true
-port = 54321
-schemas = ["public", "storage"]
-
 [db]
-port = 54322
-
-[studio]
 enabled = true
-port = 54323
+[realtime]
+enabled = true
+[storage]
+enabled = true
+[functions]
+enabled = true
+[functions.fetch-job-listings]
+verify_jwt = true
+[functions.setup-job-cron]
+verify_jwt = true

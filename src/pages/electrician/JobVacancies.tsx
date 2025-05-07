@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -6,6 +5,7 @@ import { Briefcase, ArrowLeft, FileText, Filter, ExternalLink } from "lucide-rea
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
 import CVBuilderBox from "@/components/electrician-tools/CVBuilderBox";
+import JobListingsFetcher from "@/components/electrician-tools/JobListingsFetcher";
 import {
   Select,
   SelectContent,
@@ -178,6 +178,9 @@ const JobVacancies = () => {
           </Button>
         </Link>
       </div>
+
+      {/* Add the Job Listings Fetcher component */}
+      <JobListingsFetcher />
 
       {/* AI CV Builder Box */}
       <CVBuilderBox />
