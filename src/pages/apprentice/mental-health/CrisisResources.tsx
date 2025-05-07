@@ -7,6 +7,7 @@ import AndysManClub from "@/components/mental-health/crisis/AndysManClub";
 import ResourceDownloads from "@/components/mental-health/crisis/ResourceDownloads";
 import EmergencyBanner from "@/components/mental-health/crisis/EmergencyBanner";
 import { emergencyContacts, onlineResources } from "@/components/mental-health/crisis/CrisisResourcesData";
+import LocalResourceFinder from "@/components/mental-health/crisis/LocalResourceFinder";
 
 const CrisisResources = () => {
   return (
@@ -18,6 +19,8 @@ const CrisisResources = () => {
     >
       <div className="space-y-6">
         <EmergencyBanner />
+        
+        <LocalResourceFinder />
         
         <div className="space-y-6">
           <CrisisHelplines emergencyContacts={emergencyContacts} />
