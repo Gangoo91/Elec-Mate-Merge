@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
@@ -37,6 +38,7 @@ import JobVacancies from "./pages/electrician/JobVacancies";
 import ElectricalMaterials from "./pages/electrician/ElectricalMaterials";
 import SupplierMaterials from "./pages/electrician/SupplierMaterials";
 import ElectricalTools from "./pages/electrician/ElectricalTools";
+import MentorConnect from "./pages/electrician/MentorConnect";
 import SafetyShares from "./pages/electrician/SafetyShares";
 import SafetyAlerts from "./pages/electrician/safety-shares/SafetyAlerts";
 import LearningFromExperience from "./pages/electrician/safety-shares/LearningFromExperience";
@@ -97,6 +99,7 @@ function App() {
                 <Route path="electrical-hub" element={<ElectricalHub />} />
                 <Route path="electrician" element={<Navigate to="/electrical-hub" replace />} />
                 <Route path="electrician/toolbox-talk" element={<ElectricalToolboxTalk />} />
+                <Route path="electrician/mentor-connect" element={<MentorConnect />} />
                 <Route path="electrician/chat" element={<ElectricalChat />} />
                 <Route path="electrician/job-vacancies" element={<JobVacancies />} />
                 <Route path="electrician/materials" element={<ElectricalMaterials />} />

@@ -30,9 +30,9 @@ const ElectricalHub = () => {
     {
       id: 4,
       title: "Mentor Connect",
-      description: "Connect with industry mentors for guidance and career advice",
+      description: "Offer mentorship to apprentices seeking guidance in their electrical career",
       icon: <Users className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/apprentice/mentor"
+      link: "/electrician/mentor-connect"
     },
     {
       id: 5,
@@ -80,6 +80,6 @@ const ElectricalHub = () => {
       </div>
     </div>
   );
-};
+}
 
 export default ElectricalHub;
