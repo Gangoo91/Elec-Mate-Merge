@@ -30,42 +30,44 @@ const ScrapPriceTable = ({ items }: ScrapPriceTableProps) => {
         <CardTitle className="text-xl">Scrap Metal Prices</CardTitle>
       </CardHeader>
       <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Material</TableHead>
-              <TableHead>Current Price</TableHead>
-              <TableHead>Change</TableHead>
-              <TableHead>Unit</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {items.map((item) => (
-              <TableRow key={item.id}>
-                <TableCell className="font-medium">{item.material}</TableCell>
-                <TableCell>{item.price}</TableCell>
-                <TableCell>
-                  <span className={`flex items-center ${
-                    item.trend === "up" 
-                      ? "text-green-500" 
-                      : item.trend === "down"
-                      ? "text-red-500"
-                      : "text-gray-400"
-                  }`}>
-                    {item.trend === "up" 
-                      ? <TrendingUp className="h-4 w-4 mr-1" /> 
-                      : item.trend === "down"
-                      ? <TrendingDown className="h-4 w-4 mr-1" />
-                      : null
-                    }
-                    {item.change}
-                  </span>
-                </TableCell>
-                <TableCell>{item.unit}</TableCell>
+        <div className="overflow-x-auto">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Material</TableHead>
+                <TableHead>Current Price</TableHead>
+                <TableHead>Change</TableHead>
+                <TableHead>Unit</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {items.map((item) => (
+                <TableRow key={item.id}>
+                  <TableCell className="font-medium">{item.material}</TableCell>
+                  <TableCell>{item.price}</TableCell>
+                  <TableCell>
+                    <span className={`flex items-center ${
+                      item.trend === "up" 
+                        ? "text-green-500" 
+                        : item.trend === "down"
+                        ? "text-red-500"
+                        : "text-gray-400"
+                    }`}>
+                      {item.trend === "up" 
+                        ? <TrendingUp className="h-4 w-4 mr-1" /> 
+                        : item.trend === "down"
+                        ? <TrendingDown className="h-4 w-4 mr-1" />
+                        : null
+                      }
+                      {item.change}
+                    </span>
+                  </TableCell>
+                  <TableCell>{item.unit}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       </CardContent>
     </Card>
   );

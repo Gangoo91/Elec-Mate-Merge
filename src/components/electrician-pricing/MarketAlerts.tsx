@@ -15,7 +15,7 @@ interface MarketAlertsProps {
 
 const MarketAlerts = ({ alerts }: MarketAlertsProps) => {
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-elec-gray h-full">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Bell className="h-5 w-5 text-elec-yellow" />

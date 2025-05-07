@@ -1,39 +1,44 @@
 
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { PoundSterling, ArrowLeft, TrendingUp, TrendingDown } from "lucide-react";
+import { PoundSterling, ArrowLeft, RefreshCw } from "lucide-react";
 import LivePricingMetricsCard from "@/components/electrician-pricing/LivePricingMetricsCard";
-import PriceHistoryChart from "@/components/electrician-pricing/PriceHistoryChart";
 import ScrapPriceTable from "@/components/electrician-pricing/ScrapPriceTable";
 import MarketAlerts from "@/components/electrician-pricing/MarketAlerts";
+import { useToast } from "@/hooks/use-toast";
 
 const LivePricing = () => {
+  const { toast } = useToast();
+  const [lastUpdated, setLastUpdated] = useState("7 May 2025, 10:30 AM");
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  
   const metalPrices = [
     {
       id: 1,
-      name: "Copper (per tonne)",
-      value: "£7,245.50",
+      name: "Copper (per kg)",
+      value: "£7.25",
       change: "+2.3%",
       trend: "up" as const,
     },
     {
       id: 2,
-      name: "Aluminium (per tonne)",
-      value: "£2,187.25",
+      name: "Aluminium (per kg)",
+      value: "£2.19",
       change: "-0.8%",
       trend: "down" as const,
     },
     {
       id: 3,
-      name: "Steel (per tonne)",
-      value: "£680.40",
+      name: "Steel (per kg)",
+      value: "£0.68",
       change: "+0.5%",
       trend: "up" as const,
     },
     {
       id: 4,
-      name: "Brass (per tonne)",
-      value: "£5,120.00",
+      name: "Brass (per kg)",
+      value: "£5.12",
       change: "-1.2%",
       trend: "down" as const,
     }
@@ -152,14 +157,6 @@ const LivePricing = () => {
     }
   ];
 
-  const copperPriceHistory = [
-    { date: "Jan", price: 6800 },
-    { date: "Feb", price: 7100 },
-    { date: "Mar", price: 6950 },
-    { date: "Apr", price: 7200 },
-    { date: "May", price: 7245 }
-  ];
-
   const marketAlerts = [
     {
       id: 1,
@@ -181,32 +178,53 @@ const LivePricing = () => {
     }
   ];
 
+  const refreshPrices = () => {
+    setIsRefreshing(true);
+    
+    // Simulate API call with a timeout
+    setTimeout(() => {
+      const now = new Date();
+      const formattedDate = `${now.getDate()} ${now.toLocaleString('default', { month: 'short' })} ${now.getFullYear()}, ${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')} ${now.getHours() >= 12 ? 'PM' : 'AM'}`;
+      setLastUpdated(formattedDate);
+      setIsRefreshing(false);
+      
+      toast({
+        title: "Prices Updated",
+        description: "Latest material pricing data has been loaded",
+      });
+    }, 1500);
+  };
+
   return (
     <div className="space-y-8 animate-fade-in">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-            <PoundSterling className="h-8 w-8 text-elec-yellow" />
-            Live Pricing
-          </h1>
-          <p className="text-muted-foreground">
-            Real-time pricing updates for materials and services
-          </p>
-        </div>
-        <Link to="/electrician/toolbox-talk">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Toolbox Talk
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 justify-between">
+        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
+          <PoundSterling className="h-8 w-8 text-elec-yellow" />
+          Live Pricing
+        </h1>
+        
+        <div className="flex items-center gap-2">
+          <Link to="/electrician/toolbox-talk">
+            <Button variant="outline" className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" /> Back
+            </Button>
+          </Link>
+          
+          <Button 
+            variant="outline" 
+            className="flex items-center gap-2"
+            onClick={refreshPrices}
+            disabled={isRefreshing}
+          >
+            <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
+            Refresh
           </Button>
-        </Link>
+        </div>
       </div>
 
-      <div className="border p-4 rounded-lg bg-elec-gray border-elec-yellow/20 mb-6">
-        <h2 className="text-xl font-medium mb-2">Market Overview</h2>
-        <p className="mb-4">
-          Current pricing data from major UK electrical wholesalers and material markets.
-          Updated hourly to reflect the latest changes in material costs and labor rates.
-        </p>
-        <div className="text-sm text-muted-foreground">Last updated: 7 May 2025, 10:30 AM</div>
+      <div className="border p-4 rounded-lg bg-elec-gray border-elec-yellow/20 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <h2 className="text-xl font-medium">Material Market Prices</h2>
+        <div className="text-sm text-muted-foreground">Last updated: {lastUpdated}</div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -216,16 +234,9 @@ const LivePricing = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <PriceHistoryChart
-          title="Copper"
-          data={copperPriceHistory}
-          color="#f59e0b"
-          unit="£"
-        />
         <MarketAlerts alerts={marketAlerts} />
+        <ScrapPriceTable items={scrapMetalPrices} />
       </div>
-
-      <ScrapPriceTable items={scrapMetalPrices} />
       
       <div className="border p-4 rounded-lg bg-elec-gray border-elec-yellow/20">
         <h2 className="text-lg font-medium mb-2">Price Information Disclaimer</h2>
