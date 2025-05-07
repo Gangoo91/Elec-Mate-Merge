@@ -18,7 +18,7 @@ const TalkToSomeone = () => {
             <Button 
               variant="outline" 
               size="sm" 
-              className="w-full flex items-center gap-2"
+              className="w-full flex items-center justify-center gap-2"
             >
               <MessageSquare className="h-4 w-4" />
               <span>Message a Mate</span>
@@ -28,14 +28,14 @@ const TalkToSomeone = () => {
             <Button 
               variant="outline" 
               size="sm" 
-              className="w-full flex items-center gap-2"
+              className="w-full flex items-center justify-center gap-2"
             >
               <User className="h-4 w-4" />
               <span>Find a Mentor</span>
             </Button>
           </Link>
           <Button 
-            className="w-full bg-purple-500 hover:bg-purple-600 text-white flex items-center gap-2"
+            className="w-full bg-purple-500 hover:bg-purple-600 text-white flex items-center justify-center gap-2"
             size="sm"
             onClick={() => toast.success("A counselor will contact you within 24 hours")}
           >

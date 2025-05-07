@@ -19,7 +19,7 @@ export const MerchantCard = ({ merchant, openDirections }: MerchantCardProps) =>
         <div>
           <h3 className="font-medium text-lg">{merchant.name}</h3>
           <p className="text-sm text-muted-foreground flex items-center gap-1">
-            <MapPin className="h-3 w-3" /> {merchant.address} ({merchant.distance})
+            <MapPin className="h-3 w-3 flex-shrink-0" /> {merchant.address} ({merchant.distance})
           </p>
         </div>
         <span className={`px-2 py-0.5 text-xs rounded-full ${
@@ -44,11 +44,11 @@ export const MerchantCard = ({ merchant, openDirections }: MerchantCardProps) =>
         </div>
       </div>
       
-      <div className="mt-3 flex flex-col gap-2">
+      <div className="mt-3 flex flex-col sm:flex-row gap-2">
         <Button 
           size="sm" 
           variant="outline" 
-          className="flex items-center gap-1"
+          className="flex items-center justify-center gap-1 w-full"
           disabled={merchant.phone === 'Not available'}
           onClick={() => window.open(`tel:${merchant.phone}`, '_blank')}
         >
@@ -58,7 +58,7 @@ export const MerchantCard = ({ merchant, openDirections }: MerchantCardProps) =>
         <Button 
           size="sm" 
           variant="outline" 
-          className="flex items-center gap-1"
+          className="flex items-center justify-center gap-1 w-full"
           onClick={() => openDirections(merchant)}
         >
           <ExternalLink className="h-3 w-3" />

@@ -2,8 +2,9 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.7'
 import { corsHeaders } from '../_shared/cors.ts'
 
-// Mind's API base URL - replace with actual Mind API endpoint when available
-const MINDS_API_BASE_URL = "https://www.mind.org.uk/api/local-services";
+// Google Places API configuration
+const GOOGLE_PLACES_API_BASE_URL = "https://maps.googleapis.com/maps/api/place";
+const GOOGLE_MAPS_API_KEY = Deno.env.get("GOOGLE_MAPS_API_KEY") || "";
 
 // Set up CORS to allow requests from our app
 Deno.serve(async (req) => {
@@ -32,52 +33,92 @@ Deno.serve(async (req) => {
     }
 
     try {
-      // Call Mind's API to get local mental health services
-      // Note: This is a placeholder implementation using Mind's API structure
-      // You'll need to check their actual API documentation for the correct endpoint and parameters
-      const response = await fetch(`${MINDS_API_BASE_URL}?postcode=${encodeURIComponent(postcode)}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          // Add any required API keys or auth headers here if needed
-        },
-      });
-
-      if (!response.ok) {
-        console.error(`Mind API error: ${response.status} - ${await response.text()}`);
-        
-        // Fallback to mock data if the API fails
-        return new Response(
-          JSON.stringify({ 
-            services: generateMockServices(postcode),
-            source: "mock (API unavailable)" 
-          }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-
-      const data = await response.json();
+      // Step 1: Convert postcode to coordinates using postcodes.io
+      const postcodeResponse = await fetch(`https://api.postcodes.io/postcodes/${encodeURIComponent(postcode)}`);
       
-      // Transform the Mind API response to match our expected format
-      // This will need to be adjusted based on actual Mind API response structure
-      const services = data.services.map((service: any) => ({
-        name: service.name,
-        distance: service.distance || "Unknown",
-        type: service.serviceType || "Support Service",
-        contact: service.telephone || service.email || "Contact details unavailable",
-        address: service.address || "Address unavailable"
+      if (!postcodeResponse.ok) {
+        throw new Error(`Postcode API error: ${postcodeResponse.status}`);
+      }
+      
+      const postcodeData = await postcodeResponse.json();
+      const { latitude, longitude } = postcodeData.result;
+      
+      if (!latitude || !longitude) {
+        throw new Error('Could not get coordinates for this postcode');
+      }
+      
+      // Step 2: Search for mental health services near the coordinates
+      const searchParams = new URLSearchParams({
+        location: `${latitude},${longitude}`,
+        radius: '5000', // 5km radius
+        keyword: 'mental health support counselling therapy',
+        key: GOOGLE_MAPS_API_KEY
+      });
+      
+      const placesResponse = await fetch(
+        `${GOOGLE_PLACES_API_BASE_URL}/nearbysearch/json?${searchParams.toString()}`
+      );
+      
+      if (!placesResponse.ok) {
+        throw new Error(`Google Places API error: ${placesResponse.status}`);
+      }
+      
+      const placesData = await placesResponse.json();
+      
+      if (placesData.status !== "OK" && placesData.status !== "ZERO_RESULTS") {
+        console.error("Google Places API error:", placesData);
+        throw new Error(`Google Places API returned status: ${placesData.status}`);
+      }
+      
+      // Transform the Places API response to match our expected format
+      const services = await Promise.all((placesData.results || []).slice(0, 5).map(async (place: any) => {
+        // Get additional place details for contact information
+        const detailsParams = new URLSearchParams({
+          place_id: place.place_id,
+          fields: 'name,formatted_address,formatted_phone_number,website,opening_hours',
+          key: GOOGLE_MAPS_API_KEY
+        });
+        
+        const detailsResponse = await fetch(
+          `${GOOGLE_PLACES_API_BASE_URL}/details/json?${detailsParams.toString()}`
+        );
+        
+        let details = {};
+        if (detailsResponse.ok) {
+          const detailsData = await detailsResponse.json();
+          if (detailsData.status === "OK") {
+            details = detailsData.result;
+          }
+        }
+        
+        // Calculate distance in miles
+        const distance = calculateDistance(
+          latitude, 
+          longitude, 
+          place.geometry.location.lat, 
+          place.geometry.location.lng
+        ).toFixed(1);
+        
+        return {
+          name: place.name,
+          distance: `${distance} miles`,
+          type: determineServiceType(place),
+          contact: details.formatted_phone_number || details.website || "Contact details unavailable",
+          address: place.vicinity || details.formatted_address || "Address unavailable",
+          open_now: place.opening_hours?.open_now
+        };
       }));
 
       return new Response(
         JSON.stringify({ 
           services,
-          source: "Mind API" 
+          source: "Google Places API" 
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
       
     } catch (apiError) {
-      console.error('Error calling Mind API:', apiError);
+      console.error('Error calling external APIs:', apiError);
       
       // Fallback to our mock data if the API call fails
       // This ensures users still get results even if the external API is down
@@ -97,6 +138,34 @@ Deno.serve(async (req) => {
     );
   }
 });
+
+// Helper function to calculate distance between two coordinates using Haversine formula
+function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const R = 3958.8; // Radius of the Earth in miles
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  return R * c;
+}
+
+// Helper function to determine the type of mental health service
+function determineServiceType(place: any): string {
+  const types = place.types || [];
+  const name = place.name.toLowerCase();
+  
+  if (types.includes('hospital')) return 'Hospital';
+  if (types.includes('doctor') || types.includes('health')) return 'Healthcare';
+  if (name.includes('nhs') || name.includes('national health')) return 'NHS';
+  if (name.includes('charity') || name.includes('trust')) return 'Charity';
+  if (name.includes('support') || name.includes('group')) return 'Support Group';
+  if (name.includes('counselling') || name.includes('counseling') || name.includes('therapy')) return 'Counselling';
+  
+  return 'Support Service';
+}
 
 // Keep the mock service generator as a fallback
 function generateMockServices(postcode: string) {
