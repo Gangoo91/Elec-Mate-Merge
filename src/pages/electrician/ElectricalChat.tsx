@@ -14,6 +14,8 @@ const ElectricalChat = () => {
     handleUpvote,
     handlePostMessage,
     handlePostComment,
+    handleEditMessage,
+    handleDeleteMessage,
     profile
   } = useElectricalChat();
 
@@ -43,6 +45,8 @@ const ElectricalChat = () => {
           currentUserId={profile?.id}
           onUpvote={handleUpvote}
           onPostComment={handlePostComment}
+          onEditMessage={handleEditMessage}
+          onDeleteMessage={handleDeleteMessage}
         />
       </div>
       

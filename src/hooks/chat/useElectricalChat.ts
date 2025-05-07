@@ -159,12 +159,60 @@ export const useElectricalChat = () => {
     });
   };
 
+  // Handle editing a message
+  const handleEditMessage = (messageId: string, content: string) => {
+    if (!profile) {
+      toast({
+        title: "Sign in required",
+        description: "Please sign in to edit messages.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    if (!content.trim()) return;
+    
+    setMessages(prev => 
+      prev.map(msg => 
+        msg.id === messageId 
+          ? { ...msg, content, updatedAt: new Date() } 
+          : msg
+      )
+    );
+    
+    toast({
+      title: "Message updated",
+      description: "Your message has been updated successfully.",
+    });
+  };
+  
+  // Handle deleting a message
+  const handleDeleteMessage = (messageId: string) => {
+    if (!profile) {
+      toast({
+        title: "Sign in required",
+        description: "Please sign in to delete messages.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    setMessages(prev => prev.filter(msg => msg.id !== messageId));
+    
+    toast({
+      title: "Message deleted",
+      description: "Your message has been deleted successfully.",
+    });
+  };
+
   return {
     messages,
     isLoading,
     handleUpvote,
     handlePostMessage,
     handlePostComment,
+    handleEditMessage,
+    handleDeleteMessage,
     profile
   };
 };
