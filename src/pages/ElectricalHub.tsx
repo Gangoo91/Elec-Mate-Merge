@@ -15,8 +15,8 @@ const ElectricalHub = () => {
     },
     {
       id: 2,
-      title: "Project Management",
-      description: "Organize and track your electrical projects efficiently",
+      title: "Electrical Workshop",
+      description: "A used daily toolkit for all electrical jobs",
       icon: <LayoutGrid className="h-12 w-12 text-elec-yellow opacity-80" />,
       link: "/electrician-tools"
     },
