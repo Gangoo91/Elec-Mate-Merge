@@ -86,9 +86,9 @@ const LearningFromExperience = () => {
             <CardContent className={`${isMobile ? 'px-4 py-2' : 'p-6 py-2'}`}>
               <p className="text-xs sm:text-sm text-muted-foreground">{item.summary}</p>
             </CardContent>
-            <CardFooter className={`flex gap-2 ${isMobile ? 'p-4' : 'p-6 pt-4'}`}>
-              <Button size={isMobile ? "sm" : "default"} variant="outline" className="flex-1 text-xs sm:text-sm">Key Takeaways</Button>
-              <Button size={isMobile ? "sm" : "default"} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 text-xs sm:text-sm">Read Full Report</Button>
+            <CardFooter className={`${isMobile ? 'p-4' : 'p-6 pt-4'} flex flex-col sm:flex-row w-full gap-2`}>
+              <Button size={isMobile ? "sm" : "default"} variant="outline" className="w-full text-xs sm:text-sm">Key Takeaways</Button>
+              <Button size={isMobile ? "sm" : "default"} className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 text-xs sm:text-sm">Read Full Report</Button>
             </CardFooter>
           </Card>
         ))}
