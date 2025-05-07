@@ -5,14 +5,13 @@ import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
 import OJTHeader from "@/components/apprentice/time-tracking/ojt/OJTHeader";
 import TrainingManagementCard from "@/components/apprentice/time-tracking/ojt/TrainingManagementCard";
 import TrainingGuideCard from "@/components/apprentice/time-tracking/ojt/TrainingGuideCard";
-import OJTRatioCard from "@/components/apprentice/OJTRatioCard";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const ApprenticeOJT = () => {
   const [weeklyHours, setWeeklyHours] = useState(8);
   const [targetHours] = useState(40);
   const [courseHours, setCourseHours] = useState(0);
-  const [activeTab, setActiveTab] = useState("recent");
+  const [activeTab, setActiveTab] = useState("auto"); // Change default to auto-tracking
   const { toast } = useToast();
   const { addTimeEntry, totalTime } = useTimeEntries();
   const isMobile = useIsMobile();

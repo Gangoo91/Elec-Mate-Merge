@@ -7,6 +7,7 @@ import DigitalLogbook from "@/components/apprentice/time-tracking/DigitalLogbook
 import WeeklyOverview from "@/components/apprentice/time-tracking/WeeklyOverview";
 import CertificatesManager from "@/components/apprentice/time-tracking/CertificatesManager";
 import TrainingEvidence from "@/components/apprentice/time-tracking/TrainingEvidence";
+import AutomatedTrackingCard from "@/components/apprentice/time-tracking/AutomatedTrackingCard";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Clock, ChevronDown } from "lucide-react";
@@ -35,6 +36,7 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
       case "weekly": return "Weekly";
       case "certificates": return "Certificates";
       case "evidence": return "Evidence";
+      case "auto": return "Auto-Track";
       default: return tabValue;
     }
   };
@@ -64,13 +66,17 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
                 <div className="w-3 h-3 bg-elec-gray rounded-full border border-elec-yellow/40 mr-1.5"></div>
                 <span>Manual</span>
               </div>
+              <div className="flex items-center ml-3">
+                <div className="w-3 h-3 bg-green-500/70 rounded-full mr-1.5"></div>
+                <span>Verified</span>
+              </div>
             </div>
           )}
         </div>
       </CardHeader>
       <CardContent className={isMobile ? "px-3 py-2" : ""}>
         {isMobile && (
-          <div className="flex items-center gap-6 mb-4">
+          <div className="flex items-center gap-4 mb-4">
             <div className="flex items-center">
               <div className="w-3 h-3 bg-elec-yellow/70 rounded-full mr-1.5"></div>
               <span className="text-sm">Automatic</span>
@@ -78,6 +84,10 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
             <div className="flex items-center">
               <div className="w-3 h-3 bg-elec-gray rounded-full border border-elec-yellow/40 mr-1.5"></div>
               <span className="text-sm">Manual</span>
+            </div>
+            <div className="flex items-center">
+              <div className="w-3 h-3 bg-green-500/70 rounded-full mr-1.5"></div>
+              <span className="text-sm">Verified</span>
             </div>
           </div>
         )}
@@ -93,6 +103,9 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="center" className="w-full min-w-[200px] bg-elec-dark border-elec-gray/40">
+                  <DropdownMenuItem onClick={() => setActiveTab("auto")} className="justify-center">
+                    Auto-Track
+                  </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => setActiveTab("recent")} className="justify-center">
                     Recent
                   </DropdownMenuItem>
@@ -113,6 +126,7 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
             </div>
           ) : (
             <TabsList className="mb-4 bg-elec-dark w-full">
+              <TabsTrigger value="auto" className="flex-1">Auto-Track</TabsTrigger>
               <TabsTrigger value="recent" className="flex-1">Recent</TabsTrigger>
               <TabsTrigger value="logbook" className="flex-1">Logbook</TabsTrigger>
               <TabsTrigger value="weekly" className="flex-1">Weekly</TabsTrigger>
@@ -120,6 +134,10 @@ const TrainingManagementCard = ({ initialActiveTab = "recent", className }: Trai
               <TabsTrigger value="evidence" className="flex-1">Evidence</TabsTrigger>
             </TabsList>
           )}
+          
+          <TabsContent value="auto">
+            <AutomatedTrackingCard />
+          </TabsContent>
           
           <TabsContent value="recent">
             <TimeTracker />

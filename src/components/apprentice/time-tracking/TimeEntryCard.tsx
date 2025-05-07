@@ -1,42 +1,88 @@
 
-import { Card, CardContent } from "@/components/ui/card";
-import { BookOpen, CheckSquare } from "lucide-react";
 import { TimeEntry } from "@/types/time-tracking";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Activity } from "lucide-react";
 
 interface TimeEntryCardProps {
   entry: TimeEntry;
 }
 
 const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
+  // Format date for display
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-GB', {
+      weekday: 'short', 
+      day: '2-digit', 
+      month: 'short'
+    });
+  };
+  
+  // Function to determine badge type based on entry properties
+  const getBadgeType = () => {
+    if (entry.isQuiz) {
+      return {
+        label: "Quiz",
+        color: "bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 hover:text-blue-400"
+      };
+    } else if (entry.isAutomatic) {
+      return {
+        label: "Automatic",
+        color: "bg-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/30 hover:text-elec-yellow"
+      };
+    } else if (entry.notes && entry.notes.includes("activity verification")) {
+      return {
+        label: "Verified",
+        color: "bg-green-500/20 text-green-400 hover:bg-green-500/30 hover:text-green-400"
+      };
+    } else {
+      return {
+        label: "Manual",
+        color: "bg-slate-500/20 text-slate-400 hover:bg-slate-500/30 hover:text-slate-400"
+      };
+    }
+  };
+  
+  const badgeType = getBadgeType();
+  const hours = Math.floor(entry.duration / 60);
+  const minutes = entry.duration % 60;
+  
   return (
-    <Card key={entry.id} className={`border-elec-yellow/20 ${entry.isAutomatic ? 'bg-elec-dark' : 'bg-elec-gray'}`}>
+    <Card className={entry.isAutomatic || entry.notes?.includes("verified") || entry.notes?.includes("activity verification") 
+      ? "bg-elec-gray/50 overflow-hidden border-elec-yellow/20"
+      : "bg-elec-gray/50 overflow-hidden"}>
       <CardContent className="p-4">
-        <div className="flex items-start justify-between">
-          <div className="space-y-1">
+        <div className="flex justify-between items-start">
+          <div>
             <div className="flex items-center gap-2">
-              {entry.isQuiz && <CheckSquare className="h-4 w-4 text-elec-yellow" />}
-              {entry.isAutomatic && !entry.isQuiz && <BookOpen className="h-4 w-4 text-elec-yellow" />}
               <h4 className="font-medium">{entry.activity}</h4>
+              <Badge className={badgeType.color}>{badgeType.label}</Badge>
             </div>
-            <p className="text-sm text-muted-foreground">{entry.notes}</p>
-            {entry.isQuiz && entry.score !== undefined && entry.totalQuestions !== undefined && (
-              <div className="mt-2 text-sm">
-                <div className="w-full bg-elec-gray/50 rounded-full h-2 mt-1">
-                  <div 
-                    className={`h-2 rounded-full ${(entry.score / entry.totalQuestions) >= 0.7 ? 'bg-green-500' : 'bg-amber-500'}`} 
-                    style={{ width: `${(entry.score / entry.totalQuestions) * 100}%` }}
-                  ></div>
-                </div>
-              </div>
-            )}
+            
+            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{entry.notes}</p>
           </div>
+          
           <div className="text-right">
-            <div className="font-semibold">
-              {Math.floor(entry.duration / 60)}h {entry.duration % 60}m
+            <div className="text-lg font-semibold">
+              {hours > 0 ? `${hours}h ` : ""}{minutes}m
             </div>
-            <p className="text-xs text-muted-foreground">{entry.date}</p>
+            <div className="text-xs text-muted-foreground">{formatDate(entry.date)}</div>
           </div>
         </div>
+        
+        {entry.notes && entry.notes.includes("activity verification") && (
+          <div className="mt-2 flex items-center text-xs text-green-400">
+            <Activity className="h-3 w-3 mr-1" />
+            Activity verified
+          </div>
+        )}
+        
+        {entry.isQuiz && entry.score !== undefined && entry.totalQuestions !== undefined && (
+          <div className="mt-2 text-xs text-blue-400">
+            Score: {entry.score}/{entry.totalQuestions} ({Math.round((entry.score / entry.totalQuestions) * 100)}%)
+          </div>
+        )}
       </CardContent>
     </Card>
   );
