@@ -1,7 +1,6 @@
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calculator, Wrench, Brain, Settings, FileText, Zap, Ruler, ShieldCheck } from "lucide-react";
+import { Calculator, Wrench, Brain, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ElectricianTools = () => {
@@ -69,112 +68,6 @@ const ElectricianTools = () => {
           </Link>
         ))}
       </div>
-
-      {/* Tool Details Section */}
-      <Tabs defaultValue="calculators" className="space-y-4">
-        <TabsList className="bg-elec-gray border border-elec-yellow/20">
-          <TabsTrigger value="calculators">Calculators</TabsTrigger>
-          <TabsTrigger value="projects">Project Management</TabsTrigger>
-          <TabsTrigger value="ai-tools">AI Tools</TabsTrigger>
-          <TabsTrigger value="admin">Admin Tools</TabsTrigger>
-        </TabsList>
-        
-        {/* Calculators Tab */}
-        <TabsContent value="calculators" className="space-y-6">
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Calculator className="h-5 w-5 text-elec-yellow" />
-                  <CardTitle>Voltage Drop Calculator</CardTitle>
-                </div>
-                <CardDescription>
-                  Calculate voltage drop in electrical cables based on load and distance.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">Click to access the voltage drop calculator.</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Calculator className="h-5 w-5 text-elec-yellow" />
-                  <CardTitle>Load Calculator</CardTitle>
-                </div>
-                <CardDescription>
-                  Calculate the total load on a circuit based on connected appliances.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">Click to access the load calculator.</p>
-              </CardContent>
-            </Card>
-          </div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {["Power Factor", "Conduit Fill", "Ohm's Law", "Transformer Sizing"].map((calc, i) => (
-              <Card key={i} className="border-elec-yellow/20 bg-elec-gray">
-                <CardContent className="p-4 flex flex-col items-center justify-center text-center">
-                  <Calculator className="h-6 w-6 text-elec-yellow mb-2" />
-                  <h3 className="font-medium text-sm">{calc}</h3>
-                  <p className="text-xs text-muted-foreground mt-1">Calculator</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
-        
-        {/* Project Management Tab */}
-        <TabsContent value="projects" className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle>Electrical Workshop</CardTitle>
-                  <CardDescription>
-                    A used daily toolkit for all electrical jobs.
-                  </CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">Manage your electrical projects efficiently.</p>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        {/* AI Tools Tab */}
-        <TabsContent value="ai-tools" className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>AI Assistant</CardTitle>
-              <CardDescription>
-                Get help with electrical queries, code compliance, and troubleshooting
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">Our AI assistant can help you with technical questions and provide guidance based on electrical standards.</p>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        {/* Admin Tab */}
-        <TabsContent value="admin" className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Admin Dashboard</CardTitle>
-              <CardDescription>
-                Manage your business, invoicing, and client records
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">Administrative tools for electrical contractors and businesses.</p>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
     </div>
   );
 };
