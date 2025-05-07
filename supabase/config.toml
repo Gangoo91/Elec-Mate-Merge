@@ -12,5 +12,7 @@ enabled = true
 enabled = true
 [functions.fetch-job-listings]
 verify_jwt = true
+[functions.fetch-metal-prices]
+verify_jwt = false
 [functions.setup-job-cron]
 verify_jwt = true
