@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { FileText, Download } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const CVBuilderBox = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -11,7 +12,7 @@ const CVBuilderBox = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedCV, setGeneratedCV] = useState("");
 
-  const handleGenerateCV = () => {
+  const handleGenerateCV = async () => {
     if (!cvPrompt.trim()) {
       toast({
         title: "Input required",
@@ -23,41 +24,189 @@ const CVBuilderBox = () => {
 
     setIsGenerating(true);
     
-    // Mock AI generation - in a real app, this would call an API
-    setTimeout(() => {
-      const mockCV = `
-# Professional CV
+    try {
+      // In a production app, this would call a real AI service through a Supabase Edge Function
+      // For now, we'll use our enhanced mock generator but structure it like a real API call
+      
+      // Mock API call with timeout to simulate network request
+      setTimeout(() => {
+        // Extract key information from the prompt
+        const hasCommercial = cvPrompt.toLowerCase().includes("commercial");
+        const hasIndustrial = cvPrompt.toLowerCase().includes("industrial");
+        const hasResidential = cvPrompt.toLowerCase().includes("residential");
+        const yearsExperience = extractYearsOfExperience(cvPrompt);
+        const hasLeadership = cvPrompt.toLowerCase().includes("lead") || 
+                              cvPrompt.toLowerCase().includes("manage") || 
+                              cvPrompt.toLowerCase().includes("supervis");
+        const hasApprenticeship = cvPrompt.toLowerCase().includes("apprentice");
+        const hasMaintenanceExperience = cvPrompt.toLowerCase().includes("maintenance") || 
+                                         cvPrompt.toLowerCase().includes("repair");
+        
+        // Generate a more tailored CV based on extracted information
+        const mockCV = `
+# Professional Electrical CV
 
 ## Personal Information
 [Your Name]
-[Your Contact Details]
+[Your Email] | [Your Phone]
+[Your Location]
 
 ## Professional Summary
-${cvPrompt.includes("experienced") ? "Experienced electrical professional with a proven track record in the industry." : "Qualified electrical professional seeking opportunities in the field."}
+${generateSummary(yearsExperience, hasCommercial, hasIndustrial, hasResidential, hasLeadership)}
 
 ## Skills & Qualifications
-* ${cvPrompt.includes("commercial") ? "Commercial electrical installations" : "Residential electrical work"}
-* Electrical safety standards compliance
-* ${cvPrompt.includes("maintenance") ? "Electrical systems maintenance and troubleshooting" : "Electrical installations and upgrades"}
-* ${cvPrompt.includes("team") ? "Team management and coordination" : "Collaborative work environment adaptation"}
+${generateSkills(hasCommercial, hasIndustrial, hasResidential, hasMaintenanceExperience, hasLeadership)}
 
 ## Work Experience
-[Previous employer information would be generated based on your input]
+${generateWorkExperience(yearsExperience, hasCommercial, hasIndustrial, hasResidential, hasLeadership, hasMaintenanceExperience)}
 
 ## Education & Certifications
-* Electrical Engineering qualification
-* ${cvPrompt.includes("apprentice") ? "Currently completing apprenticeship" : "Relevant certifications in electrical work"}
-* Health and Safety certification
-      `;
+${generateEducation(hasApprenticeship)}
+
+## Professional References
+* Available upon request
+        `;
+        
+        setGeneratedCV(mockCV);
+        setIsGenerating(false);
+        
+        toast({
+          title: "CV Generated",
+          description: "Your professional CV has been created. You can now download it.",
+        });
+      }, 2000);
       
-      setGeneratedCV(mockCV);
+    } catch (error) {
+      console.error("Error generating CV:", error);
       setIsGenerating(false);
-      
       toast({
-        title: "CV Generated",
-        description: "Your professional CV has been created. You can now download it.",
+        title: "Generation Failed",
+        description: "There was an error generating your CV. Please try again.",
+        variant: "destructive",
       });
-    }, 2000);
+    }
+  };
+
+  const extractYearsOfExperience = (prompt: string) => {
+    // Look for patterns like "X years" or "X year" in the prompt
+    const match = prompt.match(/(\d+)[ -]*(years?|yrs?)/i);
+    return match ? parseInt(match[1]) : 0;
+  };
+
+  const generateSummary = (years: number, commercial: boolean, industrial: boolean, residential: boolean, leadership: boolean) => {
+    let summary = "";
+    
+    if (years > 0) {
+      summary += `${years}+ year${years === 1 ? '' : 's'} experienced `;
+    } else {
+      summary += "Qualified ";
+    }
+    
+    summary += "electrical professional ";
+    
+    if (commercial && industrial && residential) {
+      summary += "with comprehensive expertise across commercial, industrial, and residential sectors. ";
+    } else if ((commercial && industrial) || (commercial && residential) || (industrial && residential)) {
+      const sectors = [];
+      if (commercial) sectors.push("commercial");
+      if (industrial) sectors.push("industrial");
+      if (residential) sectors.push("residential");
+      summary += `specializing in ${sectors.join(" and ")} electrical systems. `;
+    } else if (commercial) {
+      summary += "specializing in commercial electrical installations and systems. ";
+    } else if (industrial) {
+      summary += "specializing in industrial electrical systems and controls. ";
+    } else if (residential) {
+      summary += "specializing in residential electrical services and installations. ";
+    }
+    
+    if (leadership) {
+      summary += "Proven leadership experience managing teams and projects to successful completion. ";
+    }
+    
+    summary += "Committed to safety, quality, and electrical code compliance with a track record of delivering projects on time and to specification.";
+    
+    return summary;
+  };
+
+  const generateSkills = (commercial: boolean, industrial: boolean, residential: boolean, maintenance: boolean, leadership: boolean) => {
+    const skills = [
+      "* NEC/BS7671 regulations compliance and implementation",
+      "* Circuit design, installation, and troubleshooting",
+      "* Blueprint and schematic reading"
+    ];
+    
+    if (commercial) {
+      skills.push("* Commercial electrical installations and fit-outs");
+      skills.push("* Distribution board installation and maintenance");
+    }
+    
+    if (industrial) {
+      skills.push("* Industrial control systems and PLC programming");
+      skills.push("* Three-phase power systems");
+    }
+    
+    if (residential) {
+      skills.push("* Residential wiring and lighting systems");
+      skills.push("* Consumer unit installations and upgrades");
+    }
+    
+    if (maintenance) {
+      skills.push("* Preventative maintenance procedures");
+      skills.push("* Emergency repair and troubleshooting");
+    }
+    
+    if (leadership) {
+      skills.push("* Team leadership and project management");
+      skills.push("* Client communications and stakeholder management");
+    }
+    
+    return skills.join("\n");
+  };
+
+  const generateWorkExperience = (years: number, commercial: boolean, industrial: boolean, residential: boolean, leadership: boolean, maintenance: boolean) => {
+    let experience = "";
+    
+    // Create fictional but realistic work history based on the input
+    if (years >= 5) {
+      experience += `### Senior Electrician, ${commercial ? "PowerTech Solutions" : industrial ? "Industrial Systems Ltd" : "Quality Electric Services"}\n`;
+      experience += `${2024 - Math.min(Math.floor(years/2), 5)} - Present\n`;
+      experience += "* " + (leadership ? "Led a team of electricians in executing complex electrical projects" : "Executed complex electrical projects") + "\n";
+      experience += `* Specialized in ${commercial ? "commercial electrical installations" : industrial ? "industrial control systems" : "residential electrical services"}\n`;
+      experience += "* Maintained strong client relationships and ensured code compliance\n\n";
+      
+      experience += `### ${leadership ? "Lead" : "Journey"} Electrician, ${industrial ? "Factory Electrics" : commercial ? "BuildRight Construction" : "City Sparks Electric"}\n`;
+      experience += `${2024 - Math.min(years, 10)} - ${2024 - Math.min(Math.floor(years/2), 5) - 1}\n`;
+      experience += `* ${maintenance ? "Performed maintenance and troubleshooting on" : "Installed and upgraded"} electrical systems\n`;
+      experience += `* ${leadership ? "Supervised apprentice electricians and" : "Worked closely with senior electricians to"} complete projects efficiently\n`;
+    } else if (years >= 2) {
+      experience += `### Electrician, ${residential ? "HomeWorks Electric" : commercial ? "Commercial Electric Co." : "General Electrical Services"}\n`;
+      experience += `${2024 - years} - Present\n`;
+      experience += `* Performed ${residential ? "residential" : commercial ? "commercial" : "various"} electrical installations and repairs\n`;
+      experience += "* Ensured all work met electrical codes and safety standards\n";
+    } else {
+      experience += "### Junior Electrician, Starting Electric\n";
+      experience += `${2023 - Math.max(1, years)} - Present\n`;
+      experience += "* Assisting senior electricians with installations and repairs\n";
+      experience += "* Learning industry best practices and electrical code requirements\n";
+    }
+    
+    return experience;
+  };
+
+  const generateEducation = (apprentice: boolean) => {
+    let education = "* City & Guilds Level 3 Electrotechnical Qualification\n";
+    
+    if (apprentice) {
+      education += "* Currently completing electrical apprenticeship program\n";
+    } else {
+      education += "* NVQ Level 3 in Electrical Installation\n";
+    }
+    
+    education += "* 18th Edition Wiring Regulations BS7671\n";
+    education += "* Health and Safety certification\n";
+    
+    return education;
   };
 
   const handleDownloadCV = () => {
