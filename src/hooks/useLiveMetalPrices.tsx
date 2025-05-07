@@ -11,15 +11,6 @@ interface PriceMetric {
   trend: "up" | "down" | "neutral";
 }
 
-interface ScrapPriceItem {
-  id: number;
-  material: string;
-  price: string;
-  change: string;
-  trend: "up" | "down" | "neutral";
-  unit: string;
-}
-
 interface Alert {
   id: number;
   message: string;
@@ -31,7 +22,6 @@ interface MetalPricesData {
   metalPrices: PriceMetric[];
   cablePrices: PriceMetric[];
   equipmentPrices: PriceMetric[];
-  scrapMetalPrices: ScrapPriceItem[];
   marketAlerts: Alert[];
   lastUpdated: string;
 }

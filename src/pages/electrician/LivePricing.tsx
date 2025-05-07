@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { PoundSterling, ArrowLeft, RefreshCw, Info, MapPin, Search } from "lucide-react";
 import LivePricingMetricsCard from "@/components/electrician-pricing/LivePricingMetricsCard";
-import ScrapPriceTable from "@/components/electrician-pricing/ScrapPriceTable";
 import MarketAlerts from "@/components/electrician-pricing/MarketAlerts";
 import { useLiveMetalPrices } from "@/hooks/useLiveMetalPrices";
 import ScrapMerchantFinder from "@/components/electrician-pricing/ScrapMerchantFinder";
@@ -72,9 +71,8 @@ const LivePricing = () => {
             <LivePricingMetricsCard title="Equipment Prices" metrics={data.equipmentPrices} />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6">
             <MarketAlerts alerts={data.marketAlerts} />
-            <ScrapPriceTable items={data.scrapMetalPrices} />
           </div>
         </>
       ) : (

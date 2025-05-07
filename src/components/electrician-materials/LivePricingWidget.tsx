@@ -29,9 +29,9 @@ const LivePricingWidget = () => {
       
       // Take a few key items from each category
       const keyItems: PricingItem[] = [
-        data.metalPrices[0], // First metal (Copper)
+        data.metalPrices[0], // First metal (Copper - Bright)
+        data.metalPrices[4], // Aluminium
         data.cablePrices[0], // First cable (Twin & Earth)
-        data.equipmentPrices[0], // First equipment (Consumer Units)
       ];
       
       setPricingData(keyItems);
@@ -41,9 +41,16 @@ const LivePricingWidget = () => {
       setPricingData([
         {
           id: 1,
-          name: "Copper (per kg)",
-          value: "£7.25",
+          name: "Copper - Bright (per kg)",
+          value: "£7.75",
           change: "+2.3%",
+          trend: "up"
+        },
+        {
+          id: 5,
+          name: "Aluminium (per kg)",
+          value: "£2.19",
+          change: "+1.5%",
           trend: "up"
         },
         {
@@ -52,13 +59,6 @@ const LivePricingWidget = () => {
           value: "£0.92/m",
           change: "+4.5%",
           trend: "up"
-        },
-        {
-          id: 3,
-          name: "Consumer Units (Avg)",
-          value: "£85.30",
-          change: "-1.8%",
-          trend: "down"
         }
       ]);
     } finally {

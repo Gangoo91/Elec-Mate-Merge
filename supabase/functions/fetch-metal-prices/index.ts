@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 
@@ -28,12 +27,20 @@ const generateMockPrices = () => {
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()} ${currentDate.toLocaleString('en-UK', { month: 'short' })} ${currentDate.getFullYear()}, ${currentDate.getHours()}:${currentDate.getMinutes().toString().padStart(2, '0')} ${currentDate.getHours() >= 12 ? 'PM' : 'AM'}`;
 
-  // Generate metal prices
+  // Generate expanded metal prices with detailed copper categories
   const metals = [
-    { id: 1, name: "Copper (per kg)", base: 7.25, variance: 0.3 },
-    { id: 2, name: "Aluminium (per kg)", base: 2.19, variance: 0.15 },
-    { id: 3, name: "Steel (per kg)", base: 0.68, variance: 0.05 },
-    { id: 4, name: "Brass (per kg)", base: 5.12, variance: 0.25 }
+    // Copper Categories
+    { id: 1, name: "Copper - Bright (per kg)", base: 7.75, variance: 0.3 },
+    { id: 2, name: "Copper - Clean (per kg)", base: 7.25, variance: 0.3 },
+    { id: 3, name: "Copper - Mixed (per kg)", base: 6.85, variance: 0.3 },
+    { id: 4, name: "Copper - Insulated (per kg)", base: 2.80, variance: 0.2 },
+    // Other Metals
+    { id: 5, name: "Aluminium (per kg)", base: 2.19, variance: 0.15 },
+    { id: 6, name: "Brass (per kg)", base: 5.12, variance: 0.25 },
+    { id: 7, name: "Lead (per kg)", base: 1.25, variance: 0.08 },
+    { id: 8, name: "Steel (per kg)", base: 0.68, variance: 0.05 },
+    { id: 9, name: "Zinc (per kg)", base: 2.45, variance: 0.18 },
+    { id: 10, name: "Bronze (per kg)", base: 4.35, variance: 0.22 }
   ];
 
   const metalPrices = metals.map(metal => {
@@ -85,29 +92,7 @@ const generateMockPrices = () => {
     };
   });
 
-  // Generate scrap metal prices - all in kg now
-  const scrapMetal = [
-    { id: 1, material: "Copper Wire (Clean)", base: 5.20, variance: 0.3 },
-    { id: 2, material: "Copper Wire (Insulated)", base: 2.80, variance: 0.2 },
-    { id: 3, material: "Brass", base: 3.60, variance: 0.25 },
-    { id: 4, material: "Aluminium Cable", base: 1.40, variance: 0.1 },
-    { id: 5, material: "Lead", base: 1.25, variance: 0.08 },
-    { id: 6, material: "Steel", base: 0.18, variance: 0.02 }
-  ];
-
-  const scrapMetalPrices = scrapMetal.map(item => {
-    const trend = getRandomTrend();
-    return {
-      id: item.id,
-      material: item.material,
-      price: `£${getRandomPrice(item.base, item.variance)}`,
-      change: getRandomChange(trend),
-      trend,
-      unit: "per kg"
-    };
-  });
-
-  // Generate market alerts
+  // Market alerts remain the same
   const marketAlerts = [
     {
       id: 1,
@@ -133,7 +118,6 @@ const generateMockPrices = () => {
     metalPrices,
     cablePrices,
     equipmentPrices,
-    scrapMetalPrices,
     marketAlerts,
     lastUpdated: formattedDate
   };
