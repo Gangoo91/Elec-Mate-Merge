@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Star } from "lucide-react";
+import { Star, ExternalLink } from "lucide-react";
 import { SupplierInfo } from "@/data/electrician/supplierData";
 
 interface SupplierDealOfDayProps {
@@ -10,6 +10,22 @@ interface SupplierDealOfDayProps {
 
 const SupplierDealOfDay = ({ supplierInfo }: SupplierDealOfDayProps) => {
   if (!supplierInfo || !supplierInfo.dealOfTheDay) return null;
+
+  // Get a URL for the deal of the day
+  const getDealUrl = () => {
+    switch (supplierInfo.name.toLowerCase()) {
+      case "screwfix":
+        return "https://www.screwfix.com/deals-of-the-day";
+      case "city electrical factors":
+        return "https://www.cef.co.uk/offers";
+      case "electricaldirect":
+        return "https://www.electricaldirect.co.uk/offers";
+      case "toolstation":
+        return "https://www.toolstation.com/offers";
+      default:
+        return "#";
+    }
+  };
 
   return (
     <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-gray/70 overflow-hidden">
@@ -42,9 +58,11 @@ const SupplierDealOfDay = ({ supplierInfo }: SupplierDealOfDayProps) => {
             </ul>
             
             <div className="pt-2">
-              <Button className="w-full sm:w-auto">
-                Add to Order
-              </Button>
+              <a href={getDealUrl()} target="_blank" rel="noopener noreferrer">
+                <Button className="flex items-center gap-2">
+                  View Deal <ExternalLink className="h-4 w-4" />
+                </Button>
+              </a>
             </div>
           </div>
           

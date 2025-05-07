@@ -1,6 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { ExternalLink } from "lucide-react";
 
 interface MaterialItem {
   id: number;
@@ -12,6 +13,7 @@ interface MaterialItem {
   isOnSale?: boolean;
   salePrice?: string;
   stockStatus?: "In Stock" | "Low Stock" | "Out of Stock";
+  productUrl?: string;
 }
 
 interface MaterialCardProps {
@@ -19,6 +21,25 @@ interface MaterialCardProps {
 }
 
 const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
+  // Default URLs if not provided in the data
+  const getProductUrl = () => {
+    if (item.productUrl) return item.productUrl;
+    
+    // Fallback URLs based on supplier
+    switch (item.supplier.toLowerCase()) {
+      case "screwfix":
+        return "https://www.screwfix.com/search?search=" + encodeURIComponent(item.name);
+      case "city electrical factors":
+        return "https://www.cef.co.uk/search?q=" + encodeURIComponent(item.name);
+      case "electricaldirect":
+        return "https://www.electricaldirect.co.uk/search?q=" + encodeURIComponent(item.name);
+      case "toolstation":
+        return "https://www.toolstation.com/search?q=" + encodeURIComponent(item.name);
+      default:
+        return "#";
+    }
+  };
+
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray flex flex-col h-full hover:border-elec-yellow/50 transition-all">
       <CardHeader className="pb-2">
@@ -58,7 +79,11 @@ const MaterialCard: React.FC<MaterialCardProps> = ({ item }) => {
           </div>
           
           <div className="mt-auto">
-            <Button className="w-full">Add to Order</Button>
+            <a href={getProductUrl()} target="_blank" rel="noopener noreferrer" className="w-full">
+              <Button className="w-full flex items-center gap-2">
+                View Deal <ExternalLink className="h-4 w-4" />
+              </Button>
+            </a>
           </div>
         </div>
       </CardContent>

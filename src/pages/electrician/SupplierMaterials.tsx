@@ -2,8 +2,9 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Package, ArrowLeft, AlertTriangle, ExternalLink, Star } from "lucide-react";
+import { Package, ArrowLeft, AlertTriangle, ExternalLink, Star, BellDot } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { toast } from "@/hooks/use-toast";
 import MaterialSearch from "@/components/electrician-materials/MaterialSearch";
 import SupplierDealOfDay from "@/components/electrician-materials/SupplierDealOfDay";
 import SupplierProductGrid from "@/components/electrician-materials/SupplierProductGrid";
@@ -16,7 +17,7 @@ const SupplierMaterials = () => {
   const [supplier, setSupplier] = useState<string>("");
   const [products, setProducts] = useState<MaterialItem[]>([]);
   const [supplierInfo, setSupplierInfo] = useState<SupplierInfo | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [isNotifying, setIsNotifying] = useState<boolean>(false);
 
   useEffect(() => {
     if (supplierSlug) {
@@ -25,17 +26,12 @@ const SupplierMaterials = () => {
       setSupplier(supplierData[supplierKey as keyof typeof supplierData]?.name || "Unknown Supplier");
       setProducts(productsBySupplier[supplierKey as keyof typeof productsBySupplier] || []);
       setSupplierInfo(supplierData[supplierKey as keyof typeof supplierData] || null);
-      setSelectedCategory("all"); // Reset category filter when changing supplier
+      
+      // Check if user is already subscribed to notifications (would use localStorage or backend in production)
+      const storedNotifyState = localStorage.getItem(`notify-${supplierKey}`);
+      setIsNotifying(storedNotifyState === 'true');
     }
   }, [supplierSlug]);
-
-  // Get unique categories for this supplier's products
-  const categories = ["all", ...new Set(products.map(item => item.category))];
-
-  // Filter products by selected category
-  const filteredProducts = selectedCategory === "all" 
-    ? products 
-    : products.filter(item => item.category === selectedCategory);
 
   // Create an external URL for the supplier's website
   const getSupplierWebsiteUrl = () => {
@@ -55,6 +51,22 @@ const SupplierMaterials = () => {
     }
   };
 
+  const toggleNotifications = () => {
+    if (!supplierSlug) return;
+    
+    const newState = !isNotifying;
+    setIsNotifying(newState);
+    localStorage.setItem(`notify-${supplierSlug.toLowerCase()}`, String(newState));
+    
+    toast({
+      title: newState ? "Notifications Enabled" : "Notifications Disabled",
+      description: newState 
+        ? `You'll be notified about new deals from ${supplier}.` 
+        : `You won't receive notifications from ${supplier}.`,
+      duration: 3000,
+    });
+  };
+
   if (!supplierInfo) {
     return <div className="py-10 text-center">Loading supplier information...</div>;
   }
@@ -66,17 +78,27 @@ const SupplierMaterials = () => {
         <div>
           <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
             <Package className="h-8 w-8 text-elec-yellow" />
-            {supplier} Products
+            {supplier} Deals
           </h1>
           <p className="text-muted-foreground mt-1">
             {supplierInfo.description}
           </p>
         </div>
-        <Link to="/electrician/materials">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Materials
+        <div className="flex items-center gap-2">
+          <Button 
+            variant="outline" 
+            size="icon" 
+            onClick={toggleNotifications}
+            className={isNotifying ? "border-elec-yellow text-elec-yellow" : ""}
+          >
+            <BellDot className={`h-4 w-4 ${isNotifying ? "text-elec-yellow" : ""}`} />
           </Button>
-        </Link>
+          <Link to="/electrician/materials">
+            <Button variant="outline" className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" /> Back to Materials
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {/* Disclaimer */}
@@ -110,21 +132,6 @@ const SupplierMaterials = () => {
         </CardContent>
       </Card>
 
-      {/* Category filters */}
-      <div className="flex flex-wrap gap-2">
-        {categories.map(category => (
-          <Button 
-            key={category}
-            variant={selectedCategory === category ? "default" : "outline"}
-            size="sm"
-            onClick={() => setSelectedCategory(category)}
-            className={selectedCategory === category ? "bg-elec-yellow text-black" : ""}
-          >
-            {category === "all" ? "All Products" : category}
-          </Button>
-        ))}
-      </div>
-
       {/* Deal of the Day */}
       <SupplierDealOfDay supplierInfo={supplierInfo} />
 
@@ -132,7 +139,7 @@ const SupplierMaterials = () => {
       <div className="space-y-4">
         <h2 className="text-2xl font-semibold flex items-center gap-2">
           <Star className="h-5 w-5 text-elec-yellow" />
-          Featured Deals
+          Today's Best Deals
         </h2>
         <p className="text-sm text-muted-foreground">
           These are today's best deals from {supplier}. Updated daily.
@@ -140,7 +147,7 @@ const SupplierMaterials = () => {
       </div>
 
       {/* Product Grid */}
-      <SupplierProductGrid products={filteredProducts} supplierName={supplier} />
+      <SupplierProductGrid products={products} supplierName={supplier} />
     </div>
   );
 };
