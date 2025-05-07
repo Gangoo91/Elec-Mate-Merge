@@ -1,33 +1,27 @@
 
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { Plus } from "lucide-react";
 
 interface ChatHeaderProps {
   title: string;
-  subtitle?: string;
   onNewPost: () => void;
 }
 
-const ChatHeader = ({ title, subtitle, onNewPost }: ChatHeaderProps) => {
+const ChatHeader = ({ title, onNewPost }: ChatHeaderProps) => {
   return (
     <div className="bg-black border-b border-elec-yellow/20 py-3">
       <div className="flex justify-between items-center px-4 max-w-3xl mx-auto">
         <div>
-          <h1 className="text-2xl font-bold text-elec-yellow">{title}</h1>
-          {subtitle && (
-            <p className="text-sm text-elec-yellow/80 line-clamp-1">
-              {subtitle}
-            </p>
-          )}
+          <h1 className="text-xl font-bold text-elec-yellow">{title}</h1>
         </div>
         
         <Button
           onClick={onNewPost}
-          size="sm"
-          className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
+          size="icon"
+          variant="ghost"
+          className="text-elec-yellow hover:bg-elec-yellow/10"
         >
-          <PlusCircle className="mr-1 h-4 w-4" />
-          New Post
+          <Plus className="h-5 w-5" />
         </Button>
       </div>
     </div>

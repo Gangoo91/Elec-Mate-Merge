@@ -29,8 +29,7 @@ const ElectricalChat = () => {
     <div className="flex flex-col min-h-screen bg-black overflow-y-auto">
       <div className="bg-black">
         <ChatHeader 
-          title="Electricians Chat Room" 
-          subtitle="Connect with fellow electricians, share experiences, and discuss industry topics." 
+          title="Chat Room" 
           onNewPost={handleOpenComposer}
         />
         
