@@ -1,6 +1,4 @@
 
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 
 // Import all the component files
@@ -13,9 +11,11 @@ import BusinessBuilder from "@/components/apprentice/career/BusinessBuilder";
 import CareerWelcomeState from "@/components/apprentice/career/CareerWelcomeState";
 import CareerPageHeader from "@/components/apprentice/career/CareerPageHeader";
 import { careerSections } from "@/components/apprentice/career/SectionData";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const CareerProgression = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const isMobile = useIsMobile();
   
   // Handle back to sections
   const handleBackToSections = () => {
@@ -41,14 +41,14 @@ const CareerProgression = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-8 animate-fade-in px-2 sm:px-0">
       <CareerPageHeader 
         activeSection={activeSection} 
         onBackToSections={handleBackToSections} 
       />
 
       {activeSection === null ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {careerSections.map((section) => (
             <CareerSectionCard 
               key={section.id}
