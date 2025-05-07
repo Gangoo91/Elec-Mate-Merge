@@ -8,16 +8,20 @@ const MentorIntroCard = () => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Users className="h-5 w-5 text-elec-yellow" />
-          Find Your Mentor
+          Become a Mentor
         </CardTitle>
         <CardDescription>
-          A good mentor can make all the difference in your apprenticeship journey
+          Share your expertise and help shape the future of the electrical industry
         </CardDescription>
       </CardHeader>
       <CardContent>
         <p className="mb-4">
-          Browse our network of experienced electricians who volunteer their time to support apprentices. 
-          You can schedule one-to-one sessions, ask questions, or join group mentoring.
+          As an experienced electrical professional, you have valuable knowledge to share. 
+          Mentoring apprentices not only helps them develop their skills but also enhances your own leadership abilities and professional development.
+        </p>
+        <p>
+          Our mentoring program connects you with dedicated apprentices who are eager to learn from your real-world experience. 
+          You'll receive recognition for your contributions, and the best mentors earn rewards including tool vouchers.
         </p>
       </CardContent>
     </Card>

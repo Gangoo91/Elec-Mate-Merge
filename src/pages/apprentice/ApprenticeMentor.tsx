@@ -18,19 +18,19 @@ const ApprenticeMentor = () => {
             <Users className="h-6 w-6 text-elec-yellow" /> Mentor Connect
           </h1>
           <p className="text-muted-foreground">
-            Connect with industry mentors and experienced professionals for guidance
+            Find apprentices seeking guidance or become a mentor to earn rewards
           </p>
         </div>
-        <Link to="/apprentice/hub">
+        <Link to="/electrical-hub">
           <Button variant="outline" size="sm">
-            <ChevronLeft className="mr-1 h-4 w-4" /> Back to Apprentice Hub
+            <ChevronLeft className="mr-1 h-4 w-4" /> Back to Electrical Hub
           </Button>
         </Link>
       </div>
 
       <Tabs defaultValue="browse" className="w-full">
         <TabsList className="grid w-full grid-cols-2 mb-6">
-          <TabsTrigger value="browse">Browse Mentors</TabsTrigger>
+          <TabsTrigger value="browse">Apprentices Seeking Mentors</TabsTrigger>
           <TabsTrigger value="about">About Mentoring</TabsTrigger>
         </TabsList>
         <TabsContent value="browse" className="space-y-6">
@@ -48,15 +48,22 @@ const ApprenticeMentor = () => {
             <div className="bg-elec-gray p-6 rounded-lg border border-elec-yellow/20">
               <h3 className="text-xl font-semibold mb-3">How Mentoring Works</h3>
               <ol className="list-decimal pl-5 space-y-3">
-                <li>Browse mentors and find someone whose experience matches your learning goals</li>
-                <li>Send a mentoring request by clicking "Request Mentoring"</li>
-                <li>Once accepted, you'll be able to message your mentor directly</li>
-                <li>Schedule one-on-one sessions or ask questions through the messaging system</li>
-                <li>Rate your experience after sessions to help other apprentices find great mentors</li>
+                <li>Browse apprentices seeking guidance and find someone whose learning goals match your expertise</li>
+                <li>Offer your mentoring by clicking "Offer Mentoring"</li>
+                <li>Once accepted, you'll be able to message your apprentice directly</li>
+                <li>Schedule one-on-one sessions or answer questions through the messaging system</li>
+                <li>Track your mentoring hours which count toward your professional development</li>
               </ol>
               <div className="mt-6 p-4 bg-blue-500/10 rounded-md border border-blue-500/20">
                 <p className="text-sm text-blue-400">
-                  <strong>Pro Tip:</strong> Be specific about what you want to learn when messaging a mentor for the first time to get the most out of your mentoring experience.
+                  <strong>Pro Tip:</strong> Regular mentoring sessions lead to better outcomes. Try to schedule consistent weekly check-ins with your apprentices.
+                </p>
+              </div>
+              
+              <div className="mt-6 p-4 bg-green-500/10 rounded-md border border-green-500/20">
+                <h4 className="font-semibold text-green-400 mb-2">Mentor Rewards Program</h4>
+                <p className="text-sm text-green-400">
+                  Each month, the highest-rated mentor will receive a <strong>£50 tools voucher</strong> as recognition for their commitment to developing the next generation of electricians. Ratings are based on apprentice feedback and session quality.
                 </p>
               </div>
             </div>

@@ -25,6 +25,12 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
     console.log("Current path:", location.pathname);
     console.log("Current full URL:", window.location.href);
     
+    // Check if we're on mentor page - navigate to electrical hub
+    if (location.pathname.includes('/mentor')) {
+      navigate('/electrical-hub');
+      return;
+    }
+    
     // Check if we're on an installation-method page
     const isInstallationMethodPage = location.pathname.includes('/installation-method/');
     
@@ -77,7 +83,9 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
 
   // Determine button text based on context
   const getButtonText = () => {
-    if (location.pathname.includes('/subsection/')) {
+    if (location.pathname.includes('/mentor')) {
+      return "Back to Electrical Hub";
+    } else if (location.pathname.includes('/subsection/')) {
       return "Back to Section";
     } else if (location.pathname.includes('/section/') || 
                location.pathname.includes('/installation-method/') || 
