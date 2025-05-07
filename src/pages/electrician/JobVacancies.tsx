@@ -33,11 +33,13 @@ const JobVacancies = () => {
     <div className="space-y-8 animate-fade-in">
       <JobVacancyHeader />
 
-      {/* Add the Job Listings Fetcher component */}
-      <JobListingsFetcher />
-
-      {/* AI CV Builder Box */}
-      <CVBuilderBox />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* AI CV Builder Box */}
+        <CVBuilderBox />
+        
+        {/* Add the Job Listings Fetcher component */}
+        <JobListingsFetcher />
+      </div>
 
       <div className="space-y-4">
         <JobFilters
