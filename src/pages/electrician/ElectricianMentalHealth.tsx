@@ -58,12 +58,12 @@ const ElectricianMentalHealth = () => {
             Your Wellbeing Matters
           </CardTitle>
           <CardDescription className="text-sm">
-            The electrical trade can be demanding. Remember to prioritize your mental health.
+            The electrical trade can be demanding. Remember to prioritise your mental health.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-sm sm:text-base mb-4">
-            If you're experiencing distress or need immediate support, contact the 24/7 Electrical Trades Support Line at <span className="font-medium">0800 123 4567</span>
+            If you're experiencing distress or need immediate support, contact the Samaritans at <span className="font-medium">116 123</span> (free, 24/7)
           </p>
         </CardContent>
       </Card>

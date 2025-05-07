@@ -20,7 +20,7 @@ const OnlineCrisisSupport = ({ onlineResources }: OnlineCrisisSupportProps) => {
       <CardHeader className="pb-3 border-b border-red-500/10">
         <CardTitle className="text-lg flex items-center gap-2">
           <Globe className="h-5 w-5 text-red-500" />
-          Online Crisis Support
+          Online Support Resources
         </CardTitle>
       </CardHeader>
       <CardContent className="p-4 pt-6 space-y-4">

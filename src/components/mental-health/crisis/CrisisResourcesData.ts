@@ -17,37 +17,37 @@ export interface OnlineResource {
 // Data for crisis resources
 export const emergencyContacts: EmergencyContact[] = [
   {
-    name: "Electrical Trades Crisis Line",
-    phone: "0800 123 4567",
-    hours: "24/7",
-    description: "Immediate support for electrical trade workers in crisis"
-  },
-  {
     name: "Samaritans",
     phone: "116 123",
     hours: "24/7",
-    description: "Confidential emotional support for anyone in distress"
+    description: "Free, confidential emotional support for anyone experiencing distress or despair"
   },
   {
     name: "Construction Industry Helpline",
     phone: "0345 605 1956",
     hours: "8am - 8pm, 7 days",
-    description: "Support for construction workers facing hardship or crisis"
+    description: "Support for construction and trades workers facing hardship or crisis"
+  },
+  {
+    name: "Mind Infoline",
+    phone: "0300 123 3393",
+    hours: "9am - 6pm, Mon-Fri",
+    description: "Mental health information and signposting to local support"
   }
 ];
 
 export const onlineResources: OnlineResource[] = [
   {
-    title: "Mind - Mental Health Crisis Support",
-    description: "Information on what to do in a mental health crisis situation",
+    title: "Mind - Mental Health Support",
+    description: "Information on mental health problems, where to get help and how to support someone",
     type: "website",
-    url: "https://www.mind.org.uk/information-support/guides-to-support-and-services/crisis-services/getting-help-in-a-crisis/"
+    url: "https://www.mind.org.uk/information-support/"
   },
   {
-    title: "NHS Mental Health Crisis Resources",
-    description: "NHS guidance on accessing urgent mental health support",
+    title: "NHS Mental Health Services",
+    description: "NHS guidance on accessing urgent and non-urgent mental health support",
     type: "website",
-    url: "https://www.nhs.uk/nhs-services/mental-health-services/where-to-get-urgent-help-for-mental-health/"
+    url: "https://www.nhs.uk/mental-health/"
   },
   {
     title: "Andy's Man Club",
@@ -57,14 +57,14 @@ export const onlineResources: OnlineResource[] = [
   },
   {
     title: "CALM - Campaign Against Living Miserably",
-    description: "Support for men in the UK, of any age, who are down or in crisis",
+    description: "Support for men in the UK who are down or in crisis",
     type: "website",
     url: "https://www.thecalmzone.net/"
   },
   {
-    title: "Shout Crisis Text Line",
-    description: "Text 'SHOUT' to 85258 for free 24/7 mental health support",
+    title: "Mental Health at Work",
+    description: "Resources, toolkits and support for workplace mental health",
     type: "website",
-    url: "https://giveusashout.org/"
+    url: "https://www.mentalhealthatwork.org.uk/"
   }
 ];
