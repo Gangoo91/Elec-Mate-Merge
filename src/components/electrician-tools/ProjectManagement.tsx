@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calculator, LayoutGrid, Wrench } from "lucide-react";
+import { Calculator, LayoutGrid, Wrench, PlusCircle } from "lucide-react";
 
 const ProjectManagement = () => {
   return (
@@ -15,15 +15,18 @@ const ProjectManagement = () => {
                 A used daily toolkit for all electrical jobs.
               </CardDescription>
             </div>
-            <Button>+ New Project</Button>
+            <Button className="flex items-center gap-2">
+              <PlusCircle className="h-4 w-4" /> New Project
+            </Button>
           </div>
         </CardHeader>
         <CardContent>
           <div className="rounded-lg border border-elec-yellow/20 overflow-hidden">
-            <div className="bg-elec-dark p-4 text-center">
-              <p className="text-muted-foreground">
+            <div className="bg-elec-dark p-6 text-center">
+              <p className="text-muted-foreground mb-4">
                 No active projects found. Create a new project to get started.
               </p>
+              <Button variant="outline" className="w-full sm:w-auto">Get Started</Button>
             </div>
           </div>
         </CardContent>
