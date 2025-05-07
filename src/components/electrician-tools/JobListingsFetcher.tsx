@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
@@ -20,17 +20,24 @@ const JobListingsFetcher = () => {
 
   const fetchStats = async () => {
     try {
-      const { data, error } = await supabase
+      // First query to get the count
+      const { data: countData } = await supabase
         .from("job_listings")
-        .select("count, max(updated_at)")
+        .select("count");
+      
+      if (countData && countData.length > 0) {
+        setJobCount(countData[0].count);
+      }
+      
+      // Second query to get the latest updated_at timestamp
+      const { data: timeData } = await supabase
+        .from("job_listings")
+        .select("updated_at")
         .order("updated_at", { ascending: false })
         .limit(1);
       
-      if (error) throw error;
-      
-      if (data && data.length > 0) {
-        setJobCount(data[0].count);
-        setLastFetched(data[0].updated_at);
+      if (timeData && timeData.length > 0) {
+        setLastFetched(timeData[0].updated_at);
       }
     } catch (error) {
       console.error("Error fetching job stats:", error);
@@ -38,7 +45,7 @@ const JobListingsFetcher = () => {
   };
 
   // Fetch stats on component mount
-  useState(() => {
+  useEffect(() => {
     fetchStats();
   }, []);
 
