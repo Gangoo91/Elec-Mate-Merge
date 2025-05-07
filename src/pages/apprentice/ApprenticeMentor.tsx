@@ -30,7 +30,7 @@ const ApprenticeMentor = () => {
 
       <Tabs defaultValue="browse" className="w-full">
         <TabsList className="grid w-full grid-cols-2 mb-6">
-          <TabsTrigger value="browse">Apprentices Seeking Mentors</TabsTrigger>
+          <TabsTrigger value="browse">Mentoring</TabsTrigger>
           <TabsTrigger value="about">About Mentoring</TabsTrigger>
         </TabsList>
         <TabsContent value="browse" className="space-y-6">
