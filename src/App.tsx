@@ -32,6 +32,10 @@ import NotFound from "./pages/NotFound";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import ElectricianTools from "./pages/ElectricianTools";
+import ProjectManagement from "./pages/electrician-tools/ProjectManagement";
+import AITooling from "./pages/electrician-tools/AITooling";
+import Calculations from "./pages/electrician-tools/Calculations";
+import Admin from "./pages/electrician-tools/Admin";
 import ElectricalHub from "./pages/ElectricalHub";
 import ElectricalToolboxTalk from "./pages/electrician/ElectricalToolboxTalk";
 import ElectricalChat from "./pages/electrician/ElectricalChat";
@@ -97,6 +101,10 @@ function App() {
                 <Route path="subscriptions" element={<Subscriptions />} />
                 <Route path="payment-success" element={<PaymentSuccess />} />
                 <Route path="electrician-tools" element={<ElectricianTools />} />
+                <Route path="electrician-tools/project-management" element={<ProjectManagement />} />
+                <Route path="electrician-tools/ai-tooling" element={<AITooling />} />
+                <Route path="electrician-tools/calculations" element={<Calculations />} />
+                <Route path="electrician-tools/admin" element={<Admin />} />
                 <Route path="electrical-hub" element={<ElectricalHub />} />
                 <Route path="electrician" element={<Navigate to="/electrical-hub" replace />} />
                 <Route path="electrician/toolbox-talk" element={<ElectricalToolboxTalk />} />

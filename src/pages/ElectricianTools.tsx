@@ -9,30 +9,30 @@ const ElectricianTools = () => {
     {
       id: "project-management",
       title: "Project Management",
-      description: "Organize and track your electrical projects efficiently",
+      description: "Organise and track your electrical projects efficiently",
       icon: <Wrench className="h-10 w-10 text-elec-yellow" />,
-      link: "#project-management"
+      link: "/electrician-tools/project-management"
     },
     {
       id: "ai-tooling",
       title: "AI Tooling",
       description: "Leverage AI to enhance your electrical work productivity",
       icon: <Brain className="h-10 w-10 text-elec-yellow" />,
-      link: "#ai-tooling"
+      link: "/electrician-tools/ai-tooling"
     },
     {
       id: "calculations",
       title: "Calculations",
       description: "Essential calculators for electrical work and planning",
       icon: <Calculator className="h-10 w-10 text-elec-yellow" />,
-      link: "#calculations"
+      link: "/electrician-tools/calculations"
     },
     {
       id: "admin",
       title: "Admin",
       description: "Manage your electrical business and documentation",
       icon: <Settings className="h-10 w-10 text-elec-yellow" />,
-      link: "#admin"
+      link: "/electrician-tools/admin"
     }
   ];
 
