@@ -20,15 +20,17 @@ serve(async (req) => {
     }
     
     // Get the Google Maps API key from Supabase secrets
-    const MAPS_API_KEY = Deno.env.get('GOOGLE_MAPS_API_KEY');
+    const MAPS_API_KEY = Deno.env.get('GoogleAPI');
     
     if (!MAPS_API_KEY) {
+      console.error('[FIND-SCRAP-MERCHANTS] API key not found in environment variables');
       return new Response(
         JSON.stringify({ error: 'Maps API key not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
     
+    console.log(`[FIND-SCRAP-MERCHANTS] Using API key found in secrets: ${MAPS_API_KEY ? 'Yes (key exists)' : 'No'}`);
     console.log(`[FIND-SCRAP-MERCHANTS] Searching for merchants near postcode: ${postcode}`);
     
     // First, geocode the postcode to get coordinates
@@ -42,13 +44,16 @@ serve(async (req) => {
       console.error(`[FIND-SCRAP-MERCHANTS] HTTP error when calling Geocoding API: ${geocodeResponse.status}`);
       return new Response(
         JSON.stringify({ error: `Failed to call Geocoding API: ${geocodeResponse.statusText}` }),
-        { status: geocodeResponse.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
     
     const geocodeData = await geocodeResponse.json();
     
     console.log(`[FIND-SCRAP-MERCHANTS] Geocode API response status: ${geocodeData.status}`);
+    if (geocodeData.error_message) {
+      console.error(`[FIND-SCRAP-MERCHANTS] Geocode API error message: ${geocodeData.error_message}`);
+    }
     
     if (geocodeData.status !== 'OK' || !geocodeData.results || geocodeData.results.length === 0) {
       const errorDetails = geocodeData.error_message || 'No location found for this postcode';
@@ -62,8 +67,6 @@ serve(async (req) => {
             message: errorDetails
           }
         }),
-        // Return 200 status with error details in the response body instead of 404
-        // This helps prevent Supabase edge function from returning a non-2xx status
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -85,7 +88,6 @@ serve(async (req) => {
           error: `Failed to call Places API: ${placesResponse.statusText}`,
           note: "You may need to enable the Places API in your Google Cloud Console"
         }),
-        // Return 200 status with error details in the response body instead of 403
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -93,6 +95,9 @@ serve(async (req) => {
     const placesData = await placesResponse.json();
     
     console.log(`[FIND-SCRAP-MERCHANTS] Places API response status: ${placesData.status}`);
+    if (placesData.error_message) {
+      console.error(`[FIND-SCRAP-MERCHANTS] Places API error message: ${placesData.error_message}`);
+    }
     
     if (placesData.status !== 'OK') {
       // If no results found but API worked, return empty array instead of error
@@ -116,7 +121,6 @@ serve(async (req) => {
               message: errorDetails || "You may need to enable the Places API in your Google Cloud Console"
             }
           }),
-          // Return 200 status with error details in the response body instead of 403
           { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
@@ -129,13 +133,12 @@ serve(async (req) => {
             message: errorDetails
           }
         }),
-        // Return 200 status with error details in the response body instead of 404
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
     
     // Process the results into our format
-    const merchants = placesData.results.map((place: any, index: number) => {
+    const merchants = placesData.results.map((place, index) => {
       // Calculate distance (would be more accurate with proper route calculation)
       const distance = calculateDistance(lat, lng, place.geometry.location.lat, place.geometry.location.lng);
       
@@ -169,14 +172,13 @@ serve(async (req) => {
     
     return new Response(
       JSON.stringify({ error: 'Error searching for scrap merchants', details: error.message }),
-      // Return 200 status with error details in the response body instead of 500
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 });
 
 // Calculate distance between two points in miles using Haversine formula
-function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+function calculateDistance(lat1, lon1, lat2, lon2) {
   const R = 3958.8; // Earth's radius in miles
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLon = (lon2 - lon1) * Math.PI / 180;
