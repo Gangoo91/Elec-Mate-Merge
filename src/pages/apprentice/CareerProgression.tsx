@@ -9,14 +9,8 @@ import {
   BookOpen, 
   Briefcase,
   Building,
-  Users,
-  ScrollText,
-  FileCheck,
-  PanelRight,
-  GraduationCap as GradCap,
-  Certificate
+  FileCheck
 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 
 const CareerProgression = () => {
@@ -30,32 +24,32 @@ const CareerProgression = () => {
       icon: <Briefcase className="h-12 w-12 text-elec-yellow opacity-80" />
     },
     {
+      id: "courses",
+      title: "Career Courses",
+      description: "Professional courses to enhance your electrical career skills",
+      icon: <BookOpen className="h-12 w-12 text-elec-yellow opacity-80" />
+    },
+    {
       id: "education",
-      title: "Education Options",
-      description: "Discover courses and learning opportunities for electrical professionals",
+      title: "Further Education",
+      description: "Degrees and advanced learning opportunities for electrical professionals",
       icon: <GraduationCap className="h-12 w-12 text-elec-yellow opacity-80" />
     },
     {
-      id: "specializations",
-      title: "Specializations",
-      description: "High-demand areas to focus your skills and expertise",
-      icon: <PanelRight className="h-12 w-12 text-elec-yellow opacity-80" />
+      id: "accreditation",
+      title: "Professional Accreditation",
+      description: "Essential qualifications and certifications for career advancement",
+      icon: <Award className="h-12 w-12 text-elec-yellow opacity-80" />
     },
     {
-      id: "certifications",
-      title: "Key Certifications",
-      description: "Essential qualifications to advance your electrical career",
-      icon: <Certificate className="h-12 w-12 text-elec-yellow opacity-80" />
-    },
-    {
-      id: "resources",
-      title: "Industry Resources",
-      description: "Tools and organizations to support your professional growth",
-      icon: <ScrollText className="h-12 w-12 text-elec-yellow opacity-80" />
+      id: "business",
+      title: "Business Builder",
+      description: "Resources and guidance for starting your own electrical business",
+      icon: <Building className="h-12 w-12 text-elec-yellow opacity-80" />
     }
   ];
 
-  // Content data - same as your existing data
+  // Pathways content
   const careerPaths = [
     {
       id: 1,
@@ -74,84 +68,100 @@ const CareerProgression = () => {
     {
       id: 3,
       title: "Specialist Contractor",
-      requirements: "Journey-level experience + business license",
+      requirements: "Journey-level experience + business licence",
       description: "Start your own electrical contracting business focusing on residential, commercial, or industrial work.",
       icon: <Building className="h-8 w-8 text-elec-yellow" />
     }
   ];
 
-  const educationOptions = [
+  // Courses content
+  const careerCourses = [
     {
       id: 1,
-      title: "Technical Courses",
-      description: "Specialized courses in advanced electrical topics like automation, renewable energy systems, and industrial controls.",
-      icon: <BookOpen className="h-8 w-8 text-elec-yellow" />
+      title: "18th Edition Wiring Regulations",
+      provider: "NICEIC",
+      description: "Essential course covering the latest BS7671 electrical regulations for all UK installations.",
+      duration: "3 days"
     },
     {
       id: 2,
-      title: "University Degrees",
-      description: "Bachelor's and Master's degrees in Electrical Engineering, Building Services, or Energy Management.",
-      icon: <GradCap className="h-8 w-8 text-elec-yellow" />
+      title: "Inspection & Testing",
+      provider: "City & Guilds",
+      description: "Learn how to properly test and verify electrical installations to industry standards.",
+      duration: "5 days"
     },
     {
       id: 3,
-      title: "Industry Workshops",
-      description: "Hands-on workshops focused on emerging technologies and specialized installation techniques.",
-      icon: <Users className="h-8 w-8 text-elec-yellow" />
+      title: "Electric Vehicle Charging",
+      provider: "ECA",
+      description: "Specialised training for installing and maintaining EV charging points.",
+      duration: "2 days"
     }
   ];
   
-  const specializations = [
+  // Education content
+  const educationOptions = [
     {
       id: 1,
-      title: "Renewable Energy",
-      description: "Solar panel installation, energy storage systems, and smart grid integration.",
-      badge: "High Demand"
+      title: "HNC in Electrical Engineering",
+      institution: "UK Colleges",
+      description: "Higher National Certificate qualification providing advanced electrical theory and practice.",
+      level: "Level 4"
     },
     {
       id: 2,
-      title: "Industrial Automation",
-      description: "PLC programming, SCADA systems, and industrial control panels.",
-      badge: "Growing Field"
+      title: "Bachelor's Degree",
+      institution: "Universities",
+      description: "BEng or BSc in Electrical Engineering, Building Services, or Energy Management.",
+      level: "Level 6"
     },
     {
       id: 3,
-      title: "Building Management",
-      description: "Smart building systems, BMS implementation, and energy efficiency optimization.",
-      badge: "Future Growth"
-    },
-    {
-      id: 4,
-      title: "Data Centers",
-      description: "Mission-critical power systems, cooling infrastructure, and redundant electrical design.",
-      badge: "Specialist Role"
+      title: "Master's Degree",
+      institution: "Universities",
+      description: "MEng or MSc specialising in power systems, renewable energy, or building services.",
+      level: "Level 7"
     }
   ];
 
-  const certifications = [
+  // Accreditation content
+  const professionalAccreditations = [
     {
       id: 1,
-      title: "18th Edition BS7671 Wiring Regulations",
-      level: "Mandatory",
-      description: "Essential qualification for all practicing electricians in the UK"
+      title: "IET Membership",
+      level: "Professional",
+      description: "Membership of the Institution of Engineering and Technology, providing recognition of professional competence."
     },
     {
       id: 2,
-      title: "Level 3 NVQ Diploma in Electrotechnical Services",
+      title: "Chartered Engineer (CEng)",
       level: "Advanced",
-      description: "Industry-recognized qualification for electricians"
+      description: "Prestigious qualification demonstrating high-level competence and commitment to engineering."
     },
     {
       id: 3,
-      title: "Inspection and Testing Certification",
-      level: "Specialist",
-      description: "Required for testing electrical installations"
+      title: "ECA Membership",
+      level: "Industry",
+      description: "Electrical Contractors' Association membership, vital for commercial credibility."
+    }
+  ];
+
+  // Business builder content
+  const businessResources = [
+    {
+      id: 1,
+      title: "Business Start-up Kit",
+      description: "Templates and resources for establishing your electrical contracting business, including business plans and marketing strategies."
     },
     {
-      id: 4,
-      title: "EV Charger Installation",
-      level: "Specialist",
-      description: "Certification for installing electric vehicle charging points"
+      id: 2,
+      title: "Contractor Certification",
+      description: "Information on becoming NICEIC, NAPIT, or ELECSA approved, essential for gaining customer trust."
+    },
+    {
+      id: 3,
+      title: "Accounting & Tax Guidance",
+      description: "Financial management resources specifically for electrical contractors and small businesses."
     }
   ];
 
@@ -180,62 +190,66 @@ const CareerProgression = () => {
             </div>
           </div>
         );
+      case "courses":
+        return (
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">Career Courses</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {careerCourses.map((course) => (
+                <Card key={course.id} className="border-elec-yellow/20 bg-elec-gray h-full">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-xl">{course.title}</CardTitle>
+                    <p className="text-sm text-amber-400">Provider: {course.provider}</p>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm mb-2">{course.description}</p>
+                    <div className="text-sm bg-elec-dark/30 p-2 rounded-md inline-block">
+                      Duration: {course.duration}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        );
       case "education":
         return (
           <div>
-            <h2 className="text-2xl font-semibold mb-4">Education Options</h2>
+            <h2 className="text-2xl font-semibold mb-4">Further Education</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {educationOptions.map((option) => (
                 <Card key={option.id} className="border-elec-yellow/20 bg-elec-gray h-full">
-                  <CardHeader className="flex flex-row items-start gap-4 pb-2">
-                    {option.icon}
-                    <CardTitle className="text-xl">{option.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm">{option.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        );
-      case "specializations":
-        return (
-          <div>
-            <h2 className="text-2xl font-semibold mb-4">Specializations</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {specializations.map((specialization) => (
-                <Card key={specialization.id} className="border-elec-yellow/20 bg-elec-gray h-full">
                   <CardHeader className="pb-2">
-                    <div className="flex justify-between items-start mb-2">
-                      <CardTitle className="text-lg">{specialization.title}</CardTitle>
-                      <Badge variant="gold" className="text-xs">{specialization.badge}</Badge>
-                    </div>
+                    <CardTitle className="text-xl">{option.title}</CardTitle>
+                    <p className="text-sm text-amber-400">{option.institution}</p>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-sm">{specialization.description}</p>
+                    <p className="text-sm mb-2">{option.description}</p>
+                    <div className="text-sm bg-elec-dark/30 p-2 rounded-md inline-block">
+                      {option.level}
+                    </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
           </div>
         );
-      case "certifications":
+      case "accreditation":
         return (
           <div>
-            <h2 className="text-2xl font-semibold mb-4">Key Certifications</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {certifications.map((cert) => (
+            <h2 className="text-2xl font-semibold mb-4">Professional Accreditation</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {professionalAccreditations.map((cert) => (
                 <Card key={cert.id} className="border-elec-yellow/20 bg-elec-gray">
                   <CardHeader className="pb-2">
                     <div className="flex justify-between items-center">
                       <CardTitle className="text-lg">{cert.title}</CardTitle>
                       <span className={`text-xs px-2 py-1 rounded ${
-                        cert.level === "Mandatory" 
-                          ? "bg-red-500/20 text-red-500" 
-                          : cert.level === "Advanced" 
+                        cert.level === "Professional" 
                           ? "bg-blue-500/20 text-blue-500" 
-                          : "bg-green-500/20 text-green-500"
+                          : cert.level === "Advanced" 
+                          ? "bg-green-500/20 text-green-500" 
+                          : "bg-amber-500/20 text-amber-500"
                       }`}>
                         {cert.level}
                       </span>
@@ -249,64 +263,24 @@ const CareerProgression = () => {
             </div>
           </div>
         );
-      case "resources":
+      case "business":
         return (
           <div>
-            <h2 className="text-2xl font-semibold mb-4">Industry Resources</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader className="pb-2">
-                  <div className="flex items-start gap-3">
-                    <Building className="h-6 w-6 text-elec-yellow" />
-                    <div>
-                      <CardTitle className="text-lg">Professional Associations</CardTitle>
-                      <CardDescription>Connect with industry organizations</CardDescription>
+            <h2 className="text-2xl font-semibold mb-4">Business Builder</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {businessResources.map((resource) => (
+                <Card key={resource.id} className="border-elec-yellow/20 bg-elec-gray">
+                  <CardHeader className="pb-2">
+                    <div className="flex items-start gap-3">
+                      <FileCheck className="h-6 w-6 text-elec-yellow" />
+                      <CardTitle className="text-lg">{resource.title}</CardTitle>
                     </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-sm">
-                    <li className="flex items-center">
-                      <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mr-2"></span>
-                      National Inspection Council for Electrical Installation Contracting (NICEIC)
-                    </li>
-                    <li className="flex items-center">
-                      <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mr-2"></span>
-                      Electrical Contractors' Association (ECA)
-                    </li>
-                    <li className="flex items-center">
-                      <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mr-2"></span>
-                      Joint Industry Board (JIB)
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-              
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader className="pb-2">
-                  <div className="flex items-start gap-3">
-                    <ScrollText className="h-6 w-6 text-elec-yellow" />
-                    <div>
-                      <CardTitle className="text-lg">Career Development Resources</CardTitle>
-                      <CardDescription>Tools to advance your career</CardDescription>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm">Resume Builder</p>
-                    <Button size="sm" variant="outline">Access</Button>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm">Interview Preparation</p>
-                    <Button size="sm" variant="outline">Access</Button>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm">Salary Calculator</p>
-                    <Button size="sm" variant="outline">Access</Button>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm">{resource.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </div>
         );
