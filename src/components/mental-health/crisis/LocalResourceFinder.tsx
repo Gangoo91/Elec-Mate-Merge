@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { 
   MapPin, Search, Loader2, Info, ChevronRight, Phone 
@@ -68,7 +67,7 @@ const LocalResourceFinder = () => {
         });
       } else {
         setLocalResources(response.services);
-        setDataSource(response.source || "Unknown Source");
+        setDataSource(response.source || "Google Places API");
         
         toast.success("Local support services found", {
           description: `Found ${response.services.length} services near ${data.postcode}`,
