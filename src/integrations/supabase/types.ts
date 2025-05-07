@@ -60,6 +60,51 @@ export type Database = {
         }
         Relationships: []
       }
+      job_listings: {
+        Row: {
+          company: string
+          created_at: string
+          description: string
+          external_url: string
+          id: string
+          location: string
+          posted_date: string
+          salary: string | null
+          source: string | null
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          company: string
+          created_at?: string
+          description: string
+          external_url: string
+          id?: string
+          location: string
+          posted_date?: string
+          salary?: string | null
+          source?: string | null
+          title: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          company?: string
+          created_at?: string
+          description?: string
+          external_url?: string
+          id?: string
+          location?: string
+          posted_date?: string
+          salary?: string | null
+          source?: string | null
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       mentor_connections: {
         Row: {
           apprentice_id: string
