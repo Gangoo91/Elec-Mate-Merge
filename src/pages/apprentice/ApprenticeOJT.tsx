@@ -54,11 +54,11 @@ const ApprenticeOJT = () => {
   return (
     <div className="space-y-4 pb-20 animate-fade-in">
       {/* Only show header on desktop */}
-      <OJTHeader handleDownloadReport={handleDownloadReport} />
+      {!isMobile && <OJTHeader handleDownloadReport={handleDownloadReport} />}
       
       {/* Mobile layout has a different structure */}
       {isMobile ? (
-        <div className="pb-20"> {/* Added extra bottom padding for mobile */}
+        <div className="pb-24"> {/* Increased bottom padding for mobile */}
           {/* Training Management Card - Main Card for Mobile */}
           <TrainingManagementCard 
             initialActiveTab={activeTab}

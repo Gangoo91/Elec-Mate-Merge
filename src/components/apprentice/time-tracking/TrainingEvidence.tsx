@@ -2,15 +2,22 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Upload, X } from "lucide-react";
+import { Upload, X, ChevronDown } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import EvidenceForm from "./evidence/EvidenceForm";
 import EvidenceEmptyState from "./evidence/EvidenceEmptyState";
 import EvidenceList from "./evidence/EvidenceList";
 import { useTrainingEvidence } from "@/hooks/time-tracking/useTrainingEvidence";
 import { TrainingEvidenceItem } from "@/types/time-tracking";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import TrainingEvidenceDialog from "./evidence/TrainingEvidenceDialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const TrainingEvidence = () => {
   const { evidenceItems, addEvidence, deleteEvidence, isUploading, setIsUploading } = useTrainingEvidence();
@@ -36,58 +43,38 @@ const TrainingEvidence = () => {
             Upload and manage evidence of your off-the-job training activities
           </p>
         </div>
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger asChild>
+        <TrainingEvidenceDialog 
+          trigger={
             <Button className="gap-2">
               <Upload className="h-4 w-4" />
               Add New Evidence
             </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-md max-h-[90vh]">
-            <DialogHeader className="flex flex-row items-center justify-between">
-              <DialogTitle>Add Training Evidence</DialogTitle>
-              <DialogClose asChild>
-                <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
-                  <X className="h-4 w-4" />
-                </Button>
-              </DialogClose>
-            </DialogHeader>
-            <ScrollArea className="max-h-[calc(90vh-120px)] pr-4">
-              <EvidenceForm 
-                onAddEvidence={handleAddEvidence} 
-                isUploading={isUploading} 
-                setIsUploading={setIsUploading} 
-              />
-            </ScrollArea>
-          </DialogContent>
-        </Dialog>
+          }
+          title="Add Training Evidence"
+          onAddEvidence={addEvidence}
+          isUploading={isUploading}
+          setIsUploading={setIsUploading}
+        />
       </div>
 
-      <Tabs defaultValue="all" value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="bg-elec-dark mb-4">
-          <TabsTrigger value="all">All Evidence</TabsTrigger>
-          <TabsTrigger value="workshop">Workshops</TabsTrigger>
-          <TabsTrigger value="site visit">Site Visits</TabsTrigger>
-          <TabsTrigger value="college session">College</TabsTrigger>
-          <TabsTrigger value="online course">Online</TabsTrigger>
-        </TabsList>
+      <div className="space-y-4">
+        <div className="w-full">
+          <Select value={activeTab} onValueChange={setActiveTab}>
+            <SelectTrigger className="w-full bg-elec-dark">
+              <SelectValue placeholder="Filter by type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Evidence</SelectItem>
+              <SelectItem value="workshop">Workshops</SelectItem>
+              <SelectItem value="site visit">Site Visits</SelectItem>
+              <SelectItem value="college session">College</SelectItem>
+              <SelectItem value="online course">Online</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         
-        <TabsContent value="all">
-          <EvidenceList items={filteredEvidence} onDelete={deleteEvidence} />
-        </TabsContent>
-        <TabsContent value="workshop">
-          <EvidenceList items={filteredEvidence} onDelete={deleteEvidence} />
-        </TabsContent>
-        <TabsContent value="site visit">
-          <EvidenceList items={filteredEvidence} onDelete={deleteEvidence} />
-        </TabsContent>
-        <TabsContent value="college session">
-          <EvidenceList items={filteredEvidence} onDelete={deleteEvidence} />
-        </TabsContent>
-        <TabsContent value="online course">
-          <EvidenceList items={filteredEvidence} onDelete={deleteEvidence} />
-        </TabsContent>
-      </Tabs>
+        <EvidenceList items={filteredEvidence} onDelete={deleteEvidence} />
+      </div>
     </div>
   );
 };
