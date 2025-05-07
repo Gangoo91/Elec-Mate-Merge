@@ -2,6 +2,7 @@
 import { formatDistanceToNow } from 'date-fns';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ChatComment } from "@/components/messenger/types";
+import { getInitials } from "@/utils/stringUtils";
 
 interface CommentsListProps {
   comments: ChatComment[];
@@ -9,14 +10,6 @@ interface CommentsListProps {
 
 const CommentsList = ({ comments }: CommentsListProps) => {
   if (comments.length === 0) return null;
-  
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
-      .toUpperCase();
-  };
   
   return (
     <div className="bg-black/20 px-4 py-3 border-t border-elec-yellow/10">

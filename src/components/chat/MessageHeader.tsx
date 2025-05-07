@@ -8,6 +8,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { getInitials } from "@/utils/stringUtils";
 
 interface MessageHeaderProps {
   authorId: string;
@@ -31,14 +32,6 @@ const MessageHeader = ({
   onAuthorClick
 }: MessageHeaderProps) => {
   const isOwnMessage = authorId === currentUserId;
-  
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
-      .toUpperCase();
-  };
   
   return (
     <div className="flex justify-between items-center mb-3">

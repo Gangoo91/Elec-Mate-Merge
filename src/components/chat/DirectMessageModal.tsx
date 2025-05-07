@@ -13,6 +13,7 @@ import {
 import { Send } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
+import { getInitials } from "@/utils/stringUtils";
 
 interface DirectMessageModalProps {
   isOpen: boolean;
@@ -29,14 +30,6 @@ const DirectMessageModal = ({ isOpen, onClose, recipient }: DirectMessageModalPr
   const navigate = useNavigate();
 
   if (!recipient) return null;
-
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase();
-  };
 
   const handleSendMessage = () => {
     if (!message.trim()) return;

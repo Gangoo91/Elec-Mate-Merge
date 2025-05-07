@@ -7,6 +7,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Form, FormField, FormItem, FormControl } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
+import { getInitials } from "@/utils/stringUtils";
 
 interface ChatComposerProps {
   onSubmit: (content: string) => void;
@@ -28,15 +29,6 @@ const ChatComposer = ({ onSubmit, onCancel, isVisible }: ChatComposerProps) => {
       onSubmit(values.message);
       form.reset();
     }
-  };
-
-  const getInitials = (name?: string) => {
-    if (!name) return "U";
-    return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
-      .toUpperCase();
   };
 
   if (!isVisible) return null;
