@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { TrainingEvidenceItem } from "@/types/time-tracking";
 import { trainingTypes } from "./trainingEvidenceData";
+import { ArrowLeftCircle } from "lucide-react";
 
 interface EvidenceFormProps {
   onAddEvidence: (evidence: Omit<TrainingEvidenceItem, 'id'>) => void;
@@ -145,9 +146,11 @@ const EvidenceForm = ({ onAddEvidence, isUploading, setIsUploading }: EvidenceFo
         </p>
       </div>
       
-      <Button type="submit" className="w-full" disabled={isUploading}>
-        {isUploading ? 'Uploading...' : 'Add to Training Record'}
-      </Button>
+      <div className="flex justify-end">
+        <Button type="submit" className="w-full" disabled={isUploading}>
+          {isUploading ? 'Uploading...' : 'Add to Training Record'}
+        </Button>
+      </div>
     </form>
   );
 };

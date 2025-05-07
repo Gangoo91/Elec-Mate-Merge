@@ -11,7 +11,7 @@ const ApprenticeOJT = () => {
   const [weeklyHours, setWeeklyHours] = useState(8);
   const [targetHours] = useState(40);
   const [courseHours, setCourseHours] = useState(0);
-  const [activeTab, setActiveTab] = useState("auto"); // Change default to auto-tracking
+  const [activeTab, setActiveTab] = useState("auto"); // Default to auto-tracking
   const { toast } = useToast();
   const { addTimeEntry, totalTime } = useTimeEntries();
   const isMobile = useIsMobile();
@@ -58,7 +58,7 @@ const ApprenticeOJT = () => {
       
       {/* Mobile layout has a different structure */}
       {isMobile ? (
-        <div>
+        <div className="pb-20"> {/* Added extra bottom padding for mobile */}
           {/* Training Management Card - Main Card for Mobile */}
           <TrainingManagementCard 
             initialActiveTab={activeTab}

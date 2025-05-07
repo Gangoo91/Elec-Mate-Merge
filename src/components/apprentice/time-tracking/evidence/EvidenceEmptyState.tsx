@@ -2,9 +2,10 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileText } from "lucide-react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogClose, DialogHeader } from "@/components/ui/dialog";
 import EvidenceForm from "./EvidenceForm";
 import { TrainingEvidenceItem } from "@/types/time-tracking";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface EvidenceEmptyStateProps {
   onAddEvidence: (evidence: Omit<TrainingEvidenceItem, 'id'>) => void;
@@ -25,12 +26,15 @@ const EvidenceEmptyState = ({ onAddEvidence, isUploading, setIsUploading }: Evid
           <DialogTrigger asChild>
             <Button>Add Your First Evidence</Button>
           </DialogTrigger>
-          <DialogContent>
-            <EvidenceForm 
-              onAddEvidence={onAddEvidence}
-              isUploading={isUploading}
-              setIsUploading={setIsUploading}
-            />
+          <DialogContent className="max-h-[90vh]">
+            <DialogHeader>Add Your First Evidence</DialogHeader>
+            <ScrollArea className="max-h-[calc(90vh-120px)] pr-4">
+              <EvidenceForm 
+                onAddEvidence={onAddEvidence}
+                isUploading={isUploading}
+                setIsUploading={setIsUploading}
+              />
+            </ScrollArea>
           </DialogContent>
         </Dialog>
       </CardContent>
