@@ -2,25 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { MapPin, Phone, ExternalLink } from "lucide-react";
 import { StarRating } from "./StarRating";
+import { ScrapMerchant } from "@/hooks/useScrapMerchantFinder";
 
 interface MerchantCardProps {
-  merchant: {
-    id: number;
-    name: string;
-    address: string;
-    distance: string;
-    phone: string;
-    rating: number;
-    openNow: boolean;
-    paymentMethods: string[];
-    acceptedMaterials: string[];
-    location?: {
-      lat: number;
-      lng: number;
-    };
-    placeId?: string;
-  };
-  openDirections: (merchant: any) => void;
+  merchant: ScrapMerchant;
+  openDirections: (merchant: ScrapMerchant) => void;
 }
 
 export const MerchantCard = ({ merchant, openDirections }: MerchantCardProps) => {

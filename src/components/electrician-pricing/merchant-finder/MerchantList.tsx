@@ -1,22 +1,6 @@
 
 import { MerchantCard } from "./MerchantCard";
-
-interface ScrapMerchant {
-  id: number;
-  name: string;
-  address: string;
-  distance: string;
-  phone: string;
-  rating: number;
-  openNow: boolean;
-  paymentMethods: string[];
-  acceptedMaterials: string[];
-  placeId?: string;
-  location?: {
-    lat: number;
-    lng: number;
-  };
-}
+import { ScrapMerchant } from "@/hooks/useScrapMerchantFinder";
 
 interface MerchantListProps {
   merchants: ScrapMerchant[];
