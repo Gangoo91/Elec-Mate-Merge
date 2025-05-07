@@ -22,24 +22,24 @@ const LivePricingMetricsCard = ({ title, metrics }: LivePricingMetricsCardProps)
         <CardTitle className="text-xl">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="space-y-3">
+        <div className="space-y-4">
           {metrics.map((metric) => (
             <div key={metric.id} className="flex justify-between items-center border-b border-elec-yellow/10 pb-2">
               <span className="text-sm">{metric.name}</span>
-              <div className="flex items-center gap-2">
-                <span className="font-medium">{metric.value}</span>
-                <span className={`flex items-center text-xs px-1 py-0.5 rounded ${
+              <div className="flex items-center">
+                <span className="font-medium w-16 text-right">{metric.value}</span>
+                <span className={`flex items-center text-xs px-1 py-0.5 rounded w-14 justify-end ${
                   metric.trend === "up" 
                     ? "text-green-500" 
                     : metric.trend === "down"
-                    ? "text-red-500"
-                    : "text-gray-400"
+                      ? "text-red-500"
+                      : "text-gray-400"
                 }`}>
                   {metric.trend === "up" 
                     ? <TrendingUp className="h-3 w-3 mr-0.5" /> 
                     : metric.trend === "down"
-                    ? <TrendingDown className="h-3 w-3 mr-0.5" />
-                    : null
+                      ? <TrendingDown className="h-3 w-3 mr-0.5" />
+                      : null
                   }
                   {metric.change}
                 </span>

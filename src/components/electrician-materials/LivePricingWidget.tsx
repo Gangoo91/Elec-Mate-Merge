@@ -130,16 +130,20 @@ const LivePricingWidget = () => {
             pricingData.map((item) => (
               <div key={item.id} className="flex justify-between items-center border-b border-elec-yellow/10 pb-2">
                 <span className="text-sm">{item.name}</span>
-                <div className="flex items-center gap-2">
-                  <span className="font-medium">{item.value}</span>
-                  <span className={`flex items-center text-xs px-1 py-0.5 rounded ${
+                <div className="flex items-center">
+                  <span className="font-medium w-16 text-right">{item.value}</span>
+                  <span className={`flex items-center text-xs px-1 py-0.5 rounded w-14 justify-end ${
                     item.trend === "up" 
                       ? "text-green-500" 
-                      : "text-red-500"
+                      : item.trend === "down"
+                        ? "text-red-500"
+                        : "text-gray-400"
                   }`}>
                     {item.trend === "up" 
                       ? <TrendingUp className="h-3 w-3 mr-0.5" /> 
-                      : <TrendingDown className="h-3 w-3 mr-0.5" />
+                      : item.trend === "down"
+                        ? <TrendingDown className="h-3 w-3 mr-0.5" />
+                        : null
                     }
                     {item.change}
                   </span>
