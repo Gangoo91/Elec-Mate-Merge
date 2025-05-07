@@ -21,7 +21,7 @@ const LivePricing = () => {
           <h1 className="text-3xl font-bold tracking-tight">Live Pricing</h1>
         </div>
         
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap gap-3">
           <Link to="/electrician/toolbox-talk">
             <Button variant="outline" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" /> Back
@@ -37,16 +37,16 @@ const LivePricing = () => {
             <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
             Refresh
           </Button>
-
-          <Button
-            variant="outline"
-            className="flex items-center gap-2 ml-auto"
-            onClick={() => setShowMerchantFinder(!showMerchantFinder)}
-          >
-            <MapPin className="h-4 w-4" />
-            {showMerchantFinder ? "Hide Merchants" : "Find Scrap Merchants"}
-          </Button>
         </div>
+        
+        <Button
+          variant="outline"
+          className="flex items-center gap-2 w-fit"
+          onClick={() => setShowMerchantFinder(!showMerchantFinder)}
+        >
+          <MapPin className="h-4 w-4" />
+          {showMerchantFinder ? "Hide Merchants" : "Find Scrap Merchants"}
+        </Button>
       </div>
 
       {showMerchantFinder && (
