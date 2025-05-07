@@ -1,7 +1,8 @@
 
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Package, ArrowLeft } from "lucide-react";
+import { Package, ArrowLeft, AlertTriangle } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import MaterialSearch from "@/components/electrician-materials/MaterialSearch";
 import LivePricingWidget from "@/components/electrician-materials/LivePricingWidget";
 import DealOfTheDay from "@/components/electrician-materials/DealOfTheDay";
@@ -24,6 +25,14 @@ const ElectricalMaterials = () => {
           </Button>
         </Link>
       </div>
+
+      {/* Disclaimer */}
+      <Alert className="bg-elec-gray border-elec-yellow/30">
+        <AlertTriangle className="h-4 w-4 text-elec-yellow" />
+        <AlertDescription className="text-sm">
+          ElecMate is not affiliated with or endorsed by the suppliers listed. Prices and product availability may vary. We may earn a commission from qualifying purchases through affiliated links.
+        </AlertDescription>
+      </Alert>
 
       {/* Search bar */}
       <MaterialSearch />

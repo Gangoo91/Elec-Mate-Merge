@@ -2,8 +2,9 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Package, ArrowLeft, Star } from "lucide-react";
+import { Package, ArrowLeft, Star, AlertTriangle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import MaterialCard from "@/components/electrician-materials/MaterialCard";
 import MaterialSearch from "@/components/electrician-materials/MaterialSearch";
 
@@ -100,7 +101,7 @@ const productsBySupplier = {
       price: "£6.75",
       supplier: "Screwfix",
       image: "placeholder.svg",
-      stockStatus: "In Stock"
+      stockStatus: "In Stock" as "In Stock"
     },
     {
       id: 102,
@@ -109,7 +110,7 @@ const productsBySupplier = {
       price: "£4.99",
       supplier: "Screwfix",
       image: "placeholder.svg",
-      stockStatus: "In Stock"
+      stockStatus: "In Stock" as "In Stock"
     },
     {
       id: 103,
@@ -118,7 +119,7 @@ const productsBySupplier = {
       price: "£8.50",
       supplier: "Screwfix",
       image: "placeholder.svg",
-      stockStatus: "Low Stock"
+      stockStatus: "Low Stock" as "Low Stock"
     }
   ],
   "city-electrical-factors": [
@@ -131,7 +132,7 @@ const productsBySupplier = {
       image: "placeholder.svg",
       isOnSale: true,
       salePrice: "£95.75",
-      stockStatus: "In Stock"
+      stockStatus: "In Stock" as "In Stock"
     },
     {
       id: 202,
@@ -140,7 +141,7 @@ const productsBySupplier = {
       price: "£34.25",
       supplier: "City Electrical Factors",
       image: "placeholder.svg",
-      stockStatus: "In Stock"
+      stockStatus: "In Stock" as "In Stock"
     }
   ],
   "electricaldirect": [
@@ -151,7 +152,7 @@ const productsBySupplier = {
       price: "£85.99",
       supplier: "ElectricalDirect",
       image: "placeholder.svg",
-      stockStatus: "In Stock"
+      stockStatus: "In Stock" as "In Stock"
     },
     {
       id: 302,
@@ -160,7 +161,7 @@ const productsBySupplier = {
       price: "£7.50",
       supplier: "ElectricalDirect",
       image: "placeholder.svg",
-      stockStatus: "In Stock"
+      stockStatus: "In Stock" as "In Stock"
     }
   ],
   "toolstation": [
@@ -173,7 +174,7 @@ const productsBySupplier = {
       image: "placeholder.svg",
       isOnSale: true,
       salePrice: "£24.99",
-      stockStatus: "In Stock"
+      stockStatus: "In Stock" as "In Stock"
     },
     {
       id: 402,
@@ -182,7 +183,7 @@ const productsBySupplier = {
       price: "£3.49",
       supplier: "Toolstation",
       image: "placeholder.svg",
-      stockStatus: "In Stock"
+      stockStatus: "In Stock" as "In Stock"
     }
   ]
 };
@@ -226,6 +227,14 @@ const SupplierMaterials = () => {
           </Button>
         </Link>
       </div>
+
+      {/* Disclaimer */}
+      <Alert className="bg-elec-gray border-elec-yellow/30">
+        <AlertTriangle className="h-4 w-4 text-elec-yellow" />
+        <AlertDescription className="text-sm">
+          ElecMate is not affiliated with or endorsed by the suppliers listed. Prices and product availability may vary. We may earn a commission from qualifying purchases through affiliated links.
+        </AlertDescription>
+      </Alert>
 
       {/* Search bar */}
       <MaterialSearch />
