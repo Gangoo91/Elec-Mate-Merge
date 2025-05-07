@@ -1,24 +1,27 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { PoundSterling, ArrowLeft, RefreshCw, Info } from "lucide-react";
+import { PoundSterling, ArrowLeft, RefreshCw, Info, MapPin, Search } from "lucide-react";
 import LivePricingMetricsCard from "@/components/electrician-pricing/LivePricingMetricsCard";
 import ScrapPriceTable from "@/components/electrician-pricing/ScrapPriceTable";
 import MarketAlerts from "@/components/electrician-pricing/MarketAlerts";
 import { useLiveMetalPrices } from "@/hooks/useLiveMetalPrices";
+import ScrapMerchantFinder from "@/components/electrician-pricing/ScrapMerchantFinder";
+import { useState } from "react";
 
 const LivePricing = () => {
   const { data, isLoading, refreshPrices } = useLiveMetalPrices();
+  const [showMerchantFinder, setShowMerchantFinder] = useState(false);
   
   return (
     <div className="space-y-8 animate-fade-in">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <PoundSterling className="h-8 w-8 text-elec-yellow" />
+      <div className="flex flex-col space-y-4">
+        <div className="flex items-center">
+          <PoundSterling className="h-8 w-8 text-elec-yellow mr-2" />
           <h1 className="text-3xl font-bold tracking-tight">Live Pricing</h1>
         </div>
         
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <Link to="/electrician/toolbox-talk">
             <Button variant="outline" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" /> Back
@@ -34,8 +37,21 @@ const LivePricing = () => {
             <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
             Refresh
           </Button>
+
+          <Button
+            variant="outline"
+            className="flex items-center gap-2 ml-auto"
+            onClick={() => setShowMerchantFinder(!showMerchantFinder)}
+          >
+            <MapPin className="h-4 w-4" />
+            {showMerchantFinder ? "Hide Merchants" : "Find Scrap Merchants"}
+          </Button>
         </div>
       </div>
+
+      {showMerchantFinder && (
+        <ScrapMerchantFinder />
+      )}
 
       <div className="border p-4 rounded-lg bg-elec-gray border-elec-yellow/20 flex justify-between items-center">
         <h2 className="text-xl font-medium">Material Market Prices</h2>

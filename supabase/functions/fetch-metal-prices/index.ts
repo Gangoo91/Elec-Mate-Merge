@@ -85,7 +85,7 @@ const generateMockPrices = () => {
     };
   });
 
-  // Generate scrap metal prices
+  // Generate scrap metal prices - all in kg now
   const scrapMetal = [
     { id: 1, material: "Copper Wire (Clean)", base: 5.20, variance: 0.3 },
     { id: 2, material: "Copper Wire (Insulated)", base: 2.80, variance: 0.2 },
