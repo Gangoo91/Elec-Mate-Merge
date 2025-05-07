@@ -1,3 +1,4 @@
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import VoltageDropCalculator from "@/components/electrician-tools/VoltageDropCalculator";
 import LoadCalculator from "@/components/electrician-tools/LoadCalculator";
@@ -20,7 +21,7 @@ const ElectricianTools = () => {
         <TabsList className="bg-elec-gray border border-elec-yellow/20">
           <TabsTrigger value="calculators">Calculators</TabsTrigger>
           <TabsTrigger value="documents">Document Templates</TabsTrigger>
-          <TabsTrigger value="projects">Workstation</TabsTrigger>
+          <TabsTrigger value="projects">Electrical Workshop</TabsTrigger>
         </TabsList>
         
         {/* Calculators Tab */}
@@ -37,7 +38,7 @@ const ElectricianTools = () => {
           <DocumentTemplates />
         </TabsContent>
         
-        {/* Projects Tab - renamed to Workstation */}
+        {/* Projects Tab - renamed to Electrical Workshop */}
         <TabsContent value="projects" className="space-y-4">
           <ProjectManagement />
         </TabsContent>

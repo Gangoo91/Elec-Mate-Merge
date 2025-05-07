@@ -10,9 +10,9 @@ const ProjectManagement = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Workstation</CardTitle>
+              <CardTitle>Electrical Workshop</CardTitle>
               <CardDescription>
-                Manage projects, tools, AI assistants, and administration in one place.
+                A used daily toolkit for all electrical jobs.
               </CardDescription>
             </div>
             <Button>+ New Project</Button>
