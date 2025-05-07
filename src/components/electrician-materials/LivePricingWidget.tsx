@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -27,7 +26,7 @@ const LivePricingWidget = () => {
         throw new Error(error.message);
       }
       
-      // Take more key metals to display, including different copper types
+      // Take key metals to display, including different copper types
       const keyItems: PricingItem[] = [
         data.metalPrices[0], // Copper - Bright
         data.metalPrices[1], // Copper - Clean
@@ -39,7 +38,7 @@ const LivePricingWidget = () => {
       
       setPricingData(keyItems);
     } catch (error) {
-      console.error("Error fetching prices for widget:", error);
+      console.error("Error fetching UK prices for widget:", error);
       // Set fallback data if API fails
       setPricingData([
         {
@@ -97,7 +96,7 @@ const LivePricingWidget = () => {
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray h-full">
       <CardHeader className="pb-2 flex flex-row items-center justify-between">
-        <CardTitle className="text-xl">Live Material Pricing</CardTitle>
+        <CardTitle className="text-xl">Live UK Material Pricing</CardTitle>
         <div className="flex items-center gap-2">
           <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">LIVE</span>
           <Button 
@@ -152,7 +151,7 @@ const LivePricingWidget = () => {
             ))
           )}
           <Link to="/electrician/live-pricing" className="block mt-4">
-            <Button variant="outline" size="sm" className="w-full">View Full Price List</Button>
+            <Button variant="outline" size="sm" className="w-full">View Full UK Price List</Button>
           </Link>
         </div>
       </CardContent>

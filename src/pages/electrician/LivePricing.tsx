@@ -17,7 +17,7 @@ const LivePricing = () => {
       <div className="flex flex-col space-y-4">
         <div className="flex items-center">
           <PoundSterling className="h-8 w-8 text-elec-yellow mr-2" />
-          <h1 className="text-3xl font-bold tracking-tight">Live Pricing</h1>
+          <h1 className="text-3xl font-bold tracking-tight">UK Live Pricing</h1>
         </div>
         
         <div className="flex flex-wrap gap-3">
@@ -34,7 +34,7 @@ const LivePricing = () => {
             disabled={isLoading}
           >
             <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
-            Refresh
+            Refresh UK Prices
           </Button>
         </div>
         
@@ -44,7 +44,7 @@ const LivePricing = () => {
           onClick={() => setShowMerchantFinder(!showMerchantFinder)}
         >
           <MapPin className="h-4 w-4" />
-          {showMerchantFinder ? "Hide Merchants" : "Find Scrap Merchants"}
+          {showMerchantFinder ? "Hide Merchants" : "Find UK Scrap Merchants"}
         </Button>
       </div>
 
@@ -53,7 +53,7 @@ const LivePricing = () => {
       )}
 
       <div className="border p-4 rounded-lg bg-elec-gray border-elec-yellow/20 flex justify-between items-center">
-        <h2 className="text-xl font-medium">Material Market Prices</h2>
+        <h2 className="text-xl font-medium">UK Material Market Prices</h2>
         <div className="text-sm text-muted-foreground">Last updated: {data?.lastUpdated || "Loading..."}</div>
       </div>
 
@@ -66,9 +66,9 @@ const LivePricing = () => {
       ) : data ? (
         <>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <LivePricingMetricsCard title="Metal Prices" metrics={data.metalPrices} />
-            <LivePricingMetricsCard title="Cable Prices" metrics={data.cablePrices} />
-            <LivePricingMetricsCard title="Equipment Prices" metrics={data.equipmentPrices} />
+            <LivePricingMetricsCard title="UK Metal Prices" metrics={data.metalPrices} />
+            <LivePricingMetricsCard title="UK Cable Prices" metrics={data.cablePrices} />
+            <LivePricingMetricsCard title="UK Equipment Prices" metrics={data.equipmentPrices} />
           </div>
 
           <div className="grid grid-cols-1 gap-6">
@@ -78,16 +78,16 @@ const LivePricing = () => {
       ) : (
         <div className="p-8 border rounded-lg bg-elec-gray border-elec-yellow/20 flex flex-col items-center gap-4">
           <Info className="h-12 w-12 text-elec-yellow opacity-70" />
-          <p className="text-lg">Could not load pricing data. Please try refreshing.</p>
+          <p className="text-lg">Could not load UK pricing data. Please try refreshing.</p>
           <Button onClick={refreshPrices}>Try Again</Button>
         </div>
       )}
       
       <div className="border p-4 rounded-lg bg-elec-gray border-elec-yellow/20">
-        <h2 className="text-lg font-medium mb-2">Price Information Disclaimer</h2>
+        <h2 className="text-lg font-medium mb-2">UK Price Information Disclaimer</h2>
         <p className="text-sm text-muted-foreground">
-          Prices shown are indicative only and may vary by supplier and region. Always confirm current
-          prices with your local supplier before making purchasing decisions. Market data is provided
+          Prices shown are indicative of UK market rates and may vary by supplier and region. Always confirm current
+          prices with your local UK supplier before making purchasing decisions. Market data is provided
           for informational purposes only and should not be considered as financial advice.
         </p>
       </div>

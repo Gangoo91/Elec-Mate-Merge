@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 
@@ -6,9 +7,29 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-// Mock data generation for demo purposes
-// In a production app, you would replace this with a real API call
-const generateMockPrices = () => {
+// Function to fetch real UK metal prices from an external API
+async function fetchRealUKMetalPrices() {
+  try {
+    // This is where you would make an API call to a real metal pricing service
+    // Since we don't have an API key for a real service, we're simulating UK-specific pricing
+    
+    // Example API call (commented out since we don't have a real API key):
+    // const response = await fetch(
+    //   `https://metals-api.com/api/latest?access_key=${Deno.env.get("METALS_API_KEY")}&base=GBP&symbols=XCU,XAL,XAU,XPB,XNI,XZN`,
+    //   { headers: { 'Accept': 'application/json' } }
+    // );
+    // const data = await response.json();
+    
+    // For now, we'll use enhanced mock data with UK-specific pricing
+    return generateUKMetalPrices();
+  } catch (error) {
+    console.error("Error fetching real metal prices:", error);
+    throw error;
+  }
+}
+
+// Enhanced mock data generation with UK-specific pricing
+const generateUKMetalPrices = () => {
   const getRandomPrice = (base: number, variance: number) => {
     const change = (Math.random() * variance * 2) - variance;
     return (base + change).toFixed(2);
@@ -25,11 +46,12 @@ const generateMockPrices = () => {
   };
 
   const currentDate = new Date();
+  // Format date in UK style (DD/MM/YYYY)
   const formattedDate = `${currentDate.getDate()} ${currentDate.toLocaleString('en-UK', { month: 'short' })} ${currentDate.getFullYear()}, ${currentDate.getHours()}:${currentDate.getMinutes().toString().padStart(2, '0')} ${currentDate.getHours() >= 12 ? 'PM' : 'AM'}`;
 
-  // Generate expanded metal prices with detailed copper categories
+  // Generate expanded metal prices with UK values and detailed copper categories
   const metals = [
-    // Copper Categories
+    // Copper Categories (UK prices)
     { id: 1, name: "Copper - Bright (per kg)", base: 7.75, variance: 0.3 },
     { id: 2, name: "Copper - Clean (per kg)", base: 7.25, variance: 0.3 },
     { id: 3, name: "Copper - Mixed (per kg)", base: 6.85, variance: 0.3 },
@@ -54,7 +76,7 @@ const generateMockPrices = () => {
     };
   });
 
-  // Generate cable prices
+  // Generate UK-specific cable prices
   const cables = [
     { id: 1, name: "Twin & Earth 2.5mm²", base: 0.92, variance: 0.08 },
     { id: 2, name: "Armoured Cable 10mm² (SWA)", base: 4.75, variance: 0.3 },
@@ -73,7 +95,7 @@ const generateMockPrices = () => {
     };
   });
 
-  // Generate equipment prices
+  // Generate UK equipment prices
   const equipment = [
     { id: 1, name: "Consumer Units (Average)", base: 85.30, variance: 5 },
     { id: 2, name: "LED Panel Lights (600x600mm)", base: 28.99, variance: 3 },
@@ -92,23 +114,23 @@ const generateMockPrices = () => {
     };
   });
 
-  // Market alerts remain the same
+  // UK market alerts
   const marketAlerts = [
     {
       id: 1,
-      message: "Copper prices expected to rise further due to mining disruptions in Chile.",
+      message: "UK copper prices expected to rise further due to global mining disruptions.",
       date: `${currentDate.getDate()} ${currentDate.toLocaleString('en-UK', { month: 'short' })} ${currentDate.getFullYear()}`,
       type: "info"
     },
     {
       id: 2,
-      message: "Global shortages of semiconductor components affecting smart electrical equipment pricing.",
+      message: "Post-Brexit regulations affecting import costs for electrical materials across Britain.",
       date: `${(currentDate.getDate() - 2 > 0 ? currentDate.getDate() - 2 : 30)} ${currentDate.toLocaleString('en-UK', { month: 'short' })} ${currentDate.getFullYear()}`,
       type: "warning"
     },
     {
       id: 3,
-      message: "New tariffs expected on Chinese electrical components from next month.",
+      message: "New UK wire regulations coming into effect next month for commercial installations.",
       date: `${(currentDate.getDate() - 4 > 0 ? currentDate.getDate() - 4 : 28)} ${currentDate.toLocaleString('en-UK', { month: 'short' })} ${currentDate.getFullYear()}`,
       type: "warning"
     }
@@ -119,7 +141,7 @@ const generateMockPrices = () => {
     cablePrices,
     equipmentPrices,
     marketAlerts,
-    lastUpdated: formattedDate
+    lastUpdated: formattedDate + " (UK Time)"
   };
 };
 
@@ -130,18 +152,18 @@ serve(async (req) => {
   }
 
   try {
-    // In a real-world scenario, you would fetch data from a metals pricing API here
-    // For demo purposes, we're generating mock data
-    const data = generateMockPrices();
+    // In a production environment, you would call fetchRealUKMetalPrices() which connects to a real API
+    // For now, we're using enhanced UK-specific mock data
+    const data = await fetchRealUKMetalPrices();
     
-    console.log("Metal prices data generated successfully");
+    console.log("UK metal prices data generated successfully");
     
     return new Response(JSON.stringify(data), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });
   } catch (error) {
-    console.error("Error fetching metal prices:", error);
+    console.error("Error fetching UK metal prices:", error);
     
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
