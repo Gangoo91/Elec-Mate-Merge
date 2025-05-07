@@ -6,7 +6,7 @@ import JobListingsFetcher from "@/components/electrician-tools/JobListingsFetche
 
 const TopSection: React.FC = () => {
   return (
-    <>
+    <div className="space-y-6">
       <JobVacancyHeader />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -16,7 +16,7 @@ const TopSection: React.FC = () => {
         {/* Job Listings Fetcher component */}
         <JobListingsFetcher />
       </div>
-    </>
+    </div>
   );
 };
 
