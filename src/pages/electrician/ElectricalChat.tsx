@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { useElectricalChat } from "@/hooks/chat/useElectricalChat";
 import ChatHeader from "@/components/chat/ChatHeader";
 import ChatSearchBar from "@/components/chat/ChatSearchBar";
@@ -6,6 +7,7 @@ import ChatMessageFeed from "@/components/chat/ChatMessageFeed";
 import ChatComposer from "@/components/chat/ChatComposer";
 
 const ElectricalChat = () => {
+  const [isComposerOpen, setIsComposerOpen] = useState(false);
   const {
     messages,
     isLoading,
@@ -15,11 +17,20 @@ const ElectricalChat = () => {
     profile
   } = useElectricalChat();
 
+  const handleOpenComposer = () => setIsComposerOpen(true);
+  const handleCloseComposer = () => setIsComposerOpen(false);
+
+  const handleSubmitPost = (content: string) => {
+    handlePostMessage(content);
+    setIsComposerOpen(false);
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-black">
       <ChatHeader 
         title="Electricians Chat Room" 
         subtitle="Connect with fellow electricians, share experiences, and discuss industry topics." 
+        onNewPost={handleOpenComposer}
       />
       
       <ChatSearchBar />
@@ -32,11 +43,11 @@ const ElectricalChat = () => {
         onPostComment={handlePostComment}
       />
       
-      <div className="sticky bottom-0 w-full bg-black py-4">
-        <div className="max-w-3xl mx-auto px-4">
-          <ChatComposer onSubmit={handlePostMessage} />
-        </div>
-      </div>
+      <ChatComposer 
+        onSubmit={handleSubmitPost} 
+        onCancel={handleCloseComposer}
+        isVisible={isComposerOpen} 
+      />
     </div>
   );
 };
