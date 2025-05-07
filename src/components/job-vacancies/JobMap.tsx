@@ -71,7 +71,7 @@ const JobMap: React.FC<JobMapProps> = ({ jobs, selectedJob, handleJobSelect, use
     
     const geocodePromises = jobs.map(job => new Promise<void>((resolve) => {
       geocoder.geocode({ address: `${job.location}, UK` }, (results, status) => {
-        if (status === window.google.maps.GeocoderStatus.OK && results && results[0]) {
+        if (status === "OK" && results && results[0]) {
           const position = results[0].geometry.location.toJSON();
           
           const marker = new window.google.maps.Marker({

@@ -44,6 +44,12 @@ declare namespace google {
       getDistanceMatrix(request: DistanceMatrixRequest, callback: (response: DistanceMatrixResponse, status: DistanceMatrixStatus) => void): void;
     }
 
+    class Size {
+      constructor(width: number, height: number);
+      width: number;
+      height: number;
+    }
+
     interface MapOptions {
       center?: LatLng | LatLngLiteral;
       zoom?: number;

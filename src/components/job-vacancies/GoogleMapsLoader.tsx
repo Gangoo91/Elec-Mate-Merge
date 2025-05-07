@@ -7,12 +7,7 @@ interface GoogleMapsLoaderProps {
   children: React.ReactNode;
 }
 
-declare global {
-  interface Window {
-    google?: any;
-  }
-}
-
+// Remove the conflicting global declaration since it's already defined in google-maps.d.ts
 const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ children }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
