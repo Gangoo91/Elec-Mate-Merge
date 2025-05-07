@@ -1,8 +1,38 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Award, Briefcase, Building, TrendingUp, Trophy, GraduationCap, ShieldCheck, Hammer, Zap } from "lucide-react";
+import { Award, Briefcase, Building, TrendingUp, Trophy, GraduationCap, ShieldCheck, Hammer, Zap, Lightbulb, Tool, Cpu } from "lucide-react";
 
 const careerPaths = [
+  {
+    id: 5,
+    title: "Maintenance Electrician",
+    requirements: "Level 3 NVQ + specialized maintenance experience",
+    description: "Maintain, troubleshoot, and repair electrical systems in factories, plants, or commercial buildings.",
+    icon: <Zap className="h-8 w-8 text-elec-yellow" />,
+    skills: ["Fault diagnosis", "Preventative maintenance", "PLC systems", "Industrial standards"],
+    salaryRange: "£26,000 - £38,000",
+    timeToAchieve: "3-5 years"
+  },
+  {
+    id: 2,
+    title: "Installation Electrician",
+    requirements: "Level 3 NVQ Diploma + AM2 assessment",
+    description: "Install, maintain, and repair electrical systems in domestic, commercial and industrial environments.",
+    icon: <Hammer className="h-8 w-8 text-elec-yellow" />,
+    skills: ["Installation techniques", "Fault finding", "Circuit testing", "Following diagrams"],
+    salaryRange: "£28,000 - £35,000",
+    timeToAchieve: "3-4 years"
+  },
+  {
+    id: 8,
+    title: "Specialist Electrician",
+    requirements: "Standard qualification + specialist training",
+    description: "Focus on specific areas like renewable energy, electric vehicles, or building management systems.",
+    icon: <Briefcase className="h-8 w-8 text-elec-yellow" />,
+    skills: ["Specialized knowledge", "Advanced technologies", "Problem solving", "Consultancy"],
+    salaryRange: "£30,000 - £40,000",
+    timeToAchieve: "4-6 years"
+  },
   {
     id: 1,
     title: "Approved Electrician",
@@ -14,44 +44,24 @@ const careerPaths = [
     timeToAchieve: "3-5 years"
   },
   {
-    id: 2,
-    title: "Installation Electrician",
-    requirements: "Level 3 NVQ Diploma + AM2 assessment",
-    description: "Install, maintain, and repair electrical systems in domestic, commercial and industrial environments.",
-    icon: <Hammer className="h-8 w-8 text-elec-yellow" />,
-    skills: ["Installation techniques", "Fault finding", "Circuit testing", "Following diagrams"],
-    salaryRange: "£25,000 - £35,000",
-    timeToAchieve: "3-4 years"
-  },
-  {
-    id: 3,
-    title: "Electrical Contractor",
-    requirements: "Journey-level experience + business license + certification",
-    description: "Run your own electrical contracting business focusing on residential, commercial, or industrial work.",
-    icon: <Building className="h-8 w-8 text-elec-yellow" />,
-    skills: ["Business management", "Customer relations", "Estimation", "Financial planning"],
-    salaryRange: "£40,000 - £80,000+",
-    timeToAchieve: "5+ years"
-  },
-  {
     id: 4,
     title: "Electrical Engineer",
     requirements: "Degree in Electrical Engineering + professional experience",
     description: "Design, develop and test electrical equipment and systems for buildings, transportation, or power generation.",
     icon: <Award className="h-8 w-8 text-elec-yellow" />,
     skills: ["Circuit design", "Power systems", "Project management", "Technical documentation"],
-    salaryRange: "£30,000 - £55,000",
+    salaryRange: "£32,000 - £55,000",
     timeToAchieve: "5-7 years (including education)"
   },
   {
-    id: 5,
-    title: "Maintenance Electrician",
-    requirements: "Level 3 NVQ + specialized maintenance experience",
-    description: "Maintain, troubleshoot, and repair electrical systems in factories, plants, or commercial buildings.",
-    icon: <Zap className="h-8 w-8 text-elec-yellow" />,
-    skills: ["Fault diagnosis", "Preventative maintenance", "PLC systems", "Industrial standards"],
-    salaryRange: "£28,000 - £40,000",
-    timeToAchieve: "3-5 years"
+    id: 10,
+    title: "Electrical Designer",
+    requirements: "HNC/HND in Electrical Engineering or equivalent + design software proficiency",
+    description: "Create detailed electrical designs and drawings for construction projects using CAD and BIM software.",
+    icon: <Lightbulb className="h-8 w-8 text-elec-yellow" />,
+    skills: ["CAD software", "Design standards", "Load calculations", "Technical drawing"],
+    salaryRange: "£33,000 - £48,000",
+    timeToAchieve: "4-6 years"
   },
   {
     id: 6,
@@ -64,6 +74,26 @@ const careerPaths = [
     timeToAchieve: "6-8 years"
   },
   {
+    id: 11,
+    title: "Commissioning Technician",
+    requirements: "Advanced electrical qualification + specialized commissioning training",
+    description: "Test, verify and commission new electrical systems to ensure they operate according to specification.",
+    icon: <Tool className="h-8 w-8 text-elec-yellow" />,
+    skills: ["System testing", "Troubleshooting", "Documentation", "Commissioning procedures"],
+    salaryRange: "£36,000 - £48,000",
+    timeToAchieve: "5-7 years"
+  },
+  {
+    id: 12,
+    title: "Commissioning Engineer",
+    requirements: "Degree in Electrical Engineering + commissioning experience",
+    description: "Lead complex commissioning projects for major electrical and control systems in commercial and industrial facilities.",
+    icon: <Cpu className="h-8 w-8 text-elec-yellow" />,
+    skills: ["Project management", "Control systems", "Technical leadership", "Client management"],
+    salaryRange: "£42,000 - £60,000",
+    timeToAchieve: "7-10 years"
+  },
+  {
     id: 7,
     title: "Project Manager",
     requirements: "Extensive electrical experience + management qualifications",
@@ -74,14 +104,14 @@ const careerPaths = [
     timeToAchieve: "7-10 years"
   },
   {
-    id: 8,
-    title: "Specialist Electrician",
-    requirements: "Standard qualification + specialist training",
-    description: "Focus on specific areas like renewable energy, electric vehicles, or building management systems.",
-    icon: <Briefcase className="h-8 w-8 text-elec-yellow" />,
-    skills: ["Specialized knowledge", "Advanced technologies", "Problem solving", "Consultancy"],
-    salaryRange: "£30,000 - £50,000",
-    timeToAchieve: "4-6 years"
+    id: 3,
+    title: "Electrical Contractor",
+    requirements: "Journey-level experience + business license + certification",
+    description: "Run your own electrical contracting business focusing on residential, commercial, or industrial work.",
+    icon: <Building className="h-8 w-8 text-elec-yellow" />,
+    skills: ["Business management", "Customer relations", "Estimation", "Financial planning"],
+    salaryRange: "£40,000 - £80,000+",
+    timeToAchieve: "5+ years"
   }
 ];
 
@@ -92,7 +122,7 @@ const CareerPathways = () => {
         <h2 className="text-2xl font-semibold">Career Pathways</h2>
         <p className="text-muted-foreground">
           The electrical industry offers diverse career paths with opportunities for advancement based on your interests, skills, and goals. 
-          Below are key pathways you can explore as you progress in your electrical career.
+          Below are key pathways you can explore as you progress in your electrical career, sorted by typical salary ranges from entry-level to advanced positions.
         </p>
       </div>
 
@@ -168,6 +198,10 @@ const CareerPathways = () => {
                 <span className="text-elec-yellow font-bold">•</span>
                 <span>Consider gaining experience in different sectors (domestic, commercial, industrial) to broaden your expertise</span>
               </li>
+              <li className="flex items-start gap-2">
+                <span className="text-elec-yellow font-bold">•</span>
+                <span>Build relationships with suppliers, manufacturers and specialists to stay informed about industry developments</span>
+              </li>
             </ul>
           </div>
         </div>
@@ -179,20 +213,20 @@ const CareerPathways = () => {
           <div>
             <h3 className="font-medium text-lg mb-1">Career Progression Paths</h3>
             <p className="text-sm mb-3">
-              Common progression paths in the electrical industry include:
+              Common progression paths in the UK electrical industry include:
             </p>
             <div className="space-y-3 text-sm">
               <div>
-                <h4 className="text-amber-400 font-medium">Apprentice → Electrician → Approved Electrician → Supervisor</h4>
+                <h4 className="text-amber-400 font-medium">Apprentice → Installation Electrician → Approved Electrician → Supervisor</h4>
                 <p className="text-xs mt-1">The traditional progression path focusing on installation work and eventually team management.</p>
               </div>
               <div>
-                <h4 className="text-amber-400 font-medium">Electrician → Specialist → Consultant</h4>
-                <p className="text-xs mt-1">Focusing on developing expertise in specialized fields like renewable energy or building automation.</p>
+                <h4 className="text-amber-400 font-medium">Electrician → Specialist → Commissioning Technician → Commissioning Engineer</h4>
+                <p className="text-xs mt-1">Focusing on developing expertise in specialized systems and commissioning increasingly complex installations.</p>
               </div>
               <div>
-                <h4 className="text-amber-400 font-medium">Electrician → Further Education → Electrical Engineer</h4>
-                <p className="text-xs mt-1">Pursuing higher education to move into design and engineering roles.</p>
+                <h4 className="text-amber-400 font-medium">Electrician → HNC/HND/Degree → Electrical Designer → Project Engineer</h4>
+                <p className="text-xs mt-1">Moving from hands-on installation to design and engineering roles through further education.</p>
               </div>
               <div>
                 <h4 className="text-amber-400 font-medium">Electrician → Business Training → Electrical Contractor</h4>
