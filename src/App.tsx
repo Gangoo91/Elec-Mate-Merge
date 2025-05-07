@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
@@ -39,6 +38,11 @@ import ElectricalMaterials from "./pages/electrician/ElectricalMaterials";
 import SupplierMaterials from "./pages/electrician/SupplierMaterials";
 import ElectricalTools from "./pages/electrician/ElectricalTools";
 import SafetyShares from "./pages/electrician/SafetyShares";
+import SafetyAlerts from "./pages/electrician/safety-shares/SafetyAlerts";
+import LearningFromExperience from "./pages/electrician/safety-shares/LearningFromExperience";
+import MajorProjects from "./pages/electrician/safety-shares/MajorProjects";
+import IndustryNews from "./pages/electrician/safety-shares/IndustryNews";
+import SafetyResources from "./pages/electrician/safety-shares/SafetyResources";
 import LivePricing from "./pages/electrician/LivePricing";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
@@ -99,7 +103,11 @@ function App() {
                 <Route path="electrician/suppliers/:supplierSlug" element={<SupplierMaterials />} />
                 <Route path="electrician/tools" element={<ElectricalTools />} />
                 <Route path="electrician/safety-shares" element={<SafetyShares />} />
-                <Route path="electrician/live-pricing" element={<LivePricing />} />
+                <Route path="electrician/safety-shares/alerts" element={<SafetyAlerts />} />
+                <Route path="electrician/safety-shares/lfe" element={<LearningFromExperience />} />
+                <Route path="electrician/safety-shares/projects" element={<MajorProjects />} />
+                <Route path="electrician/safety-shares/news" element={<IndustryNews />} />
+                <Route path="electrician/safety-shares/resources" element={<SafetyResources />} />
                 <Route path="video-lessons" element={<VideoLessons />} />
                 <Route path="leaderboards" element={<Leaderboards />} />
                 <Route path="apprentice">
