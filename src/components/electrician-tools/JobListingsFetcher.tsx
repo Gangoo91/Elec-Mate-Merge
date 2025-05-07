@@ -77,39 +77,39 @@ const JobListingsFetcher = () => {
   };
 
   return (
-    <Card className="mb-6 border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <CardTitle className="flex justify-between items-center">
-          <span>Job Listings Automation</span>
+    <Card className="border-elec-yellow/20 bg-elec-gray h-full">
+      <CardHeader className="pb-2">
+        <CardTitle className="flex justify-between items-center text-xl">
+          Job Listings Automation
           <Button 
             onClick={triggerJobFetch} 
             disabled={isLoading} 
             size="sm" 
             variant="outline"
-            className="border-elec-yellow/20"
+            className="border-elec-yellow/30 hover:bg-elec-yellow/10"
           >
             <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
             {isLoading ? "Updating..." : "Update Now"}
           </Button>
         </CardTitle>
-        <CardDescription>
-          Job listings are automatically fetched from partner sites like Reed and TotalJobs
+        <CardDescription className="text-muted-foreground/70">
+          Fetched from Reed and TotalJobs
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-2 gap-4">
-          <div>
-            <p className="text-sm font-medium mb-1">Total Job Listings</p>
+          <div className="bg-elec-card/50 rounded-md p-3">
+            <p className="text-sm font-medium text-muted-foreground mb-1">Total Job Listings</p>
             {jobCount !== null ? (
-              <p className="text-2xl font-bold">{jobCount}</p>
+              <p className="text-2xl font-bold text-elec-yellow">{jobCount}</p>
             ) : (
               <Skeleton className="h-8 w-16" />
             )}
           </div>
-          <div>
-            <p className="text-sm font-medium mb-1">Last Updated</p>
+          <div className="bg-elec-card/50 rounded-md p-3">
+            <p className="text-sm font-medium text-muted-foreground mb-1">Last Updated</p>
             {lastFetched ? (
-              <p className="text-2xl font-bold">{new Date(lastFetched).toLocaleDateString()}</p>
+              <p className="text-2xl font-bold text-elec-light">{new Date(lastFetched).toLocaleDateString()}</p>
             ) : (
               <Skeleton className="h-8 w-24" />
             )}

@@ -30,18 +30,18 @@ const JobVacancies = () => {
   } = useJobListings();
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-6 animate-fade-in">
       <JobVacancyHeader />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {/* AI CV Builder Box */}
         <CVBuilderBox />
         
-        {/* Add the Job Listings Fetcher component */}
+        {/* Job Listings Fetcher component */}
         <JobListingsFetcher />
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-5 mt-2">
         <JobFilters
           locationFilter={locationFilter}
           jobTypeFilter={jobTypeFilter}

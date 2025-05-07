@@ -1,8 +1,8 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Briefcase, MapPin, Clock, Building, ExternalLink } from "lucide-react";
 
 interface JobListing {
   id: string;
@@ -24,44 +24,79 @@ interface JobCardProps {
 }
 
 const JobCard: React.FC<JobCardProps> = ({ job, selectedJob, handleApply }) => {
+  // Format posted date to be more readable
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return new Intl.DateTimeFormat('en-GB', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    }).format(date);
+  };
+
+  const isSelected = selectedJob === job.id;
+
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <CardTitle className="flex justify-between items-start">
-          <div>
-            <div className="text-xl">{job.title}</div>
-            <div className="text-sm font-normal text-muted-foreground mt-1">
-              {job.company}
-              {job.source && (
-                <span className="ml-2 text-xs text-elec-yellow">via {job.source}</span>
-              )}
+    <Card className={`bg-elec-card border-elec-yellow/20 transition-shadow hover:shadow-md ${
+      isSelected ? 'ring-2 ring-elec-yellow' : ''
+    }`}>
+      <CardHeader className="p-4 pb-2">
+        <div className="flex justify-between items-start">
+          <div className="space-y-1">
+            <h3 className="font-semibold text-lg text-elec-light line-clamp-2">
+              {job.title}
+            </h3>
+            <div className="flex items-center text-sm text-muted-foreground">
+              <Building className="h-3.5 w-3.5 mr-1" />
+              <span className="truncate">{job.company}</span>
             </div>
           </div>
-          <span className="text-sm bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">
-            {job.type}
-          </span>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div>
-          <div className="grid grid-cols-2 gap-2 text-sm mb-4">
-            <div className="font-medium">Location:</div>
-            <div>{job.location}</div>
-            <div className="font-medium">Salary:</div>
-            <div>{job.salary || "Not specified"}</div>
-            <div className="font-medium">Posted:</div>
-            <div>{new Date(job.posted_date).toLocaleDateString()}</div>
-          </div>
-          <p className="text-sm">{job.description}</p>
+          {job.source && (
+            <div className="bg-elec-gray/40 px-2 py-1 rounded text-xs font-medium">
+              {job.source}
+            </div>
+          )}
         </div>
-        <Button 
-          className={`w-full flex items-center justify-center gap-2 ${selectedJob === job.id ? "bg-green-700 hover:bg-green-600" : ""}`}
-          onClick={() => handleApply(job.id, job.external_url)}
-        >
-          {selectedJob === job.id ? "Application Started" : "Apply Now"}
-          <ExternalLink className="h-4 w-4" />
-        </Button>
+      </CardHeader>
+      <CardContent className="p-4 pt-2 pb-3">
+        <div className="space-y-4">
+          <div className="grid grid-cols-2 gap-2 text-sm">
+            <div className="flex items-center text-muted-foreground">
+              <MapPin className="h-3.5 w-3.5 mr-1.5" />
+              <span className="truncate">{job.location}</span>
+            </div>
+            <div className="flex items-center text-muted-foreground">
+              <Clock className="h-3.5 w-3.5 mr-1.5" />
+              <span>{formatDate(job.posted_date)}</span>
+            </div>
+          </div>
+          
+          <div className="space-y-2">
+            <div className="flex flex-wrap gap-1.5">
+              <span className="bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-xs px-2 py-0.5 rounded-full">
+                {job.type}
+              </span>
+              {job.salary && (
+                <span className="bg-elec-gray/40 text-xs px-2 py-0.5 rounded-full">
+                  {job.salary}
+                </span>
+              )}
+            </div>
+          
+            <p className="text-muted-foreground text-sm line-clamp-3">
+              {job.description}
+            </p>
+          </div>
+        </div>
       </CardContent>
+      <CardFooter className="p-4 pt-1">
+        <Button 
+          onClick={() => handleApply(job.id, job.external_url)} 
+          className="w-full bg-elec-gray hover:bg-elec-yellow/20 text-elec-light border border-elec-yellow/30"
+        >
+          Apply Now <ExternalLink className="h-3.5 w-3.5 ml-1.5" />
+        </Button>
+      </CardFooter>
     </Card>
   );
 };
