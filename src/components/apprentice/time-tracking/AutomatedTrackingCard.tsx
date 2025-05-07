@@ -2,18 +2,19 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Play, Pause, Activity, Clock } from "lucide-react";
+import { Play, Pause, Activity, Clock, AlertCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { formatTime } from "@/lib/utils";
 import { useAutomatedTraining } from "@/hooks/useAutomatedTraining";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface AutomatedTrackingCardProps {
   className?: string;
+  autoStart?: boolean;
 }
 
-const AutomatedTrackingCard = ({ className }: AutomatedTrackingCardProps) => {
-  const [activityType, setActivityType] = useState("Learning Portal Study");
+const AutomatedTrackingCard = ({ className, autoStart = true }: AutomatedTrackingCardProps) => {
   const isMobile = useIsMobile();
   
   const {
@@ -24,13 +25,13 @@ const AutomatedTrackingCard = ({ className }: AutomatedTrackingCardProps) => {
     pauseTracking,
     resumeTracking,
     stopTracking
-  } = useAutomatedTraining();
+  } = useAutomatedTraining(autoStart);
   
   const handleStartStop = () => {
     if (isTracking) {
       stopTracking();
     } else {
-      startTracking(activityType);
+      startTracking("Learning Portal Study");
     }
   };
   
@@ -49,6 +50,16 @@ const AutomatedTrackingCard = ({ className }: AutomatedTrackingCardProps) => {
           <CardTitle className="flex items-center gap-2">
             <Clock className="h-5 w-5 text-elec-yellow" />
             Auto-Tracking
+            {autoStart && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <AlertCircle className="h-4 w-4 text-elec-yellow cursor-help" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p className="max-w-xs">Automatically tracks time when you're in study or video content areas</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
           </CardTitle>
           <Badge variant="outline" className={isTracking ? "bg-green-500/20 text-green-400" : "bg-amber-500/20 text-amber-400"}>
             {isTracking ? "Active" : "Inactive"}
@@ -115,8 +126,10 @@ const AutomatedTrackingCard = ({ className }: AutomatedTrackingCardProps) => {
             <div className="flex items-start gap-1">
               <Activity className="h-3 w-3 mt-0.5 text-green-400" />
               <span>
-                Automated time tracking records your active study time and automatically pauses 
-                after 1 minute of inactivity.
+                {autoStart ? 
+                  "Auto-tracking automatically starts when you view study materials or videos, and pauses after 1 minute of inactivity." :
+                  "Tracking records your active study time and automatically pauses after 1 minute of inactivity."
+                }
               </span>
             </div>
           </div>

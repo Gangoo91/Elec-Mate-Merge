@@ -3,6 +3,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import LearningTimer from "@/components/apprentice/LearningTimer";
 import TimerHeader from "./timer/TimerHeader";
 import InactivityHandler from "./timer/InactivityHandler";
+import { useEffect } from "react";
+import { useAutomatedTraining } from "@/hooks/useAutomatedTraining";
 
 interface CourseTimerProps {
   courseSlug: string | undefined;
@@ -24,6 +26,16 @@ const CourseTimer = ({
   onStopStudy
 }: CourseTimerProps) => {
   const isVideoContent = currentResourceType === 'video';
+  
+  // Connect with the automated tracking system
+  const { isTracking, startTracking, stopTracking } = useAutomatedTraining();
+  
+  // When manual study is started or stopped, sync with auto tracking
+  useEffect(() => {
+    if (isStudying && !isTracking) {
+      startTracking(`Course: ${courseSlug || 'Unknown'}`);
+    }
+  }, [isStudying, isTracking, startTracking, courseSlug]);
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">

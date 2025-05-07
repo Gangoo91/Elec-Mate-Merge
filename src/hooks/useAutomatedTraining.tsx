@@ -4,12 +4,19 @@ import { useToast } from '@/components/ui/use-toast';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import { useAuthState } from '@/hooks/time-tracking/useAuthState';
 import { formatTime } from '@/lib/utils';
+import { useLocation } from 'react-router-dom';
 
 // Inactivity timeout in milliseconds
 const INACTIVITY_TIMEOUT = 60000; // 1 minute
 const SAVE_INTERVAL = 300000; // Save every 5 minutes
 
-export const useAutomatedTraining = () => {
+// Routes that should auto-start tracking
+const AUTO_TRACK_ROUTES = [
+  '/apprentice/study', // Study area route
+  '/video-lessons' // Video lessons route
+];
+
+export const useAutomatedTraining = (autoStart = true) => {
   const [isTracking, setIsTracking] = useState(false);
   const [sessionTime, setSessionTime] = useState(0);
   const [currentActivity, setCurrentActivity] = useState<string | null>(null);
@@ -17,10 +24,37 @@ export const useAutomatedTraining = () => {
   const { toast } = useToast();
   const { userId } = useAuthState();
   const { addTimeEntry } = useTimeEntries();
+  const location = useLocation();
   
   const timerRef = useRef<number | null>(null);
   const lastActivityRef = useRef<number>(Date.now());
   const activityLogRef = useRef<{timestamp: number, action: string}[]>([]);
+  const hasAutoStartedRef = useRef<boolean>(false);
+  
+  // Auto-start tracking when entering certain routes
+  useEffect(() => {
+    if (!autoStart || isTracking || !location.pathname) return;
+    
+    const shouldAutoStart = AUTO_TRACK_ROUTES.some(route => 
+      location.pathname.includes(route) || location.pathname.startsWith(route)
+    );
+    
+    if (shouldAutoStart && !hasAutoStartedRef.current) {
+      const activityType = location.pathname.includes('video') ? 
+        'Video Learning' : 
+        'Online Study';
+        
+      setTimeout(() => {
+        startTracking(activityType);
+        hasAutoStartedRef.current = true;
+      }, 1000); // Small delay to ensure page is fully loaded
+    }
+    
+    // Reset auto-start flag when leaving tracked routes
+    if (!shouldAutoStart) {
+      hasAutoStartedRef.current = false;
+    }
+  }, [location.pathname, isTracking, autoStart]);
   
   // Function to log user activity
   const logActivity = (action: string) => {

@@ -1,10 +1,11 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Play, Filter, Search, Clock, BookOpen, Star, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
+import { useVideoTracking } from "@/hooks/video-lessons/useVideoTracking";
 import {
   Select,
   SelectContent,
@@ -14,6 +15,15 @@ import {
 } from "@/components/ui/select";
 
 const VideoLessons = () => {
+  const [activeFilter, setActiveFilter] = useState("all");
+  const { trackVideoView } = useVideoTracking();
+  
+  // Track when a user clicks to watch a video
+  const handleWatchVideo = (videoTitle: string) => {
+    trackVideoView(videoTitle);
+    // In a real app, this would also play the video
+  };
+  
   // Mock video categories
   const categories = [
     "Core Units", 
@@ -147,7 +157,10 @@ const VideoLessons = () => {
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="h-16 w-16 rounded-full bg-elec-yellow/90 flex items-center justify-center cursor-pointer hover:bg-elec-yellow transition-colors">
+              <div 
+                className="h-16 w-16 rounded-full bg-elec-yellow/90 flex items-center justify-center cursor-pointer hover:bg-elec-yellow transition-colors"
+                onClick={() => handleWatchVideo("Complete Guide to Consumer Units")}
+              >
                 <Play className="h-8 w-8 text-elec-dark ml-1" />
               </div>
             </div>
@@ -191,7 +204,7 @@ const VideoLessons = () => {
       </Card>
 
       {/* Video Categories */}
-      <Tabs defaultValue="all" className="space-y-4">
+      <Tabs defaultValue="all" className="space-y-4" value={activeFilter} onValueChange={setActiveFilter}>
         <TabsList className="bg-elec-gray border border-elec-yellow/20">
           <TabsTrigger value="all">All Videos</TabsTrigger>
           {categories.map((category) => (
@@ -218,7 +231,10 @@ const VideoLessons = () => {
                   <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
                     {video.duration}
                   </div>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-black/50 transition-opacity cursor-pointer">
+                  <div 
+                    className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-black/50 transition-opacity cursor-pointer"
+                    onClick={() => handleWatchVideo(video.title)}
+                  >
                     <div className="h-12 w-12 rounded-full bg-elec-yellow/90 flex items-center justify-center">
                       <Play className="h-6 w-6 text-elec-dark ml-0.5" />
                     </div>
@@ -237,7 +253,12 @@ const VideoLessons = () => {
                       </div>
                       <span className="text-xs text-muted-foreground">by {video.instructor}</span>
                     </div>
-                    <Button variant="ghost" size="sm" className="gap-1 text-elec-yellow hover:text-elec-yellow/80 p-0">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="gap-1 text-elec-yellow hover:text-elec-yellow/80 p-0"
+                      onClick={() => handleWatchVideo(video.title)}
+                    >
                       Watch
                       <ChevronRight className="h-3.5 w-3.5" />
                     </Button>
@@ -269,7 +290,10 @@ const VideoLessons = () => {
                       <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
                         {video.duration}
                       </div>
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-black/50 transition-opacity cursor-pointer">
+                      <div 
+                        className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 bg-black/50 transition-opacity cursor-pointer"
+                        onClick={() => handleWatchVideo(video.title)}
+                      >
                         <div className="h-12 w-12 rounded-full bg-elec-yellow/90 flex items-center justify-center">
                           <Play className="h-6 w-6 text-elec-dark ml-0.5" />
                         </div>
