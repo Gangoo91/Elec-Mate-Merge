@@ -1,3 +1,4 @@
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calculator, Wrench, Brain, Settings, FileText, Zap, Ruler, ShieldCheck } from "lucide-react";
@@ -33,34 +34,6 @@ const ElectricianTools = () => {
       description: "Manage your electrical business and documentation",
       icon: <Settings className="h-10 w-10 text-elec-yellow" />,
       link: "#admin"
-    },
-    {
-      id: "safety-compliance",
-      title: "Safety & Compliance",
-      description: "Ensure adherence to electrical safety standards",
-      icon: <ShieldCheck className="h-10 w-10 text-elec-yellow" />,
-      link: "#safety-compliance"
-    },
-    {
-      id: "testing-certification",
-      title: "Testing & Certification",
-      description: "Tools for electrical testing and certification procedures",
-      icon: <FileText className="h-10 w-10 text-elec-yellow" />,
-      link: "#testing-certification"
-    },
-    {
-      id: "materials-estimator",
-      title: "Materials Estimator",
-      description: "Estimate materials needed for electrical projects",
-      icon: <Ruler className="h-10 w-10 text-elec-yellow" />,
-      link: "#materials-estimator"
-    },
-    {
-      id: "power-systems",
-      title: "Power Systems",
-      description: "Tools for power system analysis and troubleshooting",
-      icon: <Zap className="h-10 w-10 text-elec-yellow" />,
-      link: "#power-systems"
     }
   ];
 
@@ -74,7 +47,7 @@ const ElectricianTools = () => {
       </div>
 
       {/* Main Tool Categories Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
         {toolCategories.map((category) => (
           <Link to={category.link} key={category.id}>
             <Card className="h-full border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all">
