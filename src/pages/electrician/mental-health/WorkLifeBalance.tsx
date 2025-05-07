@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Clock, BookOpen, CheckCircle, Laptop, Home, Tools } from "lucide-react";
+import { Clock, BookOpen, CheckCircle, Laptop, Home, Wrench } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -157,7 +157,7 @@ const WorkLifeBalance = () => {
           <Card className="border-green-500/20 bg-elec-gray">
             <CardContent className="p-4 space-y-3">
               <h3 className="text-lg font-medium flex items-center gap-2">
-                <Tools className="h-5 w-5 text-green-500" />
+                <Wrench className="h-5 w-5 text-green-500" />
                 Professional Balance
               </h3>
               <p className="text-sm text-muted-foreground">
