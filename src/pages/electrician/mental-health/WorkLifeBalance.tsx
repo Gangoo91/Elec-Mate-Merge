@@ -24,6 +24,36 @@ const WorkLifeBalance = () => {
       description: "Understanding the importance of downtime for productivity and wellbeing in physically demanding trades",
       type: "article" as const,
       url: "https://www.nhs.uk/mental-health/self-help/guides-tools-and-activities/five-steps-to-mental-wellbeing/"
+    },
+    {
+      title: "Electrical Industries Charity Support",
+      description: "UK charity providing welfare support specifically for people from the electrical sector",
+      type: "website" as const,
+      url: "https://www.electricalcharity.org/"
+    },
+    {
+      title: "NICEIC Wellbeing Resources",
+      description: "Mental health guidance tailored for registered electrical contractors",
+      type: "document" as const,
+      url: "https://www.niceic.com/contractor/mental-health-awareness"
+    },
+    {
+      title: "HSE Work-Related Stress Resources",
+      description: "Official UK Health and Safety Executive guidance on managing work stress",
+      type: "document" as const,
+      url: "https://www.hse.gov.uk/stress/"
+    },
+    {
+      title: "Construction Industry Helpline",
+      description: "Free 24/7 confidential support line for UK construction workers including electricians",
+      type: "website" as const,
+      url: "https://www.constructionindustryhelpline.com/"
+    },
+    {
+      title: "Mates in Mind",
+      description: "UK charity addressing mental wellbeing in the construction sector",
+      type: "website" as const,
+      url: "https://www.matesinmind.org/"
     }
   ];
 

@@ -15,8 +15,8 @@ interface BalanceResourcesProps {
 const BalanceResources = ({ resources }: BalanceResourcesProps) => {
   return (
     <div>
-      <h3 className="text-lg font-medium mb-3">Balance Resources</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <h3 className="text-lg font-medium mb-3">UK Support Resources</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {resources.map((resource, index) => (
           <ResourceCard 
             key={index}
