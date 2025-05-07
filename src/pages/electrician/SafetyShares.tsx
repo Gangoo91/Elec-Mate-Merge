@@ -6,7 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Badge } from "@/components/ui/badge";
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const SafetyShares = () => {
   // Simulating a notification when page loads
@@ -98,28 +97,6 @@ const SafetyShares = () => {
         </Link>
       </div>
 
-      {/* Navigation Tabs - Added for better visibility */}
-      <Tabs defaultValue="all" className="w-full mt-4">
-        <TabsList className="w-full justify-start overflow-auto">
-          <TabsTrigger value="all" className="px-4 py-2">All Updates</TabsTrigger>
-          {categories.map(category => (
-            <TabsTrigger 
-              key={category.id}
-              value={category.id}
-              className="px-4 py-2"
-              onClick={() => window.location.href = category.linkTo}
-            >
-              {category.title}
-              {category.badge && (
-                <span className={`ml-2 text-xs px-1.5 py-0.5 rounded ${category.badgeColor.split(' ')[0]}`}>
-                  {category.badge}
-                </span>
-              )}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
-
       {/* Featured Alert Banner */}
       <Card className="bg-gradient-to-r from-red-900/40 to-red-800/20 border-red-500/30">
         <CardContent className="p-4 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -168,7 +145,8 @@ const SafetyShares = () => {
             <CardFooter>
               <Link to={category.linkTo} className="w-full">
                 <Button 
-                  className="w-full flex items-center gap-2 bg-elec-gray/30 hover:bg-elec-gray/50 border border-white/10 group-hover:bg-opacity-80 group-hover:scale-[1.02] transition-all"
+                  className="w-full flex items-center gap-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 transition-all font-medium"
+                  variant="default"
                 >
                   {category.linkText}
                   <ExternalLink className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
