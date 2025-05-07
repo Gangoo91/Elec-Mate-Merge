@@ -16,6 +16,18 @@ const educationOptions = [
     locations: ["Birmingham", "Manchester", "London", "Glasgow", "Cardiff"]
   },
   {
+    id: 4,
+    title: "HND in Electrical Engineering",
+    institution: "UK Colleges",
+    description: "Higher National Diploma offering practical and theoretical knowledge in electrical engineering.",
+    level: "Level 5",
+    duration: "2 years (full-time), 3 years (part-time)",
+    entryRequirements: "Level 3 qualification or HNC",
+    progressionOptions: "Final year entry to bachelor's degree or technical management roles",
+    keyTopics: ["Power systems", "Electronic design", "Engineering mathematics", "Industrial applications"],
+    locations: ["Liverpool", "Newcastle", "Nottingham", "Plymouth", "Belfast"]
+  },
+  {
     id: 2,
     title: "Bachelor's Degree",
     institution: "Universities",
@@ -38,18 +50,6 @@ const educationOptions = [
     progressionOptions: "PhD, chartered engineer status, or senior technical positions",
     keyTopics: ["Advanced power systems", "Renewable technology", "Research methods", "Energy efficiency"],
     locations: ["London", "Cambridge", "Manchester", "Leeds", "Southampton"]
-  },
-  {
-    id: 4,
-    title: "HND in Electrical Engineering",
-    institution: "UK Colleges",
-    description: "Higher National Diploma offering practical and theoretical knowledge in electrical engineering.",
-    level: "Level 5",
-    duration: "2 years (full-time), 3 years (part-time)",
-    entryRequirements: "Level 3 qualification or HNC",
-    progressionOptions: "Final year entry to bachelor's degree or technical management roles",
-    keyTopics: ["Power systems", "Electronic design", "Engineering mathematics", "Industrial applications"],
-    locations: ["Liverpool", "Newcastle", "Nottingham", "Plymouth", "Belfast"]
   }
 ];
 
