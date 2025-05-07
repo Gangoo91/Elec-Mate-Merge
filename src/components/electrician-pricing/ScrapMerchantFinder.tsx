@@ -3,9 +3,10 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, MapPin, Phone, ExternalLink, Loader2 } from "lucide-react";
+import { Search, MapPin, Phone, ExternalLink, Loader2, Info, AlertTriangle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface ScrapMerchant {
   id: number;
@@ -30,6 +31,7 @@ const ScrapMerchantFinder = () => {
   const [merchants, setMerchants] = useState<ScrapMerchant[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [apiStatus, setApiStatus] = useState<string | null>(null);
   const { toast } = useToast();
 
   const handleSearch = async () => {
@@ -44,17 +46,23 @@ const ScrapMerchantFinder = () => {
     
     setIsLoading(true);
     setError(null);
+    setApiStatus(null);
     
     try {
-      const { data, error } = await supabase.functions.invoke('find-scrap-merchants', {
+      const { data, error: supabaseError } = await supabase.functions.invoke('find-scrap-merchants', {
         body: { postcode: postcode.trim() }
       });
       
-      if (error) {
-        throw new Error(error.message);
+      if (supabaseError) {
+        throw new Error(supabaseError.message);
       }
       
       if (data.error) {
+        // Store API status code if available
+        if (data.details && data.details.status) {
+          setApiStatus(data.details.status);
+        }
+        
         throw new Error(data.error);
       }
       
@@ -75,12 +83,15 @@ const ScrapMerchantFinder = () => {
       
     } catch (err) {
       console.error("Error searching for scrap merchants:", err);
-      setError(err instanceof Error ? err.message : "Failed to search for merchants");
+      
+      // Extract the error message
+      const errorMsg = err instanceof Error ? err.message : "Failed to search for merchants";
+      setError(errorMsg);
       setMerchants([]);
       
       toast({
         title: "Search failed",
-        description: err instanceof Error ? err.message : "Could not complete your search. Please try again.",
+        description: errorMsg,
         variant: "destructive"
       });
       
@@ -117,6 +128,33 @@ const ScrapMerchantFinder = () => {
         <span className="ml-1 text-sm">{rating.toFixed(1)}</span>
       </div>
     );
+  };
+  
+  const renderApiErrorHelp = () => {
+    if (!apiStatus) return null;
+    
+    switch(apiStatus) {
+      case 'REQUEST_DENIED':
+        return (
+          <Alert className="mt-4 bg-amber-500/10 border-amber-500/30 text-amber-500">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription className="text-sm">
+              API authorization issue detected. Please ensure your Google Maps API key has the Geocoding and Places APIs enabled and has no restrictions that would block this request.
+            </AlertDescription>
+          </Alert>
+        );
+      case 'OVER_QUERY_LIMIT':
+        return (
+          <Alert className="mt-4 bg-amber-500/10 border-amber-500/30 text-amber-500">
+            <AlertTriangle className="h-4 w-4" />
+            <AlertDescription className="text-sm">
+              The Google Maps API usage quota has been exceeded. Please try again later or check your billing settings.
+            </AlertDescription>
+          </Alert>
+        );
+      default:
+        return null;
+    }
   };
   
   return (
@@ -162,7 +200,11 @@ const ScrapMerchantFinder = () => {
           
           {error && (
             <div className="bg-red-500/10 border border-red-500/30 text-red-500 p-3 rounded-md">
-              {error}
+              <div className="flex items-center gap-2">
+                <Info className="h-4 w-4" />
+                <p>{error}</p>
+              </div>
+              {renderApiErrorHelp()}
             </div>
           )}
           

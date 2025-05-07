@@ -62,7 +62,9 @@ serve(async (req) => {
             message: errorDetails
           }
         }),
-        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        // Return 200 status with error details in the response body instead of 404
+        // This helps prevent Supabase edge function from returning a non-2xx status
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
     
@@ -83,7 +85,8 @@ serve(async (req) => {
           error: `Failed to call Places API: ${placesResponse.statusText}`,
           note: "You may need to enable the Places API in your Google Cloud Console"
         }),
-        { status: placesResponse.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        // Return 200 status with error details in the response body instead of 403
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
     
@@ -113,7 +116,8 @@ serve(async (req) => {
               message: errorDetails || "You may need to enable the Places API in your Google Cloud Console"
             }
           }),
-          { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          // Return 200 status with error details in the response body instead of 403
+          { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
       
@@ -125,7 +129,8 @@ serve(async (req) => {
             message: errorDetails
           }
         }),
-        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        // Return 200 status with error details in the response body instead of 404
+        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
     
@@ -164,7 +169,8 @@ serve(async (req) => {
     
     return new Response(
       JSON.stringify({ error: 'Error searching for scrap merchants', details: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      // Return 200 status with error details in the response body instead of 500
+      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 });
