@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Award, Briefcase, Building, TrendingUp, Trophy, GraduationCap, ShieldCheck, Hammer, Zap, Lightbulb, Tool, Cpu } from "lucide-react";
+import { Award, Briefcase, Building, TrendingUp, Trophy, GraduationCap, ShieldCheck, Hammer, Zap, Lightbulb, Wrench, Cpu } from "lucide-react";
 
 const careerPaths = [
   {
@@ -78,7 +78,7 @@ const careerPaths = [
     title: "Commissioning Technician",
     requirements: "Advanced electrical qualification + specialized commissioning training",
     description: "Test, verify and commission new electrical systems to ensure they operate according to specification.",
-    icon: <Tool className="h-8 w-8 text-elec-yellow" />,
+    icon: <Wrench className="h-8 w-8 text-elec-yellow" />,
     skills: ["System testing", "Troubleshooting", "Documentation", "Commissioning procedures"],
     salaryRange: "£36,000 - £48,000",
     timeToAchieve: "5-7 years"
