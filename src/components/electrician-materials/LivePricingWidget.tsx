@@ -27,11 +27,14 @@ const LivePricingWidget = () => {
         throw new Error(error.message);
       }
       
-      // Take a few key items from each category
+      // Take more key metals to display, including different copper types
       const keyItems: PricingItem[] = [
-        data.metalPrices[0], // First metal (Copper - Bright)
+        data.metalPrices[0], // Copper - Bright
+        data.metalPrices[1], // Copper - Clean
+        data.metalPrices[2], // Copper - Mixed
         data.metalPrices[4], // Aluminium
-        data.cablePrices[0], // First cable (Twin & Earth)
+        data.metalPrices[5], // Brass
+        data.metalPrices[7], // Steel
       ];
       
       setPricingData(keyItems);
@@ -47,6 +50,20 @@ const LivePricingWidget = () => {
           trend: "up"
         },
         {
+          id: 2,
+          name: "Copper - Clean (per kg)",
+          value: "£7.25",
+          change: "+1.8%",
+          trend: "up"
+        },
+        {
+          id: 3,
+          name: "Copper - Mixed (per kg)",
+          value: "£6.85",
+          change: "+1.2%",
+          trend: "up"
+        },
+        {
           id: 5,
           name: "Aluminium (per kg)",
           value: "£2.19",
@@ -54,11 +71,18 @@ const LivePricingWidget = () => {
           trend: "up"
         },
         {
-          id: 2,
-          name: "Twin & Earth 2.5mm²",
-          value: "£0.92/m",
-          change: "+4.5%",
+          id: 6,
+          name: "Brass (per kg)",
+          value: "£5.12",
+          change: "+0.8%",
           trend: "up"
+        },
+        {
+          id: 8,
+          name: "Steel (per kg)",
+          value: "£0.68",
+          change: "-0.3%",
+          trend: "down"
         }
       ]);
     } finally {
@@ -92,7 +116,7 @@ const LivePricingWidget = () => {
         <div className="space-y-4">
           {isLoading ? (
             <div className="space-y-4">
-              {[1, 2, 3].map((i) => (
+              {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="flex justify-between items-center border-b border-elec-yellow/10 pb-2">
                   <div className="h-4 w-24 bg-elec-yellow/10 rounded animate-pulse" />
                   <div className="flex items-center gap-2">
