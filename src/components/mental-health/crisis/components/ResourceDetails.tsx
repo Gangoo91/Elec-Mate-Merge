@@ -1,5 +1,5 @@
 
-import { ChevronRight, MapPin, Phone } from "lucide-react";
+import { ChevronLeft, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LocalResource } from "../models/resource-types";
 import { toast } from "sonner";
@@ -30,7 +30,7 @@ const ResourceDetails = ({ resource, onBack }: ResourceDetailsProps) => {
         onClick={onBack}
         className="flex items-center gap-1"
       >
-        <ChevronRight className="h-4 w-4 rotate-180" />
+        <ChevronLeft className="h-4 w-4" />
         Back to results
       </Button>
       

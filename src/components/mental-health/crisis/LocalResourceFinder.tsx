@@ -4,7 +4,7 @@ import { MapPin } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { LocalResource } from "./models/resource-types";
+import { LocalResource, SearchResult } from "./models/resource-types";
 import PostcodeSearchForm from "./components/PostcodeSearchForm";
 import SearchError from "./components/SearchError";
 import ResourcesList from "./components/ResourcesList";
@@ -15,11 +15,13 @@ const LocalResourceFinder = () => {
   const [dataSource, setDataSource] = useState<string | null>(null);
   const [isSearching, setIsSearching] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
+  const [apiStatus, setApiStatus] = useState<string | null>(null);
   const [selectedResource, setSelectedResource] = useState<LocalResource | null>(null);
 
   const handleSearch = async (postcode: string) => {
     setIsSearching(true);
     setSearchError(null);
+    setApiStatus(null);
     setSelectedResource(null);
     setDataSource(null);
     
@@ -35,12 +37,25 @@ const LocalResourceFinder = () => {
           description: error.message || "Please try again later",
         });
       } else {
-        setLocalResources(response.services);
-        setDataSource(response.source || "Google Places API");
-        
-        toast.success("Local support services found", {
-          description: `Found ${response.services.length} services near ${postcode}`,
-        });
+        if (response.source === "mock (API error)") {
+          console.error("API returned mock data due to an error");
+          setApiStatus("REQUEST_DENIED");
+          setSearchError("The API request was denied. This might be due to an issue with the API key.");
+          // Still show mock results
+          setLocalResources(response.services);
+          setDataSource(response.source);
+          
+          toast.warning("Using fallback data", {
+            description: "Unable to connect to Google Places API. Showing simulated results.",
+          });
+        } else {
+          setLocalResources(response.services);
+          setDataSource(response.source || "Google Places API");
+          
+          toast.success("Local support services found", {
+            description: `Found ${response.services.length} services near ${postcode}`,
+          });
+        }
       }
     } catch (error) {
       console.error("Error:", error);
@@ -78,7 +93,7 @@ const LocalResourceFinder = () => {
           onSearch={handleSearch}
         />
 
-        <SearchError error={searchError} />
+        <SearchError error={searchError} apiStatus={apiStatus} />
 
         {!selectedResource && (
           <ResourcesList 

@@ -1,10 +1,11 @@
+
 // This edge function securely handles API calls to find mental health services by postcode
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.7'
 import { corsHeaders } from '../_shared/cors.ts'
 
 // Google Places API configuration
 const GOOGLE_PLACES_API_BASE_URL = "https://maps.googleapis.com/maps/api/place";
-const GOOGLE_MAPS_API_KEY = Deno.env.get("GOOGLE_MAPS_API_KEY") || "";
+const GOOGLE_MAPS_API_KEY = Deno.env.get("GoogleAPI") || "";
 
 // Set up CORS to allow requests from our app
 Deno.serve(async (req) => {
@@ -33,6 +34,8 @@ Deno.serve(async (req) => {
     }
 
     try {
+      console.log("Using API key:", GOOGLE_MAPS_API_KEY ? "API key exists" : "No API key found");
+      
       // Step 1: Convert postcode to coordinates using postcodes.io
       const postcodeResponse = await fetch(`https://api.postcodes.io/postcodes/${encodeURIComponent(postcode)}`);
       
@@ -64,6 +67,9 @@ Deno.serve(async (req) => {
       }
       
       const placesData = await placesResponse.json();
+      
+      // Log the Google Places API response status for debugging
+      console.log("Google Places API response status:", placesData.status);
       
       if (placesData.status !== "OK" && placesData.status !== "ZERO_RESULTS") {
         console.error("Google Places API error:", placesData);
