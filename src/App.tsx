@@ -112,6 +112,7 @@ function App() {
                 <Route path="electrician/safety-shares/projects" element={<MajorProjects />} />
                 <Route path="electrician/safety-shares/news" element={<IndustryNews />} />
                 <Route path="electrician/safety-shares/resources" element={<SafetyResources />} />
+                <Route path="electrician/live-pricing" element={<LivePricing />} />
                 
                 {/* Electrician Mental Health routes */}
                 <Route path="electrician/mental-health" element={<ElectricianMentalHealth />} />
