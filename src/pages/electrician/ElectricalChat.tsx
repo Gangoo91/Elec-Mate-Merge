@@ -26,16 +26,18 @@ const ElectricalChat = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-black">
-      <ChatHeader 
-        title="Electricians Chat Room" 
-        subtitle="Connect with fellow electricians, share experiences, and discuss industry topics." 
-        onNewPost={handleOpenComposer}
-      />
+    <div className="flex flex-col min-h-screen bg-black overflow-y-auto">
+      <div className="bg-black">
+        <ChatHeader 
+          title="Electricians Chat Room" 
+          subtitle="Connect with fellow electricians, share experiences, and discuss industry topics." 
+          onNewPost={handleOpenComposer}
+        />
+        
+        <ChatSearchBar />
+      </div>
       
-      <ChatSearchBar />
-      
-      <div className="mt-2 flex-1">
+      <div className="flex-1">
         <ChatMessageFeed
           messages={messages}
           isLoading={isLoading}

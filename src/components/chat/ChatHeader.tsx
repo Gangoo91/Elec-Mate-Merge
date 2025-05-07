@@ -10,7 +10,7 @@ interface ChatHeaderProps {
 
 const ChatHeader = ({ title, subtitle, onNewPost }: ChatHeaderProps) => {
   return (
-    <div className="bg-black border-b border-elec-yellow/20 sticky top-0 z-10 py-3">
+    <div className="bg-black border-b border-elec-yellow/20 py-3">
       <div className="flex justify-between items-center px-4 max-w-3xl mx-auto">
         <div>
           <h1 className="text-2xl font-bold text-elec-yellow">{title}</h1>
