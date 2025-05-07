@@ -34,14 +34,35 @@ serve(async (req) => {
     
     // First, geocode the postcode to get coordinates
     const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(postcode + ', UK')}&key=${MAPS_API_KEY}`;
+    
+    console.log(`Calling Geocoding API for postcode: ${postcode}`);
+    
     const geocodeResponse = await fetch(geocodeUrl);
+    
+    if (!geocodeResponse.ok) {
+      console.error(`HTTP error when calling Geocoding API: ${geocodeResponse.status}`);
+      return new Response(
+        JSON.stringify({ error: `Failed to call Geocoding API: ${geocodeResponse.statusText}` }),
+        { status: geocodeResponse.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    
     const geocodeData = await geocodeResponse.json();
     
     console.log(`Geocode API response status: ${geocodeData.status}`);
     
     if (geocodeData.status !== 'OK' || !geocodeData.results || geocodeData.results.length === 0) {
+      const errorDetails = geocodeData.error_message || 'No location found for this postcode';
+      console.error(`Geocoding API error: ${errorDetails}`);
+      
       return new Response(
-        JSON.stringify({ error: 'Could not find location for this postcode', details: geocodeData }),
+        JSON.stringify({ 
+          error: 'Could not find location for this postcode', 
+          details: {
+            status: geocodeData.status,
+            message: errorDetails
+          }
+        }),
         { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -49,9 +70,27 @@ serve(async (req) => {
     const { lat, lng } = geocodeData.results[0].geometry.location;
     console.log(`Location found - Lat: ${lat}, Lng: ${lng}`);
     
+    // We'll need the Places API enabled to perform this next step
+    console.log(`Note: Places API will be needed for finding nearby merchants`);
+    
     // Now search for nearby scrap merchants
     const placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=15000&keyword=scrap%20metal%20merchant&key=${MAPS_API_KEY}`;
+    
+    console.log(`Calling Places API for location: ${lat},${lng}`);
+    
     const placesResponse = await fetch(placesUrl);
+    
+    if (!placesResponse.ok) {
+      console.error(`HTTP error when calling Places API: ${placesResponse.status}`);
+      return new Response(
+        JSON.stringify({ 
+          error: `Failed to call Places API: ${placesResponse.statusText}`,
+          note: "You may need to enable the Places API in your Google Cloud Console"
+        }),
+        { status: placesResponse.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    
     const placesData = await placesResponse.json();
     
     console.log(`Places API response status: ${placesData.status}`);
@@ -66,8 +105,30 @@ serve(async (req) => {
         );
       }
       
+      const errorDetails = placesData.error_message || 'Error with Places API';
+      console.error(`Places API error: ${errorDetails}`);
+      
+      if (placesData.status === 'REQUEST_DENIED') {
+        return new Response(
+          JSON.stringify({ 
+            error: 'Places API request was denied', 
+            details: {
+              status: placesData.status,
+              message: errorDetails || "You may need to enable the Places API in your Google Cloud Console"
+            }
+          }),
+          { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      
       return new Response(
-        JSON.stringify({ error: 'Could not find scrap merchants', details: placesData }),
+        JSON.stringify({ 
+          error: 'Could not find scrap merchants', 
+          details: {
+            status: placesData.status,
+            message: errorDetails
+          }
+        }),
         { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
