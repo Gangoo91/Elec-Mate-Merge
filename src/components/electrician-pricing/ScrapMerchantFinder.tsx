@@ -3,7 +3,9 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, MapPin, Phone, ExternalLink } from "lucide-react";
+import { Search, MapPin, Phone, ExternalLink, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface ScrapMerchant {
   id: number;
@@ -15,61 +17,85 @@ interface ScrapMerchant {
   openNow: boolean;
   paymentMethods: string[];
   acceptedMaterials: string[];
+  placeId?: string;
+  location?: {
+    lat: number;
+    lng: number;
+  };
 }
-
-const mockScrapMerchants: ScrapMerchant[] = [
-  {
-    id: 1,
-    name: "City Metal Recycling",
-    address: "123 Industrial Ave, Manchester, M1 1AA",
-    distance: "2.3 miles",
-    phone: "0161 123 4567",
-    rating: 4.7,
-    openNow: true,
-    paymentMethods: ["Cash", "Bank Transfer"],
-    acceptedMaterials: ["Copper", "Brass", "Aluminum", "Steel", "Lead"]
-  },
-  {
-    id: 2,
-    name: "Northern Scrap Solutions",
-    address: "45 Recycling Way, Manchester, M4 5RT",
-    distance: "3.8 miles",
-    phone: "0161 987 6543",
-    rating: 4.2,
-    openNow: true,
-    paymentMethods: ["Cash", "Bank Transfer", "Cheque"],
-    acceptedMaterials: ["Copper", "Aluminium", "Iron", "Steel", "Electrical Equipment"]
-  },
-  {
-    id: 3,
-    name: "Eco Metals",
-    address: "78 Green Street, Salford, M6 8QP",
-    distance: "5.1 miles",
-    phone: "0161 555 1234",
-    rating: 4.5,
-    openNow: false,
-    paymentMethods: ["Cash", "Bank Transfer"],
-    acceptedMaterials: ["Copper", "Brass", "Lead", "All Electrical Waste"]
-  }
-];
 
 const ScrapMerchantFinder = () => {
   const [postcode, setPostcode] = useState("");
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [merchants, setMerchants] = useState<ScrapMerchant[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
-  const handleSearch = () => {
-    if (!postcode.trim()) return;
+  const handleSearch = async () => {
+    if (!postcode.trim()) {
+      toast({
+        title: "Postcode required",
+        description: "Please enter a valid UK postcode to search",
+        variant: "destructive"
+      });
+      return;
+    }
     
     setIsLoading(true);
+    setError(null);
     
-    // Simulate API call with a delay
-    setTimeout(() => {
-      setMerchants(mockScrapMerchants);
-      setSearchPerformed(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('find-scrap-merchants', {
+        body: { postcode: postcode.trim() }
+      });
+      
+      if (error) {
+        throw new Error(error.message);
+      }
+      
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      
+      if (data.merchants && data.merchants.length > 0) {
+        setMerchants(data.merchants);
+        toast({
+          title: "Search complete",
+          description: `Found ${data.merchants.length} scrap merchants in your area`,
+        });
+      } else {
+        setMerchants([]);
+        toast({
+          title: "No results found",
+          description: "No scrap merchants found in this area. Try a different postcode.",
+          variant: "destructive"
+        });
+      }
+      
+    } catch (err) {
+      console.error("Error searching for scrap merchants:", err);
+      setError(err instanceof Error ? err.message : "Failed to search for merchants");
+      setMerchants([]);
+      
+      toast({
+        title: "Search failed",
+        description: err instanceof Error ? err.message : "Could not complete your search. Please try again.",
+        variant: "destructive"
+      });
+      
+    } finally {
       setIsLoading(false);
-    }, 1000);
+      setSearchPerformed(true);
+    }
+  };
+
+  const openDirections = (merchant: ScrapMerchant) => {
+    if (merchant.location) {
+      window.open(`https://www.google.com/maps/dir/?api=1&destination=${merchant.location.lat},${merchant.location.lng}`, '_blank');
+    } else {
+      window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(merchant.name + ' ' + merchant.address)}`, '_blank');
+    }
   };
 
   const renderStarRating = (rating: number) => {
@@ -103,21 +129,26 @@ const ScrapMerchantFinder = () => {
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <Input 
-              placeholder="Enter your postcode" 
+              placeholder="Enter your UK postcode" 
               value={postcode}
               onChange={(e) => setPostcode(e.target.value)}
               className="max-w-xs"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearch();
+                }
+              }}
             />
             <Button 
               onClick={handleSearch} 
               disabled={isLoading}
-              className="flex items-center gap-1"
+              className="flex items-center gap-1 sm:w-auto w-full"
             >
               {isLoading ? (
                 <>
-                  <div className="h-4 w-4 border-2 border-t-transparent border-white rounded-full animate-spin"></div>
+                  <Loader2 className="h-4 w-4 animate-spin" />
                   <span>Searching...</span>
                 </>
               ) : (
@@ -129,7 +160,13 @@ const ScrapMerchantFinder = () => {
             </Button>
           </div>
           
-          {searchPerformed && merchants.length === 0 && !isLoading && (
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/30 text-red-500 p-3 rounded-md">
+              {error}
+            </div>
+          )}
+          
+          {searchPerformed && merchants.length === 0 && !isLoading && !error && (
             <div className="text-center py-6">
               <p className="text-muted-foreground">No merchants found near this location.</p>
             </div>
@@ -172,11 +209,22 @@ const ScrapMerchantFinder = () => {
                   </div>
                   
                   <div className="mt-3 flex gap-2">
-                    <Button size="sm" variant="outline" className="flex items-center gap-1">
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="flex items-center gap-1"
+                      disabled={merchant.phone === 'Not available'}
+                      onClick={() => window.open(`tel:${merchant.phone}`, '_blank')}
+                    >
                       <Phone className="h-3 w-3" />
-                      <span>{merchant.phone}</span>
+                      <span>{merchant.phone === 'Not available' ? 'No Phone' : merchant.phone}</span>
                     </Button>
-                    <Button size="sm" variant="outline" className="flex items-center gap-1">
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="flex items-center gap-1"
+                      onClick={() => openDirections(merchant)}
+                    >
                       <ExternalLink className="h-3 w-3" />
                       <span>Directions</span>
                     </Button>
@@ -185,6 +233,10 @@ const ScrapMerchantFinder = () => {
               ))}
             </div>
           )}
+          
+          <div className="text-xs text-muted-foreground mt-2">
+            <p>Note: Material acceptance and payment methods are estimated. Please call the merchant to confirm details.</p>
+          </div>
         </div>
       </CardContent>
     </Card>

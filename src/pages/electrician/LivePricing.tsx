@@ -7,6 +7,7 @@ import MarketAlerts from "@/components/electrician-pricing/MarketAlerts";
 import { useLiveMetalPrices } from "@/hooks/useLiveMetalPrices";
 import ScrapMerchantFinder from "@/components/electrician-pricing/ScrapMerchantFinder";
 import { useState } from "react";
+import { Card } from "@/components/ui/card";
 
 const LivePricing = () => {
   const { data, isLoading, refreshPrices } = useLiveMetalPrices();
@@ -38,14 +39,25 @@ const LivePricing = () => {
           </Button>
         </div>
         
-        <Button
-          variant="outline"
-          className="flex items-center gap-2 w-fit"
-          onClick={() => setShowMerchantFinder(!showMerchantFinder)}
-        >
-          <MapPin className="h-4 w-4" />
-          {showMerchantFinder ? "Hide Merchants" : "Find UK Scrap Merchants"}
-        </Button>
+        <Card className="p-4 border-elec-yellow/20 bg-elec-gray">
+          <div className="flex flex-col gap-3">
+            <h3 className="text-lg font-medium flex items-center gap-2">
+              <MapPin className="h-5 w-5 text-elec-yellow" />
+              Find UK Scrap Merchants Near You
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              Search for nearby scrap merchants using your UK postcode to get current prices for your materials.
+            </p>
+            <Button
+              variant={showMerchantFinder ? "secondary" : "default"}
+              className="w-fit flex items-center gap-2"
+              onClick={() => setShowMerchantFinder(!showMerchantFinder)}
+            >
+              <Search className="h-4 w-4" />
+              {showMerchantFinder ? "Hide Merchant Finder" : "Find Local Scrap Merchants"}
+            </Button>
+          </div>
+        </Card>
       </div>
 
       {showMerchantFinder && (
