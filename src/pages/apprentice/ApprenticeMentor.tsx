@@ -18,7 +18,7 @@ const ApprenticeMentor = () => {
             <Users className="h-6 w-6 text-elec-yellow" /> Mentor Connect
           </h1>
           <p className="text-muted-foreground">
-            Find apprentices seeking guidance or become a mentor to earn rewards
+            Offer your expertise to apprentices seeking guidance or find your own mentor
           </p>
         </div>
         <Link to="/electrical-hub">

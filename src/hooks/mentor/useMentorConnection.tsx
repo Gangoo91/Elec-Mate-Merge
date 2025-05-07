@@ -30,7 +30,7 @@ export const useMentorConnection = () => {
         setMentors(data || []);
       } catch (err) {
         console.error("Error fetching mentors:", err);
-        setError("Failed to load mentors. Please try again later.");
+        setError("Failed to load apprentices seeking mentorship. Please try again later.");
       } finally {
         setIsLoading(false);
       }
@@ -43,7 +43,7 @@ export const useMentorConnection = () => {
     if (!profile?.id) {
       toast({
         title: "Authentication Required",
-        description: "Please sign in to connect with a mentor.",
+        description: "Please sign in to connect with an apprentice.",
         duration: 5000,
       });
       return;
@@ -56,8 +56,8 @@ export const useMentorConnection = () => {
       const { data: existingConnection } = await supabase
         .from('mentor_connections')
         .select('id')
-        .eq('apprentice_id', profile.id)
-        .eq('mentor_id', mentor.id)
+        .eq('apprentice_id', mentor.id)
+        .eq('mentor_id', profile.id)
         .single();
       
       let connectionId;
@@ -69,8 +69,8 @@ export const useMentorConnection = () => {
         const { data: newConnection, error } = await supabase
           .from('mentor_connections')
           .insert({
-            apprentice_id: profile.id,
-            mentor_id: mentor.id,
+            apprentice_id: mentor.id,
+            mentor_id: profile.id,
             status: 'pending'
           })
           .select('id')
@@ -85,23 +85,23 @@ export const useMentorConnection = () => {
           .insert({
             connection_id: connectionId,
             sender_type: 'mentor',
-            sender_id: mentor.id,
-            content: `Hi there! I'm ${mentor.name}, your new mentor. Feel free to ask me any questions about your electrical apprenticeship journey.`
+            sender_id: profile.id,
+            content: `Hi there! I'm ${profile.full_name || 'your new mentor'}. I'd be happy to provide guidance during your electrical apprenticeship journey.`
           });
       }
       
       // Create a new conversation with this mentor in the messenger system
       const conversationId = addMentorConversation({
-        mentorId: mentor.id,
-        mentorName: mentor.name,
-        mentorAvatar: mentor.avatar,
+        mentorId: profile.id,
+        mentorName: profile.full_name || 'Your Mentor',
+        mentorAvatar: profile.avatar_url,
         dbConnectionId: connectionId
       });
       
       // Show success notification
       toast({
-        title: "Mentoring Request Sent",
-        description: `Your request to connect with ${mentor.name} has been sent successfully.`,
+        title: "Mentoring Offer Sent",
+        description: `Your offer to mentor ${mentor.name} has been sent successfully.`,
         duration: 5000,
       });
       
@@ -109,10 +109,10 @@ export const useMentorConnection = () => {
       navigate('/messages', { state: { conversationId } });
       
     } catch (err) {
-      console.error("Error connecting with mentor:", err);
+      console.error("Error connecting with apprentice:", err);
       toast({
         title: "Connection Failed",
-        description: "There was a problem connecting with the mentor. Please try again later.",
+        description: "There was a problem connecting with the apprentice. Please try again later.",
         variant: "destructive",
         duration: 5000,
       });

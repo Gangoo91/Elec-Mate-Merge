@@ -72,7 +72,7 @@ const MentorGrid = ({ mentors, isLoading, error, requestingMentor, onConnectMent
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input 
           className="pl-10" 
-          placeholder="Search by name, specialty, or experience..." 
+          placeholder="Search by name, specialty, or learning focus..." 
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -80,7 +80,7 @@ const MentorGrid = ({ mentors, isLoading, error, requestingMentor, onConnectMent
       
       {filteredMentors.length === 0 ? (
         <div className="text-center py-10">
-          <p className="text-muted-foreground">No mentors found matching your search criteria.</p>
+          <p className="text-muted-foreground">No apprentices found matching your search criteria.</p>
           <Button 
             variant="outline" 
             className="mt-4"
