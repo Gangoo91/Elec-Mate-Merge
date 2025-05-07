@@ -1,8 +1,8 @@
-
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { BookOpen, Wrench, MessageSquare, Sparkles, Brain, Heart } from 'lucide-react';
+import { BookOpen, Wrench, MessageSquare, Sparkles, Brain, Heart, Trophy } from 'lucide-react';
+import MilestonesDisplay from '@/components/apprentice/MilestonesDisplay';
 
 const LandingPage = () => {
   const { user } = useAuth();
@@ -17,6 +17,9 @@ const LandingPage = () => {
           <p className="text-xl md:text-2xl mb-8">
             The complete platform for electrical professionals and apprentices with learning resources, off-job training tools, electrician's toolkit, community support, mentor connect, and mental health resources
           </p>
+          
+          {user && <MilestonesDisplay className="mb-8" />}
+          
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             {user ? (
               <Link to="/dashboard">

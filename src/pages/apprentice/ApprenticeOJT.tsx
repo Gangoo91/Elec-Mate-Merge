@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
@@ -6,6 +5,7 @@ import OJTHeader from "@/components/apprentice/time-tracking/ojt/OJTHeader";
 import TrainingManagementCard from "@/components/apprentice/time-tracking/ojt/TrainingManagementCard";
 import TrainingGuideCard from "@/components/apprentice/time-tracking/ojt/TrainingGuideCard";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useTrackMilestones } from "@/hooks/useTrackMilestones";
 
 const ApprenticeOJT = () => {
   const [weeklyHours, setWeeklyHours] = useState(8);
@@ -15,11 +15,14 @@ const ApprenticeOJT = () => {
   const { toast } = useToast();
   const { totalTime } = useTimeEntries();
   const isMobile = useIsMobile();
+  
+  // Add milestone tracking
+  useTrackMilestones();
 
   // Simulate loading course hours from various course pages
   useEffect(() => {
     // In a real implementation, this would come from Supabase
-    // For now, we'll check localStorage for any course times
+    // For now, we'll check localStorage for any course time entries
     let totalCourseTime = 0;
     
     // Loop through localStorage to find any course time entries
