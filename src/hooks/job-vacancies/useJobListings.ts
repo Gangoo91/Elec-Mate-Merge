@@ -2,19 +2,7 @@
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
-
-interface JobListing {
-  id: string;
-  title: string;
-  company: string;
-  location: string;
-  salary: string | null;
-  type: string;
-  description: string;
-  external_url: string;
-  posted_date: string;
-  source: string | null;
-}
+import { JobListing } from "@/pages/electrician/JobVacancies";
 
 export const useJobListings = () => {
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
@@ -143,7 +131,7 @@ export const useJobListings = () => {
     currentJobs,
     isLoading,
     selectedJob, 
-    setSelectedJob, // <-- Added this to expose it
+    setSelectedJob,
     locationFilter,
     jobTypeFilter,
     locations,

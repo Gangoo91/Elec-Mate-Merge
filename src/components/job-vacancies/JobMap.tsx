@@ -36,7 +36,7 @@ const JobMap: React.FC<JobMapProps> = ({ jobs, selectedJob, handleJobSelect, use
 
   // Initialize Google Maps
   useEffect(() => {
-    if (!window.google || !mapRef.current) return;
+    if (!window.google?.maps || !mapRef.current) return;
     
     try {
       googleMapRef.current = new window.google.maps.Map(mapRef.current, {
@@ -60,7 +60,7 @@ const JobMap: React.FC<JobMapProps> = ({ jobs, selectedJob, handleJobSelect, use
 
   // Add job markers to map
   useEffect(() => {
-    if (!googleMapRef.current || !jobs.length) return;
+    if (!googleMapRef.current || !jobs.length || !window.google?.maps) return;
 
     // Clear existing markers
     markers.forEach(marker => marker.marker?.setMap(null));
@@ -171,7 +171,7 @@ const TravelTimeEstimate: React.FC<TravelTimeEstimateProps> = ({ origin, destina
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!destination || !origin) return;
+    if (!destination || !origin || !window.google?.maps) return;
     
     setIsLoading(true);
     const service = new window.google.maps.DistanceMatrixService();

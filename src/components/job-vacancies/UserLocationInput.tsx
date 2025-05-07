@@ -24,6 +24,15 @@ const UserLocationInput: React.FC<UserLocationInputProps> = ({
   const [isLocating, setIsLocating] = useState(false);
 
   const handleUseCurrentLocation = () => {
+    if (!window.google?.maps) {
+      toast({
+        title: "Maps Not Ready",
+        description: "Google Maps is still loading. Please try again in a moment.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsLocating(true);
     
     if (!navigator.geolocation) {

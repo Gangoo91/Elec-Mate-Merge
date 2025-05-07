@@ -7,6 +7,12 @@ interface GoogleMapsLoaderProps {
   children: React.ReactNode;
 }
 
+declare global {
+  interface Window {
+    google?: any;
+  }
+}
+
 const GoogleMapsLoader: React.FC<GoogleMapsLoaderProps> = ({ children }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);

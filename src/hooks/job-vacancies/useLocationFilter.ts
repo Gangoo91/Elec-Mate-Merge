@@ -1,14 +1,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "@/components/ui/use-toast";
-
-interface JobListing {
-  id: string;
-  title: string;
-  company: string;
-  location: string;
-  [key: string]: any;
-}
+import { JobListing } from "@/pages/electrician/JobVacancies";
 
 export const useLocationFilter = (allJobs: JobListing[]) => {
   const [userLocation, setUserLocation] = useState<string | null>(null);
@@ -19,7 +12,7 @@ export const useLocationFilter = (allJobs: JobListing[]) => {
   const [showMap, setShowMap] = useState<boolean>(false);
 
   const calculateJobDistances = useCallback(async () => {
-    if (!userLocation || !allJobs.length) {
+    if (!userLocation || !allJobs.length || !window.google?.maps) {
       setFilteredJobs(allJobs);
       return;
     }
@@ -74,8 +67,8 @@ export const useLocationFilter = (allJobs: JobListing[]) => {
           service.getDistanceMatrix({
             origins,
             destinations: validDestinations,
-            travelMode: window.google.maps.TravelMode.DRIVING,
-            unitSystem: window.google.maps.UnitSystem.IMPERIAL,
+            travelMode: google.maps.TravelMode.DRIVING,
+            unitSystem: google.maps.UnitSystem.IMPERIAL,
           }, (response, status) => {
             if (status === "OK" && response) {
               resolve(response);
