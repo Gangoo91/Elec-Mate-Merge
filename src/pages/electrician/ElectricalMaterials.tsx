@@ -1,19 +1,13 @@
 
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Package, ArrowLeft, Search, Zap, TrendingDown, Star } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import MaterialCategoryGrid from "@/components/electrician-materials/MaterialCategoryGrid";
-import DealOfTheDay from "@/components/electrician-materials/DealOfTheDay";
+import { Package, ArrowLeft } from "lucide-react";
 import MaterialSearch from "@/components/electrician-materials/MaterialSearch";
 import LivePricingWidget from "@/components/electrician-materials/LivePricingWidget";
+import DealOfTheDay from "@/components/electrician-materials/DealOfTheDay";
+import MaterialCategoryGrid from "@/components/electrician-materials/MaterialCategoryGrid";
 
 const ElectricalMaterials = () => {
-  const [activeTab, setActiveTab] = useState("all");
-  
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Header with navigation */}
@@ -31,6 +25,9 @@ const ElectricalMaterials = () => {
         </Link>
       </div>
 
+      {/* Search bar */}
+      <MaterialSearch />
+
       {/* Top row with Deal of the Day and Live Pricing */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
@@ -41,44 +38,11 @@ const ElectricalMaterials = () => {
         </div>
       </div>
 
-      {/* Search and filters */}
-      <MaterialSearch />
-
-      {/* Main content with tabs */}
-      <Tabs defaultValue="all" className="space-y-4" onValueChange={setActiveTab}>
-        <TabsList className="bg-elec-gray border border-elec-yellow/20">
-          <TabsTrigger value="all">All Materials</TabsTrigger>
-          <TabsTrigger value="cables">Cables</TabsTrigger>
-          <TabsTrigger value="distribution">Distribution</TabsTrigger>
-          <TabsTrigger value="accessories">Accessories</TabsTrigger>
-          <TabsTrigger value="lighting">Lighting</TabsTrigger>
-          <TabsTrigger value="protection">Protection</TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="all">
-          <MaterialCategoryGrid category="all" />
-        </TabsContent>
-        
-        <TabsContent value="cables">
-          <MaterialCategoryGrid category="Cables" />
-        </TabsContent>
-        
-        <TabsContent value="distribution">
-          <MaterialCategoryGrid category="Distribution" />
-        </TabsContent>
-        
-        <TabsContent value="accessories">
-          <MaterialCategoryGrid category="Accessories" />
-        </TabsContent>
-        
-        <TabsContent value="lighting">
-          <MaterialCategoryGrid category="Lighting" />
-        </TabsContent>
-        
-        <TabsContent value="protection">
-          <MaterialCategoryGrid category="Protection" />
-        </TabsContent>
-      </Tabs>
+      {/* Supplier Categories */}
+      <div className="pt-4">
+        <h2 className="text-2xl font-semibold mb-4">Shop by Supplier</h2>
+        <MaterialCategoryGrid />
+      </div>
     </div>
   );
 };

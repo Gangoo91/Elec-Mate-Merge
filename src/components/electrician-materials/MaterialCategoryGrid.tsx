@@ -1,7 +1,9 @@
 
-import { useState, useEffect } from "react";
-import MaterialCard from "./MaterialCard";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Star } from "lucide-react";
 
 interface MaterialItem {
   id: number;
@@ -15,11 +17,7 @@ interface MaterialItem {
   stockStatus?: "In Stock" | "Low Stock" | "Out of Stock";
 }
 
-interface MaterialCategoryGridProps {
-  category: string;
-}
-
-const MaterialCategoryGrid: React.FC<MaterialCategoryGridProps> = ({ category }) => {
+const MaterialCategoryGrid = () => {
   // This would typically come from an API or database
   const [materials, setMaterials] = useState<MaterialItem[]>([
     {
@@ -82,32 +80,36 @@ const MaterialCategoryGrid: React.FC<MaterialCategoryGridProps> = ({ category })
     }
   ]);
 
-  // Filter materials by category if not "all"
-  const filteredMaterials = category === "all" 
-    ? materials 
-    : materials.filter(item => item.category === category);
+  // Get unique suppliers
+  const suppliers = [...new Set(materials.map(item => item.supplier))];
 
   return (
     <div className="space-y-6">
-      {filteredMaterials.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredMaterials.map(item => (
-            <MaterialCard key={item.id} item={item} />
-          ))}
-        </div>
-      ) : (
-        <div className="py-10 text-center border border-dashed border-elec-yellow/20 rounded-lg">
-          <p className="text-muted-foreground">No materials found in this category</p>
-        </div>
-      )}
-      
-      {filteredMaterials.length > 0 && (
-        <div className="flex justify-center pt-4">
-          <Button variant="outline" className="border-elec-yellow/20">
-            View More {category !== "all" ? category : ""} Products
-          </Button>
-        </div>
-      )}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {suppliers.map(supplier => (
+          <Link to={`/electrician/suppliers/${supplier.toLowerCase().replace(/\s+/g, '-')}`} key={supplier} className="block transition-transform hover:scale-[1.02]">
+            <Card className="border-elec-yellow/20 bg-elec-gray h-full">
+              <CardHeader>
+                <CardTitle className="text-xl">{supplier}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="bg-elec-card/70 h-32 rounded-md flex items-center justify-center">
+                    <span className="text-elec-yellow/70 text-lg">{supplier} Logo</span>
+                  </div>
+                  
+                  <div>
+                    <p className="text-muted-foreground mb-2">
+                      {materials.filter(item => item.supplier === supplier).length} products available
+                    </p>
+                    <Button className="w-full">Browse Products</Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };

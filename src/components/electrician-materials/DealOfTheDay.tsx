@@ -6,12 +6,14 @@ import { Zap, Star } from "lucide-react";
 const DealOfTheDay = () => {
   return (
     <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-gray/70 overflow-hidden">
-      <div className="absolute top-0 right-0 bg-elec-yellow text-black px-3 py-1 rounded-bl-md font-semibold flex items-center text-sm">
-        <Star className="h-3 w-3 mr-1 fill-current" />
-        DEAL OF THE DAY
-      </div>
       <CardHeader>
-        <CardTitle className="text-2xl">Schneider Electric Distribution Board</CardTitle>
+        <CardTitle className="text-2xl flex items-center gap-2">
+          Deal of the Day
+          <span className="bg-elec-yellow text-black px-2 py-0.5 rounded-md text-sm flex items-center">
+            <Star className="h-3 w-3 mr-1 fill-current" />
+            SAVE 28%
+          </span>
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -19,10 +21,9 @@ const DealOfTheDay = () => {
             <div className="flex items-baseline gap-2">
               <span className="text-3xl font-bold text-elec-yellow">£129.99</span>
               <span className="text-lg line-through text-muted-foreground">£179.99</span>
-              <span className="bg-elec-yellow/20 text-elec-yellow px-2 py-0.5 rounded text-sm">
-                SAVE 28%
-              </span>
             </div>
+            
+            <div className="text-xl font-medium">Schneider Electric Distribution Board</div>
             
             <ul className="space-y-2">
               <li className="flex items-center">
