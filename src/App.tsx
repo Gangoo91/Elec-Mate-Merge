@@ -27,6 +27,7 @@ import StressManagement from "./pages/apprentice/mental-health/StressManagement"
 import SupportNetwork from "./pages/apprentice/mental-health/SupportNetwork";
 import WorkLifeBalance from "./pages/apprentice/mental-health/WorkLifeBalance";
 import CrisisResources from "./pages/apprentice/mental-health/CrisisResources";
+import ElectricianMentalHealth from "./pages/electrician/ElectricianMentalHealth";
 import NotFound from "./pages/NotFound";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
@@ -111,6 +112,14 @@ function App() {
                 <Route path="electrician/safety-shares/projects" element={<MajorProjects />} />
                 <Route path="electrician/safety-shares/news" element={<IndustryNews />} />
                 <Route path="electrician/safety-shares/resources" element={<SafetyResources />} />
+                
+                {/* Electrician Mental Health routes */}
+                <Route path="electrician/mental-health" element={<ElectricianMentalHealth />} />
+                <Route path="electrician/mental-health/stress-management" element={<StressManagement />} />
+                <Route path="electrician/mental-health/support-network" element={<SupportNetwork />} />
+                <Route path="electrician/mental-health/work-life-balance" element={<WorkLifeBalance />} />
+                <Route path="electrician/mental-health/crisis-resources" element={<CrisisResources />} />
+                
                 <Route path="video-lessons" element={<VideoLessons />} />
                 <Route path="leaderboards" element={<Leaderboards />} />
                 <Route path="apprentice">

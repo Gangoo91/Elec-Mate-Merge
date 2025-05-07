@@ -25,6 +25,18 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
     console.log("Current path:", location.pathname);
     console.log("Current full URL:", window.location.href);
     
+    // Check if we're on the electrician mental health page
+    if (location.pathname === '/electrician/mental-health') {
+      navigate('/electrical-hub');
+      return;
+    }
+    
+    // Check if we're on an electrician mental health subpage
+    if (location.pathname.startsWith('/electrician/mental-health/')) {
+      navigate('/electrician/mental-health');
+      return;
+    }
+    
     // Check if we're on the electrician mentor connect page
     if (location.pathname.includes('/electrician/mentor-connect')) {
       navigate('/electrical-hub');
@@ -34,6 +46,18 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
     // Check if we're on the apprentice mentor page
     if (location.pathname.includes('/apprentice/mentor')) {
       navigate('/apprentice/hub');
+      return;
+    }
+    
+    // Check if we're on the apprentice mental health page
+    if (location.pathname === '/apprentice/mental-health') {
+      navigate('/apprentice/hub');
+      return;
+    }
+    
+    // Check if we're on an apprentice mental health subpage
+    if (location.pathname.startsWith('/apprentice/mental-health/')) {
+      navigate('/apprentice/mental-health');
       return;
     }
     
@@ -89,7 +113,15 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
 
   // Determine button text based on context
   const getButtonText = () => {
-    if (location.pathname.includes('/electrician/mentor-connect')) {
+    if (location.pathname.includes('/electrician/mental-health') && !location.pathname.includes('/electrician/mental-health/')) {
+      return "Back to Electrical Hub";
+    } else if (location.pathname.includes('/electrician/mental-health/')) {
+      return "Back to Mental Health Hub";
+    } else if (location.pathname.includes('/apprentice/mental-health') && !location.pathname.includes('/apprentice/mental-health/')) {
+      return "Back to Apprentice Hub";
+    } else if (location.pathname.includes('/apprentice/mental-health/')) {
+      return "Back to Mental Health Hub";
+    } else if (location.pathname.includes('/electrician/mentor-connect')) {
       return "Back to Electrical Hub";
     } else if (location.pathname.includes('/apprentice/mentor')) {
       return "Back to Apprentice Hub";

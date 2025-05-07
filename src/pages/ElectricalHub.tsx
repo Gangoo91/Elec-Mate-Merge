@@ -25,7 +25,7 @@ const ElectricalHub = () => {
       title: "Mental Health Hub",
       description: "Resources and support for maintaining wellbeing during your career",
       icon: <Heart className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/apprentice/mental-health"
+      link: "/electrician/mental-health"
     },
     {
       id: 4,
