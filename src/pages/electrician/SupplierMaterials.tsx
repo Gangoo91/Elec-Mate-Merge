@@ -15,6 +15,7 @@ const SupplierMaterials = () => {
   const [supplier, setSupplier] = useState<string>("");
   const [products, setProducts] = useState<MaterialItem[]>([]);
   const [supplierInfo, setSupplierInfo] = useState<SupplierInfo | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   useEffect(() => {
     if (supplierSlug) {
@@ -23,8 +24,17 @@ const SupplierMaterials = () => {
       setSupplier(supplierData[supplierKey as keyof typeof supplierData]?.name || "Unknown Supplier");
       setProducts(productsBySupplier[supplierKey as keyof typeof productsBySupplier] || []);
       setSupplierInfo(supplierData[supplierKey as keyof typeof supplierData] || null);
+      setSelectedCategory("all"); // Reset category filter when changing supplier
     }
   }, [supplierSlug]);
+
+  // Get unique categories for this supplier's products
+  const categories = ["all", ...new Set(products.map(item => item.category))];
+
+  // Filter products by selected category
+  const filteredProducts = selectedCategory === "all" 
+    ? products 
+    : products.filter(item => item.category === selectedCategory);
 
   if (!supplierInfo) {
     return <div className="py-10 text-center">Loading supplier information...</div>;
@@ -54,18 +64,33 @@ const SupplierMaterials = () => {
       <Alert className="bg-elec-gray border-elec-yellow/30">
         <AlertTriangle className="h-4 w-4 text-elec-yellow" />
         <AlertDescription className="text-sm">
-          ElecMate is not affiliated with or endorsed by the suppliers listed. Prices and product availability may vary. We may earn a commission from qualifying purchases through affiliated links.
+          ElecMate is not affiliated with or endorsed by the suppliers listed. Prices and product availability may vary.
         </AlertDescription>
       </Alert>
 
       {/* Search bar */}
       <MaterialSearch />
 
+      {/* Category filters */}
+      <div className="flex flex-wrap gap-2">
+        {categories.map(category => (
+          <Button 
+            key={category}
+            variant={selectedCategory === category ? "default" : "outline"}
+            size="sm"
+            onClick={() => setSelectedCategory(category)}
+            className={selectedCategory === category ? "bg-elec-yellow text-black" : ""}
+          >
+            {category === "all" ? "All Products" : category}
+          </Button>
+        ))}
+      </div>
+
       {/* Deal of the Day */}
       <SupplierDealOfDay supplierInfo={supplierInfo} />
 
       {/* Product Grid */}
-      <SupplierProductGrid products={products} supplierName={supplier} />
+      <SupplierProductGrid products={filteredProducts} supplierName={supplier} />
     </div>
   );
 };

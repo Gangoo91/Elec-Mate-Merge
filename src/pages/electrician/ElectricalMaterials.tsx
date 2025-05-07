@@ -30,7 +30,7 @@ const ElectricalMaterials = () => {
       <Alert className="bg-elec-gray border-elec-yellow/30">
         <AlertTriangle className="h-4 w-4 text-elec-yellow" />
         <AlertDescription className="text-sm">
-          ElecMate is not affiliated with or endorsed by the suppliers listed. Prices and product availability may vary. We may earn a commission from qualifying purchases through affiliated links.
+          ElecMate is not affiliated with or endorsed by the suppliers listed. Prices and product availability may vary.
         </AlertDescription>
       </Alert>
 
