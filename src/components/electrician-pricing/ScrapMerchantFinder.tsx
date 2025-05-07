@@ -1,12 +1,13 @@
 
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Search, MapPin, Phone, ExternalLink, Loader2, Info, AlertTriangle, Link as LinkIcon } from "lucide-react";
+import { MapPin, Info } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { SearchForm } from "./merchant-finder/SearchForm";
+import { MerchantList } from "./merchant-finder/MerchantList";
+import { ApiErrorDisplay, ApiTroubleshooting } from "./merchant-finder/ApiErrorDisplay";
 
 interface ScrapMerchant {
   id: number;
@@ -116,82 +117,6 @@ const ScrapMerchantFinder = () => {
       window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(merchant.name + ' ' + merchant.address)}`, '_blank');
     }
   };
-
-  const renderStarRating = (rating: number) => {
-    return (
-      <div className="flex items-center">
-        {Array.from({ length: 5 }).map((_, index) => {
-          const starValue = index + 1;
-          return (
-            <svg 
-              key={index} 
-              className={`h-4 w-4 ${starValue <= rating ? "text-yellow-400" : "text-gray-300"}`}
-              fill="currentColor" 
-              viewBox="0 0 20 20"
-            >
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-            </svg>
-          );
-        })}
-        <span className="ml-1 text-sm">{rating.toFixed(1)}</span>
-      </div>
-    );
-  };
-  
-  const renderApiErrorHelp = () => {
-    if (!apiStatus) return null;
-    
-    switch(apiStatus) {
-      case 'REQUEST_DENIED':
-        return (
-          <Alert className="mt-4 bg-amber-500/10 border-amber-500/30 text-amber-500">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertDescription className="text-sm">
-              <p className="mb-2">API authorization issue detected. This is likely due to one of the following:</p>
-              <ol className="list-decimal pl-5 space-y-1">
-                <li>The Google Maps API key has not been setup correctly.</li>
-                <li>The Places API or Geocoding API is not enabled for this API key.</li>
-                <li>The API key has billing issues or has exceeded its quota.</li>
-                <li>The API key has domain/IP restrictions that block this request.</li>
-              </ol>
-              {apiErrorMessage && (
-                <p className="mt-2 italic text-xs">{apiErrorMessage}</p>
-              )}
-            </AlertDescription>
-          </Alert>
-        );
-      case 'OVER_QUERY_LIMIT':
-        return (
-          <Alert className="mt-4 bg-amber-500/10 border-amber-500/30 text-amber-500">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertDescription className="text-sm">
-              The Google Maps API usage quota has been exceeded. Please try again later or check your billing settings in the Google Cloud Console.
-            </AlertDescription>
-          </Alert>
-        );
-      case 'INVALID_REQUEST':
-        return (
-          <Alert className="mt-4 bg-amber-500/10 border-amber-500/30 text-amber-500">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertDescription className="text-sm">
-              The request sent to the Google Maps API was invalid. This could be due to a problem with the postcode format.
-            </AlertDescription>
-          </Alert>
-        );
-      default:
-        return (
-          <Alert className="mt-4 bg-amber-500/10 border-amber-500/30 text-amber-500">
-            <Info className="h-4 w-4" />
-            <AlertDescription className="text-sm">
-              An error occurred with status: {apiStatus}
-              {apiErrorMessage && (
-                <p className="mt-1 italic text-xs">{apiErrorMessage}</p>
-              )}
-            </AlertDescription>
-          </Alert>
-        );
-    }
-  };
   
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
@@ -203,36 +128,12 @@ const ScrapMerchantFinder = () => {
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row gap-2">
-            <Input 
-              placeholder="Enter your UK postcode" 
-              value={postcode}
-              onChange={(e) => setPostcode(e.target.value)}
-              className="max-w-xs"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleSearch();
-                }
-              }}
-            />
-            <Button 
-              onClick={handleSearch} 
-              disabled={isLoading}
-              className="flex items-center gap-1 sm:w-auto w-full"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>Searching...</span>
-                </>
-              ) : (
-                <>
-                  <Search className="h-4 w-4" />
-                  <span>Search</span>
-                </>
-              )}
-            </Button>
-          </div>
+          <SearchForm
+            postcode={postcode}
+            setPostcode={setPostcode}
+            handleSearch={handleSearch}
+            isLoading={isLoading}
+          />
           
           {error && (
             <div className="bg-red-500/10 border border-red-500/30 text-red-500 p-3 rounded-md">
@@ -240,100 +141,19 @@ const ScrapMerchantFinder = () => {
                 <Info className="h-4 w-4" />
                 <p>{error}</p>
               </div>
-              {renderApiErrorHelp()}
+              <ApiErrorDisplay apiStatus={apiStatus} apiErrorMessage={apiErrorMessage} />
               
-              {apiStatus === 'REQUEST_DENIED' && (
-                <div className="mt-4 p-3 bg-black/20 rounded-md">
-                  <p className="text-sm font-medium mb-2">Troubleshooting Steps:</p>
-                  <ol className="list-decimal pl-5 space-y-2 text-sm">
-                    <li>Ensure the GoogleAPI secret is set correctly in your Supabase project</li>
-                    <li>Check that you have enabled both Geocoding API and Places API in Google Cloud Console</li>
-                    <li>Verify that your Google Maps API key billing is set up and active</li>
-                    <li>If you've set any API key restrictions, ensure they allow access from your domain</li>
-                  </ol>
-                  <div className="flex items-center gap-2 mt-3 text-xs">
-                    <LinkIcon className="h-3 w-3" />
-                    <a 
-                      href="https://console.cloud.google.com/apis/library" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-elec-yellow hover:underline"
-                    >
-                      Google Cloud Console API Library
-                    </a>
-                  </div>
-                </div>
-              )}
+              {apiStatus === 'REQUEST_DENIED' && <ApiTroubleshooting />}
             </div>
           )}
           
-          {searchPerformed && merchants.length === 0 && !isLoading && !error && (
-            <div className="text-center py-6">
-              <p className="text-muted-foreground">No merchants found near this location.</p>
-            </div>
-          )}
-          
-          {merchants.length > 0 && (
-            <div className="space-y-4">
-              {merchants.map((merchant) => (
-                <div 
-                  key={merchant.id} 
-                  className="border border-elec-yellow/20 rounded-lg p-4 bg-black/10"
-                >
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-medium text-lg">{merchant.name}</h3>
-                      <p className="text-sm text-muted-foreground flex items-center gap-1">
-                        <MapPin className="h-3 w-3" /> {merchant.address} ({merchant.distance})
-                      </p>
-                    </div>
-                    <span className={`px-2 py-0.5 text-xs rounded-full ${
-                      merchant.openNow ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"
-                    }`}>
-                      {merchant.openNow ? "Open Now" : "Closed"}
-                    </span>
-                  </div>
-                  
-                  <div className="mt-2">
-                    {renderStarRating(merchant.rating)}
-                  </div>
-                  
-                  <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-2">
-                    <div>
-                      <p className="text-xs text-muted-foreground">Accepts</p>
-                      <p className="text-sm">{merchant.acceptedMaterials.join(", ")}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground">Payment</p>
-                      <p className="text-sm">{merchant.paymentMethods.join(", ")}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-3 flex flex-col gap-2">
-                    <Button 
-                      size="sm" 
-                      variant="outline" 
-                      className="flex items-center gap-1"
-                      disabled={merchant.phone === 'Not available'}
-                      onClick={() => window.open(`tel:${merchant.phone}`, '_blank')}
-                    >
-                      <Phone className="h-3 w-3" />
-                      <span>{merchant.phone === 'Not available' ? 'No Phone' : merchant.phone}</span>
-                    </Button>
-                    <Button 
-                      size="sm" 
-                      variant="outline" 
-                      className="flex items-center gap-1"
-                      onClick={() => openDirections(merchant)}
-                    >
-                      <ExternalLink className="h-3 w-3" />
-                      <span>Directions</span>
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          <MerchantList 
+            merchants={merchants}
+            searchPerformed={searchPerformed}
+            isLoading={isLoading}
+            error={error}
+            openDirections={openDirections}
+          />
           
           <div className="text-xs text-muted-foreground mt-2">
             <p>Note: Material acceptance and payment methods are estimated. Please call the merchant to confirm details.</p>
