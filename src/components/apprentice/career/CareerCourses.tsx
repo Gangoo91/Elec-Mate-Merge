@@ -115,6 +115,136 @@ const careerCourses = [
     nextDates: ["5 June 2025", "10 July 2025", "12 August 2025"],
     rating: 4.6,
     locations: ["Online", "London", "Manchester", "Birmingham", "Edinburgh"]
+  },
+  {
+    id: 9,
+    title: "Hazardous Areas & ATEX Training",
+    provider: "CompEx",
+    description: "Specialist training for electricians working in potentially explosive atmospheres and hazardous environments.",
+    duration: "5 days",
+    level: "Advanced",
+    price: "£900 - £1,200",
+    format: "Classroom with practical assessments",
+    nextDates: ["13 June 2025", "18 July 2025", "22 September 2025"],
+    rating: 4.9,
+    locations: ["Aberdeen", "Manchester", "London", "Southampton"]
+  },
+  {
+    id: 10,
+    title: "First Aid at Work",
+    provider: "St John Ambulance",
+    description: "Essential first aid qualification for site workers, covering emergency response procedures.",
+    duration: "3 days",
+    level: "All levels",
+    price: "£250 - £350",
+    format: "Practical training with assessments",
+    nextDates: ["10 June 2025", "15 July 2025", "20 August 2025"],
+    rating: 4.8,
+    locations: ["Nationwide", "London", "Manchester", "Birmingham", "Glasgow", "Bristol"]
+  },
+  {
+    id: 11,
+    title: "Confined Spaces Training",
+    provider: "City & Guilds",
+    description: "Safety training for working in restricted access areas with potential hazards.",
+    duration: "2 days",
+    level: "Intermediate",
+    price: "£350 - £450",
+    format: "Practical exercises with theory components",
+    nextDates: ["22 June 2025", "17 July 2025", "12 September 2025"],
+    rating: 4.7,
+    locations: ["Leeds", "London", "Birmingham", "Newcastle"]
+  },
+  {
+    id: 12,
+    title: "Emergency Lighting Installation & Maintenance",
+    provider: "Industry Qualifications",
+    description: "Specialized certification for installing, testing and maintaining emergency lighting systems.",
+    duration: "2 days",
+    level: "Intermediate",
+    price: "£320 - £400",
+    format: "Classroom with hands-on practice",
+    nextDates: ["8 June 2025", "20 July 2025", "15 September 2025"],
+    rating: 4.6,
+    locations: ["London", "Manchester", "Bristol", "Edinburgh"]
+  },
+  {
+    id: 13,
+    title: "Smart Home/Building Automation Systems",
+    provider: "KNX Association",
+    description: "Modern technology integration training for intelligent building systems installation and programming.",
+    duration: "5 days",
+    level: "Advanced",
+    price: "£850 - £1,200",
+    format: "Classroom with practical programming exercises",
+    nextDates: ["14 June 2025", "19 July 2025", "13 September 2025"],
+    rating: 4.9,
+    locations: ["London", "Manchester", "Bristol"]
+  },
+  {
+    id: 14,
+    title: "Electric Vehicle Charging Installation (Advanced)",
+    provider: "IET Academy",
+    description: "Advanced training for complex EV charging installations including three-phase and commercial systems.",
+    duration: "3 days",
+    level: "Advanced",
+    price: "£550 - £700",
+    format: "Classroom with advanced practical assessments",
+    nextDates: ["24 June 2025", "22 July 2025", "19 September 2025"],
+    rating: 4.8,
+    locations: ["London", "Birmingham", "Manchester", "Glasgow"]
+  },
+  {
+    id: 15,
+    title: "Testing & Inspection Periodic (Advanced)",
+    provider: "NAPIT",
+    description: "Comprehensive training for conducting periodic inspection and testing of electrical installations.",
+    duration: "4 days",
+    level: "Advanced",
+    price: "£650 - £800",
+    format: "Classroom with extensive practical assessment",
+    nextDates: ["18 June 2025", "16 July 2025", "24 September 2025"],
+    rating: 4.7,
+    locations: ["London", "Manchester", "Leeds", "Newcastle", "Cardiff"]
+  },
+  {
+    id: 16,
+    title: "Commercial & Industrial 3-Phase Systems",
+    provider: "ECA",
+    description: "Specialized power systems training for complex commercial and industrial installations.",
+    duration: "4 days",
+    level: "Advanced",
+    price: "£700 - £850",
+    format: "Classroom and practical workshop sessions",
+    nextDates: ["9 June 2025", "21 July 2025", "22 September 2025"],
+    rating: 4.8,
+    locations: ["Birmingham", "London", "Manchester", "Glasgow"]
+  },
+  {
+    id: 17,
+    title: "Data Cabling & Network Infrastructure",
+    provider: "CNet Training",
+    description: "Installation and testing of structured cabling systems for network and communications.",
+    duration: "3 days",
+    level: "Intermediate",
+    price: "£450 - £600",
+    format: "Hands-on practical training with theory",
+    nextDates: ["11 June 2025", "16 July 2025", "23 September 2025"],
+    rating: 4.6,
+    locations: ["London", "Manchester", "Birmingham", "Edinburgh"]
+  },
+  {
+    id: 18,
+    title: "Thermal Imaging/Thermography",
+    provider: "FLIR Training Centre",
+    description: "For preventative maintenance and fault finding using thermal imaging technology.",
+    duration: "2 days",
+    level: "Intermediate",
+    price: "£550 - £700",
+    format: "Hands-on equipment training with analysis techniques",
+    nextDates: ["17 June 2025", "29 July 2025", "25 September 2025"],
+    rating: 4.7,
+    locations: ["London", "Birmingham", "Manchester", "Aberdeen"]
   }
 ];
 
@@ -161,7 +291,8 @@ const trainingCenters = [
 // Available UK locations for filtering
 const ukLocations = [
   "All Locations", "London", "Manchester", "Birmingham", "Glasgow", "Edinburgh",
-  "Belfast", "Cardiff", "Newcastle", "Liverpool", "Leeds", "Bristol", "Sheffield", "Online"
+  "Belfast", "Cardiff", "Newcastle", "Liverpool", "Leeds", "Bristol", "Sheffield", "Online",
+  "Aberdeen", "Southampton", "Nationwide"
 ];
 
 const CareerCourses = () => {
@@ -735,3 +866,4 @@ const CareerCourses = () => {
 };
 
 export default CareerCourses;
+
