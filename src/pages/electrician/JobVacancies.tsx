@@ -1,10 +1,16 @@
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Briefcase, ArrowLeft } from "lucide-react";
+import { Briefcase, ArrowLeft, FileText } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/use-toast";
+import CVBuilderBox from "@/components/electrician-tools/CVBuilderBox";
 
 const JobVacancies = () => {
+  const [selectedJob, setSelectedJob] = useState<number | null>(null);
+
   const jobs = [
     {
       id: 1,
@@ -13,7 +19,8 @@ const JobVacancies = () => {
       location: "London, UK",
       salary: "£45,000 - £55,000",
       type: "Full-time",
-      description: "Looking for an experienced electrical engineer to join our growing team working on commercial projects."
+      description: "Looking for an experienced electrical engineer to join our growing team working on commercial projects.",
+      applicationUrl: "https://powertech-solutions.co.uk/careers/senior-electrical-engineer"
     },
     {
       id: 2,
@@ -22,7 +29,8 @@ const JobVacancies = () => {
       location: "Manchester, UK",
       salary: "£32,000 - £38,000",
       type: "Full-time",
-      description: "Maintenance role for qualified electrician with industrial experience. Regular hours with on-call rotation."
+      description: "Maintenance role for qualified electrician with industrial experience. Regular hours with on-call rotation.",
+      applicationUrl: "https://ind-facilities.co.uk/jobs/maintenance-electrician"
     },
     {
       id: 3,
@@ -31,7 +39,8 @@ const JobVacancies = () => {
       location: "Birmingham, UK",
       salary: "£18,000 - £22,000",
       type: "Apprenticeship",
-      description: "Great opportunity for someone looking to start their career in the electrical trade with full training provided."
+      description: "Great opportunity for someone looking to start their career in the electrical trade with full training provided.",
+      applicationUrl: "https://citysparkselectric.co.uk/apprenticeships"
     },
     {
       id: 4,
@@ -40,9 +49,20 @@ const JobVacancies = () => {
       location: "Bristol, UK",
       salary: "£58,000 - £65,000",
       type: "Full-time",
-      description: "Experienced contracts manager needed to oversee multiple electrical installation projects across the southwest."
+      description: "Experienced contracts manager needed to oversee multiple electrical installation projects across the southwest.",
+      applicationUrl: "https://buildright-construction.co.uk/careers/electrical-contracts-manager"
     }
   ];
+
+  const handleApply = (jobId: number, url: string) => {
+    setSelectedJob(jobId);
+    // Open external application URL in new tab
+    window.open(url, '_blank');
+    toast({
+      title: "Application Started",
+      description: "You've been redirected to the employer's application page.",
+    });
+  };
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -62,6 +82,9 @@ const JobVacancies = () => {
           </Button>
         </Link>
       </div>
+
+      {/* AI CV Builder Box */}
+      <CVBuilderBox />
 
       <div className="space-y-4">
         <div className="border p-4 rounded-lg bg-elec-gray border-elec-yellow/20 mb-6">
@@ -96,7 +119,12 @@ const JobVacancies = () => {
                   </div>
                   <p className="text-sm">{job.description}</p>
                 </div>
-                <Button className="w-full">Apply Now</Button>
+                <Button 
+                  className="w-full"
+                  onClick={() => handleApply(job.id, job.applicationUrl)}
+                >
+                  {selectedJob === job.id ? "Application Started" : "Apply Now"}
+                </Button>
               </CardContent>
             </Card>
           ))}
