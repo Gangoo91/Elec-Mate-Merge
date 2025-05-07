@@ -29,18 +29,17 @@ serve(async (req) => {
       );
     }
     
-    console.log(`Searching for scrap merchants near postcode: ${postcode}`);
-    console.log(`Using API key ending with: ...${MAPS_API_KEY.slice(-5)}`);
+    console.log(`[FIND-SCRAP-MERCHANTS] Searching for merchants near postcode: ${postcode}`);
     
     // First, geocode the postcode to get coordinates
     const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(postcode + ', UK')}&key=${MAPS_API_KEY}`;
     
-    console.log(`Calling Geocoding API for postcode: ${postcode}`);
+    console.log(`[FIND-SCRAP-MERCHANTS] Calling Geocoding API for postcode: ${postcode}`);
     
     const geocodeResponse = await fetch(geocodeUrl);
     
     if (!geocodeResponse.ok) {
-      console.error(`HTTP error when calling Geocoding API: ${geocodeResponse.status}`);
+      console.error(`[FIND-SCRAP-MERCHANTS] HTTP error when calling Geocoding API: ${geocodeResponse.status}`);
       return new Response(
         JSON.stringify({ error: `Failed to call Geocoding API: ${geocodeResponse.statusText}` }),
         { status: geocodeResponse.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -49,11 +48,11 @@ serve(async (req) => {
     
     const geocodeData = await geocodeResponse.json();
     
-    console.log(`Geocode API response status: ${geocodeData.status}`);
+    console.log(`[FIND-SCRAP-MERCHANTS] Geocode API response status: ${geocodeData.status}`);
     
     if (geocodeData.status !== 'OK' || !geocodeData.results || geocodeData.results.length === 0) {
       const errorDetails = geocodeData.error_message || 'No location found for this postcode';
-      console.error(`Geocoding API error: ${errorDetails}`);
+      console.error(`[FIND-SCRAP-MERCHANTS] Geocoding API error: ${errorDetails}`);
       
       return new Response(
         JSON.stringify({ 
@@ -68,20 +67,17 @@ serve(async (req) => {
     }
     
     const { lat, lng } = geocodeData.results[0].geometry.location;
-    console.log(`Location found - Lat: ${lat}, Lng: ${lng}`);
-    
-    // We'll need the Places API enabled to perform this next step
-    console.log(`Note: Places API will be needed for finding nearby merchants`);
+    console.log(`[FIND-SCRAP-MERCHANTS] Location found - Lat: ${lat}, Lng: ${lng}`);
     
     // Now search for nearby scrap merchants
     const placesUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=15000&keyword=scrap%20metal%20merchant&key=${MAPS_API_KEY}`;
     
-    console.log(`Calling Places API for location: ${lat},${lng}`);
+    console.log(`[FIND-SCRAP-MERCHANTS] Calling Places API for location coordinates`);
     
     const placesResponse = await fetch(placesUrl);
     
     if (!placesResponse.ok) {
-      console.error(`HTTP error when calling Places API: ${placesResponse.status}`);
+      console.error(`[FIND-SCRAP-MERCHANTS] HTTP error when calling Places API: ${placesResponse.status}`);
       return new Response(
         JSON.stringify({ 
           error: `Failed to call Places API: ${placesResponse.statusText}`,
@@ -93,12 +89,12 @@ serve(async (req) => {
     
     const placesData = await placesResponse.json();
     
-    console.log(`Places API response status: ${placesData.status}`);
+    console.log(`[FIND-SCRAP-MERCHANTS] Places API response status: ${placesData.status}`);
     
     if (placesData.status !== 'OK') {
       // If no results found but API worked, return empty array instead of error
       if (placesData.status === 'ZERO_RESULTS') {
-        console.log('No scrap merchants found in this area');
+        console.log('[FIND-SCRAP-MERCHANTS] No scrap merchants found in this area');
         return new Response(
           JSON.stringify({ merchants: [] }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -106,7 +102,7 @@ serve(async (req) => {
       }
       
       const errorDetails = placesData.error_message || 'Error with Places API';
-      console.error(`Places API error: ${errorDetails}`);
+      console.error(`[FIND-SCRAP-MERCHANTS] Places API error: ${errorDetails}`);
       
       if (placesData.status === 'REQUEST_DENIED') {
         return new Response(
@@ -156,7 +152,7 @@ serve(async (req) => {
       };
     });
     
-    console.log(`Found ${merchants.length} scrap merchants near ${postcode}`);
+    console.log(`[FIND-SCRAP-MERCHANTS] Found ${merchants.length} scrap merchants near ${postcode}`);
     
     return new Response(
       JSON.stringify({ merchants }),
@@ -164,7 +160,7 @@ serve(async (req) => {
     );
     
   } catch (error) {
-    console.error("Error searching for scrap merchants:", error);
+    console.error("[FIND-SCRAP-MERCHANTS] Error searching for scrap merchants:", error);
     
     return new Response(
       JSON.stringify({ error: 'Error searching for scrap merchants', details: error.message }),
