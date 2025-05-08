@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const AIAssistant = () => {
   const [prompt, setPrompt] = useState("");
@@ -27,7 +28,10 @@ const AIAssistant = () => {
     
     try {
       const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
-        body: { prompt: prompt },
+        body: { 
+          prompt: prompt,
+          type: "general" 
+        },
       });
       
       if (error) {
@@ -94,7 +98,17 @@ const AIAssistant = () => {
           )}
         </Button>
 
-        {aiResponse && (
+        {isLoading && (
+          <div className="mt-6 p-4 bg-elec-dark rounded-md animate-pulse">
+            <Skeleton className="h-6 w-40 mb-4" />
+            <Skeleton className="h-4 w-full mb-2" />
+            <Skeleton className="h-4 w-full mb-2" />
+            <Skeleton className="h-4 w-3/4 mb-2" />
+            <Skeleton className="h-4 w-5/6" />
+          </div>
+        )}
+
+        {aiResponse && !isLoading && (
           <div className="mt-6 p-4 bg-elec-dark rounded-md">
             <h3 className="text-lg font-semibold mb-2 text-elec-yellow">AI Response:</h3>
             <div className="text-sm whitespace-pre-wrap">

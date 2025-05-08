@@ -1,61 +1,63 @@
 
 import { useState } from "react";
-import { Book, Loader } from "lucide-react";
+import { Book, Loader, Search } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { supabase } from "@/integrations/supabase/client";
+import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const RegulationsAssistant = () => {
-  const [regulationQuery, setRegulationQuery] = useState("");
-  const [isRegulationLoading, setIsRegulationLoading] = useState(false);
-  const [regulationResponse, setRegulationResponse] = useState("");
+  const [query, setQuery] = useState("");
+  const [regResult, setRegResult] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
 
-  const handleRegulationQuery = async () => {
-    if (regulationQuery.trim() === "") {
+  const handleRegulationSearch = async () => {
+    if (query.trim() === "") {
       toast({
         title: "Empty Query",
-        description: "Please enter a regulation question first.",
+        description: "Please enter a regulations question or search term.",
         variant: "destructive",
       });
       return;
     }
 
-    setIsRegulationLoading(true);
-    setRegulationResponse("");
+    setIsSearching(true);
+    setRegResult("");
 
     try {
-      // In a real implementation, this would call the electrician-ai-assistant with a focused prompt
       const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
         body: { 
-          prompt: `I need specific information about UK electrical regulations (BS 7671) regarding: ${regulationQuery}. Please provide the exact regulation references and explain the requirements in detail.` 
+          prompt: query,
+          type: "regulations"
         },
       });
       
       if (error) {
-        throw new Error(error.message || 'Error connecting to the AI assistant');
+        throw new Error(error.message || 'Error connecting to the Regulations Assistant');
       }
       
       if (data.error) {
         throw new Error(data.error);
       }
-      
-      setRegulationResponse(data.response);
+
+      setRegResult(data.response || "");
       
       toast({
-        title: "Regulations Information Retrieved",
-        description: "AI has provided regulation details for your query.",
+        title: "Regulations Information Found",
+        description: "Your regulations query has been answered.",
       });
     } catch (error) {
-      console.error('Regulation Query Error:', error);
+      console.error('Regulations Search Error:', error);
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to get regulation information",
+        description: error instanceof Error ? error.message : "Failed to get regulations information",
         variant: "destructive",
       });
     } finally {
-      setIsRegulationLoading(false);
+      setIsSearching(false);
     }
   };
 
@@ -64,45 +66,68 @@ const RegulationsAssistant = () => {
       <CardHeader>
         <CardTitle className="text-xl flex items-center gap-2">
           <Book className="h-5 w-5 text-elec-yellow" />
-          Regulations Assistant
+          UK Electrical Regulations Assistant
         </CardTitle>
         <CardDescription>
-          Get instant answers to BS 7671 regulation questions with context-aware AI
+          Access BS 7671 IET Wiring Regulations information and interpretations
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-sm text-muted-foreground">
-          Enter your question about UK electrical regulations and standards to get precise answers with regulation references.
+          Ask questions about UK electrical regulations or search for specific clauses in BS 7671. Our AI will provide accurate information with references to the appropriate regulations.
         </p>
         
-        <Textarea
-          placeholder="e.g., What are the requirements for bathroom zones and IP ratings for electrical equipment in each zone?"
-          className="min-h-[100px]"
-          value={regulationQuery}
-          onChange={(e) => setRegulationQuery(e.target.value)}
-        />
-        
-        <Button 
-          className="w-full" 
-          onClick={handleRegulationQuery} 
-          disabled={isRegulationLoading}
-        >
-          {isRegulationLoading ? (
-            <>
-              <Loader className="h-4 w-4 mr-2 animate-spin" /> 
-              Searching Regulations...
-            </>
-          ) : (
-            'Get Regulation Information'
-          )}
-        </Button>
+        <div className="flex items-center space-x-2">
+          <Input
+            placeholder="e.g., What are the requirements for RCD protection in domestic installations?"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="flex-1"
+          />
+          <Button 
+            onClick={handleRegulationSearch}
+            disabled={isSearching}
+            className="whitespace-nowrap"
+          >
+            {isSearching ? (
+              <>
+                <Loader className="h-4 w-4 mr-2 animate-spin" />
+                Searching...
+              </>
+            ) : (
+              <>
+                <Search className="h-4 w-4 mr-2" />
+                Search
+              </>
+            )}
+          </Button>
+        </div>
 
-        {regulationResponse && (
+        {isSearching && (
+          <div className="mt-6 p-4 bg-elec-dark rounded-md animate-pulse">
+            <Skeleton className="h-6 w-40 mb-4" />
+            <Skeleton className="h-4 w-full mb-2" />
+            <Skeleton className="h-4 w-full mb-2" />
+            <Skeleton className="h-4 w-3/4 mb-2" />
+            <Skeleton className="h-4 w-5/6" />
+          </div>
+        )}
+
+        {regResult && !isSearching && (
           <div className="mt-6 p-4 bg-elec-dark rounded-md">
-            <h3 className="text-lg font-semibold mb-2 text-elec-yellow">Regulations Information:</h3>
+            <h3 className="text-lg font-semibold mb-3 text-elec-yellow">Regulations Information:</h3>
             <div className="text-sm whitespace-pre-wrap">
-              {regulationResponse.split('\n').map((line, index) => (
-                <p key={index} className={line.startsWith('#') ? 'text-elec-yellow font-semibold mt-3' : 'my-2'}>
+              {regResult.split('\n').map((line, index) => (
+                <p 
+                  key={index}
+                  className={
+                    line.startsWith('BS 7671:') || line.startsWith('Regulation ') ? 
+                    'text-elec-yellow font-medium my-2' : 
+                    line.match(/^(Clause|Section|Chapter|Part|Appendix) \d+/) ? 
+                    'font-semibold my-2' : 
+                    'my-1'
+                  }
+                >
                   {line}
                 </p>
               ))}
