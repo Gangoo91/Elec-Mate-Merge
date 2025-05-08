@@ -1,8 +1,9 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
+import SignIn from './pages/auth/SignIn';
+import SignUp from './pages/auth/SignUp';
 import Dashboard from './pages/Dashboard';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import Layout from './components/layout/Layout';
@@ -12,7 +13,7 @@ import SettingsPage from './pages/Settings';
 import SubscriptionsPage from './pages/Subscriptions';
 import PaymentSuccess from './pages/PaymentSuccess';
 import NotFound from './pages/NotFound';
-import ElectricianTools from './pages/electrician-tools/ElectricianTools';
+import ElectricianTools from './pages/ElectricianTools';
 import Admin from './pages/electrician-tools/Admin';
 import { AdminAnalytics } from './pages/admin/index';
 
