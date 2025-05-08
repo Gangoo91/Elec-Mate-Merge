@@ -4,6 +4,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { NotificationProvider } from './components/notifications/NotificationProvider';
 import { useEffect, useState } from 'react';
 import { supabase } from './integrations/supabase/client';
+import Layout from './components/layout/Layout';
 
 // Import the new components
 import ReferenceMaterials from "./pages/apprentice/reference-materials/ReferenceMaterials";
@@ -11,6 +12,7 @@ import PracticalTips from "./pages/apprentice/practical-tips/PracticalTips";
 import InstallationTechniques from "./pages/apprentice/installation-techniques/InstallationTechniques";
 import ApprenticeChat from "./pages/apprentice/chat/ApprenticeChat";
 import ElectricalChat from "./pages/electrician/ElectricalChat";
+import ApprenticeToolbox from "./pages/apprentice/ApprenticeToolbox";
 
 const App = () => {
   const [session, setSession] = useState<any>(null)
@@ -28,7 +30,7 @@ const App = () => {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <div>Layout</div>,
+      element: <Layout />,
       children: [
         {
           path: '/',
@@ -84,7 +86,7 @@ const App = () => {
         },
         {
           path: '/apprentice/toolbox',
-          element: <div>ApprenticeToolbox</div>,
+          element: <ApprenticeToolbox />,
         },
         {
           path: '/apprentice/tools-guide',

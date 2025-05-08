@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ChatMessage } from "@/components/messenger/types";
 import { toast } from "@/components/ui/use-toast";
@@ -6,8 +5,8 @@ import { UserProfile } from "@/types/user";
 import { addMockMessage, updateMockMessage, deleteMockMessage, addMockComment } from "@/services/chat/mockChatService";
 import { v4 as uuidv4 } from "uuid";
 
-// Extend the ChatMessage type to include updatedAt
-type ExtendedChatMessage = ChatMessage & {
+// Extended ChatMessage type to include updatedAt
+export type ExtendedChatMessage = ChatMessage & {
   updatedAt?: Date;
 };
 
@@ -137,7 +136,6 @@ export const useChatOperations = (
     // Update in the mock service
     updateMockMessage(messageId, { 
       content,
-      // Cast to allow updatedAt property
       updatedAt: new Date() 
     } as Partial<ExtendedChatMessage>);
     
