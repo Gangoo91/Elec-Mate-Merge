@@ -4,7 +4,7 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { corsHeaders } from "../_shared/cors.ts";
 
 // Make sure we're accessing the right environment variable
-const openAIApiKey = Deno.env.get('OPENAI_API_KEY') || Deno.env.get('OpenAI API');
+const openAIApiKey = Deno.env.get('OpenAI API') || Deno.env.get('OPENAI_API_KEY');
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -15,12 +15,13 @@ serve(async (req) => {
   try {
     // Debug log for API key
     console.log('OpenAI API key available:', !!openAIApiKey);
+    console.log('Secret names available:', Deno.env.keys ? [...Deno.env.keys()].join(', ') : 'Cannot list keys');
     
     // Check if OpenAI API key is available
     if (!openAIApiKey) {
       console.error('OpenAI API key is not configured or not accessible');
       return new Response(
-        JSON.stringify({ error: "OpenAI API key is not configured. Please add the OPENAI_API_KEY to your Supabase secrets." }),
+        JSON.stringify({ error: "OpenAI API key is not configured. Please add the 'OpenAI API' key to your Supabase secrets." }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
