@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, BarChart } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import AnalyticsDashboard from "@/components/admin/AnalyticsDashboard";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Shield } from "lucide-react";
 
 const AdminAnalytics = () => {
   const navigate = useNavigate();
@@ -12,8 +14,6 @@ const AdminAnalytics = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
   
   // Check if the user is authorized to access the admin page
-  // In a production app, you would check for a specific admin role
-  // For now, we'll allow access in development mode only
   useEffect(() => {
     const checkAuth = async () => {
       if (isDevelopmentMode) {
@@ -23,7 +23,6 @@ const AdminAnalytics = () => {
       
       // Here you would check if the user has admin privileges
       // For example, checking a role in their profile
-      // Placeholder for actual admin check logic
       const isAdmin = profile?.username === 'admin'; // Replace with actual admin check
       setIsAuthorized(isAdmin);
       
@@ -62,6 +61,18 @@ const AdminAnalytics = () => {
           Back
         </Button>
       </div>
+      
+      {isDevelopmentMode && (
+        <Alert className="bg-amber-500/10 border-amber-500/20 mb-6">
+          <Shield className="h-4 w-4 text-amber-500" />
+          <AlertTitle>Development Mode</AlertTitle>
+          <AlertDescription>
+            You are viewing this page in development mode. In production, this would only be accessible to admin users.
+            <br />
+            You can find the Admin Analytics page in the sidebar when development mode is enabled.
+          </AlertDescription>
+        </Alert>
+      )}
       
       <AnalyticsDashboard />
       
