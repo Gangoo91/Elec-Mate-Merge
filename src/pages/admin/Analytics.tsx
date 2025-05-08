@@ -87,8 +87,7 @@ const AdminAnalytics = () => {
       addNotification({
         title: "Analytics Refreshed",
         message: `Data updated as of ${format(new Date(), 'PPpp')}`,
-        type: "success",
-        timestamp: new Date()
+        type: "success"
       });
     }, 1500);
   };
