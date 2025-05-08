@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import TopSection from "@/components/job-vacancies/TopSection";
 import JobFilters from "@/components/job-vacancies/JobFilters";
@@ -8,6 +7,8 @@ import { useLocationFilter } from "@/hooks/job-vacancies/useLocationFilter";
 import GoogleMapsLoader from "@/components/job-vacancies/GoogleMapsLoader";
 import LocationSearchBox from "@/components/job-vacancies/LocationSearchBox";
 import JobListingContent from "@/components/job-vacancies/JobListingContent";
+import ReedJobsView from "@/components/job-vacancies/ReedJobsView";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Define a consistent JobListing interface to avoid type conflicts
 export interface JobListing {
@@ -61,6 +62,7 @@ const JobVacancies = () => {
   const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
 
   const [viewMode, setViewMode] = useState<"list" | "map">("list");
+  const [activeTab, setActiveTab] = useState<"database" | "reed">("database");
 
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -86,66 +88,84 @@ const JobVacancies = () => {
     <div className="space-y-6 animate-fade-in">
       <TopSection />
 
-      <GoogleMapsLoader>
-        {/* Location-based search */}
-        <LocationSearchBox 
-          userLocation={userLocation}
-          setUserLocation={setUserLocation}
-          searchRadius={searchRadius}
-          setSearchRadius={setSearchRadius}
-          calculateJobDistances={calculateJobDistances}
-          showMap={showMap}
-          viewMode={viewMode}
-          setViewMode={setViewMode}
-        />
+      <Tabs 
+        defaultValue="database" 
+        value={activeTab} 
+        onValueChange={(value) => setActiveTab(value as "database" | "reed")}
+        className="w-full"
+      >
+        <TabsList className="grid w-full grid-cols-2 mb-6">
+          <TabsTrigger value="database">Collected Listings</TabsTrigger>
+          <TabsTrigger value="reed">Live Reed Jobs</TabsTrigger>
+        </TabsList>
 
-        {/* Standard job filters */}
-        <div className="space-y-5">
-          <JobFilters
-            locationFilter={locationFilter}
-            jobTypeFilter={jobTypeFilter}
-            locations={locations}
-            jobTypes={jobTypes}
-            isLoading={isLoading || isCalculating}
-            handleLocationChange={handleLocationChange}
-            handleJobTypeChange={handleJobTypeChange}
-            applyFilters={handleFiltersApplied}
-            resetFilters={() => {
-              resetFilters();
-              setCurrentPage(1);
-            }}
-          />
+        <TabsContent value="database" className="mt-0">
+          <GoogleMapsLoader>
+            {/* Location-based search */}
+            <LocationSearchBox 
+              userLocation={userLocation}
+              setUserLocation={setUserLocation}
+              searchRadius={searchRadius}
+              setSearchRadius={setSearchRadius}
+              calculateJobDistances={calculateJobDistances}
+              showMap={showMap}
+              viewMode={viewMode}
+              setViewMode={setViewMode}
+            />
 
-          <JobListingContent 
-            userLocation={userLocation}
-            showMap={showMap}
-            viewMode={viewMode}
-            setViewMode={setViewMode}
-            currentJobs={currentJobs}
-            selectedJob={selectedJob}
-            handleApply={handleApply}
-            resetFilters={() => {
-              resetFilters();
-              setCurrentPage(1);
-            }}
-            isLoading={isLoading}
-            isCalculating={isCalculating}
-            filteredJobs={filteredJobs}
-            handleJobSelect={handleJobSelect}
-            searchRadius={searchRadius}
-            currentPage={currentPage}
-            totalPages={totalPages}
-            paginate={paginate}
-          />
+            {/* Standard job filters */}
+            <div className="space-y-5">
+              <JobFilters
+                locationFilter={locationFilter}
+                jobTypeFilter={jobTypeFilter}
+                locations={locations}
+                jobTypes={jobTypes}
+                isLoading={isLoading || isCalculating}
+                handleLocationChange={handleLocationChange}
+                handleJobTypeChange={handleJobTypeChange}
+                applyFilters={handleFiltersApplied}
+                resetFilters={() => {
+                  resetFilters();
+                  setCurrentPage(1);
+                }}
+              />
 
-          {/* Table view for large screens */}
-          <JobTableView 
-            jobs={filteredJobs as JobListing[]} 
-            selectedJob={selectedJob} 
-            handleApply={handleApply} 
-          />
-        </div>
-      </GoogleMapsLoader>
+              <JobListingContent 
+                userLocation={userLocation}
+                showMap={showMap}
+                viewMode={viewMode}
+                setViewMode={setViewMode}
+                currentJobs={currentJobs}
+                selectedJob={selectedJob}
+                handleApply={handleApply}
+                resetFilters={() => {
+                  resetFilters();
+                  setCurrentPage(1);
+                }}
+                isLoading={isLoading}
+                isCalculating={isCalculating}
+                filteredJobs={filteredJobs}
+                handleJobSelect={handleJobSelect}
+                searchRadius={searchRadius}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                paginate={paginate}
+              />
+
+              {/* Table view for large screens */}
+              <JobTableView 
+                jobs={filteredJobs as JobListing[]} 
+                selectedJob={selectedJob} 
+                handleApply={handleApply} 
+              />
+            </div>
+          </GoogleMapsLoader>
+        </TabsContent>
+
+        <TabsContent value="reed" className="mt-0">
+          <ReedJobsView handleApply={handleApply} />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
