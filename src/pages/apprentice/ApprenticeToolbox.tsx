@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { MessageSquare, Book, Wrench, Shield, Brain, GraduationCap } from "lucide-react";
+import { MessageSquare, Wrench, Shield, GraduationCap } from "lucide-react";
 
 const ApprenticeToolbox = () => {
   const toolboxCategories = [
@@ -12,13 +12,6 @@ const ApprenticeToolbox = () => {
       description: "Connect with other apprentices and get answers to your questions",
       icon: <MessageSquare className="h-6 w-6 text-elec-yellow" />,
       link: "/apprentice/chat"
-    },
-    {
-      id: 2,
-      title: "Learning Resources",
-      description: "Access training materials and study guides",
-      icon: <Book className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/learning-resources"
     },
     {
       id: 3,
@@ -33,13 +26,6 @@ const ApprenticeToolbox = () => {
       description: "Critical safety information for apprentices on-site",
       icon: <Shield className="h-6 w-6 text-elec-yellow" />,
       link: "/apprentice/safety-fundamentals"
-    },
-    {
-      id: 5,
-      title: "AI Learning Assistant",
-      description: "Get help with electrical concepts and calculations",
-      icon: <Brain className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/ai-tools"
     },
     {
       id: 6,
