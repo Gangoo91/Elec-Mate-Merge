@@ -102,6 +102,7 @@ function App() {
                 <Route path="payment-success" element={<PaymentSuccess />} />
                 <Route path="electrician-tools" element={<ElectricianTools />} />
                 <Route path="electrician-tools/project-management" element={<ProjectManagement />} />
+                <Route path="electrician-tools/project-management/project/:projectId" element={<ProjectManagement />} />
                 <Route path="electrician-tools/ai-tooling" element={<AITooling />} />
                 <Route path="electrician-tools/calculations" element={<Calculations />} />
                 <Route path="electrician-tools/admin" element={<Admin />} />

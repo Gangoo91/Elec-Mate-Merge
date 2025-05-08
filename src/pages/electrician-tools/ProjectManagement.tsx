@@ -1,15 +1,36 @@
 
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CalendarClock, LayoutGrid, ClipboardList, LineChart, FileSpreadsheet } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowLeft, CalendarCheck, LayoutGrid, ClipboardList, LineChart, FileSpreadsheet, Plus } from "lucide-react";
+import { Link, Routes, Route, useNavigate, useLocation, Outlet } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
+import { useProjects } from "@/hooks/useProjects";
+import { ProjectCard } from "@/components/project-management/ProjectCard";
+import { ProjectDialog } from "@/components/project-management/ProjectDialog";
+import { ProjectDetails } from "@/components/project-management/ProjectDetails";
 
 const ProjectManagement = () => {
-  const handleStartProject = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { projects, loading, createProject, deleteProject } = useProjects();
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+
+  // If we're viewing a specific project, render the ProjectDetails component
+  if (location.pathname.match(/\/electrician-tools\/project-management\/project\/[^/]+$/)) {
+    return <ProjectDetails />;
+  }
+
+  const handleStartProject = (projectData: any) => {
+    const newProject = createProject(projectData);
+    navigate(`/electrician-tools/project-management/project/${newProject.id}`);
+  };
+
+  const handleDeleteProject = (id: string) => {
+    deleteProject(id);
     toast({
-      title: "Project Started",
-      description: "Your new project has been created successfully.",
+      title: "Project Deleted",
+      description: "The project has been deleted successfully.",
     });
   };
 
@@ -22,55 +43,76 @@ const ProjectManagement = () => {
             Organise and manage your electrical projects from quotation to completion.
           </p>
         </div>
-        <Link to="/electrician-tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Tools
+        <div className="flex gap-2">
+          <Button 
+            onClick={() => setIsCreateDialogOpen(true)}
+            className="flex items-center gap-2"
+          >
+            <Plus className="h-4 w-4" /> New Project
           </Button>
-        </Link>
+          <Link to="/electrician-tools">
+            <Button variant="outline" className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" /> Back to Tools
+            </Button>
+          </Link>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {loading ? (
+        <div className="flex justify-center items-center py-20">
+          <p>Loading projects...</p>
+        </div>
+      ) : projects.length === 0 ? (
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle className="text-xl">Quick Start Project</CardTitle>
+                <CardTitle className="text-xl">Project Management</CardTitle>
                 <CardDescription>
-                  Create a new electrical project with basic structure
+                  Create and manage your electrical projects
                 </CardDescription>
               </div>
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-sm text-muted-foreground">
-              Begin tracking time, materials and client details with our streamlined project template.
-            </p>
-            <Button className="w-full" onClick={handleStartProject}>Create New Project</Button>
+            <div className="bg-elec-dark rounded-md flex flex-col items-center justify-center p-10 text-center">
+              <FileSpreadsheet className="h-16 w-16 text-elec-yellow mb-4" />
+              <h3 className="text-xl font-medium mb-2">No Projects Yet</h3>
+              <p className="text-muted-foreground mb-4">
+                Create your first project to start tracking time, materials and client details.
+              </p>
+              <Button onClick={() => setIsCreateDialogOpen(true)} className="flex items-center gap-2">
+                <Plus className="h-4 w-4" /> Create New Project
+              </Button>
+            </div>
           </CardContent>
         </Card>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {projects.map(project => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              onView={(id) => navigate(`/electrician-tools/project-management/project/${id}`)}
+              onEdit={(id) => navigate(`/electrician-tools/project-management/project/${id}`)}
+              onDelete={(id) => handleDeleteProject(id)}
+            />
+          ))}
+        </div>
+      )}
 
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="text-xl">Project Analytics</CardTitle>
-            <CardDescription>
-              Visualise your project performance and profitability
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-sm text-muted-foreground">
-              Track labour hours, materials costs and profit margins across all your electrical projects.
-            </p>
-            <Button variant="outline" className="w-full">View Analytics</Button>
-          </CardContent>
-        </Card>
-      </div>
+      <ProjectDialog
+        open={isCreateDialogOpen}
+        onOpenChange={setIsCreateDialogOpen}
+        onSubmit={handleStartProject}
+      />
 
       <h2 className="text-2xl font-semibold mt-4">Project Tools</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
-              <CalendarClock className="h-5 w-5 text-elec-yellow" />
+              <CalendarCheck className="h-5 w-5 text-elec-yellow" />
               <CardTitle className="text-base">Time Tracker</CardTitle>
             </div>
           </CardHeader>
@@ -112,26 +154,6 @@ const ProjectManagement = () => {
           </CardContent>
         </Card>
       </div>
-
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-xl flex items-center gap-2">
-            <LineChart className="h-5 w-5 text-elec-yellow" />
-            Project Timeline
-          </CardTitle>
-          <CardDescription>
-            Visualise your upcoming electrical project schedules
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="h-64 bg-elec-dark rounded-md flex items-center justify-center p-4">
-            <p className="text-muted-foreground">Connect your first project to view timeline data</p>
-          </div>
-          <div className="mt-4 text-sm text-muted-foreground">
-            <p>The timeline shows all your scheduled projects, helping you plan resources efficiently and avoid scheduling conflicts. Perfect for electrical contractors juggling multiple job sites.</p>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 };
