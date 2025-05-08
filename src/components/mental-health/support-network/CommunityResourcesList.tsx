@@ -1,7 +1,7 @@
 
 import ResourceCard from "@/components/mental-health/ResourceCard";
 
-interface Resource {
+export interface Resource {
   title: string;
   description: string;
   type: 'document' | 'video' | 'article' | 'website';

@@ -5,12 +5,12 @@ import MentalHealthMate from "@/components/mental-health/MentalHealthMate";
 import TalkToSomeone from "@/components/mental-health/support-network/TalkToSomeone";
 import SupportGroups from "@/components/mental-health/support-network/SupportGroups";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import CommunityResourcesList from "@/components/mental-health/support-network/CommunityResourcesList";
+import CommunityResourcesList, { Resource } from "@/components/mental-health/support-network/CommunityResourcesList";
 import EventsList from "@/components/mental-health/support-network/EventsList";
 import { Users } from "lucide-react";
 
 // Mock data for community resources
-const communityResources = [
+const communityResources: Resource[] = [
   {
     title: "Electrical Trades Union Mental Health Support",
     description: "Resources and support services specifically for electrical industry professionals",

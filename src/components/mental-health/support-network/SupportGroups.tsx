@@ -11,10 +11,32 @@ interface SupportGroup {
 }
 
 interface SupportGroupsProps {
-  groups: SupportGroup[];
+  groups?: SupportGroup[];
 }
 
-const SupportGroups = ({ groups }: SupportGroupsProps) => {
+// Default support groups
+const defaultGroups: SupportGroup[] = [
+  {
+    name: "Electrical Trades Mental Health",
+    members: 145,
+    meetings: "Weekly",
+    format: "In-person & Online"
+  },
+  {
+    name: "Apprentice Support Circle",
+    members: 89,
+    meetings: "Bi-weekly",
+    format: "Online"
+  },
+  {
+    name: "Work-Life Balance Group",
+    members: 56,
+    meetings: "Monthly",
+    format: "In-person"
+  }
+];
+
+const SupportGroups = ({ groups = defaultGroups }: SupportGroupsProps) => {
   const handleJoinGroup = () => {
     toast.success("Request sent!", {
       description: "We'll contact you with details about joining the support group.",
