@@ -3,7 +3,7 @@ import { Project } from "@/types/project";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CalendarCheck, Edit, Trash2 } from "lucide-react";
+import { CalendarCheck, Edit, Trash2, FileText, ClipboardCheck } from "lucide-react";
 import { format } from "date-fns";
 
 type ProjectCardProps = {
@@ -31,6 +31,24 @@ export const ProjectCard = ({ project, onEdit, onDelete, onView }: ProjectCardPr
       case "on-hold": return "bg-red-500 hover:bg-red-600";
       default: return "bg-gray-500 hover:bg-gray-600";
     }
+  };
+
+  // Get priority badge
+  const getPriorityBadge = () => {
+    if (!project.priority) return null;
+    
+    const priorityColors = {
+      low: "bg-blue-200 text-blue-800",
+      medium: "bg-green-200 text-green-800",
+      high: "bg-amber-200 text-amber-800",
+      urgent: "bg-red-200 text-red-800"
+    };
+    
+    return (
+      <Badge className={priorityColors[project.priority]}>
+        {project.priority}
+      </Badge>
+    );
   };
 
   return (
@@ -65,6 +83,25 @@ export const ProjectCard = ({ project, onEdit, onDelete, onView }: ProjectCardPr
               <span>Due: {dueDate}</span>
             </div>
           )}
+          
+          <div className="flex flex-wrap gap-2 mt-2">
+            {getPriorityBadge()}
+            
+            {project.certificateType && project.certificateType !== "none" && (
+              <Badge variant={project.certificateIssued ? "default" : "outline"} className="flex items-center gap-1">
+                <FileText className="h-3 w-3" />
+                {project.certificateType}
+              </Badge>
+            )}
+            
+            {project.invoiceIssued && (
+              <Badge variant={project.invoicePaid ? "gold" : "outline"} className="flex items-center gap-1">
+                <ClipboardCheck className="h-3 w-3" />
+                {project.invoicePaid ? "Paid" : "Invoiced"}
+              </Badge>
+            )}
+          </div>
+          
           <div className="grid grid-cols-2 gap-2 mt-3">
             <div className="bg-elec-dark p-2 rounded">
               <p className="text-xs text-muted-foreground">Materials</p>

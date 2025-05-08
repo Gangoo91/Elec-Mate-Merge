@@ -14,6 +14,13 @@ export type Project = {
   notes: string;
   createdAt: string;
   updatedAt: string;
+  certificateType?: "minor-works" | "eicr" | "installation" | "none";
+  certificateIssued?: boolean;
+  invoiceIssued?: boolean;
+  invoiceAmount?: number;
+  invoicePaid?: boolean;
+  priority?: "low" | "medium" | "high" | "urgent";
+  location?: string;
 };
 
 export type ProjectMaterial = {
