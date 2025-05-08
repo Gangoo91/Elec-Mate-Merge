@@ -14,6 +14,8 @@ import ApprenticeChat from "./pages/apprentice/chat/ApprenticeChat";
 import ElectricalChat from "./pages/electrician/ElectricalChat";
 import ApprenticeToolbox from "./pages/apprentice/ApprenticeToolbox";
 import ApprenticeHub from "./pages/ApprenticeHub";
+import Dashboard from "./pages/Dashboard";
+import Index from "./pages/Index";
 
 const App = () => {
   const [session, setSession] = useState<any>(null)
@@ -35,7 +37,11 @@ const App = () => {
       children: [
         {
           path: '/',
-          element: <div>Home</div>,
+          element: <Index />,
+        },
+        {
+          path: '/dashboard',
+          element: <Dashboard />,
         },
         {
           path: '/about',
