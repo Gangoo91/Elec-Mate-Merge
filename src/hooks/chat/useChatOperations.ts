@@ -6,6 +6,11 @@ import { UserProfile } from "@/types/user";
 import { addMockMessage, updateMockMessage, deleteMockMessage, addMockComment } from "@/services/chat/mockChatService";
 import { v4 as uuidv4 } from "uuid";
 
+// Extend the ChatMessage type to include updatedAt
+type ExtendedChatMessage = ChatMessage & {
+  updatedAt?: Date;
+};
+
 export const useChatOperations = (
   messages: ChatMessage[],
   setMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>,
@@ -131,15 +136,16 @@ export const useChatOperations = (
     
     // Update in the mock service
     updateMockMessage(messageId, { 
-      content, 
+      content,
+      // Cast to allow updatedAt property
       updatedAt: new Date() 
-    });
+    } as Partial<ExtendedChatMessage>);
     
     // Update local state
     setMessages(prev => 
       prev.map(msg => 
         msg.id === messageId 
-          ? { ...msg, content, updatedAt: new Date() } 
+          ? { ...msg, content, updatedAt: new Date() } as ExtendedChatMessage
           : msg
       )
     );

@@ -1,9 +1,8 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "react-router-dom";
-import { FileText, Lightbulb, Tool, Clock, Wrench, AlertTriangle } from "lucide-react";
+import { FileText, Lightbulb, Hammer, Clock, Wrench, AlertTriangle } from "lucide-react";
 
 const PracticalTips = () => {
   return (
@@ -31,7 +30,7 @@ const PracticalTips = () => {
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
-                <Tool className="h-5 w-5 text-elec-yellow" />
+                <Hammer className="h-5 w-5 text-elec-yellow" />
                 Daily Worksite Practices
               </CardTitle>
               <CardDescription>General advice for common site situations</CardDescription>
