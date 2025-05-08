@@ -2,7 +2,7 @@
 import React from "react";
 import JobVacancyHeader from "./JobVacancyHeader";
 import CVBuilderBox from "@/components/electrician-tools/CVBuilderBox";
-import JobListingsFetcher from "@/components/electrician-tools/JobListingsFetcher";
+import { Button } from "@/components/ui/button";
 
 const TopSection: React.FC = () => {
   return (
@@ -22,7 +22,6 @@ const TopSection: React.FC = () => {
               <div className="flex flex-col">
                 <span className="text-sm text-gray-400">Total Job Listings</span>
                 <span className="text-3xl font-bold text-amber-400">
-                  {/* Dynamic number */}
                   <span className="animate-pulse">Live</span>
                 </span>
               </div>
@@ -34,20 +33,11 @@ const TopSection: React.FC = () => {
           </div>
           
           <p className="text-sm text-gray-400 mt-auto">
-            Jobs are automatically updated daily with the latest opportunities
+            AI-powered job scanning keeps you updated with the latest opportunities
           </p>
         </div>
       </div>
     </div>
-  );
-};
-
-// Import Button for the component
-const Button = ({ children, className, variant }: { children: React.ReactNode; className?: string; variant?: string }) => {
-  return (
-    <button className={`px-4 py-2 rounded-md ${className}`}>
-      {children}
-    </button>
   );
 };
 
