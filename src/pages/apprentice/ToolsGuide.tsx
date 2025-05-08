@@ -4,13 +4,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import HandToolsTab from "@/components/apprentice/tools-guide/HandToolsTab";
-import PowerToolsTab from "@/components/apprentice/tools-guide/PowerToolsTab";
-import TestEquipmentTab from "@/components/apprentice/tools-guide/TestEquipmentTab";
-import PPETab from "@/components/apprentice/tools-guide/PPETab";
-import ToolStorage from "@/components/apprentice/tools-guide/ToolStorage";
-import RecommendedBrands from "@/components/apprentice/tools-guide/RecommendedBrands";
-import BuildingCollection from "@/components/apprentice/tools-guide/BuildingCollection";
+import {
+  HandToolsTab,
+  PowerToolsTab,
+  TestEquipmentTab,
+  PPETab,
+  ToolStorage,
+  RecommendedBrands,
+  BuildingCollection
+} from "@/components/apprentice/tools-guide";
 
 const ToolsGuide = () => {
   return (
