@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { MessageSquare, Wrench, Shield, GraduationCap, Book, FileText, Tool } from "lucide-react";
+import { MessageSquare, Wrench, Shield, GraduationCap, Book, FileText, Hammer } from "lucide-react";
 
 const ApprenticeToolbox = () => {
   const toolboxCategories = [
@@ -52,7 +52,7 @@ const ApprenticeToolbox = () => {
       id: 7,
       title: "Installation Techniques",
       description: "Best practices for various electrical installations and procedures",
-      icon: <Tool className="h-6 w-6 text-elec-yellow" />,
+      icon: <Hammer className="h-6 w-6 text-elec-yellow" />,
       link: "/apprentice/installation-techniques"
     }
   ];
