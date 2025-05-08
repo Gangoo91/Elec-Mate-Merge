@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { 
@@ -9,6 +10,8 @@ import {
   CreditCard, 
   X,
   Settings,
+  MessageCircle,
+  Brain,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -46,6 +49,18 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
       name: "Video Lessons",
       path: "/videos",
       icon: <Video className="h-5 w-5" />,
+      roles: ["visitor", "apprentice", "electrician", "employer"],
+    },
+    {
+      name: "Mental Health Hub",
+      path: "/apprentice/mental-health",
+      icon: <Brain className="h-5 w-5" />,
+      roles: ["visitor", "apprentice", "electrician", "employer"],
+    },
+    {
+      name: "Community Chat",
+      path: "/messages",
+      icon: <MessageCircle className="h-5 w-5" />,
       roles: ["visitor", "apprentice", "electrician", "employer"],
     },
     {
