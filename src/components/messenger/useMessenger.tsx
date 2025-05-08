@@ -6,12 +6,21 @@ import { Conversation, Message } from './types';
 import { MESSAGE_SIMULATION_DELAY, MessengerTabType } from './constants';
 import { useMentorConversations } from './useMentorConversations';
 import { useConversationUtils } from './useConversationUtils';
+import { useLocation } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
 
 export const useMessenger = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const contactId = queryParams.get('contact');
+  const contactType = location.state?.contactType || null;
+  const contactName = location.state?.contactName || null;
+  const initialTab = location.state?.activeTab as MessengerTabType | undefined;
+  
   const { profile } = useAuth();
   const { addNotification } = useNotifications();
   
-  const [activeTab, setActiveTab] = useState<MessengerTabType>('private');
+  const [activeTab, setActiveTab] = useState<MessengerTabType>(initialTab || 'private');
   const [activeConversation, setActiveConversation] = useState<Conversation | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -110,6 +119,35 @@ export const useMessenger = () => {
     addNotification,
     profile
   );
+
+  // Handle direct message from contact URL param
+  useEffect(() => {
+    if (contactId && profile) {
+      const existingConversation = conversations.find(
+        c => c.participantId === contactId
+      );
+      
+      if (existingConversation) {
+        setActiveTab(existingConversation.type);
+        handleSelectConversation(existingConversation);
+      } else if (contactType === 'mental-health' && contactName) {
+        // Create new mental health conversation
+        const newConversation: Conversation = {
+          id: `mental-health-${contactId}`,
+          participantId: contactId,
+          participantName: contactName,
+          lastMessage: 'New conversation',
+          lastMessageTime: new Date(),
+          unreadCount: 0,
+          type: 'mental-health'
+        };
+        
+        setConversations(prev => [...prev, newConversation]);
+        setActiveTab('mental-health');
+        handleSelectConversation(newConversation);
+      }
+    }
+  }, [contactId, contactType, contactName, profile, conversations]);
   
   const handleTabChange = (value: string) => {
     setActiveTab(value as MessengerTabType);
@@ -126,6 +164,36 @@ export const useMessenger = () => {
     
     // Mark messages as read
     setMessages(prev => prev.map(m => ({ ...m, read: true })));
+
+    // If this is a mental health conversation, fetch real messages from database
+    if (conversation.type === 'mental-health') {
+      fetchMentalHealthMessages(conversation.participantId);
+    }
+  };
+
+  const fetchMentalHealthMessages = async (participantId: string) => {
+    if (!profile) return;
+    
+    try {
+      // Simplified for now - in a real app, you'd fetch actual messages from a database
+      // This is where you'd connect to Supabase and get the conversation history
+      
+      // For now, we'll set some example messages for mental health conversations
+      if (participantId === contactId) {
+        setMessages([
+          {
+            id: `mh-${Date.now()}-1`,
+            content: "Hello, I'm available to chat. How are you feeling today?",
+            senderId: participantId,
+            senderName: contactName || "Mental Health Mate",
+            timestamp: new Date(Date.now() - 1000 * 60 * 5),
+            read: true
+          }
+        ]);
+      }
+    } catch (error) {
+      console.error('Error fetching mental health messages:', error);
+    }
   };
   
   const handleSendMessage = async (content: string) => {
@@ -133,6 +201,7 @@ export const useMessenger = () => {
     
     // Check if this is a mentor conversation
     const isMentorConversation = activeConversation.type === 'mentor';
+    const isMentalHealthConversation = activeConversation.type === 'mental-health';
     
     // Create message object
     const newMsg: Message = {
@@ -161,8 +230,48 @@ export const useMessenger = () => {
     // If this is a mentor conversation, save to database
     if (isMentorConversation) {
       await sendMentorMessage(content, activeConversation.id);
-    } else {
-      // For non-mentor conversations, simulate reply after delay
+    } 
+    // If this is a mental health conversation, save to database
+    else if (isMentalHealthConversation && profile) {
+      try {
+        // In a real implementation, you would save the message to your database
+        // For now, we'll just simulate a reply
+        
+        setTimeout(() => {
+          const simulatedReply: Message = {
+            id: `m${Date.now() + 1}`,
+            content: "Thank you for reaching out. How can I support you today?",
+            senderId: activeConversation.participantId,
+            senderName: activeConversation.participantName,
+            timestamp: new Date(),
+            read: false,
+          };
+          
+          setMessages(prev => [...prev, simulatedReply]);
+          
+          // Update conversation
+          setConversations(prev => prev.map(c => 
+            c.id === activeConversation.id 
+              ? { 
+                  ...c, 
+                  lastMessage: simulatedReply.content,
+                  lastMessageTime: new Date()
+                } 
+              : c
+          ));
+          
+          addNotification({
+            title: 'New Message',
+            message: `New message from ${activeConversation.participantName}`,
+            type: 'info'
+          });
+        }, MESSAGE_SIMULATION_DELAY);
+      } catch (error) {
+        console.error('Error sending mental health message:', error);
+      }
+    }
+    else {
+      // For other conversation types, simulate reply after delay
       setTimeout(() => {
         const simulatedReply: Message = {
           id: `m${Date.now() + 1}`,

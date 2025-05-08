@@ -7,6 +7,7 @@ import SupportGroups from "@/components/mental-health/support-network/SupportGro
 import { ScrollArea } from "@/components/ui/scroll-area";
 import CommunityResourcesList from "@/components/mental-health/support-network/CommunityResourcesList";
 import EventsList from "@/components/mental-health/support-network/EventsList";
+import MentalHealthChat from "@/components/mental-health/MentalHealthChat";
 
 const SupportNetwork = () => {
   const matesRef = useRef<HTMLDivElement>(null);
@@ -19,7 +20,7 @@ const SupportNetwork = () => {
     <MentalHealthPageLayout
       title="Support Network"
       description="Connect with others who understand the challenges of the electrical trade"
-      backLink="/apprentice/mental-health"
+      backLink="/electrician/mental-health"
     >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="col-span-1 md:col-span-2 space-y-6">
@@ -38,6 +39,7 @@ const SupportNetwork = () => {
         
         <div className="col-span-1 space-y-6">
           <TalkToSomeone onShowMentalHealthMates={scrollToMates} />
+          <MentalHealthChat />
           <SupportGroups />
         </div>
       </div>
