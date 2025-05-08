@@ -59,6 +59,7 @@ import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import Messenger from "./pages/Messenger";
 import Index from "./pages/Index";
+import ToolsGuide from "./pages/apprentice/ToolsGuide";
 
 // Component imports
 import QuizContent from "./components/apprentice/QuizContent";
@@ -141,6 +142,7 @@ function App() {
                   <Route path="mentor" element={<ApprenticeMentor />} />
                   <Route path="ojt" element={<ApprenticeOJT />} />
                   <Route path="toolbox" element={<ApprenticeToolbox />} />
+                  <Route path="tools-guide" element={<ToolsGuide />} />
                   <Route path="mental-health" element={<ApprenticeMentalHealth />} />
                   <Route path="mental-health/stress-management" element={<StressManagement />} />
                   <Route path="mental-health/support-network" element={<SupportNetwork />} />
