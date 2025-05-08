@@ -103,7 +103,8 @@ const GoogleAnalyticsSetup = () => {
             description: "Google Analytics OAuth setup has been initiated. Check console for any additional steps.",
           });
           
-          setIsInitialized(true);
+          // We don't have setIsInitialized as a separate function
+          // Instead we'll rely on the successful toast message
         } catch (err: any) {
           toast({
             title: "OAuth Setup Failed",

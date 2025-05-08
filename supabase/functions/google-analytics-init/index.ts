@@ -31,6 +31,7 @@ serve(async (req) => {
     
     // Check if just verifying credentials
     if (requestData.checkCredentials) {
+      console.log("Checking if Google API key is configured");
       return new Response(
         JSON.stringify({ 
           hasGoogleApiKey: Boolean(GOOGLE_API_KEY),
@@ -64,7 +65,6 @@ serve(async (req) => {
       }
       
       // In a real implementation, this would use the OAuth client ID to initialize the proper OAuth flow
-      // For now, we'll just return success
       console.log(`Setting up OAuth with client ID: ${oauthClientId}`);
       
       return new Response(
@@ -89,6 +89,7 @@ serve(async (req) => {
 
     // Log the request for debugging
     console.log(`Initializing Google Analytics with ID: ${analyticsId}`);
+    console.log(`Event tracking: ${eventName || 'No event specified'}`);
     
     // In a real implementation, this would call the Google Analytics API
     // using the GOOGLE_API_KEY to set up the measurement protocol events
