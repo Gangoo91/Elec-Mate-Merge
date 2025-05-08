@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { MessageSquare, Wrench, Shield, GraduationCap, Book, FileText, Hammer } from "lucide-react";
+import { MessageSquare, Wrench, Shield, GraduationCap } from "lucide-react";
 
 const ApprenticeToolbox = () => {
   const toolboxCategories = [
@@ -12,13 +12,6 @@ const ApprenticeToolbox = () => {
       description: "Connect with other apprentices and get answers to your questions",
       icon: <MessageSquare className="h-6 w-6 text-elec-yellow" />,
       link: "/apprentice/chat"
-    },
-    {
-      id: 2,
-      title: "Reference Materials",
-      description: "Access codes, standards, and technical terminology for electrical work",
-      icon: <Book className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/reference-materials"
     },
     {
       id: 3,
@@ -35,25 +28,11 @@ const ApprenticeToolbox = () => {
       link: "/apprentice/safety-fundamentals"
     },
     {
-      id: 5,
-      title: "Practical Tips",
-      description: "Day-to-day advice from experienced electricians for apprentices",
-      icon: <FileText className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/practical-tips"
-    },
-    {
       id: 6,
       title: "Qualification Pathway",
       description: "Understand the steps to becoming a qualified electrician",
       icon: <GraduationCap className="h-6 w-6 text-elec-yellow" />,
       link: "/apprentice/career-progression"
-    },
-    {
-      id: 7,
-      title: "Installation Techniques",
-      description: "Best practices for various electrical installations and procedures",
-      icon: <Hammer className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/installation-techniques"
     }
   ];
 

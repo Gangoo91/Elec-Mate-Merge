@@ -11,6 +11,7 @@ export const useChatMessages = () => {
   useEffect(() => {
     setIsLoading(true);
     
+    // Simulate API call with timeout
     const loadMessages = async () => {
       const mockMessages = await getMockMessages();
       setMessages(mockMessages);
@@ -18,17 +19,6 @@ export const useChatMessages = () => {
     };
     
     loadMessages();
-    
-    // Set up a polling mechanism to check for new messages every 10 seconds
-    // This simulates real-time updates without websockets
-    const interval = setInterval(async () => {
-      const updatedMessages = await getMockMessages();
-      if (JSON.stringify(updatedMessages) !== JSON.stringify(messages)) {
-        setMessages(updatedMessages);
-      }
-    }, 10000);
-    
-    return () => clearInterval(interval);
   }, []);
 
   return {

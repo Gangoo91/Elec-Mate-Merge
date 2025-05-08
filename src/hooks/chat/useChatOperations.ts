@@ -1,14 +1,8 @@
+
 import { useState } from "react";
 import { ChatMessage } from "@/components/messenger/types";
 import { toast } from "@/components/ui/use-toast";
 import { UserProfile } from "@/types/user";
-import { addMockMessage, updateMockMessage, deleteMockMessage, addMockComment } from "@/services/chat/mockChatService";
-import { v4 as uuidv4 } from "uuid";
-
-// Extended ChatMessage type to include updatedAt
-export type ExtendedChatMessage = ChatMessage & {
-  updatedAt?: Date;
-};
 
 export const useChatOperations = (
   messages: ChatMessage[],
@@ -17,24 +11,13 @@ export const useChatOperations = (
 ) => {
   // Handle upvoting a message
   const handleUpvote = (messageId: string) => {
-    const message = messages.find(msg => msg.id === messageId);
-    if (!message) return;
-
-    const newUpvoteStatus = !message.hasUserUpvoted;
-    const newUpvotes = newUpvoteStatus ? message.upvotes + 1 : message.upvotes - 1;
-    
-    updateMockMessage(messageId, {
-      upvotes: newUpvotes,
-      hasUserUpvoted: newUpvoteStatus
-    });
-    
     setMessages(prev => 
       prev.map(msg => 
         msg.id === messageId 
           ? { 
               ...msg, 
-              upvotes: newUpvotes,
-              hasUserUpvoted: newUpvoteStatus
+              upvotes: msg.hasUserUpvoted ? msg.upvotes - 1 : msg.upvotes + 1,
+              hasUserUpvoted: !msg.hasUserUpvoted
             } 
           : msg
       )
@@ -55,22 +38,17 @@ export const useChatOperations = (
     if (!content.trim()) return;
     
     const newMessage: ChatMessage = {
-      id: uuidv4(),
+      id: `new-${Date.now()}`,
       authorId: profile.id,
       authorName: profile.full_name || "Anonymous",
       authorAvatar: profile.avatar_url,
       content,
       createdAt: new Date(),
       upvotes: 0,
-      hasUserUpvoted: false,
       comments: [],
       category: "General"
     };
     
-    // Add to the mock service
-    addMockMessage(newMessage);
-    
-    // Update local state
     setMessages(prev => [newMessage, ...prev]);
     
     toast({
@@ -93,7 +71,7 @@ export const useChatOperations = (
     if (!content.trim()) return;
     
     const newComment = {
-      id: uuidv4(),
+      id: `comment-${Date.now()}`,
       authorId: profile.id,
       authorName: profile.full_name || "Anonymous",
       authorAvatar: profile.avatar_url,
@@ -102,10 +80,6 @@ export const useChatOperations = (
       parentId: messageId
     };
     
-    // Add to the mock service
-    addMockComment(messageId, newComment);
-    
-    // Update local state
     setMessages(prev => 
       prev.map(msg => 
         msg.id === messageId 
@@ -133,17 +107,10 @@ export const useChatOperations = (
     
     if (!content.trim()) return;
     
-    // Update in the mock service
-    updateMockMessage(messageId, { 
-      content,
-      updatedAt: new Date() 
-    } as Partial<ExtendedChatMessage>);
-    
-    // Update local state
     setMessages(prev => 
       prev.map(msg => 
         msg.id === messageId 
-          ? { ...msg, content, updatedAt: new Date() } as ExtendedChatMessage
+          ? { ...msg, content, updatedAt: new Date() } 
           : msg
       )
     );
@@ -165,10 +132,6 @@ export const useChatOperations = (
       return;
     }
     
-    // Delete from the mock service
-    deleteMockMessage(messageId);
-    
-    // Update local state
     setMessages(prev => prev.filter(msg => msg.id !== messageId));
     
     toast({
