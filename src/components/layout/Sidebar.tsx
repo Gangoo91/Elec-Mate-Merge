@@ -58,7 +58,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
       roles: ["visitor", "apprentice", "electrician", "employer"],
     },
     {
-      name: "Toolbox Chat",
+      name: "Toolbox Talks",
       path: "/electrician/chat",
       icon: <MessageCircle className="h-5 w-5" />,
       roles: ["visitor", "apprentice", "electrician", "employer"],

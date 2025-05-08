@@ -12,6 +12,7 @@ import CommentsList from './CommentsList';
 import CommentInput from './CommentInput';
 import MessageContextMenu from './MessageContextMenu';
 import { ChatMessage as ChatMessageType } from "@/components/messenger/types";
+import { motion } from "framer-motion";
 
 interface ChatMessageProps {
   message: ChatMessageType;
@@ -70,10 +71,15 @@ const ChatMessage = ({
   const isOwnMessage = message.authorId === currentUserId;
   
   return (
-    <>
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="mb-6"
+    >
       <ContextMenu>
         <ContextMenuTrigger>
-          <div className="bg-[#2c2c2c] border border-elec-yellow/20 rounded-lg overflow-hidden">
+          <div className="bg-gradient-to-br from-elec-gray-light/30 to-elec-gray border border-elec-yellow/10 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
             <div className="p-4">
               {/* Message Header */}
               <MessageHeader 
@@ -134,7 +140,7 @@ const ChatMessage = ({
         onClose={handleCloseDirectMessage}
         recipient={dmRecipient}
       />
-    </>
+    </motion.div>
   );
 };
 
