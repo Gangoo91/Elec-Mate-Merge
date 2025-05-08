@@ -1,9 +1,11 @@
 
 import { useState, useEffect } from "react";
 import { ChatMessage } from "@/components/messenger/types";
-import { getMockMessages } from "@/services/chat/mockChatService";
+import { getMockMessages, getApprenticeMockMessages } from "@/services/chat/mockChatService";
 
-export const useChatMessages = () => {
+type ChatContext = 'general' | 'apprentice';
+
+export const useChatMessages = (context: ChatContext = 'general') => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
@@ -13,13 +15,20 @@ export const useChatMessages = () => {
     
     // Simulate API call with timeout
     const loadMessages = async () => {
-      const mockMessages = await getMockMessages();
+      let mockMessages;
+      
+      if (context === 'apprentice') {
+        mockMessages = await getApprenticeMockMessages();
+      } else {
+        mockMessages = await getMockMessages();
+      }
+      
       setMessages(mockMessages);
       setIsLoading(false);
     };
     
     loadMessages();
-  }, []);
+  }, [context]);
 
   return {
     messages,

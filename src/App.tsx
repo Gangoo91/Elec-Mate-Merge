@@ -15,6 +15,7 @@ import ApprenticeMentor from "./pages/apprentice/ApprenticeMentor";
 import ApprenticeOJT from "./pages/apprentice/ApprenticeOJT";
 import ApprenticeStudy from "./pages/apprentice/ApprenticeStudy";
 import ApprenticeToolbox from "./pages/apprentice/ApprenticeToolbox";
+import ApprenticeChat from "./pages/apprentice/ApprenticeChat";
 import ApprenticeMentalHealth from "./pages/apprentice/ApprenticeMentalHealth";
 import CareerProgression from "./pages/apprentice/CareerProgression";
 import CourseDetail from "./pages/apprentice/CourseDetail";
@@ -135,6 +136,7 @@ function App() {
                 <Route path="apprentice">
                   <Route index element={<Navigate to="/apprentice/hub" replace />} />
                   <Route path="hub" element={<ApprenticeHub />} />
+                  <Route path="chat" element={<ApprenticeChat />} />
                   <Route path="ai-tools" element={<ApprenticeAITools />} />
                   <Route path="mentor" element={<ApprenticeMentor />} />
                   <Route path="ojt" element={<ApprenticeOJT />} />

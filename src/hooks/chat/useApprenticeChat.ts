@@ -3,9 +3,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useChatMessages } from "./useChatMessages";
 import { useChatOperations } from "./useChatOperations";
 
-export const useElectricalChat = () => {
+export const useApprenticeChat = () => {
   const { profile } = useAuth();
-  const { messages, setMessages, isLoading } = useChatMessages('general');
+  const { messages, setMessages, isLoading } = useChatMessages('apprentice');
   
   const {
     handleUpvote,
