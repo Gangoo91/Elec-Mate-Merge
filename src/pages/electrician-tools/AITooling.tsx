@@ -145,10 +145,10 @@ const AITooling = () => {
   };
 
   // This function simulates report generation - in production this would call an AI API
-  const generateReport = async (type, details) => {
+  const generateReport = async (type: string, details: string): Promise<string> => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        const reports = {
+        const reports: Record<string, string> = {
           eicr: `# Electrical Installation Condition Report\n\nBased on the details provided, I've generated the following EICR:\n\n## Property Details\n- Address: ${details.includes("address") ? details.split("address:")[1]?.split("\n")[0] || "Not specified" : "Not specified"}\n\n## Assessment\nThe electrical installation has been assessed and appears to be in ${details.includes("poor") ? "UNSATISFACTORY" : "SATISFACTORY"} condition.\n\n## Recommendations\n1. Next inspection recommended: 5 years\n2. ${details.includes("poor") ? "Immediate remedial action is required for circuits C1-C3" : "No immediate remedial work is required"}\n\n## Declaration\nI certify that this document represents an accurate assessment of the condition of the electrical installation based on the information provided.`,
           minorworks: `# Minor Electrical Works Certificate\n\nBased on the details provided, I've generated the following certificate:\n\n## Work Details\n- Description: ${details.split("\n")[0] || "Electrical modifications"}\n- Date of work: ${new Date().toLocaleDateString()}\n\n## Declaration\nThe electrical work described above has been designed, constructed, inspected and tested in accordance with BS 7671:2018 (18th Edition of the IEE Wiring Regulations).\n\n## Results\nAll appropriate tests have been carried out and the results confirm that the modified circuit meets the requirements of BS 7671:2018.`,
           nic: `# NIC EIC Certificate\n\nBased on the details provided, I've generated the following NIC EIC certificate:\n\n## Installation Details\n- Description: ${details.split("\n")[0] || "New electrical installation"}\n- Address: ${details.includes("address") ? details.split("address:")[1]?.split("\n")[0] || "Not specified" : "Not specified"}\n\n## Tests Conducted\n- Continuity of protective conductors: PASS\n- Insulation resistance: PASS\n- Earth fault loop impedance: PASS\n- Operation of RCDs: PASS\n\n## Declaration\nI certify that the electrical installation work described above has been designed, constructed, inspected and tested in accordance with BS 7671:2018 and no defects were identified.`
