@@ -5,11 +5,16 @@ import ChatHeader from "@/components/chat/ChatHeader";
 import ChatSearchBar from "@/components/chat/ChatSearchBar";
 import ChatMessageFeed from "@/components/chat/ChatMessageFeed";
 import ChatComposer from "@/components/chat/ChatComposer";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ChatFilters from "@/components/chat/ChatFilters";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Zap, TrendingUp, Award, Clock } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const ElectricalChat = () => {
   const [isComposerOpen, setIsComposerOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [sortBy, setSortBy] = useState<"latest" | "popular">("popular");
+  
   const {
     messages,
     isLoading,
@@ -28,6 +33,8 @@ const ElectricalChat = () => {
     handlePostMessage(content);
     setIsComposerOpen(false);
   };
+
+  const categories = ["All", "Wiring", "Safety", "Regulations", "Tools", "Tips"];
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-elec-gray to-black overflow-y-auto animate-fade-in">
@@ -57,21 +64,57 @@ const ElectricalChat = () => {
                 <span className="hidden sm:inline">Your Posts</span>
               </TabsTrigger>
             </TabsList>
+            
+            <div className="overflow-x-auto py-2">
+              <div className="flex gap-2 min-w-max">
+                {categories.map((category) => (
+                  <Badge 
+                    key={category}
+                    variant={activeCategory === category ? "default" : "outline"}
+                    className={`cursor-pointer ${activeCategory === category ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" : "bg-transparent text-white hover:bg-elec-gray-light/30"}`}
+                    onClick={() => setActiveCategory(category)}
+                  >
+                    {category}
+                  </Badge>
+                ))}
+              </div>
+            </div>
           </Tabs>
           <ChatSearchBar />
         </div>
       </div>
       
       <div className="flex-1">
-        <ChatMessageFeed
-          messages={messages}
-          isLoading={isLoading}
-          currentUserId={profile?.id}
-          onUpvote={handleUpvote}
-          onPostComment={handlePostComment}
-          onEditMessage={handleEditMessage}
-          onDeleteMessage={handleDeleteMessage}
-        />
+        <div className="max-w-6xl mx-auto px-4 py-6">
+          <ChatFilters 
+            categories={categories}
+            activeCategory={activeCategory}
+            setActiveCategory={setActiveCategory}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+          />
+          
+          <div className="mt-4">
+            <ChatMessageFeed
+              messages={messages}
+              isLoading={isLoading}
+              currentUserId={profile?.id}
+              onUpvote={handleUpvote}
+              onPostComment={handlePostComment}
+              onEditMessage={handleEditMessage}
+              onDeleteMessage={handleDeleteMessage}
+            />
+          </div>
+        </div>
+      </div>
+      
+      <div className="fixed bottom-6 right-6 md:hidden">
+        <button
+          onClick={handleOpenComposer}
+          className="bg-elec-yellow text-elec-dark rounded-full p-4 shadow-lg hover:bg-elec-yellow/90 transition-colors"
+        >
+          <Zap className="h-6 w-6" />
+        </button>
       </div>
       
       <ChatComposer 

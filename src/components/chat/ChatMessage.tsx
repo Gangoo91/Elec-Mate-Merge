@@ -13,6 +13,7 @@ import CommentInput from './CommentInput';
 import MessageContextMenu from './MessageContextMenu';
 import { ChatMessage as ChatMessageType } from "@/components/messenger/types";
 import { motion } from "framer-motion";
+import { Badge } from "@/components/ui/badge";
 
 interface ChatMessageProps {
   message: ChatMessageType;
@@ -92,6 +93,15 @@ const ChatMessage = ({
                 onDeleteClick={handleDeleteMessage}
                 onAuthorClick={handleOpenDirectMessage}
               />
+              
+              {/* Category Badge */}
+              {message.category && (
+                <div className="mb-3">
+                  <Badge variant="yellow" className="text-xs">
+                    {message.category}
+                  </Badge>
+                </div>
+              )}
               
               {/* Message Content */}
               <MessageContent 

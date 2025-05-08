@@ -4,6 +4,7 @@ import ChatMessage from "@/components/chat/ChatMessage";
 import ChatSkeleton from "@/components/chat/ChatSkeleton";
 import ChatEmptyState from "@/components/chat/ChatEmptyState";
 import TopContributors from "@/components/chat/TopContributors";
+import { motion } from "framer-motion";
 
 interface ChatMessageFeedProps {
   messages: ChatMessageType[];
@@ -15,6 +16,21 @@ interface ChatMessageFeedProps {
   onDeleteMessage?: (messageId: string) => void;
 }
 
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 }
+};
+
 const ChatMessageFeed = ({
   messages,
   isLoading,
@@ -25,29 +41,35 @@ const ChatMessageFeed = ({
   onDeleteMessage
 }: ChatMessageFeedProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-7 gap-4 px-4 pb-20 max-w-6xl mx-auto">
+    <div className="grid grid-cols-1 md:grid-cols-7 gap-6">
       {/* Main feed */}
-      <div className="md:col-span-5">
+      <motion.div 
+        className="md:col-span-5"
+        variants={container}
+        initial="hidden"
+        animate="show"
+      >
         {isLoading ? (
           <ChatSkeleton />
         ) : messages.length > 0 ? (
           <div>
             {messages.map(message => (
-              <ChatMessage
-                key={message.id}
-                message={message}
-                currentUserId={currentUserId}
-                onUpvote={onUpvote}
-                onPostComment={onPostComment}
-                onEditMessage={onEditMessage}
-                onDeleteMessage={onDeleteMessage}
-              />
+              <motion.div key={message.id} variants={item}>
+                <ChatMessage
+                  message={message}
+                  currentUserId={currentUserId}
+                  onUpvote={onUpvote}
+                  onPostComment={onPostComment}
+                  onEditMessage={onEditMessage}
+                  onDeleteMessage={onDeleteMessage}
+                />
+              </motion.div>
             ))}
           </div>
         ) : (
           <ChatEmptyState />
         )}
-      </div>
+      </motion.div>
       
       {/* Sidebar */}
       <div className="hidden md:block md:col-span-2">
