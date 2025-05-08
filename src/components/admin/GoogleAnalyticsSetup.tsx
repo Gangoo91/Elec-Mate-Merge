@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
-import { Analytics, ArrowRight, Check } from "lucide-react";
+import { BarChart3, ArrowRight, Check } from "lucide-react";
 
 const GoogleAnalyticsSetup = () => {
   const [gaId, setGaId] = useState(localStorage.getItem('elecmate-ga-id') || '');
@@ -51,7 +51,7 @@ const GoogleAnalyticsSetup = () => {
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Analytics className="h-5 w-5 text-elec-yellow" />
+          <BarChart3 className="h-5 w-5 text-elec-yellow" />
           Google Analytics Integration
         </CardTitle>
         <CardDescription>

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -86,11 +85,9 @@ const AdminAnalytics = () => {
     setTimeout(() => {
       setRefreshing(false);
       addNotification({
-        id: Date.now().toString(),
         title: "Analytics Refreshed",
         message: `Data updated as of ${format(new Date(), 'PPpp')}`,
         type: "success",
-        read: false,
         timestamp: new Date()
       });
     }, 1500);
