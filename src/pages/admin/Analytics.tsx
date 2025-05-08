@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -147,8 +146,8 @@ const AdminAnalytics = () => {
                 Configure GA
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-3xl">
-              <DialogHeader>
+            <DialogContent className="max-w-3xl max-h-[90vh] overflow-hidden">
+              <DialogHeader className="mb-4">
                 <DialogTitle>Google Analytics Configuration</DialogTitle>
                 <DialogDescription>
                   Set up and configure Google Analytics for enhanced tracking capabilities
