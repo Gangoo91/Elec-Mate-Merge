@@ -28,8 +28,9 @@ serve(async (req) => {
     // Base URL for the Reed Jobs API
     const apiUrl = new URL("https://www.reed.co.uk/api/1.0/search");
     
-    // Set required parameters
-    apiUrl.searchParams.append("keywords", keywords || "electrician");
+    // Set required parameters - use broader electrical terms if no keywords provided
+    const searchKeywords = keywords || "electrical,electrician,electrical engineer,electrical technician";
+    apiUrl.searchParams.append("keywords", searchKeywords);
     
     // Add optional parameters if provided
     if (location) apiUrl.searchParams.append("locationName", location);
