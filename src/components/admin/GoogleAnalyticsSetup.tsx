@@ -19,6 +19,7 @@ const GoogleAnalyticsSetup = () => {
   const [enabled, setEnabled] = useState(localStorage.getItem('elecmate-ga-enabled') === 'true');
   const [authTab, setAuthTab] = useState('measurement-id');
   const [isCheckingCredentials, setIsCheckingCredentials] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   
   const { isInitialized, isLoading, initialize } = useGoogleAnalytics({
     analyticsId: gaId,
@@ -67,58 +68,63 @@ const GoogleAnalyticsSetup = () => {
       return;
     }
     
-    // Store the appropriate values based on auth type
-    if (authTab === 'measurement-id') {
-      localStorage.setItem('elecmate-ga-id', gaId);
-      localStorage.removeItem('elecmate-ga-oauth-client-id');
-    } else {
-      localStorage.setItem('elecmate-ga-oauth-client-id', oauthClientId);
-      localStorage.setItem('elecmate-ga-id', ''); // Clear measurement ID when using OAuth
-    }
+    setIsSaving(true);
     
-    localStorage.setItem('elecmate-ga-enabled', enabled.toString());
-    
-    if (enabled) {
+    try {
+      // Store the appropriate values based on auth type
       if (authTab === 'measurement-id') {
-        const success = await initialize(gaId);
-        if (success) {
-          toast({
-            title: "Analytics Enabled",
-            description: "Google Analytics has been successfully configured with Measurement ID.",
-          });
+        localStorage.setItem('elecmate-ga-id', gaId);
+        localStorage.removeItem('elecmate-ga-oauth-client-id');
+      } else {
+        localStorage.setItem('elecmate-ga-oauth-client-id', oauthClientId);
+        localStorage.setItem('elecmate-ga-id', ''); // Clear measurement ID when using OAuth
+      }
+      
+      localStorage.setItem('elecmate-ga-enabled', enabled.toString());
+      
+      if (enabled) {
+        if (authTab === 'measurement-id') {
+          const success = await initialize(gaId);
+          if (success) {
+            toast({
+              title: "Analytics Enabled",
+              description: "Google Analytics has been successfully configured with Measurement ID.",
+            });
+          }
+        } else {
+          // OAuth implementation
+          try {
+            const { data, error } = await supabase.functions.invoke('google-analytics-init', {
+              body: { 
+                oauthClientId, 
+                setupOAuth: true 
+              }
+            });
+            
+            if (error) throw new Error(error.message);
+            
+            toast({
+              title: "OAuth Setup Initiated",
+              description: "Google Analytics OAuth setup has been initiated. Check console for any additional steps.",
+            });
+          } catch (err: any) {
+            throw new Error(`OAuth Setup Failed: ${err.message}`);
+          }
         }
       } else {
-        // OAuth implementation
-        try {
-          const { data, error } = await supabase.functions.invoke('google-analytics-init', {
-            body: { 
-              oauthClientId, 
-              setupOAuth: true 
-            }
-          });
-          
-          if (error) throw new Error(error.message);
-          
-          toast({
-            title: "OAuth Setup Initiated",
-            description: "Google Analytics OAuth setup has been initiated. Check console for any additional steps.",
-          });
-          
-          // We don't have setIsInitialized as a separate function
-          // Instead we'll rely on the successful toast message
-        } catch (err: any) {
-          toast({
-            title: "OAuth Setup Failed",
-            description: err.message,
-            variant: "destructive",
-          });
-        }
+        toast({
+          title: "Analytics Disabled",
+          description: "Google Analytics integration has been disabled.",
+        });
       }
-    } else {
+    } catch (err: any) {
       toast({
-        title: "Analytics Disabled",
-        description: "Google Analytics integration has been disabled.",
+        title: "Setup Failed",
+        description: err.message,
+        variant: "destructive",
       });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -156,7 +162,7 @@ const GoogleAnalyticsSetup = () => {
   };
   
   return (
-    <Card className="overflow-hidden">
+    <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BarChart3 className="h-5 w-5 text-elec-yellow" />
@@ -167,7 +173,7 @@ const GoogleAnalyticsSetup = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-[420px] pr-4">
+        <ScrollArea className="h-[400px] pr-4">
           <div className="space-y-4">
             <Tabs value={authTab} onValueChange={setAuthTab} className="w-full">
               <TabsList className="grid w-full grid-cols-2">
@@ -241,10 +247,10 @@ const GoogleAnalyticsSetup = () => {
             <div className="pt-2">
               <Button 
                 onClick={handleSave} 
-                disabled={isLoading}
+                disabled={isLoading || isSaving}
                 className="flex items-center gap-2"
               >
-                {isLoading ? "Saving..." : "Save Configuration"}
+                {isSaving ? "Saving..." : "Save Configuration"}
                 {isInitialized ? <Check className="h-4 w-4" /> : <ArrowRight className="h-4 w-4" />}
               </Button>
             </div>
