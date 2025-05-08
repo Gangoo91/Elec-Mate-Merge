@@ -54,8 +54,8 @@ const DirectMessageModal = ({ isOpen, onClose, recipient }: DirectMessageModalPr
           state: { 
             activeTab: 'mental-health',
             conversationId: `mental-health-${recipient.id}`,
-          },
-          search: `?contact=${recipient.id}`
+            contact: recipient.id
+          }
         });
         
         toast({

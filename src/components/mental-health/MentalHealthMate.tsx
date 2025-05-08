@@ -6,7 +6,6 @@ import { MessageCircle, UserPlus, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/integrations/supabase/client";
 
 interface MentalHealthMateProps {
   onBecomeMate?: () => void;
@@ -21,6 +20,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
   useEffect(() => {
     // Check if user is already a mental health mate
     if (user?.id) {
+      // For now, we'll use mock data until the mental_health_mates table is created
       checkVolunteerStatus();
       fetchAvailableMates();
     } else {
@@ -28,15 +28,12 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
     }
   }, [user?.id]);
 
+  // Mock implementation until the mental_health_mates table is created
   const checkVolunteerStatus = async () => {
     try {
-      const { data } = await supabase
-        .from('mental_health_mates')
-        .select('*')
-        .eq('user_id', user?.id)
-        .single();
-      
-      setIsVolunteer(!!data);
+      // Mock data for demo purposes
+      const isAlreadyVolunteer = localStorage.getItem(`mental_health_mate_${user?.id}`) === 'true';
+      setIsVolunteer(isAlreadyVolunteer);
     } catch (error) {
       console.error("Error checking volunteer status:", error);
     } finally {
@@ -46,33 +43,35 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
 
   const fetchAvailableMates = async () => {
     try {
-      const { data, error } = await supabase
-        .from('mental_health_mates')
-        .select(`
-          id,
-          user_id,
-          status,
-          profiles:user_id (
-            full_name,
-            role,
-            avatar_url
-          )
-        `)
-        .eq('status', 'Available')
-        .limit(10);
+      // Mock data for demo purposes
+      const mockMates = [
+        {
+          id: 'mate-1',
+          userId: 'user-1',
+          name: 'John Smith',
+          role: 'Master Electrician',
+          status: 'Available',
+          avatar: null
+        },
+        {
+          id: 'mate-2',
+          userId: 'user-2',
+          name: 'Sarah Jones',
+          role: 'Electrical Engineer',
+          status: 'Available',
+          avatar: null
+        },
+        {
+          id: 'mate-3',
+          userId: 'user-3',
+          name: 'Michael Brown',
+          role: 'Apprentice Electrician',
+          status: 'Available',
+          avatar: null
+        }
+      ];
       
-      if (error) throw error;
-
-      const formattedMates = data.map(mate => ({
-        id: mate.id,
-        userId: mate.user_id,
-        name: mate.profiles?.full_name || "Anonymous",
-        role: mate.profiles?.role || "Electrical Professional",
-        status: mate.status,
-        avatar: mate.profiles?.avatar_url
-      }));
-      
-      setAvailableMates(formattedMates);
+      setAvailableMates(mockMates);
     } catch (error) {
       console.error("Error fetching mental health mates:", error);
     }
@@ -87,16 +86,10 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
     try {
       setIsLoading(true);
       
-      const { error } = await supabase
-        .from('mental_health_mates')
-        .insert({
-          user_id: user.id,
-          status: 'Available'
-        });
-      
-      if (error) throw error;
-      
+      // Mock data for demo purposes
+      localStorage.setItem(`mental_health_mate_${user.id}`, 'true');
       setIsVolunteer(true);
+      
       toast.success("Thank you for becoming a Mental Health Mate!", {
         description: "You are now available to help others in need.",
       });
@@ -121,12 +114,8 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
     try {
       setIsLoading(true);
       
-      const { error } = await supabase
-        .from('mental_health_mates')
-        .update({ status })
-        .eq('user_id', user.id);
-      
-      if (error) throw error;
+      // Mock data storage for demo purposes
+      localStorage.setItem(`mental_health_mate_status_${user.id}`, status);
       
       toast.success(`Status updated to ${status}`);
     } catch (error) {
