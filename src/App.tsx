@@ -13,6 +13,7 @@ import InstallationTechniques from "./pages/apprentice/installation-techniques/I
 import ApprenticeChat from "./pages/apprentice/chat/ApprenticeChat";
 import ElectricalChat from "./pages/electrician/ElectricalChat";
 import ApprenticeToolbox from "./pages/apprentice/ApprenticeToolbox";
+import ApprenticeHub from "./pages/ApprenticeHub";
 
 const App = () => {
   const [session, setSession] = useState<any>(null)
@@ -81,8 +82,12 @@ const App = () => {
           element: <div>RegulationsAssistantPage</div>,
         },
         {
+          path: '/apprentice',
+          element: <ApprenticeHub />,
+        },
+        {
           path: '/apprentice/hub',
-          element: <div>ApprenticeHub</div>,
+          element: <ApprenticeHub />,
         },
         {
           path: '/apprentice/toolbox',
