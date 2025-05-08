@@ -3,7 +3,8 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { corsHeaders } from "../_shared/cors.ts";
 
-const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+// Make sure we're accessing the right environment variable
+const openAIApiKey = Deno.env.get('OPENAI_API_KEY') || Deno.env.get('OpenAI API');
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -12,9 +13,12 @@ serve(async (req) => {
   }
 
   try {
+    // Debug log for API key
+    console.log('OpenAI API key available:', !!openAIApiKey);
+    
     // Check if OpenAI API key is available
     if (!openAIApiKey) {
-      console.error('OpenAI API key is not configured');
+      console.error('OpenAI API key is not configured or not accessible');
       return new Response(
         JSON.stringify({ error: "OpenAI API key is not configured. Please add the OPENAI_API_KEY to your Supabase secrets." }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -40,7 +44,7 @@ serve(async (req) => {
       Keep your answers practical and relevant for UK electricians.
     `;
 
-    console.log('Sending request to OpenAI API');
+    console.log('Sending request to OpenAI API with prompt:', prompt.substring(0, 50) + '...');
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -58,6 +62,18 @@ serve(async (req) => {
     });
 
     const data = await response.json();
+    
+    if (!response.ok) {
+      console.error('OpenAI API Error:', data.error || response.statusText);
+      return new Response(
+        JSON.stringify({ 
+          error: `Error from OpenAI API: ${data.error?.message || response.statusText}`,
+          status: response.status,
+          statusText: response.statusText
+        }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
     
     if (data.error) {
       console.error('OpenAI API Error:', data.error);
