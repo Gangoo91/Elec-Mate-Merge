@@ -1,13 +1,9 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { corsHeaders } from "../_shared/cors.ts";
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
-
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -16,6 +12,15 @@ serve(async (req) => {
   }
 
   try {
+    // Check if OpenAI API key is available
+    if (!openAIApiKey) {
+      console.error('OpenAI API key is not configured');
+      return new Response(
+        JSON.stringify({ error: "OpenAI API key is not configured. Please add the OPENAI_API_KEY to your Supabase secrets." }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const { prompt } = await req.json();
 
     if (!prompt) {
@@ -35,6 +40,7 @@ serve(async (req) => {
       Keep your answers practical and relevant for UK electricians.
     `;
 
+    console.log('Sending request to OpenAI API');
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -62,6 +68,7 @@ serve(async (req) => {
     }
 
     const aiResponse = data.choices[0].message.content;
+    console.log('OpenAI response received successfully');
 
     return new Response(
       JSON.stringify({ response: aiResponse }),
