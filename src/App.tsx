@@ -16,37 +16,40 @@ import NotFound from './pages/NotFound';
 import ElectricianTools from './pages/ElectricianTools';
 import Admin from './pages/electrician-tools/Admin';
 import { AdminAnalytics } from './pages/admin/index';
+import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-elec-dark text-white">
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          
-          {/* Auth routes */}
-          <Route path="/auth/signin" element={<SignIn />} />
-          <Route path="/auth/signup" element={<SignUp />} />
-          
-          {/* Protected routes */}
-          <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/electrical-chat" element={<ElectricalChat />} />
-            <Route path="/apprentice-chat" element={<ApprenticeChat />} />
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route path="/subscriptions" element={<SubscriptionsPage />} />
-            <Route path="/electrician-tools" element={<ElectricianTools />} />
-            <Route path="/electrician-tools/admin" element={<Admin />} />
+    <AuthProvider>
+      <Router>
+        <div className="min-h-screen bg-elec-dark text-white">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
             
-            {/* Admin routes */}
-            <Route path="/admin/analytics" element={<AdminAnalytics />} />
-          </Route>
+            {/* Auth routes */}
+            <Route path="/auth/signin" element={<SignIn />} />
+            <Route path="/auth/signup" element={<SignUp />} />
+            
+            {/* Protected routes */}
+            <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/electrical-chat" element={<ElectricalChat />} />
+              <Route path="/apprentice-chat" element={<ApprenticeChat />} />
+              <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/subscriptions" element={<SubscriptionsPage />} />
+              <Route path="/electrician-tools" element={<ElectricianTools />} />
+              <Route path="/electrician-tools/admin" element={<Admin />} />
+              
+              {/* Admin routes */}
+              <Route path="/admin/analytics" element={<AdminAnalytics />} />
+            </Route>
 
-          <Route path="/payment-success" element={<PaymentSuccess />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
-    </Router>
+            <Route path="/payment-success" element={<PaymentSuccess />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
