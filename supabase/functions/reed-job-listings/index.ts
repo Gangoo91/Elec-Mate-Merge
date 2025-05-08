@@ -60,7 +60,7 @@ serve(async (req) => {
       console.error('Reed API Error:', response.status, errorText);
       return new Response(
         JSON.stringify({ 
-          error: `Error from Reed API: ${response.statusText}`,
+          error: `Error from API: ${response.statusText}`,
           status: response.status,
           details: errorText
         }),
@@ -69,9 +69,9 @@ serve(async (req) => {
     }
     
     const data = await response.json();
-    console.log(`Retrieved ${data.totalResults} jobs from Reed API`);
+    console.log(`Retrieved ${data.totalResults} jobs from API`);
     
-    // Map Reed API response to our job listings format
+    // Map Reed API response to our job listings format without mentioning source
     const jobs = data.results.map(job => ({
       id: job.jobId.toString(),
       title: job.jobTitle,
@@ -86,7 +86,7 @@ serve(async (req) => {
       description: job.jobDescription,
       external_url: job.jobUrl,
       posted_date: job.datePosted,
-      source: 'Reed',
+      source: null,
       expires_at: job.expirationDate || null,
       is_remote: job.isRemote || false
     }));
@@ -100,7 +100,7 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error('Error in reed-job-listings function:', error);
+    console.error('Error in job-listings function:', error);
     return new Response(
       JSON.stringify({ error: error.message }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }

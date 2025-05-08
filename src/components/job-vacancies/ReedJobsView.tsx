@@ -16,7 +16,7 @@ interface ReedJobsViewProps {
 
 const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
   const [jobs, setJobs] = useState<JobListing[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedJob, setSelectedJob] = useState<string | null>(null);
   const [keywords, setKeywords] = useState("electrical,electrician,electrical engineer");
   const [location, setLocation] = useState("");
@@ -35,7 +35,7 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
           keywords,
           location,
           page,
-          permanent: true, // Set default filters for electrical jobs
+          permanent: true,
           fullTime: true
         },
       });
@@ -45,7 +45,7 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
       
       setJobs(data.jobs);
       setTotalResults(data.totalResults);
-      setTotalPages(Math.ceil(data.totalResults / 100)); // Reed API returns max 100 results per page
+      setTotalPages(Math.ceil(data.totalResults / 100));
       setCurrentPage(data.currentPage);
       
       if (data.jobs.length === 0) {
@@ -61,7 +61,7 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
       }
       
     } catch (error) {
-      console.error('Error fetching Reed jobs:', error);
+      console.error('Error fetching jobs:', error);
       setError(error instanceof Error ? error.message : "Failed to get job listings");
       toast({
         title: "Error",
@@ -107,7 +107,7 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               type="text"
-              placeholder="Electrical keywords (e.g., Electrician, Engineer, Technician)"
+              placeholder="Job keywords (e.g., Electrician, Engineer, Technician)"
               value={keywords}
               onChange={(e) => setKeywords(e.target.value)}
               className="pl-10"
@@ -140,7 +140,7 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
       {totalResults > 0 && (
         <div className="flex items-center justify-between">
           <p className="text-sm text-muted-foreground">
-            Showing {jobs.length} of {totalResults} electrical jobs
+            Showing {jobs.length} of {totalResults} jobs
             {location && ` in ${location}`}
           </p>
           <Button 

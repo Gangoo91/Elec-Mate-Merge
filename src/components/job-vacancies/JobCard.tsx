@@ -60,13 +60,8 @@ const JobCard: React.FC<JobCardProps> = ({ job, selectedJob, handleApply }) => {
       )}
     >
       <div className="flex flex-col h-full">
-        <div className="mb-2 flex items-start justify-between">
+        <div className="mb-2">
           <h3 className="text-lg font-semibold line-clamp-2">{job.title}</h3>
-          {job.source && (
-            <Badge variant="outline" className="ml-2 flex-shrink-0">
-              {job.source}
-            </Badge>
-          )}
         </div>
         
         <div className="mb-3 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 text-sm">

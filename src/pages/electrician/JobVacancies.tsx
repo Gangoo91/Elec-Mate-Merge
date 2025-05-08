@@ -65,7 +65,7 @@ const JobVacancies = () => {
   const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
 
   const [viewMode, setViewMode] = useState<"list" | "map">("list");
-  const [activeTab, setActiveTab] = useState<"database" | "reed">("database");
+  const [activeTab, setActiveTab] = useState<"database" | "live">("live");
 
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -92,15 +92,19 @@ const JobVacancies = () => {
       <TopSection />
 
       <Tabs 
-        defaultValue="database" 
+        defaultValue="live" 
         value={activeTab} 
-        onValueChange={(value) => setActiveTab(value as "database" | "reed")}
+        onValueChange={(value) => setActiveTab(value as "database" | "live")}
         className="w-full"
       >
         <TabsList className="grid w-full grid-cols-2 mb-6">
-          <TabsTrigger value="database" className="text-base py-3">Collected Listings</TabsTrigger>
-          <TabsTrigger value="reed" className="text-base py-3">Live Reed Jobs</TabsTrigger>
+          <TabsTrigger value="live" className="text-base py-3">Live Jobs</TabsTrigger>
+          <TabsTrigger value="database" className="text-base py-3">Stored Listings</TabsTrigger>
         </TabsList>
+
+        <TabsContent value="live" className="mt-0">
+          <ReedJobsView handleApply={handleApply} />
+        </TabsContent>
 
         <TabsContent value="database" className="mt-0">
           <GoogleMapsLoader>
@@ -163,10 +167,6 @@ const JobVacancies = () => {
               />
             </div>
           </GoogleMapsLoader>
-        </TabsContent>
-
-        <TabsContent value="reed" className="mt-0">
-          <ReedJobsView handleApply={handleApply} />
         </TabsContent>
       </Tabs>
     </div>
