@@ -5,13 +5,12 @@ import ChatHeader from "@/components/chat/ChatHeader";
 import ChatSearchBar from "@/components/chat/ChatSearchBar";
 import ChatMessageFeed from "@/components/chat/ChatMessageFeed";
 import ChatComposer from "@/components/chat/ChatComposer";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Zap, TrendingUp, Award, Clock, Bookmark } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TrendingUp, Clock, Award, Bookmark, Zap } from "lucide-react";
 
 const ElectricalChat = () => {
   const [isComposerOpen, setIsComposerOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
   
   const {
     messages,
@@ -31,8 +30,19 @@ const ElectricalChat = () => {
     handlePostMessage(content);
     setIsComposerOpen(false);
   };
+  
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    // In a real app, this would filter the messages
+    console.log("Searching for:", query);
+  };
 
-  const categories = ["All", "Wiring", "Safety", "Regulations", "Tools", "Tips"];
+  const filteredMessages = searchQuery 
+    ? messages.filter(msg => 
+        msg.content.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        msg.authorName.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : messages;
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-elec-gray to-black overflow-y-auto animate-fade-in">
@@ -43,8 +53,8 @@ const ElectricalChat = () => {
         />
         
         <div className="max-w-3xl mx-auto w-full px-4 py-2">
-          <Tabs defaultValue="trending" className="w-full">
-            <TabsList className="grid grid-cols-4 mb-2">
+          <Tabs defaultValue="trending" className="w-full mb-2">
+            <TabsList className="grid grid-cols-4">
               <TabsTrigger value="trending" className="flex items-center gap-1">
                 <TrendingUp className="h-3 w-3" />
                 <span className="hidden sm:inline">Trending</span>
@@ -62,23 +72,8 @@ const ElectricalChat = () => {
                 <span className="hidden sm:inline">Saved</span>
               </TabsTrigger>
             </TabsList>
-            
-            <div className="overflow-x-auto py-2">
-              <div className="flex gap-2 min-w-max">
-                {categories.map((category) => (
-                  <Badge 
-                    key={category}
-                    variant={activeCategory === category ? "yellow" : "outline"}
-                    className={`cursor-pointer ${activeCategory === category ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" : "bg-transparent text-white hover:bg-elec-gray-light/30"}`}
-                    onClick={() => setActiveCategory(category)}
-                  >
-                    {category}
-                  </Badge>
-                ))}
-              </div>
-            </div>
           </Tabs>
-          <ChatSearchBar />
+          <ChatSearchBar onSearch={handleSearch} />
         </div>
       </div>
       
@@ -86,7 +81,7 @@ const ElectricalChat = () => {
         <div className="max-w-6xl mx-auto px-4 py-6">
           <div className="mt-4">
             <ChatMessageFeed
-              messages={messages}
+              messages={filteredMessages}
               isLoading={isLoading}
               currentUserId={profile?.id}
               onUpvote={handleUpvote}

@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { PlusCircle, MessageSquare, Bell } from "lucide-react";
+import { PlusCircle, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -30,22 +30,15 @@ const ChatHeader = ({ title, onNewPost }: ChatHeaderProps) => {
         </div>
       </div>
       
-      <div className="flex items-center gap-2">
-        <button className="relative text-white hover:text-elec-yellow transition-colors">
-          <Bell className="h-5 w-5" />
-          <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white font-bold">3</span>
-        </button>
-        
-        <Button
-          onClick={onNewPost}
-          size="sm"
-          className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80 gap-1"
-        >
-          <PlusCircle className="h-4 w-4" />
-          <span className="hidden sm:inline">Start Discussion</span>
-          <span className="sm:hidden">Post</span>
-        </Button>
-      </div>
+      <Button
+        onClick={onNewPost}
+        size="sm"
+        className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80 gap-1"
+      >
+        <PlusCircle className="h-4 w-4" />
+        <span className="hidden sm:inline">Start Discussion</span>
+        <span className="sm:hidden">Post</span>
+      </Button>
     </motion.div>
   );
 };

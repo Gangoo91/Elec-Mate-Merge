@@ -44,6 +44,7 @@ const ChatSearchBar = ({ onSearch }: ChatSearchBarProps) => {
             <button 
               className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
               onClick={clearSearch}
+              aria-label="Clear search"
             >
               <X className="h-4 w-4" />
             </button>

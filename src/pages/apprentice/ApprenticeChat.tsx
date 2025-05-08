@@ -10,6 +10,8 @@ import { Zap, TrendingUp, Award, Clock, Bookmark } from "lucide-react";
 
 const ApprenticeChat = () => {
   const [isComposerOpen, setIsComposerOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  
   const {
     messages,
     isLoading,
@@ -28,6 +30,19 @@ const ApprenticeChat = () => {
     handlePostMessage(content);
     setIsComposerOpen(false);
   };
+  
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    // In a real app, this would filter the messages
+    console.log("Searching for:", query);
+  };
+  
+  const filteredMessages = searchQuery 
+    ? messages.filter(msg => 
+        msg.content.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        msg.authorName.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : messages;
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-b from-elec-gray to-black overflow-y-auto animate-fade-in">
@@ -38,8 +53,8 @@ const ApprenticeChat = () => {
         />
         
         <div className="max-w-3xl mx-auto w-full px-4 py-2">
-          <Tabs defaultValue="trending" className="w-full">
-            <TabsList className="grid grid-cols-4 mb-2">
+          <Tabs defaultValue="trending" className="w-full mb-2">
+            <TabsList className="grid grid-cols-4">
               <TabsTrigger value="trending" className="flex items-center gap-1">
                 <TrendingUp className="h-3 w-3" />
                 <span className="hidden sm:inline">Trending</span>
@@ -58,14 +73,14 @@ const ApprenticeChat = () => {
               </TabsTrigger>
             </TabsList>
           </Tabs>
-          <ChatSearchBar />
+          <ChatSearchBar onSearch={handleSearch} />
         </div>
       </div>
       
       <div className="flex-1">
         <div className="max-w-6xl mx-auto px-4 py-6">
           <ChatMessageFeed
-            messages={messages}
+            messages={filteredMessages}
             isLoading={isLoading}
             currentUserId={profile?.id}
             onUpvote={handleUpvote}
