@@ -1,8 +1,10 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Briefcase, MapPin, Clock, Building, ExternalLink } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { formatDistanceToNow } from "date-fns";
+import { CheckCircle2, ArrowUpRight, Clock, GraduationCap, Briefcase, MapPin } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface JobListing {
   id: string;
@@ -15,6 +17,8 @@ interface JobListing {
   external_url: string;
   posted_date: string;
   source: string | null;
+  expires_at?: string | null;
+  is_remote?: boolean;
 }
 
 interface JobCardProps {
@@ -24,83 +28,86 @@ interface JobCardProps {
 }
 
 const JobCard: React.FC<JobCardProps> = ({ job, selectedJob, handleApply }) => {
-  // Format posted date to be more readable
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return new Intl.DateTimeFormat('en-GB', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric'
-    }).format(date);
-  };
-
   const isSelected = selectedJob === job.id;
-
+  
+  // Format the job description to limit its length
+  const formatDescription = (description: string) => {
+    // Strip HTML tags
+    const strippedDescription = description.replace(/<[^>]*>?/gm, '');
+    return strippedDescription.length > 200
+      ? strippedDescription.substring(0, 200) + "..."
+      : strippedDescription;
+  };
+  
+  // Format the posted date
+  const formatDate = (dateString: string) => {
+    try {
+      const date = new Date(dateString);
+      return formatDistanceToNow(date, { addSuffix: true });
+    } catch (e) {
+      return "Recently";
+    }
+  };
+  
   return (
-    <Card 
+    <div
       id={`job-${job.id}`}
-      className={`bg-elec-card border-elec-yellow/20 transition-shadow hover:shadow-md ${
-        isSelected ? 'ring-2 ring-elec-yellow' : ''
-      }`}
+      className={cn(
+        "border p-5 rounded-lg transition-all",
+        isSelected
+          ? "border-elec-yellow bg-elec-yellow/5 shadow-md"
+          : "border-gray-200 hover:border-elec-yellow/50 hover:bg-elec-yellow/5"
+      )}
     >
-      <CardHeader className="p-4 pb-2">
-        <div className="flex justify-between items-start">
-          <div className="space-y-1">
-            <h3 className="font-semibold text-lg text-elec-light line-clamp-2">
-              {job.title}
-            </h3>
-            <div className="flex items-center text-sm text-muted-foreground">
-              <Building className="h-3.5 w-3.5 mr-1" />
-              <span className="truncate">{job.company}</span>
-            </div>
-          </div>
+      <div className="flex flex-col h-full">
+        <div className="mb-2 flex items-start justify-between">
+          <h3 className="text-lg font-semibold line-clamp-2">{job.title}</h3>
           {job.source && (
-            <div className="bg-elec-gray/40 px-2 py-1 rounded text-xs font-medium">
+            <Badge variant="outline" className="ml-2 flex-shrink-0">
               {job.source}
-            </div>
+            </Badge>
           )}
         </div>
-      </CardHeader>
-      <CardContent className="p-4 pt-2 pb-3">
-        <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-2 text-sm">
-            <div className="flex items-center text-muted-foreground">
-              <MapPin className="h-3.5 w-3.5 mr-1.5" />
-              <span className="truncate">{job.location}</span>
-            </div>
-            <div className="flex items-center text-muted-foreground">
-              <Clock className="h-3.5 w-3.5 mr-1.5" />
-              <span>{formatDate(job.posted_date)}</span>
-            </div>
+        
+        <div className="mb-3 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 text-sm">
+          <div className="flex items-center gap-1 text-foreground">
+            <Briefcase className="h-3.5 w-3.5 text-muted-foreground" />
+            <span>{job.company}</span>
           </div>
           
-          <div className="space-y-2">
-            <div className="flex flex-wrap gap-1.5">
-              <span className="bg-elec-yellow/10 border border-elec-yellow/20 text-elec-yellow text-xs px-2 py-0.5 rounded-full">
-                {job.type}
-              </span>
-              {job.salary && (
-                <span className="bg-elec-gray/40 text-xs px-2 py-0.5 rounded-full">
-                  {job.salary}
-                </span>
-              )}
-            </div>
-          
-            <p className="text-muted-foreground text-sm line-clamp-3">
-              {job.description}
-            </p>
+          <div className="flex items-center gap-1 text-foreground">
+            <MapPin className="h-3.5 w-3.5 text-muted-foreground" />
+            <span>{job.is_remote ? "Remote" : job.location}</span>
           </div>
         </div>
-      </CardContent>
-      <CardFooter className="p-4 pt-1">
-        <Button 
-          onClick={() => handleApply(job.id, job.external_url)} 
-          className="w-full bg-elec-gray hover:bg-elec-yellow/20 text-elec-light border border-elec-yellow/30"
-        >
-          Apply Now <ExternalLink className="h-3.5 w-3.5 ml-1.5" />
-        </Button>
-      </CardFooter>
-    </Card>
+        
+        {job.salary && (
+          <div className="mb-2 text-sm">
+            <Badge variant="secondary">{job.salary}</Badge>
+            <Badge variant="outline" className="ml-2">{job.type}</Badge>
+          </div>
+        )}
+        
+        <p className="text-sm text-muted-foreground mb-4 flex-grow">
+          {formatDescription(job.description)}
+        </p>
+        
+        <div className="flex justify-between items-center mt-auto">
+          <div className="text-xs text-muted-foreground flex items-center gap-1">
+            <Clock className="h-3 w-3" />
+            <span>Posted {formatDate(job.posted_date)}</span>
+          </div>
+          
+          <Button 
+            size="sm" 
+            onClick={() => handleApply(job.id, job.external_url)}
+            className="ml-auto"
+          >
+            Apply <ArrowUpRight className="ml-1 h-3 w-3" />
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -15,6 +15,8 @@ interface JobListing {
   external_url: string;
   posted_date: string;
   source: string | null;
+  expires_at?: string | null;
+  is_remote?: boolean;
 }
 
 interface JobGridProps {
@@ -42,7 +44,7 @@ const JobGrid: React.FC<JobGridProps> = ({
 
   if (jobs.length === 0) {
     return (
-      <div className="col-span-2 p-8 text-center border border-dashed border-elec-yellow/20 rounded-lg">
+      <div className="p-8 text-center border border-dashed border-elec-yellow/20 rounded-lg">
         <FileText className="h-12 w-12 text-elec-yellow/50 mx-auto mb-3" />
         <h3 className="text-lg font-medium">No matching jobs found</h3>
         <p className="text-muted-foreground mt-1">Try adjusting your filters or check back later for new opportunities</p>

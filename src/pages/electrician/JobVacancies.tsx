@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import TopSection from "@/components/job-vacancies/TopSection";
 import JobFilters from "@/components/job-vacancies/JobFilters";
@@ -22,6 +23,8 @@ export interface JobListing {
   external_url: string;
   posted_date: string;
   source: string | null;
+  expires_at?: string | null;
+  is_remote?: boolean;
 }
 
 const JobVacancies = () => {
@@ -95,8 +98,8 @@ const JobVacancies = () => {
         className="w-full"
       >
         <TabsList className="grid w-full grid-cols-2 mb-6">
-          <TabsTrigger value="database">Collected Listings</TabsTrigger>
-          <TabsTrigger value="reed">Live Reed Jobs</TabsTrigger>
+          <TabsTrigger value="database" className="text-base py-3">Collected Listings</TabsTrigger>
+          <TabsTrigger value="reed" className="text-base py-3">Live Reed Jobs</TabsTrigger>
         </TabsList>
 
         <TabsContent value="database" className="mt-0">

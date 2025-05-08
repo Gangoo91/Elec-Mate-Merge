@@ -6,8 +6,9 @@ import JobGrid from "./JobGrid";
 import JobPagination from "./JobPagination";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
-import { Search, Filter, MapPin } from "lucide-react";
+import { Search, MapPin } from "lucide-react";
 import { JobListing } from "@/pages/electrician/JobVacancies";
+import SearchError from "@/components/mental-health/crisis/components/SearchError";
 
 interface ReedJobsViewProps {
   handleApply: (jobId: string, url: string) => void;
@@ -22,9 +23,11 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchReedJobs = async (page: number = 1) => {
     setIsLoading(true);
+    setError(null);
     
     try {
       const { data, error } = await supabase.functions.invoke('reed-job-listings', {
@@ -59,6 +62,7 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
       
     } catch (error) {
       console.error('Error fetching Reed jobs:', error);
+      setError(error instanceof Error ? error.message : "Failed to get job listings");
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Failed to get job listings",
@@ -107,6 +111,7 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
               value={keywords}
               onChange={(e) => setKeywords(e.target.value)}
               className="pl-10"
+              aria-label="Search keywords"
             />
           </div>
           <div className="flex-1 relative">
@@ -117,13 +122,20 @@ const ReedJobsView: React.FC<ReedJobsViewProps> = ({ handleApply }) => {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               className="pl-10"
+              aria-label="Search location"
             />
           </div>
-          <Button type="submit" className="md:w-auto" disabled={isLoading}>
+          <Button 
+            type="submit" 
+            className="md:w-auto flex-shrink-0" 
+            disabled={isLoading}
+          >
             {isLoading ? "Searching..." : "Search Jobs"}
           </Button>
         </form>
       </div>
+
+      {error && <SearchError error={error} />}
 
       {totalResults > 0 && (
         <div className="flex items-center justify-between">
