@@ -6,7 +6,7 @@ import ChatSearchBar from "@/components/chat/ChatSearchBar";
 import ChatMessageFeed from "@/components/chat/ChatMessageFeed";
 import ChatComposer from "@/components/chat/ChatComposer";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Lightning, TrendingUp, Zap, Award, Clock } from "lucide-react";
+import { Zap, TrendingUp, Award, Clock } from "lucide-react";
 
 const ElectricalChat = () => {
   const [isComposerOpen, setIsComposerOpen] = useState(false);
@@ -53,7 +53,7 @@ const ElectricalChat = () => {
                 <span className="hidden sm:inline">Popular</span>
               </TabsTrigger>
               <TabsTrigger value="yours" className="flex items-center gap-1">
-                <Lightning className="h-3 w-3" />
+                <Zap className="h-3 w-3" />
                 <span className="hidden sm:inline">Your Posts</span>
               </TabsTrigger>
             </TabsList>
