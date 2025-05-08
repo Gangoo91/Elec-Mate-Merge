@@ -5,15 +5,13 @@ import ChatHeader from "@/components/chat/ChatHeader";
 import ChatSearchBar from "@/components/chat/ChatSearchBar";
 import ChatMessageFeed from "@/components/chat/ChatMessageFeed";
 import ChatComposer from "@/components/chat/ChatComposer";
-import ChatFilters from "@/components/chat/ChatFilters";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Zap, TrendingUp, Award, Clock } from "lucide-react";
+import { Zap, TrendingUp, Award, Clock, Bookmark } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 const ElectricalChat = () => {
   const [isComposerOpen, setIsComposerOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("All");
-  const [sortBy, setSortBy] = useState<"latest" | "popular">("popular");
   
   const {
     messages,
@@ -59,9 +57,9 @@ const ElectricalChat = () => {
                 <Award className="h-3 w-3" />
                 <span className="hidden sm:inline">Popular</span>
               </TabsTrigger>
-              <TabsTrigger value="yours" className="flex items-center gap-1">
-                <Zap className="h-3 w-3" />
-                <span className="hidden sm:inline">Your Posts</span>
+              <TabsTrigger value="saved" className="flex items-center gap-1">
+                <Bookmark className="h-3 w-3" />
+                <span className="hidden sm:inline">Saved</span>
               </TabsTrigger>
             </TabsList>
             
@@ -70,7 +68,7 @@ const ElectricalChat = () => {
                 {categories.map((category) => (
                   <Badge 
                     key={category}
-                    variant={activeCategory === category ? "default" : "outline"}
+                    variant={activeCategory === category ? "yellow" : "outline"}
                     className={`cursor-pointer ${activeCategory === category ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" : "bg-transparent text-white hover:bg-elec-gray-light/30"}`}
                     onClick={() => setActiveCategory(category)}
                   >
@@ -86,14 +84,6 @@ const ElectricalChat = () => {
       
       <div className="flex-1">
         <div className="max-w-6xl mx-auto px-4 py-6">
-          <ChatFilters 
-            categories={categories}
-            activeCategory={activeCategory}
-            setActiveCategory={setActiveCategory}
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-          />
-          
           <div className="mt-4">
             <ChatMessageFeed
               messages={messages}

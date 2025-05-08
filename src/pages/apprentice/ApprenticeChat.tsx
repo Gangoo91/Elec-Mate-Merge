@@ -6,7 +6,7 @@ import ChatSearchBar from "@/components/chat/ChatSearchBar";
 import ChatMessageFeed from "@/components/chat/ChatMessageFeed";
 import ChatComposer from "@/components/chat/ChatComposer";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Zap, TrendingUp, Award, Clock } from "lucide-react";
+import { Zap, TrendingUp, Award, Clock, Bookmark } from "lucide-react";
 
 const ApprenticeChat = () => {
   const [isComposerOpen, setIsComposerOpen] = useState(false);
@@ -52,9 +52,9 @@ const ApprenticeChat = () => {
                 <Award className="h-3 w-3" />
                 <span className="hidden sm:inline">Popular</span>
               </TabsTrigger>
-              <TabsTrigger value="yours" className="flex items-center gap-1">
-                <Zap className="h-3 w-3" />
-                <span className="hidden sm:inline">Your Posts</span>
+              <TabsTrigger value="saved" className="flex items-center gap-1">
+                <Bookmark className="h-3 w-3" />
+                <span className="hidden sm:inline">Saved</span>
               </TabsTrigger>
             </TabsList>
           </Tabs>
@@ -63,15 +63,26 @@ const ApprenticeChat = () => {
       </div>
       
       <div className="flex-1">
-        <ChatMessageFeed
-          messages={messages}
-          isLoading={isLoading}
-          currentUserId={profile?.id}
-          onUpvote={handleUpvote}
-          onPostComment={handlePostComment}
-          onEditMessage={handleEditMessage}
-          onDeleteMessage={handleDeleteMessage}
-        />
+        <div className="max-w-6xl mx-auto px-4 py-6">
+          <ChatMessageFeed
+            messages={messages}
+            isLoading={isLoading}
+            currentUserId={profile?.id}
+            onUpvote={handleUpvote}
+            onPostComment={handlePostComment}
+            onEditMessage={handleEditMessage}
+            onDeleteMessage={handleDeleteMessage}
+          />
+        </div>
+      </div>
+      
+      <div className="fixed bottom-6 right-6 md:hidden">
+        <button
+          onClick={handleOpenComposer}
+          className="bg-elec-yellow text-elec-dark rounded-full p-4 shadow-lg hover:bg-elec-yellow/90 transition-colors"
+        >
+          <Zap className="h-6 w-6" />
+        </button>
       </div>
       
       <ChatComposer 
