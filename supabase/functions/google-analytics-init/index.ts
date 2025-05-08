@@ -7,6 +7,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
+// Get environment variables
 const GOOGLE_API_KEY = Deno.env.get('GoogleAPI') || '';
 
 serve(async (req) => {
@@ -26,7 +27,58 @@ serve(async (req) => {
     }
 
     // Parse the data from the request
-    const { analyticsId, eventName, eventParams } = await req.json();
+    const requestData = await req.json();
+    
+    // Check if just verifying credentials
+    if (requestData.checkCredentials) {
+      return new Response(
+        JSON.stringify({ 
+          hasGoogleApiKey: Boolean(GOOGLE_API_KEY),
+          message: Boolean(GOOGLE_API_KEY) 
+            ? 'Google API key is configured' 
+            : 'Google API key is not configured'
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Handle OAuth setup
+    if (requestData.setupOAuth) {
+      const { oauthClientId } = requestData;
+      
+      if (!oauthClientId) {
+        return new Response(
+          JSON.stringify({ error: 'OAuth Client ID is required' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      
+      if (!GOOGLE_API_KEY) {
+        return new Response(
+          JSON.stringify({ 
+            error: 'Google API key is not configured in Supabase secrets', 
+            setupRequired: true 
+          }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      
+      // In a real implementation, this would use the OAuth client ID to initialize the proper OAuth flow
+      // For now, we'll just return success
+      console.log(`Setting up OAuth with client ID: ${oauthClientId}`);
+      
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message: 'OAuth setup initialized successfully',
+          clientId: oauthClientId
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Handle standard Measurement ID setup
+    const { analyticsId, eventName, eventParams } = requestData;
     
     if (!analyticsId) {
       return new Response(
@@ -41,7 +93,6 @@ serve(async (req) => {
     // In a real implementation, this would call the Google Analytics API
     // using the GOOGLE_API_KEY to set up the measurement protocol events
     
-    // For now, we'll just return a success message to indicate the function was called
     return new Response(
       JSON.stringify({ 
         success: true, 

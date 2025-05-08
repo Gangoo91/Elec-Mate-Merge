@@ -1,17 +1,15 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { 
   ArrowLeft, 
   BarChart, 
-  TrendingUp, 
   Users, 
-  Clock,
-  Activity,
-  Calendar,
   Filter,
   Download,
-  RefreshCw
+  RefreshCw,
+  Settings
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import AnalyticsDashboard from "@/components/admin/AnalyticsDashboard";
@@ -26,6 +24,8 @@ import RealTimeUsers from "@/components/admin/RealTimeUsers";
 import UserRetentionChart from "@/components/admin/UserRetentionChart";
 import UserSegments from "@/components/admin/UserSegments";
 import { useNotifications } from "@/components/notifications/NotificationProvider";
+import GoogleAnalyticsSetup from "@/components/admin/GoogleAnalyticsSetup";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 const ANALYTICS_CHANNEL = 'admin-analytics-updates';
 
@@ -38,6 +38,7 @@ const AdminAnalytics = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
   const { addNotification } = useNotifications();
+  const [showGaSetup, setShowGaSetup] = useState(false);
   
   // Check if the user is authorized to access the admin page
   useEffect(() => {
@@ -135,6 +136,28 @@ const AdminAnalytics = () => {
           <h1 className="text-2xl font-bold tracking-tight">Admin Analytics</h1>
         </div>
         <div className="flex items-center gap-2">
+          <Dialog open={showGaSetup} onOpenChange={setShowGaSetup}>
+            <DialogTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <Settings className="h-4 w-4" />
+                Configure GA
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-3xl">
+              <DialogHeader>
+                <DialogTitle>Google Analytics Configuration</DialogTitle>
+                <DialogDescription>
+                  Set up and configure Google Analytics for enhanced tracking capabilities
+                </DialogDescription>
+              </DialogHeader>
+              <GoogleAnalyticsSetup />
+            </DialogContent>
+          </Dialog>
+          
           <Button
             variant="outline"
             size="sm"
@@ -238,7 +261,7 @@ const AdminAnalytics = () => {
         <p className="font-medium">Admin Access Notice</p>
         <p>This page is only visible to administrators or when development mode is enabled.</p>
         <p>Regular users cannot access this analytics dashboard.</p>
-        <p className="mt-2 text-elec-yellow">Google Analytics integration is available. Set up your Google Analytics ID in the settings to enable enhanced tracking.</p>
+        <p className="mt-2 text-elec-yellow">Google Analytics integration is available. Click the "Configure GA" button to set up your Google Analytics credentials.</p>
       </div>
     </div>
   );
