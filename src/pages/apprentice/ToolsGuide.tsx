@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Wrench, Toolbox, Shield, Ruler } from "lucide-react";
+import { ArrowLeft, Wrench, Shield, Ruler, CircuitBoard } from "lucide-react";
 
 const ToolsGuide = () => {
   return (
@@ -54,7 +54,7 @@ const ToolsGuide = () => {
 
             <ToolCard
               title="Pliers & Cutters"
-              icon={<Toolbox className="h-8 w-8 text-elec-yellow" />}
+              icon={<CircuitBoard className="h-8 w-8 text-elec-yellow" />}
               description="A range of insulated pliers and cutters are essential for wire work and cable terminations."
               items={[
                 "Combination pliers (160-180mm)",
@@ -108,7 +108,7 @@ const ToolsGuide = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
             <ToolCard
               title="Cordless Drill/Driver"
-              icon={<Toolbox className="h-8 w-8 text-elec-yellow" />}
+              icon={<CircuitBoard className="h-8 w-8 text-elec-yellow" />}
               description="An essential power tool for electrical installations."
               items={[
                 "18V lithium-ion battery system",
@@ -121,7 +121,7 @@ const ToolsGuide = () => {
 
             <ToolCard
               title="Inspection Tools"
-              icon={<Toolbox className="h-8 w-8 text-elec-yellow" />}
+              icon={<CircuitBoard className="h-8 w-8 text-elec-yellow" />}
               description="For accessing and examining difficult-to-reach areas."
               items={[
                 "Inspection lamp/torch (preferably LED)",
@@ -149,7 +149,7 @@ const ToolsGuide = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
             <ToolCard
               title="Basic Test Equipment"
-              icon={<Toolbox className="h-8 w-8 text-elec-yellow" />}
+              icon={<CircuitBoard className="h-8 w-8 text-elec-yellow" />}
               description="Essential testing tools for day-to-day work."
               items={[
                 "Voltage indicator (approved to GS38)",
@@ -162,7 +162,7 @@ const ToolsGuide = () => {
 
             <ToolCard
               title="Advanced Testing (Later Years)"
-              icon={<Toolbox className="h-8 w-8 text-elec-yellow" />}
+              icon={<CircuitBoard className="h-8 w-8 text-elec-yellow" />}
               description="Equipment needed as you progress to testing and inspection."
               items={[
                 "Multifunction installation tester (compliant with 18th Edition)",
