@@ -1,32 +1,21 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { 
-  ArrowLeft, 
-  BarChart, 
-  Users, 
-  Filter,
-  Download,
-  RefreshCw,
-  Settings
-} from "lucide-react";
+import { Dialog } from "@/components/ui/dialog";
 import { useAuth } from "@/contexts/AuthContext";
-import AnalyticsDashboard from "@/components/admin/AnalyticsDashboard";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Shield } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from "date-fns";
 import { toast } from "@/components/ui/use-toast";
-import RealTimeUsers from "@/components/admin/RealTimeUsers";
-import UserRetentionChart from "@/components/admin/UserRetentionChart";
-import UserSegments from "@/components/admin/UserSegments";
 import { useNotifications } from "@/components/notifications/NotificationProvider";
-import GoogleAnalyticsSetup from "@/components/admin/GoogleAnalyticsSetup";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useGoogleAnalytics } from "@/hooks/useGoogleAnalytics";
+import { supabase } from "@/integrations/supabase/client";
+
+// Import refactored components
+import AnalyticsHeader from "@/components/admin/analytics/AnalyticsHeader";
+import AnalyticsNotices from "@/components/admin/analytics/AnalyticsNotices";
+import AnalyticsTabs from "@/components/admin/analytics/AnalyticsTabs";
+import AnalyticsContent from "@/components/admin/analytics/AnalyticsContent";
+import AnalyticsFooter from "@/components/admin/analytics/AnalyticsFooter";
+import AnalyticsDialog from "@/components/admin/analytics/AnalyticsDialog";
 
 const ANALYTICS_CHANNEL = 'admin-analytics-updates';
 
@@ -161,168 +150,38 @@ const AdminAnalytics = () => {
 
   return (
     <div className="container mx-auto py-6 space-y-6 animate-fade-in">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <BarChart className="h-6 w-6 text-elec-yellow" />
-          <h1 className="text-2xl font-bold tracking-tight">Admin Analytics</h1>
-          {gaInitialized && (
-            <span className="bg-green-500/20 text-green-500 text-xs px-2 py-1 rounded-full flex items-center gap-1">
-              <span className="h-1.5 w-1.5 bg-green-500 rounded-full animate-pulse"></span>
-              GA Live
-            </span>
-          )}
-        </div>
-        <div className="flex items-center gap-2">
-          <Dialog open={showGaSetup} onOpenChange={setShowGaSetup}>
-            <DialogTrigger asChild>
-              <Button
-                variant={gaInitialized ? "outline" : "default"}
-                size="sm"
-                className="flex items-center gap-2"
-              >
-                <Settings className="h-4 w-4" />
-                {gaInitialized ? "Configure GA" : "Set Up GA Tracking"}
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="w-full max-w-3xl h-[90vh] overflow-hidden flex flex-col">
-              <DialogHeader className="mb-4">
-                <DialogTitle>Google Analytics Configuration</DialogTitle>
-                <DialogDescription>
-                  Set up and configure Google Analytics for enhanced tracking capabilities
-                </DialogDescription>
-              </DialogHeader>
-              <div className="flex-1 overflow-auto">
-                <GoogleAnalyticsSetup />
-              </div>
-            </DialogContent>
-          </Dialog>
-          
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleRefresh}
-            disabled={refreshing}
-            className="flex items-center gap-2"
-          >
-            <RefreshCw className={`h-4 w-4 ${refreshing ? "animate-spin" : ""}`} />
-            {refreshing ? "Refreshing..." : "Refresh"}
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleExport}
-            className="flex items-center gap-2"
-          >
-            <Download className="h-4 w-4" />
-            Export
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => navigate(-1)}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back
-          </Button>
-        </div>
-      </div>
+      <AnalyticsHeader 
+        gaInitialized={gaInitialized}
+        refreshing={refreshing}
+        handleRefresh={handleRefresh}
+        handleExport={handleExport}
+        showGaSetup={showGaSetup}
+        setShowGaSetup={setShowGaSetup}
+      />
       
-      {isDevelopmentMode && (
-        <Alert className="bg-amber-500/10 border-amber-500/20 mb-6">
-          <Shield className="h-4 w-4 text-amber-500" />
-          <AlertTitle>Development Mode</AlertTitle>
-          <AlertDescription>
-            You are viewing this page in development mode. In production, this would only be accessible to admin users.
-            <br />
-            You can find the Admin Analytics page in the sidebar when development mode is enabled.
-          </AlertDescription>
-        </Alert>
-      )}
+      <AnalyticsNotices 
+        isDevelopmentMode={isDevelopmentMode}
+        gaInitialized={gaInitialized}
+        setShowGaSetup={setShowGaSetup}
+      />
       
-      {!gaInitialized && (
-        <Alert className="bg-blue-500/10 border-blue-500/20 mb-6">
-          <Settings className="h-4 w-4 text-blue-500" />
-          <AlertTitle>Enhance Your Analytics</AlertTitle>
-          <AlertDescription>
-            Set up Google Analytics tracking to gain deeper insights into user behavior and enhance your data collection.
-            <Button 
-              variant="link" 
-              className="p-0 h-auto text-blue-500 ml-2"
-              onClick={() => setShowGaSetup(true)}
-            >
-              Configure Now
-            </Button>
-          </AlertDescription>
-        </Alert>
-      )}
+      <AnalyticsTabs 
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        timeRange={timeRange}
+        setTimeRange={setTimeRange}
+      />
       
-      <div className="flex items-center justify-between">
-        <Tabs defaultValue="overview" className="w-[400px]" onValueChange={setActiveTab}>
-          <TabsList>
-            <TabsTrigger value="overview">Overview</TabsTrigger>
-            <TabsTrigger value="users">Users</TabsTrigger>
-            <TabsTrigger value="content">Content</TabsTrigger>
-            <TabsTrigger value="retention">Retention</TabsTrigger>
-          </TabsList>
-        </Tabs>
-        
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <Filter className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm text-muted-foreground">Time Range:</span>
-          </div>
-          <Select value={timeRange} onValueChange={setTimeRange}>
-            <SelectTrigger className="w-[120px]">
-              <SelectValue placeholder="Select range" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="24h">Last 24 hours</SelectItem>
-              <SelectItem value="7d">Last 7 days</SelectItem>
-              <SelectItem value="30d">Last 30 days</SelectItem>
-              <SelectItem value="90d">Last 90 days</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
+      <AnalyticsContent
+        activeTab={activeTab}
+        timeRange={timeRange}
+      />
       
-      {activeTab === "overview" && (
-        <AnalyticsDashboard timeRange={timeRange} />
-      )}
+      <AnalyticsFooter gaInitialized={gaInitialized} />
       
-      {activeTab === "users" && (
-        <div className="space-y-6">
-          <UserSegments />
-          <RealTimeUsers />
-        </div>
-      )}
-      
-      {activeTab === "retention" && (
-        <UserRetentionChart timeRange={timeRange} />
-      )}
-      
-      {activeTab === "content" && (
-        <div className="space-y-6">
-          <Alert>
-            <AlertTitle>Content Analytics</AlertTitle>
-            <AlertDescription>
-              The content analytics module is currently being enhanced. 
-              Check back soon for detailed insights on your app's content performance.
-            </AlertDescription>
-          </Alert>
-        </div>
-      )}
-      
-      <div className="text-xs text-muted-foreground mt-8 p-4 border border-elec-yellow/20 rounded-md bg-elec-dark">
-        <p className="font-medium">Admin Access Notice</p>
-        <p>This page is only visible to administrators or when development mode is enabled.</p>
-        <p>Regular users cannot access this analytics dashboard.</p>
-        <p className="mt-2 text-elec-yellow">
-          {gaInitialized 
-            ? "Google Analytics integration is active. Click the \"Configure GA\" button to modify your settings."
-            : "Google Analytics integration is available. Click the \"Set Up GA Tracking\" button to configure your Google Analytics credentials."}
-        </p>
-      </div>
+      <Dialog open={showGaSetup} onOpenChange={setShowGaSetup}>
+        <AnalyticsDialog />
+      </Dialog>
     </div>
   );
 };
