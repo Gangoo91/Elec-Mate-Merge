@@ -18,7 +18,7 @@ const ApprenticeStudy = () => {
         <p className="text-muted-foreground">Industry-standard qualifications for electrical professionals</p>
       </div>
 
-      <CourseCardGrid courses={courseCategories} />
+      <CourseCardGrid courses={courseCategories} baseUrl="/apprentice/study" />
       
       <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors p-6 my-10">
         <div className="flex flex-col sm:flex-row items-center gap-4">

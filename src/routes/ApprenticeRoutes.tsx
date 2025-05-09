@@ -65,6 +65,11 @@ const ApprenticeRoutes = () => {
         <Route path="eal" element={<EALCourses />} />
         <Route path="cityGuilds" element={<CityGuildsCourses />} />
         
+        {/* General EAL route for backward compatibility */}
+        <Route path="eal/:courseSlug" element={<CourseDetail />} />
+        <Route path="eal/:courseSlug/unit/:unitSlug" element={<CourseDetail />} />
+        <Route path="eal/:courseSlug/unit/:unitSlug/quiz" element={<QuizContent />} />
+        
         {/* Level 2 courses */}
         <Route path="eal/level-2-:courseName" element={<CourseDetail />} />
         <Route path="eal/level-2-:courseName/unit/:unitSlug" element={<CourseDetail />} />
@@ -81,6 +86,10 @@ const ApprenticeRoutes = () => {
         <Route path="eal/level-4-:courseName/unit/:unitSlug/quiz" element={<QuizContent />} />
         
         <Route path="cityGuilds/:courseSlug" element={<CourseDetail />} />
+        
+        {/* Section and subsection routes - generic pattern */}
+        <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
+        <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
         
         {/* Section and subsection routes - per level */}
         <Route path="eal/level-2-:courseName/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
