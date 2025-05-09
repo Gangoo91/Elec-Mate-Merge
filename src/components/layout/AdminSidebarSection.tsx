@@ -18,7 +18,22 @@ const AdminSidebarSection = () => {
   // On mobile, highlight the admin section if we're currently on an admin route
   const mobileHighlightClass = isMobile && isAdminRoute ? "bg-yellow-950/30 border-l-2 border-elec-yellow" : "";
   
+  // Early return if not an admin and not in development mode
   if (!isAdmin) return null;
+  
+  // On mobile, if we're in the admin area, show admin section prominently
+  if (isMobile && isAdminRoute) {
+    return (
+      <div className={`${mobileHighlightClass}`}>
+        <SidebarNavSection 
+          title="Administration" 
+          items={adminNavItems} 
+          userRole={profile?.role || "visitor"} 
+          className="border-b border-elec-yellow/20 pb-4"
+        />
+      </div>
+    );
+  }
   
   return (
     <div className={`${mobileHighlightClass}`}>
