@@ -8,6 +8,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
+import { VoltageDropCalculator } from "@/components/electrician-tools/VoltageDropCalculator";
+import { LoadCalculator } from "@/components/electrician-tools/LoadCalculator";
+import { PowerFactorCalculator } from "@/components/electrician-tools/PowerFactorCalculator"; 
 
 const Calculations = () => {
   const [voltage, setVoltage] = useState("230");
@@ -46,6 +49,13 @@ const Calculations = () => {
         variant: "destructive",
       });
     }
+  };
+
+  const resetOhmsLaw = () => {
+    setVoltage("230");
+    setCurrent("");
+    setResistance("");
+    setResult(null);
   };
 
   return (
@@ -109,9 +119,14 @@ const Calculations = () => {
             </div>
           </div>
           
-          <Button className="w-full" onClick={calculateOhmsLaw}>
-            Calculate
-          </Button>
+          <div className="flex gap-2">
+            <Button className="flex-1" onClick={calculateOhmsLaw}>
+              Calculate
+            </Button>
+            <Button variant="outline" className="flex-1" onClick={resetOhmsLaw}>
+              Reset
+            </Button>
+          </div>
           
           {result && (
             <div className="bg-elec-yellow/10 p-3 rounded-md border border-elec-yellow/20 text-center">
@@ -127,20 +142,22 @@ const Calculations = () => {
 
       <h2 className="text-2xl font-semibold mt-4">Specialised Calculators</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <Cable className="h-5 w-5 text-elec-yellow" />
-              <CardTitle className="text-base">Cable Sizing</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground mb-4">
-              Calculate proper cable sizes based on current, distance, and voltage drop.
-            </p>
-            <Button variant="outline" className="w-full">Open Calculator</Button>
-          </CardContent>
-        </Card>
+        <Link to="/electrician-tools/cable-sizing">
+          <Card className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-all">
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <Cable className="h-5 w-5 text-elec-yellow" />
+                <CardTitle className="text-base">Cable Sizing</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-4">
+                Calculate proper cable sizes based on current, distance, and voltage drop.
+              </p>
+              <Button variant="outline" className="w-full">Open Calculator</Button>
+            </CardContent>
+          </Card>
+        </Link>
         
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader className="pb-3">
@@ -153,87 +170,42 @@ const Calculations = () => {
             <p className="text-sm text-muted-foreground mb-4">
               Calculate total load requirements for domestic and commercial installations.
             </p>
-            <Button variant="outline" className="w-full">Open Calculator</Button>
+            <Button variant="outline" className="w-full" onClick={() => {
+              document.getElementById('load-calculator')?.scrollIntoView({ behavior: 'smooth' });
+            }}>View Calculator</Button>
           </CardContent>
         </Card>
         
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
-              <Thermometer className="h-5 w-5 text-elec-yellow" />
-              <CardTitle className="text-base">Thermal Ratings</CardTitle>
+              <PlugZap className="h-5 w-5 text-elec-yellow" />
+              <CardTitle className="text-base">Power Factor</CardTitle>
             </div>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground mb-4">
-              Calculate derating factors and thermal ratings for various installation conditions.
+              Calculate power factor from power readings or current and voltage.
             </p>
-            <Button variant="outline" className="w-full">Open Calculator</Button>
+            <Button variant="outline" className="w-full" onClick={() => {
+              document.getElementById('power-factor-calculator')?.scrollIntoView({ behavior: 'smooth' });
+            }}>View Calculator</Button>
           </CardContent>
         </Card>
       </div>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-xl flex items-center gap-2">
-            <Percent className="h-5 w-5 text-elec-yellow" />
-            Voltage Drop Calculator
-          </CardTitle>
-          <CardDescription>
-            Calculate voltage drop across cable runs
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="cable-type">Cable Type</Label>
-              <Select defaultValue="pvc-copper">
-                <SelectTrigger>
-                  <SelectValue placeholder="Select cable type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="pvc-copper">PVC Copper</SelectItem>
-                  <SelectItem value="pvc-aluminium">PVC Aluminium</SelectItem>
-                  <SelectItem value="xlpe-copper">XLPE Copper</SelectItem>
-                  <SelectItem value="xlpe-aluminium">XLPE Aluminium</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="cable-length">Cable Length (m)</Label>
-              <Input id="cable-length" type="number" placeholder="Enter cable length" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="current-rating">Current (A)</Label>
-              <Input id="current-rating" type="number" placeholder="Enter current" />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="csa">Cross Sectional Area (mm²)</Label>
-              <Select defaultValue="1.5">
-                <SelectTrigger>
-                  <SelectValue placeholder="Select CSA" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1.0">1.0 mm²</SelectItem>
-                  <SelectItem value="1.5">1.5 mm²</SelectItem>
-                  <SelectItem value="2.5">2.5 mm²</SelectItem>
-                  <SelectItem value="4.0">4.0 mm²</SelectItem>
-                  <SelectItem value="6.0">6.0 mm²</SelectItem>
-                  <SelectItem value="10.0">10.0 mm²</SelectItem>
-                  <SelectItem value="16.0">16.0 mm²</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          
-          <Button className="w-full">Calculate Voltage Drop</Button>
-          
-          <p className="text-xs text-muted-foreground pt-2">
-            Results will show voltage drop in volts and as a percentage of supply voltage, 
-            with compliance indicators for IET Wiring Regulations BS 7671.
-          </p>
-        </CardContent>
-      </Card>
+      {/* Voltage Drop Calculator */}
+      <VoltageDropCalculator />
+
+      {/* Load Calculator */}
+      <div id="load-calculator">
+        <LoadCalculator />
+      </div>
+
+      {/* Power Factor Calculator */}
+      <div id="power-factor-calculator">
+        <PowerFactorCalculator />
+      </div>
     </div>
   );
 };

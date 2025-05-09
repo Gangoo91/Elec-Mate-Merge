@@ -9,6 +9,7 @@ const Calculations = lazy(() => import("@/pages/electrician-tools/Calculations")
 const QuoteLibrary = lazy(() => import("@/pages/electrician-tools/QuoteLibrary"));
 const ProjectManagement = lazy(() => import("@/pages/electrician-tools/ProjectManagement"));
 const ProjectDetails = lazy(() => import("@/components/project-management/ProjectDetails"));
+const CableSizingCalculator = lazy(() => import("@/pages/electrician-tools/cable-sizing"));
 
 const ElectricianRoutes = () => (
   <Routes>
@@ -16,6 +17,7 @@ const ElectricianRoutes = () => (
     <Route path="admin" element={<Admin />} />
     <Route path="ai-tooling" element={<AITooling />} />
     <Route path="calculations" element={<Calculations />} />
+    <Route path="cable-sizing" element={<CableSizingCalculator />} />
     <Route path="quote-library" element={<QuoteLibrary />} />
     <Route path="project-management" element={<ProjectManagement />} />
     <Route path="project-management/project/:projectId" element={<ProjectDetails />} />
