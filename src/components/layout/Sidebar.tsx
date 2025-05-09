@@ -24,10 +24,10 @@ interface SidebarProps {
 
 const Sidebar = ({ open, setOpen }: SidebarProps) => {
   const location = useLocation();
-  const { profile } = useAuth();
+  const { profile, isDevelopmentMode } = useAuth();
   
-  // Check if user is admin
-  const isAdmin = profile?.role === "admin";
+  // Check if user is admin or in development mode
+  const isAdmin = profile?.role === "admin" || isDevelopmentMode;
   
   const navItems = [
     {
@@ -156,7 +156,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
             ))}
           </div>
           
-          {/* Admin section - only show if user is admin */}
+          {/* Admin section - show if user is admin OR in development mode */}
           {isAdmin && (
             <>
               <div className="mt-6 mb-3 px-3">

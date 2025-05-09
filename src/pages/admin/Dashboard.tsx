@@ -4,25 +4,27 @@ import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { AlertCircle, Users, FileText, Activity } from "lucide-react";
+import { AlertCircle, Users, FileText, Activity, Code } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 
 const AdminDashboard = () => {
-  const { user, profile } = useAuth();
+  const { user, profile, isDevelopmentMode } = useAuth();
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   
   // Check if the user has admin privileges
   useEffect(() => {
-    // This is a simplified check - in production, 
-    // you'd want to check against a roles table in the database
-    if (profile?.role === "admin") {
+    // Allow access if user is admin or development mode is enabled
+    const hasAccess = profile?.role === "admin" || isDevelopmentMode;
+    
+    if (hasAccess) {
       setIsAdmin(true);
     } else {
       // Redirect non-admin users
       navigate("/dashboard");
     }
-  }, [user, profile, navigate]);
+  }, [user, profile, isDevelopmentMode, navigate]);
   
   if (!isAdmin) {
     return (
@@ -38,10 +40,16 @@ const AdminDashboard = () => {
   
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-3xl font-bold mb-2">Admin Dashboard</h2>
-        <p className="text-gray-400">Manage your application settings and users.</p>
+      <div className="flex items-center justify-between">
+        <h2 className="text-3xl font-bold">Admin Dashboard</h2>
+        {isDevelopmentMode && !profile?.role && (
+          <Badge variant="outline" className="bg-blue-900/30 text-blue-300 border-blue-500/30 flex items-center gap-1">
+            <Code className="h-3.5 w-3.5" />
+            Dev Mode Access
+          </Badge>
+        )}
       </div>
+      <p className="text-gray-400">Manage your application settings and users.</p>
       
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList>
