@@ -7,10 +7,6 @@ import {
   Trophy, 
   CreditCard, 
   Settings,
-  Shield,
-  Users,
-  Sliders,
-  Logs,
 } from "lucide-react";
 
 export type NavItem = {
@@ -62,32 +58,5 @@ export const mainNavItems: NavItem[] = [
     path: "/settings",
     icon: <Settings className="h-5 w-5" />,
     roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
-  },
-];
-
-export const adminNavItems: NavItem[] = [
-  {
-    name: "Admin Dashboard",
-    path: "/admin",
-    icon: <Shield className="h-5 w-5" />,
-    roles: ["admin"],
-  },
-  {
-    name: "User Management",
-    path: "/admin/users",
-    icon: <Users className="h-5 w-5" />,
-    roles: ["admin"],
-  },
-  {
-    name: "System Logs",
-    path: "/admin/logs",
-    icon: <Logs className="h-5 w-5" />,
-    roles: ["admin"],
-  },
-  {
-    name: "Admin Settings",
-    path: "/admin/settings",
-    icon: <Sliders className="h-5 w-5" />,
-    roles: ["admin"],
   },
 ];
