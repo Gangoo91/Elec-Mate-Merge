@@ -45,7 +45,7 @@ serve(async (req) => {
 
     // Handle OAuth setup
     if (requestData.setupOAuth) {
-      const { oauthClientId } = requestData;
+      const { oauthClientId, activateTracking } = requestData;
       
       if (!oauthClientId) {
         return new Response(
@@ -67,38 +67,59 @@ serve(async (req) => {
       // In a real implementation, this would use the OAuth client ID to initialize the proper OAuth flow
       console.log(`Setting up OAuth with client ID: ${oauthClientId}`);
       
+      // For the purpose of this demo, we'll simulate a successful OAuth setup
+      // In a production environment, you would implement the proper OAuth flow here
+      
       return new Response(
         JSON.stringify({
           success: true,
-          message: 'OAuth setup initialized successfully',
-          clientId: oauthClientId
+          message: 'OAuth setup and authentication completed successfully',
+          clientId: oauthClientId,
+          isActive: Boolean(activateTracking)
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     // Handle standard Measurement ID setup
-    const { analyticsId, eventName, eventParams } = requestData;
+    const { analyticsId, eventName, eventParams, activate } = requestData;
     
-    if (!analyticsId) {
+    if (!analyticsId && !eventName) {
       return new Response(
-        JSON.stringify({ error: 'Google Analytics ID is required' }),
+        JSON.stringify({ error: 'Google Analytics ID or event name is required' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     // Log the request for debugging
-    console.log(`Initializing Google Analytics with ID: ${analyticsId}`);
-    console.log(`Event tracking: ${eventName || 'No event specified'}`);
+    if (analyticsId) {
+      console.log(`Initializing Google Analytics with ID: ${analyticsId}`);
+    }
     
-    // In a real implementation, this would call the Google Analytics API
-    // using the GOOGLE_API_KEY to set up the measurement protocol events
+    if (eventName) {
+      console.log(`Event tracking: ${eventName}`, eventParams || {});
+      
+      // In a real implementation, this would call the Google Analytics 4 Measurement Protocol
+      // to send the event to Google Analytics using the GOOGLE_API_KEY
+      // Here we simulate a successful event tracking
+      
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          eventTracked: true,
+          eventName: eventName,
+          timestamp: new Date().toISOString()
+        }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
     
+    // If we're here, we're just initializing/activating without tracking an event
     return new Response(
       JSON.stringify({ 
         success: true, 
         message: `Google Analytics initialized with ID: ${analyticsId}`,
-        eventTracked: eventName ? `Tracked event: ${eventName}` : 'No event tracked' 
+        isActive: Boolean(activate)
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

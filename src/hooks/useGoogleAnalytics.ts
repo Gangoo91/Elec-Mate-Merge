@@ -16,16 +16,29 @@ export function useGoogleAnalytics({ analyticsId, enabled = true }: UseGoogleAna
   const { user } = useAuth();
   const { toast } = useToast();
 
+  // Check if already initialized
+  useEffect(() => {
+    const gaInitialized = localStorage.getItem('elecmate-ga-initialized') === 'true';
+    const gaEnabled = localStorage.getItem('elecmate-ga-enabled') === 'true';
+    
+    if (gaInitialized && gaEnabled) {
+      setIsInitialized(true);
+    }
+  }, []);
+
   // Initialize Google Analytics
   const initialize = async (id: string) => {
-    if (!id || !enabled) return;
+    if (!id || !enabled) return false;
     
     setIsLoading(true);
     setError(null);
 
     try {
       const { data, error } = await supabase.functions.invoke('google-analytics-init', {
-        body: { analyticsId: id }
+        body: { 
+          analyticsId: id,
+          activate: true 
+        }
       });
 
       if (error) {
@@ -34,8 +47,10 @@ export function useGoogleAnalytics({ analyticsId, enabled = true }: UseGoogleAna
 
       if (data?.success) {
         setIsInitialized(true);
+        localStorage.setItem('elecmate-ga-initialized', 'true');
         return true;
       }
+      return false;
     } catch (err: any) {
       setError(err.message);
       toast({
@@ -51,22 +66,34 @@ export function useGoogleAnalytics({ analyticsId, enabled = true }: UseGoogleAna
 
   // Track event
   const trackEvent = async (eventName: string, eventParams?: Record<string, any>) => {
-    if (!analyticsId || !enabled || !isInitialized) return;
+    if (!analyticsId && !localStorage.getItem('elecmate-ga-id')) return;
+    
+    const eventAnalyticsId = analyticsId || localStorage.getItem('elecmate-ga-id');
+    const gaEnabled = localStorage.getItem('elecmate-ga-enabled') === 'true';
+    const gaInitialized = localStorage.getItem('elecmate-ga-initialized') === 'true';
+    
+    if (!gaEnabled || !gaInitialized) return;
 
     try {
-      await supabase.functions.invoke('google-analytics-init', {
+      const response = await supabase.functions.invoke('google-analytics-init', {
         body: {
-          analyticsId,
+          analyticsId: eventAnalyticsId,
           eventName,
-          eventParams: eventParams || {}
+          eventParams: {
+            ...eventParams || {},
+            user_id: user?.id || 'anonymous',
+            timestamp: new Date().toISOString()
+          }
         }
       });
+      
+      return response;
     } catch (err: any) {
       console.error('Error tracking event:', err);
     }
   };
 
-  // Initialize on mount if analyticsId provided
+  // Initialize on mount if analyticsId provided and not already initialized
   useEffect(() => {
     if (analyticsId && enabled && !isInitialized) {
       initialize(analyticsId);

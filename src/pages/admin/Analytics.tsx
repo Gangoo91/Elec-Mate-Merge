@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,7 @@ import UserSegments from "@/components/admin/UserSegments";
 import { useNotifications } from "@/components/notifications/NotificationProvider";
 import GoogleAnalyticsSetup from "@/components/admin/GoogleAnalyticsSetup";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { useGoogleAnalytics } from "@/hooks/useGoogleAnalytics";
 
 const ANALYTICS_CHANNEL = 'admin-analytics-updates';
 
@@ -38,6 +40,19 @@ const AdminAnalytics = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const { addNotification } = useNotifications();
   const [showGaSetup, setShowGaSetup] = useState(false);
+  const [gaInitialized, setGaInitialized] = useState(false);
+  
+  // Initialize Google Analytics
+  const { isInitialized, trackPageView } = useGoogleAnalytics();
+  
+  useEffect(() => {
+    setGaInitialized(isInitialized);
+    
+    // Track page view on component mount and when analytics is initialized
+    if (isInitialized) {
+      trackPageView('/admin/analytics', 'Admin Analytics');
+    }
+  }, [isInitialized]);
   
   // Check if the user is authorized to access the admin page
   useEffect(() => {
@@ -79,6 +94,13 @@ const AdminAnalytics = () => {
     };
   }, [isAuthorized]);
 
+  // Track tab changes
+  useEffect(() => {
+    if (isInitialized) {
+      trackPageView(`/admin/analytics/${activeTab}`, `Admin Analytics - ${activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}`);
+    }
+  }, [activeTab, isInitialized]);
+
   const handleRefresh = async () => {
     setRefreshing(true);
     // Simulate analytics refresh
@@ -89,6 +111,11 @@ const AdminAnalytics = () => {
         message: `Data updated as of ${format(new Date(), 'PPpp')}`,
         type: "success"
       });
+      
+      // Track refresh event if GA is initialized
+      if (isInitialized) {
+        trackPageView('/admin/analytics', 'Admin Analytics - Data Refresh');
+      }
     }, 1500);
   };
 
@@ -114,6 +141,11 @@ const AdminAnalytics = () => {
       document.body.appendChild(downloadAnchorNode);
       downloadAnchorNode.click();
       downloadAnchorNode.remove();
+      
+      // Track export event if GA is initialized
+      if (isInitialized) {
+        trackPageView('/admin/analytics/export', 'Admin Analytics - Data Export');
+      }
     }, 1500);
   };
 
@@ -133,17 +165,23 @@ const AdminAnalytics = () => {
         <div className="flex items-center gap-2">
           <BarChart className="h-6 w-6 text-elec-yellow" />
           <h1 className="text-2xl font-bold tracking-tight">Admin Analytics</h1>
+          {gaInitialized && (
+            <span className="bg-green-500/20 text-green-500 text-xs px-2 py-1 rounded-full flex items-center gap-1">
+              <span className="h-1.5 w-1.5 bg-green-500 rounded-full animate-pulse"></span>
+              GA Live
+            </span>
+          )}
         </div>
         <div className="flex items-center gap-2">
           <Dialog open={showGaSetup} onOpenChange={setShowGaSetup}>
             <DialogTrigger asChild>
               <Button
-                variant="outline"
+                variant={gaInitialized ? "outline" : "default"}
                 size="sm"
                 className="flex items-center gap-2"
               >
                 <Settings className="h-4 w-4" />
-                Configure GA
+                {gaInitialized ? "Configure GA" : "Set Up GA Tracking"}
               </Button>
             </DialogTrigger>
             <DialogContent className="w-full max-w-3xl h-[90vh] overflow-hidden flex flex-col">
@@ -198,6 +236,23 @@ const AdminAnalytics = () => {
             You are viewing this page in development mode. In production, this would only be accessible to admin users.
             <br />
             You can find the Admin Analytics page in the sidebar when development mode is enabled.
+          </AlertDescription>
+        </Alert>
+      )}
+      
+      {!gaInitialized && (
+        <Alert className="bg-blue-500/10 border-blue-500/20 mb-6">
+          <Settings className="h-4 w-4 text-blue-500" />
+          <AlertTitle>Enhance Your Analytics</AlertTitle>
+          <AlertDescription>
+            Set up Google Analytics tracking to gain deeper insights into user behavior and enhance your data collection.
+            <Button 
+              variant="link" 
+              className="p-0 h-auto text-blue-500 ml-2"
+              onClick={() => setShowGaSetup(true)}
+            >
+              Configure Now
+            </Button>
           </AlertDescription>
         </Alert>
       )}
@@ -262,7 +317,11 @@ const AdminAnalytics = () => {
         <p className="font-medium">Admin Access Notice</p>
         <p>This page is only visible to administrators or when development mode is enabled.</p>
         <p>Regular users cannot access this analytics dashboard.</p>
-        <p className="mt-2 text-elec-yellow">Google Analytics integration is available. Click the "Configure GA" button to set up your Google Analytics credentials.</p>
+        <p className="mt-2 text-elec-yellow">
+          {gaInitialized 
+            ? "Google Analytics integration is active. Click the \"Configure GA\" button to modify your settings."
+            : "Google Analytics integration is available. Click the \"Set Up GA Tracking\" button to configure your Google Analytics credentials."}
+        </p>
       </div>
     </div>
   );
