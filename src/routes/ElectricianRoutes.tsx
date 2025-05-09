@@ -1,15 +1,14 @@
 
-import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 
 // Pages
-const AITooling = lazy(() => import("@/pages/electrician-tools/AITooling"));
-const Admin = lazy(() => import("@/pages/electrician-tools/Admin"));
-const Calculations = lazy(() => import("@/pages/electrician-tools/Calculations"));
-const QuoteLibrary = lazy(() => import("@/pages/electrician-tools/QuoteLibrary"));
-const ProjectManagement = lazy(() => import("@/pages/electrician-tools/ProjectManagement"));
-const ProjectDetails = lazy(() => import("@/components/project-management/ProjectDetails"));
-const CableSizingCalculator = lazy(() => import("@/pages/electrician-tools/cable-sizing"));
+import AITooling from "@/pages/electrician-tools/AITooling";
+import Admin from "@/pages/electrician-tools/Admin";
+import Calculations from "@/pages/electrician-tools/Calculations";
+import QuoteLibrary from "@/pages/electrician-tools/QuoteLibrary";
+import ProjectManagement from "@/pages/electrician-tools/ProjectManagement";
+import ProjectDetails from "@/components/project-management/ProjectDetails";
+import CableSizingCalculator from "@/pages/electrician-tools/cable-sizing";
 
 const ElectricianRoutes = () => (
   <Routes>
