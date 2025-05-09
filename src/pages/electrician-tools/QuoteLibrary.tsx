@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, FileText, Settings, Download, PlusCircle } from "lucide-react";
+import { ArrowLeft, FileText, PlusCircle, Download } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import QuoteTemplateList from "@/components/admin/quotes/QuoteTemplateList";
