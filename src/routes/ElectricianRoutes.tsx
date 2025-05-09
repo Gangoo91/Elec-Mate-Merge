@@ -29,7 +29,7 @@ import CrisisResources from "@/pages/apprentice/mental-health/CrisisResources";
 
 const ElectricianRoutes = () => {
   return (
-    <Fragment>
+    <>
       <Route path="electrician-tools" element={<ElectricianTools />} />
       <Route path="electrician-tools/project-management" element={<ProjectManagement />} />
       <Route path="electrician-tools/project-management/project/:projectId" element={<ProjectManagement />} />
@@ -57,7 +57,7 @@ const ElectricianRoutes = () => {
       <Route path="electrician/mental-health/support-network" element={<SupportNetwork />} />
       <Route path="electrician/mental-health/work-life-balance" element={<WorkLifeBalance />} />
       <Route path="electrician/mental-health/crisis-resources" element={<CrisisResources />} />
-    </Fragment>
+    </>
   );
 };
 

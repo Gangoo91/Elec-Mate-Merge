@@ -8,12 +8,12 @@ import SignUp from "@/pages/auth/SignUp";
 
 const PublicRoutes = () => {
   return (
-    <Fragment>
+    <>
       <Route path="/" element={<LandingPage />} />
       <Route path="/index" element={<Index />} />
       <Route path="/auth/signin" element={<SignIn />} />
       <Route path="/auth/signup" element={<SignUp />} />
-    </Fragment>
+    </>
   );
 };
 

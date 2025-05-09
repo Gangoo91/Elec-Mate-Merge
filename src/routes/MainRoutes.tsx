@@ -13,7 +13,7 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 const MainRoutes = () => {
   return (
-    <Fragment>
+    <>
       <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="profile" element={<Profile />} />
@@ -23,7 +23,7 @@ const MainRoutes = () => {
         <Route path="payment-success" element={<PaymentSuccess />} />
         <Route path="*" element={<NotFound />} />
       </Route>
-    </Fragment>
+    </>
   );
 };
 
