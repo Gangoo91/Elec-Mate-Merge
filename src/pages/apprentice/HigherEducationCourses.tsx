@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { School, BookOpen, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 interface HigherEducationCourseProps {
   title: string;
@@ -125,57 +126,6 @@ const HigherEducationCourses = () => {
         "Digital Signal Processing",
         "Final Year Project"
       ]
-    },
-    {
-      title: "MEng Electrical Engineering",
-      description: "Integrated Master's degree providing advanced knowledge for professional engineering careers.",
-      icon: <GraduationCap className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/study/higher/meng",
-      level: "Level 7",
-      duration: "4-5 years",
-      institution: "University",
-      modules: [
-        "Advanced Power Systems", 
-        "Renewable Technology", 
-        "Research Methods", 
-        "Energy Efficiency",
-        "Smart Grid Technology",
-        "Dissertation"
-      ]
-    },
-    {
-      title: "MSc Electrical Power Systems",
-      description: "Specialist Master's degree focusing on electrical power systems and energy management.",
-      icon: <School className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/study/higher/msc-power",
-      level: "Level 7",
-      duration: "1-2 years",
-      institution: "University",
-      modules: [
-        "Grid Integration", 
-        "Power Distribution", 
-        "Energy Storage", 
-        "System Protection",
-        "Advanced Modeling",
-        "Research Project"
-      ]
-    },
-    {
-      title: "MSc Renewable Energy Systems",
-      description: "Advanced study of renewable energy technologies and their integration into electrical systems.",
-      icon: <GraduationCap className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/study/higher/msc-renewable",
-      level: "Level 7",
-      duration: "1-2 years",
-      institution: "University",
-      modules: [
-        "Solar Energy Systems", 
-        "Wind Power", 
-        "Energy Storage", 
-        "Grid Integration",
-        "Sustainability Assessment",
-        "Research Dissertation"
-      ]
     }
   ];
 
@@ -188,9 +138,14 @@ const HigherEducationCourses = () => {
             Advanced qualifications to enhance your electrical career prospects
           </p>
         </div>
+        <Link to="/apprentice/study">
+          <Button variant="outline" size="sm">
+            Back to Study Centre
+          </Button>
+        </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {courses.map((course, index) => (
           <HigherEducationCourse
             key={index}
