@@ -9,23 +9,20 @@ interface MentalHealthPageLayoutProps {
   title: string;
   description: string;
   children: ReactNode;
-  backLink?: string;
-  icon?: ReactNode;
+  icon: ReactNode;
   color?: string;
 }
 
-export const MentalHealthPageLayout = ({ 
+const MentalHealthPageLayout = ({ 
   title, 
   description, 
   children, 
-  backLink,
   icon,
   color = "purple" 
 }: MentalHealthPageLayoutProps) => {
   const location = useLocation();
   const isElectricianPath = location.pathname.startsWith('/electrician/');
   const basePath = isElectricianPath ? '/electrician/mental-health' : '/apprentice/mental-health';
-  const finalBackLink = backLink || basePath;
   
   const colorClasses = {
     purple: "border-purple-500/20 from-purple-500/10 border-purple-500/10",
@@ -43,7 +40,7 @@ export const MentalHealthPageLayout = ({
             {description}
           </p>
         </div>
-        <Link to={finalBackLink} className="self-start sm:self-auto">
+        <Link to={basePath} className="self-start sm:self-auto">
           <Button variant="outline" size="sm" className="w-full sm:w-auto flex items-center gap-2">
             <ArrowLeft className="h-4 w-4" />
             Back to Mental Health Hub

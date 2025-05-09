@@ -22,19 +22,10 @@ export const useChatOperations = (
           : msg
       )
     );
-    
-    const message = messages.find(msg => msg.id === messageId);
-    const action = message?.hasUserUpvoted ? "removed" : "added";
-    
-    toast({
-      title: `Vote ${action}`,
-      description: `You've ${action} your vote for this post`,
-      duration: 2000,
-    });
   };
   
   // Handle posting a new message
-  const handlePostMessage = (content: string, category?: string) => {
+  const handlePostMessage = (content: string) => {
     if (!profile) {
       toast({
         title: "Sign in required",
@@ -55,14 +46,14 @@ export const useChatOperations = (
       createdAt: new Date(),
       upvotes: 0,
       comments: [],
-      category: category || "General"
+      category: "General"
     };
     
     setMessages(prev => [newMessage, ...prev]);
     
     toast({
-      title: "Post published",
-      description: "Your post has been published successfully.",
+      title: "Message posted",
+      description: "Your message has been posted to the chat.",
     });
   };
   
@@ -125,8 +116,8 @@ export const useChatOperations = (
     );
     
     toast({
-      title: "Post updated",
-      description: "Your post has been updated successfully.",
+      title: "Message updated",
+      description: "Your message has been updated successfully.",
     });
   };
   
@@ -144,8 +135,8 @@ export const useChatOperations = (
     setMessages(prev => prev.filter(msg => msg.id !== messageId));
     
     toast({
-      title: "Post deleted",
-      description: "Your post has been deleted successfully.",
+      title: "Message deleted",
+      description: "Your message has been deleted successfully.",
     });
   };
 

@@ -11,32 +11,10 @@ interface Event {
 }
 
 interface EventsListProps {
-  events?: Event[];
+  events: Event[];
 }
 
-// Default mock events
-const defaultEvents: Event[] = [
-  {
-    name: "Mental Health First Aid Workshop",
-    date: "June 15, 2023",
-    time: "10:00 AM - 4:00 PM",
-    location: "Trade Skills Centre, London"
-  },
-  {
-    name: "Stress Management for Electricians",
-    date: "June 22, 2023",
-    time: "6:30 PM - 8:30 PM",
-    location: "Online (Zoom)"
-  },
-  {
-    name: "Andy's Man Club - Weekly Meeting",
-    date: "Every Monday",
-    time: "7:00 PM - 9:00 PM",
-    location: "Community Centres Nationwide"
-  }
-];
-
-const EventsList = ({ events = defaultEvents }: EventsListProps) => {
+const EventsList = ({ events }: EventsListProps) => {
   return (
     <div>
       <h3 className="text-lg font-medium mb-3">Upcoming Support Events</h3>

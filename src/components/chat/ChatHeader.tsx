@@ -1,8 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { PlusCircle, MessageSquare } from "lucide-react";
-import { motion } from "framer-motion";
-import { useAuth } from "@/contexts/AuthContext";
+import { Plus } from "lucide-react";
 
 interface ChatHeaderProps {
   title: string;
@@ -10,36 +8,23 @@ interface ChatHeaderProps {
 }
 
 const ChatHeader = ({ title, onNewPost }: ChatHeaderProps) => {
-  const { profile } = useAuth();
-  
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
-      className="px-4 py-3 flex items-center justify-between max-w-3xl mx-auto w-full"
-    >
-      <div className="flex items-center gap-2">
-        <div className="bg-elec-yellow rounded-full p-1.5">
-          <MessageSquare className="h-5 w-5 text-elec-dark" />
+    <div className="bg-black border-b border-elec-yellow/20 py-3">
+      <div className="flex justify-between items-center px-4 max-w-3xl mx-auto">
+        <div>
+          <h1 className="text-xl font-bold text-elec-yellow">{title}</h1>
         </div>
-        <h1 className="text-xl font-bold tracking-tight text-white">{title}</h1>
-        <div className="hidden md:flex items-center gap-1.5 ml-2 bg-elec-yellow/20 text-white text-xs rounded-full px-2 py-0.5">
-          <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse"></span>
-          <span>24 online</span>
-        </div>
+        
+        <Button
+          onClick={onNewPost}
+          size="icon"
+          variant="ghost"
+          className="text-elec-yellow hover:bg-elec-yellow/10"
+        >
+          <Plus className="h-5 w-5" />
+        </Button>
       </div>
-      
-      <Button
-        onClick={onNewPost}
-        size="sm"
-        className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80 gap-1"
-      >
-        <PlusCircle className="h-4 w-4" />
-        <span className="hidden sm:inline">Start Discussion</span>
-        <span className="sm:hidden">Post</span>
-      </Button>
-    </motion.div>
+    </div>
   );
 };
 

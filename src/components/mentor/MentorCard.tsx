@@ -39,21 +39,21 @@ const MentorCard = ({ mentor, onConnect, isRequesting }: MentorCardProps) => {
           <Avatar className="h-12 w-12">
             <AvatarImage src="" />
             <AvatarFallback className="bg-elec-gray text-elec-yellow border border-elec-yellow/50">
-              {mentor.avatar || mentor.name.charAt(0)}
+              {mentor.avatar}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1">
             <CardTitle className="text-xl">
               {mentor.name}
             </CardTitle>
-            <CardDescription className="text-sm text-elec-light/80">Electrician • {mentor.specialty}</CardDescription>
+            <CardDescription className="text-sm text-elec-light/80">Apprentice • {mentor.specialty}</CardDescription>
           </div>
         </div>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-2 gap-2 text-sm mb-4">
           <div>
-            <p className="text-muted-foreground">Experience</p>
+            <p className="text-muted-foreground">Learning Focus</p>
             <p className="font-medium">{mentor.experience}</p>
           </div>
           <div>
@@ -72,11 +72,11 @@ const MentorCard = ({ mentor, onConnect, isRequesting }: MentorCardProps) => {
             <div className="space-y-2">
               <h4 className="font-medium text-sm">About {mentor.name}</h4>
               <p className="text-xs text-muted-foreground">
-                {mentor.name} is an experienced electrician specializing in {mentor.specialty.toLowerCase()}. 
-                They've been in the industry for {mentor.experience.toLowerCase()} and are available {mentor.availability.toLowerCase()} 
+                {mentor.name} is an apprentice electrician looking for guidance in {mentor.specialty.toLowerCase()}. 
+                They've been in their apprenticeship for {mentor.experience.toLowerCase()} and are available {mentor.availability.toLowerCase()} 
                 for mentoring sessions.
               </p>
-              <h4 className="font-medium text-sm pt-2">What they can teach</h4>
+              <h4 className="font-medium text-sm pt-2">What they're looking to learn</h4>
               <ul className="text-xs text-muted-foreground list-disc pl-4 space-y-1">
                 <li>Practical skills in {mentor.specialty}</li>
                 <li>Industry best practices</li>
@@ -90,7 +90,7 @@ const MentorCard = ({ mentor, onConnect, isRequesting }: MentorCardProps) => {
       <CardFooter>
         {showSuccess ? (
           <div className="w-full py-2 text-center bg-green-500/10 text-green-600 rounded-md flex items-center justify-center">
-            <CheckCircle className="h-4 w-4 mr-2" /> Request sent! Check messages
+            <CheckCircle className="h-4 w-4 mr-2" /> Offer sent! Check messages
           </div>
         ) : (
           <Button 
@@ -99,7 +99,7 @@ const MentorCard = ({ mentor, onConnect, isRequesting }: MentorCardProps) => {
             disabled={isConnecting}
             variant={isConnecting ? "outline" : "default"}
           >
-            {isConnecting ? 'Sending request...' : 'Request Mentorship'}
+            {isConnecting ? 'Connecting...' : 'Offer Mentoring'}
           </Button>
         )}
       </CardFooter>

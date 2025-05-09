@@ -1,75 +1,88 @@
 
-import { useRef } from "react";
-import { MentalHealthPageLayout } from "@/components/mental-health/MentalHealthPageLayout";
-import MentalHealthMate from "@/components/mental-health/MentalHealthMate";
-import TalkToSomeone from "@/components/mental-health/support-network/TalkToSomeone";
-import SupportGroups from "@/components/mental-health/support-network/SupportGroups";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import CommunityResourcesList, { Resource } from "@/components/mental-health/support-network/CommunityResourcesList";
-import EventsList from "@/components/mental-health/support-network/EventsList";
+import MentalHealthPageLayout from "@/components/mental-health/MentalHealthPageLayout";
 import { Users } from "lucide-react";
-
-// Mock data for community resources
-const communityResources: Resource[] = [
-  {
-    title: "Electrical Trades Union Mental Health Support",
-    description: "Resources and support services specifically for electrical industry professionals",
-    type: "website",
-    url: "#"
-  },
-  {
-    title: "Headspace - Mental Health Basics",
-    description: "Foundational information about mental health and wellbeing",
-    type: "article",
-    url: "#"
-  },
-  {
-    title: "Beyond Blue Workplace Resources",
-    description: "Tools for creating mentally healthy workplaces",
-    type: "document",
-    url: "#"
-  },
-  {
-    title: "MATES in Construction",
-    description: "Suicide prevention and mental health support in the construction industry",
-    type: "website",
-    url: "#"
-  }
-];
+import EventsList from "@/components/mental-health/support-network/EventsList";
+import SupportGroups from "@/components/mental-health/support-network/SupportGroups";
+import TalkToSomeone from "@/components/mental-health/support-network/TalkToSomeone";
+import CommunityResourcesList from "@/components/mental-health/support-network/CommunityResourcesList";
 
 const SupportNetwork = () => {
-  const matesRef = useRef<HTMLDivElement>(null);
-  
-  const scrollToMates = () => {
-    matesRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-  
+  const upcomingEvents = [
+    {
+      name: "Apprentice Wellbeing Social",
+      date: "18 May 2025",
+      time: "18:30 - 20:30",
+      location: "The Training Center"
+    },
+    {
+      name: "Peer Support Group Meeting",
+      date: "22 May 2025",
+      time: "12:00 - 13:00",
+      location: "Online (Zoom)"
+    },
+    {
+      name: "Mental Health First Aid Training",
+      date: "1 June 2025",
+      time: "09:00 - 17:00",
+      location: "Madison Training Hub"
+    }
+  ];
+
+  const supportGroups = [
+    {
+      name: "First Year Apprentices",
+      members: 24,
+      meetings: "Weekly",
+      format: "Hybrid (In-person & Online)"
+    },
+    {
+      name: "Women in Electrical Trades",
+      members: 18,
+      meetings: "Bi-weekly",
+      format: "Online"
+    },
+    {
+      name: "Mature-Age Apprentices",
+      members: 12,
+      meetings: "Monthly",
+      format: "In-person"
+    }
+  ];
+
+  const communityResources = [
+    {
+      title: "Building Your Support Network",
+      description: "Strategies for creating connections with fellow apprentices",
+      type: "document" as const,
+      url: "https://www.mentalhealth.org.uk/publications/guide-investing-your-relationships"
+    },
+    {
+      title: "Mentorship Program Information",
+      description: "Learn about our industry mentorship opportunities",
+      type: "article" as const,
+      url: "https://www.electricalcareers.co.uk/mentoring"
+    }
+  ];
+
   return (
     <MentalHealthPageLayout
-      title="Support Network"
-      description="Connect with others who understand the challenges of the electrical trade"
-      backLink="/apprentice/mental-health"
+      title="Apprentice Support Network"
+      description="Connect with fellow apprentices in a supportive environment"
       icon={<Users className="h-6 w-6 text-purple-400" />}
+      color="purple"
     >
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="col-span-1 md:col-span-2 space-y-6">
-          <div ref={matesRef}>
-            <MentalHealthMate />
+      <div className="space-y-6">
+        <EventsList events={upcomingEvents} />
+        
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="col-span-1 sm:col-span-2">
+            <SupportGroups groups={supportGroups} />
           </div>
           
-          <h2 className="text-xl font-semibold mb-4">Community Resources</h2>
-          <ScrollArea className="h-[400px] rounded-md border border-elec-yellow/20 p-4">
-            <CommunityResourcesList resources={communityResources} />
-          </ScrollArea>
-          
-          <h2 className="text-xl font-semibold mb-4">Upcoming Events</h2>
-          <EventsList />
+          <TalkToSomeone />
         </div>
         
-        <div className="col-span-1 space-y-6">
-          <TalkToSomeone onShowMentalHealthMates={scrollToMates} />
-          <SupportGroups />
-        </div>
+        <CommunityResourcesList resources={communityResources} />
       </div>
     </MentalHealthPageLayout>
   );

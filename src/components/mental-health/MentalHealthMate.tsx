@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MessageCircle, UserPlus, Users } from "lucide-react";
@@ -13,119 +13,25 @@ interface MentalHealthMateProps {
 
 const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
   const [isVolunteer, setIsVolunteer] = useState(false);
-  const [availableMates, setAvailableMates] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const { user, profile } = useAuth();
+  const { user } = useAuth();
 
-  useEffect(() => {
-    // Check if user is already a mental health mate
-    if (user?.id) {
-      // For now, we'll use mock data until the mental_health_mates table is created
-      checkVolunteerStatus();
-      fetchAvailableMates();
-    } else {
-      setIsLoading(false);
-    }
-  }, [user?.id]);
-
-  // Mock implementation until the mental_health_mates table is created
-  const checkVolunteerStatus = async () => {
-    try {
-      // Mock data for demo purposes
-      const isAlreadyVolunteer = localStorage.getItem(`mental_health_mate_${user?.id}`) === 'true';
-      setIsVolunteer(isAlreadyVolunteer);
-    } catch (error) {
-      console.error("Error checking volunteer status:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const fetchAvailableMates = async () => {
-    try {
-      // Mock data for demo purposes
-      const mockMates = [
-        {
-          id: 'mate-1',
-          userId: 'user-1',
-          name: 'John Smith',
-          role: 'Master Electrician',
-          status: 'Available',
-          avatar: null
-        },
-        {
-          id: 'mate-2',
-          userId: 'user-2',
-          name: 'Sarah Jones',
-          role: 'Electrical Engineer',
-          status: 'Available',
-          avatar: null
-        },
-        {
-          id: 'mate-3',
-          userId: 'user-3',
-          name: 'Michael Brown',
-          role: 'Apprentice Electrician',
-          status: 'Available',
-          avatar: null
-        }
-      ];
-      
-      setAvailableMates(mockMates);
-    } catch (error) {
-      console.error("Error fetching mental health mates:", error);
-    }
-  };
-
-  const handleBecomeMate = async () => {
-    if (!user) {
-      toast.error("You must be signed in to become a Mental Health Mate.");
-      return;
-    }
+  const handleBecomeMate = () => {
+    // In a real implementation, this would update a database record
+    setIsVolunteer(true);
+    toast.success("Thank you for becoming a Mental Health Mate!", {
+      description: "You are now available to help others in need.",
+    });
     
-    try {
-      setIsLoading(true);
-      
-      // Mock data for demo purposes
-      localStorage.setItem(`mental_health_mate_${user.id}`, 'true');
-      setIsVolunteer(true);
-      
-      toast.success("Thank you for becoming a Mental Health Mate!", {
-        description: "You are now available to help others in need.",
-      });
-      
-      if (onBecomeMate) {
-        onBecomeMate();
-      }
-
-      // Refresh the list of available mates
-      fetchAvailableMates();
-    } catch (error) {
-      console.error("Error registering as mental health mate:", error);
-      toast.error("There was a problem registering you as a Mental Health Mate. Please try again.");
-    } finally {
-      setIsLoading(false);
+    if (onBecomeMate) {
+      onBecomeMate();
     }
   };
 
-  const handleUpdateStatus = async (status: 'Available' | 'Busy' | 'Unavailable') => {
-    if (!user) return;
-    
-    try {
-      setIsLoading(true);
-      
-      // Mock data storage for demo purposes
-      localStorage.setItem(`mental_health_mate_status_${user.id}`, status);
-      
-      toast.success(`Status updated to ${status}`);
-    } catch (error) {
-      console.error("Error updating status:", error);
-      toast.error("There was a problem updating your status.");
-    } finally {
-      setIsLoading(false);
-      fetchAvailableMates();
-    }
-  };
+  const availableMates = [
+    { id: "1", name: "Sarah Thompson", role: "Journeyman Electrician", status: "Available" },
+    { id: "2", name: "Michael Chen", role: "Master Electrician", status: "Available" },
+    { id: "3", name: "James Wilson", role: "Apprentice", status: "Busy" },
+  ];
 
   return (
     <Card className="border-purple-500/20 bg-elec-gray overflow-hidden">
@@ -150,9 +56,8 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
               onClick={handleBecomeMate}
               className="bg-purple-500 hover:bg-purple-600 text-white text-sm w-full sm:w-auto"
               size="sm"
-              disabled={isLoading}
             >
-              {isLoading ? "Processing..." : "Sign Up as a Volunteer"}
+              Sign Up as a Volunteer
             </Button>
           </div>
         ) : (
@@ -162,32 +67,6 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
             <p className="text-xs sm:text-sm text-muted-foreground">
               Thank you for volunteering! Others can now reach out to you for support.
             </p>
-            <div className="flex flex-wrap gap-2 justify-center">
-              <Button 
-                onClick={() => handleUpdateStatus('Available')} 
-                variant="outline" 
-                size="sm"
-                className="border-green-500/30 text-green-400 hover:bg-green-500/10"
-              >
-                Set Available
-              </Button>
-              <Button 
-                onClick={() => handleUpdateStatus('Busy')} 
-                variant="outline" 
-                size="sm"
-                className="border-amber-500/30 text-amber-400 hover:bg-amber-500/10"
-              >
-                Set Busy
-              </Button>
-              <Button 
-                onClick={() => handleUpdateStatus('Unavailable')} 
-                variant="outline" 
-                size="sm"
-                className="border-red-500/30 text-red-400 hover:bg-red-500/10"
-              >
-                Set Unavailable
-              </Button>
-            </div>
           </div>
         )}
         
@@ -195,42 +74,31 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
           <h3 className="font-medium text-sm sm:text-base">Available Mental Health Mates</h3>
           
           <div className="space-y-2">
-            {isLoading ? (
-              <div className="text-center py-8">
-                <div className="inline-block h-6 w-6 animate-spin rounded-full border-2 border-purple-500 border-t-transparent"></div>
-                <p className="text-sm text-muted-foreground mt-2">Loading available mates...</p>
-              </div>
-            ) : availableMates.length > 0 ? (
-              availableMates.map(mate => (
-                <div 
-                  key={mate.id}
-                  className="flex items-center justify-between border border-purple-500/10 rounded-lg p-2 sm:p-3 hover:bg-purple-500/5 transition-colors"
-                >
-                  <div className="flex items-center gap-2 sm:gap-3">
-                    <div className={`w-2 h-2 rounded-full ${mate.status === "Available" ? "bg-green-500" : "bg-amber-500"}`} />
-                    <div>
-                      <p className="font-medium text-xs sm:text-sm">{mate.name}</p>
-                      <p className="text-[10px] sm:text-xs text-muted-foreground">{mate.role}</p>
-                    </div>
+            {availableMates.map(mate => (
+              <div 
+                key={mate.id}
+                className="flex items-center justify-between border border-purple-500/10 rounded-lg p-2 sm:p-3 hover:bg-purple-500/5 transition-colors"
+              >
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className={`w-2 h-2 rounded-full ${mate.status === "Available" ? "bg-green-500" : "bg-amber-500"}`} />
+                  <div>
+                    <p className="font-medium text-xs sm:text-sm">{mate.name}</p>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground">{mate.role}</p>
                   </div>
-                  
-                  <Link to={`/messages?contact=${mate.userId}`} state={{ contactType: 'mental-health', contactName: mate.name }}>
-                    <Button variant="outline" size="sm" className="flex items-center gap-1 text-xs h-7 px-2 sm:h-8 sm:px-3">
-                      <MessageCircle className="h-3 w-3" />
-                      <span>Message</span>
-                    </Button>
-                  </Link>
                 </div>
-              ))
-            ) : (
-              <div className="text-center py-4 border border-dashed border-purple-500/20 rounded-lg">
-                <p className="text-sm text-muted-foreground">No mental health mates are currently available.</p>
+                
+                <Link to={`/messages?contact=${mate.id}`}>
+                  <Button variant="outline" size="sm" className="flex items-center gap-1 text-xs h-7 px-2 sm:h-8 sm:px-3">
+                    <MessageCircle className="h-3 w-3" />
+                    <span>Message</span>
+                  </Button>
+                </Link>
               </div>
-            )}
+            ))}
           </div>
           
           <div className="text-center pt-1 sm:pt-2">
-            <Link to="/messages" state={{ activeTab: 'mental-health' }}>
+            <Link to="/messages">
               <Button variant="link" size="sm" className="text-purple-400 text-xs sm:text-sm h-auto p-0">
                 View All Mental Health Mates
               </Button>

@@ -1,4 +1,3 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { 
@@ -10,12 +9,8 @@ import {
   CreditCard, 
   X,
   Settings,
-  MessageCircle,
-  Brain,
-  BarChart
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useAuth } from "@/contexts/AuthContext";
 
 interface SidebarProps {
   open: boolean;
@@ -24,7 +19,6 @@ interface SidebarProps {
 
 const Sidebar = ({ open, setOpen }: SidebarProps) => {
   const location = useLocation();
-  const { isDevelopmentMode } = useAuth();
   
   // Mock user role - will be replaced with actual auth
   const userRole = "visitor"; // Could be visitor, apprentice, electrician, or employer
@@ -55,18 +49,6 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
       roles: ["visitor", "apprentice", "electrician", "employer"],
     },
     {
-      name: "Mental Health Hub",
-      path: "/apprentice/mental-health",
-      icon: <Brain className="h-5 w-5" />,
-      roles: ["visitor", "apprentice", "electrician", "employer"],
-    },
-    {
-      name: "Toolbox Talks",
-      path: "/electrician/chat",
-      icon: <MessageCircle className="h-5 w-5" />,
-      roles: ["visitor", "apprentice", "electrician", "employer"],
-    },
-    {
       name: "Leaderboards",
       path: "/leaderboards",
       icon: <Trophy className="h-5 w-5" />,
@@ -84,13 +66,6 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
       icon: <Settings className="h-5 w-5" />,
       roles: ["visitor", "apprentice", "electrician", "employer"],
     },
-    // Admin Analytics link - only visible in development mode
-    ...(isDevelopmentMode ? [{
-      name: "Admin Analytics",
-      path: "/admin/analytics",
-      icon: <BarChart className="h-5 w-5" />,
-      roles: ["visitor", "apprentice", "electrician", "employer"],
-    }] : []),
   ];
 
   const filteredNavItems = navItems.filter((item) =>
