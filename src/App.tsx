@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
@@ -14,6 +13,7 @@ import ApprenticeAITools from "./pages/apprentice/ApprenticeAITools";
 import ApprenticeMentor from "./pages/apprentice/ApprenticeMentor";
 import ApprenticeOJT from "./pages/apprentice/ApprenticeOJT";
 import ApprenticeStudy from "./pages/apprentice/ApprenticeStudy";
+import HigherEducationCourses from "./pages/apprentice/HigherEducationCourses";
 import ApprenticeToolbox from "./pages/apprentice/ApprenticeToolbox";
 import ApprenticeChat from "./pages/apprentice/ApprenticeChat";
 import ApprenticeMentalHealth from "./pages/apprentice/ApprenticeMentalHealth";
@@ -36,7 +36,6 @@ import ElectricianTools from "./pages/ElectricianTools";
 import ProjectManagement from "./pages/electrician-tools/ProjectManagement";
 import AITooling from "./pages/electrician-tools/AITooling";
 import Calculations from "./pages/electrician-tools/Calculations";
-import Admin from "./pages/electrician-tools/Admin";
 import ElectricalHub from "./pages/ElectricalHub";
 import ElectricalToolboxTalk from "./pages/electrician/ElectricalToolboxTalk";
 import ElectricalChat from "./pages/electrician/ElectricalChat";
@@ -108,7 +107,6 @@ function App() {
                 <Route path="electrician-tools/project-management/project/:projectId" element={<ProjectManagement />} />
                 <Route path="electrician-tools/ai-tooling" element={<AITooling />} />
                 <Route path="electrician-tools/calculations" element={<Calculations />} />
-                <Route path="electrician-tools/admin" element={<Admin />} />
                 <Route path="electrical-hub" element={<ElectricalHub />} />
                 <Route path="electrician" element={<Navigate to="/electrical-hub" replace />} />
                 <Route path="electrician/toolbox-talk" element={<ElectricalToolboxTalk />} />
@@ -156,6 +154,7 @@ function App() {
                   <Route path="on-job-tools/assessment" element={<OnJobAssessment />} />
                   <Route path="study">
                     <Route index element={<ApprenticeStudy />} />
+                    <Route path="higher" element={<HigherEducationCourses />} />
                     <Route path="eal" element={<EALCourses />} />
                     <Route path="eal/:courseSlug" element={<CourseDetail />} />
                     <Route path="eal/:courseSlug/unit/:unitSlug" element={<CourseDetail />} />
