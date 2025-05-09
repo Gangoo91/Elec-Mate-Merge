@@ -7,6 +7,7 @@ import {
   Trophy, 
   CreditCard, 
   Settings,
+  School,
 } from "lucide-react";
 
 export type NavItem = {
@@ -33,7 +34,13 @@ export const mainNavItems: NavItem[] = [
     name: "Electrical Hub",
     path: "/electrician",
     icon: <Wrench className="h-5 w-5" />,
-    roles: ["visitor", "electrician", "employer", "admin"],
+    roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
+  },
+  {
+    name: "Higher Education",
+    path: "/apprentice/study/higher",
+    icon: <School className="h-5 w-5" />,
+    roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
   },
   {
     name: "Video Lessons",
