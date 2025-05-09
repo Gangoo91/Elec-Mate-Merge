@@ -2,11 +2,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import CopyableOverview from "@/components/common/CopyableOverview";
 
 const Index = () => {
   return (
     <div className="container mx-auto py-10 px-4 min-h-screen flex flex-col items-center justify-center">
-      <Card className="w-full max-w-3xl border-elec-yellow/20">
+      <Card className="w-full max-w-3xl border-elec-yellow/20 mb-8">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl font-bold">Welcome to Electrician App</CardTitle>
           <CardDescription>
@@ -41,6 +42,8 @@ const Index = () => {
           </div>
         </CardContent>
       </Card>
+      
+      <CopyableOverview />
     </div>
   );
 };
