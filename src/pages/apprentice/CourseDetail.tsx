@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, GraduationCap } from "lucide-react";
@@ -10,19 +10,48 @@ import { ealLevel3Units } from "@/data/courseUnitsLevel3";
 import { ealLevel4Units } from "@/data/courseUnitsLevel4";
 import UnitDetails from "@/components/apprentice/UnitDetails";
 
+// Create a map to store course-specific units for Level 3 courses
+const level3CoursesUnitsMap: Record<string, typeof ealLevel3Units> = {
+  // These are placeholder entries - in a real app, you would have different unit sets per course
+  "eal-level-3-course-1": ealLevel3Units,
+  "eal-level-3-course-2": ealLevel3Units.slice(0, 3), // Example: this course only has first 3 units
+  "eal-level-3-course-3": ealLevel3Units.slice(2, 5), // Example: this course has units 3-5
+  "eal-level-3-course-4": ealLevel3Units.slice(1, 4), // Example: this course has units 2-4
+};
+
+// Create a map to store course-specific units for Level 4 courses
+const level4CoursesUnitsMap: Record<string, typeof ealLevel4Units> = {
+  // These are placeholder entries - in a real app, you would have different unit sets per course
+  "eal-level-4-course-1": ealLevel4Units,
+  "eal-level-4-course-2": ealLevel4Units.slice(0, 3), // Example: this course only has first 3 units
+  "eal-level-4-course-3": ealLevel4Units.slice(1, 4), // Example: this course has units 2-4
+};
+
 const CourseDetail = () => {
   const { courseSlug, unitSlug } = useParams();
+  const [searchParams] = useSearchParams();
+  const courseId = searchParams.get("courseId");
   const isMobile = useIsMobile();
   
-  // Determine which level and course to use based on the courseSlug
-  const getUnitsForCourse = (slug?: string) => {
+  // Determine which level and course to use based on the courseSlug and courseId
+  const getUnitsForCourse = (slug?: string, id?: string | null) => {
     if (!slug) return [];
     
     if (slug.startsWith('level-2-')) {
       return ealLevel2Units;
     } else if (slug.startsWith('level-3-')) {
+      // If we have a courseId, use it to get the specific units for this Level 3 course
+      if (id && level3CoursesUnitsMap[id]) {
+        return level3CoursesUnitsMap[id];
+      }
+      // Fallback to all Level 3 units if no courseId or not found
       return ealLevel3Units;
     } else if (slug.startsWith('level-4-')) {
+      // If we have a courseId, use it to get the specific units for this Level 4 course
+      if (id && level4CoursesUnitsMap[id]) {
+        return level4CoursesUnitsMap[id];
+      }
+      // Fallback to all Level 4 units if no courseId or not found
       return ealLevel4Units;
     } else {
       // Default to level 2 units for legacy routes
@@ -30,7 +59,7 @@ const CourseDetail = () => {
     }
   };
   
-  const courseUnits = getUnitsForCourse(courseSlug);
+  const courseUnits = getUnitsForCourse(courseSlug, courseId);
   
   // Extract course level from slug
   const getCourseLevel = (slug?: string) => {
@@ -123,10 +152,14 @@ const CourseDetail = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {courseUnits.map((unit, index) => {
           const unitSlug = createUnitSlug(unit.code, unit.title);
+          const unitUrl = `/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`;
+          // Preserve the courseId in the unit links
+          const finalUrl = courseId ? `${unitUrl}?courseId=${courseId}` : unitUrl;
+          
           return (
             <Link 
               key={index}
-              to={`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`}
+              to={finalUrl}
               className="block h-full transition-transform hover:scale-102 duration-200"
             >
               <Card 

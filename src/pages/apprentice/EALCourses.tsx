@@ -11,6 +11,7 @@ interface CourseInfo {
   title: string;
   slug: string;
   level: string;
+  courseId: string; // Added courseId to uniquely identify each course
 }
 
 const EALCourses = () => {
@@ -27,11 +28,19 @@ const EALCourses = () => {
     const level3: CourseInfo[] = [];
     const level4: CourseInfo[] = [];
     
-    ealCategory.courses.forEach(course => {
+    ealCategory.courses.forEach((course, index) => {
+      // Create a unique courseId based on level and index
+      const level = course.includes("Level 2") ? "2" : 
+                    course.includes("Level 3") ? "3" : 
+                    course.includes("Level 4") ? "4" : "2";
+      
+      const courseId = `eal-level-${level}-course-${index + 1}`;
+      
       const courseInfo = {
         title: course,
         slug: '',
-        level: ''
+        level: '',
+        courseId: courseId
       };
       
       if (course.includes("Level 2")) {
@@ -98,7 +107,7 @@ const EALCourses = () => {
           {courses.map((course, index) => (
             <Link 
               key={index}
-              to={`/apprentice/study/eal/${course.slug}`}
+              to={`/apprentice/study/eal/${course.slug}?courseId=${course.courseId}`}
               className="block h-full transition-transform hover:scale-102 duration-200"
             >
               <Card 

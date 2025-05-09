@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 interface BackButtonProps {
   courseSlug?: string;
@@ -19,19 +19,31 @@ const BackButton = ({
   label = "Back" 
 }: BackButtonProps) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const courseId = searchParams.get("courseId");
+  
+  // Helper function to add courseId to URL if present
+  const addCourseIdToUrl = (url: string) => {
+    if (courseId) {
+      return url.includes('?') ? `${url}&courseId=${courseId}` : `${url}?courseId=${courseId}`;
+    }
+    return url;
+  };
 
   const handleClick = () => {
     if (customUrl) {
-      navigate(customUrl);
+      navigate(addCourseIdToUrl(customUrl));
       return;
     }
 
     if (courseSlug && unitSlug && sectionId) {
       // We have section ID, navigate to unit page
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`);
+      const url = `/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`;
+      navigate(addCourseIdToUrl(url));
     } else if (courseSlug && unitSlug) {
       // We have unit slug, navigate to course page
-      navigate(`/apprentice/study/eal/${courseSlug}`);
+      const url = `/apprentice/study/eal/${courseSlug}`;
+      navigate(addCourseIdToUrl(url));
     } else if (courseSlug) {
       // We have course slug, navigate to courses list
       navigate('/apprentice/study/eal');

@@ -1,5 +1,5 @@
 
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import type { CourseUnit } from "@/data/courseUnits";
 import HealthSafetyUnit from "./units/HealthSafetyUnit";
 import ElectricalTheoryUnit from "./units/ElectricalTheoryUnit";
@@ -21,6 +21,8 @@ const UnitDetails = ({
   onToggleResourceComplete 
 }: UnitDetailsProps) => {
   const { courseSlug } = useParams();
+  const [searchParams] = useSearchParams();
+  const courseId = searchParams.get("courseId");
   
   // Determine which content to show based on unit code
   const showHealthSafetyContent = unit.code === "ELEC2/01";
