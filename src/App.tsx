@@ -80,6 +80,9 @@ import InspectionAreas from "./components/apprentice/resources/InspectionAreas";
 import InspectionDocumentation from "./components/apprentice/resources/InspectionDocumentation";
 import InspectionRegulations from "./components/apprentice/resources/InspectionRegulations";
 
+import CityGuildsCourses from "./pages/apprentice/CityGuildsCourses";
+import FurtherLearningCourses from "./pages/apprentice/FurtherLearningCourses";
+
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -156,6 +159,8 @@ function App() {
                     <Route index element={<ApprenticeStudy />} />
                     <Route path="higher" element={<HigherEducationCourses />} />
                     <Route path="eal" element={<EALCourses />} />
+                    <Route path="cityGuilds" element={<CityGuildsCourses />} />
+                    <Route path="further" element={<FurtherLearningCourses />} />
                     <Route path="eal/:courseSlug" element={<CourseDetail />} />
                     <Route path="eal/:courseSlug/unit/:unitSlug" element={<CourseDetail />} />
                     <Route path="eal/:courseSlug/unit/:unitSlug/quiz" element={<QuizContent />} />
