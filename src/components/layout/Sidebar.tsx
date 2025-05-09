@@ -96,8 +96,8 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
     },
   ];
 
-  // Mock user role - will be replaced with actual auth
-  const userRole = "visitor"; // Could be visitor, apprentice, electrician, or employer
+  // Get the user role from the profile, defaulting to "visitor" if not available
+  const userRole = profile?.role || "visitor";
   
   const filteredNavItems = navItems.filter((item) =>
     item.roles.includes(userRole)

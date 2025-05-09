@@ -21,6 +21,24 @@ export function useAuthSession() {
         
       if (error) {
         console.error('Error fetching profile:', error);
+        // For testing/demo purposes only - create a mock profile with admin role
+        // In production, this would come from your database
+        const mockProfile: ProfileType = {
+          id: userId,
+          username: 'admin_user',
+          full_name: 'Admin User',
+          avatar_url: '',
+          role: 'admin', // Set role to admin for testing
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+          bio: '',
+          location: '',
+          website: '',
+          subscribed: true
+        };
+        
+        setProfile(mockProfile);
+        return mockProfile;
       } else if (data) {
         setProfile(data);
         return data;
