@@ -40,28 +40,5 @@ export const courseCategories = [
       "HND Electrical Engineering",
       "BSc Electrical Engineering"
     ]
-  },
-  {
-    id: "further",
-    title: "Further Learning Courses",
-    description: "Specialized short courses and additional certifications for career advancement",
-    icon: Book,
-    courses: [
-      "18th Edition Regulations",
-      "Electric Vehicle Charging",
-      "Smart Home Installation"
-    ]
-  },
-  {
-    id: "onJob",
-    title: "On the Job Courses",
-    description: "Practical courses that can be completed during work hours and count toward qualifications",
-    icon: GraduationCap,
-    courses: [
-      "Site Safety Management",
-      "Risk Assessment Training",
-      "First Aid Certification",
-      "Working at Heights"
-    ]
   }
 ];

@@ -65,9 +65,7 @@ const ApprenticeRoutes = () => {
         <Route path="ai-learning" element={<AILearning />} />
         <Route path="eal" element={<EALCourses />} />
         <Route path="cityGuilds" element={<CityGuildsCourses />} />
-        <Route path="higher" element={<HigherLearningCourses />} /> {/* Added this route */}
-        <Route path="further" element={<CourseDetail />} /> {/* Added a basic route for further courses */}
-        <Route path="onJob" element={<CourseDetail />} /> {/* Added a basic route for on-job courses */}
+        <Route path="higher" element={<HigherLearningCourses />} />
         
         {/* General EAL route for backward compatibility */}
         <Route path="eal/:courseSlug" element={<CourseDetail />} />
