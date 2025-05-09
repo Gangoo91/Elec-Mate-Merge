@@ -7,20 +7,23 @@ import { ArrowLeft, GraduationCap } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { ealLevel2Units } from "@/data/courseUnits";
 import { ealLevel3Units } from "@/data/courseUnitsLevel3";
+import { ealLevel4Units } from "@/data/courseUnitsLevel4";
 import UnitDetails from "@/components/apprentice/UnitDetails";
 
 const CourseDetail = () => {
   const { courseSlug, unitSlug } = useParams();
   const isMobile = useIsMobile();
   
-  // Determine which level to use based on the courseSlug
+  // Determine which level and course to use based on the courseSlug
   const getUnitsForCourse = (slug?: string) => {
     if (!slug) return [];
     
-    if (slug.startsWith('level-3')) {
-      return ealLevel3Units;
-    } else if (slug.startsWith('level-2')) {
+    if (slug.startsWith('level-2-')) {
       return ealLevel2Units;
+    } else if (slug.startsWith('level-3-')) {
+      return ealLevel3Units;
+    } else if (slug.startsWith('level-4-')) {
+      return ealLevel4Units;
     } else {
       // Default to level 2 units for legacy routes
       return ealLevel2Units;
@@ -29,24 +32,44 @@ const CourseDetail = () => {
   
   const courseUnits = getUnitsForCourse(courseSlug);
   
+  // Extract course level from slug
+  const getCourseLevel = (slug?: string) => {
+    if (!slug) return "Level 2";
+    if (slug.startsWith('level-3-')) return "Level 3";
+    if (slug.startsWith('level-4-')) return "Level 4";
+    return "Level 2"; // Default
+  };
+  
   // Format the course title from the slug
   const formatCourseTitle = (slug?: string) => {
     if (!slug) return "";
-    return slug
-      .replace(/^level-[23]-/, '') // Remove level prefix
+    
+    // Remove level prefix and format
+    let title = slug
+      .replace(/^level-[234]-/, '') // Remove level prefix
       .split("-")
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
+      
+    return title;
   };
 
   const courseTitle = formatCourseTitle(courseSlug);
+  const levelDisplay = getCourseLevel(courseSlug);
   
-  // Determine course level for display
-  const isLevel3 = courseSlug?.startsWith('level-3');
-  const levelDisplay = isLevel3 ? "Level 3" : "Level 2";
-  const levelDescription = isLevel3 
-    ? "Advanced electrical units for qualified professionals"
-    : "Essential electrical units for installation work";
+  // Determine course description based on level
+  const getLevelDescription = (level: string) => {
+    switch(level) {
+      case "Level 3":
+        return "Advanced electrical units for qualified professionals";
+      case "Level 4":
+        return "Expert-level units for specialized electrical professionals";
+      default:
+        return "Essential electrical units for installation work";
+    }
+  };
+  
+  const levelDescription = getLevelDescription(levelDisplay);
 
   // Function to create a URL slug from a unit code and title
   const createUnitSlug = (code: string, title: string) => {
@@ -83,7 +106,7 @@ const CourseDetail = () => {
             <span className="gradient-text">{courseTitle}</span>
           </h1>
           <p className="text-muted-foreground text-sm sm:text-base">
-            EAL {levelDisplay} qualification with {isLevel3 ? "advanced" : "essential"} electrical units
+            EAL {levelDisplay} qualification with {levelDescription}
           </p>
         </div>
         <Link to="/apprentice/study/eal" className="w-full sm:w-auto">
