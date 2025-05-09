@@ -1,8 +1,7 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FileText, PoundSterling, Zap, Home, PlugZap } from "lucide-react";
+import { FileText, PoundSterling, Zap, Home, PlugZap, PlusCircle } from "lucide-react";
 
 // Template data that would ideally come from a database
 const QUOTE_TEMPLATES = [
