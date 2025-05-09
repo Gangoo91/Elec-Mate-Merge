@@ -56,11 +56,10 @@ const BackButton = ({
   return (
     <Button 
       variant="outline" 
-      size="sm"
+      className="border-elec-yellow/30 hover:bg-elec-yellow/10 flex items-center gap-2"
       onClick={handleClick}
-      className="border-elec-yellow/30 hover:bg-elec-yellow/10"
     >
-      <ArrowLeft className="mr-2 h-4 w-4" />
+      <ArrowLeft className="h-4 w-4" />
       {label}
     </Button>
   );

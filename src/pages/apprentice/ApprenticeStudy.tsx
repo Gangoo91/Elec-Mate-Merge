@@ -2,6 +2,7 @@
 import StudyHeader from "@/components/apprentice/StudyHeader";
 import CourseCardGrid from "@/components/apprentice/CourseCardGrid";
 import OffJobTrainingInfo from "@/components/apprentice/OffJobTrainingInfo";
+import StudyExamBot from "@/components/apprentice/study/StudyExamBot";
 import { courseCategories } from "@/data/courseCategories";
 
 const ApprenticeStudy = () => {
@@ -15,6 +16,10 @@ const ApprenticeStudy = () => {
       </div>
 
       <CourseCardGrid courses={courseCategories} />
+      
+      <div className="my-10">
+        <StudyExamBot />
+      </div>
       
       <OffJobTrainingInfo />
     </div>
