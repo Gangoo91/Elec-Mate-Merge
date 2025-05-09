@@ -37,7 +37,7 @@ const TalkToSomeone = () => {
           <Button 
             className="w-full bg-purple-500 hover:bg-purple-600 text-white flex items-center justify-center gap-2"
             size="sm"
-            onClick={() => toast.success("A counselor will contact you within 24 hours")}
+            onClick={() => toast.success("A counselor will contact you within 24 hours. For immediate support, call Samaritans at 116 123")}
           >
             <Heart className="h-4 w-4" />
             <span>Request Counselor</span>

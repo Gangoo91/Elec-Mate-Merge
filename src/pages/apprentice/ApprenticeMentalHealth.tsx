@@ -63,7 +63,7 @@ const ApprenticeMentalHealth = () => {
         </CardHeader>
         <CardContent>
           <p className="text-sm sm:text-base mb-4">
-            If you're experiencing distress or need immediate support, contact the 24/7 Electrical Trades Support Line at <span className="font-medium">0800 123 4567</span>
+            If you're experiencing distress or need immediate support, contact the Samaritans at <span className="font-medium">116 123</span> (free, 24/7) or the Construction Industry Helpline at <span className="font-medium">0345 605 1956</span> (8am-8pm, 7 days)
           </p>
         </CardContent>
       </Card>

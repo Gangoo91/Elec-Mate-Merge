@@ -29,10 +29,22 @@ export const emergencyContacts: EmergencyContact[] = [
     description: "Support for construction and trades workers facing hardship or crisis"
   },
   {
+    name: "CALM - Campaign Against Living Miserably",
+    phone: "0800 58 58 58",
+    hours: "5pm - midnight, 365 days",
+    description: "Support for men in the UK who are down or in crisis"
+  },
+  {
     name: "Mind Infoline",
     phone: "0300 123 3393",
     hours: "9am - 6pm, Mon-Fri",
     description: "Mental health information and signposting to local support"
+  },
+  {
+    name: "Electrical Industries Charity",
+    phone: "0800 652 1618",
+    hours: "8am - 8pm, Mon-Fri",
+    description: "Support for people from the electrical and energy sector"
   }
 ];
 
@@ -66,5 +78,11 @@ export const onlineResources: OnlineResource[] = [
     description: "Resources, toolkits and support for workplace mental health",
     type: "website",
     url: "https://www.mentalhealthatwork.org.uk/"
+  },
+  {
+    title: "Electrical Industries Charity",
+    description: "Support services specifically for people from the electrical sector",
+    type: "website",
+    url: "https://www.electricalcharity.org/"
   }
 ];
