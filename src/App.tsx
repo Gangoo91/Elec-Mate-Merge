@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
@@ -14,6 +15,9 @@ import ApprenticeMentor from "./pages/apprentice/ApprenticeMentor";
 import ApprenticeOJT from "./pages/apprentice/ApprenticeOJT";
 import ApprenticeStudy from "./pages/apprentice/ApprenticeStudy";
 import HigherEducationCourses from "./pages/apprentice/HigherEducationCourses";
+import HNCCourse from "./pages/apprentice/higher/HNCCourse";
+import HNDCourse from "./pages/apprentice/higher/HNDCourse";
+import BEngCourse from "./pages/apprentice/higher/BEngCourse";
 import ApprenticeToolbox from "./pages/apprentice/ApprenticeToolbox";
 import ApprenticeChat from "./pages/apprentice/ApprenticeChat";
 import ApprenticeMentalHealth from "./pages/apprentice/ApprenticeMentalHealth";
@@ -158,6 +162,9 @@ function App() {
                   <Route path="study">
                     <Route index element={<ApprenticeStudy />} />
                     <Route path="higher" element={<HigherEducationCourses />} />
+                    <Route path="higher/hnc" element={<HNCCourse />} />
+                    <Route path="higher/hnd" element={<HNDCourse />} />
+                    <Route path="higher/beng" element={<BEngCourse />} />
                     <Route path="eal" element={<EALCourses />} />
                     <Route path="cityGuilds" element={<CityGuildsCourses />} />
                     <Route path="further" element={<FurtherLearningCourses />} />
