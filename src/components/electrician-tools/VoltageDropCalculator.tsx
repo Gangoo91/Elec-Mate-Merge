@@ -6,30 +6,46 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
+import { cableSizes } from "@/components/apprentice/calculators/cable-sizing/cableSizeData"; 
 
 const VoltageDropCalculator = () => {
   const [cableLength, setCableLength] = useState<string>("");
   const [cableSize, setCableSize] = useState<string>("");
+  const [cableType, setCableType] = useState<string>("single");
   const [loadCurrent, setLoadCurrent] = useState<string>("");
   const [voltageDrop, setVoltageDrop] = useState<string | null>(null);
 
   const calculateVoltageDrop = () => {
-    // Basic voltage drop calculation (simplified for demonstration)
-    // In reality, this would use the proper electrical engineering formulas
+    // Enhanced voltage drop calculation using the cable data
     if (!cableLength || !cableSize || !loadCurrent) return;
     
     const length = parseFloat(cableLength);
     const current = parseFloat(loadCurrent);
-    const size = parseFloat(cableSize);
     
-    if (isNaN(length) || isNaN(current) || isNaN(size)) return;
+    if (isNaN(length) || isNaN(current)) return;
     
-    // Simple calculation - in a real app this would use proper resistance values and formulas
-    const resistanceFactor = 1 / size; // Simplified - larger cables have less resistance
-    const drop = (length * current * resistanceFactor * 0.02).toFixed(2);
+    // Find the selected cable in our data
+    const selectedCable = cableSizes.find(cable => cable.value === cableSize);
+    
+    if (!selectedCable) return;
+    
+    // Calculate voltage drop using the actual per-amp-meter factor from our data
+    const drop = (selectedCable.voltageDropPerAmpereMeter * length * current).toFixed(2);
     
     setVoltageDrop(drop);
   };
+
+  // Get cable options for the selected type
+  const getCableOptionsForType = () => {
+    return cableSizes
+      .filter(cable => cable.cableType === cableType)
+      .map(cable => ({
+        value: cable.value,
+        label: cable.size
+      }));
+  };
+
+  const cableOptions = getCableOptionsForType();
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
@@ -54,6 +70,24 @@ const VoltageDropCalculator = () => {
             onChange={(e) => setCableLength(e.target.value)}
           />
         </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="cable-type">Cable Type</Label>
+          <Select value={cableType} onValueChange={setCableType}>
+            <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+              <SelectValue placeholder="Select cable type" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="single">Single Core</SelectItem>
+              <SelectItem value="twin-and-earth">Twin and Earth</SelectItem>
+              <SelectItem value="swa">Steel Wire Armored (SWA)</SelectItem>
+              <SelectItem value="lsf">Low Smoke and Fume (LSF)</SelectItem>
+              <SelectItem value="armored">Armored</SelectItem>
+              <SelectItem value="heat-resistant">Heat Resistant</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        
         <div className="space-y-2">
           <Label htmlFor="cable-size">Cable Size</Label>
           <Select value={cableSize} onValueChange={setCableSize}>
@@ -61,14 +95,15 @@ const VoltageDropCalculator = () => {
               <SelectValue placeholder="Select cable size" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1.5">1.5 mm²</SelectItem>
-              <SelectItem value="2.5">2.5 mm²</SelectItem>
-              <SelectItem value="4">4.0 mm²</SelectItem>
-              <SelectItem value="6">6.0 mm²</SelectItem>
-              <SelectItem value="10">10.0 mm²</SelectItem>
+              {cableOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
+        
         <div className="space-y-2">
           <Label htmlFor="load-current">Load Current (A)</Label>
           <Input 

@@ -8,6 +8,7 @@ export interface CableSizingInputs {
   installationType: "pvc" | "xlpe";
   voltageDrop: string;
   voltage: string;
+  cableType: string;
 }
 
 export interface CableSizingErrors {
@@ -27,6 +28,7 @@ export const useCableSizing = () => {
     installationType: "pvc",
     voltageDrop: "5",
     voltage: "230",
+    cableType: "single"
   });
   const [result, setResult] = useState<CableSizingResult>({
     recommendedCable: null,
@@ -43,6 +45,10 @@ export const useCableSizing = () => {
 
   const setInstallationType = (type: "pvc" | "xlpe") => {
     setInputs(prev => ({ ...prev, installationType: type }));
+  };
+
+  const setCableType = (type: string) => {
+    setInputs(prev => ({ ...prev, cableType: type }));
   };
 
   const clearError = (field: string) => {
@@ -75,6 +81,8 @@ export const useCableSizing = () => {
     if (!inputs.voltage) newErrors.voltage = "Voltage is required";
     else if (isNaN(parseFloat(inputs.voltage)) || parseFloat(inputs.voltage) <= 0) 
       newErrors.voltage = "Please enter a valid positive number";
+
+    if (!inputs.cableType) newErrors.cableType = "Cable type is required";
     
     setResult(prev => ({ ...prev, errors: newErrors }));
     return Object.keys(newErrors).length === 0;
@@ -87,18 +95,33 @@ export const useCableSizing = () => {
     const cableLength = parseFloat(inputs.length);
     const maxVoltageDrop = (parseFloat(inputs.voltageDrop) / 100) * parseFloat(inputs.voltage);
     
-    // First filter by current carrying capacity
-    const suitableCables = cableSizes.filter(cable => 
-      cable.currentRating[inputs.installationType] >= currentAmp
+    // Filter by cable type first
+    const cablesByType = cableSizes.filter(cable => 
+      cable.cableType === inputs.cableType
     );
+    
+    // Then filter by current carrying capacity
+    const suitableCables = cablesByType.filter(cable => {
+      // For SWA, LSF, or other specialized cables, use their specific rating if available
+      if (inputs.cableType === 'swa' && cable.currentRating.swa) {
+        return cable.currentRating.swa >= currentAmp;
+      } else if (inputs.cableType === 'lsf' && cable.currentRating.lsf) {
+        return cable.currentRating.lsf >= currentAmp;
+      } else if (inputs.cableType === 'armored' && cable.currentRating.armored) {
+        return cable.currentRating.armored >= currentAmp;
+      } else {
+        // Default to the standard insulation type
+        return cable.currentRating[inputs.installationType] >= currentAmp;
+      }
+    });
     
     if (suitableCables.length === 0) {
       setResult({
         recommendedCable: null,
         alternativeCables: [],
         errors: {
-          current: `Current exceeds maximum rating for available cables. Maximum current for ${inputs.installationType.toUpperCase()} insulation is ${
-            Math.max(...cableSizes.map(c => c.currentRating[inputs.installationType]))
+          current: `Current exceeds maximum rating for available ${inputs.cableType} cables. Maximum current for ${inputs.installationType.toUpperCase()} insulation is ${
+            Math.max(...cablesByType.map(c => c.currentRating[inputs.installationType]))
           }A`
         }
       });
@@ -152,6 +175,7 @@ export const useCableSizing = () => {
       installationType: "pvc",
       voltageDrop: "5",
       voltage: "230",
+      cableType: "single",
     });
     setResult({
       recommendedCable: null,
@@ -165,6 +189,7 @@ export const useCableSizing = () => {
     result,
     updateInput,
     setInstallationType,
+    setCableType,
     calculateCableSize,
     resetCalculator,
   };

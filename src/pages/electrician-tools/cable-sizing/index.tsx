@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Sigma } from "lucide-react";
+import { ArrowLeft, Cable, Sigma } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useCableSizing } from "@/components/apprentice/calculators/cable-sizing/useCableSizing";
 import CableSizingForm from "@/components/apprentice/calculators/cable-sizing/CableSizingInputs";
@@ -18,6 +18,7 @@ const CableSizingCalculator = () => {
     result,
     updateInput,
     setInstallationType,
+    setCableType,
     calculateCableSize,
     resetCalculator,
   } = useCableSizing();
@@ -76,7 +77,7 @@ const CableSizingCalculator = () => {
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Sigma className="h-5 w-5 text-elec-yellow" />
+            <Cable className="h-5 w-5 text-elec-yellow" />
             <CardTitle>Cable Sizing Assistant</CardTitle>
           </div>
           <CardDescription>
@@ -90,6 +91,7 @@ const CableSizingCalculator = () => {
               errors={result.errors}
               updateInput={updateInput}
               setInstallationType={setInstallationType}
+              setCableType={setCableType}
               calculateCableSize={handleCalculate}
               resetCalculator={resetCalculator}
             />

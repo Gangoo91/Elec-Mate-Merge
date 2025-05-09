@@ -16,6 +16,7 @@ const CableSizingCalculator = () => {
     result,
     updateInput,
     setInstallationType,
+    setCableType,
     calculateCableSize,
     resetCalculator,
   } = useCableSizing();
@@ -73,6 +74,7 @@ const CableSizingCalculator = () => {
             errors={result.errors}
             updateInput={updateInput}
             setInstallationType={setInstallationType}
+            setCableType={setCableType}
             calculateCableSize={handleCalculate}
             resetCalculator={resetCalculator}
           />

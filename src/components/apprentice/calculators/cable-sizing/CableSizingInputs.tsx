@@ -3,6 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { CableSizingInputs, CableSizingErrors } from "./useCableSizing";
 
 interface CableSizingFormProps {
@@ -10,6 +11,7 @@ interface CableSizingFormProps {
   errors: CableSizingErrors;
   updateInput: (field: keyof CableSizingInputs, value: string) => void;
   setInstallationType: (type: "pvc" | "xlpe") => void;
+  setCableType: (type: string) => void;
   calculateCableSize: () => void;
   resetCalculator: () => void;
 }
@@ -19,6 +21,7 @@ const CableSizingForm = ({
   errors,
   updateInput,
   setInstallationType,
+  setCableType,
   calculateCableSize,
   resetCalculator
 }: CableSizingFormProps) => {
@@ -52,19 +55,42 @@ const CableSizingForm = ({
       </div>
       
       <div className="space-y-2">
-        <Label htmlFor="installation-type">Cable Insulation Type</Label>
+        <Label>Cable Type</Label>
         <Select 
-          value={inputs.installationType} 
-          onValueChange={(value: "pvc" | "xlpe") => setInstallationType(value)}
+          value={inputs.cableType} 
+          onValueChange={setCableType}
         >
           <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-            <SelectValue placeholder="Select insulation type" />
+            <SelectValue placeholder="Select cable type" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="pvc">PVC Insulation</SelectItem>
-            <SelectItem value="xlpe">XLPE Insulation</SelectItem>
+            <SelectItem value="single">Single Core</SelectItem>
+            <SelectItem value="twin-and-earth">Twin and Earth</SelectItem>
+            <SelectItem value="swa">Steel Wire Armored (SWA)</SelectItem>
+            <SelectItem value="lsf">Low Smoke and Fume (LSF)</SelectItem>
+            <SelectItem value="armored">Armored</SelectItem>
+            <SelectItem value="heat-resistant">Heat Resistant</SelectItem>
           </SelectContent>
         </Select>
+        <p className="text-xs text-muted-foreground">Different cable types have different ratings</p>
+      </div>
+      
+      <div className="space-y-2">
+        <Label htmlFor="installation-type">Cable Insulation Type</Label>
+        <RadioGroup 
+          value={inputs.installationType} 
+          onValueChange={(value: "pvc" | "xlpe") => setInstallationType(value)}
+          className="flex space-x-4"
+        >
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="pvc" id="pvc" />
+            <Label htmlFor="pvc">PVC</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="xlpe" id="xlpe" />
+            <Label htmlFor="xlpe">XLPE</Label>
+          </div>
+        </RadioGroup>
         <p className="text-xs text-muted-foreground">Different insulation affects current carrying capacity</p>
       </div>
       
