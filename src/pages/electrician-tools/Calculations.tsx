@@ -1,15 +1,15 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Calculator, Zap, Cable, BarChart4, Thermometer, Percent } from "lucide-react";
+import { ArrowLeft, Calculator, Zap, Cable, BarChart4, Thermometer, Percent, PlugZap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { VoltageDropCalculator } from "@/components/electrician-tools/VoltageDropCalculator";
-import { LoadCalculator } from "@/components/electrician-tools/LoadCalculator";
+import VoltageDropCalculator from "@/components/electrician-tools/VoltageDropCalculator";
+import LoadCalculator from "@/components/electrician-tools/LoadCalculator";
 import { PowerFactorCalculator } from "@/components/electrician-tools/PowerFactorCalculator"; 
 
 const Calculations = () => {
