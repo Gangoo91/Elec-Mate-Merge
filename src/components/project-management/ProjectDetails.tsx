@@ -1,6 +1,8 @@
 
 import { ProjectDetailsContainer } from "./details/ProjectDetailsContainer";
 
-export const ProjectDetails = () => {
+const ProjectDetails = () => {
   return <ProjectDetailsContainer />;
 };
+
+export default ProjectDetails;
