@@ -12,6 +12,7 @@ export type ProfileType = {
   bio?: string;
   location?: string;
   website?: string;
+  subscribed?: boolean; // Add missing property for subscription status
 };
 
 export type AuthContextType = {
@@ -32,4 +33,5 @@ export type AuthContextType = {
   signIn: (email: string, password: string) => Promise<{ error: any; user?: User | undefined }>;
   signUp: (email: string, password: string, fullName: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
+  fetchProfile?: (userId: string) => Promise<ProfileType | null>; // Add optional fetchProfile method
 };

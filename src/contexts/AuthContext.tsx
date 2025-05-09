@@ -10,7 +10,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   // Combine all our authentication hooks
-  const { session, user, profile, isLoading } = useAuthSession();
+  const { session, user, profile, isLoading, fetchProfile } = useAuthSession();
   const { 
     isTrialActive, 
     trialEndsAt, 
@@ -53,6 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     signIn,
     signUp,
     signOut,
+    fetchProfile,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
