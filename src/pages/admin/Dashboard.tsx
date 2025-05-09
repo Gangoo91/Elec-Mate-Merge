@@ -1,7 +1,9 @@
 
 import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { FileText } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 // Admin Dashboard Components
 import AdminHeader from "@/components/admin/dashboard/AdminHeader";
@@ -65,7 +67,19 @@ const AdminDashboard = () => {
   return (
     <div className="space-y-6">
       <AdminHeader isDevelopmentMode={isDevelopmentMode} isAdmin={!!profile?.role} />
-      <p className="text-gray-400">Manage your application settings, users, and content.</p>
+      
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <p className="text-gray-400">Manage your application settings, users, and content.</p>
+        
+        <div className="flex flex-wrap gap-2">
+          <Button asChild variant="outline" size="sm" className="flex items-center gap-2">
+            <Link to="/admin/quote-library">
+              <FileText className="h-4 w-4" />
+              Quote Library
+            </Link>
+          </Button>
+        </div>
+      </div>
       
       <AdminDashboardTabs
         overviewContent={
