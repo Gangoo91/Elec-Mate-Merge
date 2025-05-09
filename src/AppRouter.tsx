@@ -1,5 +1,5 @@
 
-import { Routes, Route } from "react-router-dom";
+import { Routes } from "react-router-dom";
 import PublicRoutes from "./routes/PublicRoutes";
 import MainRoutes from "./routes/MainRoutes";
 import ElectricianRoutes from "./routes/ElectricianRoutes";

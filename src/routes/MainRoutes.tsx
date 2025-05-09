@@ -1,5 +1,5 @@
 
-import { Route } from "react-router-dom";
+import { Route, Fragment } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import Dashboard from "@/pages/Dashboard";
 import Profile from "@/pages/Profile";
@@ -12,7 +12,7 @@ import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 const MainRoutes = () => {
   return (
-    <>
+    <Fragment>
       <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="profile" element={<Profile />} />
@@ -22,7 +22,7 @@ const MainRoutes = () => {
         <Route path="payment-success" element={<PaymentSuccess />} />
         <Route path="*" element={<NotFound />} />
       </Route>
-    </>
+    </Fragment>
   );
 };
 

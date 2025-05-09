@@ -1,5 +1,5 @@
 
-import { Route, Navigate } from "react-router-dom";
+import { Route, Navigate, Fragment } from "react-router-dom";
 import ElectricianTools from "@/pages/ElectricianTools";
 import ProjectManagement from "@/pages/electrician-tools/ProjectManagement";
 import AITooling from "@/pages/electrician-tools/AITooling";
@@ -28,7 +28,7 @@ import CrisisResources from "@/pages/apprentice/mental-health/CrisisResources";
 
 const ElectricianRoutes = () => {
   return (
-    <>
+    <Fragment>
       <Route path="electrician-tools" element={<ElectricianTools />} />
       <Route path="electrician-tools/project-management" element={<ProjectManagement />} />
       <Route path="electrician-tools/project-management/project/:projectId" element={<ProjectManagement />} />
@@ -56,7 +56,7 @@ const ElectricianRoutes = () => {
       <Route path="electrician/mental-health/support-network" element={<SupportNetwork />} />
       <Route path="electrician/mental-health/work-life-balance" element={<WorkLifeBalance />} />
       <Route path="electrician/mental-health/crisis-resources" element={<CrisisResources />} />
-    </>
+    </Fragment>
   );
 };
 

@@ -1,5 +1,5 @@
 
-import { Route, Navigate } from "react-router-dom";
+import { Route, Navigate, Fragment } from "react-router-dom";
 import VideoLessons from "@/pages/VideoLessons";
 import Leaderboards from "@/pages/Leaderboards";
 import ApprenticeHub from "@/pages/ApprenticeHub";
@@ -42,7 +42,7 @@ import InspectionRegulations from "@/components/apprentice/resources/InspectionR
 
 const ApprenticeRoutes = () => {
   return (
-    <>
+    <Fragment>
       <Route path="video-lessons" element={<VideoLessons />} />
       <Route path="leaderboards" element={<Leaderboards />} />
       
@@ -98,7 +98,7 @@ const ApprenticeRoutes = () => {
           <Route path="resources/inspection-regulations" element={<InspectionRegulations />} />
         </Route>
       </Route>
-    </>
+    </Fragment>
   );
 };
 
