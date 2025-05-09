@@ -1,5 +1,5 @@
 
-import { Users } from "lucide-react";
+import { Users, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -8,6 +8,7 @@ interface SupportGroup {
   members: number;
   meetings: string;
   format: string;
+  url?: string;
 }
 
 interface SupportGroupsProps {
@@ -15,10 +16,15 @@ interface SupportGroupsProps {
 }
 
 const SupportGroups = ({ groups }: SupportGroupsProps) => {
-  const handleJoinGroup = () => {
-    toast.success("Request sent!", {
-      description: "We'll contact you with details about joining the support group.",
-    });
+  const handleJoinGroup = (group: SupportGroup) => {
+    if (group.url) {
+      // Open the external group page
+      window.open(group.url, "_blank", "noopener,noreferrer");
+    } else {
+      toast.success("Request sent!", {
+        description: "We'll contact you with details about joining the support group.",
+      });
+    }
   };
 
   return (
@@ -46,10 +52,11 @@ const SupportGroups = ({ groups }: SupportGroupsProps) => {
             <Button 
               size="sm" 
               variant="outline" 
-              className="w-full text-xs"
-              onClick={handleJoinGroup}
+              className="w-full text-xs flex items-center justify-center gap-1"
+              onClick={() => handleJoinGroup(group)}
             >
               Request to join
+              {group.url && <ExternalLink className="h-3 w-3" />}
             </Button>
           </div>
         ))}

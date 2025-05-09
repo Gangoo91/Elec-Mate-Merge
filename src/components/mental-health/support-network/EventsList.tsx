@@ -1,5 +1,5 @@
 
-import { Calendar } from "lucide-react";
+import { Calendar, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -8,6 +8,7 @@ interface Event {
   date: string;
   time: string;
   location: string;
+  url?: string;
 }
 
 interface EventsListProps {
@@ -15,6 +16,15 @@ interface EventsListProps {
 }
 
 const EventsList = ({ events }: EventsListProps) => {
+  const handleRegister = (event: Event) => {
+    if (event.url) {
+      // Open the external registration page
+      window.open(event.url, "_blank", "noopener,noreferrer");
+    } else {
+      toast.success(`You've registered for: ${event.name}`);
+    }
+  };
+
   return (
     <div>
       <h3 className="text-lg font-medium mb-3">Upcoming Support Events</h3>
@@ -36,10 +46,11 @@ const EventsList = ({ events }: EventsListProps) => {
             </div>
             <Button 
               size="sm" 
-              className="bg-purple-500 hover:bg-purple-600 text-white w-full sm:w-auto"
-              onClick={() => toast.success(`You've registered for: ${event.name}`)}
+              className="bg-purple-500 hover:bg-purple-600 text-white w-full sm:w-auto flex items-center gap-2"
+              onClick={() => handleRegister(event)}
             >
               Register
+              {event.url && <ExternalLink className="h-3 w-3" />}
             </Button>
           </div>
         ))}
