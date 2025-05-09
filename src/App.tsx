@@ -20,6 +20,7 @@ import ApprenticeMentalHealth from "./pages/apprentice/ApprenticeMentalHealth";
 import CareerProgression from "./pages/apprentice/CareerProgression";
 import CourseDetail from "./pages/apprentice/CourseDetail";
 import EALCourses from "./pages/apprentice/EALCourses";
+import CityGuildsCourses from "./pages/apprentice/CityGuildsCourses";
 import OnJobTools from "./pages/apprentice/OnJobTools";
 import OnJobCalculations from "./pages/apprentice/OnJobCalculations";
 import OnJobDocuments from "./pages/apprentice/OnJobDocuments";
@@ -157,9 +158,11 @@ function App() {
                   <Route path="study">
                     <Route index element={<ApprenticeStudy />} />
                     <Route path="eal" element={<EALCourses />} />
+                    <Route path="cityGuilds" element={<CityGuildsCourses />} />
                     <Route path="eal/:courseSlug" element={<CourseDetail />} />
                     <Route path="eal/:courseSlug/unit/:unitSlug" element={<CourseDetail />} />
                     <Route path="eal/:courseSlug/unit/:unitSlug/quiz" element={<QuizContent />} />
+                    <Route path="cityGuilds/:courseSlug" element={<CourseDetail />} />
                     
                     {/* Updated route paths for electrical theory sections */}
                     <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
