@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import MentalHealthMate from "@/components/mental-health/MentalHealthMate";
+import LocalResourceFinder from "@/components/mental-health/crisis/LocalResourceFinder";
 
 const ApprenticeMentalHealth = () => {
   const resources = [
@@ -68,6 +69,9 @@ const ApprenticeMentalHealth = () => {
         </CardContent>
       </Card>
 
+      {/* Local Mental Health Resources Finder */}
+      <LocalResourceFinder />
+      
       {/* Mental Health Mate feature */}
       <MentalHealthMate />
 
