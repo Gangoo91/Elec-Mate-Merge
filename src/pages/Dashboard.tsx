@@ -7,12 +7,14 @@ import DashboardQuickAccess from "@/components/dashboard/DashboardQuickAccess";
 import { getDashboardData } from "@/data/dashboardData";
 import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent } from "@/components/ui/card";
-import { BookOpen, Clock } from "lucide-react";
+import { BookOpen, Clock, Settings } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const Dashboard = () => {
   // Get dashboard data from our data model
   const { user: userData, recentCourses, popularCourses } = getDashboardData();
-  const { user, profile } = useAuth();
+  const { user, profile, isDevelopmentMode } = useAuth();
   const [greeting, setGreeting] = useState("Good day");
   
   // Set appropriate greeting based on time of day
@@ -24,6 +26,7 @@ const Dashboard = () => {
   }, []);
 
   const userName = profile?.full_name || profile?.username || userData.name;
+  const isAdmin = profile?.role === "admin" || isDevelopmentMode;
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -44,6 +47,19 @@ const Dashboard = () => {
               <span className="text-sm">{userData.completedLessons} of {userData.totalLessons} lessons completed</span>
             </div>
           </div>
+          
+          {/* Development mode indicator and admin link */}
+          {isDevelopmentMode && (
+            <div className="mt-4 flex gap-2 items-center">
+              <div className="bg-yellow-950/30 border border-yellow-500/30 px-3 py-1 rounded-md text-sm flex items-center gap-2">
+                <Settings className="h-3 w-3 text-yellow-500" />
+                <span className="text-yellow-500">Development Mode</span>
+              </div>
+              <Button asChild variant="outline" size="sm" className="h-7">
+                <Link to="/admin" className="text-xs">Go to Admin</Link>
+              </Button>
+            </div>
+          )}
         </div>
         <div className="w-32 h-32 md:w-48 md:h-48 flex-shrink-0 flex items-center justify-center">
           <img 

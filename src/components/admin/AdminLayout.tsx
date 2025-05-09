@@ -1,12 +1,13 @@
 
 import { useEffect } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import { Shield, AlertTriangle, Menu } from "lucide-react";
+import { Outlet, useNavigate, Link } from "react-router-dom";
+import { Shield, AlertTriangle, Menu, ToggleRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
 
 const AdminLayout = () => {
-  const { user, profile, isDevelopmentMode } = useAuth();
+  const { user, profile, isDevelopmentMode, toggleDevelopmentMode } = useAuth();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   
@@ -39,6 +40,23 @@ const AdminLayout = () => {
         <div className="flex items-center gap-2 mb-2">
           <Shield className="h-5 w-5 text-yellow-500" />
           <h2 className="text-lg font-medium text-yellow-500">Admin Area</h2>
+          
+          <div className="ml-auto flex items-center gap-2">
+            <Button 
+              variant="outline" 
+              size="sm"
+              className={`h-7 ${isDevelopmentMode ? 'bg-yellow-950/50 border-yellow-500/50' : ''}`}
+              onClick={toggleDevelopmentMode}
+            >
+              <ToggleRight className={`h-4 w-4 mr-1 ${isDevelopmentMode ? 'text-yellow-500' : ''}`} />
+              <span className="text-xs">
+                {isDevelopmentMode ? 'Dev Mode: ON' : 'Dev Mode: OFF'}
+              </span>
+            </Button>
+            <Button variant="ghost" size="sm" className="h-7" asChild>
+              <Link to="/dashboard" className="text-xs">Back to Dashboard</Link>
+            </Button>
+          </div>
         </div>
         <p className="text-sm text-yellow-300/70">
           You are currently in the administration area.

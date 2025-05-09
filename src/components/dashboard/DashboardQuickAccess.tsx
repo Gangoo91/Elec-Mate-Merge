@@ -7,6 +7,12 @@ const DashboardQuickAccess = () => {
   const { isDevelopmentMode, profile } = useAuth();
   const isAdmin = profile?.role === "admin" || isDevelopmentMode;
 
+  console.log("DashboardQuickAccess rendering:", { 
+    isDevelopmentMode, 
+    profileRole: profile?.role, 
+    isAdmin 
+  });
+
   return (
     <div className="bg-elec-gray/70 border border-elec-yellow/20 rounded-lg p-6">
       <h2 className="text-xl font-semibold mb-4">Quick Access</h2>
@@ -26,7 +32,8 @@ const DashboardQuickAccess = () => {
           icon={<Wrench className="ml-1 h-4 w-4" />}
         />
         
-        {isAdmin && (
+        {/* Always show admin card when in development mode */}
+        {(isAdmin || isDevelopmentMode) && (
           <QuickAccessCard
             title="Admin Dashboard"
             description="Access administrative controls and system settings"
