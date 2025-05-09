@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, GraduationCap } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { ealLevel2Units } from "@/data/courseUnits";
+import { ealLevel3Units } from "@/data/courseUnitsLevel3";
 import UnitDetails from "@/components/apprentice/UnitDetails";
 
 const CourseDetail = () => {
@@ -32,7 +32,7 @@ const CourseDetail = () => {
   // If we have a unitSlug parameter, show the unit details instead of the course listing
   if (unitSlug) {
     // Find the unit that matches the unitSlug
-    const unit = ealLevel2Units.find(unit => {
+    const unit = ealLevel3Units.find(unit => {
       const generatedSlug = createUnitSlug(unit.code, unit.title);
       return generatedSlug === unitSlug;
     });
@@ -58,7 +58,7 @@ const CourseDetail = () => {
             <span className="gradient-text">{courseTitle}</span>
           </h1>
           <p className="text-muted-foreground text-sm sm:text-base">
-            EAL Level 2 qualification with essential electrical units
+            EAL Level 3 qualification with advanced electrical units
           </p>
         </div>
         <Link to="/apprentice/study/eal" className="w-full sm:w-auto">
@@ -73,7 +73,7 @@ const CourseDetail = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {ealLevel2Units.map((unit, index) => {
+        {ealLevel3Units.map((unit, index) => {
           const unitSlug = createUnitSlug(unit.code, unit.title);
           return (
             <Link 
