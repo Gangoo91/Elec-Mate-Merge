@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { useParams, Link, Route, Routes } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, GraduationCap } from "lucide-react";
@@ -15,11 +15,16 @@ const CourseDetail = () => {
   
   // Determine which level to use based on the courseSlug
   const getUnitsForCourse = (slug?: string) => {
-    if (slug?.includes('level-3')) {
+    if (!slug) return [];
+    
+    if (slug.startsWith('level-3')) {
       return ealLevel3Units;
+    } else if (slug.startsWith('level-2')) {
+      return ealLevel2Units;
+    } else {
+      // Default to level 2 units for legacy routes
+      return ealLevel2Units;
     }
-    // Default to level 2 units for all other courses
-    return ealLevel2Units;
   };
   
   const courseUnits = getUnitsForCourse(courseSlug);
@@ -28,6 +33,7 @@ const CourseDetail = () => {
   const formatCourseTitle = (slug?: string) => {
     if (!slug) return "";
     return slug
+      .replace(/^level-[23]-/, '') // Remove level prefix
       .split("-")
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
@@ -36,7 +42,7 @@ const CourseDetail = () => {
   const courseTitle = formatCourseTitle(courseSlug);
   
   // Determine course level for display
-  const isLevel3 = courseSlug?.includes('level-3');
+  const isLevel3 = courseSlug?.startsWith('level-3');
   const levelDisplay = isLevel3 ? "Level 3" : "Level 2";
   const levelDescription = isLevel3 
     ? "Advanced electrical units for qualified professionals"

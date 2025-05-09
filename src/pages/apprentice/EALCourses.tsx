@@ -11,23 +11,29 @@ const EALCourses = () => {
   // Find the EAL courses category
   const ealCategory = courseCategories.find(category => category.id === "eal");
   
-  // Add level information to each course slug
+  // Process course information to create proper slugs and level information
   const courses = ealCategory?.courses.map(course => {
+    let level = "";
+    let slug = "";
+    
     if (course.includes("Level 2")) {
-      return {
-        title: course,
-        slug: `level-2-${course.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '')}`
-      };
+      level = "Level 2";
+      slug = `level-2-${course.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '')}`;
     } else if (course.includes("Level 3")) {
-      return {
-        title: course,
-        slug: `level-3-${course.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '')}`
-      };
+      level = "Level 3";
+      slug = `level-3-${course.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '')}`;
+    } else if (course.includes("Level 4")) {
+      level = "Level 4";
+      slug = `level-4-${course.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '')}`;
+    } else {
+      // Default case for other courses
+      slug = course.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
     }
-    // Default case for other courses
+    
     return {
       title: course,
-      slug: course.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '')
+      slug: slug,
+      level: level
     };
   }) || [];
 
@@ -91,6 +97,7 @@ const EALCourses = () => {
             >
               <CardContent className="flex flex-col items-center justify-center p-6 h-full">
                 <BookOpen className="h-8 w-8 text-elec-yellow mb-4 opacity-80" />
+                <p className="text-elec-yellow text-xs mb-1">{course.level}</p>
                 <h3 className={`text-base sm:text-lg font-medium text-center ${isMobile ? "leading-tight" : ""}`}>
                   {formatCourseTitle(course.title)}
                 </h3>
