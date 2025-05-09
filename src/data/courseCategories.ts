@@ -25,7 +25,7 @@ export const courseCategories = [
       "Level 2 Electrical Installation",
       "Level 3 Electrical Installation",
       "2391 Inspection & Testing",
-      "Management of Electrical Testing (MOET)",
+      "Maintenance Operability Electrical Testing (MOET)",
       "18th Edition Wiring Regulations",
       "2377 PAT Testing"
     ]

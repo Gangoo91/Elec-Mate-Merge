@@ -27,8 +27,8 @@ const CityGuildsCourses = () => {
     },
     {
       id: "moet",
-      title: "Management of Electrical Testing (MOET)",
-      description: "Advanced competency in managing electrical testing procedures"
+      title: "Maintenance Operability Electrical Testing (MOET)",
+      description: "Advanced competency in maintenance and operability of electrical systems"
     },
     {
       id: "18th-edition",
