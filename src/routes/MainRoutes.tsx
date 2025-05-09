@@ -33,6 +33,9 @@ const MainRoutes = () => (
         <Route path="users" element={<AdminUsers />} />
         <Route path="quote-library" element={<QuoteLibrary />} />
       </Route>
+      
+      {/* Add direct access to quote library from electrician tools */}
+      <Route path="electrician-tools/quote-library" element={<QuoteLibrary />} />
 
       <Route path="apprentice/*" element={<ApprenticeRoutes />} />
       <Route path="electrician-tools/*" element={<ElectricianRoutes />} />

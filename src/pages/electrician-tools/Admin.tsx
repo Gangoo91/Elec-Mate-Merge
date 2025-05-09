@@ -1,7 +1,6 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, FileText, ClipboardList, Briefcase, CheckCircle, AlertCircle, FileCheck, Users } from "lucide-react";
+import { ArrowLeft, FileText, ClipboardList, Briefcase, CheckCircle, AlertCircle, FileCheck, Users, Book } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 
@@ -22,11 +21,18 @@ const Admin = () => {
             Streamline your electrical business administration and documentation.
           </p>
         </div>
-        <Link to="/electrician-tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Tools
-          </Button>
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link to="/electrician-tools">
+            <Button variant="outline" className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" /> Back to Tools
+            </Button>
+          </Link>
+          <Link to="/admin/quote-library">
+            <Button variant="default" className="flex items-center gap-2">
+              <Book className="h-4 w-4" /> Quote Library
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
