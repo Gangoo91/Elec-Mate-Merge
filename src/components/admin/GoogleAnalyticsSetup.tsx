@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
-import { BarChart3, ArrowRight, Check, ExternalLink, Key, Loader2 } from "lucide-react";
+import { BarChart3, ArrowRight, Check, ExternalLink, Key } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { supabase } from "@/integrations/supabase/client";
@@ -20,27 +20,11 @@ const GoogleAnalyticsSetup = () => {
   const [authTab, setAuthTab] = useState('measurement-id');
   const [isCheckingCredentials, setIsCheckingCredentials] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [isLive, setIsLive] = useState(false);
-  const [isAuthenticating, setIsAuthenticating] = useState(false);
   
-  const { isInitialized, isLoading, initialize, trackEvent } = useGoogleAnalytics({
+  const { isInitialized, isLoading, initialize } = useGoogleAnalytics({
     analyticsId: gaId,
     enabled: false, // Don't auto-initialize, we'll do it manually
   });
-  
-  // Check if the integration is already live
-  useEffect(() => {
-    const checkLiveStatus = () => {
-      const gaEnabled = localStorage.getItem('elecmate-ga-enabled') === 'true';
-      const gaInitialized = localStorage.getItem('elecmate-ga-initialized') === 'true';
-      
-      if (gaEnabled && gaInitialized) {
-        setIsLive(true);
-      }
-    };
-    
-    checkLiveStatus();
-  }, []);
   
   // Check if the function has the required secret
   useEffect(() => {
@@ -91,75 +75,43 @@ const GoogleAnalyticsSetup = () => {
       if (authTab === 'measurement-id') {
         localStorage.setItem('elecmate-ga-id', gaId);
         localStorage.removeItem('elecmate-ga-oauth-client-id');
-        
-        if (enabled) {
-          const success = await initialize(gaId);
-          if (success) {
-            localStorage.setItem('elecmate-ga-initialized', 'true');
-            setIsLive(true);
-            
-            // Track an initial page view event to confirm it's working
-            trackEvent('page_view', { 
-              page_title: 'Admin Analytics',
-              page_path: '/admin/analytics'
-            });
-            
-            toast({
-              title: "Analytics Now Live",
-              description: "Google Analytics is now tracking site activity with your Measurement ID.",
-            });
-          }
-        }
       } else {
-        // OAuth implementation
-        setIsAuthenticating(true);
         localStorage.setItem('elecmate-ga-oauth-client-id', oauthClientId);
         localStorage.setItem('elecmate-ga-id', ''); // Clear measurement ID when using OAuth
-        
-        try {
-          const { data, error } = await supabase.functions.invoke('google-analytics-init', {
-            body: { 
-              oauthClientId, 
-              setupOAuth: true,
-              activateTracking: enabled
-            }
-          });
-          
-          if (error) throw new Error(error.message);
-          
-          // Handle successful OAuth setup
-          if (data?.success) {
-            if (enabled) {
-              localStorage.setItem('elecmate-ga-initialized', 'true');
-              setIsLive(true);
-              
-              toast({
-                title: "Analytics Now Live",
-                description: "Google Analytics is now tracking site activity via OAuth authentication.",
-              });
-            } else {
-              localStorage.setItem('elecmate-ga-initialized', 'false');
-              setIsLive(false);
-              
-              toast({
-                title: "OAuth Setup Complete",
-                description: "OAuth configuration saved but tracking is disabled. Enable tracking to go live.",
-              });
-            }
-          }
-        } catch (err: any) {
-          throw new Error(`OAuth Setup Failed: ${err.message}`);
-        } finally {
-          setIsAuthenticating(false);
-        }
       }
       
       localStorage.setItem('elecmate-ga-enabled', enabled.toString());
       
-      if (!enabled) {
-        localStorage.setItem('elecmate-ga-initialized', 'false');
-        setIsLive(false);
-        
+      if (enabled) {
+        if (authTab === 'measurement-id') {
+          const success = await initialize(gaId);
+          if (success) {
+            toast({
+              title: "Analytics Enabled",
+              description: "Google Analytics has been successfully configured with Measurement ID.",
+            });
+          }
+        } else {
+          // OAuth implementation
+          try {
+            const { data, error } = await supabase.functions.invoke('google-analytics-init', {
+              body: { 
+                oauthClientId, 
+                setupOAuth: true 
+              }
+            });
+            
+            if (error) throw new Error(error.message);
+            
+            toast({
+              title: "OAuth Setup Initiated",
+              description: "Google Analytics OAuth setup has been initiated. Check console for any additional steps.",
+            });
+          } catch (err: any) {
+            throw new Error(`OAuth Setup Failed: ${err.message}`);
+          }
+        }
+      } else {
         toast({
           title: "Analytics Disabled",
           description: "Google Analytics integration has been disabled.",
@@ -208,32 +160,9 @@ const GoogleAnalyticsSetup = () => {
       setIsCheckingCredentials(false);
     }
   };
-
-  const handleVerifyTracking = async () => {
-    if (isLive) {
-      try {
-        // Send a test event to verify tracking is working
-        await trackEvent('test_event', { 
-          test_source: 'admin_panel',
-          test_time: new Date().toISOString()
-        });
-        
-        toast({
-          title: "Test Event Sent",
-          description: "A test event was successfully sent to Google Analytics.",
-        });
-      } catch (err: any) {
-        toast({
-          title: "Test Failed",
-          description: err.message,
-          variant: "destructive",
-        });
-      }
-    }
-  };
   
   return (
-    <Card className="h-full flex flex-col">
+    <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BarChart3 className="h-5 w-5 text-elec-yellow" />
@@ -243,26 +172,9 @@ const GoogleAnalyticsSetup = () => {
           Connect your Google Analytics account to track user behavior and gain deeper insights
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex-grow overflow-hidden flex flex-col">
-        <ScrollArea className="flex-grow pr-4">
+      <CardContent>
+        <ScrollArea className="h-[400px] pr-4">
           <div className="space-y-4">
-            {isLive && (
-              <Alert className="bg-emerald-500/10 border border-emerald-500/20">
-                <Check className="h-4 w-4 text-emerald-500" />
-                <AlertTitle>Google Analytics is Live</AlertTitle>
-                <AlertDescription className="text-sm text-muted-foreground">
-                  User activity is now being tracked and sent to Google Analytics.
-                  <Button 
-                    onClick={handleVerifyTracking} 
-                    variant="link" 
-                    className="p-0 h-auto text-sm text-emerald-500 ml-2"
-                  >
-                    Send Test Event
-                  </Button>
-                </AlertDescription>
-              </Alert>
-            )}
-            
             <Tabs value={authTab} onValueChange={setAuthTab} className="w-full">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="measurement-id">Measurement ID</TabsTrigger>
@@ -316,17 +228,8 @@ const GoogleAnalyticsSetup = () => {
                     disabled={isCheckingCredentials}
                     className="flex items-center gap-2"
                   >
-                    {isCheckingCredentials ? (
-                      <>
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                        Checking...
-                      </>
-                    ) : (
-                      <>
-                        Check API Credentials
-                        <Key className="h-4 w-4" />
-                      </>
-                    )}
+                    {isCheckingCredentials ? "Checking..." : "Check API Credentials"}
+                    <Key className="h-4 w-4" />
                   </Button>
                 </div>
               </TabsContent>
@@ -344,27 +247,24 @@ const GoogleAnalyticsSetup = () => {
             <div className="pt-2">
               <Button 
                 onClick={handleSave} 
-                disabled={isLoading || isSaving || isAuthenticating}
+                disabled={isLoading || isSaving}
                 className="flex items-center gap-2"
               >
-                {isAuthenticating ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Authenticating...
-                  </>
-                ) : isSaving ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    Saving...
-                  </>
-                ) : (
-                  <>
-                    Save & Activate
-                    {isLive ? <Check className="h-4 w-4" /> : <ArrowRight className="h-4 w-4" />}
-                  </>
-                )}
+                {isSaving ? "Saving..." : "Save Configuration"}
+                {isInitialized ? <Check className="h-4 w-4" /> : <ArrowRight className="h-4 w-4" />}
               </Button>
             </div>
+            
+            {isInitialized && (
+              <div className="mt-4 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-md">
+                <p className="text-sm text-emerald-400 font-medium">
+                  Google Analytics is successfully connected
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Analytics data is now being collected and will appear in your Google Analytics dashboard.
+                </p>
+              </div>
+            )}
             
             <div className="mt-6 pt-4 border-t border-elec-yellow/20">
               <h4 className="font-medium mb-2">What data is being collected?</h4>
