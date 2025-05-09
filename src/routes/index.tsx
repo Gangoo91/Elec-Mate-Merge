@@ -1,4 +1,5 @@
 
+import { Fragment } from "react";
 import { Route } from "react-router-dom";
 import Layout from "../components/layout/Layout";
 import { mainRoutes } from "./mainRoutes";
@@ -11,9 +12,10 @@ import Index from "@/pages/Index";
 
 /**
  * Root routes component that combines all route modules
+ * Must return a Fragment containing Route components for React Router v6
  */
 export const AppRoutes = () => (
-  <>
+  <Fragment>
     {/* Public Routes */}
     <Route path="/" element={<LandingPage />} />
     <Route path="/index" element={<Index />} />
@@ -32,5 +34,5 @@ export const AppRoutes = () => (
       {/* Apprentice Routes */}
       {apprenticeRoutes}
     </Route>
-  </>
+  </Fragment>
 );
