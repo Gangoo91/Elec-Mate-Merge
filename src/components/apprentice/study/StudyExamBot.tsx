@@ -1,8 +1,9 @@
 
-import { Bot, BookOpen } from "lucide-react";
+import { Bot } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import ExamTypesGrid from "./exam-bot/ExamTypesGrid";
+import QuizButton from "./exam-bot/QuizButton";
 
 const StudyExamBot = () => {
   const [isGenerating, setIsGenerating] = useState(false);
@@ -33,32 +34,9 @@ const StudyExamBot = () => {
             and areas that need improvement. Questions follow the format of UK electrical qualification exams.
           </p>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-            <div className="p-3 border rounded-md border-elec-yellow/20 bg-elec-dark flex items-center gap-2">
-              <BookOpen className="h-4 w-4 text-elec-yellow" />
-              <span>EAL Level 2 Questions</span>
-            </div>
-            <div className="p-3 border rounded-md border-elec-yellow/20 bg-elec-dark flex items-center gap-2">
-              <BookOpen className="h-4 w-4 text-elec-yellow" />
-              <span>EAL Level 3 Questions</span>
-            </div>
-            <div className="p-3 border rounded-md border-elec-yellow/20 bg-elec-dark flex items-center gap-2">
-              <BookOpen className="h-4 w-4 text-elec-yellow" />
-              <span>City & Guilds Questions</span>
-            </div>
-            <div className="p-3 border rounded-md border-elec-yellow/20 bg-elec-dark flex items-center gap-2">
-              <BookOpen className="h-4 w-4 text-elec-yellow" />
-              <span>AM2 Prep Questions</span>
-            </div>
-          </div>
+          <ExamTypesGrid />
           
-          <Button 
-            className="w-full" 
-            onClick={handleStartQuiz}
-            disabled={isGenerating}
-          >
-            {isGenerating ? "Generating Questions..." : "Start Practice Quiz"}
-          </Button>
+          <QuizButton isGenerating={isGenerating} onClick={handleStartQuiz} />
         </div>
       </CardContent>
     </Card>
