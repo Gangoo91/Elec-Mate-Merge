@@ -1,119 +1,103 @@
 
-import { Button } from "@/components/ui/button";
-import { Calculator } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { BarChart4 } from "lucide-react";
 import { useState } from "react";
-
-type Appliance = {
-  id: number;
-  name: string;
-  watts: string;
-};
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 const LoadCalculator = () => {
-  const [voltage, setVoltage] = useState<string>("230");
-  const [appliances, setAppliances] = useState<Appliance[]>([
-    { id: 1, name: "", watts: "" },
-    { id: 2, name: "", watts: "" },
-  ]);
-  const [totalPower, setTotalPower] = useState<string | null>(null);
-  const [totalCurrent, setTotalCurrent] = useState<string | null>(null);
+  const [lighting, setLighting] = useState<string>("");
+  const [sockets, setSockets] = useState<string>("");
+  const [heating, setHeating] = useState<string>("");
+  const [cooker, setCooker] = useState<string>("");
+  const [totalLoad, setTotalLoad] = useState<number | null>(null);
 
-  const handleApplianceChange = (id: number, field: "name" | "watts", value: string) => {
-    setAppliances(appliances.map(app => 
-      app.id === id ? { ...app, [field]: value } : app
-    ));
-  };
-
-  const addAppliance = () => {
-    const newId = appliances.length > 0 ? Math.max(...appliances.map(a => a.id)) + 1 : 1;
-    setAppliances([...appliances, { id: newId, name: "", watts: "" }]);
-  };
-
-  const calculateLoad = () => {
-    const totalWatts = appliances.reduce((sum, app) => {
-      const watts = parseFloat(app.watts);
-      return sum + (isNaN(watts) ? 0 : watts);
-    }, 0);
+  const calculateTotalLoad = () => {
+    const lightingLoad = parseFloat(lighting) || 0;
+    const socketLoad = parseFloat(sockets) || 0;
+    const heatingLoad = parseFloat(heating) || 0;
+    const cookerLoad = parseFloat(cooker) || 0;
     
-    const volts = parseFloat(voltage);
-    if (isNaN(volts) || volts === 0) return;
+    // Apply diversity factors
+    const socketLoadWithDiversity = socketLoad * 0.6; // 60% diversity for socket outlets
+    const heatingLoadWithDiversity = heatingLoad * 0.8; // 80% diversity for heating
     
-    setTotalPower(totalWatts.toFixed(0));
-    setTotalCurrent((totalWatts / volts).toFixed(2));
+    const total = lightingLoad + socketLoadWithDiversity + heatingLoadWithDiversity + cookerLoad;
+    setTotalLoad(total);
   };
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Calculator className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>Load Calculator</CardTitle>
+          <BarChart4 className="h-5 w-5 text-elec-yellow" />
+          <CardTitle>Load Assessment Calculator</CardTitle>
         </div>
         <CardDescription>
-          Calculate the total load on a circuit based on connected appliances.
+          Calculate total electrical load with diversity factors for installations.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="voltage">Supply Voltage (V)</Label>
+            <Label htmlFor="lighting-load">Lighting Load (W)</Label>
             <Input 
-              id="voltage" 
+              id="lighting-load" 
               type="number" 
-              value={voltage} 
-              onChange={(e) => setVoltage(e.target.value)}
+              placeholder="Enter lighting load" 
               className="bg-elec-dark border-elec-yellow/20"
+              value={lighting}
+              onChange={(e) => setLighting(e.target.value)}
             />
           </div>
           <div className="space-y-2">
-            <Label>Appliances</Label>
-            <div className="space-y-2">
-              {appliances.map(appliance => (
-                <div key={appliance.id} className="flex gap-2">
-                  <Input 
-                    placeholder="Name" 
-                    value={appliance.name}
-                    onChange={(e) => handleApplianceChange(appliance.id, "name", e.target.value)}
-                    className="bg-elec-dark border-elec-yellow/20"
-                  />
-                  <Input 
-                    type="number" 
-                    placeholder="Watts" 
-                    value={appliance.watts}
-                    onChange={(e) => handleApplianceChange(appliance.id, "watts", e.target.value)}
-                    className="bg-elec-dark border-elec-yellow/20"
-                  />
-                </div>
-              ))}
-            </div>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="w-full mt-2"
-              onClick={addAppliance}
-            >
-              + Add Appliance
-            </Button>
+            <Label htmlFor="socket-load">Socket Outlets Load (W)</Label>
+            <Input 
+              id="socket-load" 
+              type="number" 
+              placeholder="Enter socket outlets load" 
+              className="bg-elec-dark border-elec-yellow/20"
+              value={sockets}
+              onChange={(e) => setSockets(e.target.value)}
+            />
+            <p className="text-xs text-muted-foreground">60% diversity factor applied</p>
           </div>
-          <Button className="w-full" onClick={calculateLoad}>Calculate Total Load</Button>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="rounded-md bg-elec-dark p-3 text-center">
-              <div className="text-xs text-muted-foreground">Total Power:</div>
-              <div className="text-xl font-bold text-elec-yellow">
-                {totalPower ? `${totalPower} W` : '-- W'}
-              </div>
-            </div>
-            <div className="rounded-md bg-elec-dark p-3 text-center">
-              <div className="text-xs text-muted-foreground">Total Current:</div>
-              <div className="text-xl font-bold text-elec-yellow">
-                {totalCurrent ? `${totalCurrent} A` : '-- A'}
-              </div>
-            </div>
+          <div className="space-y-2">
+            <Label htmlFor="heating-load">Heating Load (W)</Label>
+            <Input 
+              id="heating-load" 
+              type="number" 
+              placeholder="Enter heating load" 
+              className="bg-elec-dark border-elec-yellow/20"
+              value={heating}
+              onChange={(e) => setHeating(e.target.value)}
+            />
+            <p className="text-xs text-muted-foreground">80% diversity factor applied</p>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="cooker-load">Cooker Load (W)</Label>
+            <Input 
+              id="cooker-load" 
+              type="number" 
+              placeholder="Enter cooker load" 
+              className="bg-elec-dark border-elec-yellow/20"
+              value={cooker}
+              onChange={(e) => setCooker(e.target.value)}
+            />
           </div>
         </div>
+        
+        <Button className="w-full" onClick={calculateTotalLoad}>Calculate Total Load</Button>
+        
+        <div className="rounded-md bg-elec-dark p-4 text-center">
+          <div className="text-sm text-muted-foreground">Total Estimated Load:</div>
+          <div className="text-2xl font-bold text-elec-yellow">{totalLoad ? `${totalLoad.toFixed(2)} W (${(totalLoad / 1000).toFixed(2)} kW)` : '-- W'}</div>
+        </div>
+        
+        <p className="text-xs text-muted-foreground">
+          This calculation includes standard diversity factors as per electrical regulations. For precise calculations, consider additional factors like power factor and simultaneity.
+        </p>
       </CardContent>
     </Card>
   );
