@@ -11,6 +11,7 @@ import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import CareerProgression from "@/pages/apprentice/CareerProgression";
 import CourseDetail from "@/pages/apprentice/CourseDetail";
 import EALCourses from "@/pages/apprentice/EALCourses";
+import HigherLearningCourses from "@/pages/apprentice/HigherLearningCourses";
 import CityGuildsCourses from "@/pages/apprentice/CityGuildsCourses";
 import OnJobTools from "@/pages/apprentice/OnJobTools";
 import OnJobCalculations from "@/pages/apprentice/OnJobCalculations";
@@ -64,6 +65,9 @@ const ApprenticeRoutes = () => {
         <Route path="ai-learning" element={<AILearning />} />
         <Route path="eal" element={<EALCourses />} />
         <Route path="cityGuilds" element={<CityGuildsCourses />} />
+        <Route path="higher" element={<HigherLearningCourses />} /> {/* Added this route */}
+        <Route path="further" element={<CourseDetail />} /> {/* Added a basic route for further courses */}
+        <Route path="onJob" element={<CourseDetail />} /> {/* Added a basic route for on-job courses */}
         
         {/* General EAL route for backward compatibility */}
         <Route path="eal/:courseSlug" element={<CourseDetail />} />
