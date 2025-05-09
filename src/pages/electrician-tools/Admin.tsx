@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, FileText, ClipboardList, Briefcase, CheckCircle, AlertCircle, FileCheck, Users, Book } from "lucide-react";
@@ -27,7 +28,7 @@ const Admin = () => {
               <ArrowLeft className="h-4 w-4" /> Back to Tools
             </Button>
           </Link>
-          <Link to="/admin/quote-library">
+          <Link to="/electrician-tools/quote-library">
             <Button variant="default" className="flex items-center gap-2">
               <Book className="h-4 w-4" /> Quote Library
             </Button>

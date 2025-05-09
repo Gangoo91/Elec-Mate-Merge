@@ -52,7 +52,7 @@ const ElectricalHub = () => {
       title: "Quote Library",
       description: "Generate professional quotes for electrical jobs with AI assistance",
       icon: <FileText className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/admin/quote-library"
+      link: "/electrician-tools/quote-library"
     }
   ];
 

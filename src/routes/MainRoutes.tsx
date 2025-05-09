@@ -12,10 +12,12 @@ import AdminLayout from "@/components/admin/AdminLayout";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import AdminSettings from "@/pages/admin/Settings";
 import AdminUsers from "@/pages/admin/Users";
-import QuoteLibrary from "@/pages/admin/QuoteLibrary";
 
 const ApprenticeRoutes = lazy(() => import("@/routes/ApprenticeRoutes"));
 const ElectricianRoutes = lazy(() => import("@/routes/ElectricianRoutes"));
+
+// Import QuoteLibrary from electrician-tools path instead
+import QuoteLibrary from "@/pages/electrician-tools/QuoteLibrary";
 
 const MainRoutes = () => (
   <Routes>
@@ -31,10 +33,10 @@ const MainRoutes = () => (
         <Route index element={<AdminDashboard />} />
         <Route path="settings" element={<AdminSettings />} />
         <Route path="users" element={<AdminUsers />} />
-        <Route path="quote-library" element={<QuoteLibrary />} />
+        {/* Remove quote-library from here */}
       </Route>
-      
-      {/* Add direct access to quote library from electrician tools */}
+
+      {/* Place quote library in the electrician-tools section only */}
       <Route path="electrician-tools/quote-library" element={<QuoteLibrary />} />
 
       <Route path="apprentice/*" element={<ApprenticeRoutes />} />
