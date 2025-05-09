@@ -65,8 +65,8 @@ const AILearning = () => {
   
   return (
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">AI Learning Tools</h1>
+      <div className="flex flex-col items-center justify-center mb-4">
+        <h1 className="text-3xl font-bold tracking-tight mb-4">AI Learning Tools</h1>
         <BackButton customUrl="/apprentice/study" label="Back to Study Centre" />
       </div>
       
