@@ -1,11 +1,9 @@
 
 import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
-import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import SignIn from "@/pages/auth/SignIn";
 import SignUp from "@/pages/auth/SignUp";
 import PaymentSuccess from "@/pages/PaymentSuccess";
-import { AuthRoutes } from "./AuthRoutes";
 import { MainRoutes } from "./MainRoutes";
 import { ElectricianRoutes } from "./ElectricianRoutes";
 import { ApprenticeRoutes } from "./ApprenticeRoutes";
@@ -26,19 +24,29 @@ const AppRouter = () => {
         <Route path="/" element={<Navigate to="/electrician" replace />} />
         
         {/* Main routes */}
-        <MainRoutes />
+        <Route>
+          <MainRoutes />
+        </Route>
         
         {/* Electrician routes */}
-        <ElectricianRoutes />
+        <Route>
+          <ElectricianRoutes />
+        </Route>
         
         {/* Electrician tools routes */}
-        <ElectricianToolsRoutes />
+        <Route>
+          <ElectricianToolsRoutes />
+        </Route>
         
         {/* Apprentice routes */}
-        <ApprenticeRoutes />
+        <Route>
+          <ApprenticeRoutes />
+        </Route>
         
         {/* Admin routes */}
-        <AdminRoutes />
+        <Route>
+          <AdminRoutes />
+        </Route>
         
         {/* Catch-all route */}
         <Route path="*" element={<NotFound />} />
