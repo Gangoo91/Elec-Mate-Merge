@@ -3,13 +3,15 @@ import { Session, User } from '@supabase/supabase-js';
 
 export type ProfileType = {
   id: string;
-  username?: string | null;
-  full_name?: string | null;
-  avatar_url?: string | null;
-  bio?: string | null;
-  updated_at?: string | null;
-  created_at?: string | null;
-  subscribed?: boolean | null;
+  username: string;
+  full_name: string;
+  avatar_url: string;
+  role?: 'admin' | 'electrician' | 'apprentice' | 'visitor' | 'employer'; // Added role field
+  created_at?: string;
+  updated_at?: string;
+  bio?: string;
+  location?: string;
+  website?: string;
 };
 
 export type AuthContextType = {
@@ -20,15 +22,14 @@ export type AuthContextType = {
   isTrialActive: boolean;
   trialEndsAt: Date | null;
   isSubscribed: boolean;
-  subscriptionTier?: string | null;
+  subscriptionTier: string | null;
   isCheckingStatus: boolean;
-  lastError?: string | null;
-  lastCheckedAt?: Date | null;
+  lastError: string | null;
+  lastCheckedAt: Date | null;
   checkSubscriptionStatus: () => Promise<void>;
-  fetchProfile?: (userId: string) => Promise<ProfileType | null>;
   isDevelopmentMode: boolean;
   toggleDevelopmentMode: () => void;
-  signIn: (email: string, password: string) => Promise<{ error: any | null }>;
-  signUp: (email: string, password: string, fullName: string) => Promise<{ error: any | null }>;
+  signIn: (email: string, password: string) => Promise<{ error: any; user?: User | undefined }>;
+  signUp: (email: string, password: string, fullName: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
 };

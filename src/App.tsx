@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
@@ -81,6 +80,12 @@ import InspectionAreas from "./components/apprentice/resources/InspectionAreas";
 import InspectionDocumentation from "./components/apprentice/resources/InspectionDocumentation";
 import InspectionRegulations from "./components/apprentice/resources/InspectionRegulations";
 
+// Admin imports
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminDashboard from "./pages/admin";
+import AdminUsers from "./pages/admin/Users";
+import AdminSettings from "./pages/admin/Settings";
+
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -102,6 +107,14 @@ function App() {
                 <Route path="messages" element={<Messenger />} />
                 <Route path="subscriptions" element={<Subscriptions />} />
                 <Route path="payment-success" element={<PaymentSuccess />} />
+                
+                {/* Admin Routes - Nested under the protected layout */}
+                <Route path="admin" element={<AdminLayout />}>
+                  <Route index element={<AdminDashboard />} />
+                  <Route path="users" element={<AdminUsers />} />
+                  <Route path="settings" element={<AdminSettings />} />
+                </Route>
+                
                 <Route path="electrician-tools" element={<ElectricianTools />} />
                 <Route path="electrician-tools/project-management" element={<ProjectManagement />} />
                 <Route path="electrician-tools/project-management/project/:projectId" element={<ProjectManagement />} />
