@@ -22,12 +22,8 @@ const SubsectionsNavigation = ({
 }: SubsectionsNavigationProps) => {
   const { courseSlug, unitSlug, sectionId } = useParams();
   
-  console.log("SubsectionsNavigation params:", { courseSlug, unitSlug, sectionId, currentSubsectionId });
-  console.log("Available subsections:", subsections.map(s => s.id));
-  
   // Find current subsection index
   const currentIndex = subsections.findIndex(sub => sub.id === currentSubsectionId);
-  console.log("Current subsection index:", currentIndex);
   
   const prevSubsection = currentIndex > 0 ? subsections[currentIndex - 1] : null;
   const nextSubsection = currentIndex < subsections.length - 1 ? subsections[currentIndex + 1] : null;

@@ -10,11 +10,14 @@ interface CourseProps {
   description: string;
   icon: LucideIcon;
   courses: string[];
+  baseUrl?: string;
 }
 
-const CourseCard = ({ id, title, icon: Icon }: CourseProps) => {
+const CourseCard = ({ id, title, icon: Icon, baseUrl = "/apprentice/study" }: CourseProps) => {
+  const linkPath = `${baseUrl}/${id}`;
+  
   return (
-    <Link to={`/apprentice/study/${id}`} className="block h-full">
+    <Link to={linkPath} className="block h-full">
       <Card 
         className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-colors cursor-pointer flex flex-col justify-center items-center py-8"
       >

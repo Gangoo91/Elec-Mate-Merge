@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Shield, BookOpen, Users } from "lucide-react";
 import { HealthSafetyUnit } from "@/components/apprentice/units";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import BackButton from "@/components/apprentice/BackButton";
+import BackButton from "@/components/common/BackButton";
 
 const SectionContent = () => {
   const { courseSlug, unitSlug, sectionId } = useParams();

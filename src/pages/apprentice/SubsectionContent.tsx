@@ -2,7 +2,7 @@
 import { useParams } from "react-router-dom";
 import SubsectionLearningContent from "@/components/apprentice/subsection/SubsectionLearningContent";
 import { useState, useEffect } from "react";
-import BackButton from "@/components/apprentice/BackButton";
+import BackButton from "@/components/common/BackButton";
 
 const SubsectionContent = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();

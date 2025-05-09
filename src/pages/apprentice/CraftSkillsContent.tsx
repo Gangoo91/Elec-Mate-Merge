@@ -1,9 +1,10 @@
+
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import { craftSkillsContent } from "@/data/craftSkills/index";
 import type { SectionData, Subsection } from "@/data/healthAndSafety/types";
-import BackButton from "@/components/apprentice/BackButton";
+import BackButton from "@/components/common/BackButton";
 
 const CraftSkillsContent = () => {
   const { sectionId, courseSlug, unitSlug } = useParams();

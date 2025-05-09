@@ -1,11 +1,10 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, BookOpen } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { installationMethodsContent } from "@/data/installationMethods/index";
 import type { SectionData, Subsection } from "@/data/healthAndSafety/types";
-import BackButton from "@/components/apprentice/BackButton";
+import BackButton from "@/components/common/BackButton";
 
 const InstallationMethodContent = () => {
   const { sectionId, courseSlug, unitSlug } = useParams();
