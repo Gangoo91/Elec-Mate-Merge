@@ -1,5 +1,4 @@
 
-import React from 'react';
 import { Route, Navigate } from "react-router-dom";
 import VideoLessons from "@/pages/VideoLessons";
 import Leaderboards from "@/pages/Leaderboards";
@@ -41,64 +40,66 @@ import InspectionAreas from "@/components/apprentice/resources/InspectionAreas";
 import InspectionDocumentation from "@/components/apprentice/resources/InspectionDocumentation";
 import InspectionRegulations from "@/components/apprentice/resources/InspectionRegulations";
 
-const ApprenticeRoutes = () => (
-  <React.Fragment>
-    <Route path="video-lessons" element={<VideoLessons />} />
-    <Route path="leaderboards" element={<Leaderboards />} />
-    
-    <Route path="apprentice">
-      <Route index element={<Navigate to="/apprentice/hub" replace />} />
-      <Route path="hub" element={<ApprenticeHub />} />
-      <Route path="chat" element={<ApprenticeChat />} />
-      <Route path="ai-tools" element={<ApprenticeAITools />} />
-      <Route path="mentor" element={<ApprenticeMentor />} />
-      <Route path="ojt" element={<ApprenticeOJT />} />
-      <Route path="toolbox" element={<ApprenticeToolbox />} />
-      <Route path="tools-guide" element={<ToolsGuide />} />
-      <Route path="mental-health" element={<ApprenticeMentalHealth />} />
-      <Route path="mental-health/stress-management" element={<StressManagement />} />
-      <Route path="mental-health/support-network" element={<SupportNetwork />} />
-      <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
-      <Route path="mental-health/crisis-resources" element={<CrisisResources />} />
-      <Route path="career-progression" element={<CareerProgression />} />
-      <Route path="on-job-tools" element={<OnJobTools />} />
-      <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
-      <Route path="on-job-tools/documents" element={<OnJobDocuments />} />
-      <Route path="on-job-tools/assessment" element={<OnJobAssessment />} />
+const ApprenticeRoutes = () => {
+  return (
+    <>
+      <Route path="video-lessons" element={<VideoLessons />} />
+      <Route path="leaderboards" element={<Leaderboards />} />
       
-      <Route path="study">
-        <Route index element={<ApprenticeStudy />} />
-        <Route path="eal" element={<EALCourses />} />
-        <Route path="cityGuilds" element={<CityGuildsCourses />} />
-        <Route path="eal/:courseSlug" element={<CourseDetail />} />
-        <Route path="eal/:courseSlug/unit/:unitSlug" element={<CourseDetail />} />
-        <Route path="eal/:courseSlug/unit/:unitSlug/quiz" element={<QuizContent />} />
-        <Route path="cityGuilds/:courseSlug" element={<CourseDetail />} />
+      <Route path="apprentice">
+        <Route index element={<Navigate to="/apprentice/hub" replace />} />
+        <Route path="hub" element={<ApprenticeHub />} />
+        <Route path="chat" element={<ApprenticeChat />} />
+        <Route path="ai-tools" element={<ApprenticeAITools />} />
+        <Route path="mentor" element={<ApprenticeMentor />} />
+        <Route path="ojt" element={<ApprenticeOJT />} />
+        <Route path="toolbox" element={<ApprenticeToolbox />} />
+        <Route path="tools-guide" element={<ToolsGuide />} />
+        <Route path="mental-health" element={<ApprenticeMentalHealth />} />
+        <Route path="mental-health/stress-management" element={<StressManagement />} />
+        <Route path="mental-health/support-network" element={<SupportNetwork />} />
+        <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
+        <Route path="mental-health/crisis-resources" element={<CrisisResources />} />
+        <Route path="career-progression" element={<CareerProgression />} />
+        <Route path="on-job-tools" element={<OnJobTools />} />
+        <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
+        <Route path="on-job-tools/documents" element={<OnJobDocuments />} />
+        <Route path="on-job-tools/assessment" element={<OnJobAssessment />} />
         
-        {/* Section and subsection routes */}
-        <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
-        <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
-        
-        {/* Installation method routes */}
-        <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId" element={<InstallationMethodContent />} />
-        <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
-        
-        {/* Craft skills routes */}
-        <Route path="eal/:courseSlug/unit/:unitSlug/craft-skills/:sectionId" element={<CraftSkillsContent />} />
-        <Route path="eal/:courseSlug/unit/:unitSlug/craft-skills/:sectionId/subsection/:subsectionId" element={<CraftSkillsSubsection />} />
-        
-        {/* Resource pages */}
-        <Route path="resources/communication-structures" element={<CommunicationStructures />} />
-        <Route path="resources/communication-methods" element={<CommunicationMethods />} />
-        <Route path="resources/safety-meetings" element={<SafetyMeetings />} />
-        <Route path="resources/documentation-systems" element={<DocumentationSystems />} />
-        <Route path="resources/inspection-types" element={<InspectionTypes />} />
-        <Route path="resources/inspection-areas" element={<InspectionAreas />} />
-        <Route path="resources/inspection-documentation" element={<InspectionDocumentation />} />
-        <Route path="resources/inspection-regulations" element={<InspectionRegulations />} />
+        <Route path="study">
+          <Route index element={<ApprenticeStudy />} />
+          <Route path="eal" element={<EALCourses />} />
+          <Route path="cityGuilds" element={<CityGuildsCourses />} />
+          <Route path="eal/:courseSlug" element={<CourseDetail />} />
+          <Route path="eal/:courseSlug/unit/:unitSlug" element={<CourseDetail />} />
+          <Route path="eal/:courseSlug/unit/:unitSlug/quiz" element={<QuizContent />} />
+          <Route path="cityGuilds/:courseSlug" element={<CourseDetail />} />
+          
+          {/* Section and subsection routes */}
+          <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
+          <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
+          
+          {/* Installation method routes */}
+          <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId" element={<InstallationMethodContent />} />
+          <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
+          
+          {/* Craft skills routes */}
+          <Route path="eal/:courseSlug/unit/:unitSlug/craft-skills/:sectionId" element={<CraftSkillsContent />} />
+          <Route path="eal/:courseSlug/unit/:unitSlug/craft-skills/:sectionId/subsection/:subsectionId" element={<CraftSkillsSubsection />} />
+          
+          {/* Resource pages */}
+          <Route path="resources/communication-structures" element={<CommunicationStructures />} />
+          <Route path="resources/communication-methods" element={<CommunicationMethods />} />
+          <Route path="resources/safety-meetings" element={<SafetyMeetings />} />
+          <Route path="resources/documentation-systems" element={<DocumentationSystems />} />
+          <Route path="resources/inspection-types" element={<InspectionTypes />} />
+          <Route path="resources/inspection-areas" element={<InspectionAreas />} />
+          <Route path="resources/inspection-documentation" element={<InspectionDocumentation />} />
+          <Route path="resources/inspection-regulations" element={<InspectionRegulations />} />
+        </Route>
       </Route>
-    </Route>
-  </React.Fragment>
-);
+    </>
+  );
+};
 
 export default ApprenticeRoutes;
