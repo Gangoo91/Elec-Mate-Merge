@@ -35,6 +35,7 @@ import InspectionTypes from "@/components/apprentice/resources/InspectionTypes";
 import InspectionAreas from "@/components/apprentice/resources/InspectionAreas";
 import InspectionDocumentation from "@/components/apprentice/resources/InspectionDocumentation";
 import InspectionRegulations from "@/components/apprentice/resources/InspectionRegulations";
+import AILearning from "@/pages/apprentice/AILearning";
 
 const ApprenticeRoutes = () => {
   return (
@@ -60,6 +61,7 @@ const ApprenticeRoutes = () => {
       
       <Route path="study">
         <Route index element={<ApprenticeStudy />} />
+        <Route path="ai-learning" element={<AILearning />} />
         <Route path="eal" element={<EALCourses />} />
         <Route path="cityGuilds" element={<CityGuildsCourses />} />
         
