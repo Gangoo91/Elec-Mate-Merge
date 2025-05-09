@@ -24,29 +24,19 @@ const AppRouter = () => {
         <Route path="/" element={<Navigate to="/electrician" replace />} />
         
         {/* Main routes */}
-        <Route>
-          <MainRoutes />
-        </Route>
+        <MainRoutes />
         
         {/* Electrician routes */}
-        <Route>
-          <ElectricianRoutes />
-        </Route>
+        <ElectricianRoutes />
         
         {/* Electrician tools routes */}
-        <Route>
-          <ElectricianToolsRoutes />
-        </Route>
+        <ElectricianToolsRoutes />
         
         {/* Apprentice routes */}
-        <Route>
-          <ApprenticeRoutes />
-        </Route>
+        <ApprenticeRoutes />
         
         {/* Admin routes */}
-        <Route>
-          <AdminRoutes />
-        </Route>
+        <AdminRoutes />
         
         {/* Catch-all route */}
         <Route path="*" element={<NotFound />} />
