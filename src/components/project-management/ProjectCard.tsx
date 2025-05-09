@@ -1,9 +1,9 @@
 
 import { Project } from "@/types/project";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CalendarCheck, Edit, Trash2, FileText, ClipboardCheck } from "lucide-react";
+import { CalendarCheck, Clock, DollarSign, Edit, FileCheck, FileText, MapPin, PieChart, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 
 type ProjectCardProps = {
@@ -21,6 +21,8 @@ export const ProjectCard = ({ project, onEdit, onDelete, onView }: ProjectCardPr
   // Calculate project statistics
   const totalMaterialsCost = project.materials.reduce((sum, item) => sum + item.total, 0);
   const totalHours = project.timeEntries.reduce((sum, entry) => sum + entry.hours, 0);
+  const progress = project.status === "completed" ? 100 : project.status === "in-progress" ? 
+    Math.min(65, Math.floor(Math.random() * 65)) : project.status === "planning" ? 0 : 0;
 
   // Get status badge color
   const getStatusColor = (status: Project["status"]) => {
@@ -33,90 +35,98 @@ export const ProjectCard = ({ project, onEdit, onDelete, onView }: ProjectCardPr
     }
   };
 
-  // Get priority badge
-  const getPriorityBadge = () => {
-    if (!project.priority) return null;
-    
-    const priorityColors = {
-      low: "bg-blue-200 text-blue-800",
-      medium: "bg-green-200 text-green-800",
-      high: "bg-amber-200 text-amber-800",
-      urgent: "bg-red-200 text-red-800"
-    };
-    
-    return (
-      <Badge className={priorityColors[project.priority]}>
-        {project.priority}
-      </Badge>
-    );
-  };
-
   return (
-    <Card className="h-full border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/30 transition-all">
-      <CardHeader className="pb-2">
+    <Card className="h-full border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 hover:shadow-md transition-all relative overflow-hidden">
+      {/* Progress bar */}
+      <div 
+        className={`absolute top-0 left-0 h-1 ${progress === 100 ? 'bg-green-500' : 'bg-elec-yellow'}`} 
+        style={{ width: `${progress}%` }}
+      ></div>
+      
+      <CardHeader className="pb-2 space-y-3">
         <div className="flex justify-between">
-          <Badge className={getStatusColor(project.status)}>{project.status.replace("-", " ")}</Badge>
+          <Badge className={getStatusColor(project.status)}>
+            {project.status.replace("-", " ")}
+          </Badge>
           <div className="flex space-x-1">
-            <Button variant="ghost" size="icon" onClick={() => onEdit(project.id)} title="Edit Project">
+            <Button variant="ghost" size="icon" onClick={(e) => { e.stopPropagation(); onEdit(project.id); }} title="Edit Project">
               <Edit className="h-4 w-4 text-elec-yellow" />
             </Button>
-            <Button variant="ghost" size="icon" onClick={() => onDelete(project.id)} title="Delete Project">
+            <Button variant="ghost" size="icon" onClick={(e) => { e.stopPropagation(); onDelete(project.id); }} title="Delete Project">
               <Trash2 className="h-4 w-4 text-red-400" />
             </Button>
           </div>
         </div>
         <CardTitle className="text-xl">{project.name}</CardTitle>
-        <CardDescription>
-          Client: {project.clientName}
-        </CardDescription>
+        <div className="flex items-center text-muted-foreground text-sm">
+          <MapPin className="h-4 w-4 mr-1 text-elec-yellow/80" />
+          {project.clientName}
+        </div>
       </CardHeader>
       
-      <CardContent className="pb-2">
-        <div className="space-y-2 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <CalendarCheck className="h-4 w-4 text-elec-yellow" />
-            <span>Start: {startDate}</span>
+      <CardContent className="space-y-4 pb-2">
+        <div className="grid grid-cols-2 gap-2 text-sm">
+          <div className="flex items-center gap-1">
+            <CalendarCheck className="h-3.5 w-3.5 text-elec-yellow/80" />
+            <span className="text-muted-foreground">Start:</span>
+            <span className="ml-1 truncate">{startDate}</span>
           </div>
-          {project.dueDate && (
-            <div className="flex items-center gap-2">
-              <CalendarCheck className="h-4 w-4 text-elec-yellow" />
-              <span>Due: {dueDate}</span>
+          <div className="flex items-center gap-1">
+            <CalendarCheck className="h-3.5 w-3.5 text-elec-yellow/80" />
+            <span className="text-muted-foreground">Due:</span>
+            <span className="ml-1 truncate">{dueDate}</span>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-3 gap-3 pt-1">
+          <div className="bg-elec-dark rounded-md p-2 text-center">
+            <div className="flex items-center justify-center mb-1">
+              <DollarSign className="h-3.5 w-3.5 text-elec-yellow" />
             </div>
+            <span className="block text-xs text-muted-foreground">Budget</span>
+            <span className="font-medium">£{project.budget.toLocaleString()}</span>
+          </div>
+          
+          <div className="bg-elec-dark rounded-md p-2 text-center">
+            <div className="flex items-center justify-center mb-1">
+              <PieChart className="h-3.5 w-3.5 text-elec-yellow" />
+            </div>
+            <span className="block text-xs text-muted-foreground">Materials</span>
+            <span className="font-medium">£{totalMaterialsCost.toLocaleString()}</span>
+          </div>
+          
+          <div className="bg-elec-dark rounded-md p-2 text-center">
+            <div className="flex items-center justify-center mb-1">
+              <Clock className="h-3.5 w-3.5 text-elec-yellow" />
+            </div>
+            <span className="block text-xs text-muted-foreground">Labour</span>
+            <span className="font-medium">{totalHours.toFixed(1)}h</span>
+          </div>
+        </div>
+        
+        {/* Certificate & Invoice Indicators */}
+        <div className="flex flex-wrap gap-2">
+          {project.certificateType && project.certificateType !== "none" && (
+            <Badge variant={project.certificateIssued ? "default" : "outline"} className="flex items-center gap-1">
+              <FileCheck className="h-3 w-3" />
+              {project.certificateType}
+            </Badge>
           )}
           
-          <div className="flex flex-wrap gap-2 mt-2">
-            {getPriorityBadge()}
-            
-            {project.certificateType && project.certificateType !== "none" && (
-              <Badge variant={project.certificateIssued ? "default" : "outline"} className="flex items-center gap-1">
-                <FileText className="h-3 w-3" />
-                {project.certificateType}
-              </Badge>
-            )}
-            
-            {project.invoiceIssued && (
-              <Badge variant={project.invoicePaid ? "gold" : "outline"} className="flex items-center gap-1">
-                <ClipboardCheck className="h-3 w-3" />
-                {project.invoicePaid ? "Paid" : "Invoiced"}
-              </Badge>
-            )}
-          </div>
-          
-          <div className="grid grid-cols-2 gap-2 mt-3">
-            <div className="bg-elec-dark p-2 rounded">
-              <p className="text-xs text-muted-foreground">Materials</p>
-              <p className="font-medium">£{totalMaterialsCost.toFixed(2)}</p>
-            </div>
-            <div className="bg-elec-dark p-2 rounded">
-              <p className="text-xs text-muted-foreground">Labour</p>
-              <p className="font-medium">{totalHours.toFixed(1)} hrs</p>
-            </div>
-          </div>
+          {project.invoiceIssued && (
+            <Badge variant={project.invoicePaid ? "default" : "outline"} className="flex items-center gap-1">
+              <FileText className="h-3 w-3" />
+              {project.invoicePaid ? "Paid" : "Invoiced"}
+            </Badge>
+          )}
         </div>
       </CardContent>
       
       <CardFooter className="pt-2">
-        <Button className="w-full" onClick={() => onView(project.id)}>
+        <Button 
+          className="w-full bg-elec-gray border border-elec-yellow/40 hover:bg-elec-yellow hover:text-black transition-all" 
+          onClick={() => onView(project.id)}
+        >
           View Project
         </Button>
       </CardFooter>

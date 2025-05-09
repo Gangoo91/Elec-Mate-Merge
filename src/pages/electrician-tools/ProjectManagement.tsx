@@ -2,13 +2,12 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CalendarCheck, LayoutGrid, ClipboardList, LineChart, FileSpreadsheet, Plus, Download } from "lucide-react";
-import { Link, Routes, Route, useNavigate, useLocation, Outlet } from "react-router-dom";
+import { ArrowLeft, CalendarCheck, LayoutGrid, ClipboardList, FileSpreadsheet, Plus, Download } from "lucide-react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { useProjects } from "@/hooks/useProjects";
 import { ProjectCard } from "@/components/project-management/ProjectCard";
 import { ProjectDialog } from "@/components/project-management/ProjectDialog";
-import { ProjectDetails } from "@/components/project-management/ProjectDetails";
 import { ProjectAnalytics } from "@/components/project-management/ProjectAnalytics";
 
 const ProjectManagement = () => {
@@ -20,12 +19,17 @@ const ProjectManagement = () => {
   
   // If we're viewing a specific project, render the ProjectDetails component
   if (location.pathname.match(/\/electrician-tools\/project-management\/project\/[^/]+$/)) {
-    return <ProjectDetails />;
+    // This is handled in MainRoutes.tsx now
+    return null;
   }
 
   const handleStartProject = (projectData: any) => {
     const newProject = createProject(projectData);
     navigate(`/electrician-tools/project-management/project/${newProject.id}`);
+    toast({
+      title: "Project Created",
+      description: "Your new project has been created successfully.",
+    });
   };
 
   const handleDeleteProject = (id: string) => {
@@ -76,7 +80,7 @@ const ProjectManagement = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Project Management</h1>
           <p className="text-muted-foreground">
@@ -86,7 +90,7 @@ const ProjectManagement = () => {
         <div className="flex gap-2">
           <Button 
             onClick={() => setIsCreateDialogOpen(true)}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
           >
             <Plus className="h-4 w-4" /> New Project
           </Button>
@@ -94,7 +98,7 @@ const ProjectManagement = () => {
             <Button 
               variant="outline" 
               onClick={exportProjectsAsCsv}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 border-elec-yellow/20 hover:border-elec-yellow/40"
               title="Export projects as CSV"
             >
               <Download className="h-4 w-4" />
@@ -102,81 +106,83 @@ const ProjectManagement = () => {
             </Button>
           )}
           <Link to="/electrician-tools">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" /> Back to Tools
+            <Button variant="outline" className="flex items-center gap-2 border-elec-yellow/20 hover:border-elec-yellow/40">
+              <ArrowLeft className="h-4 w-4" /> Back
             </Button>
           </Link>
         </div>
       </div>
       
-      {/* Analytics Section */}
-      <ProjectAnalytics />
-
-      {/* Filters */}
+      {/* Analytics Section - Updated for better visual presentation */}
       {projects.length > 0 && (
-        <div className="flex gap-2 overflow-x-auto pb-2">
-          <Button 
-            variant={filterStatus === "all" ? "default" : "outline"}
-            size="sm" 
-            onClick={() => setFilterStatus("all")}
-          >
-            All
-          </Button>
-          <Button 
-            variant={filterStatus === "planning" ? "default" : "outline"}
-            size="sm" 
-            onClick={() => setFilterStatus("planning")}
-          >
-            Planning
-          </Button>
-          <Button 
-            variant={filterStatus === "in-progress" ? "default" : "outline"}
-            size="sm" 
-            onClick={() => setFilterStatus("in-progress")}
-          >
-            In Progress
-          </Button>
-          <Button 
-            variant={filterStatus === "completed" ? "default" : "outline"}
-            size="sm" 
-            onClick={() => setFilterStatus("completed")}
-          >
-            Completed
-          </Button>
-          <Button 
-            variant={filterStatus === "on-hold" ? "default" : "outline"}
-            size="sm" 
-            onClick={() => setFilterStatus("on-hold")}
-          >
-            On Hold
-          </Button>
+        <ProjectAnalytics />
+      )}
+
+      {/* Filters - Enhanced with better visual styling */}
+      {projects.length > 0 && (
+        <div className="bg-elec-gray/50 p-4 rounded-lg border border-elec-yellow/10 overflow-x-auto">
+          <div className="flex gap-2 overflow-x-auto pb-1">
+            <Button 
+              variant={filterStatus === "all" ? "default" : "outline"}
+              size="sm" 
+              onClick={() => setFilterStatus("all")}
+              className={filterStatus === "all" ? "bg-elec-yellow text-black hover:bg-elec-yellow/90" : ""}
+            >
+              All Projects
+            </Button>
+            <Button 
+              variant={filterStatus === "planning" ? "default" : "outline"}
+              size="sm" 
+              onClick={() => setFilterStatus("planning")}
+              className={filterStatus === "planning" ? "bg-blue-500 hover:bg-blue-600" : ""}
+            >
+              Planning
+            </Button>
+            <Button 
+              variant={filterStatus === "in-progress" ? "default" : "outline"}
+              size="sm" 
+              onClick={() => setFilterStatus("in-progress")}
+              className={filterStatus === "in-progress" ? "bg-amber-500 hover:bg-amber-600" : ""}
+            >
+              In Progress
+            </Button>
+            <Button 
+              variant={filterStatus === "completed" ? "default" : "outline"}
+              size="sm" 
+              onClick={() => setFilterStatus("completed")}
+              className={filterStatus === "completed" ? "bg-green-500 hover:bg-green-600" : ""}
+            >
+              Completed
+            </Button>
+            <Button 
+              variant={filterStatus === "on-hold" ? "default" : "outline"}
+              size="sm" 
+              onClick={() => setFilterStatus("on-hold")}
+              className={filterStatus === "on-hold" ? "bg-red-500 hover:bg-red-600" : ""}
+            >
+              On Hold
+            </Button>
+          </div>
         </div>
       )}
 
       {loading ? (
-        <div className="flex justify-center items-center py-20">
-          <p>Loading projects...</p>
+        <div className="flex justify-center items-center p-12">
+          <div className="flex flex-col items-center gap-4">
+            <div className="h-12 w-12 rounded-full border-4 border-elec-yellow/20 border-t-elec-yellow animate-spin"></div>
+            <p className="text-muted-foreground">Loading your projects...</p>
+          </div>
         </div>
       ) : projects.length === 0 ? (
         <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <div>
-                <CardTitle className="text-xl">Project Management</CardTitle>
-                <CardDescription>
-                  Create and manage your electrical projects
-                </CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="bg-elec-dark rounded-md flex flex-col items-center justify-center p-10 text-center">
-              <FileSpreadsheet className="h-16 w-16 text-elec-yellow mb-4" />
-              <h3 className="text-xl font-medium mb-2">No Projects Yet</h3>
-              <p className="text-muted-foreground mb-4">
-                Create your first project to start tracking time, materials and client details.
+          <CardContent className="p-0">
+            <div className="bg-elec-dark py-16 px-8 rounded-lg flex flex-col items-center justify-center text-center">
+              <FileSpreadsheet className="h-16 w-16 text-elec-yellow mb-4 opacity-80" />
+              <h3 className="text-2xl font-medium mb-2">No Projects Yet</h3>
+              <p className="text-muted-foreground mb-6 max-w-md">
+                Create your first project to start tracking time, materials, and client details for your electrical work.
               </p>
-              <Button onClick={() => setIsCreateDialogOpen(true)} className="flex items-center gap-2">
+              <Button onClick={() => setIsCreateDialogOpen(true)} size="lg" className="flex items-center gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black">
                 <Plus className="h-4 w-4" /> Create New Project
               </Button>
             </div>
@@ -185,8 +191,9 @@ const ProjectManagement = () => {
       ) : (
         <>
           {filteredProjects.length === 0 ? (
-            <div className="text-center py-10">
-              <p className="text-muted-foreground">No projects match the selected filter.</p>
+            <div className="text-center py-16 bg-elec-gray/50 rounded-lg border border-elec-yellow/10">
+              <p className="text-xl mb-2">No matching projects found</p>
+              <p className="text-muted-foreground">Try selecting a different status filter</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -210,9 +217,9 @@ const ProjectManagement = () => {
         onSubmit={handleStartProject}
       />
 
-      <h2 className="text-2xl font-semibold mt-4">Project Tools</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+      <h2 className="text-2xl font-semibold mt-8 mb-4">Project Tools</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
               <CalendarCheck className="h-5 w-5 text-elec-yellow" />
@@ -220,14 +227,13 @@ const ProjectManagement = () => {
             </div>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-muted-foreground">
               Log time spent on different aspects of your electrical projects.
             </p>
-            <Button variant="outline" className="w-full">Open Tracker</Button>
           </CardContent>
         </Card>
         
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
               <ClipboardList className="h-5 w-5 text-elec-yellow" />
@@ -235,14 +241,13 @@ const ProjectManagement = () => {
             </div>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-muted-foreground">
               Create and manage materials lists for your electrical projects.
             </p>
-            <Button variant="outline" className="w-full">View Lists</Button>
           </CardContent>
         </Card>
         
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors">
           <CardHeader className="pb-3">
             <div className="flex items-center gap-2">
               <FileSpreadsheet className="h-5 w-5 text-elec-yellow" />
@@ -250,10 +255,9 @@ const ProjectManagement = () => {
             </div>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-muted-foreground">
               Generate electrical certificates for your completed projects.
             </p>
-            <Button variant="outline" className="w-full">Create Certificate</Button>
           </CardContent>
         </Card>
       </div>

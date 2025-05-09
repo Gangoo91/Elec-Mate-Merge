@@ -24,15 +24,15 @@ export const ProjectDetailsHeader = ({
     navigate("/electrician-tools/project-management");
     toast({
       title: "Project Deleted",
-      description: `${project.name} has been deleted.`,
+      description: `"${project.name}" has been deleted successfully.`,
     });
   };
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between mb-6">
       <Button 
         variant="outline" 
-        className="flex items-center gap-2" 
+        className="flex items-center gap-2 border-elec-yellow/20 hover:border-elec-yellow/40" 
         onClick={() => navigate("/electrician-tools/project-management")}
       >
         <ArrowLeft className="h-4 w-4" /> Back to Projects
@@ -40,10 +40,10 @@ export const ProjectDetailsHeader = ({
       <div className="flex gap-2">
         <Button 
           variant="outline" 
-          className="flex items-center gap-2" 
+          className="flex items-center gap-2 border-elec-yellow/20 hover:border-elec-yellow/40" 
           onClick={() => setEditDialogOpen(true)}
         >
-          <Edit className="h-4 w-4" /> Edit Project
+          <Edit className="h-4 w-4" /> Edit
         </Button>
         <AlertDialog>
           <AlertDialogTrigger asChild>
@@ -54,16 +54,16 @@ export const ProjectDetailsHeader = ({
               <Trash2 className="h-4 w-4" /> Delete
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent>
+          <AlertDialogContent className="bg-elec-gray border-elec-yellow/20">
             <AlertDialogHeader>
               <AlertDialogTitle>Delete Project</AlertDialogTitle>
               <AlertDialogDescription>
-                Are you sure you want to delete this project? This action cannot be undone.
+                Are you sure you want to delete "{project.name}"? This action cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleDeleteProject}>Delete</AlertDialogAction>
+              <AlertDialogCancel className="border-elec-yellow/20 hover:border-elec-yellow/40 hover:bg-transparent">Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleDeleteProject} className="bg-red-500 hover:bg-red-600">Delete</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
