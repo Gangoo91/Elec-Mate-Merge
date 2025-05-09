@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
@@ -85,6 +86,7 @@ import AdminLayout from "./components/admin/AdminLayout";
 import AdminDashboard from "./pages/admin";
 import AdminUsers from "./pages/admin/Users";
 import AdminSettings from "./pages/admin/Settings";
+import AdminLogs from "./pages/admin/Logs";
 
 function App() {
   return (
@@ -113,6 +115,7 @@ function App() {
                   <Route index element={<AdminDashboard />} />
                   <Route path="users" element={<AdminUsers />} />
                   <Route path="settings" element={<AdminSettings />} />
+                  <Route path="logs" element={<AdminLogs />} />
                 </Route>
                 
                 <Route path="electrician-tools" element={<ElectricianTools />} />

@@ -10,6 +10,7 @@ import {
   Shield,
   Users,
   Sliders,
+  Logs,
 } from "lucide-react";
 
 export type NavItem = {
@@ -75,6 +76,12 @@ export const adminNavItems: NavItem[] = [
     name: "User Management",
     path: "/admin/users",
     icon: <Users className="h-5 w-5" />,
+    roles: ["admin"],
+  },
+  {
+    name: "System Logs",
+    path: "/admin/logs",
+    icon: <Logs className="h-5 w-5" />,
     roles: ["admin"],
   },
   {
