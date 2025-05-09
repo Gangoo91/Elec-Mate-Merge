@@ -14,7 +14,7 @@ const StressManagement = () => {
 
   const resources = [
     {
-      title: "Recognizing Workplace Stressors",
+      title: "Recognising Workplace Stressors",
       description: "Learn to identify common sources of stress in electrical work environments",
       type: "document" as const,
       url: "https://www.mind.org.uk/information-support/tips-for-everyday-living/workplace-mental-health/"
@@ -41,7 +41,7 @@ const StressManagement = () => {
       title: "Stress Management for Apprentices",
       description: "Tailored advice for managing stress during your apprenticeship",
       type: "document" as const,
-      url: "https://www.electricalcommunity.co.uk/mental-health-resources"
+      url: "https://www.electricalsafetyfirst.org.uk/professional-resources/"
     },
     {
       title: "Building Resilience in the Trades",
@@ -58,7 +58,7 @@ const StressManagement = () => {
       icon: <Dumbbell className="h-5 w-5 text-elec-yellow" />
     },
     {
-      title: "Practice mindfulness",
+      title: "Practise mindfulness",
       description: "Focus on the present moment rather than worrying about future tasks",
       icon: <Brain className="h-5 w-5 text-elec-yellow" /> 
     },
@@ -99,6 +99,7 @@ const StressManagement = () => {
 
   const handleCallSupport = () => {
     toast.info("Calling this number will connect you with a trained mental health professional");
+    // Function to handle the actual call is already attached to the anchor tag
   };
 
   return (
@@ -130,7 +131,7 @@ const StressManagement = () => {
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-elec-yellow"></div>
-                <p className="text-sm">Learning complex technical skills while on the job</p>
+                <p className="text-sm">Learning complex technical skills whilst on the job</p>
               </div>
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-elec-yellow"></div>
@@ -146,7 +147,7 @@ const StressManagement = () => {
               </div>
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-elec-yellow"></div>
-                <p className="text-sm">Financial concerns while earning an apprentice wage</p>
+                <p className="text-sm">Financial concerns whilst earning an apprentice wage</p>
               </div>
             </div>
           </CardContent>
