@@ -1,4 +1,3 @@
-
 import { Route } from "react-router-dom";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import ApprenticeHub from "@/pages/ApprenticeHub";
@@ -23,11 +22,11 @@ import CrisisResources from "@/pages/apprentice/mental-health/CrisisResources";
 import StressManagement from "@/pages/apprentice/mental-health/StressManagement";
 import SupportNetwork from "@/pages/apprentice/mental-health/SupportNetwork";
 import WorkLifeBalance from "@/pages/apprentice/mental-health/WorkLifeBalance";
-import SectionContent from "@/pages/apprentice/SectionContent";
-import SubsectionContent from "@/pages/apprentice/SubsectionContent";
-import CraftSkillsContent from "@/pages/apprentice/CraftSkillsContent";
-import CraftSkillsSubsection from "@/pages/apprentice/CraftSkillsSubsection";
-import InstallationMethodContent from "@/pages/apprentice/InstallationMethodContent";
+import SectionContent from "@/pages/Apprentice/SectionContent";
+import SubsectionContent from "@/pages/Apprentice/SubsectionContent";
+import CraftSkillsContent from "@/pages/Apprentice/CraftSkillsContent";
+import CraftSkillsSubsection from "@/pages/Apprentice/CraftSkillsSubsection";
+import InstallationMethodContent from "@/pages/Apprentice/InstallationMethodContent";
 
 export const ApprenticeRoutes = () => {
   return (
