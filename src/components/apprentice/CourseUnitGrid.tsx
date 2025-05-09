@@ -1,9 +1,8 @@
-
 import { GraduationCap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import type { CourseUnit } from "@/data/courseUnitsLevel3";
+import type { CourseUnit } from "@/data/courseUnits";
 
 interface CourseUnitGridProps {
   units: CourseUnit[];

@@ -10,7 +10,26 @@ const EALCourses = () => {
   const isMobile = useIsMobile();
   // Find the EAL courses category
   const ealCategory = courseCategories.find(category => category.id === "eal");
-  const courses = ealCategory?.courses || [];
+  
+  // Add level information to each course slug
+  const courses = ealCategory?.courses.map(course => {
+    if (course.includes("Level 2")) {
+      return {
+        title: course,
+        slug: `level-2-${course.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '')}`
+      };
+    } else if (course.includes("Level 3")) {
+      return {
+        title: course,
+        slug: `level-3-${course.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '')}`
+      };
+    }
+    // Default case for other courses
+    return {
+      title: course,
+      slug: course.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '')
+    };
+  }) || [];
 
   // Function to colorize the first word and numbers in the course title
   // But exclude "18" from being highlighted
@@ -36,14 +55,6 @@ const EALCourses = () => {
         <span dangerouslySetInnerHTML={{ __html: restOfTitle }} />
       </>
     );
-  };
-
-  // Function to create a URL slug from a course title
-  const createSlug = (title: string) => {
-    return title
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w-]+/g, '');
   };
 
   return (
@@ -72,7 +83,7 @@ const EALCourses = () => {
         {courses.map((course, index) => (
           <Link 
             key={index}
-            to={`/apprentice/study/eal/${createSlug(course)}`}
+            to={`/apprentice/study/eal/${course.slug}`}
             className="block h-full transition-transform hover:scale-102 duration-200"
           >
             <Card 
@@ -81,7 +92,7 @@ const EALCourses = () => {
               <CardContent className="flex flex-col items-center justify-center p-6 h-full">
                 <BookOpen className="h-8 w-8 text-elec-yellow mb-4 opacity-80" />
                 <h3 className={`text-base sm:text-lg font-medium text-center ${isMobile ? "leading-tight" : ""}`}>
-                  {formatCourseTitle(course)}
+                  {formatCourseTitle(course.title)}
                 </h3>
               </CardContent>
             </Card>
