@@ -10,7 +10,7 @@ const OffJobTrainingInfo = () => {
         <h3 className="font-semibold">Off-the-Job Training</h3>
       </div>
       <p className="text-sm text-muted-foreground">
-        EAL Level 2 electrical courses require a minimum of 20% off-the-job training, equating to at least 278 hours 
+        EAL apprenticeships require a minimum of 20% off-the-job training, equating to at least 278 hours 
         over a 12-month period. All courses in the Study Centre count toward this requirement. Your time spent learning 
         on this app is automatically tracked in the <Link to="/apprentice/ojt" className="text-elec-yellow hover:underline">
         Off-the-Job Time Keeping</Link> section.
