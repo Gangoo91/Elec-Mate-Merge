@@ -8,7 +8,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 const EALLevel3Courses = () => {
   const isMobile = useIsMobile();
   
-  // EAL Level 3 units data
+  // EAL Level 3 units data with full descriptions as provided by the user
   const courses = [
     {
       id: "qeltk3-002",
@@ -41,13 +41,6 @@ const EALLevel3Courses = () => {
       description: "Electrical Science and principles"
     }
   ];
-
-  // Function to format course title with code highlighted
-  const formatCourseTitle = (title: string) => {
-    return (
-      <span className="text-elec-yellow">{title}</span>
-    );
-  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8 animate-fade-in">
@@ -84,7 +77,7 @@ const EALLevel3Courses = () => {
               <CardContent className="flex flex-col items-center justify-center p-6 h-full">
                 <BookOpen className="h-8 w-8 text-elec-yellow mb-4 opacity-80" />
                 <h3 className={`text-base sm:text-lg font-medium text-center ${isMobile ? "leading-tight" : ""}`}>
-                  {formatCourseTitle(course.title)}
+                  <span className="text-elec-yellow">{course.title}</span>
                 </h3>
                 <p className="text-sm text-muted-foreground text-center mt-2">
                   {course.description}
