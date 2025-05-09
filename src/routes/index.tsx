@@ -12,27 +12,25 @@ import Index from "@/pages/Index";
 /**
  * Root routes component that combines all route modules
  */
-export const AppRoutes = () => {
-  return (
-    <>
-      {/* Public Routes */}
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/index" element={<Index />} />
+export const AppRoutes = () => (
+  <>
+    {/* Public Routes */}
+    <Route path="/" element={<LandingPage />} />
+    <Route path="/index" element={<Index />} />
+    
+    {/* Auth Routes */}
+    {authRoutes}
+    
+    {/* Protected Routes with Layout */}
+    <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+      {/* Main Routes */}
+      {mainRoutes}
       
-      {/* Auth Routes */}
-      {authRoutes}
+      {/* Electrician Routes */}
+      {electricianRoutes}
       
-      {/* Protected Routes with Layout */}
-      <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-        {/* Main Routes */}
-        {mainRoutes}
-        
-        {/* Electrician Routes */}
-        {electricianRoutes}
-        
-        {/* Apprentice Routes */}
-        {apprenticeRoutes}
-      </Route>
-    </>
-  );
-};
+      {/* Apprentice Routes */}
+      {apprenticeRoutes}
+    </Route>
+  </>
+);
