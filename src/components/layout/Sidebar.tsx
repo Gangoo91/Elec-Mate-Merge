@@ -1,5 +1,5 @@
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -16,9 +16,13 @@ interface SidebarProps {
 
 const Sidebar = ({ open, setOpen }: SidebarProps) => {
   const { profile } = useAuth();
+  const location = useLocation();
   
   // Get the user role from the profile, defaulting to "visitor" if not available
   const userRole = profile?.role || "visitor";
+  
+  // Check if the current route is in admin area
+  const isAdminRoute = location.pathname.includes('/admin');
   
   return (
     <>
@@ -55,14 +59,29 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
         </div>
 
         <nav className="flex-1 overflow-y-auto py-6 px-4">
-          {/* Main navigation items */}
-          <SidebarNavSection 
-            items={mainNavItems} 
-            userRole={userRole} 
-          />
+          {/* Show admin section first on mobile when in admin routes */}
+          {isAdminRoute && (
+            <>
+              <AdminSidebarSection />
+              <div className="my-6"></div>
+              <SidebarNavSection 
+                items={mainNavItems} 
+                userRole={userRole} 
+              />
+            </>
+          )}
           
-          {/* Admin section */}
-          <AdminSidebarSection />
+          {/* Normal order (main nav first, then admin) when not in admin routes */}
+          {!isAdminRoute && (
+            <>
+              <SidebarNavSection 
+                items={mainNavItems} 
+                userRole={userRole} 
+              />
+              <div className="my-6"></div>
+              <AdminSidebarSection />
+            </>
+          )}
         </nav>
 
         {/* Footer with premium upgrade CTA */}

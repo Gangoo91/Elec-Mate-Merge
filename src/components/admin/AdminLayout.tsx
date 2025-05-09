@@ -1,12 +1,14 @@
 
 import { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Shield, AlertTriangle } from "lucide-react";
+import { Shield, AlertTriangle, Menu } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const AdminLayout = () => {
   const { user, profile, isDevelopmentMode } = useAuth();
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   
   // Check if user has admin privileges or development mode is enabled
   useEffect(() => {
@@ -32,16 +34,17 @@ const AdminLayout = () => {
   }
   
   return (
-    <div className="space-y-6">
-      <div className="border border-yellow-500/30 bg-yellow-950/20 p-4 rounded-lg mb-6">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="border border-yellow-500/30 bg-yellow-950/20 p-3 sm:p-4 rounded-lg">
         <div className="flex items-center gap-2 mb-2">
           <Shield className="h-5 w-5 text-yellow-500" />
           <h2 className="text-lg font-medium text-yellow-500">Admin Area</h2>
         </div>
         <p className="text-sm text-yellow-300/70">
-          You are currently in the administration area. Changes made here will affect all users.
+          You are currently in the administration area.
+          {!isMobile && " Changes made here will affect all users."}
           {isDevelopmentMode && (
-            <span className="ml-1 font-semibold">Development mode enabled - admin access granted.</span>
+            <span className="ml-1 font-semibold block sm:inline-block">Development mode enabled</span>
           )}
         </p>
       </div>
