@@ -1,20 +1,9 @@
 
-import { Route } from "react-router-dom";
+// This file is now deprecated as all routes are defined in AppRouter.tsx
 import { Fragment } from "react";
-import LandingPage from "@/pages/LandingPage";
-import Index from "@/pages/Index";
-import SignIn from "@/pages/auth/SignIn";
-import SignUp from "@/pages/auth/SignUp";
 
 const PublicRoutes = () => {
-  return (
-    <>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/index" element={<Index />} />
-      <Route path="/auth/signin" element={<SignIn />} />
-      <Route path="/auth/signup" element={<SignUp />} />
-    </>
-  );
+  return <Fragment />;
 };
 
 export default PublicRoutes;
