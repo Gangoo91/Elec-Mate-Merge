@@ -47,58 +47,72 @@ const QuoteLibrary = () => {
         </Link>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid grid-cols-3 w-full max-w-md">
-          <TabsTrigger value="templates" className="flex items-center gap-2">
-            <FileText className="h-4 w-4" />
-            <span>Templates</span>
-          </TabsTrigger>
-          <TabsTrigger value="generate" className="flex items-center gap-2">
-            <PlusCircle className="h-4 w-4" />
-            <span>Generate</span>
-          </TabsTrigger>
-          <TabsTrigger value="preview" className="flex items-center gap-2">
-            <Download className="h-4 w-4" />
-            <span>Preview</span>
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="templates" className="space-y-4">
-          <QuoteTemplateList onSelectTemplate={() => setActiveTab("generate")} />
-        </TabsContent>
-
-        <TabsContent value="generate" className="space-y-4">
-          <QuoteGenerator onGenerateQuote={handleGenerateQuote} />
-        </TabsContent>
-
-        <TabsContent value="preview" className="space-y-4">
-          {previewQuote ? (
-            <div className="space-y-4">
-              <QuotePreview quoteData={previewQuote} />
-              <div className="flex justify-end gap-2">
-                <Button variant="outline">Edit Quote</Button>
-                <Button onClick={handleDownloadQuote}>
-                  <Download className="h-4 w-4 mr-2" />
-                  Download Quote
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardContent className="pt-6 text-center">
-                <p className="text-muted-foreground">No quote has been generated yet. Start by selecting a template.</p>
-                <Button 
-                  variant="outline" 
-                  className="mt-4"
-                  onClick={() => setActiveTab("templates")}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardContent className="p-0">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <div className="border-b border-elec-yellow/20">
+              <TabsList className="w-full justify-start rounded-none bg-transparent p-0">
+                <TabsTrigger 
+                  value="templates" 
+                  className="rounded-none border-b-2 border-transparent px-4 py-3 data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent"
                 >
-                  Browse Templates
-                </Button>
-              </CardContent>
-            </Card>
-          )}
-        </TabsContent>
-      </Tabs>
+                  <FileText className="h-4 w-4 mr-2" />
+                  Templates
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="generate" 
+                  className="rounded-none border-b-2 border-transparent px-4 py-3 data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent"
+                >
+                  <PlusCircle className="h-4 w-4 mr-2" />
+                  Generate
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="preview" 
+                  className="rounded-none border-b-2 border-transparent px-4 py-3 data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  Preview
+                </TabsTrigger>
+              </TabsList>
+            </div>
+
+            <div className="p-6">
+              <TabsContent value="templates" className="m-0">
+                <QuoteTemplateList onSelectTemplate={() => setActiveTab("generate")} />
+              </TabsContent>
+
+              <TabsContent value="generate" className="m-0">
+                <QuoteGenerator onGenerateQuote={handleGenerateQuote} />
+              </TabsContent>
+
+              <TabsContent value="preview" className="m-0">
+                {previewQuote ? (
+                  <div className="space-y-4">
+                    <QuotePreview quoteData={previewQuote} />
+                    <div className="flex justify-end gap-2">
+                      <Button variant="outline" onClick={() => setActiveTab("generate")}>Edit Quote</Button>
+                      <Button onClick={handleDownloadQuote}>
+                        <Download className="h-4 w-4 mr-2" />
+                        Download Quote
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-center py-8">
+                    <p className="text-muted-foreground mb-4">No quote has been generated yet. Start by selecting a template.</p>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setActiveTab("templates")}
+                    >
+                      Browse Templates
+                    </Button>
+                  </div>
+                )}
+              </TabsContent>
+            </div>
+          </Tabs>
+        </CardContent>
+      </Card>
     </div>
   );
 };
