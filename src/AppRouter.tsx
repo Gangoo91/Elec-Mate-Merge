@@ -48,7 +48,7 @@ const AppRouter = () => {
         {/* Electrician Routes */}
         <Route path="electrician-tools" element={<ElectricianTools />} />
         <Route path="electrician-tools/*" element={<ElectricianRoutes />} />
-        <Route path="electrical-hub" element={<ElectricianHubRoutes index element />} />
+        <Route path="electrical-hub/*" element={<ElectricianHubRoutes />} />
         <Route path="electrician/*" element={<ElectricianHubRoutes />} />
         
         {/* Apprentice Routes */}
@@ -59,3 +59,4 @@ const AppRouter = () => {
 };
 
 export default AppRouter;
+
