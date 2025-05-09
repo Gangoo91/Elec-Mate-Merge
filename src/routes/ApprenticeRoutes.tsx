@@ -1,5 +1,6 @@
 
-import { Route, Navigate, Fragment } from "react-router-dom";
+import { Route, Navigate } from "react-router-dom";
+import { Fragment } from "react";
 import VideoLessons from "@/pages/VideoLessons";
 import Leaderboards from "@/pages/Leaderboards";
 import ApprenticeHub from "@/pages/ApprenticeHub";
