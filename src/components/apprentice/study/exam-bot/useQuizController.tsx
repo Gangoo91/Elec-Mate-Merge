@@ -28,10 +28,10 @@ export const useQuizController = () => {
     setQuizResult(null);
     
     try {
-      // Request quiz questions from the Edge Function
+      // Request quiz questions from the Edge Function with more specific instructions
       const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
         body: { 
-          prompt: `Generate 5 multiple-choice questions (4 options each) for ${selectedType} exam preparation for UK electrical apprentices. Format the response as a JSON array with fields: question (string), options (array of strings), correctAnswer (number index), and explanation (string). Ensure the response is valid JSON that can be parsed directly.`,
+          prompt: `Generate 20 multiple-choice questions (4 options each) for ${selectedType} exam preparation for UK electrical apprentices. Questions should be based on UK electrical standards, regulations (BS 7671), and practices. Each question must cover different topics within ${selectedType} to ensure variety. Format the response as a JSON array with fields: question (string), options (array of strings), correctAnswer (number index), and explanation (string). Ensure the response is valid JSON that can be parsed directly.`,
           type: "exam_quiz" 
         },
       });
