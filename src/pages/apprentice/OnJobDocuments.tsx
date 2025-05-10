@@ -1,112 +1,114 @@
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { ArrowLeft, FileText, Download, Eye } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-
-interface DocumentTemplate {
-  id: number;
-  title: string;
-  description: string;
-  type: string;
-  downloadUrl: string;
-  previewUrl: string;
-}
+import { useState, useMemo } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { documentTemplates } from "@/data/apprentice/documentTemplates";
+import DocumentCard from "@/components/apprentice/documents/DocumentCard";
+import DocumentPreviewDialog from "@/components/apprentice/documents/DocumentPreviewDialog";
+import DocumentFilters from "@/components/apprentice/documents/DocumentFilters";
+import type { DocumentTemplate } from "@/components/apprentice/documents/DocumentCard";
 
 const OnJobDocuments = () => {
-  const documentTemplates: DocumentTemplate[] = [
-    {
-      id: 1,
-      title: "Electrical Installation Certificate",
-      description: "Standard certificate for completed electrical installations",
-      type: "PDF Form",
-      downloadUrl: "#",
-      previewUrl: "#"
-    },
-    {
-      id: 2,
-      title: "Minor Works Certificate",
-      description: "For small-scale electrical work and alterations",
-      type: "PDF Form",
-      downloadUrl: "#",
-      previewUrl: "#"
-    },
-    {
-      id: 3,
-      title: "Electrical Condition Report",
-      description: "For reporting on the condition of existing electrical installations",
-      type: "PDF Form",
-      downloadUrl: "#",
-      previewUrl: "#"
-    },
-    {
-      id: 4,
-      title: "Risk Assessment Template",
-      description: "Template for documenting potential hazards and control measures",
-      type: "Word Document",
-      downloadUrl: "#",
-      previewUrl: "#"
-    },
-    {
-      id: 5,
-      title: "Method Statement Template",
-      description: "Step-by-step guide for carrying out work safely",
-      type: "Word Document",
-      downloadUrl: "#",
-      previewUrl: "#"
-    },
-    {
-      id: 6,
-      title: "Client Handover Checklist",
-      description: "Checklist for ensuring all aspects of work are complete before handover",
-      type: "Excel Sheet",
-      downloadUrl: "#",
-      previewUrl: "#"
-    }
-  ];
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [currentDocument, setCurrentDocument] = useState<DocumentTemplate | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [documentType, setDocumentType] = useState("all");
+  const { toast } = useToast();
+
+  // Filter documents based on search query and type
+  const filteredDocuments = useMemo(() => {
+    return documentTemplates.filter(doc => {
+      const matchesSearch = doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            doc.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesType = documentType === "all" || doc.type === documentType;
+      return matchesSearch && matchesType;
+    });
+  }, [searchQuery, documentType]);
+
+  const handlePreview = (document: DocumentTemplate) => {
+    setCurrentDocument(document);
+    setPreviewOpen(true);
+  };
+
+  const handleDownload = (document: DocumentTemplate) => {
+    // In a real application, this would trigger a download
+    // For now, we'll just show a toast notification
+    toast({
+      title: "Download Started",
+      description: `${document.fileName} is downloading...`,
+      variant: "default",
+    });
+    
+    // This would be replaced with actual download logic in a production app
+    setTimeout(() => {
+      toast({
+        title: "Download Complete",
+        description: `${document.fileName} has been downloaded successfully.`,
+        variant: "default",
+      });
+    }, 1500);
+  };
 
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-        <h1 className="text-3xl font-bold tracking-tight">Documentation Templates</h1>
-        <Link to="/apprentice" className="flex-shrink-0">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Documentation Templates</h1>
+          <p className="text-muted-foreground mt-1">
+            Download standardised templates for electrical work documentation
+          </p>
+        </div>
+        <Link to="/apprentice/on-job-tools" className="flex-shrink-0">
           <Button variant="outline">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Apprentice Hub
+            Back to On-Job Tools
           </Button>
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {documentTemplates.map((template) => (
-          <Card key={template.id} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-md bg-elec-yellow/10">
-                  <FileText className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <CardTitle className="text-lg">{template.title}</CardTitle>
-              </div>
-              <CardDescription className="mt-2">{template.description}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="text-sm">
-                <span className="text-muted-foreground">Document Type:</span> {template.type}
-              </div>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" className="flex gap-1 items-center">
-                  <Eye className="h-4 w-4" />
-                  Preview
-                </Button>
-                <Button size="sm" className="flex gap-1 items-center">
-                  <Download className="h-4 w-4" />
-                  Download
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {/* Filter section */}
+      <DocumentFilters 
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        documentType={documentType}
+        onDocumentTypeChange={setDocumentType}
+      />
+      
+      {filteredDocuments.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredDocuments.map((template) => (
+            <DocumentCard 
+              key={template.id} 
+              document={template} 
+              onPreview={handlePreview} 
+              onDownload={handleDownload} 
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <div className="rounded-full bg-elec-yellow/10 p-4 mb-4">
+            <Search className="h-8 w-8 text-elec-yellow" />
+          </div>
+          <h3 className="text-xl font-medium mb-2">No documents found</h3>
+          <p className="text-muted-foreground mb-4">
+            No document templates match your current search criteria
+          </p>
+          <Button variant="outline" onClick={() => { setSearchQuery(""); setDocumentType("all"); }}>
+            Reset Filters
+          </Button>
+        </div>
+      )}
+
+      {/* Document Preview Dialog */}
+      <DocumentPreviewDialog
+        open={previewOpen}
+        onOpenChange={setPreviewOpen}
+        document={currentDocument}
+        onDownload={handleDownload}
+      />
     </div>
   );
 };
