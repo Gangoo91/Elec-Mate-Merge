@@ -1,0 +1,13 @@
+
+export type QuizQuestion = {
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation: string;
+};
+
+export type QuizResult = {
+  correct: number;
+  total: number;
+  percentage: number;
+};
