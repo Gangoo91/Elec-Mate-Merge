@@ -39,6 +39,8 @@ import InspectionDocumentation from "@/components/apprentice/resources/Inspectio
 import InspectionRegulations from "@/components/apprentice/resources/InspectionRegulations";
 import AILearning from "@/pages/apprentice/AILearning";
 import SafetyFundamentals from "@/pages/apprentice/SafetyFundamentals";
+import MockExams from "@/pages/apprentice/MockExams";
+import MockExamDetails from "@/pages/apprentice/MockExamDetails";
 
 const ApprenticeRoutes = () => {
   return (
@@ -67,6 +69,8 @@ const ApprenticeRoutes = () => {
       <Route path="study">
         <Route index element={<ApprenticeStudy />} />
         <Route path="ai-learning" element={<AILearning />} />
+        <Route path="mock-exams" element={<MockExams />} />
+        <Route path="mock-exams/:examId" element={<MockExamDetails />} />
         <Route path="eal" element={<EALCourses />} />
         <Route path="cityGuilds" element={<CityGuildsCourses />} />
         <Route path="higher" element={<HigherLearningCourses />} />
