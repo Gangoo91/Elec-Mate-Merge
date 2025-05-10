@@ -6,13 +6,34 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 
+// Define an interface for the mentor data from Supabase
+interface MentorData {
+  id: string;
+  name: string;
+  specialty: string;
+  experience: string;
+  availability: string;
+  avatar?: string;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
+  is_featured?: boolean; // Make is_featured optional since it may not exist in the database
+}
+
+// Define an enhanced mentor type with additional client-side properties
+interface EnhancedMentor extends MentorData {
+  rating: number;
+  responseTime: string;
+  is_featured: boolean; // This will always be defined after enhancement
+}
+
 export const useMentorConnection = () => {
   const navigate = useNavigate();
   const { profile } = useAuth();
   const { addMentorConversation } = useMessenger();
   const [requestingMentor, setRequestingMentor] = useState<string | null>(null);
-  const [mentors, setMentors] = useState<any[]>([]);
-  const [featuredMentors, setFeaturedMentors] = useState<any[]>([]);
+  const [mentors, setMentors] = useState<EnhancedMentor[]>([]);
+  const [featuredMentors, setFeaturedMentors] = useState<EnhancedMentor[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [skillFilter, setSkillFilter] = useState<string>('all');
@@ -32,7 +53,7 @@ export const useMentorConnection = () => {
         
         if (data) {
           // Add some mock ratings for demo purposes
-          const enhancedData = data.map(mentor => ({
+          const enhancedData: EnhancedMentor[] = data.map((mentor: MentorData) => ({
             ...mentor,
             rating: Math.floor(Math.random() * 2) + 4, // Random rating 4-5
             responseTime: ['Within 24h', 'Same day', '1-2 days'][Math.floor(Math.random() * 3)],
