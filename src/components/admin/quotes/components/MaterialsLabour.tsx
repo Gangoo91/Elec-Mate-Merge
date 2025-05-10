@@ -17,6 +17,26 @@ const MaterialsLabour = ({
   formData,
   jobType
 }: MaterialsListProps) => {
+  
+  // Function to check if required fields are filled
+  const canGenerateQuote = () => {
+    return formData.clientName.trim() !== "" && jobType !== "";
+  };
+
+  const handleGenerateClick = () => {
+    if (!canGenerateQuote()) {
+      toast({
+        title: "Missing information",
+        description: "Please provide client name and select a job type.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Call the generate function provided as prop
+    handleGenerateWithAI();
+  };
+
   return (
     <Card className="border-elec-yellow/20">
       <CardHeader>
@@ -159,8 +179,8 @@ const MaterialsLabour = ({
         
         <div className="flex justify-center sm:justify-end">
           <Button 
-            onClick={handleGenerateWithAI} 
-            disabled={isLoading || !formData.clientName || !jobType}
+            onClick={handleGenerateClick} 
+            disabled={isLoading}
             className={isMobile ? "min-w-full py-6 text-lg font-medium" : "min-w-[150px] w-full sm:w-auto"}
           >
             {isLoading ? (
