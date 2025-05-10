@@ -1,12 +1,25 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Award, Medal, Star, Trophy, CheckCircle, Target, BookOpen } from "lucide-react";
+import { Award, Medal, Star, Trophy, CheckCircle, Target, BookOpen, ArrowDown, Gift, ChevronDown } from "lucide-react";
 import { UserActivity } from "@/hooks/leaderboards/types";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { getUserDisplayName } from "./leaderboardUtils";
+import { useState } from "react";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue 
+} from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface AchievementsSectionProps {
   currentUserRank: UserActivity | null;
@@ -14,6 +27,13 @@ interface AchievementsSectionProps {
 }
 
 export const AchievementsSection = ({ currentUserRank, isMobile }: AchievementsSectionProps) => {
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  
+  // Filter achievements based on selected category
+  const filteredAchievements = selectedCategory === "all" 
+    ? achievements 
+    : achievements.filter(a => a.category === selectedCategory);
+
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader className={isMobile ? "p-4 pb-2" : "pb-2"}>
@@ -26,74 +46,39 @@ export const AchievementsSection = ({ currentUserRank, isMobile }: AchievementsS
         </CardDescription>
       </CardHeader>
       <CardContent className={isMobile ? "p-4 pt-2" : "pt-2"}>
-        <Tabs defaultValue="all">
-          <TabsList className="grid grid-cols-4 mb-6">
-            <TabsTrigger value="all">All</TabsTrigger>
-            <TabsTrigger value="learning" className="flex items-center gap-1">
-              <BookOpen className="h-3.5 w-3.5" />
-              <span>Learning</span>
-            </TabsTrigger>
-            <TabsTrigger value="challenges" className="flex items-center gap-1">
-              <Target className="h-3.5 w-3.5" />
-              <span>Challenges</span>
-            </TabsTrigger>
-            <TabsTrigger value="special">Special</TabsTrigger>
-          </TabsList>
+        <div className="mb-6">
+          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+            <SelectTrigger className="w-full bg-elec-dark">
+              <SelectValue placeholder="Filter by category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              <SelectItem value="learning">Learning</SelectItem>
+              <SelectItem value="challenge">Challenges</SelectItem>
+              <SelectItem value="special">Special</SelectItem>
+            </SelectContent>
+          </Select>
+          
+          <div className="flex items-center justify-between mt-4">
+            <span className="text-sm text-muted-foreground">
+              Monthly Top 3 Reward: <span className="text-elec-yellow font-medium">£50 Voucher Each</span>
+            </span>
+            <Badge variant="gold" className="ml-auto">
+              <Gift className="h-3 w-3 mr-1" />
+              Top Prize
+            </Badge>
+          </div>
+        </div>
 
-          <TabsContent value="all">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {achievements.map((achievement, index) => (
-                <AchievementCard 
-                  key={index}
-                  achievement={achievement}
-                  isEarned={currentUserRank?.achievements?.some(a => a.id === achievement.id) || false}
-                />
-              ))}
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="learning">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {achievements
-                .filter(a => a.category === 'learning')
-                .map((achievement, index) => (
-                  <AchievementCard 
-                    key={index}
-                    achievement={achievement}
-                    isEarned={currentUserRank?.achievements?.some(a => a.id === achievement.id) || false}
-                  />
-                ))}
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="challenges">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {achievements
-                .filter(a => a.category === 'challenge')
-                .map((achievement, index) => (
-                  <AchievementCard 
-                    key={index}
-                    achievement={achievement}
-                    isEarned={currentUserRank?.achievements?.some(a => a.id === achievement.id) || false}
-                  />
-                ))}
-            </div>
-          </TabsContent>
-          
-          <TabsContent value="special">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {achievements
-                .filter(a => a.category === 'special')
-                .map((achievement, index) => (
-                  <AchievementCard 
-                    key={index}
-                    achievement={achievement}
-                    isEarned={currentUserRank?.achievements?.some(a => a.id === achievement.id) || false}
-                  />
-                ))}
-            </div>
-          </TabsContent>
-        </Tabs>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {filteredAchievements.map((achievement, index) => (
+            <AchievementCard 
+              key={index}
+              achievement={achievement}
+              isEarned={currentUserRank?.achievements?.some(a => a.id === achievement.id) || false}
+            />
+          ))}
+        </div>
 
         <div className="flex justify-center mt-6">
           <Button variant="outline" className="border-elec-yellow/20">
@@ -113,7 +98,7 @@ interface AchievementCardProps {
     icon: string;
     category: string;
     points: number;
-    difficulty: 'easy' | 'medium' | 'hard';
+    difficulty: 'easy' | 'medium' | 'hard' | 'expert';
     requirements?: {
       current?: number;
       target: number;
@@ -140,6 +125,7 @@ const AchievementCard = ({ achievement, isEarned }: AchievementCardProps) => {
       case 'easy': return 'bg-green-500/20 text-green-500';
       case 'medium': return 'bg-amber-500/20 text-amber-500';
       case 'hard': return 'bg-red-500/20 text-red-500';
+      case 'expert': return 'bg-purple-500/20 text-purple-500';
       default: return 'bg-blue-500/20 text-blue-500';
     }
   };
@@ -185,7 +171,7 @@ const AchievementCard = ({ achievement, isEarned }: AchievementCardProps) => {
   );
 };
 
-// Sample achievements data
+// Enhanced achievements data with more challenges and higher point values
 const achievements = [
   {
     id: '1',
@@ -193,7 +179,7 @@ const achievements = [
     description: 'Complete your first quiz with a score of 80% or higher',
     icon: 'star',
     category: 'learning',
-    points: 100,
+    points: 150,
     difficulty: 'easy' as const
   },
   {
@@ -202,7 +188,7 @@ const achievements = [
     description: 'Maintain a learning streak for 7 consecutive days',
     icon: 'medal',
     category: 'challenge',
-    points: 250,
+    points: 400,
     difficulty: 'medium' as const,
     requirements: {
       current: 5,
@@ -215,7 +201,7 @@ const achievements = [
     description: 'Complete all lessons in a module with perfect scores',
     icon: 'trophy',
     category: 'learning',
-    points: 500,
+    points: 800,
     difficulty: 'hard' as const
   },
   {
@@ -224,7 +210,7 @@ const achievements = [
     description: 'Access and study content from all available categories',
     icon: 'book',
     category: 'learning',
-    points: 300,
+    points: 500,
     difficulty: 'medium' as const,
     requirements: {
       current: 7,
@@ -237,7 +223,7 @@ const achievements = [
     description: 'Answer 10 questions from other users in the community forums',
     icon: 'award',
     category: 'challenge',
-    points: 400,
+    points: 600,
     difficulty: 'medium' as const,
     requirements: {
       current: 3,
@@ -250,7 +236,7 @@ const achievements = [
     description: 'One of the first 1,000 users to join the platform',
     icon: 'award',
     category: 'special',
-    points: 500,
+    points: 750,
     difficulty: 'easy' as const
   },
   {
@@ -259,7 +245,7 @@ const achievements = [
     description: 'Complete a quiz in less than 3 minutes with 100% accuracy',
     icon: 'target',
     category: 'challenge',
-    points: 350,
+    points: 550,
     difficulty: 'hard' as const
   },
   {
@@ -268,7 +254,7 @@ const achievements = [
     description: 'Spend more than 5 hours learning in a single day',
     icon: 'medal',
     category: 'challenge',
-    points: 450,
+    points: 650,
     difficulty: 'hard' as const
   },
   {
@@ -277,11 +263,82 @@ const achievements = [
     description: 'Log in every day for a month',
     icon: 'trophy',
     category: 'special',
-    points: 1000,
-    difficulty: 'hard' as const,
+    points: 1500,
+    difficulty: 'expert' as const,
     requirements: {
       current: 21,
       target: 30
+    }
+  },
+  // New challenges with higher point values
+  {
+    id: '10',
+    name: 'Documentation Expert',
+    description: 'Submit 5 detailed documentation reports with proper formatting',
+    icon: 'book',
+    category: 'challenge',
+    points: 950,
+    difficulty: 'hard' as const,
+    requirements: {
+      current: 2,
+      target: 5
+    }
+  },
+  {
+    id: '11',
+    name: 'Safety Champion',
+    description: 'Complete all safety case studies with perfect scores',
+    icon: 'award',
+    category: 'learning',
+    points: 1200,
+    difficulty: 'expert' as const
+  },
+  {
+    id: '12',
+    name: 'Calculation Wizard',
+    description: 'Successfully complete 20 different electrical calculations',
+    icon: 'star',
+    category: 'challenge',
+    points: 900,
+    difficulty: 'hard' as const,
+    requirements: {
+      current: 8,
+      target: 20
+    }
+  },
+  {
+    id: '13',
+    name: 'Regulation Master',
+    description: 'Pass the regulations assessment with at least 95% accuracy',
+    icon: 'trophy',
+    category: 'learning',
+    points: 1100,
+    difficulty: 'expert' as const
+  },
+  {
+    id: '14',
+    name: 'Mentor Support',
+    description: 'Help 3 other apprentices solve technical problems',
+    icon: 'medal',
+    category: 'special',
+    points: 850,
+    difficulty: 'medium' as const,
+    requirements: {
+      current: 1,
+      target: 3
+    }
+  },
+  {
+    id: '15',
+    name: 'Professional Development',
+    description: 'Complete 3 professional development modules',
+    icon: 'star',
+    category: 'learning',
+    points: 700,
+    difficulty: 'medium' as const,
+    requirements: {
+      current: 1,
+      target: 3
     }
   }
 ];

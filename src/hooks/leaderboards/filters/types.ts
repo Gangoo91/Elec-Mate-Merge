@@ -1,18 +1,22 @@
 
-import { UserActivity } from "../types";
-
 export type TimeframeOption = 'weekly' | 'monthly' | 'alltime';
 
-export interface LeaderboardFilters {
+export interface FiltersState {
   timeframe: TimeframeOption;
-  setTimeframe: (value: TimeframeOption) => void;
   levelFilter: string;
-  setLevelFilter: (value: string) => void;
   badgeFilter: string;
-  setBadgeFilter: (value: string) => void;
   viewMode: 'card' | 'table';
-  setViewMode: (value: 'card' | 'table') => void;
-  uniqueLevels: string[];
-  uniqueBadges: string[];
-  filteredUsers: UserActivity[];
+}
+
+export type DifficultyLevel = 'easy' | 'medium' | 'hard' | 'expert';
+
+export interface LeaderboardFiltersContext {
+  timeframe: TimeframeOption;
+  setTimeframe: (timeframe: TimeframeOption) => void;
+  levelFilter: string;
+  setLevelFilter: (level: string) => void;
+  badgeFilter: string;
+  setBadgeFilter: (badge: string) => void;
+  viewMode: 'card' | 'table';
+  setViewMode: (viewMode: 'card' | 'table') => void;
 }
