@@ -52,6 +52,26 @@ export const fetchLeaderboardData = async (): Promise<{
   });
 };
 
+// Function to fetch top users for the leaderboard
+export const fetchTopUsers = async (): Promise<UserActivity[]> => {
+  const data = await fetchLeaderboardData();
+  return data.rankings;
+};
+
+// Function to fetch community stats
+export const fetchCommunityStats = async (): Promise<CommunityStats> => {
+  const data = await fetchLeaderboardData();
+  return data.communityStats;
+};
+
+// Function to fetch the current user's rank
+export const fetchCurrentUserRank = async (userId: string): Promise<UserActivity | null> => {
+  const data = await fetchLeaderboardData();
+  // In a real app, we would filter by the actual userId
+  // For now, we'll just return the mock current user
+  return data.currentUserRank;
+};
+
 // Generate mock leaderboard data
 const generateMockLeaderboardData = (count: number): UserActivity[] => {
   const users: UserActivity[] = [];
