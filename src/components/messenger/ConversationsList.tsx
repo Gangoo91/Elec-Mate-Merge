@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, Plus, User, Users, Heart, GraduationCap } from "lucide-react";
+import { Search, Plus, User, Users, Heart, GraduationCap, MessageSquarePlus } from "lucide-react";
 import ConversationItem from './ConversationItem';
 import { Conversation } from './types';
 
@@ -36,6 +36,17 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
   
   return (
     <div className="flex flex-col h-full">
+      {/* New Message button - Prominent at the top */}
+      <div className="p-3 bg-elec-yellow">
+        <Button
+          variant="ghost"
+          className="w-full flex items-center justify-center gap-2 text-black font-medium hover:bg-black/10 transition-colors"
+        >
+          <MessageSquarePlus className="h-5 w-5" />
+          New Message
+        </Button>
+      </div>
+
       {/* Tab buttons */}
       <div className="flex border-b border-elec-yellow/10 bg-elec-gray-dark">
         {tabs.map(tab => (
@@ -92,16 +103,7 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
         )}
       </div>
       
-      {/* New Message button */}
-      <div className="p-3 border-t border-elec-yellow/10 bg-elec-gray">
-        <Button
-          variant="ghost"
-          className="w-full flex items-center justify-center gap-2 text-white hover:bg-elec-yellow/10 group"
-        >
-          <Plus className="h-4 w-4 group-hover:text-elec-yellow transition-colors" />
-          New Message
-        </Button>
-      </div>
+      {/* Remove the New Message button from the bottom since we added it to the top */}
     </div>
   );
 };

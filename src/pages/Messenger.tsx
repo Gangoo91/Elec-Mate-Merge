@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, User, Users, Heart, GraduationCap } from "lucide-react";
+import { ArrowLeft, User, Users, Heart, GraduationCap, MessageSquarePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocation } from 'react-router-dom';
 import ConversationsList from '@/components/messenger/ConversationsList';
@@ -54,6 +55,30 @@ const MessengerPage = () => {
     setShowConversationOnMobile(false);
   };
   
+  // Add New Message button for mobile when showing a conversation
+  const renderMobileHeader = () => (
+    <div className="p-3 border-b border-elec-yellow/10 bg-elec-gray flex items-center justify-between">
+      <div className="flex items-center">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={handleBackToList}
+          className="mr-2"
+        >
+          <ArrowLeft className="h-5 w-5" />
+        </Button>
+        <span className="font-medium">{activeConversation?.participantName}</span>
+      </div>
+      <Button 
+        variant="ghost" 
+        size="icon"
+        className="text-elec-yellow hover:bg-elec-yellow/10"
+      >
+        <MessageSquarePlus className="h-5 w-5" />
+      </Button>
+    </div>
+  );
+  
   return (
     <div className="animate-fade-in h-[calc(100vh-64px)]">
       <div className="grid h-full">
@@ -62,17 +87,7 @@ const MessengerPage = () => {
           <Card className="border-none bg-elec-gray overflow-hidden flex flex-col shadow-md h-full rounded-none">
             {showConversationOnMobile && activeConversation ? (
               <div className="flex flex-col h-full">
-                <div className="p-3 border-b border-elec-yellow/10 bg-elec-gray flex items-center">
-                  <Button 
-                    variant="ghost" 
-                    size="icon" 
-                    onClick={handleBackToList}
-                    className="mr-2"
-                  >
-                    <ArrowLeft className="h-5 w-5" />
-                  </Button>
-                  <span className="font-medium">{activeConversation.participantName}</span>
-                </div>
+                {renderMobileHeader()}
                 <div className="flex-1 overflow-hidden">
                   <ConversationView
                     conversation={activeConversation}
