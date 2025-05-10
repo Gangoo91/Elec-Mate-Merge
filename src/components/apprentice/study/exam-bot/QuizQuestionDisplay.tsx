@@ -38,14 +38,14 @@ const QuizQuestionDisplay = ({
       </div>
       
       <div className="bg-elec-dark p-4 rounded-lg">
-        <p className="font-medium mb-4">{currentQuestion.question}</p>
+        <p className="font-medium mb-6 text-lg border-b border-elec-yellow/20 pb-3">{currentQuestion.question}</p>
         
-        <RadioGroup disabled={hasAnswered}>
+        <RadioGroup disabled={hasAnswered} className="space-y-4">
           {currentQuestion.options.map((option, index) => {
             const isCorrect = index === currentQuestion.correctAnswer;
             const isSelected = index === userAnswer;
             
-            let optionClasses = "relative flex items-center p-3 rounded-md border";
+            let optionClasses = "relative flex items-center p-4 rounded-md border transition-all";
             
             if (hasAnswered) {
               if (isSelected && isCorrect) {
@@ -58,7 +58,7 @@ const QuizQuestionDisplay = ({
                 optionClasses += " border-elec-gray/30 bg-elec-gray/5";
               }
             } else {
-              optionClasses += " border-elec-gray/30 hover:border-elec-yellow/50 cursor-pointer";
+              optionClasses += " border-elec-gray/30 hover:border-elec-yellow/50 hover:bg-elec-yellow/5 cursor-pointer";
             }
             
             return (
@@ -66,13 +66,13 @@ const QuizQuestionDisplay = ({
                 <RadioGroupItem 
                   value={index.toString()} 
                   id={`option-${index}`}
-                  className="mr-2"
+                  className="mr-3"
                 />
                 <Label htmlFor={`option-${index}`} className="flex-grow cursor-pointer">
                   {option}
                 </Label>
                 {hasAnswered && (
-                  <div className={`ml-2 flex items-center justify-center w-5 h-5 rounded-full ${isCorrect ? 'bg-green-500' : isSelected ? 'bg-red-500' : ''}`}>
+                  <div className={`ml-2 flex items-center justify-center w-6 h-6 rounded-full ${isCorrect ? 'bg-green-500' : isSelected ? 'bg-red-500' : ''}`}>
                     {isCorrect ? <Check className="h-3 w-3 text-white" /> : isSelected ? <X className="h-3 w-3 text-white" /> : null}
                   </div>
                 )}
@@ -82,15 +82,15 @@ const QuizQuestionDisplay = ({
         </RadioGroup>
         
         {showingExplanation && (
-          <div className="mt-4 pt-4 border-t border-elec-yellow/20">
+          <div className="mt-6 pt-4 border-t border-elec-yellow/20">
             <h4 className="text-elec-yellow font-medium mb-2">Explanation:</h4>
-            <p className="text-sm">{currentQuestion.explanation}</p>
+            <p className="text-sm bg-elec-yellow/5 p-4 rounded-md border border-elec-yellow/10">{currentQuestion.explanation}</p>
           </div>
         )}
       </div>
       
       {hasAnswered && (
-        <Button className="w-full" onClick={onNext}>
+        <Button className="w-full bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark" onClick={onNext}>
           {!isLastQuestion ? 'Next Question' : 'See Results'}
         </Button>
       )}
