@@ -1,5 +1,5 @@
 
-import { Bot, Clock } from "lucide-react";
+import { Bot } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import ExamTypesGrid from "./exam-bot/ExamTypesGrid";
 import QuizButton from "./exam-bot/QuizButton";
@@ -10,6 +10,7 @@ import { useQuizController } from "./exam-bot/useQuizController";
 const StudyExamBot = () => {
   const {
     isGenerating,
+    loadingProgress,
     selectedType,
     questions,
     currentIndex,
@@ -33,7 +34,11 @@ const StudyExamBot = () => {
       return (
         <>
           <ExamTypesGrid selectedType={selectedType} onSelectType={handleSelectType} />
-          <QuizButton isGenerating={isGenerating} onClick={handleStartQuiz} />
+          <QuizButton 
+            isGenerating={isGenerating} 
+            loadingProgress={loadingProgress}
+            onClick={handleStartQuiz} 
+          />
         </>
       );
     }

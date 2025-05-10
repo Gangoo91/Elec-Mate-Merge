@@ -1,11 +1,12 @@
-
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 import { QuizQuestion, QuizResult } from "./types";
+import { logger } from "@/utils/logger";
 
 export const useQuizController = () => {
   const [isGenerating, setIsGenerating] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const [selectedType, setSelectedType] = useState<string>("am2");
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -20,6 +21,7 @@ export const useQuizController = () => {
   
   const handleStartQuiz = async () => {
     setIsGenerating(true);
+    setLoadingProgress(0);
     setQuestions([]);
     setCurrentIndex(0);
     setUserAnswers([]);
@@ -28,13 +30,17 @@ export const useQuizController = () => {
     setQuizResult(null);
     
     try {
-      // Request quiz questions from the Edge Function with more specific instructions
+      // Only request 10 questions instead of 20 for faster loading time
+      setLoadingProgress(10);
+      
       const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
         body: { 
-          prompt: `Generate 20 multiple-choice questions (4 options each) for ${selectedType} exam preparation for UK electrical apprentices. Questions should be based on UK electrical standards, regulations (BS 7671), and practices. Each question must cover different topics within ${selectedType} to ensure variety. Format the response as a JSON array with fields: question (string), options (array of strings), correctAnswer (number index), and explanation (string). Ensure the response is valid JSON that can be parsed directly.`,
+          prompt: `Generate 10 multiple-choice questions (4 options each) for ${selectedType} exam preparation for UK electrical apprentices. Questions should be based on UK electrical standards, regulations (BS 7671), and practices. Each question must cover different topics within ${selectedType} to ensure variety. Format the response as a JSON array with fields: question (string), options (array of strings), correctAnswer (number index), and explanation (string). Ensure the response is valid JSON that can be parsed directly.`,
           type: "exam_quiz" 
         },
       });
+      
+      setLoadingProgress(60);
       
       if (error) {
         throw new Error(error.message || 'Error generating quiz questions');
@@ -44,15 +50,22 @@ export const useQuizController = () => {
         throw new Error(data.error);
       }
       
+      setLoadingProgress(80);
+      
       let parsedQuestions;
       try {
         // Handle different response formats
         if (typeof data.response === 'string') {
-          // Try to parse string response as JSON
+          // Check if the response is a JSON string
+          const responseText = data.response;
+          // Extract the JSON part if wrapped in markdown code blocks
+          const jsonMatch = responseText.match(/```json\s*([\s\S]*?)\s*```/);
+          const jsonString = jsonMatch ? jsonMatch[1] : responseText;
+          
           try {
-            parsedQuestions = JSON.parse(data.response);
+            parsedQuestions = JSON.parse(jsonString);
           } catch (e) {
-            console.error("Response is not valid JSON:", data.response);
+            logger.error("Response is not valid JSON:", data.response);
             throw new Error("Response format error: not valid JSON");
           }
         } else if (Array.isArray(data.response)) {
@@ -75,6 +88,8 @@ export const useQuizController = () => {
           throw new Error("Invalid response format");
         }
         
+        setLoadingProgress(90);
+        
         // Validate the structure
         if (!Array.isArray(parsedQuestions) || parsedQuestions.length === 0) {
           throw new Error("Invalid question format received");
@@ -95,9 +110,10 @@ export const useQuizController = () => {
         }
         
         setQuestions(validatedQuestions);
+        setLoadingProgress(100);
         
       } catch (parseError) {
-        console.error("Error parsing questions:", parseError);
+        logger.error("Error parsing questions:", parseError);
         throw new Error("Could not parse quiz questions");
       }
       
@@ -114,6 +130,7 @@ export const useQuizController = () => {
       });
     } finally {
       setIsGenerating(false);
+      setLoadingProgress(0);
     }
   };
   
@@ -153,6 +170,7 @@ export const useQuizController = () => {
 
   return {
     isGenerating,
+    loadingProgress,
     selectedType,
     questions,
     currentIndex,
