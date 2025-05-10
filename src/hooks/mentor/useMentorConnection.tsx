@@ -12,8 +12,11 @@ export const useMentorConnection = () => {
   const { addMentorConversation } = useMessenger();
   const [requestingMentor, setRequestingMentor] = useState<string | null>(null);
   const [mentors, setMentors] = useState<any[]>([]);
+  const [featuredMentors, setFeaturedMentors] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [skillFilter, setSkillFilter] = useState<string>('all');
+  const [availabilityFilter, setAvailabilityFilter] = useState<string>('all');
 
   // Fetch mentors from Supabase
   useEffect(() => {
@@ -27,7 +30,21 @@ export const useMentorConnection = () => {
           
         if (error) throw error;
         
-        setMentors(data || []);
+        if (data) {
+          // Add some mock ratings for demo purposes
+          const enhancedData = data.map(mentor => ({
+            ...mentor,
+            rating: Math.floor(Math.random() * 2) + 4, // Random rating 4-5
+            responseTime: ['Within 24h', 'Same day', '1-2 days'][Math.floor(Math.random() * 3)]
+          }));
+          
+          // Filter featured mentors
+          const featured = enhancedData.filter((m) => m.is_featured);
+          setFeaturedMentors(featured);
+          
+          // Set all mentors
+          setMentors(enhancedData);
+        }
       } catch (err) {
         console.error("Error fetching mentors:", err);
         setError("Failed to load apprentices seeking mentorship. Please try again later.");
@@ -123,9 +140,14 @@ export const useMentorConnection = () => {
 
   return {
     mentors,
+    featuredMentors,
     isLoading,
     error,
     requestingMentor,
-    handleConnectMentor
+    handleConnectMentor,
+    skillFilter,
+    setSkillFilter,
+    availabilityFilter,
+    setAvailabilityFilter
   };
 };

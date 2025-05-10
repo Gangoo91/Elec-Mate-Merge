@@ -5,10 +5,13 @@ import MentorIntroCard from "@/components/mentor/MentorIntroCard";
 import MentorGrid from "@/components/mentor/MentorGrid";
 import { useMentorConnection } from "@/hooks/mentor/useMentorConnection";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Users, ChevronLeft } from "lucide-react";
+import { Users, ChevronLeft, BookOpen, MessageSquare } from "lucide-react";
+import MentorshipGuide from "@/components/mentor/MentorshipGuide";
+import FeaturedMentors from "@/components/mentor/FeaturedMentors";
+import { Separator } from "@/components/ui/separator";
 
 const ApprenticeMentor = () => {
-  const { mentors, isLoading, error, requestingMentor, handleConnectMentor } = useMentorConnection();
+  const { mentors, isLoading, error, requestingMentor, handleConnectMentor, featuredMentors } = useMentorConnection();
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -29,11 +32,26 @@ const ApprenticeMentor = () => {
       </div>
 
       <Tabs defaultValue="browse" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 mb-6">
-          <TabsTrigger value="browse">Mentoring</TabsTrigger>
-          <TabsTrigger value="about">About Mentoring</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3 mb-6">
+          <TabsTrigger value="browse"><Users className="mr-2 h-4 w-4" />Find Mentors</TabsTrigger>
+          <TabsTrigger value="guide"><BookOpen className="mr-2 h-4 w-4" />Mentorship Guide</TabsTrigger>
+          <TabsTrigger value="about"><MessageSquare className="mr-2 h-4 w-4" />About Mentoring</TabsTrigger>
         </TabsList>
+        
         <TabsContent value="browse" className="space-y-6">
+          {featuredMentors && featuredMentors.length > 0 && (
+            <>
+              <h2 className="text-xl font-semibold">Featured Mentors</h2>
+              <FeaturedMentors 
+                mentors={featuredMentors} 
+                requestingMentor={requestingMentor}
+                onConnectMentor={handleConnectMentor}
+              />
+              <Separator className="my-6" />
+            </>
+          )}
+          
+          <h2 className="text-xl font-semibold">All Available Mentors</h2>
           <MentorGrid 
             mentors={mentors}
             isLoading={isLoading}
@@ -42,6 +60,11 @@ const ApprenticeMentor = () => {
             onConnectMentor={handleConnectMentor}
           />
         </TabsContent>
+        
+        <TabsContent value="guide">
+          <MentorshipGuide />
+        </TabsContent>
+        
         <TabsContent value="about">
           <div className="space-y-6">
             <MentorIntroCard />
