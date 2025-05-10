@@ -1,4 +1,3 @@
-
 import { Routes, Route } from "react-router-dom";
 import LandingPage from "@/pages/LandingPage";
 import Index from "@/pages/Index";
@@ -24,6 +23,7 @@ import ElectricianRoutes from "@/routes/ElectricianRoutes";
 import ApprenticeChat from "@/pages/apprentice/ApprenticeChat";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
+import Chat from "@/pages/Chat";
 
 const AppRouter = () => {
   return (
@@ -45,7 +45,7 @@ const AppRouter = () => {
         <Route path="*" element={<NotFound />} />
         
         {/* Top level routes for shared features */}
-        <Route path="chat" element={<ApprenticeChat />} />
+        <Route path="chat" element={<Chat />} />
         <Route path="mental-health" element={<ApprenticeMentalHealth />} />
         <Route path="mentor" element={<ApprenticeMentor />} />
         

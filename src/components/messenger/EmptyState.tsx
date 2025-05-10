@@ -1,36 +1,36 @@
 
 import React from 'react';
-import { MessageSquare } from "lucide-react";
+import { MessengerTabType } from './constants';
 
 interface EmptyStateProps {
-  activeTab: string;
-  getTabIcon: (tab: string) => React.ReactNode;
+  activeTab: MessengerTabType;
+  getTabIcon: (tab: MessengerTabType) => React.ReactNode;
 }
 
 const EmptyState: React.FC<EmptyStateProps> = ({ activeTab, getTabIcon }) => {
-  const getMessageByTab = () => {
-    switch (activeTab) {
-      case 'private':
-        return "Select a conversation or start a new one";
-      case 'team':
-        return "Connect with your team members";
-      case 'mental-health':
-        return "Reach out to our support advisors";
-      case 'mentor':
-        return "Chat with your mentors and instructors";
-      default:
-        return "Select a conversation to start messaging";
+  const getTabMessage = (tab: MessengerTabType) => {
+    switch (tab) {
+      case 'private': 
+        return 'Select a conversation or start a new one to begin messaging';
+      case 'team': 
+        return 'Stay connected with your team through group conversations';
+      case 'mental-health': 
+        return 'Reach out to mental health support professionals';
+      case 'mentor': 
+        return 'Connect with mentors for guidance and support';
+      default: 
+        return 'Select a conversation to start messaging';
     }
   };
   
   return (
-    <div className="h-full flex flex-col items-center justify-center p-6 text-center">
-      <div className="bg-elec-gray-light/10 rounded-full p-6 mb-4">
-        {getTabIcon(activeTab) || <MessageSquare className="h-12 w-12 text-elec-yellow opacity-50" />}
+    <div className="flex flex-col items-center justify-center h-full">
+      <div className="p-6 bg-elec-gray-light/10 rounded-full mb-6">
+        {getTabIcon(activeTab)}
       </div>
-      <h3 className="text-lg font-medium mb-2 text-elec-yellow">No conversation selected</h3>
-      <p className="text-muted-foreground max-w-md">
-        {getMessageByTab()}
+      <h2 className="text-xl font-medium text-white mb-2">No conversation selected</h2>
+      <p className="text-muted-foreground text-center max-w-md">
+        {getTabMessage(activeTab)}
       </p>
     </div>
   );

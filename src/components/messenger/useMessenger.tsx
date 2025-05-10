@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
@@ -102,7 +101,7 @@ export const useMessenger = () => {
   // Import utility functions
   const { getTabIcon, getInitials } = useConversationUtils();
   
-  // Import mentor conversation functionality
+  // Import mentor conversation functionality 
   const { mentorDbConnections, sendMentorMessage, addMentorConversation } = useMentorConversations(
     conversations, 
     setConversations, 
@@ -181,7 +180,8 @@ export const useMessenger = () => {
             ? { 
                 ...c, 
                 lastMessage: simulatedReply.content,
-                lastMessageTime: new Date()
+                lastMessageTime: new Date(),
+                unreadCount: activeConversation === c ? 0 : c.unreadCount + 1
               } 
             : c
         ));

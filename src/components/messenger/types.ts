@@ -1,15 +1,5 @@
 
-export type Message = {
-  id: string;
-  content: string;
-  senderId: string;
-  senderName: string;
-  senderAvatar?: string;
-  timestamp: Date;
-  read: boolean;
-};
-
-export type Conversation = {
+export interface Conversation {
   id: string;
   participantId: string;
   participantName: string;
@@ -18,22 +8,33 @@ export type Conversation = {
   lastMessageTime?: Date;
   unreadCount: number;
   type: 'private' | 'team' | 'mental-health' | 'mentor';
-};
+}
 
-export type ChatMessage = {
+export interface Message {
+  id: string;
+  content: string;
+  senderId: string;
+  senderName: string;
+  senderAvatar?: string;
+  timestamp: Date;
+  read: boolean;
+}
+
+export interface ChatMessage {
   id: string;
   authorId: string;
   authorName: string;
   authorAvatar?: string;
   content: string;
   createdAt: Date;
+  updatedAt?: Date;
   upvotes: number;
-  comments: ChatComment[];
   hasUserUpvoted?: boolean;
   category: string;
-};
+  comments: ChatComment[];
+}
 
-export type ChatComment = {
+export interface ChatComment {
   id: string;
   authorId: string;
   authorName: string;
@@ -41,4 +42,4 @@ export type ChatComment = {
   content: string;
   createdAt: Date;
   parentId: string;
-};
+}
