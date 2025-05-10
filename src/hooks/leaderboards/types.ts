@@ -10,11 +10,24 @@ export type UserActivity = {
   last_active_date: string;
   created_at: string;
   updated_at: string;
+  previous_position?: number;
+  position?: number;
   profiles?: {
     username?: string;
     full_name?: string;
     avatar_url?: string;
+    country_code?: string;
+    country?: string;
+    bio?: string;
+    is_verified?: boolean;
   };
+  achievements?: Array<{
+    id: string;
+    name: string;
+    description: string;
+    awarded_at: string;
+  }>;
+  top_skills?: string[];
 }
 
 export type CommunityStats = {

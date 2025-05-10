@@ -1,4 +1,3 @@
-
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2, Trophy, Users, Star, Award } from "lucide-react";
 import { useLeaderboardData } from "@/hooks/leaderboards/useLeaderboardData";
@@ -12,6 +11,8 @@ import { AchievementsSection } from "@/components/leaderboards/AchievementsSecti
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
 
 const Leaderboards = () => {
   const { userRankings, communityStats, currentUserRank, isLoading, error } = useLeaderboardData();
@@ -277,4 +278,3 @@ const CommunityChallenge = ({
 };
 
 export default Leaderboards;
-
