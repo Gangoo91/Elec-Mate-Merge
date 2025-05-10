@@ -12,6 +12,14 @@ import ProjectManagement from "@/pages/electrician-tools/ProjectManagement";
 import ProjectDetails from "@/components/project-management/ProjectDetails";
 import CableSizingCalculator from "@/pages/electrician-tools/cable-sizing";
 import DocumentTemplates from "@/pages/electrician-tools/DocumentTemplates";
+// Add Staff Management page
+import StaffManagement from "@/pages/electrician-tools/StaffManagement";
+// Add Schedule Manager page
+import ScheduleManager from "@/pages/electrician-tools/ScheduleManager";
+// Add Business Analytics page
+import BusinessAnalytics from "@/pages/electrician-tools/BusinessAnalytics";
+// Add Financial Tools page
+import FinancialTools from "@/pages/electrician-tools/FinancialTools";
 
 const ElectricianRoutes = () => (
   <Routes>
@@ -26,6 +34,11 @@ const ElectricianRoutes = () => (
     <Route path="document-templates" element={<DocumentTemplates />} />
     <Route path="project-management" element={<ProjectManagement />} />
     <Route path="project-management/project/:projectId" element={<ProjectDetails />} />
+    {/* Add new routes */}
+    <Route path="staff-management" element={<StaffManagement />} />
+    <Route path="schedule" element={<ScheduleManager />} />
+    <Route path="business-analytics" element={<BusinessAnalytics />} />
+    <Route path="financial-tools" element={<FinancialTools />} />
   </Routes>
 );
 
