@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, User, Users, Heart, GraduationCap, MessageSquarePlus } from "lucide-react";
@@ -8,6 +9,7 @@ import ConversationView from '@/components/messenger/ConversationView';
 import EmptyState from '@/components/messenger/EmptyState';
 import { useMessenger } from '@/components/messenger/useMessenger';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { toast } from "@/components/ui/use-toast";
 
 const MessengerPage = () => {
   const location = useLocation();
@@ -25,6 +27,7 @@ const MessengerPage = () => {
     handleSelectConversation,
     handleSendMessage,
     getInitials,
+    addMentorConversation,
   } = useMessenger();
   
   const isMobile = useIsMobile();
@@ -54,6 +57,36 @@ const MessengerPage = () => {
     setShowConversationOnMobile(false);
   };
   
+  const handleNewMessage = () => {
+    // For now, just show a toast message
+    // In a real app, this would open a dialog to select a recipient
+    toast({
+      title: "New message",
+      description: "This feature will allow you to start a new conversation with another user.",
+      duration: 3000,
+    });
+    
+    // Example of how we might create a mock conversation for demo purposes
+    // This could be replaced with actual user selection in a real app
+    const newMockConversation = {
+      id: 'new-' + Date.now(),
+      participantId: 'new-user-' + Math.floor(Math.random() * 1000),
+      participantName: 'New Contact',
+      lastMessage: '',
+      lastMessageTime: new Date(),
+      unreadCount: 0,
+      type: activeTab
+    };
+    
+    // Select the new conversation
+    handleSelectConversation(newMockConversation);
+    
+    // If on mobile, show the conversation view
+    if (isMobile) {
+      setShowConversationOnMobile(true);
+    }
+  };
+  
   // Add New Message button for mobile when showing a conversation
   const renderMobileHeader = () => (
     <div className="p-3 border-b border-elec-yellow/10 bg-elec-gray flex items-center justify-between">
@@ -71,6 +104,7 @@ const MessengerPage = () => {
       <Button 
         size="icon"
         className="bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30"
+        onClick={handleNewMessage}
       >
         <MessageSquarePlus className="h-5 w-5" />
       </Button>
@@ -106,6 +140,7 @@ const MessengerPage = () => {
                 getInitials={getInitials}
                 activeTab={activeTab}
                 onTabChange={handleTabChange}
+                onNewMessage={handleNewMessage}
               />
             )}
           </Card>
@@ -123,6 +158,7 @@ const MessengerPage = () => {
                 getInitials={getInitials}
                 activeTab={activeTab}
                 onTabChange={handleTabChange}
+                onNewMessage={handleNewMessage}
               />
             </Card>
             

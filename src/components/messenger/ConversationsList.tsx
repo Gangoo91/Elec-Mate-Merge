@@ -15,6 +15,7 @@ interface ConversationsListProps {
   getInitials: (name: string) => string;
   activeTab: string;
   onTabChange: (tab: string) => void;
+  onNewMessage?: () => void;
 }
 
 const ConversationsList: React.FC<ConversationsListProps> = ({ 
@@ -25,7 +26,8 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
   onSelectConversation,
   getInitials,
   activeTab,
-  onTabChange
+  onTabChange,
+  onNewMessage
 }) => {
   const tabs = [
     { id: 'private', label: 'Private', icon: <User className="h-5 w-5" /> },
@@ -40,6 +42,7 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
       <div className="p-3 bg-elec-gray-dark border-b border-elec-yellow/20">
         <Button
           className="w-full flex items-center justify-center gap-2 bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow font-medium transition-colors border border-elec-yellow/30"
+          onClick={onNewMessage}
         >
           <MessageSquarePlus className="h-5 w-5" />
           New Message
@@ -84,6 +87,7 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
             <Button
               variant="outline"
               className="mt-4 border-elec-yellow/30 hover:bg-elec-yellow/10"
+              onClick={onNewMessage}
             >
               <Plus className="mr-2 h-4 w-4" />
               Start New Conversation
@@ -101,8 +105,6 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
           ))
         )}
       </div>
-      
-      {/* Remove the New Message button from the bottom since we added it to the top */}
     </div>
   );
 };
