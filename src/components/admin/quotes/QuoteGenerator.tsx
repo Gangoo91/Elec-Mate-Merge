@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -160,6 +161,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
                 value={formData.clientName}
                 onChange={handleInputChange}
                 placeholder="John Smith"
+                className={isMobile ? "h-12 text-base" : ""}
               />
             </div>
             <div className="space-y-2">
@@ -170,6 +172,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
                 value={formData.clientAddress}
                 onChange={handleInputChange}
                 placeholder="123 Main Street, London"
+                className={isMobile ? "h-12 text-base" : ""}
               />
             </div>
           </div>
@@ -189,7 +192,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
                 value={jobType} 
                 onValueChange={(value) => setJobType(value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className={isMobile ? "h-12 text-base" : ""}>
                   <SelectValue placeholder="Select job type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -206,7 +209,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
                 value={formData.propertyType} 
                 onValueChange={(value) => handleSelectChange("propertyType", value)}
               >
-                <SelectTrigger>
+                <SelectTrigger className={isMobile ? "h-12 text-base" : ""}>
                   <SelectValue placeholder="Select property type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -224,7 +227,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
                   value={formData.bedrooms} 
                   onValueChange={(value) => handleSelectChange("bedrooms", value)}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className={isMobile ? "h-12 text-base" : ""}>
                     <SelectValue placeholder="Select number" />
                   </SelectTrigger>
                   <SelectContent>
@@ -242,7 +245,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
                   value={formData.floors} 
                   onValueChange={(value) => handleSelectChange("floors", value)}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className={isMobile ? "h-12 text-base" : ""}>
                     <SelectValue placeholder="Select number" />
                   </SelectTrigger>
                   <SelectContent>
@@ -265,6 +268,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
               onChange={handleInputChange}
               placeholder="Describe the work to be carried out in detail..."
               rows={3}
+              className={isMobile ? "min-h-[100px] text-base" : ""}
             />
             <p className="text-xs text-muted-foreground mt-1">Leave blank to auto-generate from job details</p>
           </div>
@@ -278,6 +282,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
               onChange={handleInputChange}
               placeholder="Any special requirements or conditions..."
               rows={2}
+              className={isMobile ? "min-h-[80px] text-base" : ""}
             />
           </div>
         </CardContent>
@@ -313,7 +318,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
                       value={item.description}
                       onChange={(e) => updateMaterialItem(item.id, "description", e.target.value)}
                       placeholder="Material description"
-                      className="h-9 px-2 text-sm"
+                      className={isMobile ? "h-12 px-3 text-base" : "h-9 px-2 text-sm"}
                     />
                   </div>
                   <div className="col-span-2">
@@ -322,7 +327,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
                       min="1"
                       value={item.quantity}
                       onChange={(e) => updateMaterialItem(item.id, "quantity", e.target.value)}
-                      className="h-9 text-center px-1 text-sm"
+                      className={isMobile ? "h-12 text-center px-2 text-base" : "h-9 text-center px-1 text-sm"}
                     />
                   </div>
                   <div className="col-span-3">
@@ -332,7 +337,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
                       step="0.01"
                       value={item.unitPrice}
                       onChange={(e) => updateMaterialItem(item.id, "unitPrice", e.target.value)}
-                      className="h-9 text-right px-1 text-sm"
+                      className={isMobile ? "h-12 text-right px-2 text-base" : "h-9 text-right px-1 text-sm"}
                     />
                   </div>
                   <div className="col-span-1 flex justify-center">
@@ -340,9 +345,9 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
                       variant="ghost" 
                       size="sm"
                       onClick={() => removeMaterialItem(item.id)}
-                      className="h-7 w-7 p-0"
+                      className={isMobile ? "h-10 w-10 p-0" : "h-7 w-7 p-0"}
                     >
-                      <Trash2 className="h-4 w-4 text-red-500" />
+                      <Trash2 className={isMobile ? "h-5 w-5 text-red-500" : "h-4 w-4 text-red-500"} />
                       <span className="sr-only">Delete item</span>
                     </Button>
                   </div>
@@ -361,7 +366,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
             <Button 
               onClick={handleGenerateWithAI} 
               disabled={isLoading || !formData.clientName || !jobType}
-              className="min-w-[150px] w-full sm:w-auto"
+              className={isMobile ? "min-w-full py-6 text-lg font-medium" : "min-w-[150px] w-full sm:w-auto"}
             >
               {isLoading ? (
                 <>
