@@ -5,6 +5,7 @@ import { useLeaderboardData } from "@/hooks/leaderboards/useLeaderboardData";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface DashboardOverviewProps {
   user: {
@@ -20,6 +21,7 @@ const DashboardOverview = ({ user }: DashboardOverviewProps) => {
   const { user: authUser } = useAuth();
   const [completedLessons, setCompletedLessons] = useState(user.completedLessons);
   const [activeUsers, setActiveUsers] = useState(0);
+  const isMobile = useIsMobile();
 
   // Fetch completed lessons count
   useEffect(() => {
@@ -53,30 +55,34 @@ const DashboardOverview = ({ user }: DashboardOverviewProps) => {
   }, [communityStats]);
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid gap-3 md:gap-4 grid-cols-2 md:grid-cols-4">
       <OverviewCard 
         title="Your Progress" 
         value={`${completedLessons}/${user.totalLessons}`}
         description="Lessons completed"
         icon={<BookOpen className="h-4 w-4" />}
+        isMobile={isMobile}
       />
       <OverviewCard 
         title="Active Streak" 
         value={`${currentUserRank?.streak || 0} days`}
-        description={currentUserRank?.streak ? "Keep going!" : "Start learning to build your streak"}
+        description={currentUserRank?.streak ? "Keep going!" : "Start learning"}
         icon={<Clock className="h-4 w-4" />}
+        isMobile={isMobile}
       />
       <OverviewCard 
-        title="Leaderboard Rank" 
+        title="Rank" 
         value={currentUserRank ? "#" + (currentUserRank?.points > 0 ? "1-10" : "--") : "--"}
-        description="Complete lessons to rank up"
+        description="Complete lessons to rank"
         icon={<Trophy className="h-4 w-4" />}
+        isMobile={isMobile}
       />
       <OverviewCard 
         title="Community" 
         value={activeUsers.toString()}
         description="Active users this month"
         icon={<Users className="h-4 w-4" />}
+        isMobile={isMobile}
       />
     </div>
   );
