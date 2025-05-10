@@ -37,6 +37,7 @@ import InspectionAreas from "@/components/apprentice/resources/InspectionAreas";
 import InspectionDocumentation from "@/components/apprentice/resources/InspectionDocumentation";
 import InspectionRegulations from "@/components/apprentice/resources/InspectionRegulations";
 import AILearning from "@/pages/apprentice/AILearning";
+import SafetyFundamentals from "@/pages/apprentice/SafetyFundamentals";
 
 const ApprenticeRoutes = () => {
   return (
@@ -59,6 +60,7 @@ const ApprenticeRoutes = () => {
       <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
       <Route path="on-job-tools/documents" element={<OnJobDocuments />} />
       <Route path="on-job-tools/assessment" element={<OnJobAssessment />} />
+      <Route path="safety-fundamentals" element={<SafetyFundamentals />} />
       
       <Route path="study">
         <Route index element={<ApprenticeStudy />} />
