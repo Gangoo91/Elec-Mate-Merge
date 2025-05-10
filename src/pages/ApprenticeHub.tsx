@@ -38,12 +38,6 @@ const ApprenticeHub = () => {
     },
     {
       id: 6,
-      title: "AI Tooling",
-      icon: Bot,
-      link: "/apprentice/ai-tools"
-    },
-    {
-      id: 7,
       title: "On the Job Tools",
       icon: Settings,
       link: "/apprentice/on-job-tools"

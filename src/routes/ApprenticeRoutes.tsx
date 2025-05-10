@@ -1,7 +1,6 @@
 
 import { Route, Routes } from "react-router-dom";
 import ApprenticeHub from "@/pages/ApprenticeHub";
-import ApprenticeAITools from "@/pages/apprentice/ApprenticeAITools";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
 import ApprenticeOJT from "@/pages/apprentice/ApprenticeOJT";
 import ApprenticeStudy from "@/pages/apprentice/ApprenticeStudy";
@@ -47,7 +46,6 @@ const ApprenticeRoutes = () => {
       <Route index element={<ApprenticeHub />} />
       <Route path="hub" element={<ApprenticeHub />} />
       <Route path="chat" element={<ApprenticeChat />} />
-      <Route path="ai-tools" element={<ApprenticeAITools />} />
       <Route path="mentor" element={<ApprenticeMentor />} />
       <Route path="ojt" element={<ApprenticeOJT />} />
       <Route path="toolbox" element={<ApprenticeToolbox />} />
