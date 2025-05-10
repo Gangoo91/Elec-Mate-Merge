@@ -13,10 +13,11 @@ import {
   SelectValue 
 } from "@/components/ui/select";
 import { 
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger
-} from "@/components/ui/collapsible";
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from "@/components/ui/accordion";
 import { Users, ChevronLeft, BookOpen, MessageSquare, ChevronDown } from "lucide-react";
 import MentorshipGuide from "@/components/mentor/MentorshipGuide";
 import FeaturedMentors from "@/components/mentor/FeaturedMentors";
@@ -34,7 +35,6 @@ const ApprenticeMentor = () => {
   } = useMentorConnection();
   
   const [activeSection, setActiveSection] = useState("browse");
-  const [isInfoOpen, setIsInfoOpen] = useState(false);
   const isMobile = useIsMobile();
 
   const renderActiveContent = () => {
@@ -94,42 +94,39 @@ const ApprenticeMentor = () => {
                 </p>
               </div>
             </div>
-            <Collapsible open={isInfoOpen} onOpenChange={setIsInfoOpen} className="w-full">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xl font-semibold">Mentorship Workbook</h3>
-                <CollapsibleTrigger asChild>
-                  <Button variant="ghost" size="sm" className="w-9 p-0">
-                    <ChevronDown className={`h-4 w-4 transition-transform ${isInfoOpen ? "rotate-180" : ""}`} />
-                    <span className="sr-only">Toggle</span>
-                  </Button>
-                </CollapsibleTrigger>
-              </div>
-              <CollapsibleContent className="mt-4 p-4 border rounded-lg">
-                <div className="space-y-4">
-                  <p className="text-sm">
-                    Use this workbook to track your goals and progress with your mentor:
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="border p-3 rounded-md hover:border-elec-yellow/50 cursor-pointer transition-all">
-                      <h4 className="font-medium text-sm">Goal Setting Template</h4>
-                      <p className="text-xs text-muted-foreground">Define your short and long-term apprenticeship goals</p>
-                    </div>
-                    <div className="border p-3 rounded-md hover:border-elec-yellow/50 cursor-pointer transition-all">
-                      <h4 className="font-medium text-sm">Session Planner</h4>
-                      <p className="text-xs text-muted-foreground">Plan topics for your next mentoring session</p>
-                    </div>
-                    <div className="border p-3 rounded-md hover:border-elec-yellow/50 cursor-pointer transition-all">
-                      <h4 className="font-medium text-sm">Learning Journal</h4>
-                      <p className="text-xs text-muted-foreground">Document key insights from each mentoring session</p>
-                    </div>
-                    <div className="border p-3 rounded-md hover:border-elec-yellow/50 cursor-pointer transition-all">
-                      <h4 className="font-medium text-sm">Skill Progress Tracker</h4>
-                      <p className="text-xs text-muted-foreground">Track improvement in specific electrical skills</p>
+            
+            <Accordion type="single" collapsible className="w-full border rounded-lg overflow-hidden">
+              <AccordionItem value="workbook" className="border-0">
+                <AccordionTrigger className="px-4 py-3 hover:no-underline">
+                  <h3 className="text-xl font-semibold">Mentorship Workbook</h3>
+                </AccordionTrigger>
+                <AccordionContent className="px-4 pb-4 border-t">
+                  <div className="space-y-4 mt-4">
+                    <p className="text-sm">
+                      Use this workbook to track your goals and progress with your mentor:
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="border p-3 rounded-md hover:border-elec-yellow/50 cursor-pointer transition-all">
+                        <h4 className="font-medium text-sm">Goal Setting Template</h4>
+                        <p className="text-xs text-muted-foreground">Define your short and long-term apprenticeship goals</p>
+                      </div>
+                      <div className="border p-3 rounded-md hover:border-elec-yellow/50 cursor-pointer transition-all">
+                        <h4 className="font-medium text-sm">Session Planner</h4>
+                        <p className="text-xs text-muted-foreground">Plan topics for your next mentoring session</p>
+                      </div>
+                      <div className="border p-3 rounded-md hover:border-elec-yellow/50 cursor-pointer transition-all">
+                        <h4 className="font-medium text-sm">Learning Journal</h4>
+                        <p className="text-xs text-muted-foreground">Document key insights from each mentoring session</p>
+                      </div>
+                      <div className="border p-3 rounded-md hover:border-elec-yellow/50 cursor-pointer transition-all">
+                        <h4 className="font-medium text-sm">Skill Progress Tracker</h4>
+                        <p className="text-xs text-muted-foreground">Track improvement in specific electrical skills</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         );
         
