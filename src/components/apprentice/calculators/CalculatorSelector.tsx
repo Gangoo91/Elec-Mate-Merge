@@ -2,7 +2,7 @@
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Zap, Activity, PlugZap, Sigma, Calculator } from "lucide-react";
+import { Zap, Activity, PlugZap, Calculator, Variable, Gauge } from "lucide-react";
 
 interface CalculatorSelectorProps {
   calculatorType: string;
@@ -16,6 +16,8 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "voltage-drop", label: "Voltage Drop", icon: Activity },
     { value: "power-factor", label: "Power Factor", icon: PlugZap },
     { value: "load", label: "Load Calculator", icon: Calculator },
+    { value: "lumen", label: "Lumen Calculator", icon: Variable },
+    { value: "instrumentation", label: "4-20mA Scale", icon: Gauge },
   ];
 
   // For mobile: Use dropdown

@@ -9,6 +9,8 @@ import { PowerFactorCalculator } from "@/components/electrician-tools/PowerFacto
 import OhmsLawCalculator from "@/components/electrician-tools/OhmsLawCalculator";
 import CalculatorCards from "@/components/electrician-tools/CalculatorCards";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
+import LumenCalculator from "@/components/apprentice/calculators/LumenCalculator";
+import InstrumentationCalculator from "@/components/apprentice/calculators/InstrumentationCalculator";
 
 const Calculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
@@ -23,6 +25,10 @@ const Calculations = () => {
         return <PowerFactorCalculator />;
       case "load":
         return <LoadCalculator />;
+      case "lumen":
+        return <LumenCalculator />;
+      case "instrumentation":
+        return <InstrumentationCalculator />;
       default:
         return <OhmsLawCalculator />;
     }
