@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, HardHat, AlertTriangle, Check, Info, Shield } from "lucide-react";
@@ -222,6 +221,206 @@ const safetyScenarios: SafetyScenario[] = [
         regulation: "While the Electricity at Work Regulations 1989 require safe working, proper communication is also a professional requirement."
       }
     ]
+  },
+  {
+    id: 6,
+    title: "Temporary Power Supply",
+    description: "You're setting up a temporary power supply on a construction site.",
+    question: "The site manager asks you to install a distribution board without an RCD for power tools. What do you do?",
+    options: [
+      {
+        id: "A",
+        text: "Install it as requested since it's only temporary",
+        isCorrect: false,
+        feedback: "Temporary installations have the same safety requirements as permanent ones.",
+        outcome: "A worker receives an electric shock from a faulty power tool, leading to serious injury and an HSE investigation.",
+        regulation: "BS 7671 and the Electricity at Work Regulations require RCD protection for socket outlets, especially in construction environments."
+      },
+      {
+        id: "B",
+        text: "Explain that RCD protection is legally required and offer to install it properly",
+        isCorrect: true,
+        feedback: "This upholds safety standards while providing a solution.",
+        outcome: "Your properly installed distribution board with RCD protection prevents an injury when a power tool develops a fault later that week.",
+        regulation: "The Electricity at Work Regulations 1989 and BS 7671 require RCD protection for construction site power supplies."
+      },
+      {
+        id: "C",
+        text: "Install it without an RCD but add a warning label",
+        isCorrect: false,
+        feedback: "Warning labels don't substitute for required safety devices.",
+        outcome: "The warning is ignored, and when equipment fails, a worker is injured. You're held partially liable for the non-compliant installation.",
+        regulation: "Warning labels do not exempt you from the requirements of BS 7671 regarding RCD protection."
+      },
+      {
+        id: "D",
+        text: "Suggest using battery-powered tools instead",
+        isCorrect: false,
+        feedback: "While this avoids the immediate issue, it doesn't solve the fundamental safety requirement.",
+        outcome: "Battery tools aren't suitable for all applications, leading to unsafe workarounds and potential injury.",
+        regulation: "The Construction (Design and Management) Regulations 2015 require suitable and safe electrical installations regardless of power source."
+      }
+    ]
+  },
+  {
+    id: 7,
+    title: "Confined Space Work",
+    description: "You need to replace lighting in a small plant room with limited access.",
+    question: "While working in the confined space, you begin to feel light-headed. What's your next action?",
+    options: [
+      {
+        id: "A",
+        text: "Continue working quickly to finish the job sooner",
+        isCorrect: false,
+        feedback: "Continuing to work while experiencing symptoms could lead to serious injury or death.",
+        outcome: "You lose consciousness due to poor ventilation and are found by a colleague who risks their own safety to rescue you.",
+        regulation: "The Confined Spaces Regulations 1997 requires proper assessment and emergency procedures for confined space work."
+      },
+      {
+        id: "B",
+        text: "Exit immediately and report the issue",
+        isCorrect: true,
+        feedback: "This prioritises your safety and allows proper investigation of the hazard.",
+        outcome: "Testing reveals dangerous gas levels in the plant room. A proper ventilation system is installed before work continues safely.",
+        regulation: "The Confined Spaces Regulations 1997 requires workers to evacuate if they suspect dangerous conditions."
+      },
+      {
+        id: "C",
+        text: "Open a door for ventilation and continue working",
+        isCorrect: false,
+        feedback: "This improvised solution may not adequately address the underlying hazard.",
+        outcome: "The ventilation remains inadequate, your condition worsens, and you require medical attention.",
+        regulation: "The Confined Spaces Regulations 1997 requires proper risk assessment and control measures, not improvised solutions."
+      },
+      {
+        id: "D",
+        text: "Take a short break and return to finish the job",
+        isCorrect: false,
+        feedback: "Taking a break doesn't address the underlying hazard in the confined space.",
+        outcome: "Upon returning, your symptoms return more severely, putting you at serious risk.",
+        regulation: "Under the Management of Health and Safety at Work Regulations, you must report hazards and not expose yourself to known risks."
+      }
+    ]
+  },
+  {
+    id: 8,
+    title: "Working Near Water",
+    description: "You're installing outdoor lighting near a water feature at a commercial property.",
+    question: "It starts raining heavily while you're working with electrical equipment. What should you do?",
+    options: [
+      {
+        id: "A",
+        text: "Continue working but try to shield the equipment with your body",
+        isCorrect: false,
+        feedback: "This creates serious electrocution risks and doesn't adequately protect the equipment.",
+        outcome: "Water ingress causes a short circuit, resulting in electric shock and possible serious injury.",
+        regulation: "The Electricity at Work Regulations 1989 prohibit work where weather conditions create additional hazards with electricity."
+      },
+      {
+        id: "B",
+        text: "Stop work, cover equipment properly, and resume when conditions improve",
+        isCorrect: true,
+        feedback: "This properly addresses the increased risk from rain and protects both you and the equipment.",
+        outcome: "Work is completed safely when weather improves, with no incidents or equipment damage.",
+        regulation: "BS 7671 and the Electricity at Work Regulations require suitable working conditions for electrical work, especially near water."
+      },
+      {
+        id: "C",
+        text: "Use additional extension leads to work from under shelter",
+        isCorrect: false,
+        feedback: "Improvising with extension leads in wet conditions creates additional hazards.",
+        outcome: "The extension leads become wet, creating shock hazards and potential equipment damage.",
+        regulation: "The Provision and Use of Work Equipment Regulations (PUWER) requires equipment to be used in suitable conditions."
+      },
+      {
+        id: "D",
+        text: "Quickly finish the current task despite the rain",
+        isCorrect: false,
+        feedback: "Rushing in hazardous conditions increases risk and may lead to mistakes.",
+        outcome: "In your rush, connections are poorly made, leading to water ingress and system failure after you leave.",
+        regulation: "The Management of Health and Safety at Work Regulations require stopping work when conditions become unsafe."
+      }
+    ]
+  },
+  {
+    id: 9,
+    title: "Fire Safety Compliance",
+    description: "You're installing downlights in a ceiling with fire barriers.",
+    question: "You notice that the specified downlights don't have fire ratings. What's your response?",
+    options: [
+      {
+        id: "A",
+        text: "Install them anyway since that's what was specified",
+        isCorrect: false,
+        feedback: "Installing non-fire-rated fixtures in fire barriers compromises building safety.",
+        outcome: "The installation fails inspection and must be redone at significant cost. The building's fire safety certification is delayed.",
+        regulation: "Building Regulations Part B (Fire Safety) requires maintaining fire compartmentation when installing fixtures in fire barriers."
+      },
+      {
+        id: "B",
+        text: "Stop and consult with the supervisor about using fire-rated alternatives",
+        isCorrect: true,
+        feedback: "This maintains fire safety integrity while seeking a proper solution.",
+        outcome: "Fire-rated alternatives are sourced, maintaining the building's fire safety design and passing inspection.",
+        regulation: "Building Regulations Approved Document B requires appropriate fire-rated fittings when penetrating fire barriers."
+      },
+      {
+        id: "C",
+        text: "Add extra insulation around the non-fire-rated fittings",
+        isCorrect: false,
+        feedback: "Improvised fire protection may not meet regulations and could create additional hazards.",
+        outcome: "The improvised solution fails inspection and must be redone. The insulation itself becomes a fire hazard due to proximity to the light fittings.",
+        regulation: "Building Regulations require certified fire-rated products, not improvised solutions, for fire barrier penetrations."
+      },
+      {
+        id: "D",
+        text: "Install them but don't connect the power until getting approval",
+        isCorrect: false,
+        feedback: "This still compromises the fire barrier integrity regardless of whether power is connected.",
+        outcome: "The installation fails inspection due to compromised fire compartmentation, requiring costly remedial work.",
+        regulation: "The Regulatory Reform (Fire Safety) Order 2005 makes it an offence to compromise fire safety measures in buildings."
+      }
+    ]
+  },
+  {
+    id: 10,
+    title: "Hot Works Risk",
+    description: "You need to use a heat gun near flammable materials to shrink heat-shrink tubing.",
+    question: "What precautions should you take before proceeding?",
+    options: [
+      {
+        id: "A",
+        text: "Work quickly to minimise heat exposure time",
+        isCorrect: false,
+        feedback: "Speed doesn't reduce the fire risk; proper controls need to be in place.",
+        outcome: "In your haste, you accidentally ignite nearby materials, causing a fire that damages property.",
+        regulation: "The Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR) requires proper risk assessment for hot work."
+      },
+      {
+        id: "B",
+        text: "Conduct a hot work risk assessment and have fire extinguishers ready",
+        isCorrect: true,
+        feedback: "This follows proper hot work procedures and prepares for emergency response.",
+        outcome: "The work is completed safely with appropriate controls in place to prevent fire.",
+        regulation: "The Regulatory Reform (Fire Safety) Order 2005 and DSEAR require risk assessment and control measures for hot work."
+      },
+      {
+        id: "C",
+        text: "Ask someone else to hold the materials while you apply heat",
+        isCorrect: false,
+        feedback: "This puts another person at risk rather than controlling the hazard.",
+        outcome: "The other person is exposed to heat and potential burns, creating another safety incident.",
+        regulation: "The Health and Safety at Work Act requires not putting others at risk through your work activities."
+      },
+      {
+        id: "D",
+        text: "Use the heat gun at maximum temperature to finish faster",
+        isCorrect: false,
+        feedback: "Using excessive heat increases fire risk and may damage materials.",
+        outcome: "The excessive heat ignites nearby materials and damages the electrical components you're working on.",
+        regulation: "The Provision and Use of Work Equipment Regulations require equipment to be used appropriately for the task."
+      }
+    ]
   }
 ];
 
@@ -439,6 +638,14 @@ const OnJobSafetyCases = () => {
               <Check className="h-4 w-4 text-green-500" />
               <span>Risk assessment and hazard identification</span>
             </li>
+            <li className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-green-500" />
+              <span>Emergency response preparedness</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-green-500" />
+              <span>Electrical safety in specialised environments</span>
+            </li>
           </ul>
         </div>
       )}
@@ -460,6 +667,32 @@ const OnJobSafetyCases = () => {
               All references to regulations are specific to the UK electrical industry, including BS 7671 (IET Wiring Regulations), 
               the Electricity at Work Regulations 1989, and other relevant HSE guidelines. Practising these scenarios will help prepare 
               you for real-world decision making on the job.
+            </p>
+          </CardContent>
+        </Card>
+      )}
+
+      {!selectedScenario && (
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <AlertTriangle className="h-5 w-5 text-elec-yellow" />
+              Progress Tracking
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="mb-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium">Scenarios Completed</span>
+                <span className="text-sm text-elec-yellow">0/{safetyScenarios.length}</span>
+              </div>
+              <div className="h-2 bg-elec-dark/60 rounded-full overflow-hidden">
+                <div className="h-full bg-elec-yellow" style={{ width: "0%" }}></div>
+              </div>
+            </div>
+            <p className="text-sm text-elec-light/70">
+              Complete all scenarios to improve your understanding of electrical safety regulations and decision-making in the workplace.
+              Your progress is tracked as you work through the scenarios.
             </p>
           </CardContent>
         </Card>
