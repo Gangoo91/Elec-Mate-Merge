@@ -4,6 +4,8 @@ import { Route, Routes } from "react-router-dom";
 // Pages
 import AITooling from "@/pages/electrician-tools/AITooling";
 import Admin from "@/pages/electrician-tools/Admin";
+import BusinessManagement from "@/pages/electrician-tools/BusinessManagement";
+import ComplianceManager from "@/pages/electrician-tools/ComplianceManager";
 import Calculations from "@/pages/electrician-tools/Calculations";
 import QuoteLibrary from "@/pages/electrician-tools/QuoteLibrary";
 import ProjectManagement from "@/pages/electrician-tools/ProjectManagement";
@@ -16,6 +18,8 @@ const ElectricianRoutes = () => (
     <Route index element={<ProjectManagement />} />
     <Route path="admin" element={<Admin />} />
     <Route path="ai-tooling" element={<AITooling />} />
+    <Route path="business-management" element={<BusinessManagement />} />
+    <Route path="compliance" element={<ComplianceManager />} />
     <Route path="calculations" element={<Calculations />} />
     <Route path="cable-sizing" element={<CableSizingCalculator />} />
     <Route path="quote-library" element={<QuoteLibrary />} />
