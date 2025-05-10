@@ -35,7 +35,9 @@ export const useMentorConnection = () => {
           const enhancedData = data.map(mentor => ({
             ...mentor,
             rating: Math.floor(Math.random() * 2) + 4, // Random rating 4-5
-            responseTime: ['Within 24h', 'Same day', '1-2 days'][Math.floor(Math.random() * 3)]
+            responseTime: ['Within 24h', 'Same day', '1-2 days'][Math.floor(Math.random() * 3)],
+            // Add is_featured property with a default value if it doesn't exist
+            is_featured: mentor.is_featured || false
           }));
           
           // Filter featured mentors
