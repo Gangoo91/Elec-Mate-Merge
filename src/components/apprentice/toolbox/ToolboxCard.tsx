@@ -1,7 +1,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LucideIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface ToolboxCardProps {
@@ -13,16 +12,18 @@ interface ToolboxCardProps {
 }
 
 const ToolboxCard = ({ title, icon, link, onSelect, description }: ToolboxCardProps) => {
-  // If link is provided, render as a Link, otherwise as a button
+  // Create the card content
   const cardContent = (
     <Card 
-      className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all flex flex-col h-full cursor-pointer"
+      className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors cursor-pointer h-full flex flex-col"
     >
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl flex items-center gap-2">
-          {icon}
-          {title}
-        </CardTitle>
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-md bg-elec-yellow/10">
+            {icon}
+          </div>
+          <CardTitle className="text-lg">{title}</CardTitle>
+        </div>
       </CardHeader>
       <CardContent className="flex flex-col flex-1 justify-between">
         {description && (
@@ -37,15 +38,16 @@ const ToolboxCard = ({ title, icon, link, onSelect, description }: ToolboxCardPr
     </Card>
   );
 
+  // If link is provided, render as a Link, otherwise as a button
   if (link) {
     return (
-      <Link to={link} className="block">
+      <Link to={link} className="block h-full">
         {cardContent}
       </Link>
     );
   }
 
-  return <div onClick={onSelect}>{cardContent}</div>;
+  return <div onClick={onSelect} className="h-full">{cardContent}</div>;
 };
 
 export default ToolboxCard;

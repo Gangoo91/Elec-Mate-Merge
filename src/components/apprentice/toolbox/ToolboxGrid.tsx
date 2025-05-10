@@ -21,66 +21,70 @@ const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
     {
       id: 1,
       title: "Chat",
-      icon: <MessageSquare className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/chat"
+      icon: <MessageSquare className="h-5 w-5 text-elec-yellow" />,
+      link: "/apprentice/chat",
+      description: "Get help and answers to your electrical questions"
     },
     {
       id: 3,
       title: "Basic Tools Guide",
-      icon: <Wrench className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/tools-guide"
+      icon: <Wrench className="h-5 w-5 text-elec-yellow" />,
+      link: "/apprentice/tools-guide",
+      description: "Learn about the essential tools for electrical work"
     },
     {
       id: 4,
       title: "Safety Fundamentals",
-      icon: <Shield className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/safety-fundamentals"
+      icon: <Shield className="h-5 w-5 text-elec-yellow" />,
+      link: "/apprentice/safety-fundamentals",
+      description: "Critical safety information for electrical work"
     },
     {
       id: 6,
       title: "Qualification Pathway",
-      icon: <GraduationCap className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/career-progression"
+      icon: <GraduationCap className="h-5 w-5 text-elec-yellow" />,
+      link: "/apprentice/career-progression",
+      description: "Explore your career progression options"
     },
     {
       id: 7,
       title: "Study Planner",
-      icon: <LightbulbIcon className="h-6 w-6 text-elec-yellow" />,
+      icon: <LightbulbIcon className="h-5 w-5 text-elec-yellow" />,
       description: "Create personalized study plans for your apprenticeship",
       onSelect: () => onToolSelection("studyPlanner")
     },
     {
       id: 8,
       title: "Concept Explainer",
-      icon: <BookOpen className="h-6 w-6 text-elec-yellow" />,
+      icon: <BookOpen className="h-5 w-5 text-elec-yellow" />,
       description: "Get explanations for complex electrical concepts",
       onSelect: () => onToolSelection("conceptExplainer")
     },
     {
       id: 9,
       title: "Power Factor Calculator",
-      icon: <Calculator className="h-6 w-6 text-elec-yellow" />,
+      icon: <Calculator className="h-5 w-5 text-elec-yellow" />,
       description: "Calculate power factor and understand its implications",
       onSelect: () => onToolSelection("powerCalculator")
     },
     {
       id: 10,
       title: "Cable Sizing",
-      icon: <Calculator className="h-6 w-6 text-elec-yellow" />,
+      icon: <Calculator className="h-5 w-5 text-elec-yellow" />,
       description: "Calculate appropriate cable sizes based on current and voltage drop",
       onSelect: () => onToolSelection("cableSizing")
     },
     {
       id: 11,
       title: "BS7671 Search",
-      icon: <BookOpen className="h-6 w-6 text-elec-yellow" />,
+      icon: <BookOpen className="h-5 w-5 text-elec-yellow" />,
       description: "Look up regulations and standards information",
       onSelect: () => onToolSelection("regulations")
     }
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {toolboxCategories.map((category) => (
         <ToolboxCard
           key={category.id}
