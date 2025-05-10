@@ -2,7 +2,7 @@
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Zap, Activity, PlugZap, Sigma, Gauge, Variable, Calculator } from "lucide-react";
+import { Zap, Activity, PlugZap, Sigma, Calculator } from "lucide-react";
 
 interface CalculatorSelectorProps {
   calculatorType: string;
@@ -10,15 +10,12 @@ interface CalculatorSelectorProps {
 }
 
 const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSelectorProps) => {
+  // Define calculators based on the route - could be expanded to check if we're in electrician or apprentice route
   const calculators = [
     { value: "ohms-law", label: "Ohm's Law", icon: Zap },
     { value: "voltage-drop", label: "Voltage Drop", icon: Activity },
     { value: "power-factor", label: "Power Factor", icon: PlugZap },
-    { value: "cable-size", label: "Cable Sizing", icon: Sigma },
-    { value: "lumen", label: "Lumen Calculator", icon: Variable },
-    { value: "instrumentation", label: "4-20mA Scale", icon: Gauge },
-    { value: "conduit-fill", label: "Conduit Fill", icon: Calculator },
-    { value: "resistor-colour-code", label: "Resistor Colour Code", icon: Sigma },
+    { value: "load", label: "Load Calculator", icon: Calculator },
   ];
 
   // For mobile: Use dropdown

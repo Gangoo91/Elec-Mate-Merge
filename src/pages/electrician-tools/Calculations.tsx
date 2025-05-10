@@ -1,16 +1,35 @@
 
-import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ArrowLeft, Calculator } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 import VoltageDropCalculator from "@/components/electrician-tools/VoltageDropCalculator";
 import LoadCalculator from "@/components/electrician-tools/LoadCalculator";
 import { PowerFactorCalculator } from "@/components/electrician-tools/PowerFactorCalculator";
 import OhmsLawCalculator from "@/components/electrician-tools/OhmsLawCalculator";
 import CalculatorCards from "@/components/electrician-tools/CalculatorCards";
+import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
 
 const Calculations = () => {
+  const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
+
+  const renderCalculator = () => {
+    switch (calculatorType) {
+      case "ohms-law":
+        return <OhmsLawCalculator />;
+      case "voltage-drop":
+        return <VoltageDropCalculator />;
+      case "power-factor":
+        return <PowerFactorCalculator />;
+      case "load":
+        return <LoadCalculator />;
+      default:
+        return <OhmsLawCalculator />;
+    }
+  };
+
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in pb-8">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Electrical Calculations</h1>
@@ -25,22 +44,15 @@ const Calculations = () => {
         </Link>
       </div>
 
-      {/* Quick Calculator */}
-      <OhmsLawCalculator />
+      {/* Calculator Selector - Similar to the apprentice page */}
+      <CalculatorSelector calculatorType={calculatorType} setCalculatorType={setCalculatorType} />
+      
+      {/* Dynamic Calculator Content */}
+      {renderCalculator()}
 
-      <CalculatorCards />
-
-      {/* Voltage Drop Calculator */}
-      <VoltageDropCalculator />
-
-      {/* Load Calculator */}
-      <div id="load-calculator">
-        <LoadCalculator />
-      </div>
-
-      {/* Power Factor Calculator */}
-      <div id="power-factor-calculator">
-        <PowerFactorCalculator />
+      {/* Additional Calculator Cards */}
+      <div className="mt-8">
+        <CalculatorCards />
       </div>
     </div>
   );
