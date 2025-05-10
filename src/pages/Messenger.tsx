@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, User, Users, Heart, GraduationCap, MessageSquarePlus } from "lucide-react";
@@ -70,9 +69,8 @@ const MessengerPage = () => {
         <span className="font-medium">{activeConversation?.participantName}</span>
       </div>
       <Button 
-        variant="ghost" 
         size="icon"
-        className="text-elec-yellow hover:bg-elec-yellow/10"
+        className="bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30"
       >
         <MessageSquarePlus className="h-5 w-5" />
       </Button>

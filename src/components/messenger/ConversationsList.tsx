@@ -37,10 +37,9 @@ const ConversationsList: React.FC<ConversationsListProps> = ({
   return (
     <div className="flex flex-col h-full">
       {/* New Message button - Prominent at the top */}
-      <div className="p-3 bg-elec-yellow">
+      <div className="p-3 bg-elec-gray-dark border-b border-elec-yellow/20">
         <Button
-          variant="ghost"
-          className="w-full flex items-center justify-center gap-2 text-black font-medium hover:bg-black/10 transition-colors"
+          className="w-full flex items-center justify-center gap-2 bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow font-medium transition-colors border border-elec-yellow/30"
         >
           <MessageSquarePlus className="h-5 w-5" />
           New Message
