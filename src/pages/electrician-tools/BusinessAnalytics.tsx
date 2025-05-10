@@ -4,12 +4,10 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, BarChart4, DollarSign, LineChart, ChartPie, Download } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const BusinessAnalytics = () => {
-  const [activeTab, setActiveTab] = useState("overview");
-
   const handleAction = (action: string) => {
     toast({
       title: "Action Triggered",
@@ -33,150 +31,174 @@ const BusinessAnalytics = () => {
         </Link>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="flex flex-wrap">
-          <TabsTrigger value="overview" className="flex items-center gap-2">
-            <BarChart4 className="h-4 w-4" /> Overview
-          </TabsTrigger>
-          <TabsTrigger value="financial" className="flex items-center gap-2">
-            <DollarSign className="h-4 w-4" /> Financial
-          </TabsTrigger>
-          <TabsTrigger value="performance" className="flex items-center gap-2">
-            <LineChart className="h-4 w-4" /> Performance
-          </TabsTrigger>
-          <TabsTrigger value="clients" className="flex items-center gap-2">
-            <ChartPie className="h-4 w-4" /> Client Analysis
-          </TabsTrigger>
-          <TabsTrigger value="reports" className="flex items-center gap-2">
-            <Download className="h-4 w-4" /> Reports
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="overview" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle>Business Dashboard</CardTitle>
-                <CardDescription>View key performance indicators.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("View Dashboard")}
-                >
-                  View Dashboard
-                </Button>
-              </CardContent>
-            </Card>
-            
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle>Growth Trends</CardTitle>
-                <CardDescription>Analyze business growth over time.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("View Growth Trends")}
-                >
-                  View Trends
-                </Button>
-              </CardContent>
-            </Card>
-            
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle>Custom Analytics</CardTitle>
-                <CardDescription>Create custom business analytics reports.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Create Custom Analytics")}
-                >
-                  Create Report
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="financial" className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Financial Overview</CardTitle>
-              <CardDescription>View revenue, expenses, and profit margins</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("View Financial Overview")}
-                >
-                  View Financial Data
-                </Button>
+      <div className="space-y-4">
+        <Accordion type="single" collapsible className="w-full" defaultValue="overview">
+          <AccordionItem value="overview" className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4">
+            <AccordionTrigger className="px-4 py-3 hover:no-underline">
+              <div className="flex items-center gap-2">
+                <BarChart4 className="h-5 w-5 text-elec-yellow" />
+                <span className="font-medium">Overview</span>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="performance" className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Job Performance</CardTitle>
-              <CardDescription>Analyze job completion time, customer satisfaction, and efficiency</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("View Performance Metrics")}
-                >
-                  View Metrics
-                </Button>
+            </AccordionTrigger>
+            <AccordionContent className="px-4 pb-4">
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <Card className="border-elec-yellow/20 bg-elec-dark">
+                  <CardHeader>
+                    <CardTitle>Business Dashboard</CardTitle>
+                    <CardDescription>View key performance indicators.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button 
+                      className="w-full" 
+                      onClick={() => handleAction("View Dashboard")}
+                    >
+                      View Dashboard
+                    </Button>
+                  </CardContent>
+                </Card>
+                
+                <Card className="border-elec-yellow/20 bg-elec-dark">
+                  <CardHeader>
+                    <CardTitle>Growth Trends</CardTitle>
+                    <CardDescription>Analyse business growth over time.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button 
+                      className="w-full" 
+                      onClick={() => handleAction("View Growth Trends")}
+                    >
+                      View Trends
+                    </Button>
+                  </CardContent>
+                </Card>
+                
+                <Card className="border-elec-yellow/20 bg-elec-dark">
+                  <CardHeader>
+                    <CardTitle>Custom Analytics</CardTitle>
+                    <CardDescription>Create custom business analytics reports.</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <Button 
+                      className="w-full" 
+                      onClick={() => handleAction("Create Custom Analytics")}
+                    >
+                      Create Report
+                    </Button>
+                  </CardContent>
+                </Card>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+            </AccordionContent>
+          </AccordionItem>
 
-        <TabsContent value="clients" className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Client Analysis</CardTitle>
-              <CardDescription>Analyze client retention, acquisition, and lifetime value</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("View Client Analysis")}
-                >
-                  View Analysis
-                </Button>
+          <AccordionItem value="financial" className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4">
+            <AccordionTrigger className="px-4 py-3 hover:no-underline">
+              <div className="flex items-center gap-2">
+                <DollarSign className="h-5 w-5 text-elec-yellow" />
+                <span className="font-medium">Financial</span>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+            </AccordionTrigger>
+            <AccordionContent className="px-4 pb-4">
+              <Card className="border-elec-yellow/20 bg-elec-dark">
+                <CardHeader>
+                  <CardTitle>Financial Overview</CardTitle>
+                  <CardDescription>View revenue, expenses, and profit margins</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <Button 
+                      className="w-full" 
+                      onClick={() => handleAction("View Financial Overview")}
+                    >
+                      View Financial Data
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </AccordionContent>
+          </AccordionItem>
 
-        <TabsContent value="reports" className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Generate Reports</CardTitle>
-              <CardDescription>Create and export business reports</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <Button 
-                  className="w-full" 
-                  onClick={() => handleAction("Generate Reports")}
-                >
-                  Generate Reports
-                </Button>
+          <AccordionItem value="performance" className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4">
+            <AccordionTrigger className="px-4 py-3 hover:no-underline">
+              <div className="flex items-center gap-2">
+                <LineChart className="h-5 w-5 text-elec-yellow" />
+                <span className="font-medium">Performance</span>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+            </AccordionTrigger>
+            <AccordionContent className="px-4 pb-4">
+              <Card className="border-elec-yellow/20 bg-elec-dark">
+                <CardHeader>
+                  <CardTitle>Job Performance</CardTitle>
+                  <CardDescription>Analyse job completion time, customer satisfaction, and efficiency</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <Button 
+                      className="w-full" 
+                      onClick={() => handleAction("View Performance Metrics")}
+                    >
+                      View Metrics
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="clients" className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4">
+            <AccordionTrigger className="px-4 py-3 hover:no-underline">
+              <div className="flex items-center gap-2">
+                <ChartPie className="h-5 w-5 text-elec-yellow" />
+                <span className="font-medium">Client Analysis</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-4 pb-4">
+              <Card className="border-elec-yellow/20 bg-elec-dark">
+                <CardHeader>
+                  <CardTitle>Client Analysis</CardTitle>
+                  <CardDescription>Analyse client retention, acquisition, and lifetime value</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <Button 
+                      className="w-full" 
+                      onClick={() => handleAction("View Client Analysis")}
+                    >
+                      View Analysis
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="reports" className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4">
+            <AccordionTrigger className="px-4 py-3 hover:no-underline">
+              <div className="flex items-center gap-2">
+                <Download className="h-5 w-5 text-elec-yellow" />
+                <span className="font-medium">Reports</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-4 pb-4">
+              <Card className="border-elec-yellow/20 bg-elec-dark">
+                <CardHeader>
+                  <CardTitle>Generate Reports</CardTitle>
+                  <CardDescription>Create and export business reports</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <Button 
+                      className="w-full" 
+                      onClick={() => handleAction("Generate Reports")}
+                    >
+                      Generate Reports
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </div>
     </div>
   );
 };
