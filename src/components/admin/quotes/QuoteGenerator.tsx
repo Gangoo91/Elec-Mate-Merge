@@ -101,6 +101,35 @@ const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGen
           { id: 3, description: "Dedicated MCB", quantity: 1, unitPrice: 15 }
         ];
         break;
+      case "lighting":
+        defaultMaterials = [
+          { id: 1, description: "LED Downlights", quantity: 8, unitPrice: 12 },
+          { id: 2, description: "LED Drivers", quantity: 8, unitPrice: 8 },
+          { id: 3, description: "Dimmer Switch", quantity: 2, unitPrice: 25 }
+        ];
+        break;
+      case "smart_home":
+        defaultMaterials = [
+          { id: 1, description: "Smart Hub", quantity: 1, unitPrice: 150 },
+          { id: 2, description: "Smart Light Switches", quantity: 5, unitPrice: 35 },
+          { id: 3, description: "WiFi Extender", quantity: 1, unitPrice: 45 }
+        ];
+        break;
+      case "fire_alarm":
+        defaultMaterials = [
+          { id: 1, description: "Fire Alarm Panel", quantity: 1, unitPrice: 220 },
+          { id: 2, description: "Smoke Detectors", quantity: 6, unitPrice: 28 },
+          { id: 3, description: "Heat Detectors", quantity: 2, unitPrice: 32 },
+          { id: 4, description: "Fire Resistant Cable (m)", quantity: 50, unitPrice: 2 }
+        ];
+        break;
+      case "maintenance":
+        defaultMaterials = [
+          { id: 1, description: "Quarterly Inspection", quantity: 4, unitPrice: 120 },
+          { id: 2, description: "Emergency Callout", quantity: 2, unitPrice: 150 },
+          { id: 3, description: "PAT Testing (per item)", quantity: 25, unitPrice: 3 }
+        ];
+        break;
       default:
         defaultMaterials = [
           { id: 1, description: "Consumer Unit", quantity: 1, unitPrice: 120 },
@@ -135,6 +164,18 @@ const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGen
           break;
         case "ev_charger":
           labourDays = 0.5;
+          break;
+        case "lighting":
+          labourDays = 1;
+          break;
+        case "smart_home":
+          labourDays = 1.5;
+          break;
+        case "fire_alarm":
+          labourDays = 2;
+          break;
+        case "maintenance":
+          labourDays = 6; // Annual total (quarterly visits)
           break;
       }
       
@@ -192,6 +233,14 @@ const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGen
         return `Supply and installation of new consumer unit with appropriate RCDs and MCBs. Testing of all circuits and provision of installation certificate.`;
       case "ev_charger":
         return `Supply and installation of EV charging point including all necessary wiring, circuit protection, and testing. Includes registration with the appropriate scheme for compliance.`;
+      case "lighting":
+        return `Supply and installation of LED lighting system throughout the property. Includes all wiring, fixtures, and dimmer switches as required.`;
+      case "smart_home":
+        return `Installation of smart home system including hub, lighting controls, and integration with existing electrical systems. Includes setup and testing.`;
+      case "fire_alarm":
+        return `Design and installation of fire alarm system with central panel, smoke and heat detectors throughout the property. Includes certification and user training.`;
+      case "maintenance":
+        return `Annual maintenance contract including quarterly inspections, PAT testing, emergency callout service, and minor repairs as required.`;
       default:
         return "";
     }
@@ -253,6 +302,10 @@ const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGen
                   <SelectItem value="eicr">EICR</SelectItem>
                   <SelectItem value="consumer_unit">Consumer Unit Replacement</SelectItem>
                   <SelectItem value="ev_charger">EV Charger Installation</SelectItem>
+                  <SelectItem value="lighting">Lighting Installation</SelectItem>
+                  <SelectItem value="smart_home">Smart Home Installation</SelectItem>
+                  <SelectItem value="fire_alarm">Fire Alarm System</SelectItem>
+                  <SelectItem value="maintenance">Electrical Maintenance Contract</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -356,53 +409,108 @@ const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGen
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="bg-elec-dark/30 rounded-md p-3">
-            <div className="grid grid-cols-12 gap-2 mb-4 text-sm font-medium text-muted-foreground">
-              <div className="col-span-6">Description</div>
-              <div className="col-span-2 text-center">Qty</div>
-              <div className="col-span-3 text-right">Price (£)</div>
-              <div className="col-span-1"></div>
+            {/* Header row for desktop */}
+            <div className="hidden md:grid md:grid-cols-12 md:gap-2 mb-4 text-sm font-medium text-muted-foreground">
+              <div className="md:col-span-6">Description</div>
+              <div className="md:col-span-2 text-center">Qty</div>
+              <div className="md:col-span-3 text-right">Price (£)</div>
+              <div className="md:col-span-1"></div>
             </div>
             
-            <div className="space-y-3">
+            {/* Mobile header */}
+            <div className="grid grid-cols-3 gap-2 mb-3 font-medium text-muted-foreground md:hidden text-center">
+              <div>Description</div>
+              <div>Qty</div>
+              <div>Price (£)</div>
+            </div>
+            
+            <div className="space-y-4 md:space-y-3">
               {materials.map((item) => (
-                <div key={item.id} className="grid grid-cols-12 gap-2 items-center">
-                  <div className="col-span-6">
-                    <Input 
-                      value={item.description}
-                      onChange={(e) => updateMaterialItem(item.id, "description", e.target.value)}
-                      placeholder="Material description"
-                      className={isMobile ? "h-12 px-3 text-base" : "h-9 px-2 text-sm"}
-                    />
+                <div key={item.id} className="relative">
+                  {/* Mobile layout */}
+                  <div className="md:hidden space-y-3">
+                    <div className="grid grid-cols-3 gap-3">
+                      <div className="col-span-3">
+                        <Input 
+                          value={item.description}
+                          onChange={(e) => updateMaterialItem(item.id, "description", e.target.value)}
+                          placeholder="Item description"
+                          className="h-14 px-3 text-base"
+                        />
+                      </div>
+                      <div>
+                        <Input 
+                          type="number"
+                          min="1"
+                          value={item.quantity}
+                          onChange={(e) => updateMaterialItem(item.id, "quantity", e.target.value)}
+                          className="h-14 text-center text-base"
+                        />
+                      </div>
+                      <div>
+                        <Input 
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          value={item.unitPrice}
+                          onChange={(e) => updateMaterialItem(item.id, "unitPrice", e.target.value)}
+                          className="h-14 text-center text-base"
+                        />
+                      </div>
+                      <div className="flex justify-center items-center">
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={() => removeMaterialItem(item.id)}
+                          className="h-14 w-full p-0"
+                        >
+                          <Trash2 className="h-6 w-6 text-red-500" />
+                          <span className="sr-only">Delete item</span>
+                        </Button>
+                      </div>
+                    </div>
                   </div>
-                  <div className="col-span-2">
-                    <Input 
-                      type="number"
-                      min="1"
-                      value={item.quantity}
-                      onChange={(e) => updateMaterialItem(item.id, "quantity", e.target.value)}
-                      className={isMobile ? "h-12 text-center px-2 text-base" : "h-9 text-center px-1 text-sm"}
-                    />
-                  </div>
-                  <div className="col-span-3">
-                    <Input 
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      value={item.unitPrice}
-                      onChange={(e) => updateMaterialItem(item.id, "unitPrice", e.target.value)}
-                      className={isMobile ? "h-12 text-right px-2 text-base" : "h-9 text-right px-1 text-sm"}
-                    />
-                  </div>
-                  <div className="col-span-1 flex justify-center">
-                    <Button 
-                      variant="ghost" 
-                      size="sm"
-                      onClick={() => removeMaterialItem(item.id)}
-                      className={isMobile ? "h-10 w-10 p-0" : "h-7 w-7 p-0"}
-                    >
-                      <Trash2 className={isMobile ? "h-5 w-5 text-red-500" : "h-4 w-4 text-red-500"} />
-                      <span className="sr-only">Delete item</span>
-                    </Button>
+                  
+                  {/* Desktop layout */}
+                  <div className="hidden md:grid md:grid-cols-12 md:gap-2 md:items-center">
+                    <div className="md:col-span-6">
+                      <Input 
+                        value={item.description}
+                        onChange={(e) => updateMaterialItem(item.id, "description", e.target.value)}
+                        placeholder="Material description"
+                        className="h-9 px-2 text-sm"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <Input 
+                        type="number"
+                        min="1"
+                        value={item.quantity}
+                        onChange={(e) => updateMaterialItem(item.id, "quantity", e.target.value)}
+                        className="h-9 text-center px-1 text-sm"
+                      />
+                    </div>
+                    <div className="md:col-span-3">
+                      <Input 
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        value={item.unitPrice}
+                        onChange={(e) => updateMaterialItem(item.id, "unitPrice", e.target.value)}
+                        className="h-9 text-right px-1 text-sm"
+                      />
+                    </div>
+                    <div className="md:col-span-1 flex justify-center">
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => removeMaterialItem(item.id)}
+                        className="h-7 w-7 p-0"
+                      >
+                        <Trash2 className="h-4 w-4 text-red-500" />
+                        <span className="sr-only">Delete item</span>
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ))}
