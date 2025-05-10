@@ -10,6 +10,11 @@ export interface FiltersState {
 
 export type DifficultyLevel = 'easy' | 'medium' | 'hard' | 'expert';
 
+// Add new level and badge type definitions
+export type UserLevel = 'Novice' | 'Apprentice' | 'Journeyman' | 'Expert' | 'Master' | 'Specialist' | 'Technician' | 'Engineer' | 'Senior Engineer' | 'Chief Engineer';
+
+export type UserBadge = 'Bronze' | 'Silver' | 'Gold' | 'Platinum' | 'Diamond' | 'Elite' | 'Champion' | 'Innovator' | 'Safety Pro' | 'Regulations Expert' | 'Installation Ace' | 'Testing Guru';
+
 export interface LeaderboardFiltersContext {
   timeframe: TimeframeOption;
   setTimeframe: (timeframe: TimeframeOption) => void;
