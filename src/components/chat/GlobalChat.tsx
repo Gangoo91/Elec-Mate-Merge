@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useGlobalChat } from "@/hooks/chat/useGlobalChat";
+import { useGlobalChat, ChatCategory } from "@/hooks/chat/useGlobalChat";
 import ChatHeader from "@/components/chat/ChatHeader";
 import ChatSearchBar from "@/components/chat/ChatSearchBar";
 import ChatMessageFeed from "@/components/chat/ChatMessageFeed";
@@ -11,6 +11,7 @@ import TopContributors from "@/components/chat/TopContributors";
 
 const GlobalChat = () => {
   const [isComposerOpen, setIsComposerOpen] = useState(false);
+  const [sortBy, setSortBy] = useState<"latest" | "popular">("latest");
   const { profile } = useAuth();
   const {
     messages,
@@ -48,6 +49,8 @@ const GlobalChat = () => {
             <ChatFilters 
               activeCategory={activeCategory}
               setActiveCategory={setActiveCategory}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
             />
           </div>
         </div>
@@ -56,7 +59,7 @@ const GlobalChat = () => {
       <div className="grid md:grid-cols-[1fr_300px] gap-4 p-4">
         <div className="flex-1">
           <ChatMessageFeed
-            messages={messages}
+            messages={sortBy === "latest" ? messages : [...messages].sort((a, b) => b.upvotes - a.upvotes)}
             isLoading={isLoading}
             currentUserId={profile?.id}
             onUpvote={handleUpvote}

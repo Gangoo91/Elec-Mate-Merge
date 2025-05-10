@@ -7,21 +7,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ChatCategory } from "@/hooks/chat/useGlobalChat";
 
 interface ChatFiltersProps {
-  categories: string[];
+  categories?: string[];
   activeCategory: string;
-  setActiveCategory: (category: string) => void;
-  sortBy: "latest" | "popular";
-  setSortBy: (sort: "latest" | "popular") => void;
+  setActiveCategory: (category: ChatCategory) => void;
+  sortBy?: "latest" | "popular";
+  setSortBy?: (sort: "latest" | "popular") => void;
 }
 
 const ChatFilters = ({
-  categories,
+  categories = ["All", "General", "Questions", "Tips", "News"],
   activeCategory,
   setActiveCategory,
-  sortBy,
-  setSortBy,
+  sortBy = "latest",
+  setSortBy = () => {},
 }: ChatFiltersProps) => {
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 border-b border-elec-yellow/10 pb-3">
@@ -31,7 +32,7 @@ const ChatFilters = ({
             key={category}
             variant={activeCategory === category ? "default" : "outline"}
             size="sm"
-            onClick={() => setActiveCategory(category)}
+            onClick={() => setActiveCategory(category as ChatCategory)}
             className={activeCategory === category ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" : ""}
           >
             {category}
