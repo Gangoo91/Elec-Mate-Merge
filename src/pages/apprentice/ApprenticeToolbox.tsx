@@ -2,13 +2,19 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { MessageSquare, Wrench, Shield, GraduationCap, BookOpen, LightbulbIcon } from "lucide-react";
+import { MessageSquare, Wrench, Shield, GraduationCap, BookOpen, LightbulbIcon, Calculator } from "lucide-react";
 import { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import StudyPlanner from "@/components/apprentice/study/StudyPlanner";
+import ConceptExplainer from "@/components/apprentice/study/ConceptExplainer";
+import PowerFactorCalculator from "@/components/apprentice/calculators/PowerFactorCalculator";
+import CableSizingCalculator from "@/components/apprentice/calculators/CableSizingCalculator";
+import RegulationsSearch from "@/components/apprentice/study/RegulationsSearch";
+
+type ActiveTool = null | "studyPlanner" | "conceptExplainer" | "powerCalculator" | "cableSizing" | "regulations";
 
 const ApprenticeToolbox = () => {
-  const [showStudyPlanner, setShowStudyPlanner] = useState(false);
+  const [activeTool, setActiveTool] = useState<ActiveTool>(null);
   const isMobile = useIsMobile();
 
   const toolboxCategories = [
@@ -38,9 +44,26 @@ const ApprenticeToolbox = () => {
     }
   ];
 
-  const toggleStudyPlanner = () => {
-    setShowStudyPlanner(!showStudyPlanner);
+  const handleToolSelection = (tool: ActiveTool) => {
+    setActiveTool(activeTool === tool ? null : tool);
   };
+
+  const renderActiveTool = () => {
+    switch (activeTool) {
+      case "studyPlanner":
+        return <StudyPlanner />;
+      case "conceptExplainer":
+        return <ConceptExplainer />;
+      case "powerCalculator":
+        return <PowerFactorCalculator />;
+      case "cableSizing":
+        return <CableSizingCalculator />;
+      case "regulations":
+        return <RegulationsSearch />;
+      default:
+        return null;
+    }
+  }
 
   return (
     <div className="space-y-6 animate-fade-in pb-6">
@@ -51,7 +74,7 @@ const ApprenticeToolbox = () => {
         </Link>
       </div>
 
-      {!showStudyPlanner && (
+      {!activeTool && (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {toolboxCategories.map((category) => (
@@ -72,31 +95,10 @@ const ApprenticeToolbox = () => {
               </Link>
             ))}
 
-            {/* Quick Reference Card */}
-            <Card className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all flex flex-col h-full">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xl flex items-center gap-2">
-                  <BookOpen className="h-6 w-6 text-elec-yellow" />
-                  Quick References
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-col flex-1 justify-between">
-                <div className="space-y-2 mb-4">
-                  <div className="text-sm p-2 bg-elec-dark rounded-md">
-                    <span className="font-semibold text-elec-yellow">18th Edition:</span> BS 7671:2018+A2:2022
-                  </div>
-                  <div className="text-sm p-2 bg-elec-dark rounded-md">
-                    <span className="font-semibold text-elec-yellow">Copper/Aluminium:</span> 17.24 / 28.26 Ω mm²/km
-                  </div>
-                </div>
-                <Button variant="outline" className="w-full">View All References</Button>
-              </CardContent>
-            </Card>
-
-            {/* Study Planner Trigger Card */}
+            {/* Study Planner Card */}
             <Card 
               className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all flex flex-col h-full cursor-pointer"
-              onClick={toggleStudyPlanner}
+              onClick={() => handleToolSelection("studyPlanner")}
             >
               <CardHeader className="pb-2">
                 <CardTitle className="text-xl flex items-center gap-2">
@@ -109,6 +111,82 @@ const ApprenticeToolbox = () => {
                   Create personalized study plans for your apprenticeship
                 </div>
                 <Button className="w-full mt-auto">Open Study Planner</Button>
+              </CardContent>
+            </Card>
+
+            {/* Concept Explainer Card */}
+            <Card 
+              className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all flex flex-col h-full cursor-pointer"
+              onClick={() => handleToolSelection("conceptExplainer")}
+            >
+              <CardHeader className="pb-2">
+                <CardTitle className="text-xl flex items-center gap-2">
+                  <BookOpen className="h-6 w-6 text-elec-yellow" />
+                  Concept Explainer
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col flex-1 justify-between">
+                <div className="text-sm text-muted-foreground mb-4">
+                  Get explanations for complex electrical concepts
+                </div>
+                <Button className="w-full mt-auto">Open Explainer</Button>
+              </CardContent>
+            </Card>
+
+            {/* Power Factor Calculator Card */}
+            <Card 
+              className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all flex flex-col h-full cursor-pointer"
+              onClick={() => handleToolSelection("powerCalculator")}
+            >
+              <CardHeader className="pb-2">
+                <CardTitle className="text-xl flex items-center gap-2">
+                  <Calculator className="h-6 w-6 text-elec-yellow" />
+                  Power Factor Calculator
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col flex-1 justify-between">
+                <div className="text-sm text-muted-foreground mb-4">
+                  Calculate power factor and understand its implications
+                </div>
+                <Button className="w-full mt-auto">Open Calculator</Button>
+              </CardContent>
+            </Card>
+
+            {/* Cable Sizing Calculator Card */}
+            <Card 
+              className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all flex flex-col h-full cursor-pointer"
+              onClick={() => handleToolSelection("cableSizing")}
+            >
+              <CardHeader className="pb-2">
+                <CardTitle className="text-xl flex items-center gap-2">
+                  <Calculator className="h-6 w-6 text-elec-yellow" />
+                  Cable Sizing
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col flex-1 justify-between">
+                <div className="text-sm text-muted-foreground mb-4">
+                  Calculate appropriate cable sizes based on current and voltage drop
+                </div>
+                <Button className="w-full mt-auto">Open Cable Sizing</Button>
+              </CardContent>
+            </Card>
+
+            {/* Regulations Search Card */}
+            <Card 
+              className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all flex flex-col h-full cursor-pointer"
+              onClick={() => handleToolSelection("regulations")}
+            >
+              <CardHeader className="pb-2">
+                <CardTitle className="text-xl flex items-center gap-2">
+                  <BookOpen className="h-6 w-6 text-elec-yellow" />
+                  BS7671 Search
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col flex-1 justify-between">
+                <div className="text-sm text-muted-foreground mb-4">
+                  Look up regulations and standards information
+                </div>
+                <Button className="w-full mt-auto">Open Regulations</Button>
               </CardContent>
             </Card>
           </div>
@@ -128,12 +206,12 @@ const ApprenticeToolbox = () => {
         </>
       )}
 
-      {showStudyPlanner && (
+      {activeTool && (
         <div className="space-y-4">
-          <Button variant="outline" onClick={toggleStudyPlanner} className="mb-2">
+          <Button variant="outline" onClick={() => setActiveTool(null)} className="mb-2">
             Back to Toolbox
           </Button>
-          <StudyPlanner />
+          {renderActiveTool()}
         </div>
       )}
     </div>
