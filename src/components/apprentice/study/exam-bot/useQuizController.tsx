@@ -31,7 +31,7 @@ export const useQuizController = () => {
       // Request quiz questions from the Edge Function
       const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
         body: { 
-          prompt: `Generate 5 multiple-choice questions (4 options each) for ${selectedType} exam preparation for UK electrical apprentices. Format as JSON array with question, options (array), correctAnswer (index), and explanation.`,
+          prompt: `Generate 5 multiple-choice questions (4 options each) for ${selectedType} exam preparation for UK electrical apprentices. Format the response as a JSON array with fields: question (string), options (array of strings), correctAnswer (number index), and explanation (string). Ensure the response is valid JSON that can be parsed directly.`,
           type: "exam_quiz" 
         },
       });
@@ -46,24 +46,55 @@ export const useQuizController = () => {
       
       let parsedQuestions;
       try {
-        // The response might be a string that needs parsing, or already an object
-        parsedQuestions = typeof data.response === 'string' 
-          ? JSON.parse(data.response) 
-          : data.response;
-          
+        // Handle different response formats
+        if (typeof data.response === 'string') {
+          // Try to parse string response as JSON
+          try {
+            parsedQuestions = JSON.parse(data.response);
+          } catch (e) {
+            console.error("Response is not valid JSON:", data.response);
+            throw new Error("Response format error: not valid JSON");
+          }
+        } else if (Array.isArray(data.response)) {
+          // Response is already an array
+          parsedQuestions = data.response;
+        } else if (data.response && typeof data.response === 'object') {
+          // Response might be wrapped in another object
+          if (Array.isArray(data.response.questions)) {
+            parsedQuestions = data.response.questions;
+          } else {
+            // Try to extract questions from another field or the object itself
+            const possibleArrayFields = Object.values(data.response).find(val => Array.isArray(val));
+            if (possibleArrayFields) {
+              parsedQuestions = possibleArrayFields;
+            } else {
+              parsedQuestions = [data.response]; // Treat as a single question if nothing else works
+            }
+          }
+        } else {
+          throw new Error("Invalid response format");
+        }
+        
         // Validate the structure
         if (!Array.isArray(parsedQuestions) || parsedQuestions.length === 0) {
           throw new Error("Invalid question format received");
         }
         
         // Ensure all questions have the required fields
-        parsedQuestions.forEach((q: any) => {
-          if (!q.question || !Array.isArray(q.options) || q.correctAnswer === undefined || !q.explanation) {
-            throw new Error("Question missing required fields");
-          }
+        const validatedQuestions = parsedQuestions.filter((q: any) => {
+          return q && 
+                 typeof q.question === 'string' && 
+                 Array.isArray(q.options) && 
+                 q.options.length > 1 &&
+                 typeof q.correctAnswer === 'number' && 
+                 typeof q.explanation === 'string';
         });
         
-        setQuestions(parsedQuestions);
+        if (validatedQuestions.length === 0) {
+          throw new Error("No valid questions found in response");
+        }
+        
+        setQuestions(validatedQuestions);
         
       } catch (parseError) {
         console.error("Error parsing questions:", parseError);
