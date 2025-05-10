@@ -20,3 +20,10 @@ export interface LeaderboardFiltersContext {
   viewMode: 'card' | 'table';
   setViewMode: (viewMode: 'card' | 'table') => void;
 }
+
+// Add the missing LeaderboardFilters interface that combines all filter-related props
+export interface LeaderboardFilters extends LeaderboardFiltersContext {
+  uniqueLevels: string[];
+  uniqueBadges: string[];
+  filteredUsers: any[];
+}
