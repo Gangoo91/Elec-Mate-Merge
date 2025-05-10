@@ -12,6 +12,7 @@ import {
   generateDefaultScopeOfWork,
   calculateLabourDays
 } from "./utils/quoteUtils";
+import { supabase } from "@/integrations/supabase/client";
 
 // Import refactored components
 import ClientInformation from "./components/ClientInformation";
@@ -78,57 +79,173 @@ const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGen
   };
   
   const handleGenerateWithAI = async () => {
+    if (!formData.clientName || !jobType) {
+      toast({
+        title: "Missing information",
+        description: "Please provide client name and select a job type.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
     setIsLoading(true);
     
-    // Simulate AI processing
-    setTimeout(() => {
-      // Calculate material costs
-      const materialCost = materials.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
-      
-      // Calculate appropriate labour cost based on job type and inputs
-      const labourDays = calculateLabourDays(jobType, formData.bedrooms);
-      const labourRate = 250; // Daily rate in £
-      const labourCost = labourDays * labourRate;
-      const subtotal = materialCost + labourCost;
-      const vat = subtotal * 0.2;
-      const total = subtotal + vat;
-      
-      // Generate the quote data
-      const quoteData = {
-        clientInfo: {
-          name: formData.clientName,
-          address: formData.clientAddress,
-        },
-        jobDetails: {
-          type: jobType,
-          propertyType: formData.propertyType,
+    try {
+      // First, try to use the AI Edge Function if available
+      try {
+        const propertyDetails = {
+          type: formData.propertyType,
           bedrooms: formData.bedrooms,
-          floors: formData.floors,
-          scopeOfWork: formData.scopeOfWork || generateDefaultScopeOfWork(jobType, formData),
-          additionalRequirements: formData.additionalRequirements
-        },
-        materials,
-        labour: {
-          days: labourDays,
-          rate: labourRate,
-          total: labourCost
-        },
-        financials: {
-          materialCost,
-          labourCost,
-          subtotal,
-          vat,
-          total
-        },
-        quoteNumber: `QT-${Date.now().toString().substring(7)}`,
-        issueDate: new Date().toISOString().split('T')[0],
-        validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-      };
-      
+          floors: formData.floors
+        };
+        
+        // Call the Supabase Edge Function for AI generation
+        const { data, error } = await supabase.functions.invoke('ai-quote-generator', {
+          body: { 
+            jobType, 
+            propertyDetails,
+            clientRequirements: formData.additionalRequirements
+          }
+        });
+        
+        if (error) {
+          console.error("Edge function error:", error);
+          // Fallback to local generation if the AI function fails
+          handleLocalGeneration();
+          return;
+        }
+        
+        if (data && data.quote) {
+          // Use the AI generated content to enhance our quote
+          const aiQuote = data.quote;
+          
+          // Merge AI content with our current data
+          const updatedMaterials = [...materials];
+          
+          // Generate the quote data with AI enhancements
+          const quoteData = {
+            clientInfo: {
+              name: formData.clientName,
+              address: formData.clientAddress,
+            },
+            jobDetails: {
+              type: jobType,
+              propertyType: formData.propertyType,
+              bedrooms: formData.bedrooms,
+              floors: formData.floors,
+              scopeOfWork: formData.scopeOfWork || 
+                (aiQuote.scopeOfWork ? aiQuote.scopeOfWork : generateDefaultScopeOfWork(jobType, formData)),
+              additionalRequirements: formData.additionalRequirements
+            },
+            materials: updatedMaterials,
+            labour: {
+              days: calculateLabourDays(jobType, formData.bedrooms),
+              rate: 250, // Daily rate in £
+              total: calculateLabourDays(jobType, formData.bedrooms) * 250
+            },
+            financials: calculateFinancials(updatedMaterials, jobType, formData.bedrooms),
+            quoteNumber: `QT-${Date.now().toString().substring(7)}`,
+            issueDate: new Date().toISOString().split('T')[0],
+            validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+          };
+          
+          setIsLoading(false);
+          onGenerateQuote(quoteData);
+          toast({
+            title: "Quote generated",
+            description: "Your quote has been generated successfully with AI assistance."
+          });
+        } else {
+          // Fallback to local generation if AI doesn't return expected format
+          handleLocalGeneration();
+        }
+      } catch (error) {
+        console.error("Error using AI quote generator:", error);
+        // Fallback to local generation
+        handleLocalGeneration();
+      }
+    } catch (error) {
+      console.error("Error generating quote:", error);
       setIsLoading(false);
-      onGenerateQuote(quoteData);
-      
-    }, 2000);
+      toast({
+        title: "Error generating quote",
+        description: "There was a problem generating your quote. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+  
+  // Fallback to local quote generation if AI fails
+  const handleLocalGeneration = () => {
+    // Calculate material costs
+    const materialCost = materials.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+    
+    // Calculate appropriate labour cost based on job type and inputs
+    const labourDays = calculateLabourDays(jobType, formData.bedrooms);
+    const labourRate = 250; // Daily rate in £
+    const labourCost = labourDays * labourRate;
+    const subtotal = materialCost + labourCost;
+    const vat = subtotal * 0.2;
+    const total = subtotal + vat;
+    
+    // Generate the quote data
+    const quoteData = {
+      clientInfo: {
+        name: formData.clientName,
+        address: formData.clientAddress,
+      },
+      jobDetails: {
+        type: jobType,
+        propertyType: formData.propertyType,
+        bedrooms: formData.bedrooms,
+        floors: formData.floors,
+        scopeOfWork: formData.scopeOfWork || generateDefaultScopeOfWork(jobType, formData),
+        additionalRequirements: formData.additionalRequirements
+      },
+      materials,
+      labour: {
+        days: labourDays,
+        rate: labourRate,
+        total: labourCost
+      },
+      financials: {
+        materialCost,
+        labourCost,
+        subtotal,
+        vat,
+        total
+      },
+      quoteNumber: `QT-${Date.now().toString().substring(7)}`,
+      issueDate: new Date().toISOString().split('T')[0],
+      validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+    };
+    
+    setIsLoading(false);
+    onGenerateQuote(quoteData);
+    
+    toast({
+      title: "Quote generated",
+      description: "Your quote has been generated successfully."
+    });
+  };
+  
+  // Helper function to calculate financials
+  const calculateFinancials = (materialsList: MaterialItem[], jobType: string, bedrooms: string) => {
+    const materialCost = materialsList.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+    const labourDays = calculateLabourDays(jobType, bedrooms);
+    const labourRate = 250; // Daily rate in £
+    const labourCost = labourDays * labourRate;
+    const subtotal = materialCost + labourCost;
+    const vat = subtotal * 0.2;
+    const total = subtotal + vat;
+    
+    return {
+      materialCost,
+      labourCost,
+      subtotal,
+      vat,
+      total
+    };
   };
   
   return (

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PlusCircle, Trash2, Loader2 } from "lucide-react";
 import { MaterialsListProps } from "../types";
+import { toast } from "@/hooks/use-toast";
 
 const MaterialsLabour = ({ 
   materials, 
