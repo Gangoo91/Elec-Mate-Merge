@@ -16,7 +16,7 @@ const AILearningHeader = () => {
       </CardHeader>
       <CardContent>
         <p className="text-muted-foreground">
-          Our AI learning tools are designed specifically for UK electrical apprentices. They provide personalized
+          Our AI learning tools are designed specifically for UK electrical apprentices. They provide personalised
           support for studying BS 7671 regulations, preparing for exams, and understanding complex electrical concepts.
           Each tool adapts to your needs and learning style to help you succeed in your qualifications.
         </p>
@@ -31,7 +31,7 @@ const AILearningHeader = () => {
           </div>
           <div className="bg-elec-dark p-3 rounded-lg">
             <h3 className="text-sm font-medium text-elec-yellow mb-1">Study Planner</h3>
-            <p className="text-xs text-muted-foreground">Personalized study schedules</p>
+            <p className="text-xs text-muted-foreground">Personalised study schedules</p>
           </div>
           <div className="bg-elec-dark p-3 rounded-lg">
             <h3 className="text-sm font-medium text-elec-yellow mb-1">Exam Bot</h3>

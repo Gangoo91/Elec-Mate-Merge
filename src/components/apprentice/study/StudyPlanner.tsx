@@ -87,12 +87,12 @@ const StudyPlanner = () => {
           Study Planner
         </CardTitle>
         <CardDescription>
-          Create personalized study plans for exam preparation
+          Create personalised study plans for exam preparation
         </CardDescription>
       </CardHeader>
       <CardContent>
         <p className="text-muted-foreground mb-4">
-          Generate customized study schedules based on your learning goals, available time, and specific topics
+          Generate customised study schedules based on your learning goals, available time, and specific topics
           you need to cover for your electrical qualifications.
         </p>
         

@@ -256,7 +256,7 @@ const StudyExamBot = () => {
       <CardContent>
         <div className="space-y-4">
           <p className="text-muted-foreground">
-            The Exam Prep Bot creates customized practice questions based on your current studies
+            The Exam Prep Bot creates customised practice questions based on your current studies
             and areas that need improvement. Questions follow the format of UK electrical qualification exams.
           </p>
           
