@@ -1,8 +1,9 @@
 
-import { Edit, Trash2, UserRound } from "lucide-react";
+import { Edit, Trash2, UserRound, Flag, Ban } from "lucide-react";
 import {
   ContextMenuContent,
   ContextMenuItem,
+  ContextMenuSeparator,
 } from "@/components/ui/context-menu";
 
 interface MessageContextMenuProps {
@@ -10,17 +11,21 @@ interface MessageContextMenuProps {
   onEditClick: () => void;
   onDeleteClick: () => void;
   onDirectMessageClick: () => void;
+  onReportClick?: () => void;
+  onBlockUserClick?: () => void;
 }
 
 const MessageContextMenu = ({ 
   isOwnMessage, 
   onEditClick, 
   onDeleteClick, 
-  onDirectMessageClick 
+  onDirectMessageClick,
+  onReportClick,
+  onBlockUserClick
 }: MessageContextMenuProps) => {
   return (
     <ContextMenuContent>
-      {isOwnMessage && (
+      {isOwnMessage ? (
         <>
           <ContextMenuItem onClick={onEditClick}>
             <Edit className="mr-2 h-4 w-4" />
@@ -31,7 +36,19 @@ const MessageContextMenu = ({
             Delete Message
           </ContextMenuItem>
         </>
+      ) : (
+        <>
+          <ContextMenuItem onClick={onReportClick} className="text-amber-500">
+            <Flag className="mr-2 h-4 w-4" />
+            Report Message
+          </ContextMenuItem>
+          <ContextMenuItem onClick={onBlockUserClick} className="text-red-500">
+            <Ban className="mr-2 h-4 w-4" />
+            Block User
+          </ContextMenuItem>
+        </>
       )}
+      <ContextMenuSeparator />
       <ContextMenuItem onClick={onDirectMessageClick}>
         <UserRound className="mr-2 h-4 w-4" />
         Send Direct Message
