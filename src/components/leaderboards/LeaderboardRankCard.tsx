@@ -7,6 +7,7 @@ import { UserActivity } from "@/hooks/leaderboards/types";
 import { format } from "date-fns";
 import { getLevelBadgeColor, getBadgeColor } from "@/hooks/leaderboards/filters";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { getUserDisplayName, getUserInitials } from "./leaderboardUtils";
 import { useAuth } from '@/contexts/AuthContext';
 
 interface LeaderboardRankCardProps {
@@ -21,25 +22,6 @@ export const LeaderboardRankCard = ({ user, position, maxPoints }: LeaderboardRa
   
   // Check if this is the current user
   const isCurrentUser = currentUser && user.user_id === currentUser.id;
-
-  // Helper function to get user initials from profile data
-  const getUserInitials = (user: UserActivity): string => {
-    if (user.profiles?.full_name) {
-      return user.profiles.full_name.split(' ')
-        .map(name => name.charAt(0))
-        .join('')
-        .slice(0, 2)
-        .toUpperCase();
-    } else if (user.profiles?.username) {
-      return user.profiles.username.substring(0, 2).toUpperCase();
-    }
-    return 'US';
-  };
-
-  // Helper function to get user display name
-  const getUserDisplayName = (user: UserActivity): string => {
-    return user.profiles?.full_name || user.profiles?.username || 'Anonymous User';
-  };
 
   // Function to render rank badges with different designs and colors
   const getRankBadge = (position: number) => {

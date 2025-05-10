@@ -7,7 +7,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { CommunityStatsCards } from "@/components/leaderboards/CommunityStatsCards";
 import { UserRankingCard } from "@/components/leaderboards/UserRankingCard";
 import { LeaderboardFilters } from "@/components/leaderboards/LeaderboardFilters";
-import LeaderboardTabs from "@/components/leaderboards/LeaderboardTabs";
+import { LeaderboardTabContent } from "@/components/leaderboards/LeaderboardTabContent";
 import { AchievementsSection } from "@/components/leaderboards/AchievementsSection";
 
 const Leaderboards = () => {
@@ -71,9 +71,14 @@ const Leaderboards = () => {
         isMobile={isMobile}
       />
 
-      {/* Main Leaderboard */}
-      <LeaderboardTabs
-        onViewModeChange={(mode) => setViewMode(mode)}
+      {/* Main Leaderboard Content */}
+      <LeaderboardTabContent 
+        period={timeframe} 
+        filteredUsers={filteredUsers} 
+        viewMode={viewMode} 
+        maxPoints={maxPoints}
+        userRankings={userRankings}
+        isMobile={isMobile}
       />
 
       {/* Achievements */}

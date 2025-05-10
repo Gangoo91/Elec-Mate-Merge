@@ -1,11 +1,14 @@
 
-import { UserActivity } from "@/hooks/leaderboards/useLeaderboardData";
+// Functions for getting display names and formatting user data for leaderboards
 
-// Helper function to get user initials from profile data
-export const getUserInitials = (user: UserActivity): string => {
+export const getUserDisplayName = (user: any): string => {
+  return user.profiles?.full_name || user.profiles?.username || 'Anonymous User';
+};
+
+export const getUserInitials = (user: any): string => {
   if (user.profiles?.full_name) {
     return user.profiles.full_name.split(' ')
-      .map(name => name.charAt(0))
+      .map((name: string) => name.charAt(0))
       .join('')
       .slice(0, 2)
       .toUpperCase();
@@ -13,9 +16,4 @@ export const getUserInitials = (user: UserActivity): string => {
     return user.profiles.username.substring(0, 2).toUpperCase();
   }
   return 'US';
-};
-
-// Helper function to get user display name
-export const getUserDisplayName = (user: UserActivity): string => {
-  return user.profiles?.full_name || user.profiles?.username || 'Anonymous User';
 };
