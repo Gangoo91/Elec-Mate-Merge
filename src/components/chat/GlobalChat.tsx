@@ -29,7 +29,7 @@ const GlobalChat = () => {
   const handleCloseComposer = () => setIsComposerOpen(false);
 
   const handleSubmitPost = (content: string) => {
-    handlePostMessage(content);
+    handlePostMessage(content, activeCategory);
     setIsComposerOpen(false);
   };
 

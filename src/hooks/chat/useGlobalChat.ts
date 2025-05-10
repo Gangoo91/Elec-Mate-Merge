@@ -18,11 +18,18 @@ export const useGlobalChat = () => {
   
   const {
     handleUpvote,
-    handlePostMessage,
+    handlePostMessage: baseHandlePostMessage,
     handlePostComment,
     handleEditMessage,
     handleDeleteMessage
   } = useChatOperations(allMessages, setMessages, profile);
+  
+  // Wrap the handlePostMessage function to include the category
+  const handlePostMessage = (content: string, category: ChatCategory = 'General') => {
+    // If category is 'All', default to 'General'
+    const actualCategory = category === 'All' ? 'General' : category;
+    baseHandlePostMessage(content, actualCategory);
+  };
 
   return {
     messages,

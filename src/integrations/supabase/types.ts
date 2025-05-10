@@ -60,6 +60,109 @@ export type Database = {
         }
         Relationships: []
       }
+      global_chat_comments: {
+        Row: {
+          author_avatar: string | null
+          author_id: string
+          author_name: string
+          content: string
+          created_at: string
+          id: string
+          parent_id: string
+        }
+        Insert: {
+          author_avatar?: string | null
+          author_id: string
+          author_name: string
+          content: string
+          created_at?: string
+          id?: string
+          parent_id: string
+        }
+        Update: {
+          author_avatar?: string | null
+          author_id?: string
+          author_name?: string
+          content?: string
+          created_at?: string
+          id?: string
+          parent_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "global_chat_comments_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "global_chat_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      global_chat_messages: {
+        Row: {
+          author_avatar: string | null
+          author_id: string
+          author_name: string
+          category: string
+          content: string
+          created_at: string
+          id: string
+          updated_at: string | null
+          upvotes: number | null
+        }
+        Insert: {
+          author_avatar?: string | null
+          author_id: string
+          author_name: string
+          category: string
+          content: string
+          created_at?: string
+          id?: string
+          updated_at?: string | null
+          upvotes?: number | null
+        }
+        Update: {
+          author_avatar?: string | null
+          author_id?: string
+          author_name?: string
+          category?: string
+          content?: string
+          created_at?: string
+          id?: string
+          updated_at?: string | null
+          upvotes?: number | null
+        }
+        Relationships: []
+      }
+      global_chat_upvotes: {
+        Row: {
+          created_at: string
+          id: string
+          message_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "global_chat_upvotes_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "global_chat_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       job_listings: {
         Row: {
           company: string
@@ -384,7 +487,21 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_chat_messages_with_upvote_status: {
+        Args: { user_id: string }
+        Returns: {
+          id: string
+          author_id: string
+          author_name: string
+          author_avatar: string
+          content: string
+          category: string
+          upvotes: number
+          created_at: string
+          updated_at: string
+          has_user_upvoted: boolean
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
