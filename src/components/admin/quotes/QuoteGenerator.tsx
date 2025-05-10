@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,12 +8,14 @@ import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PlusCircle, Trash2, Loader2 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface QuoteGeneratorProps {
   onGenerateQuote: (quoteData: any) => void;
 }
 
 const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
+  const isMobile = useIsMobile();
   const [isLoading, setIsLoading] = useState(false);
   const [jobType, setJobType] = useState<string>("rewire");
   const [formData, setFormData] = useState({
@@ -150,7 +151,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
           <CardDescription>Enter the details of your client and the property</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <div className="space-y-2">
               <Label htmlFor="clientName">Client Name</Label>
               <Input 
@@ -181,7 +182,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
           <CardDescription>Customize the scope of work based on project requirements</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <div className="space-y-2">
               <Label htmlFor="jobType">Job Type</Label>
               <Select 
@@ -216,40 +217,42 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
                 </SelectContent>
               </Select>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="bedrooms">Number of Bedrooms</Label>
-              <Select 
-                value={formData.bedrooms} 
-                onValueChange={(value) => handleSelectChange("bedrooms", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select number" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1">1</SelectItem>
-                  <SelectItem value="2">2</SelectItem>
-                  <SelectItem value="3">3</SelectItem>
-                  <SelectItem value="4">4</SelectItem>
-                  <SelectItem value="5">5+</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="floors">Number of Floors</Label>
-              <Select 
-                value={formData.floors} 
-                onValueChange={(value) => handleSelectChange("floors", value)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select number" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1">1</SelectItem>
-                  <SelectItem value="2">2</SelectItem>
-                  <SelectItem value="3">3</SelectItem>
-                  <SelectItem value="4">4+</SelectItem>
-                </SelectContent>
-              </Select>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="bedrooms">Number of Bedrooms</Label>
+                <Select 
+                  value={formData.bedrooms} 
+                  onValueChange={(value) => handleSelectChange("bedrooms", value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select number" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1">1</SelectItem>
+                    <SelectItem value="2">2</SelectItem>
+                    <SelectItem value="3">3</SelectItem>
+                    <SelectItem value="4">4</SelectItem>
+                    <SelectItem value="5">5+</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="floors">Number of Floors</Label>
+                <Select 
+                  value={formData.floors} 
+                  onValueChange={(value) => handleSelectChange("floors", value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select number" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="1">1</SelectItem>
+                    <SelectItem value="2">2</SelectItem>
+                    <SelectItem value="3">3</SelectItem>
+                    <SelectItem value="4">4+</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
           
@@ -261,7 +264,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
               value={formData.scopeOfWork}
               onChange={handleInputChange}
               placeholder="Describe the work to be carried out in detail..."
-              rows={4}
+              rows={3}
             />
             <p className="text-xs text-muted-foreground mt-1">Leave blank to auto-generate from job details</p>
           </div>
@@ -295,14 +298,14 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="bg-elec-dark/30 rounded-md p-3">
-            <div className="grid grid-cols-12 gap-2 mb-2 text-sm font-medium text-muted-foreground">
+            <div className="grid grid-cols-12 gap-2 mb-4 text-sm font-medium text-muted-foreground">
               <div className="col-span-6">Description</div>
-              <div className="col-span-2 text-center">Quantity</div>
-              <div className="col-span-3 text-right">Unit Price (£)</div>
+              <div className="col-span-2 text-center">Qty</div>
+              <div className="col-span-3 text-right">Price (£)</div>
               <div className="col-span-1"></div>
             </div>
             
-            <div className="space-y-2">
+            <div className="space-y-3">
               {materials.map((item) => (
                 <div key={item.id} className="grid grid-cols-12 gap-2 items-center">
                   <div className="col-span-6">
@@ -310,6 +313,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
                       value={item.description}
                       onChange={(e) => updateMaterialItem(item.id, "description", e.target.value)}
                       placeholder="Material description"
+                      className="h-9 px-2 text-sm"
                     />
                   </div>
                   <div className="col-span-2">
@@ -318,7 +322,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
                       min="1"
                       value={item.quantity}
                       onChange={(e) => updateMaterialItem(item.id, "quantity", e.target.value)}
-                      className="text-center"
+                      className="h-9 text-center px-1 text-sm"
                     />
                   </div>
                   <div className="col-span-3">
@@ -328,7 +332,7 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
                       step="0.01"
                       value={item.unitPrice}
                       onChange={(e) => updateMaterialItem(item.id, "unitPrice", e.target.value)}
-                      className="text-right"
+                      className="h-9 text-right px-1 text-sm"
                     />
                   </div>
                   <div className="col-span-1 flex justify-center">
@@ -336,9 +340,10 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
                       variant="ghost" 
                       size="sm"
                       onClick={() => removeMaterialItem(item.id)}
-                      className="h-8 w-8 p-0"
+                      className="h-7 w-7 p-0"
                     >
                       <Trash2 className="h-4 w-4 text-red-500" />
+                      <span className="sr-only">Delete item</span>
                     </Button>
                   </div>
                 </div>
@@ -352,11 +357,11 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
             </div>
           </div>
           
-          <div className="flex justify-end">
+          <div className="flex justify-center sm:justify-end">
             <Button 
               onClick={handleGenerateWithAI} 
               disabled={isLoading || !formData.clientName || !jobType}
-              className="min-w-[150px]"
+              className="min-w-[150px] w-full sm:w-auto"
             >
               {isLoading ? (
                 <>

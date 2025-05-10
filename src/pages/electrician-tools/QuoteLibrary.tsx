@@ -9,8 +9,10 @@ import QuoteTemplateList from "@/components/admin/quotes/QuoteTemplateList";
 import QuoteGenerator from "@/components/admin/quotes/QuoteGenerator";
 import QuotePreview from "@/components/admin/quotes/QuotePreview";
 import { toast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const QuoteLibrary = () => {
+  const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useState("templates");
   const [previewQuote, setPreviewQuote] = useState<any>(null);
   
@@ -32,7 +34,7 @@ const QuoteLibrary = () => {
   };
   
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in pb-8">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Quote Library</h1>
@@ -54,21 +56,21 @@ const QuoteLibrary = () => {
               <TabsList className="w-full justify-start rounded-none bg-transparent p-0">
                 <TabsTrigger 
                   value="templates" 
-                  className="rounded-none border-b-2 border-transparent px-4 py-3 data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent"
+                  className="rounded-none border-b-2 border-transparent px-3 py-2 data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent"
                 >
                   <FileText className="h-4 w-4 mr-2" />
                   Templates
                 </TabsTrigger>
                 <TabsTrigger 
                   value="generate" 
-                  className="rounded-none border-b-2 border-transparent px-4 py-3 data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent"
+                  className="rounded-none border-b-2 border-transparent px-3 py-2 data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent"
                 >
                   <PlusCircle className="h-4 w-4 mr-2" />
                   Generate
                 </TabsTrigger>
                 <TabsTrigger 
                   value="preview" 
-                  className="rounded-none border-b-2 border-transparent px-4 py-3 data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent"
+                  className="rounded-none border-b-2 border-transparent px-3 py-2 data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent"
                 >
                   <Download className="h-4 w-4 mr-2" />
                   Preview
@@ -76,7 +78,7 @@ const QuoteLibrary = () => {
               </TabsList>
             </div>
 
-            <div className="p-6">
+            <div className="p-4">
               <TabsContent value="templates" className="m-0">
                 <QuoteTemplateList onSelectTemplate={() => setActiveTab("generate")} />
               </TabsContent>
@@ -89,9 +91,18 @@ const QuoteLibrary = () => {
                 {previewQuote ? (
                   <div className="space-y-4">
                     <QuotePreview quoteData={previewQuote} />
-                    <div className="flex justify-end gap-2">
-                      <Button variant="outline" onClick={() => setActiveTab("generate")}>Edit Quote</Button>
-                      <Button onClick={handleDownloadQuote}>
+                    <div className="flex flex-col sm:flex-row justify-center sm:justify-end gap-2">
+                      <Button 
+                        variant="outline" 
+                        onClick={() => setActiveTab("generate")}
+                        className="w-full sm:w-auto"
+                      >
+                        Edit Quote
+                      </Button>
+                      <Button 
+                        onClick={handleDownloadQuote}
+                        className="w-full sm:w-auto"
+                      >
                         <Download className="h-4 w-4 mr-2" />
                         Download Quote
                       </Button>
