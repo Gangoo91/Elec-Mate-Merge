@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BarChart4, DollarSign, LineChart, Pie, Download } from "lucide-react";
+import { ArrowLeft, BarChart4, DollarSign, LineChart, ChartPie, Download } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -45,7 +45,7 @@ const BusinessAnalytics = () => {
             <LineChart className="h-4 w-4" /> Performance
           </TabsTrigger>
           <TabsTrigger value="clients" className="flex items-center gap-2">
-            <Pie className="h-4 w-4" /> Client Analysis
+            <ChartPie className="h-4 w-4" /> Client Analysis
           </TabsTrigger>
           <TabsTrigger value="reports" className="flex items-center gap-2">
             <Download className="h-4 w-4" /> Reports
