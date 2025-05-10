@@ -52,13 +52,8 @@ const ElectricalToolboxTalk = () => {
 
   return (
     <div className="space-y-8 animate-fade-in">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Electrical Toolbox Talk</h1>
-          <p className="text-muted-foreground">
-            Essential resources for professional electricians
-          </p>
-        </div>
+      <div className="flex flex-col items-center justify-center">
+        <h1 className="text-3xl font-bold tracking-tight mb-4">Electrical Toolbox Talk</h1>
         <Link to="/electrical-hub">
           <Button variant="outline">Back to Electrical Hub</Button>
         </Link>
