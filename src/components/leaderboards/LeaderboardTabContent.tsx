@@ -3,11 +3,20 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Clock, Medal, Trophy } from "lucide-react";
+import { Clock, Medal, Trophy, ChevronRight, TrendingUp, TrendingDown } from "lucide-react";
 import { UserActivity } from "@/hooks/leaderboards/types";
 import { getBadgeColor, getLevelBadgeColor } from "@/hooks/leaderboards/filters";
-import { getUserDisplayName, getUserInitials } from "./leaderboardUtils";
+import { getUserDisplayName, getUserInitials, formatPoints, getTrendIndicator } from "./leaderboardUtils";
 import { LeaderboardRankCard } from "./LeaderboardRankCard";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface LeaderboardTabContentProps {
   period: string;
@@ -26,17 +35,59 @@ export const LeaderboardTabContent = ({
   userRankings,
   isMobile
 }: LeaderboardTabContentProps) => {
+  const [displayCount, setDisplayCount] = useState<number>(10);
+  const [sortBy, setSortBy] = useState<string>('points');
+  
+  // Apply sorting if different from default
+  let displayUsers = [...filteredUsers];
+  if (sortBy === 'streak') {
+    displayUsers.sort((a, b) => b.streak - a.streak);
+  } else if (sortBy === 'recent') {
+    displayUsers.sort((a, b) => {
+      const dateA = a.last_active_date ? new Date(a.last_active_date) : new Date(0);
+      const dateB = b.last_active_date ? new Date(b.last_active_date) : new Date(0);
+      return dateB.getTime() - dateA.getTime();
+    });
+  }
+  // Default sort by points is already applied
+  
+  // Pagination
+  const visibleUsers = displayUsers.slice(0, displayCount);
+  const hasMoreToShow = displayCount < displayUsers.length;
+
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader className={isMobile ? "p-4 pb-2" : "pb-2"}>
-        <CardTitle className={isMobile ? "text-xl" : ""}>
-          {period === "weekly" ? "Weekly Leaderboard" : 
-           period === "monthly" ? "Monthly Leaderboard" : "All-Time Leaderboard"}
-        </CardTitle>
-        <CardDescription>
-          {period === "weekly" ? "Top performers for this week" : 
-           period === "monthly" ? "Top performers for this month" : "Best performers of all time"}
-        </CardDescription>
+        <div className="flex justify-between items-center">
+          <div>
+            <CardTitle className={isMobile ? "text-xl" : ""}>
+              {period === "weekly" ? "Weekly Leaderboard" : 
+               period === "monthly" ? "Monthly Leaderboard" : "All-Time Leaderboard"}
+            </CardTitle>
+            <CardDescription>
+              {period === "weekly" ? "Top performers for this week" : 
+               period === "monthly" ? "Top performers for this month" : "Best performers of all time"}
+            </CardDescription>
+          </div>
+          
+          {/* Sort options */}
+          <div className="flex items-center space-x-2">
+            <span className="text-xs text-muted-foreground hidden md:inline">Sort by:</span>
+            <Select
+              value={sortBy}
+              onValueChange={setSortBy}
+            >
+              <SelectTrigger className="h-8 w-[110px] text-xs border-elec-yellow/20 bg-elec-dark/30">
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent className="bg-elec-gray border-elec-yellow/20">
+                <SelectItem value="points">Points</SelectItem>
+                <SelectItem value="streak">Streak</SelectItem>
+                <SelectItem value="recent">Recently Active</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
       </CardHeader>
       <CardContent className={isMobile ? "p-4 pt-2" : "pt-2"}>
         {filteredUsers.length === 0 ? (
@@ -45,7 +96,7 @@ export const LeaderboardTabContent = ({
           </div>
         ) : viewMode === 'card' ? (
           <div className="space-y-3 md:space-y-4">
-            {filteredUsers.map((user, index) => (
+            {visibleUsers.map((user, index) => (
               <LeaderboardRankCard 
                 key={user.id}
                 user={user}
@@ -53,16 +104,45 @@ export const LeaderboardTabContent = ({
                 maxPoints={maxPoints}
               />
             ))}
+            
+            {/* Show more button */}
+            {hasMoreToShow && (
+              <div className="flex justify-center mt-4">
+                <Button 
+                  variant="outline" 
+                  className="border-elec-yellow/20 text-sm"
+                  onClick={() => setDisplayCount(prev => prev + 10)}
+                >
+                  Show More
+                  <ChevronRight className="h-4 w-4 ml-1" />
+                </Button>
+              </div>
+            )}
           </div>
         ) : (
           <TableView 
-            filteredUsers={filteredUsers} 
+            filteredUsers={visibleUsers} 
             isMobile={isMobile} 
+            hasMoreToShow={hasMoreToShow}
+            onShowMore={() => setDisplayCount(prev => prev + 10)}
           />
         )}
       </CardContent>
       <CardFooter className={`text-xs md:text-sm text-muted-foreground border-t pt-4 ${isMobile ? 'p-4 pt-4' : ''}`}>
-        Showing {filteredUsers.length} users from total {userRankings.length} users
+        <div className="w-full flex justify-between items-center">
+          <span>Showing {visibleUsers.length} users from total {userRankings.length} users</span>
+          {hasMoreToShow && viewMode === 'table' && (
+            <Button 
+              variant="ghost" 
+              size="sm"
+              className="text-xs text-elec-yellow" 
+              onClick={() => setDisplayCount(prev => prev + 10)}
+            >
+              Show More
+              <ChevronRight className="h-3 w-3 ml-1" />
+            </Button>
+          )}
+        </div>
       </CardFooter>
     </Card>
   );
@@ -71,9 +151,11 @@ export const LeaderboardTabContent = ({
 interface TableViewProps {
   filteredUsers: UserActivity[];
   isMobile: boolean;
+  hasMoreToShow: boolean;
+  onShowMore: () => void;
 }
 
-const TableView = ({ filteredUsers, isMobile }: TableViewProps) => {
+const TableView = ({ filteredUsers, isMobile, hasMoreToShow, onShowMore }: TableViewProps) => {
   return (
     <div className="rounded-md border overflow-hidden">
       <div className="overflow-x-auto">
@@ -119,17 +201,25 @@ const TableView = ({ filteredUsers, isMobile }: TableViewProps) => {
                         </AvatarFallback>
                       )}
                     </Avatar>
-                    <span className="text-xs md:text-sm">{getUserDisplayName(user)}</span>
-                  </div>
-                  {isMobile && (
-                    <div className="flex items-center gap-1 mt-1">
-                      <Badge variant="outline" className={`text-[10px] px-1 py-0 ${getLevelBadgeColor(user.level)}`}>
-                        {user.level}
-                      </Badge>
-                      <Clock className="h-3 w-3 ml-2 mr-1 text-muted-foreground" />
-                      <span className="text-[10px] text-muted-foreground">{user.streak}d</span>
+                    <div>
+                      <div className="flex items-center gap-1">
+                        <span className="text-xs md:text-sm">{getUserDisplayName(user)}</span>
+                        {/* Trend indicator */}
+                        {user.previous_position && (
+                          <TrendIndicator user={user} />
+                        )}
+                      </div>
+                      {isMobile && (
+                        <div className="flex items-center gap-1 mt-1">
+                          <Badge variant="outline" className={`text-[10px] px-1 py-0 ${getLevelBadgeColor(user.level)}`}>
+                            {user.level}
+                          </Badge>
+                          <Clock className="h-3 w-3 ml-2 mr-1 text-muted-foreground" />
+                          <span className="text-[10px] text-muted-foreground">{user.streak}d</span>
+                        </div>
+                      )}
                     </div>
-                  )}
+                  </div>
                 </TableCell>
                 {!isMobile && (
                   <>
@@ -152,13 +242,42 @@ const TableView = ({ filteredUsers, isMobile }: TableViewProps) => {
                   </>
                 )}
                 <TableCell className="text-right font-medium text-xs md:text-sm p-2 md:p-4">
-                  {user.points.toLocaleString()}
+                  {formatPoints(user.points)}
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </div>
+      
+      {/* Show more button for table view */}
+      {hasMoreToShow && (
+        <div className="flex justify-center py-3 border-t">
+          <Button 
+            variant="ghost"
+            size="sm"
+            className="text-xs text-elec-yellow"
+            onClick={onShowMore}
+          >
+            Show More Results
+            <ChevronRight className="h-3 w-3 ml-1" />
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
+
+const TrendIndicator = ({ user }: { user: UserActivity }) => {
+  const { trend, percentage } = getTrendIndicator(user);
+  
+  if (trend === 'stable') return null;
+  
+  return (
+    <div className={`flex items-center ml-1 ${trend === 'up' ? 'text-green-500' : 'text-red-500'}`} title={`${trend === 'up' ? 'Improved' : 'Dropped'} ranking by ${percentage}%`}>
+      {trend === 'up' ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+      <span className="text-xs ml-0.5">{percentage}%</span>
+    </div>
+  );
+};
+
