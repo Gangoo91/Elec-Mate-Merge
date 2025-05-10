@@ -1,10 +1,11 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, HardHat, AlertTriangle, Check, Info } from "lucide-react";
+import { ArrowLeft, HardHat, AlertTriangle, Check, Info, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface SafetyScenario {
   id: number;
@@ -24,7 +25,7 @@ interface SafetyScenario {
 const safetyScenarios: SafetyScenario[] = [
   {
     id: 1,
-    title: "Circuit Energization",
+    title: "Circuit Energisation",
     description: "You're working on a commercial site with tight deadlines.",
     question: "You arrive on site and the supervisor asks you to energise a circuit before insulation resistance testing. What do you do?",
     options: [
@@ -33,16 +34,16 @@ const safetyScenarios: SafetyScenario[] = [
         text: "Do it anyway to keep the project on schedule",
         isCorrect: false,
         feedback: "This creates a serious safety risk and violates regulations.",
-        outcome: "The circuit has an undetected fault and causes a short circuit when energized, damaging equipment and creating a fire hazard.",
-        regulation: "BS 7671 requires insulation resistance testing before energizing any circuit to verify electrical safety."
+        outcome: "The circuit has an undetected fault and causes a short circuit when energised, damaging equipment and creating a fire hazard.",
+        regulation: "BS 7671 requires insulation resistance testing before energising any circuit to verify electrical safety."
       },
       {
         id: "B",
         text: "Tell the supervisor you'll test first as required by regulations",
         isCorrect: true,
-        feedback: "This is the correct approach that prioritizes safety over schedule.",
+        feedback: "This is the correct approach that prioritises safety over schedule.",
         outcome: "Your testing reveals a fault that could have caused serious issues. The supervisor appreciates your professionalism after the potential risk is explained.",
-        regulation: "BS 7671 Section 643 requires insulation resistance testing before energizing circuits."
+        regulation: "BS 7671 Section 643 requires insulation resistance testing before energising circuits."
       },
       {
         id: "C",
@@ -50,7 +51,7 @@ const safetyScenarios: SafetyScenario[] = [
         isCorrect: false,
         feedback: "While seeking advice is good, you should be confident in applying basic safety regulations yourself.",
         outcome: "Delay in decision-making causes project uncertainty. Your mentor advises testing first, but your hesitation affects the supervisor's confidence in you.",
-        regulation: "As a responsible electrician, you should know that BS 7671 requires testing before energization."
+        regulation: "As a responsible electrician, you should know that BS 7671 requires testing before energisation."
       },
       {
         id: "D",
@@ -58,7 +59,7 @@ const safetyScenarios: SafetyScenario[] = [
         isCorrect: false,
         feedback: "This is an unprofessional reaction that fails to address the safety issue constructively.",
         outcome: "You damage your professional reputation. The supervisor gets someone else to do the work who might comply with the unsafe request.",
-        regulation: "Instead of walking off, you should explain the requirements of BS 7671 regarding testing before energization."
+        regulation: "Instead of walking off, you should explain the requirements of BS 7671 regarding testing before energisation."
       }
     ]
   },
@@ -101,6 +102,126 @@ const safetyScenarios: SafetyScenario[] = [
         regulation: "A better approach is to explain the requirements of the Electrical Equipment (Safety) Regulations."
       }
     ]
+  },
+  {
+    id: 3,
+    title: "Working at Height",
+    description: "You need to install lighting in a stairwell with a 4-metre drop.",
+    question: "The customer hasn't provided proper scaffolding, but offers a ladder and says 'the last electrician managed fine'. What's your response?",
+    options: [
+      {
+        id: "A",
+        text: "Use the ladder but work quickly to minimise risk",
+        isCorrect: false,
+        feedback: "Working quickly at height actually increases risk of accidents.",
+        outcome: "While rushing, you lose balance and fall, resulting in serious injury and inability to work for months.",
+        regulation: "The Work at Height Regulations 2005 require suitable equipment for working safely at height with proper risk assessment."
+      },
+      {
+        id: "B",
+        text: "Explain that proper scaffolding or tower access is required by law",
+        isCorrect: true,
+        feedback: "This correctly prioritises safety and compliance with regulations.",
+        outcome: "The customer arranges proper access equipment, the job is completed safely, and you maintain your professional standards.",
+        regulation: "The Work at Height Regulations 2005 require suitable access equipment and prohibit improper ladder use."
+      },
+      {
+        id: "C",
+        text: "Attempt to create a makeshift platform using available furniture",
+        isCorrect: false,
+        feedback: "Improvised platforms create serious safety hazards and violate regulations.",
+        outcome: "The unstable platform collapses, damaging the property and risking serious injury.",
+        regulation: "The Work at Height Regulations 2005 explicitly prohibit using improvised platforms."
+      },
+      {
+        id: "D",
+        text: "Do the work but charge extra for the dangerous conditions",
+        isCorrect: false,
+        feedback: "Charging extra doesn't make unsafe work acceptable or legal.",
+        outcome: "If an accident occurs, you would still be liable regardless of extra payment, as you knowingly violated safety regulations.",
+        regulation: "The Health and Safety at Work Act places personal responsibility on workers to refuse unsafe work practices."
+      }
+    ]
+  },
+  {
+    id: 4,
+    title: "Hazardous Materials",
+    description: "You're renovating an older property built in the 1970s.",
+    question: "While removing old ceiling panels, you discover what might be asbestos-containing materials. What should you do?",
+    options: [
+      {
+        id: "A",
+        text: "Continue carefully to avoid creating dust",
+        isCorrect: false,
+        feedback: "Even careful handling of potential asbestos materials is dangerous without proper equipment.",
+        outcome: "You unknowingly release asbestos fibres, creating a serious health hazard for yourself and others on site.",
+        regulation: "The Control of Asbestos Regulations 2012 prohibit unlicensed work with asbestos-containing materials."
+      },
+      {
+        id: "B",
+        text: "Stop work immediately and inform the property owner",
+        isCorrect: true,
+        feedback: "This is the correct approach to potential asbestos discovery.",
+        outcome: "Work is safely paused, proper testing is arranged, and appropriate licensed contractors are brought in if needed.",
+        regulation: "The Control of Asbestos Regulations 2012 require stopping work and proper assessment of suspected asbestos materials."
+      },
+      {
+        id: "C",
+        text: "Remove it yourself wearing a dust mask",
+        isCorrect: false,
+        feedback: "Regular dust masks offer inadequate protection against asbestos fibres.",
+        outcome: "You're exposed to hazardous asbestos fibres that could cause serious lung disease later in life.",
+        regulation: "The Control of Asbestos Regulations 2012 require special licensing, training and equipment for asbestos removal."
+      },
+      {
+        id: "D",
+        text: "Cover it with new materials and continue the job",
+        isCorrect: false,
+        feedback: "Concealing potential asbestos without proper assessment creates future hazards.",
+        outcome: "Future workers or occupants may unknowingly disturb the material, creating serious health risks.",
+        regulation: "The Control of Asbestos Regulations 2012 require proper assessment and management of asbestos-containing materials."
+      }
+    ]
+  },
+  {
+    id: 5,
+    title: "Live Working",
+    description: "You're troubleshooting a fault in a commercial kitchen during business hours.",
+    question: "The chef insists you can't shut off power as they're preparing for dinner service. How do you proceed?",
+    options: [
+      {
+        id: "A",
+        text: "Work live carefully to avoid disrupting the kitchen service",
+        isCorrect: false,
+        feedback: "Working live to avoid inconvenience is never justified and violates safety regulations.",
+        outcome: "An accidental contact causes an electrical shock and possible injury, as well as regulatory violations.",
+        regulation: "The Electricity at Work Regulations 1989 prohibit live working unless absolutely necessary and with proper precautions."
+      },
+      {
+        id: "B",
+        text: "Explain the legal requirement to isolate and arrange a suitable time",
+        isCorrect: true,
+        feedback: "This properly balances safety requirements with business needs.",
+        outcome: "You arrange to return after service or schedule a proper shutdown with adequate notice, maintaining safety and professional standards.",
+        regulation: "The Electricity at Work Regulations 1989 require circuits to be dead before work begins unless absolutely unavoidable."
+      },
+      {
+        id: "C",
+        text: "Convince the chef it will only take a minute to fix while live",
+        isCorrect: false,
+        feedback: "Rushing live electrical work greatly increases accident risks.",
+        outcome: "Working hastily leads to mistakes that cause a short circuit, damaging equipment and potentially causing injury.",
+        regulation: "The Electricity at Work Regulations 1989 never permit live working simply for convenience."
+      },
+      {
+        id: "D",
+        text: "Shut off power without further discussion as it's your legal right",
+        isCorrect: false,
+        feedback: "While safety is paramount, communication and cooperation are still essential.",
+        outcome: "Your actions damage client relationships and could lead to complaints or loss of business.",
+        regulation: "While the Electricity at Work Regulations 1989 require safe working, proper communication is also a professional requirement."
+      }
+    ]
   }
 ];
 
@@ -109,6 +230,7 @@ const OnJobSafetyCases = () => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const { toast } = useToast();
+  const isMobile = useIsMobile();
 
   const handleSelectScenario = (scenario: SafetyScenario) => {
     setSelectedScenario(scenario);
@@ -158,7 +280,7 @@ const OnJobSafetyCases = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in pb-20">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Interactive Safety Case Studies</h1>
@@ -173,7 +295,7 @@ const OnJobSafetyCases = () => {
       </div>
 
       {!selectedScenario ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {safetyScenarios.map(scenario => (
             <Card 
               key={scenario.id} 
@@ -241,16 +363,18 @@ const OnJobSafetyCases = () => {
                     <p>{option.text}</p>
                   </div>
                   
-                  {showFeedback && selectedOption === option.id && (
+                  {showFeedback && (option.isCorrect || selectedOption === option.id) && (
                     <div className="mt-3 pl-9 space-y-3">
                       <div className="flex items-start gap-2 text-amber-300">
                         <AlertTriangle className="h-5 w-5 flex-shrink-0 mt-0.5" />
                         <p>{option.feedback}</p>
                       </div>
-                      <div className="flex items-start gap-2 text-blue-300">
-                        <Info className="h-5 w-5 flex-shrink-0 mt-0.5" />
-                        <p>{option.regulation}</p>
-                      </div>
+                      {option.regulation && (
+                        <div className="flex items-start gap-2 text-blue-300">
+                          <Info className="h-5 w-5 flex-shrink-0 mt-0.5" />
+                          <p>{option.regulation}</p>
+                        </div>
+                      )}
                       <div className="flex items-start gap-2 text-white">
                         <Check className="h-5 w-5 flex-shrink-0 mt-0.5" />
                         <p><strong>Outcome:</strong> {option.outcome}</p>
@@ -261,12 +385,12 @@ const OnJobSafetyCases = () => {
               ))}
             </div>
           </CardContent>
-          <CardFooter className="flex justify-end gap-3">
-            <Button variant="outline" onClick={handleReset}>
+          <CardFooter className={`flex ${isMobile ? "flex-col" : "justify-end"} gap-3`}>
+            <Button variant="outline" onClick={handleReset} className={isMobile ? "w-full" : ""}>
               Back to Scenarios
             </Button>
             {!showFeedback ? (
-              <Button onClick={handleSubmitAnswer} disabled={!selectedOption}>
+              <Button onClick={handleSubmitAnswer} disabled={!selectedOption} className={isMobile ? "w-full" : ""}>
                 Submit Answer
               </Button>
             ) : (
@@ -277,8 +401,10 @@ const OnJobSafetyCases = () => {
                 } else {
                   handleReset();
                 }
-              }}>
-                Next Scenario
+              }} className={isMobile ? "w-full" : ""}>
+                {safetyScenarios.findIndex(s => s.id === selectedScenario.id) + 1 < safetyScenarios.length 
+                  ? "Next Scenario" 
+                  : "Complete All Scenarios"}
               </Button>
             )}
           </CardFooter>
@@ -299,14 +425,44 @@ const OnJobSafetyCases = () => {
             </li>
             <li className="flex items-center gap-2">
               <Check className="h-4 w-4 text-green-500" />
-              <span>Situational judgment skills development</span>
+              <span>Situational judgement skills development</span>
             </li>
             <li className="flex items-center gap-2">
               <Check className="h-4 w-4 text-green-500" />
               <span>Professional communication under pressure</span>
             </li>
+            <li className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-green-500" />
+              <span>UK regulatory framework compliance</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-green-500" />
+              <span>Risk assessment and hazard identification</span>
+            </li>
           </ul>
         </div>
+      )}
+
+      {!selectedScenario && (
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Shield className="h-5 w-5 text-elec-yellow" />
+              About These Safety Scenarios
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="mb-4">
+              These interactive case studies are based on real situations encountered by UK electrical apprentices and electricians. 
+              Each scenario is designed to help you apply your knowledge of UK electrical regulations, safety standards, and professional conduct.
+            </p>
+            <p>
+              All references to regulations are specific to the UK electrical industry, including BS 7671 (IET Wiring Regulations), 
+              the Electricity at Work Regulations 1989, and other relevant HSE guidelines. Practising these scenarios will help prepare 
+              you for real-world decision making on the job.
+            </p>
+          </CardContent>
+        </Card>
       )}
     </div>
   );
