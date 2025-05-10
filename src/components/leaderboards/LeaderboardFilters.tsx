@@ -1,18 +1,34 @@
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Filter, Table, Grid3X3, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Filter, CalendarCheck, LayoutList, LayoutGrid } from "lucide-react";
-import { TimeframeOption } from "@/hooks/leaderboards/filters";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { TimeframeOption } from "@/hooks/leaderboards/filters/types";
 
 interface LeaderboardFiltersProps {
   timeframe: TimeframeOption;
-  setTimeframe: (value: TimeframeOption) => void;
+  setTimeframe: (timeframe: TimeframeOption) => void;
   levelFilter: string;
-  setLevelFilter: (value: string) => void;
-  badgeFilter: string;
-  setBadgeFilter: (value: string) => void;
+  setLevelFilter: (level: string) => void;
+  badgeFilter: string; 
+  setBadgeFilter: (badge: string) => void;
   viewMode: 'card' | 'table';
-  setViewMode: (value: 'card' | 'table') => void;
+  setViewMode: (viewMode: 'card' | 'table') => void;
   uniqueLevels: string[];
   uniqueBadges: string[];
   isMobile: boolean;
@@ -32,139 +48,117 @@ export const LeaderboardFilters = ({
   isMobile
 }: LeaderboardFiltersProps) => {
   return (
-    <>
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Leaderboards</h1>
-          <p className="text-sm md:text-base text-muted-foreground">
-            See how you rank against other electrical professionals in the community.
-          </p>
-        </div>
-        
-        <div className="flex flex-col sm:flex-row gap-3">
-          <div className="flex items-center gap-2">
-            <CalendarCheck className="h-4 w-4 text-muted-foreground" />
-            <Select value={timeframe} onValueChange={(value) => setTimeframe(value as TimeframeOption)}>
-              <SelectTrigger className={`${isMobile ? 'w-full' : 'w-[160px]'}`}>
-                <SelectValue placeholder="Timeframe" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="weekly">This Week</SelectItem>
-                <SelectItem value="monthly">This Month</SelectItem>
-                <SelectItem value="alltime">All Time</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          
-          {!isMobile && (
-            <div className="flex items-center gap-2">
-              <Filter className="h-4 w-4 text-muted-foreground" />
-              <div className="flex gap-2">
-                <Button 
-                  variant={viewMode === 'card' ? "secondary" : "outline"} 
-                  size="sm" 
-                  onClick={() => setViewMode('card')}
-                  className="h-9"
-                >
-                  <LayoutGrid className="h-4 w-4 mr-2" />
-                  Card
-                </Button>
-                <Button 
-                  variant={viewMode === 'table' ? "secondary" : "outline"} 
-                  size="sm" 
-                  onClick={() => setViewMode('table')}
-                  className="h-9"
-                >
-                  <LayoutList className="h-4 w-4 mr-2" />
-                  Table
-                </Button>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+    <div className="flex flex-col md:flex-row justify-between gap-4 md:items-center mb-6">
+      <div className="flex flex-col md:flex-row gap-4 flex-1">
+        <Tabs defaultValue={timeframe} value={timeframe} onValueChange={(v) => setTimeframe(v as TimeframeOption)} className="w-full md:w-auto">
+          <TabsList className="grid grid-cols-3 h-8 bg-elec-dark">
+            <TabsTrigger value="weekly" className="text-xs">Weekly</TabsTrigger>
+            <TabsTrigger value="monthly" className="text-xs">Monthly</TabsTrigger>
+            <TabsTrigger value="alltime" className="text-xs">All-Time</TabsTrigger>
+          </TabsList>
+        </Tabs>
 
-      {/* Additional Filters */}
-      {!isMobile ? (
-        <div className="flex flex-wrap gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Level:</span>
+        {/* Mobile View: Filters in a Sheet */}
+        {isMobile ? (
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="sm" className="h-8 border-elec-yellow/20 flex items-center gap-2">
+                <Filter className="h-3.5 w-3.5" />
+                <span>Filters</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="bottom" className="bg-elec-gray h-auto rounded-t-xl">
+              <SheetHeader className="pb-4">
+                <SheetTitle>Filter Leaderboard</SheetTitle>
+                <SheetDescription>
+                  Filter leaderboard by level and badge
+                </SheetDescription>
+              </SheetHeader>
+              <div className="grid gap-4 py-4">
+                <div className="space-y-2">
+                  <Label htmlFor="mobile-level-filter">Level</Label>
+                  <Select value={levelFilter} onValueChange={setLevelFilter}>
+                    <SelectTrigger id="mobile-level-filter" className="bg-elec-dark/30 border-elec-yellow/20">
+                      <SelectValue placeholder="All Levels" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-gray border-elec-yellow/20">
+                      <SelectItem value="">All Levels</SelectItem>
+                      {uniqueLevels.map(level => (
+                        <SelectItem key={level} value={level}>{level}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="mobile-badge-filter">Badge</Label>
+                  <Select value={badgeFilter} onValueChange={setBadgeFilter}>
+                    <SelectTrigger id="mobile-badge-filter" className="bg-elec-dark/30 border-elec-yellow/20">
+                      <SelectValue placeholder="All Badges" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-gray border-elec-yellow/20">
+                      <SelectItem value="">All Badges</SelectItem>
+                      {uniqueBadges.map(badge => (
+                        <SelectItem key={badge} value={badge}>{badge}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+        ) : (
+          /* Desktop View: Inline Filters */
+          <div className="flex gap-3">
             <Select value={levelFilter} onValueChange={setLevelFilter}>
-              <SelectTrigger className="w-[160px]">
-                <SelectValue placeholder="Filter by Level" />
+              <SelectTrigger className="h-8 w-[110px] text-xs border-elec-yellow/20 bg-elec-dark/30">
+                <SelectValue placeholder="Level" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Levels</SelectItem>
+              <SelectContent className="bg-elec-gray border-elec-yellow/20">
+                <SelectItem value="">All Levels</SelectItem>
                 {uniqueLevels.map(level => (
                   <SelectItem key={level} value={level}>{level}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
-          </div>
-          
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Badge:</span>
+
             <Select value={badgeFilter} onValueChange={setBadgeFilter}>
-              <SelectTrigger className="w-[160px]">
-                <SelectValue placeholder="Filter by Badge" />
+              <SelectTrigger className="h-8 w-[110px] text-xs border-elec-yellow/20 bg-elec-dark/30">
+                <SelectValue placeholder="Badge" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Badges</SelectItem>
+              <SelectContent className="bg-elec-gray border-elec-yellow/20">
+                <SelectItem value="">All Badges</SelectItem>
                 {uniqueBadges.map(badge => (
                   <SelectItem key={badge} value={badge}>{badge}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
+        )}
+      </div>
+
+      {/* View Mode Toggle */}
+      <div>
+        <div className="flex items-center h-8 rounded-md bg-elec-dark border-elec-yellow/20 border">
+          <Button
+            variant="ghost"
+            size="sm"
+            className={`h-7 w-8 rounded-none ${viewMode === 'card' ? 'bg-elec-yellow/10' : ''}`}
+            onClick={() => setViewMode('card')}
+          >
+            <Grid3X3 className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost" 
+            size="sm"
+            className={`h-7 w-8 rounded-none ${viewMode === 'table' ? 'bg-elec-yellow/10' : ''}`}
+            onClick={() => setViewMode('table')}
+          >
+            <Table className="h-4 w-4" />
+          </Button>
         </div>
-      ) : (
-        <div className="flex flex-col gap-3">
-          <Select value={levelFilter} onValueChange={setLevelFilter}>
-            <SelectTrigger>
-              <SelectValue placeholder="Filter by Level" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Levels</SelectItem>
-              {uniqueLevels.map(level => (
-                <SelectItem key={level} value={level}>{level}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          
-          <Select value={badgeFilter} onValueChange={setBadgeFilter}>
-            <SelectTrigger>
-              <SelectValue placeholder="Filter by Badge" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Badges</SelectItem>
-              {uniqueBadges.map(badge => (
-                <SelectItem key={badge} value={badge}>{badge}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          
-          <div className="flex gap-2 mt-1">
-            <Button 
-              variant={viewMode === 'card' ? "secondary" : "outline"} 
-              size="sm" 
-              onClick={() => setViewMode('card')}
-              className="flex-1 h-9"
-            >
-              <LayoutGrid className="h-4 w-4 mr-2" />
-              Card View
-            </Button>
-            <Button 
-              variant={viewMode === 'table' ? "secondary" : "outline"} 
-              size="sm" 
-              onClick={() => setViewMode('table')}
-              className="flex-1 h-9"
-            >
-              <LayoutList className="h-4 w-4 mr-2" />
-              Table View
-            </Button>
-          </div>
-        </div>
-      )}
-    </>
+      </div>
+    </div>
   );
 };
+
+export default LeaderboardFilters;

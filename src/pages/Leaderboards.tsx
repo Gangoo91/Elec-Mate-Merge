@@ -1,4 +1,3 @@
-
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Loader2, Trophy, Users, Star, Award, Gift, ChevronDown } from "lucide-react";
 import { useLeaderboardData } from "@/hooks/leaderboards/useLeaderboardData";
