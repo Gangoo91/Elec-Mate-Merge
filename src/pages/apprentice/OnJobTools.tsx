@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import OnTheJobToolsBox from "@/components/apprentice/OnTheJobToolsBox";
-import { Calculator, FileText, Settings } from "lucide-react";
+import { Calculator, FileText, Settings, HardHat, MessageSquare } from "lucide-react";
 
 const OnJobTools = () => {
   const onJobTools = [
@@ -27,6 +27,20 @@ const OnJobTools = () => {
       icon: Settings,
       description: "Checklists and guides for job site evaluations",
       link: "/apprentice/on-job-tools/assessment"
+    },
+    {
+      id: 4,
+      title: "Interactive Safety Case Studies",
+      icon: HardHat,
+      description: "Learn from real-life safety scenarios with interactive decision making",
+      link: "/apprentice/on-job-tools/safety-cases"
+    },
+    {
+      id: 5,
+      title: "Workplace Language & Culture",
+      icon: MessageSquare,
+      description: "Navigate workplace communication, culture and relationships effectively",
+      link: "/apprentice/on-job-tools/workplace-culture"
     }
   ];
 
