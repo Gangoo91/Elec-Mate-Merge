@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useNotifications, Notification } from './NotificationProvider';
 import { Badge } from '@/components/ui/badge';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 
@@ -44,6 +44,11 @@ const NotificationItem = ({ notification, onRead }: { notification: Notification
 
 const NotificationDropdown = () => {
   const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
+  const navigate = useNavigate();
+  
+  const handleViewAll = () => {
+    navigate('/notifications');
+  };
   
   return (
     <DropdownMenu>
@@ -94,9 +99,9 @@ const NotificationDropdown = () => {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="cursor-pointer justify-center">
-          <Link to="/notifications" className="text-sm font-medium w-full text-center py-2">
+          <div onClick={handleViewAll} className="text-sm font-medium w-full text-center py-2">
             View all notifications
-          </Link>
+          </div>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

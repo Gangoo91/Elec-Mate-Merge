@@ -1,3 +1,4 @@
+
 import { Routes, Route } from "react-router-dom";
 import LandingPage from "@/pages/LandingPage";
 import Index from "@/pages/Index";
@@ -24,6 +25,7 @@ import ApprenticeChat from "@/pages/apprentice/ApprenticeChat";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
 import Chat from "@/pages/Chat";
+import NotificationsPage from "@/pages/NotificationsPage";
 
 const AppRouter = () => {
   return (
@@ -40,6 +42,7 @@ const AppRouter = () => {
         <Route path="profile" element={<Profile />} />
         <Route path="settings" element={<Settings />} />
         <Route path="messages" element={<Messenger />} />
+        <Route path="notifications" element={<NotificationsPage />} />
         <Route path="subscriptions" element={<Subscriptions />} />
         <Route path="payment-success" element={<PaymentSuccess />} />
         <Route path="*" element={<NotFound />} />
