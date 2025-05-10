@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FileText, PoundSterling, Zap, Home, PlugZap, PlusCircle } from "lucide-react";
+import { FileText, PoundSterling, Zap, Home, PlugZap, PlusCircle, Lightbulb, WifiIcon, Shield, Tool } from "lucide-react";
 
 // Template data that would ideally come from a database
 const QUOTE_TEMPLATES = [
@@ -33,6 +33,34 @@ const QUOTE_TEMPLATES = [
     description: "EV charging point installation for residential properties",
     icon: PlugZap,
     inputs: ["charger_type", "cable_run", "earthing_requirements"]
+  },
+  {
+    id: "lighting",
+    title: "Lighting Installation",
+    description: "Indoor and outdoor lighting systems for residential and commercial properties",
+    icon: Lightbulb,
+    inputs: ["light_points", "dimmer_switches", "led_fixtures", "outdoor_lights"]
+  },
+  {
+    id: "smart_home",
+    title: "Smart Home Installation",
+    description: "Smart electrical systems and home automation setup",
+    icon: WifiIcon,
+    inputs: ["smart_devices", "hub_type", "zones", "wifi_coverage"]
+  },
+  {
+    id: "fire_alarm",
+    title: "Fire Alarm System",
+    description: "Design and installation of fire detection and alarm systems",
+    icon: Shield,
+    inputs: ["detection_points", "panel_type", "property_type", "certification_required"]
+  },
+  {
+    id: "maintenance",
+    title: "Electrical Maintenance Contract",
+    description: "Ongoing electrical system maintenance for businesses",
+    icon: Tool,
+    inputs: ["property_size", "visit_frequency", "equipment_types", "emergency_response"]
   }
 ];
 
