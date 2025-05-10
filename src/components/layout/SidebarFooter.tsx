@@ -1,15 +1,29 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Star } from "lucide-react";
+import { Star, CheckCircle } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 const SidebarFooter = () => {
-  const { isTrialActive, isSubscribed, profile } = useAuth();
+  const { isTrialActive, isSubscribed, profile, subscriptionTier } = useAuth();
   
-  // For testing/development - make button always visible
-  // In production, uncomment the line below and remove the "true ||" to restore conditional visibility
-  const showUpgradeButton = true || (isTrialActive || !isSubscribed) && profile;
+  // For production, remove the "true ||" to restore conditional visibility
+  const showUpgradeButton = (isTrialActive || !isSubscribed) && profile;
+  
+  if (!profile) {
+    return null;
+  }
+  
+  if (isSubscribed) {
+    return (
+      <div className="p-2 border-t border-green-500/20">
+        <div className="flex items-center justify-center gap-1 text-xs text-green-500 bg-green-500/10 py-1 px-2 rounded-md">
+          <CheckCircle className="h-3 w-3" />
+          <span className="font-medium">{subscriptionTier || 'Active'} Subscription</span>
+        </div>
+      </div>
+    );
+  }
   
   if (!showUpgradeButton) {
     return null;
