@@ -40,7 +40,7 @@ export const UserRankingCard = ({ currentUserRank, userRankings, isMobile }: Use
         </CardHeader>
         <CardContent className={isMobile ? "p-4" : ""}>
           <div className="flex justify-center my-3">
-            <Button onClick={() => navigate("/login")}>Sign In</Button>
+            <Button onClick={() => navigate("/auth/signin")}>Sign In</Button>
           </div>
         </CardContent>
       </Card>

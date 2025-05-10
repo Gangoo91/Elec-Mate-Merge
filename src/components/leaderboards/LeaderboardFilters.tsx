@@ -82,7 +82,7 @@ export const LeaderboardFilters = ({
                       <SelectValue placeholder="All Levels" />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-gray border-elec-yellow/20">
-                      <SelectItem value="">All Levels</SelectItem>
+                      <SelectItem value="all">All Levels</SelectItem>
                       {uniqueLevels.map(level => (
                         <SelectItem key={level} value={level}>{level}</SelectItem>
                       ))}
@@ -96,7 +96,7 @@ export const LeaderboardFilters = ({
                       <SelectValue placeholder="All Badges" />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-gray border-elec-yellow/20">
-                      <SelectItem value="">All Badges</SelectItem>
+                      <SelectItem value="all">All Badges</SelectItem>
                       {uniqueBadges.map(badge => (
                         <SelectItem key={badge} value={badge}>{badge}</SelectItem>
                       ))}
@@ -114,7 +114,7 @@ export const LeaderboardFilters = ({
                 <SelectValue placeholder="Level" />
               </SelectTrigger>
               <SelectContent className="bg-elec-gray border-elec-yellow/20">
-                <SelectItem value="">All Levels</SelectItem>
+                <SelectItem value="all">All Levels</SelectItem>
                 {uniqueLevels.map(level => (
                   <SelectItem key={level} value={level}>{level}</SelectItem>
                 ))}
@@ -126,7 +126,7 @@ export const LeaderboardFilters = ({
                 <SelectValue placeholder="Badge" />
               </SelectTrigger>
               <SelectContent className="bg-elec-gray border-elec-yellow/20">
-                <SelectItem value="">All Badges</SelectItem>
+                <SelectItem value="all">All Badges</SelectItem>
                 {uniqueBadges.map(badge => (
                   <SelectItem key={badge} value={badge}>{badge}</SelectItem>
                 ))}
