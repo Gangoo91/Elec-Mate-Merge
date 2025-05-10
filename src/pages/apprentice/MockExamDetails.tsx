@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -15,7 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/components/ui/use-toast";
-import { ArrowLeft, Clock, AlertCircle, CheckCircle } from "lucide-react";
+import { ArrowLeft, Clock, AlertCircle, CheckCircle, FileText } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
 // Mock data for exams (same as in MockExams.tsx)
