@@ -4,9 +4,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter }
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, ChevronRight, Star, MessageSquare, Clock } from "lucide-react";
+import { CheckCircle, ChevronRight, Star, MessageSquare, Clock, Briefcase } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface MentorCardProps {
   mentor: {
@@ -25,6 +26,7 @@ interface MentorCardProps {
 
 const MentorCard = ({ mentor, onConnect, isRequesting }: MentorCardProps) => {
   const [showSuccess, setShowSuccess] = useState(false);
+  const isMobile = useIsMobile();
   
   const handleConnect = () => {
     onConnect(mentor);
@@ -33,10 +35,25 @@ const MentorCard = ({ mentor, onConnect, isRequesting }: MentorCardProps) => {
     setTimeout(() => setShowSuccess(false), 3000);
   };
   
+  const handleCardClick = (event: React.MouseEvent) => {
+    // Only trigger if the click was directly on the card (not on buttons or links)
+    if ((event.target as Element).tagName !== 'BUTTON' && 
+        !(event.target as Element).closest('button') &&
+        !(event.target as Element).closest('a')) {
+      // Show the popover info by clicking on a hidden trigger
+      const popoverTrigger = document.getElementById(`info-trigger-${mentor.id}`);
+      popoverTrigger?.click();
+    }
+  };
+  
   const isConnecting = isRequesting === mentor.id;
   
   return (
-    <Card key={mentor.id} className="border-elec-yellow/20 bg-elec-gray transition-all hover:shadow-md hover:border-elec-yellow/40">
+    <Card 
+      key={mentor.id} 
+      className="border-elec-yellow/20 bg-elec-gray transition-all hover:shadow-md hover:border-elec-yellow/40 cursor-pointer"
+      onClick={handleCardClick}
+    >
       <CardHeader className="pb-3">
         <div className="flex items-center gap-4">
           <Avatar className="h-12 w-12">
@@ -57,14 +74,14 @@ const MentorCard = ({ mentor, onConnect, isRequesting }: MentorCardProps) => {
                       </Badge>
                     </TooltipTrigger>
                     <TooltipContent side="top">
-                      <p>Highly rated by apprentices</p>
+                      <p>Highly rated mentor</p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
               )}
             </CardTitle>
             <CardDescription className="text-sm text-elec-light/80">
-              Apprentice • {mentor.specialty}
+              Electrical Professional • {mentor.specialty}
             </CardDescription>
           </div>
         </div>
@@ -72,7 +89,7 @@ const MentorCard = ({ mentor, onConnect, isRequesting }: MentorCardProps) => {
       <CardContent>
         <div className="grid grid-cols-2 gap-2 text-sm mb-4">
           <div>
-            <p className="text-muted-foreground">Learning Focus</p>
+            <p className="text-muted-foreground">Experience</p>
             <p className="font-medium">{mentor.experience}</p>
           </div>
           <div>
@@ -109,7 +126,10 @@ const MentorCard = ({ mentor, onConnect, isRequesting }: MentorCardProps) => {
         
         <Popover>
           <PopoverTrigger asChild>
-            <button className="text-xs text-elec-yellow flex items-center hover:underline">
+            <button 
+              id={`info-trigger-${mentor.id}`} 
+              className="text-xs text-elec-yellow flex items-center hover:underline"
+            >
               View more details <ChevronRight className="h-3 w-3 ml-1" />
             </button>
           </PopoverTrigger>
@@ -117,15 +137,15 @@ const MentorCard = ({ mentor, onConnect, isRequesting }: MentorCardProps) => {
             <div className="space-y-2">
               <h4 className="font-medium text-sm">About {mentor.name}</h4>
               <p className="text-xs text-muted-foreground">
-                {mentor.name} is an apprentice electrician looking for guidance in {mentor.specialty.toLowerCase()}. 
-                They've been in their apprenticeship for {mentor.experience.toLowerCase()} and are available {mentor.availability.toLowerCase()} 
+                {mentor.name} is an experienced electrical professional specializing in {mentor.specialty.toLowerCase()}. 
+                They have {mentor.experience.toLowerCase()} of industry expertise and are available {mentor.availability.toLowerCase()} 
                 for mentoring sessions.
               </p>
-              <h4 className="font-medium text-sm pt-2">What they're looking to learn</h4>
+              <h4 className="font-medium text-sm pt-2">Areas of expertise</h4>
               <ul className="text-xs text-muted-foreground list-disc pl-4 space-y-1">
-                <li>Practical skills in {mentor.specialty}</li>
+                <li>Professional guidance in {mentor.specialty}</li>
                 <li>Industry best practices</li>
-                <li>Career growth guidance</li>
+                <li>Career growth advice</li>
                 <li>Troubleshooting techniques</li>
               </ul>
             </div>
