@@ -21,6 +21,9 @@ import Admin from "@/pages/electrician-tools/Admin";
 import ApprenticeRoutes from "@/routes/ApprenticeRoutes";
 import ElectricianHubRoutes from "@/routes/ElectricianHubRoutes";
 import ElectricianRoutes from "@/routes/ElectricianRoutes";
+import ApprenticeChat from "@/pages/apprentice/ApprenticeChat";
+import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
+import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
 
 const AppRouter = () => {
   return (
@@ -41,8 +44,13 @@ const AppRouter = () => {
         <Route path="payment-success" element={<PaymentSuccess />} />
         <Route path="*" element={<NotFound />} />
         
+        {/* Top level routes for shared features */}
+        <Route path="chat" element={<ApprenticeChat />} />
+        <Route path="mental-health" element={<ApprenticeMentalHealth />} />
+        <Route path="mentor" element={<ApprenticeMentor />} />
+        
         {/* Video Lessons and Leaderboards */}
-        <Route path="video-lessons" element={<VideoLessons />} />
+        <Route path="videos" element={<VideoLessons />} />
         <Route path="leaderboards" element={<Leaderboards />} />
         
         {/* Electrician Routes */}
@@ -59,4 +67,3 @@ const AppRouter = () => {
 };
 
 export default AppRouter;
-
