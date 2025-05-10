@@ -11,6 +11,8 @@ export interface CultureResource {
   title: string;
   type: "audio" | "document" | "video";
   description: string;
+  url?: string; // Optional URL field for UK-specific resources
+  isUKResource?: boolean; // Flag for UK-specific resources
 }
 
 export interface CultureQuestion {
