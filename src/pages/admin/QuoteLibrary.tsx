@@ -13,6 +13,7 @@ import { toast } from "@/hooks/use-toast";
 const QuoteLibrary = () => {
   const [activeTab, setActiveTab] = useState("templates");
   const [previewQuote, setPreviewQuote] = useState<any>(null);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>("rewire");
   
   const handleGenerateQuote = (quoteData: any) => {
     setPreviewQuote(quoteData);
@@ -21,6 +22,11 @@ const QuoteLibrary = () => {
       title: "Quote Generated",
       description: "Your customized quote has been generated successfully."
     });
+  };
+  
+  const handleSelectTemplate = (templateId: string) => {
+    setSelectedTemplateId(templateId);
+    setActiveTab("generate");
   };
   
   const handleDownloadQuote = () => {
@@ -64,11 +70,14 @@ const QuoteLibrary = () => {
         </TabsList>
 
         <TabsContent value="templates" className="space-y-4">
-          <QuoteTemplateList onSelectTemplate={() => setActiveTab("generate")} />
+          <QuoteTemplateList onSelectTemplate={handleSelectTemplate} />
         </TabsContent>
 
         <TabsContent value="generate" className="space-y-4">
-          <QuoteGenerator onGenerateQuote={handleGenerateQuote} />
+          <QuoteGenerator 
+            onGenerateQuote={handleGenerateQuote}
+            initialJobType={selectedTemplateId} 
+          />
         </TabsContent>
 
         <TabsContent value="preview" className="space-y-4">
@@ -76,7 +85,12 @@ const QuoteLibrary = () => {
             <div className="space-y-4">
               <QuotePreview quoteData={previewQuote} />
               <div className="flex justify-end gap-2">
-                <Button variant="outline">Edit Quote</Button>
+                <Button 
+                  variant="outline"
+                  onClick={() => setActiveTab("generate")}
+                >
+                  Edit Quote
+                </Button>
                 <Button onClick={handleDownloadQuote}>
                   <Download className="h-4 w-4 mr-2" />
                   Download Quote

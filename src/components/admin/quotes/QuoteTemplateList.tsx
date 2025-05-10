@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -59,7 +60,15 @@ const QuoteTemplateList = ({ onSelectTemplate }: QuoteTemplateListProps) => {
                 <CardDescription>{template.description}</CardDescription>
               </CardHeader>
               <CardContent>
-                <Button className="w-full">Use Template</Button>
+                <Button 
+                  className="w-full"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent the card onClick from also firing
+                    onSelectTemplate(template.id);
+                  }}
+                >
+                  Use Template
+                </Button>
               </CardContent>
             </Card>
           );

@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,12 +13,13 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 interface QuoteGeneratorProps {
   onGenerateQuote: (quoteData: any) => void;
+  initialJobType?: string;
 }
 
-const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
+const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGeneratorProps) => {
   const isMobile = useIsMobile();
   const [isLoading, setIsLoading] = useState(false);
-  const [jobType, setJobType] = useState<string>("rewire");
+  const [jobType, setJobType] = useState<string>(initialJobType);
   const [formData, setFormData] = useState({
     clientName: "",
     clientAddress: "",
@@ -28,6 +29,16 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
     scopeOfWork: "",
     additionalRequirements: ""
   });
+  
+  // Update jobType when initialJobType changes (from template selection)
+  useEffect(() => {
+    setJobType(initialJobType);
+    // Clear or update scope of work when template changes
+    setFormData(prevData => ({
+      ...prevData,
+      scopeOfWork: ""
+    }));
+  }, [initialJobType]);
   
   const [materials, setMaterials] = useState([
     { id: 1, description: "Consumer Unit", quantity: 1, unitPrice: 120 },
@@ -57,6 +68,48 @@ const QuoteGenerator = ({ onGenerateQuote }: QuoteGeneratorProps) => {
       item.id === id ? { ...item, [field]: field === "description" ? value : Number(value) } : item
     ));
   };
+  
+  // Update default materials based on job type
+  useEffect(() => {
+    let defaultMaterials = [];
+    
+    switch (jobType) {
+      case "rewire":
+        defaultMaterials = [
+          { id: 1, description: "Consumer Unit", quantity: 1, unitPrice: 120 },
+          { id: 2, description: "Twin Sockets", quantity: 10, unitPrice: 8 },
+          { id: 3, description: "Cable (100m roll)", quantity: 2, unitPrice: 45 }
+        ];
+        break;
+      case "eicr":
+        defaultMaterials = [
+          { id: 1, description: "EICR Certificate", quantity: 1, unitPrice: 15 },
+          { id: 2, description: "Minor Remedial Works", quantity: 1, unitPrice: 50 }
+        ];
+        break;
+      case "consumer_unit":
+        defaultMaterials = [
+          { id: 1, description: "Metal Consumer Unit", quantity: 1, unitPrice: 120 },
+          { id: 2, description: "MCBs", quantity: 6, unitPrice: 5 },
+          { id: 3, description: "RCDs", quantity: 2, unitPrice: 25 }
+        ];
+        break;
+      case "ev_charger":
+        defaultMaterials = [
+          { id: 1, description: "EV Charger Unit", quantity: 1, unitPrice: 350 },
+          { id: 2, description: "SWA Cable (per meter)", quantity: 10, unitPrice: 4 },
+          { id: 3, description: "Dedicated MCB", quantity: 1, unitPrice: 15 }
+        ];
+        break;
+      default:
+        defaultMaterials = [
+          { id: 1, description: "Consumer Unit", quantity: 1, unitPrice: 120 },
+          { id: 2, description: "Twin Sockets", quantity: 10, unitPrice: 8 }
+        ];
+    }
+    
+    setMaterials(defaultMaterials);
+  }, [jobType]);
   
   const handleGenerateWithAI = async () => {
     setIsLoading(true);

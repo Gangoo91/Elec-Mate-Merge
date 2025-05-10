@@ -15,6 +15,7 @@ const QuoteLibrary = () => {
   const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useState("templates");
   const [previewQuote, setPreviewQuote] = useState<any>(null);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>("rewire");
   
   const handleGenerateQuote = (quoteData: any) => {
     setPreviewQuote(quoteData);
@@ -23,6 +24,11 @@ const QuoteLibrary = () => {
       title: "Quote Generated",
       description: "Your customized quote has been generated successfully."
     });
+  };
+  
+  const handleSelectTemplate = (templateId: string) => {
+    setSelectedTemplateId(templateId);
+    setActiveTab("generate");
   };
   
   const handleDownloadQuote = () => {
@@ -80,11 +86,14 @@ const QuoteLibrary = () => {
 
             <div className="p-4">
               <TabsContent value="templates" className="m-0">
-                <QuoteTemplateList onSelectTemplate={() => setActiveTab("generate")} />
+                <QuoteTemplateList onSelectTemplate={handleSelectTemplate} />
               </TabsContent>
 
               <TabsContent value="generate" className="m-0">
-                <QuoteGenerator onGenerateQuote={handleGenerateQuote} />
+                <QuoteGenerator 
+                  onGenerateQuote={handleGenerateQuote} 
+                  initialJobType={selectedTemplateId} 
+                />
               </TabsContent>
 
               <TabsContent value="preview" className="m-0">
