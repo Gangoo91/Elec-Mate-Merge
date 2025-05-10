@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FileText, PoundSterling, Zap, Home, PlugZap, PlusCircle, Lightbulb, WifiIcon, Shield, Tool } from "lucide-react";
+import { FileText, PoundSterling, Zap, Home, PlugZap, PlusCircle, Lightbulb, WifiIcon, Shield, Wrench } from "lucide-react";
 
 // Template data that would ideally come from a database
 const QUOTE_TEMPLATES = [
@@ -59,7 +59,7 @@ const QUOTE_TEMPLATES = [
     id: "maintenance",
     title: "Electrical Maintenance Contract",
     description: "Ongoing electrical system maintenance for businesses",
-    icon: Tool,
+    icon: Wrench,
     inputs: ["property_size", "visit_frequency", "equipment_types", "emergency_response"]
   }
 ];
