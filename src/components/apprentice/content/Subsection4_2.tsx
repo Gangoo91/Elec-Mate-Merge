@@ -8,7 +8,7 @@ import CompletionButton from "./subsection4_2/CompletionButton";
 
 const Subsection4_2 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-fade-in">
       {/* Introduction Section */}
       <IntroSection subsectionId={subsectionId} />
       
