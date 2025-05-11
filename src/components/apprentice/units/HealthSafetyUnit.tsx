@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { CheckCircle, BookOpen, Shield, Users } from "lucide-react";
-import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
+import { healthAndSafetySections } from "@/data/healthAndSafety/index";
 import BackButton from "../BackButton";
 
 interface HealthSafetyUnitProps {
@@ -115,7 +115,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
       
       {/* Original Health and Safety Content - keep this for other sections */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {healthAndSafetyContent.map((section) => {
+        {healthAndSafetySections.map((section) => {
           const sectionSlug = createSectionSlug(section.sectionNumber);
           return (
             <Link

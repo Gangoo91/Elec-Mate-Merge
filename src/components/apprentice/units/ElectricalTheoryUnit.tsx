@@ -1,19 +1,6 @@
 
 import { useState, useEffect } from "react";
 import SectionBox from "@/components/apprentice/SectionBox";
-import { 
-  electricalTheorySection, 
-  basicElectricalTheorySection,
-  technicalInformationSection,
-  wiringSectionsSection,
-  servicePositionSection,
-  lightingCircuitsSection,
-  ringRadialCircuitsSection,
-  circuitRequirementsSection,
-  earthingBondingSection,
-  overcurrentProtectionSection,
-  circuitDesignSection
-} from "@/data/electricalTheory";
 import { useParams } from "react-router-dom";
 
 interface ElectricalTheoryUnitProps {
@@ -44,9 +31,9 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
       <div className="space-y-6">
         {/* Main section */}
         <SectionBox
-          key={electricalTheorySection.sectionNumber}
-          sectionNumber={electricalTheorySection.sectionNumber}
-          title={electricalTheorySection.title}
+          key="04"
+          sectionNumber="04"
+          title="Electrical Theory"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -56,9 +43,9 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         
         {/* Individual topic sections */}
         <SectionBox
-          key={basicElectricalTheorySection.sectionNumber}
-          sectionNumber={basicElectricalTheorySection.sectionNumber}
-          title={basicElectricalTheorySection.title}
+          key="1"
+          sectionNumber="1"
+          title="Basic Electrical Theory"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -67,9 +54,9 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key={technicalInformationSection.sectionNumber}
-          sectionNumber={technicalInformationSection.sectionNumber}
-          title={technicalInformationSection.title}
+          key="2"
+          sectionNumber="2"
+          title="Technical Information"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -78,9 +65,9 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key={wiringSectionsSection.sectionNumber}
-          sectionNumber={wiringSectionsSection.sectionNumber}
-          title={wiringSectionsSection.title}
+          key="3"
+          sectionNumber="3"
+          title="Wiring Sections"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -89,9 +76,9 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key={servicePositionSection.sectionNumber}
-          sectionNumber={servicePositionSection.sectionNumber}
-          title={servicePositionSection.title}
+          key="4"
+          sectionNumber="4"
+          title="Service Position"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -100,9 +87,9 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key={lightingCircuitsSection.sectionNumber}
-          sectionNumber={lightingCircuitsSection.sectionNumber}
-          title={lightingCircuitsSection.title}
+          key="5"
+          sectionNumber="5"
+          title="Lighting Circuits"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -111,9 +98,9 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key={ringRadialCircuitsSection.sectionNumber}
-          sectionNumber={ringRadialCircuitsSection.sectionNumber}
-          title={ringRadialCircuitsSection.title}
+          key="6"
+          sectionNumber="6"
+          title="Ring and Radial Circuits"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -122,9 +109,9 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key={circuitRequirementsSection.sectionNumber}
-          sectionNumber={circuitRequirementsSection.sectionNumber}
-          title={circuitRequirementsSection.title}
+          key="7"
+          sectionNumber="7"
+          title="Circuit Requirements"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -133,9 +120,9 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key={earthingBondingSection.sectionNumber}
-          sectionNumber={earthingBondingSection.sectionNumber}
-          title={earthingBondingSection.title}
+          key="8"
+          sectionNumber="8"
+          title="Earthing and Bonding"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -144,9 +131,9 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key={overcurrentProtectionSection.sectionNumber}
-          sectionNumber={overcurrentProtectionSection.sectionNumber}
-          title={overcurrentProtectionSection.title}
+          key="9"
+          sectionNumber="9"
+          title="Overcurrent Protection"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -155,9 +142,9 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key={circuitDesignSection.sectionNumber}
-          sectionNumber={circuitDesignSection.sectionNumber}
-          title={circuitDesignSection.title}
+          key="10"
+          sectionNumber="10"
+          title="Circuit Design"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}

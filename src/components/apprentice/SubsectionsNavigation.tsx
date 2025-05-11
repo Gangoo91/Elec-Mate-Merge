@@ -7,12 +7,14 @@ interface SubsectionsNavigationProps {
   currentSubsectionId: string;
   subsections: Subsection[];
   navigateToSubsection: (subsection: Subsection) => void;
+  parentSectionNumber?: string | null;
 }
 
 const SubsectionsNavigation = ({ 
   currentSubsectionId, 
   subsections,
-  navigateToSubsection 
+  navigateToSubsection,
+  parentSectionNumber = null
 }: SubsectionsNavigationProps) => {
   if (!subsections || subsections.length <= 1) return null;
   
