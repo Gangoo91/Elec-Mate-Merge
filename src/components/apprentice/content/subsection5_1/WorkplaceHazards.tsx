@@ -14,101 +14,128 @@ const WorkplaceHazards = () => {
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+          <Card className="bg-elec-dark/50 border border-elec-yellow/20 h-full">
             <CardHeader className="pb-2">
               <div className="flex items-center gap-2">
                 <HardHat className="h-5 w-5 text-elec-yellow" />
                 <CardTitle className="text-lg text-elec-yellow">Physical Hazards</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-3 text-sm">
-              <ul className="space-y-3">
-                <li className="border-l-4 border-elec-yellow/40 pl-3 py-1">
-                  <span className="font-medium text-elec-yellow">Slips, trips and falls</span>
-                  <p className="mt-1">Caused by uneven surfaces, trailing cables, poor housekeeping, and improper storage of materials.</p>
-                </li>
-                <li className="border-l-4 border-elec-yellow/40 pl-3 py-1">
-                  <span className="font-medium text-elec-yellow">Working at height</span>
-                  <p className="mt-1">Risks when using ladders, scaffolds or platforms without proper safety measures.</p>
-                </li>
-                <li className="border-l-4 border-elec-yellow/40 pl-3 py-1">
-                  <span className="font-medium text-elec-yellow">Confined spaces</span>
-                  <p className="mt-1">Limited access/egress points creating additional risks during emergency situations.</p>
-                </li>
-                <li className="border-l-4 border-elec-yellow/40 pl-3 py-1">
-                  <span className="font-medium text-elec-yellow">Manual handling</span>
-                  <p className="mt-1">Injuries from lifting heavy equipment, cable drums or awkward loads incorrectly.</p>
-                </li>
-              </ul>
+            <CardContent>
+              <div className="grid grid-cols-1 gap-3 text-sm">
+                <div className="bg-elec-dark p-3 rounded border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                  <h4 className="font-medium text-elec-yellow mb-1">Slips, Trips and Falls</h4>
+                  <p>Caused by uneven surfaces, trailing cables, poor housekeeping, and improper storage of materials.</p>
+                </div>
+                
+                <div className="bg-elec-dark p-3 rounded border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                  <h4 className="font-medium text-elec-yellow mb-1">Working at Height</h4>
+                  <p>Risks when using ladders, scaffolds or platforms without proper safety measures.</p>
+                </div>
+                
+                <div className="bg-elec-dark p-3 rounded border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                  <h4 className="font-medium text-elec-yellow mb-1">Confined Spaces</h4>
+                  <p>Limited access/egress points creating additional risks during emergency situations.</p>
+                </div>
+                
+                <div className="bg-elec-dark p-3 rounded border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                  <h4 className="font-medium text-elec-yellow mb-1">Manual Handling</h4>
+                  <p>Injuries from lifting heavy equipment, cable drums or awkward loads incorrectly.</p>
+                </div>
+              </div>
             </CardContent>
           </Card>
           
-          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+          <Card className="bg-elec-dark/50 border border-elec-yellow/20 h-full">
             <CardHeader className="pb-2">
               <div className="flex items-center gap-2">
                 <Construction className="h-5 w-5 text-elec-yellow" />
                 <CardTitle className="text-lg text-elec-yellow">Environmental Hazards</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="space-y-3 text-sm">
-              <ul className="space-y-3">
-                <li className="border-l-4 border-elec-yellow/40 pl-3 py-1">
-                  <span className="font-medium text-elec-yellow">Noise exposure</span>
-                  <p className="mt-1">Extended exposure to high noise levels on construction sites or in industrial settings.</p>
-                </li>
-                <li className="border-l-4 border-elec-yellow/40 pl-3 py-1">
-                  <span className="font-medium text-elec-yellow">Hazardous substances</span>
-                  <p className="mt-1">Contact with chemicals, solvents, cleaning agents, and other COSHH-regulated materials.</p>
-                </li>
-                <li className="border-l-4 border-elec-yellow/40 pl-3 py-1">
-                  <span className="font-medium text-elec-yellow">Thermal comfort issues</span>
-                  <p className="mt-1">Working in extreme heat or cold environments affecting concentration and performance.</p>
-                </li>
-                <li className="border-l-4 border-elec-yellow/40 pl-3 py-1">
-                  <span className="font-medium text-elec-yellow">Dust and airborne particles</span>
-                  <p className="mt-1">Respiratory hazards when drilling, cutting or working in dusty environments.</p>
-                </li>
-              </ul>
+            <CardContent>
+              <div className="grid grid-cols-1 gap-3 text-sm">
+                <div className="bg-elec-dark p-3 rounded border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                  <h4 className="font-medium text-elec-yellow mb-1">Noise Exposure</h4>
+                  <p>Extended exposure to high noise levels on construction sites or in industrial settings.</p>
+                </div>
+                
+                <div className="bg-elec-dark p-3 rounded border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                  <h4 className="font-medium text-elec-yellow mb-1">Hazardous Substances</h4>
+                  <p>Contact with chemicals, solvents, cleaning agents, and other COSHH-regulated materials.</p>
+                </div>
+                
+                <div className="bg-elec-dark p-3 rounded border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                  <h4 className="font-medium text-elec-yellow mb-1">Thermal Issues</h4>
+                  <p>Working in extreme heat or cold environments affecting concentration and performance.</p>
+                </div>
+                
+                <div className="bg-elec-dark p-3 rounded border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                  <h4 className="font-medium text-elec-yellow mb-1">Dust and Particles</h4>
+                  <p>Respiratory hazards when drilling, cutting or working in dusty environments.</p>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
         
-        <Card className="bg-elec-dark/50 border border-elec-yellow/20">
-          <CardHeader className="pb-2">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-elec-yellow" />
-              <CardTitle className="text-lg text-elec-yellow">Work-Related Risks</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div className="border-l-4 border-elec-yellow/40 pl-3 space-y-2">
-                <h4 className="font-medium text-elec-yellow">Work Process Hazards</h4>
-                <ul className="list-disc pl-4 space-y-2">
-                  <li>Working with power tools and hand tools (risk of cuts, injuries)</li>
-                  <li>Lone working (lack of immediate assistance in emergency)</li>
-                  <li>Hot work procedures (soldering, welding, heat guns)</li>
-                  <li>Insufficient training for tasks or equipment operation</li>
-                </ul>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card className="bg-elec-dark/50 border border-elec-yellow/20 col-span-1 md:col-span-2">
+            <CardHeader className="pb-2">
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-elec-yellow" />
+                <CardTitle className="text-lg text-elec-yellow">Work Process Hazards</CardTitle>
               </div>
-              
-              <div className="border-l-4 border-elec-yellow/40 pl-3 space-y-2">
-                <h4 className="font-medium text-elec-yellow">Organisational Risks</h4>
-                <ul className="list-disc pl-4 space-y-2">
-                  <li>Inadequate emergency procedures or evacuation plans</li>
-                  <li>Poor communication of hazards between teams or contractors</li>
-                  <li>Time pressure leading to taking shortcuts on safety measures</li>
-                  <li>Lack of proper supervision for apprentices and trainees</li>
-                </ul>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                <div className="bg-elec-dark p-3 rounded border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                  <h4 className="font-medium text-elec-yellow mb-1">Power Tools</h4>
+                  <p>Risk of cuts, abrasions and entanglement when using power tools without proper training or guards.</p>
+                </div>
+                
+                <div className="bg-elec-dark p-3 rounded border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                  <h4 className="font-medium text-elec-yellow mb-1">Lone Working</h4>
+                  <p>Lack of immediate assistance in emergency situations when working alone on site.</p>
+                </div>
+                
+                <div className="bg-elec-dark p-3 rounded border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                  <h4 className="font-medium text-elec-yellow mb-1">Hot Work</h4>
+                  <p>Soldering, welding and using heat guns can create fire hazards and burn injuries.</p>
+                </div>
+                
+                <div className="bg-elec-dark p-3 rounded border border-elec-yellow/10 hover:border-elec-yellow/30 transition-colors">
+                  <h4 className="font-medium text-elec-yellow mb-1">Inadequate Training</h4>
+                  <p>Insufficient knowledge to safely operate equipment or perform tasks correctly.</p>
+                </div>
               </div>
-            </div>
-            
-            <div className="mt-4 bg-elec-dark p-3 rounded border border-elec-yellow/20 text-sm">
-              <p className="text-elec-yellow font-medium">Remember:</p>
-              <p className="mt-1">The Control of Substances Hazardous to Health Regulations 2002 (COSHH) requires employers to control exposure to hazardous substances to prevent ill health. Electricians commonly encounter substances such as solvents, cleaning agents, dust, and fumes that may require specific control measures.</p>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+          
+          <Card className="bg-elec-dark/50 border border-elec-yellow/20">
+            <CardHeader className="pb-2">
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-elec-yellow" />
+                <CardTitle className="text-lg text-elec-yellow">COSHH</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-elec-dark p-3 rounded border border-elec-yellow/20 text-sm">
+                <p className="text-elec-yellow font-medium mb-2">Control of Substances Hazardous to Health</p>
+                <p>The COSHH Regulations 2002 require employers to control exposure to hazardous substances to prevent ill health.</p>
+                <div className="mt-3 pt-3 border-t border-elec-yellow/20">
+                  <p>Electricians commonly encounter:</p>
+                  <ul className="list-disc pl-5 mt-2 space-y-1">
+                    <li>Solvents and cleaners</li>
+                    <li>Cable lubricants</li>
+                    <li>Drilling dust</li>
+                    <li>Sealants and adhesives</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
