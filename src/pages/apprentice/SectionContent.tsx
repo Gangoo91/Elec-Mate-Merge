@@ -1,10 +1,9 @@
-
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { BookOpen, CheckCircle } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import BackButton from "@/components/apprentice/BackButton";
+import LearningBackButton from "@/components/apprentice/navigation/LearningBackButton";
 import { getHealthSafetySectionById } from "@/data/healthAndSafety/index";
 import type { SectionData, Subsection } from "@/data/healthAndSafety/types";
 import SectionSubsectionCard from "@/components/apprentice/SectionSubsectionCard";
@@ -160,7 +159,12 @@ const SectionContent = () => {
   // Regular section display
   return (
     <div className="max-w-4xl mx-auto py-6 px-4 animate-fade-in space-y-6">
-      <BackButton courseSlug={courseSlug} unitSlug={unitSlug} sectionId={sectionId} />
+      {/* Replace BackButton with LearningBackButton */}
+      <LearningBackButton 
+        currentPath="section"
+        courseSlug={courseSlug}
+        unitSlug={unitSlug}
+      />
       
       <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
         <div className="flex items-center justify-between mb-6">
