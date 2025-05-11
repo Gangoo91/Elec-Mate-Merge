@@ -1,6 +1,6 @@
 
 import { useParams, useSearchParams } from "react-router-dom";
-import type { CourseUnit } from "@/data/courseUnits";
+import type { CourseUnit } from "@/data/courseTypes";
 import HealthSafetyUnit from "./units/HealthSafetyUnit";
 import ElectricalTheoryUnit from "./units/ElectricalTheoryUnit";
 import InstallationMethodsUnit from "./units/InstallationMethodsUnit";

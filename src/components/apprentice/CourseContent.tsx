@@ -2,7 +2,7 @@
 import CourseUnitGrid from "@/components/apprentice/CourseUnitGrid";
 import UnitDetails from "@/components/apprentice/UnitDetails";
 import CourseInfoBox from "@/components/apprentice/CourseInfoBox";
-import type { CourseUnit } from "@/data/courseUnits";
+import type { CourseUnit } from "@/data/courseTypes";
 
 interface CourseContentProps {
   isUnitPage: boolean;

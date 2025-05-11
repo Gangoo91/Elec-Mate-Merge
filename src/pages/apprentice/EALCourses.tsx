@@ -27,33 +27,12 @@ const EALCourses = () => {
         </Link>
       </div>
 
-      {/* Course grid - just basic placeholder cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[
-          "Level 2 Diploma in Electrical Installation",
-          "Level 3 Advanced Diploma in Electrical Installation",
-          "Level 3 NVQ Diploma in Installing Electrotechnical Systems",
-          "Level 4 Technical Diploma in Electrical Installations"
-        ].map((course, index) => (
-          <Card 
-            key={index}
-            className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20 h-full"
-          >
-            <CardContent className="flex flex-col items-center justify-center p-6 h-full">
-              <p className="text-elec-yellow text-xs mb-1">
-                {course.includes("Level 2") ? "Level 2" : 
-                 course.includes("Level 3") ? "Level 3" : 
-                 course.includes("Level 4") ? "Level 4" : "Course"}
-              </p>
-              <h3 className="text-base sm:text-lg font-medium text-center leading-tight">
-                {course}
-              </h3>
-              <p className="mt-4 text-sm text-muted-foreground">
-                Course content coming soon
-              </p>
-            </CardContent>
-          </Card>
-        ))}
+      {/* Empty course grid - ready for future content */}
+      <div className="text-center p-8 bg-muted rounded-lg">
+        <h2 className="text-xl font-medium mb-4">Course Content Coming Soon</h2>
+        <p className="text-muted-foreground">
+          EAL course materials are currently being developed.
+        </p>
       </div>
     </div>
   );
