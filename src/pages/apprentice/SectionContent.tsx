@@ -16,7 +16,7 @@ const SectionContent = () => {
   };
   
   const renderUnitContent = () => {
-    if (unitSlug === 'elec2-01' && sectionId === "1") {
+    if (unitSlug === 'elec2-01-health-and-safety-in-electrical-installations' && sectionId === "1") {
       // For Health and Safety Unit Section 1 - specific content for this section only
       return (
         <div className="space-y-6 mt-6">
@@ -84,7 +84,7 @@ const SectionContent = () => {
           </div>
         </div>
       );
-    } else if (unitSlug === 'elec2-01') {
+    } else if (unitSlug && unitSlug.includes('elec2-01')) {
       // For other Health and Safety sections, call the HealthSafetyUnit component
       return <HealthSafetyUnit unitCode="ELEC2/01" onResourceClick={handleResourceClick} />;
     }
@@ -110,7 +110,7 @@ const SectionContent = () => {
   
   return (
     <div className="space-y-6 animate-fade-in bg-[#121212] px-4 md:px-0">
-      {/* Using the apprentice BackButton component which has better path handling */}
+      {/* Using the BackButton component to ensure correct navigation */}
       <div className="max-w-4xl mx-auto pt-6">
         <BackButton 
           courseSlug={courseSlug} 
