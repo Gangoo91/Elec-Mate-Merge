@@ -1,164 +1,261 @@
 
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { CheckCircle, Home, Building, Plug } from "lucide-react";
 import { SubsectionProps } from "./subsection1_1/types";
 import CourseContentSection from "../CourseContentSection";
+import { Button } from "@/components/ui/button";
+import { CheckCircle, Shield, ShieldAlert, HardHat, Zap, Cable } from "lucide-react";
 
 const Subsection3_3 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-elec-yellow">Special Installations</h2>
+      <CourseContentSection
+        title="PPE for Electrical Work"
+        description="Proper Personal Protective Equipment (PPE) is essential for electrical work safety. The Electricity at Work Regulations 1989 mandate appropriate PPE use, which serves as the final line of defence against electrical hazards."
+        keyPoints={[
+          "Understanding PPE categories and their specific applications in electrical work",
+          "Selection of appropriate PPE based on risk assessment and voltage levels",
+          "Legal requirements for PPE provision and maintenance",
+          "Testing and inspection requirements for electrical safety PPE",
+          "Limitations of PPE and integration with other safety measures"
+        ]}
+        icon="shield-alert"
+        subsectionId={subsectionId}
+      />
       
-      <div className="space-y-5">
-        <CourseContentSection
-          title="Special Installations"
-          description="Certain locations and installations require special considerations due to increased risks or specific requirements. Understanding these requirements is essential for compliant and safe electrical work. Special locations include bathrooms, swimming pools, agricultural locations, and temporary installations, each with their own specific requirements defined in BS 7671."
-          keyPoints={[
-            "Bathroom zones (0, 1, 2) require different levels of protection and equipment ratings",
-            "All bathroom circuits require 30mA RCD protection",
-            "Swimming pools need SELV (max 12V AC) in Zone 0 and enhanced supplementary bonding",
-            "Agricultural locations require additional fire protection and animal-resistant equipment",
-            "Temporary installations often use 110V center-tapped systems for increased safety"
-          ]}
-          icon="shield-alert"
-          subsectionId={subsectionId}
-        />
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
-            <h3 className="text-xl font-bold text-elec-yellow flex items-center">
-              <Home className="h-5 w-5 mr-2" />
-              Bathrooms and Shower Rooms
-            </h3>
-            <div className="space-y-3">
-              <h4 className="font-semibold">Zone Classifications</h4>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Zone 0: Interior of bath or shower basin</li>
-                <li>Zone 1: Area directly above bath/shower up to 2.25m</li>
-                <li>Zone 2: Area extending 0.6m beyond Zone 1, height 2.25m</li>
-                <li>Outside zones: Remainder of bathroom</li>
-                <li>Different electrical equipment permitted in each zone</li>
-              </ul>
-              
-              <h4 className="font-semibold mt-4">Protection Requirements</h4>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>All circuits require 30mA RCD protection</li>
-                <li>IPX7 equipment in Zone 0</li>
-                <li>IPX4 equipment in Zone 1 (IPX5 for water jets)</li>
-                <li>IPX4 equipment in Zone 2</li>
-                <li>Equipotential bonding of all extraneous-conductive-parts</li>
-              </ul>
-              
-              <div className="mt-4 pt-4 border-t border-elec-yellow/20">
-                <h4 className="font-semibold text-elec-yellow mb-2">Equipment Restrictions:</h4>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>Zone 0: SELV 12V AC or 30V DC equipment only</li>
-                  <li>Zone 1: Electric showers, SELV equipment, or specially protected appliances</li>
-                  <li>Zone 2: Shaver units, SELV equipment, and specific luminaires</li>
-                  <li>Outside zones: Standard equipment with RCD protection</li>
-                  <li>No socket outlets allowed in Zones 0, 1, or 2 (except shaver units)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          
-          <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
-            <h3 className="text-xl font-bold text-elec-yellow flex items-center">
-              <Building className="h-5 w-5 mr-2" />
-              Other Special Locations
-            </h3>
-            <div className="space-y-3">
-              <h4 className="font-semibold">Swimming Pools</h4>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Extended zone classifications (0, 1, 2)</li>
-                <li>SELV (max 12V AC) in Zone 0</li>
-                <li>IPX8 rating for Zone 0 equipment</li>
-                <li>Enhanced supplementary bonding</li>
-                <li>Specific spacing requirements from pool edge</li>
-              </ul>
-              
-              <h4 className="font-semibold mt-4">Agricultural Locations</h4>
-              <ul className="list-disc pl-5 space-y-2">
-                <li>Additional protection against fire (AFDDs recommended)</li>
-                <li>Increased IP ratings for dust/water protection</li>
-                <li>Animal-resistant enclosures and cable protection</li>
-                <li>Enhanced equipotential bonding</li>
-                <li>Special considerations for livestock areas</li>
-              </ul>
-              
-              <div className="mt-4 pt-4 border-t border-elec-yellow/20">
-                <h4 className="font-semibold text-elec-yellow mb-2">Temporary Installations:</h4>
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>Construction sites: reduced LV system (110V center-tapped)</li>
-                  <li>Exhibitions: enhanced mechanical protection for cables</li>
-                  <li>BS 7909 requirements for temporary events</li>
-                  <li>Frequent inspection requirements</li>
-                  <li>Enhanced RCD protection (30mA, time-delayed types)</li>
-                </ul>
-              </div>
-            </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+          <h3 className="text-xl font-bold text-elec-yellow flex items-center gap-2">
+            <Shield className="h-5 w-5" />
+            Categories of Electrical Safety PPE
+          </h3>
+          <div className="space-y-3">
+            <h4 className="font-semibold">Insulating PPE</h4>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>
+                <span className="font-medium">Insulating gloves</span>
+                <p className="text-sm mt-1">Must be certified to BS EN 60903 standard with appropriate class rating (Class 00-4)</p>
+              </li>
+              <li>
+                <span className="font-medium">Insulating mats</span>
+                <p className="text-sm mt-1">BS EN 61111 rated for the appropriate voltage class</p>
+              </li>
+              <li>
+                <span className="font-medium">Insulated tools</span>
+                <p className="text-sm mt-1">VDE/BS EN 60900 rated for either 1000V AC or 1500V DC</p>
+              </li>
+              <li>
+                <span className="font-medium">Insulating blankets</span>
+                <p className="text-sm mt-1">For covering exposed live parts, BS EN 61112 compliance</p>
+              </li>
+            </ul>
+            
+            <h4 className="font-semibold mt-4">Arc Flash Protection</h4>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>
+                <span className="font-medium">Arc flash rated clothing</span>
+                <p className="text-sm mt-1">Rated in cal/cm², typically 8-40 cal/cm² based on risk assessment</p>
+              </li>
+              <li>
+                <span className="font-medium">Face shields</span>
+                <p className="text-sm mt-1">Arc rated to protect against thermal energy</p>
+              </li>
+              <li>
+                <span className="font-medium">Arc flash hood/balaclava</span>
+                <p className="text-sm mt-1">Protects head and neck from thermal energy</p>
+              </li>
+            </ul>
           </div>
         </div>
         
-        <div className="mt-8 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-6">
-          <h3 className="text-xl font-bold text-elec-yellow mb-4 flex items-center">
-            <Plug className="h-5 w-5 mr-2" />
-            Embedded Electrical Systems
+        <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+          <h3 className="text-xl font-bold text-elec-yellow flex items-center gap-2">
+            <HardHat className="h-5 w-5" />
+            General Safety PPE Requirements
           </h3>
+          <div className="space-y-3">
+            <h4 className="font-semibold">Head and Eye Protection</h4>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>
+                <span className="font-medium">Safety helmets</span>
+                <p className="text-sm mt-1">BS EN 397 with electrical insulation properties</p>
+              </li>
+              <li>
+                <span className="font-medium">Safety glasses/goggles</span>
+                <p className="text-sm mt-1">BS EN 166 with appropriate impact resistance</p>
+              </li>
+              <li>
+                <span className="font-medium">Face shields</span>
+                <p className="text-sm mt-1">For protection against electrical flash, flying particles</p>
+              </li>
+            </ul>
+            
+            <h4 className="font-semibold mt-4">Body and Extremity Protection</h4>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>
+                <span className="font-medium">Safety footwear</span>
+                <p className="text-sm mt-1">BS EN ISO 20345 with electrical resistance properties</p>
+              </li>
+              <li>
+                <span className="font-medium">Flame-resistant clothing</span>
+                <p className="text-sm mt-1">BS EN ISO 11612 compliant for thermal hazards</p>
+              </li>
+              <li>
+                <span className="font-medium">Hi-visibility clothing</span>
+                <p className="text-sm mt-1">BS EN ISO 20471 for work near roads or in low light</p>
+              </li>
+              <li>
+                <span className="font-medium">Hearing protection</span>
+                <p className="text-sm mt-1">For noisy environments, BS EN 352 rated</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+          <h3 className="text-xl font-bold text-elec-yellow flex items-center gap-2">
+            <Zap className="h-5 w-5" />
+            Selection and Risk Assessment
+          </h3>
+          <div className="space-y-3">
+            <p>PPE selection must be based on thorough risk assessment of electrical hazards:</p>
+            
+            <h4 className="font-semibold">Voltage Classification</h4>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Low voltage: up to 1000V AC/1500V DC</li>
+              <li>High voltage: above 1000V AC/1500V DC</li>
+              <li>Different classes of insulating gloves required for different voltage ranges:
+                <ul className="list-disc pl-5 mt-1">
+                  <li>Class 00: Up to 500V AC</li>
+                  <li>Class 0: Up to 1000V AC</li>
+                  <li>Class 1: Up to 7500V AC</li>
+                  <li>Class 2: Up to 17,000V AC</li>
+                  <li>Class 3: Up to 26,500V AC</li>
+                  <li>Class 4: Up to 36,000V AC</li>
+                </ul>
+              </li>
+            </ul>
+            
+            <h4 className="font-semibold mt-4">Arc Flash Risk Assessment</h4>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>
+                <span className="font-medium">Arc flash energy calculation</span>
+                <p className="text-sm mt-1">Calculate potential incident energy in cal/cm²</p>
+              </li>
+              <li>
+                <span className="font-medium">Arc flash boundaries</span>
+                <p className="text-sm mt-1">Define Limited, Restricted, and Prohibited approach boundaries</p>
+              </li>
+              <li>
+                <span className="font-medium">PPE categories</span>
+                <p className="text-sm mt-1">Match PPE rating to calculated incident energy level</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+          <h3 className="text-xl font-bold text-elec-yellow flex items-center gap-2">
+            <Cable className="h-5 w-5" />
+            Legal Requirements and Compliance
+          </h3>
+          <div className="space-y-3">
+            <h4 className="font-semibold">Regulatory Framework</h4>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>
+                <span className="font-medium">Health and Safety at Work Act 1974</span>
+                <p className="text-sm mt-1">General duty of care for employers and employees</p>
+              </li>
+              <li>
+                <span className="font-medium">Electricity at Work Regulations 1989</span>
+                <p className="text-sm mt-1">Specific requirements for electrical safety measures</p>
+              </li>
+              <li>
+                <span className="font-medium">Personal Protective Equipment at Work Regulations 1992 (amended 2022)</span>
+                <p className="text-sm mt-1">Requirements for PPE provision, maintenance and use</p>
+              </li>
+              <li>
+                <span className="font-medium">Management of Health and Safety at Work Regulations 1999</span>
+                <p className="text-sm mt-1">Risk assessment requirements</p>
+              </li>
+            </ul>
+            
+            <h4 className="font-semibold mt-4">Employer and Worker Responsibilities</h4>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>
+                <span className="font-medium">Employer duties:</span>
+                <p className="text-sm mt-1">Provide appropriate PPE free of charge, ensure training on proper use, maintain PPE in good condition, provide storage facilities</p>
+              </li>
+              <li>
+                <span className="font-medium">Employee duties:</span>
+                <p className="text-sm mt-1">Use PPE as instructed, report defects, store properly, attend training</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4 mt-6">
+        <h3 className="text-xl font-bold text-elec-yellow flex items-center gap-2">
+          <ShieldAlert className="h-5 w-5" />
+          Inspection, Maintenance and Limitations
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-3">
+            <h4 className="font-semibold">Testing and Inspection</h4>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>
+                <span className="font-medium">Insulating gloves</span>
+                <p className="text-sm mt-1">Visual inspection before each use, air test to check for leaks, formal electrical test every 6 months</p>
+              </li>
+              <li>
+                <span className="font-medium">Insulating mats</span>
+                <p className="text-sm mt-1">Visual inspection before use, periodic electrical testing</p>
+              </li>
+              <li>
+                <span className="font-medium">Insulated tools</span>
+                <p className="text-sm mt-1">Regular inspection for cracks, cuts or damage to insulation</p>
+              </li>
+              <li>
+                <span className="font-medium">Arc flash PPE</span>
+                <p className="text-sm mt-1">Regular inspection for damage, follow manufacturer's guidance on washing/cleaning</p>
+              </li>
+            </ul>
+            
+            <h4 className="font-semibold mt-4">Documentation Requirements</h4>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>Record of PPE issued to workers</li>
+              <li>Inspection and test records</li>
+              <li>Training records for PPE use</li>
+              <li>Risk assessment documentation</li>
+            </ul>
+          </div>
           
-          <div className="space-y-4">
-            <p>Modern buildings often include embedded or concealed electrical systems with special requirements:</p>
+          <div className="space-y-3">
+            <h4 className="font-semibold">Limitations of PPE</h4>
+            <ul className="list-disc pl-5 space-y-2">
+              <li>
+                <span className="font-medium">Last line of defence</span>
+                <p className="text-sm mt-1">PPE should be used alongside, not instead of, other safety measures</p>
+              </li>
+              <li>
+                <span className="font-medium">Voltage limits</span>
+                <p className="text-sm mt-1">Each item of PPE has specific voltage limitations</p>
+              </li>
+              <li>
+                <span className="font-medium">Environmental factors</span>
+                <p className="text-sm mt-1">Moisture, contaminants, and temperature can affect performance</p>
+              </li>
+              <li>
+                <span className="font-medium">Aging and deterioration</span>
+                <p className="text-sm mt-1">PPE effectiveness decreases over time even if visually undamaged</p>
+              </li>
+            </ul>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-3">
-                <h4 className="font-semibold text-white">Floor and Ceiling Heating</h4>
-                <ul className="list-disc pl-5 space-y-2">
-                  <li>
-                    <span className="font-medium">Underfloor heating systems</span>
-                    <p className="text-sm mt-1">RCD protection required, specific cable routing</p>
-                  </li>
-                  <li>
-                    <span className="font-medium">Embedded heating elements</span>
-                    <p className="text-sm mt-1">Earth screen requirements, control system limitations</p>
-                  </li>
-                  <li>
-                    <span className="font-medium">Temperature limitations</span>
-                    <p className="text-sm mt-1">Controls to prevent overheating of cables/surroundings</p>
-                  </li>
-                  <li>
-                    <span className="font-medium">Testing requirements</span>
-                    <p className="text-sm mt-1">Special testing procedures before and after installation</p>
-                  </li>
-                </ul>
-              </div>
-              
-              <div className="space-y-3">
-                <h4 className="font-semibold text-white">Concealed Cables</h4>
-                <ul className="list-disc pl-5 space-y-2">
-                  <li>
-                    <span className="font-medium">Cables in walls</span>
-                    <p className="text-sm mt-1">RCD protection or mechanical protection requirements</p>
-                  </li>
-                  <li>
-                    <span className="font-medium">Embedded conduit systems</span>
-                    <p className="text-sm mt-1">Depth requirements and routing considerations</p>
-                  </li>
-                  <li>
-                    <span className="font-medium">Cable routes</span>
-                    <p className="text-sm mt-1">Documentation and "safe zones" for installation</p>
-                  </li>
-                  <li>
-                    <span className="font-medium">Detection systems</span>
-                    <p className="text-sm mt-1">Use of cable detectors before drilling or cutting</p>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            
-            <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-sm">
-              <p className="font-medium mb-1 text-elec-yellow">Regulatory Note:</p>
-              <p>BS 7671 Section 701 covers requirements for bathrooms, Section 702 for swimming pools, and Section 705 for agricultural locations. Regulation 522.6 details the requirements for cables embedded in walls. All special installations require enhanced documentation including clear marking of concealed cables or equipment locations.</p>
+            <div className="p-4 bg-elec-dark/30 border border-elec-yellow/20 rounded-lg text-sm mt-4">
+              <p className="font-medium mb-1 text-elec-yellow">Safety First Reminder:</p>
+              <p>Always follow the hierarchy of control: elimination, substitution, engineering controls, administrative controls, and only then PPE. Never rely solely on PPE when working with electrical systems.</p>
             </div>
           </div>
         </div>
