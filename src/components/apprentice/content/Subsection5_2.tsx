@@ -2,7 +2,7 @@
 import React from "react";
 import { SubsectionProps } from "./subsection1_1/types";
 import IntroSection from "./subsection5_2/IntroSection";
-import CompletionButton from "../../shared/CompletionButton";
+import CompletionButton from "../shared/CompletionButton";
 
 const Subsection5_2 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
@@ -420,3 +420,4 @@ const Subsection5_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 };
 
 export default Subsection5_2;
+
