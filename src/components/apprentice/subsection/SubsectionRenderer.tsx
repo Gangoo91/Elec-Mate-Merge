@@ -23,7 +23,7 @@ const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: Subse
   
   console.log("Section from URL:", sectionFromUrl);
   
-  // If we have a section from URL and simple numeric subsectionId, prioritize section from URL
+  // If we have a section from URL and simple numeric subsectionId, use section from URL
   if (sectionFromUrl && /^\d+$/.test(subsectionId)) {
     const sectionNumber = parseInt(sectionFromUrl);
     console.log(`Routing subsection ${subsectionId} to section ${sectionNumber} based on URL`);
@@ -45,6 +45,8 @@ const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: Subse
       case 9:
       case 10:
         return renderSection6To10({ subsectionId, isCompleted, markAsComplete });
+      default:
+        return <p>Content for section {sectionNumber}, subsection {subsectionId} is not yet available.</p>;
     }
   }
   
@@ -71,16 +73,12 @@ const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: Subse
       case "9":
       case "10":
         return renderSection6To10({ subsectionId, isCompleted, markAsComplete });
+      default:
+        return <p>Content for subsection {subsectionId} is not yet available.</p>;
     }
   }
   
-  // Use the section utility functions as a fallback for numeric-only IDs
-  // This is the legacy routing logic
-  if (["1", "2", "3"].includes(subsectionId)) {
-    console.log("Legacy fallback for simple numeric ID:", subsectionId);
-    return renderSection1({ subsectionId, isCompleted, markAsComplete });
-  }
-  
+  // Use the section utility functions as a fallback
   if (isSubsectionInSection(subsectionId, 1)) {
     return renderSection1({ subsectionId, isCompleted, markAsComplete });
   }

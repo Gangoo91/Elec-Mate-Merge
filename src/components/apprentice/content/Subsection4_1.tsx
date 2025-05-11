@@ -4,7 +4,7 @@ import { SubsectionProps } from "./subsection1_1/types";
 import IntroSection from "./subsection4_1/IntroSection";
 import LadderTypes from "./subsection4_1/LadderTypes";
 import LadderInspection from "./subsection4_1/LadderInspection";
-import CompletionButton from "./subsection4_1/CompletionButton";
+import CompletionButton from "./shared/CompletionButton";
 
 const Subsection4_1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
