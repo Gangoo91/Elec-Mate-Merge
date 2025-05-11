@@ -72,27 +72,27 @@ const FinancialTools = () => {
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <CardTitle>Material Cost Analysis</CardTitle>
-                <CardDescription>Analyze material costs and markup.</CardDescription>
+                <CardDescription>Analyse material costs and markup.</CardDescription>
               </CardHeader>
               <CardContent>
                 <Button 
                   className="w-full" 
                   onClick={() => handleAction("Material Cost Analysis")}
                 >
-                  Analyze Costs
+                  Analyse Costs
                 </Button>
               </CardContent>
             </Card>
             
             <Card className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
-                <CardTitle>Labor Pricing Tool</CardTitle>
-                <CardDescription>Calculate labor costs and rates.</CardDescription>
+                <CardTitle>Labour Pricing Tool</CardTitle>
+                <CardDescription>Calculate labour costs and rates.</CardDescription>
               </CardHeader>
               <CardContent>
                 <Button 
                   className="w-full" 
-                  onClick={() => handleAction("Calculate Labor Rates")}
+                  onClick={() => handleAction("Calculate Labour Rates")}
                 >
                   Calculate Rates
                 </Button>

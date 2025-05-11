@@ -136,10 +136,10 @@ const PlansList = ({ billing }: PlansListProps) => {
               <CardTitle>{plan.name}</CardTitle>
               <CardDescription>{plan.description}</CardDescription>
               <div className="mt-4">
-                <span className="text-3xl font-bold">{plan.price}</span>
+                <span className="text-3xl font-bold">{plan.price.replace('$', '£')}</span>
                 <span className="text-muted-foreground">{plan.period}</span>
                 {plan.savings && (
-                  <div className="mt-1 text-xs text-elec-yellow">{plan.savings}</div>
+                  <div className="mt-1 text-xs text-elec-yellow">{plan.savings.replace('$', '£')}</div>
                 )}
               </div>
             </CardHeader>

@@ -49,6 +49,9 @@ const JobCard: React.FC<JobCardProps> = ({ job, selectedJob, handleApply }) => {
     }
   };
   
+  // Format salary to use £ instead of $ if applicable
+  const formattedSalary = job.salary ? job.salary.replace('$', '£') : null;
+  
   return (
     <div
       id={`job-${job.id}`}
@@ -76,9 +79,9 @@ const JobCard: React.FC<JobCardProps> = ({ job, selectedJob, handleApply }) => {
           </div>
         </div>
         
-        {job.salary && (
+        {formattedSalary && (
           <div className="mb-2 text-sm">
-            <Badge variant="secondary">{job.salary}</Badge>
+            <Badge variant="secondary">{formattedSalary}</Badge>
             <Badge variant="outline" className="ml-2">{job.type}</Badge>
           </div>
         )}
