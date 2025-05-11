@@ -3,52 +3,46 @@ import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Shield, BookOpen, Lightbulb, Wrench, FlaskConical } from "lucide-react";
-import { ealLevel2Units } from "@/data/courseUnits";
 
 const InstallationMethodContent = () => {
   const { sectionId } = useParams();
   
-  // Use the actual units data from courseUnits.ts
+  // Simplified units data
   const units = [
     {
       id: "elec2-01",
       code: "ELEC2/01",
       title: "Health and Safety in Electrical Installation",
       description: "Understanding safety regulations and practices in electrical work",
-      icon: Shield,
-      path: "/apprentice/study/eal/level-2-diploma-in-electrical-installation/unit/elec2-01-health-and-safety-in-electrical-installation"
+      icon: Shield
     },
     {
       id: "elec2-04",
       code: "ELEC2/04",
       title: "Electrical Installation Theory and Technology",
       description: "Core theoretical knowledge for electrical installation work",
-      icon: Lightbulb,
-      path: "/apprentice/study/eal/level-2-diploma-in-electrical-installation/unit/elec2-04-electrical-installation-theory-and-technology"
+      icon: Lightbulb
     },
     {
       id: "elec2-05a",
       code: "ELEC2/05A",
       title: "Electrical Installation Methods, Procedures and Requirements",
       description: "Standard methods and procedures for electrical installations",
-      icon: BookOpen,
-      path: "/apprentice/study/eal/level-2-diploma-in-electrical-installation/unit/elec2-05a-electrical-installation-methods-procedures-and-requirements"
+      icon: BookOpen
     },
     {
       id: "elec2-05b",
       code: "ELEC2/05B",
       title: "Electrical Installation Craft Skills",
       description: "Practical skills for electrical installation work",
-      icon: Wrench,
-      path: "/apprentice/study/eal/level-2-diploma-in-electrical-installation/unit/elec2-05b-electrical-installation-craft-skills"
+      icon: Wrench
     },
     {
       id: "elec2-08",
       code: "ELEC2/08",
       title: "Electrical Science and Principles",
       description: "Scientific principles underlying electrical systems",
-      icon: FlaskConical,
-      path: "/apprentice/study/eal/level-2-diploma-in-electrical-installation/unit/elec2-08-electrical-science-and-principles"
+      icon: FlaskConical
     }
   ];
 
@@ -79,22 +73,17 @@ const InstallationMethodContent = () => {
           const Icon = unit.icon;
           
           return (
-            <Link 
+            <Card 
               key={unit.id}
-              to={unit.path}
-              className="block h-full transition-transform hover:scale-102 duration-200"
+              className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full"
             >
-              <Card 
-                className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full"
-              >
-                <CardContent className="flex flex-col items-center justify-center p-6 h-full text-center">
-                  <Icon className="h-10 w-10 text-elec-yellow mb-4 opacity-80" />
-                  <p className="text-elec-yellow text-sm mb-2">{unit.code}</p>
-                  <h3 className="text-lg font-medium mb-2">{unit.title}</h3>
-                  <p className="text-sm text-muted-foreground">{unit.description}</p>
-                </CardContent>
-              </Card>
-            </Link>
+              <CardContent className="flex flex-col items-center justify-center p-6 h-full text-center">
+                <Icon className="h-10 w-10 text-elec-yellow mb-4 opacity-80" />
+                <p className="text-elec-yellow text-sm mb-2">{unit.code}</p>
+                <h3 className="text-lg font-medium mb-2">{unit.title}</h3>
+                <p className="text-sm text-muted-foreground">{unit.description}</p>
+              </CardContent>
+            </Card>
           );
         })}
       </div>
