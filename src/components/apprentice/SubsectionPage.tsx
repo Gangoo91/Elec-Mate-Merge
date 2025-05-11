@@ -12,11 +12,11 @@ const SubsectionPage = () => {
   const {
     subsectionData,
     sectionTitle,
-    isCompleted,
     siblingSubsections,
+    navigateToSubsection,
+    isCompleted,
     parentSectionNumber,
     markAsComplete,
-    navigateToSubsection,
   } = useSubsectionContent({
     courseSlug,
     unitSlug,
@@ -53,6 +53,7 @@ const SubsectionPage = () => {
         currentSubsectionId={subsectionId || ""}
         subsections={siblingSubsections}
         navigateToSubsection={navigateToSubsection}
+        parentSectionNumber={parentSectionNumber}
       />
     </div>
   );

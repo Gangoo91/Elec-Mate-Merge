@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Subsection } from "@/data/courseTypes";
+import type { Subsection } from "@/data/healthAndSafety/types";
 
 interface UseSubsectionContentProps {
   courseSlug?: string;
@@ -36,6 +36,13 @@ export function useSubsectionContent({
   const [parentSectionNumber, setParentSectionNumber] = useState<string | null>(null);
 
   useEffect(() => {
+    // Check local storage for completion status
+    if (sectionId && subsectionId) {
+      const storageKey = `completion_${sectionId}_${subsectionId}`;
+      const storedCompletion = localStorage.getItem(storageKey);
+      setIsCompleted(storedCompletion === 'true');
+    }
+    
     // Set loading to false since we don't have data to load
     setLoading(false);
   }, [subsectionId, sectionId, unitSlug]);
@@ -47,7 +54,11 @@ export function useSubsectionContent({
   };
 
   const markAsComplete = () => {
-    setIsCompleted(true);
+    if (sectionId && subsectionId) {
+      const storageKey = `completion_${sectionId}_${subsectionId}`;
+      localStorage.setItem(storageKey, 'true');
+      setIsCompleted(true);
+    }
   };
 
   return {

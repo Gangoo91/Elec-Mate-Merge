@@ -11,7 +11,7 @@ import type { Subsection } from "@/data/healthAndSafety/types";
 
 interface SectionSubsectionCardProps {
   subsection: Subsection;
-  navigateToSubsection: (subsection: Subsection) => void;
+  navigateToSubsection: (subsection: Subsection | string) => void;
   collapsible?: boolean;
 }
 

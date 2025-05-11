@@ -8,15 +8,15 @@ import type { Subsection } from "@/data/healthAndSafety/types";
 type SubsectionNavigationProps = {
   currentSubsectionId: string;
   subsections: Subsection[];
-  navigateToSubsection: (subsectionId: string) => void;
-  parentSectionNumber: string;
+  navigateToSubsection: (subsection: Subsection | string) => void;
+  parentSectionNumber?: string | null;
 };
 
 const SubsectionNavigation = ({ 
   currentSubsectionId,
   subsections,
   navigateToSubsection,
-  parentSectionNumber
+  parentSectionNumber = null
 }: SubsectionNavigationProps) => {
   const { courseSlug, unitSlug, sectionId } = useParams();
   
@@ -27,7 +27,7 @@ const SubsectionNavigation = ({
   const nextSubsection = currentIndex < subsections.length - 1 ? subsections[currentIndex + 1] : null;
   
   // Determine the "All Subsections" link based on the unit type
-  const allSubsectionsLink = `/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${parentSectionNumber}`;
+  const allSubsectionsLink = `/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${parentSectionNumber || sectionId}`;
   
   return (
     <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8 bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-4">
@@ -36,7 +36,7 @@ const SubsectionNavigation = ({
           <Button 
             variant="outline" 
             className="w-full justify-start border-elec-yellow/30 hover:bg-elec-yellow/10"
-            onClick={() => navigateToSubsection(prevSubsection.id)}
+            onClick={() => navigateToSubsection(prevSubsection)}
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Previous: {prevSubsection.title}
@@ -59,7 +59,7 @@ const SubsectionNavigation = ({
           <Button 
             variant="outline" 
             className="w-full justify-end border-elec-yellow/30 hover:bg-elec-yellow/10"
-            onClick={() => navigateToSubsection(nextSubsection.id)}
+            onClick={() => navigateToSubsection(nextSubsection)}
           >
             Next: {nextSubsection.title}
             <ArrowRight className="ml-2 h-4 w-4" />
