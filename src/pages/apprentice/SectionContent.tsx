@@ -71,7 +71,9 @@ const SectionContent = () => {
       return (
         <div className="space-y-6 mt-6">
           <h2 className="text-xl md:text-2xl font-bold text-elec-yellow">{sectionData.title}</h2>
-          <p className="text-elec-light/80">{sectionData.description || "Section content"}</p>
+          {sectionData.content.introduction && (
+            <p className="text-elec-light/80">{sectionData.content.introduction}</p>
+          )}
           
           {/* Display subsections in a grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
@@ -87,7 +89,7 @@ const SectionContent = () => {
                   </CardHeader>
                   <CardContent>
                     <CardDescription className="text-elec-light/80">
-                      {subsection.description || "Click to view this subsection's content"}
+                      {subsection.content || "Click to view this subsection's content"}
                     </CardDescription>
                     <div className="flex justify-end mt-4">
                       <BookOpen className="h-5 w-5 text-elec-yellow opacity-70" />
