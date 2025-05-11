@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, ClipboardList, FileText, ShieldAlert } from "lucide-react";
+import { CheckCircle } from "lucide-react";
 import { SubsectionProps } from "./subsection1_1/types";
 import CourseContentSection from "../CourseContentSection";
 
@@ -20,204 +20,230 @@ const Subsection2_2 = ({
 
       {/* Key Safety Documents Section */}
       <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-6 mb-6">
-        <div className="flex items-start gap-3 mb-4">
-          <div className="bg-yellow-600/20 p-2 rounded-full">
-            <ShieldAlert className="h-6 w-6 text-elec-yellow" />
-          </div>
-          <h2 className="text-xl font-semibold text-elec-yellow">Key Safety Documents</h2>
-        </div>
+        <h2 className="text-xl font-semibold text-elec-yellow mb-4">Key Safety Documents</h2>
         
         <div className="space-y-4">
           <p className="text-muted-foreground">
             Core documentation required for electrical work includes:
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-              <h4 className="font-semibold text-white mb-2">Risk Assessments</h4>
-              <p className="text-sm text-muted-foreground">
-                Identify hazards and control measures for specific tasks and environments. Must be task-specific, not generic, addressing the particular circumstances of each job.
-              </p>
-            </div>
-            
-            <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-              <h4 className="font-semibold text-white mb-2">Method Statements</h4>
-              <p className="text-sm text-muted-foreground">
-                Outline how work will be completed safely with step-by-step procedures. Include emergency procedures and specific control measures for identified risks.
-              </p>
-            </div>
-            
-            <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-              <h4 className="font-semibold text-white mb-2">Equipment Inspection Records</h4>
-              <p className="text-sm text-muted-foreground">
-                Track testing dates, results, and future inspection schedules for all electrical equipment, tools, and safety equipment used on-site.
-              </p>
-            </div>
-            
-            <div className="border border-elec-yellow/20 rounded p-3 bg-elec-dark/30">
-              <h4 className="font-semibold text-white mb-2">Training Records</h4>
-              <p className="text-sm text-muted-foreground">
-                Document all safety-related instruction, certification, and competency assessments. Include dates, content covered, and verification of understanding.
-              </p>
-            </div>
-          </div>
+          <h3 className="font-semibold text-white mt-6 mb-2">Risk Assessments</h3>
+          <p className="text-muted-foreground mb-4">
+            Risk assessments are legally required documents that identify hazards, evaluate risks, and determine control measures for specific tasks.
+            They must be:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6">
+            <li>Task-specific rather than generic</li>
+            <li>Created before work begins and updated as conditions change</li>
+            <li>Completed by a competent person with knowledge of the work and hazards</li>
+            <li>Regularly reviewed and revised as needed</li>
+            <li>Communicated to all workers involved in the task</li>
+            <li>Stored for a minimum of 3 years, though 5 years is recommended</li>
+          </ul>
+
+          <h3 className="font-semibold text-white mt-6 mb-2">Method Statements</h3>
+          <p className="text-muted-foreground mb-4">
+            Method statements outline the step-by-step procedure for completing work safely. They complement risk assessments by providing detailed instructions on how to implement control measures.
+            Effective method statements include:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6">
+            <li>Detailed sequence of operations</li>
+            <li>Specific equipment and tools required</li>
+            <li>Safety precautions for each step</li>
+            <li>PPE requirements</li>
+            <li>Emergency procedures</li>
+            <li>References to related risk assessments</li>
+            <li>Isolation procedures for electrical work</li>
+          </ul>
+
+          <h3 className="font-semibold text-white mt-6 mb-2">Equipment Inspection Records</h3>
+          <p className="text-muted-foreground mb-4">
+            Regular inspection of tools and equipment is essential for electrical safety. Documentation must track:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6">
+            <li>Unique identification numbers for each piece of equipment</li>
+            <li>Inspection dates and results</li>
+            <li>Calibration records for measuring instruments</li>
+            <li>PAT testing dates and certificates</li>
+            <li>Repair history and maintenance schedules</li>
+            <li>Due dates for next inspections</li>
+            <li>Name and qualification of the inspector</li>
+          </ul>
+
+          <h3 className="font-semibold text-white mt-6 mb-2">Training Records</h3>
+          <p className="text-muted-foreground mb-4">
+            Documentation of worker training and competence is critical for demonstrating due diligence and compliance:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6">
+            <li>Qualifications and certifications</li>
+            <li>Dates of training sessions attended</li>
+            <li>Content covered in training</li>
+            <li>Assessment results and competency verification</li>
+            <li>Refresher training schedules</li>
+            <li>Authorization for specific tasks or equipment</li>
+            <li>Signatures of trainers and trainees</li>
+          </ul>
+
+          <h3 className="font-semibold text-white mt-6 mb-2">Accident and Incident Reports</h3>
+          <p className="text-muted-foreground mb-4">
+            When incidents occur, comprehensive documentation is essential:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6">
+            <li>Date, time, and location of the incident</li>
+            <li>Names of individuals involved and witnesses</li>
+            <li>Detailed description of what happened</li>
+            <li>Contributing factors identified</li>
+            <li>Immediate actions taken</li>
+            <li>Follow-up corrective measures</li>
+            <li>RIDDOR reporting details if applicable</li>
+            <li>Investigation findings and recommendations</li>
+          </ul>
         </div>
       </div>
 
       {/* Document Management Section */}
       <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-6 mb-6">
-        <div className="flex items-start gap-3 mb-4">
-          <div className="bg-yellow-600/20 p-2 rounded-full">
-            <FileText className="h-6 w-6 text-elec-yellow" />
-          </div>
-          <h2 className="text-xl font-semibold text-elec-yellow">Document Management</h2>
-        </div>
+        <h2 className="text-xl font-semibold text-elec-yellow mb-4">Document Management Systems</h2>
         
         <div className="space-y-4">
-          <p className="text-muted-foreground">
-            Effective systems for organizing and maintaining documentation are essential for ensuring safety compliance.
+          <p className="text-muted-foreground mb-4">
+            Maintaining an organized documentation system is crucial for ensuring documents are accessible when needed and can be readily provided during inspections or audits.
           </p>
           
-          <ul className="space-y-4 mt-4">
-            <li className="bg-elec-gray/30 p-4 rounded-lg border-l-4 border-elec-yellow">
-              <h3 className="font-medium mb-1">Document Control</h3>
-              <p className="text-sm text-muted-foreground">
-                Ensure workers have access to the latest versions with clear version control and update procedures. This prevents the use of outdated or incorrect information.
-              </p>
-            </li>
-            
-            <li className="bg-elec-gray/30 p-4 rounded-lg border-l-4 border-elec-yellow">
-              <h3 className="font-medium mb-1">Storage Systems</h3>
-              <p className="text-sm text-muted-foreground">
-                Secure, accessible storage with appropriate backup and protection. Consider both physical and digital storage solutions with appropriate security measures.
-              </p>
-            </li>
-            
-            <li className="bg-elec-gray/30 p-4 rounded-lg border-l-4 border-elec-yellow">
-              <h3 className="font-medium mb-1">Retention Periods</h3>
-              <p className="text-sm text-muted-foreground">
-                Follow legal requirements for how long different documents must be kept. Some records may need to be retained for many years to comply with regulations.
-              </p>
-            </li>
-            
-            <li className="bg-elec-gray/30 p-4 rounded-lg border-l-4 border-elec-yellow">
-              <h3 className="font-medium mb-1">Accessibility</h3>
-              <p className="text-sm text-muted-foreground">
-                Make relevant documents available at point of use (e.g., on-site) while maintaining security of sensitive information. Ensure all workers know how to access documentation.
-              </p>
-            </li>
+          <h3 className="font-semibold text-white mt-6 mb-2">Document Control</h3>
+          <p className="text-muted-foreground mb-6">
+            A robust document control system ensures that all personnel have access to the correct, up-to-date versions of essential documents. Key elements include version numbering, clear revision histories, approval signatures, and distribution lists. Documents should be reviewed at regular intervals, typically every 12 months or whenever processes change significantly.
+          </p>
+          
+          <h3 className="font-semibold text-white mt-6 mb-2">Storage Systems</h3>
+          <p className="text-muted-foreground mb-6">
+            Modern electrical contractors typically employ a combination of physical and digital storage. Digital systems offer advantages of accessibility, searchability, and backup capabilities, while physical copies may be required on-site. Cloud-based systems with appropriate security measures are increasingly becoming the industry standard, allowing real-time access from multiple locations while maintaining document integrity.
+          </p>
+          
+          <h3 className="font-semibold text-white mt-6 mb-2">Retention Periods</h3>
+          <p className="text-muted-foreground mb-6">
+            Different documentation types require different retention periods according to regulations:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6">
+            <li>Risk assessments and method statements: Minimum 3 years after completion</li>
+            <li>Accident records: Minimum 3 years from date of report</li>
+            <li>Equipment inspection records: Duration of equipment life plus 2 years</li>
+            <li>Training records: Duration of employment plus 5 years</li>
+            <li>Electrical installation certificates: For the life of the installation</li>
+            <li>COSHH assessments: 40 years for hazardous substances exposure records</li>
+          </ul>
+          
+          <h3 className="font-semibold text-white mt-6 mb-2">Document Accessibility</h3>
+          <p className="text-muted-foreground mb-6">
+            Safety documentation must be accessible to those who need it, when they need it. This includes:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6">
+            <li>On-site availability of risk assessments and method statements</li>
+            <li>Clear processes for accessing documents outside of normal working hours</li>
+            <li>Multiple formats to accommodate different needs (digital, print, etc.)</li>
+            <li>Security measures to protect sensitive information while maintaining accessibility</li>
+            <li>Training for all staff on how to access and use documentation systems</li>
           </ul>
         </div>
       </div>
 
       {/* Compliance Documentation Section */}
       <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-6">
-        <div className="flex items-start gap-3 mb-4">
-          <div className="bg-yellow-600/20 p-2 rounded-full">
-            <ClipboardList className="h-6 w-6 text-elec-yellow" />
-          </div>
-          <h2 className="text-xl font-semibold text-elec-yellow">Compliance Documentation</h2>
-        </div>
+        <h2 className="text-xl font-semibold text-elec-yellow mb-4">Compliance Documentation</h2>
         
         <div className="space-y-4">
-          <p className="text-muted-foreground">
-            Maintaining proper compliance documentation is crucial for meeting regulatory requirements and demonstrating due diligence.
+          <p className="text-muted-foreground mb-4">
+            Electrical work requires specific documentation to demonstrate compliance with industry regulations and standards.
           </p>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-            <div className="bg-elec-gray/30 p-5 rounded-lg">
-              <h3 className="text-lg font-medium mb-3 text-elec-yellow/80">Required Legal Documentation</h3>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>• Certificates of Compliance with BS 7671</li>
-                <li>• Statutory inspection records for equipment</li>
-                <li>• COSHH assessments for hazardous substances</li>
-                <li>• HSE notifications for certain types of work</li>
-                <li>• Insurance documentation and liability coverage</li>
-                <li>• Accident and incident reports</li>
-                <li>• Health surveillance records where required</li>
-              </ul>
-            </div>
-            
-            <div className="bg-elec-gray/30 p-5 rounded-lg">
-              <h3 className="text-lg font-medium mb-3 text-elec-yellow/80">Documentation Auditing</h3>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>• Regular audits to ensure completeness and accuracy</li>
-                <li>• Gap analysis to identify missing information</li>
-                <li>• Quality assessment of document detail and specificity</li>
-                <li>• Implementation checks to verify procedures are followed</li>
-                <li>• Improvement process for updating based on findings</li>
-                <li>• Third-party verification where appropriate</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="mt-6 p-4 bg-elec-dark/70 rounded-lg">
-            <p className="font-medium mb-2 text-elec-yellow">Legal Note:</p>
-            <p className="text-muted-foreground">
-              Employers with five or more employees must record significant findings of risk assessments. However, all employers, regardless of size, are advised to maintain thorough documentation as best practice and for their own protection in case of incident investigation or regulatory inspection.
-            </p>
-          </div>
+          <h3 className="font-semibold text-white mt-6 mb-2">Electrical Certification</h3>
+          <p className="text-muted-foreground mb-6">
+            BS 7671 requires various certificates to be issued upon completion of electrical work:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6">
+            <li>Electrical Installation Certificate (EIC) - for new installations</li>
+            <li>Minor Electrical Installation Works Certificate (MEIWC) - for smaller works</li>
+            <li>Electrical Installation Condition Report (EICR) - for periodic inspections</li>
+            <li>Schedule of Inspections and Schedule of Test Results - supporting documents for certificates</li>
+            <li>Certification of Energy Storage Systems (when applicable)</li>
+          </ul>
+
+          <h3 className="font-semibold text-white mt-6 mb-2">Statutory Documentation</h3>
+          <p className="text-muted-foreground mb-6">
+            Additional documentation required by law includes:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6">
+            <li>Health and Safety Policy (required for businesses with 5+ employees)</li>
+            <li>Fire risk assessments</li>
+            <li>COSHH assessments for hazardous substances</li>
+            <li>Insurance certificates (public and employer's liability)</li>
+            <li>Construction phase plans for CDM 2015 compliance</li>
+            <li>F-Gas certificates for air conditioning work</li>
+          </ul>
+
+          <h3 className="font-semibold text-white mt-6 mb-2">Internal Quality Control</h3>
+          <p className="text-muted-foreground mb-6">
+            Maintaining internal documentation helps ensure consistent quality and safety:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6">
+            <li>Internal audit reports and findings</li>
+            <li>Corrective action records</li>
+            <li>Quality management system documentation</li>
+            <li>Toolbox talk registers and content</li>
+            <li>Safety inspection checklists and reports</li>
+            <li>Near-miss reporting forms and analysis</li>
+          </ul>
         </div>
       </div>
       
       {/* Documentation Best Practices */}
       <div className="bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-6">
-        <h2 className="text-xl font-semibold mb-4 text-elec-yellow">Documentation Best Practices</h2>
+        <h2 className="text-xl font-semibold text-elec-yellow mb-4">Documentation Best Practices</h2>
         
         <div className="space-y-4">
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground mb-4">
             Following these best practices ensures that your documentation system is effective and compliant:
           </p>
           
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 text-muted-foreground">
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow font-bold">•</span>
-              <span>Keep inspection records for a minimum of three years</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow font-bold">•</span>
-              <span>Make records accessible to relevant stakeholders</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow font-bold">•</span>
-              <span>Use clear file naming conventions</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow font-bold">•</span>
-              <span>Regularly back up electronic documentation</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow font-bold">•</span>
-              <span>Review and update documentation processes regularly</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow font-bold">•</span>
-              <span>Ensure forms align with current regulations</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow font-bold">•</span>
-              <span>Train inspectors on proper documentation techniques</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-elec-yellow font-bold">•</span>
-              <span>Implement version control for all documents</span>
-            </li>
+          <h3 className="font-semibold text-white mt-6 mb-2">Record-Keeping Excellence</h3>
+          <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6">
+            <li>Use standardized templates for consistency across the organization</li>
+            <li>Implement clear file naming conventions and folder structures</li>
+            <li>Schedule regular documentation audits to identify gaps</li>
+            <li>Establish a chain of responsibility for document management</li>
+            <li>Train all staff on documentation procedures</li>
+            <li>Create backup systems with appropriate redundancy</li>
+            <li>Implement version control systems to track changes</li>
           </ul>
           
-          <div className="bg-elec-gray/30 p-4 rounded-lg border-l-4 border-elec-yellow mt-4">
-            <h3 className="font-medium mb-2">Digital Documentation Benefits</h3>
-            <p className="text-sm text-muted-foreground mb-2">
-              Moving to digital documentation systems offers several advantages:
-            </p>
-            <ul className="text-sm text-muted-foreground space-y-1">
-              <li>• Improved searchability and retrieval of information</li>
-              <li>• Enhanced data analysis capabilities</li>
-              <li>• Reduced storage space requirements</li>
-              <li>• Automatic backups and version control</li>
-              <li>• Easier sharing of information with authorized personnel</li>
-              <li>• Improved environmental sustainability</li>
-            </ul>
-          </div>
+          <h3 className="font-semibold text-white mt-6 mb-2">Digital Transformation Benefits</h3>
+          <p className="text-muted-foreground mb-6">
+            Transitioning to digital documentation offers numerous advantages for electrical contractors:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6">
+            <li>Real-time updates accessible from multiple locations</li>
+            <li>Enhanced searchability using keywords and filters</li>
+            <li>Automated reminders for document reviews and renewals</li>
+            <li>Integration with project management systems</li>
+            <li>Reduced storage space requirements</li>
+            <li>Improved environmental sustainability</li>
+            <li>Easy sharing with clients, inspectors, and other stakeholders</li>
+            <li>Better data security with encryption and access controls</li>
+          </ul>
+          
+          <h3 className="font-semibold text-white mt-6 mb-2">Common Documentation Pitfalls</h3>
+          <p className="text-muted-foreground mb-6">
+            Avoid these common mistakes in safety documentation:
+          </p>
+          <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-6">
+            <li>Using generic templates without site-specific details</li>
+            <li>Inadequate review and updating of documents</li>
+            <li>Failing to communicate documentation to relevant personnel</li>
+            <li>Inconsistent filing systems leading to lost or misplaced documents</li>
+            <li>Incomplete records that lack essential information</li>
+            <li>Over-reliance on paper systems in modern work environments</li>
+            <li>Insufficient backup procedures</li>
+          </ul>
         </div>
       </div>
       
