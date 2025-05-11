@@ -1,9 +1,8 @@
 
 import { useParams } from "react-router-dom";
-import SubsectionLearningContent from "@/components/apprentice/subsection/SubsectionLearningContent";
 import { useState, useEffect } from "react";
 import LearningBackButton from "@/components/apprentice/navigation/LearningBackButton";
-import SubsectionsNavigation from "@/components/apprentice/SubsectionsNavigation";
+import SubsectionLearningContent from "@/components/apprentice/subsection/SubsectionLearningContent";
 import { useSubsectionContent } from "@/hooks/useSubsectionContent";
 
 const SubsectionContent = () => {
@@ -56,7 +55,7 @@ const SubsectionContent = () => {
       <div className="border-b border-elec-yellow/20 pb-4">
         <h1 className="text-xl md:text-2xl font-bold text-elec-yellow">
           {sectionTitle && `${sectionTitle}: `}
-          {subsectionData?.title || "Loading..."}
+          Subsection Content
         </h1>
       </div>
       
@@ -66,15 +65,6 @@ const SubsectionContent = () => {
           subsectionId={subsectionId}
           isCompleted={isCompleted}
           markAsComplete={markAsComplete}
-        />
-      )}
-      
-      {/* Navigation between subsections */}
-      {siblingSubsections && siblingSubsections.length > 0 && (
-        <SubsectionsNavigation
-          currentSubsectionId={subsectionId || ""}
-          subsections={siblingSubsections}
-          navigateToSubsection={navigateToSubsection}
         />
       )}
     </div>

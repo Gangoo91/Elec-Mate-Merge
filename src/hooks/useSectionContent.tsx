@@ -1,21 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { SectionData, Subsection } from "@/data/healthAndSafety/types";
-import { healthAndSafetyContent } from "@/data/healthAndSafety/index";
-import { installationMethodsContent } from "@/data/installationMethods/index";
-import { 
-  basicElectricalTheorySection,
-  technicalInformationSection,
-  wiringSectionsSection,
-  servicePositionSection,
-  lightingCircuitsSection,
-  ringRadialCircuitsSection,
-  circuitRequirementsSection,
-  earthingBondingSection,
-  overcurrentProtectionSection,
-  circuitDesignSection
-} from "@/data/electricalTheory";
+import type { SectionData, Subsection } from "@/data/courseTypes";
 
 interface UseSectionContentProps {
   courseSlug?: string;
@@ -40,69 +26,8 @@ export function useSectionContent({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (sectionId && unitSlug) {
-      // Determine which unit we're working with
-      const isHealthSafetyUnit = unitSlug === 'elec2-01';
-      const isElectricalTheoryUnit = unitSlug === 'elec2-04';
-      const isInstallationMethodsUnit = unitSlug === 'elec2-05a';
-
-      let section;
-
-      // Find the section based on unit type
-      if (isHealthSafetyUnit) {
-        // For health and safety content
-        section = healthAndSafetyContent.find(
-          section => section.sectionNumber === sectionId
-        );
-      } else if (isElectricalTheoryUnit) {
-        // For electrical theory, find the section based on the sectionId
-        switch(sectionId) {
-          case "1": 
-            section = basicElectricalTheorySection;
-            break;
-          case "2":
-            section = technicalInformationSection;
-            break;
-          case "3":
-            section = wiringSectionsSection;
-            break;
-          case "4":
-            section = servicePositionSection;
-            break;
-          case "5":
-            section = lightingCircuitsSection;
-            break;
-          case "6":
-            section = ringRadialCircuitsSection;
-            break;
-          case "7":
-            section = circuitRequirementsSection;
-            break;
-          case "8":
-            section = earthingBondingSection;
-            break;
-          case "9":
-            section = overcurrentProtectionSection;
-            break;
-          case "10":
-            section = circuitDesignSection;
-            break;
-          default:
-            section = null;
-        }
-      } else if (isInstallationMethodsUnit) {
-        // For installation methods, find the section by sectionNumber
-        section = installationMethodsContent.find(
-          section => section.sectionNumber === sectionId
-        );
-      }
-
-      if (section) {
-        setSectionData(section);
-      }
-      
-      setLoading(false);
-    }
+    // Set loading to false since we don't have any actual data yet
+    setLoading(false);
   }, [sectionId, unitSlug]);
 
   const handleBackClick = () => {
@@ -115,16 +40,7 @@ export function useSectionContent({
 
   const navigateToSubsection = (subsection: Subsection) => {
     if (courseSlug && unitSlug && sectionId) {
-      // Determine the correct navigation path based on unit type
-      const isInstallationMethodsUnit = unitSlug === 'elec2-05a';
-      
-      if (isInstallationMethodsUnit) {
-        // For installation methods unit
-        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/installation-method/${sectionId}/subsection/${subsection.id}`);
-      } else {
-        // For other units (health & safety or electrical theory)
-        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subsection.id}`);
-      }
+      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subsection.id}`);
     }
   };
 
