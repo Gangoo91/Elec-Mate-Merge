@@ -42,25 +42,6 @@ const CityGuildsCourses = () => {
     }
   ];
 
-  // Function to format course title with first word highlighted
-  const formatCourseTitle = (title: string) => {
-    // Split the title into words
-    const words = title.split(' ');
-    
-    // Extract the first word
-    const firstWord = words[0];
-    
-    // Join the rest of the words
-    const restOfTitle = words.slice(1).join(' ');
-    
-    return (
-      <>
-        <span className="text-elec-yellow">{firstWord} </span>
-        <span>{restOfTitle}</span>
-      </>
-    );
-  };
-
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8 animate-fade-in">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
@@ -94,11 +75,11 @@ const CityGuildsCourses = () => {
               className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full"
             >
               <CardContent className="flex flex-col items-center justify-center p-6 h-full">
-                <BookOpen className="h-8 w-8 text-elec-yellow mb-4 opacity-80" />
-                <h3 className={`text-base sm:text-lg font-medium text-center ${isMobile ? "leading-tight" : ""}`}>
-                  {formatCourseTitle(course.title)}
+                <BookOpen className="h-10 w-10 text-elec-yellow mb-4 opacity-80" />
+                <h3 className="text-xl font-medium text-center mb-2">
+                  {course.title}
                 </h3>
-                <p className="text-sm text-muted-foreground text-center mt-2">
+                <p className="text-sm text-muted-foreground text-center">
                   {course.description}
                 </p>
               </CardContent>
