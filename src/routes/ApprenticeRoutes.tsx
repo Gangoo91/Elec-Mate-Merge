@@ -1,4 +1,3 @@
-
 import { Route, Routes } from "react-router-dom";
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
@@ -73,7 +72,9 @@ const ApprenticeRoutes = () => {
         <Route path="eal/level-2-diploma/unit/:unitId" element={<UnitContent />} />
         <Route path="eal/level-2-diploma/unit/:unitId/section/:sectionId" element={<SectionContent />} />
         <Route path="eal/level-2-diploma/unit/:unitId/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
-        <Route path="eal/level-2-diploma/unit/:unitId/quiz" element={<SectionContent />} />
+        <Route path="eal/:courseSlug/unit/:unitId/section/:sectionId" element={<SectionContent />} />
+        <Route path="eal/:courseSlug/unit/:unitId/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
+        <Route path="eal/:courseSlug/unit/:unitId/quiz" element={<SectionContent />} />
         <Route path="cityGuilds" element={<CityGuildsCourses />} />
         <Route path="higher" element={<HigherLearningCourses />} />
         

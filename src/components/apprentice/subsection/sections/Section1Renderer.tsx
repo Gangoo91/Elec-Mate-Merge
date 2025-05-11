@@ -1,11 +1,15 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { SubsectionProps } from "../../content/subsection1_1/types";
 import Subsection1_1 from "../../content/Subsection1_1";
 import Subsection1_2 from "../../content/Subsection1_2";
 import Subsection1_3 from "../../content/Subsection1_3";
 
 export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
+  useEffect(() => {
+    console.log("Section1Renderer - Effect with ID:", subsectionId, "isCompleted:", isCompleted);
+  }, [subsectionId, isCompleted]);
+
   console.log("Section1Renderer - Rendering subsection with ID:", subsectionId);
   
   // Handle both formats of subsection IDs

@@ -24,6 +24,10 @@ const SubsectionLearningContent = ({
 }: SubsectionLearningContentProps) => {
   console.log("SubsectionLearningContent rendering with ID:", subsectionId);
   
+  useEffect(() => {
+    console.log("SubsectionLearningContent mounted with subsectionId:", subsectionId, "isCompleted:", isCompleted);
+  }, [subsectionId, isCompleted]);
+  
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
@@ -40,19 +44,8 @@ const SubsectionLearningContent = ({
           )}
         </div>
         
-        {/* Completion Button - Only show if not already in component */}
-        {!subsectionId.includes('.') && (
-          <div className="flex justify-end pt-4 border-t border-elec-yellow/20 mt-6">
-            <Button
-              onClick={markAsComplete}
-              disabled={isCompleted}
-              className={`${isCompleted ? 'bg-green-600/20 border-green-500/50 text-green-400' : 'hover:bg-elec-yellow hover:text-elec-dark'}`}
-            >
-              {isCompleted ? 'Completed' : 'Mark as Complete'}
-              {isCompleted && <CheckCircle className="ml-2 h-4 w-4" />}
-            </Button>
-          </div>
-        )}
+        {/* Completion Button - Only show if completion button isn't already in the component */}
+        {/* We'll remove this button since the subsection components now have their own */}
       </div>
     </div>
   );

@@ -26,6 +26,10 @@ export function useSubsectionContent({
   
   console.log("useSubsectionContent called with:", { courseSlug, unitSlug, sectionId, subsectionId });
   
+  // Use default values for missing parameters
+  const effectiveCourseSlug = courseSlug || 'level-2-diploma';
+  const effectiveUnitSlug = unitSlug || 'health-safety';
+  
   useEffect(() => {
     if (sectionId && subsectionId) {
       console.log("Fetching content for section:", sectionId, "subsection:", subsectionId);
@@ -83,9 +87,8 @@ export function useSubsectionContent({
       subsectionToNavigate = subsection.id;
     }
     
-    if (courseSlug && unitSlug) {
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subsectionToNavigate}`);
-    }
+    // Use the effective values for navigation
+    navigate(`/apprentice/study/eal/${effectiveCourseSlug}/unit/${effectiveUnitSlug}/section/${sectionId}/subsection/${subsectionToNavigate}`);
   };
   
   return {

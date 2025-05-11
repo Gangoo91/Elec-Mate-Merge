@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { SubsectionProps } from "../content/subsection1_1/types";
 import { isSubsectionInSection, isSubsectionInRange } from "./utils/sectionUtils";
 import { renderSection1 } from "./sections/Section1Renderer";
@@ -10,6 +10,10 @@ import { renderSection5 } from "./sections/Section5Renderer";
 import { renderSection6To10 } from "./sections/Section6To10Renderer";
 
 const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
+  useEffect(() => {
+    console.log("SubsectionRenderer mounted with ID:", subsectionId, "isCompleted:", isCompleted);
+  }, [subsectionId, isCompleted]);
+  
   console.log("SubsectionRenderer called with ID:", subsectionId);
   
   // Handle subsections with explicit section format (e.g., "1.1", "1.2", etc.)
@@ -19,6 +23,7 @@ const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: Subse
     console.log("Processing subsection with dot notation. Section part:", sectionPart);
     switch (sectionPart) {
       case "1":
+        console.log("Rendering Section 1 content for", subsectionId);
         return renderSection1({ subsectionId, isCompleted, markAsComplete });
       case "2":
         return renderSection2({ subsectionId, isCompleted, markAsComplete });

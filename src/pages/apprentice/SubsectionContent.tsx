@@ -12,14 +12,18 @@ const SubsectionContent = () => {
   // Log parameters to debug
   console.log("SubsectionContent params:", { courseSlug, unitSlug, sectionId, subsectionId });
   
+  // Use default values if parameters are undefined
+  const effectiveCourseSlug = courseSlug || "level-2-diploma";
+  const effectiveUnitSlug = unitSlug || "health-safety";
+  
   const {
     subsectionData,
     sectionTitle,
     siblingSubsections,
     navigateToSubsection,
   } = useSubsectionContent({
-    courseSlug: courseSlug || "level-2-diploma",
-    unitSlug: unitSlug || "health-safety",
+    courseSlug: effectiveCourseSlug,
+    unitSlug: effectiveUnitSlug,
     sectionId,
     subsectionId,
   });
@@ -27,7 +31,7 @@ const SubsectionContent = () => {
   // Check local storage for completion status
   useEffect(() => {
     if (sectionId && subsectionId) {
-      const storageKey = `completion_${sectionId}_${subsectionId}`;
+      const storageKey = `completion_hs_${sectionId}_${subsectionId}`;
       const storedCompletion = localStorage.getItem(storageKey);
       setIsCompleted(storedCompletion === 'true');
       console.log("Checking completion status:", storageKey, storedCompletion);
@@ -36,7 +40,7 @@ const SubsectionContent = () => {
   
   const markAsComplete = () => {
     if (sectionId && subsectionId) {
-      const storageKey = `completion_${sectionId}_${subsectionId}`;
+      const storageKey = `completion_hs_${sectionId}_${subsectionId}`;
       localStorage.setItem(storageKey, 'true');
       setIsCompleted(true);
       console.log("Marked as complete:", storageKey);
@@ -49,8 +53,8 @@ const SubsectionContent = () => {
       <div className="w-full">
         <LearningBackButton
           currentPath="subsection"
-          courseSlug={courseSlug || "level-2-diploma"}
-          unitSlug={unitSlug || "health-safety"}
+          courseSlug={effectiveCourseSlug}
+          unitSlug={effectiveUnitSlug}
           sectionId={sectionId}
           subsectionId={subsectionId}
         />
