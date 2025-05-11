@@ -13,6 +13,10 @@ export const isSubsectionInSection = (subsectionId: string, sectionNumber: numbe
   
   // For numeric IDs, try to match section
   const idNum = parseInt(subsectionId, 10);
+  if (!isNaN(idNum) && idNum <= 3) {
+    return sectionNumber === 1;
+  }
+  
   return !isNaN(idNum) && Math.floor(idNum / 10) === sectionNumber - 1;
 };
 

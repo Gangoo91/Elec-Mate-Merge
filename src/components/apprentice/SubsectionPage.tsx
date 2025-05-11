@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSubsectionContent } from "@/hooks/useSubsectionContent";
 import SubsectionLearningContent from "./subsection/SubsectionLearningContent";
@@ -8,6 +8,8 @@ import BackButton from "./BackButton";
 
 const SubsectionPage = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
+  
+  console.log("SubsectionPage - Params:", { courseSlug, unitSlug, sectionId, subsectionId });
   
   const {
     subsectionData,
@@ -19,17 +21,22 @@ const SubsectionPage = () => {
     markAsComplete,
   } = useSubsectionContent({
     courseSlug,
-    unitSlug,
+    unitSlug, 
     sectionId,
     subsectionId,
   });
+
+  useEffect(() => {
+    console.log("SubsectionPage - Current subsectionId:", subsectionId);
+    console.log("SubsectionPage - Current subsectionData:", subsectionData);
+  }, [subsectionId, subsectionData]);
 
   return (
     <div className="flex flex-col flex-1">
       <div className="px-4 py-3 bg-elec-dark/80 border-b border-elec-yellow/20">
         <h1 className="text-lg font-semibold text-elec-yellow">
           {sectionTitle && `${sectionTitle}: `}
-          {subsectionData?.title || "Loading..."}
+          {subsectionData?.title || "Learning Content"}
         </h1>
       </div>
       

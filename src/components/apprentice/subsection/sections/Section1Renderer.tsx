@@ -13,7 +13,7 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
   
   switch (normalizedId) {
     case "1":
-    case "1":
+    case "1.1":
       return (
         <Subsection1_1 
           subsectionId={subsectionId} 
@@ -22,6 +22,7 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
         />
       );
     case "2":
+    case "1.2":
       return (
         <Subsection1_2 
           subsectionId={subsectionId}
@@ -30,6 +31,7 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
         />
       );
     case "3":
+    case "1.3":
       return (
         <Subsection1_3 
           subsectionId={subsectionId}
@@ -39,6 +41,6 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
       );
     default:
       console.log("Section1Renderer - No matching subsection found for:", normalizedId);
-      return null;
+      return <p>Content for subsection {subsectionId} is not yet available.</p>;
   }
 };

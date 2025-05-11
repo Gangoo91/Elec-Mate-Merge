@@ -24,23 +24,30 @@ export function useSubsectionContent({
   const [siblingSubsections, setSiblingSubsections] = useState<Subsection[]>([]);
   const [parentSectionNumber, setParentSectionNumber] = useState('');
   
+  console.log("useSubsectionContent called with:", { courseSlug, unitSlug, sectionId, subsectionId });
+  
   useEffect(() => {
     if (sectionId && subsectionId) {
+      console.log("Fetching content for section:", sectionId, "subsection:", subsectionId);
       const section = getHealthSafetySectionById(sectionId);
       
       if (section) {
+        console.log("Found section data:", section.title);
         setSectionTitle(section.title);
         setParentSectionNumber(section.sectionNumber);
         
         // Get the subsection data
         const subsection = getSubsectionById(sectionId, subsectionId);
         if (subsection) {
+          console.log("Found subsection data:", subsection.title);
           setSubsectionData(subsection);
           
           // Check completion status
           const storageKey = `completion_hs_${sectionId}_${subsectionId}`;
           const storedCompletion = localStorage.getItem(storageKey);
           setIsCompleted(storedCompletion === 'true');
+        } else {
+          console.log("No subsection found for ID:", subsectionId);
         }
         
         // Get sibling subsections for navigation
@@ -50,7 +57,10 @@ export function useSubsectionContent({
           section.content.subsections : 
           section.subsections || [];
           
+        console.log("Found sibling subsections:", subsections.length);
         setSiblingSubsections(subsections);
+      } else {
+        console.log("No section found for ID:", sectionId);
       }
     }
   }, [sectionId, subsectionId]);

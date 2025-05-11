@@ -36,7 +36,7 @@ const SubsectionLearningContent = ({
           />
         </div>
         
-        {/* Completion Button - Only show if not in the subsection component */}
+        {/* Completion Button - Only show if not already in component */}
         {!subsectionId.includes('.') && (
           <div className="flex justify-end pt-4 border-t border-elec-yellow/20 mt-6">
             <Button
