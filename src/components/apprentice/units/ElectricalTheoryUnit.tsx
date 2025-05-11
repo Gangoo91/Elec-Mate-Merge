@@ -1,8 +1,20 @@
 
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import SectionBox from "@/components/apprentice/SectionBox";
+import { 
+  electricalTheorySection, 
+  basicElectricalTheorySection,
+  technicalInformationSection,
+  wiringSectionsSection,
+  servicePositionSection,
+  lightingCircuitsSection,
+  ringRadialCircuitsSection,
+  circuitRequirementsSection,
+  earthingBondingSection,
+  overcurrentProtectionSection,
+  circuitDesignSection
+} from "@/data/electricalTheory";
 import { useParams } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Lightbulb, BookOpen, Wrench, FileText, Settings, Zap, Box, Cable, Bolt, ShieldCheck } from "lucide-react";
 
 interface ElectricalTheoryUnitProps {
   unitCode: string;
@@ -10,244 +22,163 @@ interface ElectricalTheoryUnitProps {
 }
 
 const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUnitProps) => {
+  const [quizCompleted, setQuizCompleted] = useState(false);
   const { courseSlug } = useParams();
   
+  // Load completion status
+  useEffect(() => {
+    const storedQuizStatus = localStorage.getItem(`unit_${unitCode}_quiz_completed`);
+    if (storedQuizStatus === 'true') {
+      setQuizCompleted(true);
+    }
+  }, [unitCode]);
+
+  const handleSectionClick = () => {
+    // Report study activity when opening a section
+    onResourceClick('learning');
+  };
+
   return (
-    <div className="space-y-8">
-      <div>
-        <h2 className="text-xl md:text-2xl font-bold text-elec-yellow">Electrical Installation Theory and Technology</h2>
-        <p className="text-elec-light/80 mt-2">
-          This unit covers the principles, theory and technologies that underpin electrical installation practices.
-          You'll learn about electrical theory, wiring systems, and installation methods.
-        </p>
-      </div>
-
-      <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
-        {/* Section 1: Basic Electrical Theory */}
-        <Link 
-          to={`/apprentice/study/eal/${courseSlug}/unit/elec2-04/section/1`}
-          onClick={() => onResourceClick("section")}
-        >
-          <Card className="border-elec-yellow/20 bg-elec-gray p-6 hover:bg-elec-gray/90 transition-all duration-300 h-full">
-            <CardHeader className="pb-2">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                  <Zap className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <CardTitle className="text-lg">1. Basic Electrical Theory</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <CardDescription className="text-elec-light/80">
-                Learn the fundamentals of electrical theory including voltage, current, resistance, 
-                and circuit principles that form the foundation of electrical work.
-              </CardDescription>
-            </CardContent>
-          </Card>
-        </Link>
-
-        {/* Section 2: Technical Information */}
-        <Link 
-          to={`/apprentice/study/eal/${courseSlug}/unit/elec2-04/section/2`}
-          onClick={() => onResourceClick("section")}
-        >
-          <Card className="border-elec-yellow/20 bg-elec-gray p-6 hover:bg-elec-gray/90 transition-all duration-300 h-full">
-            <CardHeader className="pb-2">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                  <FileText className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <CardTitle className="text-lg">2. Technical Information</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <CardDescription className="text-elec-light/80">
-                Understand how to interpret technical information, diagrams, and electrical drawings 
-                essential for electrical installation work.
-              </CardDescription>
-            </CardContent>
-          </Card>
-        </Link>
+    <div className="space-y-6 animate-fade-in">
+      {/* Electrical Theory Content */}
+      <div className="space-y-6">
+        {/* Main section */}
+        <SectionBox
+          key={electricalTheorySection.sectionNumber}
+          sectionNumber={electricalTheorySection.sectionNumber}
+          title={electricalTheorySection.title}
+          isExpanded={false}
+          onClick={handleSectionClick}
+          content={<></>}
+          unitCode={unitCode}
+          courseSlug={courseSlug}
+        />
         
-        {/* Section 3: Wiring Systems */}
-        <Link 
-          to={`/apprentice/study/eal/${courseSlug}/unit/elec2-04/section/3`}
-          onClick={() => onResourceClick("section")}
-        >
-          <Card className="border-elec-yellow/20 bg-elec-gray p-6 hover:bg-elec-gray/90 transition-all duration-300 h-full">
-            <CardHeader className="pb-2">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                  <Cable className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <CardTitle className="text-lg">3. Wiring Systems</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <CardDescription className="text-elec-light/80">
-                Explore different wiring systems, cable types, and wiring methods used in electrical 
-                installations for various applications.
-              </CardDescription>
-            </CardContent>
-          </Card>
-        </Link>
+        {/* Individual topic sections */}
+        <SectionBox
+          key={basicElectricalTheorySection.sectionNumber}
+          sectionNumber={basicElectricalTheorySection.sectionNumber}
+          title={basicElectricalTheorySection.title}
+          isExpanded={false}
+          onClick={handleSectionClick}
+          content={<></>}
+          unitCode={unitCode}
+          courseSlug={courseSlug}
+        />
         
-        {/* Section 4: Service Positions */}
-        <Link 
-          to={`/apprentice/study/eal/${courseSlug}/unit/elec2-04/section/4`}
-          onClick={() => onResourceClick("section")}
-        >
-          <Card className="border-elec-yellow/20 bg-elec-gray p-6 hover:bg-elec-gray/90 transition-all duration-300 h-full">
-            <CardHeader className="pb-2">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                  <Box className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <CardTitle className="text-lg">4. Service Positions</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <CardDescription className="text-elec-light/80">
-                Learn about consumer units, distribution boards, and service positions used in 
-                domestic and commercial electrical installations.
-              </CardDescription>
-            </CardContent>
-          </Card>
-        </Link>
+        <SectionBox
+          key={technicalInformationSection.sectionNumber}
+          sectionNumber={technicalInformationSection.sectionNumber}
+          title={technicalInformationSection.title}
+          isExpanded={false}
+          onClick={handleSectionClick}
+          content={<></>}
+          unitCode={unitCode}
+          courseSlug={courseSlug}
+        />
         
-        {/* Section 5: Lighting Circuits */}
-        <Link 
-          to={`/apprentice/study/eal/${courseSlug}/unit/elec2-04/section/5`}
-          onClick={() => onResourceClick("section")}
-        >
-          <Card className="border-elec-yellow/20 bg-elec-gray p-6 hover:bg-elec-gray/90 transition-all duration-300 h-full">
-            <CardHeader className="pb-2">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                  <Lightbulb className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <CardTitle className="text-lg">5. Lighting Circuits</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <CardDescription className="text-elec-light/80">
-                Understand lighting circuits design, installation methods, and control systems for 
-                domestic and commercial applications.
-              </CardDescription>
-            </CardContent>
-          </Card>
-        </Link>
+        <SectionBox
+          key={wiringSectionsSection.sectionNumber}
+          sectionNumber={wiringSectionsSection.sectionNumber}
+          title={wiringSectionsSection.title}
+          isExpanded={false}
+          onClick={handleSectionClick}
+          content={<></>}
+          unitCode={unitCode}
+          courseSlug={courseSlug}
+        />
         
-        {/* More sections */}
-        <Link 
-          to={`/apprentice/study/eal/${courseSlug}/unit/elec2-04/section/6`}
-          onClick={() => onResourceClick("section")}
-        >
-          <Card className="border-elec-yellow/20 bg-elec-gray p-6 hover:bg-elec-gray/90 transition-all duration-300 h-full">
-            <CardHeader className="pb-2">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                  <Settings className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <CardTitle className="text-lg">6. Power Circuits</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <CardDescription className="text-elec-light/80">
-                Study ring and radial circuits for power distribution in domestic and commercial 
-                electrical installations.
-              </CardDescription>
-            </CardContent>
-          </Card>
-        </Link>
+        <SectionBox
+          key={servicePositionSection.sectionNumber}
+          sectionNumber={servicePositionSection.sectionNumber}
+          title={servicePositionSection.title}
+          isExpanded={false}
+          onClick={handleSectionClick}
+          content={<></>}
+          unitCode={unitCode}
+          courseSlug={courseSlug}
+        />
         
-        <Link 
-          to={`/apprentice/study/eal/${courseSlug}/unit/elec2-04/section/7`}
-          onClick={() => onResourceClick("section")}
-        >
-          <Card className="border-elec-yellow/20 bg-elec-gray p-6 hover:bg-elec-gray/90 transition-all duration-300 h-full">
-            <CardHeader className="pb-2">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                  <Wrench className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <CardTitle className="text-lg">7. Special Installation Requirements</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <CardDescription className="text-elec-light/80">
-                Explore special installation requirements for specific locations and conditions 
-                according to BS 7671 standards.
-              </CardDescription>
-            </CardContent>
-          </Card>
-        </Link>
+        <SectionBox
+          key={lightingCircuitsSection.sectionNumber}
+          sectionNumber={lightingCircuitsSection.sectionNumber}
+          title={lightingCircuitsSection.title}
+          isExpanded={false}
+          onClick={handleSectionClick}
+          content={<></>}
+          unitCode={unitCode}
+          courseSlug={courseSlug}
+        />
         
-        <Link 
-          to={`/apprentice/study/eal/${courseSlug}/unit/elec2-04/section/8`}
-          onClick={() => onResourceClick("section")}
-        >
-          <Card className="border-elec-yellow/20 bg-elec-gray p-6 hover:bg-elec-gray/90 transition-all duration-300 h-full">
-            <CardHeader className="pb-2">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                  <ShieldCheck className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <CardTitle className="text-lg">8. Earthing and Bonding</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <CardDescription className="text-elec-light/80">
-                Learn about earthing arrangements, protective bonding, and equipotential bonding 
-                principles for electrical safety.
-              </CardDescription>
-            </CardContent>
-          </Card>
-        </Link>
+        <SectionBox
+          key={ringRadialCircuitsSection.sectionNumber}
+          sectionNumber={ringRadialCircuitsSection.sectionNumber}
+          title={ringRadialCircuitsSection.title}
+          isExpanded={false}
+          onClick={handleSectionClick}
+          content={<></>}
+          unitCode={unitCode}
+          courseSlug={courseSlug}
+        />
         
-        <Link 
-          to={`/apprentice/study/eal/${courseSlug}/unit/elec2-04/section/9`}
-          onClick={() => onResourceClick("section")}
-        >
-          <Card className="border-elec-yellow/20 bg-elec-gray p-6 hover:bg-elec-gray/90 transition-all duration-300 h-full">
-            <CardHeader className="pb-2">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                  <Bolt className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <CardTitle className="text-lg">9. Overcurrent Protection</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <CardDescription className="text-elec-light/80">
-                Study overcurrent protective devices, their selection, and application in electrical 
-                installations for safety and compliance.
-              </CardDescription>
-            </CardContent>
-          </Card>
-        </Link>
+        <SectionBox
+          key={circuitRequirementsSection.sectionNumber}
+          sectionNumber={circuitRequirementsSection.sectionNumber}
+          title={circuitRequirementsSection.title}
+          isExpanded={false}
+          onClick={handleSectionClick}
+          content={<></>}
+          unitCode={unitCode}
+          courseSlug={courseSlug}
+        />
         
-        <Link 
-          to={`/apprentice/study/eal/${courseSlug}/unit/elec2-04/section/10`}
-          onClick={() => onResourceClick("section")}
-        >
-          <Card className="border-elec-yellow/20 bg-elec-gray p-6 hover:bg-elec-gray/90 transition-all duration-300 h-full">
-            <CardHeader className="pb-2">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                  <BookOpen className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <CardTitle className="text-lg">10. Circuit Design</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <CardDescription className="text-elec-light/80">
-                Learn principles of electrical circuit design, load calculation, and installation planning 
-                according to regulations and best practices.
-              </CardDescription>
-            </CardContent>
-          </Card>
-        </Link>
+        <SectionBox
+          key={earthingBondingSection.sectionNumber}
+          sectionNumber={earthingBondingSection.sectionNumber}
+          title={earthingBondingSection.title}
+          isExpanded={false}
+          onClick={handleSectionClick}
+          content={<></>}
+          unitCode={unitCode}
+          courseSlug={courseSlug}
+        />
+        
+        <SectionBox
+          key={overcurrentProtectionSection.sectionNumber}
+          sectionNumber={overcurrentProtectionSection.sectionNumber}
+          title={overcurrentProtectionSection.title}
+          isExpanded={false}
+          onClick={handleSectionClick}
+          content={<></>}
+          unitCode={unitCode}
+          courseSlug={courseSlug}
+        />
+        
+        <SectionBox
+          key={circuitDesignSection.sectionNumber}
+          sectionNumber={circuitDesignSection.sectionNumber}
+          title={circuitDesignSection.title}
+          isExpanded={false}
+          onClick={handleSectionClick}
+          content={<></>}
+          unitCode={unitCode}
+          courseSlug={courseSlug}
+        />
+        
+        {/* Quiz Section */}
+        <SectionBox
+          sectionNumber="Q"
+          title="Electrical Theory Assessment Quiz"
+          isExpanded={false}
+          onClick={() => {
+            handleSectionClick();
+            onResourceClick('assessment');
+          }}
+          content={<></>}
+          isCompleted={quizCompleted}
+          unitCode={unitCode}
+          courseSlug={courseSlug}
+        />
       </div>
     </div>
   );
