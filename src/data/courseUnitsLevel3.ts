@@ -1,30 +1,56 @@
 
-import type { CourseUnit } from './courseUnits';
+export interface CourseResource {
+  id: string;
+  title: string;
+  description: string;
+  type: 'document' | 'video' | 'learning';
+  duration?: string;
+  href?: string;
+}
+
+export interface CourseUnit {
+  id: string;
+  title: string;
+  code: string;
+  description: string;
+  resources: CourseResource[];
+}
 
 // Course units for EAL Level 3 diploma
-export const courseUnitsLevel3: CourseUnit[] = [
+export const ealLevel3Units: CourseUnit[] = [
   {
-    id: "unit-1-l3",
-    title: "Health and Safety in Electrical Installations - Level 3",
+    id: "unit-301",
+    title: "Understanding Environmental Legislation",
     code: "ELEC3/01",
-    slug: "elec3-01",
-    description: "Advanced health and safety principles for electrical installation work.",
+    description: "Environmental legislation, procedures and requirements for the electrical industry.",
     resources: []
   },
   {
-    id: "unit-2-l3",
-    title: "Advanced Electrical Installation Theory",
+    id: "unit-302",
+    title: "Advanced Electrical Science and Principles",
+    code: "ELEC3/02",
+    description: "Advanced scientific principles required for electrical installation, commissioning and maintenance work.",
+    resources: []
+  },
+  {
+    id: "unit-303",
+    title: "Electrical Installations: Fault Diagnosis and Rectification",
+    code: "ELEC3/03",
+    description: "Techniques for diagnosing and rectifying faults in electrical systems and equipment.",
+    resources: []
+  },
+  {
+    id: "unit-304",
+    title: "Inspection, Testing and Commissioning",
     code: "ELEC3/04",
-    slug: "elec3-04",
-    description: "Advanced theories related to electrical installations.",
+    description: "Requirements and procedures for the inspection, testing and commissioning of electrical installations.",
     resources: []
   },
   {
-    id: "unit-3-l3",
-    title: "Advanced Installation Methods",
-    code: "ELEC3/05A",
-    slug: "elec3-05a",
-    description: "Advanced methods and procedures for electrical installations.",
+    id: "unit-305",
+    title: "Electrical Systems Design",
+    code: "ELEC3/05", 
+    description: "Principles and procedures for the design of electrical systems and circuits.",
     resources: []
   }
 ];
