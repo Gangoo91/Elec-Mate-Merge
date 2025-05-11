@@ -4,7 +4,6 @@ import { SubsectionProps } from "../../content/subsection1_1/types";
 import Subsection2_1 from "../../content/Subsection2_1";
 import Subsection2_2 from "../../content/Subsection2_2";
 import Subsection2_3 from "../../content/Subsection2_3";
-import ElectricalSymbolsDisplay from "../../ElectricalSymbolsDisplay";
 
 export const renderSection2 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   console.log("Section2Renderer - rendering subsection:", subsectionId);
@@ -23,14 +22,11 @@ export const renderSection2 = ({ subsectionId, isCompleted, markAsComplete }: Su
       );
     case "2.2":
       return (
-        <>
-          <Subsection2_2 
-            subsectionId={subsectionId}
-            isCompleted={isCompleted}
-            markAsComplete={markAsComplete}
-          />
-          <ElectricalSymbolsDisplay subsectionId={subsectionId} />
-        </>
+        <Subsection2_2 
+          subsectionId={subsectionId}
+          isCompleted={isCompleted}
+          markAsComplete={markAsComplete}
+        />
       );
     case "2.3":
       return (
