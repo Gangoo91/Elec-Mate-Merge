@@ -23,6 +23,7 @@ export interface Subsection {
   title: string;
   content?: React.ReactNode;
   number: string;
+  keyPoints?: string[];  // Added missing property
 }
 
 export interface SectionData {
@@ -30,4 +31,6 @@ export interface SectionData {
   title: string;
   number: string;
   subsections: Subsection[];
+  sectionNumber?: string;  // Added missing property
+  content?: React.ReactNode;  // Added missing property
 }

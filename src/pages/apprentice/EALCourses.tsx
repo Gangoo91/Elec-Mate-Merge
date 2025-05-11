@@ -34,7 +34,7 @@ const EALCourses = () => {
         </Link>
       </div>
 
-      {/* Course grid - extremely simplified with just placeholder cards */}
+      {/* Course grid - just basic placeholder cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {ealCategory?.courses.map((course, index) => (
           <Card 
