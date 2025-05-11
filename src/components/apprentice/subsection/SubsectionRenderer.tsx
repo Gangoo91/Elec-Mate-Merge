@@ -16,6 +16,38 @@ const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: Subse
   
   console.log("SubsectionRenderer called with ID:", subsectionId);
   
+  // Extract section part from the URL if available
+  const urlPath = window.location.pathname;
+  const sectionMatch = urlPath.match(/\/section\/(\d+)/);
+  const sectionFromUrl = sectionMatch ? sectionMatch[1] : null;
+  
+  console.log("Section from URL:", sectionFromUrl);
+  
+  // If we have a section from URL and simple numeric subsectionId, prioritize section from URL
+  if (sectionFromUrl && /^\d+$/.test(subsectionId)) {
+    const sectionNumber = parseInt(sectionFromUrl);
+    console.log(`Routing subsection ${subsectionId} to section ${sectionNumber} based on URL`);
+    
+    switch (sectionNumber) {
+      case 1:
+        return renderSection1({ subsectionId, isCompleted, markAsComplete });
+      case 2:
+        return renderSection2({ subsectionId, isCompleted, markAsComplete });
+      case 3:
+        return renderSection3({ subsectionId, isCompleted, markAsComplete });
+      case 4:
+        return renderSection4({ subsectionId, isCompleted, markAsComplete });
+      case 5:
+        return renderSection5({ subsectionId, isCompleted, markAsComplete });
+      case 6:
+      case 7:
+      case 8:
+      case 9:
+      case 10:
+        return renderSection6To10({ subsectionId, isCompleted, markAsComplete });
+    }
+  }
+  
   // Handle subsections with explicit section format (e.g., "1.1", "1.2", etc.)
   if (subsectionId.includes(".")) {
     const sectionPart = subsectionId.split(".")[0];
@@ -42,15 +74,14 @@ const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: Subse
     }
   }
   
-  // Handle simple numeric subsection IDs (1, 2, 3)
+  // Use the section utility functions as a fallback for numeric-only IDs
+  // This is the legacy routing logic
   if (["1", "2", "3"].includes(subsectionId)) {
-    console.log("Direct match for simple numeric ID:", subsectionId);
+    console.log("Legacy fallback for simple numeric ID:", subsectionId);
     return renderSection1({ subsectionId, isCompleted, markAsComplete });
   }
   
-  // Use the section utility functions as a fallback
   if (isSubsectionInSection(subsectionId, 1)) {
-    console.log("Rendering Section 1 content via utility function for:", subsectionId);
     return renderSection1({ subsectionId, isCompleted, markAsComplete });
   }
   
