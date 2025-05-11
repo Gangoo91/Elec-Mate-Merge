@@ -10,174 +10,249 @@ const Subsection7_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
     <div className="space-y-6">
       {/* Main header with background */}
       <div className="bg-elec-dark border border-elec-yellow/30 rounded-lg p-5">
-        <h2 className="text-2xl md:text-3xl font-bold text-elec-yellow">Practical Risk Assessment</h2>
+        <h2 className="text-2xl md:text-3xl font-bold text-elec-yellow">Preparation and Planning</h2>
         <p className="mt-2 text-elec-light/80">
-          Applying risk assessment principles to real electrical work scenarios
+          Ensuring all tools and equipment are in good condition, selecting appropriate Personal Protective Equipment (PPE), and understanding the task requirements
         </p>
       </div>
       
       {/* Introduction Section */}
       <CourseContentSection
-        title="Introduction to Practical Risk Assessment"
-        description="Risk assessment is not just a theoretical exercise but an essential practical skill that every electrician must apply daily. This section provides hands-on guidance for conducting effective risk assessments in real-world electrical work environments."
+        title="Introduction to Practical Preparation"
+        description="Thorough preparation and planning are fundamental to safe electrical work. This section provides guidance on the practical steps required before beginning any electrical installation or maintenance task."
         keyPoints={[
-          "Converting theoretical knowledge into practical application",
-          "Developing critical thinking for hazard identification",
-          "Building confidence in risk assessment decisions",
-          "Creating habitual safety practices"
+          "Tool and equipment inspection and maintenance",
+          "Appropriate PPE selection for electrical tasks",
+          "Task planning and preparation procedures",
+          "Pre-work safety checks and documentation"
         ]}
-        icon="shield-alert"
+        icon="tools"
         subsectionId={subsectionId}
       />
       
       {/* Content Sections */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
         <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-6">
-          <h3 className="text-xl font-semibold text-elec-yellow mb-4">Pre-Work Assessment Process</h3>
+          <h3 className="text-xl font-semibold text-elec-yellow mb-4">Tool and Equipment Inspection</h3>
           <div className="space-y-4">
-            <p className="text-elec-light/90">Before beginning any electrical work, follow these practical steps:</p>
-            <ol className="list-decimal pl-5 space-y-3 text-elec-light/80">
-              <li className="pl-2">
-                <span className="font-medium text-white">Site survey</span> - Physically inspect the work area looking for potential hazards such as water sources, damaged infrastructure, or access issues
-              </li>
-              <li className="pl-2">
-                <span className="font-medium text-white">Documentation review</span> - Check building plans, existing electrical diagrams, and previous risk assessments for known issues
-              </li>
-              <li className="pl-2">
-                <span className="font-medium text-white">Task breakdown</span> - Divide the job into discrete steps and assess risks for each component of the work
-              </li>
-              <li className="pl-2">
-                <span className="font-medium text-white">Control measures selection</span> - Choose appropriate controls for each identified risk and ensure necessary equipment is available
-              </li>
-              <li className="pl-2">
-                <span className="font-medium text-white">Team briefing</span> - Communicate the risk assessment findings to all workers involved before starting
-              </li>
-            </ol>
+            <p className="text-elec-light/90">Before beginning any electrical work, thorough inspection of tools and equipment is essential:</p>
+            
+            <div className="overflow-x-auto">
+              <table className="min-w-full border-collapse my-4">
+                <thead>
+                  <tr className="bg-elec-yellow/20 text-left">
+                    <th className="p-3 border border-elec-yellow/30">Inspection Element</th>
+                    <th className="p-3 border border-elec-yellow/30">Key Checks</th>
+                    <th className="p-3 border border-elec-yellow/30">Action if Defective</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="p-3 border border-elec-yellow/30">Insulation</td>
+                    <td className="p-3 border border-elec-yellow/30">
+                      <ul className="list-disc pl-4">
+                        <li>No cracks or damage</li>
+                        <li>No exposed conductors</li>
+                        <li>Colour-coding intact</li>
+                      </ul>
+                    </td>
+                    <td className="p-3 border border-elec-yellow/30">
+                      Remove from service, label as defective, arrange for repair or replacement
+                    </td>
+                  </tr>
+                  <tr className="bg-elec-gray">
+                    <td className="p-3 border border-elec-yellow/30">Electrical continuity</td>
+                    <td className="p-3 border border-elec-yellow/30">
+                      <ul className="list-disc pl-4">
+                        <li>Proper connections</li>
+                        <li>No loose components</li>
+                        <li>Test functionality</li>
+                      </ul>
+                    </td>
+                    <td className="p-3 border border-elec-yellow/30">
+                      Tag as "Do Not Use", record in inspection log, report to supervisor
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="p-3 border border-elec-yellow/30">Physical condition</td>
+                    <td className="p-3 border border-elec-yellow/30">
+                      <ul className="list-disc pl-4">
+                        <li>No structural damage</li>
+                        <li>Handles firmly attached</li>
+                        <li>Guards in place</li>
+                      </ul>
+                    </td>
+                    <td className="p-3 border border-elec-yellow/30">
+                      Assess if repair is possible, otherwise dispose of properly and replace
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         
         <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-6">
-          <h3 className="text-xl font-semibold text-elec-yellow mb-4">Practical Hazard Identification</h3>
+          <h3 className="text-xl font-semibold text-elec-yellow mb-4">PPE Selection and Inspection</h3>
           <div className="space-y-4">
-            <p className="text-elec-light/90">Develop your hazard spotting skills with these practical techniques:</p>
+            <p className="text-elec-light/90">Select appropriate PPE based on the specific electrical task:</p>
             <ul className="list-disc pl-5 space-y-3 text-elec-light/80">
               <li className="pl-2">
-                <span className="font-medium text-white">The 5-minute walk-through</span> - Conduct a brief site review specifically looking for electrical, physical, environmental, and access hazards
+                <span className="font-medium text-white">Class 0 gloves</span> - For basic insulation from electrical shock up to 1,000V AC (verify voltage rating before use)
               </li>
               <li className="pl-2">
-                <span className="font-medium text-white">The "what if" technique</span> - For each element of work, ask "what if something goes wrong here?" to identify potential problems
+                <span className="font-medium text-white">Safety eyewear</span> - Always required when working with live circuits or where there's risk of arc flash
               </li>
               <li className="pl-2">
-                <span className="font-medium text-white">Sensory assessment</span> - Use all senses (unusual smells, sounds, visual indicators) to identify potential issues such as overheating or damaged insulation
+                <span className="font-medium text-white">Arc flash protection</span> - Required for higher current installations or where fault current could cause arc flash
               </li>
               <li className="pl-2">
-                <span className="font-medium text-white">Sequential assessment</span> - Visualize the job from start to finish, focusing on transition points between tasks where risks often occur
+                <span className="font-medium text-white">Insulating mats</span> - Place under work area when working on live or potentially live equipment
+              </li>
+              <li className="pl-2">
+                <span className="font-medium text-white">Safety footwear</span> - Electrical hazard rated boots with insulated soles and toe protection
               </li>
             </ul>
+            
+            <div className="bg-elec-gray/30 p-3 rounded mt-4">
+              <p className="text-sm text-elec-light/90">
+                <strong>Inspection tip:</strong> Before each use, inspect PPE for tears, punctures, contamination by conductive materials, and signs of deterioration or ageing. Never use damaged PPE.
+              </p>
+            </div>
           </div>
         </div>
       </div>
       
       <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-6">
-        <h3 className="text-xl font-semibold text-elec-yellow mb-4">Case Study: Domestic Rewiring Risk Assessment</h3>
+        <h3 className="text-xl font-semibold text-elec-yellow mb-4">Task Planning Procedures</h3>
         <div className="space-y-4">
           <p className="text-elec-light/90">
-            Consider a typical domestic rewiring project and how risk assessment principles apply in practice:
+            Follow this structured approach to planning electrical installation or maintenance work:
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+            <div>
+              <h4 className="font-semibold text-white">Pre-Work Planning Checklist:</h4>
+              <ol className="list-decimal pl-5 mt-2 space-y-2 text-elec-light/80">
+                <li>Review circuit diagrams and installation specifications</li>
+                <li>Identify required tools, materials and equipment</li>
+                <li>Confirm availability of appropriate test instruments</li>
+                <li>Establish safe isolation procedures</li>
+                <li>Schedule work to minimise disruption</li>
+                <li>Identify and communicate with affected stakeholders</li>
+                <li>Ensure permits and authorisations are in place</li>
+                <li>Consider emergency procedures and escape routes</li>
+              </ol>
+              
+              <div className="bg-elec-gray/30 p-3 rounded mt-4">
+                <p className="text-sm text-elec-light/90">
+                  <strong>Best practice:</strong> Create a written work plan for complex tasks, detailing step-by-step procedures, responsibilities, and safety measures.
+                </p>
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold text-white">Material and Equipment Preparation:</h4>
+              <ul className="list-disc pl-5 mt-2 space-y-2 text-elec-light/80">
+                <li>Ensure all materials meet current regulations</li>
+                <li>Check compatibility of components with existing systems</li>
+                <li>Verify correct ratings of protective devices</li>
+                <li>Pre-assemble components where possible</li>
+                <li>Organise materials in logical work sequence</li>
+                <li>Have spares available for critical components</li>
+                <li>Keep documentation for installed equipment</li>
+              </ul>
+              
+              <div className="bg-elec-gray/30 p-3 rounded mt-4">
+                <p className="text-sm text-elec-light/90">
+                  <strong>Documentation tip:</strong> Take photographs of existing installations before modification work to assist with reinstatement if required.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-6">
+        <h3 className="text-xl font-semibold text-elec-yellow mb-4">Pre-Work Safety Documentation</h3>
+        <div className="space-y-4">
+          <p className="text-elec-light/90">
+            Complete and review these essential safety documents before commencing work:
           </p>
           
           <div className="overflow-x-auto">
             <table className="min-w-full border-collapse my-4">
               <thead>
                 <tr className="bg-elec-yellow/20 text-left">
-                  <th className="p-3 border border-elec-yellow/30">Task Element</th>
-                  <th className="p-3 border border-elec-yellow/30">Identified Hazards</th>
-                  <th className="p-3 border border-elec-yellow/30">Practical Controls</th>
+                  <th className="p-3 border border-elec-yellow/30">Document Type</th>
+                  <th className="p-3 border border-elec-yellow/30">Purpose</th>
+                  <th className="p-3 border border-elec-yellow/30">Key Elements</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td className="p-3 border border-elec-yellow/30">Initial inspection</td>
+                  <td className="p-3 border border-elec-yellow/30">Risk Assessment</td>
                   <td className="p-3 border border-elec-yellow/30">
-                    <ul className="list-disc pl-4">
-                      <li>Unknown live circuits</li>
-                      <li>Structural issues</li>
-                      <li>Confined spaces</li>
-                    </ul>
+                    Identify hazards and control measures specific to the task
                   </td>
                   <td className="p-3 border border-elec-yellow/30">
                     <ul className="list-disc pl-4">
-                      <li>Use voltage tester before touching</li>
-                      <li>Torch inspection before entry</li>
-                      <li>Minimum two-person team</li>
+                      <li>Specific electrical hazards identified</li>
+                      <li>Control measures detailed</li>
+                      <li>Updated for site conditions</li>
                     </ul>
                   </td>
                 </tr>
                 <tr className="bg-elec-gray">
-                  <td className="p-3 border border-elec-yellow/30">Cable installation</td>
+                  <td className="p-3 border border-elec-yellow/30">Method Statement</td>
                   <td className="p-3 border border-elec-yellow/30">
-                    <ul className="list-disc pl-4">
-                      <li>Working at height</li>
-                      <li>Dust/debris</li>
-                      <li>Sharp objects</li>
-                    </ul>
+                    Step-by-step procedure for completing work safely
                   </td>
                   <td className="p-3 border border-elec-yellow/30">
                     <ul className="list-disc pl-4">
-                      <li>Stable step ladder with helper</li>
-                      <li>Dust masks and eye protection</li>
-                      <li>Cut-resistant gloves</li>
+                      <li>Sequential work steps</li>
+                      <li>Safety measures at each stage</li>
+                      <li>Equipment and personnel required</li>
                     </ul>
                   </td>
                 </tr>
                 <tr>
-                  <td className="p-3 border border-elec-yellow/30">Consumer unit replacement</td>
+                  <td className="p-3 border border-elec-yellow/30">Permit to Work</td>
                   <td className="p-3 border border-elec-yellow/30">
-                    <ul className="list-disc pl-4">
-                      <li>Electrical shock</li>
-                      <li>Fire risk</li>
-                      <li>Service disruption</li>
-                    </ul>
+                    Formal authorisation for high-risk electrical work
                   </td>
                   <td className="p-3 border border-elec-yellow/30">
                     <ul className="list-disc pl-4">
-                      <li>Confirm DNO isolation</li>
-                      <li>Safe isolation procedure</li>
-                      <li>Customer communication plan</li>
+                      <li>Clearly defined work scope</li>
+                      <li>Time limitations</li>
+                      <li>Authorising signatures</li>
+                      <li>Safe isolation confirmation</li>
                     </ul>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
-      
-      <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-6">
-        <h3 className="text-xl font-semibold text-elec-yellow mb-4">Interactive Risk Assessment Exercise</h3>
-        <div className="space-y-4">
-          <p className="text-elec-light/90">
-            For practical application, consider this electrical installation scenario and identify the key risks and appropriate controls:
-          </p>
           
           <div className="bg-elec-gray/50 p-4 rounded-lg my-4">
-            <p className="font-medium text-white">Scenario:</p>
+            <p className="font-medium text-white">Practical Exercise:</p>
             <p className="text-elec-light/90 mt-2">
-              You need to install new lighting circuits in a retail store that remains open during the work. The installation involves running cables through the ceiling void where there are existing services, and working above a busy customer area.
+              For the following scenario, create a preparation checklist identifying the required tools, PPE, and key safety considerations:
             </p>
             
             <div className="mt-4 space-y-3">
-              <p className="font-medium text-white">Consider these aspects:</p>
+              <p className="font-medium text-white">Scenario: Replacing a consumer unit in a domestic property</p>
               <ul className="list-disc pl-5 space-y-2 text-elec-light/80">
-                <li>What specific hazards would you look for?</li>
-                <li>How would you safely isolate areas while maintaining business operations?</li>
-                <li>What PPE and equipment would be essential?</li>
-                <li>How would you communicate with staff and customers?</li>
-                <li>What emergency procedures should be in place?</li>
+                <li>What specific tools would you prepare?</li>
+                <li>What PPE would be essential?</li>
+                <li>What safety documentation would you need?</li>
+                <li>What isolation procedures would you plan?</li>
+                <li>How would you communicate with the property occupants?</li>
               </ul>
             </div>
             
             <p className="text-elec-light/90 mt-4">
-              Document these considerations as you would in a real risk assessment form, and discuss with your supervisor or instructor.
+              Document your preparation plan as you would in a real work environment, and discuss with your supervisor or instructor.
             </p>
           </div>
         </div>
