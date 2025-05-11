@@ -30,8 +30,8 @@ const Subsection5_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </p>
         
         {/* Horizontal Layout for Reporting Process */}
-        <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-5">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4 md:p-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             <div className="space-y-3">
               <div className="flex items-center gap-2 mb-2">
                 <div className="p-1.5 bg-elec-yellow/10 rounded">
@@ -119,15 +119,15 @@ const Subsection5_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
         </div>
         
-        {/* Documentation Requirements Section - Horizontal Layout */}
+        {/* Documentation Requirements Section - Simplified Layout */}
         <h3 className="text-xl font-bold text-elec-yellow mt-8">Documentation Requirements</h3>
         
         <p className="text-sm md:text-base mb-4">
           Proper documentation of hazards is crucial for maintaining safety records, ensuring appropriate action is taken, and meeting legal obligations.
         </p>
         
-        <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-5">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4 md:p-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {/* Left Column */}
             <div className="space-y-4">
               <div className="flex items-center gap-2 mb-2">
@@ -137,7 +137,7 @@ const Subsection5_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <h4 className="font-medium text-elec-yellow">Hazard Report Form Contents</h4>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-elec-gray rounded-md p-3">
                   <h5 className="font-medium text-elec-yellow text-sm mb-1">Hazard Details</h5>
                   <ul className="list-disc list-inside text-sm space-y-1">
@@ -182,7 +182,7 @@ const Subsection5_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             
             {/* Right Column */}
             <div className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <div className="p-1.5 bg-elec-yellow/10 rounded">
@@ -217,47 +217,6 @@ const Subsection5_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   </div>
                 </div>
               </div>
-              
-              {/* Process Flow - Horizontal */}
-              <div className="bg-elec-gray rounded-lg p-3">
-                <h4 className="font-medium text-elec-yellow mb-2">Documentation Process Flow</h4>
-                <div className="flex flex-row items-center justify-between">
-                  <div className="flex flex-col items-center text-center">
-                    <div className="p-2 bg-elec-dark rounded border border-elec-yellow/10 w-20">
-                      <p className="text-xs font-medium text-elec-yellow">Hazard Identified</p>
-                      <p className="text-xs mt-1">Day 1</p>
-                    </div>
-                  </div>
-                  <div className="w-4 h-0.5 bg-elec-yellow/30 hidden sm:block"></div>
-                  <div className="flex flex-col items-center text-center">
-                    <div className="p-2 bg-elec-dark rounded border border-elec-yellow/10 w-20">
-                      <p className="text-xs font-medium text-elec-yellow">Report Filed</p>
-                      <p className="text-xs mt-1">Day 1</p>
-                    </div>
-                  </div>
-                  <div className="w-4 h-0.5 bg-elec-yellow/30 hidden sm:block"></div>
-                  <div className="flex flex-col items-center text-center">
-                    <div className="p-2 bg-elec-dark rounded border border-elec-yellow/10 w-20">
-                      <p className="text-xs font-medium text-elec-yellow">Assessment</p>
-                      <p className="text-xs mt-1">Day 1-2</p>
-                    </div>
-                  </div>
-                  <div className="w-4 h-0.5 bg-elec-yellow/30 hidden sm:block"></div>
-                  <div className="flex flex-col items-center text-center">
-                    <div className="p-2 bg-elec-dark rounded border border-elec-yellow/10 w-20">
-                      <p className="text-xs font-medium text-elec-yellow">Action</p>
-                      <p className="text-xs mt-1">By Day 7</p>
-                    </div>
-                  </div>
-                  <div className="w-4 h-0.5 bg-elec-yellow/30 hidden sm:block"></div>
-                  <div className="flex flex-col items-center text-center">
-                    <div className="p-2 bg-elec-dark rounded border border-elec-yellow/10 w-20">
-                      <p className="text-xs font-medium text-elec-yellow">Review</p>
-                      <p className="text-xs mt-1">Day 14-28</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -270,8 +229,8 @@ const Subsection5_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           and facilitate effective resolution.
         </p>
         
-        <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-5">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4 md:p-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {/* Reporting Methods */}
             <div>
               <div className="flex items-center gap-2 mb-3">
@@ -352,7 +311,7 @@ const Subsection5_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <div className="mt-5 bg-elec-gray rounded-lg p-4">
             <h4 className="font-medium text-elec-yellow mb-3">Case Study: Effective Hazard Reporting</h4>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="flex gap-3">
                 <div className="p-1.5 bg-elec-yellow/10 rounded h-fit">
                   <AlertTriangle className="h-5 w-5 text-elec-yellow" />
