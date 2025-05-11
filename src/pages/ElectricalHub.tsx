@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -38,7 +39,7 @@ const ElectricalHub = () => {
       title: "AI Tooling",
       description: "Leverage AI tools to enhance your learning and practical electrical skills",
       icon: <Brain className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/apprentice/ai-tools"
+      link: "/electrician-tools/ai-tooling"  // Updated link to electrician AI tooling
     },
     {
       id: 6,
