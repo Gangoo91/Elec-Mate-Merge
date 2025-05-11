@@ -1,45 +1,50 @@
 
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, BookOpen, Shield, Lightbulb, Wrench, FlaskConical } from "lucide-react";
+import { ArrowLeft, Shield, BookOpen, Lightbulb, Wrench, FlaskConical } from "lucide-react";
+import { ealLevel2Units } from "@/data/courseUnits";
 
 const InstallationMethodContent = () => {
   const { sectionId } = useParams();
-  const navigate = useNavigate();
   
-  // Define the EAL Level 2 Units
+  // Use the actual units data from courseUnits.ts
   const units = [
     {
-      id: "ELEC2/01",
+      id: "elec2-01",
+      code: "ELEC2/01",
       title: "Health and Safety in Electrical Installation",
       description: "Understanding safety regulations and practices in electrical work",
       icon: Shield,
       path: "/apprentice/study/eal/level-2-diploma-in-electrical-installation/unit/elec2-01-health-and-safety-in-electrical-installation"
     },
     {
-      id: "ELEC2/04",
+      id: "elec2-04",
+      code: "ELEC2/04",
       title: "Electrical Installation Theory and Technology",
       description: "Core theoretical knowledge for electrical installation work",
       icon: Lightbulb,
       path: "/apprentice/study/eal/level-2-diploma-in-electrical-installation/unit/elec2-04-electrical-installation-theory-and-technology"
     },
     {
-      id: "ELEC2/05A",
+      id: "elec2-05a",
+      code: "ELEC2/05A",
       title: "Electrical Installation Methods, Procedures and Requirements",
       description: "Standard methods and procedures for electrical installations",
       icon: BookOpen,
       path: "/apprentice/study/eal/level-2-diploma-in-electrical-installation/unit/elec2-05a-electrical-installation-methods-procedures-and-requirements"
     },
     {
-      id: "ELEC2/05B",
+      id: "elec2-05b",
+      code: "ELEC2/05B",
       title: "Electrical Installation Craft Skills",
       description: "Practical skills for electrical installation work",
       icon: Wrench,
       path: "/apprentice/study/eal/level-2-diploma-in-electrical-installation/unit/elec2-05b-electrical-installation-craft-skills"
     },
     {
-      id: "ELEC2/08",
+      id: "elec2-08",
+      code: "ELEC2/08",
       title: "Electrical Science and Principles",
       description: "Scientific principles underlying electrical systems",
       icon: FlaskConical,
@@ -84,7 +89,7 @@ const InstallationMethodContent = () => {
               >
                 <CardContent className="flex flex-col items-center justify-center p-6 h-full text-center">
                   <Icon className="h-10 w-10 text-elec-yellow mb-4 opacity-80" />
-                  <p className="text-elec-yellow text-sm mb-2">{unit.id}</p>
+                  <p className="text-elec-yellow text-sm mb-2">{unit.code}</p>
                   <h3 className="text-lg font-medium mb-2">{unit.title}</h3>
                   <p className="text-sm text-muted-foreground">{unit.description}</p>
                 </CardContent>
