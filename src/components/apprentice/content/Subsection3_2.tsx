@@ -9,6 +9,7 @@ import SafeIsolationProcedures from "./subsection3_2/SafeIsolationProcedures";
 import ElectricalHazards from "./subsection3_2/ElectricalHazards";
 import KeyRegulations from "./subsection3_2/KeyRegulations";
 import CaseStudies from "./subsection3_2/CaseStudies";
+import DownloadResources from "./subsection3_2/DownloadResources";
 import CompletionButton from "./subsection3_2/CompletionButton";
 
 const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
@@ -46,6 +47,9 @@ const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       
       {/* Case Studies Section */}
       <CaseStudies />
+      
+      {/* Download Resources Section */}
+      <DownloadResources />
       
       {/* Completion Button */}
       <CompletionButton isCompleted={isCompleted} markAsComplete={markAsComplete} />
