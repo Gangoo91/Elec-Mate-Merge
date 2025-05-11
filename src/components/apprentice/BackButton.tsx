@@ -23,49 +23,6 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
   const handleBackClick = () => {
     console.log("Back button clicked with params:", { course, unit, section });
     console.log("Current path:", location.pathname);
-    console.log("Current full URL:", window.location.href);
-    
-    // Check if we're on the electrician mental health page
-    if (location.pathname === '/electrician/mental-health') {
-      navigate('/electrical-hub');
-      return;
-    }
-    
-    // Check if we're on an electrician mental health subpage
-    if (location.pathname.startsWith('/electrician/mental-health/')) {
-      navigate('/electrician/mental-health');
-      return;
-    }
-    
-    // Check if we're on the electrician mentor connect page
-    if (location.pathname.includes('/electrician/mentor-connect')) {
-      navigate('/electrical-hub');
-      return;
-    }
-    
-    // Check if we're on the apprentice mentor page
-    if (location.pathname.includes('/apprentice/mentor')) {
-      navigate('/apprentice/hub');
-      return;
-    }
-    
-    // Check if we're on the apprentice mental health page
-    if (location.pathname === '/apprentice/mental-health') {
-      navigate('/apprentice/hub');
-      return;
-    }
-    
-    // Check if we're on an apprentice mental health subpage
-    if (location.pathname.startsWith('/apprentice/mental-health/')) {
-      navigate('/apprentice/mental-health');
-      return;
-    }
-    
-    // Check if we're on an installation-method page
-    const isInstallationMethodPage = location.pathname.includes('/installation-method/');
-    
-    // Check if we're on a craft-skills page
-    const isCraftSkillsPage = location.pathname.includes('/craft-skills/');
     
     // Check if we're on a section page (but not subsection)
     const isSectionPage = location.pathname.includes('/section/') && !location.pathname.includes('/subsection/');
@@ -73,35 +30,19 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
     // Check if we're on a subsection page
     const isSubsectionPage = location.pathname.includes('/subsection/');
     
-    // More detailed logging to help with debugging
-    console.log("Path analysis:", { 
-      isInstallationMethodPage, 
-      isCraftSkillsPage,
-      isSectionPage, 
-      isSubsectionPage
-    });
-    
     // Handle subsection pages - navigate back to the section page
     if (isSubsectionPage && course && unit && section) {
-      if (isInstallationMethodPage) {
-        navigate(`/apprentice/study/eal/${course}/unit/${unit}/installation-method/${section}`);
-      } else if (isCraftSkillsPage) {
-        navigate(`/apprentice/study/eal/${course}/unit/${unit}/craft-skills/${section}`);
-      } else {
-        navigate(`/apprentice/study/eal/${course}/unit/${unit}/section/${section}`);
-      }
+      navigate(`/apprentice/study/eal/${course}/unit/${unit}/section/${section}`);
       return;
     }
     
     // Handle section pages - navigate to the unit page
-    if (isSectionPage || isInstallationMethodPage || isCraftSkillsPage) {
-      if (course && unit) {
-        navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
-        return;
-      }
+    if (isSectionPage && course && unit) {
+      navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
+      return;
     }
     
-    // Handle unit page - go back to courses
+    // Handle unit page - go back to course
     if (location.pathname.includes('/unit/') && !isSectionPage && !isSubsectionPage && course) {
       navigate(`/apprentice/study/eal/${course}`);
       return;
@@ -113,23 +54,9 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
 
   // Determine button text based on context
   const getButtonText = () => {
-    if (location.pathname.includes('/electrician/mental-health') && !location.pathname.includes('/electrician/mental-health/')) {
-      return "Back to Electrical Hub";
-    } else if (location.pathname.includes('/electrician/mental-health/')) {
-      return "Back to Mental Health Hub";
-    } else if (location.pathname.includes('/apprentice/mental-health') && !location.pathname.includes('/apprentice/mental-health/')) {
-      return "Back to Apprentice Hub";
-    } else if (location.pathname.includes('/apprentice/mental-health/')) {
-      return "Back to Mental Health Hub";
-    } else if (location.pathname.includes('/electrician/mentor-connect')) {
-      return "Back to Electrical Hub";
-    } else if (location.pathname.includes('/apprentice/mentor')) {
-      return "Back to Apprentice Hub";
-    } else if (location.pathname.includes('/subsection/')) {
+    if (location.pathname.includes('/subsection/')) {
       return "Back to Section";
-    } else if (location.pathname.includes('/section/') || 
-               location.pathname.includes('/installation-method/') || 
-               location.pathname.includes('/craft-skills/')) {
+    } else if (location.pathname.includes('/section/')) {
       return "Back to Unit Sections";
     } else if (location.pathname.includes('/unit/')) {
       return "Back to Course";
