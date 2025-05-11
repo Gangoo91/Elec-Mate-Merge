@@ -8,9 +8,10 @@ type BackButtonProps = {
   courseSlug?: string;
   unitSlug?: string;
   sectionId?: string;
+  subsectionId?: string;
 };
 
-const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
+const BackButton = ({ courseSlug, unitSlug, sectionId, subsectionId }: BackButtonProps) => {
   const navigate = useNavigate();
   const params = useParams();
   const location = useLocation();
@@ -19,39 +20,42 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
   const course = courseSlug || params.courseSlug;
   const unit = unitSlug || params.unitSlug;
   const section = sectionId || params.sectionId;
+  const subsection = subsectionId || params.subsectionId;
 
   const handleBackClick = () => {
-    console.log("Back button clicked with params:", { course, unit, section });
-    console.log("Current path:", location.pathname);
+    console.log("BackButton: Current path:", location.pathname);
+    console.log("BackButton: Params:", { course, unit, section, subsection });
     
-    // Check if we're on a subsection page
+    // Determine the current page type based on URL and parameters
     const isSubsectionPage = location.pathname.includes('/subsection/');
+    const isSectionPage = location.pathname.includes('/section/') && !isSubsectionPage;
+    const isUnitPage = location.pathname.includes('/unit/') && !isSectionPage && !isSubsectionPage;
     
-    // Check if we're on a section page (but not subsection)
-    const isSectionPage = location.pathname.includes('/section/') && !location.pathname.includes('/subsection/');
+    console.log("BackButton: Page types:", { isSubsectionPage, isSectionPage, isUnitPage });
     
-    // Check if we're on a unit detail page
-    const isUnitDetailPage = location.pathname.includes('/unit/') && !isSectionPage && !isSubsectionPage;
-    
-    // Handle subsection pages - navigate back to the section page
+    // From subsection page → section page
     if (isSubsectionPage && course && unit && section) {
+      console.log("BackButton: Navigating from subsection to section");
       navigate(`/apprentice/study/eal/${course}/unit/${unit}/section/${section}`);
       return;
     }
     
-    // Handle section pages - navigate to the unit page
+    // From section page → unit page
     if (isSectionPage && course && unit) {
+      console.log("BackButton: Navigating from section to unit");
       navigate(`/apprentice/study/eal/${course}/unit/${unit}`);
       return;
     }
     
-    // Handle unit page - go back to course
-    if (isUnitDetailPage && course) {
+    // From unit page → course page
+    if (isUnitPage && course) {
+      console.log("BackButton: Navigating from unit to course");
       navigate(`/apprentice/study/eal/${course}`);
       return;
     }
     
-    // Last resort fallback - just go back in history
+    // Fallback: just go back in history
+    console.log("BackButton: Using history fallback navigation");
     navigate(-1);
   };
 
@@ -60,7 +64,7 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
     if (location.pathname.includes('/subsection/')) {
       return "Back to Section";
     } else if (location.pathname.includes('/section/')) {
-      return "Back to Unit Sections";
+      return "Back to Unit";
     } else if (location.pathname.includes('/unit/')) {
       return "Back to Course";
     } else {

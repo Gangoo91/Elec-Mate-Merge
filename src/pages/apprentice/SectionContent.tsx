@@ -1,5 +1,5 @@
 
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Shield, BookOpen, Users } from "lucide-react";
 import { HealthSafetyUnit } from "@/components/apprentice/units";
@@ -8,7 +8,6 @@ import BackButton from "@/components/apprentice/BackButton";
 
 const SectionContent = () => {
   const { courseSlug, unitSlug, sectionId } = useParams();
-  const location = useLocation();
   
   const handleResourceClick = (type: string) => {
     // This would typically log or track resource usage
@@ -31,7 +30,7 @@ const SectionContent = () => {
             {/* Legislation and Regulations subsection */}
             <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20">
               <Link 
-                to={`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/1/subsection/1.1`}
+                to={`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/1.1`}
                 onClick={() => handleResourceClick('learning')}
                 className="block h-full"
               >
@@ -58,7 +57,7 @@ const SectionContent = () => {
             {/* Roles and Responsibilities subsection */}
             <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20">
               <Link 
-                to={`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/1/subsection/1.2`}
+                to={`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/1.2`}
                 onClick={() => handleResourceClick('learning')}
                 className="block h-full"
               >
@@ -115,6 +114,7 @@ const SectionContent = () => {
         <BackButton 
           courseSlug={courseSlug} 
           unitSlug={unitSlug} 
+          sectionId={sectionId} 
         />
       </div>
       {renderUnitContent()}
