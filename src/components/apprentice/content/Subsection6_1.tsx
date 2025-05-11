@@ -5,7 +5,7 @@ import IntroSection from "./subsection6_1/IntroSection";
 import WorkingPractices from "./subsection6_1/WorkingPractices";
 import RiskAssessment from "./subsection6_1/RiskAssessment";
 import PlanningConsiderations from "./subsection6_1/PlanningConsiderations";
-import CompletionButton from "./shared/CompletionButton";
+import CompletionButton from "../shared/CompletionButton";
 
 const Subsection6_1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (

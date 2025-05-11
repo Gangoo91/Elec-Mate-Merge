@@ -1,6 +1,6 @@
 
 import React from "react";
-import { LayoutPlanIcon, Box } from "lucide-react";
+import { LayoutTemplate, Box } from "lucide-react";
 
 const PlanningConsiderations = () => {
   return (
@@ -18,7 +18,7 @@ const PlanningConsiderations = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-2">
               <div className="p-1.5 bg-elec-yellow/10 rounded">
-                <LayoutPlanIcon className="h-5 w-5 text-elec-yellow" />
+                <LayoutTemplate className="h-5 w-5 text-elec-yellow" />
               </div>
               <h4 className="font-medium text-elec-yellow text-lg">Work Area Considerations</h4>
             </div>
