@@ -18,8 +18,38 @@ import Subsection10_2 from "../../content/Subsection10_2";
 import Subsection10_3 from "../../content/Subsection10_3";
 
 export const renderSection6To10 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
+  console.log("renderSection6To10 called with subsectionId:", subsectionId);
+  
+  // Extract section part and subsection part
+  let sectionPart: number;
+  let subsectionPart: number;
+  
+  if (subsectionId.includes('.')) {
+    // Handle format like "6.1"
+    const parts = subsectionId.split('.');
+    sectionPart = parseInt(parts[0]);
+    subsectionPart = parseInt(parts[1]);
+  } else {
+    // Handle numeric only format and use URL for section
+    const urlPath = window.location.pathname;
+    const sectionMatch = urlPath.match(/\/section\/(\d+)/);
+    
+    if (sectionMatch && sectionMatch[1]) {
+      sectionPart = parseInt(sectionMatch[1]);
+      subsectionPart = parseInt(subsectionId);
+    } else {
+      console.error("Cannot determine section from URL:", urlPath);
+      return <p>Error: Cannot determine section. Please check URL format.</p>;
+    }
+  }
+  
+  console.log("Determined section:", sectionPart, "subsection:", subsectionPart);
+  
+  // Combine section and subsection for switch
+  const fullSubsectionId = `${sectionPart}.${subsectionPart}`;
+  
   // Sections 6-10
-  switch (subsectionId) {
+  switch (fullSubsectionId) {
     // Section 6
     case "6.1":
       return (
@@ -150,6 +180,7 @@ export const renderSection6To10 = ({ subsectionId, isCompleted, markAsComplete }
         />
       );
     default:
-      return null;
+      console.error("No matching subsection found for ID:", fullSubsectionId);
+      return <p>Content for section {sectionPart}, subsection {subsectionPart} is not yet available.</p>;
   }
 };

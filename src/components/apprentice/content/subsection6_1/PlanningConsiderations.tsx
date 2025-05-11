@@ -1,15 +1,15 @@
 
 import React from "react";
-import { LayoutTemplate, Box } from "lucide-react";
+import { LayoutTemplate, ClipboardList } from "lucide-react";
 
 const PlanningConsiderations = () => {
   return (
     <div className="space-y-4">
-      <h3 className="text-2xl font-bold text-elec-yellow">Planning for Electrical Installation Work</h3>
+      <h3 className="text-2xl font-bold text-elec-yellow">Planning Considerations for Electrical Work</h3>
       
       <p className="text-base md:text-lg mb-4">
-        Proper planning is essential for the safe and efficient completion of electrical installation work. 
-        This includes considering material handling, sequencing of tasks, and maintaining an organised work area.
+        Proper planning is essential for safe and efficient electrical installation and maintenance. 
+        This involves careful consideration of the work environment, resources needed, and potential hazards.
       </p>
       
       <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4 md:p-5">
@@ -20,41 +20,28 @@ const PlanningConsiderations = () => {
               <div className="p-1.5 bg-elec-yellow/10 rounded">
                 <LayoutTemplate className="h-5 w-5 text-elec-yellow" />
               </div>
-              <h4 className="font-medium text-elec-yellow text-lg">Work Area Considerations</h4>
+              <h4 className="font-medium text-elec-yellow text-lg">Work Planning</h4>
             </div>
             
             <div className="bg-elec-gray rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-base mb-1">Preparation</h5>
+              <h5 className="font-medium text-elec-yellow text-base mb-1">Pre-Work Assessment</h5>
               <ul className="list-disc list-inside text-base space-y-1">
-                <li>Clear access and exit routes</li>
-                <li>Establish designated work zones</li>
-                <li>Ensure adequate lighting and ventilation</li>
-                <li>Identify and isolate potential hazards</li>
-                <li>Position tools and materials for efficient access</li>
-                <li>Setup barriers and signage where required</li>
+                <li>Detailed site survey before commencing work</li>
+                <li>Identification of electrical supply points</li>
+                <li>Confirmation of isolation possibilities</li>
+                <li>Assessment of access restrictions</li>
+                <li>Identification of material storage areas</li>
               </ul>
             </div>
             
             <div className="bg-elec-gray rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-base mb-1">Organisation During Work</h5>
+              <h5 className="font-medium text-elec-yellow text-base mb-1">Resource Planning</h5>
               <ul className="list-disc list-inside text-base space-y-1">
-                <li>Maintain clear walkways and work areas</li>
-                <li>Store tools safely when not in use</li>
-                <li>Manage cables to prevent trip hazards</li>
-                <li>Clean as you go to prevent accumulation of waste</li>
-                <li>Maintain separation between power and data cables</li>
-                <li>Label circuits and components clearly</li>
-              </ul>
-            </div>
-            
-            <div className="bg-elec-gray rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-base mb-1">Completion Procedures</h5>
-              <ul className="list-disc list-inside text-base space-y-1">
-                <li>Thorough clean-up of work areas</li>
-                <li>Proper disposal of waste materials</li>
-                <li>Restoration of moved furniture or equipment</li>
-                <li>Final safety checks before handover</li>
-                <li>Documentation of work completed</li>
+                <li>Determining appropriate staffing levels</li>
+                <li>Ensuring correct tools and equipment are available</li>
+                <li>Planning for material delivery and storage</li>
+                <li>Arranging specialized equipment if needed</li>
+                <li>Allocating time for testing and commissioning</li>
               </ul>
             </div>
           </div>
@@ -63,54 +50,42 @@ const PlanningConsiderations = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-2">
               <div className="p-1.5 bg-elec-yellow/10 rounded">
-                <Box className="h-5 w-5 text-elec-yellow" />
+                <ClipboardList className="h-5 w-5 text-elec-yellow" />
               </div>
-              <h4 className="font-medium text-elec-yellow text-lg">Materials Handling</h4>
+              <h4 className="font-medium text-elec-yellow text-lg">Documentation</h4>
             </div>
             
             <div className="bg-elec-gray rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-base mb-1">Manual Handling Best Practices</h5>
+              <h5 className="font-medium text-elec-yellow text-base mb-1">Required Documentation</h5>
               <ul className="list-disc list-inside text-base space-y-1">
-                <li>Assess the load before lifting</li>
-                <li>Use proper lifting techniques (bend knees, not back)</li>
-                <li>Get assistance for heavy or awkward items</li>
-                <li>Use mechanical aids where available</li>
-                <li>Plan the route before moving materials</li>
-                <li>Take breaks during repetitive handling tasks</li>
+                <li>Risk assessments specific to the work</li>
+                <li>Method statements outlining work process</li>
+                <li>Permits to work where applicable</li>
+                <li>Electrical installation certificates</li>
+                <li>Test results and commissioning records</li>
+                <li>Hand-over documentation</li>
               </ul>
             </div>
             
             <div className="bg-elec-gray rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-base mb-1">Storage Considerations</h5>
+              <h5 className="font-medium text-elec-yellow text-base mb-1">Communication Plan</h5>
               <ul className="list-disc list-inside text-base space-y-1">
-                <li>Store heavy items at waist height</li>
-                <li>Ensure materials are stable and secure</li>
-                <li>Protect cables and components from damage</li>
-                <li>Store hazardous materials according to regulations</li>
-                <li>Keep pathways clear of stored materials</li>
-                <li>Consider weather protection for outdoor storage</li>
-              </ul>
-            </div>
-            
-            <div className="bg-elec-gray rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-base mb-1">Equipment Requirements</h5>
-              <ul className="list-disc list-inside text-base space-y-1">
-                <li>Choose appropriate transport equipment</li>
-                <li>Inspect lifting equipment before use</li>
-                <li>Ensure adequate space for equipment operation</li>
-                <li>Consider access limitations for large materials</li>
-                <li>Plan delivery schedules to minimise storage needs</li>
+                <li>Briefing all personnel before work commences</li>
+                <li>Clear communication methods during work</li>
+                <li>Emergency procedures and contacts</li>
+                <li>Client communication protocols</li>
+                <li>Reporting procedures for issues</li>
               </ul>
             </div>
           </div>
         </div>
         
         <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-base">
-          <p className="font-medium mb-1 text-elec-yellow">Manual Handling Regulations:</p>
-          <p>The Manual Handling Operations Regulations 1992 (as amended) require employers to avoid hazardous manual handling operations 
-          where reasonably practicable. Where such operations cannot be avoided, employers must assess the risk and take appropriate steps to 
-          reduce the risk of injury. This includes considering the task, the load, the working environment, individual capability, and 
-          providing training for workers who undertake manual handling activities.</p>
+          <p className="font-medium mb-1 text-elec-yellow">Legal Compliance:</p>
+          <p>The Management of Health and Safety at Work Regulations 1999 require suitable and sufficient planning, 
+          including risk assessment, before undertaking work activities. For electrical work, the Electricity at Work 
+          Regulations 1989 require that all work is properly planned, with consideration given to the risks associated 
+          with electricity.</p>
         </div>
       </div>
     </div>

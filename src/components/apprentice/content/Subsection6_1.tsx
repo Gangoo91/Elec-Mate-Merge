@@ -8,6 +8,8 @@ import PlanningConsiderations from "./subsection6_1/PlanningConsiderations";
 import CompletionButton from "../shared/CompletionButton";
 
 const Subsection6_1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
+  console.log("Subsection6_1 rendering with ID:", subsectionId);
+  
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Introduction Section */}
