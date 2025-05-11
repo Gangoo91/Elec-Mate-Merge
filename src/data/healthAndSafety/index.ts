@@ -5,6 +5,7 @@ import { electricalSafetySection } from './section3-electrical';
 import { accessEquipmentSection } from './section4-access';
 import { hazardsSection } from './section5-hazards';
 import { safeWorkingPracticesSection } from './section6-practices';
+import { ppeAndManualHandlingSection } from './section7-ppe';
 
 export const healthAndSafetySections = [
   legislationSection,
@@ -12,7 +13,8 @@ export const healthAndSafetySections = [
   electricalSafetySection,
   accessEquipmentSection,
   hazardsSection,
-  safeWorkingPracticesSection
+  safeWorkingPracticesSection,
+  ppeAndManualHandlingSection
 ];
 
 export const getHealthSafetySectionById = (sectionId: string) => {
