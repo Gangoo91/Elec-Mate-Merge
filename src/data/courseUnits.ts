@@ -2,7 +2,7 @@
 // This file is a placeholder for future course units
 // It contains minimal structure to avoid build errors
 
-import { CourseUnit } from './courseTypes';
+import { CourseUnit, CourseResource } from './courseTypes';
 
 export const courseUnits: CourseUnit[] = [];
 
@@ -10,3 +10,6 @@ export const courseUnits: CourseUnit[] = [];
 export const getCourseUnitById = (id: string): CourseUnit | undefined => {
   return courseUnits.find(unit => unit.id === id);
 };
+
+// Re-export types to maintain compatibility with existing imports
+export type { CourseUnit, CourseResource };

@@ -23,8 +23,16 @@ const CraftSkillsSubsection = () => {
       
       if (section) {
         setSectionTitle(section.title);
+        
+        // Safely access subsections with type checking
+        const subsections = section.content && 
+          typeof section.content === 'object' && 
+          'subsections' in section.content ? 
+          section.content.subsections : 
+          section.subsections || [];
+        
         // Find the subsection
-        const subsection = section.content.subsections.find(
+        const subsection = subsections.find(
           sub => sub.id === subsectionId
         );
         
@@ -80,7 +88,7 @@ const CraftSkillsSubsection = () => {
         
         <div className="space-y-6">
           <div className="text-elec-light/90 leading-relaxed prose prose-invert max-w-none">
-            <p className="mb-4">{subsectionData.content}</p>
+            <p className="mb-4">{typeof subsectionData.content === 'string' ? subsectionData.content : 'Content placeholder for this subsection.'}</p>
             
             {/* Image or illustration placeholder */}
             <div className="my-6 bg-elec-dark/50 rounded-lg p-4 flex flex-col items-center text-center">

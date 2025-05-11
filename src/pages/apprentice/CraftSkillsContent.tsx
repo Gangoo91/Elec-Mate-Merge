@@ -38,6 +38,13 @@ const CraftSkillsContent = () => {
     }
   };
 
+  // Safely access subsections with type checking
+  const subsections = sectionData.content && 
+    typeof sectionData.content === 'object' && 
+    'subsections' in sectionData.content ? 
+    sectionData.content.subsections : 
+    sectionData.subsections || [];
+
   return (
     <div className="space-y-6 animate-fade-in px-4 md:px-0">
       <div className="mb-6">
@@ -59,7 +66,7 @@ const CraftSkillsContent = () => {
         </div>
         
         <div className="space-y-4 max-w-4xl mx-auto">
-          {sectionData.content.subsections.map((subsection) => (
+          {subsections.map((subsection) => (
             <div 
               key={subsection.id} 
               className="border border-elec-yellow/20 rounded-lg p-5 hover:bg-elec-yellow/5 transition-all cursor-pointer"
