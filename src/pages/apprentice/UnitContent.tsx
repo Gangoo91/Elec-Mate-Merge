@@ -2,11 +2,10 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, BookOpen, CheckCircle, Shield, Users, FileText, Info, Construction, AlertTriangle } from "lucide-react";
 import { getCourseUnitById } from "@/data/courseUnits";
-import SectionBox from "@/components/apprentice/SectionBox";
-import { healthAndSafetySections } from "@/data/healthAndSafety/index";
+import BackButton from "@/components/apprentice/BackButton";
 
 const UnitContent = () => {
   const { unitId } = useParams();
@@ -83,21 +82,13 @@ const UnitContent = () => {
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight mb-2">
-            <span className="gradient-text">{unitData?.title || 'Unit Content'}</span>
+            <span className="gradient-text">{unitData?.title || 'Health & Safety for Electrical Installations'}</span>
           </h1>
           <p className="text-muted-foreground text-sm sm:text-base">
-            {unitData?.code || ''}: {unitData?.description || ''}
+            {unitData?.code || 'ELEC2/01'}: {unitData?.description || 'Understanding health and safety legislation and working practices'}
           </p>
         </div>
-        <Link to="/apprentice/study/eal/level-2-diploma" className="w-full sm:w-auto">
-          <Button 
-            variant="outline" 
-            className="border-elec-yellow/30 hover:bg-elec-yellow/10 w-full sm:w-auto"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Diploma Units
-          </Button>
-        </Link>
+        <BackButton courseSlug="level-2-diploma" />
       </div>
 
       {/* Unit description */}
@@ -114,12 +105,12 @@ const UnitContent = () => {
         {sections.map((section) => (
           <Card 
             key={section.id}
-            className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 cursor-pointer relative"
+            className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 cursor-pointer shadow-md relative"
             onClick={() => handleSectionClick(section.id)}
           >
             <CardContent className="p-6">
               <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow/90 flex items-center justify-center shadow-inner">
                   <span className="text-elec-dark font-bold text-lg">{section.id}</span>
                 </div>
                 <h3 className="text-lg font-medium leading-tight">{section.title}</h3>
@@ -137,12 +128,12 @@ const UnitContent = () => {
         
         {/* Quiz Card */}
         <Card 
-          className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 cursor-pointer relative"
+          className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 cursor-pointer shadow-md relative"
           onClick={handleQuizClick}
         >
           <CardContent className="p-6">
             <div className="flex items-center gap-3">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow/90 flex items-center justify-center shadow-inner">
                 <span className="text-elec-dark font-bold text-lg">Q</span>
               </div>
               <h3 className="text-lg font-medium leading-tight">Unit Quiz</h3>
