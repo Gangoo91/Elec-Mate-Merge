@@ -1,70 +1,57 @@
 
-import React from "react";
-import { Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import type { Subsection } from "@/data/courseTypes";
 
-type SubsectionData = {
-  id: string;
-  title: string;
-};
-
-type SubsectionsNavigationProps = {
-  subsections: SubsectionData[];
+interface SubsectionsNavigationProps {
   currentSubsectionId: string;
-  navigateToSubsection: (subsectionId: string) => void;
-};
+  subsections: Subsection[];
+  navigateToSubsection: (subsection: Subsection) => void;
+}
 
 const SubsectionsNavigation = ({ 
-  subsections, 
-  currentSubsectionId,
+  currentSubsectionId, 
+  subsections,
   navigateToSubsection 
 }: SubsectionsNavigationProps) => {
-  const { courseSlug, unitSlug, sectionId } = useParams();
+  if (!subsections || subsections.length <= 1) return null;
   
-  // Find current subsection index
   const currentIndex = subsections.findIndex(sub => sub.id === currentSubsectionId);
+  if (currentIndex === -1) return null;
   
   const prevSubsection = currentIndex > 0 ? subsections[currentIndex - 1] : null;
   const nextSubsection = currentIndex < subsections.length - 1 ? subsections[currentIndex + 1] : null;
   
-  // Always link back to section
-  const allSubsectionsLink = `/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}`;
-  
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-center gap-4 bg-elec-dark/50 border border-elec-yellow/20 rounded-lg p-4">
-      <div className="w-full sm:w-1/3">
+    <div className="flex justify-between items-center p-3 bg-elec-dark/80 border-t border-elec-yellow/20">
+      <div>
         {prevSubsection && (
-          <Button 
-            variant="outline" 
-            className="w-full justify-start border-elec-yellow/30 hover:bg-elec-yellow/10"
-            onClick={() => navigateToSubsection(prevSubsection.id)}
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-1 border-elec-yellow/30 hover:bg-elec-yellow/10"
+            onClick={() => navigateToSubsection(prevSubsection)}
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Previous: {prevSubsection.title}
+            <ChevronLeft className="h-4 w-4" />
+            <span className="max-sm:hidden">Previous</span>
           </Button>
         )}
       </div>
       
-      <div className="w-full sm:w-1/3 text-center">
-        <Button 
-          variant="outline"
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-          asChild
-        >
-          <Link to={allSubsectionsLink}>All Subsections</Link>
-        </Button>
+      <div className="text-sm text-elec-yellow/70">
+        {currentIndex + 1} of {subsections.length}
       </div>
       
-      <div className="w-full sm:w-1/3">
+      <div>
         {nextSubsection && (
-          <Button 
-            variant="outline" 
-            className="w-full justify-end border-elec-yellow/30 hover:bg-elec-yellow/10"
-            onClick={() => navigateToSubsection(nextSubsection.id)}
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-1 border-elec-yellow/30 hover:bg-elec-yellow/10"
+            onClick={() => navigateToSubsection(nextSubsection)}
           >
-            Next: {nextSubsection.title}
-            <ArrowRight className="ml-2 h-4 w-4" />
+            <span className="max-sm:hidden">Next</span>
+            <ChevronRight className="h-4 w-4" />
           </Button>
         )}
       </div>

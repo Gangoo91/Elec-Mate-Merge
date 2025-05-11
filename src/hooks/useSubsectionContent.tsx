@@ -16,6 +16,9 @@ interface UseSubsectionContentResult {
   siblingSubsections: Subsection[];
   loading: boolean;
   navigateToSubsection: (subsection: Subsection) => void;
+  isCompleted: boolean;
+  parentSectionNumber: string | null;
+  markAsComplete: () => void;
 }
 
 export function useSubsectionContent({
@@ -29,6 +32,8 @@ export function useSubsectionContent({
   const [sectionTitle, setSectionTitle] = useState<string | null>(null);
   const [siblingSubsections, setSiblingSubsections] = useState<Subsection[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [parentSectionNumber, setParentSectionNumber] = useState<string | null>(null);
 
   useEffect(() => {
     // Set loading to false since we don't have data to load
@@ -41,11 +46,18 @@ export function useSubsectionContent({
     }
   };
 
+  const markAsComplete = () => {
+    setIsCompleted(true);
+  };
+
   return {
     subsectionData,
     sectionTitle,
     siblingSubsections,
     loading,
-    navigateToSubsection
+    navigateToSubsection,
+    isCompleted,
+    parentSectionNumber,
+    markAsComplete
   };
 }
