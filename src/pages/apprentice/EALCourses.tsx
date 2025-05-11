@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { ArrowLeft, BookOpen } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 
 const EALCourses = () => {
   return (
@@ -40,7 +40,6 @@ const EALCourses = () => {
             className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20 h-full"
           >
             <CardContent className="flex flex-col items-center justify-center p-6 h-full">
-              <BookOpen className="h-8 w-8 text-elec-yellow mb-4 opacity-80" />
               <p className="text-elec-yellow text-xs mb-1">
                 {course.includes("Level 2") ? "Level 2" : 
                  course.includes("Level 3") ? "Level 3" : 
@@ -55,10 +54,6 @@ const EALCourses = () => {
             </CardContent>
           </Card>
         ))}
-      </div>
-
-      <div className="text-center py-8 text-muted-foreground">
-        <p>Course content is currently being developed.</p>
       </div>
     </div>
   );

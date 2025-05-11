@@ -17,8 +17,8 @@ const SafetyFundamentals = () => {
       </div>
       
       <div className="bg-muted p-8 rounded-lg text-center">
-        <p className="text-lg mb-4">Safety content is being developed.</p>
-        <p>Check back soon for comprehensive safety training materials.</p>
+        <p className="text-lg mb-4">This page is under development.</p>
+        <p>Content will be added soon.</p>
       </div>
     </div>
   );
