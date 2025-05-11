@@ -9,14 +9,17 @@ const SubsectionContent = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
   const [isCompleted, setIsCompleted] = useState(false);
   
+  // Log parameters to debug
+  console.log("SubsectionContent params:", { courseSlug, unitSlug, sectionId, subsectionId });
+  
   const {
     subsectionData,
     sectionTitle,
     siblingSubsections,
     navigateToSubsection,
   } = useSubsectionContent({
-    courseSlug,
-    unitSlug,
+    courseSlug: courseSlug || "level-2-diploma",
+    unitSlug: unitSlug || "health-safety",
     sectionId,
     subsectionId,
   });
@@ -27,6 +30,7 @@ const SubsectionContent = () => {
       const storageKey = `completion_${sectionId}_${subsectionId}`;
       const storedCompletion = localStorage.getItem(storageKey);
       setIsCompleted(storedCompletion === 'true');
+      console.log("Checking completion status:", storageKey, storedCompletion);
     }
   }, [sectionId, subsectionId]);
   
@@ -35,6 +39,7 @@ const SubsectionContent = () => {
       const storageKey = `completion_${sectionId}_${subsectionId}`;
       localStorage.setItem(storageKey, 'true');
       setIsCompleted(true);
+      console.log("Marked as complete:", storageKey);
     }
   };
   
@@ -44,8 +49,8 @@ const SubsectionContent = () => {
       <div className="w-full">
         <LearningBackButton
           currentPath="subsection"
-          courseSlug={courseSlug}
-          unitSlug={unitSlug}
+          courseSlug={courseSlug || "level-2-diploma"}
+          unitSlug={unitSlug || "health-safety"}
           sectionId={sectionId}
           subsectionId={subsectionId}
         />
@@ -55,7 +60,7 @@ const SubsectionContent = () => {
       <div className="border-b border-elec-yellow/20 pb-4">
         <h1 className="text-xl md:text-2xl font-bold text-elec-yellow">
           {sectionTitle && `${sectionTitle}: `}
-          Subsection Content
+          {subsectionData?.title || "Learning Content"}
         </h1>
       </div>
       

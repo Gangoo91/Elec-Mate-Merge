@@ -29,11 +29,15 @@ const SubsectionLearningContent = ({
       <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
         {/* Content will be loaded dynamically based on subsectionId */}
         <div className="prose prose-invert prose-yellow max-w-none">
-          <SubsectionRenderer 
-            subsectionId={subsectionId}
-            isCompleted={isCompleted}
-            markAsComplete={markAsComplete}
-          />
+          {subsectionId ? (
+            <SubsectionRenderer 
+              subsectionId={subsectionId}
+              isCompleted={isCompleted}
+              markAsComplete={markAsComplete}
+            />
+          ) : (
+            <p>No subsection ID provided. Please select a valid section.</p>
+          )}
         </div>
         
         {/* Completion Button - Only show if not already in component */}

@@ -12,15 +12,40 @@ import { renderSection6To10 } from "./sections/Section6To10Renderer";
 const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   console.log("SubsectionRenderer called with ID:", subsectionId);
   
-  // Direct matches for section 1 subsections
-  if (subsectionId === "1.1" || subsectionId === "1.2" || subsectionId === "1.3") {
-    console.log("Direct match for Section 1 subsection:", subsectionId);
+  // Handle subsections with explicit section format (e.g., "1.1", "1.2", etc.)
+  if (subsectionId.includes(".")) {
+    const sectionPart = subsectionId.split(".")[0];
+    
+    console.log("Processing subsection with dot notation. Section part:", sectionPart);
+    switch (sectionPart) {
+      case "1":
+        return renderSection1({ subsectionId, isCompleted, markAsComplete });
+      case "2":
+        return renderSection2({ subsectionId, isCompleted, markAsComplete });
+      case "3":
+        return renderSection3({ subsectionId, isCompleted, markAsComplete });
+      case "4":
+        return renderSection4({ subsectionId, isCompleted, markAsComplete });
+      case "5":
+        return renderSection5({ subsectionId, isCompleted, markAsComplete });
+      case "6":
+      case "7":
+      case "8":
+      case "9":
+      case "10":
+        return renderSection6To10({ subsectionId, isCompleted, markAsComplete });
+    }
+  }
+  
+  // Handle simple numeric subsection IDs (1, 2, 3)
+  if (["1", "2", "3"].includes(subsectionId)) {
+    console.log("Direct match for simple numeric ID:", subsectionId);
     return renderSection1({ subsectionId, isCompleted, markAsComplete });
   }
   
-  // Pass props to the appropriate section renderer based on the subsection ID
-  if (isSubsectionInSection(subsectionId, 1) || ["1", "2", "3"].includes(subsectionId)) {
-    console.log("Rendering Section 1 content for:", subsectionId);
+  // Use the section utility functions as a fallback
+  if (isSubsectionInSection(subsectionId, 1)) {
+    console.log("Rendering Section 1 content via utility function for:", subsectionId);
     return renderSection1({ subsectionId, isCompleted, markAsComplete });
   }
   
@@ -44,7 +69,7 @@ const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: Subse
     return renderSection6To10({ subsectionId, isCompleted, markAsComplete });
   }
 
-  // Default fallback if no matching section is found
+  // Default fallback
   return <p>Content for subsection {subsectionId} is not yet available.</p>;
 };
 
