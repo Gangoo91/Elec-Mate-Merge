@@ -4,11 +4,12 @@ import { SubsectionProps } from "./subsection1_1/types";
 import IntroSection from "./subsection4_1/IntroSection";
 import LadderTypes from "./subsection4_1/LadderTypes";
 import LadderInspection from "./subsection4_1/LadderInspection";
+import SafeWorkPractices from "./subsection4_1/SafeWorkPractices";
 import CompletionButton from "../shared/CompletionButton";
 
 const Subsection4_1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Introduction Section */}
       <IntroSection subsectionId={subsectionId} />
       
@@ -17,6 +18,9 @@ const Subsection4_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       
       {/* Second horizontal box - Ladder Inspection & Safe Use */}
       <LadderInspection />
+      
+      {/* Third horizontal box - Safe Working Practices */}
+      <SafeWorkPractices />
       
       {/* Completion Button */}
       <CompletionButton isCompleted={isCompleted} markAsComplete={markAsComplete} />

@@ -18,7 +18,7 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
         "Maximum safe working loads and positioning requirements",
         "Alternative access equipment options for electrical work at height"
       ]}
-      icon="hardhat"
+      icon="shield-alert"
       subsectionId={subsectionId}
     />
   );
