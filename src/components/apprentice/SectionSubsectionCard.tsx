@@ -22,6 +22,12 @@ const SectionSubsectionCard = ({
 }: SectionSubsectionCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
   
+  // Handle view content click
+  const handleViewContent = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigateToSubsection(subsection);
+  };
+  
   // Regular non-collapsible card
   if (!collapsible) {
     return (
@@ -55,7 +61,7 @@ const SectionSubsectionCard = ({
           <Button 
             variant="study" 
             className="hover:bg-elec-yellow hover:text-elec-dark"
-            onClick={() => navigateToSubsection(subsection)}
+            onClick={handleViewContent}
           >
             View Full Content
             <BookOpen className="ml-2 h-4 w-4" />

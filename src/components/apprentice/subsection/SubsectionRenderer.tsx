@@ -10,8 +10,11 @@ import { renderSection5 } from "./sections/Section5Renderer";
 import { renderSection6To10 } from "./sections/Section6To10Renderer";
 
 const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
+  console.log("SubsectionRenderer called with ID:", subsectionId);
+  
   // Pass props to the appropriate section renderer based on the subsection ID
   if (isSubsectionInSection(subsectionId, 1)) {
+    console.log("Rendering Section 1 content for:", subsectionId);
     return renderSection1({ subsectionId, isCompleted, markAsComplete });
   }
   

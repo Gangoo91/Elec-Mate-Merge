@@ -44,7 +44,7 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
         </p>
         
         {/* Subsections for Section 1 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
           {/* Legislation and Regulations subsection */}
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
             <Link 
@@ -91,6 +91,33 @@ const HealthSafetyUnit = ({ unitCode, onResourceClick }: HealthSafetyUnitProps) 
                 <CardDescription className="text-elec-light/80">
                   Identification of duties for employers, employees, and other stakeholders in 
                   maintaining a safe working environment.
+                </CardDescription>
+                <div className="flex justify-end mt-4">
+                  <BookOpen className="h-5 w-5 text-elec-yellow opacity-70" />
+                </div>
+              </CardContent>
+            </Link>
+          </Card>
+          
+          {/* Risk Assessment subsection */}
+          <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
+            <Link 
+              to={`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/1/subsection/1.3`}
+              onClick={handleSectionClick}
+              className="block h-full"
+            >
+              <CardHeader className="pb-2">
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                    <Shield className="h-5 w-5 text-elec-dark" />
+                  </div>
+                  <CardTitle className="text-lg">Risk Assessment & Implementation</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-elec-light/80">
+                  Learn how to conduct thorough risk assessments, create proper method statements, 
+                  and implement effective incident reporting procedures in electrical work.
                 </CardDescription>
                 <div className="flex justify-end mt-4">
                   <BookOpen className="h-5 w-5 text-elec-yellow opacity-70" />
