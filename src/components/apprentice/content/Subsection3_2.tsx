@@ -24,17 +24,17 @@ const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         subsectionId={subsectionId}
       />
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Safe Working Procedures Card */}
-        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
-          <h3 className="text-lg font-bold text-elec-yellow flex items-center">
-            <ShieldAlert className="h-5 w-5 mr-2" />
-            Safe Working Procedures
-          </h3>
-          
-          <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-3">
-            <h4 className="font-semibold text-elec-yellow mb-1 text-sm">Before Starting Work:</h4>
-            <ul className="list-disc pl-4 space-y-1 text-xs">
+      {/* Safe Working Procedures Section */}
+      <div className="bg-gray-100/30 rounded-lg p-5 border border-elec-yellow/10">
+        <h3 className="text-lg font-bold text-elec-yellow flex items-center mb-4">
+          <ShieldAlert className="h-5 w-5 mr-2" />
+          Safe Working Procedures
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <h4 className="font-semibold text-elec-yellow mb-2 text-sm">Before Starting Work:</h4>
+            <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>Complete risk assessment</li>
               <li>Ensure proper authorization</li>
               <li>Check test equipment calibration</li>
@@ -43,9 +43,9 @@ const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ul>
           </div>
           
-          <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-3 text-xs">
-            <p className="font-medium text-elec-yellow">During Work:</p>
-            <ul className="list-disc pl-4 mt-1 space-y-0.5">
+          <div>
+            <h4 className="font-semibold text-elec-yellow mb-2 text-sm">During Work:</h4>
+            <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>Use appropriate PPE at all times</li>
               <li>Apply lock-off procedures</li>
               <li>Use insulated tools</li>
@@ -53,19 +53,21 @@ const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ul>
           </div>
         </div>
+      </div>
+      
+      {/* PPE and Safety Equipment Section */}
+      <div className="bg-gray-100/30 rounded-lg p-5 border border-elec-yellow/10">
+        <h3 className="text-lg font-bold text-elec-yellow flex items-center mb-4">
+          <ShieldAlert className="h-5 w-5 mr-2" />
+          PPE & Safety Equipment
+        </h3>
         
-        {/* PPE and Safety Equipment Card */}
-        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
-          <h3 className="text-lg font-bold text-elec-yellow flex items-center">
-            <ShieldAlert className="h-5 w-5 mr-2" />
-            PPE & Safety Equipment
-          </h3>
-          
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {!isMobile ? (
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-3">
-                <h4 className="font-semibold text-elec-yellow mb-1">Essential PPE:</h4>
-                <ul className="list-disc pl-4 space-y-1">
+            <>
+              <div>
+                <h4 className="font-semibold text-elec-yellow mb-2 text-sm">Essential PPE:</h4>
+                <ul className="list-disc pl-5 space-y-1 text-sm">
                   <li>Insulated gloves (rated for voltage)</li>
                   <li>Eye protection/face shield</li>
                   <li>Non-conductive safety footwear</li>
@@ -73,9 +75,9 @@ const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   <li>Insulating mats</li>
                 </ul>
               </div>
-              <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-3">
-                <h4 className="font-semibold text-elec-yellow mb-1">Safety Equipment:</h4>
-                <ul className="list-disc pl-4 space-y-1">
+              <div>
+                <h4 className="font-semibold text-elec-yellow mb-2 text-sm">Safety Equipment:</h4>
+                <ul className="list-disc pl-5 space-y-1 text-sm">
                   <li>Voltage indicators</li>
                   <li>Proving units</li>
                   <li>Locking-off devices</li>
@@ -83,34 +85,32 @@ const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                   <li>Barriers/screening</li>
                 </ul>
               </div>
-            </div>
+            </>
           ) : (
-            <div className="space-y-2 text-xs">
-              <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-3">
-                <h4 className="font-semibold text-elec-yellow mb-1">Essential PPE & Equipment:</h4>
-                <ul className="list-disc pl-4 space-y-0.5">
-                  <li>Insulated gloves</li>
-                  <li>Eye protection</li>
-                  <li>Voltage indicators</li>
-                  <li>Locking-off devices</li>
-                </ul>
-              </div>
+            <div>
+              <h4 className="font-semibold text-elec-yellow mb-2 text-sm">Essential PPE & Equipment:</h4>
+              <ul className="list-disc pl-5 space-y-1 text-sm">
+                <li>Insulated gloves</li>
+                <li>Eye protection</li>
+                <li>Voltage indicators</li>
+                <li>Locking-off devices</li>
+              </ul>
             </div>
           )}
         </div>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Safe Isolation Procedures Card */}
-        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
-          <h3 className="text-lg font-bold text-elec-yellow flex items-center">
-            <Zap className="h-5 w-5 mr-2" />
-            Safe Isolation Procedures
-          </h3>
-          
-          <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-3">
-            <h4 className="font-semibold text-elec-yellow mb-1 text-sm">Five Steps of Safe Isolation:</h4>
-            <ol className="list-decimal pl-4 space-y-1 text-xs">
+      {/* Safe Isolation and Electrical Hazards Section */}
+      <div className="bg-gray-100/30 rounded-lg p-5 border border-elec-yellow/10">
+        <h3 className="text-lg font-bold text-elec-yellow flex items-center mb-4">
+          <Zap className="h-5 w-5 mr-2" />
+          Safe Isolation Procedures
+        </h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <h4 className="font-semibold text-elec-yellow mb-2 text-sm">Five Steps of Safe Isolation:</h4>
+            <ol className="list-decimal pl-5 space-y-1 text-sm">
               <li><span className="font-medium">Identify</span> the circuit</li>
               <li><span className="font-medium">Isolate</span> and lock off</li>
               <li><span className="font-medium">Prove</span> the voltage tester</li>
@@ -119,26 +119,28 @@ const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ol>
           </div>
           
-          <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-3 text-xs">
-            <p className="font-medium text-elec-yellow">When live work is permitted:</p>
-            <ul className="list-disc pl-4 mt-1 space-y-0.5">
+          <div>
+            <h4 className="font-semibold text-elec-yellow mb-2 text-sm">When live work is permitted:</h4>
+            <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>It's unreasonable for the circuit to be dead</li>
               <li>Suitable precautions are in place</li>
               <li>Authorized by competent person</li>
             </ul>
           </div>
         </div>
+      </div>
+      
+      {/* Electrical Hazards Section */}
+      <div className="bg-gray-100/30 rounded-lg p-5 border border-elec-yellow/10">
+        <h3 className="text-lg font-bold text-elec-yellow flex items-center mb-4">
+          <AlertTriangle className="h-5 w-5 mr-2" />
+          Common Electrical Hazards
+        </h3>
         
-        {/* Electrical Hazards Card */}
-        <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-4 space-y-3">
-          <h3 className="text-lg font-bold text-elec-yellow flex items-center">
-            <AlertTriangle className="h-5 w-5 mr-2" />
-            Common Electrical Hazards
-          </h3>
-          
-          <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-3">
-            <h4 className="font-semibold text-elec-yellow mb-1 text-sm">Hazard Types:</h4>
-            <ul className="list-disc pl-4 space-y-1 text-xs">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div>
+            <h4 className="font-semibold text-elec-yellow mb-2 text-sm">Hazard Types:</h4>
+            <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>Direct contact with live parts</li>
               <li>Indirect contact through conductive materials</li>
               <li>Arc flash/blast injuries</li>
@@ -147,9 +149,9 @@ const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ul>
           </div>
           
-          <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-3 text-xs">
-            <p className="font-medium text-elec-yellow">Common Issues:</p>
-            <ul className="list-disc pl-4 mt-1 space-y-0.5">
+          <div>
+            <h4 className="font-semibold text-elec-yellow mb-2 text-sm">Common Issues:</h4>
+            <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>Exposed conductors</li>
               <li>Damaged insulation</li>
               <li>Water ingress</li>
@@ -159,17 +161,18 @@ const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </div>
       </div>
       
-      <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-lg p-4">
-        <h3 className="text-lg font-bold text-elec-yellow mb-3 flex items-center">
+      {/* Key Regulations Section */}
+      <div className="bg-gray-100/30 rounded-lg p-5 border border-elec-yellow/10">
+        <h3 className="text-lg font-bold text-elec-yellow flex items-center mb-4">
           <ShieldAlert className="h-5 w-5 mr-2" />
           Key Regulations for Working Safely
         </h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <h4 className="font-semibold text-white">Electricity at Work Regulations 1989</h4>
-            <p className="text-elec-light/80 mt-1">Regulation 14 specifically covers working on or near live conductors, requiring that no person shall work on or near any live conductor unless:</p>
-            <ul className="list-disc pl-5 mt-2 space-y-1">
+            <h4 className="font-semibold text-white mb-2 text-sm">Electricity at Work Regulations 1989</h4>
+            <p className="text-sm text-elec-light/80">Regulation 14 specifically covers working on or near live conductors, requiring that no person shall work on or near any live conductor unless:</p>
+            <ul className="list-disc pl-5 mt-2 space-y-1 text-sm">
               <li>It is unreasonable for it to be dead</li>
               <li>Suitable precautions are taken</li>
               <li>It is reasonable to work live</li>
@@ -177,9 +180,9 @@ const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           </div>
           
           <div>
-            <h4 className="font-semibold text-white">BS 7671 Wiring Regulations</h4>
-            <p className="text-elec-light/80 mt-1">The IET Wiring Regulations provide specific technical standards for:</p>
-            <ul className="list-disc pl-5 mt-2 space-y-1">
+            <h4 className="font-semibold text-white mb-2 text-sm">BS 7671 Wiring Regulations</h4>
+            <p className="text-sm text-elec-light/80">The IET Wiring Regulations provide specific technical standards for:</p>
+            <ul className="list-disc pl-5 mt-2 space-y-1 text-sm">
               <li>Protection against electric shock</li>
               <li>Isolation and switching procedures</li>
               <li>Protective measures</li>
@@ -189,7 +192,7 @@ const Subsection3_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </div>
       </div>
       
-      <div className="flex justify-end pt-6 border-t border-elec-yellow/20">
+      <div className="flex justify-end pt-4 border-t border-elec-yellow/20">
         <Button
           variant="study"
           className={`${isCompleted ? 'bg-green-600/20 border-green-500/50 text-green-400' : 'hover:bg-elec-yellow hover:text-elec-dark'}`}
