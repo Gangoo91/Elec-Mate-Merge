@@ -9,7 +9,10 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
   // Parse subsection ID to handle both formats (e.g., "1" and "1.1")
   const normalizedId = subsectionId.includes('.') ? subsectionId.split('.')[1] : subsectionId;
   
+  console.log("Section1Renderer - Rendering subsection with ID:", subsectionId, "Normalized ID:", normalizedId);
+  
   switch (normalizedId) {
+    case "1":
     case "1":
       return (
         <Subsection1_1 
@@ -35,6 +38,7 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
         />
       );
     default:
+      console.log("Section1Renderer - No matching subsection found for:", normalizedId);
       return null;
   }
 };

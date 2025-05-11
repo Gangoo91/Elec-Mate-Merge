@@ -12,6 +12,12 @@ import { renderSection6To10 } from "./sections/Section6To10Renderer";
 const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   console.log("SubsectionRenderer called with ID:", subsectionId);
   
+  // Check if subsection is 1.1, 1.2, 1.3 directly
+  if (["1.1", "1.2", "1.3"].includes(subsectionId)) {
+    console.log("Direct match for Section 1 subsection:", subsectionId);
+    return renderSection1({ subsectionId, isCompleted, markAsComplete });
+  }
+  
   // Pass props to the appropriate section renderer based on the subsection ID
   if (isSubsectionInSection(subsectionId, 1)) {
     console.log("Rendering Section 1 content for:", subsectionId);

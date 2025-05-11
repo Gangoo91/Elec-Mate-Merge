@@ -5,9 +5,10 @@
 export const isSubsectionInSection = (subsectionId: string, sectionNumber: number): boolean => {
   if (!subsectionId) return false;
   
-  // Handle legacy format (e.g., "1") and new format (e.g., "1.1")
+  // Direct match for format "sectionNumber.subsectionNumber" (e.g., "1.1")
   if (subsectionId.includes('.')) {
-    return subsectionId.startsWith(`${sectionNumber}.`);
+    const sectionPart = subsectionId.split('.')[0];
+    return sectionPart === sectionNumber.toString();
   }
   
   // For numeric IDs, try to match section
