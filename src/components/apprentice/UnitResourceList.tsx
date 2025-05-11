@@ -1,36 +1,64 @@
 
-import ResourceCard from "@/components/apprentice/ResourceCard";
-import type { CourseResource } from "@/data/courseUnits";
+import React from 'react';
+import { BookOpen, FileText, Video } from 'lucide-react';
 
-interface UnitResourceListProps {
-  resources: CourseResource[];
-  onResourceClick: (type: string) => void;
-  completedResources: Record<string, boolean>;
-  onToggleResourceComplete: (resourceId: string) => void;
+interface Resource {
+  id: string;
+  title: string;
+  type: "video" | "learning" | "document"; // Specific string literals only
+  completed?: boolean;
 }
 
-const UnitResourceList = ({ 
-  resources, 
-  onResourceClick, 
-  completedResources, 
-  onToggleResourceComplete 
-}: UnitResourceListProps) => {
+interface UnitResourceListProps {
+  resources: Resource[];
+  onResourceClick: (resourceId: string) => void;
+  onToggleComplete: (resourceId: string) => void;
+  completedResources: Record<string, boolean>;
+}
+
+const UnitResourceList: React.FC<UnitResourceListProps> = ({
+  resources,
+  onResourceClick,
+  onToggleComplete,
+  completedResources
+}) => {
+  const getIcon = (type: "video" | "learning" | "document") => {
+    switch (type) {
+      case "video":
+        return <Video className="h-4 w-4 text-blue-500" />;
+      case "learning":
+        return <BookOpen className="h-4 w-4 text-green-500" />;
+      case "document":
+        return <FileText className="h-4 w-4 text-amber-500" />;
+      default:
+        return <FileText className="h-4 w-4" />;
+    }
+  };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-      <h4 className="font-semibold col-span-full">Learning Resources</h4>
-      {resources.map(resource => (
-        <ResourceCard
+    <div className="space-y-3">
+      {resources.map((resource) => (
+        <div 
           key={resource.id}
-          title={resource.title}
-          description={resource.description}
-          type={resource.type}
-          cta={resource.type === 'video' ? 'Watch Video' : resource.type === 'document' ? 'Read Document' : 'Start Activity'}
-          href={resource.href}
-          duration={resource.duration}
-          onClick={() => onResourceClick(resource.type)}
-          isCompleted={!!completedResources[resource.id]}
-          onToggleComplete={() => onToggleResourceComplete(resource.id)}
-        />
+          className="flex items-center justify-between p-3 rounded-md border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-800 shadow-sm hover:shadow transition cursor-pointer"
+          onClick={() => onResourceClick(resource.id)}
+        >
+          <div className="flex items-center space-x-3">
+            {getIcon(resource.type)}
+            <span>{resource.title}</span>
+          </div>
+          <div>
+            <input 
+              type="checkbox" 
+              checked={!!completedResources[resource.id]} 
+              onChange={(e) => {
+                e.stopPropagation();
+                onToggleComplete(resource.id);
+              }}
+              className="h-4 w-4 accent-green-600"
+            />
+          </div>
+        </div>
       ))}
     </div>
   );

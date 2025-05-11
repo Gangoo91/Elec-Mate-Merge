@@ -1,26 +1,29 @@
 
 import { SectionData } from './types';
-import { legislationSection } from './section1-legislation';
-import { safeWorkingEnvironmentSection } from './section2-environment';
-import { electricalSafetySection } from './section3-electrical';
-import { accessEquipmentSection } from './section4-access';
-import { hazardsSection } from './section5-hazards';
-import { safeWorkingPracticesSection } from './section6-practices';
 
-// Combine all sections into an array
-export const healthAndSafetySections: SectionData[] = [
-  legislationSection,
-  safeWorkingEnvironmentSection,
-  electricalSafetySection,
-  accessEquipmentSection,
-  hazardsSection,
-  safeWorkingPracticesSection
+// Simple placeholder sections
+const placeholderSections: SectionData[] = [
+  {
+    sectionNumber: "1",
+    title: "Health and Safety Legislation",
+    description: "Understanding key electrical safety regulations",
+    content: {
+      introduction: "Overview of relevant health and safety legislation.",
+      subsections: [
+        {
+          id: "1",
+          title: "Electricity at Work Regulations",
+          content: "Key requirements of the Electricity at Work Regulations 1989.",
+          keyPoints: ["Employer responsibilities", "Worker responsibilities"]
+        }
+      ]
+    }
+  }
 ];
 
-// For backward compatibility
-export const healthAndSafetyContent = healthAndSafetySections;
+export const healthAndSafetySections = placeholderSections;
+export const healthAndSafetyContent = placeholderSections;
 
-// Helper function to get a specific section
 export const getHealthAndSafetySection = (sectionNumber: string): SectionData | null => {
   return healthAndSafetySections.find(section => section.sectionNumber === sectionNumber) || null;
 };

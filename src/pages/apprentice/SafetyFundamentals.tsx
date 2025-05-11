@@ -1,21 +1,25 @@
 
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 const SafetyFundamentals = () => {
-  const navigate = useNavigate();
-
   return (
-    <div className="container mx-auto p-4 space-y-6">
-      <h1 className="text-2xl font-bold">Safety Fundamentals</h1>
+    <div className="max-w-4xl mx-auto p-6 space-y-8">
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold">Safety Fundamentals</h1>
+        <Link to="/apprentice/study">
+          <Button variant="outline">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Study
+          </Button>
+        </Link>
+      </div>
       
-      <Card className="p-6">
-        <h2 className="text-xl font-semibold mb-4">Coming Soon</h2>
-        <p className="mb-4">Safety fundamentals content is currently under development.</p>
-        <Button onClick={() => navigate(-1)}>Go Back</Button>
-      </Card>
+      <div className="bg-muted p-8 rounded-lg text-center">
+        <p className="text-lg mb-4">Safety content is being developed.</p>
+        <p>Check back soon for comprehensive safety training materials.</p>
+      </div>
     </div>
   );
 };

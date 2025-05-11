@@ -3,15 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { ArrowLeft, BookOpen } from "lucide-react";
-import { courseCategories } from "@/data/courseCategories";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const EALCourses = () => {
-  const isMobile = useIsMobile();
-  
-  // Find the EAL courses category
-  const ealCategory = courseCategories.find(category => category.id === "eal");
-  
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8 animate-fade-in">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
@@ -36,7 +29,12 @@ const EALCourses = () => {
 
       {/* Course grid - just basic placeholder cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {ealCategory?.courses.map((course, index) => (
+        {[
+          "Level 2 Diploma in Electrical Installation",
+          "Level 3 Advanced Diploma in Electrical Installation",
+          "Level 3 NVQ Diploma in Installing Electrotechnical Systems",
+          "Level 4 Technical Diploma in Electrical Installations"
+        ].map((course, index) => (
           <Card 
             key={index}
             className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20 h-full"
@@ -48,7 +46,7 @@ const EALCourses = () => {
                  course.includes("Level 3") ? "Level 3" : 
                  course.includes("Level 4") ? "Level 4" : "Course"}
               </p>
-              <h3 className={`text-base sm:text-lg font-medium text-center ${isMobile ? "leading-tight" : ""}`}>
+              <h3 className="text-base sm:text-lg font-medium text-center leading-tight">
                 {course}
               </h3>
               <p className="mt-4 text-sm text-muted-foreground">
