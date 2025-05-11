@@ -7,7 +7,7 @@ import Subsection1_3 from "../../content/Subsection1_3";
 
 export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   switch (subsectionId) {
-    case "1.1":
+    case "1":
       return (
         <Subsection1_1 
           subsectionId={subsectionId} 
@@ -15,7 +15,7 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
           markAsComplete={markAsComplete}
         />
       );
-    case "1.2":
+    case "2":
       return (
         <Subsection1_2 
           subsectionId={subsectionId}
@@ -23,7 +23,7 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
           markAsComplete={markAsComplete}
         />
       );
-    case "1.3":
+    case "3":
       return (
         <Subsection1_3 
           subsectionId={subsectionId}

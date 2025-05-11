@@ -18,4 +18,3 @@ export interface SectionData {
   };
   subsections?: Subsection[]; // For backward compatibility
 }
-
