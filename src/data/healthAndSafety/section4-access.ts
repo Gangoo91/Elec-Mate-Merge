@@ -16,15 +16,15 @@ export const accessEquipmentSection: SectionData = {
       },
       {
         id: "2",
-        title: "Scaffolding and Platforms",
-        content: "Scaffolding and platforms must be properly erected, inspected, and maintained to ensure worker safety.",
-        keyPoints: ["Only use scaffolding erected by trained personnel", "Inspect scaffolding before each use", "Ensure platforms are fully boarded"]
+        title: "Working at Height Requirements",
+        content: "Legal requirements and equipment selection for working at height safely in electrical installations.",
+        keyPoints: ["Follow Work at Height Regulations 2005", "Select appropriate access equipment for each task", "Consider electrical hazards when choosing equipment"]
       },
       {
         id: "3",
-        title: "Equipment Inspection",
-        content: "Regular inspection of access equipment helps identify defects and prevent accidents.",
-        keyPoints: ["Follow manufacturer's inspection guidelines", "Document all inspections", "Remove defective equipment from service"]
+        title: "MEWPs and Scaffolding",
+        content: "Safe use of Mobile Elevating Work Platforms (MEWPs) and scaffolding in electrical work.",
+        keyPoints: ["Only use equipment you're trained and certified to operate", "Inspect all components before assembly", "Follow manufacturer's guidelines"]
       }
     ]
   }

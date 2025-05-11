@@ -2,8 +2,8 @@
 import React from "react";
 import { SubsectionProps } from "./subsection1_1/types";
 import IntroSection from "./subsection4_1/IntroSection";
-import LegalRequirements from "./subsection4_1/LegalRequirements";
-import AccessEquipmentSelection from "./subsection4_1/AccessEquipmentSelection";
+import LadderTypes from "./subsection4_1/LadderTypes";
+import LadderInspection from "./subsection4_1/LadderInspection";
 import CompletionButton from "./subsection4_1/CompletionButton";
 
 const Subsection4_1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
@@ -12,11 +12,11 @@ const Subsection4_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       {/* Introduction Section */}
       <IntroSection subsectionId={subsectionId} />
       
-      {/* First horizontal box - Legal Requirements */}
-      <LegalRequirements />
+      {/* First horizontal box - Ladder Types */}
+      <LadderTypes />
       
-      {/* Second horizontal box - Access Equipment Selection */}
-      <AccessEquipmentSelection />
+      {/* Second horizontal box - Ladder Inspection & Safe Use */}
+      <LadderInspection />
       
       {/* Completion Button */}
       <CompletionButton isCompleted={isCompleted} markAsComplete={markAsComplete} />

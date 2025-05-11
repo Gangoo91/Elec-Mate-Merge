@@ -9,14 +9,14 @@ interface IntroSectionProps {
 const IntroSection = ({ subsectionId }: IntroSectionProps) => {
   return (
     <CourseContentSection
-      title="Working at Height Safety"
-      description="Working at height remains one of the biggest causes of fatalities and major injuries in the electrical industry. The Work at Height Regulations 2005 apply to all work at height where there is a risk of a fall liable to cause personal injury."
+      title="Ladder Safety & Inspection"
+      description="Portable ladders are commonly used for electrical work but are a significant source of accidents. Understanding proper selection, inspection, and use of ladders is essential for electrical workers to ensure safe access at height."
       keyPoints={[
-        "Legal requirements under Work at Height Regulations 2005",
-        "Risk assessment approaches for height work in electrical installations",
-        "Selection of appropriate access equipment for electrical tasks",
-        "Inspection and maintenance requirements for access equipment",
-        "Fall prevention and protection systems for electrical contractors"
+        "Different types of ladders and their appropriate applications",
+        "Pre-use inspection requirements for ladders in electrical work",
+        "Safe positioning and securing of ladders near electrical installations",
+        "Maximum safe working loads and positioning requirements",
+        "Alternative access equipment options for electrical work at height"
       ]}
       icon="hardhat"
       subsectionId={subsectionId}
