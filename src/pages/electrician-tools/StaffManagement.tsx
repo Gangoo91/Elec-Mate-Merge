@@ -5,16 +5,14 @@ import { ArrowLeft, Users, UserCircle, BriefcaseIcon, Clock, Award } from "lucid
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { toast } from "@/hooks/use-toast";
 
 const StaffManagement = () => {
   const [activeTab, setActiveTab] = useState("team");
 
+  // Remove toast notifications and replace with console.log
   const handleAction = (action: string) => {
-    toast({
-      title: "Action Triggered",
-      description: `${action} functionality will be available soon.`,
-    });
+    console.log(`${action} action triggered`);
+    // Toast notification removed
   };
 
   return (

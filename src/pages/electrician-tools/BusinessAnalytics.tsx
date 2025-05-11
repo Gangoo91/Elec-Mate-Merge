@@ -1,17 +1,17 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, BarChart4, LineChart, ChartPie, Download, CircleDollarSign } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { toast } from "@/hooks/use-toast";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const BusinessAnalytics = () => {
+  // Remove the handleAction function that triggers toasts
+  // Instead use a simple console.log for now
   const handleAction = (action: string) => {
-    toast({
-      title: "Action Triggered",
-      description: `${action} functionality will be available soon.`,
-    });
+    console.log(`${action} action triggered`);
+    // Toast notification removed
   };
 
   return (
