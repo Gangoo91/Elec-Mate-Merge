@@ -1,44 +1,41 @@
 
-import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Shield, BookOpen, Lightbulb, Wrench, FlaskConical } from "lucide-react";
 
 const InstallationMethodContent = () => {
-  const { sectionId } = useParams();
-  
-  // Simplified units data
+  // Simplified units data with no links to existing data structures
   const units = [
     {
-      id: "elec2-01",
+      id: "unit-1",
       code: "ELEC2/01",
       title: "Health and Safety in Electrical Installation",
       description: "Understanding safety regulations and practices in electrical work",
       icon: Shield
     },
     {
-      id: "elec2-04",
+      id: "unit-2",
       code: "ELEC2/04",
       title: "Electrical Installation Theory and Technology",
       description: "Core theoretical knowledge for electrical installation work",
       icon: Lightbulb
     },
     {
-      id: "elec2-05a",
+      id: "unit-3",
       code: "ELEC2/05A",
       title: "Electrical Installation Methods, Procedures and Requirements",
       description: "Standard methods and procedures for electrical installations",
       icon: BookOpen
     },
     {
-      id: "elec2-05b",
+      id: "unit-4",
       code: "ELEC2/05B",
       title: "Electrical Installation Craft Skills",
       description: "Practical skills for electrical installation work",
       icon: Wrench
     },
     {
-      id: "elec2-08",
+      id: "unit-5",
       code: "ELEC2/08",
       title: "Electrical Science and Principles",
       description: "Scientific principles underlying electrical systems",
@@ -57,15 +54,13 @@ const InstallationMethodContent = () => {
             Core units for the EAL Level 2 Diploma in Electrical Installation
           </p>
         </div>
-        <Link to="/apprentice/study/eal" className="w-full sm:w-auto">
-          <Button 
-            variant="outline" 
-            className="border-elec-yellow/30 hover:bg-elec-yellow/10 w-full sm:w-auto"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to EAL Courses
-          </Button>
-        </Link>
+        <Button 
+          variant="outline" 
+          className="border-elec-yellow/30 hover:bg-elec-yellow/10 w-full sm:w-auto"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back
+        </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
