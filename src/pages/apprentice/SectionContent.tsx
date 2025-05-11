@@ -1,13 +1,14 @@
 
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Shield, BookOpen, Users } from "lucide-react";
 import { HealthSafetyUnit } from "@/components/apprentice/units";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import BackButton from "@/components/common/BackButton";
+import BackButton from "@/components/apprentice/BackButton";
 
 const SectionContent = () => {
   const { courseSlug, unitSlug, sectionId } = useParams();
+  const location = useLocation();
   
   const handleResourceClick = (type: string) => {
     // This would typically log or track resource usage
@@ -109,12 +110,11 @@ const SectionContent = () => {
   
   return (
     <div className="space-y-6 animate-fade-in bg-[#121212] px-4 md:px-0">
-      {/* Back button to go to the unit sections page - making sure props get passed correctly */}
+      {/* Using the apprentice BackButton component which has better path handling */}
       <div className="max-w-4xl mx-auto pt-6">
         <BackButton 
           courseSlug={courseSlug} 
           unitSlug={unitSlug} 
-          sectionId={sectionId}
         />
       </div>
       {renderUnitContent()}

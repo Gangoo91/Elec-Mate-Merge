@@ -2,7 +2,7 @@
 import { useParams } from "react-router-dom";
 import SubsectionLearningContent from "@/components/apprentice/subsection/SubsectionLearningContent";
 import { useState, useEffect } from "react";
-import BackButton from "@/components/common/BackButton";
+import BackButton from "@/components/apprentice/BackButton";
 
 const SubsectionContent = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
@@ -27,7 +27,7 @@ const SubsectionContent = () => {
   
   return (
     <div className="space-y-6 animate-fade-in bg-[#121212] px-4 md:px-6 max-w-4xl mx-auto py-8">
-      {/* Back button - explicitly passing all params for clarity */}
+      {/* Use the improved BackButton component that properly handles navigation */}
       <BackButton 
         courseSlug={courseSlug} 
         unitSlug={unitSlug} 
