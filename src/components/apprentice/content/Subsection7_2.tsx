@@ -157,17 +157,17 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <li>
                   <span className="font-medium text-white">Category 2:</span> Minimum 8 cal/cm² protection
                   <br />
-                  <span className="text-sm">Tasks: Opening panel covers, working on control circuits ≤240V</span>
+                  <span className="text-sm">Tasks: Opening panel covers, working on control circuits &le;240V</span>
                 </li>
                 <li>
                   <span className="font-medium text-white">Category 3:</span> Minimum 25 cal/cm² protection
                   <br />
-                  <span className="text-sm">Tasks: Inserting breakers, working inside panels ≤600V</span>
+                  <span className="text-sm">Tasks: Inserting breakers, working inside panels &le;600V</span>
                 </li>
                 <li>
                   <span className="font-medium text-white">Category 4:</span> Minimum 40 cal/cm² protection
                   <br />
-                  <span className="text-sm">Tasks: Working on exposed energized conductors >600V</span>
+                  <span className="text-sm">Tasks: Working on exposed energized conductors &gt;600V</span>
                 </li>
               </ul>
             </div>
