@@ -4,6 +4,7 @@ import { SectionData } from './types';
 export const safeWorkingEnvironmentSection: SectionData = {
   sectionNumber: "2",
   title: "Health and Safety Procedures in the Work Environment",
+  description: "Understanding safety procedures for the electrical work environment",
   content: {
     introduction: "This section covers emergency procedures, proper documentation and reporting practices, and environmental considerations for electrical work.",
     subsections: [

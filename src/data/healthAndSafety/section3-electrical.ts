@@ -4,6 +4,7 @@ import { SectionData } from './types';
 export const electricalSafetySection: SectionData = {
   sectionNumber: "3",
   title: "Electrical Safety",
+  description: "Understanding the fundamentals of electrical safety",
   content: {
     introduction: "Understanding electrical safety is fundamental for all electrical work.",
     subsections: [
@@ -44,7 +45,6 @@ export const electricalSafetySection: SectionData = {
         ]
       }
     ],
-    icon: "shield-alert",
-    sectionNumber: "3"
+    icon: "shield-alert"
   }
 };

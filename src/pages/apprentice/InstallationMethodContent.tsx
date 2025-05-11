@@ -1,5 +1,6 @@
+
 import { useParams, Link } from "react-router-dom";
-import { Button } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { installationMethodsSections } from "@/data/installationMethods/index";
 
 const InstallationMethodContent = () => {

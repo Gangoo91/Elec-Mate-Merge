@@ -4,6 +4,7 @@ import { SectionData } from './types';
 export const accessEquipmentSection: SectionData = {
   sectionNumber: "4",
   title: "Access Equipment Safety",
+  description: "Safety considerations for using access equipment in electrical work",
   content: {
     introduction: "Working at height is common in electrical installation and requires proper safety measures. This section covers ladders, scaffolding, and other access equipment safety considerations.",
     subsections: [

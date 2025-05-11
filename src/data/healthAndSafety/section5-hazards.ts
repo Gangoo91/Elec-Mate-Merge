@@ -1,8 +1,10 @@
+
 import { SectionData } from './types';
 
 export const hazardsSection: SectionData = {
   sectionNumber: "5",
   title: "Identifying and Dealing with Hazards",
+  description: "Learning to identify and mitigate workplace hazards",
   content: {
     introduction: "Identifying and mitigating hazards is a critical skill for electrical workers. This section covers common hazards and appropriate response procedures.",
     subsections: [

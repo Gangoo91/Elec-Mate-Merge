@@ -4,6 +4,7 @@ import { SectionData } from './types';
 export const safeWorkingPracticesSection: SectionData = {
   sectionNumber: "6",
   title: "Safe Working Practices",
+  description: "Essential practices for working safely with electrical systems",
   content: {
     introduction: "Following safe working practices is essential for preventing accidents and injuries in electrical work. This section covers key procedures and best practices.",
     subsections: [
