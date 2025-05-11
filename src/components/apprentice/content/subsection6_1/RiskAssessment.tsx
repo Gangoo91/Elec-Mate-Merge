@@ -1,6 +1,7 @@
 
 import React from "react";
 import { AlertTriangle, CheckSquare, Shield, Clipboard } from "lucide-react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 const RiskAssessment = () => {
   return (
@@ -156,48 +157,56 @@ const RiskAssessment = () => {
             </div>
           </div>
           
-          {/* Hierarchy of Controls Diagram */}
-          <div className="mt-6 flex flex-col items-center">
-            <h5 className="text-center font-medium text-elec-yellow mb-4">Hierarchy of Controls</h5>
-            <div className="w-full max-w-lg">
-              <div className="relative">
-                <div className="flex flex-col gap-2">
-                  {/* Most Effective */}
-                  <div className="bg-green-900/30 border border-green-500/30 p-3 rounded-t-lg">
-                    <div className="font-medium text-green-400 mb-1">1. Elimination</div>
+          {/* Improved Hierarchy of Controls Diagram */}
+          <div className="mt-8">
+            <Card className="bg-elec-gray border border-elec-yellow/20">
+              <CardHeader className="pb-2 border-b border-elec-yellow/20">
+                <h5 className="font-medium text-elec-yellow">Hierarchy of Controls</h5>
+              </CardHeader>
+              <CardContent className="pt-4">
+                <div className="grid grid-cols-1 gap-2">
+                  <div className="bg-green-900/30 border border-green-500/30 p-3 rounded-lg">
+                    <div className="font-medium text-green-400 mb-1 flex items-center gap-2">
+                      <span className="bg-green-800/50 h-6 w-6 rounded-full flex items-center justify-center text-sm">1</span>
+                      Elimination
+                    </div>
                     <p className="text-sm text-gray-300">Remove the hazard completely (e.g., redesign the job)</p>
                   </div>
                   
-                  <div className="bg-green-800/30 border border-green-500/30 p-3">
-                    <div className="font-medium text-green-400 mb-1">2. Substitution</div>
+                  <div className="bg-green-800/30 border border-green-500/30 p-3 rounded-lg">
+                    <div className="font-medium text-green-400 mb-1 flex items-center gap-2">
+                      <span className="bg-green-800/50 h-6 w-6 rounded-full flex items-center justify-center text-sm">2</span>
+                      Substitution
+                    </div>
                     <p className="text-sm text-gray-300">Replace the hazard with something less hazardous</p>
                   </div>
                   
-                  <div className="bg-yellow-900/30 border border-yellow-500/30 p-3">
-                    <div className="font-medium text-yellow-400 mb-1">3. Engineering Controls</div>
+                  <div className="bg-yellow-900/30 border border-yellow-500/30 p-3 rounded-lg">
+                    <div className="font-medium text-yellow-400 mb-1 flex items-center gap-2">
+                      <span className="bg-yellow-800/50 h-6 w-6 rounded-full flex items-center justify-center text-sm">3</span>
+                      Engineering Controls
+                    </div>
                     <p className="text-sm text-gray-300">Isolate people from the hazard (e.g., machine guards)</p>
                   </div>
                   
-                  <div className="bg-yellow-800/30 border border-yellow-500/30 p-3">
-                    <div className="font-medium text-yellow-400 mb-1">4. Administrative Controls</div>
+                  <div className="bg-yellow-800/30 border border-yellow-500/30 p-3 rounded-lg">
+                    <div className="font-medium text-yellow-400 mb-1 flex items-center gap-2">
+                      <span className="bg-yellow-800/50 h-6 w-6 rounded-full flex items-center justify-center text-sm">4</span>
+                      Administrative Controls
+                    </div>
                     <p className="text-sm text-gray-300">Change the way people work (e.g., procedures, training)</p>
                   </div>
                   
-                  {/* Least Effective */}
-                  <div className="bg-red-900/30 border border-red-500/30 p-3 rounded-b-lg">
-                    <div className="font-medium text-red-400 mb-1">5. PPE</div>
+                  <div className="bg-red-900/30 border border-red-500/30 p-3 rounded-lg">
+                    <div className="font-medium text-red-400 mb-1 flex items-center gap-2">
+                      <span className="bg-red-800/50 h-6 w-6 rounded-full flex items-center justify-center text-sm">5</span>
+                      Personal Protective Equipment
+                    </div>
                     <p className="text-sm text-gray-300">Protect the worker with personal protective equipment</p>
                   </div>
                 </div>
-                
-                {/* Effectiveness indicator */}
-                <div className="absolute -left-8 inset-y-0 flex flex-col justify-between items-center my-6">
-                  <div className="writing-mode-vertical-rl transform rotate-180 text-green-400 text-sm font-medium">Most Effective</div>
-                  <div className="h-32 w-0.5 bg-gradient-to-b from-green-500 via-yellow-500 to-red-500 my-2"></div>
-                  <div className="writing-mode-vertical-rl transform rotate-180 text-red-400 text-sm font-medium">Least Effective</div>
-                </div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           </div>
           
           <div className="mt-6 p-4 bg-elec-dark/70 border border-elec-yellow/20 rounded-lg">

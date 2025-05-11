@@ -1,150 +1,135 @@
 
 import React from "react";
-import { Lock, CheckSquare2, ShieldAlert, CircleAlert } from "lucide-react";
+import { LockKeyhole, Check, AlertTriangle, Lightbulb, Zap } from "lucide-react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 const SafeIsolationProcedures = () => {
   return (
-    <div className="space-y-4">
-      <h3 className="text-2xl font-bold text-elec-yellow">Safe Isolation Procedures</h3>
-      
-      <p className="text-base md:text-lg mb-4">
-        Safe isolation is a critical procedure that ensures electrical systems are completely disconnected from their power 
-        source before work begins. This process protects electricians from electric shock, arc flash, and other electrical hazards.
-      </p>
-      
-      <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg overflow-hidden">
-        {/* Header with banner */}
-        <div className="bg-elec-yellow/10 p-4 flex items-center gap-3 border-b border-elec-yellow/20">
-          <div className="p-2 bg-elec-yellow/20 rounded-full">
-            <Lock className="h-6 w-6 text-elec-yellow" />
-          </div>
-          <h4 className="font-semibold text-xl text-elec-yellow">The Safe Isolation Process</h4>
+    <Card className="bg-elec-gray border border-elec-yellow/20 h-full">
+      <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent border-b border-elec-yellow/20 pb-3">
+        <div className="flex items-center gap-2">
+          <LockKeyhole className="h-5 w-5 text-elec-yellow" />
+          <h4 className="text-xl font-semibold text-elec-yellow">Safe Isolation Procedures</h4>
         </div>
+      </CardHeader>
+      
+      <CardContent className="pt-4 space-y-6">
+        <p className="text-sm">
+          Safe isolation is a critical procedure that ensures electrical circuits are disconnected from their power source 
+          before work begins, protecting electricians from electric shock, burns, and other injuries.
+        </p>
         
-        <div className="p-5 md:p-6">
-          {/* Main content grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Left column */}
-            <div className="space-y-5">
-              <div className="bg-gradient-to-r from-elec-gray to-elec-gray/80 rounded-lg p-4">
-                <h5 className="flex items-center gap-2 font-medium text-elec-yellow text-lg mb-3">
-                  <span className="bg-elec-yellow/10 p-1.5 rounded-md flex items-center justify-center w-7 h-7">1</span>
-                  Preparation
-                </h5>
-                <ul className="space-y-2 text-base">
-                  <li className="flex items-start gap-2">
-                    <CheckSquare2 className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                    <span>Obtain permission to isolate from the appropriate authority</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckSquare2 className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                    <span>Identify the correct circuit or equipment to be isolated</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckSquare2 className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                    <span>Check isolation equipment is in good condition and properly calibrated</span>
-                  </li>
-                </ul>
+        <div className="space-y-4">
+          {/* Essential Steps */}
+          <h5 className="font-medium text-elec-yellow">The Essential 7-Step Procedure:</h5>
+          <div className="grid grid-cols-1 gap-3">
+            {steps.map((step, index) => (
+              <div 
+                key={index} 
+                className="p-3 bg-elec-dark/70 border border-elec-yellow/20 rounded-lg flex gap-3 hover:border-elec-yellow/40 transition-colors"
+              >
+                <div className="bg-elec-yellow/10 h-8 w-8 rounded-full flex items-center justify-center shrink-0 mt-0.5">
+                  <span className="text-elec-yellow font-medium">{index + 1}</span>
+                </div>
+                <div className="space-y-1">
+                  <h6 className="font-semibold text-white">{step.title}</h6>
+                  <p className="text-sm text-gray-300">{step.description}</p>
+                </div>
               </div>
-              
-              <div className="bg-gradient-to-r from-elec-gray to-elec-gray/80 rounded-lg p-4">
-                <h5 className="flex items-center gap-2 font-medium text-elec-yellow text-lg mb-3">
-                  <span className="bg-elec-yellow/10 p-1.5 rounded-md flex items-center justify-center w-7 h-7">2</span>
-                  Isolation
-                </h5>
-                <ul className="space-y-2 text-base">
-                  <li className="flex items-start gap-2">
-                    <CheckSquare2 className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                    <span>Switch off the identified circuit or equipment</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckSquare2 className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                    <span>Lock the isolation point with an appropriate lock-off device</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckSquare2 className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                    <span>Apply warning tags with your name, contact details, and date</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            
-            {/* Right column */}
-            <div className="space-y-5">
-              <div className="bg-gradient-to-r from-elec-gray to-elec-gray/80 rounded-lg p-4">
-                <h5 className="flex items-center gap-2 font-medium text-elec-yellow text-lg mb-3">
-                  <span className="bg-elec-yellow/10 p-1.5 rounded-md flex items-center justify-center w-7 h-7">3</span>
-                  Verification
-                </h5>
-                <ul className="space-y-2 text-base">
-                  <li className="flex items-start gap-2">
-                    <CheckSquare2 className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                    <span>Test the voltage tester on a known live source</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckSquare2 className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                    <span>Confirm the isolated circuit is dead using approved voltage indicator</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckSquare2 className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                    <span>Verify the voltage tester is working by testing again on a known live source</span>
-                  </li>
-                </ul>
-              </div>
-              
-              <div className="bg-gradient-to-r from-elec-gray to-elec-gray/80 rounded-lg p-4">
-                <h5 className="flex items-center gap-2 font-medium text-elec-yellow text-lg mb-3">
-                  <span className="bg-elec-yellow/10 p-1.5 rounded-md flex items-center justify-center w-7 h-7">4</span>
-                  Security & Completion
-                </h5>
-                <ul className="space-y-2 text-base">
-                  <li className="flex items-start gap-2">
-                    <CheckSquare2 className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                    <span>Secure the work area to prevent unauthorized access</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckSquare2 className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                    <span>Only remove lock-off devices when all work is completed</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <CheckSquare2 className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
-                    <span>Check area is clear before reinstating power</span>
-                  </li>
-                </ul>
+            ))}
+          </div>
+          
+          {/* Required Equipment */}
+          <div className="mt-6">
+            <h5 className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
+              <Lightbulb className="h-4 w-4" />
+              Required Equipment
+            </h5>
+            <ul className="space-y-2 text-sm">
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-green-400" />
+                <span>Approved voltage indicators (GS38 compliant)</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-green-400" />
+                <span>Proving units for testing voltage indicators</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-green-400" />
+                <span>Locking off devices and padlocks</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-green-400" />
+                <span>Warning notices and tags</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-green-400" />
+                <span>Insulated tools and PPE</span>
+              </li>
+            </ul>
+          </div>
+          
+          {/* Warning Box */}
+          <div className="p-3 bg-red-900/20 border border-red-500/30 rounded-lg mt-4">
+            <div className="flex items-start gap-2">
+              <AlertTriangle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
+              <div>
+                <h6 className="font-medium text-red-400">Critical Safety Warning</h6>
+                <p className="text-sm text-gray-300 mt-1">
+                  Never rely on isolation switches alone. Always follow the complete safe isolation procedure and verify 
+                  the absence of voltage before beginning work.
+                </p>
               </div>
             </div>
           </div>
           
-          {/* Safety box */}
-          <div className="mt-6 bg-elec-dark/80 rounded-lg border border-red-400/30 p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <ShieldAlert className="h-5 w-5 text-red-400" />
-              <h5 className="text-red-400 font-medium">Critical Safety Points</h5>
+          {/* Regulations */}
+          <div className="p-3 bg-elec-dark/50 rounded-lg border border-elec-yellow/20 mt-2">
+            <div className="flex items-center gap-2">
+              <Zap className="h-4 w-4 text-elec-yellow" />
+              <span className="text-sm text-elec-yellow font-medium">Electricity at Work Regulations 1989</span>
             </div>
-            
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-              <li className="flex items-start gap-2">
-                <CircleAlert className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
-                <span className="text-sm">Never rely on isolation devices without verification</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CircleAlert className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
-                <span className="text-sm">Always perform the live-dead-live test sequence</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CircleAlert className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
-                <span className="text-sm">Use your own lock and keep the key with you</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <CircleAlert className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
-                <span className="text-sm">Never work on equipment that you haven't personally verified</span>
-              </li>
-            </ul>
+            <p className="text-xs text-gray-300 mt-1">
+              Regulation 13 specifically requires that adequate precautions are taken to prevent electrical equipment that has 
+              been made dead from becoming live while work is carried out.
+            </p>
           </div>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
+
+// Data for the steps
+const steps = [
+  {
+    title: "Identify",
+    description: "Correctly identify the circuit or equipment to be worked on."
+  },
+  {
+    title: "Isolate",
+    description: "Switch off and secure the correct isolation device."
+  },
+  {
+    title: "Prove the tester",
+    description: "Test your voltage indicator on a known live source."
+  },
+  {
+    title: "Test dead",
+    description: "Verify the circuit or equipment is not energized."
+  },
+  {
+    title: "Reprove the tester",
+    description: "Test your voltage indicator again on a known live source."
+  },
+  {
+    title: "Lock off and tag",
+    description: "Apply locks and warning notices to prevent reconnection."
+  },
+  {
+    title: "Issue permit-to-work",
+    description: "For complex systems, issue formal authorization documents."
+  }
+];
 
 export default SafeIsolationProcedures;

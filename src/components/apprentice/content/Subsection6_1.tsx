@@ -17,8 +17,8 @@ const Subsection6_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       {/* Introduction Section */}
       <IntroSection subsectionId={subsectionId} />
       
-      {/* Decorative Separator */}
-      <div className="flex items-center gap-4 py-2">
+      {/* Decorative Separator with Icon */}
+      <div className="flex items-center gap-4 py-4">
         <Separator className="flex-grow bg-elec-yellow/30" />
         <div className="bg-elec-yellow/10 p-2 rounded-full">
           <span className="text-elec-yellow text-xl">⚡</span>
@@ -26,11 +26,14 @@ const Subsection6_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         <Separator className="flex-grow bg-elec-yellow/30" />
       </div>
       
-      {/* Safe Isolation Procedures - New Section */}
-      <SafeIsolationProcedures />
-      
-      {/* Working Practices Section */}
-      <WorkingPractices />
+      {/* Safe Isolation Procedures */}
+      <div className="rounded-lg border border-elec-yellow/20 p-6 bg-gradient-to-b from-elec-dark/50 to-elec-dark">
+        <h3 className="text-2xl font-bold text-elec-yellow mb-6">Essential Safety Procedures</h3>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <SafeIsolationProcedures />
+          <WorkingPractices />
+        </div>
+      </div>
       
       {/* Risk Assessment Section */}
       <RiskAssessment />
@@ -39,7 +42,7 @@ const Subsection6_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       <PlanningConsiderations />
       
       {/* Completion Button */}
-      <div className="pt-4 border-t border-elec-yellow/20">
+      <div className="pt-6 border-t border-elec-yellow/20">
         <CompletionButton isCompleted={isCompleted} markAsComplete={markAsComplete} />
       </div>
     </div>
