@@ -1,29 +1,33 @@
 
-import { SectionData } from './types';
+import { legislationSection } from './section1-legislation';
+import { safeWorkingEnvironmentSection } from './section2-environment';
+import { electricalSafetySection } from './section3-electrical';
+import { accessEquipmentSection } from './section4-access';
+import { hazardsSection } from './section5-hazards';
+import { safeWorkingPracticesSection } from './section6-practices';
 
-// Simple placeholder sections
-const placeholderSections: SectionData[] = [
-  {
-    sectionNumber: "1",
-    title: "Health and Safety Legislation",
-    description: "Understanding key electrical safety regulations",
-    content: {
-      introduction: "Overview of relevant health and safety legislation.",
-      subsections: [
-        {
-          id: "1",
-          title: "Electricity at Work Regulations",
-          content: "Key requirements of the Electricity at Work Regulations 1989.",
-          keyPoints: ["Employer responsibilities", "Worker responsibilities"]
-        }
-      ]
-    }
-  }
+export const healthAndSafetySections = [
+  legislationSection,
+  safeWorkingEnvironmentSection,
+  electricalSafetySection,
+  accessEquipmentSection,
+  hazardsSection,
+  safeWorkingPracticesSection
 ];
 
-export const healthAndSafetySections = placeholderSections;
-export const healthAndSafetyContent = placeholderSections;
+export const getHealthSafetySectionById = (sectionId: string) => {
+  return healthAndSafetySections.find(section => section.sectionNumber === sectionId);
+};
 
-export const getHealthAndSafetySection = (sectionNumber: string): SectionData | null => {
-  return healthAndSafetySections.find(section => section.sectionNumber === sectionNumber) || null;
+export const getSubsectionById = (sectionId: string, subsectionId: string) => {
+  const section = getHealthSafetySectionById(sectionId);
+  if (!section) return null;
+  
+  const subsections = section.content && 
+                     typeof section.content === 'object' && 
+                     'subsections' in section.content ? 
+                     section.content.subsections : 
+                     section.subsections || [];
+                     
+  return subsections.find(sub => sub.id === subsectionId);
 };

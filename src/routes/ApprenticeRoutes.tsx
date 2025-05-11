@@ -10,6 +10,8 @@ import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import CareerProgression from "@/pages/apprentice/CareerProgression";
 import EALCourses from "@/pages/apprentice/EALCourses";
 import EALLevel2Diploma from "@/pages/apprentice/EALLevel2Diploma";
+import UnitContent from "@/pages/apprentice/UnitContent";
+import SectionContent from "@/pages/apprentice/SectionContent";
 import HigherLearningCourses from "@/pages/apprentice/HigherLearningCourses";
 import CityGuildsCourses from "@/pages/apprentice/CityGuildsCourses";
 import OnJobTools from "@/pages/apprentice/OnJobTools";
@@ -67,6 +69,9 @@ const ApprenticeRoutes = () => {
         <Route path="mock-exams/:examId" element={<MockExamDetails />} />
         <Route path="eal" element={<EALCourses />} />
         <Route path="eal/level-2-diploma" element={<EALLevel2Diploma />} />
+        <Route path="eal/level-2-diploma/unit/:unitId" element={<UnitContent />} />
+        <Route path="eal/level-2-diploma/unit/:unitId/section/:sectionId" element={<SectionContent />} />
+        <Route path="eal/level-2-diploma/unit/:unitId/quiz" element={<SectionContent />} />
         <Route path="cityGuilds" element={<CityGuildsCourses />} />
         <Route path="higher" element={<HigherLearningCourses />} />
         

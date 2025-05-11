@@ -1,24 +1,34 @@
 
-export interface Section {
-  id: string;
-  title: string;
-  description?: string;
-}
-
 export interface CourseUnit {
   id: string;
   title: string;
-  description: string;
-  sections: Section[];
   code: string;
-  resources: any[]; // Adding this to fix the CourseUnitGrid errors
+  description: string;
+  sections: CourseSection[];
+  resources: UnitResource[];
 }
 
-export interface Course {
+export interface CourseSection {
   id: string;
   title: string;
   description: string;
-  units: CourseUnit[];
+  completed?: boolean;
+  subsections?: CourseSectionContent[];
+}
+
+export interface CourseSectionContent {
+  id: string;
+  title: string;
+  content: string;
+  keyPoints?: string[];
+}
+
+export interface UnitResource {
+  id: string;
+  title: string;
+  type: 'pdf' | 'video' | 'link' | 'assessment';
+  url: string;
+  completed?: boolean;
 }
 
 export interface SectionData {
@@ -30,7 +40,7 @@ export interface SectionData {
     subsections: Subsection[];
     icon?: string;
   };
-  subsections?: Subsection[];
+  subsections?: Subsection[]; // For backward compatibility
 }
 
 export interface Subsection {
@@ -38,11 +48,5 @@ export interface Subsection {
   title: string;
   content: string;
   keyPoints?: string[];
-  number?: string;
-}
-
-export interface CourseResource {
-  id: string;
-  title: string;
-  type: string;
+  number?: string; // Making this optional
 }
