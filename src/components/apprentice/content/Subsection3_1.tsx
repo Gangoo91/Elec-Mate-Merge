@@ -11,13 +11,7 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       <CourseContentSection
         title="Electrical Safety Fundamentals"
         description="Electrical safety is fundamental to preventing accidents in electrical work. Understanding the dangers posed by electricity and taking appropriate precautions is essential for all electrical workers. The Electricity at Work Regulations 1989 place legal responsibilities on both employers and individuals to ensure competence for electrical work."
-        keyPoints={[
-          "Electric shock can cause effects ranging from tingling to death, with 50mA potentially fatal",
-          "Safe isolation procedures must be followed without exception before working on electrical equipment",
-          "Electrical fires can result from overheating, arcing, or ignition of combustible materials",
-          "The Electricity at Work Regulations 1989 require competence for all electrical work",
-          "Appropriate PPE and insulated tools must be used for electrical work"
-        ]}
+        keyPoints={[]}
         icon="shield-alert"
         subsectionId={subsectionId}
       />
