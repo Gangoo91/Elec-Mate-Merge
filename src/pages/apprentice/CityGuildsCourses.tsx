@@ -74,14 +74,16 @@ const CityGuildsCourses = () => {
             <Card 
               className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full"
             >
-              <CardContent className="flex flex-col items-center justify-center p-6 h-full">
-                <BookOpen className="h-10 w-10 text-elec-yellow mb-4 opacity-80" />
-                <h3 className="text-xl font-medium text-center mb-2">
-                  {course.title}
-                </h3>
-                <p className="text-sm text-muted-foreground text-center">
-                  {course.description}
-                </p>
+              <CardContent className="flex flex-col h-full p-6">
+                <div className="flex flex-col items-center justify-center flex-grow">
+                  <BookOpen className="h-10 w-10 text-elec-yellow mb-4 opacity-80" />
+                  <h3 className="text-xl font-medium text-center mb-2">
+                    {course.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground text-center">
+                    {course.description}
+                  </p>
+                </div>
               </CardContent>
             </Card>
           </Link>
