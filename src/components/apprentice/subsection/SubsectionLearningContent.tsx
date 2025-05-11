@@ -43,9 +43,6 @@ const SubsectionLearningContent = ({
             <p>No subsection ID provided. Please select a valid section.</p>
           )}
         </div>
-        
-        {/* Completion Button - Only show if completion button isn't already in the component */}
-        {/* We'll remove this button since the subsection components now have their own */}
       </div>
     </div>
   );

@@ -6,13 +6,13 @@ import SubsectionLearningContent from "@/components/apprentice/subsection/Subsec
 import { useSubsectionContent } from "@/hooks/useSubsectionContent";
 
 const SubsectionContent = () => {
-  const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
+  const { courseSlug = "level-2-diploma", unitSlug = "health-safety", sectionId, subsectionId } = useParams();
   const [isCompleted, setIsCompleted] = useState(false);
   
   // Log parameters to debug
   console.log("SubsectionContent params:", { courseSlug, unitSlug, sectionId, subsectionId });
   
-  // Use default values if parameters are undefined
+  // Ensure we have valid parameters for all routes
   const effectiveCourseSlug = courseSlug || "level-2-diploma";
   const effectiveUnitSlug = unitSlug || "health-safety";
   

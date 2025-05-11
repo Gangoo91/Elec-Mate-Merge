@@ -50,6 +50,7 @@ export function useSubsectionContent({
           const storageKey = `completion_hs_${sectionId}_${subsectionId}`;
           const storedCompletion = localStorage.getItem(storageKey);
           setIsCompleted(storedCompletion === 'true');
+          console.log("Checking completion status:", storageKey, storedCompletion);
         } else {
           console.log("No subsection found for ID:", subsectionId);
         }
@@ -74,6 +75,7 @@ export function useSubsectionContent({
       const storageKey = `completion_hs_${sectionId}_${subsectionId}`;
       localStorage.setItem(storageKey, 'true');
       setIsCompleted(true);
+      console.log("Marked as complete:", storageKey);
     }
   };
   

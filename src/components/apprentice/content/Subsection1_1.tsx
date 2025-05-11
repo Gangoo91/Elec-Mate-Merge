@@ -9,36 +9,63 @@ import {
   CardHeader, 
   CardTitle 
 } from '@/components/ui/card';
-import CourseContentSection from '../CourseContentSection';
+import { 
+  Table, 
+  TableBody, 
+  TableCaption, 
+  TableCell, 
+  TableHead, 
+  TableHeader, 
+  TableRow 
+} from '@/components/ui/table';
+import { AlertCircle, Shield, BookOpen, FileText, CheckSquare } from 'lucide-react';
 
 const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
     <div className="space-y-8">
-      <h1 className="text-2xl font-bold text-elec-yellow">Legislation and Regulations in Electrical Work</h1>
+      <h1 className="text-2xl font-bold text-elec-yellow">Electricity at Work Regulations 1989</h1>
+      
+      <div className="bg-elec-dark/50 border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+        <div className="flex items-start gap-4">
+          <div className="bg-elec-yellow/20 p-3 rounded-full">
+            <Shield className="h-6 w-6 text-elec-yellow" />
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold text-elec-yellow">Key Information</h2>
+            <p className="text-muted-foreground mt-1">
+              The Electricity at Work Regulations 1989 (EWR) came into force on 1 April 1990 and apply to all aspects of 
+              the use of electricity in the workplace. They are made under the Health and Safety at Work etc. Act 1974 
+              and enforce a high standard of electrical safety in all workplaces.
+            </p>
+          </div>
+        </div>
+      </div>
       
       <Card className="border-elec-yellow/30 bg-elec-dark/50">
         <CardHeader className="pb-2">
-          <CardTitle className="text-xl text-elec-yellow">Electricity at Work Regulations 1989</CardTitle>
-          <CardDescription>A cornerstone of electrical safety legislation</CardDescription>
+          <CardTitle className="text-xl text-elec-yellow">Core Principles</CardTitle>
+          <CardDescription>The fundamental requirements established by the regulations</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <p>
-            The Electricity at Work Regulations 1989 (EWR) is a key piece of legislation that 
-            establishes legal duties for employers, employees, and self-employed persons. These 
-            regulations specifically cover the safety of electrical systems and equipment in 
-            workplaces across the UK.
+            The Electricity at Work Regulations 1989 establish legal requirements for employers, employees, and self-employed 
+            persons to ensure electrical safety in the workplace. They apply to all electrical equipment and systems, from 
+            power stations to the smallest portable appliance.
           </p>
           
           <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-semibold text-elec-yellow mb-2">Key Requirements:</h3>
             <ul className="list-disc pl-5 space-y-2">
-              <li>All electrical systems must be maintained in a safe condition</li>
-              <li>Work activities must be carried out safely to prevent danger</li>
-              <li>Only competent persons may work on electrical systems</li>
+              <li>All electrical systems must be constructed and maintained to prevent danger</li>
+              <li>All work activities involving electrical systems must be carried out safely</li>
+              <li>Only persons with appropriate technical knowledge or experience may work on electrical systems</li>
               <li>All conductors must be insulated, protected, or placed to prevent danger</li>
-              <li>Equipment must be suitable for its environment and intended use</li>
-              <li>Means for cutting off the electrical supply and for isolation must be provided</li>
-              <li>Precautions must be taken when working on dead circuits to prevent them becoming live</li>
+              <li>Precautions must be taken against adverse or hazardous environments</li>
+              <li>Electrical equipment must be suitable for its environment and intended use</li>
+              <li>Equipment must be properly isolated before work is carried out</li>
+              <li>Adequate working space, access, and lighting must be provided for electrical work</li>
+              <li>Persons working on electrical systems must be competent to prevent danger</li>
+              <li>Testing and inspection must be carried out to prevent danger</li>
             </ul>
           </div>
         </CardContent>
@@ -46,54 +73,136 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       
       <Card className="border-elec-yellow/30 bg-elec-dark/50">
         <CardHeader className="pb-2">
-          <CardTitle className="text-xl text-elec-yellow">Health and Safety at Work Act 1974</CardTitle>
-          <CardDescription>The foundation of workplace safety legislation</CardDescription>
+          <CardTitle className="text-xl text-elec-yellow">Regulation 4: Systems, Work Activities and Protective Equipment</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <p>
-            The Health and Safety at Work Act 1974 (HSWA) is the primary piece of legislation covering 
-            occupational health and safety in the UK. It establishes a framework for managing workplace 
-            health and safety, and places general duties on employers, employees, and the self-employed.
+            This key regulation requires that all electrical systems be constructed and maintained to prevent danger. It establishes 
+            the fundamental safety requirements for all electrical installations and equipment.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
-            <h3 className="text-lg font-semibold text-elec-yellow mb-2">Key Provisions:</h3>
+          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mb-4">
+            <h3 className="text-lg font-semibold text-elec-yellow mb-2">Requirements for Compliance:</h3>
             <ul className="list-disc pl-5 space-y-2">
-              <li>Employers must ensure the health, safety and welfare of all employees</li>
-              <li>Safe systems of work must be provided and maintained</li>
-              <li>Information, instruction, training, and supervision must be provided</li>
-              <li>Workplaces must be maintained in a safe condition</li>
-              <li>Employees must take reasonable care of their own safety and that of others</li>
-              <li>Employees must cooperate with employers on health and safety matters</li>
-              <li>Equipment and substances must be handled and stored safely</li>
+              <li>All electrical systems must be of suitable construction</li>
+              <li>Systems must be maintained in a safe condition</li>
+              <li>Systems must be protected from foreseeable environmental conditions</li>
+              <li>Work activities must not give rise to danger</li>
+              <li>Protective equipment must be suitable for use and properly maintained</li>
+              <li>The system design must consider the environment it will operate in</li>
             </ul>
+          </div>
+          
+          <div className="bg-elec-yellow/10 p-4 rounded-md border border-elec-yellow/30 flex items-start gap-3">
+            <AlertCircle className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
+            <p className="text-sm">
+              <span className="font-semibold text-elec-yellow">Important Note:</span> Regulation 4 is absolute in nature, 
+              meaning there is no qualification of "so far as is reasonably practicable." This makes compliance 
+              mandatory regardless of cost or difficulty.
+            </p>
           </div>
         </CardContent>
       </Card>
       
       <Card className="border-elec-yellow/30 bg-elec-dark/50">
         <CardHeader className="pb-2">
-          <CardTitle className="text-xl text-elec-yellow">COSHH Regulations</CardTitle>
-          <CardDescription>Control of Substances Hazardous to Health</CardDescription>
+          <CardTitle className="text-xl text-elec-yellow">Regulation 14: Working on or Near Live Conductors</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <p>
-            The Control of Substances Hazardous to Health Regulations 2002 (COSHH) require employers to 
-            control substances that are hazardous to health. In electrical work, this includes exposure 
-            to hazardous substances such as solvents, fluxes, lead, sealants, and insulation materials.
+            This critical regulation establishes the requirements for any work on or near live electrical conductors. It is 
+            particularly relevant for electricians who may need to work with live systems.
           </p>
           
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
-            <h3 className="text-lg font-semibold text-elec-yellow mb-2">Requirements for Electricians:</h3>
+          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mb-4">
+            <h3 className="text-lg font-semibold text-elec-yellow mb-2">The Three Conditions:</h3>
+            <p className="mb-2">
+              Under Regulation 14, no person shall work on or near any live conductor unless:
+            </p>
+            <ol className="list-decimal pl-5 space-y-2">
+              <li>It is unreasonable in all circumstances for the conductor to be dead</li>
+              <li>It is reasonable in all circumstances for the person to work on or near the conductor while it is live</li>
+              <li>Suitable precautions are taken to prevent injury</li>
+            </ol>
+          </div>
+          
+          <Table>
+            <TableCaption>Common examples of suitable precautions for live working</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-1/4">Precaution Type</TableHead>
+                <TableHead>Description</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableRow>
+                <TableCell className="font-medium">PPE</TableCell>
+                <TableCell>Insulated tools, rubber mats, insulating gloves, face shields</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Workspace</TableCell>
+                <TableCell>Adequate working space, good lighting, dry conditions</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Procedural</TableCell>
+                <TableCell>Permits to work, risk assessments, method statements</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Personnel</TableCell>
+                <TableCell>Second person present, competent supervision</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className="font-medium">Engineering</TableCell>
+                <TableCell>Temporary insulation, shrouding, barriers, screens</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+      
+      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xl text-elec-yellow">Competence Requirements (Regulation 16)</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p>
+            Regulation 16 requires that no person shall engage in work that requires technical knowledge or experience
+            to prevent danger unless they have that knowledge or experience, or are under appropriate supervision.
+          </p>
+          
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+              <h3 className="text-lg font-semibold text-elec-yellow mb-2">Technical Knowledge</h3>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>Understanding of electrical theory</li>
+                <li>Knowledge of the system being worked on</li>
+                <li>Awareness of hazards and safety requirements</li>
+                <li>Familiarity with relevant standards and procedures</li>
+                <li>Understanding of test equipment and methods</li>
+              </ul>
+            </div>
+            
+            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
+              <h3 className="text-lg font-semibold text-elec-yellow mb-2">Experience</h3>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>Practical application of technical knowledge</li>
+                <li>Demonstrated ability to work safely</li>
+                <li>Familiarity with tools and equipment</li>
+                <li>Past similar work completed successfully</li>
+                <li>Proven problem-solving capabilities</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 mt-4">
+            <h3 className="text-lg font-semibold text-elec-yellow mb-2">Documentation of Competence:</h3>
             <ul className="list-disc pl-5 space-y-2">
-              <li>Assess the risks to health from hazardous substances</li>
-              <li>Decide what precautions are needed before starting work</li>
-              <li>Prevent or control exposure to hazardous substances</li>
-              <li>Use control measures properly and follow standard operating procedures</li>
-              <li>Maintain, examine, and test control measures regularly</li>
-              <li>Monitor exposure where necessary</li>
-              <li>Carry out health surveillance where necessary</li>
-              <li>Properly store, handle, and dispose of hazardous substances</li>
+              <li>Formal qualifications (City & Guilds, NVQs, etc.)</li>
+              <li>Training certificates and records</li>
+              <li>Evidence of continuing professional development</li>
+              <li>Employer authorization/competency assessment</li>
+              <li>Professional registration (e.g., with IET, ECA)</li>
+              <li>Apprenticeship completion certificates</li>
             </ul>
           </div>
         </CardContent>
@@ -101,20 +210,76 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
       
       <Card className="border-elec-yellow/30 bg-elec-dark/50">
         <CardHeader className="pb-2">
-          <CardTitle className="text-xl text-elec-yellow">Other Relevant Regulations</CardTitle>
+          <CardTitle className="text-xl text-elec-yellow">Legal Enforcement and Penalties</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20">
-            <h3 className="text-lg font-semibold text-elec-yellow mb-2">Additional Legislation for Electricians:</h3>
-            <ul className="list-disc pl-5 space-y-2">
-              <li><span className="font-semibold">BS 7671 (IET Wiring Regulations)</span> - Provides technical standards for electrical installations</li>
-              <li><span className="font-semibold">Building Regulations Part P</span> - Applies to domestic electrical installations</li>
-              <li><span className="font-semibold">Management of Health and Safety at Work Regulations</span> - Requires risk assessments</li>
-              <li><span className="font-semibold">Work at Height Regulations</span> - For working safely at heights</li>
-              <li><span className="font-semibold">Personal Protective Equipment at Work Regulations</span> - Covers PPE requirements</li>
-              <li><span className="font-semibold">Manual Handling Operations Regulations</span> - For safe lifting and carrying</li>
-              <li><span className="font-semibold">Provision and Use of Work Equipment Regulations</span> - For safe use of equipment</li>
+          <p>
+            The Health and Safety Executive (HSE) and local authorities enforce the Electricity at Work Regulations 1989.
+            Breaches can result in significant penalties, including fines and imprisonment.
+          </p>
+          
+          <div className="bg-elec-yellow/10 p-4 rounded-md border border-elec-yellow/30">
+            <h3 className="text-lg font-semibold text-elec-yellow mb-2">Potential Penalties:</h3>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Improvement notices requiring remedial action</li>
+              <li>Prohibition notices stopping dangerous activities</li>
+              <li>Fines with no upper limit for serious offenses</li>
+              <li>Imprisonment up to 2 years for the most serious cases</li>
+              <li>Corporate manslaughter charges in fatality cases</li>
+              <li>Disqualification from directorship</li>
             </ul>
+          </div>
+          
+          <div className="flex items-start gap-4 mt-4">
+            <div className="bg-elec-yellow/20 p-3 rounded-full">
+              <FileText className="h-6 w-6 text-elec-yellow" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-elec-yellow">Case Law</h3>
+              <p className="text-muted-foreground mt-1">
+                Several landmark legal cases have established precedents in the application of the EWR, including 
+                R v HTM Ltd (2006), where a company was fined £175,000 after an employee was fatally electrocuted, 
+                and R v Balfour Beatty Rail Infrastructure Services Ltd (2006), resulting in a £10 million fine.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+      
+      <Card className="border-elec-yellow/30 bg-elec-dark/50">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xl text-elec-yellow">Guidance and Resources</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 flex flex-col h-full">
+              <div className="flex items-center gap-2 mb-2">
+                <BookOpen className="h-5 w-5 text-elec-yellow" />
+                <h3 className="text-lg font-semibold text-elec-yellow">Official Publications</h3>
+              </div>
+              <ul className="list-disc pl-5 space-y-1 flex-grow">
+                <li>HSE Guidance Note HSR25</li>
+                <li>Memorandum of Guidance on the EWR</li>
+                <li>BS 7671 IET Wiring Regulations</li>
+                <li>Guidance Notes 1-8 by the IET</li>
+                <li>HSE Electrical Safety at Work website</li>
+              </ul>
+            </div>
+            
+            <div className="bg-elec-dark rounded-md p-4 border border-elec-yellow/20 flex flex-col h-full">
+              <div className="flex items-center gap-2 mb-2">
+                <CheckSquare className="h-5 w-5 text-elec-yellow" />
+                <h3 className="text-lg font-semibold text-elec-yellow">Compliance Checklist</h3>
+              </div>
+              <ul className="list-disc pl-5 space-y-1 flex-grow">
+                <li>Risk assessments completed</li>
+                <li>Safe systems of work established</li>
+                <li>Competency records maintained</li>
+                <li>Test and inspection regimes in place</li>
+                <li>Documentation and certification up to date</li>
+                <li>Suitable tools and PPE provided</li>
+              </ul>
+            </div>
           </div>
         </CardContent>
       </Card>
