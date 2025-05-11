@@ -18,7 +18,7 @@ const IntroSection = ({ subsectionId }: IntroSectionProps) => {
         "Communication protocols during workplace emergencies",
         "Post-incident reporting and documentation requirements"
       ]}
-      icon="alert-triangle"
+      icon="shield-alert"
       subsectionId={subsectionId}
     />
   );

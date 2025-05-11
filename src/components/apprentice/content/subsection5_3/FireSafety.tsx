@@ -5,9 +5,9 @@ import { Flame, FileText, ShieldAlert } from "lucide-react";
 const FireSafety = () => {
   return (
     <div className="space-y-4">
-      <h3 className="text-xl font-bold text-elec-yellow">Fire Safety for Electrical Environments</h3>
+      <h3 className="text-2xl font-bold text-elec-yellow">Fire Safety for Electrical Environments</h3>
       
-      <p className="text-sm md:text-base mb-4">
+      <p className="text-base md:text-lg mb-4">
         Electrical fires require specific response procedures due to their unique hazards. Understanding the 
         correct extinguishing methods and preventive measures is essential for all electrical workers.
       </p>
@@ -20,15 +20,15 @@ const FireSafety = () => {
               <div className="p-1.5 bg-elec-yellow/10 rounded">
                 <Flame className="h-5 w-5 text-elec-yellow" />
               </div>
-              <h4 className="font-medium text-elec-yellow">Fire Classification & Extinguishers</h4>
+              <h4 className="font-medium text-elec-yellow text-lg">Fire Classification & Extinguishers</h4>
             </div>
             
             <div className="bg-elec-gray rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-sm mb-1">Electrical Fires (Class E/C)</h5>
-              <p className="text-sm mb-2">Electrical fires are classified as Class E (UK) or Class C (EU) fires. They require specific extinguishing agents that do not conduct electricity.</p>
+              <h5 className="font-medium text-elec-yellow text-base mb-1">Electrical Fires (Class E/C)</h5>
+              <p className="text-base mb-2">Electrical fires are classified as Class E (UK) or Class C (EU) fires. They require specific extinguishing agents that do not conduct electricity.</p>
               
-              <h6 className="font-medium text-white text-xs mt-3 mb-1">Appropriate Extinguishers:</h6>
-              <ul className="list-disc list-inside text-sm space-y-1">
+              <h6 className="font-medium text-white text-sm mt-3 mb-1">Appropriate Extinguishers:</h6>
+              <ul className="list-disc list-inside text-base space-y-1">
                 <li><span className="text-elec-yellow">CO₂ extinguishers</span> - Primary choice for electrical fires</li>
                 <li><span className="text-elec-yellow">Dry powder</span> - Effective but causes significant mess</li>
                 <li className="text-red-400">NEVER use water or foam extinguishers on live electrical equipment</li>
@@ -36,15 +36,15 @@ const FireSafety = () => {
             </div>
             
             <div className="bg-elec-gray rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-sm mb-1">Fire Extinguisher Operation (PASS)</h5>
-              <ol className="list-decimal list-inside text-sm space-y-1">
+              <h5 className="font-medium text-elec-yellow text-base mb-1">Fire Extinguisher Operation (PASS)</h5>
+              <ol className="list-decimal list-inside text-base space-y-1">
                 <li><span className="font-medium">P</span>ull the pin</li>
                 <li><span className="font-medium">A</span>im at the base of the fire</li>
                 <li><span className="font-medium">S</span>queeze the handle</li>
                 <li><span className="font-medium">S</span>weep from side to side</li>
               </ol>
               
-              <p className="text-sm mt-2">Only attempt to fight small, contained fires if it is safe to do so and you have a clear escape route.</p>
+              <p className="text-base mt-2">Only attempt to fight small, contained fires if it is safe to do so and you have a clear escape route.</p>
             </div>
           </div>
           
@@ -54,12 +54,12 @@ const FireSafety = () => {
               <div className="p-1.5 bg-elec-yellow/10 rounded">
                 <ShieldAlert className="h-5 w-5 text-elec-yellow" />
               </div>
-              <h4 className="font-medium text-elec-yellow">Fire Prevention & Response</h4>
+              <h4 className="font-medium text-elec-yellow text-lg">Fire Prevention & Response</h4>
             </div>
             
             <div className="bg-elec-gray rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-sm mb-1">Preventive Measures</h5>
-              <ul className="list-disc list-inside text-sm space-y-1">
+              <h5 className="font-medium text-elec-yellow text-base mb-1">Preventive Measures</h5>
+              <ul className="list-disc list-inside text-base space-y-1">
                 <li>Regular inspection and maintenance of electrical equipment</li>
                 <li>Avoid overloading circuits and extension leads</li>
                 <li>Proper cable management to prevent damage</li>
@@ -70,8 +70,8 @@ const FireSafety = () => {
             </div>
             
             <div className="bg-elec-gray rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-sm mb-1">Response Procedures</h5>
-              <ol className="list-decimal list-inside text-sm space-y-1">
+              <h5 className="font-medium text-elec-yellow text-base mb-1">Response Procedures</h5>
+              <ol className="list-decimal list-inside text-base space-y-1">
                 <li>Raise the alarm immediately</li>
                 <li>If safe, disconnect power to affected equipment</li>
                 <li>Evacuate the area if fire cannot be controlled</li>
@@ -82,8 +82,8 @@ const FireSafety = () => {
             </div>
             
             <div className="bg-elec-gray rounded-md p-3">
-              <h5 className="font-medium text-elec-yellow text-sm mb-1">Post-Fire Investigation</h5>
-              <ul className="list-disc list-inside text-sm space-y-1">
+              <h5 className="font-medium text-elec-yellow text-base mb-1">Post-Fire Investigation</h5>
+              <ul className="list-disc list-inside text-base space-y-1">
                 <li>All electrical fires must be formally reported</li>
                 <li>Equipment involved should not be used until inspected</li>
                 <li>Root cause analysis should be conducted</li>
@@ -94,7 +94,7 @@ const FireSafety = () => {
           </div>
         </div>
         
-        <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-sm">
+        <div className="mt-4 p-4 bg-elec-dark/70 rounded-lg text-base">
           <div className="flex items-start gap-3">
             <FileText className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
             <div>
