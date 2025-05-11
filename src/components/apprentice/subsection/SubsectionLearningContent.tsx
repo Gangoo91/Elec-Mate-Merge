@@ -1,49 +1,18 @@
 
-import { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
-import { 
-  Accordion, 
-  AccordionContent, 
-  AccordionItem, 
-  AccordionTrigger 
-} from "@/components/ui/accordion";
+import React from "react";
+import { SubsectionProps } from "../content/subsection1_1/types";
 import SubsectionRenderer from "./SubsectionRenderer";
-import CourseContentSection from "@/components/apprentice/CourseContentSection";
 
-interface SubsectionLearningContentProps {
-  subsectionId: string;
-  isCompleted: boolean;
-  markAsComplete: () => void;
-}
+const SubsectionLearningContent = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
+  console.log("SubsectionLearningContent rendering with subsectionId:", subsectionId);
 
-const SubsectionLearningContent = ({
-  subsectionId,
-  isCompleted,
-  markAsComplete
-}: SubsectionLearningContentProps) => {
-  console.log("SubsectionLearningContent rendering with ID:", subsectionId);
-  
-  useEffect(() => {
-    console.log("SubsectionLearningContent mounted with subsectionId:", subsectionId, "isCompleted:", isCompleted);
-  }, [subsectionId, isCompleted]);
-  
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
-        {/* Content will be loaded dynamically based on subsectionId */}
-        <div className="prose prose-invert prose-yellow max-w-none">
-          {subsectionId ? (
-            <SubsectionRenderer 
-              subsectionId={subsectionId}
-              isCompleted={isCompleted}
-              markAsComplete={markAsComplete}
-            />
-          ) : (
-            <p>No subsection ID provided. Please select a valid section.</p>
-          )}
-        </div>
-      </div>
+    <div className="animate-fade-in">
+      <SubsectionRenderer
+        subsectionId={subsectionId}
+        isCompleted={isCompleted}
+        markAsComplete={markAsComplete}
+      />
     </div>
   );
 };
