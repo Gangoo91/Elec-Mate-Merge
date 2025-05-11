@@ -10,7 +10,7 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
     <div className="space-y-6">
       <CourseContentSection
         title="Electrical Safety Fundamentals"
-        description="Electrical safety is fundamental to preventing accidents in electrical work. Understanding the dangers posed by electricity and taking appropriate precautions is essential for all electrical workers. The Electricity at Work Regulations 1989 place legal responsibilities on both employers and individuals to ensure competence for electrical work."
+        description="Electrical safety is fundamental to preventing accidents in electrical work. Understanding the dangers posed by electricity and taking appropriate precautions is essential for all electrical workers."
         keyPoints={[]}
         icon="shield-alert"
         subsectionId={subsectionId}
@@ -23,13 +23,6 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             Electrical Hazards
           </h3>
           <div className="space-y-3">
-            <h4 className="font-semibold">Electric Shock</h4>
-            <p className="text-sm">
-              Electric shock occurs when current passes through the body, disrupting normal electrical functions.
-              The severity depends on current path, voltage, duration, body resistance, and frequency.
-              Wet conditions significantly reduce skin resistance, increasing shock hazard.
-            </p>
-            
             <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-4 mt-2">
               <h4 className="font-semibold text-elec-yellow mb-2">Current Effects on the Human Body:</h4>
               <ul className="list-disc pl-5 space-y-1 text-sm">
@@ -68,12 +61,7 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <Shield className="h-5 w-5 mr-2" />
             Safe Isolation Procedures
           </h3>
-          <div className="space-y-3">
-            <p className="text-sm">
-              Safe isolation is the process of ensuring electrical equipment is disconnected from all sources of supply
-              and cannot be reconnected while work is being carried out. This procedure must be followed without exception.
-            </p>
-            
+          <div className="space-y-3">            
             <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-4 mt-2">
               <h4 className="font-semibold text-elec-yellow mb-2">The Safe Isolation Procedure:</h4>
               <ol className="list-decimal pl-5 space-y-1 text-sm">
@@ -98,7 +86,6 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             
             <div className="mt-3 p-3 bg-elec-dark/70 rounded-lg border border-elec-yellow/30 text-sm">
               <p className="font-medium mb-1 text-elec-yellow">When is live work permitted?</p>
-              <p>Live working is only permitted when it can be demonstrated that:</p>
               <ul className="list-disc pl-5 space-y-1 mt-2">
                 <li>It is unreasonable in all circumstances for the conductor to be dead</li>
                 <li>It is reasonable in all circumstances for work to be carried out on or near a live conductor</li>
@@ -115,12 +102,7 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <AlertOctagon className="h-5 w-5 mr-2" />
             Electrical Safety Legislation
           </h3>
-          <div className="space-y-3">
-            <p className="text-sm">
-              Key legislation governs electrical safety in the workplace in the UK, setting out the legal requirements
-              for employers and individuals carrying out electrical work.
-            </p>
-            
+          <div className="space-y-3">            
             <h4 className="font-semibold">Primary Legislation</h4>
             <ul className="list-disc pl-5 space-y-1 text-sm">
               <li>
@@ -162,12 +144,7 @@ const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <Shield className="h-5 w-5 mr-2" />
             First Aid for Electrical Incidents
           </h3>
-          <div className="space-y-3">
-            <p className="text-sm">
-              Responding correctly to an electrical injury can save lives. All electrical workers should be familiar
-              with emergency procedures for electrical incidents.
-            </p>
-            
+          <div className="space-y-3">            
             <div className="bg-elec-dark/70 border border-elec-yellow/30 rounded p-4 mt-2">
               <h4 className="font-semibold text-elec-yellow mb-2">Emergency Response Procedure:</h4>
               <ol className="list-decimal pl-5 space-y-1 text-sm">
