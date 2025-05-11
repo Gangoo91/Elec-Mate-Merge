@@ -1,3 +1,4 @@
+
 import { Route, Routes } from "react-router-dom";
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
@@ -27,7 +28,6 @@ import SectionContent from "@/pages/apprentice/SectionContent";
 import SubsectionContent from "@/pages/apprentice/SubsectionContent";
 import CraftSkillsContent from "@/pages/apprentice/CraftSkillsContent";
 import CraftSkillsSubsection from "@/pages/apprentice/CraftSkillsSubsection";
-import InstallationMethodContent from "@/pages/apprentice/InstallationMethodContent";
 import CommunicationStructures from "@/components/apprentice/resources/CommunicationStructures";
 import CommunicationMethods from "@/components/apprentice/resources/CommunicationMethods";
 import SafetyMeetings from "@/components/apprentice/resources/SafetyMeetings";
@@ -82,10 +82,6 @@ const ApprenticeRoutes = () => {
         {/* Section and Subsection Routes */}
         <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
         <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
-        
-        {/* Installation method routes */}
-        <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId" element={<InstallationMethodContent />} />
-        <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
         
         {/* Craft skills routes */}
         <Route path="eal/:courseSlug/unit/:unitSlug/craft-skills/:sectionId" element={<CraftSkillsContent />} />

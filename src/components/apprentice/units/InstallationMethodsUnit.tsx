@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from "react";
 import SectionBox from "@/components/apprentice/SectionBox";
-import { installationMethodsSection } from "@/data/electricalTheory/section-installation-methods";
 import { useParams } from "react-router-dom";
 
 interface InstallationMethodsUnitProps {
@@ -26,32 +25,21 @@ const InstallationMethodsUnit = ({ unitCode, onResourceClick }: InstallationMeth
     onResourceClick('learning');
   };
 
-  // Helper function to create section boxes from section data
-  const createSectionBoxes = () => {
-    if (!installationMethodsSection || !installationMethodsSection.content || !installationMethodsSection.content.subsections) return null;
-    
-    return installationMethodsSection.content.subsections.map((subsection: any) => (
-      <SectionBox
-        key={subsection.id}
-        sectionNumber={subsection.id}
-        title={subsection.title}
-        isExpanded={false}
-        onClick={handleSectionClick}
-        content={<></>}
-        unitCode={unitCode}
-        courseSlug={courseSlug}
-      />
-    ));
-  };
+  // Placeholder data for installation methods
+  const installationMethodsSubsections = [
+    { id: "5A.1", title: "Wiring Systems" },
+    { id: "5A.2", title: "Conduit Systems" },
+    { id: "5A.3", title: "Trunking Systems" }
+  ];
 
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Installation Methods Content */}
       <div className="space-y-6">
         <SectionBox
-          key={installationMethodsSection.sectionNumber}
-          sectionNumber={installationMethodsSection.sectionNumber}
-          title={installationMethodsSection.title}
+          key="5A"
+          sectionNumber="5A"
+          title="Installation Methods"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -60,7 +48,18 @@ const InstallationMethodsUnit = ({ unitCode, onResourceClick }: InstallationMeth
         />
         
         {/* Render subsections */}
-        {createSectionBoxes()}
+        {installationMethodsSubsections.map(subsection => (
+          <SectionBox
+            key={subsection.id}
+            sectionNumber={subsection.id}
+            title={subsection.title}
+            isExpanded={false}
+            onClick={handleSectionClick}
+            content={<></>}
+            unitCode={unitCode}
+            courseSlug={courseSlug}
+          />
+        ))}
         
         {/* Quiz Section */}
         <SectionBox
