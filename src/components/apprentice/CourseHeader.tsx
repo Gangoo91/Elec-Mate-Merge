@@ -4,15 +4,20 @@ import { ArrowLeft, Book } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface CourseHeaderProps {
-  courseTitle: string | undefined;
+  courseTitle?: string;
+  courseSlug?: string;
+  unitSlug?: string;
+  selectedUnitData?: any;
 }
 
-const CourseHeader = ({ courseTitle }: CourseHeaderProps) => {
+const CourseHeader = ({ courseTitle, courseSlug, unitSlug, selectedUnitData }: CourseHeaderProps) => {
+  const title = selectedUnitData ? selectedUnitData.title : courseTitle;
+  
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
       <div>
         <h1 className="text-3xl font-bold tracking-tight mb-1">
-          <span className="gradient-text">{courseTitle}</span>
+          <span className="gradient-text">{title}</span>
         </h1>
         <p className="text-muted-foreground">
           EAL Level 2 course materials and learning resources
