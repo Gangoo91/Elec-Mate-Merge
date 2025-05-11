@@ -5,7 +5,7 @@ import IntroSection from "./subsection5_2/IntroSection";
 import ReportingProcedures from "./subsection5_2/ReportingProcedures";
 import DocumentationRequirements from "./subsection5_2/DocumentationRequirements";
 import ReportingTools from "./subsection5_2/ReportingTools";
-import CompletionButton from "./subsection5_1/CompletionButton";
+import CompletionButton from "./subsection5_2/CompletionButton";
 
 const Subsection5_2 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
