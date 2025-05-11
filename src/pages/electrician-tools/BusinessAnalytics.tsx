@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BarChart4, LineChart, ChartPie, Download, Pound } from "lucide-react";
+import { ArrowLeft, BarChart4, LineChart, ChartPie, Download, CirclePound } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
@@ -93,7 +93,7 @@ const BusinessAnalytics = () => {
           <AccordionItem value="financial" className="border-elec-yellow/20 bg-elec-gray rounded-md mb-4">
             <AccordionTrigger className="px-4 py-3 hover:no-underline">
               <div className="flex items-center gap-2">
-                <Pound className="h-5 w-5 text-elec-yellow" />
+                <CirclePound className="h-5 w-5 text-elec-yellow" />
                 <span className="font-medium">Financial</span>
               </div>
             </AccordionTrigger>
