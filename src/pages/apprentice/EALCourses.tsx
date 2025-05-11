@@ -11,7 +11,7 @@ interface CourseInfo {
   title: string;
   slug: string;
   level: string;
-  courseId: string; // Added courseId to uniquely identify each course
+  courseId: string;
 }
 
 const EALCourses = () => {
@@ -105,23 +105,21 @@ const EALCourses = () => {
         <h2 className="text-xl font-bold text-elec-yellow">{levelTitle}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {courses.map((course, index) => (
-            <Link 
+            <Card 
               key={index}
-              to={`/apprentice/study/eal/${course.slug}?courseId=${course.courseId}`}
-              className="block h-full transition-transform hover:scale-102 duration-200"
+              className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full"
             >
-              <Card 
-                className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full"
-              >
-                <CardContent className="flex flex-col items-center justify-center p-6 h-full">
-                  <BookOpen className="h-8 w-8 text-elec-yellow mb-4 opacity-80" />
-                  <p className="text-elec-yellow text-xs mb-1">{course.level}</p>
-                  <h3 className={`text-base sm:text-lg font-medium text-center ${isMobile ? "leading-tight" : ""}`}>
-                    {formatCourseTitle(course.title)}
-                  </h3>
-                </CardContent>
-              </Card>
-            </Link>
+              <CardContent className="flex flex-col items-center justify-center p-6 h-full">
+                <BookOpen className="h-8 w-8 text-elec-yellow mb-4 opacity-80" />
+                <p className="text-elec-yellow text-xs mb-1">{course.level}</p>
+                <h3 className={`text-base sm:text-lg font-medium text-center ${isMobile ? "leading-tight" : ""}`}>
+                  {formatCourseTitle(course.title)}
+                </h3>
+                <p className="mt-4 text-sm text-muted-foreground">
+                  Course content coming soon
+                </p>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>

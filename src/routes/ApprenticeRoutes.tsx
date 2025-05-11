@@ -8,7 +8,6 @@ import ApprenticeToolbox from "@/pages/apprentice/ApprenticeToolbox";
 import ApprenticeChat from "@/pages/apprentice/ApprenticeChat";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import CareerProgression from "@/pages/apprentice/CareerProgression";
-import CourseDetail from "@/pages/apprentice/CourseDetail";
 import EALCourses from "@/pages/apprentice/EALCourses";
 import HigherLearningCourses from "@/pages/apprentice/HigherLearningCourses";
 import CityGuildsCourses from "@/pages/apprentice/CityGuildsCourses";
@@ -23,11 +22,6 @@ import SupportNetwork from "@/pages/apprentice/mental-health/SupportNetwork";
 import WorkLifeBalance from "@/pages/apprentice/mental-health/WorkLifeBalance";
 import CrisisResources from "@/pages/apprentice/mental-health/CrisisResources";
 import ToolsGuide from "@/pages/apprentice/ToolsGuide";
-import QuizContent from "@/components/apprentice/QuizContent";
-import SectionContent from "@/pages/apprentice/SectionContent";
-import SubsectionContent from "@/pages/apprentice/SubsectionContent";
-import CraftSkillsContent from "@/pages/apprentice/CraftSkillsContent";
-import CraftSkillsSubsection from "@/pages/apprentice/CraftSkillsSubsection";
 import CommunicationStructures from "@/components/apprentice/resources/CommunicationStructures";
 import CommunicationMethods from "@/components/apprentice/resources/CommunicationMethods";
 import SafetyMeetings from "@/components/apprentice/resources/SafetyMeetings";
@@ -73,19 +67,6 @@ const ApprenticeRoutes = () => {
         <Route path="eal" element={<EALCourses />} />
         <Route path="cityGuilds" element={<CityGuildsCourses />} />
         <Route path="higher" element={<HigherLearningCourses />} />
-        
-        {/* EAL Course Routes */}
-        <Route path="eal/:courseSlug" element={<CourseDetail />} />
-        <Route path="eal/:courseSlug/unit/:unitSlug" element={<CourseDetail />} />
-        <Route path="eal/:courseSlug/unit/:unitSlug/quiz" element={<QuizContent />} />
-        
-        {/* Section and Subsection Routes */}
-        <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
-        <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
-        
-        {/* Craft skills routes */}
-        <Route path="eal/:courseSlug/unit/:unitSlug/craft-skills/:sectionId" element={<CraftSkillsContent />} />
-        <Route path="eal/:courseSlug/unit/:unitSlug/craft-skills/:sectionId/subsection/:subsectionId" element={<CraftSkillsSubsection />} />
         
         {/* Resource pages */}
         <Route path="resources/communication-structures" element={<CommunicationStructures />} />
