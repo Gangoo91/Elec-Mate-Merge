@@ -26,7 +26,7 @@ const Subsection7_2 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           "Proper inspection techniques to ensure PPE integrity",
           "Creating a personal PPE maintenance routine"
         ]}
-        icon="shield"
+        icon="safety"
         subsectionId={subsectionId}
       />
       
