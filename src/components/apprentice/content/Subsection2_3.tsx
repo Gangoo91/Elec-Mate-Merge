@@ -376,13 +376,13 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
           <CourseContentSection
             title="Continuous Education"
             description="Stay updated on the latest environmental regulations, sustainable technologies, and eco-friendly installation methods through regular training."
-            icon="book"
+            icon="info"
           />
           
           <CourseContentSection
             title="Client Education"
             description="Educate clients on the environmental benefits and long-term cost savings of energy-efficient installations and renewable energy systems."
-            icon="users"
+            icon="info"
           />
         </div>
         
@@ -597,3 +597,4 @@ const Subsection2_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 };
 
 export default Subsection2_3;
+
