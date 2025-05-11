@@ -9,6 +9,7 @@ import ApprenticeChat from "@/pages/apprentice/ApprenticeChat";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import CareerProgression from "@/pages/apprentice/CareerProgression";
 import EALCourses from "@/pages/apprentice/EALCourses";
+import EALLevel2Diploma from "@/pages/apprentice/EALLevel2Diploma";
 import HigherLearningCourses from "@/pages/apprentice/HigherLearningCourses";
 import CityGuildsCourses from "@/pages/apprentice/CityGuildsCourses";
 import OnJobTools from "@/pages/apprentice/OnJobTools";
@@ -65,6 +66,7 @@ const ApprenticeRoutes = () => {
         <Route path="mock-exams" element={<MockExams />} />
         <Route path="mock-exams/:examId" element={<MockExamDetails />} />
         <Route path="eal" element={<EALCourses />} />
+        <Route path="eal/level-2-diploma" element={<EALLevel2Diploma />} />
         <Route path="cityGuilds" element={<CityGuildsCourses />} />
         <Route path="higher" element={<HigherLearningCourses />} />
         

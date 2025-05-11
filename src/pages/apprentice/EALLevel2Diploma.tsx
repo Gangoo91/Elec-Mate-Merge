@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, BookOpen, FileText, Wrench, Shield, Lightbulb } from "lucide-react";
 import CourseContent from "@/components/apprentice/CourseContent";
+import { level2DiplomaUnits, getCourseUnitById } from "@/data/courseUnits";
 import type { CourseUnit } from "@/data/courseTypes";
 
 const EALLevel2Diploma = () => {
@@ -12,54 +13,10 @@ const EALLevel2Diploma = () => {
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
   const [completedResources, setCompletedResources] = useState<Record<string, boolean>>({});
 
-  // Define the Level 2 Diploma units
-  const units: CourseUnit[] = [
-    {
-      id: "elec2-01",
-      title: "Health and Safety in Electrical Installation",
-      code: "ELEC2/01",
-      description: "Learn about health and safety regulations, risk assessment, and safe working practices in electrical installations.",
-      sections: [],
-      resources: []
-    },
-    {
-      id: "elec2-04",
-      title: "Electrical Installation Theory and Technology",
-      code: "ELEC2/04",
-      description: "Understand the fundamental theories and technologies behind electrical installations.",
-      sections: [],
-      resources: []
-    },
-    {
-      id: "elec2-05a",
-      title: "Electrical Installation Methods, Procedures and Requirements",
-      code: "ELEC2/05A",
-      description: "Explore proper installation methods and procedures according to industry standards.",
-      sections: [],
-      resources: []
-    },
-    {
-      id: "elec2-05b",
-      title: "Electrical Installation Craft Skills",
-      code: "ELEC2/05B",
-      description: "Develop hands-on skills necessary for professional electrical installation work.",
-      sections: [],
-      resources: []
-    },
-    {
-      id: "elec2-08",
-      title: "Electrical Science and Principles",
-      code: "ELEC2/08",
-      description: "Master the scientific principles that govern electrical systems and components.",
-      sections: [],
-      resources: []
-    }
-  ];
-
   // Handle unit selection
   const handleUnitSelect = (unitId: string) => {
     setSelectedUnit(unitId);
-    const selectedUnitData = units.find(unit => unit.id === unitId);
+    const selectedUnitData = level2DiplomaUnits.find(unit => unit.id === unitId);
     if (selectedUnitData) {
       navigate(`/apprentice/study/eal/level-2-diploma/unit/${unitId}`);
     }
@@ -80,7 +37,7 @@ const EALLevel2Diploma = () => {
 
   // Get selected unit data
   const selectedUnitData = selectedUnit 
-    ? units.find(unit => unit.id === selectedUnit) || null
+    ? level2DiplomaUnits.find(unit => unit.id === selectedUnit) || null
     : null;
 
   return (
@@ -117,7 +74,7 @@ const EALLevel2Diploma = () => {
 
       {/* Units grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {units.map((unit) => {
+        {level2DiplomaUnits.map((unit) => {
           // Select the appropriate icon based on the unit code
           let UnitIcon;
           switch(unit.code) {
@@ -178,7 +135,7 @@ const EALLevel2Diploma = () => {
         onUnitSelect={handleUnitSelect}
         onResourceClick={handleResourceClick}
         onToggleResourceComplete={handleToggleResourceComplete}
-        units={units}
+        units={level2DiplomaUnits}
       />
     </div>
   );
