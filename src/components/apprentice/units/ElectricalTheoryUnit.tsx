@@ -15,6 +15,7 @@ import {
   circuitDesignSection
 } from "@/data/electricalTheory";
 import { useParams } from "react-router-dom";
+import { Bolt } from "lucide-react"; // Changed from Lightning to Bolt
 
 interface ElectricalTheoryUnitProps {
   unitCode: string;
