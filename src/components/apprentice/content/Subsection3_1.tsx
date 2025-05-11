@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle, Zap, Shield, AlertOctagon } from "lucide-react";
 import { SubsectionProps } from "./subsection1_1/types";
 import CourseContentSection from "../CourseContentSection";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const Subsection3_1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
