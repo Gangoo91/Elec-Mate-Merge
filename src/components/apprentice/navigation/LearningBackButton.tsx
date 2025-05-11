@@ -22,22 +22,27 @@ const LearningBackButton = ({
   className
 }: LearningBackButtonProps) => {
   const navigate = useNavigate();
+  
+  // Default values for navigation
+  const effectiveCourseSlug = courseSlug || "level-2-diploma";
+  const effectiveUnitSlug = unitSlug || "health-safety";
 
   const handleBackClick = () => {
     console.log("LearningBackButton: navigating from", { currentPath, courseSlug, unitSlug, sectionId, subsectionId });
+    console.log("Using effective values:", { effectiveCourseSlug, effectiveUnitSlug });
     
     switch (currentPath) {
       case 'subsection':
         // From subsection → section (correct route for unit 1 sections)
-        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}`);
+        navigate(`/apprentice/study/eal/${effectiveCourseSlug}/unit/${effectiveUnitSlug}/section/${sectionId}`);
         break;
       case 'section':
         // From section → unit
-        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`);
+        navigate(`/apprentice/study/eal/${effectiveCourseSlug}/unit/${effectiveUnitSlug}`);
         break;
       case 'unit':
         // From unit → course
-        navigate(`/apprentice/study/eal/${courseSlug}`);
+        navigate(`/apprentice/study/eal/${effectiveCourseSlug}`);
         break;
       case 'course':
         // From course → courses list

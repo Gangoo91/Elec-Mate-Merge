@@ -11,10 +11,17 @@ import SectionSubsectionCard from "@/components/apprentice/SectionSubsectionCard
 import { useNavigate } from "react-router-dom";
 
 const SectionContent = () => {
-  const { courseSlug, unitSlug, sectionId } = useParams();
+  const { courseSlug = "level-2-diploma", unitSlug = "health-safety", sectionId } = useParams();
   const navigate = useNavigate();
   const [sectionData, setSectionData] = useState<SectionData | null>(null);
   const [isCompleted, setIsCompleted] = useState(false);
+  
+  // Log current navigation values for debugging
+  console.log("SectionContent params:", { courseSlug, unitSlug, sectionId, pathname: window.location.pathname });
+  
+  // Ensure we have valid parameters for all routes
+  const effectiveCourseSlug = courseSlug || "level-2-diploma";
+  const effectiveUnitSlug = unitSlug || "health-safety";
   
   useEffect(() => {
     if (sectionId) {
@@ -32,7 +39,7 @@ const SectionContent = () => {
         });
         
         // Check if quiz is completed
-        const quizCompletionKey = `unit_${unitSlug}_quiz_completed`;
+        const quizCompletionKey = `unit_${effectiveUnitSlug}_quiz_completed`;
         const completionStatus = localStorage.getItem(quizCompletionKey);
         setIsCompleted(completionStatus === 'true');
       } else {
@@ -42,22 +49,22 @@ const SectionContent = () => {
           setSectionData(section);
           
           // Check if section is completed
-          const sectionCompletionKey = `unit_${unitSlug}_section_${sectionId}_completed`;
+          const sectionCompletionKey = `unit_${effectiveUnitSlug}_section_${sectionId}_completed`;
           const completionStatus = localStorage.getItem(sectionCompletionKey);
           setIsCompleted(completionStatus === 'true');
         }
       }
     }
-  }, [sectionId, unitSlug]);
+  }, [sectionId, effectiveUnitSlug]);
   
   const markAsComplete = () => {
     if (window.location.pathname.includes('/quiz')) {
       // Mark quiz as completed
-      const quizCompletionKey = `unit_${unitSlug}_quiz_completed`;
+      const quizCompletionKey = `unit_${effectiveUnitSlug}_quiz_completed`;
       localStorage.setItem(quizCompletionKey, 'true');
     } else if (sectionId) {
       // Mark section as completed
-      const sectionCompletionKey = `unit_${unitSlug}_section_${sectionId}_completed`;
+      const sectionCompletionKey = `unit_${effectiveUnitSlug}_section_${sectionId}_completed`;
       localStorage.setItem(sectionCompletionKey, 'true');
     }
     
@@ -72,7 +79,7 @@ const SectionContent = () => {
       subsectionId = subsection.id;
     }
     
-    navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}/section/${sectionId}/subsection/${subsectionId}`);
+    navigate(`/apprentice/study/eal/${effectiveCourseSlug}/unit/${effectiveUnitSlug}/section/${sectionId}/subsection/${subsectionId}`);
   };
   
   // Show quiz content if on quiz route
@@ -81,8 +88,8 @@ const SectionContent = () => {
       <div className="max-w-4xl mx-auto py-6 px-4 animate-fade-in space-y-6">
         <LearningBackButton 
           currentPath="section"
-          courseSlug={courseSlug} 
-          unitSlug={unitSlug} 
+          courseSlug={effectiveCourseSlug} 
+          unitSlug={effectiveUnitSlug} 
         />
         
         <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
@@ -123,7 +130,7 @@ const SectionContent = () => {
             <Button
               variant="outline"
               className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-              onClick={() => navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`)}
+              onClick={() => navigate(`/apprentice/study/eal/${effectiveCourseSlug}/unit/${effectiveUnitSlug}`)}
             >
               Back to Unit
             </Button>
@@ -148,8 +155,8 @@ const SectionContent = () => {
       <div className="max-w-4xl mx-auto py-6 px-4 animate-fade-in">
         <LearningBackButton 
           currentPath="section"
-          courseSlug={courseSlug}
-          unitSlug={unitSlug}
+          courseSlug={effectiveCourseSlug}
+          unitSlug={effectiveUnitSlug}
         />
         <div className="text-center py-12">
           <p className="text-lg text-muted-foreground">Loading section content...</p>
@@ -168,11 +175,11 @@ const SectionContent = () => {
   // Regular section display
   return (
     <div className="max-w-4xl mx-auto py-6 px-4 animate-fade-in space-y-6">
-      {/* Replace BackButton with LearningBackButton */}
+      {/* Learning back button with proper navigation */}
       <LearningBackButton 
         currentPath="section"
-        courseSlug={courseSlug}
-        unitSlug={unitSlug}
+        courseSlug={effectiveCourseSlug}
+        unitSlug={effectiveUnitSlug}
       />
       
       <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
@@ -214,7 +221,7 @@ const SectionContent = () => {
           <Button
             variant="outline"
             className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-            onClick={() => navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`)}
+            onClick={() => navigate(`/apprentice/study/eal/${effectiveCourseSlug}/unit/${effectiveUnitSlug}`)}
           >
             Back to Unit
           </Button>
