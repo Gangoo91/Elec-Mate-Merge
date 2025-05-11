@@ -1,9 +1,7 @@
 
-import { GraduationCap } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { Card, CardContent } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
+import { Link } from "react-router-dom";
 import type { CourseUnit } from "@/data/courseUnits";
+import { Card } from "@/components/ui/card";
 
 interface CourseUnitGridProps {
   units: CourseUnit[];
@@ -13,75 +11,67 @@ interface CourseUnitGridProps {
   courseSlug?: string;
 }
 
-const CourseUnitGrid = ({ 
-  units, 
-  selectedUnit, 
-  onUnitSelect, 
+const CourseUnitGrid = ({
+  units,
+  selectedUnit,
+  onUnitSelect,
   completedResources,
-  courseSlug 
+  courseSlug
 }: CourseUnitGridProps) => {
-  const navigate = useNavigate();
-
-  // Calculate progress percentage for each unit
-  const calculateUnitProgress = (unit: CourseUnit) => {
-    if (unit.resources.length === 0) return 0;
-    
-    const completedCount = unit.resources.filter(
-      resource => completedResources[resource.id]
-    ).length;
-    
-    return Math.round((completedCount / unit.resources.length) * 100);
+  const handleUnitClick = (unitSlug: string) => {
+    onUnitSelect(unitSlug);
   };
-
-  // Create URL-friendly slug for the unit
-  const createUnitSlug = (unit: CourseUnit) => {
-    return unit.code.toLowerCase().replace('/', '-') + '-' + 
-      unit.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-  };
-
-  const handleUnitClick = (unit: CourseUnit) => {
-    onUnitSelect(unit.id);
-    
-    if (courseSlug) {
-      const unitSlug = createUnitSlug(unit);
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`);
-    }
-  };
-
+  
+  // Filter out the ELEC2/04 unit since we're already on that page
+  const filteredUnits = courseSlug === 'level-2-diploma-in-electrical-installation' ? 
+    units.filter(unit => unit.slug !== 'elec2-04') : units;
+  
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {units.map(unit => {
-        const progressPercent = calculateUnitProgress(unit);
+      {filteredUnits.map((unit) => {
+        // Calculate completion percentage for this unit
+        const unitResources = Object.keys(completedResources).filter(key => key.startsWith(`${unit.code}-`));
+        const completedCount = unitResources.filter(key => completedResources[key]).length;
+        const totalCount = unitResources.length;
+        const completionPercentage = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
         
         return (
-          <Card 
-            key={unit.id}
-            className={`border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors cursor-pointer 
-              ${selectedUnit === unit.id ? 'ring-2 ring-elec-yellow' : ''}`}
-            onClick={() => handleUnitClick(unit)}
+          <Link
+            key={unit.slug}
+            to={`/apprentice/study/eal/${courseSlug}/unit/${unit.slug}`}
+            onClick={() => handleUnitClick(unit.slug)}
+            className="block"
           >
-            <CardContent className="p-6">
-              <div className="flex items-start gap-3">
-                <GraduationCap className="h-6 w-6 text-elec-yellow mt-1 flex-shrink-0" />
-                <div className="w-full">
-                  <h3 className="font-semibold text-lg mb-1">{unit.title}</h3>
-                  <p className="text-sm text-elec-yellow mb-2">{unit.code}</p>
-                  <p className="text-sm text-muted-foreground line-clamp-3 mb-3">{unit.description}</p>
-                  
-                  <div className="w-full mt-2">
-                    <div className="flex justify-between items-center text-xs mb-1">
-                      <span>Progress</span>
-                      <span className="font-medium">{progressPercent}%</span>
-                    </div>
-                    <Progress 
-                      value={progressPercent} 
-                      className="h-2 bg-elec-yellow/20" 
-                    />
+            <Card className={`h-full border-elec-yellow/20 bg-elec-gray p-6 transition-all duration-300 hover:border-elec-yellow/40 hover:bg-elec-gray/90 ${
+              selectedUnit === unit.slug ? "border-elec-yellow ring-1 ring-elec-yellow/50" : ""
+            }`}
+            >
+              <div className="flex flex-col h-full">
+                <div className="flex gap-4 items-start">
+                  <div className="flex-shrink-0 w-12 h-12 bg-elec-yellow/10 rounded-lg flex items-center justify-center">
+                    <span className="text-elec-yellow font-bold text-sm">{unit.code}</span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold mb-2">{unit.title}</h3>
+                    <p className="text-sm text-gray-400 line-clamp-3">{unit.description}</p>
+                  </div>
+                </div>
+                
+                <div className="mt-auto pt-4">
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-elec-yellow/80">Progress</span>
+                    <span className="text-elec-yellow/80">{completionPercentage}%</span>
+                  </div>
+                  <div className="w-full h-2 bg-elec-dark/50 rounded-full mt-1 overflow-hidden">
+                    <div 
+                      className="h-full bg-elec-yellow/80 rounded-full" 
+                      style={{ width: `${completionPercentage}%` }}
+                    ></div>
                   </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </Card>
+          </Link>
         );
       })}
     </div>
