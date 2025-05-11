@@ -1,11 +1,13 @@
 
+// Basic type definitions for course structure
+
 export interface CourseResource {
   id: string;
   title: string;
   description: string;
-  type: 'document' | 'video' | 'learning';
-  duration?: string;
+  type: string;
   href?: string;
+  duration?: string;
 }
 
 export interface CourseUnit {
@@ -16,21 +18,16 @@ export interface CourseUnit {
   resources: CourseResource[];
 }
 
-export interface SectionData {
-  sectionNumber: string;
-  title: string;
-  description: string;
-  content: {
-    introduction?: string;
-    subsections: Subsection[];
-    icon?: "safety" | "info" | "construction" | "warning" | "hardhat" | "list" | "section" | "cable" | "socket" | "bulb" | "test" | "tools" | "shield-alert";
-  };
-}
-
 export interface Subsection {
   id: string;
   title: string;
-  content: string;
-  keyPoints: string[];
-  description?: string;
+  content?: React.ReactNode;
+  number: string;
+}
+
+export interface SectionData {
+  id: string;
+  title: string;
+  number: string;
+  subsections: Subsection[];
 }
