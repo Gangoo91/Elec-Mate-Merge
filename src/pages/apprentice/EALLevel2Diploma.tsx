@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, BookOpen, FileText, Wrench, Shield, Lightbulb } from "lucide-react";
-import CourseContent from "@/components/apprentice/CourseContent";
 import { level2DiplomaUnits, getCourseUnitById } from "@/data/courseUnits";
 import type { CourseUnit } from "@/data/courseTypes";
 
@@ -124,19 +123,6 @@ const EALLevel2Diploma = () => {
           );
         })}
       </div>
-
-      {/* Unit content display (initially empty) */}
-      <CourseContent
-        isUnitPage={false}
-        selectedUnit={selectedUnit}
-        courseSlug="level-2-diploma"
-        selectedUnitData={selectedUnitData}
-        completedResources={completedResources}
-        onUnitSelect={handleUnitSelect}
-        onResourceClick={handleResourceClick}
-        onToggleResourceComplete={handleToggleResourceComplete}
-        units={level2DiplomaUnits}
-      />
     </div>
   );
 };
