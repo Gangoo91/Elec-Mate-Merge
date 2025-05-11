@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Lightbulb, BookOpen, Wrench, FileText, Settings, Zap, Box, Cable, Lightning, ShieldCheck } from "lucide-react";
+import { Lightbulb, BookOpen, Wrench, FileText, Settings, Zap, Box, Cable, Bolt, ShieldCheck } from "lucide-react";
 
 interface ElectricalTheoryUnitProps {
   unitCode: string;
@@ -213,7 +213,7 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
             <CardHeader className="pb-2">
               <div className="flex items-center gap-3">
                 <div className="flex-shrink-0 w-12 h-12 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                  <Lightning className="h-6 w-6 text-elec-yellow" />
+                  <Bolt className="h-6 w-6 text-elec-yellow" />
                 </div>
                 <CardTitle className="text-lg">9. Overcurrent Protection</CardTitle>
               </div>
