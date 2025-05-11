@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -78,7 +79,11 @@ const SectionContent = () => {
   if (window.location.pathname.includes('/quiz')) {
     return (
       <div className="max-w-4xl mx-auto py-6 px-4 animate-fade-in space-y-6">
-        <BackButton courseSlug={courseSlug} unitSlug={unitSlug} />
+        <LearningBackButton 
+          currentPath="section"
+          courseSlug={courseSlug} 
+          unitSlug={unitSlug} 
+        />
         
         <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
           <div className="flex items-center justify-between mb-6">
@@ -141,7 +146,11 @@ const SectionContent = () => {
   if (!sectionData) {
     return (
       <div className="max-w-4xl mx-auto py-6 px-4 animate-fade-in">
-        <BackButton courseSlug={courseSlug} unitSlug={unitSlug} />
+        <LearningBackButton 
+          currentPath="section"
+          courseSlug={courseSlug}
+          unitSlug={unitSlug}
+        />
         <div className="text-center py-12">
           <p className="text-lg text-muted-foreground">Loading section content...</p>
         </div>
