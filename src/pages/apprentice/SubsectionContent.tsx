@@ -49,7 +49,7 @@ const SubsectionContent = () => {
   
   return (
     <div className="space-y-6 animate-fade-in bg-[#121212] px-4 md:px-6 max-w-4xl mx-auto py-8">
-      {/* Back Button */}
+      {/* Back Button - Updated to go back to section rather than unit */}
       <div className="w-full">
         <LearningBackButton
           currentPath="subsection"
