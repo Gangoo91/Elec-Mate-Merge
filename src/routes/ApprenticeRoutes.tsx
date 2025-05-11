@@ -1,4 +1,3 @@
-
 import { Route, Routes } from "react-router-dom";
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
@@ -75,41 +74,14 @@ const ApprenticeRoutes = () => {
         <Route path="cityGuilds" element={<CityGuildsCourses />} />
         <Route path="higher" element={<HigherLearningCourses />} />
         
-        {/* General EAL route for backward compatibility */}
+        {/* EAL Course Routes */}
         <Route path="eal/:courseSlug" element={<CourseDetail />} />
         <Route path="eal/:courseSlug/unit/:unitSlug" element={<CourseDetail />} />
         <Route path="eal/:courseSlug/unit/:unitSlug/quiz" element={<QuizContent />} />
         
-        {/* Level 2 courses */}
-        <Route path="eal/level-2-:courseName" element={<CourseDetail />} />
-        <Route path="eal/level-2-:courseName/unit/:unitSlug" element={<CourseDetail />} />
-        <Route path="eal/level-2-:courseName/unit/:unitSlug/quiz" element={<QuizContent />} />
-        
-        {/* Level 3 courses */}
-        <Route path="eal/level-3-:courseName" element={<CourseDetail />} />
-        <Route path="eal/level-3-:courseName/unit/:unitSlug" element={<CourseDetail />} />
-        <Route path="eal/level-3-:courseName/unit/:unitSlug/quiz" element={<QuizContent />} />
-        
-        {/* Level 4 courses */}
-        <Route path="eal/level-4-:courseName" element={<CourseDetail />} />
-        <Route path="eal/level-4-:courseName/unit/:unitSlug" element={<CourseDetail />} />
-        <Route path="eal/level-4-:courseName/unit/:unitSlug/quiz" element={<QuizContent />} />
-        
-        <Route path="cityGuilds/:courseSlug" element={<CourseDetail />} />
-        
-        {/* Section and subsection routes - generic pattern */}
+        {/* Section and Subsection Routes */}
         <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
         <Route path="eal/:courseSlug/unit/:unitSlug/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
-        
-        {/* Section and subsection routes - per level */}
-        <Route path="eal/level-2-:courseName/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
-        <Route path="eal/level-2-:courseName/unit/:unitSlug/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
-        
-        <Route path="eal/level-3-:courseName/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
-        <Route path="eal/level-3-:courseName/unit/:unitSlug/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
-        
-        <Route path="eal/level-4-:courseName/unit/:unitSlug/section/:sectionId" element={<SectionContent />} />
-        <Route path="eal/level-4-:courseName/unit/:unitSlug/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
         
         {/* Installation method routes */}
         <Route path="eal/:courseSlug/unit/:unitSlug/installation-method/:sectionId" element={<InstallationMethodContent />} />
