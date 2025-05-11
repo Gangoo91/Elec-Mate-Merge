@@ -1,15 +1,25 @@
 
 import React from "react";
-import { SubsectionProps } from "../content/subsection1_1/types";
 import SubsectionRenderer from "./SubsectionRenderer";
 
-const SubsectionLearningContent = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
-  console.log("SubsectionLearningContent rendering with subsectionId:", subsectionId);
+interface SubsectionLearningContentProps {
+  subsectionId: string;
+  isCompleted: boolean;
+  markAsComplete: () => void;
+}
 
+const SubsectionLearningContent = ({ 
+  subsectionId, 
+  isCompleted, 
+  markAsComplete 
+}: SubsectionLearningContentProps) => {
+  console.log("SubsectionLearningContent - Rendering with ID:", subsectionId);
+  console.log("SubsectionLearningContent - Completion status:", isCompleted);
+  
   return (
     <div className="animate-fade-in">
-      <SubsectionRenderer
-        subsectionId={subsectionId}
+      <SubsectionRenderer 
+        subsectionId={subsectionId} 
         isCompleted={isCompleted}
         markAsComplete={markAsComplete}
       />

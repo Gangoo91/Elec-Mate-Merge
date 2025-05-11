@@ -1,42 +1,37 @@
 
-/**
- * Determines if a subsection ID belongs to a specific section
- */
+// Add this function if it doesn't exist already
 export const isSubsectionInSection = (subsectionId: string, sectionNumber: number): boolean => {
-  if (!subsectionId) return false;
-  
-  // Handle direct format match "sectionNumber.subsectionNumber" (e.g., "1.1")
+  // Check if subsection ID matches pattern like "6.1" for section 6
   if (subsectionId.includes('.')) {
-    const sectionPart = subsectionId.split('.')[0];
-    return sectionPart === sectionNumber.toString();
+    const sectionPart = parseInt(subsectionId.split('.')[0]);
+    return sectionPart === sectionNumber;
   }
   
-  // Special case for section 1 with simple numeric IDs 1, 2, 3
-  if (sectionNumber === 1 && ["1", "2", "3"].includes(subsectionId)) {
-    return true;
-  }
-  
-  // For other numeric IDs, try to match section
-  const idNum = parseInt(subsectionId, 10);
-  if (!isNaN(idNum)) {
-    if (sectionNumber === 1 && idNum <= 3) {
-      return true;
-    }
-    
-    return Math.floor(idNum / 10) === sectionNumber - 1;
+  // Handle numeric only subsectionIds based on URL section
+  const urlPath = window.location.pathname;
+  const sectionMatch = urlPath.match(/\/section\/(\d+)/);
+  if (sectionMatch && sectionMatch[1]) {
+    return parseInt(sectionMatch[1]) === sectionNumber;
   }
   
   return false;
 };
 
-/**
- * Determines if a subsection ID is within a range of sections
- */
+// Add this function if it doesn't exist already
 export const isSubsectionInRange = (subsectionId: string, startSection: number, endSection: number): boolean => {
-  for (let i = startSection; i <= endSection; i++) {
-    if (isSubsectionInSection(subsectionId, i)) {
-      return true;
-    }
+  // Check if subsection ID is in format like "6.1"
+  if (subsectionId.includes('.')) {
+    const sectionPart = parseInt(subsectionId.split('.')[0]);
+    return sectionPart >= startSection && sectionPart <= endSection;
   }
+  
+  // Handle numeric only subsectionIds based on URL section
+  const urlPath = window.location.pathname;
+  const sectionMatch = urlPath.match(/\/section\/(\d+)/);
+  if (sectionMatch && sectionMatch[1]) {
+    const urlSectionNum = parseInt(sectionMatch[1]);
+    return urlSectionNum >= startSection && urlSectionNum <= endSection;
+  }
+  
   return false;
 };
