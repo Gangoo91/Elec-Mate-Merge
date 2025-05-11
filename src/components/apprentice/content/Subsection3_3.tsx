@@ -22,13 +22,14 @@ const Subsection3_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         subsectionId={subsectionId}
       />
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-        <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4">
-          <h3 className="text-xl font-bold text-elec-yellow flex items-center gap-2">
-            <Shield className="h-5 w-5" />
-            Categories of Electrical Safety PPE
-          </h3>
-          <div className="space-y-3">
+      {/* First horizontal box - Categories of PPE */}
+      <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+        <h3 className="text-xl font-bold text-elec-yellow flex items-center gap-2">
+          <Shield className="h-5 w-5" />
+          Categories of Electrical Safety PPE
+        </h3>
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="flex-1 space-y-3">
             <h4 className="font-semibold">Insulating PPE</h4>
             <ul className="list-disc pl-5 space-y-2">
               <li>
@@ -48,8 +49,9 @@ const Subsection3_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <p className="text-sm mt-1">For covering exposed live parts, BS EN 61112 compliance</p>
               </li>
             </ul>
-            
-            <h4 className="font-semibold mt-4">Arc Flash Protection</h4>
+          </div>
+          <div className="flex-1 space-y-3">
+            <h4 className="font-semibold">Arc Flash Protection</h4>
             <ul className="list-disc pl-5 space-y-2">
               <li>
                 <span className="font-medium">Arc flash rated clothing</span>
@@ -66,13 +68,16 @@ const Subsection3_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ul>
           </div>
         </div>
-        
-        <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4">
-          <h3 className="text-xl font-bold text-elec-yellow flex items-center gap-2">
-            <HardHat className="h-5 w-5" />
-            General Safety PPE Requirements
-          </h3>
-          <div className="space-y-3">
+      </div>
+      
+      {/* Second horizontal box - General Safety PPE */}
+      <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+        <h3 className="text-xl font-bold text-elec-yellow flex items-center gap-2">
+          <HardHat className="h-5 w-5" />
+          General Safety PPE Requirements
+        </h3>
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="flex-1 space-y-3">
             <h4 className="font-semibold">Head and Eye Protection</h4>
             <ul className="list-disc pl-5 space-y-2">
               <li>
@@ -88,8 +93,9 @@ const Subsection3_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <p className="text-sm mt-1">For protection against electrical flash, flying particles</p>
               </li>
             </ul>
-            
-            <h4 className="font-semibold mt-4">Body and Extremity Protection</h4>
+          </div>
+          <div className="flex-1 space-y-3">
+            <h4 className="font-semibold">Body and Extremity Protection</h4>
             <ul className="list-disc pl-5 space-y-2">
               <li>
                 <span className="font-medium">Safety footwear</span>
@@ -112,15 +118,14 @@ const Subsection3_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
         </div>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4">
-          <h3 className="text-xl font-bold text-elec-yellow flex items-center gap-2">
-            <Zap className="h-5 w-5" />
-            Selection and Risk Assessment
-          </h3>
-          <div className="space-y-3">
-            <p>PPE selection must be based on thorough risk assessment of electrical hazards:</p>
-            
+      {/* Third horizontal box - Selection and Risk Assessment + Legal Requirements */}
+      <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4">
+        <h3 className="text-xl font-bold text-elec-yellow flex items-center gap-2">
+          <Zap className="h-5 w-5" />
+          Selection and Legal Framework
+        </h3>
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="flex-1 space-y-3">
             <h4 className="font-semibold">Voltage Classification</h4>
             <ul className="list-disc pl-5 space-y-1">
               <li>Low voltage: up to 1000V AC/1500V DC</li>
@@ -147,20 +152,9 @@ const Subsection3_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
                 <span className="font-medium">Arc flash boundaries</span>
                 <p className="text-sm mt-1">Define Limited, Restricted, and Prohibited approach boundaries</p>
               </li>
-              <li>
-                <span className="font-medium">PPE categories</span>
-                <p className="text-sm mt-1">Match PPE rating to calculated incident energy level</p>
-              </li>
             </ul>
           </div>
-        </div>
-        
-        <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4">
-          <h3 className="text-xl font-bold text-elec-yellow flex items-center gap-2">
-            <Cable className="h-5 w-5" />
-            Legal Requirements and Compliance
-          </h3>
-          <div className="space-y-3">
+          <div className="flex-1 space-y-3">
             <h4 className="font-semibold">Regulatory Framework</h4>
             <ul className="list-disc pl-5 space-y-2">
               <li>
@@ -181,28 +175,25 @@ const Subsection3_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
               </li>
             </ul>
             
-            <h4 className="font-semibold mt-4">Employer and Worker Responsibilities</h4>
-            <ul className="list-disc pl-5 space-y-2">
-              <li>
-                <span className="font-medium">Employer duties:</span>
-                <p className="text-sm mt-1">Provide appropriate PPE free of charge, ensure training on proper use, maintain PPE in good condition, provide storage facilities</p>
-              </li>
-              <li>
-                <span className="font-medium">Employee duties:</span>
-                <p className="text-sm mt-1">Use PPE as instructed, report defects, store properly, attend training</p>
-              </li>
+            <h4 className="font-semibold mt-4">Employer Duties</h4>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Provide appropriate PPE free of charge</li>
+              <li>Ensure training on proper use</li>
+              <li>Maintain PPE in good condition</li>
+              <li>Provide storage facilities</li>
             </ul>
           </div>
         </div>
       </div>
       
-      <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4 mt-6">
+      {/* Fourth horizontal box - Inspection, Maintenance and Limitations */}
+      <div className="border border-elec-yellow/30 rounded-lg p-6 space-y-4">
         <h3 className="text-xl font-bold text-elec-yellow flex items-center gap-2">
           <ShieldAlert className="h-5 w-5" />
           Inspection, Maintenance and Limitations
         </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-3">
+        <div className="flex flex-col md:flex-row gap-6">
+          <div className="flex-1 space-y-3">
             <h4 className="font-semibold">Testing and Inspection</h4>
             <ul className="list-disc pl-5 space-y-2">
               <li>
@@ -224,15 +215,14 @@ const Subsection3_3 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             </ul>
             
             <h4 className="font-semibold mt-4">Documentation Requirements</h4>
-            <ul className="list-disc pl-5 space-y-2">
+            <ul className="list-disc pl-5 space-y-1">
               <li>Record of PPE issued to workers</li>
               <li>Inspection and test records</li>
               <li>Training records for PPE use</li>
               <li>Risk assessment documentation</li>
             </ul>
           </div>
-          
-          <div className="space-y-3">
+          <div className="flex-1 space-y-3">
             <h4 className="font-semibold">Limitations of PPE</h4>
             <ul className="list-disc pl-5 space-y-2">
               <li>
