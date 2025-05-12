@@ -24,7 +24,7 @@ const Layout = () => {
         {/* Header with mobile menu toggle */}
         <Header toggleSidebar={toggleSidebar} />
         
-        <main className="flex-1 relative pb-16 md:pb-0">
+        <main className="flex-1 relative pb-16 md:pb-0 pt-16">
           <div className={cn("container mx-auto py-4 md:py-8 px-2 md:px-4 lg:px-8")}>
             <Outlet />
           </div>

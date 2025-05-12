@@ -40,14 +40,14 @@ const GlobalChat = () => {
 
   return (
     <div className="flex flex-col h-full bg-black">
-      <div className="sticky top-0 z-10 bg-black border-b border-yellow-500/20">
+      <div className="sticky top-16 z-10 bg-black border-b border-yellow-500/20">
         <ChatHeader 
           title="Global Chat" 
           onNewPost={handleOpenComposer}
         />
       </div>
       
-      <div className="sticky top-16 z-10 bg-black px-4 pt-4 pb-2">
+      <div className="sticky top-32 z-10 bg-black px-4 pt-4 pb-2">
         <Tabs 
           defaultValue={activeCategory} 
           onValueChange={(value) => setActiveCategory(value as any)}
@@ -87,7 +87,7 @@ const GlobalChat = () => {
         
         {!isMobile && (
           <div className="hidden lg:block w-80 p-4 border-l border-yellow-500/20">
-            <Card className="bg-zinc-900 border-yellow-500/20 p-4 rounded-lg sticky top-32">
+            <Card className="bg-zinc-900 border-yellow-500/20 p-4 rounded-lg sticky top-48">
               <TopContributors />
             </Card>
           </div>
