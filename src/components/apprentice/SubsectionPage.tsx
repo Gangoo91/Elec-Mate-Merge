@@ -41,19 +41,19 @@ const SubsectionPage = () => {
 
   return (
     <div className="flex flex-col flex-1">
-      <div className="px-4 py-4 bg-elec-dark/80 border-b border-elec-yellow/30 shadow-md">
-        <h1 className="text-lg md:text-2xl font-semibold text-elec-yellow">
+      <div className="px-4 py-3 md:py-4 bg-elec-dark/80 border-b border-elec-yellow/30 shadow-md">
+        <h1 className="text-lg md:text-xl font-semibold text-elec-yellow">
           {sectionTitle && `${sectionTitle}: `}
           {subsectionData?.title || "Learning Content"}
         </h1>
       </div>
       
       <div className="flex-1 overflow-auto">
-        <div className="max-w-4xl mx-auto py-6 px-4 md:px-8">
+        <div className="max-w-4xl mx-auto py-5 px-4 md:px-6">
           <BackButton courseSlug={courseSlug} unitSlug={effectiveUnitSlug} sectionId={sectionId} />
           
           {subsectionId && (
-            <div className="mt-6">
+            <div className="mt-5">
               <SubsectionLearningContent
                 subsectionId={subsectionId}
                 isCompleted={isCompleted}
