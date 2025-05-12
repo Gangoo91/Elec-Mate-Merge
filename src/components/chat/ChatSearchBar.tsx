@@ -16,13 +16,13 @@ const ChatSearchBar = () => {
   return (
     <div className="relative">
       <div 
-        className={`flex items-center gap-2 rounded-full bg-elec-gray-light/5 px-3 py-2 border transition-all ${
+        className={`flex items-center gap-2 rounded-full bg-zinc-900 px-3 py-2 border transition-all ${
           isFocused 
-            ? 'border-elec-yellow ring-2 ring-elec-yellow/20' 
-            : 'border-elec-yellow/20'
+            ? 'border-yellow-500 ring-2 ring-yellow-500/20' 
+            : 'border-yellow-500/20'
         }`}
       >
-        <Search className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+        <Search className="h-4 w-4 text-gray-400 flex-shrink-0" />
         <Input
           type="text"
           placeholder="Search messages..."
@@ -30,7 +30,7 @@ const ChatSearchBar = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          className="border-0 bg-transparent p-0 focus-visible:ring-0 text-sm text-white placeholder:text-muted-foreground flex-1 h-6"
+          className="border-0 bg-transparent p-0 focus-visible:ring-0 text-sm text-white placeholder:text-gray-400 flex-1 h-6"
         />
         <AnimatePresence>
           {searchQuery && (
@@ -44,7 +44,7 @@ const ChatSearchBar = () => {
                 type="button"
                 variant="ghost"
                 size="icon"
-                className="h-5 w-5 rounded-full bg-elec-gray-light/10 p-1 text-muted-foreground hover:text-white hover:bg-elec-gray-light/20"
+                className="h-5 w-5 rounded-full bg-zinc-800 p-1 text-gray-400 hover:text-white hover:bg-zinc-700"
                 onClick={handleClearSearch}
               >
                 <X className="h-3 w-3" />

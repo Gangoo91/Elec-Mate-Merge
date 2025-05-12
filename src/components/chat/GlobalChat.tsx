@@ -5,7 +5,6 @@ import ChatHeader from "@/components/chat/ChatHeader";
 import ChatSearchBar from "@/components/chat/ChatSearchBar";
 import ChatMessageFeed from "@/components/chat/ChatMessageFeed";
 import ChatComposer from "@/components/chat/ChatComposer";
-import ChatFilters from "@/components/chat/ChatFilters";
 import TopContributors from "@/components/chat/TopContributors";
 import { Card } from "@/components/ui/card";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -41,33 +40,33 @@ const GlobalChat = () => {
   const chatCategories = ['All', 'General', 'Questions', 'Tips', 'News'];
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="sticky top-0 z-10 backdrop-blur-md bg-black/80 border-b border-elec-yellow/20">
+    <div className="flex flex-col h-full bg-black">
+      <div className="sticky top-0 z-10 bg-black border-b border-yellow-500/20">
         <ChatHeader 
           title="Global Chat" 
           onNewPost={handleOpenComposer}
         />
       </div>
       
-      <div className="px-4 py-3">
+      <div className="p-4 pb-0">
         <Tabs 
           defaultValue={activeCategory} 
           onValueChange={(value) => setActiveCategory(value as any)}
           className="w-full"
         >
-          <TabsList className="bg-elec-gray-light/10 border border-elec-yellow/10 p-1 w-full flex overflow-x-auto no-scrollbar">
+          <TabsList className="grid grid-cols-5 gap-2 bg-black">
             {chatCategories.map((category) => (
               <TabsTrigger
                 key={category}
                 value={category}
-                className="flex-1 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-sm px-3 py-1.5 text-sm font-medium transition-all"
+                className={`py-2 ${category === 'All' ? 'bg-yellow-500 text-black' : 'bg-zinc-900 hover:bg-zinc-800 text-white border border-yellow-500/20'} data-[state=active]:bg-yellow-500 data-[state=active]:text-black rounded-md`}
               >
                 {category}
               </TabsTrigger>
             ))}
           </TabsList>
           
-          <div className="px-0 py-2">
+          <div className="mt-4 mb-2">
             <ChatSearchBar />
           </div>
         </Tabs>
@@ -88,8 +87,8 @@ const GlobalChat = () => {
         </div>
         
         {!isMobile && (
-          <div className="hidden lg:block w-80 p-4 border-l border-elec-yellow/10">
-            <Card className="bg-elec-gray-light/5 border-elec-yellow/20 p-4 rounded-lg">
+          <div className="hidden lg:block w-80 p-4 border-l border-yellow-500/20">
+            <Card className="bg-zinc-900 border-yellow-500/20 p-4 rounded-lg">
               <TopContributors />
             </Card>
           </div>

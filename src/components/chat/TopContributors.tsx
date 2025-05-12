@@ -60,10 +60,10 @@ const TopContributors = () => {
   
   const getBadgeColor = (badge: string) => {
     switch (badge) {
-      case 'gold': return 'bg-amber-400 text-black';
+      case 'gold': return 'bg-yellow-500 text-black';
       case 'silver': return 'bg-gray-300 text-black';
       case 'bronze': return 'bg-amber-700 text-white';
-      default: return 'bg-elec-gray-light/20 text-white';
+      default: return 'bg-zinc-700 text-white';
     }
   };
   
@@ -82,17 +82,17 @@ const TopContributors = () => {
         {contributors.map((contributor) => (
           <div key={contributor.id} className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Avatar className="h-8 w-8 border border-elec-yellow/30">
+              <Avatar className="h-8 w-8 border border-yellow-500/30">
                 <AvatarImage src={contributor.avatar || undefined} />
-                <AvatarFallback className="bg-elec-gray-light/20 text-sm font-medium">
+                <AvatarFallback className="bg-zinc-800 text-sm font-medium">
                   {getInitials(contributor.name)}
                 </AvatarFallback>
               </Avatar>
-              <span className="text-sm font-medium">{contributor.name}</span>
+              <span className="text-sm font-medium text-white">{contributor.name}</span>
             </div>
             
             <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">{contributor.points} pts</span>
+              <span className="text-xs text-gray-400">{contributor.points} pts</span>
               {contributor.badge !== 'regular' && (
                 <Badge variant="outline" className={`${getBadgeColor(contributor.badge)} text-xs px-1.5 py-0`}>
                   {contributor.badge}
@@ -104,7 +104,7 @@ const TopContributors = () => {
       </div>
       
       <div className="pt-2 text-center">
-        <a href="#" className="text-elec-yellow text-xs hover:underline">
+        <a href="#" className="text-yellow-500 text-xs hover:underline">
           View All Rankings
         </a>
       </div>
