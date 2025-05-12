@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { getHealthSafetySectionById } from '@/data/healthAndSafety/index';
 import { electricalTheorySections } from '@/data/electricalTheory';
+import { legislationSection } from '@/data/electricalTheory/section1-legislation';
 import type { SectionData } from '@/data/courseTypes';
 
 interface UseSectionContentDataProps {
@@ -33,9 +34,15 @@ export const useSectionContentData = ({
     // Load data based on unit type
     let section;
     if (isElectricalTheory) {
-      // For electrical theory, use the section number to get the right section
-      const sectionIndex = parseInt(sectionId) - 1;
-      section = electricalTheorySections[sectionIndex] || null;
+      // For electrical theory, handle special case for section 1 (legislation)
+      if (sectionId === "1" || sectionId === "1.0") {
+        section = legislationSection;
+      } else {
+        // For other electrical theory sections
+        const sectionIndex = parseInt(sectionId) - 1;
+        section = electricalTheorySections[sectionIndex] || null;
+      }
+      
       console.log("Loaded electrical theory section:", section?.title || "Not found");
     } else {
       // For health & safety, use the existing function

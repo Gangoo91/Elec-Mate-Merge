@@ -2,7 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, BookOpen } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { legislationSection } from '@/data/electricalTheory/section1-legislation';
 
@@ -21,8 +21,6 @@ const ElectricalTheorySection = ({
   
   // Get section data based on section ID
   const sectionData = legislationSection;
-  console.log("ElectricalTheorySection - Rendering section:", sectionId);
-  console.log("ElectricalTheorySection - Section data:", sectionData);
   
   const navigateToSubsection = (subsectionId: string) => {
     navigate(`/apprentice/study/eal/level-2-diploma/unit/elec2-04/section/${sectionId}/subsection/${subsectionId}`);
@@ -54,13 +52,12 @@ const ElectricalTheorySection = ({
           </p>
         </div>
         
-        {/* Subsection Grid - Similar to Unit 1 layout */}
+        {/* Subsection Grid - Use the exact same layout as shown in the image */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {sectionData.content.subsections.map((subsection) => (
             <Card 
               key={subsection.id}
               className="border border-elec-yellow/20 bg-elec-dark/80 hover:bg-elec-dark/60 cursor-pointer transition-colors"
-              onClick={() => navigateToSubsection(subsection.id)}
             >
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
@@ -80,6 +77,40 @@ const ElectricalTheorySection = ({
                     }}
                   >
                     View
+                  </Button>
+                </div>
+                
+                {/* Show brief content description */}
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {subsection.content.substring(0, 100)}...
+                </p>
+                
+                {/* Show key points if available */}
+                {subsection.keyPoints && subsection.keyPoints.length > 0 && (
+                  <div className="mt-3 pt-3 border-t border-elec-yellow/20">
+                    <h4 className="text-sm font-semibold text-elec-yellow mb-2">Key Points</h4>
+                    <ul className="list-disc pl-4 space-y-1 text-xs text-elec-light/80">
+                      {subsection.keyPoints.slice(0, 2).map((point, index) => (
+                        <li key={index}>{point}</li>
+                      ))}
+                      {subsection.keyPoints.length > 2 && <li>...</li>}
+                    </ul>
+                  </div>
+                )}
+                
+                {/* View Full Content button */}
+                <div className="mt-3 pt-3 border-t border-elec-yellow/20 text-right">
+                  <Button 
+                    variant="ghost" 
+                    size="sm"
+                    className="text-elec-yellow hover:bg-elec-yellow/10"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigateToSubsection(subsection.id);
+                    }}
+                  >
+                    View Full Content
+                    <BookOpen className="ml-2 h-4 w-4" />
                   </Button>
                 </div>
               </CardContent>

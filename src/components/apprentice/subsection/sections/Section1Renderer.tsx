@@ -26,9 +26,10 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
   if (isElectricalTheory) {
     console.log("Section1Renderer - Rendering electrical theory section with ID:", subsectionId);
     
-    // If this is just the section (no subsection), render the section overview 
-    if (subsectionId === "1") {
-      return <ElectricalTheorySection sectionId={subsectionId} isCompleted={isCompleted} markAsComplete={markAsComplete} />;
+    // Check if we're on the section overview (no subsection) or a numeric ID that represents section 1
+    if (subsectionId === "1" || subsectionId === "1.0") {
+      console.log("Section1Renderer - Rendering electrical theory section overview");
+      return <ElectricalTheorySection sectionId="1" isCompleted={isCompleted} markAsComplete={markAsComplete} />;
     }
     
     // Otherwise render the specific subsection

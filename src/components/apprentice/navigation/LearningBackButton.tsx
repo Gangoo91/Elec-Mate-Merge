@@ -43,7 +43,7 @@ const LearningBackButton = ({
     
     switch (currentPath) {
       case 'subsection':
-        // From subsection → section (correct route for unit 1 sections)
+        // From subsection → section (correct route for unit sections)
         navigate(`/apprentice/study/eal/${effectiveCourseSlug}/unit/${effectiveUnitSlug}/section/${sectionId}`);
         break;
       case 'section':
