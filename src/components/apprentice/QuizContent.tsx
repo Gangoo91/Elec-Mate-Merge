@@ -16,11 +16,20 @@ const QuizContent = () => {
   const [timeRemaining, setTimeRemaining] = useState<number>(45 * 60); // 45 minutes in seconds
   const [quizStarted, setQuizStarted] = useState(false);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
   
   // Extract unit code from the unitSlug
   const unitCode = unitSlug?.includes('-') ? 
     unitSlug.split('-').slice(0, 2).join('/').toUpperCase() : '';
   
+  // Check if quiz is completed
+  useEffect(() => {
+    if (unitCode) {
+      const completed = localStorage.getItem(`unit_${unitCode}_quiz_completed`) === 'true';
+      setIsCompleted(completed);
+    }
+  }, [unitCode]);
+
   // Timer effect
   useEffect(() => {
     if (!quizStarted || quizSubmitted) return;
@@ -66,6 +75,7 @@ const QuizContent = () => {
     try {
       // Mark quiz as completed in localStorage
       localStorage.setItem(`unit_${unitCode}_quiz_completed`, 'true');
+      setIsCompleted(true);
       
       // Calculate time taken
       const timeTaken = (45 * 60) - timeRemaining;
@@ -144,6 +154,12 @@ const QuizContent = () => {
     }
   };
 
+  const handleRetakeQuiz = () => {
+    setQuizStarted(false);
+    setQuizSubmitted(false);
+    setTimeRemaining(45 * 60);
+  };
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="mb-6">
@@ -164,6 +180,11 @@ const QuizContent = () => {
             Q
           </span>
           <h2 className="text-2xl font-bold">Knowledge Assessment Quiz</h2>
+          {isCompleted && quizSubmitted && (
+            <div className="ml-auto flex items-center text-green-500 gap-2">
+              <span className="text-sm">Completed</span>
+            </div>
+          )}
         </div>
         
         {!quizStarted ? (
@@ -190,7 +211,7 @@ const QuizContent = () => {
               className="bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark flex items-center gap-2"
             >
               <Play className="h-4 w-4" />
-              Start Quiz
+              {isCompleted ? "Retake Quiz" : "Start Quiz"}
             </Button>
           </div>
         ) : (
@@ -223,6 +244,17 @@ const QuizContent = () => {
                 currentTime={timeRemaining}
                 isSubmitted={quizSubmitted}
               />
+              
+              {quizSubmitted && (
+                <div className="mt-6 flex justify-end">
+                  <Button
+                    onClick={handleRetakeQuiz}
+                    className="bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark"
+                  >
+                    Retake Quiz
+                  </Button>
+                </div>
+              )}
             </div>
           </>
         )}
