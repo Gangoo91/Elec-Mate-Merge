@@ -29,6 +29,9 @@ const AutomatedTrackingCard = () => {
     let timer: number | null = null;
     
     if (isTracking) {
+      // Update immediately to show current time
+      setElapsedTimeDisplay(sessionTime);
+      
       timer = window.setInterval(() => {
         setElapsedTimeDisplay(sessionTime);
       }, 1000);

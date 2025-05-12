@@ -86,7 +86,7 @@ export const useAutoSave = ({
       
       // Only save if we have accumulated time
       if (accumulatedTimeRef.current > 0) {
-        const minutesToSave = Math.max(1, Math.floor(accumulatedTimeRef.current / 60));
+        const minutesToSave = Math.max(5, Math.floor(accumulatedTimeRef.current / 60));
         
         onSave(minutesToSave, currentActivity);
         lastAutoSaveRef.current = sessionTime;

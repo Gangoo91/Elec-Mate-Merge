@@ -33,7 +33,7 @@ const TrackingStatusIndicator = () => {
           title: "Training time saved",
           description: "Your accumulated training time has been recorded",
         });
-      }, 10000); // Changed from 2000 to 10000 (10 seconds)
+      }, 10000); // 10 seconds
     }
     
     return () => {
