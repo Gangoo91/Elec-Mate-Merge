@@ -14,17 +14,31 @@ const MILESTONES = [
 
 export const useTrackMilestones = () => {
   const { totalTime } = useTimeEntries();
-  const { addNotification } = useNotifications();
+  
+  // Try to use notifications, but don't error if they're not available
+  let notificationsAvailable = true;
+  let addNotification;
+  
+  try {
+    const notifications = useNotifications();
+    addNotification = notifications.addNotification;
+  } catch (e) {
+    console.warn('Notifications not available, skipping milestone notifications');
+    notificationsAvailable = false;
+  }
   
   // Convert hours and minutes to total minutes for easier comparison
   const totalMinutes = (totalTime.hours * 60) + totalTime.minutes;
   
   useEffect(() => {
+    // If notifications aren't available, don't proceed
+    if (!notificationsAvailable) return;
+    
     // Check if we've reached any milestones
     MILESTONES.forEach(milestone => {
       if (totalMinutes === milestone.minutes) {
         // Trigger notification for achieved milestone
-        addNotification({
+        addNotification?.({
           title: milestone.title,
           message: milestone.message,
           type: 'success'
@@ -38,7 +52,7 @@ export const useTrackMilestones = () => {
         }
       }
     });
-  }, [totalMinutes, addNotification]);
+  }, [totalMinutes, addNotification, notificationsAvailable]);
   
   return null; // This hook doesn't return anything
 };

@@ -43,7 +43,22 @@ const NotificationItem = ({ notification, onRead }: { notification: Notification
 };
 
 const NotificationDropdown = () => {
-  const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
+  // Using useNotifications hook safely with try/catch
+  let notifications: Notification[] = [];
+  let unreadCount = 0;
+  let markAsRead = (id: string) => {};
+  let markAllAsRead = () => {};
+  
+  try {
+    const notificationContext = useNotifications();
+    notifications = notificationContext.notifications;
+    unreadCount = notificationContext.unreadCount;
+    markAsRead = notificationContext.markAsRead;
+    markAllAsRead = notificationContext.markAllAsRead;
+  } catch (e) {
+    console.warn('NotificationProvider not available');
+  }
+  
   const navigate = useNavigate();
   
   const handleViewAll = () => {
