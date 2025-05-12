@@ -19,15 +19,21 @@ const BackButton = ({ courseSlug, unitSlug, sectionId }: BackButtonProps) => {
     
     // Use the correct unit slug based on the path
     let effectiveUnitSlug = unitSlug;
-    if (!effectiveUnitSlug && isElectricalTheory) {
+    if (isElectricalTheory) {
       effectiveUnitSlug = "elec2-04";
     } else if (!effectiveUnitSlug) {
       effectiveUnitSlug = "health-safety";
     }
     
-    // If we have a section ID, go back to the unit page
+    // If we have a section ID, go back to the section page (not the unit page)
     if (sectionId && effectiveUnitSlug) {
-      navigate(`/apprentice/study/eal/${courseSlug || 'level-2-diploma'}/unit/${effectiveUnitSlug}`);
+      if (isElectricalTheory) {
+        // For electrical theory, always navigate to the section page
+        navigate(`/apprentice/study/eal/${courseSlug || 'level-2-diploma'}/unit/${effectiveUnitSlug}/section/${sectionId}`);
+      } else {
+        // For other units, navigate to the unit page
+        navigate(`/apprentice/study/eal/${courseSlug || 'level-2-diploma'}/unit/${effectiveUnitSlug}`);
+      }
     }
     // If we have only a unit ID, go back to the course page
     else if (effectiveUnitSlug) {

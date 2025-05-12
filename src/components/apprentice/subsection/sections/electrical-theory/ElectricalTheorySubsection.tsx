@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface ElectricalTheorySubsectionProps {
   title: string;
@@ -20,9 +21,27 @@ const ElectricalTheorySubsection = ({
   markAsComplete,
   subsectionId
 }: ElectricalTheorySubsectionProps) => {
+  const navigate = useNavigate();
+  const { sectionId } = useParams();
+
+  // Handle back to section navigation
+  const handleBackToSection = () => {
+    // Navigate directly to the electrical theory section page with the correct unit and section ID
+    navigate(`/apprentice/study/eal/level-2-diploma/unit/elec2-04/section/${sectionId || '1'}`);
+  };
+  
   return (
     <div className="space-y-6">
-      <h1 className="text-xl md:text-2xl font-bold text-elec-yellow">{title}</h1>
+      <div className="flex flex-col gap-4 mb-6">
+        <Button
+          variant="outline"
+          onClick={handleBackToSection}
+          className="self-start border-elec-yellow/30 hover:bg-elec-yellow/10"
+        >
+          Back to Section
+        </Button>
+        <h1 className="text-xl md:text-2xl font-bold text-elec-yellow">{title}</h1>
+      </div>
       
       <div className="prose prose-invert max-w-none">
         <p className="text-base md:text-lg leading-relaxed">{content}</p>

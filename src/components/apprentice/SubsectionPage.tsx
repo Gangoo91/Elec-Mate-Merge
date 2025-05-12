@@ -1,13 +1,16 @@
 
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useSubsectionContent } from "@/hooks/useSubsectionContent";
 import SubsectionLearningContent from "./subsection/SubsectionLearningContent";
 import SubsectionsNavigation from "./SubsectionsNavigation";
 import BackButton from "./BackButton";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
 const SubsectionPage = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
+  const navigate = useNavigate();
   
   // Detect if we're on an electrical theory page
   const path = window.location.pathname;
@@ -39,6 +42,17 @@ const SubsectionPage = () => {
     console.log("SubsectionPage - Current subsectionData:", subsectionData);
   }, [subsectionId, subsectionData]);
 
+  // Custom back button for electrical theory subsections
+  const handleBackToSection = () => {
+    if (isElectricalTheory && sectionId) {
+      navigate(`/apprentice/study/eal/level-2-diploma/unit/elec2-04/section/${sectionId}`);
+    } else if (courseSlug && effectiveUnitSlug && sectionId) {
+      navigate(`/apprentice/study/eal/${courseSlug}/unit/${effectiveUnitSlug}/section/${sectionId}`);
+    } else {
+      navigate(-1);
+    }
+  };
+
   return (
     <div className="flex flex-col flex-1">
       <div className="px-4 py-3 md:py-4 bg-elec-dark/80 border-b border-elec-yellow/30 shadow-md">
@@ -50,7 +64,14 @@ const SubsectionPage = () => {
       
       <div className="flex-1 overflow-auto">
         <div className="max-w-4xl mx-auto py-5 px-4 md:px-6">
-          <BackButton courseSlug={courseSlug} unitSlug={effectiveUnitSlug} sectionId={sectionId} />
+          <Button
+            variant="outline" 
+            className="mb-4 border-elec-yellow/30 hover:bg-elec-yellow/10"
+            onClick={handleBackToSection}
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Section
+          </Button>
           
           {subsectionId && (
             <div className="mt-5">
