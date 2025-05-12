@@ -14,11 +14,11 @@ const SubsectionContent = () => {
   console.log("SubsectionContent params:", { courseSlug, unitSlug, sectionId, subsectionId });
   
   // Ensure we have valid parameters for all routes
-  const effectiveCourseSlug = courseSlug || "level-2-diploma";
-  const effectiveUnitSlug = unitSlug || "health-safety";
+  const effectiveCourseSlug = courseSlug || 'level-2-diploma';
+  const effectiveUnitSlug = unitSlug || 'health-safety';
   
   // Check if we're on the electrical theory unit
-  const isElectricalTheory = effectiveUnitSlug === "elec2-04";
+  const isElectricalTheory = effectiveUnitSlug === 'elec2-04';
   
   const {
     subsectionData,
