@@ -40,13 +40,13 @@ const QuizControls = ({
           </Button>
         )}
         
-        {answeredCount > 0 && answeredCount < totalQuestions && isLastQuestion && (
+        {answeredCount > 0 && (
           <Button 
             onClick={onSubmit}
             variant="outline"
             className="border-elec-yellow/30 hover:bg-elec-yellow/10"
           >
-            Submit Quiz Early
+            Submit Quiz
           </Button>
         )}
       </div>
