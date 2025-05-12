@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, User, Users, Heart, GraduationCap, MessageSquarePlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ConversationsList from '@/components/messenger/ConversationsList';
 import ConversationView from '@/components/messenger/ConversationView';
 import EmptyState from '@/components/messenger/EmptyState';
@@ -13,6 +13,7 @@ import { toast } from "@/components/ui/use-toast";
 
 const MessengerPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const initialConversationId = location.state?.conversationId;
   
   const {
@@ -55,6 +56,10 @@ const MessengerPage = () => {
   
   const handleBackToList = () => {
     setShowConversationOnMobile(false);
+  };
+  
+  const handleNavigateBack = () => {
+    navigate(-1);
   };
   
   const handleNewMessage = () => {
@@ -113,6 +118,19 @@ const MessengerPage = () => {
   
   return (
     <div className="animate-fade-in h-[calc(100vh-64px)]">
+      {/* Back button for desktop view */}
+      <div className="container py-4">
+        <Button 
+          variant="outline" 
+          size="sm"
+          onClick={handleNavigateBack}
+          className="mb-4 flex items-center gap-2"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back
+        </Button>
+      </div>
+      
       <div className="grid h-full">
         {/* Mobile view with conditional rendering */}
         {isMobile ? (
