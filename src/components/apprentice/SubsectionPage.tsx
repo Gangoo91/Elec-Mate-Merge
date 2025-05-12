@@ -4,7 +4,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSubsectionContent } from "@/hooks/useSubsectionContent";
 import SubsectionLearningContent from "./subsection/SubsectionLearningContent";
 import SubsectionsNavigation from "./SubsectionsNavigation";
-import BackButton from "./BackButton";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
