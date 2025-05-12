@@ -20,11 +20,12 @@ const OJTHeader = ({ handleDownloadReport }: OJTHeaderProps) => {
   
   const generateReport = () => {
     try {
-      // Call the report generator with the required data
+      // Call the report generator with the current entries
+      // This will use the correct hour calculation from the improved report generator
       generateTrainingReport({
         studentName: profile?.full_name || user?.email?.split('@')[0] || 'Apprentice',
         totalHours: totalTime,
-        entries: entries,
+        entries: entries, // These are the current entries after any deletions
         targetHours: 40,
         weeklyHours: 8
       });

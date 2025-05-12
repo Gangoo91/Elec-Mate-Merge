@@ -42,13 +42,17 @@ export const generateTrainingReport = (data: ReportData): void => {
   doc.text(`Report Date: ${format(new Date(), 'dd MMM yyyy')}`, 20, 40);
   doc.text(`Report Period: ${filterMonth || 'All Time'}`, 20, 50);
   
-  // Add total hours information
-  const totalTimeText = `Total Training Hours: ${totalHours.hours}h ${totalHours.minutes}m`;
+  // Add total hours information - ensure we're calculating correct hours
+  const calculatedHours = entries.reduce((total, entry) => total + entry.duration, 0) / 60;
+  const calculatedHoursWhole = Math.floor(calculatedHours);
+  const calculatedMinutes = Math.round((calculatedHours - calculatedHoursWhole) * 60);
+  
+  const totalTimeText = `Total Training Hours: ${calculatedHoursWhole}h ${calculatedMinutes}m`;
   doc.text(totalTimeText, 20, 60);
   
   // Add target information if available
   if (targetHours) {
-    const completion = ((totalHours.hours + totalHours.minutes / 60) / targetHours) * 100;
+    const completion = (calculatedHours / targetHours) * 100;
     doc.text(`Target Hours: ${targetHours}h (${completion.toFixed(1)}% complete)`, 20, 70);
   }
   

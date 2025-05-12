@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { TimeEntry } from "@/types/time-tracking";
 import { useAuthState } from "./useAuthState";
@@ -31,35 +30,60 @@ export const useTimeEntries = () => {
       // Clear all manual entries if filter is "all"
       setManualEntries([]);
       
+      // Store the deletion state in localStorage to ensure it persists
+      localStorage.setItem('entries_cleared', 'true');
+      localStorage.setItem('entries_cleared_timestamp', Date.now().toString());
+      
       // In a real implementation with Supabase, would delete from the database
-      // if (userId) {
-      //   supabase.from('time_entries').delete().eq('user_id', userId);
-      // }
+      if (userId) {
+        try {
+          // This is where we would delete from Supabase
+          // supabase.from('time_entries').delete().eq('user_id', userId);
+          
+          // For now, just store in localStorage that we've cleared entries
+          localStorage.removeItem('manualEntries');
+        } catch (error) {
+          console.error('Error deleting entries:', error);
+        }
+      }
     } else {
       // Filter out entries from the specified month
-      setManualEntries(prev => prev.filter(entry => {
-        const date = new Date(entry.date);
-        const entryMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-        return entryMonth !== filterMonth;
-      }));
-      
-      // In a real implementation with Supabase, would delete filtered entries
-      // if (userId) {
-      //   const startDate = new Date(`${filterMonth}-01`);
-      //   const endDateMonth = new Date(startDate);
-      //   endDateMonth.setMonth(endDateMonth.getMonth() + 1);
-      //   
-      //   supabase.from('time_entries')
-      //     .delete()
-      //     .eq('user_id', userId)
-      //     .gte('date', startDate.toISOString().split('T')[0])
-      //     .lt('date', endDateMonth.toISOString().split('T')[0]);
-      // }
+      setManualEntries(prev => {
+        const filteredEntries = prev.filter(entry => {
+          const date = new Date(entry.date);
+          const entryMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+          return entryMonth !== filterMonth;
+        });
+        
+        // Store updated entries in localStorage
+        localStorage.setItem('manualEntries', JSON.stringify(filteredEntries));
+        
+        return filteredEntries;
+      });
     }
   };
   
-  // Combine all entries
-  const allEntries = [...manualEntries, ...courseEntries, ...quizEntries];
+  // Combine entries but respect the deleted state
+  const wasEntriesCleared = localStorage.getItem('entries_cleared') === 'true';
+  const clearTimestamp = parseInt(localStorage.getItem('entries_cleared_timestamp') || '0');
+  const oneHourAgo = Date.now() - (60 * 60 * 1000);
+  
+  // If entries were cleared less than an hour ago, only use manual entries
+  // Otherwise, use all entries (manual, course, quiz)
+  let allEntries: TimeEntry[] = [];
+  
+  if (wasEntriesCleared && clearTimestamp > oneHourAgo) {
+    // Only use manual entries if entries were cleared recently
+    allEntries = [...manualEntries];
+  } else {
+    // Clear the flag if it's been more than an hour
+    if (wasEntriesCleared) {
+      localStorage.removeItem('entries_cleared');
+      localStorage.removeItem('entries_cleared_timestamp');
+    }
+    // Use all entries
+    allEntries = [...manualEntries, ...courseEntries, ...quizEntries];
+  }
   
   // Calculate total minutes
   const totalMinutes = allEntries.reduce((total, entry) => total + entry.duration, 0);
