@@ -32,12 +32,13 @@ export const useAutomatedTraining = (autoStart = false) => {
     onInactive: handleInactivity
   });
   
-  const { saveCurrentProgress, resetAutoSave } = useAutoSave({
+  const { saveCurrentProgress, resetAutoSave, isSaving } = useAutoSave({
     sessionTime,
     isTracking,
     currentActivity,
+    minimumEntryDuration: 30, // Only create entries after 30 minutes
     onSave: (minutes, activity) => {
-      addTimeEntry(minutes, activity, "Auto-saved training time");
+      addTimeEntry(minutes, activity, "Auto-tracked training time");
     }
   });
 
@@ -64,16 +65,10 @@ export const useAutomatedTraining = (autoStart = false) => {
     setIsTracking(false);
     pauseTimer();
     
-    // Save progress when paused
-    if (currentActivity) {
-      const savedMinutes = saveCurrentProgress();
-      if (savedMinutes > 0) {
-        console.log(`Saved ${savedMinutes} minutes on pause`);
-      }
-    }
-    
+    // We don't save on pause anymore, only when stopping completely
+    // or when reaching the minimum time threshold
     console.log("Tracking paused");
-  }, [currentActivity, pauseTimer, saveCurrentProgress]);
+  }, [pauseTimer]);
 
   // Resume tracking function
   const resumeTracking = useCallback(() => {
@@ -98,7 +93,7 @@ export const useAutomatedTraining = (autoStart = false) => {
   const stopTracking = useCallback(() => {
     setIsTracking(false);
     
-    // Save remaining time
+    // Save remaining time (even if less than minimumEntryDuration)
     if (currentActivity) {
       const savedMinutes = saveCurrentProgress();
       
@@ -142,6 +137,7 @@ export const useAutomatedTraining = (autoStart = false) => {
     isTracking,
     sessionTime,
     currentActivity,
+    isSaving,
     startTracking,
     pauseTracking,
     resumeTracking,

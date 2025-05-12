@@ -20,6 +20,7 @@ const AutomatedTrackingCard = () => {
     stopTracking, 
     sessionTime,
     currentActivity,
+    isSaving,
     isAuthenticated
   } = useAutomatedTraining();
   
@@ -103,6 +104,15 @@ const AutomatedTrackingCard = () => {
                   <span className="text-sm font-medium">{formatTime(sessionTime)}</span>
                 </div>
                 <div className="mt-1 text-white">{currentActivity}</div>
+                
+                {/* Tracking status message */}
+                <div className="mt-2 text-xs text-muted-foreground">
+                  {isSaving ? (
+                    <div className="text-green-400">Saving training record...</div>
+                  ) : (
+                    <div>Accumulating time - entries recorded after 30 minutes</div>
+                  )}
+                </div>
               </div>
             )}
             
@@ -138,8 +148,8 @@ const AutomatedTrackingCard = () => {
               <p className="mb-1">This tracker will:</p>
               <ul className="list-disc pl-5 space-y-1">
                 <li>Automatically track time spent on learning pages</li>
-                <li>Record your activity as off-the-job training</li>
-                <li>Save progress regularly to your training record</li>
+                <li>Create entries after 30 minutes of accumulated time</li>
+                <li>Save all remaining time when you stop tracking</li>
                 <li>Pause when you're inactive for over 5 minutes</li>
               </ul>
             </div>

@@ -8,6 +8,8 @@ import TrainingGuideCard from "@/components/apprentice/time-tracking/ojt/Trainin
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useTrackMilestones } from "@/hooks/useTrackMilestones";
 import { useLocation } from "react-router-dom";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Info } from "lucide-react";
 
 const ApprenticeOJT = () => {
   const [weeklyHours, setWeeklyHours] = useState(8);
@@ -59,6 +61,14 @@ const ApprenticeOJT = () => {
     <div className="space-y-6 pb-20 animate-fade-in">
       {/* Only show header on desktop */}
       {!isMobile && <OJTHeader handleDownloadReport={handleDownloadReport} />}
+      
+      {/* Time tracking info banner */}
+      <Alert variant="default" className="bg-elec-gray/50 border-elec-yellow/30">
+        <Info className="h-4 w-4 text-elec-yellow" />
+        <AlertDescription className="text-sm">
+          Your training is now tracked in 30-minute sessions to simplify your records. All time is still captured even if you do shorter sessions.
+        </AlertDescription>
+      </Alert>
       
       {/* Clean layout for both mobile and desktop */}
       <div className={isMobile ? "pb-24" : "space-y-6"}>
