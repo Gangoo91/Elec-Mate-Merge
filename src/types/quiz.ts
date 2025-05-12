@@ -5,7 +5,7 @@ export interface QuizProps {
   unitCode: string;
   questions: QuizQuestion[];
   onQuizComplete: (score: number, totalQuestions: number) => void;
-  questionCount?: number;
+  questionCount?: number; // Default is now 30 in the UnitQuiz component
   timeLimit?: number;
   currentTime?: number;
   isSubmitted?: boolean;
