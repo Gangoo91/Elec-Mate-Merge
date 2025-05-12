@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAutomatedTraining } from '@/hooks/useAutomatedTraining';
 import { useToast } from '@/components/ui/use-toast';
@@ -17,6 +17,7 @@ export const useTrainingActivityMonitor = () => {
     isAuthenticated
   } = useAutomatedTraining();
   const { toast } = useToast();
+  const [hasShownToast, setHasShownToast] = useState(false);
   
   // Automatically track activity based on routes
   useEffect(() => {
@@ -43,11 +44,15 @@ export const useTrainingActivityMonitor = () => {
       // Start tracking the learning activity
       startTracking(`${activityType}: ${location.pathname.split('/').pop()}`);
       
-      toast({
-        title: "Training time recording",
-        description: "Your off-the-job training time is now being recorded",
-        duration: 3000,
-      });
+      // Only show toast once per session
+      if (!hasShownToast) {
+        toast({
+          title: "Training time recording",
+          description: "Your off-the-job training time is now being recorded",
+          duration: 3000,
+        });
+        setHasShownToast(true);
+      }
     } else if (!isLearningPage && isTracking) {
       // When navigating away from learning pages, stop tracking
       stopTracking();
@@ -59,7 +64,7 @@ export const useTrainingActivityMonitor = () => {
         stopTracking();
       }
     };
-  }, [location.pathname, isTracking, startTracking, stopTracking, isAuthenticated, toast]);
+  }, [location.pathname, isTracking, startTracking, stopTracking, isAuthenticated, toast, hasShownToast]);
   
   return { isTracking };
 };

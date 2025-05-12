@@ -7,6 +7,7 @@ import { Play, Pause, Clock, Save } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { formatTime } from "@/lib/utils";
 import LearningTimer from "@/components/apprentice/LearningTimer";
+import RecordingIndicator from "@/components/apprentice/timer/RecordingIndicator";
 
 const AutomatedTrackingCard = () => {
   const [elapsedTimeDisplay, setElapsedTimeDisplay] = useState(0);
@@ -80,7 +81,10 @@ const AutomatedTrackingCard = () => {
     <div className="space-y-4">
       <Card className="border-elec-yellow/20 bg-elec-gray/50">
         <CardHeader className="pb-2">
-          <CardTitle>Automated Training Tracker</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle>Automated Training Tracker</CardTitle>
+            <RecordingIndicator showText={true} />
+          </div>
           <CardDescription>
             {isTracking 
               ? "Your learning time is being recorded automatically" 
@@ -93,7 +97,7 @@ const AutomatedTrackingCard = () => {
               <div className="rounded-md border border-elec-yellow/20 bg-elec-dark p-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="h-3 w-3 rounded-full bg-elec-yellow animate-pulse"></div>
+                    <div className="h-3 w-3 rounded-full bg-green-500 animate-pulse"></div>
                     <span className="text-sm text-elec-yellow">Currently tracking:</span>
                   </div>
                   <span className="text-sm font-medium">{formatTime(sessionTime)}</span>

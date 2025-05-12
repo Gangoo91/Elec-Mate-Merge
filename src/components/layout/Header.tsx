@@ -1,13 +1,7 @@
-
-import { Link } from "react-router-dom";
-import { Menu, MessageSquare } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import UserProfileDropdown from "@/components/auth/UserProfileDropdown";
-import NotificationDropdown from "@/components/notifications/NotificationDropdown";
-import { Badge } from "@/components/ui/badge";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { useNavigate } from "react-router-dom";
+import RecordingIndicator from "../apprentice/timer/RecordingIndicator";
 
 interface HeaderProps {
   toggleSidebar: () => void;
@@ -15,55 +9,23 @@ interface HeaderProps {
 
 const Header = ({ toggleSidebar }: HeaderProps) => {
   const isMobile = useIsMobile();
-  const navigate = useNavigate();
   
   return (
-    <header className="flex h-16 items-center justify-between border-b border-elec-yellow/30 px-4 md:px-6">
-      <div className="flex items-center">
+    <header className="bg-elec-gray border-b border-elec-yellow/10 py-2 px-4 flex justify-between items-center sticky top-0 z-10">
+      <div className="flex items-center gap-4">
         {isMobile && (
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleSidebar}
-            className="mr-2 md:hidden"
-            aria-label="Toggle Menu"
-          >
+          <Button variant="ghost" size="icon" onClick={toggleSidebar}>
             <Menu className="h-6 w-6" />
           </Button>
         )}
-        <div className="flex items-center gap-2">
-          <Link to="/" className="flex items-center">
-            <span className="text-xl font-bold text-elec-yellow">Elec-Mate</span>
-          </Link>
+        <div className="flex items-center gap-3">
+          <h1 className="text-lg font-medium text-elec-yellow">Electlearn</h1>
+          <RecordingIndicator className="mt-0.5" />
         </div>
       </div>
       
-      <div className="flex items-center gap-3">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="relative"
-                onClick={() => navigate('/messages')}
-              >
-                <MessageSquare className="h-5 w-5" />
-                <Badge 
-                  className="absolute -top-1 -right-1 bg-elec-yellow text-elec-dark text-xs h-5 w-5 flex items-center justify-center p-0"
-                  variant="outline"
-                >
-                  2
-                </Badge>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Messages</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <NotificationDropdown />
-        <UserProfileDropdown />
+      <div className="flex items-center space-x-4">
+        {/* Other header items can go here */}
       </div>
     </header>
   );
