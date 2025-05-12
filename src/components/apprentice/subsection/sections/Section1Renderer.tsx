@@ -1,8 +1,8 @@
-
 import React, { useEffect } from "react";
 import { SubsectionProps } from "../types";
 import HealthSafetySubsection from "./health-safety/HealthSafetySubsection";
 import { renderElectricalTheorySection1 } from "./electrical-theory/ElectricalTheoryContent";
+import ElectricalTheorySection from "@/components/apprentice/section/ElectricalTheorySection";
 
 export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   useEffect(() => {
@@ -21,6 +21,12 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
   
   // Handle electrical theory content
   if (isElectricalTheory) {
+    // If this is just the section (no subsection), render the section overview
+    if (subsectionId === "1") {
+      return <ElectricalTheorySection sectionId={subsectionId} isCompleted={isCompleted} markAsComplete={markAsComplete} />;
+    }
+    
+    // Otherwise render the specific subsection
     return renderElectricalTheorySection1(subsectionId, isCompleted, markAsComplete);
   }
   

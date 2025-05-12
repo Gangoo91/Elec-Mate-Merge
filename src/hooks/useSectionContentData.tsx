@@ -1,90 +1,69 @@
 
-import { useState, useEffect } from "react";
-import { getHealthSafetySectionById } from "@/data/healthAndSafety/index";
-import { electricalTheorySections } from "@/data/electricalTheory";
-import type { SectionData } from "@/data/courseTypes";
+import { useState, useEffect } from 'react';
+import { getHealthSafetySectionById } from '@/data/healthAndSafety/index';
+import { electricalTheorySections } from '@/data/electricalTheory';
+import type { SectionData } from '@/data/courseTypes';
 
 interface UseSectionContentDataProps {
   courseSlug: string;
   unitSlug: string;
   sectionId?: string;
-  isQuizRoute: boolean;
+  isQuizRoute?: boolean;
 }
 
-interface UseSectionContentDataResult {
-  sectionData: SectionData | null;
-  isCompleted: boolean;
-  markAsComplete: () => void;
-}
-
-export function useSectionContentData({
+export const useSectionContentData = ({
   courseSlug,
   unitSlug,
   sectionId,
-  isQuizRoute
-}: UseSectionContentDataProps): UseSectionContentDataResult {
+  isQuizRoute = false
+}: UseSectionContentDataProps) => {
   const [sectionData, setSectionData] = useState<SectionData | null>(null);
   const [isCompleted, setIsCompleted] = useState(false);
   
-  useEffect(() => {
-    if (isQuizRoute) {
-      // Set quiz data
-      setSectionData({
-        sectionNumber: "Q",
-        title: "Unit Assessment Quiz",
-        description: "Test your knowledge of health and safety in electrical installations",
-        content: {
-          introduction: "This quiz will test your understanding of the key concepts covered in this unit.",
-          subsections: [],
-        }
-      });
-      
-      // Check if quiz is completed
-      const quizCompletionKey = `unit_${unitSlug}_quiz_completed`;
-      const completionStatus = localStorage.getItem(quizCompletionKey);
-      setIsCompleted(completionStatus === 'true');
-    } else if (sectionId) {
-      let section = null;
-      
-      // Check which unit we're in and fetch the appropriate content
-      if (unitSlug === 'elec2-04' || unitSlug === 'electrical-theory') {
-        // Fetch from electrical theory content
-        section = electricalTheorySections.find(s => s.sectionNumber === sectionId);
-        console.log("Loading electrical theory section:", sectionId, section);
-      } else {
-        // Default to health & safety content
-        section = getHealthSafetySectionById(sectionId);
-        console.log("Loading health & safety section:", sectionId, section);
-      }
-      
-      if (section) {
-        setSectionData(section);
-        
-        // Check if section is completed
-        const sectionCompletionKey = `unit_${unitSlug}_section_${sectionId}_completed`;
-        const completionStatus = localStorage.getItem(sectionCompletionKey);
-        setIsCompleted(completionStatus === 'true');
-      }
-    }
-  }, [sectionId, unitSlug, isQuizRoute]);
+  // Check if we're on the electrical theory unit
+  const isElectricalTheory = unitSlug === 'elec2-04';
   
-  const markAsComplete = () => {
-    if (isQuizRoute) {
-      // Mark quiz as completed
-      const quizCompletionKey = `unit_${unitSlug}_quiz_completed`;
-      localStorage.setItem(quizCompletionKey, 'true');
-    } else if (sectionId) {
-      // Mark section as completed
-      const sectionCompletionKey = `unit_${unitSlug}_section_${sectionId}_completed`;
-      localStorage.setItem(sectionCompletionKey, 'true');
+  useEffect(() => {
+    // Skip if on quiz route or no section ID
+    if (isQuizRoute || !sectionId) return;
+    
+    console.log(`Loading section data for ${isElectricalTheory ? 'Electrical Theory' : 'Health & Safety'} section: ${sectionId}`);
+    
+    // Load data based on unit type
+    let section;
+    if (isElectricalTheory) {
+      // For electrical theory, use the section number to get the right section
+      const sectionIndex = parseInt(sectionId) - 1;
+      section = electricalTheorySections[sectionIndex] || null;
+    } else {
+      // For health & safety, use the existing function
+      section = getHealthSafetySectionById(sectionId);
     }
     
+    if (section) {
+      console.log("Section data loaded:", section.title);
+      setSectionData(section);
+      
+      // Check completion status
+      const storageKey = `completion_${isElectricalTheory ? 'elec' : 'hs'}_section_${sectionId}`;
+      const storedCompletion = localStorage.getItem(storageKey);
+      setIsCompleted(storedCompletion === 'true');
+    }
+  }, [sectionId, unitSlug, isQuizRoute, isElectricalTheory]);
+  
+  // Function to mark section as complete
+  const markAsComplete = () => {
+    if (!sectionId) return;
+    
+    const storageKey = `completion_${isElectricalTheory ? 'elec' : 'hs'}_section_${sectionId}`;
+    localStorage.setItem(storageKey, 'true');
     setIsCompleted(true);
+    console.log(`Section ${sectionId} marked as complete with key: ${storageKey}`);
   };
-
+  
   return {
     sectionData,
     isCompleted,
     markAsComplete
   };
-}
+};

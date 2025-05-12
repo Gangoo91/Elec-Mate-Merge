@@ -1,61 +1,34 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
-import SectionSubsectionCard from "@/components/apprentice/SectionSubsectionCard";
-import type { SectionData, Subsection } from "@/data/healthAndSafety/types";
-import ElectricalTheorySection from "./ElectricalTheorySection";
 
-interface SectionDisplayProps {
-  sectionData: SectionData;
-  effectiveCourseSlug: string;
-  effectiveUnitSlug: string;
-  sectionId?: string;
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import SectionSubsectionCard from '@/components/apprentice/SectionSubsectionCard';
+import { electricalTheorySections } from '@/data/electricalTheory';
+import { Button } from '@/components/ui/button';
+import { CheckCircle } from 'lucide-react';
+
+interface ElectricalTheorySectionProps {
+  sectionId: string;
   isCompleted: boolean;
   markAsComplete: () => void;
 }
 
-const SectionDisplay = ({ 
-  sectionData, 
-  effectiveCourseSlug,
-  effectiveUnitSlug,
-  sectionId,
+const ElectricalTheorySection = ({ 
+  sectionId, 
   isCompleted, 
   markAsComplete 
-}: SectionDisplayProps) => {
+}: ElectricalTheorySectionProps) => {
   const navigate = useNavigate();
   
-  // Check if we're in the electrical theory unit
-  const isElectricalTheory = effectiveUnitSlug === 'elec2-04';
+  // Get the section data (this should be section 1 - legislation)
+  const sectionData = electricalTheorySections[0];
   
-  // If this is electrical theory section 1, use the specialized component
-  if (isElectricalTheory && sectionId === "1") {
-    return (
-      <ElectricalTheorySection 
-        sectionId={sectionId} 
-        isCompleted={isCompleted} 
-        markAsComplete={markAsComplete} 
-      />
-    );
-  }
-  
-  // Extract subsections from the section data
-  const subsections = sectionData.content && 
-                     typeof sectionData.content === 'object' && 
-                     'subsections' in sectionData.content ? 
-                     sectionData.content.subsections : 
-                     sectionData.subsections || [];
-  
-  const navigateToSubsection = (subsection: Subsection | string) => {
-    let subsectionId;
-    if (typeof subsection === 'string') {
-      subsectionId = subsection;
-    } else {
-      subsectionId = subsection.id;
-    }
-    
-    navigate(`/apprentice/study/eal/${effectiveCourseSlug}/unit/${effectiveUnitSlug}/section/${sectionId}/subsection/${subsectionId}`);
+  const navigateToSubsection = (subsection: any) => {
+    navigate(`/apprentice/study/eal/level-2-diploma/unit/elec2-04/section/${sectionId}/subsection/${subsection.id}`);
   };
+
+  if (!sectionData) {
+    return <p>Section content not found.</p>;
+  }
 
   return (
     <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
@@ -83,7 +56,7 @@ const SectionDisplay = ({
       
       {/* Display subsections */}
       <div className="space-y-6 mb-8">
-        {subsections.map(subsection => (
+        {sectionData.content.subsections.map(subsection => (
           <SectionSubsectionCard 
             key={subsection.id}
             subsection={subsection}
@@ -97,7 +70,7 @@ const SectionDisplay = ({
         <Button
           variant="outline"
           className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-          onClick={() => navigate(`/apprentice/study/eal/${effectiveCourseSlug}/unit/${effectiveUnitSlug}`)}
+          onClick={() => navigate(`/apprentice/study/eal/level-2-diploma/unit/elec2-04`)}
         >
           Back to Unit
         </Button>
@@ -115,4 +88,4 @@ const SectionDisplay = ({
   );
 };
 
-export default SectionDisplay;
+export default ElectricalTheorySection;
