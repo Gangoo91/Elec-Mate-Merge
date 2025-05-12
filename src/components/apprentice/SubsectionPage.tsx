@@ -4,9 +4,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSubsectionContent } from "@/hooks/useSubsectionContent";
 import SubsectionLearningContent from "./subsection/SubsectionLearningContent";
 import SubsectionsNavigation from "./SubsectionsNavigation";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import LearningBackButton from "./navigation/LearningBackButton";
 
 const SubsectionPage = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();

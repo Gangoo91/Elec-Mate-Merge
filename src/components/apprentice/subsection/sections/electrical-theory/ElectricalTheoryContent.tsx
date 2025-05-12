@@ -10,7 +10,7 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
     case "1":
       return (
         <ElectricalTheorySubsection
-          title="Health and Safety Legislation"
+          title="Health and Safety at Work Act 1974"
           content="The Health and Safety at Work Act 1974 (HSWA) is the primary piece of legislation covering occupational health and safety in the United Kingdom. It sets out the general duties that employers have towards employees and members of the public, and employees have to themselves and to each other."
           keyPoints={[
             "Employers must ensure, as far as is reasonably practicable, the health, safety, and welfare of all employees.",
