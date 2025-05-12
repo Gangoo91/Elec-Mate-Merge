@@ -1,5 +1,12 @@
 
-import { QuizQuestion } from "@/components/apprentice/study/exam-bot/types";
+// Define and export the QuizQuestion interface
+export interface QuizQuestion {
+  id?: string;
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation?: string;
+}
 
 export interface UnitQuiz {
   unitCode: string;
