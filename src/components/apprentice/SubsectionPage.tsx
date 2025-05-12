@@ -16,7 +16,8 @@ const SubsectionPage = () => {
   // Use the effective unit slug based on the path
   const effectiveUnitSlug = isElectricalTheory ? "elec2-04" : unitSlug;
   
-  console.log("SubsectionPage - Params:", { courseSlug, unitSlug: effectiveUnitSlug, sectionId, subsectionId });
+  console.log("SubsectionPage - Params:", { courseSlug, unitSlug: effectiveUnitSlug, sectionId, subsectionId, path });
+  console.log("SubsectionPage - Is Electrical Theory:", isElectricalTheory);
   
   const {
     subsectionData,

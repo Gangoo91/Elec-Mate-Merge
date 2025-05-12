@@ -20,8 +20,12 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
   // Determine if we're in the electrical theory unit
   const isElectricalTheory = unitSlug === 'elec2-04' || urlPath.includes('electrical-theory');
   
+  console.log("Section1Renderer - Is Electrical Theory:", isElectricalTheory, "Unit:", unitSlug);
+  
   // Handle electrical theory content
   if (isElectricalTheory) {
+    console.log("Section1Renderer - Rendering electrical theory section with ID:", subsectionId);
+    
     // If this is just the section (no subsection), render the section overview 
     if (subsectionId === "1") {
       return <ElectricalTheorySection sectionId={subsectionId} isCompleted={isCompleted} markAsComplete={markAsComplete} />;

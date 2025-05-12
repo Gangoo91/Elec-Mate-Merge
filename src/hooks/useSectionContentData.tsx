@@ -28,6 +28,7 @@ export const useSectionContentData = ({
     if (isQuizRoute || !sectionId) return;
     
     console.log(`Loading section data for ${isElectricalTheory ? 'Electrical Theory' : 'Health & Safety'} section: ${sectionId}`);
+    console.log(`Current unit: ${unitSlug}, isElectricalTheory: ${isElectricalTheory}`);
     
     // Load data based on unit type
     let section;
@@ -35,6 +36,7 @@ export const useSectionContentData = ({
       // For electrical theory, use the section number to get the right section
       const sectionIndex = parseInt(sectionId) - 1;
       section = electricalTheorySections[sectionIndex] || null;
+      console.log("Loaded electrical theory section:", section?.title || "Not found");
     } else {
       // For health & safety, use the existing function
       section = getHealthSafetySectionById(sectionId);
