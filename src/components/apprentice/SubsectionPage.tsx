@@ -49,17 +49,6 @@ const SubsectionPage = () => {
     console.log("SubsectionPage - Current subsectionData:", subsectionData);
   }, [subsectionId, subsectionData]);
 
-  // Handle back navigation to section page
-  const handleBackToSection = () => {
-    if (isElectricalTheory && sectionId) {
-      navigate(`/apprentice/study/eal/level-2-diploma/unit/elec2-04/section/${sectionId}`);
-    } else if (courseSlug && effectiveUnitSlug && sectionId) {
-      navigate(`/apprentice/study/eal/${courseSlug}/unit/${effectiveUnitSlug}/section/${sectionId}`);
-    } else {
-      navigate(-1);
-    }
-  };
-
   return (
     <div className="flex flex-col flex-1">
       <div className="px-4 py-3 md:py-4 bg-elec-dark/80 border-b border-elec-yellow/30 shadow-md">
@@ -71,7 +60,7 @@ const SubsectionPage = () => {
       
       <div className="flex-1 overflow-auto">
         <div className="max-w-4xl mx-auto py-5 px-4 md:px-6">
-          {/* We've removed the top back button here */}
+          {/* No back button here */}
           
           {subsectionId && (
             <div className="mt-5">
