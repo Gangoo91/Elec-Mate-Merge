@@ -119,7 +119,7 @@ const ChatMessage = ({
     <>
       <ContextMenu>
         <ContextMenuTrigger>
-          <div className="bg-[#2c2c2c] border border-elec-yellow/20 rounded-lg overflow-hidden">
+          <div className="bg-gradient-to-br from-elec-gray to-[#1a1a1a] border border-elec-yellow/10 rounded-lg overflow-hidden hover:border-elec-yellow/30 transition-colors cursor-pointer shadow-md">
             <div className="p-4">
               {/* Message Header */}
               <MessageHeader 

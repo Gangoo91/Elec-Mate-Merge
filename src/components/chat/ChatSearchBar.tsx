@@ -1,31 +1,57 @@
 
-import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Search, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-interface ChatSearchBarProps {
-  onSearch?: (query: string) => void;
-}
-
-const ChatSearchBar = ({ onSearch }: ChatSearchBarProps) => {
-  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (onSearch) {
-      onSearch(e.target.value);
-    }
+const ChatSearchBar = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+  
+  const handleClearSearch = () => {
+    setSearchQuery("");
   };
-
+  
   return (
-    <div className="bg-black py-2 px-4 border-b border-elec-yellow/20">
-      <div className="max-w-3xl mx-auto w-full">
-        <div className="relative w-full">
-          <input
-            type="text"
-            placeholder="Search messages..."
-            className="w-full bg-[#2c2c2c] border border-elec-yellow/30 rounded-lg py-2 px-4 text-white focus:outline-none focus:border-elec-yellow text-sm"
-            onChange={handleSearchInputChange}
-          />
-          <button className="absolute right-3 top-1/2 -translate-y-1/2">
-            <Search className="h-4 w-4 text-elec-yellow" />
-          </button>
-        </div>
+    <div className="relative">
+      <div 
+        className={`flex items-center gap-2 rounded-full bg-elec-gray-light/5 px-3 py-2 border transition-all ${
+          isFocused 
+            ? 'border-elec-yellow ring-2 ring-elec-yellow/20' 
+            : 'border-elec-yellow/20'
+        }`}
+      >
+        <Search className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+        <Input
+          type="text"
+          placeholder="Search messages..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          className="border-0 bg-transparent p-0 focus-visible:ring-0 text-sm text-white placeholder:text-muted-foreground flex-1 h-6"
+        />
+        <AnimatePresence>
+          {searchQuery && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.15 }}
+            >
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="h-5 w-5 rounded-full bg-elec-gray-light/10 p-1 text-muted-foreground hover:text-white hover:bg-elec-gray-light/20"
+                onClick={handleClearSearch}
+              >
+                <X className="h-3 w-3" />
+              </Button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

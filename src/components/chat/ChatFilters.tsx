@@ -1,58 +1,61 @@
 
-import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { ChatCategory } from "@/hooks/chat/useGlobalChat";
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { ChatCategory } from '@/hooks/chat/useGlobalChat';
 
 interface ChatFiltersProps {
-  categories?: string[];
-  activeCategory: string;
+  activeCategory: ChatCategory;
   setActiveCategory: (category: ChatCategory) => void;
-  sortBy?: "latest" | "popular";
-  setSortBy?: (sort: "latest" | "popular") => void;
 }
 
-const ChatFilters = ({
-  categories = ["All", "General", "Questions", "Tips", "News"],
-  activeCategory,
-  setActiveCategory,
-  sortBy = "latest",
-  setSortBy = () => {},
-}: ChatFiltersProps) => {
+const ChatFilters = ({ activeCategory, setActiveCategory }: ChatFiltersProps) => {
+  const isMobile = useIsMobile();
+  const [showAllCategories, setShowAllCategories] = useState(!isMobile);
+  
+  const categories: ChatCategory[] = ['All', 'General', 'Questions', 'Tips', 'News'];
+  
+  // For mobile, we initially show only a few categories
+  const visibleCategories = showAllCategories ? categories : categories.slice(0, 3);
+  
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-elec-yellow/10 pb-3">
+    <div className="w-full">
       <div className="flex flex-wrap gap-2">
-        {categories.map((category) => (
+        {visibleCategories.map((category) => (
           <Button
             key={category}
+            onClick={() => setActiveCategory(category)}
             variant={activeCategory === category ? "default" : "outline"}
             size="sm"
-            onClick={() => setActiveCategory(category as ChatCategory)}
-            className={activeCategory === category ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" : ""}
+            className={`text-sm font-medium transition-all ${
+              activeCategory === category 
+                ? 'bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90'
+                : 'hover:bg-elec-yellow/20 text-white border-elec-yellow/30'
+            }`}
           >
             {category}
+            {activeCategory === category && (
+              <motion.div
+                layoutId="activeCategory"
+                className="absolute inset-0 border-2 border-elec-yellow rounded-md"
+                transition={{ duration: 0.2 }}
+                initial={false}
+              />
+            )}
           </Button>
         ))}
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="text-sm text-muted-foreground">Sort by:</span>
-        <Select
-          value={sortBy}
-          onValueChange={(value) => setSortBy(value as "latest" | "popular")}
-        >
-          <SelectTrigger className="w-[120px] bg-elec-gray-light/5 h-9 text-sm">
-            <SelectValue placeholder="Sort by" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="latest">Latest</SelectItem>
-            <SelectItem value="popular">Most Liked</SelectItem>
-          </SelectContent>
-        </Select>
+        
+        {isMobile && categories.length > 3 && (
+          <Button
+            onClick={() => setShowAllCategories(!showAllCategories)}
+            variant="ghost"
+            size="sm"
+            className="text-xs text-elec-yellow/80 hover:text-elec-yellow"
+          >
+            {showAllCategories ? 'Show Less' : 'More...'}
+          </Button>
+        )}
       </div>
     </div>
   );
