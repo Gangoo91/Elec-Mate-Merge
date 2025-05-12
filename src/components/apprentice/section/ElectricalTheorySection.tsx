@@ -18,8 +18,10 @@ const ElectricalTheorySection = ({
 }: ElectricalTheorySectionProps) => {
   const navigate = useNavigate();
   
-  // Get section data (for section 1 we use the legislationSection directly)
+  // Get section data based on section ID
   const sectionData = legislationSection;
+  console.log("ElectricalTheorySection - Rendering section:", sectionId);
+  console.log("ElectricalTheorySection - Section data:", sectionData);
   
   const navigateToSubsection = (subsectionId: string) => {
     navigate(`/apprentice/study/eal/level-2-diploma/unit/elec2-04/section/${sectionId}/subsection/${subsectionId}`);

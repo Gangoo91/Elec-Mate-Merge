@@ -13,7 +13,12 @@ const SectionContent = () => {
   
   // Ensure we have valid parameters for all routes
   const effectiveCourseSlug = courseSlug || "level-2-diploma";
-  const effectiveUnitSlug = unitSlug || "health-safety";
+  
+  // Check if we're on electrical theory unit
+  const isElectricalTheory = window.location.pathname.includes('/elec2-04');
+  const effectiveUnitSlug = isElectricalTheory ? "elec2-04" : (unitSlug || "health-safety");
+  
+  console.log("SectionContent - Using unitSlug:", effectiveUnitSlug, "isElectricalTheory:", isElectricalTheory);
   
   // Check if we're on the quiz route
   const isQuizRoute = window.location.pathname.includes('/quiz');

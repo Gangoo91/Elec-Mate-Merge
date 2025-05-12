@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -28,11 +29,14 @@ const SectionDisplay = ({
   // Check if we're in the electrical theory unit
   const isElectricalTheory = effectiveUnitSlug === 'elec2-04';
   
-  // If this is electrical theory section 1, use the specialized component
-  if (isElectricalTheory && sectionId === "1") {
+  console.log("SectionDisplay - Is electrical theory:", isElectricalTheory);
+  console.log("SectionDisplay - Section data:", sectionData);
+  
+  // For electrical theory sections, use specialized components
+  if (isElectricalTheory) {
     return (
       <ElectricalTheorySection 
-        sectionId={sectionId} 
+        sectionId={sectionId || ""} 
         isCompleted={isCompleted} 
         markAsComplete={markAsComplete} 
       />
