@@ -9,10 +9,14 @@ import ChatFilters from "@/components/chat/ChatFilters";
 import TopContributors from "@/components/chat/TopContributors";
 import { Card } from "@/components/ui/card";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useNavigate } from "react-router-dom";
 
 const GlobalChat = () => {
   const [isComposerOpen, setIsComposerOpen] = useState(false);
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
+  
   const {
     messages,
     isLoading,
@@ -33,6 +37,8 @@ const GlobalChat = () => {
     handlePostMessage(content, activeCategory === 'All' ? 'General' : activeCategory);
     setIsComposerOpen(false);
   };
+  
+  const chatCategories = ['All', 'General', 'Questions', 'Tips', 'News'];
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -41,17 +47,30 @@ const GlobalChat = () => {
           title="Global Chat" 
           onNewPost={handleOpenComposer}
         />
-        
-        <div className="px-4 pb-2">
-          <ChatFilters 
-            activeCategory={activeCategory}
-            setActiveCategory={setActiveCategory}
-          />
-        </div>
-        
-        <div className="px-4 pb-4">
-          <ChatSearchBar />
-        </div>
+      </div>
+      
+      <div className="px-4 py-3">
+        <Tabs 
+          defaultValue={activeCategory} 
+          onValueChange={(value) => setActiveCategory(value as any)}
+          className="w-full"
+        >
+          <TabsList className="bg-elec-gray-light/10 border border-elec-yellow/10 p-1 w-full flex overflow-x-auto no-scrollbar">
+            {chatCategories.map((category) => (
+              <TabsTrigger
+                key={category}
+                value={category}
+                className="flex-1 data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark data-[state=active]:shadow-sm px-3 py-1.5 text-sm font-medium transition-all"
+              >
+                {category}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          
+          <div className="px-0 py-2">
+            <ChatSearchBar />
+          </div>
+        </Tabs>
       </div>
       
       <div className="flex flex-1 overflow-hidden">
@@ -64,6 +83,7 @@ const GlobalChat = () => {
             onPostComment={handlePostComment}
             onEditMessage={handleEditMessage}
             onDeleteMessage={handleDeleteMessage}
+            onNewPost={handleOpenComposer}
           />
         </div>
         

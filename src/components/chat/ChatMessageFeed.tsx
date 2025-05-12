@@ -12,6 +12,7 @@ interface ChatMessageFeedProps {
   onPostComment: (messageId: string, content: string) => void;
   onEditMessage?: (messageId: string, content: string) => void;
   onDeleteMessage?: (messageId: string) => void;
+  onNewPost?: () => void;
 }
 
 const ChatMessageFeed = ({
@@ -21,7 +22,8 @@ const ChatMessageFeed = ({
   onUpvote,
   onPostComment,
   onEditMessage,
-  onDeleteMessage
+  onDeleteMessage,
+  onNewPost
 }: ChatMessageFeedProps) => {
   return (
     <div className="flex-1 max-w-3xl mx-auto w-full px-4 pb-20">
@@ -42,7 +44,7 @@ const ChatMessageFeed = ({
           ))}
         </div>
       ) : (
-        <ChatEmptyState />
+        <ChatEmptyState onNewPost={onNewPost} />
       )}
     </div>
   );
