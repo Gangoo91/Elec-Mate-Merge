@@ -1,3 +1,4 @@
+
 import { QuizQuestion } from "@/components/apprentice/study/exam-bot/types";
 
 export interface UnitQuiz {
@@ -1061,3 +1062,716 @@ export const healthAndSafetyQuizzes: UnitQuiz = {
       question: "What is the first step in conducting a safe isolation procedure?",
       options: [
         "Switch off the supply",
+        "Identify the circuit to be worked on",
+        "Lock off the supply",
+        "Test the voltage indicator on a known source"
+      ],
+      correctAnswer: 1
+    },
+    // Adding more questions to the pool (continuing from where the file was cut off)
+    {
+      id: "hs-q97",
+      question: "What should be done prior to excavation work?",
+      options: [
+        "Notify the local authority",
+        "Check for underground services",
+        "Check the weather forecast",
+        "Install temporary lighting"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q98",
+      question: "What does a yellow triangle warning sign indicate?",
+      options: [
+        "Prohibition",
+        "Mandatory action",
+        "Hazard warning",
+        "Safe condition"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q99",
+      question: "How often should portable electrical equipment be formally visually inspected in a low-risk environment?",
+      options: [
+        "Daily",
+        "Weekly",
+        "Monthly",
+        "Before each use"
+      ],
+      correctAnswer: 3
+    },
+    {
+      id: "hs-q100",
+      question: "What is the primary function of a safe system of work?",
+      options: [
+        "To document accidents",
+        "To ensure formal procedures are followed when conducting hazardous activities",
+        "To comply with insurance requirements",
+        "To allocate responsibility to managers"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q101",
+      question: "What does the term 'competent person' mean in health and safety?",
+      options: [
+        "Someone with specific qualifications only",
+        "Someone with the necessary skills, knowledge, experience, and training",
+        "A person with management responsibility",
+        "Someone who has worked in the industry for at least 5 years"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q102",
+      question: "What action must be taken when a hazard is identified that cannot be immediately rectified?",
+      options: [
+        "Ignore it if it seems minor",
+        "Wait for someone else to deal with it",
+        "Implement temporary controls and report it",
+        "Shut down the entire workplace"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q103",
+      question: "What is the significance of the CE mark on PPE?",
+      options: [
+        "It indicates the country of manufacture",
+        "It confirms compliance with European safety standards",
+        "It shows the equipment has been tested in the UK",
+        "It indicates the equipment is suitable for commercial use"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q104",
+      question: "What is the primary purpose of a Method Statement?",
+      options: [
+        "To record time spent on tasks",
+        "To detail step-by-step how work will be carried out safely",
+        "To assign blame in case of accidents",
+        "To calculate costs for the client"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q105",
+      question: "What should you do if you discover damaged electrical equipment?",
+      options: [
+        "Repair it yourself",
+        "Remove it from use, label it, and report it",
+        "Continue using it but take extra care",
+        "Hide it to avoid getting blamed"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q106",
+      question: "What type of fire extinguisher is identified by a blue label?",
+      options: [
+        "Water",
+        "Foam",
+        "Powder",
+        "Carbon Dioxide"
+      ],
+      correctAnswer: 3
+    },
+    {
+      id: "hs-q107",
+      question: "What does a 'permit-to-work' system primarily control?",
+      options: [
+        "Access to the worksite",
+        "High-risk activities",
+        "Working hours",
+        "Payment for work"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q108",
+      question: "What is the maximum weight that can be carried before requiring a manual handling assessment?",
+      options: [
+        "There is no specific weight limit",
+        "10 kg",
+        "20 kg",
+        "25 kg"
+      ],
+      correctAnswer: 0
+    },
+    {
+      id: "hs-q109",
+      question: "When using a ladder, what is the recommended maximum working height?",
+      options: [
+        "As high as the ladder allows",
+        "No higher than the third rung from the top",
+        "No time limit if secured properly",
+        "Maximum of 30 minutes"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q110",
+      question: "What is the purpose of isolation in electrical work?",
+      options: [
+        "To speed up the work process",
+        "To ensure electrical equipment cannot be accidentally re-energized",
+        "To properly ground equipment",
+        "To prevent power surges"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q111",
+      question: "What is the purpose of safety signs in the workplace?",
+      options: [
+        "For decoration only",
+        "To provide warning, information, or instruction about health and safety",
+        "To comply with insurance requirements only",
+        "To assign blame in case of accidents"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q112",
+      question: "What risk assessment approach suggests identifying hazards, determining who might be harmed, evaluating risks, recording findings, and reviewing regularly?",
+      options: [
+        "The PUWER method",
+        "The five steps approach",
+        "The COSHH assessment",
+        "The RIDDOR procedure"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q113",
+      question: "What is the definition of a 'near miss'?",
+      options: [
+        "An incident that caused injury",
+        "An event that nearly resulted in injury or damage but did not",
+        "A hazard that has been identified",
+        "A type of safety inspection"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q114",
+      question: "What is the main purpose of earthing electrical equipment?",
+      options: [
+        "To increase power efficiency",
+        "To provide a path for fault current to safely flow to ground",
+        "To protect against water damage",
+        "To comply with warranty requirements"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q115",
+      question: "Who has the primary responsibility for health and safety in a workplace?",
+      options: [
+        "Safety officers only",
+        "The employer",
+        "HSE inspectors",
+        "Individual employees only"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q116",
+      question: "What does the acronym SSOW stand for?",
+      options: [
+        "Safe System Of Work",
+        "Standard Safety Operation Worksheet",
+        "Safe Strategy On Workplace",
+        "Standard System Of Working"
+      ],
+      correctAnswer: 0
+    },
+    {
+      id: "hs-q117",
+      question: "What is the primary purpose of a lockout/tagout procedure?",
+      options: [
+        "To record who is working on equipment",
+        "To prevent theft of tools",
+        "To prevent unexpected energizing or startup of machinery",
+        "To track maintenance schedules"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q118",
+      question: "What type of electrical test should be performed after repairs are completed?",
+      options: [
+        "Visual inspection only",
+        "Voltage test only",
+        "Functional test and safety test",
+        "Resistance test only"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q119",
+      question: "When should personal protective equipment (PPE) be used?",
+      options: [
+        "As the first line of defense against hazards",
+        "Only when working outdoors",
+        "As the last resort after other control measures",
+        "Only when supervisors are present"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q120",
+      question: "What is the maximum height for a working platform without guardrails?",
+      options: [
+        "No maximum if working alone",
+        "1 meter",
+        "2 meters",
+        "Guardrails are required for all working platforms regardless of height"
+      ],
+      correctAnswer: 3
+    },
+    {
+      id: "hs-q121",
+      question: "What does the Health and Safety at Work Act require employers to provide?",
+      options: [
+        "Full pay during sickness",
+        "Transport to and from work",
+        "Safe plant and systems of work",
+        "Guaranteed employment for life"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q122",
+      question: "What is the purpose of cable detection equipment?",
+      options: [
+        "To test the quality of cable insulation",
+        "To locate underground services before digging",
+        "To measure the length of cables",
+        "To identify cable manufacturer"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q123",
+      question: "What is required before working in a confined space?",
+      options: [
+        "Only a ladder for access",
+        "A permit-to-work and risk assessment",
+        "Just verbal approval from a supervisor",
+        "Work in confined spaces is always prohibited"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q124",
+      question: "What is the first action when discovering a fire?",
+      options: [
+        "Call your supervisor",
+        "Attempt to fight the fire",
+        "Raise the alarm",
+        "Run to safety"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q125",
+      question: "Which of these is NOT a type of hazard in the workplace?",
+      options: [
+        "Biological",
+        "Psychological",
+        "Recreational",
+        "Chemical"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q126",
+      question: "What is the maximum noise level that is considered safe for an 8-hour working day?",
+      options: [
+        "65 dB(A)",
+        "75 dB(A)",
+        "85 dB(A)",
+        "95 dB(A)"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q127",
+      question: "What should be checked when inspecting a ladder?",
+      options: [
+        "Only the manufacturer's label",
+        "The rungs, stiles, feet and general condition",
+        "Only that it's the correct height",
+        "Just the material it's made from"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q128",
+      question: "What is the purpose of a risk assessment?",
+      options: [
+        "To comply with regulations only",
+        "To identify hazards and implement control measures",
+        "To assign blame if accidents occur",
+        "To justify cost-cutting measures"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q129",
+      question: "What does the abbreviation MEWP stand for?",
+      options: [
+        "Multiple Environment Working Platform",
+        "Manual Elevated Work Position",
+        "Mobile Elevating Work Platform",
+        "Mechanical Equipment for Working at Positions"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q130",
+      question: "Which type of fire extinguisher should NEVER be used on electrical fires?",
+      options: [
+        "Carbon dioxide",
+        "Water",
+        "Dry powder",
+        "Foam"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q131",
+      question: "What does the Construction (Design and Management) Regulations 2015 primarily focus on?",
+      options: [
+        "Building aesthetics and design principles",
+        "Payment terms for construction projects",
+        "Health, safety and welfare in construction",
+        "Environmental impact of construction"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q132",
+      question: "What is the primary function of an RCD (Residual Current Device)?",
+      options: [
+        "To protect against overcurrent",
+        "To detect earth leakage current and disconnect supply",
+        "To improve power factor",
+        "To regulate voltage"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q133",
+      question: "What is the minimum safe distance that should be maintained from overhead power lines?",
+      options: [
+        "1 meter",
+        "3 meters",
+        "9 meters",
+        "15 meters"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q134",
+      question: "What is the safest way to work near live electrical conductors?",
+      options: [
+        "Work quickly to minimize exposure time",
+        "Do not work near live conductors; isolate first",
+        "Use insulated tools and hope for the best",
+        "Just be very careful"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q135",
+      question: "What is the purpose of cable armoring?",
+      options: [
+        "To make the cable look better",
+        "To provide mechanical protection",
+        "To increase electrical efficiency",
+        "To mark the cable manufacturer"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q136",
+      question: "What information must be included on a risk assessment?",
+      options: [
+        "Only the assessor's name",
+        "Just the hazards identified",
+        "Hazards, who might be harmed, controls, further actions needed, review date",
+        "Only control measures"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q137",
+      question: "What does 'PUWER' stand for?",
+      options: [
+        "Personal Usage of Work Equipment Regulations",
+        "Provision and Use of Work Equipment Regulations",
+        "Professional Use of Workplace Equipment Rules",
+        "Proper Utilization of Workplace Equipment Requirements"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q138",
+      question: "When is a hot work permit typically required?",
+      options: [
+        "When working in hot weather conditions",
+        "When using equipment that produces heat or sparks",
+        "When working with hot water systems",
+        "When working overtime during summer"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q139",
+      question: "What is the purpose of a toolbox talk?",
+      options: [
+        "To catalog tools in the workplace",
+        "To provide focused safety information on specific topics",
+        "To allocate tools to workers",
+        "To discuss tool maintenance only"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q140",
+      question: "What are the three elements needed for a fire to start?",
+      options: [
+        "Water, air, and earth",
+        "Heat, fuel, and oxygen",
+        "Smoke, flames, and heat",
+        "Wood, paper, and plastic"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q141",
+      question: "What is the main purpose of PAT testing?",
+      options: [
+        "To test electrical resistance in wiring",
+        "To ensure portable electrical appliances are safe to use",
+        "To measure power consumption",
+        "To calibrate test equipment"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q142",
+      question: "What does the acronym COSHH stand for?",
+      options: [
+        "Control of Safety and Health Hazards",
+        "Care of Substances Harmful to Health",
+        "Control of Substances Hazardous to Health",
+        "Containment of Serious Health Hazards"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q143",
+      question: "What is the purpose of a 'proving unit'?",
+      options: [
+        "To calculate electrical loads",
+        "To verify test equipment is working correctly",
+        "To measure resistance in circuits",
+        "To isolate circuits"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q144",
+      question: "What does the 'General Principles of Prevention' refer to?",
+      options: [
+        "A first aid procedure",
+        "A hierarchy of risk control measures",
+        "A type of safety equipment",
+        "A system for organizing tools"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q145",
+      question: "What is the primary responsibility of a 'responsible person' under fire safety legislation?",
+      options: [
+        "To fight fires when they occur",
+        "To ensure adequate fire safety measures are in place",
+        "To maintain fire extinguishers only",
+        "To call the fire brigade"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q146",
+      question: "What is the legal minimum number of trained first aiders required in a low-risk workplace with 25 employees?",
+      options: [
+        "None",
+        "One appointed person",
+        "Two first aiders",
+        "Three first aiders"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q147",
+      question: "What should you check when examining an extension lead before use?",
+      options: [
+        "Only the plug",
+        "Cable, plug, socket and general condition",
+        "Only the cable length",
+        "Just the voltage rating"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q148",
+      question: "What is the recommended maximum angle for a ladder against a structure?",
+      options: [
+        "45 degrees",
+        "75 degrees",
+        "90 degrees",
+        "60 degrees"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q149",
+      question: "What is required before excavating near underground services?",
+      options: [
+        "Just start digging carefully",
+        "Only notify the local authority",
+        "Locate and identify services using plans and detection equipment",
+        "Just look for warning signs"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q150",
+      question: "What are employers required to provide for electrical safety in the workplace?",
+      options: [
+        "Only insulated tools",
+        "Only warning signs",
+        "Safe electrical systems and equipment with proper maintenance",
+        "Just rubber gloves"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q151",
+      question: "What is the purpose of equipotential bonding?",
+      options: [
+        "To increase electrical conductivity",
+        "To prevent electric shock by connecting exposed conductive parts",
+        "To improve circuit efficiency",
+        "To ground all equipment"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q152",
+      question: "Which regulation specifically deals with working at height?",
+      options: [
+        "The Work at Height Regulations",
+        "The Health and Safety at Work Act",
+        "The Construction Design and Management Regulations",
+        "The Personal Protective Equipment Regulations"
+      ],
+      correctAnswer: 0
+    },
+    {
+      id: "hs-q153",
+      question: "What is the appropriate first action if you suspect a gas leak?",
+      options: [
+        "Open all windows",
+        "Turn off the gas supply and ventilate the area",
+        "Call a plumber",
+        "Look for the leak with a lighter"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q154",
+      question: "What is the purpose of a safety data sheet?",
+      options: [
+        "To record safety inspections",
+        "To provide information about hazardous substances",
+        "To document accident statistics",
+        "To list first aid procedures only"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q155",
+      question: "What color is used for mandatory signs according to safety sign regulations?",
+      options: [
+        "Red",
+        "Blue",
+        "Green",
+        "Yellow"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q156",
+      question: "What is the legal duty of employees regarding health and safety?",
+      options: [
+        "To provide all safety equipment",
+        "To take reasonable care of themselves and others",
+        "To write all safety policies",
+        "To conduct risk assessments"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q157",
+      question: "What is the primary purpose of a 'dynamic risk assessment'?",
+      options: [
+        "To avoid doing paperwork",
+        "To continually assess changing risks during work activities",
+        "To save money on formal assessments",
+        "To replace written risk assessments"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q158",
+      question: "What is the recommended inspection frequency for Class II electrical equipment in a construction environment?",
+      options: [
+        "Daily",
+        "Monthly",
+        "Every 3 months",
+        "Annually"
+      ],
+      correctAnswer: 2
+    },
+    {
+      id: "hs-q159",
+      question: "What is the main function of task lighting in electrical work?",
+      options: [
+        "To look professional",
+        "To provide adequate illumination of the work area",
+        "To save energy",
+        "To avoid working in darkness"
+      ],
+      correctAnswer: 1
+    },
+    {
+      id: "hs-q160",
+      question: "What should always be done before working on electrical equipment?",
+      options: [
+        "Just wear gloves",
+        "Isolate and lock off the supply",
+        "Just turn it off at the socket",
+        "Work quickly to minimize risk"
+      ],
+      correctAnswer: 1
+    }
+  ]
+};
