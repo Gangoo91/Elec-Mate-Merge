@@ -1,10 +1,9 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import SectionSubsectionCard from '@/components/apprentice/SectionSubsectionCard';
-import { electricalTheorySections } from '@/data/electricalTheory';
 import { Button } from '@/components/ui/button';
 import { CheckCircle } from 'lucide-react';
+import { legislationSection } from '@/data/electricalTheory/section1-legislation';
 
 interface ElectricalTheorySectionProps {
   sectionId: string;
@@ -19,17 +18,12 @@ const ElectricalTheorySection = ({
 }: ElectricalTheorySectionProps) => {
   const navigate = useNavigate();
   
-  // Get the section data based on sectionId
-  const sectionIndex = parseInt(sectionId) - 1;
-  const sectionData = electricalTheorySections[sectionIndex];
+  // Get section data (for section 1 we use the legislationSection directly)
+  const sectionData = legislationSection;
   
-  const navigateToSubsection = (subsection: any) => {
-    navigate(`/apprentice/study/eal/level-2-diploma/unit/elec2-04/section/${sectionId}/subsection/${subsection.id}`);
+  const navigateToSubsection = (subsectionId: string) => {
+    navigate(`/apprentice/study/eal/level-2-diploma/unit/elec2-04/section/${sectionId}/subsection/${subsectionId}`);
   };
-
-  if (!sectionData) {
-    return <p>Section content not found.</p>;
-  }
 
   return (
     <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
@@ -55,15 +49,39 @@ const ElectricalTheorySection = ({
         </p>
       </div>
       
-      {/* Display subsections */}
-      <div className="space-y-6 mb-8">
-        {sectionData.content.subsections && sectionData.content.subsections.map(subsection => (
-          <SectionSubsectionCard 
-            key={subsection.id}
-            subsection={subsection}
-            navigateToSubsection={navigateToSubsection}
-          />
-        ))}
+      <div className="space-y-4 mb-8">
+        <h2 className="text-xl font-semibold text-elec-yellow">Subsections:</h2>
+        
+        {/* Display subsections */}
+        <div className="grid grid-cols-1 gap-3">
+          {sectionData.content.subsections.map((subsection) => (
+            <div 
+              key={subsection.id}
+              className="border border-elec-yellow/20 rounded-lg p-4 bg-elec-dark/80 hover:bg-elec-dark/60 cursor-pointer transition-colors"
+              onClick={() => navigateToSubsection(subsection.id)}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow">
+                    {subsection.id}
+                  </div>
+                  <h3 className="text-lg font-medium">{subsection.title}</h3>
+                </div>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="border-elec-yellow/30 hover:bg-elec-yellow hover:text-elec-dark"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigateToSubsection(subsection.id);
+                  }}
+                >
+                  View
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
       
       {/* Completion button */}

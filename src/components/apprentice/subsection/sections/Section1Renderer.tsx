@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { SubsectionProps } from "../types";
 import HealthSafetySubsection from "./health-safety/HealthSafetySubsection";
@@ -21,7 +22,7 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
   
   // Handle electrical theory content
   if (isElectricalTheory) {
-    // If this is just the section (no subsection), render the section overview
+    // If this is just the section (no subsection), render the section overview 
     if (subsectionId === "1") {
       return <ElectricalTheorySection sectionId={subsectionId} isCompleted={isCompleted} markAsComplete={markAsComplete} />;
     }
