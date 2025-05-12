@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
@@ -6,6 +7,7 @@ import TrainingManagementCard from "@/components/apprentice/time-tracking/ojt/Tr
 import TrainingGuideCard from "@/components/apprentice/time-tracking/ojt/TrainingGuideCard";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useTrackMilestones } from "@/hooks/useTrackMilestones";
+import { useLocation } from "react-router-dom";
 
 const ApprenticeOJT = () => {
   const [weeklyHours, setWeeklyHours] = useState(8);
@@ -15,6 +17,7 @@ const ApprenticeOJT = () => {
   const { toast } = useToast();
   const { totalTime } = useTimeEntries();
   const isMobile = useIsMobile();
+  const location = useLocation();
   
   // Add milestone tracking
   useTrackMilestones();
@@ -41,7 +44,7 @@ const ApprenticeOJT = () => {
       const newTotal = 8 + (totalCourseTime / 3600);
       return parseFloat(newTotal.toFixed(1));
     });
-  }, []);
+  }, [location.pathname]); // Re-run when location changes to capture new learning time
 
   const handleDownloadReport = () => {
     toast({

@@ -1,141 +1,148 @@
 
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Play, Pause, Activity, Clock, AlertCircle } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { formatTime } from "@/lib/utils";
+import { useState, useEffect } from "react";
 import { useAutomatedTraining } from "@/hooks/useAutomatedTraining";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Play, Pause, Clock, Save } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import { formatTime } from "@/lib/utils";
+import LearningTimer from "@/components/apprentice/LearningTimer";
 
-interface AutomatedTrackingCardProps {
-  className?: string;
-  autoStart?: boolean;
-}
-
-const AutomatedTrackingCard = ({ className, autoStart = true }: AutomatedTrackingCardProps) => {
-  const isMobile = useIsMobile();
-  
-  const {
-    isTracking,
+const AutomatedTrackingCard = () => {
+  const [elapsedTimeDisplay, setElapsedTimeDisplay] = useState(0);
+  const { toast } = useToast();
+  const { 
+    isTracking, 
+    startTracking, 
+    pauseTracking, 
+    resumeTracking, 
+    stopTracking, 
     sessionTime,
     currentActivity,
-    startTracking,
-    pauseTracking,
-    resumeTracking,
-    stopTracking
-  } = useAutomatedTraining(autoStart);
+    isAuthenticated
+  } = useAutomatedTraining();
   
-  const handleStartStop = () => {
+  // For continuous time display
+  useEffect(() => {
+    let timer: number | null = null;
+    
     if (isTracking) {
-      stopTracking();
+      timer = window.setInterval(() => {
+        setElapsedTimeDisplay(sessionTime);
+      }, 1000);
     } else {
-      startTracking("Learning Portal Study");
+      setElapsedTimeDisplay(sessionTime);
     }
+    
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [isTracking, sessionTime]);
+  
+  const handleStart = () => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Sign in required",
+        description: "Please sign in to track your training time",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    startTracking("Manual Training Time");
+    toast({
+      title: "Training tracking started",
+      description: "Your off-the-job training time is now being recorded",
+    });
+  };
+  
+  const handleStop = () => {
+    stopTracking();
   };
   
   const handlePauseResume = () => {
     if (isTracking) {
       pauseTracking();
+      toast({
+        title: "Training tracking paused",
+        description: "Your training time recording is paused",
+      });
     } else {
       resumeTracking();
+      toast({
+        title: "Training tracking resumed",
+        description: "Your training time recording has resumed",
+      });
     }
   };
   
   return (
-    <Card className={`border-elec-yellow/20 bg-elec-gray ${className || ''}`}>
-      <CardHeader className={isMobile ? 'pb-2 px-4' : ''}>
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            <Clock className="h-5 w-5 text-elec-yellow" />
-            Auto-Tracking
-            {autoStart && (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <AlertCircle className="h-4 w-4 text-elec-yellow cursor-help" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p className="max-w-xs">Automatically tracks time when you're in study or video content areas</p>
-                </TooltipContent>
-              </Tooltip>
-            )}
-          </CardTitle>
-          <Badge variant="outline" className={isTracking ? "bg-green-500/20 text-green-400" : "bg-amber-500/20 text-amber-400"}>
-            {isTracking ? "Active" : "Inactive"}
-          </Badge>
-        </div>
-      </CardHeader>
-      <CardContent className={isMobile ? 'p-4' : ''}>
-        <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-2">
-            <div className="text-center sm:text-left w-full sm:w-auto">
-              <div className="text-sm text-muted-foreground mb-1">Current session</div>
-              <div className="text-3xl font-bold text-elec-yellow">{formatTime(sessionTime)}</div>
-            </div>
-            <div className="text-center sm:text-right w-full sm:w-auto">
-              <div className="text-sm text-muted-foreground mb-1">Activity</div>
-              <div className="font-medium truncate max-w-[200px]">
-                {currentActivity || "Not tracking"}
+    <div className="space-y-4">
+      <Card className="border-elec-yellow/20 bg-elec-gray/50">
+        <CardHeader className="pb-2">
+          <CardTitle>Automated Training Tracker</CardTitle>
+          <CardDescription>
+            {isTracking 
+              ? "Your learning time is being recorded automatically" 
+              : "Track your study and learning time"}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {isTracking && currentActivity && (
+              <div className="rounded-md border border-elec-yellow/20 bg-elec-dark p-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="h-3 w-3 rounded-full bg-elec-yellow animate-pulse"></div>
+                    <span className="text-sm text-elec-yellow">Currently tracking:</span>
+                  </div>
+                  <span className="text-sm font-medium">{formatTime(sessionTime)}</span>
+                </div>
+                <div className="mt-1 text-white">{currentActivity}</div>
               </div>
-            </div>
-          </div>
-          
-          <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-2`}>
-            <Button
-              onClick={handleStartStop}
-              variant={isTracking ? "destructive" : "default"}
-              className="gap-2"
-            >
-              {isTracking ? (
-                <>
-                  <Activity className="h-4 w-4" />
-                  Stop & Save
-                </>
-              ) : (
-                <>
-                  <Play className="h-4 w-4" />
-                  Start Tracking
-                </>
-              )}
-            </Button>
+            )}
             
-            {currentActivity && (
-              <Button
-                onClick={handlePauseResume}
-                variant="outline"
-                className="gap-2"
-                disabled={!currentActivity}
+            <LearningTimer
+              isRunning={isTracking}
+              elapsedTime={elapsedTimeDisplay}
+              todayTotal={0} // This would ideally come from a total for today
+              onStart={handleStart}
+              onStop={handleStop}
+            />
+            
+            {isTracking && (
+              <Button 
+                variant="outline" 
+                onClick={handlePauseResume} 
+                className="w-full"
               >
                 {isTracking ? (
                   <>
-                    <Pause className="h-4 w-4" />
-                    Pause
+                    <Pause className="h-4 w-4 mr-2" />
+                    Pause Tracking
                   </>
                 ) : (
                   <>
-                    <Play className="h-4 w-4" />
-                    Resume
+                    <Play className="h-4 w-4 mr-2" />
+                    Resume Tracking
                   </>
                 )}
               </Button>
             )}
-          </div>
-          
-          <div className="text-xs text-muted-foreground mt-2">
-            <div className="flex items-start gap-1">
-              <Activity className="h-3 w-3 mt-0.5 text-green-400" />
-              <span>
-                {autoStart ? 
-                  "Auto-tracking automatically starts when you view study materials or videos, and pauses after 1 minute of inactivity." :
-                  "Tracking records your active study time and automatically pauses after 1 minute of inactivity."
-                }
-              </span>
+            
+            <div className="text-sm text-muted-foreground mt-2">
+              <p className="mb-1">This tracker will:</p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li>Automatically track time spent on learning pages</li>
+                <li>Record your activity as off-the-job training</li>
+                <li>Save progress regularly to your training record</li>
+                <li>Pause when you're inactive for over 5 minutes</li>
+              </ul>
             </div>
           </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
