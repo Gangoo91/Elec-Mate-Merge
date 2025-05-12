@@ -15,7 +15,7 @@ interface SectionBoxProps {
   courseSlug?: string;
 }
 
-const SectionBox = ({
+export const SectionBox = ({
   sectionNumber,
   title,
   isExpanded,
@@ -43,13 +43,7 @@ const SectionBox = ({
       }
       // If it's electrical theory unit (ELEC2/04), handle differently based on section number
       else if (unitCode.toLowerCase().includes('04')) {
-        if (sectionNumber === "04") {
-          // Main section - navigate to unit page
-          navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}`);
-        } else {
-          // Subsection - navigate to section page
-          navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/${sectionSlug}`);
-        }
+        navigate(`/apprentice/study/eal/${courseSlug}/unit/${unitCode.toLowerCase().replace('/', '-')}/section/${sectionNumber}`);
       }
       // Regular section page
       else {
@@ -61,7 +55,7 @@ const SectionBox = ({
   // Function to render appropriate icon based on section type
   const renderSectionIcon = () => {
     // If it's the electrical theory unit and we have a subsection
-    if (unitCode.toLowerCase().includes('04') && sectionNumber !== "04" && sectionNumber !== "Q") {
+    if (unitCode.toLowerCase().includes('04')) {
       switch(sectionNumber) {
         case "1": return <Info className="h-4 w-4" />; // Legislation and Regulations
         case "2": return <Info className="h-4 w-4" />; // Technical Information
@@ -69,10 +63,10 @@ const SectionBox = ({
         case "4": return <Construction className="h-4 w-4" />; // Service Position Equipment
         case "5": return <Lightbulb className="h-4 w-4" />; // Lighting Circuits
         case "6": return <Cable className="h-4 w-4" />; // Ring and Radial Circuits
-        case "7": return <Cable className="h-4 w-4" />; // Circuit Requirements - Changed from CircuitBoard
-        case "8": return <ShieldAlert className="h-4 w-4" />; // Earthing and Bonding - Changed from Safety
-        case "9": return <ShieldAlert className="h-4 w-4" />; // Overcurrent Protection - Changed from Safety
-        case "10": return <Cable className="h-4 w-4" />; // Circuit Design - Changed from CircuitBoard
+        case "7": return <Cable className="h-4 w-4" />; // Circuit Requirements
+        case "8": return <ShieldAlert className="h-4 w-4" />; // Earthing and Bonding
+        case "9": return <ShieldAlert className="h-4 w-4" />; // Overcurrent Protection
+        case "10": return <Cable className="h-4 w-4" />; // Circuit Design
         default: return <BookOpen className="h-4 w-4" />;
       }
     }

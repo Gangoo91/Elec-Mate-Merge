@@ -19,8 +19,9 @@ const ElectricalTheorySection = ({
 }: ElectricalTheorySectionProps) => {
   const navigate = useNavigate();
   
-  // Get the section data (this should be section 1 - legislation)
-  const sectionData = electricalTheorySections[0];
+  // Get the section data based on sectionId
+  const sectionIndex = parseInt(sectionId) - 1;
+  const sectionData = electricalTheorySections[sectionIndex];
   
   const navigateToSubsection = (subsection: any) => {
     navigate(`/apprentice/study/eal/level-2-diploma/unit/elec2-04/section/${sectionId}/subsection/${subsection.id}`);
@@ -56,7 +57,7 @@ const ElectricalTheorySection = ({
       
       {/* Display subsections */}
       <div className="space-y-6 mb-8">
-        {sectionData.content.subsections.map(subsection => (
+        {sectionData.content.subsections && sectionData.content.subsections.map(subsection => (
           <SectionSubsectionCard 
             key={subsection.id}
             subsection={subsection}

@@ -1,9 +1,8 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SectionData } from '@/data/courseTypes';
-import SectionSubsectionCard from '@/components/apprentice/SectionSubsectionCard';
-import { electricalTheorySections } from '@/data/electricalTheory';
+import { SectionBox } from '@/components/apprentice/SectionBox';
+import TheoryQuizCard from './TheoryQuizCard';
 
 interface TheorySectionsProps {
   unitCode: string;
@@ -13,35 +12,52 @@ interface TheorySectionsProps {
 
 const TheorySections = ({ unitCode, quizCompleted, onResourceClick }: TheorySectionsProps) => {
   const navigate = useNavigate();
+  const courseSlug = "level-2-diploma";
   
-  // Get the first section data which contains the legislation subsections
-  const legislationSection = electricalTheorySections[0];
-  
-  const navigateToSubsection = (subsection: any) => {
-    navigate(`/apprentice/study/eal/level-2-diploma/unit/elec2-04/section/1/subsection/${subsection.id}`);
-  };
+  // The section titles for Electrical Theory
+  const sectionTitles = [
+    "Legislation & Regulations",
+    "Technical Information",
+    "Wiring Systems",
+    "Service Position Equipment",
+    "Lighting Circuits",
+    "Ring and Radial Circuits",
+    "Circuit Requirements",
+    "Earthing and Bonding",
+    "Overcurrent Protection",
+    "Circuit Design"
+  ];
   
   return (
     <div className="space-y-6">
-      <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-6">
-        <h2 className="text-2xl font-semibold text-elec-yellow mb-4">
-          {legislationSection.title}
-        </h2>
-        
-        <p className="text-muted-foreground mb-6">
-          {legislationSection.description}
-        </p>
-        
-        {/* Subsection cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          {legislationSection.content.subsections.map((subsection) => (
-            <SectionSubsectionCard
-              key={subsection.id}
-              subsection={subsection}
-              navigateToSubsection={navigateToSubsection}
+      {/* Section boxes */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        {sectionTitles.map((title, index) => {
+          const sectionNumber = `${index + 1}`;
+          return (
+            <SectionBox
+              key={sectionNumber}
+              sectionNumber={sectionNumber}
+              title={title}
+              isExpanded={false}
+              onClick={() => {}}
+              content={null}
+              isCompleted={false}
+              unitCode={unitCode}
+              courseSlug={courseSlug}
             />
-          ))}
-        </div>
+          );
+        })}
+      </div>
+      
+      {/* Quiz card */}
+      <div className="mt-8">
+        <TheoryQuizCard 
+          courseSlug={courseSlug} 
+          unitCode={unitCode}
+          quizCompleted={quizCompleted}
+          onClick={() => onResourceClick("quiz")}
+        />
       </div>
     </div>
   );
