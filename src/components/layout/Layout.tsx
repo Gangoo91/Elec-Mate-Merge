@@ -1,7 +1,6 @@
 
 import { Outlet } from "react-router-dom";
 import { Toaster } from "@/components/ui/toaster";
-import TrainingActivityMonitor from "@/components/apprentice/TrainingActivityMonitor";
 import Sidebar from "@/components/layout/Sidebar";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -31,9 +30,6 @@ const Layout = () => {
           </div>
         </main>
       </div>
-      
-      {/* Add the training activity monitor */}
-      <TrainingActivityMonitor />
       
       <Toaster />
     </div>
