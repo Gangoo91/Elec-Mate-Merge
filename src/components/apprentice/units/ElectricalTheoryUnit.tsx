@@ -27,25 +27,16 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
 
   return (
     <div className="space-y-6 animate-fade-in">
+      <h2 className="text-2xl font-bold">Electrical Installation Theory and Technology</h2>
+      <p className="text-muted-foreground mb-6">
+        This unit covers the essential theories, regulations, and technical information related to electrical installations.
+      </p>
+      
       {/* Electrical Theory Content */}
-      <div className="space-y-6">
-        {/* Main section */}
+      <div className="space-y-4">
         <SectionBox
-          key="04"
-          sectionNumber="04"
-          title="Electrical Theory"
-          isExpanded={false}
-          onClick={handleSectionClick}
-          content={<></>}
-          unitCode={unitCode}
-          courseSlug={courseSlug}
-        />
-        
-        {/* Individual topic sections */}
-        <SectionBox
-          key="1"
           sectionNumber="1"
-          title="Basic Electrical Theory"
+          title="Legislation, Regulations, and Guidance for Electrical Installation Work"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -54,9 +45,8 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key="2"
           sectionNumber="2"
-          title="Technical Information"
+          title="Technical Information Used in Electrical Work"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -65,9 +55,8 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key="3"
           sectionNumber="3"
-          title="Wiring Sections"
+          title="Properties, Applications, and Limitations of Different Wiring Systems"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -76,9 +65,8 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key="4"
           sectionNumber="4"
-          title="Service Position"
+          title="General Layout of Equipment at the Service Position"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -87,9 +75,8 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key="5"
           sectionNumber="5"
-          title="Lighting Circuits"
+          title="Standard Lighting Circuits"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -98,9 +85,8 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key="6"
           sectionNumber="6"
-          title="Ring and Radial Circuits"
+          title="Standard Ring and Radial Final Circuits"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -109,9 +95,8 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key="7"
           sectionNumber="7"
-          title="Circuit Requirements"
+          title="Basic Requirements for Circuits"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -120,9 +105,8 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key="8"
           sectionNumber="8"
-          title="Earthing and Bonding"
+          title="Importance of Earthing and Bonding for Protection"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -131,9 +115,8 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key="9"
           sectionNumber="9"
-          title="Overcurrent Protection"
+          title="Principles of Overcurrent Protection"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
@@ -142,9 +125,8 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
         />
         
         <SectionBox
-          key="10"
           sectionNumber="10"
-          title="Circuit Design"
+          title="Principles of Circuit Design"
           isExpanded={false}
           onClick={handleSectionClick}
           content={<></>}
