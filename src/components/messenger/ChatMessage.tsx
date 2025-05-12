@@ -10,6 +10,21 @@ interface ChatMessageProps {
 }
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ message, isCurrentUser }) => {
+  // Safe formatting with validation
+  const formatTimeDistance = (timestamp: Date | number | string) => {
+    try {
+      const date = timestamp instanceof Date ? timestamp : new Date(timestamp);
+      // Check if date is valid before formatting
+      if (isNaN(date.getTime())) {
+        return "Invalid date";
+      }
+      return formatDistanceToNow(date, { addSuffix: true });
+    } catch (error) {
+      console.error("Error formatting date:", error);
+      return "Unknown time";
+    }
+  };
+
   return (
     <div
       className={`flex ${isCurrentUser ? 'justify-end' : 'justify-start'} animate-fade-in mb-2`}
@@ -28,7 +43,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message, isCurrentUser }) => 
         <p className="break-words text-sm md:text-base">{message.content}</p>
         <div className={`flex items-center gap-1 mt-1 text-xs ${isCurrentUser ? 'justify-end' : ''}`}>
           <span className={isCurrentUser ? 'text-elec-dark/70' : 'text-muted-foreground'}>
-            {formatDistanceToNow(message.timestamp, { addSuffix: true })}
+            {formatTimeDistance(message.timestamp)}
           </span>
           {isCurrentUser && (
             <span className="text-elec-dark/70 flex items-center">

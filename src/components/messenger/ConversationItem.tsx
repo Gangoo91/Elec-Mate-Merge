@@ -17,6 +17,23 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
   onSelect,
   getInitials
 }) => {
+  // Safe formatting with validation
+  const formatTimeDistance = (timestamp: Date | number | string | undefined) => {
+    if (!timestamp) return "";
+    
+    try {
+      const date = timestamp instanceof Date ? timestamp : new Date(timestamp);
+      // Check if date is valid before formatting
+      if (isNaN(date.getTime())) {
+        return "";
+      }
+      return formatDistanceToNow(date, { addSuffix: true });
+    } catch (error) {
+      console.error("Error formatting date:", error);
+      return "";
+    }
+  };
+
   return (
     <div
       className={`p-4 border-b border-elec-yellow/10 cursor-pointer transition-colors ${
@@ -45,7 +62,7 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
             </h3>
             {conversation.lastMessageTime && (
               <span className="text-xs text-muted-foreground">
-                {formatDistanceToNow(conversation.lastMessageTime, { addSuffix: true })}
+                {formatTimeDistance(conversation.lastMessageTime)}
               </span>
             )}
           </div>
