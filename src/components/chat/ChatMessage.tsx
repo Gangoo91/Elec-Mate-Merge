@@ -126,7 +126,7 @@ const ChatMessage = ({
                 authorId={message.authorId}
                 authorName={message.authorName}
                 authorAvatar={message.authorAvatar}
-                createdAt={message.createdAt}
+                createdAt={message.createdAt instanceof Date ? message.createdAt : new Date(message.createdAt || Date.now())}
                 currentUserId={currentUserId}
                 onEditClick={() => setIsEditing(true)}
                 onDeleteClick={handleDeleteMessage}
