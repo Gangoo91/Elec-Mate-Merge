@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import LearningBackButton from "@/components/apprentice/navigation/LearningBackButton";
 import SubsectionLearningContent from "@/components/apprentice/subsection/SubsectionLearningContent";
 import { useSubsectionContent } from "@/hooks/useSubsectionContent";
+import { Card, CardContent } from "@/components/ui/card";
+import { CheckCircle, Book } from "lucide-react";
 
 const SubsectionContent = () => {
   const { courseSlug = "level-2-diploma", unitSlug = "health-safety", sectionId, subsectionId } = useParams();
@@ -78,7 +80,7 @@ const SubsectionContent = () => {
   };
   
   return (
-    <div className="space-y-6 animate-fade-in bg-[#121212] px-4 md:px-6 max-w-4xl mx-auto py-8">
+    <div className="space-y-6 animate-fade-in px-4 md:px-6 max-w-4xl mx-auto py-8">
       {/* Back Button */}
       <div className="w-full">
         <LearningBackButton
@@ -90,13 +92,28 @@ const SubsectionContent = () => {
         />
       </div>
       
-      {/* Subsection Title */}
-      <div className="border-b border-elec-yellow/20 pb-4">
-        <h1 className="text-xl md:text-2xl font-bold text-elec-yellow">
-          {displaySectionTitle && `${displaySectionTitle}: `}
-          {displaySubsectionTitle || "Learning Content"}
-        </h1>
-      </div>
+      {/* Subsection Header */}
+      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-dark to-elec-dark/80 overflow-hidden">
+        <CardContent className="p-6">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="bg-elec-yellow rounded-md p-1.5 flex items-center justify-center">
+              <Book className="h-4 w-4 text-elec-dark" />
+            </div>
+            <div className="text-sm font-medium text-elec-yellow">
+              {displaySectionTitle || "Section"}
+            </div>
+            {isCompleted && (
+              <div className="ml-auto flex items-center text-green-400 text-sm gap-1">
+                <CheckCircle className="h-3.5 w-3.5" />
+                <span>Completed</span>
+              </div>
+            )}
+          </div>
+          <h1 className="text-xl md:text-2xl font-bold text-white ml-9">
+            {displaySubsectionTitle || "Learning Content"}
+          </h1>
+        </CardContent>
+      </Card>
       
       {/* Subsection content */}
       {subsectionId && (
