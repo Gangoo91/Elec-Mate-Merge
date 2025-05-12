@@ -26,14 +26,14 @@ const TrackingStatusIndicator = () => {
         description: "Your training time is being saved automatically",
       });
       
-      // Give a small delay before stopping to allow the user to see the status
+      // Give a 10-second delay before stopping to allow the user to see the status
       timeoutId = window.setTimeout(() => {
         stopTracking();
         toast({
           title: "Training time saved",
           description: "Your accumulated training time has been recorded",
         });
-      }, 2000);
+      }, 10000); // Changed from 2000 to 10000 (10 seconds)
     }
     
     return () => {

@@ -55,6 +55,7 @@ const TrainingActivityMonitor = () => {
     } else if (isOJTPage && isTracking) {
       // When navigating to the OJT page, don't immediately stop tracking
       // This is now handled by the TrackingStatusIndicator component
+      console.log("On OJT page - tracking will be handled by TrackingStatusIndicator");
     } else if (!isLearningPage && !isOJTPage && isTracking) {
       // When navigating to other non-learning pages, stop tracking
       stopTracking();
