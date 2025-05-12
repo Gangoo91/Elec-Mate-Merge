@@ -9,7 +9,14 @@ import BackButton from "./BackButton";
 const SubsectionPage = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
   
-  console.log("SubsectionPage - Params:", { courseSlug, unitSlug, sectionId, subsectionId });
+  // Detect if we're on an electrical theory page
+  const path = window.location.pathname;
+  const isElectricalTheory = path.includes("/elec2-04") || path.includes("/electrical-theory");
+  
+  // Use the effective unit slug based on the path
+  const effectiveUnitSlug = isElectricalTheory ? "elec2-04" : unitSlug;
+  
+  console.log("SubsectionPage - Params:", { courseSlug, unitSlug: effectiveUnitSlug, sectionId, subsectionId });
   
   const {
     subsectionData,
@@ -21,7 +28,7 @@ const SubsectionPage = () => {
     markAsComplete,
   } = useSubsectionContent({
     courseSlug,
-    unitSlug, 
+    unitSlug: effectiveUnitSlug, 
     sectionId,
     subsectionId,
   });
@@ -42,7 +49,7 @@ const SubsectionPage = () => {
       
       <div className="flex-1 overflow-auto">
         <div className="max-w-4xl mx-auto py-4 px-4 md:px-8">
-          <BackButton courseSlug={courseSlug} unitSlug={unitSlug} sectionId={sectionId} />
+          <BackButton courseSlug={courseSlug} unitSlug={effectiveUnitSlug} sectionId={sectionId} />
           
           {subsectionId && (
             <div className="mt-4">

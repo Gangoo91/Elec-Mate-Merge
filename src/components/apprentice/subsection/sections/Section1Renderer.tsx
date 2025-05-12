@@ -286,4 +286,3 @@ const HealthSafetySubsection = ({
 
   return <Component subsectionId={subsectionId} isCompleted={isCompleted} markAsComplete={markAsComplete} />;
 };
-

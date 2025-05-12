@@ -25,7 +25,17 @@ const LearningBackButton = ({
   
   // Default values for navigation
   const effectiveCourseSlug = courseSlug || "level-2-diploma";
-  const effectiveUnitSlug = unitSlug || "health-safety";
+  // Check if we're in the electrical theory unit
+  let effectiveUnitSlug = unitSlug;
+  if (!effectiveUnitSlug) {
+    // Detect if we're on an electrical theory page
+    const path = window.location.pathname;
+    if (path.includes("/elec2-04") || path.includes("/electrical-theory")) {
+      effectiveUnitSlug = "elec2-04";
+    } else {
+      effectiveUnitSlug = "health-safety";
+    }
+  }
 
   const handleBackClick = () => {
     console.log("LearningBackButton: navigating from", { currentPath, courseSlug, unitSlug, sectionId, subsectionId });

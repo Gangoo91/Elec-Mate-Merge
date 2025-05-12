@@ -50,9 +50,11 @@ export function useSectionContentData({
       if (unitSlug === 'elec2-04' || unitSlug === 'electrical-theory') {
         // Fetch from electrical theory content
         section = electricalTheorySections.find(s => s.sectionNumber === sectionId);
+        console.log("Loading electrical theory section:", sectionId, section);
       } else {
         // Default to health & safety content
         section = getHealthSafetySectionById(sectionId);
+        console.log("Loading health & safety section:", sectionId, section);
       }
       
       if (section) {
