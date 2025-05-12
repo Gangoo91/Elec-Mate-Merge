@@ -32,6 +32,25 @@ const ElectricalTheorySubsection = ({
     navigate(path);
   };
   
+  // Override title for subsection 1.1 to display correct content about Health and Safety at Work Act
+  const displayTitle = subsectionId === "1.1" 
+    ? "Health and Safety at Work Act 1974"
+    : title;
+
+  // Adjust content for subsection 1.1
+  const displayContent = subsectionId === "1.1"
+    ? "Understanding the Health and Safety at Work Act 1974, which outlines the duties of employers and employees to maintain a safe working environment."
+    : content;
+
+  // Adjust key points for subsection 1.1
+  const displayKeyPoints = subsectionId === "1.1"
+    ? [
+        "Employer and employee responsibilities under HSWA 1974",
+        "Powers of HSE inspectors and enforcement mechanisms",
+        "Risk assessment requirements and documentation"
+      ]
+    : keyPoints;
+  
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4 mb-6">
@@ -43,15 +62,15 @@ const ElectricalTheorySubsection = ({
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Section
         </Button>
-        <h1 className="text-xl md:text-2xl font-bold text-elec-yellow">{title}</h1>
+        <h1 className="text-xl md:text-2xl font-bold text-elec-yellow">{displayTitle}</h1>
       </div>
       
       <div className="prose prose-invert max-w-none">
-        <p className="text-base md:text-lg leading-relaxed">{content}</p>
+        <p className="text-base md:text-lg leading-relaxed">{displayContent}</p>
         
         <h2 className="text-lg md:text-xl font-semibold mt-6 mb-3 text-white">Key Points</h2>
         <ul className="space-y-2">
-          {keyPoints.map((point, index) => (
+          {displayKeyPoints.map((point, index) => (
             <li key={index} className="flex items-start gap-2 text-base">
               <span className="text-elec-yellow mt-1">•</span>
               <span className="leading-relaxed">{point}</span>
