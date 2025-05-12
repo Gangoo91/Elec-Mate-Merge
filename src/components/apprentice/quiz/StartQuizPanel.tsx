@@ -16,6 +16,14 @@ const StartQuizPanel = ({ isCompleted, onStartQuiz, onBack }: StartQuizPanelProp
           This quiz will test your understanding of the key health and safety concepts 
           covered in this unit. Complete the quiz to demonstrate your knowledge.
         </p>
+        {isCompleted && (
+          <div className="flex items-center gap-2 mt-4 p-3 bg-green-950/30 border border-green-600/30 rounded-md">
+            <CheckCircle className="h-5 w-5 text-green-500" />
+            <p className="text-green-400">
+              You have already completed this quiz. You can retake it to improve your score.
+            </p>
+          </div>
+        )}
       </div>
       
       <div className="space-y-6 p-4 border border-elec-yellow/20 rounded-lg">

@@ -51,15 +51,17 @@ const QuizContent = () => {
     resetTimer();
   };
 
-  const handleQuizComplete = async (score: number, totalQuestions: number) => {
+  const handleQuizSubmission = (score: number, totalQuestions: number) => {
     // Calculate time taken
     const timeTaken = QUIZ_TIME_IN_SECONDS - timeRemaining;
     
-    const success = await handleQuizComplete(score, totalQuestions, timeTaken);
-    if (success) {
-      setIsCompleted(true);
-      setQuizSubmitted(true);
-    }
+    handleQuizComplete(score, totalQuestions, timeTaken)
+      .then(success => {
+        if (success) {
+          setIsCompleted(true);
+          setQuizSubmitted(true);
+        }
+      });
   };
 
   const handleRetakeQuiz = () => {
@@ -115,7 +117,7 @@ const QuizContent = () => {
               <UnitQuiz
                 unitCode={unitCode}
                 questions={healthAndSafetyQuizzes.questions}
-                onQuizComplete={handleQuizComplete}
+                onQuizComplete={handleQuizSubmission}
                 questionCount={QUESTION_COUNT}
                 timeLimit={QUIZ_TIME_IN_SECONDS}
                 currentTime={timeRemaining}

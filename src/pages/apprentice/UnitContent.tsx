@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, BookOpen, CheckCircle, Shield, Users, FileText, Info, Construction, AlertTriangle } from "lucide-react";
+import { ArrowLeft, BookOpen, CheckCircle, Shield, Users, FileText, Info, Construction, AlertTriangle, Play } from "lucide-react";
 import { getCourseUnitById } from "@/data/courseUnits";
 import BackButton from "@/components/apprentice/BackButton";
 
@@ -136,7 +136,22 @@ const UnitContent = () => {
               <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow/90 flex items-center justify-center shadow-inner">
                 <span className="text-elec-dark font-bold text-lg">Q</span>
               </div>
-              <h3 className="text-lg font-medium leading-tight">Unit Quiz</h3>
+              <div className="flex flex-col">
+                <h3 className="text-lg font-medium leading-tight">Unit Quiz</h3>
+                <div className="flex items-center mt-2">
+                  <Button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleQuizClick();
+                    }} 
+                    className="bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark flex items-center gap-2 text-xs py-1 h-auto"
+                    size="sm"
+                  >
+                    <Play className="h-3 w-3" />
+                    {quizCompleted ? "Retake Quiz" : "Take Quiz"}
+                  </Button>
+                </div>
+              </div>
             </div>
             
             {/* Display complete icon if quiz is completed */}
