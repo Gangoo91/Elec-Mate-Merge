@@ -4,6 +4,7 @@ import { SubsectionProps } from "../../types";
 import ElectricalTheorySubsection from "./ElectricalTheorySubsection";
 import ElectricalTheoryHSAWA from "@/components/apprentice/content/subsection1_1/ElectricalTheoryHSAWA";
 import ElectricalTheoryEWR from "@/components/apprentice/content/subsection1_1/ElectricalTheoryEWR";
+import ElectricalTheoryPartP from "@/components/apprentice/content/subsection1_1/ElectricalTheoryPartP";
 
 export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted: boolean, markAsComplete: () => void) => {
   // Map the subsection IDs to content
@@ -29,18 +30,10 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
     case "1.3":
     case "3":
       return (
-        <ElectricalTheorySubsection
-          title="Building Regulations (Part P)"
-          content="Part P of the Building Regulations applies to electrical installations in dwellings in England and Wales. It was introduced to reduce the number of injuries and deaths caused by electric shocks and fires in homes."
-          keyPoints={[
-            "Electrical installation work in dwellings must meet the requirements of Part P.",
-            "Notifiable work must be certified by a registered competent person or inspected by building control.",
-            "Notifiable work includes new circuits, work in special locations (bathrooms, swimming pools), and consumer unit replacements.",
-            "Certification demonstrates that work meets safety requirements and complies with BS 7671."
-          ]}
+        <ElectricalTheoryPartP
+          subsectionId={subsectionId}
           isCompleted={isCompleted}
           markAsComplete={markAsComplete}
-          subsectionId={subsectionId}
         />
       );
     case "1.4":
@@ -98,4 +91,3 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
       return <p>Content for electrical theory subsection {subsectionId} is not yet available.</p>;
   }
 };
-
