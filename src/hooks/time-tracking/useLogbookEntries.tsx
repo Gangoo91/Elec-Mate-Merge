@@ -4,7 +4,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useTimeEntries } from "./useTimeEntries";
 
 export const useLogbookEntries = () => {
-  const { entries, totalTime, addTimeEntry } = useTimeEntries();
+  const { entries, totalTime, addTimeEntry, deleteAllEntries } = useTimeEntries();
   const { toast } = useToast();
   const [filterMonth, setFilterMonth] = useState<string>("all");
   
@@ -49,7 +49,9 @@ export const useLogbookEntries = () => {
   };
   
   const handleClearAllEntries = () => {
-    // In a real implementation, this would delete all entries for the current filter
+    // Call the new deleteAllEntries function from useTimeEntries
+    deleteAllEntries(filterMonth);
+    
     toast({
       title: "Entries cleared",
       description: filterMonth === "all" 
