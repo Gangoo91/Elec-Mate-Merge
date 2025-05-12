@@ -39,18 +39,16 @@ const SubsectionLearningContent = ({
   
   return (
     <div className="animate-fade-in">
-      {/* Add back button for electrical theory content */}
-      {isElectricalTheory && (
-        <div className="mb-6">
-          <LearningBackButton
-            currentPath="subsection"
-            courseSlug={courseSlug || "level-2-diploma"}
-            unitSlug={unitSlug || "elec2-04"}
-            sectionId={sectionId || "1"}
-            subsectionId={subsectionId}
-          />
-        </div>
-      )}
+      {/* Always show the back button for both electrical theory and other content */}
+      <div className="mb-6">
+        <LearningBackButton
+          currentPath="subsection"
+          courseSlug={courseSlug || "level-2-diploma"}
+          unitSlug={unitSlug || "elec2-04"}
+          sectionId={sectionId || "1"}
+          subsectionId={subsectionId}
+        />
+      </div>
       
       <SubsectionRenderer 
         subsectionId={effectiveSubsectionId} 

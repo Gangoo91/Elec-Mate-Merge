@@ -1,7 +1,7 @@
-
 import React from "react";
 import { SubsectionProps } from "../../types";
 import ElectricalTheorySubsection from "./ElectricalTheorySubsection";
+import ElectricalTheoryHSAWA from "@/components/apprentice/content/subsection1_1/ElectricalTheoryHSAWA";
 
 export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted: boolean, markAsComplete: () => void) => {
   // Map the subsection IDs to content
@@ -9,18 +9,10 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
     case "1.1":
     case "1":
       return (
-        <ElectricalTheorySubsection
-          title="Health and Safety at Work Act 1974"
-          content="The Health and Safety at Work Act 1974 (HSWA) is the primary piece of legislation covering occupational health and safety in the United Kingdom. It sets out the general duties that employers have towards employees and members of the public, and employees have to themselves and to each other."
-          keyPoints={[
-            "Employers must ensure, as far as is reasonably practicable, the health, safety, and welfare of all employees.",
-            "Employers must provide and maintain safe equipment and systems of work.",
-            "Employees have a duty to take reasonable care of their own health and safety and that of others.",
-            "The Health and Safety Executive (HSE) enforces the Act and can issue improvement and prohibition notices."
-          ]}
+        <ElectricalTheoryHSAWA
+          subsectionId={subsectionId}
           isCompleted={isCompleted}
           markAsComplete={markAsComplete}
-          subsectionId={subsectionId}
         />
       );
     case "1.2":
