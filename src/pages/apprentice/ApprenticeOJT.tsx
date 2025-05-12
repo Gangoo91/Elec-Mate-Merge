@@ -47,6 +47,8 @@ const ApprenticeOJT = () => {
   }, [location.pathname]); // Re-run when location changes to capture new learning time
 
   const handleDownloadReport = () => {
+    // The actual report download is now handled in OJTHeader component
+    // This function remains for backwards compatibility
     toast({
       title: "Report Generated",
       description: "Your training report has been downloaded successfully."
