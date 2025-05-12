@@ -47,18 +47,18 @@ const StartQuizPanel = ({ isCompleted, onStartQuiz, onBack }: StartQuizPanelProp
         </div>
       </div>
       
-      <div className="flex justify-between items-center mt-6 pt-4">
+      <div className="flex justify-between mt-6 pt-4">
         <Button
           variant="outline"
-          className="border-elec-yellow/30 hover:bg-elec-yellow/10 px-6"
+          className="border-elec-yellow/30 hover:bg-elec-yellow/10 w-[120px]"
           onClick={onBack}
         >
-          Back to Unit
+          Back
         </Button>
         
         <Button 
           onClick={onStartQuiz}
-          className="bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark font-medium px-8"
+          className="bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark font-medium w-[120px]"
         >
           {isCompleted ? "Retake Quiz" : "Start Quiz"}
         </Button>
