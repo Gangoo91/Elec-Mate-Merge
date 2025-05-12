@@ -1,3 +1,4 @@
+
 import React from "react";
 import { SubsectionProps } from "../../types";
 import ElectricalTheorySubsection from "./ElectricalTheorySubsection";
@@ -20,12 +21,15 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
       return (
         <ElectricalTheorySubsection
           title="Electricity at Work Regulations 1989"
-          content="The Electricity at Work Regulations 1989 are specific regulations designed to prevent death or personal injury from electrical causes in the workplace. They apply to all electrical equipment and systems, and impose duties on employers, employees, and the self-employed."
+          content="The Electricity at Work Regulations 1989 are statutory regulations that specifically address electrical safety in the workplace. These regulations place duties on employers, employees and the self-employed to control and mitigate risks arising from the use of electricity in work activities."
           keyPoints={[
-            "All electrical systems must be maintained to prevent danger.",
-            "Work activities must be carried out in a manner that prevents danger.",
-            "Persons carrying out electrical work must be competent or adequately supervised.",
-            "Proper procedures for working on dead circuits include isolation, proving dead, and locking off."
+            "The regulations apply to all aspects of electrical systems and work activities involving electricity",
+            "Systems must be constructed and maintained to prevent danger",
+            "Work activities must be carried out in a manner that prevents danger",
+            "Persons working on electrical systems must be competent or adequately supervised",
+            "Live working is prohibited unless it is unreasonable to work dead, reasonable to work live, and suitable precautions are taken",
+            "Proper procedures for isolation, testing, and earthing must be followed",
+            "Regular inspection and testing of systems is required"
           ]}
           isCompleted={isCompleted}
           markAsComplete={markAsComplete}

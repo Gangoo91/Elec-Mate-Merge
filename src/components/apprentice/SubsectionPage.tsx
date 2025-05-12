@@ -36,15 +36,28 @@ const SubsectionPage = () => {
     subsectionId,
   });
 
-  // Override title for electrical theory subsection 1.1
+  // Override titles for electrical theory subsections
   let displaySectionTitle = sectionTitle;
   let displaySubsectionTitle = subsectionData?.title;
   
-  if (isElectricalTheory && subsectionId === "1.1") {
-    // Use correct title for electrical theory subsection 1.1
+  if (isElectricalTheory) {
     displaySectionTitle = "Legislation & Regulations";
-    displaySubsectionTitle = "Health and Safety at Work Act 1974";
-    console.log("SubsectionPage - Overriding title for electrical theory subsection 1.1");
+    
+    if (subsectionId === "1.1") {
+      displaySubsectionTitle = "Health and Safety at Work Act 1974";
+    } else if (subsectionId === "1.2") {
+      displaySubsectionTitle = "Electricity at Work Regulations 1989";
+    } else if (subsectionId === "1.3") {
+      displaySubsectionTitle = "Building Regulations (Part P)";
+    } else if (subsectionId === "1.4") {
+      displaySubsectionTitle = "British Standards (BS 7671)";
+    } else if (subsectionId === "1.5") {
+      displaySubsectionTitle = "Guidance Documents";
+    } else if (subsectionId === "1.6") {
+      displaySubsectionTitle = "Roles and Responsibilities";
+    }
+    
+    console.log("SubsectionPage - Overriding title for electrical theory subsection:", subsectionId);
   }
 
   useEffect(() => {
