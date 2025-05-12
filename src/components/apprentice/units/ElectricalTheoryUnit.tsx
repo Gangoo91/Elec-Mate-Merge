@@ -47,12 +47,17 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
           className="block transition-transform hover:scale-102 duration-200 h-full"
         >
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-            <CardContent className="flex flex-col p-6 h-full">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
-                  <span className="text-elec-dark font-bold text-lg">1</span>
+            <CardContent className="p-6 h-full">
+              <div className="flex flex-col space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                    <span className="text-elec-dark font-bold text-lg">1</span>
+                  </div>
+                  <h3 className="text-lg font-medium">Legislation & Regulations</h3>
                 </div>
-                <h3 className="text-base sm:text-lg font-medium leading-tight">Legislation, Regulations, and Guidance for Electrical Installation Work</h3>
+                <p className="text-sm text-muted-foreground pl-[52px]">
+                  Legislation, Regulations, and Guidance for Electrical Installation Work
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -65,12 +70,17 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
           className="block transition-transform hover:scale-102 duration-200 h-full"
         >
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-            <CardContent className="flex flex-col p-6 h-full">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
-                  <span className="text-elec-dark font-bold text-lg">2</span>
+            <CardContent className="p-6 h-full">
+              <div className="flex flex-col space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                    <span className="text-elec-dark font-bold text-lg">2</span>
+                  </div>
+                  <h3 className="text-lg font-medium">Technical Information</h3>
                 </div>
-                <h3 className="text-base sm:text-lg font-medium leading-tight">Technical Information Used in Electrical Work</h3>
+                <p className="text-sm text-muted-foreground pl-[52px]">
+                  Technical Information Used in Electrical Work
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -83,12 +93,17 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
           className="block transition-transform hover:scale-102 duration-200 h-full"
         >
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-            <CardContent className="flex flex-col p-6 h-full">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
-                  <span className="text-elec-dark font-bold text-lg">3</span>
+            <CardContent className="p-6 h-full">
+              <div className="flex flex-col space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                    <span className="text-elec-dark font-bold text-lg">3</span>
+                  </div>
+                  <h3 className="text-lg font-medium">Wiring Systems</h3>
                 </div>
-                <h3 className="text-base sm:text-lg font-medium leading-tight">Properties, Applications, and Limitations of Different Wiring Systems</h3>
+                <p className="text-sm text-muted-foreground pl-[52px]">
+                  Properties, Applications, and Limitations of Different Wiring Systems
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -101,12 +116,17 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
           className="block transition-transform hover:scale-102 duration-200 h-full"
         >
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-            <CardContent className="flex flex-col p-6 h-full">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
-                  <span className="text-elec-dark font-bold text-lg">4</span>
+            <CardContent className="p-6 h-full">
+              <div className="flex flex-col space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                    <span className="text-elec-dark font-bold text-lg">4</span>
+                  </div>
+                  <h3 className="text-lg font-medium">Service Position</h3>
                 </div>
-                <h3 className="text-base sm:text-lg font-medium leading-tight">General Layout of Equipment at the Service Position</h3>
+                <p className="text-sm text-muted-foreground pl-[52px]">
+                  General Layout of Equipment at the Service Position
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -119,12 +139,17 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
           className="block transition-transform hover:scale-102 duration-200 h-full"
         >
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-            <CardContent className="flex flex-col p-6 h-full">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
-                  <span className="text-elec-dark font-bold text-lg">5</span>
+            <CardContent className="p-6 h-full">
+              <div className="flex flex-col space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                    <span className="text-elec-dark font-bold text-lg">5</span>
+                  </div>
+                  <h3 className="text-lg font-medium">Lighting Circuits</h3>
                 </div>
-                <h3 className="text-base sm:text-lg font-medium leading-tight">Standard Lighting Circuits</h3>
+                <p className="text-sm text-muted-foreground pl-[52px]">
+                  Standard Lighting Circuits
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -137,12 +162,17 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
           className="block transition-transform hover:scale-102 duration-200 h-full"
         >
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-            <CardContent className="flex flex-col p-6 h-full">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
-                  <span className="text-elec-dark font-bold text-lg">6</span>
+            <CardContent className="p-6 h-full">
+              <div className="flex flex-col space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                    <span className="text-elec-dark font-bold text-lg">6</span>
+                  </div>
+                  <h3 className="text-lg font-medium">Final Circuits</h3>
                 </div>
-                <h3 className="text-base sm:text-lg font-medium leading-tight">Standard Ring and Radial Final Circuits</h3>
+                <p className="text-sm text-muted-foreground pl-[52px]">
+                  Standard Ring and Radial Final Circuits
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -155,12 +185,17 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
           className="block transition-transform hover:scale-102 duration-200 h-full"
         >
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-            <CardContent className="flex flex-col p-6 h-full">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
-                  <span className="text-elec-dark font-bold text-lg">7</span>
+            <CardContent className="p-6 h-full">
+              <div className="flex flex-col space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                    <span className="text-elec-dark font-bold text-lg">7</span>
+                  </div>
+                  <h3 className="text-lg font-medium">Circuit Requirements</h3>
                 </div>
-                <h3 className="text-base sm:text-lg font-medium leading-tight">Basic Requirements for Circuits</h3>
+                <p className="text-sm text-muted-foreground pl-[52px]">
+                  Basic Requirements for Circuits
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -173,12 +208,17 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
           className="block transition-transform hover:scale-102 duration-200 h-full"
         >
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-            <CardContent className="flex flex-col p-6 h-full">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
-                  <span className="text-elec-dark font-bold text-lg">8</span>
+            <CardContent className="p-6 h-full">
+              <div className="flex flex-col space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                    <span className="text-elec-dark font-bold text-lg">8</span>
+                  </div>
+                  <h3 className="text-lg font-medium">Earthing & Bonding</h3>
                 </div>
-                <h3 className="text-base sm:text-lg font-medium leading-tight">Importance of Earthing and Bonding for Protection</h3>
+                <p className="text-sm text-muted-foreground pl-[52px]">
+                  Importance of Earthing and Bonding for Protection
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -191,12 +231,17 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
           className="block transition-transform hover:scale-102 duration-200 h-full"
         >
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-            <CardContent className="flex flex-col p-6 h-full">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
-                  <span className="text-elec-dark font-bold text-lg">9</span>
+            <CardContent className="p-6 h-full">
+              <div className="flex flex-col space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                    <span className="text-elec-dark font-bold text-lg">9</span>
+                  </div>
+                  <h3 className="text-lg font-medium">Overcurrent Protection</h3>
                 </div>
-                <h3 className="text-base sm:text-lg font-medium leading-tight">Principles of Overcurrent Protection</h3>
+                <p className="text-sm text-muted-foreground pl-[52px]">
+                  Principles of Overcurrent Protection
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -209,12 +254,17 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
           className="block transition-transform hover:scale-102 duration-200 h-full"
         >
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-            <CardContent className="flex flex-col p-6 h-full">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
-                  <span className="text-elec-dark font-bold text-lg">10</span>
+            <CardContent className="p-6 h-full">
+              <div className="flex flex-col space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                    <span className="text-elec-dark font-bold text-lg">10</span>
+                  </div>
+                  <h3 className="text-lg font-medium">Circuit Design</h3>
                 </div>
-                <h3 className="text-base sm:text-lg font-medium leading-tight">Principles of Circuit Design</h3>
+                <p className="text-sm text-muted-foreground pl-[52px]">
+                  Principles of Circuit Design
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -230,12 +280,17 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
           className="block transition-transform hover:scale-102 duration-200 h-full"
         >
           <Card className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full">
-            <CardContent className="flex flex-col p-6 h-full relative">
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
-                  <span className="text-elec-dark font-bold text-lg">Q</span>
+            <CardContent className="p-6 h-full relative">
+              <div className="flex flex-col space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
+                    <span className="text-elec-dark font-bold text-lg">Q</span>
+                  </div>
+                  <h3 className="text-lg font-medium">Assessment Quiz</h3>
                 </div>
-                <h3 className="text-base sm:text-lg font-medium leading-tight">Electrical Theory Assessment Quiz</h3>
+                <p className="text-sm text-muted-foreground pl-[52px]">
+                  Electrical Theory Assessment Quiz
+                </p>
               </div>
               
               {quizCompleted && (
