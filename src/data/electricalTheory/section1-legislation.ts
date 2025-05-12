@@ -10,7 +10,7 @@ export const legislationSection: SectionData = {
     subsections: [
       {
         id: "1.1",
-        title: "Health and Safety Legislation",
+        title: "Health and Safety at Work Act 1974",
         content: "Understanding the Health and Safety at Work Act 1974, which outlines the duties of employers and employees to maintain a safe working environment.",
         keyPoints: [
           "Employer and employee responsibilities under HSWA 1974",

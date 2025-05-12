@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import LearningBackButton from "@/components/apprentice/navigation/LearningBackButton";
 import SubsectionLearningContent from "@/components/apprentice/subsection/SubsectionLearningContent";
 import { useSubsectionContent } from "@/hooks/useSubsectionContent";
+import { legislationSection } from "@/data/electricalTheory/section1-legislation";
 
 const SubsectionContent = () => {
   const { courseSlug = "level-2-diploma", unitSlug = "health-safety", sectionId, subsectionId } = useParams();
@@ -16,6 +17,9 @@ const SubsectionContent = () => {
   const effectiveCourseSlug = courseSlug || "level-2-diploma";
   const effectiveUnitSlug = unitSlug || "health-safety";
   
+  // Check if we're on the electrical theory unit
+  const isElectricalTheory = effectiveUnitSlug === "elec2-04";
+  
   const {
     subsectionData,
     sectionTitle,
@@ -27,6 +31,16 @@ const SubsectionContent = () => {
     sectionId,
     subsectionId,
   });
+  
+  // Override title for electrical theory subsection 1.1
+  let displaySectionTitle = sectionTitle;
+  let displaySubsectionTitle = subsectionData?.title;
+  
+  if (isElectricalTheory && subsectionId === "1.1") {
+    // Use correct title for electrical theory subsection 1.1
+    displaySectionTitle = "Legislation & Regulations";
+    displaySubsectionTitle = "Health and Safety at Work Act 1974";
+  }
   
   // Check local storage for completion status
   useEffect(() => {
@@ -63,8 +77,8 @@ const SubsectionContent = () => {
       {/* Subsection Title */}
       <div className="border-b border-elec-yellow/20 pb-4">
         <h1 className="text-xl md:text-2xl font-bold text-elec-yellow">
-          {sectionTitle && `${sectionTitle}: `}
-          {subsectionData?.title || "Learning Content"}
+          {displaySectionTitle && `${displaySectionTitle}: `}
+          {displaySubsectionTitle || "Learning Content"}
         </h1>
       </div>
       

@@ -37,6 +37,16 @@ const SubsectionPage = () => {
     subsectionId,
   });
 
+  // Override title for electrical theory subsection 1.1
+  let displaySectionTitle = sectionTitle;
+  let displaySubsectionTitle = subsectionData?.title;
+  
+  if (isElectricalTheory && subsectionId === "1.1") {
+    // Use correct title for electrical theory subsection 1.1
+    displaySectionTitle = "Legislation & Regulations";
+    displaySubsectionTitle = "Health and Safety at Work Act 1974";
+  }
+
   useEffect(() => {
     console.log("SubsectionPage - Current subsectionId:", subsectionId);
     console.log("SubsectionPage - Current subsectionData:", subsectionData);
@@ -57,8 +67,8 @@ const SubsectionPage = () => {
     <div className="flex flex-col flex-1">
       <div className="px-4 py-3 md:py-4 bg-elec-dark/80 border-b border-elec-yellow/30 shadow-md">
         <h1 className="text-lg md:text-xl font-semibold text-elec-yellow">
-          {sectionTitle && `${sectionTitle}: `}
-          {subsectionData?.title || "Learning Content"}
+          {displaySectionTitle && `${displaySectionTitle}: `}
+          {displaySubsectionTitle || "Learning Content"}
         </h1>
       </div>
       
