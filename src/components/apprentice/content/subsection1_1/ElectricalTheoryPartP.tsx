@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { SubsectionProps } from "./types";
@@ -9,7 +8,7 @@ import {
   CardHeader, 
   CardTitle 
 } from '@/components/ui/card';
-import { AlertTriangle, CheckCircle, BookOpen, FileCheck, Home, Tools, ClipboardCheck, AlertCircle } from 'lucide-react';
+import { AlertTriangle, CheckCircle, BookOpen, FileCheck, Home, Wrench, ClipboardCheck, AlertCircle } from 'lucide-react';
 
 const ElectricalTheoryPartP = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
   return (
@@ -128,7 +127,7 @@ const ElectricalTheoryPartP = ({ subsectionId, isCompleted, markAsComplete }: Su
       <Card className="border-elec-yellow/30 bg-elec-dark/50">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl text-elec-yellow flex items-center">
-            <Tools className="mr-3 h-6 w-6" />
+            <Wrench className="mr-3 h-6 w-6" />
             Routes to Compliance
           </CardTitle>
           <CardDescription>How to ensure your work meets Part P requirements</CardDescription>
