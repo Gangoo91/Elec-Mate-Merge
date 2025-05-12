@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { PlusCircle } from "lucide-react";
 
 interface ChatHeaderProps {
   title: string;
@@ -9,21 +9,16 @@ interface ChatHeaderProps {
 
 const ChatHeader = ({ title, onNewPost }: ChatHeaderProps) => {
   return (
-    <div className="bg-black border-b border-elec-yellow/20 py-3">
-      <div className="flex justify-between items-center px-4 max-w-3xl mx-auto">
-        <div>
-          <h1 className="text-xl font-bold text-elec-yellow">{title}</h1>
-        </div>
-        
-        <Button
-          onClick={onNewPost}
-          size="icon"
-          variant="ghost"
-          className="text-elec-yellow hover:bg-elec-yellow/10"
-        >
-          <Plus className="h-5 w-5" />
-        </Button>
-      </div>
+    <div className="flex items-center justify-between p-4 border-b border-elec-yellow/20">
+      <h1 className="text-xl font-semibold text-white">{title}</h1>
+      <Button 
+        onClick={onNewPost}
+        variant="default"
+        className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80"
+      >
+        <PlusCircle className="mr-2 h-4 w-4" />
+        New Post
+      </Button>
     </div>
   );
 };

@@ -28,6 +28,19 @@ const ConversationView: React.FC<ConversationViewProps> = ({
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
   
+  // Helper function to safely format dates
+  const formatDate = (date: Date | null | undefined) => {
+    if (!date) return "";
+    try {
+      return new Date(date).toLocaleTimeString(undefined, { 
+        hour: '2-digit', 
+        minute: '2-digit'
+      });
+    } catch (e) {
+      return "";
+    }
+  };
+
   return (
     <div className="flex flex-col h-full">
       {/* Conversation header */}

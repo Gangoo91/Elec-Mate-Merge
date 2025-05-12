@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 interface ToolboxCardProps {
   title: string;
@@ -12,6 +12,9 @@ interface ToolboxCardProps {
 }
 
 const ToolboxCard = ({ title, icon, link, onSelect, description }: ToolboxCardProps) => {
+  // Get current location to check if router is available
+  const location = useLocation();
+  
   // Create the card content
   const cardContent = (
     <Card 
