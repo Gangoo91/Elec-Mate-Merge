@@ -3,6 +3,7 @@ import React from "react";
 import { SubsectionProps } from "../../types";
 import ElectricalTheorySubsection from "./ElectricalTheorySubsection";
 import ElectricalTheoryHSAWA from "@/components/apprentice/content/subsection1_1/ElectricalTheoryHSAWA";
+import ElectricalTheoryEWR from "@/components/apprentice/content/subsection1_1/ElectricalTheoryEWR";
 
 export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted: boolean, markAsComplete: () => void) => {
   // Map the subsection IDs to content
@@ -19,21 +20,10 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
     case "1.2":
     case "2":
       return (
-        <ElectricalTheorySubsection
-          title="Electricity at Work Regulations 1989"
-          content="The Electricity at Work Regulations 1989 are statutory regulations that specifically address electrical safety in the workplace. These regulations place duties on employers, employees and the self-employed to control and mitigate risks arising from the use of electricity in work activities."
-          keyPoints={[
-            "The regulations apply to all aspects of electrical systems and work activities involving electricity",
-            "Systems must be constructed and maintained to prevent danger",
-            "Work activities must be carried out in a manner that prevents danger",
-            "Persons working on electrical systems must be competent or adequately supervised",
-            "Live working is prohibited unless it is unreasonable to work dead, reasonable to work live, and suitable precautions are taken",
-            "Proper procedures for isolation, testing, and earthing must be followed",
-            "Regular inspection and testing of systems is required"
-          ]}
+        <ElectricalTheoryEWR
+          subsectionId={subsectionId}
           isCompleted={isCompleted}
           markAsComplete={markAsComplete}
-          subsectionId={subsectionId}
         />
       );
     case "1.3":
@@ -108,3 +98,4 @@ export const renderElectricalTheorySection1 = (subsectionId: string, isCompleted
       return <p>Content for electrical theory subsection {subsectionId} is not yet available.</p>;
   }
 };
+
