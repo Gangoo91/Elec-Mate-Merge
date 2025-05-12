@@ -10,4 +10,3 @@ export const electricalTheorySections: SectionData[] = [
 
 // Export for backward compatibility
 export const electricalTheoryContent = electricalTheorySections;
-

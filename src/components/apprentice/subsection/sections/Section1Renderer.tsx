@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { SubsectionProps } from "../types";
 import CourseContentSection from "../../CourseContentSection";
@@ -29,10 +30,11 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
   if (subsectionId === "1.1") {
     console.log("Section1Renderer - Rendering subsection 1.1");
     return (
-      <Subsection1_1 
+      <HealthSafetySubsection
         subsectionId={subsectionId} 
         isCompleted={isCompleted} 
         markAsComplete={markAsComplete}
+        subsectionType="1_1"
       />
     );
   }
@@ -40,10 +42,11 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
   if (subsectionId === "1.2") {
     console.log("Section1Renderer - Rendering subsection 1.2");
     return (
-      <Subsection1_2 
+      <HealthSafetySubsection
         subsectionId={subsectionId}
         isCompleted={isCompleted}
         markAsComplete={markAsComplete}
+        subsectionType="1_2"
       />
     );
   }
@@ -51,10 +54,11 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
   if (subsectionId === "1.3") {
     console.log("Section1Renderer - Rendering subsection 1.3");
     return (
-      <Subsection1_3 
+      <HealthSafetySubsection
         subsectionId={subsectionId}
         isCompleted={isCompleted}
         markAsComplete={markAsComplete}
+        subsectionType="1_3"
       />
     );
   }
@@ -64,10 +68,11 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
   if (subsectionId === "1") {
     console.log("Section1Renderer - Rendering subsection 1.1 via numeric ID 1");
     return (
-      <Subsection1_1 
+      <HealthSafetySubsection
         subsectionId="1.1" 
         isCompleted={isCompleted} 
         markAsComplete={markAsComplete}
+        subsectionType="1_1"
       />
     );
   }
@@ -75,10 +80,11 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
   if (subsectionId === "2") {
     console.log("Section1Renderer - Rendering subsection 1.2 via numeric ID 2");
     return (
-      <Subsection1_2 
+      <HealthSafetySubsection
         subsectionId="1.2"
         isCompleted={isCompleted}
         markAsComplete={markAsComplete}
+        subsectionType="1_2"
       />
     );
   }
@@ -86,10 +92,11 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
   if (subsectionId === "3") {
     console.log("Section1Renderer - Rendering subsection 1.3 via numeric ID 3");
     return (
-      <Subsection1_3 
+      <HealthSafetySubsection
         subsectionId="1.3"
         isCompleted={isCompleted}
         markAsComplete={markAsComplete}
+        subsectionType="1_3"
       />
     );
   }
@@ -257,17 +264,21 @@ const ElectricalTheorySubsection = ({
   );
 };
 
-// Import these only when health and safety content is accessed
-// This is a workaround to avoid reference errors
-const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
+// Component for rendering health & safety subsections with dynamic import
+const HealthSafetySubsection = ({ 
+  subsectionId, 
+  isCompleted, 
+  markAsComplete, 
+  subsectionType 
+}: SubsectionProps & { subsectionType: string }) => {
   // Dynamic import to prevent reference errors
   const [Component, setComponent] = React.useState<React.ComponentType<any> | null>(null);
 
   useEffect(() => {
-    import("../../content/Subsection1_1").then(module => {
+    import(`../../content/Subsection${subsectionType}`).then(module => {
       setComponent(() => module.default);
     });
-  }, []);
+  }, [subsectionType]);
 
   if (!Component) {
     return <p>Loading content...</p>;
@@ -275,3 +286,4 @@ const Subsection1_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
 
   return <Component subsectionId={subsectionId} isCompleted={isCompleted} markAsComplete={markAsComplete} />;
 };
+
