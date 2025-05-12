@@ -1,19 +1,26 @@
 
 import React from "react";
 import SubsectionRenderer from "./SubsectionRenderer";
+import LearningBackButton from "@/components/apprentice/navigation/LearningBackButton";
 
 interface SubsectionLearningContentProps {
   subsectionId: string;
   isCompleted: boolean;
   markAsComplete: () => void;
   isElectricalTheory?: boolean;
+  courseSlug?: string;
+  unitSlug?: string;
+  sectionId?: string;
 }
 
 const SubsectionLearningContent = ({ 
   subsectionId, 
   isCompleted, 
   markAsComplete,
-  isElectricalTheory = false
+  isElectricalTheory = false,
+  courseSlug,
+  unitSlug,
+  sectionId
 }: SubsectionLearningContentProps) => {
   console.log("SubsectionLearningContent - Rendering with ID:", subsectionId);
   console.log("SubsectionLearningContent - Completion status:", isCompleted);
@@ -32,6 +39,19 @@ const SubsectionLearningContent = ({
   
   return (
     <div className="animate-fade-in">
+      {/* Add back button for electrical theory content */}
+      {isElectricalTheory && (
+        <div className="mb-6">
+          <LearningBackButton
+            currentPath="subsection"
+            courseSlug={courseSlug || "level-2-diploma"}
+            unitSlug={unitSlug || "elec2-04"}
+            sectionId={sectionId || "1"}
+            subsectionId={subsectionId}
+          />
+        </div>
+      )}
+      
       <SubsectionRenderer 
         subsectionId={effectiveSubsectionId} 
         isCompleted={isCompleted}

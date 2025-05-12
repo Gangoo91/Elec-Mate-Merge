@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import LearningBackButton from "@/components/apprentice/navigation/LearningBackButton";
 import SubsectionLearningContent from "@/components/apprentice/subsection/SubsectionLearningContent";
 import { useSubsectionContent } from "@/hooks/useSubsectionContent";
-import { legislationSection } from "@/data/electricalTheory/section1-legislation";
 
 const SubsectionContent = () => {
   const { courseSlug = "level-2-diploma", unitSlug = "health-safety", sectionId, subsectionId } = useParams();
@@ -68,18 +67,16 @@ const SubsectionContent = () => {
   
   return (
     <div className="space-y-6 animate-fade-in bg-[#121212] px-4 md:px-6 max-w-4xl mx-auto py-8">
-      {/* Back Button - Only show for non-electrical theory routes */}
-      {!isElectricalTheory && (
-        <div className="w-full">
-          <LearningBackButton
-            currentPath="subsection"
-            courseSlug={effectiveCourseSlug}
-            unitSlug={effectiveUnitSlug}
-            sectionId={sectionId}
-            subsectionId={subsectionId}
-          />
-        </div>
-      )}
+      {/* Back Button */}
+      <div className="w-full">
+        <LearningBackButton
+          currentPath="subsection"
+          courseSlug={effectiveCourseSlug}
+          unitSlug={effectiveUnitSlug}
+          sectionId={sectionId}
+          subsectionId={subsectionId}
+        />
+      </div>
       
       {/* Subsection Title */}
       <div className="border-b border-elec-yellow/20 pb-4">
@@ -96,6 +93,9 @@ const SubsectionContent = () => {
           isCompleted={isCompleted}
           markAsComplete={markAsComplete}
           isElectricalTheory={isElectricalTheory}
+          courseSlug={effectiveCourseSlug}
+          unitSlug={effectiveUnitSlug}
+          sectionId={sectionId}
         />
       )}
     </div>

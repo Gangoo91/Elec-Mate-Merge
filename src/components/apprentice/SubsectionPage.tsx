@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useSubsectionContent } from "@/hooks/useSubsectionContent";
 import SubsectionLearningContent from "./subsection/SubsectionLearningContent";
 import SubsectionsNavigation from "./SubsectionsNavigation";
+import LearningBackButton from "./navigation/LearningBackButton";
 
 const SubsectionPage = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
@@ -15,6 +16,7 @@ const SubsectionPage = () => {
   
   // Use the effective unit slug based on the path
   const effectiveUnitSlug = isElectricalTheory ? "elec2-04" : unitSlug;
+  const effectiveCourseSlug = courseSlug || "level-2-diploma";
   
   console.log("SubsectionPage - Params:", { courseSlug, unitSlug: effectiveUnitSlug, sectionId, subsectionId, path });
   console.log("SubsectionPage - Is Electrical Theory:", isElectricalTheory);
@@ -62,7 +64,16 @@ const SubsectionPage = () => {
       
       <div className="flex-1 overflow-auto">
         <div className="max-w-4xl mx-auto py-5 px-4 md:px-6">
-          {/* No back button here */}
+          {/* Add back button for all subsections */}
+          <div className="mb-5">
+            <LearningBackButton
+              currentPath="subsection"
+              courseSlug={effectiveCourseSlug}
+              unitSlug={effectiveUnitSlug}
+              sectionId={sectionId}
+              subsectionId={subsectionId}
+            />
+          </div>
           
           {subsectionId && (
             <div className="mt-5">
@@ -71,6 +82,9 @@ const SubsectionPage = () => {
                 isCompleted={isCompleted}
                 markAsComplete={markAsComplete}
                 isElectricalTheory={isElectricalTheory}
+                courseSlug={effectiveCourseSlug}
+                unitSlug={effectiveUnitSlug}
+                sectionId={sectionId}
               />
             </div>
           )}
