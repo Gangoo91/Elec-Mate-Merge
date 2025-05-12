@@ -1,22 +1,19 @@
 
-import { BrowserRouter as Router, Routes } from "react-router-dom";
-import { ThemeProvider } from "@/components/theme-provider";
+import { useEffect } from 'react';
+import './App.css';
+import AppRouter from './AppRouter';
 import { Toaster } from "@/components/ui/toaster";
-import { AuthProvider } from "@/contexts/AuthContext";
-import { NotificationProvider } from "@/components/notifications/NotificationProvider";
-import AppRouter from "./AppRouter";
+import { ThemeProvider } from "@/components/theme-provider";
+import TrainingActivityMonitor from '@/components/apprentice/TrainingActivityMonitor';
 
 function App() {
+  // Add any global app initialization here
+  
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <AuthProvider>
-        <NotificationProvider>
-          <Router>
-            <AppRouter />
-            <Toaster />
-          </Router>
-        </NotificationProvider>
-      </AuthProvider>
+    <ThemeProvider defaultTheme="dark" storageKey="elec-ui-theme">
+      <TrainingActivityMonitor />
+      <AppRouter />
+      <Toaster />
     </ThemeProvider>
   );
 }

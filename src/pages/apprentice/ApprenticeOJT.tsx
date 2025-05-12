@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
@@ -10,6 +9,7 @@ import { useTrackMilestones } from "@/hooks/useTrackMilestones";
 import { useLocation } from "react-router-dom";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info } from "lucide-react";
+import TrackingStatusIndicator from "@/components/apprentice/time-tracking/ojt/TrackingStatusIndicator";
 
 const ApprenticeOJT = () => {
   const [weeklyHours, setWeeklyHours] = useState(8);
@@ -61,6 +61,9 @@ const ApprenticeOJT = () => {
     <div className="space-y-6 pb-20 animate-fade-in">
       {/* Only show header on desktop */}
       {!isMobile && <OJTHeader handleDownloadReport={handleDownloadReport} />}
+      
+      {/* Add the training status indicator */}
+      <TrackingStatusIndicator />
       
       {/* Time tracking info banner */}
       <Alert variant="default" className="bg-elec-gray/50 border-elec-yellow/30">
