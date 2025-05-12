@@ -2,7 +2,7 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Clock, AlertTriangle } from "lucide-react";
+import { ArrowLeft, Clock, AlertTriangle, Play } from "lucide-react";
 import UnitQuiz from "@/components/apprentice/UnitQuiz";
 import { healthAndSafetyQuizzes } from "@/data/unitQuizzes";
 import { useToast } from "@/components/ui/use-toast";
@@ -13,7 +13,7 @@ const QuizContent = () => {
   const { courseSlug, unitSlug } = useParams();
   const { toast } = useToast();
   const navigate = useNavigate();
-  const [timeRemaining, setTimeRemaining] = useState<number>(30 * 60); // 30 minutes in seconds
+  const [timeRemaining, setTimeRemaining] = useState<number>(45 * 60); // 45 minutes in seconds
   const [quizStarted, setQuizStarted] = useState(false);
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   
@@ -52,53 +52,96 @@ const QuizContent = () => {
   };
   
   // Calculate progress percentage
-  const timeProgress = 100 - ((timeRemaining / (30 * 60)) * 100);
+  const timeProgress = 100 - ((timeRemaining / (45 * 60)) * 100);
 
   const handleStartQuiz = () => {
     setQuizStarted(true);
     toast({
       title: "Quiz Started",
-      description: "You have 30 minutes to complete this assessment.",
+      description: "You have 45 minutes to complete this assessment.",
     });
   };
 
   const handleQuizComplete = async (score: number, totalQuestions: number) => {
-    // Mark quiz as completed in localStorage
-    localStorage.setItem(`unit_${unitCode}_quiz_completed`, 'true');
-    
-    // Calculate time taken
-    const timeTaken = (30 * 60) - timeRemaining;
-    const minutesTaken = Math.ceil(timeTaken / 60);
-    
-    // Add to off-the-job training record
     try {
-      // In a real implementation, this would save to Supabase
-      // For now, we'll just add to localStorage
-      const existingTime = parseInt(localStorage.getItem(`course_${courseSlug}_todayTime`) || '0');
-      const newTime = existingTime + timeTaken;
-      localStorage.setItem(`course_${courseSlug}_todayTime`, newTime.toString());
+      // Mark quiz as completed in localStorage
+      localStorage.setItem(`unit_${unitCode}_quiz_completed`, 'true');
       
-      // Record quiz attempt in localStorage
-      const attempts = JSON.parse(localStorage.getItem(`unit_${unitCode}_quiz_attempts`) || '[]');
-      attempts.push({
-        date: new Date().toISOString(),
-        score,
-        totalQuestions,
-        timeTaken,
-        percentage: Math.round((score / totalQuestions) * 100)
-      });
-      localStorage.setItem(`unit_${unitCode}_quiz_attempts`, JSON.stringify(attempts));
+      // Calculate time taken
+      const timeTaken = (45 * 60) - timeRemaining;
+      const minutesTaken = Math.ceil(timeTaken / 60);
+      
+      // Add to off-the-job training record
+      try {
+        // First update the localStorage for today's time
+        const existingTime = parseInt(localStorage.getItem(`course_${courseSlug}_todayTime`) || '0');
+        const newTime = existingTime + timeTaken;
+        localStorage.setItem(`course_${courseSlug}_todayTime`, newTime.toString());
+        
+        // Record quiz attempt in localStorage
+        const attempts = JSON.parse(localStorage.getItem(`unit_${unitCode}_quiz_attempts`) || '[]');
+        attempts.push({
+          date: new Date().toISOString(),
+          score,
+          totalQuestions,
+          timeTaken,
+          percentage: Math.round((score / totalQuestions) * 100)
+        });
+        localStorage.setItem(`unit_${unitCode}_quiz_attempts`, JSON.stringify(attempts));
+        
+        // Try to save to Supabase if user is logged in
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (user) {
+          const { error } = await supabase
+            .from('quiz_attempts')
+            .insert({
+              user_id: user.id,
+              unit_code: unitCode,
+              score: score,
+              total_questions: totalQuestions,
+              percentage: Math.round((score / totalQuestions) * 100),
+              time_taken: timeTaken
+            });
+            
+          if (error) {
+            console.error('Error saving quiz attempt to Supabase:', error);
+            // Still show success toast as we've saved to localStorage
+            toast({
+              title: "Quiz Results Saved Locally",
+              description: `You scored ${score} out of ${totalQuestions}. ${minutesTaken} minutes has been added to your off-the-job training.`,
+            });
+          } else {
+            toast({
+              title: "Quiz Completed",
+              description: `You scored ${score} out of ${totalQuestions}. ${minutesTaken} minutes has been added to your off-the-job training.`,
+            });
+          }
+        } else {
+          // User not logged in, show local save toast
+          toast({
+            title: "Quiz Results Saved Locally",
+            description: `You scored ${score} out of ${totalQuestions}. ${minutesTaken} minutes has been added to your off-the-job training.`,
+          });
+        }
+      } catch (error) {
+        console.error("Error saving quiz result:", error);
+        // Fallback toast
+        toast({
+          title: "Quiz Completed",
+          description: `You scored ${score} out of ${totalQuestions}.`,
+        });
+      }
+      
+      setQuizSubmitted(true);
     } catch (error) {
-      console.error("Error saving quiz result:", error);
+      console.error("Error in handleQuizComplete:", error);
+      toast({
+        title: "Failed to save results",
+        description: "There was a problem saving your quiz results. Please try again.",
+        variant: "destructive"
+      });
     }
-    
-    // Show toast
-    toast({
-      title: "Quiz Completed",
-      description: `You scored ${score} out of ${totalQuestions}. ${minutesTaken} minutes has been added to your off-the-job training.`,
-    });
-    
-    setQuizSubmitted(true);
   };
 
   return (
@@ -127,12 +170,12 @@ const QuizContent = () => {
           <div className="space-y-6 p-4 border border-elec-yellow/20 rounded-lg">
             <div className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-elec-yellow" />
-              <h3 className="font-semibold">Timed Assessment - 30 Minutes</h3>
+              <h3 className="font-semibold">Timed Assessment - 45 Minutes</h3>
             </div>
             
             <div className="space-y-4">
               <p>This quiz consists of 30 questions randomly selected from a large question pool.</p>
-              <p>Once started, you'll have 30 minutes to complete the quiz. Your results will be recorded as part of your off-the-job training hours.</p>
+              <p>Once started, you'll have 45 minutes to complete the quiz. Your results will be recorded as part of your off-the-job training hours.</p>
               <div className="flex items-start gap-3 bg-amber-950/30 p-4 rounded-lg border border-amber-500/30">
                 <AlertTriangle className="h-5 w-5 text-amber-500 mt-0.5" />
                 <div>
@@ -144,8 +187,9 @@ const QuizContent = () => {
             
             <Button 
               onClick={handleStartQuiz}
-              className="bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark"
+              className="bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark flex items-center gap-2"
             >
+              <Play className="h-4 w-4" />
               Start Quiz
             </Button>
           </div>
@@ -162,7 +206,11 @@ const QuizContent = () => {
                   {formatTime(timeRemaining)}
                 </span>
               </div>
-              <Progress value={timeProgress} className="h-2" />
+              <Progress 
+                value={timeProgress} 
+                className="h-2" 
+                indicatorClassName={timeRemaining < 300 ? "bg-red-500" : "bg-elec-yellow"} 
+              />
             </div>
             
             <div className="mt-6">
@@ -171,7 +219,7 @@ const QuizContent = () => {
                 questions={healthAndSafetyQuizzes.questions}
                 onQuizComplete={handleQuizComplete}
                 questionCount={30}
-                timeLimit={30 * 60}
+                timeLimit={45 * 60}
                 currentTime={timeRemaining}
                 isSubmitted={quizSubmitted}
               />
