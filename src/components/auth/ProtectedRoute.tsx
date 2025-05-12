@@ -65,6 +65,6 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   // Render the protected content if authenticated and can access
   return <>{children}</>;
   */
-</ProtectedRoute>
+};
 
 export default ProtectedRoute;
