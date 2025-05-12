@@ -39,16 +39,6 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
 
   return (
     <div className="space-y-6 animate-fade-in">
-      {/* Add Back Button */}
-      <Button 
-        variant="outline" 
-        className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-        onClick={handleBackClick}
-      >
-        <ArrowLeft className="mr-2 h-4 w-4" />
-        Back
-      </Button>
-
       <h2 className="text-2xl font-bold">Electrical Installation Theory and Technology</h2>
       <p className="text-muted-foreground mb-6">
         This unit covers the essential theories, regulations, and technical information related to electrical installations.
