@@ -63,14 +63,7 @@ const SubsectionPage = () => {
       
       <div className="flex-1 overflow-auto">
         <div className="max-w-4xl mx-auto py-5 px-4 md:px-6">
-          <Button
-            variant="outline" 
-            className="mb-4 border-elec-yellow/30 hover:bg-elec-yellow/10"
-            onClick={handleBackToSection}
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Section
-          </Button>
+          {/* We've removed the top back button here */}
           
           {subsectionId && (
             <div className="mt-5">
