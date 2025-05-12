@@ -25,26 +25,29 @@ const LearningBackButton = ({
   
   // Default values for navigation
   const effectiveCourseSlug = courseSlug || "level-2-diploma";
+  
   // Check if we're in the electrical theory unit
+  const path = window.location.pathname;
+  const isElectricalTheory = path.includes("/elec2-04") || path.includes("/electrical-theory");
+  
+  // Set effective unit slug based on path
   let effectiveUnitSlug = unitSlug;
-  if (!effectiveUnitSlug) {
-    // Detect if we're on an electrical theory page
-    const path = window.location.pathname;
-    if (path.includes("/elec2-04") || path.includes("/electrical-theory")) {
-      effectiveUnitSlug = "elec2-04";
-    } else {
-      effectiveUnitSlug = "health-safety";
-    }
+  if (isElectricalTheory) {
+    effectiveUnitSlug = "elec2-04";
+  } else if (!effectiveUnitSlug) {
+    effectiveUnitSlug = "health-safety";
   }
 
   const handleBackClick = () => {
     console.log("LearningBackButton: navigating from", { currentPath, courseSlug, unitSlug, sectionId, subsectionId });
-    console.log("Using effective values:", { effectiveCourseSlug, effectiveUnitSlug });
+    console.log("Using effective values:", { effectiveCourseSlug, effectiveUnitSlug, isElectricalTheory });
     
     switch (currentPath) {
       case 'subsection':
-        // From subsection → section (correct route for unit sections)
-        navigate(`/apprentice/study/eal/${effectiveCourseSlug}/unit/${effectiveUnitSlug}/section/${sectionId}`);
+        // From subsection → section (with special handling for electrical theory)
+        const sectionPath = `/apprentice/study/eal/${effectiveCourseSlug}/unit/${effectiveUnitSlug}/section/${sectionId}`;
+        console.log("Navigating to section:", sectionPath);
+        navigate(sectionPath);
         break;
       case 'section':
         // From section → unit

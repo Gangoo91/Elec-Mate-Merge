@@ -6,6 +6,7 @@ import SubsectionLearningContent from "./subsection/SubsectionLearningContent";
 import SubsectionsNavigation from "./SubsectionsNavigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import LearningBackButton from "./navigation/LearningBackButton";
 
 const SubsectionPage = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
@@ -41,7 +42,7 @@ const SubsectionPage = () => {
     console.log("SubsectionPage - Current subsectionData:", subsectionData);
   }, [subsectionId, subsectionData]);
 
-  // Custom back button for electrical theory subsections
+  // Handle back navigation to section page
   const handleBackToSection = () => {
     if (isElectricalTheory && sectionId) {
       navigate(`/apprentice/study/eal/level-2-diploma/unit/elec2-04/section/${sectionId}`);

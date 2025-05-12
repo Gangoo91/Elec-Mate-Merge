@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, ArrowLeft } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 
 interface ElectricalTheorySubsectionProps {
@@ -24,10 +24,12 @@ const ElectricalTheorySubsection = ({
   const navigate = useNavigate();
   const { sectionId } = useParams();
 
-  // Handle back to section navigation
+  // Handle back to section navigation - fixed the navigation path
   const handleBackToSection = () => {
-    // Navigate directly to the electrical theory section page with the correct unit and section ID
-    navigate(`/apprentice/study/eal/level-2-diploma/unit/elec2-04/section/${sectionId || '1'}`);
+    // Navigate directly to the electrical theory section page with the correct path
+    const path = `/apprentice/study/eal/level-2-diploma/unit/elec2-04/section/${sectionId || '1'}`;
+    console.log("Navigating to:", path);
+    navigate(path);
   };
   
   return (
@@ -38,6 +40,7 @@ const ElectricalTheorySubsection = ({
           onClick={handleBackToSection}
           className="self-start border-elec-yellow/30 hover:bg-elec-yellow/10"
         >
+          <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Section
         </Button>
         <h1 className="text-xl md:text-2xl font-bold text-elec-yellow">{title}</h1>
