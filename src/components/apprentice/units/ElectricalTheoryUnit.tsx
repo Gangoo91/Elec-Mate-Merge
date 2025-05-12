@@ -1,8 +1,9 @@
 
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { CheckCircle, BookOpen, Shield, Cable, Lightbulb, CircuitBoard, FileText, Info, ShieldAlert } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CheckCircle, BookOpen, Shield, Cable, Lightbulb, CircuitBoard, FileText, Info, ShieldAlert, ArrowLeft } from "lucide-react";
 
 interface ElectricalTheoryUnitProps {
   unitCode: string;
@@ -12,6 +13,7 @@ interface ElectricalTheoryUnitProps {
 const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUnitProps) => {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const { courseSlug } = useParams();
+  const navigate = useNavigate();
   
   // Load completion status
   useEffect(() => {
@@ -26,6 +28,10 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
     onResourceClick('learning');
   };
 
+  const handleBackClick = () => {
+    navigate(-1); // Go back one step in history
+  };
+
   // Create a URL slug from a section number and title
   const createSectionSlug = (sectionNumber: string) => {
     return sectionNumber.toLowerCase().replace(/\//g, "-");
@@ -33,6 +39,16 @@ const ElectricalTheoryUnit = ({ unitCode, onResourceClick }: ElectricalTheoryUni
 
   return (
     <div className="space-y-6 animate-fade-in">
+      {/* Add Back Button */}
+      <Button 
+        variant="outline" 
+        className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+        onClick={handleBackClick}
+      >
+        <ArrowLeft className="mr-2 h-4 w-4" />
+        Back
+      </Button>
+
       <h2 className="text-2xl font-bold">Electrical Installation Theory and Technology</h2>
       <p className="text-muted-foreground mb-6">
         This unit covers the essential theories, regulations, and technical information related to electrical installations.
