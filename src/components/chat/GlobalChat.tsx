@@ -9,12 +9,11 @@ import TopContributors from "@/components/chat/TopContributors";
 import { Card } from "@/components/ui/card";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useNavigate } from "react-router-dom";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const GlobalChat = () => {
   const [isComposerOpen, setIsComposerOpen] = useState(false);
   const isMobile = useIsMobile();
-  const navigate = useNavigate();
   
   const {
     messages,
@@ -48,7 +47,7 @@ const GlobalChat = () => {
         />
       </div>
       
-      <div className="p-4 pb-0">
+      <div className="sticky top-16 z-10 bg-black px-4 pt-4 pb-2">
         <Tabs 
           defaultValue={activeCategory} 
           onValueChange={(value) => setActiveCategory(value as any)}
@@ -66,13 +65,13 @@ const GlobalChat = () => {
             ))}
           </TabsList>
           
-          <div className="mt-4 mb-2">
+          <div className="mt-4">
             <ChatSearchBar />
           </div>
         </Tabs>
       </div>
       
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden mt-2">
         <div className="flex-1 overflow-y-auto pb-24">
           <ChatMessageFeed
             messages={messages}
@@ -88,7 +87,7 @@ const GlobalChat = () => {
         
         {!isMobile && (
           <div className="hidden lg:block w-80 p-4 border-l border-yellow-500/20">
-            <Card className="bg-zinc-900 border-yellow-500/20 p-4 rounded-lg">
+            <Card className="bg-zinc-900 border-yellow-500/20 p-4 rounded-lg sticky top-32">
               <TopContributors />
             </Card>
           </div>

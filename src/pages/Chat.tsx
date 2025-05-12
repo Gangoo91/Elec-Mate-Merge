@@ -1,11 +1,8 @@
 
 import GlobalChat from "@/components/chat/GlobalChat";
-import { useIsMobile } from "@/hooks/use-mobile";
 import { motion } from "framer-motion";
 
 const ChatPage = () => {
-  const isMobile = useIsMobile();
-  
   return (
     <motion.div 
       className="animate-fade-in min-h-[calc(100vh-64px)]"
@@ -14,7 +11,7 @@ const ChatPage = () => {
       transition={{ duration: 0.3 }}
     >
       <div className="h-full">
-        <div className="bg-black min-h-[calc(100vh-64px)] overflow-hidden">
+        <div className="bg-black min-h-[calc(100vh-64px)]">
           <GlobalChat />
         </div>
       </div>
