@@ -4,14 +4,39 @@ import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import { ProjectTimeEntry } from "@/types/project";
 import { format } from "date-fns";
+import { 
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useState } from "react";
 
 type TimeEntriesTableProps = {
   timeEntries: ProjectTimeEntry[];
   onDeleteTimeEntry: (id: string) => void;
+  onDeleteAllTimeEntries?: () => void;
 };
 
-export const TimeEntriesTable = ({ timeEntries, onDeleteTimeEntry }: TimeEntriesTableProps) => {
+export const TimeEntriesTable = ({ 
+  timeEntries, 
+  onDeleteTimeEntry,
+  onDeleteAllTimeEntries 
+}: TimeEntriesTableProps) => {
+  const [alertOpen, setAlertOpen] = useState(false);
   const totalHours = timeEntries.reduce((sum, entry) => sum + entry.hours, 0);
+
+  const handleDeleteAll = () => {
+    if (onDeleteAllTimeEntries) {
+      onDeleteAllTimeEntries();
+      setAlertOpen(false);
+    }
+  };
 
   if (timeEntries.length === 0) {
     return (
@@ -24,6 +49,39 @@ export const TimeEntriesTable = ({ timeEntries, onDeleteTimeEntry }: TimeEntries
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardContent className="pt-6">
+        <div className="flex justify-end mb-4">
+          <AlertDialog open={alertOpen} onOpenChange={setAlertOpen}>
+            <AlertDialogTrigger asChild>
+              <Button 
+                variant="destructive" 
+                size="sm" 
+                className="text-xs flex items-center gap-1"
+              >
+                <Trash2 className="h-3 w-3" /> Delete All
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent className="bg-elec-dark border-elec-yellow/20">
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete all time entries?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. All time entries for this project will be permanently deleted.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className="bg-elec-gray text-white hover:bg-elec-gray/80">
+                  Cancel
+                </AlertDialogCancel>
+                <AlertDialogAction 
+                  onClick={handleDeleteAll} 
+                  className="bg-red-600 text-white hover:bg-red-700"
+                >
+                  Delete All
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </div>
+        
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="border-b border-elec-yellow/20">

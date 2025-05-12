@@ -5,6 +5,7 @@ import { MaterialsForm } from "./materials/MaterialsForm";
 import { MaterialsTable } from "./materials/MaterialsTable";
 import { TimeEntryForm } from "./time/TimeEntryForm";
 import { TimeEntriesTable } from "./time/TimeEntriesTable";
+import { useToast } from "@/components/ui/use-toast";
 
 type ProjectDetailsTabsProps = {
   project: Project;
@@ -12,6 +13,7 @@ type ProjectDetailsTabsProps = {
   onDeleteMaterial: (id: string) => void;
   onAddTimeEntry: (entry: ProjectTimeEntry) => void;
   onDeleteTimeEntry: (id: string) => void;
+  onDeleteAllTimeEntries?: () => void;
 };
 
 export const ProjectDetailsTabs = ({ 
@@ -19,10 +21,22 @@ export const ProjectDetailsTabs = ({
   onAddMaterial,
   onDeleteMaterial,
   onAddTimeEntry,
-  onDeleteTimeEntry
+  onDeleteTimeEntry,
+  onDeleteAllTimeEntries
 }: ProjectDetailsTabsProps) => {
+  const { toast } = useToast();
   const totalMaterialsCost = project.materials.reduce((sum, item) => sum + item.total, 0);
   const totalHours = project.timeEntries.reduce((sum, entry) => sum + entry.hours, 0);
+
+  const handleDeleteAllTimeEntries = () => {
+    if (onDeleteAllTimeEntries) {
+      onDeleteAllTimeEntries();
+      toast({
+        title: "Time entries deleted",
+        description: "All time entries have been deleted from this project.",
+      });
+    }
+  };
 
   return (
     <Tabs defaultValue="materials" className="w-full">
@@ -49,7 +63,8 @@ export const ProjectDetailsTabs = ({
         <TimeEntryForm onAddTimeEntry={onAddTimeEntry} />
         <TimeEntriesTable 
           timeEntries={project.timeEntries} 
-          onDeleteTimeEntry={onDeleteTimeEntry} 
+          onDeleteTimeEntry={onDeleteTimeEntry}
+          onDeleteAllTimeEntries={handleDeleteAllTimeEntries}
         />
       </TabsContent>
     </Tabs>

@@ -13,6 +13,7 @@ const DigitalLogbook = () => {
     addTimeEntry,
     handleSaveEntry,
     handleDeleteEntry,
+    handleClearAllEntries,
     hasEntries
   } = useLogbookEntries();
 
@@ -23,6 +24,7 @@ const DigitalLogbook = () => {
         setFilterMonth={setFilterMonth}
         months={months}
         onAddEntry={addTimeEntry}
+        onClearAllEntries={hasEntries ? handleClearAllEntries : undefined}
       />
 
       {!hasEntries ? (

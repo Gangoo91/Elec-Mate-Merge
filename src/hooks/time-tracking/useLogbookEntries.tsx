@@ -47,6 +47,17 @@ export const useLogbookEntries = () => {
       variant: "destructive"
     });
   };
+  
+  const handleClearAllEntries = () => {
+    // In a real implementation, this would delete all entries for the current filter
+    toast({
+      title: "Entries cleared",
+      description: filterMonth === "all" 
+        ? "All time entries have been deleted." 
+        : `All entries for ${filterMonth} have been deleted.`,
+      variant: "destructive"
+    });
+  };
 
   return {
     months,
@@ -56,6 +67,7 @@ export const useLogbookEntries = () => {
     addTimeEntry,
     handleSaveEntry,
     handleDeleteEntry,
+    handleClearAllEntries,
     hasEntries: Object.keys(entriesByDate).length > 0
   };
 };
