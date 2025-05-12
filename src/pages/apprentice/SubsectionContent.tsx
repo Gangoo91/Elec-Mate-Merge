@@ -17,8 +17,11 @@ const SubsectionContent = () => {
   const effectiveCourseSlug = courseSlug || 'level-2-diploma';
   const effectiveUnitSlug = unitSlug || 'health-safety';
   
-  // Check if we're on the electrical theory unit
-  const isElectricalTheory = effectiveUnitSlug === 'elec2-04';
+  // Check if we're on the electrical theory unit - check both the unitSlug and the URL path
+  const path = window.location.pathname;
+  const isElectricalTheory = effectiveUnitSlug === 'elec2-04' || path.includes('/elec2-04') || path.includes('/electrical-theory');
+  
+  console.log("SubsectionContent - isElectricalTheory:", isElectricalTheory, "Path:", path);
   
   const {
     subsectionData,
@@ -45,16 +48,18 @@ const SubsectionContent = () => {
   // Check local storage for completion status
   useEffect(() => {
     if (sectionId && subsectionId) {
-      const storageKey = `completion_hs_${sectionId}_${subsectionId}`;
+      const prefix = isElectricalTheory ? 'elec' : 'hs';
+      const storageKey = `completion_${prefix}_${sectionId}_${subsectionId}`;
       const storedCompletion = localStorage.getItem(storageKey);
       setIsCompleted(storedCompletion === 'true');
       console.log("Checking completion status:", storageKey, storedCompletion);
     }
-  }, [sectionId, subsectionId]);
+  }, [sectionId, subsectionId, isElectricalTheory]);
   
   const markAsComplete = () => {
     if (sectionId && subsectionId) {
-      const storageKey = `completion_hs_${sectionId}_${subsectionId}`;
+      const prefix = isElectricalTheory ? 'elec' : 'hs';
+      const storageKey = `completion_${prefix}_${sectionId}_${subsectionId}`;
       localStorage.setItem(storageKey, 'true');
       setIsCompleted(true);
       console.log("Marked as complete:", storageKey);
@@ -90,6 +95,7 @@ const SubsectionContent = () => {
           subsectionId={subsectionId}
           isCompleted={isCompleted}
           markAsComplete={markAsComplete}
+          isElectricalTheory={isElectricalTheory}
         />
       )}
     </div>

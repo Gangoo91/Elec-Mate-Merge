@@ -42,12 +42,14 @@ const SubsectionPage = () => {
     // Use correct title for electrical theory subsection 1.1
     displaySectionTitle = "Legislation & Regulations";
     displaySubsectionTitle = "Health and Safety at Work Act 1974";
+    console.log("SubsectionPage - Overriding title for electrical theory subsection 1.1");
   }
 
   useEffect(() => {
     console.log("SubsectionPage - Current subsectionId:", subsectionId);
     console.log("SubsectionPage - Current subsectionData:", subsectionData);
-  }, [subsectionId, subsectionData]);
+    console.log("SubsectionPage - Using titles:", { displaySectionTitle, displaySubsectionTitle });
+  }, [subsectionId, subsectionData, displaySectionTitle, displaySubsectionTitle]);
 
   return (
     <div className="flex flex-col flex-1">
@@ -68,6 +70,7 @@ const SubsectionPage = () => {
                 subsectionId={subsectionId}
                 isCompleted={isCompleted}
                 markAsComplete={markAsComplete}
+                isElectricalTheory={isElectricalTheory}
               />
             </div>
           )}

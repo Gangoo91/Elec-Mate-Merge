@@ -5,7 +5,7 @@ import HealthSafetySubsection from "./health-safety/HealthSafetySubsection";
 import { renderElectricalTheorySection1 } from "./electrical-theory/ElectricalTheoryContent";
 import ElectricalTheorySection from "@/components/apprentice/section/ElectricalTheorySection";
 
-export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
+export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete, isElectricalTheory: propIsElectricalTheory }: SubsectionProps) => {
   useEffect(() => {
     console.log("Section1Renderer - Effect with ID:", subsectionId, "isCompleted:", isCompleted);
   }, [subsectionId, isCompleted]);
@@ -18,7 +18,8 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete }: Su
   const unitSlug = unitMatch ? unitMatch[1] : null;
   
   // Determine if we're in the electrical theory unit
-  const isElectricalTheory = unitSlug === 'elec2-04' || urlPath.includes('electrical-theory');
+  // Check both the prop and the URL to be sure
+  const isElectricalTheory = propIsElectricalTheory || unitSlug === 'elec2-04' || urlPath.includes('electrical-theory') || urlPath.includes('/elec2-04');
   
   console.log("Section1Renderer - Is Electrical Theory:", isElectricalTheory, "Unit:", unitSlug);
   

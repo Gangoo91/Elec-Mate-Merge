@@ -6,15 +6,18 @@ interface SubsectionLearningContentProps {
   subsectionId: string;
   isCompleted: boolean;
   markAsComplete: () => void;
+  isElectricalTheory?: boolean;
 }
 
 const SubsectionLearningContent = ({ 
   subsectionId, 
   isCompleted, 
-  markAsComplete 
+  markAsComplete,
+  isElectricalTheory = false
 }: SubsectionLearningContentProps) => {
   console.log("SubsectionLearningContent - Rendering with ID:", subsectionId);
   console.log("SubsectionLearningContent - Completion status:", isCompleted);
+  console.log("SubsectionLearningContent - Is Electrical Theory:", isElectricalTheory);
   
   // If subsectionId is numeric only (like "1") and we're in section 6, convert it to "6.1" format
   let effectiveSubsectionId = subsectionId;
@@ -33,6 +36,7 @@ const SubsectionLearningContent = ({
         subsectionId={effectiveSubsectionId} 
         isCompleted={isCompleted}
         markAsComplete={markAsComplete}
+        isElectricalTheory={isElectricalTheory}
       />
     </div>
   );

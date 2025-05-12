@@ -1,7 +1,4 @@
 
-import React, { useEffect } from "react";
-import { SubsectionProps } from "../content/subsection1_1/types";
-import { isSubsectionInSection, isSubsectionInRange } from "./utils/sectionUtils";
 import { renderSection1 } from "./sections/Section1Renderer";
 import { renderSection2 } from "./sections/Section2Renderer";
 import { renderSection3 } from "./sections/Section3Renderer";
@@ -9,102 +6,67 @@ import { renderSection4 } from "./sections/Section4Renderer";
 import { renderSection5 } from "./sections/Section5Renderer";
 import { renderSection6To10 } from "./sections/Section6To10Renderer";
 
-const SubsectionRenderer = ({ subsectionId, isCompleted, markAsComplete }: SubsectionProps) => {
-  useEffect(() => {
-    console.log("SubsectionRenderer mounted with ID:", subsectionId, "isCompleted:", isCompleted);
-  }, [subsectionId, isCompleted]);
-  
+interface SubsectionRendererProps {
+  subsectionId: string;
+  isCompleted: boolean;
+  markAsComplete: () => void;
+  isElectricalTheory?: boolean;
+}
+
+const SubsectionRenderer = ({ 
+  subsectionId, 
+  isCompleted, 
+  markAsComplete,
+  isElectricalTheory = false
+}: SubsectionRendererProps) => {
   console.log("SubsectionRenderer called with ID:", subsectionId);
   
-  // Extract section part from the URL if available
+  // Get section part from subsectionId
+  let sectionPart: string = "1";
+  let sectionFromUrl: string | null = null;
+  
+  // Check URL for section ID
   const urlPath = window.location.pathname;
   const sectionMatch = urlPath.match(/\/section\/(\d+)/);
-  const sectionFromUrl = sectionMatch ? sectionMatch[1] : null;
-  
-  console.log("Section from URL:", sectionFromUrl);
-  
-  // If we have a section from URL and simple numeric subsectionId, use section from URL
-  if (sectionFromUrl && /^\d+$/.test(subsectionId)) {
-    const sectionNumber = parseInt(sectionFromUrl);
-    console.log(`Routing subsection ${subsectionId} to section ${sectionNumber} based on URL`);
-    
-    switch (sectionNumber) {
-      case 1:
-        return renderSection1({ subsectionId, isCompleted, markAsComplete });
-      case 2:
-        return renderSection2({ subsectionId, isCompleted, markAsComplete });
-      case 3:
-        return renderSection3({ subsectionId, isCompleted, markAsComplete });
-      case 4:
-        return renderSection4({ subsectionId, isCompleted, markAsComplete });
-      case 5:
-        return renderSection5({ subsectionId, isCompleted, markAsComplete });
-      case 6:
-      case 7:
-      case 8:
-      case 9:
-      case 10:
-        return renderSection6To10({ subsectionId, isCompleted, markAsComplete });
-      default:
-        return <p>Content for section {sectionNumber}, subsection {subsectionId} is not yet available.</p>;
-    }
+  if (sectionMatch) {
+    sectionFromUrl = sectionMatch[1];
+    console.log("Section from URL:", sectionFromUrl);
   }
   
-  // Handle subsections with explicit section format (e.g., "1.1", "1.2", etc.)
+  // For subsections with dot notation (e.g., "1.1")
   if (subsectionId.includes(".")) {
-    const sectionPart = subsectionId.split(".")[0];
-    
+    sectionPart = subsectionId.split(".")[0];
     console.log("Processing subsection with dot notation. Section part:", sectionPart);
-    switch (sectionPart) {
-      case "1":
-        console.log("Rendering Section 1 content for", subsectionId);
-        return renderSection1({ subsectionId, isCompleted, markAsComplete });
-      case "2":
-        return renderSection2({ subsectionId, isCompleted, markAsComplete });
-      case "3":
-        return renderSection3({ subsectionId, isCompleted, markAsComplete });
-      case "4":
-        return renderSection4({ subsectionId, isCompleted, markAsComplete });
-      case "5":
-        return renderSection5({ subsectionId, isCompleted, markAsComplete });
-      case "6":
-      case "7":
-      case "8":
-      case "9":
-      case "10":
-        return renderSection6To10({ subsectionId, isCompleted, markAsComplete });
-      default:
-        return <p>Content for subsection {subsectionId} is not yet available.</p>;
-    }
+  } 
+  // For simple numeric subsections (e.g., "1")
+  else if (sectionFromUrl) {
+    sectionPart = sectionFromUrl;
+    console.log("Processing simple numeric subsection with section from URL:", sectionPart);
   }
   
-  // Use the section utility functions as a fallback
-  if (isSubsectionInSection(subsectionId, 1)) {
-    return renderSection1({ subsectionId, isCompleted, markAsComplete });
-  }
+  // Render content based on section part
+  console.log("Rendering Section", sectionPart, "content for", subsectionId);
   
-  if (isSubsectionInSection(subsectionId, 2)) {
-    return renderSection2({ subsectionId, isCompleted, markAsComplete });
+  switch (sectionPart) {
+    case "1":
+      return renderSection1({ subsectionId, isCompleted, markAsComplete, isElectricalTheory });
+    case "2":
+      return renderSection2({ subsectionId, isCompleted, markAsComplete });
+    case "3":
+      return renderSection3({ subsectionId, isCompleted, markAsComplete });
+    case "4":
+      return renderSection4({ subsectionId, isCompleted, markAsComplete });
+    case "5":
+      return renderSection5({ subsectionId, isCompleted, markAsComplete });
+    case "6":
+    case "7": 
+    case "8":
+    case "9":
+    case "10":
+      return renderSection6To10({ subsectionId, isCompleted, markAsComplete });
+    default:
+      return <div>Content for section {sectionPart} is not available.</div>;
   }
-  
-  if (isSubsectionInSection(subsectionId, 3)) {
-    return renderSection3({ subsectionId, isCompleted, markAsComplete });
-  }
-  
-  if (isSubsectionInSection(subsectionId, 4)) {
-    return renderSection4({ subsectionId, isCompleted, markAsComplete });
-  }
-  
-  if (isSubsectionInSection(subsectionId, 5)) {
-    return renderSection5({ subsectionId, isCompleted, markAsComplete });
-  }
-  
-  if (isSubsectionInRange(subsectionId, 6, 10)) {
-    return renderSection6To10({ subsectionId, isCompleted, markAsComplete });
-  }
-
-  // Default fallback
-  return <p>Content for subsection {subsectionId} is not yet available.</p>;
 };
 
 export default SubsectionRenderer;

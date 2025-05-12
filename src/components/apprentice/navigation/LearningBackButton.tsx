@@ -30,6 +30,12 @@ const LearningBackButton = ({
   const path = window.location.pathname;
   const isElectricalTheory = path.includes("/elec2-04") || path.includes("/electrical-theory");
   
+  // Skip rendering for electrical theory subsections
+  if (isElectricalTheory && currentPath === 'subsection') {
+    console.log("LearningBackButton - Not rendering for electrical theory subsection");
+    return null;
+  }
+  
   // Set effective unit slug based on path
   let effectiveUnitSlug = unitSlug;
   if (isElectricalTheory) {
