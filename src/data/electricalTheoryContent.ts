@@ -1,6 +1,6 @@
 
 import { electricalTheorySections } from './electricalTheory';
-import type { SectionData } from './healthAndSafety/types';
+import type { SectionData } from './courseTypes';
 
 // Export sections with legacy export name for backward compatibility
 export const electricalTheoryContent = electricalTheorySections;

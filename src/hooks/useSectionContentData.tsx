@@ -1,7 +1,8 @@
 
 import { useState, useEffect } from "react";
 import { getHealthSafetySectionById } from "@/data/healthAndSafety/index";
-import type { SectionData } from "@/data/healthAndSafety/types";
+import { electricalTheorySections } from "@/data/electricalTheory";
+import type { SectionData } from "@/data/courseTypes";
 
 interface UseSectionContentDataProps {
   courseSlug: string;
@@ -43,8 +44,17 @@ export function useSectionContentData({
       const completionStatus = localStorage.getItem(quizCompletionKey);
       setIsCompleted(completionStatus === 'true');
     } else if (sectionId) {
-      // Load section data from health & safety content
-      const section = getHealthSafetySectionById(sectionId);
+      let section = null;
+      
+      // Check which unit we're in and fetch the appropriate content
+      if (unitSlug === 'elec2-04' || unitSlug === 'electrical-theory') {
+        // Fetch from electrical theory content
+        section = electricalTheorySections.find(s => s.sectionNumber === sectionId);
+      } else {
+        // Default to health & safety content
+        section = getHealthSafetySectionById(sectionId);
+      }
+      
       if (section) {
         setSectionData(section);
         
