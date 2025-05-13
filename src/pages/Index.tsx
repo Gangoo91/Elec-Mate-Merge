@@ -9,7 +9,7 @@ const Index = () => {
     <div className="container mx-auto py-10 px-4 min-h-screen flex flex-col items-center justify-center">
       <Card className="w-full max-w-3xl border-elec-yellow/20 mb-8">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold">Welcome to Electrician App</CardTitle>
+          <CardTitle className="text-3xl font-bold">Welcome to Elec-Mate</CardTitle>
           <CardDescription>
             Access your tools and resources from the dashboard
           </CardDescription>

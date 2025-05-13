@@ -1,7 +1,8 @@
+
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { BookOpen, Wrench, MessageSquare, Sparkles, Brain, Heart, Trophy } from 'lucide-react';
+import { BookOpen, Wrench, MessageSquare, Sparkles, Brain, Heart } from 'lucide-react';
 import MilestonesDisplay from '@/components/apprentice/MilestonesDisplay';
 
 const LandingPage = () => {
@@ -45,7 +46,7 @@ const LandingPage = () => {
         </div>
       </div>
       
-      {/* New Features Section */}
+      {/* Features Section */}
       <div className="py-12 bg-elec-gray border-t border-elec-yellow/30">
         <div className="max-w-6xl mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-bold text-center text-elec-yellow mb-10">
