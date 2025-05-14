@@ -22,7 +22,7 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete, isEl
   // Check both the prop and the URL to be sure
   const isElectricalTheory = propIsElectricalTheory || unitSlug === 'elec2-04' || urlPath.includes('electrical-theory') || urlPath.includes('/elec2-04');
   
-  console.log("Section1Renderer - Is Electrical Theory:", isElectricalTheory, "Unit:", unitSlug);
+  console.log("Section1Renderer - Is Electrical Theory:", isElectricalTheory, "Unit:", unitSlug, "Path:", urlPath);
   
   // Handle electrical theory content
   if (isElectricalTheory) {
@@ -49,7 +49,7 @@ export const renderSection1 = ({ subsectionId, isCompleted, markAsComplete, isEl
   // Original health & safety content (kept for backward compatibility)
   // Handle dot notation format (e.g., "1.1", "1.2", "1.3")
   const renderHealthSafetyContent = (id: string, type: string) => {
-    console.log("Section1Renderer - Rendering health & safety content with type:", type);
+    console.log("Section1Renderer - Rendering health & safety content with type:", type, "and id:", id);
     return (
       <Card className="border-elec-yellow/20 bg-transparent shadow-none">
         <CardContent className="p-0">
