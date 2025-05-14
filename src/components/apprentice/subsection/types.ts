@@ -4,7 +4,4 @@ export interface SubsectionProps {
   isCompleted: boolean;
   markAsComplete: () => void;
   isElectricalTheory?: boolean;
-  courseSlug?: string;
-  unitSlug?: string;
-  sectionId?: string;
 }
