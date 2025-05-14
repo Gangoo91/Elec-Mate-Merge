@@ -1,11 +1,11 @@
 
-import { toast as sonnerToast, Toast, ToastOptions } from "sonner";
+import { toast as sonnerToast, type ToasterProps } from "sonner";
 
-type ToastProps = ToastOptions & {
+type ToastProps = {
   title?: string;
   description?: string;
   variant?: "default" | "destructive" | "success";
-};
+} & ToasterProps;
 
 const toast = ({ title, description, variant = "default", ...props }: ToastProps) => {
   const styles = {
@@ -26,7 +26,10 @@ const toast = ({ title, description, variant = "default", ...props }: ToastProps
 };
 
 const useToast = () => {
-  return { toast };
+  return {
+    toast,
+    toasts: [] // Adding this to match the expected interface in toaster.tsx
+  };
 };
 
 export { useToast, toast };
