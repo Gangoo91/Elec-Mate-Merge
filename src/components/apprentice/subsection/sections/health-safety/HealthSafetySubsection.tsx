@@ -17,13 +17,22 @@ const HealthSafetySubsection = ({
 
   useEffect(() => {
     // Fix the import path to correctly reference the components
-    import(`../../../content/Subsection${subsectionType}`)
+    import(`../../../content/subsection${subsectionType}/index`)
       .then(module => {
         setComponent(() => module.default);
       })
       .catch(error => {
         console.error("Failed to load subsection component:", error);
-        setComponent(null);
+        
+        // Fallback - try the old path format as a secondary attempt
+        import(`../../../content/Subsection${subsectionType}`)
+          .then(module => {
+            setComponent(() => module.default);
+          })
+          .catch(secondError => {
+            console.error("Both import attempts failed:", secondError);
+            setComponent(null);
+          });
       });
   }, [subsectionType]);
 
