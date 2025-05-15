@@ -3,13 +3,22 @@ import StudyHeader from "@/components/apprentice/StudyHeader";
 import CourseCardGrid from "@/components/apprentice/CourseCardGrid";
 import { courseCategories } from "@/data/courseCategories";
 import { Link } from "react-router-dom";
-import { GraduationCap, Shield, FileText } from "lucide-react";
+import { GraduationCap, Shield, FileText, AlertTriangle } from "lucide-react";
 import CourseCard from "@/components/apprentice/CourseCard";
 
 const ApprenticeStudy = () => {
   return (
     <div className="space-y-8 animate-fade-in px-2 md:px-0">
       <StudyHeader />
+      
+      <div className="bg-amber-950/20 border border-amber-600/30 rounded-md p-4 mb-6 flex items-start gap-3">
+        <AlertTriangle className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
+        <p className="text-sm text-amber-200/90">
+          <strong>Disclaimer:</strong> ElecMate is not endorsed by, directly affiliated with, maintained, 
+          authorized, or sponsored by EAL or City &amp; Guilds. All product names, logos, and brands are 
+          property of their respective owners.
+        </p>
+      </div>
       
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-elec-yellow">Electrical Courses</h2>
