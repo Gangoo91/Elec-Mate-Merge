@@ -1,7 +1,6 @@
 
 import StudyHeader from "@/components/apprentice/StudyHeader";
 import CourseCardGrid from "@/components/apprentice/CourseCardGrid";
-import OffJobTrainingInfo from "@/components/apprentice/OffJobTrainingInfo";
 import { courseCategories } from "@/data/courseCategories";
 import { Link } from "react-router-dom";
 import { GraduationCap, Shield, FileText } from "lucide-react";
@@ -47,8 +46,6 @@ const ApprenticeStudy = () => {
           baseUrl="/apprentice/study"
         />
       </div>
-      
-      <OffJobTrainingInfo />
     </div>
   );
 };
