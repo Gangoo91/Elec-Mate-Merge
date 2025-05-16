@@ -1,128 +1,201 @@
 
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import { toast } from "@/hooks/use-toast";
-import { useProjects } from "@/hooks/useProjects";
-import { ProjectDialog } from "@/components/project-management/ProjectDialog";
-import { ProjectHeader } from "./components/ProjectHeader";
-import { ProjectAnalytics } from "@/components/project-management/ProjectAnalytics";
-import { ProjectFilters } from "./components/ProjectFilters";
-import { ProjectList } from "./components/ProjectList";
-import { ProjectTools } from "./components/ProjectTools";
-import { EmptyProjectState } from "./components/EmptyProjectState";
-import { LoadingState } from "./components/LoadingState";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ClipboardList, FileText, Calendar, Users, PieChart, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ProjectManagementPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { projects, loading, createProject, deleteProject } = useProjects();
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [filterStatus, setFilterStatus] = useState<string>("all");
-  
-  // If we're viewing a specific project, render the ProjectDetails component
-  if (location.pathname.match(/\/electrician-tools\/project-management\/project\/[^/]+$/)) {
-    // This is handled in MainRoutes.tsx now
-    return null;
-  }
-
-  const handleStartProject = (projectData: any) => {
-    const newProject = createProject(projectData);
-    navigate(`/electrician-tools/project-management/project/${newProject.id}`);
-    toast({
-      title: "Project Created",
-      description: "Your new project has been created successfully.",
-    });
-  };
-
-  const handleDeleteProject = (id: string) => {
-    deleteProject(id);
-    toast({
-      title: "Project Deleted",
-      description: "The project has been deleted successfully.",
-    });
-  };
-  
-  const filteredProjects = filterStatus === "all" 
-    ? projects 
-    : projects.filter(p => p.status === filterStatus);
-  
-  const exportProjectsAsCsv = () => {
-    // Create CSV content
-    const headers = ["Project Name", "Client", "Status", "Start Date", "Due Date", "Budget", "Location"];
-    const rows = projects.map(p => [
-      p.name,
-      p.clientName,
-      p.status,
-      p.startDate,
-      p.dueDate || "",
-      p.budget.toString(),
-      p.location || ""
-    ]);
-    
-    const csvContent = [
-      headers.join(','),
-      ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
-    ].join('\n');
-    
-    // Create download link
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `electrical-projects-${new Date().toISOString().split('T')[0]}.csv`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    toast({
-      title: "Projects Exported",
-      description: "Your projects have been exported as a CSV file.",
-    });
-  };
+  const [activeTab, setActiveTab] = useState("overview");
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <ProjectHeader 
-        onNewProject={() => setIsCreateDialogOpen(true)}
-        onExport={exportProjectsAsCsv}
-        hasProjects={projects.length > 0}
-      />
-      
-      {projects.length > 0 && <ProjectAnalytics />}
+    <div className="space-y-6 animate-fade-in pb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Project Management</h1>
+          <p className="text-muted-foreground">
+            Professional electrical project management tools and guidance.
+          </p>
+        </div>
+        <Link to="/electrician-tools/admin">
+          <Button variant="outline" className="flex items-center gap-2">
+            <ArrowLeft className="h-4 w-4" /> Back to Admin Tools
+          </Button>
+        </Link>
+      </div>
 
-      {projects.length > 0 && (
-        <ProjectFilters filterStatus={filterStatus} setFilterStatus={setFilterStatus} />
-      )}
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+        <TabsList className="flex flex-wrap">
+          <TabsTrigger value="overview" className="flex items-center gap-2">
+            <PieChart className="h-4 w-4" /> Overview
+          </TabsTrigger>
+          <TabsTrigger value="projects" className="flex items-center gap-2">
+            <ClipboardList className="h-4 w-4" /> Projects
+          </TabsTrigger>
+          <TabsTrigger value="documents" className="flex items-center gap-2">
+            <FileText className="h-4 w-4" /> Documents
+          </TabsTrigger>
+          <TabsTrigger value="schedule" className="flex items-center gap-2">
+            <Calendar className="h-4 w-4" /> Schedule
+          </TabsTrigger>
+          <TabsTrigger value="team" className="flex items-center gap-2">
+            <Users className="h-4 w-4" /> Team
+          </TabsTrigger>
+        </TabsList>
 
-      {loading ? (
-        <LoadingState />
-      ) : projects.length === 0 ? (
-        <EmptyProjectState onCreateProject={() => setIsCreateDialogOpen(true)} />
-      ) : (
-        <>
-          {filteredProjects.length === 0 ? (
-            <div className="text-center py-16 bg-elec-gray/50 rounded-lg border border-elec-yellow/10">
-              <p className="text-xl mb-2">No matching projects found</p>
-              <p className="text-muted-foreground">Try selecting a different status filter</p>
-            </div>
-          ) : (
-            <ProjectList 
-              projects={filteredProjects} 
-              onView={(id) => navigate(`/electrician-tools/project-management/project/${id}`)}
-              onEdit={(id) => navigate(`/electrician-tools/project-management/project/${id}`)}
-              onDelete={handleDeleteProject}
-            />
-          )}
-        </>
-      )}
+        <TabsContent value="overview" className="space-y-4">
+          <div className="grid gap-4 md:grid-cols-2">
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardHeader>
+                <CardTitle>Project Management Essentials</CardTitle>
+                <CardDescription>Key principles for successful electrical projects</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <p>Effective project management is vital for electrical contractors to deliver work on time, within budget, and to specification. Follow these key principles:</p>
+                  
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>
+                      <strong>Clear scope definition</strong> - Ensure all parties understand the exact requirements, deliverables and constraints before work begins
+                    </li>
+                    <li>
+                      <strong>Detailed planning</strong> - Break projects into manageable tasks with assigned responsibilities and realistic timeframes
+                    </li>
+                    <li>
+                      <strong>Risk assessment</strong> - Identify potential issues early and develop mitigation strategies
+                    </li>
+                    <li>
+                      <strong>Regular communication</strong> - Keep clients and team members informed with progress updates and issues
+                    </li>
+                    <li>
+                      <strong>Quality control</strong> - Implement inspection points throughout the project to maintain standards
+                    </li>
+                  </ul>
+                </div>
+              </CardContent>
+            </Card>
 
-      <ProjectDialog
-        open={isCreateDialogOpen}
-        onOpenChange={setIsCreateDialogOpen}
-        onSubmit={handleStartProject}
-      />
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardHeader>
+                <CardTitle>Project Management Resources</CardTitle>
+                <CardDescription>Tools to help manage your electrical projects</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <p>Access these resources to improve your project management capabilities:</p>
+                  
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>Project schedule templates</li>
+                    <li>Risk assessment documentation</li>
+                    <li>Client communication guides</li>
+                    <li>Quality control checklists</li>
+                    <li>Project handover documents</li>
+                  </ul>
+                  
+                  <Button className="w-full mt-4">Access Resources</Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
-      <ProjectTools />
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <CardTitle>Common Project Management Challenges</CardTitle>
+              <CardDescription>Solutions for electrical contractors</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">Scope Creep</h3>
+                    <p className="text-sm">When clients request additional work beyond the original agreement.</p>
+                    <p className="text-sm mt-2"><strong>Solution:</strong> Document all requirements thoroughly in initial contracts and use change orders for additional requests. Clarify the impact on timeline and cost.</p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">Resource Allocation</h3>
+                    <p className="text-sm">Managing staff and materials across multiple projects.</p>
+                    <p className="text-sm mt-2"><strong>Solution:</strong> Use resource scheduling software to track availability and implement just-in-time ordering for materials to reduce wastage.</p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">Regulatory Compliance</h3>
+                    <p className="text-sm">Ensuring all work meets current standards and building regulations.</p>
+                    <p className="text-sm mt-2"><strong>Solution:</strong> Stay updated with BS 7671 requirements and implement compliance checklists at key project milestones.</p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">Client Communication</h3>
+                    <p className="text-sm">Keeping clients informed without overwhelming them.</p>
+                    <p className="text-sm mt-2"><strong>Solution:</strong> Establish regular update schedules and use visual progress reports that clients can easily understand.</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="projects" className="space-y-4">
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <CardTitle>Project Management Tools</CardTitle>
+              <CardDescription>Manage your electrical projects efficiently</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4 text-center py-8">
+                <p className="text-lg mb-4">Project management features will be available soon.</p>
+                <Button>Request Early Access</Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="documents" className="space-y-4">
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <CardTitle>Document Management</CardTitle>
+              <CardDescription>Organise project documentation</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4 text-center py-8">
+                <p className="text-lg mb-4">Document management features will be available soon.</p>
+                <Button>Request Early Access</Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="schedule" className="space-y-4">
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <CardTitle>Project Scheduling</CardTitle>
+              <CardDescription>Plan and track project timelines</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4 text-center py-8">
+                <p className="text-lg mb-4">Project scheduling features will be available soon.</p>
+                <Button>Request Early Access</Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="team" className="space-y-4">
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <CardTitle>Team Management</CardTitle>
+              <CardDescription>Assign and track team responsibilities</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4 text-center py-8">
+                <p className="text-lg mb-4">Team management features will be available soon.</p>
+                <Button>Request Early Access</Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
