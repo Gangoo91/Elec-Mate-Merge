@@ -7,9 +7,20 @@ import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useState } from "react";
 import { toast } from "sonner";
+import { 
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+  DialogClose
+} from "@/components/ui/dialog";
 
 const BusinessStartup = () => {
   const [openSection, setOpenSection] = useState<string | null>("legal");
+  const [selectedResource, setSelectedResource] = useState<string | null>(null);
 
   const toggleSection = (section: string) => {
     setOpenSection(openSection === section ? null : section);
@@ -21,12 +32,19 @@ const BusinessStartup = () => {
     });
   };
 
+  const handleAccessResource = (resourceId: string) => {
+    setSelectedResource(resourceId);
+    toast.success("Resource content loaded", {
+      description: "You can now view the detailed guide"
+    });
+  };
+
   const infoBoxes = [
     {
       id: "startupKit",
       title: "Business Start-up Kit",
       icon: <Briefcase className="h-6 w-6 text-elec-yellow" />,
-      description: "Templates and resources for establishing your electrical contracting business.",
+      description: "Essential templates and resources for establishing your electrical contracting business.",
       contents: [
         "Business plan template", 
         "Market research guide", 
@@ -99,6 +117,75 @@ const BusinessStartup = () => {
     }
   ];
 
+  const resourceDialogContent = {
+    startupKit: {
+      title: "Business Start-up Kit",
+      description: "Comprehensive resources to help you establish your electrical business",
+      content: [
+        {
+          title: "Business Plan Template",
+          description: "A detailed template specific to electrical contracting businesses, including market analysis, financial projections, and business strategy sections. Use this to secure funding and establish clear business objectives.",
+        },
+        {
+          title: "Market Research Guide",
+          description: "Learn how to identify your target market, analyze local competition, and determine the most profitable electrical services to offer in your area.",
+        },
+        {
+          title: "Brand Development Workbook",
+          description: "Step-by-step exercises to develop your unique branding, including logo design brief, messaging guidelines, and customer persona development.",
+        },
+        {
+          title: "Business Registration Checklist",
+          description: "A complete checklist for registering your business with HMRC, Companies House, and relevant trade bodies, ensuring you meet all legal requirements.",
+        }
+      ]
+    },
+    certification: {
+      title: "Contractor Certification",
+      description: "Everything you need to know about becoming a certified electrical contractor",
+      content: [
+        {
+          title: "Certification Requirements Guide",
+          description: "Detailed breakdown of the qualifications, experience, and documentation needed for NICEIC, NAPIT, and ELECSA approval.",
+        },
+        {
+          title: "Application Process Walkthrough",
+          description: "Step-by-step guide to the application and assessment process for competent person schemes, including timelines and costs.",
+        },
+        {
+          title: "Assessment Preparation Tips",
+          description: "Expert guidance on preparing for technical assessments, including common questions, inspection points, and required documentation.",
+        },
+        {
+          title: "First-year Compliance Checklist",
+          description: "Essential tasks to maintain your certification in the first year, including periodic notifications, record-keeping, and continuing professional development.",
+        }
+      ]
+    },
+    taxes: {
+      title: "Accounting & Tax Guidance",
+      description: "Financial management resources for electrical contractors",
+      content: [
+        {
+          title: "Tax Obligations Overview",
+          description: "Comprehensive guide to tax obligations for electrical contractors, including income tax, National Insurance, VAT, and corporation tax if applicable.",
+        },
+        {
+          title: "Bookkeeping Templates",
+          description: "Ready-to-use spreadsheets and templates for tracking income, expenses, mileage, and other financial data essential for tax reporting.",
+        },
+        {
+          title: "Expense Tracking Systems",
+          description: "Comparison of digital tools and apps specifically designed for tradespeople to track business expenses and maximise legitimate tax deductions.",
+        },
+        {
+          title: "VAT Registration Guide",
+          description: "Detailed guidance on when and how to register for VAT, flat rate vs standard schemes, and managing VAT returns for electrical businesses.",
+        }
+      ]
+    }
+  };
+
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex items-center gap-2">
@@ -130,42 +217,83 @@ const BusinessStartup = () => {
             </p>
           </div>
 
-          {/* Resource boxes - styled like in Career Progression */}
+          {/* Resource boxes with dialog functionality */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {infoBoxes.map((box) => (
-              <Card key={box.id} className="border-elec-yellow/20 bg-elec-gray h-full flex flex-col hover:border-elec-yellow/50 transition-all cursor-pointer">
-                <CardHeader className="pb-2">
-                  <div className="flex items-start gap-3">
-                    {box.icon}
-                    <CardTitle className="text-lg">{box.title}</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="pt-1 flex flex-col flex-grow">
-                  <p className="text-sm mb-4">{box.description}</p>
-                  
-                  <div className="mt-auto space-y-3">
-                    <div>
-                      <h4 className="text-xs text-elec-yellow mb-1.5">What's Included:</h4>
-                      <ul className="text-xs space-y-1.5">
-                        {box.contents.map((content, idx) => (
-                          <li key={idx} className="flex items-start gap-1.5">
-                            <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5"></span>
-                            <span>{content}</span>
-                          </li>
-                        ))}
-                      </ul>
+              <Dialog key={box.id}>
+                <Card className="border-elec-yellow/20 bg-elec-gray h-full flex flex-col hover:border-elec-yellow/50 transition-all">
+                  <CardHeader className="pb-2">
+                    <div className="flex items-start gap-3">
+                      {box.icon}
+                      <CardTitle className="text-lg">{box.title}</CardTitle>
                     </div>
+                  </CardHeader>
+                  <CardContent className="pt-1 flex flex-col flex-grow">
+                    <p className="text-sm mb-4">{box.description}</p>
                     
+                    <div className="mt-auto space-y-3">
+                      <div>
+                        <h4 className="text-xs text-elec-yellow mb-1.5">What's Included:</h4>
+                        <ul className="text-xs space-y-1.5">
+                          {box.contents.map((content, idx) => (
+                            <li key={idx} className="flex items-start gap-1.5">
+                              <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5"></span>
+                              <span>{content}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      
+                      <DialogTrigger asChild>
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          className="w-full mt-3 border-elec-yellow/30 hover:border-elec-yellow text-xs"
+                          onClick={() => handleAccessResource(box.id)}
+                        >
+                          Access Resource
+                        </Button>
+                      </DialogTrigger>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle className="text-elec-yellow">
+                      {resourceDialogContent[box.id as keyof typeof resourceDialogContent]?.title}
+                    </DialogTitle>
+                    <DialogDescription>
+                      {resourceDialogContent[box.id as keyof typeof resourceDialogContent]?.description}
+                    </DialogDescription>
+                  </DialogHeader>
+                  
+                  <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+                    {resourceDialogContent[box.id as keyof typeof resourceDialogContent]?.content.map((item, idx) => (
+                      <div key={idx} className="bg-elec-gray/70 p-3 rounded-md border border-elec-yellow/10">
+                        <h3 className="font-medium text-sm text-elec-yellow">{item.title}</h3>
+                        <p className="text-xs mt-1">{item.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <DialogFooter className="flex justify-end gap-2 mt-4">
                     <Button 
                       variant="outline" 
-                      size="sm"
-                      className="w-full mt-3 border-elec-yellow/30 hover:border-elec-yellow text-xs"
+                      className="border-elec-yellow/30"
+                      onClick={() => toast.success("Resource added to your saved items")}
                     >
-                      Access Resource
+                      Save Resource
                     </Button>
-                  </div>
-                </CardContent>
-              </Card>
+                    <Button 
+                      className="bg-elec-yellow hover:bg-elec-yellow/80 text-black"
+                      onClick={() => toast.success("Full guide will download shortly")}
+                    >
+                      Download Full Guide
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             ))}
           </div>
 
@@ -178,19 +306,19 @@ const BusinessStartup = () => {
             
             <div className="space-y-4">
               {roadmapSteps.map((step, index) => (
-                <Card key={step.id} className="border-elec-yellow/20 bg-elec-gray">
+                <Card key={step.id} className="border-elec-yellow/20 bg-elec-gray/80 transition-all hover:border-elec-yellow/40">
                   <CardContent className="p-4">
                     <div className="flex flex-col sm:flex-row gap-4">
                       <div className="flex-shrink-0 flex items-start">
-                        <div className="bg-elec-yellow text-elec-dark h-8 w-8 rounded-full flex items-center justify-center font-bold text-lg">
+                        <div className="bg-elec-yellow text-elec-dark h-8 w-8 rounded-full flex items-center justify-center font-bold text-lg shadow-md">
                           {index + 1}
                         </div>
                       </div>
                       
                       <div className="space-y-2 flex-grow">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                          <h4 className="font-medium text-lg">{step.title}</h4>
-                          <span className="text-xs bg-elec-dark/60 px-3 py-1 rounded-full text-elec-yellow">
+                          <h4 className="font-medium text-lg text-elec-yellow/90">{step.title}</h4>
+                          <span className="text-xs bg-elec-dark px-3 py-1 rounded-full text-elec-yellow border border-elec-yellow/20">
                             {step.timeline}
                           </span>
                         </div>
@@ -202,7 +330,7 @@ const BusinessStartup = () => {
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
                             {step.keyTasks.map((task, idx) => (
                               <div key={idx} className="flex items-center gap-2">
-                                <FileText className="h-3 w-3 text-elec-yellow" />
+                                <CheckCircle className="h-3 w-3 text-elec-yellow" />
                                 <span className="text-xs">{task}</span>
                               </div>
                             ))}
@@ -226,12 +354,12 @@ const BusinessStartup = () => {
                 <LucideShieldCheck className="h-5 w-5 text-elec-yellow" />
                 <h3 className="font-semibold">Legal Requirements & Qualifications</h3>
               </div>
-              <span>{openSection === "legal" ? "−" : "+"}</span>
+              <span className="text-elec-yellow">{openSection === "legal" ? "−" : "+"}</span>
             </CollapsibleTrigger>
-            <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20 bg-elec-gray/30">
+            <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20 bg-elec-gray/40">
               <div className="space-y-4 pt-4">
                 <div>
-                  <h4 className="font-medium mb-2">Essential Qualifications</h4>
+                  <h4 className="font-medium mb-2 text-elec-yellow/90">Essential Qualifications</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li>Level 3 NVQ Diploma in Electrotechnical Services</li>
                     <li>City & Guilds 2365 Diploma in Electrical Installations</li>
@@ -241,7 +369,7 @@ const BusinessStartup = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-medium mb-2">Competent Person Scheme Registration</h4>
+                  <h4 className="font-medium mb-2 text-elec-yellow/90">Competent Person Scheme Registration</h4>
                   <p className="text-sm mb-2">
                     You should register with one of the following competent person schemes:
                   </p>
@@ -258,7 +386,7 @@ const BusinessStartup = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-medium mb-2">Business Registration</h4>
+                  <h4 className="font-medium mb-2 text-elec-yellow/90">Business Registration</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li>Register with HMRC as self-employed (sole trader) or establish a limited company via Companies House</li>
                     <li>Register for VAT if your turnover exceeds £85,000 (as of 2023/24 tax year)</li>
@@ -280,12 +408,12 @@ const BusinessStartup = () => {
                 <CreditCard className="h-5 w-5 text-elec-yellow" />
                 <h3 className="font-semibold">Financial Planning & Insurance</h3>
               </div>
-              <span>{openSection === "financial" ? "−" : "+"}</span>
+              <span className="text-elec-yellow">{openSection === "financial" ? "−" : "+"}</span>
             </CollapsibleTrigger>
-            <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20 bg-elec-gray/30">
+            <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20 bg-elec-gray/40">
               <div className="space-y-4 pt-4">
                 <div>
-                  <h4 className="font-medium mb-2">Essential Insurance</h4>
+                  <h4 className="font-medium mb-2 text-elec-yellow/90">Essential Insurance</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><span className="font-medium">Public Liability Insurance</span> - Protects against claims for injury or damage caused to third parties or property (typically £2-5 million cover)</li>
                     <li><span className="font-medium">Professional Indemnity Insurance</span> - Covers errors or omissions in your work or advice</li>
@@ -296,7 +424,7 @@ const BusinessStartup = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-medium mb-2">Startup Costs Estimation</h4>
+                  <h4 className="font-medium mb-2 text-elec-yellow/90">Startup Costs Estimation</h4>
                   <p className="text-sm mb-2">Typical startup costs include:</p>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li>Tools and equipment: £2,000-£5,000</li>
@@ -310,7 +438,7 @@ const BusinessStartup = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-medium mb-2">Pricing Your Services</h4>
+                  <h4 className="font-medium mb-2 text-elec-yellow/90">Pricing Your Services</h4>
                   <p className="text-sm">
                     When setting your rates, consider:
                   </p>
@@ -337,12 +465,12 @@ const BusinessStartup = () => {
                 <Building className="h-5 w-5 text-elec-yellow" />
                 <h3 className="font-semibold">Business Operations & Marketing</h3>
               </div>
-              <span>{openSection === "operations" ? "−" : "+"}</span>
+              <span className="text-elec-yellow">{openSection === "operations" ? "−" : "+"}</span>
             </CollapsibleTrigger>
-            <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20 bg-elec-gray/30">
+            <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20 bg-elec-gray/40">
               <div className="space-y-4 pt-4">
                 <div>
-                  <h4 className="font-medium mb-2">Essential Business Systems</h4>
+                  <h4 className="font-medium mb-2 text-elec-yellow/90">Essential Business Systems</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><span className="font-medium">Quoting system</span> - Standardised quoting process to ensure accuracy and consistency</li>
                     <li><span className="font-medium">Invoicing system</span> - Professional invoices with clear payment terms</li>
@@ -353,7 +481,7 @@ const BusinessStartup = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-medium mb-2">Effective Marketing Strategies</h4>
+                  <h4 className="font-medium mb-2 text-elec-yellow/90">Effective Marketing Strategies</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><span className="font-medium">Professional website</span> - With examples of your work, services, and contact information</li>
                     <li><span className="font-medium">Google My Business</span> - Essential for local search visibility</li>
@@ -366,7 +494,7 @@ const BusinessStartup = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-medium mb-2">Building Customer Trust</h4>
+                  <h4 className="font-medium mb-2 text-elec-yellow/90">Building Customer Trust</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li>Always provide detailed written quotes before starting work</li>
                     <li>Explain work clearly and in non-technical language</li>
@@ -391,12 +519,12 @@ const BusinessStartup = () => {
                 <Users className="h-5 w-5 text-elec-yellow" />
                 <h3 className="font-semibold">Growth & Building a Team</h3>
               </div>
-              <span>{openSection === "scalability" ? "−" : "+"}</span>
+              <span className="text-elec-yellow">{openSection === "scalability" ? "−" : "+"}</span>
             </CollapsibleTrigger>
-            <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20 bg-elec-gray/30">
+            <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20 bg-elec-gray/40">
               <div className="space-y-4 pt-4">
                 <div>
-                  <h4 className="font-medium mb-2">Growing Your Business</h4>
+                  <h4 className="font-medium mb-2 text-elec-yellow/90">Growing Your Business</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li>Focus on a specific niche (domestic, commercial, industrial, renewable)</li>
                     <li>Develop recurring revenue streams (maintenance contracts, periodic testing)</li>
@@ -407,7 +535,7 @@ const BusinessStartup = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-medium mb-2">Taking on Staff</h4>
+                  <h4 className="font-medium mb-2 text-elec-yellow/90">Taking on Staff</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li>Understand employer responsibilities (PAYE, National Insurance, pensions)</li>
                     <li>Consider subcontractors initially before full-time employees</li>
@@ -419,7 +547,7 @@ const BusinessStartup = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-medium mb-2">Common Pitfalls to Avoid</h4>
+                  <h4 className="font-medium mb-2 text-elec-yellow/90">Common Pitfalls to Avoid</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li>Undercharging for services</li>
                     <li>Poor cash flow management</li>
@@ -444,12 +572,12 @@ const BusinessStartup = () => {
                 <BadgeCheck className="h-5 w-5 text-elec-yellow" />
                 <h3 className="font-semibold">Regulatory Compliance & Standards</h3>
               </div>
-              <span>{openSection === "compliance" ? "−" : "+"}</span>
+              <span className="text-elec-yellow">{openSection === "compliance" ? "−" : "+"}</span>
             </CollapsibleTrigger>
-            <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20 bg-elec-gray/30">
+            <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20 bg-elec-gray/40">
               <div className="space-y-4 pt-4">
                 <div>
-                  <h4 className="font-medium mb-2">Key Regulations to Know</h4>
+                  <h4 className="font-medium mb-2 text-elec-yellow/90">Key Regulations to Know</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li><span className="font-medium">BS 7671 (18th Edition Wiring Regulations)</span> - The UK standard for electrical installations</li>
                     <li><span className="font-medium">Building Regulations Part P</span> - Requires domestic electrical work to meet safety standards</li>
@@ -460,7 +588,7 @@ const BusinessStartup = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-medium mb-2">Notification Requirements</h4>
+                  <h4 className="font-medium mb-2 text-elec-yellow/90">Notification Requirements</h4>
                   <p className="text-sm mb-2">
                     Certain electrical work must be notified to local building control authorities, including:
                   </p>
@@ -475,7 +603,7 @@ const BusinessStartup = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-medium mb-2">Documentation Requirements</h4>
+                  <h4 className="font-medium mb-2 text-elec-yellow/90">Documentation Requirements</h4>
                   <ul className="list-disc pl-6 space-y-1 text-sm">
                     <li>Electrical Installation Certificate (EIC) for new installations</li>
                     <li>Electrical Installation Condition Report (EICR) for inspections</li>
@@ -512,7 +640,7 @@ const BusinessStartup = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
-                className="bg-elec-yellow hover:bg-elec-yellow/80 text-black flex-grow"
+                className="bg-elec-yellow hover:bg-elec-yellow/80 text-black flex-grow shadow-md"
                 onClick={handleDownload}
               >
                 Download Business Startup Checklist
@@ -520,6 +648,9 @@ const BusinessStartup = () => {
               <Button 
                 variant="outline" 
                 className="border-elec-yellow/30 hover:border-elec-yellow hover:bg-elec-yellow/10 flex-grow"
+                onClick={() => toast.success("Consultation request received", {
+                  description: "Our team will contact you shortly to schedule your business consultation"
+                })}
               >
                 Book a Business Consultation
               </Button>
@@ -532,4 +663,3 @@ const BusinessStartup = () => {
 };
 
 export default BusinessStartup;
-
