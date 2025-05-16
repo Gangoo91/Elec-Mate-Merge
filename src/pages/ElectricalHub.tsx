@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Wrench, LayoutGrid, Heart, Users, Brain, GraduationCap, FileText } from "lucide-react";
+import { Wrench, LayoutGrid, Heart, Users, Brain, GraduationCap, FileText, Briefcase } from "lucide-react";
 
 const ElectricalHub = () => {
   const hubCards = [
@@ -54,6 +54,13 @@ const ElectricalHub = () => {
       description: "Generate professional quotes for electrical jobs with AI assistance",
       icon: <FileText className="h-12 w-12 text-elec-yellow opacity-80" />,
       link: "/electrician-tools/quote-library"
+    },
+    {
+      id: 8,
+      title: "Business Development",
+      description: "Tools and resources to grow your electrical business",
+      icon: <Briefcase className="h-12 w-12 text-elec-yellow opacity-80" />,
+      link: "/electrician/business-development"
     }
   ];
 
