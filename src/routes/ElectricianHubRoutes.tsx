@@ -20,6 +20,7 @@ import StressManagement from "@/pages/apprentice/mental-health/StressManagement"
 import SupportNetwork from "@/pages/apprentice/mental-health/SupportNetwork";
 import WorkLifeBalance from "@/pages/apprentice/mental-health/WorkLifeBalance";
 import CrisisResources from "@/pages/apprentice/mental-health/CrisisResources";
+import BusinessDevelopment from "@/pages/electrician/BusinessDevelopment";
 
 const ElectricianHubRoutes = () => {
   return (
@@ -44,6 +45,7 @@ const ElectricianHubRoutes = () => {
       <Route path="mental-health/support-network" element={<SupportNetwork />} />
       <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
       <Route path="mental-health/crisis-resources" element={<CrisisResources />} />
+      <Route path="business-development" element={<BusinessDevelopment />} />
     </Routes>
   );
 };

@@ -1,0 +1,148 @@
+
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { 
+  Briefcase, 
+  GraduationCap, 
+  TrendingUp, 
+  HandHelping, 
+  Users, 
+  Building, 
+  FileText 
+} from "lucide-react";
+
+const BusinessDevelopment = () => {
+  const businessSections = [
+    {
+      id: 1,
+      title: "Starting an Electrical Business",
+      description: "Essential guidance for establishing your electrical contracting business, from registration to certification",
+      icon: <Briefcase className="h-12 w-12 text-elec-yellow opacity-80" />,
+      link: "/electrician/business-development/startup"
+    },
+    {
+      id: 2,
+      title: "Onboarding Apprentices",
+      description: "Best practices for recruiting, mentoring and developing apprentices in your electrical business",
+      icon: <GraduationCap className="h-12 w-12 text-elec-yellow opacity-80" />,
+      link: "/electrician/business-development/apprentices"
+    },
+    {
+      id: 3,
+      title: "Growing Your Business",
+      description: "Strategies for expanding your electrical business, from marketing to diversifying services",
+      icon: <TrendingUp className="h-12 w-12 text-elec-yellow opacity-80" />,
+      link: "/electrician/business-development/growth"
+    },
+    {
+      id: 4,
+      title: "Customer Acquisition",
+      description: "Effective methods to attract and retain clients for your electrical services",
+      icon: <HandHelping className="h-12 w-12 text-elec-yellow opacity-80" />,
+      link: "/electrician/business-development/customers"
+    },
+    {
+      id: 5,
+      title: "Team Management",
+      description: "Tools and techniques for managing your electrical team efficiently",
+      icon: <Users className="h-12 w-12 text-elec-yellow opacity-80" />,
+      link: "/electrician/business-development/team"
+    },
+    {
+      id: 6,
+      title: "Commercial Properties",
+      description: "Expanding into commercial electrical work and managing larger projects",
+      icon: <Building className="h-12 w-12 text-elec-yellow opacity-80" />,
+      link: "/electrician/business-development/commercial"
+    },
+    {
+      id: 7,
+      title: "Business Templates",
+      description: "Essential documents and templates for running your electrical contracting business",
+      icon: <FileText className="h-12 w-12 text-elec-yellow opacity-80" />,
+      link: "/electrician/business-development/templates"
+    }
+  ];
+  
+  const quickStartGuide = [
+    "Register your business with Companies House and HMRC",
+    "Obtain proper electrical qualifications and certification",
+    "Secure adequate business insurance (public liability, professional indemnity)",
+    "Join a competent person scheme (NICEIC, NAPIT, etc.)",
+    "Set up business banking and accounting systems",
+    "Create a basic marketing plan and online presence",
+    "Establish relationships with suppliers and wholesalers"
+  ];
+
+  return (
+    <div className="space-y-8 animate-fade-in">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">Business Development</h1>
+        <p className="text-muted-foreground">
+          Resources and guidance to establish and grow your electrical contracting business
+        </p>
+      </div>
+
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="text-xl">Quick Start Guide: Setting Up an Electrical Business</CardTitle>
+          <CardDescription>
+            Key steps to get your electrical contracting business up and running
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ol className="list-decimal list-inside space-y-2 pl-2">
+            {quickStartGuide.map((step, index) => (
+              <li key={index} className="text-sm">
+                {step}
+              </li>
+            ))}
+          </ol>
+          <Button 
+            variant="outline" 
+            className="mt-6 border-elec-yellow/30 hover:border-elec-yellow"
+          >
+            Download Complete Business Setup Checklist
+          </Button>
+        </CardContent>
+      </Card>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {businessSections.map((section) => (
+          <Link key={section.id} to={section.link} className="group">
+            <Card className="h-full border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-xl">{section.title}</CardTitle>
+                <CardDescription className="text-sm">
+                  {section.description}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex items-center justify-center py-6">
+                <div className="transition-transform group-hover:scale-110">
+                  {section.icon}
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        ))}
+      </div>
+      
+      <Card className="border-elec-yellow/20 bg-elec-gray mt-6">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xl">Business Development Disclaimer</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-muted-foreground">
+            The information provided is for general guidance only and does not constitute financial, legal, or business advice. 
+            Always consult with qualified professionals regarding your specific business circumstances. ElecMate is not endorsed by, 
+            directly affiliated with, maintained, authorised, or sponsored by any regulatory bodies or certification schemes mentioned. 
+            All product names, logos, and brands are property of their respective owners.
+          </p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+export default BusinessDevelopment;
