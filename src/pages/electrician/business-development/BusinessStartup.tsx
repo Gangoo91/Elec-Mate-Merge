@@ -1,13 +1,31 @@
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { Briefcase, ArrowLeft, FileText, LucideShieldCheck, CreditCard, Users, Building, Download, FileCheck, CheckCircle, BadgeCheck } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { Separator } from "@/components/ui/separator";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
+
+// UI Components
 import { 
+  Card, 
+  CardContent, 
+  CardDescription, 
+  CardHeader, 
+  CardTitle, 
+  CardFooter 
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { 
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger 
+} from "@/components/ui/hover-card";
+import { 
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -18,13 +36,28 @@ import {
   DialogClose
 } from "@/components/ui/dialog";
 
-const BusinessStartup = () => {
-  const [openSection, setOpenSection] = useState<string | null>("legal");
-  const [selectedResource, setSelectedResource] = useState<string | null>(null);
+// Icons
+import { 
+  ArrowLeft, 
+  Briefcase, 
+  FileText, 
+  LucideShieldCheck, 
+  Building, 
+  Users, 
+  Download, 
+  Landmark, 
+  Receipt, 
+  TrendingUp, 
+  CheckCircle,
+  BadgeCheck,
+  UserCheck,
+  FileCheck,
+  CreditCard
+} from "lucide-react";
 
-  const toggleSection = (section: string) => {
-    setOpenSection(openSection === section ? null : section);
-  };
+const BusinessStartup = () => {
+  const [selectedResource, setSelectedResource] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("overview");
 
   const handleDownload = () => {
     toast.success("Business Startup Checklist will download shortly", {
@@ -32,162 +65,259 @@ const BusinessStartup = () => {
     });
   };
 
-  const handleAccessResource = (resourceId: string) => {
-    setSelectedResource(resourceId);
-    toast.success("Resource content loaded", {
-      description: "You can now view the detailed guide"
+  const handleBookConsultation = () => {
+    toast.success("Consultation request received", {
+      description: "Our team will contact you shortly to schedule your business consultation"
     });
   };
 
-  const infoBoxes = [
-    {
-      id: "startupKit",
-      title: "Business Start-up Kit",
-      icon: <Briefcase className="h-6 w-6 text-elec-yellow" />,
-      description: "Essential templates and resources for establishing your electrical contracting business.",
-      contents: [
-        "Business plan template", 
-        "Market research guide", 
-        "Brand development workbook",
-        "Business registration checklist"
-      ]
-    },
-    {
-      id: "certification",
-      title: "Contractor Certification",
-      icon: <FileCheck className="h-6 w-6 text-elec-yellow" />,
-      description: "Information on becoming NICEIC, NAPIT, or ELECSA approved, essential for building customer trust.",
-      contents: [
-        "Certification requirements guide", 
-        "Application process walkthrough", 
-        "Assessment preparation tips",
-        "First-year compliance checklist"
-      ]
-    },
-    {
-      id: "taxes",
-      title: "Accounting & Tax Guidance",
-      icon: <CreditCard className="h-6 w-6 text-elec-yellow" />,
-      description: "Financial management resources specifically for electrical contractors.",
-      contents: [
-        "Tax obligations overview", 
-        "Bookkeeping templates", 
-        "Expense tracking systems",
-        "VAT registration guide"
-      ]
-    }
-  ];
-
-  const roadmapSteps = [
+  const startupSteps = [
     {
       id: 1,
-      title: "Business Structure Setup",
-      description: "Choose between sole trader, partnership, or limited company structures, each with different legal and tax implications.",
-      timeline: "Month 1-2",
-      keyTasks: [
-        "Register with HMRC",
+      title: "Business Formation",
+      description: "Choose the right business structure for your electrical contracting business.",
+      icon: <Landmark className="h-5 w-5 text-elec-yellow/80" />,
+      content: [
+        "Decide between sole trader, partnership, or limited company",
+        "Register with HMRC and Companies House",
         "Set up business banking",
-        "Arrange business insurance",
-        "Register for VAT (if applicable)"
+        "Arrange business insurance (public liability, professional indemnity)",
+        "Register for VAT if applicable"
       ]
     },
     {
       id: 2,
-      title: "Certification & Compliance",
-      description: "Ensure you have all necessary certifications to operate legally and build trust with customers.",
-      timeline: "Month 2-4",
-      keyTasks: [
-        "Apply for competent person scheme membership",
-        "Prepare for assessment visits",
-        "Set up notification processes for building control",
-        "Establish health and safety policies"
+      title: "Certifications & Compliance",
+      description: "Ensure you have all necessary qualifications and certifications.",
+      icon: <BadgeCheck className="h-5 w-5 text-elec-yellow/80" />,
+      content: [
+        "Maintain relevant electrical qualifications (Level 3 NVQ, 18th Edition)",
+        "Join a competent person scheme (NICEIC, NAPIT, etc.)",
+        "Prepare for assessment and inspections",
+        "Set up document management systems for certifications",
+        "Understand building regulations notification requirements"
       ]
     },
     {
       id: 3,
-      title: "Marketing & Client Acquisition",
-      description: "Develop your brand and marketing strategy to attract your first clients.",
-      timeline: "Month 3-6",
-      keyTasks: [
-        "Create business website and social profiles",
-        "Design business cards and brochures",
-        "Establish relationships with builders and other trades",
-        "Set up online business listings"
+      title: "Operations Setup",
+      description: "Establish core business systems and processes.",
+      icon: <FileCheck className="h-5 w-5 text-elec-yellow/80" />,
+      content: [
+        "Set up accounting and invoicing systems",
+        "Establish scheduling and job management processes",
+        "Create standardized templates (quotes, invoices, certificates)",
+        "Develop health and safety protocols",
+        "Set up inventory and tool management systems"
+      ]
+    },
+    {
+      id: 4,
+      title: "Market Presence",
+      description: "Build your brand and start attracting customers.",
+      icon: <TrendingUp className="h-5 w-5 text-elec-yellow/80" />,
+      content: [
+        "Design professional logo and branding",
+        "Create business website and social media profiles",
+        "Set up Google My Business listing",
+        "Design vehicle signage and workwear",
+        "Network with other trades and potential referral partners"
+      ]
+    },
+    {
+      id: 5,
+      title: "Team Building",
+      description: "Start building your team as your business grows.",
+      icon: <Users className="h-5 w-5 text-elec-yellow/80" />,
+      content: [
+        "Understand employer responsibilities",
+        "Consider using subcontractors initially",
+        "Develop recruitment processes",
+        "Create staff training and development plans",
+        "Consider apprenticeship opportunities"
       ]
     }
   ];
 
-  const resourceDialogContent = {
-    startupKit: {
-      title: "Business Start-up Kit",
-      description: "Comprehensive resources to help you establish your electrical business",
-      content: [
+  const businessResources = [
+    {
+      id: "businessPlan",
+      title: "Business Plan Template",
+      description: "Comprehensive business plan template tailored for electrical contractors",
+      icon: <FileText className="h-10 w-10 text-elec-yellow" />,
+      sections: [
         {
-          title: "Business Plan Template",
-          description: "A detailed template specific to electrical contracting businesses, including market analysis, financial projections, and business strategy sections. Use this to secure funding and establish clear business objectives.",
+          title: "Executive Summary",
+          content: "A template for creating a concise overview of your electrical business, including mission statement, key objectives, and unique selling proposition."
         },
         {
-          title: "Market Research Guide",
-          description: "Learn how to identify your target market, analyze local competition, and determine the most profitable electrical services to offer in your area.",
+          title: "Market Analysis",
+          content: "Framework for researching and analyzing the local electrical services market, competition, and identifying your target customers."
         },
         {
-          title: "Brand Development Workbook",
-          description: "Step-by-step exercises to develop your unique branding, including logo design brief, messaging guidelines, and customer persona development.",
+          title: "Service Offerings",
+          content: "Templates to define your service packages, pricing strategy, and competitive advantages in the electrical contracting space."
         },
         {
-          title: "Business Registration Checklist",
-          description: "A complete checklist for registering your business with HMRC, Companies House, and relevant trade bodies, ensuring you meet all legal requirements.",
+          title: "Financial Projections",
+          content: "Spreadsheets for forecasting startup costs, operating expenses, revenue projections, and break-even analysis specific to electrical businesses."
         }
       ]
     },
-    certification: {
-      title: "Contractor Certification",
-      description: "Everything you need to know about becoming a certified electrical contractor",
-      content: [
+    {
+      id: "legalCompliance",
+      title: "Legal & Compliance Guide",
+      description: "Essential legal and regulatory guidance for UK electrical contractors",
+      icon: <LucideShieldCheck className="h-10 w-10 text-elec-yellow" />,
+      sections: [
         {
-          title: "Certification Requirements Guide",
-          description: "Detailed breakdown of the qualifications, experience, and documentation needed for NICEIC, NAPIT, and ELECSA approval.",
+          title: "Certification Requirements",
+          content: "Detailed breakdown of all required qualifications and certifications, including NVQ Level 3, 18th Edition, inspection & testing qualifications."
         },
         {
-          title: "Application Process Walkthrough",
-          description: "Step-by-step guide to the application and assessment process for competent person schemes, including timelines and costs.",
+          title: "Competent Person Schemes",
+          content: "Comparison guide to different schemes (NICEIC, NAPIT, ELECSA) with application processes and requirements for each."
         },
         {
-          title: "Assessment Preparation Tips",
-          description: "Expert guidance on preparing for technical assessments, including common questions, inspection points, and required documentation.",
+          title: "Building Regulations",
+          content: "Comprehensive overview of Part P requirements and notification procedures for electrical work in dwellings."
         },
         {
-          title: "First-year Compliance Checklist",
-          description: "Essential tasks to maintain your certification in the first year, including periodic notifications, record-keeping, and continuing professional development.",
+          title: "Health & Safety Compliance",
+          content: "Templates for risk assessments, method statements, and safety policies tailored for electrical contractors."
         }
       ]
     },
-    taxes: {
-      title: "Accounting & Tax Guidance",
-      description: "Financial management resources for electrical contractors",
-      content: [
+    {
+      id: "financialTools",
+      title: "Financial Management Kit",
+      description: "Financial tools and templates for managing your electrical business",
+      icon: <CreditCard className="h-10 w-10 text-elec-yellow" />,
+      sections: [
         {
-          title: "Tax Obligations Overview",
-          description: "Comprehensive guide to tax obligations for electrical contractors, including income tax, National Insurance, VAT, and corporation tax if applicable.",
+          title: "Pricing Calculator",
+          content: "Spreadsheet tool to calculate accurate job prices, including labor, materials, overhead recovery, and profit margins."
         },
         {
-          title: "Bookkeeping Templates",
-          description: "Ready-to-use spreadsheets and templates for tracking income, expenses, mileage, and other financial data essential for tax reporting.",
+          title: "Cash Flow Management",
+          content: "Templates for tracking income, expenses, and maintaining healthy cash flow in your electrical business."
         },
         {
-          title: "Expense Tracking Systems",
-          description: "Comparison of digital tools and apps specifically designed for tradespeople to track business expenses and maximise legitimate tax deductions.",
+          title: "Tax Planning",
+          content: "Guide to tax obligations, deductions, and planning specific to electrical contractors, including VAT considerations."
         },
         {
-          title: "VAT Registration Guide",
-          description: "Detailed guidance on when and how to register for VAT, flat rate vs standard schemes, and managing VAT returns for electrical businesses.",
+          title: "Investment Planning",
+          content: "Tools for planning equipment purchases, vehicle investments, and business expansion with ROI calculations."
+        }
+      ]
+    },
+    {
+      id: "marketingKit",
+      title: "Marketing Toolkit",
+      description: "Marketing resources to help grow your electrical contracting business",
+      icon: <TrendingUp className="h-10 w-10 text-elec-yellow" />,
+      sections: [
+        {
+          title: "Brand Development",
+          content: "Templates and guides for creating a professional electrical business brand, including logo design brief and messaging guidelines."
+        },
+        {
+          title: "Online Presence",
+          content: "Step-by-step guide to creating a professional website, setting up Google My Business, and managing social media profiles."
+        },
+        {
+          title: "Customer Acquisition",
+          content: "Strategies for generating leads, building relationships with property developers, and establishing referral networks."
+        },
+        {
+          title: "Customer Retention",
+          content: "Templates for follow-up communications, service reminders, and developing ongoing maintenance contracts."
+        }
+      ]
+    },
+    {
+      id: "operationsManual",
+      title: "Operations Manual",
+      description: "Systems and processes to streamline electrical business operations",
+      icon: <Building className="h-10 w-10 text-elec-yellow" />,
+      sections: [
+        {
+          title: "Job Management",
+          content: "Workflows and templates for managing jobs from inquiry to completion, including scheduling, customer communications, and quality control."
+        },
+        {
+          title: "Document Management",
+          content: "Systems for managing certificates, test results, and compliance documentation with templates and filing structures."
+        },
+        {
+          title: "Inventory Control",
+          content: "Tools for managing materials, tracking usage, and optimizing supplier relationships to reduce costs."
+        },
+        {
+          title: "Vehicle & Tool Management",
+          content: "Systems for maintaining vehicles, tracking tool inventory, and planning equipment upgrades."
+        }
+      ]
+    },
+    {
+      id: "teamBuilding",
+      title: "Team Building Guide",
+      description: "Resources for hiring and managing staff in your electrical business",
+      icon: <UserCheck className="h-10 w-10 text-elec-yellow" />,
+      sections: [
+        {
+          title: "Recruitment Process",
+          content: "Templates for job descriptions, interview questions, and skills assessments specific to hiring electricians and support staff."
+        },
+        {
+          title: "Onboarding Program",
+          content: "Structured onboarding process to integrate new team members, including safety training and company procedures."
+        },
+        {
+          title: "Performance Management",
+          content: "Systems for setting expectations, providing feedback, and developing team members' skills and careers."
+        },
+        {
+          title: "Apprenticeship Management",
+          content: "Guide to establishing an apprenticeship program, including training frameworks and mentor systems."
         }
       ]
     }
-  };
+  ];
+
+  const quickTips = [
+    "Focus on building a strong reputation with impeccable workmanship",
+    "Invest in quality tools that improve efficiency and last longer",
+    "Build relationships with other trades for consistent referral business",
+    "Price your services based on value, not just to be the cheapest option",
+    "Set aside money for taxes from every job payment",
+    "Maintain a cash reserve to handle unexpected business expenses",
+    "Continuously update your technical knowledge and qualifications",
+    "Consider specializing in growing areas like EV charging or renewables"
+  ];
+
+  const keyRegulations = [
+    {
+      name: "BS 7671 (18th Edition)",
+      description: "The UK standard for electrical installations"
+    },
+    {
+      name: "Part P Building Regulations",
+      description: "Requirements for domestic electrical work"
+    },
+    {
+      name: "Electricity at Work Regulations",
+      description: "Legal framework for electrical safety"
+    },
+    {
+      name: "CDM Regulations 2015",
+      description: "Requirements for construction projects"
+    }
+  ];
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in pb-10">
       <div className="flex items-center gap-2">
         <Link to="/electrician/business-development">
           <Button variant="ghost" size="sm" className="gap-1">
@@ -197,96 +327,237 @@ const BusinessStartup = () => {
         </Link>
         <h1 className="text-2xl font-bold">Starting an Electrical Business</h1>
       </div>
-      
-      <Card className="border-elec-yellow/20">
-        <CardHeader>
-          <div className="flex items-center gap-3">
-            <Briefcase className="h-6 w-6 text-elec-yellow" />
-            <CardTitle>Essential Business Startup Guide for UK Electricians</CardTitle>
-          </div>
-          <CardDescription>Comprehensive guidance to establish your electrical contracting business in the UK market</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Introduction section */}
-          <div className="bg-elec-gray/50 p-4 rounded-md border border-elec-yellow/20">
-            <p className="font-medium text-elec-yellow mb-2">Why start your own electrical business?</p>
-            <p className="text-sm">
-              Running your own electrical contracting business offers excellent earning potential, flexibility, and the opportunity to build 
-              something of your own. With the UK's ongoing demand for qualified electricians, particularly with the push towards renewable 
-              energy and smart home technologies, there's never been a better time to establish your own electrical business.
-            </p>
-          </div>
 
-          {/* Resource boxes with dialog functionality */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {infoBoxes.map((box) => (
-              <Dialog key={box.id}>
-                <Card className="border-elec-yellow/20 bg-elec-gray h-full flex flex-col hover:border-elec-yellow/50 transition-all">
+      <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid grid-cols-3 mb-6">
+          <TabsTrigger value="overview">Business Overview</TabsTrigger>
+          <TabsTrigger value="resources">Startup Resources</TabsTrigger>
+          <TabsTrigger value="roadmap">Business Roadmap</TabsTrigger>
+        </TabsList>
+
+        {/* OVERVIEW TAB */}
+        <TabsContent value="overview" className="space-y-6">
+          <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray/80 to-elec-gray/50">
+            <CardHeader className="pb-2">
+              <div className="flex items-center gap-3">
+                <Briefcase className="h-6 w-6 text-elec-yellow" />
+                <CardTitle>Essential Business Startup Guide for UK Electricians</CardTitle>
+              </div>
+              <CardDescription>Comprehensive guidance to establish your electrical contracting business in the UK market</CardDescription>
+            </CardHeader>
+            
+            <CardContent className="space-y-6">
+              {/* Introduction */}
+              <div className="bg-elec-gray/70 p-5 rounded-md border border-elec-yellow/20 shadow-inner">
+                <p className="font-medium text-elec-yellow mb-2">Why start your own electrical business?</p>
+                <p className="text-sm leading-relaxed">
+                  Running your own electrical contracting business offers excellent earning potential, flexibility, 
+                  and the opportunity to build something of your own. With the UK's ongoing demand for qualified 
+                  electricians, particularly with the push towards renewable energy and smart home technologies, 
+                  there's never been a better time to establish your own electrical business.
+                </p>
+              </div>
+              
+              {/* Key considerations */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <Card className="border-elec-yellow/20 bg-elec-card shadow-md">
                   <CardHeader className="pb-2">
-                    <div className="flex items-start gap-3">
-                      {box.icon}
-                      <CardTitle className="text-lg">{box.title}</CardTitle>
-                    </div>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <CheckCircle className="h-5 w-5 text-elec-yellow" />
+                      <span>Essential Qualifications</span>
+                    </CardTitle>
                   </CardHeader>
-                  <CardContent className="pt-1 flex flex-col flex-grow">
-                    <p className="text-sm mb-4">{box.description}</p>
-                    
-                    <div className="mt-auto space-y-3">
-                      <div>
-                        <h4 className="text-xs text-elec-yellow mb-1.5">What's Included:</h4>
-                        <ul className="text-xs space-y-1.5">
-                          {box.contents.map((content, idx) => (
-                            <li key={idx} className="flex items-start gap-1.5">
-                              <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5"></span>
-                              <span>{content}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      
-                      <DialogTrigger asChild>
-                        <Button 
-                          variant="outline" 
-                          size="sm"
-                          className="w-full mt-3 border-elec-yellow/30 hover:border-elec-yellow text-xs"
-                          onClick={() => handleAccessResource(box.id)}
-                        >
-                          Access Resource
-                        </Button>
-                      </DialogTrigger>
-                    </div>
+                  <CardContent className="pt-0">
+                    <ul className="space-y-1 text-sm">
+                      <li className="flex items-start gap-2">
+                        <span className="h-2 w-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></span>
+                        <span>Level 3 NVQ Diploma in Electrotechnical Services</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="h-2 w-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></span>
+                        <span>18th Edition Wiring Regulations qualification</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="h-2 w-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></span>
+                        <span>Inspection and Testing qualification (2391 or 2394/2395)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="h-2 w-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></span>
+                        <span>Competent person scheme membership (NICEIC, NAPIT, etc.)</span>
+                      </li>
+                    </ul>
                   </CardContent>
                 </Card>
 
-                <DialogContent className="sm:max-w-md">
+                <Card className="border-elec-yellow/20 bg-elec-card shadow-md">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <Receipt className="h-5 w-5 text-elec-yellow" />
+                      <span>Startup Costs</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <ul className="space-y-1 text-sm">
+                      <li className="flex items-start gap-2">
+                        <span className="h-2 w-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></span>
+                        <span>Tools and equipment: £2,000-£5,000</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="h-2 w-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></span>
+                        <span>Vehicle and signage: £5,000-£15,000</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="h-2 w-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></span>
+                        <span>Insurance: £500-£1,500 annually</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="h-2 w-2 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></span>
+                        <span>Scheme registration: £500-£1,000 annually</span>
+                      </li>
+                    </ul>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Quick tips */}
+              <div className="bg-elec-yellow/10 p-5 rounded-md border border-elec-yellow/30">
+                <h3 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
+                  <Briefcase className="h-5 w-5" />
+                  Expert Quick Tips
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+                  {quickTips.map((tip, index) => (
+                    <div key={index} className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                      <p className="text-sm">{tip}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Key regulations */}
+              <Card className="border-elec-yellow/20 bg-elec-dark shadow-md">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <LucideShieldCheck className="h-5 w-5 text-elec-yellow" />
+                    <span>Key Regulations to Know</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {keyRegulations.map((reg, index) => (
+                      <HoverCard key={index}>
+                        <HoverCardTrigger asChild>
+                          <Button variant="outline" className="justify-start border-elec-yellow/20 hover:border-elec-yellow w-full">
+                            <span>{reg.name}</span>
+                          </Button>
+                        </HoverCardTrigger>
+                        <HoverCardContent className="w-80 bg-elec-dark border-elec-yellow/20">
+                          <div className="flex justify-between space-x-4">
+                            <div>
+                              <h4 className="text-sm font-semibold text-elec-yellow">{reg.name}</h4>
+                              <p className="text-xs mt-1">{reg.description}</p>
+                            </div>
+                          </div>
+                        </HoverCardContent>
+                      </HoverCard>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </CardContent>
+            
+            <CardFooter className="flex-col space-y-4 pt-0">
+              <Separator className="bg-elec-yellow/20" />
+              <div className="flex flex-col sm:flex-row gap-3 w-full">
+                <Button 
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 gap-2 flex-1"
+                  onClick={handleDownload}
+                >
+                  <Download className="h-4 w-4" />
+                  Download Business Startup Checklist
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="border-elec-yellow/30 hover:border-elec-yellow hover:bg-elec-yellow/10 flex-1"
+                  onClick={handleBookConsultation}
+                >
+                  Book a Business Consultation
+                </Button>
+              </div>
+            </CardFooter>
+          </Card>
+        </TabsContent>
+
+        {/* RESOURCES TAB */}
+        <TabsContent value="resources" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {businessResources.map((resource) => (
+              <Dialog key={resource.id}>
+                <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray/80 to-elec-gray/50 hover:border-elec-yellow/50 transition-all shadow-md h-full flex flex-col">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-center mb-2">
+                      {resource.icon}
+                    </div>
+                    <CardTitle className="text-center">{resource.title}</CardTitle>
+                    <CardDescription className="text-center line-clamp-2">
+                      {resource.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex-grow flex flex-col justify-between pt-2">
+                    <div className="space-y-3">
+                      <h4 className="text-xs text-elec-yellow mb-1">What's Included:</h4>
+                      <ul className="text-xs space-y-1.5 flex-1">
+                        {resource.sections.map((section, idx) => (
+                          <li key={idx} className="flex items-start gap-1.5">
+                            <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></span>
+                            <span>{section.title}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <DialogTrigger asChild>
+                      <Button 
+                        className="w-full mt-4 bg-elec-yellow/90 text-black hover:bg-elec-yellow"
+                        onClick={() => setSelectedResource(resource.id)}
+                      >
+                        Access Resource
+                      </Button>
+                    </DialogTrigger>
+                  </CardContent>
+                </Card>
+
+                <DialogContent className="sm:max-w-lg bg-elec-dark border-elec-yellow/20">
                   <DialogHeader>
-                    <DialogTitle className="text-elec-yellow">
-                      {resourceDialogContent[box.id as keyof typeof resourceDialogContent]?.title}
+                    <DialogTitle className="text-elec-yellow flex items-center gap-2">
+                      {resource.icon && <div className="h-5 w-5">{resource.icon}</div>}
+                      {resource.title}
                     </DialogTitle>
                     <DialogDescription>
-                      {resourceDialogContent[box.id as keyof typeof resourceDialogContent]?.description}
+                      {resource.description}
                     </DialogDescription>
                   </DialogHeader>
                   
                   <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
-                    {resourceDialogContent[box.id as keyof typeof resourceDialogContent]?.content.map((item, idx) => (
-                      <div key={idx} className="bg-elec-gray/70 p-3 rounded-md border border-elec-yellow/10">
-                        <h3 className="font-medium text-sm text-elec-yellow">{item.title}</h3>
-                        <p className="text-xs mt-1">{item.description}</p>
+                    {resource.sections.map((section, idx) => (
+                      <div key={idx} className="bg-elec-gray/70 p-4 rounded-md border border-elec-yellow/10">
+                        <h3 className="font-medium text-sm text-elec-yellow mb-2">{section.title}</h3>
+                        <p className="text-xs">{section.content}</p>
                       </div>
                     ))}
                   </div>
                   
-                  <DialogFooter className="flex justify-end gap-2 mt-4">
+                  <DialogFooter className="flex justify-between items-center mt-4">
                     <Button 
                       variant="outline" 
                       className="border-elec-yellow/30"
-                      onClick={() => toast.success("Resource added to your saved items")}
+                      onClick={() => toast.success("Resource saved to your account")}
                     >
                       Save Resource
                     </Button>
                     <Button 
-                      className="bg-elec-yellow hover:bg-elec-yellow/80 text-black"
+                      className="bg-elec-yellow text-black hover:bg-elec-yellow/80"
                       onClick={() => toast.success("Full guide will download shortly")}
                     >
                       Download Full Guide
@@ -296,368 +567,96 @@ const BusinessStartup = () => {
               </Dialog>
             ))}
           </div>
+        </TabsContent>
 
-          {/* Business Roadmap */}
-          <div className="space-y-4 mt-8">
-            <h3 className="text-xl font-medium flex items-center gap-2">
-              <Building className="h-5 w-5 text-elec-yellow" />
-              <span>Business Establishment Roadmap</span>
-            </h3>
-            
-            <div className="space-y-4">
-              {roadmapSteps.map((step, index) => (
-                <Card key={step.id} className="border-elec-yellow/20 bg-elec-gray/80 transition-all hover:border-elec-yellow/40">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col sm:flex-row gap-4">
-                      <div className="flex-shrink-0 flex items-start">
-                        <div className="bg-elec-yellow text-elec-dark h-8 w-8 rounded-full flex items-center justify-center font-bold text-lg shadow-md">
-                          {index + 1}
-                        </div>
-                      </div>
+        {/* ROADMAP TAB */}
+        <TabsContent value="roadmap" className="space-y-5">
+          <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray/80 to-elec-gray/50 shadow-md">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TrendingUp className="h-5 w-5 text-elec-yellow" />
+                Business Establishment Roadmap
+              </CardTitle>
+              <CardDescription>
+                Follow this step-by-step guide to successfully launch your electrical contracting business
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <div className="space-y-6">
+                {startupSteps.map((step, index) => (
+                  <Popover key={step.id}>
+                    <div className="relative flex">
+                      {/* Timeline connector */}
+                      {index < startupSteps.length - 1 && (
+                        <div className="absolute left-6 top-12 w-0.5 h-14 bg-elec-yellow/30 z-0"></div>
+                      )}
                       
-                      <div className="space-y-2 flex-grow">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                          <h4 className="font-medium text-lg text-elec-yellow/90">{step.title}</h4>
-                          <span className="text-xs bg-elec-dark px-3 py-1 rounded-full text-elec-yellow border border-elec-yellow/20">
-                            {step.timeline}
-                          </span>
+                      <div className="flex gap-4 items-start relative z-10">
+                        {/* Step number */}
+                        <div className="bg-elec-yellow text-black h-12 w-12 rounded-full flex items-center justify-center font-bold text-xl shadow-md flex-shrink-0">
+                          {step.id}
                         </div>
                         
-                        <p className="text-sm">{step.description}</p>
-                        
-                        <div className="pt-2">
-                          <h5 className="text-xs text-elec-yellow mb-1.5">Key Tasks:</h5>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
-                            {step.keyTasks.map((task, idx) => (
-                              <div key={idx} className="flex items-center gap-2">
-                                <CheckCircle className="h-3 w-3 text-elec-yellow" />
-                                <span className="text-xs">{task}</span>
-                              </div>
-                            ))}
+                        {/* Step content */}
+                        <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-4 flex-grow shadow-md">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                            <h3 className="font-semibold text-lg flex items-center gap-2">
+                              {step.icon}
+                              <span>{step.title}</span>
+                            </h3>
+                            
+                            <PopoverTrigger asChild>
+                              <Button variant="outline" size="sm" className="border-elec-yellow/30 hover:border-elec-yellow text-xs">
+                                See Details
+                              </Button>
+                            </PopoverTrigger>
                           </div>
+                          
+                          <p className="text-sm text-gray-300">{step.description}</p>
                         </div>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
+                    
+                    <PopoverContent className="w-80 bg-elec-dark border-elec-yellow/20">
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-2">
+                          {step.icon}
+                          <h4 className="font-medium text-elec-yellow">{step.title}</h4>
+                        </div>
+                        <ul className="space-y-2">
+                          {step.content.map((item, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5" />
+                              <span className="text-xs">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
 
-          <Collapsible 
-            open={openSection === "legal"} 
-            onOpenChange={() => toggleSection("legal")}
-            className="border rounded-md overflow-hidden border-elec-yellow/20"
-          >
-            <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-elec-gray/70">
-              <div className="flex items-center gap-3">
-                <LucideShieldCheck className="h-5 w-5 text-elec-yellow" />
-                <h3 className="font-semibold">Legal Requirements & Qualifications</h3>
-              </div>
-              <span className="text-elec-yellow">{openSection === "legal" ? "−" : "+"}</span>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20 bg-elec-gray/40">
-              <div className="space-y-4 pt-4">
-                <div>
-                  <h4 className="font-medium mb-2 text-elec-yellow/90">Essential Qualifications</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Level 3 NVQ Diploma in Electrotechnical Services</li>
-                    <li>City & Guilds 2365 Diploma in Electrical Installations</li>
-                    <li>18th Edition Wiring Regulations (BS7671)</li>
-                    <li>Inspection and Testing qualification (2391 or 2394/2395)</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium mb-2 text-elec-yellow/90">Competent Person Scheme Registration</h4>
-                  <p className="text-sm mb-2">
-                    You should register with one of the following competent person schemes:
-                  </p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>NICEIC (National Inspection Council for Electrical Installation Contracting)</li>
-                    <li>NAPIT (National Association of Professional Inspectors and Testers)</li>
-                    <li>ELECSA</li>
-                    <li>SELECT (Scotland)</li>
-                  </ul>
-                  <p className="text-sm mt-2">
-                    These organisations will assess your technical competence and provide certification that allows you to self-certify 
-                    your work as compliant with Building Regulations, including Part P for domestic work.
-                  </p>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium mb-2 text-elec-yellow/90">Business Registration</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Register with HMRC as self-employed (sole trader) or establish a limited company via Companies House</li>
-                    <li>Register for VAT if your turnover exceeds £85,000 (as of 2023/24 tax year)</li>
-                    <li>Set up proper accounting systems to track income and expenses</li>
-                    <li>Register with the Information Commissioner's Office (ICO) if handling customer data</li>
-                  </ul>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          <Collapsible 
-            open={openSection === "financial"} 
-            onOpenChange={() => toggleSection("financial")}
-            className="border rounded-md overflow-hidden border-elec-yellow/20"
-          >
-            <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-elec-gray/70">
-              <div className="flex items-center gap-3">
-                <CreditCard className="h-5 w-5 text-elec-yellow" />
-                <h3 className="font-semibold">Financial Planning & Insurance</h3>
-              </div>
-              <span className="text-elec-yellow">{openSection === "financial" ? "−" : "+"}</span>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20 bg-elec-gray/40">
-              <div className="space-y-4 pt-4">
-                <div>
-                  <h4 className="font-medium mb-2 text-elec-yellow/90">Essential Insurance</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><span className="font-medium">Public Liability Insurance</span> - Protects against claims for injury or damage caused to third parties or property (typically £2-5 million cover)</li>
-                    <li><span className="font-medium">Professional Indemnity Insurance</span> - Covers errors or omissions in your work or advice</li>
-                    <li><span className="font-medium">Employers' Liability Insurance</span> - Mandatory if you employ anyone (minimum £5 million cover)</li>
-                    <li><span className="font-medium">Tool and Equipment Insurance</span> - Protects your tools against theft, damage or loss</li>
-                    <li><span className="font-medium">Personal Accident Insurance</span> - Provides income if you're unable to work due to injury</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium mb-2 text-elec-yellow/90">Startup Costs Estimation</h4>
-                  <p className="text-sm mb-2">Typical startup costs include:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Tools and equipment: £2,000-£5,000</li>
-                    <li>Vehicle and signage: £5,000-£15,000</li>
-                    <li>Insurance: £500-£1,500 annually</li>
-                    <li>Competent person scheme registration: £500-£1,000 annually</li>
-                    <li>Accounting software: £10-£30 monthly</li>
-                    <li>Marketing and website: £500-£2,000</li>
-                    <li>Initial operational costs (3 months): £3,000-£5,000</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium mb-2 text-elec-yellow/90">Pricing Your Services</h4>
-                  <p className="text-sm">
-                    When setting your rates, consider:
-                  </p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Your overhead costs (vehicle, tools, insurance, certifications)</li>
-                    <li>Material costs and markup (typically 10-20%)</li>
-                    <li>Your desired hourly rate (£30-£60 depending on location and expertise)</li>
-                    <li>Market rates in your area (research competitors)</li>
-                    <li>Include travel time and parking costs</li>
-                    <li>Factor in time for quoting and administrative tasks</li>
-                  </ul>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          <Collapsible 
-            open={openSection === "operations"} 
-            onOpenChange={() => toggleSection("operations")}
-            className="border rounded-md overflow-hidden border-elec-yellow/20"
-          >
-            <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-elec-gray/70">
-              <div className="flex items-center gap-3">
-                <Building className="h-5 w-5 text-elec-yellow" />
-                <h3 className="font-semibold">Business Operations & Marketing</h3>
-              </div>
-              <span className="text-elec-yellow">{openSection === "operations" ? "−" : "+"}</span>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20 bg-elec-gray/40">
-              <div className="space-y-4 pt-4">
-                <div>
-                  <h4 className="font-medium mb-2 text-elec-yellow/90">Essential Business Systems</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><span className="font-medium">Quoting system</span> - Standardised quoting process to ensure accuracy and consistency</li>
-                    <li><span className="font-medium">Invoicing system</span> - Professional invoices with clear payment terms</li>
-                    <li><span className="font-medium">Job scheduling</span> - System to track and manage appointments</li>
-                    <li><span className="font-medium">Document management</span> - For certificates, invoices, and compliance documents</li>
-                    <li><span className="font-medium">Customer database</span> - To build and maintain customer relationships</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium mb-2 text-elec-yellow/90">Effective Marketing Strategies</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><span className="font-medium">Professional website</span> - With examples of your work, services, and contact information</li>
-                    <li><span className="font-medium">Google My Business</span> - Essential for local search visibility</li>
-                    <li><span className="font-medium">Social media presence</span> - Particularly Facebook and Instagram to showcase work</li>
-                    <li><span className="font-medium">Vehicle branding</span> - A mobile billboard for your business</li>
-                    <li><span className="font-medium">Local advertising</span> - Community noticeboards, local papers</li>
-                    <li><span className="font-medium">Partnerships</span> - With builders, property managers, and estate agents</li>
-                    <li><span className="font-medium">Customer reviews</span> - Build and showcase positive feedback</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium mb-2 text-elec-yellow/90">Building Customer Trust</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Always provide detailed written quotes before starting work</li>
-                    <li>Explain work clearly and in non-technical language</li>
-                    <li>Be punctual and communicate any delays immediately</li>
-                    <li>Leave work areas clean and tidy</li>
-                    <li>Provide all necessary certification promptly</li>
-                    <li>Offer warranties on your workmanship</li>
-                    <li>Follow up after completing jobs</li>
-                  </ul>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          <Collapsible 
-            open={openSection === "scalability"} 
-            onOpenChange={() => toggleSection("scalability")}
-            className="border rounded-md overflow-hidden border-elec-yellow/20"
-          >
-            <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-elec-gray/70">
-              <div className="flex items-center gap-3">
-                <Users className="h-5 w-5 text-elec-yellow" />
-                <h3 className="font-semibold">Growth & Building a Team</h3>
-              </div>
-              <span className="text-elec-yellow">{openSection === "scalability" ? "−" : "+"}</span>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20 bg-elec-gray/40">
-              <div className="space-y-4 pt-4">
-                <div>
-                  <h4 className="font-medium mb-2 text-elec-yellow/90">Growing Your Business</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Focus on a specific niche (domestic, commercial, industrial, renewable)</li>
-                    <li>Develop recurring revenue streams (maintenance contracts, periodic testing)</li>
-                    <li>Expand your service offering (EV chargers, smart home installations)</li>
-                    <li>Pursue larger contracts as your capacity grows</li>
-                    <li>Invest in efficiency improvements (tools, software, systems)</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium mb-2 text-elec-yellow/90">Taking on Staff</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Understand employer responsibilities (PAYE, National Insurance, pensions)</li>
-                    <li>Consider subcontractors initially before full-time employees</li>
-                    <li>Create clear job descriptions and performance expectations</li>
-                    <li>Ensure proper health and safety policies are in place</li>
-                    <li>Invest in training and development</li>
-                    <li>Consider apprenticeships to develop talent with government support</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium mb-2 text-elec-yellow/90">Common Pitfalls to Avoid</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Undercharging for services</li>
-                    <li>Poor cash flow management</li>
-                    <li>Taking on too much work too quickly</li>
-                    <li>Inadequate record-keeping</li>
-                    <li>Not setting aside funds for tax obligations</li>
-                    <li>Failing to adapt to regulatory changes</li>
-                    <li>Not investing in continued professional development</li>
-                  </ul>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          <Collapsible 
-            open={openSection === "compliance"} 
-            onOpenChange={() => toggleSection("compliance")}
-            className="border rounded-md overflow-hidden border-elec-yellow/20"
-          >
-            <CollapsibleTrigger className="flex items-center justify-between w-full p-4 hover:bg-elec-gray/70">
-              <div className="flex items-center gap-3">
-                <BadgeCheck className="h-5 w-5 text-elec-yellow" />
-                <h3 className="font-semibold">Regulatory Compliance & Standards</h3>
-              </div>
-              <span className="text-elec-yellow">{openSection === "compliance" ? "−" : "+"}</span>
-            </CollapsibleTrigger>
-            <CollapsibleContent className="p-4 pt-0 border-t border-elec-yellow/20 bg-elec-gray/40">
-              <div className="space-y-4 pt-4">
-                <div>
-                  <h4 className="font-medium mb-2 text-elec-yellow/90">Key Regulations to Know</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li><span className="font-medium">BS 7671 (18th Edition Wiring Regulations)</span> - The UK standard for electrical installations</li>
-                    <li><span className="font-medium">Building Regulations Part P</span> - Requires domestic electrical work to meet safety standards</li>
-                    <li><span className="font-medium">Electricity at Work Regulations 1989</span> - Legal framework for electrical safety at work</li>
-                    <li><span className="font-medium">Health and Safety at Work Act 1974</span> - Overall framework for workplace safety</li>
-                    <li><span className="font-medium">Construction Design and Management (CDM) Regulations 2015</span> - For construction projects</li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium mb-2 text-elec-yellow/90">Notification Requirements</h4>
-                  <p className="text-sm mb-2">
-                    Certain electrical work must be notified to local building control authorities, including:
-                  </p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>New circuits in domestic properties</li>
-                    <li>Work in special locations (bathrooms, swimming pools)</li>
-                    <li>Consumer unit replacements</li>
-                  </ul>
-                  <p className="text-sm mt-2">
-                    Membership in a competent person scheme allows you to self-certify work instead of going through building control.
-                  </p>
-                </div>
-                
-                <div>
-                  <h4 className="font-medium mb-2 text-elec-yellow/90">Documentation Requirements</h4>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Electrical Installation Certificate (EIC) for new installations</li>
-                    <li>Electrical Installation Condition Report (EICR) for inspections</li>
-                    <li>Minor Electrical Installation Works Certificate (MEIWC)</li>
-                    <li>Building Regulations compliance certificates</li>
-                    <li>Risk assessments and method statements</li>
-                    <li>Public liability insurance certificates</li>
-                    <li>Waste carrier license and waste transfer notes</li>
-                  </ul>
-                </div>
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
-
-          <div className="bg-elec-yellow/10 p-4 rounded-md border border-elec-yellow/30 mt-6">
-            <h3 className="font-semibold text-elec-yellow mb-2">Expert Tips for Success</h3>
-            <ul className="list-disc pl-6 space-y-2 text-sm">
-              <li><span className="font-medium">Focus on reputation</span> - Word-of-mouth is your most powerful marketing tool</li>
-              <li><span className="font-medium">Stay current</span> - Keep up with the latest regulations and technology trends</li>
-              <li><span className="font-medium">Network effectively</span> - Join trade associations and local business groups</li>
-              <li><span className="font-medium">Manage your finances carefully</span> - Set aside tax money and maintain a cash reserve</li>
-              <li><span className="font-medium">Value your time</span> - Charge appropriately for your expertise and experience</li>
-              <li><span className="font-medium">Invest in quality tools</span> - They increase efficiency and demonstrate professionalism</li>
-              <li><span className="font-medium">Consider specialising</span> - Develop expertise in growing areas like renewable energy</li>
-            </ul>
-          </div>
-        </CardContent>
-        <CardFooter className="flex flex-col items-start gap-4 pt-0">
-          <Separator className="w-full bg-elec-yellow/20" />
-          <div className="flex flex-col space-y-4 w-full">
-            <div className="flex items-center gap-2">
-              <Download className="h-5 w-5 text-elec-yellow" />
-              <p className="text-sm font-medium">Need more help? Download our comprehensive business startup checklist</p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                className="bg-elec-yellow hover:bg-elec-yellow/80 text-black flex-grow shadow-md"
-                onClick={handleDownload}
-              >
-                Download Business Startup Checklist
-              </Button>
-              <Button 
-                variant="outline" 
-                className="border-elec-yellow/30 hover:border-elec-yellow hover:bg-elec-yellow/10 flex-grow"
-                onClick={() => toast.success("Consultation request received", {
-                  description: "Our team will contact you shortly to schedule your business consultation"
-                })}
-              >
-                Book a Business Consultation
-              </Button>
-            </div>
-          </div>
-        </CardFooter>
-      </Card>
+          <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray/80 to-elec-gray/50 shadow-md">
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="h-5 w-5 text-elec-yellow" />
+                Business Setup Disclaimer
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-gray-300">
+                The information provided is for general guidance only and does not constitute financial, legal, or business advice. 
+                Always consult with qualified professionals regarding your specific business circumstances. ElecMate is not endorsed by, 
+                directly affiliated with, maintained, authorised, or sponsored by any regulatory bodies or certification schemes mentioned. 
+                All product names, logos, and brands are property of their respective owners.
+              </p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
