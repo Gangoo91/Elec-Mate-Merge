@@ -11,7 +11,6 @@ import {
   Building, 
   UserCheck
 } from "lucide-react";
-import BusinessBuilder from "@/components/electrician/business/BusinessBuilder";
 
 const BusinessDevelopment = () => {
   const businessSections = [
@@ -94,8 +93,6 @@ const BusinessDevelopment = () => {
           </Link>
         ))}
       </div>
-      
-      <BusinessBuilder />
       
       <Card className="border-elec-yellow/20 bg-elec-gray mt-6">
         <CardHeader className="pb-2">
