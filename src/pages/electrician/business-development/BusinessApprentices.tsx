@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { GraduationCap, ArrowLeft, Pound, Award, Briefcase, FileText, HandHelping, User } from "lucide-react";
+import { GraduationCap, ArrowLeft, Award, Briefcase, FileText, HandHelping, User, PoundSterling } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -177,7 +177,7 @@ const BusinessApprentices = () => {
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-lg flex items-center gap-2">
-                      <Pound className="h-5 w-5 text-elec-yellow" />
+                      <PoundSterling className="h-5 w-5 text-elec-yellow" />
                       Financial Support for Sole Traders
                     </CardTitle>
                   </div>
