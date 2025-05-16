@@ -22,6 +22,15 @@ import WorkLifeBalance from "@/pages/apprentice/mental-health/WorkLifeBalance";
 import CrisisResources from "@/pages/apprentice/mental-health/CrisisResources";
 import BusinessDevelopment from "@/pages/electrician/BusinessDevelopment";
 
+// Import placeholder business development section pages
+import BusinessStartup from "@/pages/electrician/business-development/BusinessStartup";
+import BusinessApprentices from "@/pages/electrician/business-development/BusinessApprentices";
+import BusinessGrowth from "@/pages/electrician/business-development/BusinessGrowth";
+import BusinessCustomers from "@/pages/electrician/business-development/BusinessCustomers";
+import BusinessTeam from "@/pages/electrician/business-development/BusinessTeam";
+import BusinessCommercial from "@/pages/electrician/business-development/BusinessCommercial";
+import BusinessTemplates from "@/pages/electrician/business-development/BusinessTemplates";
+
 const ElectricianHubRoutes = () => {
   return (
     <Routes>
@@ -46,6 +55,13 @@ const ElectricianHubRoutes = () => {
       <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
       <Route path="mental-health/crisis-resources" element={<CrisisResources />} />
       <Route path="business-development" element={<BusinessDevelopment />} />
+      <Route path="business-development/startup" element={<BusinessStartup />} />
+      <Route path="business-development/apprentices" element={<BusinessApprentices />} />
+      <Route path="business-development/growth" element={<BusinessGrowth />} />
+      <Route path="business-development/customers" element={<BusinessCustomers />} />
+      <Route path="business-development/team" element={<BusinessTeam />} />
+      <Route path="business-development/commercial" element={<BusinessCommercial />} />
+      <Route path="business-development/templates" element={<BusinessTemplates />} />
     </Routes>
   );
 };

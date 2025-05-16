@@ -7,7 +7,7 @@ import CareerPathways from "@/components/apprentice/career/CareerPathways";
 import CareerCourses from "@/components/apprentice/career/CareerCourses";
 import FurtherEducation from "@/components/apprentice/career/FurtherEducation";
 import ProfessionalAccreditation from "@/components/apprentice/career/ProfessionalAccreditation";
-import BusinessBuilder from "@/components/apprentice/career/BusinessBuilder";
+import BusinessBuilder from "@/components/electrician/business/BusinessBuilder";
 import CareerWelcomeState from "@/components/apprentice/career/CareerWelcomeState";
 import CareerPageHeader from "@/components/apprentice/career/CareerPageHeader";
 import { careerSections } from "@/components/apprentice/career/SectionData";
