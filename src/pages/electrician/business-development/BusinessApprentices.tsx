@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { GraduationCap, ArrowLeft, Award, Briefcase, FileText, HandHelping, User, PoundSterling } from "lucide-react";
@@ -6,9 +5,20 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
+import GoogleMapsLoader from "@/components/job-vacancies/GoogleMapsLoader";
+import TrainingProviderMap from "@/components/apprentice/TrainingProviderMap";
 
 const BusinessApprentices = () => {
   const [activeTab, setActiveTab] = useState("overview");
+  const [showMap, setShowMap] = useState(false);
+
+  const handleOpenMap = () => {
+    setShowMap(true);
+  };
+
+  const handleCloseMap = () => {
+    setShowMap(false);
+  };
 
   return (
     <div className="space-y-6 animate-fade-in pb-8">
@@ -259,7 +269,10 @@ const BusinessApprentices = () => {
                       <li>Use the apprenticeship service account to manage your funding and payments</li>
                     </ol>
 
-                    <Button className="mt-4 bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark">
+                    <Button 
+                      className="mt-4 bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark"
+                      onClick={handleOpenMap}
+                    >
                       Find Local Training Providers
                     </Button>
                   </div>
@@ -766,6 +779,13 @@ const BusinessApprentices = () => {
           </Tabs>
         </CardContent>
       </Card>
+
+      {/* Training Provider Map */}
+      {showMap && (
+        <GoogleMapsLoader>
+          <TrainingProviderMap onClose={handleCloseMap} />
+        </GoogleMapsLoader>
+      )}
     </div>
   );
 };

@@ -33,6 +33,8 @@ declare namespace google {
       setMap(map: Map | null): void;
       getPosition(): LatLng;
       setPosition(latLng: LatLng | LatLngLiteral): void;
+      getTitle(): string | undefined;
+      setTitle(title: string): void;
       addListener(event: string, handler: Function): MapsEventListener;
     }
 
@@ -48,6 +50,79 @@ declare namespace google {
       constructor(width: number, height: number);
       width: number;
       height: number;
+    }
+
+    namespace places {
+      class PlacesService {
+        constructor(attrContainer: Map | Element);
+        nearbySearch(request: PlaceSearchRequest, callback: (results: PlaceResult[], status: PlacesServiceStatus, pagination: PlaceSearchPagination) => void): void;
+        textSearch(request: TextSearchRequest, callback: (results: PlaceResult[], status: PlacesServiceStatus) => void): void;
+        getDetails(request: PlaceDetailsRequest, callback: (result: PlaceResult, status: PlacesServiceStatus) => void): void;
+      }
+
+      interface PlaceSearchRequest {
+        bounds?: LatLngBounds;
+        location?: LatLng | LatLngLiteral;
+        radius?: number;
+        rankBy?: RankBy;
+        keyword?: string;
+        type?: string;
+      }
+
+      interface TextSearchRequest {
+        query: string;
+        location?: LatLng | LatLngLiteral;
+        radius?: number;
+        bounds?: LatLngBounds;
+        type?: string;
+      }
+
+      interface PlaceDetailsRequest {
+        placeId: string;
+        fields?: string[];
+      }
+
+      enum RankBy {
+        PROMINENCE = 0,
+        DISTANCE = 1
+      }
+
+      interface PlaceSearchPagination {
+        nextPage(): void;
+        hasNextPage: boolean;
+      }
+
+      interface PlaceResult {
+        place_id?: string;
+        name?: string;
+        vicinity?: string;
+        formatted_address?: string;
+        formatted_phone_number?: string;
+        geometry?: PlaceGeometry;
+        photos?: PlacePhoto[];
+        rating?: number;
+        website?: string;
+        types?: string[];
+      }
+
+      interface PlaceGeometry {
+        location: LatLng;
+        viewport: LatLngBounds;
+      }
+
+      interface PlacePhoto {
+        getUrl(opts: PhotoOptions): string;
+        height: number;
+        width: number;
+        html_attributions: string[];
+      }
+
+      interface PhotoOptions {
+        maxWidth?: number;
+        maxHeight?: number;
+      }
+
+      type PlacesServiceStatus = "OK" | "ZERO_RESULTS" | "OVER_QUERY_LIMIT" | "REQUEST_DENIED" | "INVALID_REQUEST" | "UNKNOWN_ERROR";
     }
 
     interface MapOptions {
@@ -76,6 +151,20 @@ declare namespace google {
       origin?: Point;
       anchor?: Point;
       scaledSize?: Size;
+      path?: SymbolPath | string;
+      fillColor?: string;
+      fillOpacity?: number;
+      strokeWeight?: number;
+      strokeColor?: string;
+      scale?: number;
+    }
+
+    enum SymbolPath {
+      BACKWARD_CLOSED_ARROW = 3,
+      BACKWARD_OPEN_ARROW = 4,
+      CIRCLE = 0,
+      FORWARD_CLOSED_ARROW = 1,
+      FORWARD_OPEN_ARROW = 2
     }
 
     interface Size {
