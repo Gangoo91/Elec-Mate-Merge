@@ -25,6 +25,7 @@ import BusinessDevelopment from "@/pages/electrician/BusinessDevelopment";
 // Import placeholder business development section pages
 import BusinessStartup from "@/pages/electrician/business-development/BusinessStartup";
 import BusinessApprentices from "@/pages/electrician/business-development/BusinessApprentices";
+import BusinessElectricians from "@/pages/electrician/business-development/BusinessElectricians";
 import BusinessGrowth from "@/pages/electrician/business-development/BusinessGrowth";
 import BusinessCustomers from "@/pages/electrician/business-development/BusinessCustomers";
 import BusinessTeam from "@/pages/electrician/business-development/BusinessTeam";
@@ -57,6 +58,7 @@ const ElectricianHubRoutes = () => {
       <Route path="business-development" element={<BusinessDevelopment />} />
       <Route path="business-development/startup" element={<BusinessStartup />} />
       <Route path="business-development/apprentices" element={<BusinessApprentices />} />
+      <Route path="business-development/electricians" element={<BusinessElectricians />} />
       <Route path="business-development/growth" element={<BusinessGrowth />} />
       <Route path="business-development/customers" element={<BusinessCustomers />} />
       <Route path="business-development/team" element={<BusinessTeam />} />

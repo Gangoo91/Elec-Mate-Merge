@@ -9,7 +9,7 @@ import {
   HandHelping, 
   Users, 
   Building, 
-  FileText 
+  UserCheck
 } from "lucide-react";
 import BusinessBuilder from "@/components/electrician/business/BusinessBuilder";
 
@@ -31,38 +31,38 @@ const BusinessDevelopment = () => {
     },
     {
       id: 3,
+      title: "Onboarding Electricians",
+      description: "Effective strategies for recruiting, integrating and retaining qualified electricians",
+      icon: <UserCheck className="h-12 w-12 text-elec-yellow opacity-80" />,
+      link: "/electrician/business-development/electricians"
+    },
+    {
+      id: 4,
       title: "Growing Your Business",
       description: "Strategies for expanding your electrical business, from marketing to diversifying services",
       icon: <TrendingUp className="h-12 w-12 text-elec-yellow opacity-80" />,
       link: "/electrician/business-development/growth"
     },
     {
-      id: 4,
+      id: 5,
       title: "Customer Acquisition",
       description: "Effective methods to attract and retain clients for your electrical services",
       icon: <HandHelping className="h-12 w-12 text-elec-yellow opacity-80" />,
       link: "/electrician/business-development/customers"
     },
     {
-      id: 5,
+      id: 6,
       title: "Team Management",
       description: "Tools and techniques for managing your electrical team efficiently",
       icon: <Users className="h-12 w-12 text-elec-yellow opacity-80" />,
       link: "/electrician/business-development/team"
     },
     {
-      id: 6,
+      id: 7,
       title: "Commercial Properties",
       description: "Expanding into commercial electrical work and managing larger projects",
       icon: <Building className="h-12 w-12 text-elec-yellow opacity-80" />,
       link: "/electrician/business-development/commercial"
-    },
-    {
-      id: 7,
-      title: "Business Templates",
-      description: "Essential documents and templates for running your electrical contracting business",
-      icon: <FileText className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/electrician/business-development/templates"
     }
   ];
   
