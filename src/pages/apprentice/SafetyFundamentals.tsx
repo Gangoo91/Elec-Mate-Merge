@@ -154,7 +154,7 @@ const SafetyFundamentals = () => {
                     <li><strong>5-30 mA</strong>: Painful shock, muscle control lost</li>
                     <li><strong>30-50 mA</strong>: Respiratory difficulty</li>
                     <li><strong>50-100 mA</strong>: Ventricular fibrillation</li>
-                    <li><strong>>100 mA</strong>: Cardiac arrest, severe burns</li>
+                    <li><strong>&gt;100 mA</strong>: Cardiac arrest, severe burns</li>
                   </ul>
                 </div>
                 
@@ -420,3 +420,4 @@ const SafetyFundamentals = () => {
 };
 
 export default SafetyFundamentals;
+
