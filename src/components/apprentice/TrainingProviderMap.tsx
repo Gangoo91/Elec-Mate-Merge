@@ -14,6 +14,10 @@ interface TrainingProvider {
   vicinity: string;
   rating?: number;
   place_id: string;
+  phone?: string;
+  website?: string;
+  address?: string;
+  photos?: google.maps.places.PlacePhoto[];
 }
 
 interface TrainingProviderMapProps {
@@ -66,12 +70,8 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
                 position: userLocation,
                 map: googleMapRef.current,
                 icon: {
-                  path: window.google.maps.SymbolPath.CIRCLE,
-                  scale: 8,
-                  fillColor: "#4285F4",
-                  fillOpacity: 0.7,
-                  strokeWeight: 2,
-                  strokeColor: "#FFFFFF"
+                  url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+                  scaledSize: new window.google.maps.Size(24, 24)
                 },
                 title: "Your approximate location"
               });
@@ -165,7 +165,7 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
                               website: placeResult.website,
                               address: placeResult.formatted_address,
                               photos: placeResult.photos
-                            } as any);
+                            });
                           }
                         }
                       );
