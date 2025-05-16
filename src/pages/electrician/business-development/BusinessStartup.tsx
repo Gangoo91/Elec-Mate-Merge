@@ -56,7 +56,6 @@ import {
 } from "lucide-react";
 
 const BusinessStartup = () => {
-  const [selectedResource, setSelectedResource] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState("overview");
 
   const handleDownload = () => {
@@ -106,7 +105,7 @@ const BusinessStartup = () => {
       content: [
         "Set up accounting and invoicing systems",
         "Establish scheduling and job management processes",
-        "Create standardized templates (quotes, invoices, certificates)",
+        "Create standardised templates (quotes, invoices, certificates)",
         "Develop health and safety protocols",
         "Set up inventory and tool management systems"
       ]
@@ -139,164 +138,6 @@ const BusinessStartup = () => {
     }
   ];
 
-  const businessResources = [
-    {
-      id: "businessPlan",
-      title: "Business Plan Template",
-      description: "Comprehensive business plan template tailored for electrical contractors",
-      icon: <FileText className="h-10 w-10 text-elec-yellow" />,
-      sections: [
-        {
-          title: "Executive Summary",
-          content: "A template for creating a concise overview of your electrical business, including mission statement, key objectives, and unique selling proposition."
-        },
-        {
-          title: "Market Analysis",
-          content: "Framework for researching and analyzing the local electrical services market, competition, and identifying your target customers."
-        },
-        {
-          title: "Service Offerings",
-          content: "Templates to define your service packages, pricing strategy, and competitive advantages in the electrical contracting space."
-        },
-        {
-          title: "Financial Projections",
-          content: "Spreadsheets for forecasting startup costs, operating expenses, revenue projections, and break-even analysis specific to electrical businesses."
-        }
-      ]
-    },
-    {
-      id: "legalCompliance",
-      title: "Legal & Compliance Guide",
-      description: "Essential legal and regulatory guidance for UK electrical contractors",
-      icon: <LucideShieldCheck className="h-10 w-10 text-elec-yellow" />,
-      sections: [
-        {
-          title: "Certification Requirements",
-          content: "Detailed breakdown of all required qualifications and certifications, including NVQ Level 3, 18th Edition, inspection & testing qualifications."
-        },
-        {
-          title: "Competent Person Schemes",
-          content: "Comparison guide to different schemes (NICEIC, NAPIT, ELECSA) with application processes and requirements for each."
-        },
-        {
-          title: "Building Regulations",
-          content: "Comprehensive overview of Part P requirements and notification procedures for electrical work in dwellings."
-        },
-        {
-          title: "Health & Safety Compliance",
-          content: "Templates for risk assessments, method statements, and safety policies tailored for electrical contractors."
-        }
-      ]
-    },
-    {
-      id: "financialTools",
-      title: "Financial Management Kit",
-      description: "Financial tools and templates for managing your electrical business",
-      icon: <CreditCard className="h-10 w-10 text-elec-yellow" />,
-      sections: [
-        {
-          title: "Pricing Calculator",
-          content: "Spreadsheet tool to calculate accurate job prices, including labor, materials, overhead recovery, and profit margins."
-        },
-        {
-          title: "Cash Flow Management",
-          content: "Templates for tracking income, expenses, and maintaining healthy cash flow in your electrical business."
-        },
-        {
-          title: "Tax Planning",
-          content: "Guide to tax obligations, deductions, and planning specific to electrical contractors, including VAT considerations."
-        },
-        {
-          title: "Investment Planning",
-          content: "Tools for planning equipment purchases, vehicle investments, and business expansion with ROI calculations."
-        }
-      ]
-    },
-    {
-      id: "marketingKit",
-      title: "Marketing Toolkit",
-      description: "Marketing resources to help grow your electrical contracting business",
-      icon: <TrendingUp className="h-10 w-10 text-elec-yellow" />,
-      sections: [
-        {
-          title: "Brand Development",
-          content: "Templates and guides for creating a professional electrical business brand, including logo design brief and messaging guidelines."
-        },
-        {
-          title: "Online Presence",
-          content: "Step-by-step guide to creating a professional website, setting up Google My Business, and managing social media profiles."
-        },
-        {
-          title: "Customer Acquisition",
-          content: "Strategies for generating leads, building relationships with property developers, and establishing referral networks."
-        },
-        {
-          title: "Customer Retention",
-          content: "Templates for follow-up communications, service reminders, and developing ongoing maintenance contracts."
-        }
-      ]
-    },
-    {
-      id: "operationsManual",
-      title: "Operations Manual",
-      description: "Systems and processes to streamline electrical business operations",
-      icon: <Building className="h-10 w-10 text-elec-yellow" />,
-      sections: [
-        {
-          title: "Job Management",
-          content: "Workflows and templates for managing jobs from inquiry to completion, including scheduling, customer communications, and quality control."
-        },
-        {
-          title: "Document Management",
-          content: "Systems for managing certificates, test results, and compliance documentation with templates and filing structures."
-        },
-        {
-          title: "Inventory Control",
-          content: "Tools for managing materials, tracking usage, and optimizing supplier relationships to reduce costs."
-        },
-        {
-          title: "Vehicle & Tool Management",
-          content: "Systems for maintaining vehicles, tracking tool inventory, and planning equipment upgrades."
-        }
-      ]
-    },
-    {
-      id: "teamBuilding",
-      title: "Team Building Guide",
-      description: "Resources for hiring and managing staff in your electrical business",
-      icon: <UserCheck className="h-10 w-10 text-elec-yellow" />,
-      sections: [
-        {
-          title: "Recruitment Process",
-          content: "Templates for job descriptions, interview questions, and skills assessments specific to hiring electricians and support staff."
-        },
-        {
-          title: "Onboarding Program",
-          content: "Structured onboarding process to integrate new team members, including safety training and company procedures."
-        },
-        {
-          title: "Performance Management",
-          content: "Systems for setting expectations, providing feedback, and developing team members' skills and careers."
-        },
-        {
-          title: "Apprenticeship Management",
-          content: "Guide to establishing an apprenticeship program, including training frameworks and mentor systems."
-        }
-      ]
-    }
-  ];
-
-  const quickTips = [
-    "Focus on building a strong reputation with impeccable workmanship",
-    "Invest in quality tools that improve efficiency and last longer",
-    "Build relationships with other trades for consistent referral business",
-    "Price your services based on value, not just to be the cheapest option",
-    "Set aside money for taxes from every job payment",
-    "Maintain a cash reserve to handle unexpected business expenses",
-    "Continuously update your technical knowledge and qualifications",
-    "Consider specializing in growing areas like EV charging or renewables"
-  ];
-
   const keyRegulations = [
     {
       name: "BS 7671 (18th Edition)",
@@ -316,6 +157,79 @@ const BusinessStartup = () => {
     }
   ];
 
+  const quickTips = [
+    "Focus on building a strong reputation with impeccable workmanship",
+    "Invest in quality tools that improve efficiency and last longer",
+    "Build relationships with other trades for consistent referral business",
+    "Price your services based on value, not just to be the cheapest option",
+    "Set aside money for taxes from every job payment",
+    "Maintain a cash reserve to handle unexpected business expenses",
+    "Continuously update your technical knowledge and qualifications",
+    "Consider specialising in growing areas like EV charging or renewables"
+  ];
+
+  const businessRequirements = [
+    {
+      title: "Essential Insurance",
+      items: [
+        "Public Liability Insurance (min. £2m cover)",
+        "Professional Indemnity Insurance",
+        "Employers' Liability Insurance (if employing staff)",
+        "Contract Works Insurance",
+        "Tools and Equipment Insurance"
+      ]
+    },
+    {
+      title: "Registration & Certification",
+      items: [
+        "NICEIC, NAPIT or ELECSA membership",
+        "Gas Safe registration (if offering gas work)",
+        "Construction Industry Scheme (CIS) registration",
+        "Data protection registration (ICO)",
+        "Waste carrier licence"
+      ]
+    },
+    {
+      title: "Legal Documentation",
+      items: [
+        "Terms and conditions of business",
+        "Customer contracts and agreements",
+        "Health and safety policy",
+        "Risk assessment templates",
+        "GDPR compliance documentation"
+      ]
+    },
+    {
+      title: "Financial Systems",
+      items: [
+        "Business bank account",
+        "Accounting software setup",
+        "Payment processing solutions",
+        "Tax and VAT management system",
+        "Cash flow forecasting tools"
+      ]
+    }
+  ];
+
+  const marketingStrategies = [
+    {
+      title: "Local SEO Optimisation",
+      content: "Ensure your Google Business Profile is fully optimised with correct business category, service area, opening hours, and high-quality images. Regularly solicit reviews from satisfied customers."
+    },
+    {
+      title: "Trade Network Development",
+      content: "Build relationships with complementary trades (plumbers, builders, property managers) to establish a referral network. Join local trade associations and business networking groups."
+    },
+    {
+      title: "Social Proof Collection",
+      content: "Systematically collect before/after photos, testimonials, and case studies. Create a portfolio that highlights your expertise in various electrical services, particularly showcasing complex or interesting work."
+    },
+    {
+      title: "Community Engagement",
+      content: "Participate in local community events, sponsor sports teams, or offer electrical safety workshops to enhance visibility and demonstrate community commitment."
+    }
+  ];
+
   return (
     <div className="space-y-6 animate-fade-in pb-10">
       <div className="flex items-center gap-2">
@@ -331,7 +245,7 @@ const BusinessStartup = () => {
       <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid grid-cols-3 mb-6">
           <TabsTrigger value="overview">Business Overview</TabsTrigger>
-          <TabsTrigger value="resources">Startup Resources</TabsTrigger>
+          <TabsTrigger value="requirements">Key Requirements</TabsTrigger>
           <TabsTrigger value="roadmap">Business Roadmap</TabsTrigger>
         </TabsList>
 
@@ -419,6 +333,26 @@ const BusinessStartup = () => {
                 </Card>
               </div>
 
+              {/* Marketing strategies section */}
+              <Card className="border-elec-yellow/20 bg-elec-card shadow-md">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <TrendingUp className="h-5 w-5 text-elec-yellow" />
+                    <span>Effective Marketing Strategies</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {marketingStrategies.map((strategy, index) => (
+                      <div key={index} className="bg-elec-gray/50 p-4 rounded-md border border-elec-yellow/10">
+                        <h4 className="font-medium text-elec-yellow mb-2 text-sm">{strategy.title}</h4>
+                        <p className="text-xs">{strategy.content}</p>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
               {/* Quick tips */}
               <div className="bg-elec-yellow/10 p-5 rounded-md border border-elec-yellow/30">
                 <h3 className="font-semibold text-elec-yellow mb-3 flex items-center gap-2">
@@ -489,84 +423,140 @@ const BusinessStartup = () => {
           </Card>
         </TabsContent>
 
-        {/* RESOURCES TAB */}
-        <TabsContent value="resources" className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {businessResources.map((resource) => (
-              <Dialog key={resource.id}>
-                <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray/80 to-elec-gray/50 hover:border-elec-yellow/50 transition-all shadow-md h-full flex flex-col">
-                  <CardHeader className="pb-2">
-                    <div className="flex justify-center mb-2">
-                      {resource.icon}
-                    </div>
-                    <CardTitle className="text-center">{resource.title}</CardTitle>
-                    <CardDescription className="text-center line-clamp-2">
-                      {resource.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex-grow flex flex-col justify-between pt-2">
-                    <div className="space-y-3">
-                      <h4 className="text-xs text-elec-yellow mb-1">What's Included:</h4>
-                      <ul className="text-xs space-y-1.5 flex-1">
-                        {resource.sections.map((section, idx) => (
-                          <li key={idx} className="flex items-start gap-1.5">
-                            <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5 flex-shrink-0"></span>
-                            <span>{section.title}</span>
+        {/* REQUIREMENTS TAB */}
+        <TabsContent value="requirements" className="space-y-6">
+          <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray/80 to-elec-gray/50">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <CheckCircle className="h-5 w-5 text-elec-yellow" />
+                Key Business Requirements
+              </CardTitle>
+              <CardDescription>
+                Essential elements needed to establish a compliant and professional electrical contracting business in the UK
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {businessRequirements.map((category, index) => (
+                  <Card key={index} className="border-elec-yellow/20 bg-elec-card shadow-md h-full">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-lg">{category.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-2">
+                        {category.items.map((item, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                            <span className="text-sm">{item}</span>
                           </li>
                         ))}
                       </ul>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+              
+              <Card className="border-elec-yellow/20 bg-elec-card shadow-md mt-6">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <FileText className="h-5 w-5 text-elec-yellow" />
+                    Key Business Metrics to Track
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div className="bg-elec-dark p-4 rounded-md">
+                      <h4 className="font-medium text-elec-yellow mb-2 text-sm">Financial Metrics</h4>
+                      <ul className="text-xs space-y-1">
+                        <li className="flex items-start gap-1.5">
+                          <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5"></span>
+                          <span>Gross profit margin (industry avg: 40-60%)</span>
+                        </li>
+                        <li className="flex items-start gap-1.5">
+                          <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5"></span>
+                          <span>Job profitability by service type</span>
+                        </li>
+                        <li className="flex items-start gap-1.5">
+                          <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5"></span>
+                          <span>Monthly overhead recovery</span>
+                        </li>
+                        <li className="flex items-start gap-1.5">
+                          <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5"></span>
+                          <span>Material vs labour cost ratio</span>
+                        </li>
+                      </ul>
                     </div>
-
-                    <DialogTrigger asChild>
-                      <Button 
-                        className="w-full mt-4 bg-elec-yellow/90 text-black hover:bg-elec-yellow"
-                        onClick={() => setSelectedResource(resource.id)}
-                      >
-                        Access Resource
-                      </Button>
-                    </DialogTrigger>
-                  </CardContent>
-                </Card>
-
-                <DialogContent className="sm:max-w-lg bg-elec-dark border-elec-yellow/20">
-                  <DialogHeader>
-                    <DialogTitle className="text-elec-yellow flex items-center gap-2">
-                      {resource.icon && <div className="h-5 w-5">{resource.icon}</div>}
-                      {resource.title}
-                    </DialogTitle>
-                    <DialogDescription>
-                      {resource.description}
-                    </DialogDescription>
-                  </DialogHeader>
-                  
-                  <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
-                    {resource.sections.map((section, idx) => (
-                      <div key={idx} className="bg-elec-gray/70 p-4 rounded-md border border-elec-yellow/10">
-                        <h3 className="font-medium text-sm text-elec-yellow mb-2">{section.title}</h3>
-                        <p className="text-xs">{section.content}</p>
-                      </div>
-                    ))}
+                    
+                    <div className="bg-elec-dark p-4 rounded-md">
+                      <h4 className="font-medium text-elec-yellow mb-2 text-sm">Operational Metrics</h4>
+                      <ul className="text-xs space-y-1">
+                        <li className="flex items-start gap-1.5">
+                          <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5"></span>
+                          <span>Billable hours per electrician</span>
+                        </li>
+                        <li className="flex items-start gap-1.5">
+                          <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5"></span>
+                          <span>First-time fix rate</span>
+                        </li>
+                        <li className="flex items-start gap-1.5">
+                          <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5"></span>
+                          <span>Response time to emergency calls</span>
+                        </li>
+                        <li className="flex items-start gap-1.5">
+                          <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5"></span>
+                          <span>Vehicle utilisation and fuel efficiency</span>
+                        </li>
+                      </ul>
+                    </div>
+                    
+                    <div className="bg-elec-dark p-4 rounded-md">
+                      <h4 className="font-medium text-elec-yellow mb-2 text-sm">Customer Metrics</h4>
+                      <ul className="text-xs space-y-1">
+                        <li className="flex items-start gap-1.5">
+                          <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5"></span>
+                          <span>Customer satisfaction rating</span>
+                        </li>
+                        <li className="flex items-start gap-1.5">
+                          <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5"></span>
+                          <span>Repeat business percentage</span>
+                        </li>
+                        <li className="flex items-start gap-1.5">
+                          <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5"></span>
+                          <span>Referral rate from existing customers</span>
+                        </li>
+                        <li className="flex items-start gap-1.5">
+                          <span className="h-1 w-1 rounded-full bg-elec-yellow mt-1.5"></span>
+                          <span>Quote-to-job conversion rate</span>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
-                  
-                  <DialogFooter className="flex justify-between items-center mt-4">
-                    <Button 
-                      variant="outline" 
-                      className="border-elec-yellow/30"
-                      onClick={() => toast.success("Resource saved to your account")}
-                    >
-                      Save Resource
-                    </Button>
-                    <Button 
-                      className="bg-elec-yellow text-black hover:bg-elec-yellow/80"
-                      onClick={() => toast.success("Full guide will download shortly")}
-                    >
-                      Download Full Guide
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            ))}
-          </div>
+                </CardContent>
+              </Card>
+              
+              <div className="bg-elec-yellow/10 p-5 rounded-md border border-elec-yellow/30 mt-6">
+                <h3 className="font-semibold text-elec-yellow mb-3">Common Pitfalls to Avoid</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="bg-elec-gray/50 p-3 rounded-md">
+                    <h4 className="font-medium text-sm mb-2">Inadequate Pricing Structure</h4>
+                    <p className="text-xs">Don't undervalue your services. Calculate your true costs including overheads, travel time, and professional development before setting rates.</p>
+                  </div>
+                  <div className="bg-elec-gray/50 p-3 rounded-md">
+                    <h4 className="font-medium text-sm mb-2">Poor Cash Flow Management</h4>
+                    <p className="text-xs">Establish clear payment terms, take deposits for larger jobs, and consider staged payments for longer projects to maintain healthy cash flow.</p>
+                  </div>
+                  <div className="bg-elec-gray/50 p-3 rounded-md">
+                    <h4 className="font-medium text-sm mb-2">Inadequate Insurance Coverage</h4>
+                    <p className="text-xs">Ensure comprehensive coverage tailored for electrical contractors, including specific coverage for specialised work like commercial installations.</p>
+                  </div>
+                  <div className="bg-elec-gray/50 p-3 rounded-md">
+                    <h4 className="font-medium text-sm mb-2">Taking on Inappropriate Work</h4>
+                    <p className="text-xs">Only accept jobs within your competence and certification. Turning down work outside your expertise protects your reputation and compliance status.</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
 
         {/* ROADMAP TAB */}
@@ -643,6 +633,63 @@ const BusinessStartup = () => {
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center gap-2">
                 <FileText className="h-5 w-5 text-elec-yellow" />
+                Growth Timeline Guidance
+              </CardTitle>
+              <CardDescription>Typical progression timeline for UK electrical contractors</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="bg-elec-dark p-4 rounded-md border border-elec-yellow/10">
+                  <h4 className="font-medium text-elec-yellow mb-2">Year 1: Establishment Phase</h4>
+                  <p className="text-sm mb-2">Focus on building reputation through quality work, establishing systems, and securing steady client base.</p>
+                  <ul className="text-xs space-y-1 ml-4 list-disc">
+                    <li>Complete all certification and registration processes</li>
+                    <li>Establish efficient administrative systems</li>
+                    <li>Focus on domestic installations and small commercial work</li>
+                    <li>Build portfolio of completed projects and testimonials</li>
+                  </ul>
+                </div>
+                
+                <div className="bg-elec-dark p-4 rounded-md border border-elec-yellow/10">
+                  <h4 className="font-medium text-elec-yellow mb-2">Years 2-3: Stabilisation Phase</h4>
+                  <p className="text-sm mb-2">Refine business processes, potentially hire first employee or regular subcontractor, begin specialising.</p>
+                  <ul className="text-xs space-y-1 ml-4 list-disc">
+                    <li>Expand service offerings based on market demand</li>
+                    <li>Develop partnerships with contractors and other trades</li>
+                    <li>Consider adding specialist services (EV chargers, renewable energy)</li>
+                    <li>Establish more robust financial management systems</li>
+                  </ul>
+                </div>
+                
+                <div className="bg-elec-dark p-4 rounded-md border border-elec-yellow/10">
+                  <h4 className="font-medium text-elec-yellow mb-2">Years 4-5: Growth Phase</h4>
+                  <p className="text-sm mb-2">Possible expansion to multiple employees, larger commercial projects, and broader service area.</p>
+                  <ul className="text-xs space-y-1 ml-4 list-disc">
+                    <li>Establish formal recruitment and training processes</li>
+                    <li>Consider expanding to larger commercial contracts</li>
+                    <li>Develop management systems for multi-site operations</li>
+                    <li>Seek advanced certification for specialised installations</li>
+                  </ul>
+                </div>
+                
+                <div className="bg-elec-dark p-4 rounded-md border border-elec-yellow/10">
+                  <h4 className="font-medium text-elec-yellow mb-2">Years 5+: Maturity Phase</h4>
+                  <p className="text-sm mb-2">Established company with multiple teams, potentially specialised divisions, and systematic business processes.</p>
+                  <ul className="text-xs space-y-1 ml-4 list-disc">
+                    <li>Develop middle management structure</li>
+                    <li>Consider formal business premises</li>
+                    <li>Implement advanced project management systems</li>
+                    <li>Establish apprenticeship programme and staff development pathways</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray/80 to-elec-gray/50 shadow-md">
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center gap-2">
+                <FileText className="h-5 w-5 text-elec-yellow" />
                 Business Setup Disclaimer
               </CardTitle>
             </CardHeader>
@@ -662,3 +709,4 @@ const BusinessStartup = () => {
 };
 
 export default BusinessStartup;
+
