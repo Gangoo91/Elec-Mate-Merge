@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { GraduationCap, ArrowLeft, Award, Briefcase, FileText, HandHelping, User, PoundSterling } from "lucide-react";
@@ -218,6 +219,23 @@ const BusinessApprentices = () => {
                           <span>Additional £1,000 payment for training apprentices aged 16-18</span>
                         </li>
                       </ul>
+                      <div className="mt-3 border-t border-elec-yellow/20 pt-3">
+                        <h5 className="text-sm font-medium mb-1">Useful Links:</h5>
+                        <ul className="space-y-1.5 text-sm">
+                          <li className="flex items-start gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2"></span>
+                            <a href="https://www.gov.uk/employing-an-apprentice" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">
+                              GOV.UK: Employing an apprentice
+                            </a>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2"></span>
+                            <a href="https://www.apprenticeships.gov.uk/employers/funding-an-apprenticeship-non-levy" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">
+                              Apprenticeships.gov.uk: Non-Levy Funding Guide
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
 
                     <div className="bg-elec-dark/60 p-4 rounded-lg">
@@ -237,6 +255,23 @@ const BusinessApprentices = () => {
                           <span>Wage subsidies during the initial training period</span>
                         </li>
                       </ul>
+                      <div className="mt-3 border-t border-elec-yellow/20 pt-3">
+                        <h5 className="text-sm font-medium mb-1">Find Local Funding:</h5>
+                        <ul className="space-y-1.5 text-sm">
+                          <li className="flex items-start gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2"></span>
+                            <a href="https://www.gov.uk/apply-apprenticeship-grant" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">
+                              Apprenticeship Grant Finder
+                            </a>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2"></span>
+                            <a href="https://www.lepnetwork.net/about-leps/location-map/" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">
+                              Local Enterprise Partnerships Network
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
 
                     <div className="bg-elec-dark/60 p-4 rounded-lg">
@@ -256,6 +291,29 @@ const BusinessApprentices = () => {
                           <span>NICEIC/NAPIT trainee registration discounts</span>
                         </li>
                       </ul>
+                      <div className="mt-3 border-t border-elec-yellow/20 pt-3">
+                        <h5 className="text-sm font-medium mb-1">Industry Resources:</h5>
+                        <ul className="space-y-1.5 text-sm">
+                          <li className="flex items-start gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2"></span>
+                            <a href="https://www.jib.org.uk/apprentice" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">
+                              JIB Apprenticeship Support
+                            </a>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2"></span>
+                            <a href="https://www.ecscard.org.uk/card-types/apprentice/" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">
+                              ECS Apprentice Card Scheme
+                            </a>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2"></span>
+                            <a href="https://www.eca.co.uk/business-industry-support/skills-development/apprenticeships" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">
+                              ECA Apprenticeship Support
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
 
@@ -263,10 +321,10 @@ const BusinessApprentices = () => {
                     <h4 className="font-medium text-lg mb-2">How to Access Funding</h4>
                     <ol className="list-decimal list-inside space-y-2 text-sm pl-1">
                       <li>Contact your local college or training provider to discuss available courses and funding</li>
-                      <li>Register with the National Apprenticeship Service (gov.uk/apprenticeships)</li>
-                      <li>Apply for additional local grants through your Local Enterprise Partnership (LEP)</li>
-                      <li>Contact industry bodies such as JIB, ECA or NICEIC for specific electrical grants</li>
-                      <li>Use the apprenticeship service account to manage your funding and payments</li>
+                      <li>Register with the National Apprenticeship Service (<a href="https://www.gov.uk/apprenticeships-guide" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">gov.uk/apprenticeships</a>)</li>
+                      <li>Apply for additional local grants through your <a href="https://www.lepnetwork.net/about-leps/location-map/" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">Local Enterprise Partnership (LEP)</a></li>
+                      <li>Contact industry bodies such as <a href="https://www.jib.org.uk" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">JIB</a>, <a href="https://www.eca.co.uk" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">ECA</a> or <a href="https://www.niceic.com" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">NICEIC</a> for specific electrical grants</li>
+                      <li>Use the <a href="https://accounts.manage-apprenticeships.service.gov.uk/service/index" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">apprenticeship service account</a> to manage your funding and payments</li>
                     </ol>
 
                     <Button 
@@ -294,6 +352,11 @@ const BusinessApprentices = () => {
                       programmes include work experience and can be fully funded, allowing you to assess if the 
                       candidate is right for your business before offering an apprenticeship.
                     </p>
+                    <div className="mt-2 pt-2 border-t border-elec-yellow/20">
+                      <a href="https://www.gov.uk/guidance/traineeship-information-for-employers" target="_blank" rel="noopener noreferrer" className="text-sm text-elec-yellow hover:underline">
+                        Learn more about traineeships
+                      </a>
+                    </div>
                   </div>
 
                   <div className="bg-elec-dark/60 p-4 rounded-lg">
@@ -303,6 +366,11 @@ const BusinessApprentices = () => {
                       these placements can lead to recruiting well-prepared apprentices with technical knowledge,
                       and there's often funding available to support placement providers.
                     </p>
+                    <div className="mt-2 pt-2 border-t border-elec-yellow/20">
+                      <a href="https://www.tlevels.gov.uk/employers" target="_blank" rel="noopener noreferrer" className="text-sm text-elec-yellow hover:underline">
+                        T-Level industry placement information
+                      </a>
+                    </div>
                   </div>
 
                   <div className="bg-elec-dark/60 p-4 rounded-lg">
@@ -312,12 +380,44 @@ const BusinessApprentices = () => {
                       who have successfully employed apprentices. This free service provides guidance on
                       management, training and making the most of having an apprentice.
                     </p>
+                    <div className="mt-2 pt-2 border-t border-elec-yellow/20">
+                      <a href="https://www.fsb.org.uk/resources-page/supporting-apprenticeships.html" target="_blank" rel="noopener noreferrer" className="text-sm text-elec-yellow hover:underline">
+                        Federation of Small Businesses apprenticeship support
+                      </a>
+                    </div>
+                  </div>
+                  
+                  <div className="bg-elec-dark/60 p-4 rounded-lg">
+                    <h4 className="font-medium text-elec-yellow mb-2">Additional Financial Support</h4>
+                    <p className="text-sm mb-2">
+                      Other funding options that may be available to support your apprenticeship programme:
+                    </p>
+                    <ul className="space-y-1.5 text-sm">
+                      <li className="flex items-start gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2"></span>
+                        <a href="https://www.gov.uk/guidance/incentive-payments-for-hiring-a-new-apprentice" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">
+                          Incentive payments for hiring new apprentices
+                        </a>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2"></span>
+                        <a href="https://www.citb.co.uk/levy-grants-and-funding/grants-funding/" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">
+                          CITB grants and funding (for construction-related electrical work)
+                        </a>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2"></span>
+                        <a href="https://www.talentedapprenticeships.com/incentives/" target="_blank" rel="noopener noreferrer" className="text-elec-yellow hover:underline">
+                          Current apprenticeship incentives and bonuses
+                        </a>
+                      </li>
+                    </ul>
                   </div>
                 </CardContent>
               </Card>
             </TabsContent>
 
-            {/* Onboarding Process Tab Content */}
+            {/* Process Tab Content */}
             <TabsContent value="process" className="space-y-4">
               <Card className="border-elec-yellow/20 bg-elec-gray">
                 <CardHeader className="pb-2">
