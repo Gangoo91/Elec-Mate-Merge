@@ -8,7 +8,6 @@ import {
   TrendingUp, 
   HandHelping, 
   Users, 
-  Building, 
   UserCheck
 } from "lucide-react";
 
@@ -48,21 +47,8 @@ const BusinessDevelopment = () => {
       description: "Effective methods to attract and retain clients for your electrical services",
       icon: <HandHelping className="h-12 w-12 text-elec-yellow opacity-80" />,
       link: "/electrician/business-development/customers"
-    },
-    {
-      id: 6,
-      title: "Team Management",
-      description: "Tools and techniques for managing your electrical team efficiently",
-      icon: <Users className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/electrician/business-development/team"
-    },
-    {
-      id: 7,
-      title: "Commercial Properties",
-      description: "Expanding into commercial electrical work and managing larger projects",
-      icon: <Building className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/electrician/business-development/commercial"
     }
+    // Team Management and Commercial Properties sections removed
   ];
 
   return (
