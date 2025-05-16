@@ -65,16 +65,6 @@ const BusinessDevelopment = () => {
       link: "/electrician/business-development/commercial"
     }
   ];
-  
-  const quickStartGuide = [
-    "Register your business with Companies House and HMRC",
-    "Obtain proper electrical qualifications and certification",
-    "Secure adequate business insurance (public liability, professional indemnity)",
-    "Join a competent person scheme (NICEIC, NAPIT, etc.)",
-    "Set up business banking and accounting systems",
-    "Create a basic marketing plan and online presence",
-    "Establish relationships with suppliers and wholesalers"
-  ];
 
   return (
     <div className="space-y-8 animate-fade-in">
@@ -84,30 +74,6 @@ const BusinessDevelopment = () => {
           Resources and guidance to establish and grow your electrical contracting business
         </p>
       </div>
-
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-xl">Quick Start Guide: Setting Up an Electrical Business</CardTitle>
-          <CardDescription>
-            Key steps to get your electrical contracting business up and running
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ol className="list-decimal list-inside space-y-2 pl-2">
-            {quickStartGuide.map((step, index) => (
-              <li key={index} className="text-sm">
-                {step}
-              </li>
-            ))}
-          </ol>
-          <Button 
-            variant="outline" 
-            className="mt-6 border-elec-yellow/30 hover:border-elec-yellow"
-          >
-            Download Complete Business Setup Checklist
-          </Button>
-        </CardContent>
-      </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {businessSections.map((section) => (
