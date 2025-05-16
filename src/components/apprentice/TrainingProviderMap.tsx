@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search, MapPin, X } from "lucide-react";
+import { Search, MapPin, X, ExternalLink, Phone } from "lucide-react";
 import { ApiErrorDisplay } from "../electrician-pricing/merchant-finder/ApiErrorDisplay";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "sonner";
@@ -35,62 +35,118 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
   const [selectedProvider, setSelectedProvider] = useState<TrainingProvider | null>(null);
   const geocoderRef = useRef<google.maps.Geocoder | null>(null);
   const markersRef = useRef<google.maps.Marker[]>([]);
+  const [mapInitialized, setMapInitialized] = useState<boolean>(false);
 
   // Initialize Google Maps
   useEffect(() => {
-    if (!window.google?.maps || !mapRef.current) return;
-    
-    try {
-      googleMapRef.current = new window.google.maps.Map(mapRef.current, {
-        center: { lat: 54.7023545, lng: -3.2765753 }, // Default to UK center
-        zoom: 7,
-        mapTypeControl: false,
-        streetViewControl: false,
-        fullscreenControl: true,
-        zoomControl: true,
-      });
-      
-      geocoderRef.current = new window.google.maps.Geocoder();
-      
-      // Try to get user's location for better initial positioning
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const userLocation = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
-            
-            if (googleMapRef.current) {
-              googleMapRef.current.setCenter(userLocation);
-              googleMapRef.current.setZoom(10);
-              
-              // Create a marker for user's location
-              new window.google.maps.Marker({
-                position: userLocation,
-                map: googleMapRef.current,
-                icon: {
-                  url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-                  scaledSize: new window.google.maps.Size(24, 24)
-                },
-                title: "Your approximate location"
-              });
-            }
-          },
-          () => {
-            console.log("Error: The Geolocation service failed or permission denied.");
-          }
-        );
+    const initMap = () => {
+      if (!window.google?.maps || !mapRef.current) {
+        console.error("Google Maps not loaded or map container not found");
+        setApiError("Google Maps could not be initialized. Please reload the page.");
+        return;
       }
       
-    } catch (error) {
-      console.error("Error initializing Google Maps:", error);
-      setApiError("Failed to initialize Google Maps");
+      try {
+        console.log("Initializing Google Maps...");
+        googleMapRef.current = new window.google.maps.Map(mapRef.current, {
+          center: { lat: 54.7023545, lng: -3.2765753 }, // Default to UK center
+          zoom: 7,
+          mapTypeControl: false,
+          streetViewControl: false,
+          fullscreenControl: true,
+          zoomControl: true,
+        });
+        
+        geocoderRef.current = new window.google.maps.Geocoder();
+        setMapInitialized(true);
+        console.log("Map initialized successfully");
+        
+        // Try to get user's location for better initial positioning
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const userLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              };
+              
+              if (googleMapRef.current) {
+                googleMapRef.current.setCenter(userLocation);
+                googleMapRef.current.setZoom(10);
+                
+                // Create a marker for user's location
+                new window.google.maps.Marker({
+                  position: userLocation,
+                  map: googleMapRef.current,
+                  icon: {
+                    url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+                    scaledSize: new window.google.maps.Size(24, 24)
+                  },
+                  title: "Your approximate location"
+                });
+              }
+            },
+            (error) => {
+              console.log("Geolocation error:", error);
+              toast.error("Location access denied", {
+                description: "Using default UK map view"
+              });
+            }
+          );
+        }
+        
+      } catch (error) {
+        console.error("Error initializing Google Maps:", error);
+        setApiError("Failed to initialize Google Maps: " + (error instanceof Error ? error.message : "Unknown error"));
+      }
+    };
+
+    // Ensure Google Maps is loaded before initializing
+    if (window.google?.maps) {
+      initMap();
+    } else {
+      const checkGoogleMaps = setInterval(() => {
+        if (window.google?.maps) {
+          clearInterval(checkGoogleMaps);
+          initMap();
+        }
+      }, 500);
+
+      // Safety timeout after 10 seconds
+      setTimeout(() => {
+        clearInterval(checkGoogleMaps);
+        if (!window.google?.maps) {
+          console.error("Google Maps failed to load after timeout");
+          setApiError("Google Maps could not be loaded. Please check your internet connection and reload the page.");
+        }
+      }, 10000);
     }
+
+    return () => {
+      // Clean up markers
+      markersRef.current.forEach(marker => marker.setMap(null));
+    };
   }, []);
 
   const searchProviders = async () => {
-    if (!googleMapRef.current || !geocoderRef.current || !postcode.trim()) return;
+    if (!mapInitialized) {
+      toast.error("Map not initialized", {
+        description: "Please wait for the map to load or reload the page"
+      });
+      return;
+    }
+
+    if (!googleMapRef.current || !geocoderRef.current) {
+      setApiError("Map services are not available. Please reload the page.");
+      return;
+    }
+    
+    if (!postcode.trim()) {
+      toast.error("Postcode required", {
+        description: "Please enter a valid UK postcode"
+      });
+      return;
+    }
     
     setIsLoading(true);
     setApiError(null);
@@ -102,10 +158,12 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
     markersRef.current = [];
     
     try {
+      console.log("Searching for providers with postcode:", postcode);
       // Geocode the postcode to get coordinates
       geocoderRef.current.geocode({ address: `${postcode}, UK` }, async (results, status) => {
         if (status === "OK" && results && results[0]) {
           const location = results[0].geometry.location;
+          console.log("Geocoded location:", location.toString());
           
           if (googleMapRef.current) {
             googleMapRef.current.setCenter(location);
@@ -124,7 +182,8 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
               (results, status) => {
                 setIsLoading(false);
                 
-                if (status === "OK" && results) {
+                if (status === "OK" && results && results.length > 0) {
+                  console.log("Found providers:", results.length);
                   const trainingProviders = results.map(place => ({
                     id: place.place_id || `place-${Math.random().toString(36).substr(2, 9)}`,
                     name: place.name || "Unknown Provider",
@@ -176,6 +235,7 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
                   
                   toast.success(`Found ${trainingProviders.length} training providers near ${postcode}`);
                 } else {
+                  console.error("Places API error:", status);
                   setApiStatus(status);
                   setApiError("Failed to find training providers. Please try another postcode.");
                   toast.error("Unable to find training providers", {
@@ -186,6 +246,7 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
             );
           }
         } else {
+          console.error("Geocoder error:", status);
           setIsLoading(false);
           setApiStatus(status);
           setApiError("Invalid postcode or location not found. Please try again.");
@@ -197,7 +258,8 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
     } catch (error) {
       console.error("Error searching for training providers:", error);
       setIsLoading(false);
-      setApiError("An error occurred while searching for training providers.");
+      setApiError("An error occurred while searching for training providers: " + 
+        (error instanceof Error ? error.message : "Unknown error"));
       toast.error("Service error", {
         description: "There was a problem with the mapping service"
       });
@@ -222,6 +284,25 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
     if (marker && googleMapRef.current) {
       googleMapRef.current.panTo(marker.getPosition() as google.maps.LatLng);
       googleMapRef.current.setZoom(14);
+    }
+
+    // If we haven't loaded detailed info yet, load it now
+    if (googleMapRef.current && !provider.phone) {
+      const service = new window.google.maps.places.PlacesService(googleMapRef.current);
+      service.getDetails(
+        { placeId: provider.place_id },
+        (placeResult, status) => {
+          if (status === "OK" && placeResult) {
+            setSelectedProvider({
+              ...provider,
+              phone: placeResult.formatted_phone_number,
+              website: placeResult.website,
+              address: placeResult.formatted_address,
+              photos: placeResult.photos
+            });
+          }
+        }
+      );
     }
   };
 
@@ -249,7 +330,7 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
             />
             <Button 
               onClick={searchProviders} 
-              disabled={isLoading}
+              disabled={isLoading || !mapInitialized}
               className="bg-elec-yellow hover:bg-elec-yellow/80 text-elec-dark"
             >
               {isLoading ? (
@@ -266,11 +347,22 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
             </Button>
           </div>
           {apiError && <ApiErrorDisplay apiStatus={apiStatus} apiErrorMessage={apiError} />}
+          {!mapInitialized && !apiError && (
+            <div className="mt-2 p-2 bg-yellow-500/10 text-yellow-500 text-sm rounded flex items-center gap-2">
+              <div className="h-3 w-3 border-2 border-yellow-500/30 border-t-yellow-500 animate-spin rounded-full"></div>
+              <span>Initializing map...</span>
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 flex-1 overflow-hidden">
           <div className="md:col-span-1 max-h-[60vh] md:max-h-[70vh] overflow-y-auto p-2 border-r border-elec-yellow/10">
-            {providers.length > 0 ? (
+            {isLoading ? (
+              <div className="flex flex-col items-center justify-center h-full p-4">
+                <div className="h-8 w-8 border-4 border-elec-yellow/30 border-t-elec-yellow animate-spin rounded-full mb-4"></div>
+                <p className="text-sm text-muted-foreground">Searching for training providers...</p>
+              </div>
+            ) : providers.length > 0 ? (
               <div className="space-y-2">
                 <p className="text-xs text-muted-foreground p-2">Found {providers.length} training providers</p>
                 {providers.map(provider => (
@@ -308,18 +400,26 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
             )}
           </div>
           
-          <div className="md:col-span-2 h-[60vh] md:h-[70vh]">
+          <div className="md:col-span-2 h-[60vh] md:h-[70vh] relative">
             <div ref={mapRef} className="w-full h-full"></div>
+            {!mapInitialized && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                <div className="p-4 bg-elec-dark rounded-md shadow-lg">
+                  <div className="h-6 w-6 border-4 border-elec-yellow/30 border-t-elec-yellow animate-spin rounded-full mx-auto mb-2"></div>
+                  <p className="text-sm text-center">Loading map...</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
         {selectedProvider && (
           <div className="p-4 border-t border-elec-yellow/20 bg-elec-dark/30">
             <h3 className="font-medium">{selectedProvider.name}</h3>
-            <p className="text-sm text-muted-foreground">{selectedProvider.vicinity}</p>
+            <p className="text-sm text-muted-foreground">{selectedProvider.address || selectedProvider.vicinity}</p>
             
-            <div className="flex justify-between items-center mt-3">
-              <div className="text-xs text-muted-foreground">
+            <div className="flex flex-wrap justify-between items-center mt-3 gap-2">
+              <div className="flex flex-col gap-2">
                 {selectedProvider.rating && (
                   <div className="flex items-center gap-1">
                     <div className="text-yellow-500">
@@ -329,9 +429,31 @@ const TrainingProviderMap: React.FC<TrainingProviderMapProps> = ({ onClose }) =>
                         </span>
                       ))}
                     </div>
-                    <span>({selectedProvider.rating})</span>
+                    <span className="text-sm">({selectedProvider.rating})</span>
                   </div>
                 )}
+                <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                  {selectedProvider.phone && (
+                    <a 
+                      href={`tel:${selectedProvider.phone}`} 
+                      className="flex items-center gap-1 text-elec-yellow hover:underline"
+                    >
+                      <Phone className="h-3 w-3" />
+                      <span>{selectedProvider.phone}</span>
+                    </a>
+                  )}
+                  {selectedProvider.website && (
+                    <a 
+                      href={selectedProvider.website} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 text-elec-yellow hover:underline"
+                    >
+                      <ExternalLink className="h-3 w-3" />
+                      <span>Visit website</span>
+                    </a>
+                  )}
+                </div>
               </div>
               
               <Popover>
