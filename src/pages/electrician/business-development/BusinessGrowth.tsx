@@ -191,7 +191,7 @@ const BusinessGrowth = () => {
           <Collapsible>
             <CollapsibleTrigger asChild>
               <Button variant="outline" className="w-full border-elec-yellow/30 hover:bg-elec-yellow/10 flex items-center justify-center gap-2">
-                <LightBulb className="h-4 w-4" />
+                <Lightbulb className="h-4 w-4" />
                 <span>Show Success Stories</span>
               </Button>
             </CollapsibleTrigger>
