@@ -28,8 +28,6 @@ import BusinessApprentices from "@/pages/electrician/business-development/Busine
 import BusinessElectricians from "@/pages/electrician/business-development/BusinessElectricians";
 import BusinessGrowth from "@/pages/electrician/business-development/BusinessGrowth";
 import BusinessCustomers from "@/pages/electrician/business-development/BusinessCustomers";
-import BusinessTeam from "@/pages/electrician/business-development/BusinessTeam";
-import BusinessCommercial from "@/pages/electrician/business-development/BusinessCommercial";
 import BusinessTemplates from "@/pages/electrician/business-development/BusinessTemplates";
 
 const ElectricianHubRoutes = () => {
@@ -61,8 +59,6 @@ const ElectricianHubRoutes = () => {
       <Route path="business-development/electricians" element={<BusinessElectricians />} />
       <Route path="business-development/growth" element={<BusinessGrowth />} />
       <Route path="business-development/customers" element={<BusinessCustomers />} />
-      <Route path="business-development/team" element={<BusinessTeam />} />
-      <Route path="business-development/commercial" element={<BusinessCommercial />} />
       <Route path="business-development/templates" element={<BusinessTemplates />} />
     </Routes>
   );
