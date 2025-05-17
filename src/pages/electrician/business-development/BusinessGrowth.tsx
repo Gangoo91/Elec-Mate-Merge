@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { TrendingUp, ArrowLeft, Rocket, Award, Star, Briefcase, Users, LightBulb } from "lucide-react";
+import { TrendingUp, ArrowLeft, Rocket, Award, Star, Briefcase, Users, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
