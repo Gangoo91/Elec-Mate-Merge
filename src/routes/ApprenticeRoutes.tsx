@@ -1,4 +1,3 @@
-
 import { Route, Routes } from "react-router-dom";
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
@@ -8,13 +7,9 @@ import ApprenticeToolbox from "@/pages/apprentice/ApprenticeToolbox";
 import ApprenticeChat from "@/pages/apprentice/ApprenticeChat";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import CareerProgression from "@/pages/apprentice/CareerProgression";
-import EALCourses from "@/pages/apprentice/EALCourses";
-import EALLevel2Diploma from "@/pages/apprentice/EALLevel2Diploma";
 import UnitContent from "@/pages/apprentice/UnitContent";
 import SectionContent from "@/pages/apprentice/SectionContent";
 import SubsectionContent from "@/pages/apprentice/SubsectionContent";
-import HigherLearningCourses from "@/pages/apprentice/HigherLearningCourses";
-import CityGuildsCourses from "@/pages/apprentice/CityGuildsCourses";
 import OnJobTools from "@/pages/apprentice/OnJobTools";
 import OnJobCalculations from "@/pages/apprentice/OnJobCalculations";
 import OnJobDocuments from "@/pages/apprentice/OnJobDocuments";
@@ -68,26 +63,11 @@ const ApprenticeRoutes = () => {
         <Route path="ai-learning" element={<AILearning />} />
         <Route path="mock-exams" element={<MockExams />} />
         <Route path="mock-exams/:examId" element={<MockExamDetails />} />
-        <Route path="eal" element={<EALCourses />} />
-        <Route path="eal/level-2-diploma" element={<EALLevel2Diploma />} />
-        <Route path="eal/level-2-diploma/unit/:unitId" element={<UnitContent />} />
-        <Route path="eal/level-2-diploma/unit/:unitId/section/:sectionId" element={<SectionContent />} />
-        <Route path="eal/level-2-diploma/unit/:unitId/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
         
-        {/* Handle cases with undefined courseSlug and unitSlug */}
-        <Route path="eal/undefined/unit/:unitId/section/:sectionId" element={<SectionContent />} />
-        <Route path="eal/undefined/unit/undefined/section/:sectionId" element={<SectionContent />} />
-        <Route path="eal/undefined/unit/:unitId/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
-        <Route path="eal/undefined/unit/undefined/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
+        <Route path="unit/:unitId" element={<UnitContent />} />
+        <Route path="unit/:unitId/section/:sectionId" element={<SectionContent />} />
+        <Route path="unit/:unitId/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
         
-        {/* Original routes */}
-        <Route path="eal/:courseSlug/unit/:unitId/section/:sectionId" element={<SectionContent />} />
-        <Route path="eal/:courseSlug/unit/:unitId/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
-        <Route path="eal/:courseSlug/unit/:unitId/quiz" element={<SectionContent />} />
-        <Route path="cityGuilds" element={<CityGuildsCourses />} />
-        <Route path="higher" element={<HigherLearningCourses />} />
-        
-        {/* Resource pages */}
         <Route path="resources/communication-structures" element={<CommunicationStructures />} />
         <Route path="resources/communication-methods" element={<CommunicationMethods />} />
         <Route path="resources/safety-meetings" element={<SafetyMeetings />} />

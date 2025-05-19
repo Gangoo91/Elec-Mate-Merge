@@ -1,7 +1,6 @@
 
 import StudyHeader from "@/components/apprentice/StudyHeader";
 import CourseCardGrid from "@/components/apprentice/CourseCardGrid";
-import { courseCategories } from "@/data/courseCategories";
 import { Link } from "react-router-dom";
 import { GraduationCap, Shield, FileText, AlertTriangle } from "lucide-react";
 import CourseCard from "@/components/apprentice/CourseCard";
@@ -12,11 +11,9 @@ const ApprenticeStudy = () => {
       <StudyHeader />
       
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-elec-yellow">Electrical Courses</h2>
-        <p className="text-muted-foreground">Industry-standard qualifications for electrical professionals</p>
+        <h2 className="text-2xl font-bold text-elec-yellow">Learning Resources</h2>
+        <p className="text-muted-foreground">Tools and resources to support your electrical education</p>
       </div>
-
-      <CourseCardGrid courses={courseCategories} baseUrl="/apprentice/study" />
       
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <CourseCard 
