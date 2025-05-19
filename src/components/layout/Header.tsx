@@ -34,11 +34,13 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
       <div className="flex items-center space-x-2 md:space-x-4">
         <Link to="/messenger">
           <Button 
-            variant="ghost" 
-            size="icon" 
-            className="relative hover:bg-elec-yellow/10"
+            variant="outline" 
+            size="sm"
+            className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow transition-all flex items-center gap-2 px-3 py-1 rounded-full"
           >
-            <MessageSquare className="h-5 w-5 text-elec-yellow" />
+            <MessageSquare className="h-4 w-4" />
+            <span className="hidden sm:inline">Messages</span>
+            <span className="inline-flex items-center justify-center w-4 h-4 bg-elec-yellow text-elec-dark text-xs font-bold rounded-full">2</span>
           </Button>
         </Link>
         <NotificationDropdown />
