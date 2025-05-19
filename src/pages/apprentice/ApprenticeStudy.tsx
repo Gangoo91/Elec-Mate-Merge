@@ -1,6 +1,6 @@
 
 import StudyHeader from "@/components/apprentice/StudyHeader";
-import { GraduationCap, Shield, FileText, AlertTriangle, Book, School, BookOpen, Library, Briefcase } from "lucide-react";
+import { GraduationCap, FileText, Book, School, BookOpen, Library, Briefcase } from "lucide-react";
 import CourseCard from "@/components/apprentice/CourseCard";
 
 const ApprenticeStudy = () => {
@@ -85,19 +85,10 @@ const ApprenticeStudy = () => {
           courses={[]}
           baseUrl="/apprentice/study"
         />
-        
-        <CourseCard 
-          id="safety-fundamentals"
-          title="Safety Fundamentals"
-          description=""
-          icon={Shield}
-          courses={[]}
-          baseUrl="/apprentice/study"
-        />
       </div>
       
       <div className="bg-amber-950/20 border border-amber-600/30 rounded-md p-4 mt-8 flex items-start gap-3">
-        <AlertTriangle className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
+        <FileText className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
         <p className="text-sm text-amber-200/90">
           <strong>Disclaimer:</strong> ElecMate is not endorsed by, directly affiliated with, maintained, 
           authorised, or sponsored by EAL or City &amp; Guilds. All product names, logos, and brands are 

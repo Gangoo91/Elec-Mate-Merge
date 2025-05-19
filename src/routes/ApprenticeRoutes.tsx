@@ -31,7 +31,6 @@ import InspectionAreas from "@/components/apprentice/resources/InspectionAreas";
 import InspectionDocumentation from "@/components/apprentice/resources/InspectionDocumentation";
 import InspectionRegulations from "@/components/apprentice/resources/InspectionRegulations";
 import AILearning from "@/pages/apprentice/AILearning";
-import SafetyFundamentals from "@/pages/apprentice/SafetyFundamentals";
 import MockExams from "@/pages/apprentice/MockExams";
 import MockExamDetails from "@/pages/apprentice/MockExamDetails";
 import CourseContent from "@/pages/apprentice/CourseContent";
@@ -67,7 +66,6 @@ const ApprenticeRoutes = () => {
       <Route path="on-job-tools/assessment" element={<OnJobAssessment />} />
       <Route path="on-job-tools/safety-cases" element={<OnJobSafetyCases />} />
       <Route path="on-job-tools/workplace-culture" element={<OnJobWorkplaceCulture />} />
-      <Route path="safety-fundamentals" element={<SafetyFundamentals />} />
       
       <Route path="study">
         <Route index element={<ApprenticeStudy />} />
