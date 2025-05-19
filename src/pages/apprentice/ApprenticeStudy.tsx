@@ -2,7 +2,7 @@
 import StudyHeader from "@/components/apprentice/StudyHeader";
 import CourseCardGrid from "@/components/apprentice/CourseCardGrid";
 import { Link } from "react-router-dom";
-import { GraduationCap, Shield, FileText, AlertTriangle } from "lucide-react";
+import { GraduationCap, Shield, FileText, AlertTriangle, Book, School } from "lucide-react";
 import CourseCard from "@/components/apprentice/CourseCard";
 
 const ApprenticeStudy = () => {
@@ -16,6 +16,24 @@ const ApprenticeStudy = () => {
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <CourseCard 
+          id="course-content"
+          title="Course Content"
+          description=""
+          icon={Book}
+          courses={[]}
+          baseUrl="/apprentice/study"
+        />
+        
+        <CourseCard 
+          id="higher-learning"
+          title="Higher Learning"
+          description=""
+          icon={School}
+          courses={[]}
+          baseUrl="/apprentice/study"
+        />
+        
         <CourseCard 
           id="ai-learning"
           title="AI Learning Tools"

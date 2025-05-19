@@ -1,3 +1,4 @@
+
 import { Route, Routes } from "react-router-dom";
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
@@ -33,6 +34,8 @@ import AILearning from "@/pages/apprentice/AILearning";
 import SafetyFundamentals from "@/pages/apprentice/SafetyFundamentals";
 import MockExams from "@/pages/apprentice/MockExams";
 import MockExamDetails from "@/pages/apprentice/MockExamDetails";
+import CourseContent from "@/pages/apprentice/CourseContent";
+import HigherLearning from "@/pages/apprentice/HigherLearning";
 
 const ApprenticeRoutes = () => {
   return (
@@ -60,6 +63,8 @@ const ApprenticeRoutes = () => {
       
       <Route path="study">
         <Route index element={<ApprenticeStudy />} />
+        <Route path="course-content" element={<CourseContent />} />
+        <Route path="higher-learning" element={<HigherLearning />} />
         <Route path="ai-learning" element={<AILearning />} />
         <Route path="mock-exams" element={<MockExams />} />
         <Route path="mock-exams/:examId" element={<MockExamDetails />} />
