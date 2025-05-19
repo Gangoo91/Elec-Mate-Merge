@@ -16,7 +16,7 @@ interface ExamIntroductionProps {
 
 const ExamIntroduction: React.FC<ExamIntroductionProps> = ({ exam, onStart }) => {
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in">
       <Card className="border-elec-yellow/30 bg-elec-gray">
         <CardHeader className="pb-2 pt-4">
           <CardTitle className="text-lg sm:text-xl">Exam Instructions</CardTitle>
@@ -38,15 +38,19 @@ const ExamIntroduction: React.FC<ExamIntroductionProps> = ({ exam, onStart }) =>
           <div className="bg-elec-dark/50 p-3 sm:p-4 rounded-md mt-4 sm:mt-6">
             <h3 className="font-semibold mb-2 text-sm sm:text-base">Important Notes:</h3>
             <ul className="list-disc list-inside space-y-1 text-xs sm:text-sm">
-              <li>Complete all questions within the allocated 60 minutes</li>
+              <li>Complete all questions within the allocated time of {exam.duration} minutes</li>
               <li>You can navigate between questions using the Previous and Next buttons</li>
               <li>If you run out of time, the exam will automatically submit</li>
               <li>Your results will be displayed at the end of the exam</li>
+              <li>A score of 70% or higher is considered a pass</li>
             </ul>
           </div>
         </CardContent>
         <CardFooter className="pb-4">
-          <Button className="w-full" onClick={onStart}>
+          <Button 
+            className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90" 
+            onClick={onStart}
+          >
             Start Exam
           </Button>
         </CardFooter>

@@ -3,11 +3,54 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { FileText, Clock, ArrowLeft } from "lucide-react";
+import { FileText, Clock, ArrowLeft, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { mockExams } from "@/data/apprentice/mockExams";
+
+// Mock exam data - 5 exams with 50 questions each
+const mockExams = [
+  {
+    id: "level-2",
+    title: "Level 2 Electrical Installation",
+    description: "Core concepts and practices for Level 2 electrical qualifications",
+    duration: 60,
+    questionCount: 50,
+    isPremium: false
+  },
+  {
+    id: "level-3",
+    title: "Level 3 Electrical Installation",
+    description: "Advanced electrical principles and installation practices",
+    duration: 60,
+    questionCount: 50,
+    isPremium: true
+  },
+  {
+    id: "inspection-testing",
+    title: "Inspection & Testing",
+    description: "Comprehensive testing procedures and certification",
+    duration: 60,
+    questionCount: 50,
+    isPremium: true
+  },
+  {
+    id: "18th-edition",
+    title: "18th Edition Wiring Regulations",
+    description: "BS 7671 regulations and requirements",
+    duration: 60,
+    questionCount: 50,
+    isPremium: true
+  },
+  {
+    id: "am2",
+    title: "AM2 Assessment Preparation",
+    description: "Preparation for practical assessment tasks",
+    duration: 60,
+    questionCount: 50,
+    isPremium: true
+  }
+];
 
 const MockExams = () => {
   const { isSubscribed } = useAuth();
@@ -30,24 +73,27 @@ const MockExams = () => {
         </Link>
       </div>
 
-      <div className="bg-elec-gray border border-elec-yellow/30 rounded-lg p-4 sm:p-6 mb-4">
-        <div className="flex justify-center mb-6">
+      <div className="bg-elec-gray border border-elec-yellow/30 rounded-lg p-4 sm:p-6 mb-6">
+        <div className="flex justify-center mb-5">
           <div className="w-16 h-16 rounded-full bg-elec-gray-dark/40 flex items-center justify-center">
-            <FileText className="h-8 w-8 text-elec-yellow" />
+            <CheckCircle className="h-8 w-8 text-elec-yellow" />
           </div>
         </div>
         
-        <h2 className="text-lg sm:text-xl font-semibold mb-3 text-center">Detailed Feedback</h2>
-        <p className="text-center text-muted-foreground text-sm mb-4">
-          Review answers with explanations
+        <h2 className="text-lg sm:text-xl font-semibold mb-3 text-center">Comprehensive Exam Practice</h2>
+        <p className="text-center text-muted-foreground text-sm mb-2">
+          Each exam contains 50 questions with detailed feedback and explanations
+        </p>
+        <p className="text-center text-muted-foreground text-xs">
+          Time limit: 60 minutes per exam
         </p>
       </div>
 
-      <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {mockExams.map((exam) => (
           <Card 
             key={exam.id}
-            className="border-elec-yellow/30 bg-elec-gray overflow-hidden"
+            className="border-elec-yellow/30 bg-elec-gray overflow-hidden h-full"
           >
             <CardHeader className="pb-2 px-4 pt-4">
               <div className="flex justify-between items-start">

@@ -29,7 +29,7 @@ const ExamQuestion: React.FC<ExamQuestionProps> = ({
   isLastQuestion
 }) => {
   return (
-    <Card className="border-elec-yellow/30 bg-elec-gray">
+    <Card className="border-elec-yellow/30 bg-elec-gray animate-fade-in">
       <CardContent className="pt-4 sm:pt-6">
         <div className="space-y-4 sm:space-y-6">
           <h2 className="text-base sm:text-xl font-medium">{question.text}</h2>
@@ -66,7 +66,7 @@ const ExamQuestion: React.FC<ExamQuestionProps> = ({
           <Button 
             onClick={onFinish}
             size="sm"
-            className="text-xs sm:text-sm h-8 sm:h-10"
+            className="text-xs sm:text-sm h-8 sm:h-10 bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
             Finish Exam
           </Button>
@@ -74,7 +74,7 @@ const ExamQuestion: React.FC<ExamQuestionProps> = ({
           <Button 
             onClick={onNext}
             size="sm"
-            className="text-xs sm:text-sm h-8 sm:h-10"
+            className="text-xs sm:text-sm h-8 sm:h-10 bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
             Next Question
           </Button>
