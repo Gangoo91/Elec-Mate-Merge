@@ -16,7 +16,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
   
   return (
     <header className="bg-[#1e1e1e] border-b border-elec-yellow/10 py-3 px-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 pl-1">
         {isMobile && (
           <Button variant="ghost" size="icon" onClick={toggleSidebar}>
             <Menu className="h-6 w-6" />
@@ -36,11 +36,10 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           <Button 
             variant="ghost" 
             size="sm"
-            className="text-white hover:bg-white/10 transition-all flex items-center gap-2 px-3 py-1 rounded-full"
+            className="text-white hover:bg-white/10 transition-all flex items-center gap-2 px-3 py-1 rounded-full ml-auto"
           >
             <MessageSquare className="h-4 w-4" />
             <span className="hidden sm:inline">Messages</span>
-            <span className="inline-flex items-center justify-center w-5 h-5 bg-elec-yellow text-elec-dark text-xs font-bold rounded-full">2</span>
           </Button>
         </Link>
         <NotificationDropdown />
