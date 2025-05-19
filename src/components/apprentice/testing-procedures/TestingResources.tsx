@@ -5,7 +5,7 @@ import { BookOpen, Download, ExternalLink, FileText, Video } from "lucide-react"
 
 const TestingResources = () => {
   return (
-    <div className="border border-blue-500/30 rounded-md overflow-hidden">
+    <div className="border border-blue-500/30 rounded-md overflow-hidden w-full mx-auto">
       <div className="bg-blue-950/30 p-4 border-b border-blue-500/30">
         <h3 className="text-lg font-medium flex items-center gap-2">
           <BookOpen className="h-5 w-5 text-blue-400" />
@@ -22,20 +22,20 @@ const TestingResources = () => {
           <ul className="text-sm space-y-2">
             <li>
               <Link to="/apprentice/study/inspection-testing" className="text-blue-100/80 hover:text-blue-200 flex items-center gap-1.5">
-                <ExternalLink className="h-3.5 w-3.5" />
-                <span>BS 7671:2018+A2:2022 Amendment 2</span>
+                <ExternalLink className="h-3.5 w-3.5 flex-shrink-0" />
+                <span className="break-words">BS 7671:2018+A2:2022 Amendment 2</span>
               </Link>
             </li>
             <li>
               <Link to="/apprentice/study/inspection-testing" className="text-blue-100/80 hover:text-blue-200 flex items-center gap-1.5">
-                <ExternalLink className="h-3.5 w-3.5" />
-                <span>IET Guidance Note 3: Inspection & Testing</span>
+                <ExternalLink className="h-3.5 w-3.5 flex-shrink-0" />
+                <span className="break-words">IET Guidance Note 3: Inspection & Testing</span>
               </Link>
             </li>
             <li>
               <Link to="/apprentice/study/inspection-testing" className="text-blue-100/80 hover:text-blue-200 flex items-center gap-1.5">
-                <ExternalLink className="h-3.5 w-3.5" />
-                <span>Certificate Templates & Examples</span>
+                <ExternalLink className="h-3.5 w-3.5 flex-shrink-0" />
+                <span className="break-words">Certificate Templates & Examples</span>
               </Link>
             </li>
           </ul>
@@ -55,26 +55,26 @@ const TestingResources = () => {
           <ul className="text-sm space-y-2">
             <li>
               <Link to="/apprentice/study/inspection-testing" className="text-blue-100/80 hover:text-blue-200 flex items-center gap-1.5">
-                <ExternalLink className="h-3.5 w-3.5" />
-                <span>R1+R2 Testing Demonstration</span>
+                <ExternalLink className="h-3.5 w-3.5 flex-shrink-0" />
+                <span className="break-words">R1+R2 Testing Demonstration</span>
               </Link>
             </li>
             <li>
               <Link to="/apprentice/study/inspection-testing" className="text-blue-100/80 hover:text-blue-200 flex items-center gap-1.5">
-                <ExternalLink className="h-3.5 w-3.5" />
-                <span>Insulation Resistance Testing in Practice</span>
+                <ExternalLink className="h-3.5 w-3.5 flex-shrink-0" />
+                <span className="break-words">Insulation Resistance Testing in Practice</span>
               </Link>
             </li>
             <li>
               <Link to="/apprentice/study/inspection-testing" className="text-blue-100/80 hover:text-blue-200 flex items-center gap-1.5">
-                <ExternalLink className="h-3.5 w-3.5" />
-                <span>Earth Fault Loop Impedance Testing Guide</span>
+                <ExternalLink className="h-3.5 w-3.5 flex-shrink-0" />
+                <span className="break-words">Earth Fault Loop Impedance Testing Guide</span>
               </Link>
             </li>
             <li>
               <Link to="/apprentice/study/inspection-testing" className="text-blue-100/80 hover:text-blue-200 flex items-center gap-1.5">
-                <ExternalLink className="h-3.5 w-3.5" />
-                <span>Polarity Testing Walkthrough</span>
+                <ExternalLink className="h-3.5 w-3.5 flex-shrink-0" />
+                <span className="break-words">Polarity Testing Walkthrough</span>
               </Link>
             </li>
           </ul>

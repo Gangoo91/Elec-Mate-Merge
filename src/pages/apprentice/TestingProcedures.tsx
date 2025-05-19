@@ -49,7 +49,7 @@ const TestingProcedures = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6 animate-fade-in">
+    <div className="max-w-7xl mx-auto space-y-6 animate-fade-in px-2 sm:px-0">
       <TestingHeader />
       
       {lastVisited && activeTab !== lastVisited && (
@@ -71,7 +71,7 @@ const TestingProcedures = () => {
         </div>
       )}
 
-      <Collapsible open={showGuidance} onOpenChange={setShowGuidance} className="mb-6">
+      <Collapsible open={showGuidance} onOpenChange={setShowGuidance} className="mb-6 w-full">
         <div className="bg-gradient-to-r from-blue-950/30 to-blue-900/20 border border-blue-500/30 rounded-md p-4">
           <CollapsibleTrigger asChild>
             <div className="flex items-center justify-between cursor-pointer">
@@ -114,7 +114,7 @@ const TestingProcedures = () => {
         </div>
       </Collapsible>
       
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden w-full">
         <Tabs 
           value={activeTab} 
           onValueChange={handleTabChange} 
