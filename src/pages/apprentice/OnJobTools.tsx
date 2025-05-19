@@ -3,10 +3,17 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import OnTheJobToolsBox from "@/components/apprentice/OnTheJobToolsBox";
-import { Calculator, FileText, Settings, HardHat, MessageSquare, TestTube, HelpCircle, BookOpen, ClipboardList } from "lucide-react";
+import { Calculator, FileText, Settings, HardHat, MessageSquare, TestTube, HelpCircle, BookOpen } from "lucide-react";
 
 const OnJobTools = () => {
   const onJobTools = [
+    {
+      id: 6,
+      title: "Testing Procedures (Mini Toolkit)",
+      icon: TestTube,
+      description: "R1+R2, IR, Zs, polarity testing with step-by-step guides and diagrams",
+      link: "/apprentice/on-job-tools/testing-procedures"
+    },
     {
       id: 1,
       title: "Electrical Calculations",
@@ -36,20 +43,6 @@ const OnJobTools = () => {
       link: "/apprentice/on-job-tools/safety-cases"
     },
     {
-      id: 5,
-      title: "Workplace Language & Culture",
-      icon: MessageSquare,
-      description: "Navigate workplace communication, culture and relationships effectively",
-      link: "/apprentice/on-job-tools/workplace-culture"
-    },
-    {
-      id: 6,
-      title: "Testing Procedures (Mini Toolkit)",
-      icon: TestTube,
-      description: "R1+R2, IR, Zs, polarity testing with step-by-step guides and diagrams",
-      link: "/apprentice/on-job-tools/testing-procedures"
-    },
-    {
       id: 7,
       title: "Ask a Supervisor",
       icon: HelpCircle,
@@ -64,11 +57,11 @@ const OnJobTools = () => {
       link: "/apprentice/on-job-tools/flashcards"
     },
     {
-      id: 9,
-      title: "Incident Logging Tool",
-      icon: ClipboardList,
-      description: "Log near misses, unsafe practices, and faulty equipment with secure storage",
-      link: "/apprentice/on-job-tools/incident-logging"
+      id: 5,
+      title: "Workplace Language & Culture",
+      icon: MessageSquare,
+      description: "Navigate workplace communication, culture and relationships effectively",
+      link: "/apprentice/on-job-tools/workplace-culture"
     }
   ];
 
