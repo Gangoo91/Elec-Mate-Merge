@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { toast } from "sonner";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import TestingHeader from "@/components/apprentice/testing-procedures/TestingHeader";
 import TestingTabsList from "@/components/apprentice/testing-procedures/TestingTabsList";
 import TestingResources from "@/components/apprentice/testing-procedures/TestingResources";
@@ -10,11 +11,12 @@ import IRTestingTab from "@/components/apprentice/testing-procedures/testing-tab
 import ZsTestingTab from "@/components/apprentice/testing-procedures/testing-tabs/EarthFaultLoop/ZsTestingTab";
 import PolarityTestingTab from "@/components/apprentice/testing-procedures/testing-tabs/Polarity/PolarityTestingTab";
 import { Button } from "@/components/ui/button";
-import { BookmarkCheck, HelpCircle } from "lucide-react";
+import { BookmarkCheck, ChevronDown, HelpCircle, Info } from "lucide-react";
 
 const TestingProcedures = () => {
   const [activeTab, setActiveTab] = useState("r1r2");
   const [lastVisited, setLastVisited] = useState<string | null>(null);
+  const [showGuidance, setShowGuidance] = useState(false);
   
   // Track active tab for persistence
   useEffect(() => {
@@ -67,6 +69,41 @@ const TestingProcedures = () => {
           </Button>
         </div>
       )}
+
+      <Collapsible open={showGuidance} onOpenChange={setShowGuidance} className="mb-6">
+        <div className="bg-gradient-to-r from-blue-950/30 to-blue-900/20 border border-blue-500/30 rounded-md p-4">
+          <CollapsibleTrigger asChild>
+            <div className="flex items-center justify-between cursor-pointer">
+              <div className="flex items-center gap-2">
+                <Info className="h-5 w-5 text-blue-400" />
+                <h3 className="font-medium text-blue-200">Testing Guidance & Best Practices</h3>
+              </div>
+              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${showGuidance ? 'rotate-180' : ''}`} />
+              </Button>
+            </div>
+          </CollapsibleTrigger>
+          <CollapsibleContent className="pt-4 text-sm text-blue-100/90">
+            <div className="space-y-4">
+              <p>
+                When conducting electrical testing, always follow these professional guidelines:
+              </p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Always ensure the testing circuit is isolated before connecting test equipment</li>
+                <li>Use correctly calibrated, appropriate test equipment for each procedure</li>
+                <li>Fully document all test results, including date and time of testing</li>
+                <li>Verify test results against expected values from BS 7671</li>
+                <li>Complete tests in the sequence specified in the IET Guidance Note 3</li>
+                <li>Ensure personal protective equipment is worn during all testing procedures</li>
+                <li>When in doubt, consult the manufacturer's guidelines for your specific test equipment</li>
+              </ul>
+              <p className="font-medium text-blue-300 mt-2">
+                Remember: Documentation is as important as the testing itself. Keep comprehensive records.
+              </p>
+            </div>
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
       
       <div className="relative">
         <Tabs 
