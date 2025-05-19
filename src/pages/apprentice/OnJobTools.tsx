@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import OnTheJobToolsBox from "@/components/apprentice/OnTheJobToolsBox";
-import { Calculator, FileText, Settings, HardHat, MessageSquare } from "lucide-react";
+import { Calculator, FileText, Settings, HardHat, MessageSquare, TestTube } from "lucide-react";
 
 const OnJobTools = () => {
   const onJobTools = [
@@ -41,6 +41,13 @@ const OnJobTools = () => {
       icon: MessageSquare,
       description: "Navigate workplace communication, culture and relationships effectively",
       link: "/apprentice/on-job-tools/workplace-culture"
+    },
+    {
+      id: 6,
+      title: "Testing Procedures (Mini Toolkit)",
+      icon: TestTube,
+      description: "R1+R2, IR, Zs, polarity testing with step-by-step guides and diagrams",
+      link: "/apprentice/on-job-tools/testing-procedures"
     }
   ];
 
