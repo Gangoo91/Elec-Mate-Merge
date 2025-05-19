@@ -16,19 +16,19 @@ const StepNavigation = ({
   handlePrevious
 }: StepNavigationProps) => {
   return (
-    <div className="flex items-center justify-between pt-4">
-      <div className="flex items-center gap-1">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
+      <div className="flex items-center gap-1 w-full sm:w-auto order-2 sm:order-1">
         {Array.from({ length: totalSteps }).map((_, idx) => (
           <div 
             key={idx} 
-            className={`h-2 w-8 rounded-full ${
+            className={`h-2 w-6 sm:w-8 rounded-full ${
               idx + 1 <= currentStep ? "bg-amber-500" : "bg-gray-700"
             }`}
           />
         ))}
       </div>
       
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end order-1 sm:order-2">
         <Button
           variant="outline"
           size="sm"

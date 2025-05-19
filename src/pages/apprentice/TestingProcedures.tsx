@@ -53,9 +53,9 @@ const TestingProcedures = () => {
       <TestingHeader />
       
       {lastVisited && activeTab !== lastVisited && (
-        <div className="bg-blue-950/20 border border-blue-500/30 rounded-md p-3 mb-6 flex items-center justify-between">
+        <div className="bg-blue-950/20 border border-blue-500/30 rounded-md p-3 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <BookmarkCheck className="h-5 w-5 text-blue-400" />
+            <BookmarkCheck className="h-5 w-5 text-blue-400 flex-shrink-0" />
             <span className="text-sm text-blue-100">
               You last viewed the <span className="font-medium">{getTabName(lastVisited)}</span> procedure.
             </span>
@@ -63,7 +63,7 @@ const TestingProcedures = () => {
           <Button 
             size="sm" 
             variant="outline" 
-            className="text-xs border-blue-500/40 hover:bg-blue-800/20"
+            className="text-xs border-blue-500/40 hover:bg-blue-800/20 w-full sm:w-auto"
             onClick={() => setActiveTab(lastVisited)}
           >
             Return
@@ -76,7 +76,7 @@ const TestingProcedures = () => {
           <CollapsibleTrigger asChild>
             <div className="flex items-center justify-between cursor-pointer">
               <div className="flex items-center gap-2">
-                <Info className="h-5 w-5 text-blue-400" />
+                <Info className="h-5 w-5 text-blue-400 flex-shrink-0" />
                 <h3 className="font-medium text-blue-200">Testing Guidance & Best Practices</h3>
               </div>
               <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
@@ -114,7 +114,7 @@ const TestingProcedures = () => {
         </div>
       </Collapsible>
       
-      <div className="relative">
+      <div className="relative overflow-hidden">
         <Tabs 
           value={activeTab} 
           onValueChange={handleTabChange} 

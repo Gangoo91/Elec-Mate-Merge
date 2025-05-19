@@ -1,4 +1,6 @@
 
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 const R1R2Step2 = () => {
   return (
     <div className="space-y-4">
@@ -21,7 +23,9 @@ const R1R2Step2 = () => {
       </div>
       
       <div className="mt-4 bg-gray-800/30 p-4 rounded-md">
-        <img src="/placeholder.svg" alt="R1+R2 Testing Process" className="mx-auto max-h-64" />
+        <ScrollArea className="w-full max-w-full">
+          <img src="/placeholder.svg" alt="R1+R2 Testing Process" className="mx-auto max-h-64" />
+        </ScrollArea>
         <p className="text-xs text-center mt-2 text-muted-foreground">
           Testing process diagram showing proper testing technique
         </p>

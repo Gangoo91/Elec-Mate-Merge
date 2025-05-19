@@ -1,4 +1,6 @@
 
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 const R1R2Step1 = () => {
   return (
     <div className="space-y-4">
@@ -8,11 +10,13 @@ const R1R2Step1 = () => {
         <li>Verify the test instrument is functioning correctly using a calibration check</li>
         <li>Ensure all protective conductors are correctly identified</li>
         <li>Remove any electronic devices that might be damaged by testing</li>
-        <li>Check that the installation is compliant with BS 7671 regulations</li>
+        <li>Check that the installation complies with BS 7671 regulations</li>
         <li>Ensure that proper labels and documentation are available</li>
       </ul>
       <div className="mt-4 bg-gray-800/30 p-4 rounded-md">
-        <img src="/placeholder.svg" alt="R1+R2 Testing Equipment Setup" className="mx-auto max-h-64" />
+        <ScrollArea className="w-full max-w-full">
+          <img src="/placeholder.svg" alt="R1+R2 Testing Equipment Setup" className="mx-auto max-h-64" />
+        </ScrollArea>
         <p className="text-xs text-center mt-2 text-muted-foreground">
           Proper test equipment connection diagram
         </p>
