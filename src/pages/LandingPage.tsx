@@ -12,12 +12,11 @@ const LandingPage = () => {
     <div className="min-h-screen flex flex-col bg-elec-dark text-white">
       <div className="flex-1 flex flex-col items-center justify-center text-center px-4 py-12">
         <div className="max-w-3xl">
-          {/* Updated logo styling */}
-          <h1 className="mb-6 relative">
-            <span className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight">
-              <span className="text-elec-yellow">Elec</span>
-              <span className="text-elec-light">-</span>
-              <span className="text-elec-yellow">Mate</span>
+          {/* Updated logo styling to match the uploaded image */}
+          <h1 className="mb-6">
+            <span className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight flex justify-center items-baseline">
+              <span className="text-elec-yellow">Elec-</span>
+              <span className="text-white">Mate</span>
             </span>
             <span className="absolute -top-4 right-1/4 text-xs sm:text-sm text-elec-yellow font-semibold tracking-widest">UK</span>
           </h1>
@@ -56,8 +55,8 @@ const LandingPage = () => {
       {/* Enhanced Features Section with improved visual design */}
       <div className="py-16 bg-gradient-to-b from-elec-gray to-elec-dark border-t border-elec-yellow/30">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-3 text-elec-yellow">
-            Everything You Need in One Place
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-3">
+            <span className="text-elec-yellow">Everything</span> <span className="text-white">You Need in One Place</span>
           </h2>
           <p className="text-center text-elec-light/70 max-w-2xl mx-auto mb-12">
             ElecMate provides the complete toolkit for UK electrical professionals, from apprentices to business owners
@@ -101,9 +100,8 @@ const LandingPage = () => {
       <footer className="py-6 border-t border-elec-yellow/30 text-center">
         <div className="flex flex-col items-center justify-center">
           <h3 className="text-xl font-semibold mb-2">
-            <span className="text-elec-yellow">Elec</span>
-            <span className="text-elec-light">-</span>
-            <span className="text-elec-yellow">Mate</span>
+            <span className="text-elec-yellow">Elec-</span>
+            <span className="text-white">Mate</span>
           </h3>
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} Elec-Mate Learning Platform
