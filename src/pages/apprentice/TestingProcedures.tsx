@@ -49,11 +49,11 @@ const TestingProcedures = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6 animate-fade-in px-2 sm:px-0">
+    <div className="max-w-7xl mx-auto space-y-6 animate-fade-in px-4">
       <TestingHeader />
       
       {lastVisited && activeTab !== lastVisited && (
-        <div className="bg-blue-950/20 border border-blue-500/30 rounded-md p-3 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="bg-blue-950/20 border border-blue-500/30 rounded-md p-3 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 max-w-full">
           <div className="flex items-center gap-2">
             <BookmarkCheck className="h-5 w-5 text-blue-400 flex-shrink-0" />
             <span className="text-sm text-blue-100">
@@ -71,7 +71,7 @@ const TestingProcedures = () => {
         </div>
       )}
 
-      <Collapsible open={showGuidance} onOpenChange={setShowGuidance} className="mb-6 w-full">
+      <Collapsible open={showGuidance} onOpenChange={setShowGuidance} className="mb-6 w-full overflow-hidden">
         <div className="bg-gradient-to-r from-blue-950/30 to-blue-900/20 border border-blue-500/30 rounded-md p-4">
           <CollapsibleTrigger asChild>
             <div className="flex items-center justify-between cursor-pointer">
@@ -84,7 +84,7 @@ const TestingProcedures = () => {
               </Button>
             </div>
           </CollapsibleTrigger>
-          <CollapsibleContent className="pt-4 text-sm text-blue-100/90">
+          <CollapsibleContent className="pt-4 text-sm text-blue-100/90 overflow-x-hidden">
             <div className="space-y-4">
               <p>
                 When conducting electrical testing, always follow these professional guidelines:
@@ -114,7 +114,7 @@ const TestingProcedures = () => {
         </div>
       </Collapsible>
       
-      <div className="relative overflow-hidden w-full">
+      <div className="w-full overflow-hidden">
         <Tabs 
           value={activeTab} 
           onValueChange={handleTabChange} 
@@ -122,19 +122,19 @@ const TestingProcedures = () => {
         >
           <TestingTabsList />
           
-          <TabsContent value="r1r2" className="animate-fade-in">
+          <TabsContent value="r1r2" className="animate-fade-in overflow-hidden">
             <R1R2TestingTab />
           </TabsContent>
           
-          <TabsContent value="ir" className="animate-fade-in">
+          <TabsContent value="ir" className="animate-fade-in overflow-hidden">
             <IRTestingTab />
           </TabsContent>
           
-          <TabsContent value="zs" className="animate-fade-in">
+          <TabsContent value="zs" className="animate-fade-in overflow-hidden">
             <ZsTestingTab />
           </TabsContent>
           
-          <TabsContent value="polarity" className="animate-fade-in">
+          <TabsContent value="polarity" className="animate-fade-in overflow-hidden">
             <PolarityTestingTab />
           </TabsContent>
         </Tabs>

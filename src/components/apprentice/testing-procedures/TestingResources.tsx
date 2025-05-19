@@ -13,8 +13,8 @@ const TestingResources = () => {
         </h3>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-        <div className="p-3 border border-gray-700/50 rounded-md bg-gray-800/30">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 w-full">
+        <div className="p-3 border border-gray-700/50 rounded-md bg-gray-800/30 w-full">
           <h4 className="text-blue-300 font-medium mb-2 flex items-center gap-2">
             <FileText className="h-4 w-4" />
             <span>Reference Documents</span>
@@ -47,7 +47,7 @@ const TestingResources = () => {
           </div>
         </div>
         
-        <div className="p-3 border border-gray-700/50 rounded-md bg-gray-800/30">
+        <div className="p-3 border border-gray-700/50 rounded-md bg-gray-800/30 w-full">
           <h4 className="text-blue-300 font-medium mb-2 flex items-center gap-2">
             <Video className="h-4 w-4" />
             <span>Video Tutorials</span>

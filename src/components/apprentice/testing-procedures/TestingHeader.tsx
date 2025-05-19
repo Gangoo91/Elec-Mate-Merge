@@ -14,7 +14,7 @@ const TestingHeader = () => {
           </div>
           <h1 className="text-3xl font-bold tracking-tight">Testing Procedures</h1>
         </div>
-        <div className="flex items-center gap-2 mt-4 md:mt-0">
+        <div className="flex flex-wrap items-center gap-2 mt-4 md:mt-0 justify-center md:justify-end">
           <Link to="/apprentice/study/inspection-testing">
             <Button variant="outline" size="sm" className="flex items-center gap-2">
               <BookmarkCheck className="h-4 w-4" />
