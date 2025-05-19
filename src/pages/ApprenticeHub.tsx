@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Book, Clock, Heart, Users, WrenchIcon, Bot, ArrowLeft, Calculator, FileText, Settings } from "lucide-react";
+import { Book, Clock, Heart, Users, WrenchIcon, Bot, ArrowLeft, Calculator, FileText, Settings, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
@@ -41,6 +41,12 @@ const ApprenticeHub = () => {
       title: "On the Job Tools",
       icon: Settings,
       link: "/apprentice/on-job-tools"
+    },
+    {
+      id: 7,
+      title: "Professional Development",
+      icon: GraduationCap,
+      link: "/apprentice/professional-development"
     }
   ];
 

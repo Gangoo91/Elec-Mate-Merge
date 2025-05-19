@@ -42,6 +42,7 @@ import InspectionTesting from "@/pages/apprentice/InspectionTesting";
 import EighteenthEdition from "@/pages/apprentice/EighteenthEdition";
 import AM2Prep from "@/pages/apprentice/AM2Prep";
 import OnSiteSkills from "@/pages/apprentice/OnSiteSkills";
+import ProfessionalDevelopment from "@/pages/apprentice/ProfessionalDevelopment";
 
 const ApprenticeRoutes = () => {
   return (
@@ -59,6 +60,7 @@ const ApprenticeRoutes = () => {
       <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
       <Route path="mental-health/crisis-resources" element={<CrisisResources />} />
       <Route path="career-progression" element={<CareerProgression />} />
+      <Route path="professional-development" element={<ProfessionalDevelopment />} />
       <Route path="on-job-tools" element={<OnJobTools />} />
       <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
       <Route path="on-job-tools/documents" element={<OnJobDocuments />} />
