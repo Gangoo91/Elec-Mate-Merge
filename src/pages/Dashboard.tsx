@@ -22,7 +22,7 @@ const Dashboard = () => {
     const hour = new Date().getHours();
     if (hour < 12) setGreeting("Good morning");
     else if (hour < 18) setGreeting("Good Afternoon");
-    else setGreeting("Good evening");
+    else setGreeting("Good Evening");
   }, []);
 
   const userName = profile?.full_name || profile?.username || userData.name;
