@@ -5,12 +5,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileText, ListChecks, Zap, BookOpen, ShieldCheck, FileClock, BarChart4 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Helmet } from "react-helmet";
 
 const InspectionTesting = () => {
   const [activeTab, setActiveTab] = useState("fundamentals");
 
   return (
     <div className="max-w-7xl mx-auto space-y-6 animate-fade-in px-4">
+      <Helmet>
+        <title>Inspection & Testing | ElecMate</title>
+      </Helmet>
+      
       <div className="flex flex-col items-center justify-center mb-4">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Inspection & Testing</h1>
         <p className="text-center text-muted-foreground text-sm sm:text-base mb-4 max-w-3xl">
@@ -32,7 +37,7 @@ const InspectionTesting = () => {
         <TabsContent value="fundamentals" className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             <Link to="/apprentice/study/inspection-testing/safe-isolation" className="block w-full">
-              <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
+              <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20 h-full">
                 <CardContent className="flex flex-col items-center justify-center p-5 sm:p-6 h-full">
                   <ShieldCheck className="h-10 w-10 text-elec-yellow mb-3 sm:mb-4" />
                   <h2 className="text-base sm:text-xl font-bold mb-2 text-center">Safe isolation procedures</h2>
@@ -44,7 +49,7 @@ const InspectionTesting = () => {
             </Link>
             
             <Link to="/apprentice/study/inspection-testing/methodology" className="block w-full">
-              <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
+              <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20 h-full">
                 <CardContent className="flex flex-col items-center justify-center p-5 sm:p-6 h-full">
                   <ListChecks className="h-10 w-10 text-elec-yellow mb-3 sm:mb-4" />
                   <h2 className="text-base sm:text-xl font-bold mb-2 text-center">Inspection methodology</h2>
@@ -56,7 +61,7 @@ const InspectionTesting = () => {
             </Link>
             
             <Link to="/apprentice/study/inspection-testing/principles" className="block w-full">
-              <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
+              <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20 h-full">
                 <CardContent className="flex flex-col items-center justify-center p-5 sm:p-6 h-full">
                   <Zap className="h-10 w-10 text-elec-yellow mb-3 sm:mb-4" />
                   <h2 className="text-base sm:text-xl font-bold mb-2 text-center">Testing principles</h2>
@@ -68,7 +73,7 @@ const InspectionTesting = () => {
             </Link>
             
             <Link to="/apprentice/study/inspection-testing/regulations" className="block w-full">
-              <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
+              <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20 h-full">
                 <CardContent className="flex flex-col items-center justify-center p-5 sm:p-6 h-full">
                   <BookOpen className="h-10 w-10 text-elec-yellow mb-3 sm:mb-4" />
                   <h2 className="text-base sm:text-xl font-bold mb-2 text-center">Regulatory framework</h2>
@@ -95,7 +100,7 @@ const InspectionTesting = () => {
             </Link>
 
             <Link to="/apprentice/study/inspection-testing/result-analysis" className="block w-full">
-              <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
+              <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20 h-full">
                 <CardContent className="flex flex-col items-center justify-center p-5 sm:p-6 h-full">
                   <BarChart4 className="h-10 w-10 text-elec-yellow mb-3 sm:mb-4" />
                   <h2 className="text-base sm:text-xl font-bold mb-2 text-center">Test result analysis</h2>
