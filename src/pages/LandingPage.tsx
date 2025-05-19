@@ -12,9 +12,9 @@ const LandingPage = () => {
     <div className="min-h-screen flex flex-col bg-elec-dark text-white">
       <div className="flex-1 flex flex-col items-center justify-center text-center px-4 py-12">
         <div className="max-w-3xl">
-          {/* Updated logo styling to match the uploaded image */}
-          <h1 className="mb-6">
-            <span className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight flex justify-center items-baseline">
+          {/* Logo styling to exactly match the provided image */}
+          <h1 className="mb-8 relative">
+            <span className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight flex justify-center">
               <span className="text-elec-yellow">Elec-</span>
               <span className="text-white">Mate</span>
             </span>
