@@ -1,8 +1,7 @@
 
 import StudyHeader from "@/components/apprentice/StudyHeader";
-import CourseCardGrid from "@/components/apprentice/CourseCardGrid";
 import { Link } from "react-router-dom";
-import { GraduationCap, Shield, FileText, AlertTriangle, Book, School } from "lucide-react";
+import { GraduationCap, Shield, FileText, AlertTriangle, Book, School, BookOpen, Library } from "lucide-react";
 import CourseCard from "@/components/apprentice/CourseCard";
 
 const ApprenticeStudy = () => {
@@ -17,8 +16,8 @@ const ApprenticeStudy = () => {
       
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <CourseCard 
-          id="course-content"
-          title="Course Content"
+          id="level-2"
+          title="Level 2 (Diploma / NVQ)"
           description=""
           icon={Book}
           courses={[]}
@@ -26,10 +25,37 @@ const ApprenticeStudy = () => {
         />
         
         <CourseCard 
-          id="higher-learning"
-          title="Higher Learning"
+          id="level-3"
+          title="Level 3"
           description=""
-          icon={School}
+          icon={BookOpen}
+          courses={[]}
+          baseUrl="/apprentice/study"
+        />
+        
+        <CourseCard 
+          id="inspection-testing"
+          title="Inspection & Testing"
+          description=""
+          icon={FileText}
+          courses={[]}
+          baseUrl="/apprentice/study"
+        />
+        
+        <CourseCard 
+          id="18th-edition"
+          title="18th Edition (BS 7671)"
+          description=""
+          icon={Library}
+          courses={[]}
+          baseUrl="/apprentice/study"
+        />
+        
+        <CourseCard 
+          id="am2-prep"
+          title="AM2 / AM2S Prep"
+          description=""
+          icon={GraduationCap}
           courses={[]}
           baseUrl="/apprentice/study"
         />
@@ -38,7 +64,7 @@ const ApprenticeStudy = () => {
           id="ai-learning"
           title="AI Learning Tools"
           description=""
-          icon={GraduationCap}
+          icon={School}
           courses={[]}
           baseUrl="/apprentice/study"
         />
