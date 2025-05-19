@@ -1,10 +1,11 @@
 
-import { Menu } from "lucide-react";
+import { Menu, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import RecordingIndicator from "../apprentice/timer/RecordingIndicator";
 import NotificationDropdown from "../notifications/NotificationDropdown";
 import UserProfileDropdown from "../auth/UserProfileDropdown";
+import { Link } from "react-router-dom";
 
 interface HeaderProps {
   toggleSidebar: () => void;
@@ -22,7 +23,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           </Button>
         )}
         <div className="flex items-center gap-1">
-          <h1 className="text-xl md:text-2xl font-bold tracking-tight">
+          <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
             <span className="text-elec-yellow">Elec</span>
             <span className="text-white">Mate</span>
           </h1>
@@ -31,6 +32,15 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
       </div>
       
       <div className="flex items-center space-x-2 md:space-x-4">
+        <Link to="/messenger">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="relative hover:bg-elec-yellow/10"
+          >
+            <MessageSquare className="h-5 w-5 text-elec-yellow" />
+          </Button>
+        </Link>
         <NotificationDropdown />
         <UserProfileDropdown />
       </div>
