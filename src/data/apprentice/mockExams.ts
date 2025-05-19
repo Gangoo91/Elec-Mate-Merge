@@ -1,94 +1,48 @@
-
 export const mockExams = [
   {
-    id: "level2-am2",
-    title: "Level 2 - AM2 Preparation",
-    description: "Comprehensive mock exam covering all Level 2 topics with emphasis on AM2 assessment preparation.",
-    duration: 120,
-    questionCount: 60,
-    level: "Level 2",
-    isPremium: false,
-  },
-  {
-    id: "level2-unit1",
-    title: "Level 2 - Unit 1 Health & Safety",
-    description: "Practice exam focused on health and safety principles for electrical installation work.",
-    duration: 45,
-    questionCount: 30,
-    level: "Level 2",
-    isPremium: false,
-  },
-  {
-    id: "level2-electrical-science",
-    title: "Level 2 - Electrical Science",
-    description: "Test your knowledge of electrical principles, circuits, and measurements.",
+    id: "level2",
+    title: "Level 2 Electrical Installation",
+    description: "Comprehensive mock exam covering all Level 2 electrical installation topics including theory, practical knowledge and regulations.",
     duration: 60,
-    questionCount: 40,
+    questionCount: 50,
     level: "Level 2",
     isPremium: false,
   },
   {
-    id: "level3-full",
-    title: "Level 3 - Full Practice Exam",
-    description: "Complete mock exam covering all Level 3 topics including electrical science and fault diagnosis.",
-    duration: 180,
-    questionCount: 80,
-    level: "Level 3",
-    isPremium: true,
-  },
-  {
-    id: "level3-inspection",
-    title: "Level 3 - Inspection & Testing",
-    description: "Specialised practice test focusing on inspection, testing and commissioning procedures.",
+    id: "level3",
+    title: "Level 3 Electrical Installation",
+    description: "Complete mock exam covering advanced Level 3 topics including electrical principles, fault diagnosis and installation techniques.",
     duration: 60,
-    questionCount: 40,
-    level: "Level 3",
-    isPremium: true,
-  },
-  {
-    id: "level3-fault-finding",
-    title: "Level 3 - Fault Finding",
-    description: "Test your diagnostic skills with common electrical installation and equipment faults.",
-    duration: 75,
     questionCount: 50,
     level: "Level 3",
-    isPremium: true,
+    isPremium: false,
   },
   {
-    id: "am2-practical-prep",
-    title: "AM2 - Practical Assessment Prep",
-    description: "Theory questions to prepare you for the AM2 practical assessment scenarios.",
-    duration: 90,
-    questionCount: 45,
-    level: "AM2",
-    isPremium: true,
-  },
-  {
-    id: "am2-written-assessment",
-    title: "AM2 - Written Assessment Practice",
-    description: "Preparation for the written assessment portion of the AM2 test.",
+    id: "inspection-testing",
+    title: "Inspection & Testing",
+    description: "Specialised exam focusing on inspection, testing and commissioning procedures for electrical installations.",
     duration: 60,
-    questionCount: 30,
-    level: "AM2",
-    isPremium: true,
+    questionCount: 50,
+    level: "Level 3",
+    isPremium: false,
   },
   {
     id: "18th-edition",
-    title: "18th Edition BS 7671 - Full Mock",
-    description: "Complete practice exam for the 18th Edition Wiring Regulations qualification.",
-    duration: 120,
-    questionCount: 60,
+    title: "18th Edition BS 7671",
+    description: "Complete practice exam for the 18th Edition Wiring Regulations qualification covering all chapters.",
+    duration: 60,
+    questionCount: 50,
     level: "Level 3",
-    isPremium: true,
+    isPremium: false,
   },
   {
-    id: "level4-design",
-    title: "Level 4 - Electrical Design",
-    description: "Advanced mock exam on electrical system design principles for experienced electricians.",
-    duration: 120,
+    id: "am2",
+    title: "AM2 Assessment Preparation",
+    description: "Theory questions to prepare you for the AM2 practical assessment scenarios and written exam.",
+    duration: 60,
     questionCount: 50,
-    level: "Level 4",
-    isPremium: true,
+    level: "AM2",
+    isPremium: false,
   }
 ];
 
@@ -154,3 +108,19 @@ export const mockQuestions = [
     explanation: "According to BS 7671, the protective earth conductor must be identified by green and yellow striped insulation throughout its length in fixed installations."
   }
 ];
+
+// Generate 45 more sample questions to reach 50 total
+for (let i = 6; i <= 50; i++) {
+  mockQuestions.push({
+    id: i,
+    text: `Sample question ${i} for demonstration purposes. This would be replaced with real electrical exam content.`,
+    options: [
+      "Option A - Sample answer choice",
+      "Option B - Sample answer choice",
+      "Option C - Sample answer choice",
+      "Option D - Sample answer choice"
+    ],
+    correctAnswer: Math.floor(Math.random() * 4),
+    explanation: "This is a placeholder explanation for the correct answer. In a real exam, this would provide detailed information about why the answer is correct."
+  });
+}

@@ -61,14 +61,14 @@ const MockExamDetails = () => {
   // If exam not found
   if (!exam) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
-        <div className="flex items-center justify-center flex-col p-10 bg-elec-gray rounded-lg border border-elec-yellow/20">
-          <AlertCircle className="h-10 w-10 text-red-500 mb-4" />
-          <h1 className="text-xl font-semibold mb-2">Exam Not Found</h1>
-          <p className="text-muted-foreground mb-6">The exam you're looking for doesn't exist or has been removed.</p>
+      <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+        <div className="flex items-center justify-center flex-col p-6 sm:p-10 bg-elec-gray rounded-lg border border-elec-yellow/20">
+          <AlertCircle className="h-8 w-8 sm:h-10 sm:w-10 text-red-500 mb-4" />
+          <h1 className="text-lg sm:text-xl font-semibold mb-2">Exam Not Found</h1>
+          <p className="text-sm text-muted-foreground mb-6">The exam you're looking for doesn't exist or has been removed.</p>
           <button 
             onClick={() => navigate('/apprentice/study/mock-exams')}
-            className="px-4 py-2 bg-elec-yellow text-elec-dark font-medium rounded-md"
+            className="px-3 py-2 bg-elec-yellow text-elec-dark font-medium rounded-md text-sm"
           >
             Return to Mock Exams
           </button>
@@ -78,7 +78,7 @@ const MockExamDetails = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6 space-y-6 animate-fade-in">
+    <div className="max-w-4xl mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6 animate-fade-in">
       <ExamHeader 
         title={exam.title} 
         timeRemaining={isExamStarted ? formatTime(timeRemaining) : `${exam.duration}:00`}

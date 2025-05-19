@@ -30,42 +30,52 @@ const ExamQuestion: React.FC<ExamQuestionProps> = ({
 }) => {
   return (
     <Card className="border-elec-yellow/30 bg-elec-gray">
-      <CardContent className="pt-6">
-        <div className="space-y-6">
-          <h2 className="text-xl font-medium">{question.text}</h2>
+      <CardContent className="pt-4 sm:pt-6">
+        <div className="space-y-4 sm:space-y-6">
+          <h2 className="text-base sm:text-xl font-medium">{question.text}</h2>
           
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3">
             {question.options.map((option, index) => (
               <div
                 key={index}
-                className={`p-3 rounded-md border cursor-pointer transition-colors ${
+                className={`p-2 sm:p-3 rounded-md border cursor-pointer transition-colors ${
                   selectedAnswer === index
                     ? 'bg-elec-yellow/20 border-elec-yellow'
                     : 'border-elec-gray-border hover:border-elec-yellow/50 bg-elec-dark/30'
                 }`}
                 onClick={() => onSelectAnswer(question.id, index)}
               >
-                {option}
+                <span className="text-sm sm:text-base">{option}</span>
               </div>
             ))}
           </div>
         </div>
       </CardContent>
-      <CardFooter className="flex justify-between mt-6">
+      <CardFooter className="flex justify-between mt-4 sm:mt-6 pb-4 sm:pb-6 pt-2 sm:pt-0">
         <Button 
           variant="outline" 
           onClick={onPrevious}
           disabled={isFirstQuestion}
+          size="sm"
+          className="text-xs sm:text-sm h-8 sm:h-10"
         >
           Previous
         </Button>
         
         {isLastQuestion ? (
-          <Button onClick={onFinish}>
+          <Button 
+            onClick={onFinish}
+            size="sm"
+            className="text-xs sm:text-sm h-8 sm:h-10"
+          >
             Finish Exam
           </Button>
         ) : (
-          <Button onClick={onNext}>
+          <Button 
+            onClick={onNext}
+            size="sm"
+            className="text-xs sm:text-sm h-8 sm:h-10"
+          >
             Next Question
           </Button>
         )}
