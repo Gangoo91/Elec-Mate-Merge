@@ -12,31 +12,38 @@ const LandingPage = () => {
     <div className="min-h-screen flex flex-col bg-elec-dark text-white">
       <div className="flex-1 flex flex-col items-center justify-center text-center px-4 py-12">
         <div className="max-w-3xl">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-elec-yellow mb-6">
-            Elec-Mate
+          {/* Updated logo styling */}
+          <h1 className="mb-6 relative">
+            <span className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight">
+              <span className="text-elec-yellow">Elec</span>
+              <span className="text-elec-light">-</span>
+              <span className="text-elec-yellow">Mate</span>
+            </span>
+            <span className="absolute -top-4 right-1/4 text-xs sm:text-sm text-elec-yellow font-semibold tracking-widest">UK</span>
           </h1>
-          <p className="text-xl md:text-2xl mb-8">
+          
+          <p className="text-xl md:text-2xl mb-8 text-elec-light/90 max-w-2xl mx-auto">
             The complete platform for electrical professionals and apprentices with learning resources, off-job training tools, electrician's toolkit, community support, mentor connect, and mental health resources
           </p>
           
           {user && <MilestonesDisplay className="mb-8" />}
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
             {user ? (
               <Link to="/dashboard">
-                <Button size="lg" className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80">
+                <Button size="lg" className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80 font-medium px-8 py-6 text-lg">
                   Go to Dashboard
                 </Button>
               </Link>
             ) : (
               <>
                 <Link to="/auth/signin">
-                  <Button size="lg" className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80">
+                  <Button size="lg" className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80 font-medium px-8 py-6 text-lg">
                     Sign In
                   </Button>
                 </Link>
                 <Link to="/auth/signup">
-                  <Button size="lg" variant="outline" className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow/10">
+                  <Button size="lg" variant="outline" className="border-elec-yellow text-elec-yellow hover:bg-elec-yellow/10 font-medium px-8 py-6 text-lg">
                     Create Account
                   </Button>
                 </Link>
@@ -46,12 +53,15 @@ const LandingPage = () => {
         </div>
       </div>
       
-      {/* Features Section */}
-      <div className="py-12 bg-elec-gray border-t border-elec-yellow/30">
+      {/* Enhanced Features Section with improved visual design */}
+      <div className="py-16 bg-gradient-to-b from-elec-gray to-elec-dark border-t border-elec-yellow/30">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-center text-elec-yellow mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-3 text-elec-yellow">
             Everything You Need in One Place
           </h2>
+          <p className="text-center text-elec-light/70 max-w-2xl mx-auto mb-12">
+            ElecMate provides the complete toolkit for UK electrical professionals, from apprentices to business owners
+          </p>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <FeatureCard 
@@ -89,22 +99,29 @@ const LandingPage = () => {
       </div>
       
       <footer className="py-6 border-t border-elec-yellow/30 text-center">
-        <p className="text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Elec-Mate Learning Platform
-        </p>
+        <div className="flex flex-col items-center justify-center">
+          <h3 className="text-xl font-semibold mb-2">
+            <span className="text-elec-yellow">Elec</span>
+            <span className="text-elec-light">-</span>
+            <span className="text-elec-yellow">Mate</span>
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Elec-Mate Learning Platform
+          </p>
+        </div>
       </footer>
     </div>
   );
 };
 
-// Feature Card Component
+// Enhanced Feature Card Component with hover effects
 const FeatureCard = ({ icon: Icon, title, description }) => {
   return (
-    <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-6 flex flex-col items-center text-center hover:border-elec-yellow/50 transition-colors">
-      <div className="bg-elec-yellow/10 p-3 rounded-full mb-4">
-        <Icon className="h-6 w-6 text-elec-yellow" />
+    <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg p-6 flex flex-col items-center text-center hover:border-elec-yellow/50 transition-colors hover:shadow-lg hover:shadow-elec-yellow/5 group">
+      <div className="bg-elec-yellow/10 p-4 rounded-full mb-5 group-hover:bg-elec-yellow/20 transition-colors">
+        <Icon className="h-7 w-7 text-elec-yellow" />
       </div>
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+      <h3 className="text-xl font-semibold mb-3">{title}</h3>
       <p className="text-elec-light/70">{description}</p>
     </div>
   );
