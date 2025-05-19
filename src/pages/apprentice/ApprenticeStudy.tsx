@@ -1,7 +1,6 @@
 
 import StudyHeader from "@/components/apprentice/StudyHeader";
-import { Link } from "react-router-dom";
-import { GraduationCap, Shield, FileText, AlertTriangle, Book, School, BookOpen, Library } from "lucide-react";
+import { GraduationCap, Shield, FileText, AlertTriangle, Book, School, BookOpen, Library, Briefcase } from "lucide-react";
 import CourseCard from "@/components/apprentice/CourseCard";
 
 const ApprenticeStudy = () => {
@@ -47,6 +46,15 @@ const ApprenticeStudy = () => {
           title="18th Edition (BS 7671)"
           description=""
           icon={Library}
+          courses={[]}
+          baseUrl="/apprentice/study"
+        />
+        
+        <CourseCard 
+          id="on-site-skills"
+          title="On-Site Apprenticeship Skills"
+          description=""
+          icon={Briefcase}
           courses={[]}
           baseUrl="/apprentice/study"
         />

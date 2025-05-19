@@ -41,6 +41,7 @@ import Level3 from "@/pages/apprentice/Level3";
 import InspectionTesting from "@/pages/apprentice/InspectionTesting";
 import EighteenthEdition from "@/pages/apprentice/EighteenthEdition";
 import AM2Prep from "@/pages/apprentice/AM2Prep";
+import OnSiteSkills from "@/pages/apprentice/OnSiteSkills";
 
 const ApprenticeRoutes = () => {
   return (
@@ -75,6 +76,7 @@ const ApprenticeRoutes = () => {
         <Route path="inspection-testing" element={<InspectionTesting />} />
         <Route path="18th-edition" element={<EighteenthEdition />} />
         <Route path="am2-prep" element={<AM2Prep />} />
+        <Route path="on-site-skills" element={<OnSiteSkills />} />
         <Route path="ai-learning" element={<AILearning />} />
         <Route path="mock-exams" element={<MockExams />} />
         <Route path="mock-exams/:examId" element={<MockExamDetails />} />
