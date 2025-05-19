@@ -16,7 +16,7 @@ const ApprenticeStudy = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <CourseCard 
           id="level-2"
-          title="Level 2 (Diploma / NVQ)"
+          title="Level 2 Electrical Installation"
           description=""
           icon={Book}
           courses={[]}
@@ -25,7 +25,7 @@ const ApprenticeStudy = () => {
         
         <CourseCard 
           id="level-3"
-          title="Level 3"
+          title="Level 3 Electrical Installation"
           description=""
           icon={BookOpen}
           courses={[]}

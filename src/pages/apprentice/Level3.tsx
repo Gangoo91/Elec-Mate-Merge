@@ -7,7 +7,7 @@ const Level3 = () => {
   return (
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-4">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">Level 3</h1>
+        <h1 className="text-3xl font-bold tracking-tight mb-4">Level 3 Electrical Installation</h1>
         <BackButton customUrl="/apprentice/study" label="Back to Study Centre" />
       </div>
       
