@@ -18,6 +18,9 @@ import OnJobAssessment from "@/pages/apprentice/OnJobAssessment";
 import OnJobSafetyCases from "@/pages/apprentice/OnJobSafetyCases";
 import OnJobWorkplaceCulture from "@/pages/apprentice/OnJobWorkplaceCulture";
 import TestingProcedures from "@/pages/apprentice/TestingProcedures";
+import SupervisorKnowledge from "@/pages/apprentice/SupervisorKnowledge";
+import FlashcardsLearning from "@/pages/apprentice/FlashcardsLearning";
+import IncidentLogging from "@/pages/apprentice/IncidentLogging";
 import StressManagement from "@/pages/apprentice/mental-health/StressManagement";
 import SupportNetwork from "@/pages/apprentice/mental-health/SupportNetwork";
 import WorkLifeBalance from "@/pages/apprentice/mental-health/WorkLifeBalance";
@@ -69,6 +72,9 @@ const ApprenticeRoutes = () => {
       <Route path="on-job-tools/safety-cases" element={<OnJobSafetyCases />} />
       <Route path="on-job-tools/workplace-culture" element={<OnJobWorkplaceCulture />} />
       <Route path="on-job-tools/testing-procedures" element={<TestingProcedures />} />
+      <Route path="on-job-tools/supervisor-knowledge" element={<SupervisorKnowledge />} />
+      <Route path="on-job-tools/flashcards" element={<FlashcardsLearning />} />
+      <Route path="on-job-tools/incident-logging" element={<IncidentLogging />} />
       
       <Route path="study">
         <Route index element={<ApprenticeStudy />} />

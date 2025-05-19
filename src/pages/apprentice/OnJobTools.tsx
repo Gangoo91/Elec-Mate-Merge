@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import OnTheJobToolsBox from "@/components/apprentice/OnTheJobToolsBox";
-import { Calculator, FileText, Settings, HardHat, MessageSquare, TestTube } from "lucide-react";
+import { Calculator, FileText, Settings, HardHat, MessageSquare, TestTube, HelpCircle, BookOpen, ClipboardList } from "lucide-react";
 
 const OnJobTools = () => {
   const onJobTools = [
@@ -48,6 +48,27 @@ const OnJobTools = () => {
       icon: TestTube,
       description: "R1+R2, IR, Zs, polarity testing with step-by-step guides and diagrams",
       link: "/apprentice/on-job-tools/testing-procedures"
+    },
+    {
+      id: 7,
+      title: "Ask a Supervisor",
+      icon: HelpCircle,
+      description: "Knowledge bank with FAQs from real-world site questions and expert answers",
+      link: "/apprentice/on-job-tools/supervisor-knowledge"
+    },
+    {
+      id: 8,
+      title: "Flashcards & Microlearning",
+      icon: BookOpen,
+      description: "Quick-fire revision flashcards for cable colors, regulations, EICR codes, and more",
+      link: "/apprentice/on-job-tools/flashcards"
+    },
+    {
+      id: 9,
+      title: "Incident Logging Tool",
+      icon: ClipboardList,
+      description: "Log near misses, unsafe practices, and faulty equipment with secure storage",
+      link: "/apprentice/on-job-tools/incident-logging"
     }
   ];
 
