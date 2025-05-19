@@ -1,7 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface StepNavigationProps {
   currentStep: number;
@@ -10,57 +9,47 @@ interface StepNavigationProps {
   handlePrevious: () => void;
 }
 
-const StepNavigation = ({ 
+const StepNavigation = ({
   currentStep,
   totalSteps,
   handleNext,
-  handlePrevious 
+  handlePrevious
 }: StepNavigationProps) => {
-  
-  const steps = Array.from({ length: totalSteps }, (_, i) => i + 1);
-  
   return (
-    <div className="space-y-4 mt-8">
-      <div className="flex items-center justify-between">
-        <Button 
-          onClick={handlePrevious} 
-          variant="outline" 
-          disabled={currentStep === 1}
-          className="flex items-center gap-2"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Previous
-        </Button>
-        
-        <Button 
-          onClick={handleNext} 
-          variant="default" 
-          disabled={currentStep === totalSteps}
-          className="flex items-center gap-2"
-        >
-          Next
-          <ArrowRight className="h-4 w-4" />
-        </Button>
-      </div>
-      
-      <div className="flex items-center justify-center space-x-1">
-        {steps.map((step) => (
+    <div className="flex items-center justify-between pt-4">
+      <div className="flex items-center gap-1">
+        {Array.from({ length: totalSteps }).map((_, idx) => (
           <div 
-            key={step}
-            className={cn(
-              "h-2 rounded-full transition-all duration-300",
-              step === currentStep 
-                ? "w-6 bg-elec-yellow" 
-                : "w-2 bg-gray-600",
-              step < currentStep && "bg-green-500"
-            )}
-          >
-          </div>
+            key={idx} 
+            className={`h-2 w-8 rounded-full ${
+              idx + 1 <= currentStep ? "bg-amber-500" : "bg-gray-700"
+            }`}
+          />
         ))}
       </div>
       
-      <div className="text-center text-sm text-muted-foreground">
-        Step {currentStep} of {totalSteps} - {Math.round((currentStep / totalSteps) * 100)}% Complete
+      <div className="flex items-center gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handlePrevious}
+          disabled={currentStep === 1}
+          className="flex items-center gap-1 border-amber-500/20 hover:bg-amber-900/20"
+        >
+          <ChevronLeft className="h-4 w-4" />
+          <span>Previous</span>
+        </Button>
+        
+        <Button
+          variant="default"
+          size="sm"
+          onClick={handleNext}
+          disabled={currentStep === totalSteps}
+          className="flex items-center gap-1 bg-gradient-to-r from-amber-600 to-yellow-500 hover:from-amber-700 hover:to-yellow-600"
+        >
+          <span>Next</span>
+          <ChevronRight className="h-4 w-4" />
+        </Button>
       </div>
     </div>
   );

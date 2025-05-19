@@ -12,6 +12,7 @@ import ZsTestingTab from "@/components/apprentice/testing-procedures/testing-tab
 import PolarityTestingTab from "@/components/apprentice/testing-procedures/testing-tabs/Polarity/PolarityTestingTab";
 import { Button } from "@/components/ui/button";
 import { BookmarkCheck, ChevronDown, HelpCircle, Info } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const TestingProcedures = () => {
   const [activeTab, setActiveTab] = useState("r1r2");
@@ -48,7 +49,7 @@ const TestingProcedures = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
+    <div className="max-w-7xl mx-auto space-y-6 animate-fade-in">
       <TestingHeader />
       
       {lastVisited && activeTab !== lastVisited && (
@@ -100,6 +101,14 @@ const TestingProcedures = () => {
               <p className="font-medium text-blue-300 mt-2">
                 Remember: Documentation is as important as the testing itself. Keep comprehensive records.
               </p>
+              
+              <div className="mt-4 text-right">
+                <Link to="/apprentice/study/inspection-testing">
+                  <Button size="sm" variant="outline" className="border-blue-500/40 hover:bg-blue-800/20">
+                    <span>View Full Inspection & Testing Guide</span>
+                  </Button>
+                </Link>
+              </div>
             </div>
           </CollapsibleContent>
         </div>

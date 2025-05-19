@@ -94,14 +94,18 @@ const CommonIssuesCard = () => {
       </ul>
       
       <div className="mt-4 pt-3 border-t border-blue-500/20 text-center">
-        <Button 
-          variant="outline" 
-          size="sm"
-          className="text-xs border-blue-500/40 hover:bg-blue-800/20"
-          onClick={() => window.open("#", "_blank")}
+        <a 
+          href="/apprentice/study/inspection-testing"
+          className="inline-block"
         >
-          View Full Troubleshooting Guide
-        </Button>
+          <Button 
+            variant="outline" 
+            size="sm"
+            className="text-xs border-blue-500/40 hover:bg-blue-800/20"
+          >
+            View Full Troubleshooting Guide
+          </Button>
+        </a>
       </div>
     </div>
   );
