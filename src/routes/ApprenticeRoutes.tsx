@@ -42,6 +42,7 @@ import EighteenthEdition from "@/pages/apprentice/EighteenthEdition";
 import AM2Prep from "@/pages/apprentice/AM2Prep";
 import OnSiteSkills from "@/pages/apprentice/OnSiteSkills";
 import ProfessionalDevelopment from "@/pages/apprentice/ProfessionalDevelopment";
+import MathsRefresher from "@/pages/apprentice/MathsRefresher";
 
 const ApprenticeRoutes = () => {
   return (
@@ -77,6 +78,7 @@ const ApprenticeRoutes = () => {
         <Route path="18th-edition" element={<EighteenthEdition />} />
         <Route path="am2-prep" element={<AM2Prep />} />
         <Route path="on-site-skills" element={<OnSiteSkills />} />
+        <Route path="maths-refresher" element={<MathsRefresher />} />
         <Route path="ai-learning" element={<AILearning />} />
         <Route path="mock-exams" element={<MockExams />} />
         <Route path="mock-exams/:examId" element={<MockExamDetails />} />

@@ -1,6 +1,6 @@
 
 import StudyHeader from "@/components/apprentice/StudyHeader";
-import { GraduationCap, FileText, Book, School, BookOpen, Library, Briefcase } from "lucide-react";
+import { GraduationCap, FileText, Book, School, BookOpen, Library, Briefcase, Calculator } from "lucide-react";
 import CourseCard from "@/components/apprentice/CourseCard";
 
 const ApprenticeStudy = () => {
@@ -64,6 +64,15 @@ const ApprenticeStudy = () => {
           title="AM2 / AM2S Prep"
           description=""
           icon={GraduationCap}
+          courses={[]}
+          baseUrl="/apprentice/study"
+        />
+        
+        <CourseCard 
+          id="maths-refresher"
+          title="Maths Refresher"
+          description=""
+          icon={Calculator}
           courses={[]}
           baseUrl="/apprentice/study"
         />
