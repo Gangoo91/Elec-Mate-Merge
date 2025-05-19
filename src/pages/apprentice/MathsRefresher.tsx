@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calculator, Percent, SquareRoot, Pi, Divide } from "lucide-react";
+import { Calculator, Percent, SquareDot, Pi, Divide } from "lucide-react";
 import { Link } from "react-router-dom";
 import BackButton from "@/components/common/BackButton";
 
@@ -45,7 +45,7 @@ const MathsRefresher = () => {
         
         <Card className="border-elec-yellow/20 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 shadow-lg shadow-black/20">
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
-            <SquareRoot className="h-12 w-12 text-elec-yellow mb-4" />
+            <SquareDot className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Powers & Roots</h2>
             <p className="text-center text-muted-foreground mb-4">
               Master powers, square roots and other operations used in power calculations.
