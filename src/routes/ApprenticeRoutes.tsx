@@ -20,7 +20,6 @@ import OnJobWorkplaceCulture from "@/pages/apprentice/OnJobWorkplaceCulture";
 import TestingProcedures from "@/pages/apprentice/TestingProcedures";
 import SupervisorKnowledge from "@/pages/apprentice/SupervisorKnowledge";
 import FlashcardsLearning from "@/pages/apprentice/FlashcardsLearning";
-import IncidentLogging from "@/pages/apprentice/IncidentLogging";
 import StressManagement from "@/pages/apprentice/mental-health/StressManagement";
 import SupportNetwork from "@/pages/apprentice/mental-health/SupportNetwork";
 import WorkLifeBalance from "@/pages/apprentice/mental-health/WorkLifeBalance";
@@ -45,7 +44,6 @@ import InspectionTesting from "@/pages/apprentice/InspectionTesting";
 import EighteenthEdition from "@/pages/apprentice/EighteenthEdition";
 import AM2Prep from "@/pages/apprentice/AM2Prep";
 import OnSiteSkills from "@/pages/apprentice/OnSiteSkills";
-import ProfessionalDevelopment from "@/pages/apprentice/ProfessionalDevelopment";
 import MathsRefresher from "@/pages/apprentice/MathsRefresher";
 
 const ApprenticeRoutes = () => {
@@ -64,7 +62,6 @@ const ApprenticeRoutes = () => {
       <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
       <Route path="mental-health/crisis-resources" element={<CrisisResources />} />
       <Route path="career-progression" element={<CareerProgression />} />
-      <Route path="professional-development" element={<ProfessionalDevelopment />} />
       <Route path="on-job-tools" element={<OnJobTools />} />
       <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
       <Route path="on-job-tools/documents" element={<OnJobDocuments />} />
@@ -74,7 +71,6 @@ const ApprenticeRoutes = () => {
       <Route path="on-job-tools/testing-procedures" element={<TestingProcedures />} />
       <Route path="on-job-tools/supervisor-knowledge" element={<SupervisorKnowledge />} />
       <Route path="on-job-tools/flashcards" element={<FlashcardsLearning />} />
-      <Route path="on-job-tools/incident-logging" element={<IncidentLogging />} />
       
       <Route path="study">
         <Route index element={<ApprenticeStudy />} />
