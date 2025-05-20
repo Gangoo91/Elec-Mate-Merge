@@ -11,6 +11,7 @@ import { useLocation } from "react-router-dom";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info } from "lucide-react";
 import TrackingStatusIndicator from "@/components/apprentice/time-tracking/ojt/TrackingStatusIndicator";
+import { useTrainingActivityMonitor } from "@/hooks/useTrainingActivityMonitor";
 
 const ApprenticeOJT = () => {
   const [weeklyHours, setWeeklyHours] = useState(8);
@@ -24,6 +25,9 @@ const ApprenticeOJT = () => {
   
   // Add milestone tracking
   useTrackMilestones();
+  
+  // Monitor training activity across the app
+  useTrainingActivityMonitor();
 
   // Simulate loading course hours from various course pages
   useEffect(() => {

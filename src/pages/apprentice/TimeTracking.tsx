@@ -6,10 +6,20 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Clock, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useTrackMilestones } from "@/hooks/useTrackMilestones";
+import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
+import { useTrainingActivityMonitor } from "@/hooks/useTrainingActivityMonitor";
 
 const TimeTracking = () => {
   const { toast } = useToast();
   const isMobile = useIsMobile();
+  const { totalTime } = useTimeEntries();
+  
+  // Use milestone tracking
+  useTrackMilestones();
+  
+  // Monitor training activity across the app
+  useTrainingActivityMonitor();
   
   // Notify user on page load for better UX
   useEffect(() => {
@@ -54,18 +64,22 @@ const TimeTracking = () => {
             <Clock className="h-5 w-5 text-elec-yellow mr-3" />
             <div>
               <h3 className="text-lg font-medium">Total Hours</h3>
-              <p className="text-2xl font-bold">4h 3m</p>
+              <p className="text-2xl font-bold">{totalTime.hours}h {totalTime.minutes}m</p>
             </div>
           </div>
           <div className="bg-elec-gray rounded-lg p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-medium">Weekly Goal</h3>
             <p className="text-2xl font-bold">8h 0m</p>
-            <p className="text-xs text-muted-foreground">50.4% complete</p>
+            <p className="text-xs text-muted-foreground">
+              {Math.min(Math.round((totalTime.hours * 60 + totalTime.minutes) / (8 * 60) * 100), 100)}% complete
+            </p>
           </div>
           <div className="bg-elec-gray rounded-lg p-4 border border-elec-yellow/20">
             <h3 className="text-lg font-medium">Required (20%)</h3>
             <p className="text-2xl font-bold">320h</p>
-            <p className="text-xs text-muted-foreground">1.2% complete</p>
+            <p className="text-xs text-muted-foreground">
+              {Math.min(Math.round((totalTime.hours) / 320 * 100), 100)}% complete
+            </p>
           </div>
         </div>
       )}
