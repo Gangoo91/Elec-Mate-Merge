@@ -56,6 +56,8 @@ const ApprenticeRoutes = () => {
       <Route path="evidence" element={<div>Training Evidence</div>} />
       <Route path="time-tracking" element={<div>Time Tracking</div>} />
       <Route path="off-job-training" element={<div>Off-Job Training</div>} />
+      <Route path="toolbox" element={<div>Toolbox Talk</div>} />
+      <Route path="on-job-tools" element={<div>On the Job Tools</div>} />
     </Routes>
   );
 };
