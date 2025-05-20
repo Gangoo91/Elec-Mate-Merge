@@ -9,6 +9,7 @@ import QuoteTemplateList from "@/components/admin/quotes/QuoteTemplateList";
 import QuoteGenerator from "@/components/admin/quotes/QuoteGenerator";
 import QuotePreview from "@/components/admin/quotes/QuotePreview";
 import { toast } from "@/hooks/use-toast";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const QuoteLibrary = () => {
   const [activeTab, setActiveTab] = useState("templates");
@@ -38,7 +39,7 @@ const QuoteLibrary = () => {
   };
   
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in max-w-full overflow-x-hidden">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Quote Library</h1>
@@ -53,66 +54,68 @@ const QuoteLibrary = () => {
         </Link>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid grid-cols-3 w-full max-w-md">
-          <TabsTrigger value="templates" className="flex items-center gap-2">
-            <FileText className="h-4 w-4" />
-            <span>Templates</span>
-          </TabsTrigger>
-          <TabsTrigger value="generate" className="flex items-center gap-2">
-            <PlusCircle className="h-4 w-4" />
-            <span>Generate</span>
-          </TabsTrigger>
-          <TabsTrigger value="preview" className="flex items-center gap-2">
-            <Download className="h-4 w-4" />
-            <span>Preview</span>
-          </TabsTrigger>
-        </TabsList>
+      <ScrollArea className="max-w-full">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 w-full">
+          <TabsList className="grid grid-cols-3 w-full max-w-md">
+            <TabsTrigger value="templates" className="flex items-center gap-2">
+              <FileText className="h-4 w-4" />
+              <span>Templates</span>
+            </TabsTrigger>
+            <TabsTrigger value="generate" className="flex items-center gap-2">
+              <PlusCircle className="h-4 w-4" />
+              <span>Generate</span>
+            </TabsTrigger>
+            <TabsTrigger value="preview" className="flex items-center gap-2">
+              <Download className="h-4 w-4" />
+              <span>Preview</span>
+            </TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="templates" className="space-y-4">
-          <QuoteTemplateList onSelectTemplate={handleSelectTemplate} />
-        </TabsContent>
+          <TabsContent value="templates" className="space-y-4 w-full">
+            <QuoteTemplateList onSelectTemplate={handleSelectTemplate} />
+          </TabsContent>
 
-        <TabsContent value="generate" className="space-y-4">
-          <QuoteGenerator 
-            onGenerateQuote={handleGenerateQuote}
-            initialJobType={selectedTemplateId} 
-          />
-        </TabsContent>
+          <TabsContent value="generate" className="space-y-4 w-full">
+            <QuoteGenerator 
+              onGenerateQuote={handleGenerateQuote}
+              initialJobType={selectedTemplateId} 
+            />
+          </TabsContent>
 
-        <TabsContent value="preview" className="space-y-4">
-          {previewQuote ? (
-            <div className="space-y-4">
-              <QuotePreview quoteData={previewQuote} />
-              <div className="flex justify-end gap-2">
-                <Button 
-                  variant="outline"
-                  onClick={() => setActiveTab("generate")}
-                >
-                  Edit Quote
-                </Button>
-                <Button onClick={handleDownloadQuote}>
-                  <Download className="h-4 w-4 mr-2" />
-                  Download Quote
-                </Button>
+          <TabsContent value="preview" className="space-y-4 w-full">
+            {previewQuote ? (
+              <div className="space-y-4 w-full">
+                <QuotePreview quoteData={previewQuote} />
+                <div className="flex justify-end gap-2">
+                  <Button 
+                    variant="outline"
+                    onClick={() => setActiveTab("generate")}
+                  >
+                    Edit Quote
+                  </Button>
+                  <Button onClick={handleDownloadQuote}>
+                    <Download className="h-4 w-4 mr-2" />
+                    Download Quote
+                  </Button>
+                </div>
               </div>
-            </div>
-          ) : (
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardContent className="pt-6 text-center">
-                <p className="text-muted-foreground">No quote has been generated yet. Start by selecting a template.</p>
-                <Button 
-                  variant="outline" 
-                  className="mt-4"
-                  onClick={() => setActiveTab("templates")}
-                >
-                  Browse Templates
-                </Button>
-              </CardContent>
-            </Card>
-          )}
-        </TabsContent>
-      </Tabs>
+            ) : (
+              <Card className="border-elec-yellow/20 bg-elec-gray">
+                <CardContent className="pt-6 text-center">
+                  <p className="text-muted-foreground">No quote has been generated yet. Start by selecting a template.</p>
+                  <Button 
+                    variant="outline" 
+                    className="mt-4"
+                    onClick={() => setActiveTab("templates")}
+                  >
+                    Browse Templates
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
+          </TabsContent>
+        </Tabs>
+      </ScrollArea>
     </div>
   );
 };

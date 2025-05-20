@@ -10,6 +10,7 @@ import QuoteGenerator from "@/components/admin/quotes/QuoteGenerator";
 import QuotePreview from "@/components/admin/quotes/QuotePreview";
 import { toast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const QuoteLibrary = () => {
   const isMobile = useIsMobile();
@@ -40,7 +41,7 @@ const QuoteLibrary = () => {
   };
   
   return (
-    <div className="space-y-6 animate-fade-in pb-8">
+    <div className="space-y-6 animate-fade-in pb-8 max-w-full overflow-x-hidden">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Quote Library</h1>
@@ -84,52 +85,54 @@ const QuoteLibrary = () => {
               </TabsList>
             </div>
 
-            <div className="p-4">
-              <TabsContent value="templates" className="m-0">
-                <QuoteTemplateList onSelectTemplate={handleSelectTemplate} />
-              </TabsContent>
+            <ScrollArea className="max-w-full">
+              <div className="p-4 w-full">
+                <TabsContent value="templates" className="m-0 w-full">
+                  <QuoteTemplateList onSelectTemplate={handleSelectTemplate} />
+                </TabsContent>
 
-              <TabsContent value="generate" className="m-0">
-                <QuoteGenerator 
-                  onGenerateQuote={handleGenerateQuote} 
-                  initialJobType={selectedTemplateId} 
-                />
-              </TabsContent>
+                <TabsContent value="generate" className="m-0 w-full">
+                  <QuoteGenerator 
+                    onGenerateQuote={handleGenerateQuote} 
+                    initialJobType={selectedTemplateId} 
+                  />
+                </TabsContent>
 
-              <TabsContent value="preview" className="m-0">
-                {previewQuote ? (
-                  <div className="space-y-4">
-                    <QuotePreview quoteData={previewQuote} />
-                    <div className="flex flex-col sm:flex-row justify-center sm:justify-end gap-2">
+                <TabsContent value="preview" className="m-0 w-full">
+                  {previewQuote ? (
+                    <div className="space-y-4 w-full">
+                      <QuotePreview quoteData={previewQuote} />
+                      <div className="flex flex-col sm:flex-row justify-center sm:justify-end gap-2">
+                        <Button 
+                          variant="outline" 
+                          onClick={() => setActiveTab("generate")}
+                          className="w-full sm:w-auto"
+                        >
+                          Edit Quote
+                        </Button>
+                        <Button 
+                          onClick={handleDownloadQuote}
+                          className="w-full sm:w-auto"
+                        >
+                          <Download className="h-4 w-4 mr-2" />
+                          Download Quote
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-center py-8">
+                      <p className="text-muted-foreground mb-4">No quote has been generated yet. Start by selecting a template.</p>
                       <Button 
                         variant="outline" 
-                        onClick={() => setActiveTab("generate")}
-                        className="w-full sm:w-auto"
+                        onClick={() => setActiveTab("templates")}
                       >
-                        Edit Quote
-                      </Button>
-                      <Button 
-                        onClick={handleDownloadQuote}
-                        className="w-full sm:w-auto"
-                      >
-                        <Download className="h-4 w-4 mr-2" />
-                        Download Quote
+                        Browse Templates
                       </Button>
                     </div>
-                  </div>
-                ) : (
-                  <div className="text-center py-8">
-                    <p className="text-muted-foreground mb-4">No quote has been generated yet. Start by selecting a template.</p>
-                    <Button 
-                      variant="outline" 
-                      onClick={() => setActiveTab("templates")}
-                    >
-                      Browse Templates
-                    </Button>
-                  </div>
-                )}
-              </TabsContent>
-            </div>
+                  )}
+                </TabsContent>
+              </div>
+            </ScrollArea>
           </Tabs>
         </CardContent>
       </Card>

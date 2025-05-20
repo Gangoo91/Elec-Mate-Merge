@@ -70,22 +70,22 @@ interface QuoteTemplateListProps {
 
 const QuoteTemplateList = ({ onSelectTemplate }: QuoteTemplateListProps) => {
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="space-y-4 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
         {QUOTE_TEMPLATES.map(template => {
           const Icon = template.icon;
           
           return (
-            <Card key={template.id} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-colors cursor-pointer" 
+            <Card key={template.id} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-colors cursor-pointer w-full" 
               onClick={() => onSelectTemplate(template.id)}>
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-lg flex items-center gap-2">
-                    <Icon className="h-5 w-5 text-elec-yellow" />
-                    {template.title}
+                    <Icon className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+                    <span className="truncate">{template.title}</span>
                   </CardTitle>
                 </div>
-                <CardDescription>{template.description}</CardDescription>
+                <CardDescription className="line-clamp-2">{template.description}</CardDescription>
               </CardHeader>
               <CardContent>
                 <Button 
@@ -103,7 +103,7 @@ const QuoteTemplateList = ({ onSelectTemplate }: QuoteTemplateListProps) => {
         })}
       </div>
       
-      <Card className="border-dashed border-2 border-elec-yellow/30 bg-transparent hover:bg-elec-dark/20 transition-colors cursor-pointer">
+      <Card className="border-dashed border-2 border-elec-yellow/30 bg-transparent hover:bg-elec-dark/20 transition-colors cursor-pointer w-full">
         <CardContent className="p-6 flex flex-col items-center justify-center">
           <PlusCircle className="h-8 w-8 text-elec-yellow/60 mb-2" />
           <p className="font-medium">Create Custom Template</p>

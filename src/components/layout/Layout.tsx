@@ -20,12 +20,12 @@ const Layout = () => {
       {/* Sidebar navigation */}
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 
-      <div className="flex flex-col flex-1 relative">
+      <div className="flex flex-col flex-1 relative overflow-hidden">
         {/* Header with mobile menu toggle */}
         <Header toggleSidebar={toggleSidebar} />
         
-        <main className="flex-1 relative pb-16 md:pb-0 pt-16">
-          <div className={cn("container mx-auto py-4 md:py-8 px-2 md:px-4 lg:px-8")}>
+        <main className="flex-1 relative pb-16 md:pb-0 pt-16 overflow-x-hidden">
+          <div className={cn("container mx-auto py-4 md:py-8 px-2 md:px-4 lg:px-8 overflow-x-hidden")}>
             <Outlet />
           </div>
         </main>
