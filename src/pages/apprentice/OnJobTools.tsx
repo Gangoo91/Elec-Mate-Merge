@@ -4,8 +4,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import BackButton from "@/components/common/BackButton";
 import OnTheJobToolsBox from "@/components/apprentice/OnTheJobToolsBox";
 import { Calculator, FileText, Pencil, ShieldCheck, Zap, WrenchIcon } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import { useEffect } from "react";
 
 const OnJobTools = () => {
+  const { toast } = useToast();
+
+  // Show welcome toast on first load
+  useEffect(() => {
+    toast({
+      title: "On the Job Tools",
+      description: "Select a tool from the options below.",
+    });
+  }, [toast]);
+
   const tools = [
     {
       id: 1,

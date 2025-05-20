@@ -12,9 +12,20 @@ import InstrumentationCalculator from "@/components/apprentice/calculators/Instr
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
 import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoonCalculator";
 import { Calculator, Sigma, Gauge, Variable } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import { useEffect } from "react";
 
 const OnJobCalculations = () => {
-  const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
+  const [calculatorType, setCalculatorType] = useState<string>("cable-size");
+  const { toast } = useToast();
+
+  // Show welcome toast on first load
+  useEffect(() => {
+    toast({
+      title: "Calculation Tools Loaded",
+      description: "Select a calculator from the options below.",
+    });
+  }, [toast]);
 
   const renderCalculator = () => {
     switch (calculatorType) {
@@ -43,7 +54,7 @@ const OnJobCalculations = () => {
           description="Translate resistor colour bands to resistance values and tolerance." 
         />;
       default:
-        return <OhmsLawCalculator />;
+        return <CableSizingCalculator />;
     }
   };
 
@@ -51,7 +62,7 @@ const OnJobCalculations = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">On-the-Job Calculations</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Cable Calculations</h1>
           <p className="text-muted-foreground">
             Essential calculators for electrical installations and troubleshooting
           </p>

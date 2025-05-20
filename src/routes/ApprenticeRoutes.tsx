@@ -25,6 +25,7 @@ import HigherLearningCourses from "@/pages/apprentice/HigherLearningCourses";
 import AILearning from "@/pages/apprentice/AILearning";
 import TimeTracking from "@/pages/apprentice/TimeTracking";
 import ApprenticeOJT from "@/pages/apprentice/ApprenticeOJT";
+import OnJobCalculations from "@/pages/apprentice/OnJobCalculations";
 
 const ApprenticeRoutes = () => {
   return (
@@ -73,6 +74,12 @@ const ApprenticeRoutes = () => {
       <Route path="off-job-training" element={<ApprenticeOJT />} />
       <Route path="toolbox" element={<ToolboxTalk />} />
       <Route path="on-job-tools" element={<OnJobTools />} />
+      <Route path="on-job-tools/cable-calculations" element={<OnJobCalculations />} />
+      <Route path="on-job-tools/safety-checklists" element={<div>Safety Checklists</div>} />
+      <Route path="on-job-tools/documentation" element={<div>Documentation Templates</div>} />
+      <Route path="on-job-tools/testing-guides" element={<div>Testing Guides</div>} />
+      <Route path="on-job-tools/material-estimator" element={<div>Material Estimator</div>} />
+      <Route path="on-job-tools/tool-selection" element={<div>Tool Selection Guide</div>} />
     </Routes>
   );
 };
