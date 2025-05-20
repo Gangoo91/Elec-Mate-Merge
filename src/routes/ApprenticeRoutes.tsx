@@ -1,3 +1,4 @@
+
 import { Route, Routes } from "react-router-dom";
 import InspectionDocumentation from "@/components/apprentice/resources/InspectionDocumentation";
 import InspectionAreas from "@/components/apprentice/resources/InspectionAreas";
