@@ -1,83 +1,65 @@
 
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Card, CardContent } from "@/components/ui/card";
+import BackButton from "@/components/common/BackButton";
 import OnTheJobToolsBox from "@/components/apprentice/OnTheJobToolsBox";
-import { Calculator, FileText, Settings, HardHat, MessageSquare, TestTube, HelpCircle, BookOpen } from "lucide-react";
+import { Calculator, FileText, Pencil, ShieldCheck, Zap, WrenchIcon } from "lucide-react";
 
 const OnJobTools = () => {
-  const onJobTools = [
-    {
-      id: 6,
-      title: "Testing Procedures (Mini Toolkit)",
-      icon: TestTube,
-      description: "R1+R2, IR, Zs, polarity testing with step-by-step guides and diagrams",
-      link: "/apprentice/on-job-tools/testing-procedures"
-    },
+  const tools = [
     {
       id: 1,
-      title: "Electrical Calculations",
+      title: "Cable Calculations",
       icon: Calculator,
-      description: "Cable sizing, load calculations, voltage drop, and more",
-      link: "/apprentice/on-job-tools/calculations"
+      description: "Calculate cable sizes, voltage drop, and fault current levels",
+      link: "/apprentice/on-job-tools/cable-calculations"
     },
     {
       id: 2,
-      title: "Documentation Templates",
-      icon: FileText,
-      description: "Forms, certificates, and reports for on-site documentation",
-      link: "/apprentice/on-job-tools/documents"
+      title: "Safety Checklists",
+      icon: ShieldCheck,
+      description: "Pre-job safety checklists and risk assessments",
+      link: "/apprentice/on-job-tools/safety-checklists"
     },
     {
       id: 3,
-      title: "Site Assessment Tools",
-      icon: Settings,
-      description: "Checklists and guides for job site evaluations",
-      link: "/apprentice/on-job-tools/assessment"
+      title: "Documentation Templates",
+      icon: FileText,
+      description: "Templates for electrical certificates and reports",
+      link: "/apprentice/on-job-tools/documentation"
     },
     {
       id: 4,
-      title: "Interactive Safety Case Studies",
-      icon: HardHat,
-      description: "Learn from real-life safety scenarios with interactive decision making",
-      link: "/apprentice/on-job-tools/safety-cases"
-    },
-    {
-      id: 7,
-      title: "Ask a Supervisor",
-      icon: HelpCircle,
-      description: "Knowledge bank with FAQs from real-world site questions and expert answers",
-      link: "/apprentice/on-job-tools/supervisor-knowledge"
-    },
-    {
-      id: 8,
-      title: "Flashcards & Microlearning",
-      icon: BookOpen,
-      description: "Quick-fire revision flashcards for cable colors, regulations, EICR codes, and more",
-      link: "/apprentice/on-job-tools/flashcards"
+      title: "Testing Guides",
+      icon: Zap,
+      description: "Step-by-step guides for electrical testing procedures",
+      link: "/apprentice/on-job-tools/testing-guides"
     },
     {
       id: 5,
-      title: "Workplace Language & Culture",
-      icon: MessageSquare,
-      description: "Navigate workplace communication, culture and relationships effectively",
-      link: "/apprentice/on-job-tools/workplace-culture"
+      title: "Material Estimator",
+      icon: Pencil,
+      description: "Estimate materials needed for common electrical jobs",
+      link: "/apprentice/on-job-tools/material-estimator"
+    },
+    {
+      id: 6,
+      title: "Tool Selection Guide",
+      icon: WrenchIcon,
+      description: "Guide for selecting the right tools for specific jobs",
+      link: "/apprentice/on-job-tools/tool-selection"
     }
   ];
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-        <h1 className="text-3xl font-bold tracking-tight">On the Job Tools</h1>
-        <Link to="/apprentice/hub" className="flex-shrink-0">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Apprentice Hub
-          </Button>
-        </Link>
+    <div className="max-w-7xl mx-auto animate-fade-in p-6">
+      <div className="mb-6">
+        <BackButton customUrl="/apprentice" label="Back to Apprentice Hub" />
+        <h1 className="text-3xl font-bold mt-4 mb-2">On the Job Tools</h1>
+        <p className="text-muted-foreground">Practical tools and resources for on-site electrical work</p>
       </div>
 
-      <OnTheJobToolsBox tools={onJobTools} />
+      <OnTheJobToolsBox tools={tools} />
     </div>
   );
 };

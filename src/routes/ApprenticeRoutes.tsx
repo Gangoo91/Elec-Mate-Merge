@@ -17,7 +17,7 @@ import ApprenticeHub from "@/pages/ApprenticeHub";
 const ApprenticeRoutes = () => {
   return (
     <Routes>
-      <Route index element={<ApprenticeHub />} />
+      <Route path="/" element={<ApprenticeHub />} />
       <Route path="study" element={<div>Study Portal</div>} />
       <Route path="study/mock-exams" element={<div>Mock Exams</div>} />
       <Route path="study/mock-exams/:examId" element={<div>Exam Details</div>} />
