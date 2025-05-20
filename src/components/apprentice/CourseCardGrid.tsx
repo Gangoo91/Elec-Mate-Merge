@@ -3,13 +3,13 @@ import { ReactNode } from "react";
 import CourseCard from "./CourseCard";
 import { LucideIcon } from "lucide-react";
 
-interface Course {
+export interface Course {
   id: string;
   title: string;
   description?: string;
 }
 
-interface CourseWithSubcourses {
+export interface CourseWithSubcourses {
   id: string;
   title: string;
   description: string;

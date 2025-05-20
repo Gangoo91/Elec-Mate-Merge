@@ -28,6 +28,7 @@ import ApprenticeMentorHub from "@/pages/apprentice/ApprenticeMentor";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import Chat from "@/pages/Chat";
 import NotificationsPage from "@/pages/NotificationsPage";
+import ApprenticeHub from "@/pages/ApprenticeHub";
 
 const AppRouter = () => {
   return (
@@ -68,7 +69,7 @@ const AppRouter = () => {
         <Route path="electrician/*" element={<ElectricianHubRoutes />} />
         
         {/* Apprentice Routes */}
-        <Route path="apprentice" element={<Navigate to="/apprentice/" replace />} />
+        <Route path="apprentice" element={<ApprenticeHub />} />
         <Route path="apprentice/*" element={<ApprenticeRoutes />} />
         
         {/* Catch-all route */}

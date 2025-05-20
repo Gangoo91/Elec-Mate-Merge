@@ -66,7 +66,7 @@ const ApprenticeHub = () => {
                 <CardTitle className="text-xl">{resource.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                {/* Removed descriptions for cleaner look */}
+                {/* No descriptions for cleaner look */}
               </CardContent>
             </Card>
           </Link>

@@ -22,6 +22,7 @@ import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import ApprenticeChat from "@/pages/apprentice/ApprenticeChat";
 import HigherLearningCourses from "@/pages/apprentice/HigherLearningCourses";
+import AILearning from "@/pages/apprentice/AILearning";
 
 const ApprenticeRoutes = () => {
   return (
@@ -42,6 +43,7 @@ const ApprenticeRoutes = () => {
       <Route path="study/inspection-testing/result-analysis" element={<TestResultAnalysis />} />
       <Route path="study/testing-procedures" element={<TestingProcedures />} />
       <Route path="study/course-content" element={<CourseContent />} />
+      <Route path="study/ai-learning" element={<AILearning />} />
       
       <Route path="study/eal/:courseSlug" element={<div>Course Detail</div>} />
       <Route path="study/eal/:courseSlug/unit/:unitSlug" element={<div>Course Unit</div>} />

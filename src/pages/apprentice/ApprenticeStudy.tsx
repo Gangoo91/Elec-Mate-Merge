@@ -1,12 +1,12 @@
 
 import StudyHeader from "@/components/apprentice/StudyHeader";
 import { GraduationCap, FileText, Book, School, BookOpen, Library, Briefcase, Calculator } from "lucide-react";
-import CourseCardGrid from "@/components/apprentice/CourseCardGrid";
+import CourseCardGrid, { CourseWithSubcourses } from "@/components/apprentice/CourseCardGrid";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const ApprenticeStudy = () => {
-  const studyCourses = [
+  const studyCourses: CourseWithSubcourses[] = [
     {
       id: "level-2",
       title: "Level 2 Electrical Installation",
@@ -93,7 +93,7 @@ const ApprenticeStudy = () => {
         { id: "ai-1", title: "Practice Quizzes" },
         { id: "ai-2", title: "Interactive Learning" }
       ],
-      baseUrl: "/apprentice/study"
+      baseUrl: "/apprentice/study/ai-learning"
     },
     {
       id: "mock-exams",
