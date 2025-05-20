@@ -17,7 +17,7 @@ interface OnTheJobToolsBoxProps {
 
 const OnTheJobToolsBox = ({ tools }: OnTheJobToolsBoxProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {tools.map((tool) => (
         <Link to={tool.link} key={tool.id} className="focus:outline-none">
           <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-colors cursor-pointer">

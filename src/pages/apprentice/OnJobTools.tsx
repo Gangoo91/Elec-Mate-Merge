@@ -1,14 +1,17 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import BackButton from "@/components/common/BackButton";
 import OnTheJobToolsBox from "@/components/apprentice/OnTheJobToolsBox";
-import { Calculator, FileText, Pencil, ShieldCheck, Zap, WrenchIcon } from "lucide-react";
+import { Calculator, FileText, Pencil, ShieldCheck, Zap, Wrench } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import { useEffect } from "react";
+import { useTrainingActivityMonitor } from "@/hooks/useTrainingActivityMonitor";
 
 const OnJobTools = () => {
   const { toast } = useToast();
+  
+  // Monitor training activity
+  useTrainingActivityMonitor();
 
   // Show welcome toast on first load
   useEffect(() => {
@@ -57,7 +60,7 @@ const OnJobTools = () => {
     {
       id: 6,
       title: "Tool Selection Guide",
-      icon: WrenchIcon,
+      icon: Wrench,
       description: "Guide for selecting the right tools for specific jobs",
       link: "/apprentice/on-job-tools/tool-selection"
     }

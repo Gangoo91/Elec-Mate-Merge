@@ -1,10 +1,15 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Book, Clock, Heart, Users, WrenchIcon, Bot, ArrowLeft, Calculator, FileText, Settings } from "lucide-react";
+import { Book, Clock, Heart, Users, Wrench, Bot, ArrowLeft, Calculator, FileText, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useTrainingActivityMonitor } from "@/hooks/useTrainingActivityMonitor";
+import { useEffect } from "react";
 
 const ApprenticeHub = () => {
+  // Monitor training activity
+  useTrainingActivityMonitor();
+  
   const apprenticeResources = [
     {
       id: 1,
@@ -22,18 +27,18 @@ const ApprenticeHub = () => {
       id: 3,
       title: "Mental Health Hub",
       icon: Heart,
-      link: "/mental-health"
+      link: "/apprentice/mental-health"
     },
     {
       id: 4,
       title: "Mentor Connect",
       icon: Users,
-      link: "/mentor"
+      link: "/apprentice/mentor"
     },
     {
       id: 5,
       title: "Toolbox Talk",
-      icon: WrenchIcon,
+      icon: Wrench,
       link: "/apprentice/toolbox"
     },
     {
