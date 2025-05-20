@@ -13,12 +13,17 @@ import TestingPrinciples from "@/pages/apprentice/inspection-testing/TestingPrin
 import RegulatoryFramework from "@/pages/apprentice/inspection-testing/RegulatoryFramework";
 import TestResultAnalysis from "@/pages/apprentice/inspection-testing/TestResultAnalysis";
 import ApprenticeHub from "@/pages/ApprenticeHub";
+import ApprenticeStudy from "@/pages/apprentice/ApprenticeStudy";
+import ToolboxTalk from "@/pages/apprentice/ToolboxTalk";
+import OnJobTools from "@/pages/apprentice/OnJobTools";
+import SubsectionPage from "@/components/apprentice/SubsectionPage";
+import CourseContent from "@/pages/apprentice/CourseContent";
 
 const ApprenticeRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<ApprenticeHub />} />
-      <Route path="study" element={<div>Study Portal</div>} />
+      <Route path="study" element={<ApprenticeStudy />} />
       <Route path="study/mock-exams" element={<div>Mock Exams</div>} />
       <Route path="study/mock-exams/:examId" element={<div>Exam Details</div>} />
       <Route path="study/electrical-symbols" element={<div>Electrical Symbols</div>} />
@@ -31,11 +36,12 @@ const ApprenticeRoutes = () => {
       <Route path="study/inspection-testing/regulations" element={<RegulatoryFramework />} />
       <Route path="study/inspection-testing/result-analysis" element={<TestResultAnalysis />} />
       <Route path="study/testing-procedures" element={<TestingProcedures />} />
+      <Route path="study/course-content" element={<CourseContent />} />
       
       <Route path="study/eal/:courseSlug" element={<div>Course Detail</div>} />
       <Route path="study/eal/:courseSlug/unit/:unitSlug" element={<div>Course Unit</div>} />
       <Route path="study/eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<div>Section Page</div>} />
-      <Route path="study/eal/:courseSlug/unit/:unitSlug/section/:sectionId/subsection/:subsectionId" element={<div>Subsection Page</div>} />
+      <Route path="study/eal/:courseSlug/unit/:unitSlug/section/:sectionId/subsection/:subsectionId" element={<SubsectionPage />} />
       <Route path="study/eal/:courseSlug/unit/:unitSlug/quiz" element={<div>Course Quiz</div>} />
       
       <Route path="study/resources/inspection-documentation" element={<InspectionDocumentation />} />
@@ -56,8 +62,8 @@ const ApprenticeRoutes = () => {
       <Route path="evidence" element={<div>Training Evidence</div>} />
       <Route path="time-tracking" element={<div>Time Tracking</div>} />
       <Route path="off-job-training" element={<div>Off-Job Training</div>} />
-      <Route path="toolbox" element={<div>Toolbox Talk</div>} />
-      <Route path="on-job-tools" element={<div>On the Job Tools</div>} />
+      <Route path="toolbox" element={<ToolboxTalk />} />
+      <Route path="on-job-tools" element={<OnJobTools />} />
     </Routes>
   );
 };

@@ -26,6 +26,7 @@ import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
 import ToolboxTalk from "@/pages/apprentice/ToolboxTalk";
 import OnJobTools from "@/pages/apprentice/OnJobTools";
+import ApprenticeStudy from "@/pages/apprentice/ApprenticeStudy";
 import Chat from "@/pages/Chat";
 import NotificationsPage from "@/pages/NotificationsPage";
 
