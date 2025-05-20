@@ -233,12 +233,12 @@ const FlashcardsLearning = () => {
                     </CardContent>
                   </Card>
                   
-                  {/* Back of card - updated with better color scheme */}
-                  <Card className={`absolute w-full h-full backface-hidden rotate-y-180 border-elec-yellow/20 bg-gradient-to-br from-blue-600 to-blue-800 flex flex-col justify-center items-center p-6 ${!flipped ? 'invisible' : ''}`}>
+                  {/* Back of card */}
+                  <Card className={`absolute w-full h-full backface-hidden rotate-y-180 border-elec-yellow/20 bg-elec-yellow/10 flex flex-col justify-center items-center p-6 ${!flipped ? 'invisible' : ''}`}>
                     <CardContent className="flex flex-col justify-center items-center h-full w-full p-0">
                       <div className="text-center space-y-4">
-                        <p className="text-xl font-medium text-white">{currentCard?.answer}</p>
-                        <div className="mt-auto pt-6 text-white/70 text-sm">
+                        <p className="text-xl font-medium text-elec-yellow">{currentCard?.answer}</p>
+                        <div className="mt-auto pt-6 text-muted-foreground text-sm">
                           <p>Tap to see question</p>
                         </div>
                       </div>
