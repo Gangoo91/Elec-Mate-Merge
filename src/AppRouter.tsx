@@ -1,5 +1,5 @@
 
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import LandingPage from "@/pages/LandingPage";
 import Index from "@/pages/Index";
 import SignIn from "@/pages/auth/SignIn";

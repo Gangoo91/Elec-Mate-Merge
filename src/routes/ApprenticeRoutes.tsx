@@ -1,5 +1,5 @@
 
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import InspectionDocumentation from "@/components/apprentice/resources/InspectionDocumentation";
 import InspectionAreas from "@/components/apprentice/resources/InspectionAreas";
 import InspectionTypes from "@/components/apprentice/resources/InspectionTypes";
@@ -23,6 +23,8 @@ import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import ApprenticeChat from "@/pages/apprentice/ApprenticeChat";
 import HigherLearningCourses from "@/pages/apprentice/HigherLearningCourses";
 import AILearning from "@/pages/apprentice/AILearning";
+import TimeTracking from "@/pages/apprentice/TimeTracking";
+import ApprenticeOJT from "@/pages/apprentice/ApprenticeOJT";
 
 const ApprenticeRoutes = () => {
   return (
@@ -67,8 +69,8 @@ const ApprenticeRoutes = () => {
       <Route path="career/advancement" element={<div>Career Advancement</div>} />
       <Route path="providers" element={<div>Training Providers</div>} />
       <Route path="evidence" element={<div>Training Evidence</div>} />
-      <Route path="time-tracking" element={<div>Time Tracking</div>} />
-      <Route path="off-job-training" element={<div>Off-Job Training</div>} />
+      <Route path="time-tracking" element={<TimeTracking />} />
+      <Route path="off-job-training" element={<ApprenticeOJT />} />
       <Route path="toolbox" element={<ToolboxTalk />} />
       <Route path="on-job-tools" element={<OnJobTools />} />
     </Routes>
