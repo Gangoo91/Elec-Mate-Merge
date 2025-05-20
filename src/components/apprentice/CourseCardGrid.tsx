@@ -6,13 +6,18 @@ import { LucideIcon } from "lucide-react";
 interface Course {
   id: string;
   title: string;
-  description: string;
-  icon: LucideIcon;
-  courses: string[];
+  description?: string;
 }
 
 interface CourseCardGridProps {
-  courses: Course[];
+  courses: {
+    id: string;
+    title: string;
+    description: string;
+    icon: LucideIcon;
+    courses: Course[];
+    baseUrl: string;
+  }[];
   baseUrl?: string;
   emptyState?: ReactNode;
 }
@@ -32,7 +37,7 @@ const CourseCardGrid = ({ courses, baseUrl = "", emptyState }: CourseCardGridPro
           description={course.description} 
           icon={course.icon} 
           courses={course.courses}
-          baseUrl={baseUrl}
+          baseUrl={course.baseUrl || baseUrl}
         />
       ))}
     </div>
