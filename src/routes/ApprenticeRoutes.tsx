@@ -12,11 +12,12 @@ import InspectionMethodology from "@/pages/apprentice/inspection-testing/Inspect
 import TestingPrinciples from "@/pages/apprentice/inspection-testing/TestingPrinciples";
 import RegulatoryFramework from "@/pages/apprentice/inspection-testing/RegulatoryFramework";
 import TestResultAnalysis from "@/pages/apprentice/inspection-testing/TestResultAnalysis";
+import ApprenticeHub from "@/pages/ApprenticeHub";
 
 const ApprenticeRoutes = () => {
   return (
     <Routes>
-      <Route index element={<div>Apprentice Hub</div>} />
+      <Route index element={<ApprenticeHub />} />
       <Route path="study" element={<div>Study Portal</div>} />
       <Route path="study/mock-exams" element={<div>Mock Exams</div>} />
       <Route path="study/mock-exams/:examId" element={<div>Exam Details</div>} />
