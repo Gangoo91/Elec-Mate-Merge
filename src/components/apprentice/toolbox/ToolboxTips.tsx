@@ -1,23 +1,35 @@
 
-import { useIsMobile } from "@/hooks/use-mobile";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Lightbulb } from "lucide-react";
 
 const ToolboxTips = () => {
-  const isMobile = useIsMobile();
-  
-  if (isMobile) {
-    return null;
-  }
+  const tips = [
+    "Remember to review safety procedures before starting any electrical job",
+    "Always verify lockout/tagout procedures are followed correctly",
+    "Use the correct tools for the job to ensure safety and efficiency",
+    "When in doubt, consult with your mentor or supervisor",
+    "Document any issues or unusual circumstances encountered on the job"
+  ];
 
   return (
-    <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-4 mt-6">
-      <h3 className="text-lg font-medium text-elec-yellow mb-2">Top Tips for New Apprentices</h3>
-      <ul className="list-disc list-inside space-y-2 text-sm">
-        <li>Always carry a voltage tester and use it before working on circuits</li>
-        <li>Keep a notebook for recording important information on site</li>
-        <li>Ask questions - experienced electricians are usually happy to share knowledge</li>
-        <li>Invest in quality tools that will last throughout your apprenticeship</li>
-      </ul>
-    </div>
+    <Card className="border-elec-yellow/20 bg-elec-gray">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-xl flex items-center gap-2">
+          <Lightbulb className="h-5 w-5 text-elec-yellow" />
+          Quick Tips
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ul className="space-y-2">
+          {tips.map((tip, index) => (
+            <li key={index} className="flex items-start gap-2">
+              <span className="text-elec-yellow font-bold">•</span>
+              <span>{tip}</span>
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+    </Card>
   );
 };
 

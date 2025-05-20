@@ -16,6 +16,7 @@ import ApprenticeHub from "@/pages/ApprenticeHub";
 import ApprenticeStudy from "@/pages/apprentice/ApprenticeStudy";
 import ToolboxTalk from "@/pages/apprentice/ToolboxTalk";
 import OnJobTools from "@/pages/apprentice/OnJobTools";
+import ApprenticeToolbox from "@/pages/apprentice/ApprenticeToolbox";
 import SubsectionPage from "@/components/apprentice/SubsectionPage";
 import CourseContent from "@/pages/apprentice/CourseContent";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
@@ -62,6 +63,8 @@ const ApprenticeRoutes = () => {
       <Route path="mentor" element={<ApprenticeMentor />} />
       <Route path="chat" element={<ApprenticeChat />} />
       <Route path="mental-health" element={<ApprenticeMentalHealth />} />
+      <Route path="toolbox" element={<ToolboxTalk />} />
+      <Route path="apprentice-toolbox" element={<ApprenticeToolbox />} />
       <Route path="calculators" element={<div>Calculators</div>} />
       <Route path="certificate" element={<div>Certificate</div>} />
       <Route path="career" element={<div>Career Pathways</div>} />
@@ -72,7 +75,6 @@ const ApprenticeRoutes = () => {
       <Route path="evidence" element={<div>Training Evidence</div>} />
       <Route path="time-tracking" element={<TimeTracking />} />
       <Route path="off-job-training" element={<ApprenticeOJT />} />
-      <Route path="toolbox" element={<ToolboxTalk />} />
       <Route path="on-job-tools" element={<OnJobTools />} />
       <Route path="on-job-tools/cable-calculations" element={<OnJobCalculations />} />
       <Route path="on-job-tools/safety-checklists" element={<div>Safety Checklists</div>} />
@@ -80,6 +82,16 @@ const ApprenticeRoutes = () => {
       <Route path="on-job-tools/testing-guides" element={<div>Testing Guides</div>} />
       <Route path="on-job-tools/material-estimator" element={<div>Material Estimator</div>} />
       <Route path="on-job-tools/tool-selection" element={<div>Tool Selection Guide</div>} />
+      
+      {/* Add toolbox talk subpages */}
+      <Route path="toolbox/safety" element={<div>Safety Procedures</div>} />
+      <Route path="toolbox/tools" element={<div>Tools Guide</div>} />
+      <Route path="toolbox/communication" element={<div>Team Communication</div>} />
+      <Route path="toolbox/best-practices" element={<div>Best Practices</div>} />
+      <Route path="toolbox/documentation" element={<div>Documentation Procedures</div>} />
+      <Route path="toolbox/regulations" element={<div>Electrical Regulations</div>} />
+      <Route path="toolbox/ppe" element={<div>PPE Requirements</div>} />
+      <Route path="toolbox/site-management" element={<div>Site Management</div>} />
     </Routes>
   );
 };

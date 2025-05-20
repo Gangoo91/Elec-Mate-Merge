@@ -5,10 +5,21 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useTrainingActivityMonitor } from "@/hooks/useTrainingActivityMonitor";
 import { useEffect } from "react";
+import { useToast } from "@/components/ui/use-toast";
 
 const ApprenticeHub = () => {
   // Monitor training activity
   useTrainingActivityMonitor();
+  
+  const { toast } = useToast();
+  
+  // Show welcome toast on first load
+  useEffect(() => {
+    toast({
+      title: "Welcome to Apprentice Hub",
+      description: "Access all your apprenticeship resources and tools here.",
+    });
+  }, [toast]);
   
   const apprenticeResources = [
     {
