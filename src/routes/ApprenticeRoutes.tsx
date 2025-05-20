@@ -1,4 +1,3 @@
-
 import { Route, Routes } from "react-router-dom";
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
@@ -26,14 +25,7 @@ import SupportNetwork from "@/pages/apprentice/mental-health/SupportNetwork";
 import WorkLifeBalance from "@/pages/apprentice/mental-health/WorkLifeBalance";
 import CrisisResources from "@/pages/apprentice/mental-health/CrisisResources";
 import ToolsGuide from "@/pages/apprentice/ToolsGuide";
-import CommunicationStructures from "@/components/apprentice/resources/CommunicationStructures";
-import CommunicationMethods from "@/components/apprentice/resources/CommunicationMethods";
-import SafetyMeetings from "@/components/apprentice/resources/SafetyMeetings";
-import DocumentationSystems from "@/components/apprentice/resources/DocumentationSystems";
-import InspectionTypes from "@/components/apprentice/resources/InspectionTypes";
-import InspectionAreas from "@/components/apprentice/resources/InspectionAreas";
-import InspectionDocumentation from "@/components/apprentice/resources/InspectionDocumentation";
-import InspectionRegulations from "@/components/apprentice/resources/InspectionRegulations";
+
 import AILearning from "@/pages/apprentice/AILearning";
 import MockExams from "@/pages/apprentice/MockExams";
 import MockExamDetails from "@/pages/apprentice/MockExamDetails";
