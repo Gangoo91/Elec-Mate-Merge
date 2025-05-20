@@ -22,13 +22,13 @@ const ApprenticeHub = () => {
       id: 3,
       title: "Mental Health Hub",
       icon: Heart,
-      link: "/apprentice/mental-health"
+      link: "/mental-health"
     },
     {
       id: 4,
       title: "Mentor Connect",
       icon: Users,
-      link: "/apprentice/mentor"
+      link: "/mentor"
     },
     {
       id: 5,

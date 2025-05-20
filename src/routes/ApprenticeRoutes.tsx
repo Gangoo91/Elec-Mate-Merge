@@ -1,5 +1,5 @@
 
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import InspectionDocumentation from "@/components/apprentice/resources/InspectionDocumentation";
 import InspectionAreas from "@/components/apprentice/resources/InspectionAreas";
 import InspectionTypes from "@/components/apprentice/resources/InspectionTypes";
@@ -18,17 +18,22 @@ import ToolboxTalk from "@/pages/apprentice/ToolboxTalk";
 import OnJobTools from "@/pages/apprentice/OnJobTools";
 import SubsectionPage from "@/components/apprentice/SubsectionPage";
 import CourseContent from "@/pages/apprentice/CourseContent";
+import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
+import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
+import ApprenticeChat from "@/pages/apprentice/ApprenticeChat";
+import HigherLearningCourses from "@/pages/apprentice/HigherLearningCourses";
 
 const ApprenticeRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<ApprenticeHub />} />
+      <Route index element={<ApprenticeHub />} />
       <Route path="study" element={<ApprenticeStudy />} />
       <Route path="study/mock-exams" element={<div>Mock Exams</div>} />
       <Route path="study/mock-exams/:examId" element={<div>Exam Details</div>} />
       <Route path="study/electrical-symbols" element={<div>Electrical Symbols</div>} />
       <Route path="study/tools" element={<div>Study Tools</div>} />
       <Route path="study/electrical-theory" element={<div>Electrical Theory</div>} />
+      <Route path="study/higher-learning" element={<HigherLearningCourses />} />
       <Route path="study/inspection-testing" element={<InspectionTesting />} />
       <Route path="study/inspection-testing/safe-isolation" element={<SafeIsolation />} />
       <Route path="study/inspection-testing/methodology" element={<InspectionMethodology />} />
@@ -49,9 +54,9 @@ const ApprenticeRoutes = () => {
       <Route path="study/resources/inspection-types" element={<InspectionTypes />} />
       <Route path="study/resources/inspection-regulations" element={<InspectionRegulations />} />
       
-      <Route path="chat" element={<div>Apprentice Chat</div>} />
-      <Route path="mental-health" element={<div>Mental Health</div>} />
-      <Route path="mentor" element={<div>Mentor</div>} />
+      <Route path="mentor" element={<ApprenticeMentor />} />
+      <Route path="chat" element={<ApprenticeChat />} />
+      <Route path="mental-health" element={<ApprenticeMentalHealth />} />
       <Route path="calculators" element={<div>Calculators</div>} />
       <Route path="certificate" element={<div>Certificate</div>} />
       <Route path="career" element={<div>Career Pathways</div>} />

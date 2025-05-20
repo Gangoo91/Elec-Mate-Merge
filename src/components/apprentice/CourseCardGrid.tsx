@@ -9,15 +9,17 @@ interface Course {
   description?: string;
 }
 
+interface CourseWithSubcourses {
+  id: string;
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  courses: Course[];
+  baseUrl: string;
+}
+
 interface CourseCardGridProps {
-  courses: {
-    id: string;
-    title: string;
-    description: string;
-    icon: LucideIcon;
-    courses: Course[];
-    baseUrl: string;
-  }[];
+  courses: CourseWithSubcourses[];
   baseUrl?: string;
   emptyState?: ReactNode;
 }

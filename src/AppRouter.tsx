@@ -21,12 +21,11 @@ import Admin from "@/pages/electrician-tools/Admin";
 import ApprenticeRoutes from "@/routes/ApprenticeRoutes";
 import ElectricianHubRoutes from "@/routes/ElectricianHubRoutes";
 import ElectricianRoutes from "@/routes/ElectricianRoutes";
-import ApprenticeChat from "@/pages/apprentice/ApprenticeChat";
-import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
-import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
 import ToolboxTalk from "@/pages/apprentice/ToolboxTalk";
 import OnJobTools from "@/pages/apprentice/OnJobTools";
 import ApprenticeStudy from "@/pages/apprentice/ApprenticeStudy";
+import ApprenticeMentorHub from "@/pages/apprentice/ApprenticeMentor";
+import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import Chat from "@/pages/Chat";
 import NotificationsPage from "@/pages/NotificationsPage";
 
@@ -52,12 +51,11 @@ const AppRouter = () => {
         <Route path="notifications" element={<NotificationsPage />} />
         <Route path="subscriptions" element={<Subscriptions />} />
         <Route path="payment-success" element={<PaymentSuccess />} />
-        <Route path="*" element={<NotFound />} />
         
         {/* Top level routes for shared features */}
         <Route path="chat" element={<Chat />} />
         <Route path="mental-health" element={<ApprenticeMentalHealth />} />
-        <Route path="mentor" element={<ApprenticeMentor />} />
+        <Route path="mentor" element={<ApprenticeMentorHub />} />
         
         {/* Video Lessons and Leaderboards */}
         <Route path="videos" element={<VideoLessons />} />
@@ -70,7 +68,11 @@ const AppRouter = () => {
         <Route path="electrician/*" element={<ElectricianHubRoutes />} />
         
         {/* Apprentice Routes */}
+        <Route path="apprentice" element={<Navigate to="/apprentice/" replace />} />
         <Route path="apprentice/*" element={<ApprenticeRoutes />} />
+        
+        {/* Catch-all route */}
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

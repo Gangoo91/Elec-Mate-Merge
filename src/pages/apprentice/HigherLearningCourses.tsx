@@ -3,12 +3,19 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { ArrowLeft, School, GraduationCap } from "lucide-react";
-import { courseCategories } from "@/data/courseCategories";
-import FurtherEducation from "@/components/apprentice/career/FurtherEducation";
 
 const HigherLearningCourses = () => {
-  // Find the higher learning courses category
-  const higherCategory = courseCategories.find(category => category.id === "higher");
+  const higherCourses = [
+    "HNC in Electrical and Electronic Engineering",
+    "HND in Electrical Engineering",
+    "Foundation Degree in Electrical Engineering",
+    "BEng Electrical Engineering",
+    "MEng Electrical Engineering",
+    "MSc Electrical Power Systems",
+    "Professional Certifications (IET, ECA)",
+    "Electrical Safety Management",
+    "Advanced Inspection and Testing"
+  ];
   
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8 animate-fade-in">
@@ -33,7 +40,7 @@ const HigherLearningCourses = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {higherCategory?.courses.map((course, index) => (
+        {higherCourses.map((course, index) => (
           <Card 
             key={index}
             className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full"
@@ -52,10 +59,30 @@ const HigherLearningCourses = () => {
         ))}
       </div>
       
-      {/* Display detailed information about higher education options */}
       <div className="mt-12 pt-8 border-t border-elec-yellow/20">
         <h2 className="text-2xl font-bold mb-6">Further Education Pathways</h2>
-        <FurtherEducation />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
+            <h3 className="text-xl font-semibold mb-4">Academic Progression</h3>
+            <ul className="space-y-2 list-disc pl-5">
+              <li>HNC/HND in Electrical Engineering</li>
+              <li>Foundation Degrees</li>
+              <li>Bachelor's Degrees (BEng)</li>
+              <li>Master's Degrees (MEng/MSc)</li>
+              <li>PhD Research in Electrical Engineering</li>
+            </ul>
+          </div>
+          <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-6">
+            <h3 className="text-xl font-semibold mb-4">Professional Development</h3>
+            <ul className="space-y-2 list-disc pl-5">
+              <li>IET Professional Registration (EngTech, IEng, CEng)</li>
+              <li>Management Qualifications</li>
+              <li>Design Certifications</li>
+              <li>Specialized Technical Certificates</li>
+              <li>Teaching and Training Qualifications</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );

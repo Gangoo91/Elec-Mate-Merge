@@ -81,4 +81,3 @@ export const mainNavItems: NavItem[] = [
     roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
   },
 ];
-
