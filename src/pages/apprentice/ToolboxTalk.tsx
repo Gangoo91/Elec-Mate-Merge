@@ -1,26 +1,11 @@
 
 import React from 'react';
+import { Card, CardContent } from "@/components/ui/card";
 import BackButton from "@/components/common/BackButton";
 import ToolboxCard from "@/components/apprentice/toolbox/ToolboxCard";
-import { FileText, ShieldAlert, WrenchIcon, Users, Lightbulb, Book, Shield, HardHat } from "lucide-react";
-import { useTrainingActivityMonitor } from "@/hooks/useTrainingActivityMonitor";
-import { useToast } from "@/components/ui/use-toast";
-import { useEffect } from "react";
+import { FileText, ShieldAlert, WrenchIcon, Users, Lightbulb } from "lucide-react";
 
 const ToolboxTalk = () => {
-  const { toast } = useToast();
-  
-  // Monitor training activity
-  useTrainingActivityMonitor();
-
-  // Show welcome toast on first load
-  useEffect(() => {
-    toast({
-      title: "Toolbox Talk Resources",
-      description: "Access important electrical work guidance, safety information, and best practices.",
-    });
-  }, [toast]);
-
   const toolboxItems = [
     {
       title: "Safety Procedures",
@@ -51,24 +36,6 @@ const ToolboxTalk = () => {
       icon: <FileText className="h-5 w-5 text-elec-yellow" />,
       description: "Proper documentation procedures for electrical jobs",
       link: "/apprentice/toolbox/documentation"
-    },
-    {
-      title: "Regulations",
-      icon: <Book className="h-5 w-5 text-elec-yellow" />,
-      description: "Key electrical regulations and standards",
-      link: "/apprentice/toolbox/regulations"
-    },
-    {
-      title: "PPE Requirements",
-      icon: <Shield className="h-5 w-5 text-elec-yellow" />,
-      description: "Personal protective equipment guidance for electrical work",
-      link: "/apprentice/toolbox/ppe"
-    },
-    {
-      title: "Site Management",
-      icon: <HardHat className="h-5 w-5 text-elec-yellow" />,
-      description: "Managing electrical work sites safely and efficiently",
-      link: "/apprentice/toolbox/site-management"
     }
   ];
 

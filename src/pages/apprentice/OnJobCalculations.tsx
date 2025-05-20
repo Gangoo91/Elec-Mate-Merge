@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CableSizingCalculator from "@/components/apprentice/calculators/CableSizingCalculator";
 import OhmsLawCalculator from "@/components/electrician-tools/OhmsLawCalculator";
 import VoltageDropCalculator from "@/components/electrician-tools/VoltageDropCalculator";
@@ -11,25 +11,10 @@ import LumenCalculator from "@/components/apprentice/calculators/LumenCalculator
 import InstrumentationCalculator from "@/components/apprentice/calculators/InstrumentationCalculator";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
 import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoonCalculator";
-import { Calculator, Sigma } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
-import BackButton from "@/components/common/BackButton";
-import { useTrainingActivityMonitor } from "@/hooks/useTrainingActivityMonitor";
+import { Calculator, Sigma, Gauge, Variable } from "lucide-react";
 
 const OnJobCalculations = () => {
-  const [calculatorType, setCalculatorType] = useState<string>("cable-size");
-  const { toast } = useToast();
-  
-  // Monitor training activity
-  useTrainingActivityMonitor();
-
-  // Show welcome toast on first load
-  useEffect(() => {
-    toast({
-      title: "Calculation Tools Loaded",
-      description: "Select a calculator from the options below.",
-    });
-  }, [toast]);
+  const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
 
   const renderCalculator = () => {
     switch (calculatorType) {
@@ -58,20 +43,24 @@ const OnJobCalculations = () => {
           description="Translate resistor colour bands to resistance values and tolerance." 
         />;
       default:
-        return <CableSizingCalculator />;
+        return <OhmsLawCalculator />;
     }
   };
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <BackButton customUrl="/apprentice/on-job-tools" label="Back to Tools" />
-          <h1 className="text-3xl font-bold tracking-tight mt-4">Cable Calculations</h1>
+          <h1 className="text-3xl font-bold tracking-tight">On-the-Job Calculations</h1>
           <p className="text-muted-foreground">
             Essential calculators for electrical installations and troubleshooting
           </p>
         </div>
+        <Link to="/apprentice/on-job-tools">
+          <Button variant="outline" className="flex items-center gap-2">
+            <ArrowLeft className="h-4 w-4" /> Back to Tools
+          </Button>
+        </Link>
       </div>
 
       {/* Calculator Selector */}
