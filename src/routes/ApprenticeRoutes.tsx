@@ -1,9 +1,9 @@
+
 import { Route, Routes } from "react-router-dom";
 import InspectionDocumentation from "@/components/apprentice/resources/InspectionDocumentation";
 import InspectionAreas from "@/components/apprentice/resources/InspectionAreas";
 import InspectionTypes from "@/components/apprentice/resources/InspectionTypes";
 import InspectionRegulations from "@/components/apprentice/resources/InspectionRegulations";
-import ApprenticeStudy from "@/pages/apprentice/ApprenticeStudy";
 
 import InspectionTesting from "@/pages/apprentice/InspectionTesting";
 import TestingProcedures from "@/pages/apprentice/TestingProcedures";
@@ -17,7 +17,7 @@ const ApprenticeRoutes = () => {
   return (
     <Routes>
       <Route index element={<div>Apprentice Hub</div>} />
-      <Route path="study" element={<ApprenticeStudy />} />
+      <Route path="study" element={<div>Study Portal</div>} />
       <Route path="study/mock-exams" element={<div>Mock Exams</div>} />
       <Route path="study/mock-exams/:examId" element={<div>Exam Details</div>} />
       <Route path="study/electrical-symbols" element={<div>Electrical Symbols</div>} />
