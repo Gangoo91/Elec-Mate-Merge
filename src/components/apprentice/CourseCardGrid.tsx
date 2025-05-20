@@ -3,23 +3,16 @@ import { ReactNode } from "react";
 import CourseCard from "./CourseCard";
 import { LucideIcon } from "lucide-react";
 
-export interface Course {
-  id: string;
-  title: string;
-  description?: string;
-}
-
-export interface CourseWithSubcourses {
+interface Course {
   id: string;
   title: string;
   description: string;
   icon: LucideIcon;
-  courses: Course[];
-  baseUrl: string;
+  courses: string[];
 }
 
 interface CourseCardGridProps {
-  courses: CourseWithSubcourses[];
+  courses: Course[];
   baseUrl?: string;
   emptyState?: ReactNode;
 }
@@ -39,7 +32,7 @@ const CourseCardGrid = ({ courses, baseUrl = "", emptyState }: CourseCardGridPro
           description={course.description} 
           icon={course.icon} 
           courses={course.courses}
-          baseUrl={course.baseUrl || baseUrl}
+          baseUrl={baseUrl}
         />
       ))}
     </div>

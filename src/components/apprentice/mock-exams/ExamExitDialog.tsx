@@ -1,5 +1,5 @@
 
-import { AlertTriangle } from "lucide-react";
+import React from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,37 +8,28 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
+  AlertDialogTitle
 } from "@/components/ui/alert-dialog";
 
 interface ExamExitDialogProps {
   open: boolean;
-  onClose: () => void;
+  onOpenChange: (open: boolean) => void;
   onExit: () => void;
 }
 
-const ExamExitDialog: React.FC<ExamExitDialogProps> = ({
-  open,
-  onClose,
-  onExit
-}) => {
+const ExamExitDialog: React.FC<ExamExitDialogProps> = ({ open, onOpenChange, onExit }) => {
   return (
-    <AlertDialog open={open} onOpenChange={onClose}>
-      <AlertDialogContent className="bg-elec-gray border-elec-yellow/30 w-[95%] max-w-md mx-auto">
-        <AlertDialogHeader className="flex flex-col items-center">
-          <AlertTriangle className="h-10 w-10 text-amber-500 mb-2" />
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
           <AlertDialogTitle>Exit Exam?</AlertDialogTitle>
-          <AlertDialogDescription className="text-center text-sm">
-            Your progress will be lost if you exit now. 
-            Are you sure you want to leave the exam?
+          <AlertDialogDescription>
+            Your progress will be lost if you exit now. Are you sure you want to leave the exam?
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter className="flex flex-col sm:flex-row gap-2">
-          <AlertDialogCancel className="w-full sm:w-auto text-sm">Continue Exam</AlertDialogCancel>
-          <AlertDialogAction 
-            onClick={onExit}
-            className="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white text-sm"
-          >
+        <AlertDialogFooter>
+          <AlertDialogCancel>Continue Exam</AlertDialogCancel>
+          <AlertDialogAction onClick={onExit}>
             Exit Exam
           </AlertDialogAction>
         </AlertDialogFooter>

@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Book, Clock, Heart, Users, WrenchIcon, Bot, ArrowLeft, Calculator, FileText, Settings } from "lucide-react";
+import { Book, Clock, Heart, Users, WrenchIcon, Bot, ArrowLeft, Calculator, FileText, Settings, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
@@ -14,21 +14,21 @@ const ApprenticeHub = () => {
     },
     {
       id: 2,
-      title: "Off the Job Time Tracking",
+      title: "Off the Job Time Keeping",
       icon: Clock,
-      link: "/apprentice/time-tracking"
+      link: "/apprentice/ojt"
     },
     {
       id: 3,
       title: "Mental Health Hub",
       icon: Heart,
-      link: "/mental-health"
+      link: "/apprentice/mental-health"
     },
     {
       id: 4,
       title: "Mentor Connect",
       icon: Users,
-      link: "/mentor"
+      link: "/apprentice/mentor"
     },
     {
       id: 5,
@@ -41,6 +41,12 @@ const ApprenticeHub = () => {
       title: "On the Job Tools",
       icon: Settings,
       link: "/apprentice/on-job-tools"
+    },
+    {
+      id: 7,
+      title: "Professional Development",
+      icon: GraduationCap,
+      link: "/apprentice/professional-development"
     }
   ];
 
@@ -66,7 +72,7 @@ const ApprenticeHub = () => {
                 <CardTitle className="text-xl">{resource.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                {/* No descriptions for cleaner look */}
+                {/* Removed descriptions for cleaner look */}
               </CardContent>
             </Card>
           </Link>

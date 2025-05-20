@@ -1,38 +1,58 @@
 
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
-import { useToast } from "@/components/ui/use-toast";
+import { useNotifications } from "@/components/notifications/NotificationProvider";
+
+// Define milestone thresholds in minutes
+const MILESTONES = [
+  { minutes: 30, title: "Quick Study Session", message: "You've completed your first 30 minutes of learning!" },
+  { minutes: 60, title: "One Hour Milestone", message: "Great job! You've studied for a full hour." },
+  { minutes: 180, title: "Serious Dedication", message: "Three hours of learning completed. You're making excellent progress!" },
+  { minutes: 300, title: "Professional Development", message: "Five hours of learning completed. You're well on your way to expertise!" },
+  { minutes: 600, title: "Master in Training", message: "Ten hours of focused learning. Your dedication is impressive!" },
+];
 
 export const useTrackMilestones = () => {
-  const { entries, totalTime } = useTimeEntries();
-  const { toast } = useToast();
+  const { totalTime } = useTimeEntries();
   
-  // Track milestones based on total time
+  // Try to use notifications, but don't error if they're not available
+  let notificationsAvailable = true;
+  let addNotification;
+  
+  try {
+    const notifications = useNotifications();
+    addNotification = notifications.addNotification;
+  } catch (e) {
+    console.warn('Notifications not available, skipping milestone notifications');
+    notificationsAvailable = false;
+  }
+  
+  // Convert hours and minutes to total minutes for easier comparison
+  const totalMinutes = (totalTime.hours * 60) + totalTime.minutes;
+  
   useEffect(() => {
-    // Get previous milestone from localStorage
-    const previousMilestone = parseInt(localStorage.getItem('lastMilestone') || '0');
-    const currentHours = totalTime.hours + (totalTime.minutes / 60);
+    // If notifications aren't available, don't proceed
+    if (!notificationsAvailable) return;
     
-    // Define milestones in hours
-    const milestones = [1, 5, 10, 20, 50, 100, 200];
-    
-    // Find the next milestone
-    for (const milestone of milestones) {
-      if (currentHours >= milestone && previousMilestone < milestone) {
-        // Save new milestone
-        localStorage.setItem('lastMilestone', milestone.toString());
-        
-        // Show toast for milestone achievement
-        toast({
-          title: `Milestone Achieved: ${milestone} Hours!`,
-          description: `You've logged ${milestone} hours of off-the-job training. Keep up the good work!`,
-          duration: 5000,
+    // Check if we've reached any milestones
+    MILESTONES.forEach(milestone => {
+      if (totalMinutes === milestone.minutes) {
+        // Trigger notification for achieved milestone
+        addNotification?.({
+          title: milestone.title,
+          message: milestone.message,
+          type: 'success'
         });
         
-        break;
+        // Store this milestone as achieved
+        const achievedMilestones = JSON.parse(localStorage.getItem('achievedMilestones') || '[]');
+        if (!achievedMilestones.includes(milestone.minutes)) {
+          achievedMilestones.push(milestone.minutes);
+          localStorage.setItem('achievedMilestones', JSON.stringify(achievedMilestones));
+        }
       }
-    }
-  }, [totalTime, toast]);
+    });
+  }, [totalMinutes, addNotification, notificationsAvailable]);
   
-  return { milestoneReached: false }; // Simple return for now, could be expanded
+  return null; // This hook doesn't return anything
 };

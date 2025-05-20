@@ -1,8 +1,7 @@
 
-import { ArrowLeft, TestTube, BookOpen, Download, BookmarkCheck } from "lucide-react";
+import { ArrowLeft, TestTube, BookOpen, Download } from "lucide-react";
 import BackButton from "@/components/common/BackButton";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
 
 const TestingHeader = () => {
   return (
@@ -14,14 +13,7 @@ const TestingHeader = () => {
           </div>
           <h1 className="text-3xl font-bold tracking-tight">Testing Procedures</h1>
         </div>
-        <div className="flex flex-wrap items-center gap-2 mt-4 md:mt-0 justify-center md:justify-end">
-          <Link to="/apprentice/study/inspection-testing">
-            <Button variant="outline" size="sm" className="flex items-center gap-2">
-              <BookmarkCheck className="h-4 w-4" />
-              <span className="hidden sm:inline">Inspection & Testing</span>
-              <span className="inline sm:hidden">I&T Guide</span>
-            </Button>
-          </Link>
+        <div className="flex items-center gap-2 mt-4 md:mt-0">
           <Button variant="outline" size="sm" className="flex items-center gap-2">
             <BookOpen className="h-4 w-4" />
             <span className="hidden sm:inline">Resources</span>
@@ -37,7 +29,7 @@ const TestingHeader = () => {
         Follow these step-by-step guides for essential electrical testing procedures required for installation 
         and verification. The interactive wizards will help you complete accurate tests every time.
       </p>
-      <div className="h-1 w-20 bg-gradient-to-r from-amber-500 to-yellow-600 rounded-full"></div>
+      <div className="h-1 w-20 bg-gradient-to-r from-elec-yellow to-yellow-500/70 rounded-full"></div>
     </div>
   );
 };

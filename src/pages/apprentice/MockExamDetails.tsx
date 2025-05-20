@@ -1,25 +1,61 @@
 
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import ExamQuestion from "@/components/apprentice/mock-exams/ExamQuestion";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import { ArrowLeft } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+
+// Import components
 import ExamIntroduction from "@/components/apprentice/mock-exams/ExamIntroduction";
-import ExamResults from "@/components/apprentice/mock-exams/ExamResults";
 import ExamHeader from "@/components/apprentice/mock-exams/ExamHeader";
+import ExamQuestion from "@/components/apprentice/mock-exams/ExamQuestion";
+import ExamResults from "@/components/apprentice/mock-exams/ExamResults";
 import ExamExitDialog from "@/components/apprentice/mock-exams/ExamExitDialog";
+
+// Import mock data
 import { mockExams, mockQuestions } from "@/data/apprentice/mockExams";
+
+// Import custom hooks
 import { useExam } from "@/hooks/apprentice/useExam";
-import { AlertCircle } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const MockExamDetails = () => {
-  const { examId } = useParams<{ examId: string }>();
+  const { examId } = useParams();
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
+  const { toast } = useToast();
+  const { isSubscribed } = useAuth();
   
-  // Find the exam details
-  const exam = mockExams.find(exam => exam.id === examId) || null;
-  
-  // Setup the exam controller
+  const [currentExam, setCurrentExam] = useState<any>(null);
+
+  // Find the exam data based on the URL param
+  useEffect(() => {
+    const exam = mockExams.find(e => e.id === examId);
+    
+    if (!exam) {
+      toast({
+        title: "Exam not found",
+        description: "The requested exam could not be found.",
+        variant: "destructive"
+      });
+      navigate("/apprentice/study/mock-exams");
+      return;
+    }
+    
+    // Check if premium exam and user not subscribed
+    if (exam.isPremium && !isSubscribed) {
+      toast({
+        title: "Premium Content",
+        description: "Please subscribe to access premium mock exams.",
+        variant: "destructive"
+      });
+      navigate("/apprentice/study/mock-exams");
+      return;
+    }
+    
+    setCurrentExam(exam);
+  }, [examId, navigate, isSubscribed, toast]);
+
+  // Initialize exam controller using our custom hook
   const {
     currentQuestionIndex,
     selectedAnswers,
@@ -35,90 +71,88 @@ const MockExamDetails = () => {
     startExam,
     finishExam,
     setShowResults
-  } = useExam(exam, mockQuestions);
-  
-  // Format remaining time
-  const formatTime = (totalSeconds: number) => {
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  };
-  
-  // Return to the main mock exams page
-  const handleReturnToExams = () => {
-    navigate('/apprentice/study/mock-exams');
-  };
-  
-  // Show exit confirmation dialog
-  const handleExitClick = () => {
-    if (isExamStarted && !isExamFinished) {
+  } = useExam(currentExam, mockQuestions);
+
+  // Return to exam list
+  const handleExit = () => {
+    if (!isExamFinished && isExamStarted) {
       setExitDialogOpen(true);
     } else {
-      handleReturnToExams();
+      navigate("/apprentice/study/mock-exams");
     }
   };
 
-  // If exam not found
-  if (!exam) {
+  // If no exam is loaded yet
+  if (!currentExam) {
+    return <div className="flex justify-center items-center h-[60vh]">Loading exam...</div>;
+  }
+
+  // Show results page
+  if (showResults) {
     return (
-      <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
-        <div className="flex items-center justify-center flex-col p-6 sm:p-10 bg-elec-gray rounded-lg border border-elec-yellow/20">
-          <AlertCircle className="h-8 w-8 sm:h-10 sm:w-10 text-red-500 mb-4" />
-          <h1 className="text-lg sm:text-xl font-semibold mb-2">Exam Not Found</h1>
-          <p className="text-sm text-muted-foreground mb-6">The exam you're looking for doesn't exist or has been removed.</p>
-          <button 
-            onClick={() => navigate('/apprentice/study/mock-exams')}
-            className="px-3 py-2 bg-elec-yellow text-elec-dark font-medium rounded-md text-sm"
-          >
-            Return to Mock Exams
-          </button>
+      <div className="max-w-4xl mx-auto px-4 py-8 space-y-8 animate-fade-in">
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-3xl font-bold tracking-tight">Exam Results</h1>
+          <Button variant="outline" onClick={() => navigate("/apprentice/study/mock-exams")}>
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Exams
+          </Button>
         </div>
+        
+        <ExamResults 
+          examTitle={currentExam.title}
+          questions={mockQuestions}
+          selectedAnswers={selectedAnswers}
+          onReturn={() => navigate("/apprentice/study/mock-exams")}
+        />
       </div>
     );
   }
 
+  // Show exam interface
   return (
-    <div className="max-w-4xl mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6 animate-fade-in">
-      <ExamHeader 
-        title={exam.title} 
-        timeRemaining={isExamStarted ? formatTime(timeRemaining) : `${exam.duration}:00`}
-        onExitClick={handleExitClick}
-        questionIndex={currentQuestionIndex + 1}
-        questionCount={mockQuestions.length}
-        isExamStarted={isExamStarted}
-        isExamFinished={isExamFinished}
-      />
-      
-      {!isExamStarted && (
-        <ExamIntroduction exam={exam} onStart={startExam} />
+    <div className="max-w-4xl mx-auto px-4 py-8 space-y-8 animate-fade-in">
+      {!isExamStarted ? (
+        // Exam introduction page
+        <div className="space-y-6">
+          <div className="flex items-center justify-between">
+            <h1 className="text-2xl font-bold tracking-tight">{currentExam.title}</h1>
+            <Button variant="outline" onClick={handleExit}>
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Exams
+            </Button>
+          </div>
+          
+          <ExamIntroduction exam={currentExam} onStart={startExam} />
+        </div>
+      ) : (
+        // Exam in progress
+        <div className="space-y-6">
+          <ExamHeader 
+            currentQuestionIndex={currentQuestionIndex}
+            totalQuestions={mockQuestions.length}
+            timeRemaining={timeRemaining}
+            onExit={() => setExitDialogOpen(true)}
+          />
+          
+          <ExamQuestion 
+            question={mockQuestions[currentQuestionIndex]}
+            selectedAnswer={selectedAnswers[mockQuestions[currentQuestionIndex].id]}
+            onSelectAnswer={handleSelectAnswer}
+            onPrevious={goToPreviousQuestion}
+            onNext={goToNextQuestion}
+            onFinish={finishExam}
+            isFirstQuestion={currentQuestionIndex === 0}
+            isLastQuestion={currentQuestionIndex === mockQuestions.length - 1}
+          />
+        </div>
       )}
       
-      {isExamStarted && !showResults && (
-        <ExamQuestion 
-          question={mockQuestions[currentQuestionIndex]}
-          selectedAnswer={selectedAnswers[mockQuestions[currentQuestionIndex].id]}
-          onSelectAnswer={handleSelectAnswer}
-          onPrevious={goToPreviousQuestion}
-          onNext={goToNextQuestion}
-          onFinish={finishExam}
-          isFirstQuestion={currentQuestionIndex === 0}
-          isLastQuestion={currentQuestionIndex === mockQuestions.length - 1}
-        />
-      )}
-      
-      {showResults && (
-        <ExamResults 
-          examTitle={exam.title}
-          questions={mockQuestions}
-          selectedAnswers={selectedAnswers}
-          onReturn={handleReturnToExams}
-        />
-      )}
-      
+      {/* Exit confirmation dialog */}
       <ExamExitDialog 
-        open={exitDialogOpen} 
-        onClose={() => setExitDialogOpen(false)}
-        onExit={handleReturnToExams}
+        open={exitDialogOpen}
+        onOpenChange={setExitDialogOpen}
+        onExit={() => navigate("/apprentice/study/mock-exams")}
       />
     </div>
   );

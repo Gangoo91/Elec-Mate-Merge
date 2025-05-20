@@ -1,78 +1,109 @@
 
 import { Route, Routes } from "react-router-dom";
-import InspectionDocumentation from "@/components/apprentice/resources/InspectionDocumentation";
-import InspectionAreas from "@/components/apprentice/resources/InspectionAreas";
-import InspectionTypes from "@/components/apprentice/resources/InspectionTypes";
-import InspectionRegulations from "@/components/apprentice/resources/InspectionRegulations";
-
-import InspectionTesting from "@/pages/apprentice/InspectionTesting";
-import TestingProcedures from "@/pages/apprentice/TestingProcedures";
-import SafeIsolation from "@/pages/apprentice/inspection-testing/SafeIsolation";
-import InspectionMethodology from "@/pages/apprentice/inspection-testing/InspectionMethodology";
-import TestingPrinciples from "@/pages/apprentice/inspection-testing/TestingPrinciples";
-import RegulatoryFramework from "@/pages/apprentice/inspection-testing/RegulatoryFramework";
-import TestResultAnalysis from "@/pages/apprentice/inspection-testing/TestResultAnalysis";
 import ApprenticeHub from "@/pages/ApprenticeHub";
-import ApprenticeStudy from "@/pages/apprentice/ApprenticeStudy";
-import ToolboxTalk from "@/pages/apprentice/ToolboxTalk";
-import OnJobTools from "@/pages/apprentice/OnJobTools";
-import SubsectionPage from "@/components/apprentice/SubsectionPage";
-import CourseContent from "@/pages/apprentice/CourseContent";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
-import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
-import ApprenticeChat from "@/pages/apprentice/ApprenticeChat";
-import HigherLearningCourses from "@/pages/apprentice/HigherLearningCourses";
-import AILearning from "@/pages/apprentice/AILearning";
-import TimeTracking from "@/pages/apprentice/TimeTracking";
 import ApprenticeOJT from "@/pages/apprentice/ApprenticeOJT";
+import ApprenticeStudy from "@/pages/apprentice/ApprenticeStudy";
+import ApprenticeToolbox from "@/pages/apprentice/ApprenticeToolbox";
+import ApprenticeChat from "@/pages/apprentice/ApprenticeChat";
+import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
+import CareerProgression from "@/pages/apprentice/CareerProgression";
+import UnitContent from "@/pages/apprentice/UnitContent";
+import SectionContent from "@/pages/apprentice/SectionContent";
+import SubsectionContent from "@/pages/apprentice/SubsectionContent";
+import OnJobTools from "@/pages/apprentice/OnJobTools";
+import OnJobCalculations from "@/pages/apprentice/OnJobCalculations";
+import OnJobDocuments from "@/pages/apprentice/OnJobDocuments";
+import OnJobAssessment from "@/pages/apprentice/OnJobAssessment";
+import OnJobSafetyCases from "@/pages/apprentice/OnJobSafetyCases";
+import OnJobWorkplaceCulture from "@/pages/apprentice/OnJobWorkplaceCulture";
+import TestingProcedures from "@/pages/apprentice/TestingProcedures";
+import SupervisorKnowledge from "@/pages/apprentice/SupervisorKnowledge";
+import FlashcardsLearning from "@/pages/apprentice/FlashcardsLearning";
+import IncidentLogging from "@/pages/apprentice/IncidentLogging";
+import StressManagement from "@/pages/apprentice/mental-health/StressManagement";
+import SupportNetwork from "@/pages/apprentice/mental-health/SupportNetwork";
+import WorkLifeBalance from "@/pages/apprentice/mental-health/WorkLifeBalance";
+import CrisisResources from "@/pages/apprentice/mental-health/CrisisResources";
+import ToolsGuide from "@/pages/apprentice/ToolsGuide";
+import CommunicationStructures from "@/components/apprentice/resources/CommunicationStructures";
+import CommunicationMethods from "@/components/apprentice/resources/CommunicationMethods";
+import SafetyMeetings from "@/components/apprentice/resources/SafetyMeetings";
+import DocumentationSystems from "@/components/apprentice/resources/DocumentationSystems";
+import InspectionTypes from "@/components/apprentice/resources/InspectionTypes";
+import InspectionAreas from "@/components/apprentice/resources/InspectionAreas";
+import InspectionDocumentation from "@/components/apprentice/resources/InspectionDocumentation";
+import InspectionRegulations from "@/components/apprentice/resources/InspectionRegulations";
+import AILearning from "@/pages/apprentice/AILearning";
+import MockExams from "@/pages/apprentice/MockExams";
+import MockExamDetails from "@/pages/apprentice/MockExamDetails";
+import CourseContent from "@/pages/apprentice/CourseContent";
+import HigherLearning from "@/pages/apprentice/HigherLearning";
+import Level2 from "@/pages/apprentice/Level2";
+import Level3 from "@/pages/apprentice/Level3";
+import InspectionTesting from "@/pages/apprentice/InspectionTesting";
+import EighteenthEdition from "@/pages/apprentice/EighteenthEdition";
+import AM2Prep from "@/pages/apprentice/AM2Prep";
+import OnSiteSkills from "@/pages/apprentice/OnSiteSkills";
+import ProfessionalDevelopment from "@/pages/apprentice/ProfessionalDevelopment";
+import MathsRefresher from "@/pages/apprentice/MathsRefresher";
 
 const ApprenticeRoutes = () => {
   return (
     <Routes>
       <Route index element={<ApprenticeHub />} />
-      <Route path="study" element={<ApprenticeStudy />} />
-      <Route path="study/mock-exams" element={<div>Mock Exams</div>} />
-      <Route path="study/mock-exams/:examId" element={<div>Exam Details</div>} />
-      <Route path="study/electrical-symbols" element={<div>Electrical Symbols</div>} />
-      <Route path="study/tools" element={<div>Study Tools</div>} />
-      <Route path="study/electrical-theory" element={<div>Electrical Theory</div>} />
-      <Route path="study/higher-learning" element={<HigherLearningCourses />} />
-      <Route path="study/inspection-testing" element={<InspectionTesting />} />
-      <Route path="study/inspection-testing/safe-isolation" element={<SafeIsolation />} />
-      <Route path="study/inspection-testing/methodology" element={<InspectionMethodology />} />
-      <Route path="study/inspection-testing/principles" element={<TestingPrinciples />} />
-      <Route path="study/inspection-testing/regulations" element={<RegulatoryFramework />} />
-      <Route path="study/inspection-testing/result-analysis" element={<TestResultAnalysis />} />
-      <Route path="study/testing-procedures" element={<TestingProcedures />} />
-      <Route path="study/course-content" element={<CourseContent />} />
-      <Route path="study/ai-learning" element={<AILearning />} />
-      
-      <Route path="study/eal/:courseSlug" element={<div>Course Detail</div>} />
-      <Route path="study/eal/:courseSlug/unit/:unitSlug" element={<div>Course Unit</div>} />
-      <Route path="study/eal/:courseSlug/unit/:unitSlug/section/:sectionId" element={<div>Section Page</div>} />
-      <Route path="study/eal/:courseSlug/unit/:unitSlug/section/:sectionId/subsection/:subsectionId" element={<SubsectionPage />} />
-      <Route path="study/eal/:courseSlug/unit/:unitSlug/quiz" element={<div>Course Quiz</div>} />
-      
-      <Route path="study/resources/inspection-documentation" element={<InspectionDocumentation />} />
-      <Route path="study/resources/inspection-areas" element={<InspectionAreas />} />
-      <Route path="study/resources/inspection-types" element={<InspectionTypes />} />
-      <Route path="study/resources/inspection-regulations" element={<InspectionRegulations />} />
-      
-      <Route path="mentor" element={<ApprenticeMentor />} />
+      <Route path="hub" element={<ApprenticeHub />} />
       <Route path="chat" element={<ApprenticeChat />} />
+      <Route path="mentor" element={<ApprenticeMentor />} />
+      <Route path="ojt" element={<ApprenticeOJT />} />
+      <Route path="toolbox" element={<ApprenticeToolbox />} />
+      <Route path="tools-guide" element={<ToolsGuide />} />
       <Route path="mental-health" element={<ApprenticeMentalHealth />} />
-      <Route path="calculators" element={<div>Calculators</div>} />
-      <Route path="certificate" element={<div>Certificate</div>} />
-      <Route path="career" element={<div>Career Pathways</div>} />
-      <Route path="career/courses" element={<div>Career Courses</div>} />
-      <Route path="career/qualifications" element={<div>Career Qualifications</div>} />
-      <Route path="career/advancement" element={<div>Career Advancement</div>} />
-      <Route path="providers" element={<div>Training Providers</div>} />
-      <Route path="evidence" element={<div>Training Evidence</div>} />
-      <Route path="time-tracking" element={<TimeTracking />} />
-      <Route path="off-job-training" element={<ApprenticeOJT />} />
-      <Route path="toolbox" element={<ToolboxTalk />} />
+      <Route path="mental-health/stress-management" element={<StressManagement />} />
+      <Route path="mental-health/support-network" element={<SupportNetwork />} />
+      <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
+      <Route path="mental-health/crisis-resources" element={<CrisisResources />} />
+      <Route path="career-progression" element={<CareerProgression />} />
+      <Route path="professional-development" element={<ProfessionalDevelopment />} />
       <Route path="on-job-tools" element={<OnJobTools />} />
+      <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
+      <Route path="on-job-tools/documents" element={<OnJobDocuments />} />
+      <Route path="on-job-tools/assessment" element={<OnJobAssessment />} />
+      <Route path="on-job-tools/safety-cases" element={<OnJobSafetyCases />} />
+      <Route path="on-job-tools/workplace-culture" element={<OnJobWorkplaceCulture />} />
+      <Route path="on-job-tools/testing-procedures" element={<TestingProcedures />} />
+      <Route path="on-job-tools/supervisor-knowledge" element={<SupervisorKnowledge />} />
+      <Route path="on-job-tools/flashcards" element={<FlashcardsLearning />} />
+      <Route path="on-job-tools/incident-logging" element={<IncidentLogging />} />
+      
+      <Route path="study">
+        <Route index element={<ApprenticeStudy />} />
+        <Route path="course-content" element={<CourseContent />} />
+        <Route path="higher-learning" element={<HigherLearning />} />
+        <Route path="level-2" element={<Level2 />} />
+        <Route path="level-3" element={<Level3 />} />
+        <Route path="inspection-testing" element={<InspectionTesting />} />
+        <Route path="18th-edition" element={<EighteenthEdition />} />
+        <Route path="am2-prep" element={<AM2Prep />} />
+        <Route path="on-site-skills" element={<OnSiteSkills />} />
+        <Route path="maths-refresher" element={<MathsRefresher />} />
+        <Route path="ai-learning" element={<AILearning />} />
+        <Route path="mock-exams" element={<MockExams />} />
+        <Route path="mock-exams/:examId" element={<MockExamDetails />} />
+        
+        <Route path="unit/:unitId" element={<UnitContent />} />
+        <Route path="unit/:unitId/section/:sectionId" element={<SectionContent />} />
+        <Route path="unit/:unitId/section/:sectionId/subsection/:subsectionId" element={<SubsectionContent />} />
+        
+        <Route path="resources/communication-structures" element={<CommunicationStructures />} />
+        <Route path="resources/communication-methods" element={<CommunicationMethods />} />
+        <Route path="resources/safety-meetings" element={<SafetyMeetings />} />
+        <Route path="resources/documentation-systems" element={<DocumentationSystems />} />
+        <Route path="resources/inspection-types" element={<InspectionTypes />} />
+        <Route path="resources/inspection-areas" element={<InspectionAreas />} />
+        <Route path="resources/inspection-documentation" element={<InspectionDocumentation />} />
+        <Route path="resources/inspection-regulations" element={<InspectionRegulations />} />
+      </Route>
     </Routes>
   );
 };
