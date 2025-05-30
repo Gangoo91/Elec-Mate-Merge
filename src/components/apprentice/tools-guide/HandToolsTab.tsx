@@ -4,21 +4,24 @@ import { CircuitBoard, Ruler, Wrench } from "lucide-react";
 
 const HandToolsTab = () => {
   return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-semibold text-elec-yellow">Essential Hand Tools</h2>
-      <p className="text-muted-foreground">
-        Every apprentice electrician in the UK should have the following hand tools in their toolkit.
-      </p>
+    <div className="p-6 space-y-6">
+      <div className="text-center space-y-2">
+        <h2 className="text-2xl font-semibold text-elec-yellow">Essential Hand Tools</h2>
+        <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          Every apprentice electrician in the UK should have these fundamental hand tools in their kit. 
+          Quality hand tools will last your entire career when properly maintained.
+        </p>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ToolCard
           title="Screwdrivers"
           icon={<Wrench className="h-8 w-8 text-elec-yellow" />}
-          description="You'll need a full set of insulated screwdrivers including flat-head (terminal and standard), Phillips, and Pozidriv. Look for VDE certified screwdrivers that are rated to 1000V."
+          description="You'll need a comprehensive set of insulated screwdrivers including flat-head (terminal and standard), Phillips, and Pozidriv. Look for VDE certified screwdrivers rated to 1000V for electrical safety."
           items={[
             "Flared terminal screwdriver (2.5mm & 4mm)",
             "Pozidriv (PZ1 & PZ2)",
-            "Phillips (PH1 & PH2)",
+            "Phillips (PH1 & PH2)", 
             "Standard flat-head in various sizes",
             "VDE rating to BS EN 60900"
           ]}
@@ -27,7 +30,7 @@ const HandToolsTab = () => {
         <ToolCard
           title="Pliers & Cutters"
           icon={<CircuitBoard className="h-8 w-8 text-elec-yellow" />}
-          description="A range of insulated pliers and cutters are essential for wire work and cable terminations."
+          description="A range of insulated pliers and cutters are essential for wire work and cable terminations. Quality cutting tools ensure clean cuts and reduce cable damage."
           items={[
             "Combination pliers (160-180mm)",
             "Side cutters (160mm)",
@@ -40,11 +43,11 @@ const HandToolsTab = () => {
         <ToolCard
           title="Spanners & Wrenches"
           icon={<Wrench className="h-8 w-8 text-elec-yellow" />}
-          description="For tightening nuts and bolts on electrical equipment and enclosures."
+          description="For tightening nuts and bolts on electrical equipment and enclosures. Proper torque settings prevent loose connections and potential fire hazards."
           items={[
             "Adjustable wrench (200-250mm)",
             "Set of combination spanners (8-17mm)",
-            "Hexagon keys (metric)",
+            "Hexagon keys (metric set)",
             "Conduit box spanner set"
           ]}
         />
@@ -52,7 +55,7 @@ const HandToolsTab = () => {
         <ToolCard
           title="Measuring & Marking"
           icon={<Ruler className="h-8 w-8 text-elec-yellow" />}
-          description="Precision is crucial for electrical installations and tracking material usage."
+          description="Precision is crucial for electrical installations and material calculations. Accurate measurements ensure professional results and material efficiency."
           items={[
             "Tape measure (5m minimum)",
             "Spirit level (600mm minimum)",
@@ -63,10 +66,15 @@ const HandToolsTab = () => {
         />
       </div>
 
-      <div className="bg-elec-gray/50 border border-elec-yellow/20 rounded-lg p-4 mt-6">
-        <h3 className="text-lg font-medium text-elec-yellow mb-2">UK Electrical Standards Note</h3>
-        <p>
-          Tools used in the UK must comply with British Standards for electrical safety. Look for BS EN 60900 certification for insulated tools and the BS kite mark on safety equipment. Tools should be regularly inspected for damage to insulation or wear.
+      <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
+        <h3 className="text-lg font-medium text-amber-300 mb-2 flex items-center gap-2">
+          <Wrench className="h-5 w-5" />
+          UK Electrical Standards Note
+        </h3>
+        <p className="text-sm text-muted-foreground leading-relaxed">
+          Tools used in the UK must comply with British Standards for electrical safety. Look for BS EN 60900 certification 
+          for insulated tools and the BSI Kitemark on safety equipment. Tools should be regularly inspected for damage 
+          to insulation or wear, and replaced immediately if compromised.
         </p>
       </div>
     </div>
