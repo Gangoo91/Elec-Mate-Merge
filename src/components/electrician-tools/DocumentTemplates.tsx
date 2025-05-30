@@ -3,7 +3,7 @@ import { useState, useEffect, useMemo } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { FileText, Download, Eye, Edit, Clock, Shield, Star } from "lucide-react";
+import { FileText, Download, Eye, Edit, Shield, Star } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -132,15 +132,6 @@ const DocumentTemplates = () => {
     setShowGenerator(true);
   };
 
-  const getDifficultyColor = (difficulty?: string) => {
-    switch (difficulty) {
-      case "beginner": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "intermediate": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      case "advanced": return "bg-red-500/20 text-red-400 border-red-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
-    }
-  };
-
   if (loading) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -164,18 +155,22 @@ const DocumentTemplates = () => {
 
       {/* Category Tabs */}
       <Tabs defaultValue="all" value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="mb-6 flex flex-wrap">
+        <TabsList className="bg-elec-gray/50 border border-elec-yellow/20 p-1 rounded-lg">
           {categories.map(category => (
-            <TabsTrigger key={category.id} value={category.id} className="flex items-center gap-2">
-              {category.label}
-              <Badge variant="outline" className="text-xs">
+            <TabsTrigger 
+              key={category.id} 
+              value={category.id} 
+              className="flex items-center gap-2 px-4 py-2 rounded-md data-[state=active]:bg-elec-yellow data-[state=active]:text-elec-dark transition-all"
+            >
+              <span className="font-medium">{category.label}</span>
+              <Badge variant="secondary" className="text-xs bg-elec-yellow/20 text-elec-yellow border-none">
                 {category.count}
               </Badge>
             </TabsTrigger>
           ))}
         </TabsList>
 
-        <TabsContent value={activeTab} className="mt-0">
+        <TabsContent value={activeTab} className="mt-6">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {filteredTemplates.map((template) => (
               <Card key={template.id} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-all">
@@ -205,11 +200,6 @@ const DocumentTemplates = () => {
 
                     {/* Template Metadata */}
                     <div className="flex flex-wrap gap-2">
-                      {template.difficulty && (
-                        <Badge variant="outline" className={getDifficultyColor(template.difficulty)}>
-                          {template.difficulty}
-                        </Badge>
-                      )}
                       {template.regulationCompliant && template.regulationCompliant.length > 0 && (
                         <Badge variant="outline" className="bg-green-500/20 text-green-400 border-green-500/30">
                           <Shield className="h-3 w-3 mr-1" />
@@ -294,10 +284,10 @@ const DocumentTemplates = () => {
             {/* Template Info */}
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <strong>Difficulty:</strong> {selectedTemplate?.difficulty || "Not specified"}
+                <strong>Est. Time:</strong> {selectedTemplate?.estimatedTime || "Variable"}
               </div>
               <div>
-                <strong>Est. Time:</strong> {selectedTemplate?.estimatedTime || "Variable"}
+                <strong>File Type:</strong> {selectedTemplate?.fileType || "PDF"}
               </div>
             </div>
 
@@ -363,7 +353,7 @@ const DocumentTemplates = () => {
         </CardHeader>
         <CardContent>
           <Button className="w-full" disabled>
-            <Clock className="h-4 w-4 mr-2" />
+            <Star className="h-4 w-4 mr-2" />
             Launch Template Builder (Coming Soon)
           </Button>
         </CardContent>
