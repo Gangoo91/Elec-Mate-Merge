@@ -1,4 +1,3 @@
-
 import { Route, Routes } from "react-router-dom";
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
@@ -28,6 +27,12 @@ import CrisisResources from "@/pages/apprentice/mental-health/CrisisResources";
 import ToolsGuide from "@/pages/apprentice/ToolsGuide";
 import BasicToolsMaterialsGuide from "@/pages/apprentice/BasicToolsMaterialsGuide";
 import ElectricalInstallationGuides from "@/pages/apprentice/ElectricalInstallationGuides";
+import DomesticInstallations from "@/pages/apprentice/DomesticInstallations";
+import CommercialInstallations from "@/pages/apprentice/CommercialInstallations";
+import IndustrialInstallations from "@/pages/apprentice/IndustrialInstallations";
+import SpecialistInstallations from "@/pages/apprentice/SpecialistInstallations";
+import ToolsMaterialsGuide from "@/pages/apprentice/ToolsMaterialsGuide";
+import BS7671QuickReference from "@/pages/apprentice/BS7671QuickReference";
 import ApprenticeshipExpectations from "@/pages/apprentice/ApprenticeshipExpectations";
 import OffJobTrainingGuide from "@/pages/apprentice/OffJobTrainingGuide";
 import SiteJargon from "@/pages/apprentice/SiteJargon";
@@ -79,6 +84,12 @@ const ApprenticeRoutes = () => {
       <Route path="tools-guide" element={<ToolsGuide />} />
       <Route path="basic-tools-materials" element={<BasicToolsMaterialsGuide />} />
       <Route path="electrical-installation-guides" element={<ElectricalInstallationGuides />} />
+      <Route path="electrical-installation-guides/domestic" element={<DomesticInstallations />} />
+      <Route path="electrical-installation-guides/commercial" element={<CommercialInstallations />} />
+      <Route path="electrical-installation-guides/industrial" element={<IndustrialInstallations />} />
+      <Route path="electrical-installation-guides/specialist" element={<SpecialistInstallations />} />
+      <Route path="electrical-installation-guides/tools-materials" element={<ToolsMaterialsGuide />} />
+      <Route path="electrical-installation-guides/bs7671-reference" element={<BS7671QuickReference />} />
       <Route path="apprenticeship-expectations" element={<ApprenticeshipExpectations />} />
       <Route path="off-job-training-guide" element={<OffJobTrainingGuide />} />
       <Route path="site-jargon" element={<SiteJargon />} />
