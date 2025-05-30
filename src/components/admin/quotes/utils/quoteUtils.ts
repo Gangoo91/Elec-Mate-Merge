@@ -1,125 +1,134 @@
 
 import { QuoteFormData, MaterialItem } from "../types";
 
-// UK-specific default materials for different job types
+// UK-specific default materials for different job types with more variation
 export const getDefaultMaterialsForJobType = (jobType: string): MaterialItem[] => {
+  // Add some randomization to prevent identical quotes
+  const priceVariation = () => 0.85 + Math.random() * 0.3; // ±15% price variation
+  const quantityVariation = (base: number) => Math.max(1, Math.round(base * (0.9 + Math.random() * 0.2)));
+
   const materialSets: Record<string, MaterialItem[]> = {
     rewire: [
-      { id: 1, description: "18th Edition Consumer Unit (12-way)", quantity: 1, unitPrice: 145 },
-      { id: 2, description: "Type B MCBs (6A-32A)", quantity: 8, unitPrice: 18 },
-      { id: 3, description: "RCD Protection (30mA)", quantity: 2, unitPrice: 35 },
-      { id: 4, description: "2.5mm² T&E Cable (100m)", quantity: 3, unitPrice: 85 },
-      { id: 5, description: "1.5mm² T&E Cable (100m)", quantity: 2, unitPrice: 65 },
-      { id: 6, description: "13A Socket Outlets (MK Logic)", quantity: 12, unitPrice: 8 },
-      { id: 7, description: "Light Switches (1&2 Gang)", quantity: 8, unitPrice: 12 },
-      { id: 8, description: "Ceiling Roses & Accessories", quantity: 10, unitPrice: 4 },
-      { id: 9, description: "Earth Bonding Cable 10mm²", quantity: 20, unitPrice: 3.50 },
-      { id: 10, description: "Back Boxes & Mounting Hardware", quantity: 20, unitPrice: 2 }
+      { id: 1, description: "18th Edition Consumer Unit (12-way RCBO)", quantity: 1, unitPrice: Math.round(145 * priceVariation()) },
+      { id: 2, description: "Type B MCBs (Various Ratings)", quantity: quantityVariation(8), unitPrice: Math.round(18 * priceVariation()) },
+      { id: 3, description: "30mA RCD Protection Device", quantity: quantityVariation(2), unitPrice: Math.round(35 * priceVariation()) },
+      { id: 4, description: "2.5mm² T&E Cable - Socket Circuits (100m)", quantity: quantityVariation(3), unitPrice: Math.round(85 * priceVariation()) },
+      { id: 5, description: "1.5mm² T&E Cable - Lighting Circuits (100m)", quantity: quantityVariation(2), unitPrice: Math.round(65 * priceVariation()) },
+      { id: 6, description: "13A Socket Outlets (MK Logic Plus)", quantity: quantityVariation(12), unitPrice: Math.round(8 * priceVariation()) },
+      { id: 7, description: "Light Switches (1&2 Gang)", quantity: quantityVariation(8), unitPrice: Math.round(12 * priceVariation()) },
+      { id: 8, description: "LED Downlight Fittings (IP65)", quantity: quantityVariation(10), unitPrice: Math.round(22 * priceVariation()) },
+      { id: 9, description: "Earth Bonding Cable 10mm²", quantity: quantityVariation(20), unitPrice: Math.round(3.50 * priceVariation()) },
+      { id: 10, description: "Mounting Hardware & Accessories", quantity: quantityVariation(20), unitPrice: Math.round(2 * priceVariation()) }
     ],
     "fuse-box-upgrade": [
-      { id: 1, description: "18th Edition Consumer Unit (10-way)", quantity: 1, unitPrice: 125 },
-      { id: 2, description: "Type B MCBs (Various Ratings)", quantity: 6, unitPrice: 18 },
-      { id: 3, description: "RCD Protection (30mA, 63A)", quantity: 1, unitPrice: 35 },
-      { id: 4, description: "Main Switch (100A)", quantity: 1, unitPrice: 25 },
-      { id: 5, description: "Meter Tails 25mm²", quantity: 2, unitPrice: 15 },
-      { id: 6, description: "Earth Cable 16mm²", quantity: 5, unitPrice: 4 },
-      { id: 7, description: "Labels & Documentation", quantity: 1, unitPrice: 8 }
+      { id: 1, description: "18th Edition Consumer Unit (10-way)", quantity: 1, unitPrice: Math.round(125 * priceVariation()) },
+      { id: 2, description: "Type B MCBs (Mixed Ratings)", quantity: quantityVariation(6), unitPrice: Math.round(18 * priceVariation()) },
+      { id: 3, description: "RCD Protection (30mA, 63A)", quantity: 1, unitPrice: Math.round(35 * priceVariation()) },
+      { id: 4, description: "Main Switch (100A DP)", quantity: 1, unitPrice: Math.round(25 * priceVariation()) },
+      { id: 5, description: "Meter Tails 25mm² (Per Metre)", quantity: quantityVariation(2), unitPrice: Math.round(15 * priceVariation()) },
+      { id: 6, description: "Earth Cable 16mm²", quantity: quantityVariation(5), unitPrice: Math.round(4 * priceVariation()) },
+      { id: 7, description: "Labels & Documentation Kit", quantity: 1, unitPrice: Math.round(8 * priceVariation()) }
     ],
     "socket-installation": [
-      { id: 1, description: "13A Twin Socket Outlets", quantity: 4, unitPrice: 12 },
-      { id: 2, description: "2.5mm² T&E Cable", quantity: 25, unitPrice: 22 },
-      { id: 3, description: "35mm Back Boxes", quantity: 4, unitPrice: 2.50 },
-      { id: 4, description: "Conduit & Accessories", quantity: 10, unitPrice: 3 },
-      { id: 5, description: "Cable Clips & Fixings", quantity: 20, unitPrice: 0.50 }
+      { id: 1, description: "13A Twin Socket Outlets (White)", quantity: quantityVariation(4), unitPrice: Math.round(12 * priceVariation()) },
+      { id: 2, description: "2.5mm² T&E Cable (Per Metre)", quantity: quantityVariation(25), unitPrice: Math.round(0.85 * priceVariation()) },
+      { id: 3, description: "35mm Back Boxes (Metal)", quantity: quantityVariation(4), unitPrice: Math.round(2.50 * priceVariation()) },
+      { id: 4, description: "Conduit & Protection", quantity: quantityVariation(10), unitPrice: Math.round(3 * priceVariation()) },
+      { id: 5, description: "Cable Clips & Fixings", quantity: quantityVariation(20), unitPrice: Math.round(0.50 * priceVariation()) }
     ],
     "lighting-installation": [
-      { id: 1, description: "LED Downlights (IP65)", quantity: 6, unitPrice: 18 },
-      { id: 2, description: "1.5mm² T&E Cable", quantity: 50, unitPrice: 32 },
-      { id: 3, description: "Light Switches (1 Gang)", quantity: 3, unitPrice: 12 },
-      { id: 4, description: "Junction Boxes", quantity: 4, unitPrice: 3 },
-      { id: 5, description: "Ceiling Fixings", quantity: 6, unitPrice: 2 }
+      { id: 1, description: "LED Downlights (IP65 Fire Rated)", quantity: quantityVariation(6), unitPrice: Math.round(18 * priceVariation()) },
+      { id: 2, description: "1.5mm² T&E Cable (Per Metre)", quantity: quantityVariation(50), unitPrice: Math.round(0.65 * priceVariation()) },
+      { id: 3, description: "Light Switches (1 Gang 2-Way)", quantity: quantityVariation(3), unitPrice: Math.round(12 * priceVariation()) },
+      { id: 4, description: "Junction Boxes (Maintenance Free)", quantity: quantityVariation(4), unitPrice: Math.round(3 * priceVariation()) },
+      { id: 5, description: "Ceiling Fixings & Hardware", quantity: quantityVariation(6), unitPrice: Math.round(2 * priceVariation()) }
     ],
     "electric-shower": [
-      { id: 1, description: "Electric Shower Unit (9.5kW)", quantity: 1, unitPrice: 185 },
-      { id: 2, description: "10mm² Shower Cable", quantity: 15, unitPrice: 8 },
-      { id: 3, description: "45A Switch & Neon", quantity: 1, unitPrice: 28 },
-      { id: 4, description: "40A MCB Type B", quantity: 1, unitPrice: 22 },
-      { id: 5, description: "Isolator Switch (Pull Cord)", quantity: 1, unitPrice: 15 }
+      { id: 1, description: "Electric Shower Unit (9.5kW)", quantity: 1, unitPrice: Math.round(185 * priceVariation()) },
+      { id: 2, description: "10mm² Shower Cable (Per Metre)", quantity: quantityVariation(15), unitPrice: Math.round(8 * priceVariation()) },
+      { id: 3, description: "45A Switch & Neon Indicator", quantity: 1, unitPrice: Math.round(28 * priceVariation()) },
+      { id: 4, description: "40A MCB Type B", quantity: 1, unitPrice: Math.round(22 * priceVariation()) },
+      { id: 5, description: "Isolator Switch (Pull Cord)", quantity: 1, unitPrice: Math.round(15 * priceVariation()) }
     ],
     "electric-car-charger": [
-      { id: 1, description: "7kW EV Charging Point", quantity: 1, unitPrice: 485 },
-      { id: 2, description: "6mm² SWA Cable", quantity: 20, unitPrice: 12 },
-      { id: 3, description: "32A Type B MCB", quantity: 1, unitPrice: 22 },
-      { id: 4, description: "Type A RCD (30mA)", quantity: 1, unitPrice: 45 },
-      { id: 5, description: "External Mounting Kit", quantity: 1, unitPrice: 35 }
+      { id: 1, description: "7kW EV Charging Point (Tethered)", quantity: 1, unitPrice: Math.round(485 * priceVariation()) },
+      { id: 2, description: "6mm² SWA Cable (Per Metre)", quantity: quantityVariation(20), unitPrice: Math.round(12 * priceVariation()) },
+      { id: 3, description: "32A Type B MCB", quantity: 1, unitPrice: Math.round(22 * priceVariation()) },
+      { id: 4, description: "Type A RCD (30mA, 40A)", quantity: 1, unitPrice: Math.round(45 * priceVariation()) },
+      { id: 5, description: "External Mounting & Fixings", quantity: 1, unitPrice: Math.round(35 * priceVariation()) }
     ]
   };
 
   return materialSets[jobType] || materialSets.rewire;
 };
 
-// Generate UK-compliant scope of work
+// Generate UK-compliant scope of work with more variation
 export const generateDefaultScopeOfWork = (jobType: string, formData: QuoteFormData): string => {
+  const propertyAge = Math.random() > 0.5 ? "modern" : "traditional";
+  const accessNote = Math.random() > 0.7 ? "\n• Additional access considerations may apply" : "";
+  
   const scopes: Record<string, string> = {
-    rewire: `Complete rewire of ${formData.bedrooms}-bedroom ${formData.propertyType} including:
-• Installation of new 18th Edition consumer unit with RCD protection
-• Full rewiring to all rooms using appropriate cable sizes (BS 7671)
-• Installation of new socket outlets, light switches, and ceiling points
-• Earth bonding to gas and water services
-• Full electrical installation certificate and test results
-• Compliance with Part P Building Regulations
-• All work carried out to BS 7671:2018+A2:2022 standards`,
+    rewire: `Complete electrical rewire of ${formData.bedrooms}-bedroom ${propertyAge} ${formData.propertyType} including:
+• Remove existing wiring and install new 18th Edition consumer unit
+• Install new lighting circuits using 1.5mm² T&E cable to BS 7671
+• Install new socket circuits using 2.5mm² T&E cable with RCD protection  
+• Fit new socket outlets, light switches, and ceiling points throughout
+• Main and supplementary earth bonding to gas and water services
+• Full electrical testing, inspection, and certification
+• Notification to Building Control under Part P regulations
+• All work completed to BS 7671:2018+A2:2022 standards${accessNote}`,
 
-    "fuse-box-upgrade": `Upgrade of existing consumer unit including:
-• Remove old fuse box/consumer unit
-• Install new 18th Edition consumer unit with RCD protection
-• Connect existing circuits with testing and inspection
-• Issue Electrical Installation Certificate
-• Notify Building Control under Part P regulations
-• All work compliant with BS 7671:2018+A2:2022`,
+    "fuse-box-upgrade": `Consumer unit upgrade for ${propertyAge} property including:
+• Safe isolation and removal of existing fuse box/consumer unit
+• Install new 18th Edition consumer unit with RCBO or split-load RCD protection
+• Connect and test all existing circuits with full inspection
+• Issue Electrical Installation Certificate and Schedule of Test Results
+• Building Control notification under Part P regulations
+• Upgrade main earthing and bonding where required
+• All work compliant with current BS 7671:2018+A2:2022${accessNote}`,
 
-    "socket-installation": `Installation of additional 13A socket outlets including:
-• Cable routing and installation using appropriate methods
-• Installation of socket outlets to BS 1363 standards
-• Connection to existing circuits or new circuit installation
-• Testing and inspection of new installation
-• Minor Electrical Installation Works Certificate
-• Compliance with BS 7671 requirements`,
+    "socket-installation": `Additional socket outlet installation including:
+• Professional cable routing using appropriate installation methods
+• Install socket outlets to BS 1363 standards with proper earthing
+• Connect to existing ring circuit or install new dedicated circuit
+• Full testing and inspection of new installation including R1+R2 and RCD tests
+• Issue Minor Electrical Installation Works Certificate
+• Ensure compliance with BS 7671 wiring regulations${accessNote}`,
 
-    "lighting-installation": `Installation of new lighting system including:
-• Installation of LED downlights with appropriate IP rating
-• New switching arrangements and cable installation
-• Connection to existing or new lighting circuits
-• Testing of installation including earth continuity
-• Minor Electrical Installation Works Certificate
-• Energy efficient LED lighting to reduce consumption`,
+    "lighting-installation": `New lighting installation for ${propertyAge} property including:
+• Install energy-efficient LED downlights with appropriate IP ratings
+• New switching arrangements with proper cable installation methods
+• Connect to existing lighting circuits or install new circuit as required
+• Full testing including earth continuity, insulation resistance, and polarity
+• Issue Minor Electrical Installation Works Certificate  
+• All fittings meet current energy efficiency standards${accessNote}`,
 
-    "electric-shower": `Installation of electric shower including:
-• New dedicated circuit from consumer unit (typically 10mm²)
-• Installation of 45A double pole switch with neon indicator
-• Shower unit installation and commissioning
-• Supplementary bonding if required
-• Electrical Installation Certificate for new circuit
-• Part P notification and Building Control compliance`,
+    "electric-shower": `Electric shower installation including:
+• Install new dedicated 10mm² circuit from consumer unit with appropriate protection
+• Fit 45A double pole isolating switch with neon indicator
+• Professional shower unit installation with commissioning and testing
+• Supplementary bonding installation where required by regulations
+• Full testing and issue Electrical Installation Certificate for new circuit
+• Building Control notification and compliance with Part P regulations${accessNote}`,
 
-    "electric-car-charger": `Installation of electric vehicle charging point including:
-• New dedicated 32A circuit installation
-• Type A RCD protection for EV charging
-• External weatherproof charging unit installation
-• Earthing and bonding arrangements
-• Full testing and commissioning
-• OLEV compliance and certification if applicable
-• Building Control notification under Part P`
+    "electric-car-charger": `Electric vehicle charging point installation including:
+• Install new dedicated 32A circuit with Type A RCD protection for EV charging
+• Mount weatherproof charging unit with appropriate cable management
+• Complete earthing and bonding arrangements to manufacturer specifications
+• Full commissioning, testing, and demonstration of charging operation
+• Issue installation certificate and warranty documentation
+• Building Control notification and OLEV compliance where applicable${accessNote}`
   };
 
   return scopes[jobType] || scopes.rewire;
 };
 
-// Calculate labour days based on UK typical completion times
+// Calculate labour days with more realistic variations
 export const calculateLabourDays = (jobType: string, bedrooms: string): number => {
   const bedroomCount = parseInt(bedrooms) || 3;
+  const complexityFactor = 0.9 + Math.random() * 0.2; // ±10% variation for property complexity
   
-  const labourCalculations: Record<string, number> = {
+  const baseDays: Record<string, number> = {
     rewire: Math.max(5, bedroomCount * 1.8 + 2), // Minimum 5 days for rewire
     "fuse-box-upgrade": 1,
     "socket-installation": 0.5,
@@ -128,7 +137,8 @@ export const calculateLabourDays = (jobType: string, bedrooms: string): number =
     "electric-car-charger": 1
   };
 
-  return labourCalculations[jobType] || 1;
+  const calculatedDays = (baseDays[jobType] || 1) * complexityFactor;
+  return Math.round(calculatedDays * 4) / 4; // Round to nearest quarter day
 };
 
 // UK postcode validation
@@ -145,10 +155,10 @@ export const formatUKCurrency = (amount: number): string => {
   }).format(amount);
 };
 
-// Generate unique quote reference
+// Generate unique quote reference with variation
 export const generateQuoteReference = (): string => {
   const prefix = 'QT';
   const timestamp = Date.now().toString().substring(7);
-  const random = Math.floor(Math.random() * 100).toString().padStart(2, '0');
+  const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
   return `${prefix}-${timestamp}${random}`;
 };
