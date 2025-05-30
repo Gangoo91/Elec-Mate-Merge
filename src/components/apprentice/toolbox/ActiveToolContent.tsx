@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import PowerFactorCalculator from "@/components/apprentice/calculators/PowerFactorCalculator";
 import CableSizingCalculator from "@/components/apprentice/calculators/CableSizingCalculator";
 
-type ActiveTool = null | "powerCalculator" | "cableSizing";
+type ActiveTool = string | null;
 
 interface ActiveToolContentProps {
   activeTool: ActiveTool;
@@ -21,7 +21,14 @@ const ActiveToolContent = ({ activeTool, onClose }: ActiveToolContentProps) => {
       case "cableSizing":
         return <CableSizingCalculator />;
       default:
-        return null;
+        return (
+          <div className="p-6 text-center">
+            <h2 className="text-xl font-semibold mb-4">Tool Content</h2>
+            <p className="text-muted-foreground">
+              Content for {activeTool} is being developed and will be available soon.
+            </p>
+          </div>
+        );
     }
   };
 
