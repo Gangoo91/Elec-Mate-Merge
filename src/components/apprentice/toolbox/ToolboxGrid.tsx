@@ -1,4 +1,3 @@
-
 import { ReactNode } from "react";
 import ToolboxCard from "./ToolboxCard";
 import { 
@@ -24,6 +23,7 @@ interface ToolboxCategory {
   link?: string;
   description?: string;
   onSelect?: () => void;
+  comingSoon?: boolean;
 }
 
 interface ToolboxGridProps {
@@ -43,8 +43,8 @@ const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
       id: 2,
       title: "Electrical Installation Guides",
       icon: <FileText className="h-5 w-5 text-elec-yellow" />,
-      link: "/apprentice/electrical-installation-guides",
-      description: "Step-by-step installation guides for domestic, commercial, industrial, and outdoor environments"
+      description: "Step-by-step installation guides for domestic, commercial, industrial, and outdoor environments",
+      comingSoon: true
     },
     {
       id: 3,
@@ -139,8 +139,9 @@ const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
           key={category.id}
           title={category.title}
           icon={category.icon}
-          link={category.link}
+          link={category.comingSoon ? undefined : category.link}
           description={category.description}
+          comingSoon={category.comingSoon}
           onSelect={
             category.onSelect 
               ? () => category.onSelect?.() 
