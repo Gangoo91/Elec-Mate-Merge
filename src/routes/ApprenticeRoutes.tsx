@@ -51,6 +51,10 @@ import ProfessionalCertifications from "@/pages/apprentice/ProfessionalCertifica
 import ContinuingEducation from "@/pages/apprentice/ContinuingEducation";
 import IndustryNetworking from "@/pages/apprentice/IndustryNetworking";
 import MathsRefresher from "@/pages/apprentice/MathsRefresher";
+import RegulationsReference from "@/pages/apprentice/RegulationsReference";
+import TroubleshootingGuide from "@/pages/apprentice/TroubleshootingGuide";
+import ElectricalSymbols from "@/pages/apprentice/ElectricalSymbols";
+import ExamPreparation from "@/pages/apprentice/ExamPreparation";
 
 const ApprenticeRoutes = () => {
   return (
@@ -62,6 +66,10 @@ const ApprenticeRoutes = () => {
       <Route path="ojt" element={<ApprenticeOJT />} />
       <Route path="toolbox" element={<ApprenticeToolbox />} />
       <Route path="tools-guide" element={<ToolsGuide />} />
+      <Route path="regulations-reference" element={<RegulationsReference />} />
+      <Route path="troubleshooting" element={<TroubleshootingGuide />} />
+      <Route path="electrical-symbols" element={<ElectricalSymbols />} />
+      <Route path="exam-prep" element={<ExamPreparation />} />
       <Route path="mental-health" element={<ApprenticeMentalHealth />} />
       <Route path="mental-health/stress-management" element={<StressManagement />} />
       <Route path="mental-health/support-network" element={<SupportNetwork />} />
