@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,7 +25,10 @@ import {
   BookOpen,
   Target,
   Settings,
-  Plug
+  Plug,
+  Home,
+  Building,
+  Factory
 } from "lucide-react";
 
 const BasicToolsMaterialsGuide = () => {
