@@ -85,12 +85,9 @@ const TemplateSearch = ({ onSearch, onFilterChange, totalCount, filteredCount }:
         </Button>
       </div>
 
-      {/* Results Count */}
-      <div className="flex items-center justify-between text-sm text-muted-foreground">
-        <span>
-          Showing {filteredCount} of {totalCount} templates
-        </span>
-        {hasActiveFilters && (
+      {/* Clear filters button - only show when filters are active */}
+      {hasActiveFilters && (
+        <div className="flex justify-end">
           <Button
             variant="ghost"
             size="sm"
@@ -100,8 +97,8 @@ const TemplateSearch = ({ onSearch, onFilterChange, totalCount, filteredCount }:
             <X className="h-3 w-3 mr-1" />
             Clear filters
           </Button>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Filters Panel */}
       {showFilters && (
