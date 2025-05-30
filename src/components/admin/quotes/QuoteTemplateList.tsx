@@ -70,28 +70,46 @@ interface QuoteTemplateListProps {
 
 const QuoteTemplateList = ({ onSelectTemplate }: QuoteTemplateListProps) => {
   return (
-    <div className="space-y-4 w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+    <div className="space-y-6">
+      <div className="text-center">
+        <h2 className="text-xl font-semibold text-white mb-2">Choose a Quote Template</h2>
+        <p className="text-muted-foreground">
+          Select from our professional templates to quickly generate accurate quotes
+        </p>
+      </div>
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {QUOTE_TEMPLATES.map(template => {
           const Icon = template.icon;
           
           return (
-            <Card key={template.id} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-colors cursor-pointer w-full" 
-              onClick={() => onSelectTemplate(template.id)}>
+            <Card 
+              key={template.id} 
+              className="border-elec-yellow/20 bg-elec-dark/30 hover:border-elec-yellow/40 transition-all duration-200 cursor-pointer group h-full" 
+              onClick={() => onSelectTemplate(template.id)}
+            >
               <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Icon className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-                    <span className="truncate">{template.title}</span>
-                  </CardTitle>
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <div className="p-2 rounded-lg bg-elec-yellow/20 group-hover:bg-elec-yellow/30 transition-colors flex-shrink-0">
+                      <Icon className="h-5 w-5 text-elec-yellow" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <CardTitle className="text-base sm:text-lg text-white leading-tight">
+                        {template.title}
+                      </CardTitle>
+                    </div>
+                  </div>
                 </div>
-                <CardDescription className="line-clamp-2">{template.description}</CardDescription>
+                <CardDescription className="text-sm text-muted-foreground line-clamp-2 mt-2">
+                  {template.description}
+                </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-0">
                 <Button 
-                  className="w-full"
+                  className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
                   onClick={(e) => {
-                    e.stopPropagation(); // Prevent the card onClick from also firing
+                    e.stopPropagation();
                     onSelectTemplate(template.id);
                   }}
                 >
@@ -103,11 +121,13 @@ const QuoteTemplateList = ({ onSelectTemplate }: QuoteTemplateListProps) => {
         })}
       </div>
       
-      <Card className="border-dashed border-2 border-elec-yellow/30 bg-transparent hover:bg-elec-dark/20 transition-colors cursor-pointer w-full">
-        <CardContent className="p-6 flex flex-col items-center justify-center">
-          <PlusCircle className="h-8 w-8 text-elec-yellow/60 mb-2" />
-          <p className="font-medium">Create Custom Template</p>
-          <p className="text-sm text-muted-foreground mt-1">Build your own quote template from scratch</p>
+      <Card className="border-dashed border-2 border-elec-yellow/30 bg-elec-dark/20 hover:bg-elec-dark/30 transition-colors cursor-pointer">
+        <CardContent className="p-6 flex flex-col items-center justify-center text-center">
+          <PlusCircle className="h-8 w-8 text-elec-yellow/60 mb-3" />
+          <h3 className="font-semibold text-white mb-1">Create Custom Template</h3>
+          <p className="text-sm text-muted-foreground">
+            Build your own quote template from scratch
+          </p>
         </CardContent>
       </Card>
     </div>
