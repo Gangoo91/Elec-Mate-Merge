@@ -1,6 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calculator, Wrench, Brain, Settings } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Calculator, Wrench, Brain, Settings, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ElectricianTools = () => {
@@ -38,11 +39,18 @@ const ElectricianTools = () => {
 
   return (
     <div className="space-y-8 animate-fade-in">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Electrician Tools</h1>
-        <p className="text-muted-foreground">
-          Professional resources to enhance your efficiency in the field.
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Electrician Tools</h1>
+          <p className="text-muted-foreground">
+            Professional resources to enhance your efficiency in the field.
+          </p>
+        </div>
+        <Link to="/">
+          <Button variant="outline" className="flex items-center gap-2">
+            <ArrowLeft className="h-4 w-4" /> Back to Home
+          </Button>
+        </Link>
       </div>
 
       {/* Main Tool Categories Grid */}
