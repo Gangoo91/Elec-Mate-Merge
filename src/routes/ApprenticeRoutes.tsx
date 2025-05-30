@@ -29,6 +29,12 @@ import ToolsGuide from "@/pages/apprentice/ToolsGuide";
 import ApprenticeshipExpectations from "@/pages/apprentice/ApprenticeshipExpectations";
 import OffJobTrainingGuide from "@/pages/apprentice/OffJobTrainingGuide";
 import SiteJargon from "@/pages/apprentice/SiteJargon";
+import PortfolioBuilding from "@/pages/apprentice/PortfolioBuilding";
+import RightsAndPay from "@/pages/apprentice/RightsAndPay";
+import CommunicationSkills from "@/pages/apprentice/CommunicationSkills";
+import StudyTips from "@/pages/apprentice/StudyTips";
+import LearningFromMistakes from "@/pages/apprentice/LearningFromMistakes";
+import SafetyFundamentals from "@/pages/apprentice/SafetyFundamentals";
 import CommunicationStructures from "@/components/apprentice/resources/CommunicationStructures";
 import CommunicationMethods from "@/components/apprentice/resources/CommunicationMethods";
 import SafetyMeetings from "@/components/apprentice/resources/SafetyMeetings";
@@ -72,12 +78,12 @@ const ApprenticeRoutes = () => {
       <Route path="apprenticeship-expectations" element={<ApprenticeshipExpectations />} />
       <Route path="off-job-training-guide" element={<OffJobTrainingGuide />} />
       <Route path="site-jargon" element={<SiteJargon />} />
-      <Route path="portfolio-building" element={<RegulationsReference />} />
-      <Route path="rights-and-pay" element={<RegulationsReference />} />
-      <Route path="communication-skills" element={<RegulationsReference />} />
-      <Route path="study-tips" element={<RegulationsReference />} />
-      <Route path="learning-from-mistakes" element={<RegulationsReference />} />
-      <Route path="safety-fundamentals" element={<RegulationsReference />} />
+      <Route path="portfolio-building" element={<PortfolioBuilding />} />
+      <Route path="rights-and-pay" element={<RightsAndPay />} />
+      <Route path="communication-skills" element={<CommunicationSkills />} />
+      <Route path="study-tips" element={<StudyTips />} />
+      <Route path="learning-from-mistakes" element={<LearningFromMistakes />} />
+      <Route path="safety-fundamentals" element={<SafetyFundamentals />} />
       <Route path="regulations-reference" element={<RegulationsReference />} />
       <Route path="troubleshooting" element={<TroubleshootingGuide />} />
       <Route path="electrical-symbols" element={<ElectricalSymbols />} />
