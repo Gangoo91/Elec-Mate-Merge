@@ -99,6 +99,8 @@ const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGen
           floors: formData.floors
         };
         
+        console.log("Sending request to AI quote generator with:", { jobType, propertyDetails, clientRequirements: formData.additionalRequirements });
+        
         // Call the Supabase Edge Function for AI generation
         const { data, error } = await supabase.functions.invoke('ai-quote-generator', {
           body: { 
@@ -115,12 +117,49 @@ const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGen
           return;
         }
         
+        console.log("AI quote response:", data);
+        
         if (data && data.quote) {
           // Use the AI generated content to enhance our quote
           const aiQuote = data.quote;
+          console.log("Processing AI quote data:", aiQuote);
           
-          // Merge AI content with our current data
-          const updatedMaterials = [...materials];
+          // Extract materials from AI response if available
+          let updatedMaterials = [...materials];
+          
+          if (aiQuote.materials && Array.isArray(aiQuote.materials)) {
+            console.log("Using AI-generated materials:", aiQuote.materials);
+            updatedMaterials = aiQuote.materials.map((item: any, index: number) => ({
+              id: index + 1,
+              description: item.description || item.name || item.item || "Unknown Item",
+              quantity: parseInt(item.quantity) || 1,
+              unitPrice: parseFloat(item.unitPrice || item.price || item.cost) || 0
+            }));
+            setMaterials(updatedMaterials);
+          }
+          
+          // Extract labour information from AI response
+          let labourInfo = {
+            days: calculateLabourDays(jobType, formData.bedrooms),
+            rate: 250,
+            total: 0
+          };
+          
+          if (aiQuote.labour) {
+            labourInfo.days = parseFloat(aiQuote.labour.days) || labourInfo.days;
+            labourInfo.rate = parseFloat(aiQuote.labour.dailyRate || aiQuote.labour.rate) || labourInfo.rate;
+          }
+          labourInfo.total = labourInfo.days * labourInfo.rate;
+          
+          console.log("Labour info:", labourInfo);
+          
+          // Calculate financials using AI data
+          const materialCost = updatedMaterials.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+          const subtotal = materialCost + labourInfo.total;
+          const vat = subtotal * 0.2;
+          const total = subtotal + vat;
+          
+          console.log("Calculated financials:", { materialCost, labourCost: labourInfo.total, subtotal, vat, total });
           
           // Generate the quote data with AI enhancements
           const quoteData = {
@@ -138,24 +177,29 @@ const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGen
               additionalRequirements: formData.additionalRequirements
             },
             materials: updatedMaterials,
-            labour: {
-              days: calculateLabourDays(jobType, formData.bedrooms),
-              rate: 250, // Daily rate in £
-              total: calculateLabourDays(jobType, formData.bedrooms) * 250
+            labour: labourInfo,
+            financials: {
+              materialCost,
+              labourCost: labourInfo.total,
+              subtotal,
+              vat,
+              total
             },
-            financials: calculateFinancials(updatedMaterials, jobType, formData.bedrooms),
             quoteNumber: `QT-${Date.now().toString().substring(7)}`,
             issueDate: new Date().toISOString().split('T')[0],
             validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
           };
           
+          console.log("Final quote data:", quoteData);
+          
           setIsLoading(false);
           onGenerateQuote(quoteData);
           toast({
-            title: "Quote generated",
-            description: "Your quote has been generated successfully with AI assistance."
+            title: "AI Quote Generated",
+            description: `Quote generated with ${updatedMaterials.length} materials and ${labourInfo.days} days labour at £${total.toFixed(2)} total.`
           });
         } else {
+          console.log("No quote data from AI, falling back to local generation");
           // Fallback to local generation if AI doesn't return expected format
           handleLocalGeneration();
         }
@@ -177,6 +221,8 @@ const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGen
   
   // Fallback to local quote generation if AI fails
   const handleLocalGeneration = () => {
+    console.log("Using local generation with current materials:", materials);
+    
     // Calculate material costs
     const materialCost = materials.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
     
@@ -187,6 +233,8 @@ const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGen
     const subtotal = materialCost + labourCost;
     const vat = subtotal * 0.2;
     const total = subtotal + vat;
+    
+    console.log("Local generation financials:", { materialCost, labourCost, subtotal, vat, total });
     
     // Generate the quote data
     const quoteData = {
@@ -225,27 +273,8 @@ const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGen
     
     toast({
       title: "Quote generated",
-      description: "Your quote has been generated successfully."
+      description: `Local quote generated at £${total.toFixed(2)} total.`
     });
-  };
-  
-  // Helper function to calculate financials
-  const calculateFinancials = (materialsList: MaterialItem[], jobType: string, bedrooms: string) => {
-    const materialCost = materialsList.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
-    const labourDays = calculateLabourDays(jobType, bedrooms);
-    const labourRate = 250; // Daily rate in £
-    const labourCost = labourDays * labourRate;
-    const subtotal = materialCost + labourCost;
-    const vat = subtotal * 0.2;
-    const total = subtotal + vat;
-    
-    return {
-      materialCost,
-      labourCost,
-      subtotal,
-      vat,
-      total
-    };
   };
   
   return (
