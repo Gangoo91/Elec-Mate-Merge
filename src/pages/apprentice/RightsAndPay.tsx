@@ -1,7 +1,7 @@
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Pound, Shield, Phone, FileText } from "lucide-react";
+import { PoundSterling, Shield, Phone, FileText } from "lucide-react";
 
 const RightsAndPay = () => {
   const wageTiers = [
@@ -56,7 +56,7 @@ const RightsAndPay = () => {
       <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Pound className="h-6 w-6 text-elec-yellow" />
+            <PoundSterling className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">UK Wage Expectations (2024)</CardTitle>
           </div>
         </CardHeader>

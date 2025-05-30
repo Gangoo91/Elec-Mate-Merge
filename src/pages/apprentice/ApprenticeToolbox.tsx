@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Wrench, MapPin, MessageCircle, FileText, Pound, Users, Clock, BookOpen, AlertTriangle, CheckCircle, Heart } from "lucide-react";
+import { ArrowLeft, Wrench, MapPin, MessageCircle, FileText, PoundSterling, Users, Clock, BookOpen, AlertTriangle, CheckCircle, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import ToolboxGrid from "@/components/apprentice/toolbox/ToolboxGrid";
 import ToolboxHeader from "@/components/apprentice/toolbox/ToolboxHeader";
@@ -59,7 +59,7 @@ const ApprenticeToolbox = () => {
     {
       id: "rights-and-pay",
       title: "Apprenticeship Rights & Pay",
-      icon: <Pound className="h-6 w-6 text-elec-yellow" />,
+      icon: <PoundSterling className="h-6 w-6 text-elec-yellow" />,
       link: "/apprentice/rights-and-pay",
       description: "National wage tiers, your rights on site, and support channels when things go wrong"
     },
@@ -101,13 +101,17 @@ const ApprenticeToolbox = () => {
   ];
 
   if (activeTool) {
-    return <ActiveToolContent toolId={activeTool} onBack={() => setActiveTool(null)} />;
+    return <ActiveToolContent activeTool={activeTool} onClose={() => setActiveTool(null)} />;
   }
 
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-        <ToolboxHeader />
+        <ToolboxHeader 
+          title="Apprentice Guidance Area"
+          linkPath="/apprentice/hub"
+          linkText="Back to Hub"
+        />
         <Link to="/apprentice/hub" className="flex-shrink-0">
           <Button variant="outline">
             <ArrowLeft className="mr-2 h-4 w-4" />
