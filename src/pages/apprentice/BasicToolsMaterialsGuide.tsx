@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,7 +15,7 @@ import {
   CheckCircle,
   Play,
   Eye,
-  Pound
+  BadgePoundSterling
 } from "lucide-react";
 
 const BasicToolsMaterialsGuide = () => {
@@ -376,7 +375,7 @@ const BasicToolsMaterialsGuide = () => {
                 </div>
                 <div className="mt-2 md:mt-0">
                   <span className="text-sm text-green-300 flex items-center gap-1">
-                    <Pound className="h-4 w-4" />
+                    <BadgePoundSterling className="h-4 w-4" />
                     {item.cost}
                   </span>
                 </div>
