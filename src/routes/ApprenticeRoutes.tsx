@@ -27,6 +27,7 @@ import WorkLifeBalance from "@/pages/apprentice/mental-health/WorkLifeBalance";
 import CrisisResources from "@/pages/apprentice/mental-health/CrisisResources";
 import ToolsGuide from "@/pages/apprentice/ToolsGuide";
 import BasicToolsMaterialsGuide from "@/pages/apprentice/BasicToolsMaterialsGuide";
+import ElectricalInstallationGuides from "@/pages/apprentice/ElectricalInstallationGuides";
 import ApprenticeshipExpectations from "@/pages/apprentice/ApprenticeshipExpectations";
 import OffJobTrainingGuide from "@/pages/apprentice/OffJobTrainingGuide";
 import SiteJargon from "@/pages/apprentice/SiteJargon";
@@ -77,6 +78,7 @@ const ApprenticeRoutes = () => {
       <Route path="toolbox" element={<ApprenticeToolbox />} />
       <Route path="tools-guide" element={<ToolsGuide />} />
       <Route path="basic-tools-materials" element={<BasicToolsMaterialsGuide />} />
+      <Route path="electrical-installation-guides" element={<ElectricalInstallationGuides />} />
       <Route path="apprenticeship-expectations" element={<ApprenticeshipExpectations />} />
       <Route path="off-job-training-guide" element={<OffJobTrainingGuide />} />
       <Route path="site-jargon" element={<SiteJargon />} />

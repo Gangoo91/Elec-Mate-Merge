@@ -13,7 +13,8 @@ import {
   Calculator,
   Wrench,
   FileCheck,
-  Shield
+  Shield,
+  FileText
 } from "lucide-react";
 
 interface ToolboxCategory {
@@ -40,83 +41,90 @@ const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
     },
     {
       id: 2,
+      title: "Electrical Installation Guides",
+      icon: <FileText className="h-5 w-5 text-elec-yellow" />,
+      link: "/apprentice/electrical-installation-guides",
+      description: "Step-by-step installation guides for domestic, commercial, industrial, and outdoor environments"
+    },
+    {
+      id: 3,
       title: "What to Expect in Your Apprenticeship",
       icon: <Users className="h-5 w-5 text-elec-yellow" />,
       link: "/apprentice/apprenticeship-expectations",
       description: "Day 1 preparation, site etiquette, chain of command, and year-by-year expectations"
     },
     {
-      id: 3,
+      id: 4,
       title: "Off-the-Job Training Explained",
       icon: <Clock className="h-5 w-5 text-elec-yellow" />,
       link: "/apprentice/off-job-training-guide",
       description: "What counts as off-the-job learning, how to log it, and sample templates"
     },
     {
-      id: 4,
+      id: 5,
       title: "Building Your Work Portfolio",
       icon: <FolderOpen className="h-5 w-5 text-elec-yellow" />,
       link: "/apprentice/portfolio-building",
       description: "How to document work properly, what assessors look for, and common pitfalls to avoid"
     },
     {
-      id: 5,
+      id: 6,
       title: "Apprenticeship Rights & Pay",
       icon: <DollarSign className="h-5 w-5 text-elec-yellow" />,
       link: "/apprentice/rights-and-pay",
       description: "National wage tiers, your rights on site, and support channels when things go wrong"
     },
     {
-      id: 6,
+      id: 7,
       title: "Communication Skills",
       icon: <MessageCircle className="h-5 w-5 text-elec-yellow" />,
       link: "/apprentice/communication-skills",
       description: "How to speak with supervisors, report problems, and take feedback professionally"
     },
     {
-      id: 7,
+      id: 8,
       title: "Study Tips for Electrical Apprentices",
       icon: <BookOpen className="h-5 w-5 text-elec-yellow" />,
       link: "/apprentice/study-tips",
       description: "Revision strategies for 18th Edition and Level 3 exams, plus free resources"
     },
     {
-      id: 8,
+      id: 9,
       title: "Site Slang & Jargon Decoder",
       icon: <MessageSquare className="h-5 w-5 text-elec-yellow" />,
       link: "/apprentice/site-jargon",
       description: "Translate real-world terms and regional slang to help you fit in on site"
     },
     {
-      id: 9,
+      id: 10,
       title: "Mistakes You're Allowed to Make",
       icon: <AlertCircle className="h-5 w-5 text-elec-yellow" />,
       link: "/apprentice/learning-from-mistakes",
       description: "Safe screw-ups vs dangerous errors - build confidence and reduce imposter syndrome"
     },
     {
-      id: 10,
+      id: 11,
       title: "Power Factor Calculator",
       icon: <Calculator className="h-5 w-5 text-elec-yellow" />,
       description: "Calculate power factor and understand its implications",
       onSelect: () => onToolSelection("powerCalculator")
     },
     {
-      id: 11,
+      id: 12,
       title: "Cable Sizing Calculator",
       icon: <Calculator className="h-5 w-5 text-elec-yellow" />,
       description: "Calculate appropriate cable sizes based on current and voltage drop",
       onSelect: () => onToolSelection("cableSizing")
     },
     {
-      id: 12,
+      id: 13,
       title: "Exam Preparation",
       icon: <FileCheck className="h-5 w-5 text-elec-yellow" />,
       link: "/apprentice/exam-prep",
       description: "Practice tests and revision materials for your assessments"
     },
     {
-      id: 13,
+      id: 14,
       title: "Safety Fundamentals",
       icon: <Shield className="h-5 w-5 text-elec-yellow" />,
       link: "/apprentice/safety-fundamentals",
