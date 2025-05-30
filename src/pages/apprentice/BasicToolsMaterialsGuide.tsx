@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,7 +22,9 @@ import {
   Users,
   Award,
   BookOpen,
-  Target
+  Target,
+  Settings,
+  Plug
 } from "lucide-react";
 
 const BasicToolsMaterialsGuide = () => {
@@ -155,24 +156,195 @@ const BasicToolsMaterialsGuide = () => {
   const ukMaterialGuide = [
     {
       type: "Twin & Earth (T&E)",
-      sizes: ["1.0mm²", "1.5mm²", "2.5mm²", "4mm²", "6mm²", "10mm²"],
-      applications: ["Domestic lighting (1.5mm²)", "Ring mains (2.5mm²)", "Cookers (6mm²)", "Showers (10mm²)"],
+      sizes: ["1.0mm²", "1.5mm²", "2.5mm²", "4mm²", "6mm²", "10mm²", "16mm²"],
+      applications: [
+        "1.0mm² - Alarm circuits, door entry systems",
+        "1.5mm² - Domestic lighting circuits (6A MCB)",
+        "2.5mm² - Ring main circuits (32A MCB/RCBO)",
+        "4mm² - Radial circuits, small cookers (20A)",
+        "6mm² - Cooker circuits, large radials (32A)",
+        "10mm² - Electric shower circuits (40A-45A)",
+        "16mm² - Large appliances, sub-mains (63A)"
+      ],
       standards: "BS 6004",
-      colours: "Brown (L), Blue (N), Green/Yellow (E)"
+      colours: "Brown (L), Blue (N), Green/Yellow (E)",
+      typical_uses: "Internal domestic and commercial wiring where mechanical protection not required"
     },
     {
       type: "Steel Wire Armoured (SWA)",
-      sizes: ["1.5mm²", "2.5mm²", "4mm²", "6mm²", "10mm²", "16mm²+"],
-      applications: ["Underground cables", "External installations", "Industrial supplies"],
+      sizes: ["1.5mm²", "2.5mm²", "4mm²", "6mm²", "10mm²", "16mm²", "25mm²", "35mm²", "50mm²", "70mm²", "95mm²"],
+      applications: [
+        "1.5mm² - Small outdoor lighting, garden circuits",
+        "2.5mm² - Outdoor sockets, small outbuilding supplies",
+        "4mm² - Medium outbuilding supplies, external equipment",
+        "6mm² - Large outbuilding supplies, workshop feeds",
+        "10mm² - Sub-main feeds to garages, workshops",
+        "16mm² - Small industrial equipment, larger sub-mains",
+        "25mm² - Industrial machinery, large sub-main feeds",
+        "35mm²+ - High-current industrial applications, main distribution"
+      ],
       standards: "BS 5467",
-      colours: "Various cores available"
+      colours: "Various core configurations available (2-core, 3-core, 4-core)",
+      typical_uses: "Underground installations, external supplies, industrial environments requiring mechanical protection"
     },
     {
       type: "Fire Performance (FP200)",
       sizes: ["1.0mm²", "1.5mm²", "2.5mm²"],
-      applications: ["Fire alarms", "Emergency lighting", "Smoke extraction"],
+      applications: [
+        "Fire alarm systems and control panels",
+        "Emergency lighting circuits",
+        "Smoke extraction fan controls",
+        "Fire suppression system wiring",
+        "Emergency voice communication systems"
+      ],
       standards: "BS EN 50200",
-      colours: "Red sheath (fire circuits)"
+      colours: "Red sheath (fire circuits), other colours available",
+      typical_uses: "Life safety systems that must continue operating during fire conditions"
+    }
+  ];
+
+  const cableFittingsGuide = [
+    {
+      category: "SWA Cable Glands",
+      description: "Essential for terminating Steel Wire Armoured cables safely and maintaining IP ratings",
+      fittings: [
+        {
+          name: "20mm SWA Gland (CW20S)",
+          cable_sizes: "6-12mm cable diameter",
+          typical_cables: "1.5mm² to 4mm² SWA",
+          thread: "M20 x 1.5",
+          termination_steps: [
+            "Strip outer sheath 50mm from cable end",
+            "Fold back steel wire armour evenly",
+            "Fit gland body through enclosure entry",
+            "Slide compression ring over cable",
+            "Tighten gland nut to compress armour wires",
+            "Ensure armour makes good earth connection",
+            "Tighten compression seal on inner sheath"
+          ]
+        },
+        {
+          name: "25mm SWA Gland (CW25S)",
+          cable_sizes: "13-18mm cable diameter",
+          typical_cables: "6mm² to 10mm² SWA",
+          thread: "M25 x 1.5",
+          termination_steps: [
+            "Strip outer sheath 60mm from cable end",
+            "Fold back steel wire armour evenly",
+            "Fit gland body through panel cutout",
+            "Position compression ring correctly",
+            "Hand tighten gland nut initially",
+            "Check armour wire positioning",
+            "Final tighten to manufacturer's torque spec"
+          ]
+        },
+        {
+          name: "32mm SWA Gland (CW32S)",
+          cable_sizes: "18-25mm cable diameter",
+          typical_cables: "16mm² to 25mm² SWA",
+          thread: "M32 x 1.5",
+          termination_steps: [
+            "Strip outer sheath 70mm from cable end",
+            "Carefully fold back all armour wires",
+            "Apply thread sealant to gland threads",
+            "Insert through enclosure wall",
+            "Position compression components correctly",
+            "Ensure even compression of armour",
+            "Test earth continuity through armour"
+          ]
+        }
+      ]
+    },
+    {
+      category: "T&E Cable Accessories",
+      description: "Standard fittings for Twin & Earth cable installations",
+      fittings: [
+        {
+          name: "Plastic Cable Grommet",
+          cable_sizes: "6-10mm cable diameter",
+          typical_cables: "1.5mm² to 2.5mm² T&E",
+          thread: "Various sizes 16mm-25mm",
+          termination_steps: [
+            "Drill appropriate hole in enclosure",
+            "Fit grommet into drilled hole",
+            "Thread cable through grommet",
+            "Ensure cable sheath protection",
+            "No mechanical strain on conductors",
+            "Maintain IP rating if required"
+          ]
+        },
+        {
+          name: "Stuffing Gland",
+          cable_sizes: "Multiple cables 4-20mm total",
+          typical_cables: "Multiple T&E cables",
+          thread: "M20, M25 threads available",
+          termination_steps: [
+            "Insert cables through gland body",
+            "Pack stuffing material around cables",
+            "Ensure even distribution of packing",
+            "Compress packing with gland nut",
+            "Test seal integrity",
+            "Verify strain relief on cables"
+          ]
+        }
+      ]
+    },
+    {
+      category: "Flexible Cable Glands",
+      description: "For flexible and multicore cables in moving applications",
+      fittings: [
+        {
+          name: "Nickel Plated Brass Gland",
+          cable_sizes: "3-40mm diameter range",
+          typical_cables: "SY cable, multicore flex",
+          thread: "Metric and PG threads",
+          termination_steps: [
+            "Select correct size for cable diameter",
+            "Strip outer sheath to required length",
+            "Fit gland components in correct order",
+            "Ensure strain relief on cable",
+            "Tighten to achieve IP rating",
+            "Test pull-out resistance"
+          ]
+        }
+      ]
+    }
+  ];
+
+  const toolSelection = [
+    {
+      task: "SWA Gland Installation",
+      required_tools: [
+        "SWA stripping knife or specialist stripper",
+        "Sharp utility knife",
+        "Cable cutters/hacksaw",
+        "Spanners (correct size for gland)",
+        "Torque wrench (for larger glands)",
+        "Earth continuity tester"
+      ],
+      safety_considerations: [
+        "Ensure supply is isolated and proved dead",
+        "Wear cut-resistant gloves when stripping",
+        "Use proper lifting techniques for heavy cables",
+        "Check gland IP rating matches application"
+      ]
+    },
+    {
+      task: "T&E Cable Termination",
+      required_tools: [
+        "Cable strippers (automatic preferred)",
+        "Sharp knife for sheath removal",
+        "Terminal screwdrivers (various sizes)",
+        "Wire nuts or connector blocks",
+        "Insulation tape",
+        "Cable identification labels"
+      ],
+      safety_considerations: [
+        "Prove dead before starting work",
+        "Ensure adequate strain relief",
+        "Check terminal tightness",
+        "Apply appropriate IP protection"
+      ]
     }
   ];
 
@@ -384,7 +556,7 @@ const BasicToolsMaterialsGuide = () => {
         </CardContent>
       </Card>
 
-      {/* Essential Tools by Category - Enhanced */}
+      {/* Enhanced Essential Tools by Category - Enhanced */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -453,52 +625,162 @@ const BasicToolsMaterialsGuide = () => {
         </CardContent>
       </Card>
 
-      {/* UK Materials Guide - Enhanced */}
+      {/* Enhanced UK Materials Guide - Enhanced */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Cable className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">UK Electrical Materials Guide</CardTitle>
           </div>
-          <p className="text-muted-foreground">Understanding British Standards and cable specifications</p>
+          <p className="text-muted-foreground">Understanding British Standards, cable specifications, and applications</p>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="space-y-8">
             {ukMaterialGuide.map((material, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-5">
-                <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
+                <h4 className="font-semibold text-white mb-4 flex items-center gap-2 text-xl">
                   <span className="text-2xl">⚡</span>
                   {material.type}
                 </h4>
                 
-                <div className="space-y-3">
-                  <div>
-                    <h5 className="text-sm font-medium text-elec-yellow mb-1">Available Sizes</h5>
-                    <div className="flex flex-wrap gap-1">
-                      {material.sizes.map((size, idx) => (
-                        <Badge key={idx} variant="outline" className="text-xs border-elec-yellow/40 text-elec-yellow">
-                          {size}
-                        </Badge>
-                      ))}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="text-sm font-medium text-elec-yellow mb-2">Available Sizes</h5>
+                      <div className="flex flex-wrap gap-1">
+                        {material.sizes.map((size, idx) => (
+                          <Badge key={idx} variant="outline" className="text-xs border-elec-yellow/40 text-elec-yellow">
+                            {size}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="bg-elec-dark/50 p-3 rounded">
+                      <p className="text-xs text-muted-foreground mb-1">
+                        <strong className="text-elec-yellow">Standard:</strong> {material.standards}
+                      </p>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        <strong className="text-elec-yellow">Colours:</strong> {material.colours}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        <strong className="text-elec-yellow">Typical Uses:</strong> {material.typical_uses}
+                      </p>
                     </div>
                   </div>
                   
                   <div>
-                    <h5 className="text-sm font-medium text-elec-yellow mb-1">Applications</h5>
-                    <ul className="text-xs text-muted-foreground space-y-1">
+                    <h5 className="text-sm font-medium text-elec-yellow mb-2">Applications by Size</h5>
+                    <ul className="text-xs text-muted-foreground space-y-1 max-h-32 overflow-y-auto">
                       {material.applications.map((app, idx) => (
-                        <li key={idx}>• {app}</li>
+                        <li key={idx} className="flex items-start gap-2">
+                          <span className="text-green-400 mt-0.5">•</span>
+                          {app}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Cable Fittings and Glands Guide */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Plug className="h-6 w-6 text-elec-yellow" />
+            <CardTitle className="text-elec-yellow">Cable Fittings & Glands Guide</CardTitle>
+          </div>
+          <p className="text-muted-foreground">Complete guide to cable termination, gland selection, and installation procedures</p>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-8">
+            {cableFittingsGuide.map((category, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
+                <h3 className="text-xl font-semibold text-white mb-2">{category.category}</h3>
+                <p className="text-sm text-muted-foreground mb-6">{category.description}</p>
+                
+                <div className="space-y-6">
+                  {category.fittings.map((fitting, fittingIndex) => (
+                    <div key={fittingIndex} className="bg-elec-dark/30 p-5 rounded-lg">
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-4">
+                        <div>
+                          <h4 className="font-medium text-white mb-2">{fitting.name}</h4>
+                          <p className="text-sm text-muted-foreground mb-1">
+                            <strong className="text-elec-yellow">Cable Size:</strong> {fitting.cable_sizes}
+                          </p>
+                          <p className="text-sm text-muted-foreground mb-1">
+                            <strong className="text-elec-yellow">Typical Cables:</strong> {fitting.typical_cables}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            <strong className="text-elec-yellow">Thread:</strong> {fitting.thread}
+                          </p>
+                        </div>
+                        
+                        <div className="lg:col-span-2">
+                          <h5 className="font-medium text-elec-yellow mb-3">Installation Steps</h5>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            {fitting.termination_steps.map((step, stepIndex) => (
+                              <div key={stepIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                                <span className="bg-elec-yellow text-black rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                                  {stepIndex + 1}
+                                </span>
+                                {step}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Tool Selection for Cable Work */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Settings className="h-6 w-6 text-elec-yellow" />
+            <CardTitle className="text-elec-yellow">Tools for Cable Termination Work</CardTitle>
+          </div>
+          <p className="text-muted-foreground">Essential tools and safety considerations for different cable work</p>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {toolSelection.map((task, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-5">
+                <h4 className="font-semibold text-white mb-4">{task.task}</h4>
+                
+                <div className="space-y-4">
+                  <div>
+                    <h5 className="text-sm font-medium text-elec-yellow mb-2">Required Tools</h5>
+                    <ul className="space-y-1">
+                      {task.required_tools.map((tool, toolIndex) => (
+                        <li key={toolIndex} className="text-sm text-muted-foreground flex items-center gap-2">
+                          <CheckCircle className="h-3 w-3 text-green-400" />
+                          {tool}
+                        </li>
                       ))}
                     </ul>
                   </div>
                   
-                  <div className="bg-elec-dark/50 p-2 rounded">
-                    <p className="text-xs text-muted-foreground">
-                      <strong className="text-elec-yellow">Standard:</strong> {material.standards}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      <strong className="text-elec-yellow">Colours:</strong> {material.colours}
-                    </p>
+                  <div>
+                    <h5 className="text-sm font-medium text-orange-400 mb-2">Safety Considerations</h5>
+                    <ul className="space-y-1">
+                      {task.safety_considerations.map((safety, safetyIndex) => (
+                        <li key={safetyIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <AlertTriangle className="h-3 w-3 text-orange-400 mt-0.5 flex-shrink-0" />
+                          {safety}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </div>
