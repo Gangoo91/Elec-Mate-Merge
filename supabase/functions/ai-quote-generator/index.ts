@@ -12,11 +12,10 @@ serve(async (req) => {
   }
 
   try {
-    // Check if OpenAI API key is available
     if (!openAIApiKey) {
-      console.error('OpenAI API key is not configured or not accessible');
+      console.error('OpenAI API key not configured');
       return new Response(
-        JSON.stringify({ error: "OpenAI API key is not configured" }),
+        JSON.stringify({ error: "OpenAI API key not configured" }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -25,8 +24,10 @@ serve(async (req) => {
     const { 
       jobType, 
       propertyDetails, 
-      clientRequirements, 
-      templateType 
+      clientRequirements,
+      region = "UK",
+      standards = ["BS 7671", "Part P Building Regulations"],
+      currency = "GBP"
     } = requestData;
 
     if (!jobType) {
@@ -36,29 +37,49 @@ serve(async (req) => {
       );
     }
 
-    // Create system prompt based on request type
-    const systemMessage = `
-      You are a professional electrical quote generator for UK electricians. 
-      Generate detailed, accurate quotes for electrical work with the following characteristics:
-      - Use UK electrical terminology and standards (BS 7671)
-      - Include appropriate materials and labour estimates for the job type
-      - Structure quotes with proper line items
-      - Include relevant certification requirements
-      - Use realistic UK pricing for both materials and labour
-      - Format the response as a JSON object that can be easily parsed
-      
-      For a ${jobType} job, with the following details:
-      Property: ${JSON.stringify(propertyDetails)}
-      Requirements: ${clientRequirements || "Standard installation"}
-      
-      Generate a detailed quote with:
-      1. A comprehensive scope of work
-      2. Complete materials list with quantities and unit prices
-      3. Labour requirements in days
-      4. Any necessary certificates or compliance requirements
-    `;
+    // Enhanced UK-specific system prompt
+    const systemMessage = `You are a professional UK electrical contractor's AI assistant specialising in accurate electrical quotes.
 
-    console.log('Sending request to OpenAI API for quote generation');
+CRITICAL REQUIREMENTS:
+- Generate quotes strictly compliant with UK electrical standards (BS 7671, Part P Building Regulations)
+- Use current UK pricing for materials and labour (2024 rates)
+- Include all necessary electrical components for safe, compliant installations
+- Consider regional UK pricing variations and current material costs
+- Account for inspection and testing requirements
+- Include appropriate certification costs where applicable
+
+PROPERTY DETAILS:
+- Job Type: ${jobType}
+- Property: ${JSON.stringify(propertyDetails)}
+- Additional Requirements: ${clientRequirements || "Standard installation to BS 7671"}
+- Region: ${region}
+- Currency: ${currency}
+
+RESPONSE FORMAT (JSON):
+{
+  "scopeOfWork": "Detailed scope including all work phases, safety requirements, and compliance steps",
+  "materials": [
+    {
+      "description": "Accurate UK electrical component name with specifications",
+      "quantity": number,
+      "unitPrice": realistic_uk_price_in_pounds
+    }
+  ],
+  "labour": {
+    "days": estimated_working_days_decimal,
+    "dailyRate": uk_electrician_daily_rate,
+    "description": "Labour breakdown explanation"
+  },
+  "compliance": {
+    "standards": ["BS 7671", "Part P"],
+    "certificates": ["Installation Certificate", "Test Certificate"],
+    "inspectionRequired": true/false
+  }
+}
+
+Ensure all pricing reflects current UK market rates. Include realistic material costs, proper cable specifications, appropriate protective devices, and account for testing/inspection time.`;
+
+    console.log('Generating UK electrical quote via OpenAI API');
     
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -70,65 +91,97 @@ serve(async (req) => {
         model: 'gpt-4o-mini',
         messages: [
           { role: 'system', content: systemMessage },
-          { role: 'user', content: `Generate a professional electrical quote for ${jobType}.` }
+          { 
+            role: 'user', 
+            content: `Generate a comprehensive UK electrical quote for a ${jobType} in a ${propertyDetails.bedrooms}-bedroom ${propertyDetails.type} with ${propertyDetails.floors} floors. Include realistic current UK pricing and ensure full BS 7671 compliance.` 
+          }
         ],
-        temperature: 0.2, // Lower temperature for more consistent responses
+        temperature: 0.1, // Very low for consistent pricing
+        max_tokens: 2000,
       }),
     });
 
-    const data = await response.json();
-    
     if (!response.ok) {
-      console.error('OpenAI API Error:', data.error || response.statusText);
+      const errorData = await response.json();
+      console.error('OpenAI API Error:', errorData);
       return new Response(
         JSON.stringify({ 
-          error: `Error from OpenAI API: ${data.error?.message || response.statusText}`,
+          error: `OpenAI API Error: ${errorData.error?.message || response.statusText}`,
         }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
-    
-    if (data.error) {
-      console.error('OpenAI API Error:', data.error);
-      return new Response(
-        JSON.stringify({ error: "Error from OpenAI API: " + data.error.message }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-    }
 
+    const data = await response.json();
     const aiResponse = data.choices[0].message.content;
-    console.log('OpenAI response received successfully');
+    console.log('OpenAI response received for UK quote');
 
-    // Try to parse the AI response as JSON
+    // Enhanced JSON parsing with validation
     let parsedQuote;
     try {
-      // Check if the response contains a JSON object
-      const jsonMatch = aiResponse.match(/```json([\s\S]*?)```/) || 
-                         aiResponse.match(/{[\s\S]*?}/);
+      // Extract JSON from response
+      const jsonMatch = aiResponse.match(/```json\s*([\s\S]*?)\s*```/) || 
+                         aiResponse.match(/{[\s\S]*}/);
       
-      const jsonString = jsonMatch ? jsonMatch[1] || jsonMatch[0] : aiResponse;
-      parsedQuote = JSON.parse(jsonString.replace(/```json|```/g, '').trim());
+      if (!jsonMatch) {
+        throw new Error('No JSON structure found in AI response');
+      }
+
+      const jsonString = jsonMatch[1] || jsonMatch[0];
+      parsedQuote = JSON.parse(jsonString.trim());
+      
+      // Validate essential fields
+      if (!parsedQuote.materials || !Array.isArray(parsedQuote.materials)) {
+        throw new Error('Invalid materials structure in AI response');
+      }
+      
+      if (!parsedQuote.labour || typeof parsedQuote.labour.days !== 'number') {
+        throw new Error('Invalid labour structure in AI response');
+      }
+
+      // Ensure UK pricing standards
+      parsedQuote.materials = parsedQuote.materials.map(item => ({
+        ...item,
+        unitPrice: Math.max(0.50, parseFloat(item.unitPrice) || 0), // Minimum 50p
+        quantity: Math.max(1, parseInt(item.quantity) || 1)
+      }));
+
+      parsedQuote.labour.days = Math.max(0.25, parseFloat(parsedQuote.labour.days) || 1);
+      parsedQuote.labour.dailyRate = Math.max(200, parseFloat(parsedQuote.labour.dailyRate) || 280);
+
+      console.log('Successfully parsed and validated UK quote');
+
     } catch (error) {
-      console.error('Error parsing AI response as JSON:', error);
+      console.error('Error parsing AI response:', error);
       
-      // Return the raw AI response if parsing fails
+      // Return raw response with error context
       return new Response(
         JSON.stringify({ 
           raw: aiResponse,
-          error: "Could not parse the AI response as structured data"
+          error: "Could not parse AI response as valid quote structure",
+          details: error.message
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     return new Response(
-      JSON.stringify({ quote: parsedQuote }),
+      JSON.stringify({ 
+        quote: parsedQuote,
+        generatedAt: new Date().toISOString(),
+        region: region,
+        currency: currency
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
+
   } catch (error) {
     console.error('Error in ai-quote-generator function:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message,
+        timestamp: new Date().toISOString()
+      }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

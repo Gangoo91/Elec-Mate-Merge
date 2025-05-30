@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { toast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { 
@@ -33,56 +33,77 @@ const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGen
     additionalRequirements: ""
   });
   
-  // Materials state
+  // Materials state with UK default materials
   const [materials, setMaterials] = useState<MaterialItem[]>([
-    { id: 1, description: "Consumer Unit", quantity: 1, unitPrice: 120 },
-    { id: 2, description: "Twin Sockets", quantity: 10, unitPrice: 8 }
+    { id: 1, description: "Consumer Unit (18th Edition)", quantity: 1, unitPrice: 135 },
+    { id: 2, description: "13A Twin Socket Outlets", quantity: 8, unitPrice: 12 }
   ]);
   
-  // Update jobType when initialJobType changes (from template selection)
-  useEffect(() => {
-    setJobType(initialJobType);
-    // Clear or update scope of work when template changes
+  // Optimised update functions
+  const updateJobType = useCallback((newJobType: string) => {
+    setJobType(newJobType);
     setFormData(prevData => ({
       ...prevData,
       scopeOfWork: ""
     }));
-  }, [initialJobType]);
+  }, []);
   
-  // Update default materials based on job type
+  // Update jobType when initialJobType changes
   useEffect(() => {
-    setMaterials(getDefaultMaterialsForJobType(jobType));
+    updateJobType(initialJobType);
+  }, [initialJobType, updateJobType]);
+  
+  // Update default materials based on job type with UK specifications
+  useEffect(() => {
+    const ukMaterials = getDefaultMaterialsForJobType(jobType).map(material => ({
+      ...material,
+      // Ensure UK terminology and pricing
+      description: material.description.includes("Consumer Unit") 
+        ? `${material.description} (BS 7671 Compliant)`
+        : material.description,
+      unitPrice: Math.round(material.unitPrice * 1.1) // Adjust for current UK pricing
+    }));
+    setMaterials(ukMaterials);
   }, [jobType]);
   
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-  };
+  }, []);
   
-  const handleSelectChange = (name: string, value: string) => {
+  const handleSelectChange = useCallback((name: string, value: string) => {
     setFormData(prev => ({ ...prev, [name]: value }));
-  };
+  }, []);
   
-  const addMaterialItem = () => {
+  const addMaterialItem = useCallback(() => {
     const newId = materials.length ? Math.max(...materials.map(m => m.id)) + 1 : 1;
-    setMaterials([...materials, { id: newId, description: "", quantity: 1, unitPrice: 0 }]);
-  };
+    setMaterials(prev => [...prev, { 
+      id: newId, 
+      description: "", 
+      quantity: 1, 
+      unitPrice: 0 
+    }]);
+  }, [materials.length]);
   
-  const removeMaterialItem = (id: number) => {
-    setMaterials(materials.filter(item => item.id !== id));
-  };
+  const removeMaterialItem = useCallback((id: number) => {
+    setMaterials(prev => prev.filter(item => item.id !== id));
+  }, []);
   
-  const updateMaterialItem = (id: number, field: string, value: string | number) => {
-    setMaterials(materials.map(item => 
-      item.id === id ? { ...item, [field]: field === "description" ? value : Number(value) } : item
+  const updateMaterialItem = useCallback((id: number, field: string, value: string | number) => {
+    setMaterials(prev => prev.map(item => 
+      item.id === id ? { 
+        ...item, 
+        [field]: field === "description" ? value : Number(value) 
+      } : item
     ));
-  };
+  }, []);
   
+  // Enhanced AI quote generation with better UK focus
   const handleGenerateWithAI = async () => {
     if (!formData.clientName || !jobType) {
       toast({
-        title: "Missing information",
-        description: "Please provide client name and select a job type.",
+        title: "Missing Information",
+        description: "Please provide client name and select a job type to proceed.",
         variant: "destructive"
       });
       return;
@@ -91,152 +112,127 @@ const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGen
     setIsLoading(true);
     
     try {
-      // First, try to use the AI Edge Function if available
-      try {
-        const propertyDetails = {
-          type: formData.propertyType,
-          bedrooms: formData.bedrooms,
-          floors: formData.floors
+      const propertyDetails = {
+        type: formData.propertyType,
+        bedrooms: formData.bedrooms,
+        floors: formData.floors
+      };
+      
+      console.log("Generating UK-compliant AI quote for:", { jobType, propertyDetails });
+      
+      // Enhanced prompt for UK electrical work
+      const { data, error } = await supabase.functions.invoke('ai-quote-generator', {
+        body: { 
+          jobType, 
+          propertyDetails,
+          clientRequirements: formData.additionalRequirements,
+          region: "UK",
+          standards: ["BS 7671", "Part P Building Regulations"],
+          currency: "GBP"
+        }
+      });
+      
+      if (error) {
+        console.error("AI generation error:", error);
+        handleLocalGeneration();
+        return;
+      }
+      
+      if (data?.quote) {
+        const aiQuote = data.quote;
+        console.log("Processing UK AI quote:", aiQuote);
+        
+        // Process AI-generated materials with UK specifications
+        let updatedMaterials = [...materials];
+        
+        if (aiQuote.materials && Array.isArray(aiQuote.materials)) {
+          updatedMaterials = aiQuote.materials.map((item: any, index: number) => ({
+            id: index + 1,
+            description: item.description || item.name || "Electrical Component",
+            quantity: Math.max(1, parseInt(item.quantity) || 1),
+            unitPrice: Math.max(0, parseFloat(item.unitPrice || item.price || item.cost) || 0)
+          }));
+          setMaterials(updatedMaterials);
+        }
+        
+        // Enhanced labour calculation for UK market
+        let labourInfo = {
+          days: calculateLabourDays(jobType, formData.bedrooms),
+          rate: 280, // Updated UK electrician daily rate
+          total: 0
         };
         
-        console.log("Sending request to AI quote generator with:", { jobType, propertyDetails, clientRequirements: formData.additionalRequirements });
+        if (aiQuote.labour) {
+          labourInfo.days = Math.max(0.5, parseFloat(aiQuote.labour.days) || labourInfo.days);
+          labourInfo.rate = Math.max(200, parseFloat(aiQuote.labour.dailyRate || aiQuote.labour.rate) || labourInfo.rate);
+        }
+        labourInfo.total = Math.round(labourInfo.days * labourInfo.rate);
         
-        // Call the Supabase Edge Function for AI generation
-        const { data, error } = await supabase.functions.invoke('ai-quote-generator', {
-          body: { 
-            jobType, 
-            propertyDetails,
-            clientRequirements: formData.additionalRequirements
-          }
+        // UK VAT calculation (20%)
+        const materialCost = updatedMaterials.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+        const subtotal = materialCost + labourInfo.total;
+        const vat = Math.round(subtotal * 0.2);
+        const total = subtotal + vat;
+        
+        console.log("UK quote financials:", { materialCost, labourCost: labourInfo.total, subtotal, vat, total });
+        
+        const quoteData = {
+          clientInfo: {
+            name: formData.clientName,
+            address: formData.clientAddress,
+          },
+          jobDetails: {
+            type: jobType,
+            propertyType: formData.propertyType,
+            bedrooms: formData.bedrooms,
+            floors: formData.floors,
+            scopeOfWork: formData.scopeOfWork || 
+              (aiQuote.scopeOfWork || generateDefaultScopeOfWork(jobType, formData)),
+            additionalRequirements: formData.additionalRequirements
+          },
+          materials: updatedMaterials,
+          labour: labourInfo,
+          financials: {
+            materialCost: Math.round(materialCost),
+            labourCost: labourInfo.total,
+            subtotal: Math.round(subtotal),
+            vat,
+            total
+          },
+          quoteNumber: `QT-${Date.now().toString().substring(7)}`,
+          issueDate: new Date().toLocaleDateString('en-GB'),
+          validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB')
+        };
+        
+        setIsLoading(false);
+        onGenerateQuote(quoteData);
+        
+        toast({
+          title: "AI Quote Generated Successfully",
+          description: `Professional quote created with ${updatedMaterials.length} materials totalling £${total.toLocaleString('en-GB')}.`,
         });
-        
-        if (error) {
-          console.error("Edge function error:", error);
-          // Fallback to local generation if the AI function fails
-          handleLocalGeneration();
-          return;
-        }
-        
-        console.log("AI quote response:", data);
-        
-        if (data && data.quote) {
-          // Use the AI generated content to enhance our quote
-          const aiQuote = data.quote;
-          console.log("Processing AI quote data:", aiQuote);
-          
-          // Extract materials from AI response if available
-          let updatedMaterials = [...materials];
-          
-          if (aiQuote.materials && Array.isArray(aiQuote.materials)) {
-            console.log("Using AI-generated materials:", aiQuote.materials);
-            updatedMaterials = aiQuote.materials.map((item: any, index: number) => ({
-              id: index + 1,
-              description: item.description || item.name || item.item || "Unknown Item",
-              quantity: parseInt(item.quantity) || 1,
-              unitPrice: parseFloat(item.unitPrice || item.price || item.cost) || 0
-            }));
-            setMaterials(updatedMaterials);
-          }
-          
-          // Extract labour information from AI response
-          let labourInfo = {
-            days: calculateLabourDays(jobType, formData.bedrooms),
-            rate: 250,
-            total: 0
-          };
-          
-          if (aiQuote.labour) {
-            labourInfo.days = parseFloat(aiQuote.labour.days) || labourInfo.days;
-            labourInfo.rate = parseFloat(aiQuote.labour.dailyRate || aiQuote.labour.rate) || labourInfo.rate;
-          }
-          labourInfo.total = labourInfo.days * labourInfo.rate;
-          
-          console.log("Labour info:", labourInfo);
-          
-          // Calculate financials using AI data
-          const materialCost = updatedMaterials.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
-          const subtotal = materialCost + labourInfo.total;
-          const vat = subtotal * 0.2;
-          const total = subtotal + vat;
-          
-          console.log("Calculated financials:", { materialCost, labourCost: labourInfo.total, subtotal, vat, total });
-          
-          // Generate the quote data with AI enhancements
-          const quoteData = {
-            clientInfo: {
-              name: formData.clientName,
-              address: formData.clientAddress,
-            },
-            jobDetails: {
-              type: jobType,
-              propertyType: formData.propertyType,
-              bedrooms: formData.bedrooms,
-              floors: formData.floors,
-              scopeOfWork: formData.scopeOfWork || 
-                (aiQuote.scopeOfWork ? aiQuote.scopeOfWork : generateDefaultScopeOfWork(jobType, formData)),
-              additionalRequirements: formData.additionalRequirements
-            },
-            materials: updatedMaterials,
-            labour: labourInfo,
-            financials: {
-              materialCost,
-              labourCost: labourInfo.total,
-              subtotal,
-              vat,
-              total
-            },
-            quoteNumber: `QT-${Date.now().toString().substring(7)}`,
-            issueDate: new Date().toISOString().split('T')[0],
-            validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-          };
-          
-          console.log("Final quote data:", quoteData);
-          
-          setIsLoading(false);
-          onGenerateQuote(quoteData);
-          toast({
-            title: "AI Quote Generated",
-            description: `Quote generated with ${updatedMaterials.length} materials and ${labourInfo.days} days labour at £${total.toFixed(2)} total.`
-          });
-        } else {
-          console.log("No quote data from AI, falling back to local generation");
-          // Fallback to local generation if AI doesn't return expected format
-          handleLocalGeneration();
-        }
-      } catch (error) {
-        console.error("Error using AI quote generator:", error);
-        // Fallback to local generation
+      } else {
+        console.log("AI response incomplete, using local generation");
         handleLocalGeneration();
       }
     } catch (error) {
-      console.error("Error generating quote:", error);
-      setIsLoading(false);
-      toast({
-        title: "Error generating quote",
-        description: "There was a problem generating your quote. Please try again.",
-        variant: "destructive"
-      });
+      console.error("Quote generation error:", error);
+      handleLocalGeneration();
     }
   };
   
-  // Fallback to local quote generation if AI fails
+  // Enhanced local generation with UK standards
   const handleLocalGeneration = () => {
-    console.log("Using local generation with current materials:", materials);
+    console.log("Generating local UK-compliant quote");
     
-    // Calculate material costs
     const materialCost = materials.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
-    
-    // Calculate appropriate labour cost based on job type and inputs
     const labourDays = calculateLabourDays(jobType, formData.bedrooms);
-    const labourRate = 250; // Daily rate in £
-    const labourCost = labourDays * labourRate;
+    const labourRate = 280; // UK electrician daily rate
+    const labourCost = Math.round(labourDays * labourRate);
     const subtotal = materialCost + labourCost;
-    const vat = subtotal * 0.2;
+    const vat = Math.round(subtotal * 0.2); // UK VAT rate
     const total = subtotal + vat;
     
-    console.log("Local generation financials:", { materialCost, labourCost, subtotal, vat, total });
-    
-    // Generate the quote data
     const quoteData = {
       clientInfo: {
         name: formData.clientName,
@@ -257,23 +253,23 @@ const QuoteGenerator = ({ onGenerateQuote, initialJobType = "rewire" }: QuoteGen
         total: labourCost
       },
       financials: {
-        materialCost,
+        materialCost: Math.round(materialCost),
         labourCost,
-        subtotal,
+        subtotal: Math.round(subtotal),
         vat,
         total
       },
       quoteNumber: `QT-${Date.now().toString().substring(7)}`,
-      issueDate: new Date().toISOString().split('T')[0],
-      validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+      issueDate: new Date().toLocaleDateString('en-GB'),
+      validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB')
     };
     
     setIsLoading(false);
     onGenerateQuote(quoteData);
     
     toast({
-      title: "Quote generated",
-      description: `Local quote generated at £${total.toFixed(2)} total.`
+      title: "Quote Generated",
+      description: `Professional quote created totalling £${total.toLocaleString('en-GB')}.`,
     });
   };
   
