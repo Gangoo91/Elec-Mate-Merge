@@ -26,6 +26,9 @@ import SupportNetwork from "@/pages/apprentice/mental-health/SupportNetwork";
 import WorkLifeBalance from "@/pages/apprentice/mental-health/WorkLifeBalance";
 import CrisisResources from "@/pages/apprentice/mental-health/CrisisResources";
 import ToolsGuide from "@/pages/apprentice/ToolsGuide";
+import ApprenticeshipExpectations from "@/pages/apprentice/ApprenticeshipExpectations";
+import OffJobTrainingGuide from "@/pages/apprentice/OffJobTrainingGuide";
+import SiteJargon from "@/pages/apprentice/SiteJargon";
 import CommunicationStructures from "@/components/apprentice/resources/CommunicationStructures";
 import CommunicationMethods from "@/components/apprentice/resources/CommunicationMethods";
 import SafetyMeetings from "@/components/apprentice/resources/SafetyMeetings";
@@ -66,6 +69,9 @@ const ApprenticeRoutes = () => {
       <Route path="ojt" element={<ApprenticeOJT />} />
       <Route path="toolbox" element={<ApprenticeToolbox />} />
       <Route path="tools-guide" element={<ToolsGuide />} />
+      <Route path="apprenticeship-expectations" element={<ApprenticeshipExpectations />} />
+      <Route path="off-job-training-guide" element={<OffJobTrainingGuide />} />
+      <Route path="site-jargon" element={<SiteJargon />} />
       <Route path="regulations-reference" element={<RegulationsReference />} />
       <Route path="troubleshooting" element={<TroubleshootingGuide />} />
       <Route path="electrical-symbols" element={<ElectricalSymbols />} />
