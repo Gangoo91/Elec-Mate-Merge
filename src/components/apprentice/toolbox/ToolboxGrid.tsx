@@ -1,7 +1,7 @@
 
 import { ReactNode } from "react";
 import ToolboxCard from "./ToolboxCard";
-import { MessageSquare, Wrench, Shield, GraduationCap, Calculator, BookOpen, FileCheck, AlertTriangle, Users, Lightbulb } from "lucide-react";
+import { Wrench, Shield, GraduationCap, Calculator, BookOpen, FileCheck, AlertTriangle, Lightbulb } from "lucide-react";
 
 interface ToolboxCategory {
   id: number;
@@ -18,13 +18,6 @@ interface ToolboxGridProps {
 
 const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
   const toolboxCategories: ToolboxCategory[] = [
-    {
-      id: 1,
-      title: "Chat",
-      icon: <MessageSquare className="h-5 w-5 text-elec-yellow" />,
-      link: "/apprentice/chat",
-      description: "Get help and answers to your electrical questions"
-    },
     {
       id: 2,
       title: "Safety Fundamentals",
@@ -54,25 +47,11 @@ const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
       description: "Explore your career progression options"
     },
     {
-      id: 6,
-      title: "Regulations Quick Reference",
-      icon: <FileCheck className="h-5 w-5 text-elec-yellow" />,
-      link: "/apprentice/regulations-reference",
-      description: "Quick access to BS 7671 regulations and standards"
-    },
-    {
       id: 7,
       title: "Troubleshooting Guide",
       icon: <AlertTriangle className="h-5 w-5 text-elec-yellow" />,
       link: "/apprentice/troubleshooting",
       description: "Common electrical problems and their solutions"
-    },
-    {
-      id: 8,
-      title: "Mentor Connect",
-      icon: <Users className="h-5 w-5 text-elec-yellow" />,
-      link: "/apprentice/mentor",
-      description: "Connect with experienced electricians for guidance"
     },
     {
       id: 9,
@@ -87,13 +66,6 @@ const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
       icon: <Calculator className="h-5 w-5 text-elec-yellow" />,
       description: "Calculate appropriate cable sizes based on current and voltage drop",
       onSelect: () => onToolSelection("cableSizing")
-    },
-    {
-      id: 11,
-      title: "Electrical Symbols Guide",
-      icon: <Lightbulb className="h-5 w-5 text-elec-yellow" />,
-      link: "/apprentice/electrical-symbols",
-      description: "Learn and reference common electrical symbols and diagrams"
     },
     {
       id: 12,
