@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,7 +16,14 @@ import {
   CheckCircle,
   Play,
   Eye,
-  BadgePoundSterling
+  BadgePoundSterling,
+  Clock,
+  Star,
+  DollarSign,
+  Users,
+  Award,
+  BookOpen,
+  Target
 } from "lucide-react";
 
 const BasicToolsMaterialsGuide = () => {
@@ -24,127 +32,203 @@ const BasicToolsMaterialsGuide = () => {
   const [showQuizResult, setShowQuizResult] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 
-  const cableQuiz = [
+  const expandedCableQuiz = [
     {
       question: "What cable would you use for a standard ring main circuit in a domestic property?",
       options: ["1.5mm² T&E", "2.5mm² T&E", "4mm² T&E", "6mm² T&E"],
       correct: "2.5mm² T&E",
-      explanation: "2.5mm² Twin & Earth is standard for ring main circuits (32A) in domestic installations."
+      explanation: "2.5mm² Twin & Earth is standard for ring main circuits (32A) in domestic installations as per BS 7671."
     },
     {
       question: "Which cable is suitable for external underground installation?",
       options: ["Standard T&E", "SWA Cable", "Flex Cable", "FP200"],
       correct: "SWA Cable",
-      explanation: "Steel Wire Armoured (SWA) cable provides mechanical protection for underground installations."
+      explanation: "Steel Wire Armoured (SWA) cable provides mechanical protection for underground installations and complies with BS 5467."
     },
     {
       question: "What cable would you use for a cooker circuit rated at 32A?",
       options: ["2.5mm² T&E", "4mm² T&E", "6mm² T&E", "10mm² T&E"],
       correct: "6mm² T&E",
-      explanation: "6mm² T&E is typically used for 32A cooker circuits, though cable sizing depends on installation method and protection."
+      explanation: "6mm² T&E is typically used for 32A cooker circuits, though cable sizing depends on installation method and protection device."
     },
     {
       question: "Which cable maintains circuit integrity in fire conditions?",
       options: ["Standard T&E", "SWA", "FP200", "SY Cable"],
       correct: "FP200",
-      explanation: "FP200 is a fire performance cable that maintains circuit integrity for 2 hours at 950°C."
+      explanation: "FP200 is a fire performance cable that maintains circuit integrity for 2 hours at 950°C, essential for fire alarm systems."
+    },
+    {
+      question: "What size cable is typically used for lighting circuits in domestic installations?",
+      options: ["1.0mm² T&E", "1.5mm² T&E", "2.5mm² T&E", "4mm² T&E"],
+      correct: "1.5mm² T&E",
+      explanation: "1.5mm² T&E is standard for domestic lighting circuits protected by a 6A MCB or 5A fuse."
+    },
+    {
+      question: "Which cable type would you use for a shower circuit rated at 40A?",
+      options: ["6mm² T&E", "10mm² T&E", "16mm² T&E", "25mm² T&E"],
+      correct: "10mm² T&E",
+      explanation: "10mm² T&E is typically suitable for electric shower circuits up to 40A, depending on installation method and route length."
+    },
+    {
+      question: "What does the 'T&E' in cable specification stand for?",
+      options: ["Tough & Earthed", "Twin & Earth", "Tested & Evaluated", "Thermal & Electric"],
+      correct: "Twin & Earth",
+      explanation: "T&E stands for Twin & Earth - referring to the two insulated conductors (live and neutral) plus the bare earth conductor."
+    },
+    {
+      question: "Which cable would be most appropriate for a garden shed supply?",
+      options: ["Standard T&E", "SWA Cable", "Flex Cable", "MICC Cable"],
+      correct: "SWA Cable",
+      explanation: "SWA (Steel Wire Armoured) cable provides the necessary mechanical protection for outdoor/underground installation to outbuildings."
     }
   ];
 
-  const handTools = [
+  const essentialToolsData = [
     {
-      category: "Cutting",
+      category: "Testing Equipment",
+      priority: "Critical",
       tools: [
-        { name: "Side Cutters", use: "Cutting cables and wires cleanly", warning: "Never use on live circuits" },
-        { name: "Hacksaw", use: "Cutting conduit, trunking, and metal work", warning: "Ensure blade is tight and suitable for material" }
+        { 
+          name: "Multifunction Tester", 
+          cost: "£300-800", 
+          description: "Essential for all electrical testing - insulation resistance, continuity, RCD testing",
+          brands: ["Megger", "Fluke", "Kewtech"]
+        },
+        { 
+          name: "Voltage Tester", 
+          cost: "£15-50", 
+          description: "Two-pole voltage tester for proving dead before work",
+          safety: "Must be GS38 compliant"
+        },
+        { 
+          name: "Proving Unit", 
+          cost: "£20-40", 
+          description: "Tests your voltage tester is working properly",
+          safety: "Essential part of safe isolation procedure"
+        }
       ]
     },
     {
-      category: "Measuring", 
+      category: "Hand Tools",
+      priority: "Essential",
       tools: [
-        { name: "Tape Measure", use: "General measurement and marking", warning: "Check for damage to avoid inaccurate readings" },
-        { name: "Laser Level", use: "Ensuring straight runs and level installations", warning: "Avoid looking directly into laser beam" },
-        { name: "Multimeter", use: "Testing voltage, current, and resistance", warning: "Always check test leads before use" }
+        { 
+          name: "Insulated Screwdrivers", 
+          cost: "£30-80 (set)", 
+          description: "VDE approved screwdrivers for work near live parts",
+          safety: "Must be individually tested to 10,000V"
+        },
+        { 
+          name: "Side Cutters", 
+          cost: "£20-60", 
+          description: "For cutting cables and conductors",
+          brands: ["Knipex", "Bahco", "CK Tools"]
+        },
+        { 
+          name: "Wire Strippers", 
+          cost: "£15-40", 
+          description: "Self-adjusting strippers save time and prevent damage",
+          tip: "Look for ones that adjust automatically"
+        }
       ]
     },
     {
-      category: "Gripping",
+      category: "Power Tools",
+      priority: "Important",
       tools: [
-        { name: "Long Nose Pliers", use: "Gripping in confined spaces", warning: "Don't use as a hammer or lever" },
-        { name: "Grips/Mole Wrenches", use: "Holding pipes and awkward shaped items", warning: "Can damage surfaces if over-tightened" }
-      ]
-    },
-    {
-      category: "Driving",
-      tools: [
-        { name: "Insulated Screwdrivers", use: "Working near live parts (up to 1000V)", warning: "Check insulation regularly for damage" },
-        { name: "Pozi/Phillips Drivers", use: "Most modern electrical accessories", warning: "Use correct size to avoid cam-out damage" }
+        { 
+          name: "Cordless Drill/Driver", 
+          cost: "£80-200", 
+          description: "Essential for fixing and drilling. 18V systems most popular",
+          brands: ["Makita", "DeWalt", "Milwaukee"]
+        },
+        { 
+          name: "SDS Drill", 
+          cost: "£100-300", 
+          description: "For drilling masonry and concrete",
+          safety: "Always use appropriate PPE and dust extraction"
+        }
       ]
     }
   ];
 
-  const powerTools = [
-    {
-      name: "Cordless Drill",
-      safety: "Always wear safety glasses, check battery charge",
-      neverDo: "Never drill into walls without checking for cables/pipes first"
-    },
-    {
-      name: "SDS Drill", 
-      safety: "Wear full PPE, secure workpiece properly",
-      neverDo: "Never use without dust extraction in enclosed spaces"
-    },
-    {
-      name: "Oscillating Multi-tool",
-      safety: "Let blade stop completely before setting down",
-      neverDo: "Never force the tool, let the blade do the work"
-    }
-  ];
-
-  const cableTypes = [
+  const ukMaterialGuide = [
     {
       type: "Twin & Earth (T&E)",
-      function: "General domestic wiring",
-      whereUsed: "Inside buildings, protected from mechanical damage",
-      image: "🔌"
-    },
-    {
-      type: "Flexible Cable (Flex)",
-      function: "Connecting portable appliances",
-      whereUsed: "Appliance leads, temporary connections",
-      image: "🔗"
+      sizes: ["1.0mm²", "1.5mm²", "2.5mm²", "4mm²", "6mm²", "10mm²"],
+      applications: ["Domestic lighting (1.5mm²)", "Ring mains (2.5mm²)", "Cookers (6mm²)", "Showers (10mm²)"],
+      standards: "BS 6004",
+      colours: "Brown (L), Blue (N), Green/Yellow (E)"
     },
     {
       type: "Steel Wire Armoured (SWA)",
-      function: "Underground and external installations", 
-      whereUsed: "Garden supplies, between buildings",
-      image: "⚡"
+      sizes: ["1.5mm²", "2.5mm²", "4mm²", "6mm²", "10mm²", "16mm²+"],
+      applications: ["Underground cables", "External installations", "Industrial supplies"],
+      standards: "BS 5467",
+      colours: "Various cores available"
     },
     {
       type: "Fire Performance (FP200)",
-      function: "Maintains circuit integrity in fire",
-      whereUsed: "Fire alarm systems, emergency lighting",
-      image: "🔥"
+      sizes: ["1.0mm²", "1.5mm²", "2.5mm²"],
+      applications: ["Fire alarms", "Emergency lighting", "Smoke extraction"],
+      standards: "BS EN 50200",
+      colours: "Red sheath (fire circuits)"
     }
   ];
 
-  const starterKit = [
-    { item: "Basic hand tools set", cost: "£60-120", priority: "Month 1" },
-    { item: "Cordless drill & bits", cost: "£80-150", priority: "Month 2" },
-    { item: "Multimeter", cost: "£30-80", priority: "Month 1" },
-    { item: "Voltage tester", cost: "£15-40", priority: "Month 1" },
-    { item: "Tool bag/box", cost: "£25-60", priority: "Month 1" },
-    { item: "PPE kit", cost: "£40-80", priority: "Month 1" }
+  const apprenticeProgression = [
+    {
+      year: "Year 1",
+      focus: "Basic Tools & Safety",
+      budget: "£200-400",
+      essentials: ["Basic hand tools", "PPE kit", "Simple multimeter", "Tool bag"],
+      skills: "Learn safe handling and basic electrical principles"
+    },
+    {
+      year: "Year 2", 
+      focus: "Testing Equipment",
+      budget: "£400-800",
+      essentials: ["Multifunction tester", "Advanced hand tools", "Power tools"],
+      skills: "Testing procedures, fault finding, installation methods"
+    },
+    {
+      year: "Year 3",
+      focus: "Specialisation",
+      budget: "£300-600", 
+      essentials: ["Specialist tools", "Additional test equipment", "Professional tool storage"],
+      skills: "Design, inspection, certification, project management"
+    }
+  ];
+
+  const ukSuppliersGuide = [
+    {
+      name: "Electrical Wholesalers",
+      suppliers: ["CEF (City Electrical Factors)", "Rexel", "Edmundson Electrical", "TLC Electrical"],
+      benefits: "Trade prices, technical support, local branches",
+      apprenticeDiscount: "Many offer apprentice rates - ask for student card"
+    },
+    {
+      name: "Tool Retailers", 
+      suppliers: ["Screwfix", "Toolstation", "Machine Mart", "Travis Perkins"],
+      benefits: "Competitive prices, online ordering, click & collect",
+      apprenticeDiscount: "Some offer trade accounts with discounts"
+    },
+    {
+      name: "Specialist Electrical",
+      suppliers: ["RS Components", "Farnell", "CPC", "Rapid Electronics"],
+      benefits: "Technical specification, next-day delivery, wide range",
+      apprenticeDiscount: "Educational discounts available"
+    }
   ];
 
   const handleQuizAnswer = (answer: string) => {
     setSelectedAnswer(answer);
-    if (answer === cableQuiz[currentQuiz].correct) {
+    if (answer === expandedCableQuiz[currentQuiz].correct) {
       setQuizScore(quizScore + 1);
     }
     
     setTimeout(() => {
-      if (currentQuiz < cableQuiz.length - 1) {
+      if (currentQuiz < expandedCableQuiz.length - 1) {
         setCurrentQuiz(currentQuiz + 1);
         setSelectedAnswer(null);
       } else {
@@ -161,87 +245,137 @@ const BasicToolsMaterialsGuide = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">Basic Tools & Materials Guide</h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-4">
-          Everything you need to know about electrical tools, materials, and equipment for apprentices
+    <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
+      <div className="text-center mb-8">
+        <h1 className="text-4xl font-bold tracking-tight mb-4 text-elec-yellow">Basic Tools & Materials Guide</h1>
+        <p className="text-muted-foreground text-lg max-w-3xl mx-auto mb-6">
+          Complete guide to electrical tools, materials, and equipment for UK apprentices. 
+          Learn what you need, when you need it, and where to get the best deals.
         </p>
         <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
       </div>
 
-      {/* Cable Selection Quiz */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Cable className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Which Cable for This Job? - Interactive Quiz</CardTitle>
+      {/* Interactive Cable Quiz - Enhanced */}
+      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-gray via-elec-dark/80 to-elec-gray">
+        <CardHeader className="bg-elec-yellow/10 rounded-t-lg">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Cable className="h-7 w-7 text-elec-yellow" />
+              <div>
+                <CardTitle className="text-elec-yellow text-xl">Cable Selection Master Quiz</CardTitle>
+                <p className="text-sm text-muted-foreground mt-1">Test your knowledge of UK cable types and applications</p>
+              </div>
+            </div>
+            <Badge variant="outline" className="border-elec-yellow text-elec-yellow">
+              {expandedCableQuiz.length} Questions
+            </Badge>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-6">
           {!showQuizResult ? (
-            <div className="space-y-4">
-              <div className="flex justify-between items-center mb-4">
-                <span className="text-sm text-muted-foreground">
-                  Question {currentQuiz + 1} of {cableQuiz.length}
-                </span>
+            <div className="space-y-6">
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-4">
+                  <span className="text-sm text-muted-foreground">
+                    Question {currentQuiz + 1} of {expandedCableQuiz.length}
+                  </span>
+                  <div className="bg-elec-dark rounded-full h-2 w-32">
+                    <div 
+                      className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${((currentQuiz + 1) / expandedCableQuiz.length) * 100}%` }}
+                    />
+                  </div>
+                </div>
                 <span className="text-sm text-muted-foreground">
                   Score: {quizScore}/{currentQuiz + (selectedAnswer ? 1 : 0)}
                 </span>
               </div>
               
-              <h3 className="text-lg font-semibold text-white mb-4">
-                {cableQuiz[currentQuiz].question}
-              </h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {cableQuiz[currentQuiz].options.map((option, index) => (
-                  <Button
-                    key={index}
-                    variant="outline"
-                    className={`p-4 h-auto text-left justify-start ${
-                      selectedAnswer === option
-                        ? option === cableQuiz[currentQuiz].correct
-                          ? 'bg-green-500/20 border-green-500'
-                          : 'bg-red-500/20 border-red-500'
-                        : 'border-elec-yellow/20 hover:border-elec-yellow/40'
-                    }`}
-                    onClick={() => handleQuizAnswer(option)}
-                    disabled={selectedAnswer !== null}
-                  >
-                    {option}
-                    {selectedAnswer === option && (
-                      <div className="ml-auto">
-                        {option === cableQuiz[currentQuiz].correct ? (
-                          <CheckCircle className="h-4 w-4 text-green-400" />
-                        ) : (
-                          <AlertTriangle className="h-4 w-4 text-red-400" />
+              <div className="bg-elec-dark/50 p-6 rounded-lg">
+                <h3 className="text-xl font-semibold text-white mb-6">
+                  {expandedCableQuiz[currentQuiz].question}
+                </h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {expandedCableQuiz[currentQuiz].options.map((option, index) => (
+                    <Button
+                      key={index}
+                      variant="outline"
+                      className={`p-4 h-auto text-left justify-start text-wrap ${
+                        selectedAnswer === option
+                          ? option === expandedCableQuiz[currentQuiz].correct
+                            ? 'bg-green-500/20 border-green-500 text-green-300'
+                            : 'bg-red-500/20 border-red-500 text-red-300'
+                          : 'border-elec-yellow/30 hover:border-elec-yellow/60 hover:bg-elec-yellow/10'
+                      }`}
+                      onClick={() => handleQuizAnswer(option)}
+                      disabled={selectedAnswer !== null}
+                    >
+                      <div className="flex items-center justify-between w-full">
+                        <span>{option}</span>
+                        {selectedAnswer === option && (
+                          <div className="ml-2">
+                            {option === expandedCableQuiz[currentQuiz].correct ? (
+                              <CheckCircle className="h-5 w-5 text-green-400" />
+                            ) : (
+                              <AlertTriangle className="h-5 w-5 text-red-400" />
+                            )}
+                          </div>
                         )}
                       </div>
-                    )}
-                  </Button>
-                ))}
-              </div>
-              
-              {selectedAnswer && (
-                <div className="mt-4 p-4 bg-elec-yellow/10 rounded-lg">
-                  <p className="text-sm text-muted-foreground">
-                    <strong className="text-elec-yellow">Explanation:</strong> {cableQuiz[currentQuiz].explanation}
-                  </p>
+                    </Button>
+                  ))}
                 </div>
-              )}
+                
+                {selectedAnswer && (
+                  <div className="mt-6 p-4 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
+                    <div className="flex items-start gap-2">
+                      <BookOpen className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-medium text-elec-yellow mb-1">Explanation</h4>
+                        <p className="text-sm text-muted-foreground">
+                          {expandedCableQuiz[currentQuiz].explanation}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           ) : (
-            <div className="text-center space-y-4">
-              <h3 className="text-2xl font-bold text-white">Quiz Complete!</h3>
-              <p className="text-lg text-muted-foreground">
-                You scored {quizScore} out of {cableQuiz.length}
-              </p>
-              <div className="text-sm text-muted-foreground">
-                {quizScore === cableQuiz.length && "Perfect! You know your cables!"}
-                {quizScore >= cableQuiz.length * 0.75 && quizScore < cableQuiz.length && "Great work! You're getting there."}
-                {quizScore < cableQuiz.length * 0.75 && "Keep studying - cable selection is crucial for safety."}
+            <div className="text-center space-y-6">
+              <div className="bg-elec-dark/50 p-8 rounded-lg">
+                <h3 className="text-2xl font-bold text-white mb-4">Quiz Complete!</h3>
+                <div className={`text-5xl font-bold mb-4 ${
+                  quizScore >= expandedCableQuiz.length * 0.8 ? 'text-green-400' : 
+                  quizScore >= expandedCableQuiz.length * 0.6 ? 'text-elec-yellow' : 'text-orange-400'
+                }`}>
+                  {Math.round((quizScore / expandedCableQuiz.length) * 100)}%
+                </div>
+                <p className="text-lg mb-6">
+                  You scored <span className="font-bold text-elec-yellow">{quizScore}</span> out of{" "}
+                  <span className="font-bold">{expandedCableQuiz.length}</span> questions correctly
+                </p>
+                
+                <div className={`p-4 rounded-lg border ${
+                  quizScore >= expandedCableQuiz.length * 0.8 
+                    ? 'bg-green-500/20 border-green-500 text-green-300'
+                    : quizScore >= expandedCableQuiz.length * 0.6
+                    ? 'bg-amber-500/20 border-amber-500 text-amber-300'
+                    : 'bg-orange-500/20 border-orange-500 text-orange-300'
+                }`}>
+                  {quizScore >= expandedCableQuiz.length * 0.8 && (
+                    <p className="font-medium">Excellent! You have a strong understanding of UK cable types and applications.</p>
+                  )}
+                  {quizScore >= expandedCableQuiz.length * 0.6 && quizScore < expandedCableQuiz.length * 0.8 && (
+                    <p className="font-medium">Good work! Review BS 7671 cable selection requirements to improve further.</p>
+                  )}
+                  {quizScore < expandedCableQuiz.length * 0.6 && (
+                    <p className="font-medium">Keep studying! Cable selection is crucial for safety and compliance. Review the materials section below.</p>
+                  )}
+                </div>
               </div>
+              
               <Button onClick={resetQuiz} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
                 Take Quiz Again
               </Button>
@@ -250,232 +384,276 @@ const BasicToolsMaterialsGuide = () => {
         </CardContent>
       </Card>
 
-      {/* Core Hand Tools */}
+      {/* Essential Tools by Category - Enhanced */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Wrench className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Core Hand Tools</CardTitle>
+            <CardTitle className="text-elec-yellow">Essential Tools for UK Electricians</CardTitle>
           </div>
+          <p className="text-muted-foreground">Comprehensive guide to professional electrical tools and equipment</p>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
-            {handTools.map((category, index) => (
-              <div key={index}>
-                <h3 className="text-lg font-semibold text-white mb-3">{category.category}</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-8">
+            {essentialToolsData.map((category, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-semibold text-white">{category.category}</h3>
+                  <Badge variant="outline" className={`
+                    ${category.priority === 'Critical' ? 'border-red-500 text-red-400' : 
+                      category.priority === 'Essential' ? 'border-elec-yellow text-elec-yellow' : 
+                      'border-blue-500 text-blue-400'}
+                  `}>
+                    {category.priority}
+                  </Badge>
+                </div>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                   {category.tools.map((tool, toolIndex) => (
-                    <div key={toolIndex} className="border border-elec-yellow/20 rounded-lg p-4">
-                      <h4 className="font-medium text-white mb-2">{tool.name}</h4>
-                      <p className="text-sm text-muted-foreground mb-2">
-                        <strong>Use:</strong> {tool.use}
-                      </p>
-                      <div className="bg-orange-500/10 p-2 rounded-lg">
-                        <p className="text-sm text-orange-300">
-                          <AlertTriangle className="h-4 w-4 inline mr-1" />
-                          {tool.warning}
-                        </p>
+                    <div key={toolIndex} className="bg-elec-dark/30 p-4 rounded-lg">
+                      <div className="flex items-start justify-between mb-2">
+                        <h4 className="font-medium text-white">{tool.name}</h4>
+                        <span className="text-sm text-green-300 flex items-center gap-1">
+                          <BadgePoundSterling className="h-4 w-4" />
+                          {tool.cost}
+                        </span>
                       </div>
+                      <p className="text-sm text-muted-foreground mb-3">{tool.description}</p>
+                      
+                      {tool.brands && (
+                        <div className="mb-2">
+                          <span className="text-xs font-medium text-elec-yellow">Recommended brands: </span>
+                          <span className="text-xs text-muted-foreground">{tool.brands.join(', ')}</span>
+                        </div>
+                      )}
+                      
+                      {tool.safety && (
+                        <div className="bg-orange-500/10 p-2 rounded border border-orange-500/30">
+                          <p className="text-xs text-orange-300">
+                            <Shield className="h-3 w-3 inline mr-1" />
+                            {tool.safety}
+                          </p>
+                        </div>
+                      )}
+                      
+                      {tool.tip && (
+                        <div className="bg-blue-500/10 p-2 rounded border border-blue-500/30">
+                          <p className="text-xs text-blue-300">
+                            <Target className="h-3 w-3 inline mr-1" />
+                            {tool.tip}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
               </div>
             ))}
-            <div className="bg-elec-yellow/10 p-4 rounded-lg">
-              <p className="text-sm text-muted-foreground">
-                <strong className="text-elec-yellow">Apprentice Tip:</strong> "Buy cheap, buy twice" - invest in quality tools 
-                that will last your entire career. Cheap tools break when you need them most.
-              </p>
-            </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Power Tools */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Zap className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Power Tools & Safety Basics</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {powerTools.map((tool, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                  <div className="flex-1">
-                    <h4 className="font-medium text-white mb-2">{tool.name}</h4>
-                    <p className="text-sm text-green-300 mb-2">
-                      <Shield className="h-4 w-4 inline mr-1" />
-                      <strong>Safety:</strong> {tool.safety}
-                    </p>
-                    <p className="text-sm text-red-300">
-                      <AlertTriangle className="h-4 w-4 inline mr-1" />
-                      <strong>Never:</strong> {tool.neverDo}
-                    </p>
-                  </div>
-                  <Button variant="outline" size="sm" className="flex items-center gap-2">
-                    <Play className="h-4 w-4" />
-                    Demo Video
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Materials Overview */}
+      {/* UK Materials Guide - Enhanced */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Cable className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Materials Overview</CardTitle>
+            <CardTitle className="text-elec-yellow">UK Electrical Materials Guide</CardTitle>
           </div>
+          <p className="text-muted-foreground">Understanding British Standards and cable specifications</p>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {cableTypes.map((cable, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="text-2xl">{cable.image}</span>
-                  <h4 className="font-medium text-white">{cable.type}</h4>
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+            {ukMaterialGuide.map((material, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-5">
+                <h4 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <span className="text-2xl">⚡</span>
+                  {material.type}
+                </h4>
+                
+                <div className="space-y-3">
+                  <div>
+                    <h5 className="text-sm font-medium text-elec-yellow mb-1">Available Sizes</h5>
+                    <div className="flex flex-wrap gap-1">
+                      {material.sizes.map((size, idx) => (
+                        <Badge key={idx} variant="outline" className="text-xs border-elec-yellow/40 text-elec-yellow">
+                          {size}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h5 className="text-sm font-medium text-elec-yellow mb-1">Applications</h5>
+                    <ul className="text-xs text-muted-foreground space-y-1">
+                      {material.applications.map((app, idx) => (
+                        <li key={idx}>• {app}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-elec-dark/50 p-2 rounded">
+                    <p className="text-xs text-muted-foreground">
+                      <strong className="text-elec-yellow">Standard:</strong> {material.standards}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      <strong className="text-elec-yellow">Colours:</strong> {material.colours}
+                    </p>
+                  </div>
                 </div>
-                <p className="text-sm text-muted-foreground mb-2">
-                  <strong>Function:</strong> {cable.function}
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  <strong>Where Used:</strong> {cable.whereUsed}
-                </p>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      {/* Apprentice Starter Kit */}
+      {/* Apprentice Progression Guide */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Clock className="h-6 w-6 text-elec-yellow" />
+            <CardTitle className="text-elec-yellow">3-Year Apprentice Tool Progression</CardTitle>
+          </div>
+          <p className="text-muted-foreground">Strategic approach to building your professional toolkit</p>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            {apprenticeProgression.map((year, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-elec-yellow text-black rounded-full w-8 h-8 flex items-center justify-center font-bold">
+                      {index + 1}
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-white">{year.year}</h3>
+                      <p className="text-sm text-elec-yellow">{year.focus}</p>
+                    </div>
+                  </div>
+                  <Badge variant="outline" className="border-green-500 text-green-400">
+                    {year.budget}
+                  </Badge>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h4 className="font-medium text-white mb-2">Essential Purchases</h4>
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      {year.essentials.map((item, idx) => (
+                        <li key={idx} className="flex items-center gap-2">
+                          <CheckCircle className="h-4 w-4 text-green-400" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 className="font-medium text-white mb-2">Skills Development</h4>
+                    <p className="text-sm text-muted-foreground">{year.skills}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* UK Suppliers Guide */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <div className="flex items-center gap-2">
             <ShoppingCart className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Apprentice Starter Kit - Buying Guide</CardTitle>
+            <CardTitle className="text-elec-yellow">Where to Buy - UK Supplier Guide</CardTitle>
           </div>
+          <p className="text-muted-foreground">Best places to purchase electrical tools and materials in the UK</p>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            <p className="text-muted-foreground">What every apprentice should own:</p>
-            {starterKit.map((item, index) => (
-              <div key={index} className="flex flex-col md:flex-row md:items-center justify-between p-3 border border-elec-yellow/20 rounded-lg">
-                <div className="flex-1">
-                  <h4 className="font-medium text-white">{item.item}</h4>
-                  <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow mt-1">
-                    {item.priority}
-                  </Badge>
-                </div>
-                <div className="mt-2 md:mt-0">
-                  <span className="text-sm text-green-300 flex items-center gap-1">
-                    <BadgePoundSterling className="h-4 w-4" />
-                    {item.cost}
-                  </span>
+          <div className="space-y-6">
+            {ukSuppliersGuide.map((category, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-5">
+                <h3 className="font-semibold text-white mb-3 flex items-center gap-2">
+                  <Star className="h-5 w-5 text-elec-yellow" />
+                  {category.name}
+                </h3>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                  <div>
+                    <h4 className="text-sm font-medium text-elec-yellow mb-2">Suppliers</h4>
+                    <ul className="text-sm text-muted-foreground space-y-1">
+                      {category.suppliers.map((supplier, idx) => (
+                        <li key={idx}>• {supplier}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-sm font-medium text-elec-yellow mb-2">Benefits</h4>
+                    <p className="text-sm text-muted-foreground">{category.benefits}</p>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-sm font-medium text-elec-yellow mb-2">Apprentice Discounts</h4>
+                    <p className="text-sm text-green-300">{category.apprenticeDiscount}</p>
+                  </div>
                 </div>
               </div>
             ))}
-            <div className="bg-elec-yellow/10 p-4 rounded-lg">
-              <p className="text-sm text-muted-foreground">
-                <strong className="text-elec-yellow">Where to buy:</strong> Toolstation, Screwfix, 
-                CEF, Rexel. Check for apprentice discounts - many suppliers offer student rates.
-              </p>
-            </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Tool Comparison */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      {/* Professional Tips */}
+      <Card className="border-orange-500/50 bg-gradient-to-r from-orange-500/10 to-red-500/10">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Scale className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Cheap vs Professional Tools</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="border border-red-500/30 rounded-lg p-4">
-              <h4 className="font-medium text-red-300 mb-3">Budget Tools (£5-15)</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Break easily under regular use</li>
-                <li>• Poor accuracy and reliability</li>
-                <li>• May not meet safety standards</li>
-                <li>• Short warranty periods</li>
-                <li>• Cost more in long run due to replacement</li>
-              </ul>
-            </div>
-            
-            <div className="border border-green-500/30 rounded-lg p-4">
-              <h4 className="font-medium text-green-300 mb-3">Professional Tools (£25-60)</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Built to last entire career</li>
-                <li>• Better accuracy and consistency</li>
-                <li>• Meet all safety certifications</li>
-                <li>• Lifetime warranties available</li>
-                <li>• Retain resale value</li>
-              </ul>
-            </div>
-          </div>
-          
-          <Separator className="my-4" />
-          
-          <div className="bg-elec-yellow/10 p-4 rounded-lg">
-            <h4 className="font-medium text-elec-yellow mb-2">Investment Priorities</h4>
-            <p className="text-sm text-muted-foreground">
-              <strong>Invest in:</strong> Multimeter, insulated screwdrivers, side cutters<br/>
-              <strong>Save on:</strong> Tape measures, basic hand tools until you can afford better
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Safety & Maintenance */}
-      <Card className="border-orange-500/50 bg-orange-500/10">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Shield className="h-6 w-6 text-orange-400" />
-            <CardTitle className="text-orange-300">Safety & Maintenance</CardTitle>
+            <Award className="h-6 w-6 text-orange-400" />
+            <CardTitle className="text-orange-300">Professional Tips for Success</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h4 className="font-semibold text-white mb-3">Daily Tool Checks</h4>
+              <h4 className="font-semibold text-white mb-3">Quality Investment Strategy</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-start gap-2">
-                  <Eye className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
-                  Check power cables for damage
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Buy quality test equipment first - your safety depends on it
                 </li>
                 <li className="flex items-start gap-2">
-                  <Eye className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
-                  Inspect tool casings for cracks
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Invest in tools you'll use daily, save on occasional-use items
                 </li>
                 <li className="flex items-start gap-2">
-                  <Eye className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
-                  Test voltage testers before use
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Consider tool insurance for expensive equipment
                 </li>
                 <li className="flex items-start gap-2">
-                  <Eye className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
-                  Clean tools after use
+                  <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Join tool manufacturer loyalty schemes for discounts
                 </li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-semibold text-white mb-3">PAT Testing Rules</h4>
+              <h4 className="font-semibold text-white mb-3">Career Development</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Class I tools: Annual testing required</li>
-                <li>• Class II tools: 6-monthly in harsh environments</li>
-                <li>• College workshops: Check local requirements</li>
-                <li>• Keep records of all PAT tests</li>
-                <li>• Never use tools with failed PAT tests</li>
+                <li className="flex items-start gap-2">
+                  <Target className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                  Build relationships with suppliers - they're valuable resources
+                </li>
+                <li className="flex items-start gap-2">
+                  <Target className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                  Attend trade shows and manufacturer training events
+                </li>
+                <li className="flex items-start gap-2">
+                  <Target className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                  Network with other electricians - share knowledge and opportunities
+                </li>
+                <li className="flex items-start gap-2">
+                  <Target className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                  Stay updated with new technologies and regulations
+                </li>
               </ul>
             </div>
           </div>
