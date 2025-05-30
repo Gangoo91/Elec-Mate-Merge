@@ -44,9 +44,9 @@ const ElectricalHub = () => {
     {
       id: 6,
       title: "Career Progression",
-      description: "Resources and guidance for advancing your electrical career",
+      description: "Advanced career development resources for qualified electricians",
       icon: <GraduationCap className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/apprentice/career-progression"
+      link: "/electrician/career-progression"
     },
     {
       id: 7,
