@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CalendarIcon, Download, FileText, Shield, Clock, Info } from "lucide-react";
+import { CalendarIcon, Download, FileText, Shield, Info } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
@@ -297,51 +297,26 @@ const DocumentGenerator = ({ template, onClose }: DocumentGeneratorProps) => {
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
-      <CardHeader>
+    <div className="w-full">
+      <div className="mb-6">
         <div className="flex items-start gap-3">
           <FileText className="h-6 w-6 text-elec-yellow flex-shrink-0 mt-1" />
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
-              <CardTitle>Generate {template.name}</CardTitle>
+              <h2 className="text-xl font-semibold">Generate {template.name}</h2>
               {template.ukSpecific && (
                 <Badge variant="outline" className="bg-blue-500/20 text-blue-400 border-blue-500/30">
                   UK Specific
                 </Badge>
               )}
-              {template.difficulty && (
-                <Badge variant="outline" className={
-                  template.difficulty === "beginner" ? "bg-green-500/20 text-green-400 border-green-500/30" :
-                  template.difficulty === "intermediate" ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/30" :
-                  "bg-red-500/20 text-red-400 border-red-500/30"
-                }>
-                  {template.difficulty}
-                </Badge>
-              )}
             </div>
-            <CardDescription>{template.description}</CardDescription>
+            <p className="text-muted-foreground mb-3">{template.description}</p>
             
-            {/* Template Info */}
-            <div className="flex items-center gap-4 mt-3 text-sm text-muted-foreground">
-              {template.estimatedTime && (
-                <div className="flex items-center gap-1">
-                  <Clock className="h-4 w-4" />
-                  {template.estimatedTime}
-                </div>
-              )}
-              {template.regulationCompliant && template.regulationCompliant.length > 0 && (
-                <div className="flex items-center gap-1">
-                  <Shield className="h-4 w-4 text-green-400" />
-                  Regulation compliant
-                </div>
-              )}
-            </div>
-
             {/* Regulation Compliance Info */}
             {template.regulationCompliant && template.regulationCompliant.length > 0 && (
-              <div className="mt-3 p-3 bg-green-500/10 border border-green-500/30 rounded-md">
+              <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-md">
                 <div className="flex items-start gap-2">
-                  <Info className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
+                  <Shield className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-sm font-medium text-green-400">Regulation Compliant</p>
                     <p className="text-xs text-green-300">
@@ -353,13 +328,14 @@ const DocumentGenerator = ({ template, onClose }: DocumentGeneratorProps) => {
             )}
           </div>
         </div>
-      </CardHeader>
-      <CardContent className="space-y-6">
+      </div>
+
+      <div className="space-y-6">
         <div className="grid gap-6 md:grid-cols-2">
           {template.fields?.map(renderField)}
         </div>
 
-        <div className="flex gap-3 pt-4 border-t">
+        <div className="flex gap-3 pt-6 border-t border-elec-yellow/20">
           <Button variant="outline" onClick={onClose} className="flex-1">
             Cancel
           </Button>
@@ -372,8 +348,8 @@ const DocumentGenerator = ({ template, onClose }: DocumentGeneratorProps) => {
             {isGenerating ? "Generating..." : "Generate Document"}
           </Button>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 
