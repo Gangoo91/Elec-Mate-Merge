@@ -72,6 +72,12 @@ const ApprenticeRoutes = () => {
       <Route path="apprenticeship-expectations" element={<ApprenticeshipExpectations />} />
       <Route path="off-job-training-guide" element={<OffJobTrainingGuide />} />
       <Route path="site-jargon" element={<SiteJargon />} />
+      <Route path="portfolio-building" element={<RegulationsReference />} />
+      <Route path="rights-and-pay" element={<RegulationsReference />} />
+      <Route path="communication-skills" element={<RegulationsReference />} />
+      <Route path="study-tips" element={<RegulationsReference />} />
+      <Route path="learning-from-mistakes" element={<RegulationsReference />} />
+      <Route path="safety-fundamentals" element={<RegulationsReference />} />
       <Route path="regulations-reference" element={<RegulationsReference />} />
       <Route path="troubleshooting" element={<TroubleshootingGuide />} />
       <Route path="electrical-symbols" element={<ElectricalSymbols />} />

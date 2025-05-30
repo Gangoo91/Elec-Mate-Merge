@@ -37,7 +37,7 @@ const ApprenticeshipExpectations = () => {
     { category: "Hand Tools", items: ["Basic screwdriver set", "Wire strippers", "Side cutters", "Long nose pliers"] },
     { category: "Measuring", items: ["Tape measure", "Spirit level", "Voltage tester pen"] },
     { category: "PPE", items: ["Safety boots", "Hard hat", "Hi-vis vest", "Safety glasses"] },
-    { category: "Organization", items: ["Tool bag/box", "Knee pads", "Head torch"] }
+    { category: "Organisation", items: ["Tool bag/box", "Knee pads", "Head torch"] }
   ];
 
   const yearExpectations = [
@@ -46,7 +46,7 @@ const ApprenticeshipExpectations = () => {
       expectations: [
         "Learn basic safety procedures and follow them religiously",
         "Carry materials and assist qualified electricians",
-        "Practice basic wiring techniques under supervision",
+        "Practise basic wiring techniques under supervision",
         "Learn to use basic hand tools properly",
         "Start understanding electrical theory at college"
       ],
