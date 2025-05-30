@@ -5,7 +5,7 @@ import ToolboxGrid from "@/components/apprentice/toolbox/ToolboxGrid";
 import ToolboxTips from "@/components/apprentice/toolbox/ToolboxTips";
 import ActiveToolContent from "@/components/apprentice/toolbox/ActiveToolContent";
 
-type ActiveTool = null | "studyPlanner" | "conceptExplainer" | "powerCalculator" | "cableSizing" | "regulations";
+type ActiveTool = null | "powerCalculator" | "cableSizing";
 
 const ApprenticeToolbox = () => {
   const [activeTool, setActiveTool] = useState<ActiveTool>(null);

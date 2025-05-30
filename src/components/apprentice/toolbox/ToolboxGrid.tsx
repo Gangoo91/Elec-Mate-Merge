@@ -1,7 +1,7 @@
 
 import { ReactNode } from "react";
 import ToolboxCard from "./ToolboxCard";
-import { MessageSquare, Wrench, Shield, GraduationCap, LightbulbIcon, BookOpen, Calculator } from "lucide-react";
+import { MessageSquare, Wrench, Shield, GraduationCap, Calculator } from "lucide-react";
 
 interface ToolboxCategory {
   id: number;
@@ -47,20 +47,6 @@ const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
       description: "Explore your career progression options"
     },
     {
-      id: 7,
-      title: "Study Planner",
-      icon: <LightbulbIcon className="h-5 w-5 text-elec-yellow" />,
-      description: "Create personalized study plans for your apprenticeship",
-      onSelect: () => onToolSelection("studyPlanner")
-    },
-    {
-      id: 8,
-      title: "Concept Explainer",
-      icon: <BookOpen className="h-5 w-5 text-elec-yellow" />,
-      description: "Get explanations for complex electrical concepts",
-      onSelect: () => onToolSelection("conceptExplainer")
-    },
-    {
       id: 9,
       title: "Power Factor Calculator",
       icon: <Calculator className="h-5 w-5 text-elec-yellow" />,
@@ -73,13 +59,6 @@ const ToolboxGrid = ({ onToolSelection }: ToolboxGridProps) => {
       icon: <Calculator className="h-5 w-5 text-elec-yellow" />,
       description: "Calculate appropriate cable sizes based on current and voltage drop",
       onSelect: () => onToolSelection("cableSizing")
-    },
-    {
-      id: 11,
-      title: "BS7671 Search",
-      icon: <BookOpen className="h-5 w-5 text-elec-yellow" />,
-      description: "Look up regulations and standards information",
-      onSelect: () => onToolSelection("regulations")
     }
   ];
 
