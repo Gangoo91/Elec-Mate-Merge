@@ -28,7 +28,7 @@ const ActiveToolContent = ({ activeTool, onClose }: ActiveToolContentProps) => {
   return (
     <div className="space-y-4">
       <Button variant="outline" onClick={onClose} className="mb-2">
-        Back to Toolbox
+        Back to Guidance Area
       </Button>
       {renderActiveTool()}
     </div>

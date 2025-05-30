@@ -32,7 +32,7 @@ const ApprenticeHub = () => {
     },
     {
       id: 5,
-      title: "Toolbox Talk",
+      title: "Guidance Area",
       icon: WrenchIcon,
       link: "/apprentice/toolbox"
     },

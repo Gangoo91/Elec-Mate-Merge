@@ -17,7 +17,7 @@ const ApprenticeToolbox = () => {
   return (
     <div className="space-y-6 animate-fade-in pb-6">
       <ToolboxHeader 
-        title="Apprentice Toolbox" 
+        title="Apprentice Guidance Area" 
         linkPath="/apprentice/hub" 
         linkText="Back to Apprentice Hub" 
       />

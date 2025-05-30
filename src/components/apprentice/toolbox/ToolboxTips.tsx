@@ -10,12 +10,12 @@ const ToolboxTips = () => {
 
   return (
     <div className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-4 mt-6">
-      <h3 className="text-lg font-medium text-elec-yellow mb-2">Top Tips for New Apprentices</h3>
+      <h3 className="text-lg font-medium text-elec-yellow mb-2">Essential Guidance for Apprentices</h3>
       <ul className="list-disc list-inside space-y-2 text-sm">
-        <li>Always carry a voltage tester and use it before working on circuits</li>
-        <li>Keep a notebook for recording important information on site</li>
-        <li>Ask questions - experienced electricians are usually happy to share knowledge</li>
-        <li>Invest in quality tools that will last throughout your apprenticeship</li>
+        <li>Use the chat feature to get instant help with electrical questions and problems</li>
+        <li>Refer to the safety fundamentals regularly - safety should always be your top priority</li>
+        <li>Explore career progression options early to plan your professional development</li>
+        <li>Take advantage of the calculators to understand practical applications of electrical theory</li>
       </ul>
     </div>
   );
