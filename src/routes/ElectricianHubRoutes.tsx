@@ -1,3 +1,4 @@
+
 import { Route, Routes, Navigate } from "react-router-dom";
 import ElectricalChat from "@/pages/electrician/ElectricalChat";
 import ElectricalMaterials from "@/pages/electrician/ElectricalMaterials";
@@ -35,7 +36,7 @@ import MajorProjectDetail from "@/components/electrician/safety-shares/MajorProj
 
 const ElectricianHubRoutes = () => {
   return (
-    <Routes>
+    <>
       <Route index element={<Navigate to="toolbox-talk" replace />} />
       <Route path="chat" element={<ElectricalChat />} />
       <Route path="materials" element={<ElectricalMaterials />} />
@@ -70,7 +71,7 @@ const ElectricianHubRoutes = () => {
       <Route path="safety-shares/resources/:id" element={<SafetyResourceDetail />} />
       <Route path="safety-shares/news/:id" element={<IndustryNewsDetail />} />
       <Route path="safety-shares/projects/:id" element={<MajorProjectDetail />} />
-    </Routes>
+    </>
   );
 };
 
