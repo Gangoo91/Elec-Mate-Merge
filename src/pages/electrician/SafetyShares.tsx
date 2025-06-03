@@ -60,45 +60,45 @@ const SafetyShares = () => {
         <meta name="description" content="Share safety knowledge, learn from experience, and stay updated with the latest electrical industry safety information" />
       </Helmet>
       
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Header Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-6xl font-bold text-elec-yellow mb-8 tracking-tight">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-elec-yellow mb-4 tracking-tight">
             Safety Shares
           </h1>
-          <p className="text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed font-light">
+          <p className="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Your central hub for electrical safety information. Stay informed with the latest safety alerts, 
-            industry news, and learning opportunities from the electrical industry.
+            industry news, and learning opportunities.
           </p>
         </div>
 
         {/* Navigation Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6 max-w-6xl mx-auto">
           {safetyCategories.map((category) => {
             const IconComponent = category.icon;
             return (
               <Link key={category.title} to={category.link} className="group">
                 <Card className={`
-                  border-2 ${category.borderColor} ${category.bgColor} 
-                  hover:border-elec-yellow/80 transition-all duration-500 
-                  transform hover:scale-105 hover:shadow-2xl hover:shadow-elec-yellow/20
-                  h-64 flex flex-col justify-center relative overflow-hidden
-                  backdrop-blur-sm
+                  border ${category.borderColor} ${category.bgColor} 
+                  hover:border-elec-yellow/60 transition-all duration-300 
+                  transform hover:scale-105 hover:shadow-lg hover:shadow-elec-yellow/10
+                  h-48 flex flex-col justify-center relative overflow-hidden
+                  backdrop-blur-sm bg-elec-card/80
                 `}>
-                  <CardContent className="p-8 text-center h-full flex flex-col justify-center relative z-10">
-                    <div className="mb-6">
-                      <IconComponent className={`h-16 w-16 ${category.color} mx-auto mb-4 group-hover:scale-125 transition-all duration-500 drop-shadow-lg`} />
+                  <CardContent className="p-6 text-center h-full flex flex-col justify-center relative z-10">
+                    <div className="mb-4">
+                      <IconComponent className={`h-12 w-12 ${category.color} mx-auto mb-3 group-hover:scale-110 transition-all duration-300`} />
                     </div>
-                    <h3 className="font-bold text-white mb-3 text-xl group-hover:text-elec-yellow transition-colors duration-300">
+                    <h3 className="font-semibold text-white mb-2 text-lg group-hover:text-elec-yellow transition-colors duration-300">
                       {category.title}
                     </h3>
-                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300 leading-relaxed text-sm">
+                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300 text-sm leading-relaxed">
                       {category.description}
                     </p>
                   </CardContent>
                   
                   {/* Subtle gradient overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-elec-yellow/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-elec-yellow/3 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </Card>
               </Link>
             );
@@ -106,8 +106,8 @@ const SafetyShares = () => {
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center mt-16">
-          <p className="text-gray-400 text-lg">
+        <div className="text-center mt-12">
+          <p className="text-gray-400 text-base">
             Click on any category above to explore comprehensive safety resources and stay ahead of industry standards.
           </p>
         </div>
