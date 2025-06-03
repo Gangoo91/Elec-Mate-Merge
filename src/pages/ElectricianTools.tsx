@@ -1,7 +1,6 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calculator, Wrench, Brain, Settings, ArrowLeft, MapPin } from "lucide-react";
+import { Calculator, Wrench, Brain, Settings, ArrowLeft, MapPin, TestTube } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ElectricianTools = () => {
@@ -13,6 +12,13 @@ const ElectricianTools = () => {
       description: "Plan electrical installations with professional guidance and calculations",
       icon: <MapPin className="h-10 w-10 text-elec-yellow" />,
       link: "/electrician-tools/install-planner"
+    },
+    {
+      id: "inspection-testing",
+      title: "Inspection & Testing Walkthrough",
+      description: "Step-by-step testing procedures with validation and automated reporting",
+      icon: <TestTube className="h-10 w-10 text-elec-yellow" />,
+      link: "/electrician-tools/inspection-testing"
     },
     {
       id: "project-management",
