@@ -55,10 +55,15 @@ const ResistorColourCodeCalculator = () => {
   const calculateResistance = () => {
     if (!band1 || !band2 || !band3 || !band4) return;
 
-    const digit1 = colorValues[band1 as keyof typeof colorValues]?.value;
-    const digit2 = colorValues[band2 as keyof typeof colorValues]?.value;
-    const multiplier = colorValues[band3 as keyof typeof colorValues]?.multiplier;
+    const color1 = colorValues[band1 as keyof typeof colorValues];
+    const color2 = colorValues[band2 as keyof typeof colorValues];
+    const color3 = colorValues[band3 as keyof typeof colorValues];
     const tolerance = toleranceColors[band4 as keyof typeof toleranceColors];
+
+    // Check if the colors have value property (digits 1 and 2 must have value)
+    const digit1 = 'value' in color1 ? color1.value : undefined;
+    const digit2 = 'value' in color2 ? color2.value : undefined;
+    const multiplier = color3?.multiplier;
 
     if (digit1 === undefined || digit2 === undefined || !multiplier || !tolerance) return;
 
