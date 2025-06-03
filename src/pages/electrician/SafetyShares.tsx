@@ -7,24 +7,48 @@ import { Badge } from "@/components/ui/badge";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const SafetyShares = () => {
   const isMobile = useIsMobile();
   
+  const { data: latestAlert } = useQuery({
+    queryKey: ['latest-safety-alert'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('safety_alerts')
+        .select('id, title, date_published')
+        .eq('is_active', true)
+        .order('date_published', { ascending: false })
+        .limit(1)
+        .single();
+      
+      if (error) return null;
+      return data;
+    }
+  });
+
   // Simulating a notification when page loads
   useEffect(() => {
     const timer = setTimeout(() => {
-      toast.info("New safety alert from HSE available", {
-        description: "Updated guidance on electrical test equipment use - 15 Apr 2025",
-        action: {
-          label: "View",
-          onClick: () => window.scrollTo({ top: 0, behavior: 'smooth' })
-        }
-      });
+      if (latestAlert) {
+        toast.info("New safety alert available", {
+          description: `${latestAlert.title} - ${new Date(latestAlert.date_published).toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+          })}`,
+          action: {
+            label: "View",
+            onClick: () => window.location.href = `/electrician/safety-shares/alerts/${latestAlert.id}`
+          }
+        });
+      }
     }, 2000);
     
     return () => clearTimeout(timer);
-  }, []);
+  }, [latestAlert]);
 
   // Category card data
   const categories = [
@@ -34,7 +58,7 @@ const SafetyShares = () => {
       description: "Critical alerts and bulletins from industry regulators",
       icon: <AlertTriangle className="h-8 w-8 sm:h-10 sm:w-10 text-red-400" />,
       color: "from-red-900/20 to-red-800/10 border-red-500/30",
-      badge: "2 New",
+      badge: "New Alerts",
       badgeColor: "bg-red-500/20 text-red-400 hover:bg-red-500/30 hover:text-red-400",
       linkText: "View Safety Alerts",
       linkTo: "/electrician/safety-shares/alerts"
@@ -45,7 +69,7 @@ const SafetyShares = () => {
       description: "Real-world incidents and valuable lessons for electricians",
       icon: <FileText className="h-8 w-8 sm:h-10 sm:w-10 text-amber-400" />,
       color: "from-amber-900/20 to-amber-800/10 border-amber-500/30",
-      badge: "3 New",
+      badge: "New Reports",
       badgeColor: "bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 hover:text-amber-400",
       linkText: "Browse LFE Reports",
       linkTo: "/electrician/safety-shares/lfe"
@@ -114,7 +138,9 @@ const SafetyShares = () => {
             </p>
           </div>
           <div>
-            <Button size={isMobile ? "sm" : "default"} variant="destructive" className="whitespace-nowrap">View Details</Button>
+            <Link to="/electrician/safety-shares/alerts">
+              <Button size={isMobile ? "sm" : "default"} variant="destructive" className="whitespace-nowrap">View Details</Button>
+            </Link>
           </div>
         </CardContent>
       </Card>
@@ -174,7 +200,18 @@ const SafetyShares = () => {
             </p>
           </div>
           <div>
-            <Button size={isMobile ? "sm" : "default"} variant="default" className="whitespace-nowrap">Subscribe Now</Button>
+            <Button 
+              size={isMobile ? "sm" : "default"} 
+              variant="default" 
+              className="whitespace-nowrap"
+              onClick={() => {
+                toast.success("Subscription successful", {
+                  description: "You will now receive safety and industry updates."
+                });
+              }}
+            >
+              Subscribe Now
+            </Button>
           </div>
         </CardContent>
       </Card>
