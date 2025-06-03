@@ -5,6 +5,22 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Sigma } from "lucide-react";
 
+// Define proper types for color values
+type ColorWithValue = {
+  value: number;
+  multiplier: number;
+  color: string;
+  tolerance?: string;
+};
+
+type ColorWithoutValue = {
+  multiplier: number;
+  color: string;
+  tolerance?: string;
+};
+
+type ColorValue = ColorWithValue | ColorWithoutValue;
+
 const ResistorColourCodeCalculator = () => {
   const [band1, setBand1] = useState("");
   const [band2, setBand2] = useState("");
@@ -16,7 +32,7 @@ const ResistorColourCodeCalculator = () => {
     formattedValue: string;
   } | null>(null);
 
-  const colorValues = {
+  const colorValues: Record<string, ColorValue> = {
     black: { value: 0, multiplier: 1, color: "#000000" },
     brown: { value: 1, multiplier: 10, color: "#964B00", tolerance: "±1%" },
     red: { value: 2, multiplier: 100, color: "#FF0000", tolerance: "±2%" },
@@ -42,6 +58,11 @@ const ResistorColourCodeCalculator = () => {
     silver: "±10%",
   };
 
+  // Type guard to check if color has value property
+  const hasValue = (color: ColorValue): color is ColorWithValue => {
+    return 'value' in color;
+  };
+
   const formatResistance = (value: number): string => {
     if (value >= 1000000) {
       return `${(value / 1000000).toFixed(value % 1000000 === 0 ? 0 : 2)}MΩ`;
@@ -55,17 +76,17 @@ const ResistorColourCodeCalculator = () => {
   const calculateResistance = () => {
     if (!band1 || !band2 || !band3 || !band4) return;
 
-    const color1 = colorValues[band1 as keyof typeof colorValues];
-    const color2 = colorValues[band2 as keyof typeof colorValues];
-    const color3 = colorValues[band3 as keyof typeof colorValues];
+    const color1 = colorValues[band1];
+    const color2 = colorValues[band2];
+    const color3 = colorValues[band3];
     const tolerance = toleranceColors[band4 as keyof typeof toleranceColors];
 
     // Check if the colors have value property (digits 1 and 2 must have value)
-    const digit1 = 'value' in color1 ? color1.value : undefined;
-    const digit2 = 'value' in color2 ? color2.value : undefined;
-    const multiplier = color3?.multiplier;
+    if (!hasValue(color1) || !hasValue(color2) || !color3 || !tolerance) return;
 
-    if (digit1 === undefined || digit2 === undefined || !multiplier || !tolerance) return;
+    const digit1 = color1.value;
+    const digit2 = color2.value;
+    const multiplier = color3.multiplier;
 
     const resistance = (digit1 * 10 + digit2) * multiplier;
     const formattedValue = formatResistance(resistance);
@@ -89,7 +110,7 @@ const ResistorColourCodeCalculator = () => {
     <div className="flex items-center">
       <div 
         className="w-4 h-4 rounded-full border border-gray-400 mr-2" 
-        style={{ backgroundColor: colorValues[name as keyof typeof colorValues]?.color }}
+        style={{ backgroundColor: colorValues[name]?.color }}
       />
       <span className="capitalize">{name}</span>
     </div>
@@ -115,7 +136,7 @@ const ResistorColourCodeCalculator = () => {
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
                   {Object.entries(colorValues).slice(1, 10).map(([name]) => (
                     <SelectItem key={name} value={name}>
-                      <ColorOption color={colorValues[name as keyof typeof colorValues].color} name={name} />
+                      <ColorOption color={colorValues[name].color} name={name} />
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -131,7 +152,7 @@ const ResistorColourCodeCalculator = () => {
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
                   {Object.entries(colorValues).slice(0, 10).map(([name]) => (
                     <SelectItem key={name} value={name}>
-                      <ColorOption color={colorValues[name as keyof typeof colorValues].color} name={name} />
+                      <ColorOption color={colorValues[name].color} name={name} />
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -147,7 +168,7 @@ const ResistorColourCodeCalculator = () => {
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
                   {Object.entries(colorValues).map(([name]) => (
                     <SelectItem key={name} value={name}>
-                      <ColorOption color={colorValues[name as keyof typeof colorValues].color} name={name} />
+                      <ColorOption color={colorValues[name].color} name={name} />
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -164,7 +185,7 @@ const ResistorColourCodeCalculator = () => {
                   {Object.entries(toleranceColors).map(([name, tolerance]) => (
                     <SelectItem key={name} value={name}>
                       <div className="flex items-center justify-between w-full">
-                        <ColorOption color={colorValues[name as keyof typeof colorValues].color} name={name} />
+                        <ColorOption color={colorValues[name].color} name={name} />
                         <span className="text-xs text-muted-foreground ml-2">{tolerance}</span>
                       </div>
                     </SelectItem>
@@ -204,11 +225,11 @@ const ResistorColourCodeCalculator = () => {
                 <div className="mt-4">
                   <p className="text-xs text-muted-foreground mb-2">Resistor bands:</p>
                   <div className="flex items-center gap-1 bg-amber-100 p-2 rounded">
-                    <div className="w-6 h-8 border border-gray-400" style={{ backgroundColor: band1 ? colorValues[band1 as keyof typeof colorValues]?.color : '#ccc' }} />
-                    <div className="w-6 h-8 border border-gray-400" style={{ backgroundColor: band2 ? colorValues[band2 as keyof typeof colorValues]?.color : '#ccc' }} />
-                    <div className="w-6 h-8 border border-gray-400" style={{ backgroundColor: band3 ? colorValues[band3 as keyof typeof colorValues]?.color : '#ccc' }} />
+                    <div className="w-6 h-8 border border-gray-400" style={{ backgroundColor: band1 ? colorValues[band1]?.color : '#ccc' }} />
+                    <div className="w-6 h-8 border border-gray-400" style={{ backgroundColor: band2 ? colorValues[band2]?.color : '#ccc' }} />
+                    <div className="w-6 h-8 border border-gray-400" style={{ backgroundColor: band3 ? colorValues[band3]?.color : '#ccc' }} />
                     <div className="w-2 bg-amber-100"></div>
-                    <div className="w-6 h-8 border border-gray-400" style={{ backgroundColor: band4 ? colorValues[band4 as keyof typeof colorValues]?.color : '#ccc' }} />
+                    <div className="w-6 h-8 border border-gray-400" style={{ backgroundColor: band4 ? colorValues[band4]?.color : '#ccc' }} />
                   </div>
                 </div>
               </div>
