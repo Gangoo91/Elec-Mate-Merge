@@ -15,6 +15,12 @@ import ConduitFillCalculator from "@/components/apprentice/calculators/ConduitFi
 import ResistorColourCodeCalculator from "@/components/apprentice/calculators/ResistorColourCodeCalculator";
 import RingCircuitCalculator from "@/components/apprentice/calculators/RingCircuitCalculator";
 import DiversityFactorCalculator from "@/components/apprentice/calculators/DiversityFactorCalculator";
+import EarthFaultLoopCalculator from "@/components/apprentice/calculators/EarthFaultLoopCalculator";
+import MaximumDemandCalculator from "@/components/apprentice/calculators/MaximumDemandCalculator";
+import RCDTripTimeCalculator from "@/components/apprentice/calculators/RCDTripTimeCalculator";
+import SolarPVCalculator from "@/components/apprentice/calculators/SolarPVCalculator";
+import BatteryBackupCalculator from "@/components/apprentice/calculators/BatteryBackupCalculator";
+import BS7671ZsLookupCalculator from "@/components/apprentice/calculators/BS7671ZsLookupCalculator";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
 import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoonCalculator";
 import { Calculator, RotateCw } from "lucide-react";
@@ -48,6 +54,24 @@ const OnJobCalculations = () => {
         return <RingCircuitCalculator />;
       case "diversity-factor":
         return <DiversityFactorCalculator />;
+      case "earth-fault-loop":
+        return <EarthFaultLoopCalculator />;
+      case "maximum-demand":
+        return <MaximumDemandCalculator />;
+      case "rcd-trip-time":
+        return <RCDTripTimeCalculator />;
+      case "solar-pv":
+        return <SolarPVCalculator />;
+      case "battery-backup":
+        return <BatteryBackupCalculator />;
+      case "bs7671-zs-lookup":
+        return <BS7671ZsLookupCalculator />;
+      case "load":
+        return <ComingSoonCalculator 
+          title="Load Calculator" 
+          icon={Calculator} 
+          description="Calculate total load requirements for installations." 
+        />;
       case "phase-rotation":
         return <ComingSoonCalculator 
           title="Phase Rotation" 

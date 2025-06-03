@@ -2,7 +2,7 @@
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Zap, Activity, PlugZap, Calculator, Variable, Gauge, Sigma, Wrench, Cable, RotateCw } from "lucide-react";
+import { Zap, Activity, PlugZap, Calculator, Variable, Gauge, Sigma, Wrench, Cable, RotateCw, Shield, TrendingUp, Clock, Sun, Battery } from "lucide-react";
 
 interface CalculatorSelectorProps {
   calculatorType: string;
@@ -26,6 +26,12 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "ring-circuit", label: "Ring Circuit", icon: RotateCw },
     { value: "diversity-factor", label: "Diversity Factor", icon: Wrench },
     { value: "phase-rotation", label: "Phase Rotation", icon: RotateCw },
+    { value: "earth-fault-loop", label: "Earth Fault Loop", icon: Shield },
+    { value: "maximum-demand", label: "Maximum Demand", icon: TrendingUp },
+    { value: "rcd-trip-time", label: "RCD Trip Time", icon: Clock },
+    { value: "solar-pv", label: "Solar PV", icon: Sun },
+    { value: "battery-backup", label: "Battery Backup", icon: Battery },
+    { value: "bs7671-zs-lookup", label: "BS7671 Zs Lookup", icon: Zap },
   ];
 
   // For mobile: Use dropdown
@@ -56,10 +62,10 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
       <div className="hidden md:block">
         <Label className="text-lg font-medium mb-2 block">Select Calculator</Label>
         <Tabs value={calculatorType} onValueChange={setCalculatorType} className="w-full">
-          <TabsList className="w-full overflow-x-auto">
+          <TabsList className="w-full overflow-x-auto flex-wrap h-auto gap-1 p-2">
             {calculators.map((calc) => (
-              <TabsTrigger key={calc.value} value={calc.value} className="flex items-center gap-2">
-                <calc.icon className="h-4 w-4" />
+              <TabsTrigger key={calc.value} value={calc.value} className="flex items-center gap-2 text-xs">
+                <calc.icon className="h-3 w-3" />
                 {calc.label}
               </TabsTrigger>
             ))}
