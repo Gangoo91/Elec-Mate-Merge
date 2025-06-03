@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -11,7 +10,7 @@ interface SafetyAlert {
   title: string;
   summary: string;
   content: string;
-  severity: 'low' | 'medium' | 'high' | 'critical';
+  severity: string;
   category: string;
   date_published: string;
 }
