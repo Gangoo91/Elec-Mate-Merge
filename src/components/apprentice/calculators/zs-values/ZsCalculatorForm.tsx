@@ -3,7 +3,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calculator } from "lucide-react";
-import { fuseTypes, fuseRatings } from "./ZsValuesData";
+import { fuseTypes, fuseRatings, curveTypes } from "./ZsValuesData";
 
 interface ZsCalculatorFormProps {
   mcbRating: string;
@@ -16,6 +16,10 @@ interface ZsCalculatorFormProps {
   setFuseType: (value: string) => void;
   protectionType: string;
   setProtectionType: (value: string) => void;
+  mcbCurve: string;
+  setMcbCurve: (value: string) => void;
+  rcboCurve: string;
+  setRcboCurve: (value: string) => void;
   onCalculate: () => void;
   onReset: () => void;
 }
@@ -31,6 +35,10 @@ const ZsCalculatorForm = ({
   setFuseType,
   protectionType,
   setProtectionType,
+  mcbCurve,
+  setMcbCurve,
+  rcboCurve,
+  setRcboCurve,
   onCalculate,
   onReset
 }: ZsCalculatorFormProps) => {
@@ -51,47 +59,79 @@ const ZsCalculatorForm = ({
       </div>
 
       {protectionType === "mcb" && (
-        <div>
-          <Label htmlFor="mcb-rating">MCB Rating (A)</Label>
-          <Select value={mcbRating} onValueChange={setMcbRating}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-              <SelectValue placeholder="Select MCB rating" />
-            </SelectTrigger>
-            <SelectContent className="bg-elec-dark border-elec-yellow/20">
-              <SelectItem value="6">6A</SelectItem>
-              <SelectItem value="10">10A</SelectItem>
-              <SelectItem value="16">16A</SelectItem>
-              <SelectItem value="20">20A</SelectItem>
-              <SelectItem value="25">25A</SelectItem>
-              <SelectItem value="32">32A</SelectItem>
-              <SelectItem value="40">40A</SelectItem>
-              <SelectItem value="50">50A</SelectItem>
-              <SelectItem value="63">63A</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <>
+          <div>
+            <Label htmlFor="mcb-curve">MCB Curve Type</Label>
+            <Select value={mcbCurve} onValueChange={setMcbCurve}>
+              <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                <SelectValue placeholder="Select curve type" />
+              </SelectTrigger>
+              <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                {Object.entries(curveTypes).map(([key, label]) => (
+                  <SelectItem key={key} value={key}>{label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label htmlFor="mcb-rating">MCB Rating (A)</Label>
+            <Select value={mcbRating} onValueChange={setMcbRating}>
+              <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                <SelectValue placeholder="Select MCB rating" />
+              </SelectTrigger>
+              <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                <SelectItem value="6">6A</SelectItem>
+                <SelectItem value="10">10A</SelectItem>
+                <SelectItem value="16">16A</SelectItem>
+                <SelectItem value="20">20A</SelectItem>
+                <SelectItem value="25">25A</SelectItem>
+                <SelectItem value="32">32A</SelectItem>
+                <SelectItem value="40">40A</SelectItem>
+                <SelectItem value="50">50A</SelectItem>
+                <SelectItem value="63">63A</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </>
       )}
 
       {protectionType === "rcbo" && (
-        <div>
-          <Label htmlFor="rcbo-rating">RCBO Rating (A)</Label>
-          <Select value={rcboRating} onValueChange={setRcboRating}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-              <SelectValue placeholder="Select RCBO rating" />
-            </SelectTrigger>
-            <SelectContent className="bg-elec-dark border-elec-yellow/20">
-              <SelectItem value="6">6A</SelectItem>
-              <SelectItem value="10">10A</SelectItem>
-              <SelectItem value="16">16A</SelectItem>
-              <SelectItem value="20">20A</SelectItem>
-              <SelectItem value="25">25A</SelectItem>
-              <SelectItem value="32">32A</SelectItem>
-              <SelectItem value="40">40A</SelectItem>
-              <SelectItem value="50">50A</SelectItem>
-              <SelectItem value="63">63A</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <>
+          <div>
+            <Label htmlFor="rcbo-curve">RCBO Curve Type</Label>
+            <Select value={rcboCurve} onValueChange={setRcboCurve}>
+              <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                <SelectValue placeholder="Select curve type" />
+              </SelectTrigger>
+              <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                {Object.entries(curveTypes).map(([key, label]) => (
+                  <SelectItem key={key} value={key}>{label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label htmlFor="rcbo-rating">RCBO Rating (A)</Label>
+            <Select value={rcboRating} onValueChange={setRcboRating}>
+              <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                <SelectValue placeholder="Select RCBO rating" />
+              </SelectTrigger>
+              <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                <SelectItem value="6">6A</SelectItem>
+                <SelectItem value="10">10A</SelectItem>
+                <SelectItem value="16">16A</SelectItem>
+                <SelectItem value="20">20A</SelectItem>
+                <SelectItem value="25">25A</SelectItem>
+                <SelectItem value="32">32A</SelectItem>
+                <SelectItem value="40">40A</SelectItem>
+                <SelectItem value="50">50A</SelectItem>
+                <SelectItem value="63">63A</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </>
       )}
 
       {protectionType === "fuse" && (
@@ -138,8 +178,8 @@ const ZsCalculatorForm = ({
           onClick={onCalculate} 
           className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
           disabled={!protectionType || 
-            (protectionType === "mcb" && !mcbRating) ||
-            (protectionType === "rcbo" && !rcboRating) ||
+            (protectionType === "mcb" && (!mcbRating || !mcbCurve)) ||
+            (protectionType === "rcbo" && (!rcboRating || !rcboCurve)) ||
             (protectionType === "fuse" && (!fuseType || !fusRating))
           }
         >

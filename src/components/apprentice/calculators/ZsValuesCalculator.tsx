@@ -13,18 +13,23 @@ const ZsValuesCalculator = () => {
   const [fusRating, setFusRating] = useState("");
   const [fuseType, setFuseType] = useState("");
   const [protectionType, setProtectionType] = useState("");
+  const [mcbCurve, setMcbCurve] = useState("");
+  const [rcboCurve, setRcboCurve] = useState("");
   const [result, setResult] = useState<number | null>(null);
 
   const calculateZs = () => {
     let rating: number;
     let deviceType: keyof typeof zsValues;
+    let curveType: string | undefined;
 
     if (protectionType === "mcb") {
       rating = parseInt(mcbRating);
       deviceType = "mcb";
+      curveType = mcbCurve;
     } else if (protectionType === "rcbo") {
       rating = parseInt(rcboRating);
       deviceType = "rcbo";
+      curveType = rcboCurve;
     } else if (protectionType === "fuse") {
       rating = parseInt(fusRating);
       deviceType = fuseType as keyof typeof zsValues;
@@ -32,7 +37,17 @@ const ZsValuesCalculator = () => {
       return;
     }
 
-    const maxZs = zsValues[deviceType][rating as keyof typeof zsValues[typeof deviceType]];
+    let maxZs: number | undefined;
+
+    if ((deviceType === "mcb" || deviceType === "rcbo") && curveType) {
+      const deviceData = zsValues[deviceType] as any;
+      const curveData = deviceData[curveType];
+      maxZs = curveData?.[rating as keyof typeof curveData];
+    } else {
+      const deviceData = zsValues[deviceType] as any;
+      maxZs = deviceData?.[rating as keyof typeof deviceData];
+    }
+
     setResult(maxZs || null);
   };
 
@@ -42,6 +57,8 @@ const ZsValuesCalculator = () => {
     setFusRating("");
     setFuseType("");
     setProtectionType("");
+    setMcbCurve("");
+    setRcboCurve("");
     setResult(null);
   };
 
@@ -66,6 +83,10 @@ const ZsValuesCalculator = () => {
             setFuseType={setFuseType}
             protectionType={protectionType}
             setProtectionType={setProtectionType}
+            mcbCurve={mcbCurve}
+            setMcbCurve={setMcbCurve}
+            rcboCurve={rcboCurve}
+            setRcboCurve={setRcboCurve}
             onCalculate={calculateZs}
             onReset={resetCalculator}
           />
@@ -77,6 +98,8 @@ const ZsValuesCalculator = () => {
             rcboRating={rcboRating}
             fusRating={fusRating}
             fuseType={fuseType}
+            mcbCurve={mcbCurve}
+            rcboCurve={rcboCurve}
           />
         </div>
 
