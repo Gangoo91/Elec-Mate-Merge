@@ -1,7 +1,7 @@
 
 import { Helmet } from "react-helmet";
 import { Card, CardContent } from "@/components/ui/card";
-import { AlertTriangle, BookOpen, Newspaper, Building, FileText, Bell } from "lucide-react";
+import { AlertTriangle, BookOpen, Newspaper, Building, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const SafetyShares = () => {
@@ -54,133 +54,63 @@ const SafetyShares = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-elec-dark text-white p-6">
+    <div className="min-h-screen bg-elec-dark text-white">
       <Helmet>
         <title>Safety Shares - Elec-Mate</title>
         <meta name="description" content="Share safety knowledge, learn from experience, and stay updated with the latest electrical industry safety information" />
       </Helmet>
       
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="mb-12 text-center">
-          <h1 className="text-5xl font-bold text-elec-yellow mb-6">Safety Shares</h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        {/* Header Section */}
+        <div className="text-center mb-16">
+          <h1 className="text-6xl font-bold text-elec-yellow mb-8 tracking-tight">
+            Safety Shares
+          </h1>
+          <p className="text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed font-light">
             Your central hub for electrical safety information. Stay informed with the latest safety alerts, 
             industry news, and learning opportunities from the electrical industry.
           </p>
         </div>
 
-        {/* Enhanced Navigation Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
+        {/* Navigation Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {safetyCategories.map((category) => {
             const IconComponent = category.icon;
             return (
               <Link key={category.title} to={category.link} className="group">
                 <Card className={`
                   border-2 ${category.borderColor} ${category.bgColor} 
-                  hover:border-elec-yellow/60 transition-all duration-300 
-                  transform hover:scale-105 hover:shadow-xl hover:shadow-elec-yellow/10
-                  h-48 flex flex-col justify-center
+                  hover:border-elec-yellow/80 transition-all duration-500 
+                  transform hover:scale-105 hover:shadow-2xl hover:shadow-elec-yellow/20
+                  h-64 flex flex-col justify-center relative overflow-hidden
+                  backdrop-blur-sm
                 `}>
-                  <CardContent className="p-6 text-center h-full flex flex-col justify-center">
-                    <div className="mb-4">
-                      <IconComponent className={`h-12 w-12 ${category.color} mx-auto mb-3 group-hover:scale-110 transition-transform duration-300`} />
+                  <CardContent className="p-8 text-center h-full flex flex-col justify-center relative z-10">
+                    <div className="mb-6">
+                      <IconComponent className={`h-16 w-16 ${category.color} mx-auto mb-4 group-hover:scale-125 transition-all duration-500 drop-shadow-lg`} />
                     </div>
-                    <h3 className="font-bold text-white mb-2 text-lg group-hover:text-elec-yellow transition-colors">
+                    <h3 className="font-bold text-white mb-3 text-xl group-hover:text-elec-yellow transition-colors duration-300">
                       {category.title}
                     </h3>
-                    <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors leading-relaxed">
+                    <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300 leading-relaxed text-sm">
                       {category.description}
                     </p>
                   </CardContent>
+                  
+                  {/* Subtle gradient overlay on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-elec-yellow/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </Card>
               </Link>
             );
           })}
         </div>
 
-        {/* Key Features Section */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardContent className="p-8">
-              <div className="flex items-start gap-4">
-                <AlertTriangle className="h-8 w-8 text-red-400 mt-1" />
-                <div>
-                  <h3 className="text-2xl font-semibold text-white mb-3">Real-Time Safety Updates</h3>
-                  <p className="text-gray-300 leading-relaxed">
-                    Get instant access to critical safety alerts, regulatory changes, and industry updates 
-                    that directly impact your work and safety practices.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardContent className="p-8">
-              <div className="flex items-start gap-4">
-                <BookOpen className="h-8 w-8 text-yellow-400 mt-1" />
-                <div>
-                  <h3 className="text-2xl font-semibold text-white mb-3">Learn from Experience</h3>
-                  <p className="text-gray-300 leading-relaxed">
-                    Access real incident reports, near-miss analyses, and lessons learned from 
-                    experienced professionals across the electrical industry.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Bottom CTA */}
+        <div className="text-center mt-16">
+          <p className="text-gray-400 text-lg">
+            Click on any category above to explore comprehensive safety resources and stay ahead of industry standards.
+          </p>
         </div>
-
-        {/* Industry Resources Section */}
-        <Card className="border-elec-yellow/20 bg-elec-gray mb-8">
-          <CardContent className="p-8">
-            <div className="text-center mb-6">
-              <h2 className="text-3xl font-bold text-elec-yellow mb-4">Stay Connected with Industry Standards</h2>
-              <p className="text-gray-300 text-lg max-w-4xl mx-auto">
-                Our safety shares platform connects you with the latest developments in electrical safety, 
-                regulatory compliance, and best practices from across the industry.
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-6 mt-8">
-              <div className="text-center">
-                <Newspaper className="h-10 w-10 text-blue-400 mx-auto mb-3" />
-                <h4 className="font-semibold text-white mb-2">Latest News</h4>
-                <p className="text-sm text-gray-400">Industry updates and regulatory changes</p>
-              </div>
-              <div className="text-center">
-                <Building className="h-10 w-10 text-green-400 mx-auto mb-3" />
-                <h4 className="font-semibold text-white mb-2">Major Projects</h4>
-                <p className="text-sm text-gray-400">Learn from large-scale installations</p>
-              </div>
-              <div className="text-center">
-                <FileText className="h-10 w-10 text-purple-400 mx-auto mb-3" />
-                <h4 className="font-semibold text-white mb-2">Resources</h4>
-                <p className="text-sm text-gray-400">Downloadable guides and materials</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Subscription Notice */}
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-6">
-            <div className="flex items-start gap-4">
-              <Bell className="h-6 w-6 text-elec-yellow mt-1" />
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-2">Never Miss Critical Updates</h3>
-                <p className="text-gray-300 mb-4">
-                  Get instant notifications for critical safety alerts and industry updates. 
-                  Subscribe to categories that matter to your work and stay ahead of safety requirements.
-                </p>
-                <div className="text-sm text-gray-400">
-                  Sign in to manage your notification preferences and customize your safety information feed.
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );
