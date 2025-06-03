@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -29,6 +28,9 @@ const ZsValuesCalculator = () => {
     "bs1361": {
       5: 9.2, 15: 3.07, 20: 2.3, 30: 1.53, 45: 1.02
     },
+    "bs1361-type2": {
+      5: 9.2, 15: 3.07, 20: 2.3, 30: 1.53, 45: 1.02
+    },
     "bs3036": {
       5: 11.5, 15: 3.83, 20: 2.87, 30: 1.92, 45: 1.28
     },
@@ -41,34 +43,66 @@ const ZsValuesCalculator = () => {
     "bs88-4": {
       2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44
     },
+    "bs88-6": {
+      2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44, 40: 1.15, 50: 0.92, 63: 0.73, 80: 0.58, 100: 0.46
+    },
     "iec60269": {
       2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44, 40: 1.15, 50: 0.92, 63: 0.73
     },
+    "iec60269-1": {
+      2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44, 40: 1.15, 50: 0.92, 63: 0.73, 80: 0.58, 100: 0.46
+    },
+    "iec60269-2": {
+      2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44, 50: 0.92, 63: 0.73
+    },
     "din": {
       2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44, 35: 1.31, 50: 0.92, 63: 0.73
+    },
+    "din43653": {
+      6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 35: 1.31, 50: 0.92, 63: 0.73
+    },
+    "neozed": {
+      2: 23, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 35: 1.31
+    },
+    "diazed": {
+      2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 35: 1.31, 50: 0.92, 63: 0.73
     }
   };
 
   const fuseTypes = {
     "bs88": "BS 88 Fuse (HRC)",
-    "bs1361": "BS 1361 Cartridge Fuse",
+    "bs1361": "BS 1361 Cartridge Fuse Type I",
+    "bs1361-type2": "BS 1361 Cartridge Fuse Type II",
     "bs3036": "BS 3036 Rewirable Fuse",
     "bs1362": "BS 1362 Plug Fuse (13A Socket)",
     "bs646": "BS 646 Cartridge Fuse",
     "bs88-4": "BS 88-4 Compact HRC Fuse",
+    "bs88-6": "BS 88-6 Motor Circuit HRC Fuse",
     "iec60269": "IEC 60269 European Fuse",
-    "din": "DIN VDE Industrial Fuse"
+    "iec60269-1": "IEC 60269-1 General Purpose",
+    "iec60269-2": "IEC 60269-2 Partial Range",
+    "din": "DIN VDE Industrial Fuse",
+    "din43653": "DIN 43653 Blade Fuse",
+    "neozed": "NEOZED Bottle Fuse",
+    "diazed": "DIAZED Screw-in Fuse"
   };
 
   const fuseRatings = {
     "bs88": [2, 4, 5, 6, 10, 15, 16, 20, 25, 30, 32, 35, 40, 45, 50, 63, 80, 100],
     "bs1361": [5, 15, 20, 30, 45],
+    "bs1361-type2": [5, 15, 20, 30, 45],
     "bs3036": [5, 15, 20, 30, 45],
     "bs1362": [3, 5, 13],
     "bs646": [5, 15, 20, 30, 45, 60],
     "bs88-4": [2, 4, 6, 10, 16, 20, 25, 32],
+    "bs88-6": [2, 4, 6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100],
     "iec60269": [2, 4, 6, 10, 16, 20, 25, 32, 40, 50, 63],
-    "din": [2, 4, 6, 10, 16, 20, 25, 32, 35, 50, 63]
+    "iec60269-1": [2, 4, 6, 10, 16, 20, 25, 32, 40, 50, 63, 80, 100],
+    "iec60269-2": [2, 4, 6, 10, 16, 20, 25, 32, 50, 63],
+    "din": [2, 4, 6, 10, 16, 20, 25, 32, 35, 50, 63],
+    "din43653": [6, 10, 16, 20, 25, 35, 50, 63],
+    "neozed": [2, 6, 10, 16, 20, 25, 35],
+    "diazed": [2, 4, 6, 10, 16, 20, 25, 35, 50, 63]
   };
 
   const calculateZs = () => {
@@ -181,7 +215,7 @@ const ZsValuesCalculator = () => {
                     <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
                       <SelectValue placeholder="Select fuse type" />
                     </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                    <SelectContent className="bg-elec-dark border-elec-yellow/20 max-h-48">
                       {Object.entries(fuseTypes).map(([key, label]) => (
                         <SelectItem key={key} value={key}>{label}</SelectItem>
                       ))}
@@ -248,8 +282,10 @@ const ZsValuesCalculator = () => {
                         ? "rewirable fuses" 
                         : protectionType === "fuse" && fuseType === "bs1362"
                         ? "plug fuses in 13A sockets"
-                        : protectionType === "fuse" && (fuseType === "iec60269" || fuseType === "din")
+                        : protectionType === "fuse" && (fuseType?.includes("iec") || fuseType?.includes("din") || fuseType?.includes("neozed") || fuseType?.includes("diazed"))
                         ? "European/industrial fuses"
+                        : protectionType === "fuse" && fuseType === "bs88-6"
+                        ? "motor circuit HRC fuses"
                         : "Type B MCBs and cartridge fuses"
                     } at 230V. 
                     Actual measured Zs must be less than this maximum value for safe operation.
@@ -265,16 +301,19 @@ const ZsValuesCalculator = () => {
         </div>
 
         <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-          <h4 className="text-sm font-medium text-blue-300 mb-2">UK Fuse Types Explained</h4>
+          <h4 className="text-sm font-medium text-blue-300 mb-2">International Fuse Types Explained</h4>
           <div className="text-xs text-muted-foreground space-y-1">
             <p><strong>BS 88 (HRC):</strong> High Rupturing Capacity fuses for distribution boards and industrial use</p>
-            <p><strong>BS 1361:</strong> Cartridge fuses commonly used in older consumer units</p>
+            <p><strong>BS 1361:</strong> Cartridge fuses commonly used in older consumer units (Type I & II)</p>
             <p><strong>BS 3036:</strong> Rewirable fuses (wire element) - less common in modern installations</p>
             <p><strong>BS 1362:</strong> Plug fuses found in 13A socket outlets and plugs</p>
             <p><strong>BS 646:</strong> Cartridge fuses for lighting and small appliance circuits</p>
             <p><strong>BS 88-4:</strong> Compact HRC fuses for modern consumer units</p>
-            <p><strong>IEC 60269:</strong> European standard fuses used in some installations</p>
-            <p><strong>DIN VDE:</strong> German/European industrial fuses for motor and industrial circuits</p>
+            <p><strong>BS 88-6:</strong> Motor circuit protection HRC fuses for industrial applications</p>
+            <p><strong>IEC 60269:</strong> European standard fuses (General & Partial range types)</p>
+            <p><strong>DIN:</strong> German/European industrial fuses for motor and industrial circuits</p>
+            <p><strong>NEOZED:</strong> German bottle-type fuses commonly used in Europe</p>
+            <p><strong>DIAZED:</strong> German screw-in fuses for distribution boards</p>
           </div>
         </div>
       </CardContent>
