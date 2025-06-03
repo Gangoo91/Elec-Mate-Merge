@@ -11,43 +11,35 @@ const LandingPage = () => {
   const features = [
     {
       icon: BookOpen,
-      title: "Comprehensive Learning Hub",
-      description: "Access the UK's most extensive collection of electrical training materials, video lessons, and certification preparation resources designed for every skill level."
+      title: "Comprehensive Learning Hub"
     },
     {
       icon: Wrench,
-      title: "Professional Toolkit",
-      description: "Essential calculation tools, code references, project management, and business development resources trusted by thousands of UK electrical professionals."
+      title: "Professional Toolkit"
     },
     {
       icon: Users,
-      title: "Industry Community",
-      description: "Connect with over 10,000 electrical professionals across the UK. Share knowledge, solve complex problems, and build valuable industry relationships."
+      title: "Industry Community"
     },
     {
       icon: Sparkles,
-      title: "Digital Training Management",
-      description: "Track off-job training hours, manage apprenticeship portfolios, and document professional development with our comprehensive digital logbook system."
+      title: "Digital Training Management"
     },
     {
       icon: Brain,
-      title: "Expert Mentorship Program",
-      description: "Get paired with experienced professionals through our mentorship network. Accelerate your career with guidance from industry leaders."
+      title: "Expert Mentorship Program"
     },
     {
       icon: Heart,
-      title: "Mental Health & Wellbeing",
-      description: "Access specialized mental health resources designed for the electrical industry, including stress management and work-life balance support."
+      title: "Mental Health & Wellbeing"
     },
     {
       icon: Shield,
-      title: "Safety Knowledge Sharing",
-      description: "Stay updated with critical safety alerts, learn from real incidents, and access the latest regulatory updates to maintain the highest safety standards."
+      title: "Safety Knowledge Sharing"
     },
     {
       icon: Award,
-      title: "Career Development",
-      description: "Explore career pathways, find job opportunities, and access business development resources whether you're an apprentice or running your own electrical business."
+      title: "Career Development"
     }
   ];
 
@@ -131,10 +123,6 @@ const LandingPage = () => {
                 <h3 className="text-2xl font-medium text-white mb-4 group-hover:text-elec-yellow transition-colors duration-300">
                   {feature.title}
                 </h3>
-                
-                <p className="text-gray-300 leading-relaxed">
-                  {feature.description}
-                </p>
               </div>
             );
           })}
