@@ -89,23 +89,17 @@ const SafetyShares = () => {
           </div>
         </div>
 
-        {/* Live Content Feed */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        {/* Live Content Feed - Single Column Layout for Wider Boxes */}
+        <div className="space-y-8 mb-8">
           <SafetyAlertsCard />
           <LearningFromExperienceCard />
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <IndustryNewsCard />
           <MajorProjectsCard />
-        </div>
-
-        <div className="grid grid-cols-1 gap-6">
           <SafetyResourcesCard />
         </div>
 
         {/* Subscription Notice */}
-        <Card className="border-elec-yellow/20 bg-elec-gray mt-8">
+        <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardContent className="p-6">
             <div className="flex items-start gap-4">
               <Bell className="h-6 w-6 text-elec-yellow mt-1" />
