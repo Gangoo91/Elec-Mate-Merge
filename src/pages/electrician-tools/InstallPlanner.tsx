@@ -87,9 +87,9 @@ const InstallPlanner = () => {
             Plan your electrical installation with professional guidance and calculations.
           </p>
         </div>
-        <Link to="/electrical-hub">
+        <Link to="/electrician-tools">
           <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Electrical Hub
+            <ArrowLeft className="h-4 w-4" /> Back to Electrician Tools
           </Button>
         </Link>
       </div>

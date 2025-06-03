@@ -1,12 +1,19 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calculator, Wrench, Brain, Settings, ArrowLeft } from "lucide-react";
+import { Calculator, Wrench, Brain, Settings, ArrowLeft, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ElectricianTools = () => {
   // Main tool categories
   const toolCategories = [
+    {
+      id: "install-planner",
+      title: "Install Planner",
+      description: "Plan electrical installations with professional guidance and calculations",
+      icon: <MapPin className="h-10 w-10 text-elec-yellow" />,
+      link: "/electrician-tools/install-planner"
+    },
     {
       id: "project-management",
       title: "Project Management",
