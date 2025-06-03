@@ -24,7 +24,7 @@ const ZsValuesCalculator = () => {
       6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44, 40: 1.15, 50: 0.92, 63: 0.73
     },
     "bs88": {
-      5: 9.2, 10: 4.6, 15: 3.07, 20: 2.3, 25: 1.84, 30: 1.53, 45: 1.02
+      2: 23, 4: 11.5, 5: 9.2, 6: 7.67, 10: 4.6, 15: 3.07, 16: 2.87, 20: 2.3, 25: 1.84, 30: 1.53, 32: 1.44, 35: 1.31, 40: 1.15, 45: 1.02, 50: 0.92, 63: 0.73, 80: 0.58, 100: 0.46
     },
     "bs1361": {
       5: 9.2, 15: 3.07, 20: 2.3, 30: 1.53, 45: 1.02
@@ -34,6 +34,18 @@ const ZsValuesCalculator = () => {
     },
     "bs1362": {
       3: 15.33, 5: 9.2, 13: 1.77
+    },
+    "bs646": {
+      5: 9.2, 15: 3.07, 20: 2.3, 30: 1.53, 45: 1.02, 60: 0.77
+    },
+    "bs88-4": {
+      2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44
+    },
+    "iec60269": {
+      2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44, 40: 1.15, 50: 0.92, 63: 0.73
+    },
+    "din": {
+      2: 23, 4: 11.5, 6: 7.67, 10: 4.6, 16: 2.87, 20: 2.3, 25: 1.84, 32: 1.44, 35: 1.31, 50: 0.92, 63: 0.73
     }
   };
 
@@ -41,14 +53,22 @@ const ZsValuesCalculator = () => {
     "bs88": "BS 88 Fuse (HRC)",
     "bs1361": "BS 1361 Cartridge Fuse",
     "bs3036": "BS 3036 Rewirable Fuse",
-    "bs1362": "BS 1362 Plug Fuse (13A Socket)"
+    "bs1362": "BS 1362 Plug Fuse (13A Socket)",
+    "bs646": "BS 646 Cartridge Fuse",
+    "bs88-4": "BS 88-4 Compact HRC Fuse",
+    "iec60269": "IEC 60269 European Fuse",
+    "din": "DIN VDE Industrial Fuse"
   };
 
   const fuseRatings = {
-    "bs88": [5, 10, 15, 20, 25, 30, 45],
+    "bs88": [2, 4, 5, 6, 10, 15, 16, 20, 25, 30, 32, 35, 40, 45, 50, 63, 80, 100],
     "bs1361": [5, 15, 20, 30, 45],
     "bs3036": [5, 15, 20, 30, 45],
-    "bs1362": [3, 5, 13]
+    "bs1362": [3, 5, 13],
+    "bs646": [5, 15, 20, 30, 45, 60],
+    "bs88-4": [2, 4, 6, 10, 16, 20, 25, 32],
+    "iec60269": [2, 4, 6, 10, 16, 20, 25, 32, 40, 50, 63],
+    "din": [2, 4, 6, 10, 16, 20, 25, 32, 35, 50, 63]
   };
 
   const calculateZs = () => {
@@ -228,6 +248,8 @@ const ZsValuesCalculator = () => {
                         ? "rewirable fuses" 
                         : protectionType === "fuse" && fuseType === "bs1362"
                         ? "plug fuses in 13A sockets"
+                        : protectionType === "fuse" && (fuseType === "iec60269" || fuseType === "din")
+                        ? "European/industrial fuses"
                         : "Type B MCBs and cartridge fuses"
                     } at 230V. 
                     Actual measured Zs must be less than this maximum value for safe operation.
@@ -243,12 +265,16 @@ const ZsValuesCalculator = () => {
         </div>
 
         <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-          <h4 className="text-sm font-medium text-blue-300 mb-2">Fuse Types Explained</h4>
+          <h4 className="text-sm font-medium text-blue-300 mb-2">UK Fuse Types Explained</h4>
           <div className="text-xs text-muted-foreground space-y-1">
-            <p><strong>BS 88 (HRC):</strong> High Rupturing Capacity fuses for distribution boards</p>
+            <p><strong>BS 88 (HRC):</strong> High Rupturing Capacity fuses for distribution boards and industrial use</p>
             <p><strong>BS 1361:</strong> Cartridge fuses commonly used in older consumer units</p>
             <p><strong>BS 3036:</strong> Rewirable fuses (wire element) - less common in modern installations</p>
             <p><strong>BS 1362:</strong> Plug fuses found in 13A socket outlets and plugs</p>
+            <p><strong>BS 646:</strong> Cartridge fuses for lighting and small appliance circuits</p>
+            <p><strong>BS 88-4:</strong> Compact HRC fuses for modern consumer units</p>
+            <p><strong>IEC 60269:</strong> European standard fuses used in some installations</p>
+            <p><strong>DIN VDE:</strong> German/European industrial fuses for motor and industrial circuits</p>
           </div>
         </div>
       </CardContent>
