@@ -61,9 +61,11 @@ const AppRouter = () => {
         <Route path="videos" element={<VideoLessons />} />
         <Route path="leaderboards" element={<Leaderboards />} />
         
-        {/* Electrician Routes */}
+        {/* Electrician Tools Routes */}
         <Route path="electrician-tools" element={<ElectricianTools />} />
         <Route path="electrician-tools/*" element={<ElectricianRoutes />} />
+        
+        {/* Electrical Hub Routes */}
         <Route path="electrical-hub" element={<ElectricalHub />} />
         <Route path="electrical-hub/*" element={<ElectricianHubRoutes />} />
         <Route path="electrician/*" element={<ElectricianHubRoutes />} />
