@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, FileText, ClipboardList, Briefcase, Users, Book, BarChart4, CalendarClock, Calculator, FileCheck } from "lucide-react";
+import { ArrowLeft, FileText, ClipboardList, Briefcase, Users, Book, BarChart4, CalendarClock, Calculator, FileCheck, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 
@@ -69,6 +69,13 @@ const Admin = () => {
       description: "Generate professional quotes for electrical jobs",
       icon: <Book className="h-5 w-5 text-elec-yellow" />,
       link: "/electrician-tools/quote-library"
+    },
+    {
+      id: 9,
+      title: "Install Planner",
+      description: "Plan electrical installations with load calculations and recommendations",
+      icon: <MapPin className="h-5 w-5 text-elec-yellow" />,
+      link: "/electrician-tools/install-planner"
     }
   ];
 

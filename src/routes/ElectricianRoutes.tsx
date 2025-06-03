@@ -12,6 +12,7 @@ import ProjectManagement from "@/pages/electrician-tools/ProjectManagement";
 import ProjectDetails from "@/components/project-management/ProjectDetails";
 import CableSizingCalculator from "@/pages/electrician-tools/cable-sizing";
 import DocumentTemplates from "@/pages/electrician-tools/DocumentTemplates";
+import InstallPlanner from "@/pages/electrician-tools/InstallPlanner";
 // Add Staff Management page
 import StaffManagement from "@/pages/electrician-tools/StaffManagement";
 // Add Schedule Manager page
@@ -34,6 +35,7 @@ const ElectricianRoutes = () => (
     <Route path="document-templates" element={<DocumentTemplates />} />
     <Route path="project-management" element={<ProjectManagement />} />
     <Route path="project-management/project/:projectId" element={<ProjectDetails />} />
+    <Route path="install-planner" element={<InstallPlanner />} />
     {/* Add new routes */}
     <Route path="staff-management" element={<StaffManagement />} />
     <Route path="schedule" element={<ScheduleManager />} />
