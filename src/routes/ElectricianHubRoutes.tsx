@@ -1,4 +1,3 @@
-
 import { Route, Routes, Navigate } from "react-router-dom";
 import ElectricalChat from "@/pages/electrician/ElectricalChat";
 import ElectricalMaterials from "@/pages/electrician/ElectricalMaterials";
@@ -30,6 +29,9 @@ import IndustryNews from "@/pages/electrician/safety-shares/IndustryNews";
 // Safety shares detail views
 import SafetyAlertDetail from "@/components/electrician/safety-shares/SafetyAlertDetail";
 import LFEReportDetail from "@/components/electrician/safety-shares/LFEReportDetail";
+import SafetyResourceDetail from "@/components/electrician/safety-shares/SafetyResourceDetail";
+import IndustryNewsDetail from "@/components/electrician/safety-shares/IndustryNewsDetail";
+import MajorProjectDetail from "@/components/electrician/safety-shares/MajorProjectDetail";
 
 const ElectricianHubRoutes = () => {
   return (
@@ -65,6 +67,9 @@ const ElectricianHubRoutes = () => {
       {/* Safety shares detail views */}
       <Route path="safety-shares/alerts/:id" element={<SafetyAlertDetail />} />
       <Route path="safety-shares/lfe/:id" element={<LFEReportDetail />} />
+      <Route path="safety-shares/resources/:id" element={<SafetyResourceDetail />} />
+      <Route path="safety-shares/news/:id" element={<IndustryNewsDetail />} />
+      <Route path="safety-shares/projects/:id" element={<MajorProjectDetail />} />
     </Routes>
   );
 };

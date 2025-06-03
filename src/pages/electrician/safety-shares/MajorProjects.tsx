@@ -10,60 +10,21 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 const MajorProjects = () => {
   const isMobile = useIsMobile();
   
-  const projects = [
-    {
-      id: 1,
-      title: "HS2 Euston Station Electrical Package",
-      awardedTo: "Balfour Beatty",
-      date: "18 Mar 2025",
-      summary: "£120M electrical installation package for the new HS2 Euston terminus station, covering critical power systems, lighting, and security.",
-      location: "London",
-      value: "£120M",
-      status: "awarded"
-    },
-    {
-      id: 2,
-      title: "SSE North Sea Wind Farm Grid Connection",
-      awardedTo: "Siemens Energy & VolkerInfra",
-      date: "4 Apr 2025",
-      summary: "Major contract awarded for connecting the 1.2GW Berwick Bank offshore wind farm to the National Grid via 380kV transmission system.",
-      location: "East Lothian, Scotland",
-      value: "£240M",
-      status: "awarded"
-    },
-    {
-      id: 3,
-      title: "Hinkley Point C Nuclear Plant Distribution Systems",
-      awardedTo: "Balfour Beatty Bailey",
-      date: "27 Mar 2025",
-      summary: "Final phase electrical distribution systems for the UK's first new nuclear power plant in a generation.",
-      location: "Somerset",
-      value: "£190M",
-      status: "awarded"
-    },
-    {
-      id: 4,
-      title: "Microsoft Hyperscale Data Centre",
-      awardedTo: "Mercury Engineering",
-      date: "15 Feb 2025",
-      summary: "Full electrical package for new 50MW hyperscale data centre including primary and secondary distribution systems.",
-      location: "Dublin, Ireland",
-      value: "€95M",
-      status: "awarded"
-    },
-    {
-      id: 5,
-      title: "Leeds Teaching Hospital Redevelopment",
-      awardedTo: "NG Bailey",
-      date: "2 Apr 2025",
-      summary: "Complete hospital electrical infrastructure package including life critical systems, medical-grade distribution networks and BMS integration.",
-      location: "Leeds",
-      value: "£87M",
-      status: "awarded"
+  const { data: projects, isLoading, error } = useQuery({
+    queryKey: ['major-projects'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('major_projects')
+        .select('*')
+        .eq('is_active', true)
+        .order('date_awarded', { ascending: false });
+      
+      if (error) throw error;
+      return data;
     }
-  ];
+  });
 
-  const getStatusBadge = (status) => {
+  const getStatusBadge = (status: string) => {
     return (
       <div className="flex items-center gap-1">
         <span className="relative flex h-3 w-3">
@@ -73,6 +34,43 @@ const MajorProjects = () => {
       </div>
     );
   };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6 animate-fade-in px-2 md:px-0">
+        <div className="flex justify-between items-center">
+          <div className="h-8 bg-elec-gray/20 rounded w-64 animate-pulse"></div>
+          <div className="h-10 bg-elec-gray/20 rounded w-32 animate-pulse"></div>
+        </div>
+        <div className="h-64 bg-elec-gray/20 rounded animate-pulse"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-6 animate-fade-in px-2 md:px-0">
+        <div className="flex justify-between items-center">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight flex items-center gap-2">
+            <Construction className="h-5 w-5 sm:h-6 sm:w-6 text-green-400" />
+            Major Awarded Projects
+          </h1>
+          <Link to="/electrician/safety-shares">
+            <Button variant="outline" size={isMobile ? "sm" : "default"} className="flex items-center gap-2">
+              <ArrowLeft className="h-4 w-4" /> Back to Safety Hub
+            </Button>
+          </Link>
+        </div>
+        <Card className="border-green-500/20">
+          <CardContent className="p-6 text-center">
+            <Construction className="h-12 w-12 text-green-400 mx-auto mb-4" />
+            <h2 className="text-xl font-semibold mb-2">Unable to Load Projects</h2>
+            <p className="text-muted-foreground">There was an error loading major projects. Please try again later.</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 animate-fade-in px-2 md:px-0">
@@ -93,77 +91,101 @@ const MajorProjects = () => {
         </Link>
       </div>
 
-      {!isMobile && (
+      {projects && projects.length > 0 ? (
+        <>
+          {!isMobile && (
+            <Card className="border-elec-yellow/20">
+              <CardContent className="p-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="bg-elec-gray/80 hover:bg-elec-gray">
+                      <TableHead className="w-[250px]">Project</TableHead>
+                      <TableHead>Awarded To</TableHead>
+                      <TableHead>Value</TableHead>
+                      <TableHead>Location</TableHead>
+                      <TableHead>Date</TableHead>
+                      <TableHead className="text-right">Details</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {projects.map(project => (
+                      <TableRow key={project.id} className="border-elec-yellow/10 hover:bg-elec-gray/50">
+                        <TableCell className="font-medium">{project.title}</TableCell>
+                        <TableCell>{project.awarded_to}</TableCell>
+                        <TableCell>{project.project_value}</TableCell>
+                        <TableCell>{project.location}</TableCell>
+                        <TableCell>{new Date(project.date_awarded).toLocaleDateString('en-GB', {
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric'
+                        })}</TableCell>
+                        <TableCell className="text-right">
+                          <Link to={`/electrician/safety-shares/projects/${project.id}`}>
+                            <Button variant="outline" size="sm" className="gap-1">
+                              <FileCheck className="h-3 w-3" /> View
+                            </Button>
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          )}
+
+          {isMobile && (
+            <div className="grid grid-cols-1 gap-4">
+              {projects.map(project => (
+                <Card key={project.id} className="overflow-hidden border-elec-yellow/20 bg-elec-gray/80 hover:bg-elec-gray transition-all duration-200">
+                  <div className="h-1 bg-green-500" />
+                  <CardHeader className="pb-2 p-4">
+                    <div className="flex justify-between items-center mb-2">
+                      <Badge className="bg-green-500/20 text-green-400 hover:bg-green-500/30 hover:text-green-400">
+                        {project.project_value}
+                      </Badge>
+                      <div className="flex items-center text-xs text-muted-foreground gap-1">
+                        <CalendarDays className="h-3 w-3" />
+                        {new Date(project.date_awarded).toLocaleDateString('en-GB', {
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric'
+                        })}
+                      </div>
+                    </div>
+                    <CardTitle className="text-base">{project.title}</CardTitle>
+                    <CardDescription className="text-green-400/80">Awarded to: {project.awarded_to}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="px-4 py-2 space-y-2">
+                    <p className="text-xs text-muted-foreground">{project.summary}</p>
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-3 gap-1">
+                      <div className="flex items-center text-xs text-muted-foreground">
+                        <MapPin className="h-3 w-3 mr-1" /> {project.location}
+                      </div>
+                      {getStatusBadge(project.status)}
+                    </div>
+                  </CardContent>
+                  <CardFooter className="p-4 flex w-full gap-2">
+                    <Link to={`/electrician/safety-shares/projects/${project.id}`} className="w-full">
+                      <Button size="sm" variant="outline" className="w-full text-xs">View Details</Button>
+                    </Link>
+                    <Button size="sm" className="w-full bg-green-500 text-white hover:bg-green-600 text-xs">
+                      <Building className="mr-1 h-3 w-3" /> Contractor Info
+                    </Button>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+          )}
+        </>
+      ) : (
         <Card className="border-elec-yellow/20">
-          <CardContent className="p-0">
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-elec-gray/80 hover:bg-elec-gray">
-                  <TableHead className="w-[250px]">Project</TableHead>
-                  <TableHead>Awarded To</TableHead>
-                  <TableHead>Value</TableHead>
-                  <TableHead>Location</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead className="text-right">Details</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {projects.map(project => (
-                  <TableRow key={project.id} className="border-elec-yellow/10 hover:bg-elec-gray/50">
-                    <TableCell className="font-medium">{project.title}</TableCell>
-                    <TableCell>{project.awardedTo}</TableCell>
-                    <TableCell>{project.value}</TableCell>
-                    <TableCell>{project.location}</TableCell>
-                    <TableCell>{project.date}</TableCell>
-                    <TableCell className="text-right">
-                      <Button variant="outline" size="sm" className="gap-1">
-                        <FileCheck className="h-3 w-3" /> View
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+          <CardContent className="p-6 text-center">
+            <Construction className="h-12 w-12 text-green-400 mx-auto mb-4" />
+            <h2 className="text-xl font-semibold mb-2">No Major Projects</h2>
+            <p className="text-muted-foreground">There are currently no active major projects.</p>
           </CardContent>
         </Card>
-      )}
-
-      {isMobile && (
-        <div className="grid grid-cols-1 gap-4">
-          {projects.map(project => (
-            <Card key={project.id} className="overflow-hidden border-elec-yellow/20 bg-elec-gray/80 hover:bg-elec-gray transition-all duration-200">
-              <div className="h-1 bg-green-500" />
-              <CardHeader className="pb-2 p-4">
-                <div className="flex justify-between items-center mb-2">
-                  <Badge className="bg-green-500/20 text-green-400 hover:bg-green-500/30 hover:text-green-400">
-                    {project.value}
-                  </Badge>
-                  <div className="flex items-center text-xs text-muted-foreground gap-1">
-                    <CalendarDays className="h-3 w-3" />
-                    {project.date}
-                  </div>
-                </div>
-                <CardTitle className="text-base">{project.title}</CardTitle>
-                <CardDescription className="text-green-400/80">Awarded to: {project.awardedTo}</CardDescription>
-              </CardHeader>
-              <CardContent className="px-4 py-2 space-y-2">
-                <p className="text-xs text-muted-foreground">{project.summary}</p>
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-3 gap-1">
-                  <div className="flex items-center text-xs text-muted-foreground">
-                    <MapPin className="h-3 w-3 mr-1" /> {project.location}
-                  </div>
-                  {getStatusBadge(project.status)}
-                </div>
-              </CardContent>
-              <CardFooter className="p-4 flex w-full gap-2">
-                <Button size="sm" variant="outline" className="w-full text-xs">View Details</Button>
-                <Button size="sm" className="w-full bg-green-500 text-white hover:bg-green-600 text-xs">
-                  <Building className="mr-1 h-3 w-3" /> Contractor Info
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
       )}
       
       <Card className="bg-elec-gray/50 border-elec-yellow/20">
