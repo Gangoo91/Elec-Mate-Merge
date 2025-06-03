@@ -11,9 +11,13 @@ import LumenCalculator from "@/components/apprentice/calculators/LumenCalculator
 import InstrumentationCalculator from "@/components/apprentice/calculators/InstrumentationCalculator";
 import ZsValuesCalculator from "@/components/apprentice/calculators/ZsValuesCalculator";
 import AdiabaticCalculator from "@/components/apprentice/calculators/AdiabaticCalculator";
+import ConduitFillCalculator from "@/components/apprentice/calculators/ConduitFillCalculator";
+import ResistorColourCodeCalculator from "@/components/apprentice/calculators/ResistorColourCodeCalculator";
+import RingCircuitCalculator from "@/components/apprentice/calculators/RingCircuitCalculator";
+import DiversityFactorCalculator from "@/components/apprentice/calculators/DiversityFactorCalculator";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
 import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoonCalculator";
-import { Calculator, Sigma, Gauge, Variable } from "lucide-react";
+import { Calculator, RotateCw } from "lucide-react";
 
 const OnJobCalculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
@@ -37,16 +41,18 @@ const OnJobCalculations = () => {
       case "adiabatic":
         return <AdiabaticCalculator />;
       case "conduit-fill":
-        return <ComingSoonCalculator 
-          title="Conduit Fill" 
-          icon={Calculator} 
-          description="Calculate the appropriate conduit size based on cable diameter and quantity." 
-        />;
+        return <ConduitFillCalculator />;
       case "resistor-colour-code":
+        return <ResistorColourCodeCalculator />;
+      case "ring-circuit":
+        return <RingCircuitCalculator />;
+      case "diversity-factor":
+        return <DiversityFactorCalculator />;
+      case "phase-rotation":
         return <ComingSoonCalculator 
-          title="Resistor Colour Code" 
-          icon={Sigma} 
-          description="Translate resistor colour bands to resistance values and tolerance." 
+          title="Phase Rotation" 
+          icon={RotateCw} 
+          description="Determine correct phase sequence for 3-phase motor connections and installations." 
         />;
       default:
         return <OhmsLawCalculator />;

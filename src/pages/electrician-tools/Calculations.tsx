@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Calculator } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import VoltageDropCalculator from "@/components/electrician-tools/VoltageDropCalculator";
@@ -13,6 +13,10 @@ import LumenCalculator from "@/components/apprentice/calculators/LumenCalculator
 import InstrumentationCalculator from "@/components/apprentice/calculators/InstrumentationCalculator";
 import ZsValuesCalculator from "@/components/apprentice/calculators/ZsValuesCalculator";
 import AdiabaticCalculator from "@/components/apprentice/calculators/AdiabaticCalculator";
+import ConduitFillCalculator from "@/components/apprentice/calculators/ConduitFillCalculator";
+import ResistorColourCodeCalculator from "@/components/apprentice/calculators/ResistorColourCodeCalculator";
+import RingCircuitCalculator from "@/components/apprentice/calculators/RingCircuitCalculator";
+import DiversityFactorCalculator from "@/components/apprentice/calculators/DiversityFactorCalculator";
 
 const Calculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
@@ -35,6 +39,14 @@ const Calculations = () => {
         return <ZsValuesCalculator />;
       case "adiabatic":
         return <AdiabaticCalculator />;
+      case "conduit-fill":
+        return <ConduitFillCalculator />;
+      case "resistor-colour-code":
+        return <ResistorColourCodeCalculator />;
+      case "ring-circuit":
+        return <RingCircuitCalculator />;
+      case "diversity-factor":
+        return <DiversityFactorCalculator />;
       default:
         return <OhmsLawCalculator />;
     }

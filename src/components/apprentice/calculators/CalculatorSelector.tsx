@@ -2,7 +2,7 @@
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Zap, Activity, PlugZap, Calculator, Variable, Gauge, Sigma } from "lucide-react";
+import { Zap, Activity, PlugZap, Calculator, Variable, Gauge, Sigma, Wrench, Cable, RotateCw } from "lucide-react";
 
 interface CalculatorSelectorProps {
   calculatorType: string;
@@ -16,10 +16,16 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "voltage-drop", label: "Voltage Drop", icon: Activity },
     { value: "power-factor", label: "Power Factor", icon: PlugZap },
     { value: "load", label: "Load Calculator", icon: Calculator },
+    { value: "cable-size", label: "Cable Sizing", icon: Cable },
     { value: "lumen", label: "Lumen Calculator", icon: Variable },
     { value: "instrumentation", label: "4-20mA Scale", icon: Gauge },
     { value: "zs-values", label: "Zs Values", icon: Zap },
     { value: "adiabatic", label: "Adiabatic Equation", icon: Sigma },
+    { value: "conduit-fill", label: "Conduit Fill", icon: Calculator },
+    { value: "resistor-colour-code", label: "Resistor Colour", icon: Sigma },
+    { value: "ring-circuit", label: "Ring Circuit", icon: RotateCw },
+    { value: "diversity-factor", label: "Diversity Factor", icon: Wrench },
+    { value: "phase-rotation", label: "Phase Rotation", icon: RotateCw },
   ];
 
   // For mobile: Use dropdown
