@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { MessageSquare, Briefcase, Package, Wrench, Shield, PoundSterling } from "lucide-react";
 
@@ -9,77 +9,88 @@ const ElectricalToolboxTalk = () => {
     {
       id: 1,
       title: "Chat",
-      description: "Connect with other electricians and share knowledge",
-      icon: <MessageSquare className="h-6 w-6 text-elec-yellow" />,
+      icon: <MessageSquare className="h-8 w-8 text-elec-yellow" />,
       link: "/electrician/chat"
     },
     {
       id: 2,
       title: "Job Vacancies",
-      description: "Find the latest electrical job opportunities",
-      icon: <Briefcase className="h-6 w-6 text-elec-yellow" />,
+      icon: <Briefcase className="h-8 w-8 text-elec-yellow" />,
       link: "/electrician/job-vacancies"
     },
     {
       id: 3,
       title: "Materials",
-      description: "Browse and source electrical materials",
-      icon: <Package className="h-6 w-6 text-elec-yellow" />,
+      icon: <Package className="h-8 w-8 text-elec-yellow" />,
       link: "/electrician/materials"
     },
     {
       id: 4,
       title: "Tools",
-      description: "Essential tools and equipment for electrical work",
-      icon: <Wrench className="h-6 w-6 text-elec-yellow" />,
+      icon: <Wrench className="h-8 w-8 text-elec-yellow" />,
       link: "/electrician/tools"
     },
     {
       id: 5,
       title: "Safety & Industry Updates",
-      description: "Safety information and lessons from experience",
-      icon: <Shield className="h-6 w-6 text-elec-yellow" />,
+      icon: <Shield className="h-8 w-8 text-elec-yellow" />,
       link: "/electrician/safety-shares"
     },
     {
       id: 6,
       title: "Live Pricing",
-      description: "Real-time pricing updates for materials and services",
-      icon: <PoundSterling className="h-6 w-6 text-elec-yellow" />,
+      icon: <PoundSterling className="h-8 w-8 text-elec-yellow" />,
       link: "/electrician/live-pricing"
     }
   ];
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="flex flex-col items-center text-center">
-        <h1 className="text-3xl font-bold tracking-tight mb-6">Electrical Toolbox Talk</h1>
-        <Link to="/electrical-hub">
-          <Button variant="outline" className="mb-4">Back to Electrical Hub</Button>
-        </Link>
-      </div>
+    <div className="min-h-screen bg-elec-dark text-white">
+      <div className="max-w-6xl mx-auto px-6 py-12">
+        {/* Clean Header */}
+        <div className="text-center mb-16">
+          <h1 className="text-5xl font-light text-white mb-6 tracking-tight">
+            Electrical Toolbox Talk
+          </h1>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            Your central hub for electrical trade resources and community
+          </p>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {toolboxCategories.map((category) => (
-          <Link to={category.link} key={category.id} className="block">
-            <Card 
-              className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all flex flex-col h-full"
-            >
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xl flex items-center gap-2">
-                  {category.icon}
-                  {category.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-col flex-1 justify-between">
-                <CardDescription className="text-sm mb-4">
-                  {category.description}
-                </CardDescription>
-                <Button className="w-full mt-auto">View Details</Button>
-              </CardContent>
-            </Card>
+        {/* Clean Navigation Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {toolboxCategories.map((category) => (
+            <Link key={category.id} to={category.link} className="group block">
+              <Card className="border-0 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-500 h-full">
+                <CardContent className="p-8 text-center h-full flex flex-col justify-center">
+                  <div className="w-16 h-16 bg-elec-yellow/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-elec-yellow/20 transition-all duration-300">
+                    {category.icon}
+                  </div>
+                  
+                  <h3 className="text-xl font-medium text-white group-hover:text-elec-yellow transition-colors duration-300">
+                    {category.title}
+                  </h3>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+
+        {/* Back Button */}
+        <div className="text-center mt-16">
+          <Link to="/electrical-hub">
+            <Button variant="outline" className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10">
+              Back to Electrical Hub
+            </Button>
           </Link>
-        ))}
+        </div>
+
+        {/* Simple Footer */}
+        <div className="text-center mt-16 pt-8 border-t border-white/10">
+          <p className="text-gray-500 text-sm">
+            Connect, share, and grow with the electrical community
+          </p>
+        </div>
       </div>
     </div>
   );
