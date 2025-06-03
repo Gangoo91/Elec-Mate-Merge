@@ -1,220 +1,122 @@
 
-import { Button } from "@/components/ui/button";
+import { Helmet } from "react-helmet";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AlertTriangle, BookOpen, Newspaper, Building, FileText, Bell } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Shield, ArrowLeft, AlertTriangle, Library, FileText, Construction, ExternalLink, BookOpen } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { useEffect } from "react";
-import { toast } from "sonner";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import SafetyAlertsCard from "@/components/electrician/safety-shares/SafetyAlertsCard";
+import LearningFromExperienceCard from "@/components/electrician/safety-shares/LearningFromExperienceCard";
+import IndustryNewsCard from "@/components/electrician/safety-shares/IndustryNewsCard";
+import MajorProjectsCard from "@/components/electrician/safety-shares/MajorProjectsCard";
+import SafetyResourcesCard from "@/components/electrician/safety-shares/SafetyResourcesCard";
 
 const SafetyShares = () => {
-  const isMobile = useIsMobile();
-  
-  const { data: latestAlert } = useQuery({
-    queryKey: ['latest-safety-alert'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('safety_alerts')
-        .select('id, title, date_published')
-        .eq('is_active', true)
-        .order('date_published', { ascending: false })
-        .limit(1)
-        .single();
-      
-      if (error) return null;
-      return data;
-    }
-  });
-
-  // Simulating a notification when page loads
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (latestAlert) {
-        toast.info("New safety alert available", {
-          description: `${latestAlert.title} - ${new Date(latestAlert.date_published).toLocaleDateString('en-GB', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric'
-          })}`,
-          action: {
-            label: "View",
-            onClick: () => window.location.href = `/electrician/safety-shares/alerts/${latestAlert.id}`
-          }
-        });
-      }
-    }, 2000);
-    
-    return () => clearTimeout(timer);
-  }, [latestAlert]);
-
-  // Category card data
-  const categories = [
+  const safetyCategories = [
     {
-      id: "safety-updates",
-      title: "Safety Updates",
-      description: "Critical alerts and bulletins from industry regulators",
-      icon: <AlertTriangle className="h-8 w-8 sm:h-10 sm:w-10 text-red-400" />,
-      color: "from-red-900/20 to-red-800/10 border-red-500/30",
-      badge: "New Alerts",
-      badgeColor: "bg-red-500/20 text-red-400 hover:bg-red-500/30 hover:text-red-400",
-      linkText: "View Safety Alerts",
-      linkTo: "/electrician/safety-shares/alerts"
+      icon: AlertTriangle,
+      title: "Safety Alerts",
+      description: "Critical safety warnings and alerts",
+      link: "/electrician/safety-shares/safety-alerts",
+      color: "text-red-400",
+      bgColor: "bg-red-500/10"
     },
     {
-      id: "learning-from-experience",
+      icon: BookOpen,
       title: "Learning From Experience",
-      description: "Real-world incidents and valuable lessons for electricians",
-      icon: <FileText className="h-8 w-8 sm:h-10 sm:w-10 text-amber-400" />,
-      color: "from-amber-900/20 to-amber-800/10 border-amber-500/30",
-      badge: "New Reports",
-      badgeColor: "bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 hover:text-amber-400",
-      linkText: "Browse LFE Reports",
-      linkTo: "/electrician/safety-shares/lfe"
+      description: "Real incidents and lessons learned",
+      link: "/electrician/safety-shares/learning-from-experience",
+      color: "text-yellow-400",
+      bgColor: "bg-yellow-500/10"
     },
     {
-      id: "major-projects",
-      title: "Major Projects",
-      description: "Safety considerations for upcoming large-scale electrical projects",
-      icon: <Construction className="h-8 w-8 sm:h-10 sm:w-10 text-green-400" />,
-      color: "from-green-900/20 to-green-800/10 border-green-500/30",
-      linkText: "Explore Projects",
-      linkTo: "/electrician/safety-shares/projects"
-    },
-    {
-      id: "industry-news",
+      icon: Newspaper,
       title: "Industry News",
-      description: "Latest electrical industry regulations and developments",
-      icon: <Library className="h-8 w-8 sm:h-10 sm:w-10 text-blue-400" />,
-      color: "from-blue-900/20 to-blue-800/10 border-blue-500/30",
-      badge: "Updated",
-      badgeColor: "bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 hover:text-blue-400",
-      linkText: "Read Latest News",
-      linkTo: "/electrician/safety-shares/news"
+      description: "Latest regulatory updates and news",
+      link: "/electrician/safety-shares/industry-news",
+      color: "text-blue-400",
+      bgColor: "bg-blue-500/10"
     },
     {
-      id: "resources",
-      title: "Resources",
-      description: "Downloadable guides, toolbox talks and reference materials",
-      icon: <BookOpen className="h-8 w-8 sm:h-10 sm:w-10 text-purple-400" />,
-      color: "from-purple-900/20 to-purple-800/10 border-purple-500/30",
-      linkText: "Access Resources",
-      linkTo: "/electrician/safety-shares/resources"
+      icon: Building,
+      title: "Major Projects",
+      description: "Industry projects and opportunities",
+      link: "/electrician/safety-shares/major-projects",
+      color: "text-green-400",
+      bgColor: "bg-green-500/10"
+    },
+    {
+      icon: FileText,
+      title: "Safety Resources",
+      description: "Download guides and training materials",
+      link: "/electrician/safety-shares/safety-resources",
+      color: "text-purple-400",
+      bgColor: "bg-purple-500/10"
     }
   ];
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in px-2 md:px-0">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight flex items-center gap-2">
-            <Shield className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
-            Safety & Industry Updates
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Stay informed with the latest safety information and industry developments
+    <div className="min-h-screen bg-elec-dark text-white p-6">
+      <Helmet>
+        <title>Safety Shares - Elec-Mate</title>
+        <meta name="description" content="Share safety knowledge, learn from experience, and stay updated with the latest electrical industry safety information" />
+      </Helmet>
+      
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-elec-yellow mb-4">Safety Shares</h1>
+          <p className="text-xl text-gray-300 mb-6">
+            Stay informed with the latest safety alerts, industry news, and learning opportunities from the electrical industry.
           </p>
+          
+          {/* Quick Navigation */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+            {safetyCategories.map((category) => {
+              const IconComponent = category.icon;
+              return (
+                <Link key={category.title} to={category.link}>
+                  <Card className={`border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all duration-300 transform hover:scale-105 ${category.bgColor}`}>
+                    <CardContent className="p-4">
+                      <div className="flex flex-col items-center text-center">
+                        <IconComponent className={`h-8 w-8 ${category.color} mb-2`} />
+                        <h3 className="font-semibold text-white mb-1">{category.title}</h3>
+                        <p className="text-xs text-gray-400">{category.description}</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
+              );
+            })}
+          </div>
         </div>
-        <Link to="/electrician/toolbox-talk">
-          <Button variant="outline" size={isMobile ? "sm" : "default"} className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Toolbox Talk
-          </Button>
-        </Link>
-      </div>
 
-      {/* Featured Alert Banner */}
-      <Card className="bg-gradient-to-r from-red-900/40 to-red-800/20 border-red-500/30">
-        <CardContent className={`${isMobile ? 'p-4' : 'p-4 sm:p-6'} flex flex-col sm:flex-row items-start sm:items-center gap-4`}>
-          <div className="rounded-full bg-red-500/20 p-2 sm:p-3">
-            <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-red-400" />
-          </div>
-          <div className="space-y-2 flex-1">
-            <h2 className="text-base sm:text-lg font-semibold text-red-400">Critical Safety Notice</h2>
-            <p className="text-xs sm:text-sm text-white/90">
-              All electrical work must comply with the Electricity at Work Regulations and current BS7671 standards. 
-              Always ensure proper isolation procedures before working on electrical systems.
-            </p>
-          </div>
-          <div>
-            <Link to="/electrician/safety-shares/alerts">
-              <Button size={isMobile ? "sm" : "default"} variant="destructive" className="whitespace-nowrap">View Details</Button>
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
+        {/* Live Content Feed - Single Column Layout for Wider Boxes */}
+        <div className="space-y-8 mb-8">
+          <SafetyAlertsCard />
+          <LearningFromExperienceCard />
+          <IndustryNewsCard />
+          <MajorProjectsCard />
+          <SafetyResourcesCard />
+        </div>
 
-      {/* Category Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        {categories.map((category) => (
-          <Card 
-            key={category.id}
-            className={`overflow-hidden border-elec-yellow/20 bg-gradient-to-br ${category.color} hover:shadow-md transition-all duration-200 group`}
-          >
-            <CardHeader className={`pb-2 ${isMobile ? 'p-4' : 'p-6'}`}>
-              <div className="flex justify-between items-start">
-                <div className="rounded-full bg-elec-gray/30 p-2 sm:p-3">
-                  {category.icon}
+        {/* Subscription Notice */}
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardContent className="p-6">
+            <div className="flex items-start gap-4">
+              <Bell className="h-6 w-6 text-elec-yellow mt-1" />
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-2">Stay Updated</h3>
+                <p className="text-gray-300 mb-4">
+                  Get instant notifications for critical safety alerts and industry updates. 
+                  Subscribe to categories that matter to your work.
+                </p>
+                <div className="text-sm text-gray-400">
+                  Sign in to manage your notification preferences and never miss important safety information.
                 </div>
-                {category.badge && (
-                  <Badge className={category.badgeColor}>
-                    {category.badge}
-                  </Badge>
-                )}
               </div>
-              <CardTitle className="text-lg sm:text-xl mt-3">{category.title}</CardTitle>
-              <CardDescription className="text-xs sm:text-sm text-white/80">
-                {category.description}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className={`${isMobile ? 'px-4 py-2' : 'p-6 py-2'} space-y-2`}>
-              <div className="h-1 bg-white/10 rounded-full w-full" />
-            </CardContent>
-            <CardFooter className={isMobile ? 'p-4' : 'p-6 pt-4'}>
-              <Link to={category.linkTo} className="w-full">
-                <Button 
-                  className="w-full flex items-center gap-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 transition-all font-medium"
-                  variant="default"
-                  size={isMobile ? "sm" : "default"}
-                >
-                  {category.linkText}
-                  <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-            </CardFooter>
-          </Card>
-        ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
-
-      {/* Subscribe Banner */}
-      <Card className="bg-gradient-to-r from-elec-yellow/20 to-elec-yellow/5 border-elec-yellow/30">
-        <CardContent className={`${isMobile ? 'p-4' : 'p-4 sm:p-6'} flex flex-col sm:flex-row items-center gap-4`}>
-          <div className="rounded-full bg-elec-yellow/20 p-2 sm:p-3">
-            <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-          </div>
-          <div className="space-y-2 flex-1">
-            <h2 className="text-base sm:text-lg font-semibold text-elec-yellow">Stay Informed</h2>
-            <p className="text-xs sm:text-sm text-white/90">
-              Subscribe to safety alerts and regulatory updates to receive immediate notifications.
-            </p>
-          </div>
-          <div>
-            <Button 
-              size={isMobile ? "sm" : "default"} 
-              variant="default" 
-              className="whitespace-nowrap"
-              onClick={() => {
-                toast.success("Subscription successful", {
-                  description: "You will now receive safety and industry updates."
-                });
-              }}
-            >
-              Subscribe Now
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 };

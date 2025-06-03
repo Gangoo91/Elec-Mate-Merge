@@ -63,9 +63,8 @@ const AppRouter = () => {
         {/* Electrician Routes */}
         <Route path="electrician-tools" element={<ElectricianTools />} />
         <Route path="electrician-tools/*" element={<ElectricianRoutes />} />
-        
-        {/* Electrician Hub Routes - now properly nested */}
-        <ElectricianHubRoutes />
+        <Route path="electrical-hub/*" element={<ElectricianHubRoutes />} />
+        <Route path="electrician/*" element={<ElectricianHubRoutes />} />
         
         {/* Apprentice Routes */}
         <Route path="apprentice/*" element={<ApprenticeRoutes />} />
