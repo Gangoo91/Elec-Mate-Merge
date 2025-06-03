@@ -85,8 +85,8 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
                     </div>
                   </div>
                 </CardContent>
-              ))}
-            </div>
+              </Card>
+            ))}
           </div>
         </div>
       </div>
