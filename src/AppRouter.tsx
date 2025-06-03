@@ -16,6 +16,7 @@ import NotFound from "@/pages/NotFound";
 import VideoLessons from "@/pages/VideoLessons";
 import Leaderboards from "@/pages/Leaderboards";
 import ElectricianTools from "@/pages/ElectricianTools";
+import ElectricalHub from "@/pages/ElectricalHub";
 import Calculations from "@/pages/electrician-tools/Calculations";
 import Admin from "@/pages/electrician-tools/Admin";
 import ApprenticeRoutes from "@/routes/ApprenticeRoutes";
@@ -63,6 +64,7 @@ const AppRouter = () => {
         {/* Electrician Routes */}
         <Route path="electrician-tools" element={<ElectricianTools />} />
         <Route path="electrician-tools/*" element={<ElectricianRoutes />} />
+        <Route path="electrical-hub" element={<ElectricalHub />} />
         <Route path="electrical-hub/*" element={<ElectricianHubRoutes />} />
         <Route path="electrician/*" element={<ElectricianHubRoutes />} />
         

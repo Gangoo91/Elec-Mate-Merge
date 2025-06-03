@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Wrench, LayoutGrid, Heart, Users, Brain, GraduationCap, FileText, Briefcase } from "lucide-react";
+import { Wrench, LayoutGrid, Heart, Users, Brain, GraduationCap, FileText, Briefcase, MapPin } from "lucide-react";
 
 const ElectricalHub = () => {
   const hubCards = [
@@ -22,41 +22,48 @@ const ElectricalHub = () => {
     },
     {
       id: 3,
+      title: "Install Planner",
+      description: "Plan electrical installations with professional guidance and calculations",
+      icon: <MapPin className="h-12 w-12 text-elec-yellow opacity-80" />,
+      link: "/electrician-tools/install-planner"
+    },
+    {
+      id: 4,
       title: "Mental Health Hub",
       description: "Resources and support for maintaining wellbeing during your career",
       icon: <Heart className="h-12 w-12 text-elec-yellow opacity-80" />,
       link: "/electrician/mental-health"
     },
     {
-      id: 4,
+      id: 5,
       title: "Mentor Connect",
       description: "Offer mentorship to apprentices seeking guidance in their electrical career",
       icon: <Users className="h-12 w-12 text-elec-yellow opacity-80" />,
       link: "/electrician/mentor-connect"
     },
     {
-      id: 5,
+      id: 6,
       title: "AI Tooling",
       description: "Leverage AI tools to enhance your learning and practical electrical skills",
       icon: <Brain className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/electrician-tools/ai-tooling"  // Updated link to electrician AI tooling
+      link: "/electrician-tools/ai-tooling"
     },
     {
-      id: 6,
+      id: 7,
       title: "Career Progression",
       description: "Advanced career development resources for qualified electricians",
       icon: <GraduationCap className="h-12 w-12 text-elec-yellow opacity-80" />,
       link: "/electrician/career-progression"
     },
     {
-      id: 7,
+      id: 8,
       title: "Quote Library",
       description: "Generate professional quotes for electrical jobs with AI assistance",
       icon: <FileText className="h-12 w-12 text-elec-yellow opacity-80" />,
       link: "/electrician-tools/quote-library"
     },
     {
-      id: 8,
+      id: 9,
       title: "Business Development",
       description: "Tools and resources to grow your electrical business",
       icon: <Briefcase className="h-12 w-12 text-elec-yellow opacity-80" />,
