@@ -11,6 +11,8 @@ import CalculatorCards from "@/components/electrician-tools/CalculatorCards";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
 import LumenCalculator from "@/components/apprentice/calculators/LumenCalculator";
 import InstrumentationCalculator from "@/components/apprentice/calculators/InstrumentationCalculator";
+import ZsValuesCalculator from "@/components/apprentice/calculators/ZsValuesCalculator";
+import AdiabaticCalculator from "@/components/apprentice/calculators/AdiabaticCalculator";
 
 const Calculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
@@ -29,6 +31,10 @@ const Calculations = () => {
         return <LumenCalculator />;
       case "instrumentation":
         return <InstrumentationCalculator />;
+      case "zs-values":
+        return <ZsValuesCalculator />;
+      case "adiabatic":
+        return <AdiabaticCalculator />;
       default:
         return <OhmsLawCalculator />;
     }

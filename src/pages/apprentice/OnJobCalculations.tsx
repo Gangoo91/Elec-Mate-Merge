@@ -9,6 +9,8 @@ import VoltageDropCalculator from "@/components/electrician-tools/VoltageDropCal
 import { PowerFactorCalculator } from "@/components/electrician-tools/PowerFactorCalculator";
 import LumenCalculator from "@/components/apprentice/calculators/LumenCalculator";
 import InstrumentationCalculator from "@/components/apprentice/calculators/InstrumentationCalculator";
+import ZsValuesCalculator from "@/components/apprentice/calculators/ZsValuesCalculator";
+import AdiabaticCalculator from "@/components/apprentice/calculators/AdiabaticCalculator";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
 import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoonCalculator";
 import { Calculator, Sigma, Gauge, Variable } from "lucide-react";
@@ -30,6 +32,10 @@ const OnJobCalculations = () => {
         return <LumenCalculator />;
       case "instrumentation":
         return <InstrumentationCalculator />;
+      case "zs-values":
+        return <ZsValuesCalculator />;
+      case "adiabatic":
+        return <AdiabaticCalculator />;
       case "conduit-fill":
         return <ComingSoonCalculator 
           title="Conduit Fill" 
