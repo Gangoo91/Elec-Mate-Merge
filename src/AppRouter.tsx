@@ -63,7 +63,8 @@ const AppRouter = () => {
         {/* Electrician Routes */}
         <Route path="electrician-tools" element={<ElectricianTools />} />
         <Route path="electrician-tools/*" element={<ElectricianRoutes />} />
-        <Route path="electrical-hub/*" element={<ElectricianHubRoutes />} />
+        
+        {/* Consolidated Electrician Hub Routes - remove the duplicate */}
         <Route path="electrician/*" element={<ElectricianHubRoutes />} />
         
         {/* Apprentice Routes */}
