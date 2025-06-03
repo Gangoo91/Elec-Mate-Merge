@@ -23,6 +23,10 @@ import BatteryBackupCalculator from "@/components/apprentice/calculators/Battery
 import BS7671ZsLookupCalculator from "@/components/apprentice/calculators/BS7671ZsLookupCalculator";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
 import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoonCalculator";
+import R1R2Calculator from "@/components/apprentice/calculators/R1R2Calculator";
+import PFCCalculator from "@/components/apprentice/calculators/PFCCalculator";
+import RCDDiscriminationCalculator from "@/components/apprentice/calculators/RCDDiscriminationCalculator";
+import CableDeratingCalculator from "@/components/apprentice/calculators/CableDeratingCalculator";
 import { Calculator, RotateCw } from "lucide-react";
 
 const OnJobCalculations = () => {
@@ -66,6 +70,14 @@ const OnJobCalculations = () => {
         return <BatteryBackupCalculator />;
       case "bs7671-zs-lookup":
         return <BS7671ZsLookupCalculator />;
+      case "r1r2":
+        return <R1R2Calculator />;
+      case "pfc":
+        return <PFCCalculator />;
+      case "rcd-discrimination":
+        return <RCDDiscriminationCalculator />;
+      case "cable-derating":
+        return <CableDeratingCalculator />;
       case "load":
         return <ComingSoonCalculator 
           title="Load Calculator" 

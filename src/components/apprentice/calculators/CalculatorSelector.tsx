@@ -32,6 +32,11 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "solar-pv", label: "Solar PV", icon: Sun },
     { value: "battery-backup", label: "Battery Backup", icon: Battery },
     { value: "bs7671-zs-lookup", label: "BS7671 Zs Lookup", icon: Zap },
+    // Phase 1 new calculators
+    { value: "r1r2", label: "R1+R2 Calculator", icon: Cable },
+    { value: "pfc", label: "PFC Calculator", icon: Shield },
+    { value: "rcd-discrimination", label: "RCD Discrimination", icon: Shield },
+    { value: "cable-derating", label: "Cable Derating", icon: Cable },
   ];
 
   // For mobile: Use dropdown

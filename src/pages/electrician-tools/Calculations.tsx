@@ -24,6 +24,10 @@ import SolarPVCalculator from "@/components/apprentice/calculators/SolarPVCalcul
 import BatteryBackupCalculator from "@/components/apprentice/calculators/BatteryBackupCalculator";
 import BS7671ZsLookupCalculator from "@/components/apprentice/calculators/BS7671ZsLookupCalculator";
 import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoonCalculator";
+import R1R2Calculator from "@/components/apprentice/calculators/R1R2Calculator";
+import PFCCalculator from "@/components/apprentice/calculators/PFCCalculator";
+import RCDDiscriminationCalculator from "@/components/apprentice/calculators/RCDDiscriminationCalculator";
+import CableDeratingCalculator from "@/components/apprentice/calculators/CableDeratingCalculator";
 import { RotateCw } from "lucide-react";
 
 const Calculations = () => {
@@ -67,6 +71,14 @@ const Calculations = () => {
         return <BatteryBackupCalculator />;
       case "bs7671-zs-lookup":
         return <BS7671ZsLookupCalculator />;
+      case "r1r2":
+        return <R1R2Calculator />;
+      case "pfc":
+        return <PFCCalculator />;
+      case "rcd-discrimination":
+        return <RCDDiscriminationCalculator />;
+      case "cable-derating":
+        return <CableDeratingCalculator />;
       case "phase-rotation":
         return <ComingSoonCalculator 
           title="Phase Rotation" 
