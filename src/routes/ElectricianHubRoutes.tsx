@@ -1,5 +1,5 @@
 
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import ElectricalChat from "@/pages/electrician/ElectricalChat";
 import ElectricalMaterials from "@/pages/electrician/ElectricalMaterials";
 import ElectricalTools from "@/pages/electrician/ElectricalTools";
@@ -34,6 +34,7 @@ import LFEReportDetail from "@/components/electrician/safety-shares/LFEReportDet
 const ElectricianHubRoutes = () => {
   return (
     <Routes>
+      <Route index element={<Navigate to="toolbox-talk" replace />} />
       <Route path="chat" element={<ElectricalChat />} />
       <Route path="materials" element={<ElectricalMaterials />} />
       <Route path="tools" element={<ElectricalTools />} />
