@@ -1,5 +1,5 @@
 
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
 import ApprenticeHub from "./pages/ApprenticeHub";
@@ -20,34 +20,32 @@ import NotFound from "./pages/NotFound";
 
 const AppRouter = () => {
   return (
-    <Router>
-        <Routes>
-          {/* Main Routes */}
-          <Route path="/" element={<Index />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/electrical-hub" element={<ElectricalHub />} />
-          <Route path="/apprentice" element={<ApprenticeHub />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/chat" element={<Chat />} />
+    <Routes>
+      {/* Main Routes */}
+      <Route path="/" element={<Index />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/electrical-hub" element={<ElectricalHub />} />
+      <Route path="/apprentice" element={<ApprenticeHub />} />
+      <Route path="/settings" element={<Settings />} />
+      <Route path="/chat" element={<Chat />} />
 
-          {/* Apprentice Routes */}
-          <Route path="/apprentice/study" element={<StudyCentre />} />
-          <Route path="/apprentice/inspection-testing" element={<InspectionTesting />} />
+      {/* Apprentice Routes */}
+      <Route path="/apprentice/study" element={<StudyCentre />} />
+      <Route path="/apprentice/inspection-testing" element={<InspectionTesting />} />
 
-          {/* Electrician Tools Routes */}
-          <Route path="/electrician-tools" element={<ElectricianTools />} />
-          <Route path="/electrician-tools/install-planner" element={<InstallPlanner />} />
-          <Route path="/electrician-tools/inspection-testing" element={<InspectionTestingTools />} />
-          <Route path="/electrician-tools/eicr-reports" element={<EICRReports />} />
-          <Route path="/electrician-tools/project-management" element={<ProjectManagement />} />
-          <Route path="/electrician-tools/ai-tooling" element={<AITooling />} />
-          <Route path="/electrician-tools/calculations" element={<Calculations />} />
-          <Route path="/electrician-tools/admin" element={<Admin />} />
+      {/* Electrician Tools Routes */}
+      <Route path="/electrician-tools" element={<ElectricianTools />} />
+      <Route path="/electrician-tools/install-planner" element={<InstallPlanner />} />
+      <Route path="/electrician-tools/inspection-testing" element={<InspectionTestingTools />} />
+      <Route path="/electrician-tools/eicr-reports" element={<EICRReports />} />
+      <Route path="/electrician-tools/project-management" element={<ProjectManagement />} />
+      <Route path="/electrician-tools/ai-tooling" element={<AITooling />} />
+      <Route path="/electrician-tools/calculations" element={<Calculations />} />
+      <Route path="/electrician-tools/admin" element={<Admin />} />
 
-          {/* Catch all route for 404 */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-    </Router>
+      {/* Catch all route for 404 */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 
