@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,7 +11,7 @@ import { useTestFlowEngine } from '@/hooks/useTestFlowEngine';
 import { enhancedTestFlows } from '@/data/inspection-testing/enhancedTestFlows';
 import { expandedTestFlows } from '@/data/inspection-testing/expandedTestFlows';
 import { standardisedTestFlows } from '@/data/inspection-testing/standardisedTestFlows';
-import EnhancedTestFlowSelector from './EnhancedTestFlowSelector';
+import SimplifiedTestFlowSelector from './SimplifiedTestFlowSelector';
 import TestStepDisplay from './TestStepDisplay';
 import GuidedWorkflow from './GuidedWorkflow';
 import SessionSetup from './SessionSetup';
@@ -26,7 +27,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
   const [selectedFlow, setSelectedFlow] = useState<TestFlow | null>(null);
   const [showGuidedWorkflow, setShowGuidedWorkflow] = useState(true);
   
-  // Combine all test flows with enhanced and standardised flows taking priority
+  // Combine all test flows with standardised flows taking priority
   const allTestFlows = [...standardisedTestFlows, ...enhancedTestFlows, ...expandedTestFlows];
   
   const {
@@ -90,49 +91,20 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
 
   const sessionInfo = getSessionStatusInfo();
 
-  // Calculate estimated total time for selected flow
   const getEstimatedTotalTime = () => {
     if (!selectedFlow) return 0;
     return selectedFlow.steps.reduce((total, step) => total + step.estimatedTime, 0);
   };
 
-  // Wrap the entire component with EICRProvider
   const renderContent = () => {
-    // No flow selected - show enhanced flow selector
+    // No flow selected - show simplified flow selector
     if (!selectedFlow) {
       return (
-        <div className="space-y-6">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                Select Testing Procedure
-                <Badge variant="outline" className="ml-auto">
-                  {mode === 'apprentice' ? 'Learning Mode' : 'Professional Mode'}
-                </Badge>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground mb-4">
-                Choose a testing procedure to begin. Each procedure includes detailed step-by-step guidance
-                {mode === 'apprentice' ? ' with educational content to help you learn' : ' for professional compliance'}.
-                Time estimates are standardised across all procedures for better planning.
-              </p>
-              <Alert className="bg-blue-500/10 border-blue-500/30">
-                <AlertTriangle className="h-4 w-4 text-blue-400" />
-                <AlertDescription className="text-blue-200">
-                  <strong>Enhanced Testing Suite:</strong> Our procedures now include standardised time estimates, 
-                  improved UK English terminology, and comprehensive guidance based on BS 7671:2018+A2:2022.
-                </AlertDescription>
-              </Alert>
-            </CardContent>
-          </Card>
-
-          <EnhancedTestFlowSelector
-            flows={allTestFlows}
-            onSelectFlow={handleFlowSelection}
-            mode={mode}
-          />
-        </div>
+        <SimplifiedTestFlowSelector
+          flows={allTestFlows}
+          onSelectFlow={handleFlowSelection}
+          mode={mode}
+        />
       );
     }
 
@@ -172,7 +144,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
     // Active session - show testing interface with EICR integration
     return (
       <div className="space-y-6">
-        {/* EICR Dashboard - Now at the top */}
+        {/* EICR Dashboard - Simplified for active sessions */}
         <EICRDashboard />
 
         {/* Session Header */}

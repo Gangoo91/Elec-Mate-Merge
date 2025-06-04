@@ -14,6 +14,7 @@ import CableSizingCalculator from "@/pages/electrician-tools/cable-sizing";
 import DocumentTemplates from "@/pages/electrician-tools/DocumentTemplates";
 import InstallPlanner from "@/pages/electrician-tools/InstallPlanner";
 import InspectionTesting from "@/pages/electrician-tools/InspectionTesting";
+import EICRReports from "@/pages/electrician-tools/EICRReports";
 // Add Staff Management page
 import StaffManagement from "@/pages/electrician-tools/StaffManagement";
 // Add Schedule Manager page
@@ -38,6 +39,7 @@ const ElectricianRoutes = () => (
     <Route path="project-management/project/:projectId" element={<ProjectDetails />} />
     <Route path="install-planner" element={<InstallPlanner />} />
     <Route path="inspection-testing" element={<InspectionTesting />} />
+    <Route path="eicr-reports" element={<EICRReports />} />
     {/* Add new routes */}
     <Route path="staff-management" element={<StaffManagement />} />
     <Route path="schedule" element={<ScheduleManager />} />
