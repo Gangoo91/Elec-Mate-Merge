@@ -1,3 +1,4 @@
+
 export interface TestStep {
   id: string;
   title: string;
@@ -58,4 +59,22 @@ export interface TestSession {
   endTime?: Date;
   status: TestStatus;
   isComprehensive?: boolean;
+}
+
+// Add missing ValidationResult interface
+export interface ValidationResult {
+  isValid: boolean;
+  message: string;
+  severity: 'info' | 'warning' | 'error';
+}
+
+// Add missing ComprehensiveTestResults interface
+export interface ComprehensiveTestResults {
+  continuity: TestResult[];
+  insulationResistance: TestResult[];
+  polarity: TestResult[];
+  earthFaultLoop: TestResult[];
+  rcdTest: TestResult[];
+  functionalTest: TestResult[];
+  visualInspection: TestResult[];
 }
