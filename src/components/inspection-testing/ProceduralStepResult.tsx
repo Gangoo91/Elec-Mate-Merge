@@ -2,7 +2,7 @@
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, AlertTriangle } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface ProceduralStepResultProps {
@@ -24,6 +24,16 @@ const ProceduralStepResult = ({
 }: ProceduralStepResultProps) => {
   const isMobile = useIsMobile();
 
+  const handleConfirmComplete = () => {
+    console.log('Confirming step as complete');
+    onRecordPass();
+  };
+
+  const handleRecordIssue = () => {
+    console.log('Recording step as failed/issue');
+    onRecordFail();
+  };
+
   return (
     <div className="space-y-4">
       <div>
@@ -42,20 +52,21 @@ const ProceduralStepResult = ({
       
       <div className={`flex ${isMobile ? 'flex-col' : 'flex-wrap'} gap-3`}>
         <Button
-          onClick={onRecordPass}
+          onClick={handleConfirmComplete}
           className="bg-red-600 hover:bg-red-700 flex-1"
           disabled={status === 'completed'}
         >
           <CheckCircle className="h-4 w-4 mr-2" />
-          Confirm Step Complete
+          {status === 'completed' ? 'Step Completed' : 'Confirm Step Complete'}
         </Button>
         
         <Button
-          onClick={onRecordFail}
+          onClick={handleRecordIssue}
           variant="destructive"
           className="flex-1"
           disabled={status === 'failed'}
         >
+          <AlertTriangle className="h-4 w-4 mr-2" />
           Record Issue/Failure
         </Button>
         
@@ -65,6 +76,24 @@ const ProceduralStepResult = ({
           </Button>
         )}
       </div>
+
+      {status === 'completed' && (
+        <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
+          <p className="text-green-300 text-sm flex items-center gap-2">
+            <CheckCircle className="h-4 w-4" />
+            Step marked as complete. You can now proceed to the next step.
+          </p>
+        </div>
+      )}
+
+      {status === 'failed' && (
+        <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+          <p className="text-red-300 text-sm flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4" />
+            Step marked as failed. Review and address the issue before proceeding.
+          </p>
+        </div>
+      )}
     </div>
   );
 };

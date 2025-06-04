@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { TestStep, TestResult } from '@/types/inspection-testing';
@@ -99,6 +100,8 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
   const isMeasurement = !isVisualInspection && !isSupplySelection && !isProcedural;
 
   const handleRecordPass = () => {
+    console.log('Recording step as pass for step:', step.id);
+    
     const resultData = {
       value: isMeasurement && value ? parseFloat(value) : undefined,
       unit: isMeasurement ? unit : undefined,
@@ -107,18 +110,25 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
       isWithinLimits: true
     };
     
+    console.log('Recording result data:', resultData);
+    
     onRecordResult(resultData);
     setStatus('completed');
 
     // Integrate with EICR
-    populateFromTestResult(step.id, {
+    const testResult = {
       ...resultData,
       stepId: step.id,
       timestamp: new Date()
-    });
+    };
+    
+    console.log('Populating EICR with test result:', testResult);
+    populateFromTestResult(step.id, testResult);
   };
 
   const handleRecordFail = () => {
+    console.log('Recording step as fail for step:', step.id);
+    
     const resultData = {
       value: isMeasurement && value ? parseFloat(value) : undefined,
       unit: isMeasurement ? unit : undefined,
@@ -127,15 +137,20 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
       isWithinLimits: false
     };
 
+    console.log('Recording failed result data:', resultData);
+    
     onRecordResult(resultData);
     setStatus('failed');
 
     // Integrate with EICR
-    populateFromTestResult(step.id, {
+    const testResult = {
       ...resultData,
       stepId: step.id,
       timestamp: new Date()
-    });
+    };
+    
+    console.log('Populating EICR with failed test result:', testResult);
+    populateFromTestResult(step.id, testResult);
   };
 
   // Check if this is a safe isolation step
