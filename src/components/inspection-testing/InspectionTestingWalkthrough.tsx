@@ -89,19 +89,23 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
   // Flow selection screen
   if (!selectedFlow) {
     return (
-      <div className="space-y-6 max-w-full overflow-hidden">
-        <div className="text-center space-y-4 px-4 sm:px-6 lg:px-0">
-          <h2 className="text-xl sm:text-2xl font-bold leading-tight">
-            Inspection & Testing Walkthrough
-          </h2>
-          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
-            {mode === 'apprentice' 
-              ? 'Learn electrical testing procedures with guided step-by-step instructions'
-              : 'Professional testing procedures with validation and reporting'
-            }
-          </p>
+      <div className="min-h-screen flex flex-col">
+        <div className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center space-y-6 mb-8">
+            <div className="space-y-4">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">
+                Inspection & Testing Walkthrough
+              </h2>
+              <p className="text-muted-foreground text-base sm:text-lg leading-relaxed max-w-3xl mx-auto">
+                {mode === 'apprentice' 
+                  ? 'Learn electrical testing procedures with guided step-by-step instructions'
+                  : 'Professional testing procedures with validation and reporting'
+                }
+              </p>
+            </div>
+          </div>
+          <TestFlowSelector onSelectFlow={handleFlowSelection} mode={mode} />
         </div>
-        <TestFlowSelector onSelectFlow={handleFlowSelection} mode={mode} />
       </div>
     );
   }
@@ -109,40 +113,46 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
   // Setup screen
   if (!isSetupComplete) {
     return (
-      <div className="space-y-6 max-w-full overflow-hidden">
-        <div className="flex flex-col gap-4 px-4 sm:px-6 lg:px-0">
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-col space-y-2">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <h2 className="text-xl sm:text-2xl font-bold flex flex-wrap items-center gap-2">
-                  <span className="break-words">{selectedFlow.name}</span>
-                  <div className="flex flex-wrap gap-2">
-                    <Badge className={`${getDifficultyColor(selectedFlow.difficulty)} flex-shrink-0`}>
-                      {selectedFlow.difficulty}
-                    </Badge>
-                    {isComprehensiveMode && (
-                      <Badge className="bg-elec-yellow text-black flex-shrink-0">
-                        <Zap className="h-3 w-3 mr-1" />
-                        COMPREHENSIVE
+      <div className="min-h-screen flex flex-col">
+        <div className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+          <div className="space-y-6">
+            <div className="flex flex-col space-y-4">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div className="min-w-0 flex-1">
+                  <h2 className="text-2xl sm:text-3xl font-bold flex flex-wrap items-center gap-3">
+                    <span className="break-words">{selectedFlow.name}</span>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge className={`${getDifficultyColor(selectedFlow.difficulty)} flex-shrink-0`}>
+                        {selectedFlow.difficulty}
                       </Badge>
-                    )}
-                  </div>
-                </h2>
-                <Button variant="outline" onClick={() => setSelectedFlow(null)} className="flex-shrink-0 w-full sm:w-auto">
+                      {isComprehensiveMode && (
+                        <Badge className="bg-elec-yellow text-black flex-shrink-0">
+                          <Zap className="h-3 w-3 mr-1" />
+                          COMPREHENSIVE
+                        </Badge>
+                      )}
+                    </div>
+                  </h2>
+                  <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mt-2">
+                    {selectedFlow.description}
+                  </p>
+                </div>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setSelectedFlow(null)} 
+                  className="flex-shrink-0 w-full lg:w-auto"
+                >
                   Change Test
                 </Button>
               </div>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                {selectedFlow.description}
-              </p>
             </div>
+            <SessionSetup 
+              testFlow={selectedFlow} 
+              onStart={handleSessionStart}
+              mode={mode}
+            />
           </div>
         </div>
-        <SessionSetup 
-          testFlow={selectedFlow} 
-          onStart={handleSessionStart}
-          mode={mode}
-        />
       </div>
     );
   }
@@ -150,29 +160,35 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
   // Summary screen
   if (showSummary && session) {
     return (
-      <div className="space-y-6 max-w-full overflow-hidden">
-        <div className="flex flex-col gap-4 px-4 sm:px-6 lg:px-0">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <h2 className="text-xl sm:text-2xl font-bold flex flex-wrap items-center gap-2">
-              <span>Test Complete</span>
-              {isComprehensiveMode && (
-                <Badge className="bg-elec-yellow text-black flex-shrink-0">
-                  <Zap className="h-3 w-3 mr-1" />
-                  COMPREHENSIVE
-                </Badge>
-              )}
-            </h2>
-            <Button variant="outline" onClick={() => setShowSummary(false)} className="flex-shrink-0 w-full sm:w-auto">
-              Back to Test
-            </Button>
+      <div className="min-h-screen flex flex-col">
+        <div className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+          <div className="space-y-6">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+              <h2 className="text-2xl sm:text-3xl font-bold flex flex-wrap items-center gap-3">
+                <span>Test Complete</span>
+                {isComprehensiveMode && (
+                  <Badge className="bg-elec-yellow text-black flex-shrink-0">
+                    <Zap className="h-3 w-3 mr-1" />
+                    COMPREHENSIVE
+                  </Badge>
+                )}
+              </h2>
+              <Button 
+                variant="outline" 
+                onClick={() => setShowSummary(false)} 
+                className="flex-shrink-0 w-full lg:w-auto"
+              >
+                Back to Test
+              </Button>
+            </div>
+            <ConsolidatedTestSummary
+              testFlow={selectedFlow}
+              session={session}
+              onGenerateReport={handleGenerateReport}
+              onExportResults={handleExportResults}
+            />
           </div>
         </div>
-        <ConsolidatedTestSummary
-          testFlow={selectedFlow}
-          session={session}
-          onGenerateReport={handleGenerateReport}
-          onExportResults={handleExportResults}
-        />
       </div>
     );
   }
@@ -202,95 +218,99 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
 
   // Desktop view - enhanced for comprehensive mode
   return (
-    <div className="space-y-6 max-w-full overflow-hidden px-4 sm:px-6 lg:px-0">
-      {/* Session Header */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="flex items-center gap-2">
-                {selectedFlow.name}
-                <Badge variant={isSessionActive ? "default" : "secondary"}>
-                  {isSessionActive ? 'Active' : 'Paused'}
-                </Badge>
-                {isComprehensiveMode && (
-                  <Badge className="bg-elec-yellow text-black">
-                    <Zap className="h-3 w-3 mr-1" />
-                    ALL TESTS
-                  </Badge>
-                )}
-              </CardTitle>
-              <p className="text-sm text-muted-foreground">
-                Step {currentStepIndex + 1} of {selectedFlow.steps.length}
-                {isComprehensiveMode && ` • Comprehensive BS 7671 Testing`}
-              </p>
-            </div>
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={isSessionActive ? pauseSession : resumeSession}
-              >
-                <Clock className="h-4 w-4 mr-1" />
-                {isSessionActive ? 'Pause' : 'Resume'}
-              </Button>
-              {isLastStep && (
-                <Button onClick={handleTestComplete} className="bg-green-600 hover:bg-green-700">
-                  <CheckCircle className="h-4 w-4 mr-1" />
-                  Complete Test
+    <div className="min-h-screen flex flex-col">
+      <div className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        <div className="space-y-6">
+          {/* Session Header */}
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader className="pb-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <CardTitle className="flex items-center gap-2">
+                    {selectedFlow.name}
+                    <Badge variant={isSessionActive ? "default" : "secondary"}>
+                      {isSessionActive ? 'Active' : 'Paused'}
+                    </Badge>
+                    {isComprehensiveMode && (
+                      <Badge className="bg-elec-yellow text-black">
+                        <Zap className="h-3 w-3 mr-1" />
+                        ALL TESTS
+                      </Badge>
+                    )}
+                  </CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    Step {currentStepIndex + 1} of {selectedFlow.steps.length}
+                    {isComprehensiveMode && ` • Comprehensive BS 7671 Testing`}
+                  </p>
+                </div>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={isSessionActive ? pauseSession : resumeSession}
+                  >
+                    <Clock className="h-4 w-4 mr-1" />
+                    {isSessionActive ? 'Pause' : 'Resume'}
+                  </Button>
+                  {isLastStep && (
+                    <Button onClick={handleTestComplete} className="bg-green-600 hover:bg-green-700">
+                      <CheckCircle className="h-4 w-4 mr-1" />
+                      Complete Test
+                    </Button>
+                  )}
+                </div>
+              </div>
+              <Progress value={progress} className="h-2" />
+            </CardHeader>
+          </Card>
+
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+            {/* Main Test Step */}
+            <div className="xl:col-span-2">
+              {currentStep && (
+                <TestStepDisplay
+                  step={currentStep}
+                  result={currentStepResult}
+                  onRecordResult={(result) => recordResult(currentStep.id, result)}
+                  mode={mode}
+                />
+              )}
+              
+              {/* Navigation */}
+              <div className="flex justify-between mt-6">
+                <Button
+                  variant="outline"
+                  onClick={previousStep}
+                  disabled={isFirstStep}
+                >
+                  Previous Step
                 </Button>
+                <Button
+                  onClick={nextStep}
+                  disabled={isLastStep}
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                >
+                  Next Step
+                </Button>
+              </div>
+            </div>
+
+            {/* Results Panel */}
+            <div className="xl:col-span-1">
+              {isComprehensiveMode && session ? (
+                <ComprehensiveTestResults
+                  testFlow={selectedFlow}
+                  session={session}
+                />
+              ) : (
+                <TestResultsPanel
+                  testFlow={selectedFlow}
+                  session={session}
+                  mode={mode}
+                />
               )}
             </div>
           </div>
-          <Progress value={progress} className="h-2" />
-        </CardHeader>
-      </Card>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Test Step */}
-        <div className="lg:col-span-2">
-          {currentStep && (
-            <TestStepDisplay
-              step={currentStep}
-              result={currentStepResult}
-              onRecordResult={(result) => recordResult(currentStep.id, result)}
-              mode={mode}
-            />
-          )}
-          
-          {/* Navigation */}
-          <div className="flex justify-between mt-6">
-            <Button
-              variant="outline"
-              onClick={previousStep}
-              disabled={isFirstStep}
-            >
-              Previous Step
-            </Button>
-            <Button
-              onClick={nextStep}
-              disabled={isLastStep}
-              className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-            >
-              Next Step
-            </Button>
-          </div>
-        </div>
-
-        {/* Results Panel */}
-        <div>
-          {isComprehensiveMode && session ? (
-            <ComprehensiveTestResults
-              testFlow={selectedFlow}
-              session={session}
-            />
-          ) : (
-            <TestResultsPanel
-              testFlow={selectedFlow}
-              session={session}
-              mode={mode}
-            />
-          )}
         </div>
       </div>
     </div>
