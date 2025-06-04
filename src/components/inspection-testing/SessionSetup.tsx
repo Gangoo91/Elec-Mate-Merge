@@ -6,19 +6,21 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { AlertTriangle, User, Building, Play } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
+import { AlertTriangle, User, Building, Play, FileText } from 'lucide-react';
 import { useState } from 'react';
 import { TestFlow } from '@/types/inspection-testing';
 import { useEICR } from '@/contexts/EICRContext';
 
 interface SessionSetupProps {
   flow: TestFlow;
-  onStartSession: (installationDetails: any, technician: any) => void;
+  onStartSession: (installationDetails: any, technician: any, enableEicr?: boolean) => void;
   mode: 'electrician' | 'apprentice';
 }
 
 const SessionSetup = ({ flow, onStartSession, mode }: SessionSetupProps) => {
   const { initializeEICR } = useEICR();
+  const [enableEicrIntegration, setEnableEicrIntegration] = useState(false);
   const [installationDetails, setInstallationDetails] = useState({
     address: '',
     description: '',
@@ -38,11 +40,13 @@ const SessionSetup = ({ flow, onStartSession, mode }: SessionSetupProps) => {
   });
 
   const handleStartSession = () => {
-    // Initialize EICR context with session details
-    initializeEICR(installationDetails, technicianDetails);
+    // Initialize EICR context if enabled
+    if (enableEicrIntegration) {
+      initializeEICR(installationDetails, technicianDetails);
+    }
     
     // Start the test session
-    onStartSession(installationDetails, technicianDetails);
+    onStartSession(installationDetails, technicianDetails, enableEicrIntegration);
   };
 
   const isFormValid = () => {
@@ -88,6 +92,49 @@ const SessionSetup = ({ flow, onStartSession, mode }: SessionSetupProps) => {
               </p>
             </div>
           )}
+        </CardContent>
+      </Card>
+
+      {/* EICR Integration Option */}
+      <Card className="border-elec-yellow/30 bg-gradient-to-r from-elec-gray to-elec-gray/80">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <FileText className="h-5 w-5 text-elec-yellow" />
+            EICR Integration
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex items-start space-x-3">
+            <Checkbox 
+              id="eicr-integration"
+              checked={enableEicrIntegration}
+              onCheckedChange={(checked) => setEnableEicrIntegration(checked as boolean)}
+              className="mt-1"
+            />
+            <div className="flex-1">
+              <Label htmlFor="eicr-integration" className="text-base font-medium cursor-pointer">
+                Enable EICR Report Generation
+              </Label>
+              <p className="text-sm text-muted-foreground mt-1">
+                Automatically generate an Electrical Installation Condition Report with fault codes and classifications during testing.
+                Results will be available in the dedicated EICR dashboard.
+              </p>
+              {enableEicrIntegration && (
+                <div className="mt-3 p-3 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <FileText className="h-4 w-4 text-elec-yellow" />
+                    <span className="font-medium text-elec-yellow">EICR Features Enabled</span>
+                  </div>
+                  <ul className="text-sm text-muted-foreground mt-2 space-y-1">
+                    <li>• Automatic C1, C2, C3, and FI fault classification</li>
+                    <li>• Live EICR dashboard during testing</li>
+                    <li>• Professional PDF report generation</li>
+                    <li>• BS 7671:2018+A2:2022 compliance</li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
         </CardContent>
       </Card>
 
@@ -311,7 +358,9 @@ const SessionSetup = ({ flow, onStartSession, mode }: SessionSetupProps) => {
               <p className="font-medium">Ready to begin testing session?</p>
               <p className="text-sm text-muted-foreground">
                 {isFormValid() 
-                  ? 'All required information provided. EICR report will be automatically generated.'
+                  ? enableEicrIntegration 
+                    ? 'All required information provided. EICR report will be automatically generated.'
+                    : 'All required information provided. Testing session ready to start.'
                   : 'Please complete all required fields marked with *'
                 }
               </p>
