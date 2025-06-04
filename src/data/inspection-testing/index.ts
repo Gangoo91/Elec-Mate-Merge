@@ -1,6 +1,7 @@
 
 export { expandedTestFlows } from './expandedTestFlows';
 export { enhancedTestFlows } from './enhancedTestFlows';
+export { standardisedTestFlows } from './standardisedTestFlows';
 export { 
   enhancedSafeIsolationSteps,
   enhancedContinuitySteps,
@@ -8,4 +9,4 @@ export {
   enhancedZsTestingSteps,
   enhancedRCDTestingSteps,
   enhancedPolaritySteps
-} from './comprehensiveTestSteps';
+} from './enhancedComprehensiveTestSteps';
