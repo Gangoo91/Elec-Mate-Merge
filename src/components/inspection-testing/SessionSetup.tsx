@@ -44,7 +44,8 @@ const SessionSetup = ({ flow, onStartSession, mode }: SessionSetupProps) => {
     
     const technicianValid = technicianDetails.name && technicianDetails.qualification;
     
-    setIsValid(installationValid && technicianValid);
+    const formIsValid = Boolean(installationValid && technicianValid);
+    setIsValid(formIsValid);
   };
 
   const handleInstallationChange = (field: string, value: string) => {

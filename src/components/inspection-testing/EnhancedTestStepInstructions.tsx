@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { CheckSquare, AlertTriangle, Info, BookOpen, Shield, Zap, Timer, FileText, Calculator } from 'lucide-react';
+import { CheckSquare, AlertTriangle, Info, BookOpen, Shield, Zap, Timer, FileText, Calculator, Lightbulb } from 'lucide-react';
 import { TestStep } from '@/types/inspection-testing';
 import TestStepEducationalContent from './TestStepEducationalContent';
 
