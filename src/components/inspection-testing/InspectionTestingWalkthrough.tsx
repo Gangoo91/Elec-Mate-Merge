@@ -1,21 +1,19 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { Clock, CheckCircle, AlertTriangle, User, FileText } from 'lucide-react';
-import { testFlows } from '@/data/inspection-testing/testFlows';
-import { expandedTestFlows } from '@/data/inspection-testing/expandedTestFlows';
-import { useTestFlowEngine } from '@/hooks/useTestFlowEngine';
-import TestStepDisplay from './TestStepDisplay';
-import EnhancedTestFlowSelector from './EnhancedTestFlowSelector';
-import SessionSetupForm from './SessionSetupForm';
-import TestProgressSidebar from './TestProgressSidebar';
-import TestCompletionSummary from './TestCompletionSummary';
-import GuidedWorkflow from './GuidedWorkflow';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle, Play, Pause, RotateCcw } from 'lucide-react';
 import { TestFlow, TestSession } from '@/types/inspection-testing';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useTestFlowEngine } from '@/hooks/useTestFlowEngine';
+import { enhancedTestFlows } from '@/data/inspection-testing/enhancedTestFlows';
+import { expandedTestFlows } from '@/data/inspection-testing/expandedTestFlows';
+import EnhancedTestFlowSelector from './EnhancedTestFlowSelector';
+import TestStepDisplay from './TestStepDisplay';
+import GuidedWorkflow from './GuidedWorkflow';
+import SessionSetup from './SessionSetup';
 
 interface InspectionTestingWalkthroughProps {
   mode: 'electrician' | 'apprentice';
@@ -24,14 +22,11 @@ interface InspectionTestingWalkthroughProps {
 
 const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWalkthroughProps) => {
   const [selectedFlow, setSelectedFlow] = useState<TestFlow | null>(null);
-  const [showSetup, setShowSetup] = useState(false);
-  const isMobile = useIsMobile();
-
-  // Combine original and expanded test flows, prioritizing expanded versions
-  const allFlows = [...expandedTestFlows, ...testFlows.filter(flow => 
-    !expandedTestFlows.some(expanded => expanded.type === flow.type)
-  )];
-
+  const [showGuidedWorkflow, setShowGuidedWorkflow] = useState(true);
+  
+  // Combine enhanced and expanded test flows
+  const allTestFlows = [...enhancedTestFlows, ...expandedTestFlows];
+  
   const {
     session,
     currentStep,
@@ -45,236 +40,250 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
     recordResult,
     nextStep,
     previousStep,
-    completeSession
+    completeSession,
+    pauseSession,
+    resumeSession
   } = useTestFlowEngine(selectedFlow);
 
   const handleFlowSelection = (flow: TestFlow) => {
-    console.log('Selected flow:', flow.name, 'with', flow.steps.length, 'steps');
     setSelectedFlow(flow);
-    setShowSetup(true);
+    console.log('Selected test flow:', flow);
   };
 
-  const handleSessionStart = (installationDetails: any, technician: any) => {
+  const handleStartSession = (installationDetails: any, technician: any) => {
     startSession(installationDetails, technician);
-    setShowSetup(false);
+    console.log('Session started with details:', { installationDetails, technician });
   };
 
-  const handleStepComplete = (result: any) => {
-    if (!currentStep) return;
-    
-    recordResult(currentStep.id, result);
-    
-    // Auto-advance for successful completions
-    if (result.status === 'completed' && !isLastStep) {
-      setTimeout(() => {
-        nextStep();
-      }, 1000);
+  const handleStepCompletion = () => {
+    if (isLastStep) {
+      const completedSession = completeSession();
+      if (completedSession) {
+        onComplete(completedSession);
+      }
+    } else {
+      nextStep();
     }
   };
 
-  const handleTestCompletion = () => {
-    const completedSession = completeSession();
-    if (completedSession) {
-      onComplete(completedSession);
-    }
+  const handleRestart = () => {
+    setSelectedFlow(null);
+    setShowGuidedWorkflow(true);
   };
 
-  // Flow selection view
+  const getSessionStatusInfo = () => {
+    if (!session) return null;
+    
+    const completedSteps = session.results.filter(r => r.status === 'completed').length;
+    const failedSteps = session.results.filter(r => r.status === 'failed').length;
+    const totalSteps = selectedFlow?.steps.length || 0;
+    
+    return {
+      completed: completedSteps,
+      failed: failedSteps,
+      total: totalSteps,
+      remaining: totalSteps - completedSteps - failedSteps
+    };
+  };
+
+  const sessionInfo = getSessionStatusInfo();
+
+  // No flow selected - show flow selector
   if (!selectedFlow) {
     return (
       <div className="space-y-6">
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <FileText className="h-6 w-6 text-elec-yellow" />
               Select Testing Procedure
+              <Badge variant="outline" className="ml-auto">
+                {mode === 'apprentice' ? 'Learning Mode' : 'Professional Mode'}
+              </Badge>
             </CardTitle>
-            <p className="text-muted-foreground">
-              Choose the appropriate testing procedure for your electrical installation work.
-              {mode === 'apprentice' && ' Comprehensive procedures include detailed explanations and learning content.'}
-            </p>
           </CardHeader>
           <CardContent>
-            <EnhancedTestFlowSelector
-              flows={allFlows}
-              onSelectFlow={handleFlowSelection}
-              mode={mode}
-            />
+            <p className="text-muted-foreground mb-4">
+              Choose a testing procedure to begin. Each procedure includes detailed step-by-step guidance
+              {mode === 'apprentice' ? ' with educational content to help you learn' : ' for professional compliance'}.
+            </p>
           </CardContent>
         </Card>
-      </div>
-    );
-  }
 
-  // Session setup view
-  if (showSetup && !session) {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <Button
-            variant="outline"
-            onClick={() => {
-              setSelectedFlow(null);
-              setShowSetup(false);
-            }}
-          >
-            ← Back to Selection
-          </Button>
-          <div>
-            <h2 className="text-xl font-semibold">{selectedFlow.name}</h2>
-            <p className="text-muted-foreground">{selectedFlow.description}</p>
-            <Badge variant="outline" className="mt-1">
-              {selectedFlow.steps.length} detailed steps
-            </Badge>
-          </div>
-        </div>
-        
-        <SessionSetupForm
-          testFlow={selectedFlow}
-          onStartSession={handleSessionStart}
+        <EnhancedTestFlowSelector
+          flows={allTestFlows}
+          onSelectFlow={handleFlowSelection}
           mode={mode}
         />
       </div>
     );
   }
 
-  // Testing session completion view
-  if (session && session.status === 'completed') {
+  // Flow selected but no session - show session setup
+  if (!session) {
     return (
-      <TestCompletionSummary
-        session={session}
-        testFlow={selectedFlow}
-        onStartNew={() => {
-          setSelectedFlow(null);
-          setShowSetup(false);
-        }}
-        mode={mode}
-      />
+      <div className="space-y-6">
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle>{selectedFlow.name}</CardTitle>
+              <Button variant="outline" size="sm" onClick={() => setSelectedFlow(null)}>
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Selection
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">{selectedFlow.description}</p>
+          </CardContent>
+        </Card>
+
+        <SessionSetup
+          flow={selectedFlow}
+          onStartSession={handleStartSession}
+          mode={mode}
+        />
+      </div>
     );
   }
 
-  // Active testing session view
-  if (session && currentStep && isSessionActive) {
-    return (
-      <div className={`${isMobile ? 'space-y-4' : 'grid grid-cols-1 lg:grid-cols-4 gap-6'}`}>
-        {/* Guided Workflow Sidebar */}
-        <div className={isMobile ? 'order-2' : 'lg:col-span-1'}>
+  // Active session - show testing interface
+  return (
+    <div className="space-y-6">
+      {/* Session Header */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader className="pb-3">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div className="flex-1">
+              <CardTitle className="flex items-center gap-2">
+                {selectedFlow.name}
+                <Badge variant="outline" className="text-xs">
+                  {session.status === 'in-progress' ? 'Active' : session.status}
+                </Badge>
+              </CardTitle>
+              <p className="text-sm text-muted-foreground mt-1">
+                {currentStep?.title || 'Loading...'}
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Button variant="outline" size="sm" onClick={handleRestart}>
+                <RotateCcw className="h-4 w-4 mr-2" />
+                Restart
+              </Button>
+              {isSessionActive ? (
+                <Button variant="outline" size="sm" onClick={pauseSession}>
+                  <Pause className="h-4 w-4 mr-2" />
+                  Pause
+                </Button>
+              ) : (
+                <Button variant="outline" size="sm" onClick={resumeSession}>
+                  <Play className="h-4 w-4 mr-2" />
+                  Resume
+                </Button>
+              )}
+            </div>
+          </div>
+          
+          {/* Progress Bar */}
+          <div className="space-y-2">
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>Step {currentStepIndex + 1} of {selectedFlow.steps.length}</span>
+              <span>{Math.round(progress)}% Complete</span>
+            </div>
+            <Progress value={progress} className="h-2" />
+          </div>
+
+          {/* Session Stats */}
+          {sessionInfo && (
+            <div className="flex gap-4 text-xs">
+              <div className="flex items-center gap-1">
+                <CheckCircle className="h-3 w-3 text-green-400" />
+                <span>{sessionInfo.completed} Completed</span>
+              </div>
+              {sessionInfo.failed > 0 && (
+                <div className="flex items-center gap-1">
+                  <AlertTriangle className="h-3 w-3 text-red-400" />
+                  <span>{sessionInfo.failed} Failed</span>
+                </div>
+              )}
+              <div className="text-muted-foreground">
+                {sessionInfo.remaining} Remaining
+              </div>
+            </div>
+          )}
+        </CardHeader>
+      </Card>
+
+      {/* Main Content Area */}
+      <div className="grid gap-6 lg:grid-cols-3">
+        {/* Left Column: Current Step */}
+        <div className="lg:col-span-2 space-y-6">
+          {currentStep && (
+            <TestStepDisplay
+              step={currentStep}
+              result={currentStepResult}
+              onRecordResult={(result) => recordResult(currentStep.id, result)}
+              mode={mode}
+            />
+          )}
+        </div>
+
+        {/* Right Column: Guided Workflow */}
+        {showGuidedWorkflow && (
           <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-medium">Guided Workflow</h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowGuidedWorkflow(!showGuidedWorkflow)}
+              >
+                {showGuidedWorkflow ? 'Hide' : 'Show'}
+              </Button>
+            </div>
             <GuidedWorkflow
               currentStep={currentStep}
               session={session}
               mode={mode}
             />
-            {!isMobile && (
-              <TestProgressSidebar
-                session={session}
-                testFlow={selectedFlow}
-                currentStepIndex={currentStepIndex}
-                mode={mode}
-              />
-            )}
           </div>
-        </div>
-
-        {/* Main Testing Area */}
-        <div className={`${isMobile ? 'order-1' : 'lg:col-span-3'} space-y-6`}>
-          {/* Session Header */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="flex items-center gap-2">
-                    <User className="h-5 w-5 text-elec-yellow" />
-                    {session.technician.name}
-                  </CardTitle>
-                  <p className="text-sm text-muted-foreground">
-                    {session.installationDetails.location} • {selectedFlow.name}
-                  </p>
-                </div>
-                <Badge variant="outline" className="bg-green-900/30 border-green-500/30">
-                  <Clock className="h-3 w-3 mr-1" />
-                  Session Active
-                </Badge>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span>Progress: Step {currentStepIndex + 1} of {selectedFlow.steps.length}</span>
-                  <span>{Math.round(progress)}% Complete</span>
-                </div>
-                <Progress value={progress} className="h-2" />
-              </div>
-            </CardHeader>
-          </Card>
-
-          {/* Current Test Step */}
-          <TestStepDisplay
-            step={currentStep}
-            result={currentStepResult}
-            onRecordResult={handleStepComplete}
-            mode={mode}
-          />
-
-          {/* Navigation Controls */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardContent className="pt-6">
-              <div className={`flex ${isMobile ? 'flex-col gap-3' : 'justify-between items-center'}`}>
-                <Button
-                  variant="outline"
-                  onClick={previousStep}
-                  disabled={isFirstStep}
-                  className={isMobile ? 'w-full' : ''}
-                >
-                  ← Previous Step
-                </Button>
-
-                <div className="flex items-center gap-2">
-                  {currentStepResult?.status === 'completed' && (
-                    <CheckCircle className="h-5 w-5 text-green-400" />
-                  )}
-                  {currentStepResult?.status === 'failed' && (
-                    <AlertTriangle className="h-5 w-5 text-red-400" />
-                  )}
-                  <span className="text-sm font-medium">
-                    {currentStepResult?.status || 'Pending'}
-                  </span>
-                </div>
-
-                {isLastStep ? (
-                  <Button
-                    onClick={handleTestCompletion}
-                    disabled={!currentStepResult || currentStepResult.status !== 'completed'}
-                    className="bg-green-600 hover:bg-green-700"
-                  >
-                    <CheckCircle className="h-4 w-4 mr-2" />
-                    Complete Testing
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={nextStep}
-                    disabled={!currentStepResult || currentStepResult.status !== 'completed'}
-                    className={isMobile ? 'w-full' : ''}
-                  >
-                    Next Step →
-                  </Button>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        )}
       </div>
-    );
-  }
 
-  // Loading or error state
-  return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardContent className="pt-6">
-        <div className="text-center">
-          <p className="text-muted-foreground">Initializing testing session...</p>
-        </div>
-      </CardContent>
-    </Card>
+      {/* Navigation Footer */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardContent className="pt-6">
+          <div className="flex justify-between items-center">
+            <Button
+              variant="outline"
+              onClick={previousStep}
+              disabled={isFirstStep}
+              className="flex items-center gap-2"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Previous Step
+            </Button>
+
+            <div className="text-center">
+              <p className="text-sm text-muted-foreground">
+                {currentStepResult?.status === 'completed' ? 
+                  'Step completed - ready to proceed' : 
+                  'Complete current step to continue'
+                }
+              </p>
+            </div>
+
+            <Button
+              onClick={handleStepCompletion}
+              disabled={!currentStepResult || currentStepResult.status !== 'completed'}
+              className="flex items-center gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            >
+              {isLastStep ? 'Complete Testing' : 'Next Step'}
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
