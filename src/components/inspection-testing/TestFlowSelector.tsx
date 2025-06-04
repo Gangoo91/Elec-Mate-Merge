@@ -42,11 +42,20 @@ const TestFlowSelector = ({ flows, onSelectFlow, mode }: TestFlowSelectorProps) 
     return flow.steps.reduce((total, step) => total + step.estimatedTime, 0);
   };
 
+  const getButtonText = (flowName: string) => {
+    // For long flow names (>20 characters), use "Start Test" to prevent overflow
+    if (flowName.length > 20) {
+      return 'Start Test';
+    }
+    return `Start ${flowName}`;
+  };
+
   return (
     <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'} gap-4`}>
       {flows.map((flow) => {
         const Icon = getFlowIcon(flow.type);
         const estimatedTime = getEstimatedTime(flow);
+        const buttonText = getButtonText(flow.name);
         
         return (
           <Card
@@ -105,13 +114,13 @@ const TestFlowSelector = ({ flows, onSelectFlow, mode }: TestFlowSelectorProps) 
               </div>
 
               <Button 
-                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 text-sm px-3 py-2 h-auto min-h-[2.5rem] whitespace-normal leading-tight"
                 onClick={(e) => {
                   e.stopPropagation();
                   onSelectFlow(flow);
                 }}
               >
-                Start {flow.name}
+                <span className="truncate">{buttonText}</span>
               </Button>
             </CardContent>
           </Card>
