@@ -13,10 +13,10 @@ const InspectionTesting = () => {
         <div>
           <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
             <TestTube className="h-8 w-8 text-elec-yellow" />
-            Inspection & Testing Walkthrough
+            Inspection & Testing with EICR Integration
           </h1>
           <p className="text-muted-foreground">
-            Professional testing procedures with step-by-step guidance and validation.
+            Professional testing procedures with automatic EICR report generation and fault code management.
           </p>
         </div>
         <Link to="/electrician-tools">

@@ -9,6 +9,7 @@ import SupplyTypeSelection from './SupplyTypeSelection';
 import VisualInspectionResult from './VisualInspectionResult';
 import MeasurementResult from './MeasurementResult';
 import ProceduralStepResult from './ProceduralStepResult';
+import { useEICR } from '@/contexts/EICRContext';
 
 interface TestStepDisplayProps {
   step: TestStep;
@@ -25,6 +26,8 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
   const [status, setStatus] = useState<'pending' | 'in-progress' | 'completed' | 'failed' | 'skipped'>(
     result?.status || 'pending'
   );
+
+  const { populateFromTestResult } = useEICR();
 
   // Get validation for current result
   const validation = result ? BS7671Validator.validateTestStep(step, result) : null;
@@ -106,17 +109,33 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
     
     onRecordResult(resultData);
     setStatus('completed');
+
+    // Integrate with EICR
+    populateFromTestResult(step.id, {
+      ...resultData,
+      stepId: step.id,
+      timestamp: new Date()
+    });
   };
 
   const handleRecordFail = () => {
-    onRecordResult({
+    const resultData = {
       value: isMeasurement && value ? parseFloat(value) : undefined,
       unit: isMeasurement ? unit : undefined,
-      status: 'failed',
+      status: 'failed' as const,
       notes: isSupplySelection ? supplyType : notes,
       isWithinLimits: false
-    });
+    };
+
+    onRecordResult(resultData);
     setStatus('failed');
+
+    // Integrate with EICR
+    populateFromTestResult(step.id, {
+      ...resultData,
+      stepId: step.id,
+      timestamp: new Date()
+    });
   };
 
   // Check if this is a safe isolation step
