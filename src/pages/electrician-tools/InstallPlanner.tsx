@@ -11,8 +11,10 @@ import CableRunStep from "@/components/install-planner/CableRunStep";
 import EnvironmentStep from "@/components/install-planner/EnvironmentStep";
 import ResultsStep from "@/components/install-planner/ResultsStep";
 import { InstallPlanData } from "@/components/install-planner/types";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const InstallPlanner = () => {
+  const isMobile = useIsMobile();
   const [currentStep, setCurrentStep] = useState(1);
   const [planData, setPlanData] = useState<InstallPlanData>({
     installationType: "",
@@ -76,38 +78,48 @@ const InstallPlanner = () => {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-            <MapPin className="h-8 w-8 text-elec-yellow" />
-            Install Planner
-          </h1>
-          <p className="text-muted-foreground">
-            Plan your electrical installation with professional guidance and calculations.
-          </p>
+    <div className="space-y-4 md:space-y-6 animate-fade-in px-2 md:px-0">
+      {/* Header Section */}
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex-1">
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-2">
+              <MapPin className="h-6 w-6 md:h-8 md:w-8 text-elec-yellow flex-shrink-0" />
+              Installation Planner
+            </h1>
+            <p className="text-muted-foreground text-sm md:text-base mt-1">
+              Plan your electrical installation with professional guidance and calculations.
+            </p>
+          </div>
+          <div className="flex justify-end">
+            <Link to="/electrician-tools">
+              <Button variant="outline" size={isMobile ? "sm" : "default"} className="flex items-center gap-2">
+                <ArrowLeft className="h-4 w-4" /> 
+                <span className={isMobile ? "text-sm" : ""}>Back to Electrician Tools</span>
+              </Button>
+            </Link>
+          </div>
         </div>
-        <Link to="/electrician-tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Electrician Tools
-          </Button>
-        </Link>
       </div>
 
-      {/* Progress Bar */}
+      {/* Progress Section */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader className="pb-3">
-          <div className="flex justify-between items-center">
-            <CardTitle className="text-lg">Step {currentStep} of {steps.length}: {currentStepData?.title}</CardTitle>
-            <span className="text-sm text-muted-foreground">{Math.round(progress)}% Complete</span>
+        <CardHeader className="pb-3 px-4 md:px-6">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
+            <CardTitle className="text-base md:text-lg">
+              Step {currentStep} of {steps.length}: {currentStepData?.title}
+            </CardTitle>
+            <span className="text-xs md:text-sm text-muted-foreground">
+              {Math.round(progress)}% Complete
+            </span>
           </div>
-          <Progress value={progress} className="h-2" />
+          <Progress value={progress} className="h-2 mt-2" />
         </CardHeader>
       </Card>
 
       {/* Step Content */}
-      <Card className="border-elec-yellow/20 bg-elec-gray min-h-[500px]">
-        <CardContent className="p-6">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardContent className="p-4 md:p-6 min-h-[400px] md:min-h-[500px]">
           {CurrentStepComponent && (
             <CurrentStepComponent
               planData={planData}
@@ -117,13 +129,14 @@ const InstallPlanner = () => {
         </CardContent>
       </Card>
 
-      {/* Navigation */}
-      <div className="flex justify-between">
+      {/* Navigation Section */}
+      <div className="flex flex-col md:flex-row justify-between gap-3 md:gap-0 px-2 md:px-0">
         <Button
           variant="outline"
           onClick={handlePrevious}
           disabled={currentStep === 1}
-          className="flex items-center gap-2"
+          className={`flex items-center gap-2 ${isMobile ? 'w-full justify-center' : ''}`}
+          size={isMobile ? "lg" : "default"}
         >
           <ChevronLeft className="h-4 w-4" />
           Previous
@@ -133,7 +146,8 @@ const InstallPlanner = () => {
           <Button
             onClick={handleNext}
             disabled={!canProceed()}
-            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
+            className={`bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2 ${isMobile ? 'w-full justify-center' : ''}`}
+            size={isMobile ? "lg" : "default"}
           >
             Next
             <ChevronRight className="h-4 w-4" />
@@ -141,7 +155,8 @@ const InstallPlanner = () => {
         ) : (
           <Button
             onClick={() => setCurrentStep(1)}
-            className="bg-green-600 hover:bg-green-700 text-white"
+            className={`bg-green-600 hover:bg-green-700 text-white ${isMobile ? 'w-full justify-center' : ''}`}
+            size={isMobile ? "lg" : "default"}
           >
             Start New Plan
           </Button>
