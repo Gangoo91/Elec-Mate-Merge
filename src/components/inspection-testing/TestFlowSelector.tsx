@@ -42,7 +42,7 @@ const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
   const individualFlows = testFlows.filter(flow => !flow.isComprehensive);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 px-4 sm:px-0">
       {/* Comprehensive Testing - Featured */}
       {comprehensiveFlow && (
         <div>
@@ -52,83 +52,76 @@ const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
           </h3>
           
           <Card className="border-2 border-elec-yellow bg-gradient-to-br from-elec-gray to-elec-dark hover:border-elec-yellow/80 transition-all cursor-pointer shadow-lg">
-            <CardHeader className={isMobile ? "pb-4" : ""}>
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <CardTitle className={`flex items-center gap-2 ${isMobile ? 'text-lg' : 'text-xl'}`}>
+            <CardHeader className="pb-4">
+              <div className="flex flex-col space-y-3">
+                <div className="flex flex-col space-y-2">
+                  <CardTitle className="text-xl sm:text-2xl leading-tight">
                     {comprehensiveFlow.name}
-                    <Badge className="bg-elec-yellow text-black">
+                  </CardTitle>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge className="bg-elec-yellow text-black text-xs px-2 py-1 font-medium">
                       FEATURED
                     </Badge>
-                  </CardTitle>
-                  <CardDescription className={`mt-2 ${isMobile ? 'text-sm' : 'text-base'}`}>
-                    {comprehensiveFlow.description}
-                  </CardDescription>
+                    <Badge className={`${getDifficultyColor(comprehensiveFlow.difficulty)} flex items-center gap-1 text-xs px-2 py-1`}>
+                      {getDifficultyIcon(comprehensiveFlow.difficulty)}
+                      {comprehensiveFlow.difficulty}
+                    </Badge>
+                  </div>
                 </div>
-                {!isMobile && (
-                  <Badge className={`${getDifficultyColor(comprehensiveFlow.difficulty)} flex items-center gap-1`}>
-                    {getDifficultyIcon(comprehensiveFlow.difficulty)}
-                    {comprehensiveFlow.difficulty}
-                  </Badge>
-                )}
+                <CardDescription className="text-sm leading-relaxed">
+                  {comprehensiveFlow.description}
+                </CardDescription>
               </div>
-              {isMobile && (
-                <Badge className={`${getDifficultyColor(comprehensiveFlow.difficulty)} flex items-center gap-1 w-fit`}>
-                  {getDifficultyIcon(comprehensiveFlow.difficulty)}
-                  {comprehensiveFlow.difficulty}
-                </Badge>
-              )}
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'} gap-4 text-sm`}>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
                 <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-muted-foreground" />
-                  <span>{getTotalEstimatedTime(comprehensiveFlow)} minutes</span>
+                  <Clock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                  <span className="truncate">{getTotalEstimatedTime(comprehensiveFlow)} minutes</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-muted-foreground" />
-                  <span>{comprehensiveFlow.steps.length} test steps</span>
+                  <CheckCircle className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                  <span className="truncate">{comprehensiveFlow.steps.length} test steps</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-muted-foreground" />
-                  <span>All BS 7671 Tests</span>
+                  <Zap className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                  <span className="truncate">All BS 7671 Tests</span>
                 </div>
               </div>
 
               <div className="space-y-3">
                 <h4 className="font-medium text-sm">Includes:</h4>
-                <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-2 text-xs`}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full shrink-0"></div>
-                    <span>Visual Inspection</span>
+                    <div className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></div>
+                    <span className="truncate">Visual Inspection</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full shrink-0"></div>
-                    <span>Continuity Testing</span>
+                    <div className="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></div>
+                    <span className="truncate">Continuity Testing</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-yellow-500 rounded-full shrink-0"></div>
-                    <span>Insulation Resistance</span>
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full flex-shrink-0"></div>
+                    <span className="truncate">Insulation Resistance</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-purple-500 rounded-full shrink-0"></div>
-                    <span>Polarity Testing</span>
+                    <div className="w-2 h-2 bg-purple-500 rounded-full flex-shrink-0"></div>
+                    <span className="truncate">Polarity Testing</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-orange-500 rounded-full shrink-0"></div>
-                    <span>Earth Fault Loop</span>
+                    <div className="w-2 h-2 bg-orange-500 rounded-full flex-shrink-0"></div>
+                    <span className="truncate">Earth Fault Loop</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-red-500 rounded-full shrink-0"></div>
-                    <span>RCD Testing</span>
+                    <div className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0"></div>
+                    <span className="truncate">RCD Testing</span>
                   </div>
                 </div>
               </div>
 
               <Button 
                 onClick={() => onSelectFlow(comprehensiveFlow)}
-                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
-                size={isMobile ? "default" : "lg"}
+                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium h-12"
               >
                 Start Comprehensive Testing
               </Button>
@@ -140,7 +133,7 @@ const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
       {/* Individual Test Flows */}
       <div>
         <h3 className="text-lg font-semibold mb-4">Individual Test Procedures</h3>
-        <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'} gap-4`}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {individualFlows.map((flow) => (
             <Card 
               key={flow.id} 
@@ -148,41 +141,43 @@ const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
               onClick={() => onSelectFlow(flow)}
             >
               <CardHeader className="pb-3">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1 min-w-0 pr-2">
-                    <CardTitle className={isMobile ? "text-base" : "text-lg"}>{flow.name}</CardTitle>
-                    <CardDescription className="mt-1 text-sm">
-                      {flow.description}
-                    </CardDescription>
+                <div className="flex flex-col space-y-2">
+                  <div className="flex items-start justify-between gap-2">
+                    <CardTitle className="text-base leading-tight flex-1 min-w-0">
+                      {flow.name}
+                    </CardTitle>
+                    <Badge className={`${getDifficultyColor(flow.difficulty)} text-xs flex-shrink-0`}>
+                      {flow.difficulty}
+                    </Badge>
                   </div>
-                  <Badge className={`${getDifficultyColor(flow.difficulty)} shrink-0 text-xs`}>
-                    {flow.difficulty}
-                  </Badge>
+                  <CardDescription className="text-sm leading-relaxed">
+                    {flow.description}
+                  </CardDescription>
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span>{getTotalEstimatedTime(flow)} min</span>
+                    <Clock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                    <span className="truncate">{getTotalEstimatedTime(flow)} min</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-muted-foreground" />
-                    <span>{flow.steps.length} steps</span>
+                    <CheckCircle className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                    <span className="truncate">{flow.steps.length} steps</span>
                   </div>
                 </div>
 
                 {flow.regulatoryStandards && flow.regulatoryStandards.length > 0 && (
                   <div className="text-xs text-muted-foreground">
-                    <span className="font-medium">Standards:</span> {flow.regulatoryStandards[0]}
+                    <span className="font-medium">Standards:</span>{' '}
+                    <span className="truncate">{flow.regulatoryStandards[0]}</span>
                   </div>
                 )}
 
                 <Button 
                   onClick={() => onSelectFlow(flow)}
                   variant="outline" 
-                  className="w-full"
-                  size={isMobile ? "sm" : "default"}
+                  className="w-full h-10"
                 >
                   Select Test
                 </Button>
