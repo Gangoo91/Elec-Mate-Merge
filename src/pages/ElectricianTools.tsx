@@ -1,6 +1,7 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calculator, Wrench, Brain, Settings, ArrowLeft, MapPin, TestTube } from "lucide-react";
+import { Calculator, Wrench, Brain, Settings, ArrowLeft, MapPin, TestTube, FileText, ArrowRight, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ElectricianTools = () => {
@@ -63,6 +64,55 @@ const ElectricianTools = () => {
           <Button variant="outline" className="flex items-center gap-2">
             <ArrowLeft className="h-4 w-4" /> Back to Electrical Hub
           </Button>
+        </Link>
+      </div>
+
+      {/* Featured EICR Section */}
+      <div className="w-full">
+        <Link to="/electrician-tools/eicr-reports">
+          <Card className="border-elec-yellow/30 bg-gradient-to-r from-elec-gray to-elec-gray/80 hover:border-elec-yellow/50 transition-all group cursor-pointer">
+            <CardHeader className="pb-4">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30">
+                    <FileText className="h-8 w-8 text-elec-yellow" />
+                  </div>
+                  <div className="flex-1">
+                    <CardTitle className="text-2xl mb-2 flex items-center gap-2">
+                      EICR Reports & Management
+                      <CheckCircle className="h-5 w-5 text-green-400" />
+                    </CardTitle>
+                    <CardDescription className="text-base text-muted-foreground">
+                      Create, manage, and export professional Electrical Installation Condition Reports with automated fault detection and BS 7671:2018+A2:2022 compliance.
+                    </CardDescription>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="text-right hidden sm:block">
+                    <p className="text-sm text-elec-yellow font-medium">Featured Tool</p>
+                    <p className="text-xs text-muted-foreground">Click to access</p>
+                  </div>
+                  <ArrowRight className="h-6 w-6 text-elec-yellow group-hover:translate-x-1 transition-transform" />
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <div className="flex flex-wrap gap-2">
+                <span className="px-3 py-1 bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-full text-xs font-medium">
+                  BS 7671 Compliant
+                </span>
+                <span className="px-3 py-1 bg-green-500/20 text-green-300 border border-green-500/30 rounded-full text-xs font-medium">
+                  Automated Fault Codes
+                </span>
+                <span className="px-3 py-1 bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 rounded-full text-xs font-medium">
+                  PDF Export
+                </span>
+                <span className="px-3 py-1 bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-full text-xs font-medium">
+                  Live Dashboard
+                </span>
+              </div>
+            </CardContent>
+          </Card>
         </Link>
       </div>
 
