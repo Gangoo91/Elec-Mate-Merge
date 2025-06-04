@@ -1,4 +1,5 @@
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, FileText, Plus, Download } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -6,9 +7,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EICRProvider } from "@/contexts/EICRContext";
 import EICRDashboard from "@/components/inspection-testing/eicr/EICRDashboard";
+import DigitalEICRForm from "@/components/inspection-testing/eicr/DigitalEICRForm";
 
 const EICRReports = () => {
   console.log('EICRReports page rendered');
+  const [showDigitalForm, setShowDigitalForm] = useState(false);
   
   return (
     <EICRProvider>
@@ -29,11 +32,64 @@ const EICRReports = () => {
                 <ArrowLeft className="h-4 w-4" /> Back to Testing
               </Button>
             </Link>
-            <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2">
-              <Plus className="h-4 w-4" /> New EICR
+            <Button 
+              onClick={() => setShowDigitalForm(true)}
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
+            >
+              <Plus className="h-4 w-4" /> New Digital EICR
             </Button>
           </div>
         </div>
+
+        {/* Digital EICR Tool Feature */}
+        <Card className="border-elec-yellow/30 bg-gradient-to-r from-elec-gray to-elec-gray/80">
+          <CardHeader className="pb-4">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+              <div className="flex items-start gap-4">
+                <div className="p-3 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30">
+                  <FileText className="h-8 w-8 text-elec-yellow" />
+                </div>
+                <div className="flex-1">
+                  <CardTitle className="text-2xl mb-2">
+                    Interactive Digital EICR Tool
+                  </CardTitle>
+                  <p className="text-base text-muted-foreground">
+                    Complete step-by-step EICR creation with guided inspection checklists, automated test result validation, 
+                    real-time fault classification, and professional report generation. Perfect for both experienced electricians 
+                    and those learning the EICR process.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Button 
+                  onClick={() => setShowDigitalForm(true)}
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                >
+                  Launch Digital Tool
+                </Button>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="pt-0">
+            <div className="flex flex-wrap gap-2">
+              <span className="px-3 py-1 bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-full text-xs font-medium">
+                Interactive Inspection Checklist
+              </span>
+              <span className="px-3 py-1 bg-green-500/20 text-green-300 border border-green-500/30 rounded-full text-xs font-medium">
+                Automated Test Validation
+              </span>
+              <span className="px-3 py-1 bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-full text-xs font-medium">
+                Real-time Fault Classification
+              </span>
+              <span className="px-3 py-1 bg-orange-500/20 text-orange-300 border border-orange-500/30 rounded-full text-xs font-medium">
+                Professional PDF Generation
+              </span>
+              <span className="px-3 py-1 bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 rounded-full text-xs font-medium">
+                BS 7671:2018+A2:2022 Compliant
+              </span>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -128,6 +184,11 @@ const EICRReports = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Digital EICR Form Modal */}
+        {showDigitalForm && (
+          <DigitalEICRForm onClose={() => setShowDigitalForm(false)} />
+        )}
       </div>
     </EICRProvider>
   );
