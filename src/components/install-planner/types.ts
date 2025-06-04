@@ -32,6 +32,9 @@ export interface CableRecommendation {
   ratedCurrent: number;
   suitability: "suitable" | "marginal" | "unsuitable";
   notes: string[];
+  cost?: "low" | "medium" | "high";
+  availability?: "common" | "limited" | "special-order";
+  installationComplexity?: "simple" | "moderate" | "complex";
 }
 
 export interface InstallPlanResult {
@@ -45,4 +48,22 @@ export interface InstallPlanResult {
   totalSystemLoad: number;
   warnings: string[];
   recommendations: string[];
+  suggestions: InstallationSuggestion[];
+  complianceChecks: ComplianceCheck[];
+}
+
+export interface InstallationSuggestion {
+  type: "cable-upgrade" | "installation-method" | "protective-device" | "cost-optimization" | "safety";
+  title: string;
+  description: string;
+  impact: "high" | "medium" | "low";
+  cost?: "low" | "medium" | "high";
+}
+
+export interface ComplianceCheck {
+  regulation: string;
+  requirement: string;
+  status: "pass" | "fail" | "warning";
+  reference: string;
+  details?: string;
 }
