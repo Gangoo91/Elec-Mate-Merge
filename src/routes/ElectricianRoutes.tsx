@@ -15,6 +15,7 @@ import DocumentTemplates from "@/pages/electrician-tools/DocumentTemplates";
 import InstallPlanner from "@/pages/electrician-tools/InstallPlanner";
 import InspectionTesting from "@/pages/electrician-tools/InspectionTesting";
 import EICRReports from "@/pages/electrician-tools/EICRReports";
+import DigitalEICRTool from "@/pages/electrician-tools/DigitalEICRTool";
 // Add Staff Management page
 import StaffManagement from "@/pages/electrician-tools/StaffManagement";
 // Add Schedule Manager page
@@ -40,6 +41,7 @@ const ElectricianRoutes = () => (
     <Route path="install-planner" element={<InstallPlanner />} />
     <Route path="inspection-testing" element={<InspectionTesting />} />
     <Route path="eicr-reports" element={<EICRReports />} />
+    <Route path="digital-eicr" element={<DigitalEICRTool />} />
     {/* Add new routes */}
     <Route path="staff-management" element={<StaffManagement />} />
     <Route path="schedule" element={<ScheduleManager />} />

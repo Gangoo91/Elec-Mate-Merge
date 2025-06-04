@@ -1,5 +1,4 @@
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, FileText, Plus, Download } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -7,11 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EICRProvider } from "@/contexts/EICRContext";
 import EICRDashboard from "@/components/inspection-testing/eicr/EICRDashboard";
-import DigitalEICRForm from "@/components/inspection-testing/eicr/DigitalEICRForm";
 
 const EICRReports = () => {
   console.log('EICRReports page rendered');
-  const [showDigitalForm, setShowDigitalForm] = useState(false);
   
   return (
     <EICRProvider>
@@ -32,12 +29,11 @@ const EICRReports = () => {
                 <ArrowLeft className="h-4 w-4" /> Back to Testing
               </Button>
             </Link>
-            <Button 
-              onClick={() => setShowDigitalForm(true)}
-              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
-            >
-              <Plus className="h-4 w-4" /> New Digital EICR
-            </Button>
+            <Link to="/electrician-tools/digital-eicr">
+              <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2">
+                <Plus className="h-4 w-4" /> New Digital EICR
+              </Button>
+            </Link>
           </div>
         </div>
 
@@ -61,12 +57,11 @@ const EICRReports = () => {
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <Button 
-                  onClick={() => setShowDigitalForm(true)}
-                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                >
-                  Launch Digital Tool
-                </Button>
+                <Link to="/electrician-tools/digital-eicr">
+                  <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+                    Launch Digital Tool
+                  </Button>
+                </Link>
               </div>
             </div>
           </CardHeader>
@@ -184,11 +179,6 @@ const EICRReports = () => {
             </div>
           </CardContent>
         </Card>
-
-        {/* Digital EICR Form Modal */}
-        {showDigitalForm && (
-          <DigitalEICRForm onClose={() => setShowDigitalForm(false)} />
-        )}
       </div>
     </EICRProvider>
   );

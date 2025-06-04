@@ -6,6 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { FileText, Save, Download, ArrowLeft, ArrowRight, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useEICR } from '@/contexts/EICRContext';
 import ReportTypeSelector from './ReportTypeSelector';
 import InspectionChecklist from './InspectionChecklist';
@@ -16,11 +17,7 @@ import EICRExportOptions from './EICRExportOptions';
 export type ReportType = 'eicr' | 'initial-verification' | 'minor-works';
 export type FormStep = 'report-type' | 'inspection' | 'testing' | 'review' | 'export';
 
-interface DigitalEICRFormProps {
-  onClose: () => void;
-}
-
-const DigitalEICRForm = ({ onClose }: DigitalEICRFormProps) => {
+const DigitalEICRForm = () => {
   const { eicrSession, initializeEICR } = useEICR();
   const [currentStep, setCurrentStep] = useState<FormStep>('report-type');
   const [reportType, setReportType] = useState<ReportType>('eicr');
@@ -143,117 +140,124 @@ const DigitalEICRForm = ({ onClose }: DigitalEICRFormProps) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-elec-gray border border-elec-yellow/30 rounded-lg w-full max-w-6xl max-h-[90vh] overflow-hidden">
+    <div className="min-h-screen bg-elec-dark">
+      <div className="container mx-auto px-4 py-6 max-w-6xl">
         {/* Header */}
-        <div className="border-b border-elec-yellow/20 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <FileText className="h-6 w-6 text-elec-yellow" />
-              <div>
-                <h2 className="text-2xl font-bold">Digital EICR Tool</h2>
-                <p className="text-sm text-muted-foreground">
-                  Interactive electrical inspection and testing system
-                </p>
+        <div className="bg-elec-gray border border-elec-yellow/30 rounded-lg mb-6">
+          <div className="border-b border-elec-yellow/20 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <FileText className="h-6 w-6 text-elec-yellow" />
+                <div>
+                  <h1 className="text-3xl font-bold">Digital EICR Tool</h1>
+                  <p className="text-sm text-muted-foreground">
+                    Interactive electrical inspection and testing system
+                  </p>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button variant="outline" size="sm">
+                  <Save className="h-4 w-4 mr-2" />
+                  Save Progress
+                </Button>
+                <Link to="/electrician-tools/eicr-reports">
+                  <Button variant="outline" size="sm">
+                    <ArrowLeft className="h-4 w-4 mr-2" />
+                    Back to EICR Reports
+                  </Button>
+                </Link>
               </div>
             </div>
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm">
-                <Save className="h-4 w-4 mr-2" />
-                Save Progress
-              </Button>
-              <Button variant="outline" size="sm" onClick={onClose}>
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Close
-              </Button>
-            </div>
-          </div>
 
-          {/* Progress Bar */}
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span>Step {currentStepIndex + 1} of {steps.length}</span>
-              <span>{Math.round(progress)}% Complete</span>
-            </div>
-            <Progress value={progress} className="h-2" />
-          </div>
-
-          {/* Step Navigation */}
-          <div className="flex gap-2 mt-4 overflow-x-auto">
-            {steps.map((step, index) => (
-              <div
-                key={step.key}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm whitespace-nowrap ${
-                  index <= currentStepIndex
-                    ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30'
-                    : 'bg-elec-dark text-muted-foreground border border-elec-yellow/10'
-                }`}
-              >
-                {index < currentStepIndex ? (
-                  <CheckCircle className="h-4 w-4" />
-                ) : index === currentStepIndex ? (
-                  <AlertTriangle className="h-4 w-4" />
-                ) : (
-                  <div className="h-4 w-4 rounded-full border border-current" />
-                )}
-                <span>{step.title}</span>
+            {/* Progress Bar */}
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>Step {currentStepIndex + 1} of {steps.length}</span>
+                <span>{Math.round(progress)}% Complete</span>
               </div>
-            ))}
-          </div>
-        </div>
+              <Progress value={progress} className="h-2" />
+            </div>
 
-        {/* Content */}
-        <div className="p-6 overflow-y-auto max-h-[calc(90vh-200px)]">
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2">
+            {/* Step Navigation */}
+            <div className="flex gap-2 mt-4 overflow-x-auto">
+              {steps.map((step, index) => (
+                <div
+                  key={step.key}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm whitespace-nowrap ${
+                    index <= currentStepIndex
+                      ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30'
+                      : 'bg-elec-dark text-muted-foreground border border-elec-yellow/10'
+                  }`}
+                >
+                  {index < currentStepIndex ? (
+                    <CheckCircle className="h-4 w-4" />
+                  ) : index === currentStepIndex ? (
+                    <AlertTriangle className="h-4 w-4" />
+                  ) : (
+                    <div className="h-4 w-4 rounded-full border border-current" />
+                  )}
+                  <span>{step.title}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Current Step Info */}
+          <div className="p-6 pb-4">
+            <h2 className="text-xl font-semibold mb-2">
               {steps[currentStepIndex]?.title}
-            </h3>
+            </h2>
             <p className="text-muted-foreground">
               {steps[currentStepIndex]?.description}
             </p>
           </div>
+        </div>
 
+        {/* Content */}
+        <div className="mb-6">
           {renderStepContent()}
         </div>
 
-        {/* Footer */}
-        <div className="border-t border-elec-yellow/20 p-6">
-          <div className="flex justify-between items-center">
-            <Button
-              variant="outline"
-              onClick={handlePrevious}
-              disabled={currentStepIndex === 0}
-              className="flex items-center gap-2"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Previous
-            </Button>
+        {/* Footer Navigation */}
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardContent className="pt-6">
+            <div className="flex justify-between items-center">
+              <Button
+                variant="outline"
+                onClick={handlePrevious}
+                disabled={currentStepIndex === 0}
+                className="flex items-center gap-2"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Previous
+              </Button>
 
-            <div className="text-center">
-              <Badge variant="outline" className="text-xs">
-                {reportType.toUpperCase().replace('-', ' ')}
-              </Badge>
+              <div className="text-center">
+                <Badge variant="outline" className="text-xs">
+                  {reportType.toUpperCase().replace('-', ' ')}
+                </Badge>
+              </div>
+
+              <Button
+                onClick={handleNext}
+                disabled={currentStepIndex === steps.length - 1 || !canProceed()}
+                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
+              >
+                Next
+                <ArrowRight className="h-4 w-4" />
+              </Button>
             </div>
 
-            <Button
-              onClick={handleNext}
-              disabled={currentStepIndex === steps.length - 1 || !canProceed()}
-              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
-            >
-              Next
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </div>
-
-          {!canProceed() && (
-            <Alert className="mt-4 bg-orange-500/10 border-orange-500/30">
-              <AlertTriangle className="h-4 w-4 text-orange-400" />
-              <AlertDescription className="text-orange-200">
-                Please complete all required fields before proceeding to the next step.
-              </AlertDescription>
-            </Alert>
-          )}
-        </div>
+            {!canProceed() && (
+              <Alert className="mt-4 bg-orange-500/10 border-orange-500/30">
+                <AlertTriangle className="h-4 w-4 text-orange-400" />
+                <AlertDescription className="text-orange-200">
+                  Please complete all required fields before proceeding to the next step.
+                </AlertDescription>
+              </Alert>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
