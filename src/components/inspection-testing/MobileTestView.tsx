@@ -5,11 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TestTube, FileText, Clock, CheckCircle, AlertTriangle } from 'lucide-react';
+import { TestTube, FileText, Clock, CheckCircle, AlertTriangle, Zap } from 'lucide-react';
 import { TestFlow, TestSession } from '@/types/inspection-testing';
 import { useIsMobile } from '@/hooks/use-mobile';
 import TestStepDisplay from './TestStepDisplay';
 import TestResultsPanel from './TestResultsPanel';
+import ComprehensiveTestResults from './ComprehensiveTestResults';
 
 interface MobileTestViewProps {
   testFlow: TestFlow;
@@ -51,72 +52,93 @@ const MobileTestView = ({
 
   if (!isMobile) return null;
 
+  const isComprehensiveMode = testFlow?.isComprehensive || false;
+
   return (
-    <div className="flex flex-col h-screen bg-background">
-      {/* Mobile Header */}
-      <Card className="border-elec-yellow/20 bg-elec-gray rounded-none border-x-0 border-t-0">
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <div className="flex-1 min-w-0">
-              <CardTitle className="text-lg truncate">{testFlow.name}</CardTitle>
-              <div className="flex items-center gap-2 mt-1">
-                <Badge variant={isSessionActive ? "default" : "secondary"} className="text-xs">
-                  {isSessionActive ? 'Active' : 'Paused'}
-                </Badge>
-                <span className="text-xs text-muted-foreground">
-                  Step {(session?.currentStepIndex || 0) + 1}/{testFlow.steps.length}
-                </span>
+    <div className="flex flex-col h-screen bg-elec-dark">
+      {/* Mobile Header - More Compact */}
+      <Card className="border-elec-yellow/20 bg-elec-gray rounded-none border-x-0 border-t-0 shadow-lg">
+        <CardHeader className="pb-4 px-4 pt-4">
+          <div className="space-y-3">
+            <div className="flex items-start justify-between">
+              <div className="flex-1 min-w-0 pr-3">
+                <CardTitle className="text-lg font-bold truncate flex items-center gap-2">
+                  {testFlow.name}
+                  {isComprehensiveMode && (
+                    <Badge className="bg-elec-yellow text-black text-xs px-2 py-1">
+                      <Zap className="h-3 w-3 mr-1" />
+                      ALL
+                    </Badge>
+                  )}
+                </CardTitle>
+                <div className="flex items-center gap-3 mt-2">
+                  <Badge 
+                    variant={isSessionActive ? "default" : "secondary"} 
+                    className="text-xs px-2 py-1"
+                  >
+                    {isSessionActive ? 'Active' : 'Paused'}
+                  </Badge>
+                  <span className="text-xs text-muted-foreground font-medium">
+                    Step {(session?.currentStepIndex || 0) + 1} of {testFlow.steps.length}
+                  </span>
+                </div>
               </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={isSessionActive ? onPauseSession : onResumeSession}
+                className="shrink-0 h-8 w-8 p-0"
+              >
+                <Clock className="h-3 w-3" />
+              </Button>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={isSessionActive ? onPauseSession : onResumeSession}
-            >
-              <Clock className="h-3 w-3" />
-            </Button>
+            <Progress value={progress} className="h-2 bg-elec-dark" />
           </div>
-          <Progress value={progress} className="h-1.5 mt-2" />
         </CardHeader>
       </Card>
 
-      {/* Mobile Tabs */}
+      {/* Mobile Tabs - Better Alignment */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col">
-        <TabsList className="grid w-full grid-cols-3 rounded-none bg-elec-gray">
-          <TabsTrigger value="test" className="text-xs">
-            <TestTube className="h-3 w-3 mr-1" />
-            Test
+        <TabsList className="grid w-full grid-cols-3 rounded-none bg-elec-gray border-b border-elec-yellow/20 h-12">
+          <TabsTrigger value="test" className="text-xs font-medium flex items-center gap-1 px-2">
+            <TestTube className="h-3 w-3" />
+            <span className="hidden xs:inline">Test</span>
           </TabsTrigger>
-          <TabsTrigger value="results" className="text-xs">
-            <FileText className="h-3 w-3 mr-1" />
-            Results
+          <TabsTrigger value="results" className="text-xs font-medium flex items-center gap-1 px-2">
+            <FileText className="h-3 w-3" />
+            <span className="hidden xs:inline">Results</span>
           </TabsTrigger>
-          <TabsTrigger value="overview" className="text-xs">
-            <CheckCircle className="h-3 w-3 mr-1" />
-            Overview
+          <TabsTrigger value="overview" className="text-xs font-medium flex items-center gap-1 px-2">
+            <CheckCircle className="h-3 w-3" />
+            <span className="hidden xs:inline">Overview</span>
           </TabsTrigger>
         </TabsList>
 
         <div className="flex-1 overflow-hidden">
-          <TabsContent value="test" className="h-full overflow-y-auto p-4 m-0">
+          <TabsContent value="test" className="h-full overflow-y-auto p-4 m-0 space-y-4">
             {currentStep && (
-              <div className="space-y-4">
-                <TestStepDisplay
-                  step={currentStep}
-                  result={currentStepResult}
-                  onRecordResult={onRecordResult}
-                  mode={mode}
-                />
-              </div>
+              <TestStepDisplay
+                step={currentStep}
+                result={currentStepResult}
+                onRecordResult={onRecordResult}
+                mode={mode}
+              />
             )}
           </TabsContent>
 
           <TabsContent value="results" className="h-full overflow-y-auto p-4 m-0">
-            <TestResultsPanel
-              testFlow={testFlow}
-              session={session}
-              mode={mode}
-            />
+            {isComprehensiveMode && session ? (
+              <ComprehensiveTestResults
+                testFlow={testFlow}
+                session={session}
+              />
+            ) : (
+              <TestResultsPanel
+                testFlow={testFlow}
+                session={session}
+                mode={mode}
+              />
+            )}
           </TabsContent>
 
           <TabsContent value="overview" className="h-full overflow-y-auto p-4 m-0">
@@ -125,14 +147,14 @@ const MobileTestView = ({
         </div>
       </Tabs>
 
-      {/* Mobile Navigation */}
-      <div className="border-t border-elec-yellow/20 bg-elec-gray p-4">
-        <div className="flex justify-between gap-2">
+      {/* Mobile Navigation - Better Styling */}
+      <div className="border-t border-elec-yellow/20 bg-elec-gray p-4 shadow-lg">
+        <div className="flex justify-between gap-3">
           <Button
             variant="outline"
             onClick={onPreviousStep}
             disabled={isFirstStep}
-            className="flex-1"
+            className="flex-1 h-12 font-medium border-elec-yellow/30 hover:border-elec-yellow/50"
           >
             Previous
           </Button>
@@ -140,17 +162,17 @@ const MobileTestView = ({
           {isLastStep ? (
             <Button 
               onClick={onCompleteSession} 
-              className="flex-1 bg-green-600 hover:bg-green-700"
+              className="flex-1 h-12 bg-green-600 hover:bg-green-700 font-medium shadow-md"
             >
-              <CheckCircle className="h-4 w-4 mr-1" />
+              <CheckCircle className="h-4 w-4 mr-2" />
               Complete
             </Button>
           ) : (
             <Button
               onClick={onNextStep}
-              className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium shadow-md"
             >
-              Next
+              Next Step
             </Button>
           )}
         </div>
@@ -164,56 +186,91 @@ const ConsolidatedTestView = ({ testFlow, session }: { testFlow: TestFlow; sessi
 
   const completedSteps = session.results.filter(r => r.status === 'completed').length;
   const failedSteps = session.results.filter(r => r.status === 'failed').length;
+  const totalSteps = testFlow.steps.length;
 
   return (
-    <div className="space-y-4">
-      <Card className="border-elec-yellow/20 bg-elec-dark">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg">Test Summary</CardTitle>
+    <div className="space-y-6">
+      {/* Summary Cards - Better Mobile Layout */}
+      <Card className="border-elec-yellow/20 bg-elec-gray shadow-md">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg flex items-center gap-2">
+            📊 Test Progress
+            {testFlow.isComprehensive && (
+              <Badge className="bg-elec-yellow text-black text-xs">
+                <Zap className="h-3 w-3 mr-1" />
+                COMPREHENSIVE
+              </Badge>
+            )}
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 gap-4 text-center">
-            <div className="p-3 bg-green-600/20 rounded-lg">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="text-center p-4 bg-green-600/20 rounded-lg border border-green-600/30">
               <div className="text-2xl font-bold text-green-400">{completedSteps}</div>
-              <div className="text-xs text-green-300">Passed</div>
+              <div className="text-xs text-green-300 font-medium">Passed</div>
             </div>
-            <div className="p-3 bg-red-600/20 rounded-lg">
+            <div className="text-center p-4 bg-red-600/20 rounded-lg border border-red-600/30">
               <div className="text-2xl font-bold text-red-400">{failedSteps}</div>
-              <div className="text-xs text-red-300">Failed</div>
+              <div className="text-xs text-red-300 font-medium">Failed</div>
             </div>
+          </div>
+          
+          <div className="text-center p-3 bg-blue-600/20 rounded-lg border border-blue-600/30">
+            <div className="text-sm font-medium text-blue-300">
+              {completedSteps + failedSteps} of {totalSteps} tests completed
+            </div>
+            <Progress 
+              value={((completedSteps + failedSteps) / totalSteps) * 100} 
+              className="h-2 mt-2 bg-blue-900/50" 
+            />
           </div>
         </CardContent>
       </Card>
 
-      <div className="space-y-2">
+      {/* Test Steps List - Mobile Optimized */}
+      <div className="space-y-3">
         {testFlow.steps.map((step, index) => {
           const result = session.results.find(r => r.stepId === step.id);
           const status = result?.status || 'pending';
           
           return (
-            <Card key={step.id} className="border-elec-yellow/10 bg-elec-dark">
-              <CardContent className="p-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium truncate">
-                      {index + 1}. {step.title}
-                    </div>
-                    {result?.value && (
-                      <div className="text-xs text-muted-foreground">
-                        {result.value} {result.unit}
+            <Card key={step.id} className="border-elec-yellow/10 bg-elec-dark shadow-sm">
+              <CardContent className="p-4">
+                <div className="space-y-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-medium leading-tight">
+                        {index + 1}. {step.title}
                       </div>
-                    )}
+                      {result?.value && (
+                        <div className="text-xs text-muted-foreground mt-1">
+                          Result: {result.value} {result.unit}
+                        </div>
+                      )}
+                      {step.estimatedTime && (
+                        <div className="flex items-center gap-1 mt-1">
+                          <Clock className="h-3 w-3 text-muted-foreground" />
+                          <span className="text-xs text-muted-foreground">{step.estimatedTime}min</span>
+                        </div>
+                      )}
+                    </div>
+                    <Badge
+                      variant={status === 'completed' ? 'default' : 'secondary'}
+                      className={`text-xs shrink-0 ${
+                        status === 'completed' ? 'bg-green-600' :
+                        status === 'failed' ? 'bg-red-600' :
+                        status === 'in-progress' ? 'bg-yellow-600' : 'bg-gray-600'
+                      }`}
+                    >
+                      {status}
+                    </Badge>
                   </div>
-                  <Badge
-                    variant={status === 'completed' ? 'default' : 'secondary'}
-                    className={`text-xs ${
-                      status === 'completed' ? 'bg-green-600' :
-                      status === 'failed' ? 'bg-red-600' :
-                      status === 'in-progress' ? 'bg-yellow-600' : ''
-                    }`}
-                  >
-                    {status}
-                  </Badge>
+                  
+                  {result?.notes && (
+                    <div className="text-xs text-muted-foreground bg-elec-gray/50 p-2 rounded border border-elec-yellow/10">
+                      <strong>Notes:</strong> {result.notes}
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

@@ -10,6 +10,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Clock, AlertTriangle, CheckCircle, Camera, Wrench, Shield } from 'lucide-react';
 import { TestStep, TestResult } from '@/types/inspection-testing';
 import { BS7671Validator } from './BS7671Validator';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface TestStepDisplayProps {
   step: TestStep;
@@ -25,6 +26,8 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
   const [status, setStatus] = useState<'pending' | 'in-progress' | 'completed' | 'failed' | 'skipped'>(
     result?.status || 'pending'
   );
+  
+  const isMobile = useIsMobile();
 
   // Get validation for current result
   const validation = result ? BS7671Validator.validateTestStep(step, result) : null;
@@ -76,10 +79,10 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
+    <Card className="border-elec-yellow/20 bg-elec-gray shadow-md">
+      <CardHeader className={isMobile ? "pb-4" : ""}>
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className={`flex items-center gap-2 ${isMobile ? 'text-lg' : ''}`}>
             {step.title}
             <Badge className={getStatusColor(status)}>
               {status}
@@ -93,14 +96,16 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
       </CardHeader>
       <CardContent className="space-y-6">
         <div>
-          <p className="text-muted-foreground mb-4">{step.description}</p>
+          <p className="text-muted-foreground mb-4 leading-relaxed">{step.description}</p>
           
           {/* Instructions */}
           <div className="space-y-2">
-            <h4 className="font-medium">Instructions:</h4>
-            <ol className="list-decimal list-inside space-y-1 text-sm">
+            <h4 className="font-medium flex items-center gap-2">
+              📋 Instructions:
+            </h4>
+            <ol className="list-decimal list-inside space-y-2 text-sm bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/10">
               {step.instructions.map((instruction, index) => (
-                <li key={index}>{instruction}</li>
+                <li key={index} className="leading-relaxed">{instruction}</li>
               ))}
             </ol>
           </div>
@@ -120,8 +125,8 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
             <Alert className="mt-4 bg-amber-500/10 border-amber-500/30">
               <AlertTriangle className="h-4 w-4 text-amber-400" />
               <AlertDescription className="text-amber-200">
-                <strong>Safety Notes:</strong>
-                <ul className="list-disc list-inside mt-1">
+                <strong>⚠️ Safety Notes:</strong>
+                <ul className="list-disc list-inside mt-2 space-y-1">
                   {step.safetyNotes.map((note, index) => (
                     <li key={index}>{note}</li>
                   ))}
@@ -133,13 +138,13 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
           {/* Tools Required */}
           {step.tools && step.tools.length > 0 && (
             <div className="mt-4">
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-2 mb-3">
                 <Wrench className="h-4 w-4 text-elec-yellow" />
                 <span className="font-medium">Tools Required:</span>
               </div>
               <div className="flex flex-wrap gap-2">
                 {step.tools.map((tool, index) => (
-                  <Badge key={index} variant="outline">
+                  <Badge key={index} variant="outline" className="text-xs">
                     {tool}
                   </Badge>
                 ))}
@@ -170,13 +175,13 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
           </Alert>
         )}
 
-        {/* Result Recording */}
-        <div className="border-t pt-4 space-y-4">
-          <h4 className="font-medium">Record Test Result</h4>
+        {/* Result Recording - Mobile Optimized */}
+        <div className="border-t pt-6 space-y-4">
+          <h4 className="font-medium">📝 Record Test Result</h4>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'} gap-4`}>
             <div>
-              <Label htmlFor="value">Measured Value</Label>
+              <Label htmlFor="value" className="text-sm font-medium">Measured Value</Label>
               <Input
                 id="value"
                 type="number"
@@ -184,55 +189,56 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
                 placeholder="Enter measured value"
-                className="bg-elec-dark border-elec-yellow/20"
+                className="bg-elec-dark border-elec-yellow/20 mt-1"
               />
             </div>
             
             <div>
-              <Label htmlFor="unit">Unit</Label>
+              <Label htmlFor="unit" className="text-sm font-medium">Unit</Label>
               <Input
                 id="unit"
                 value={unit}
                 onChange={(e) => setUnit(e.target.value)}
                 placeholder="e.g., Ω, V, A, MΩ, ms"
-                className="bg-elec-dark border-elec-yellow/20"
+                className="bg-elec-dark border-elec-yellow/20 mt-1"
               />
             </div>
           </div>
 
           <div>
-            <Label htmlFor="notes">Notes (Optional)</Label>
+            <Label htmlFor="notes" className="text-sm font-medium">Notes (Optional)</Label>
             <Textarea
               id="notes"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Add any additional observations or notes"
-              className="bg-elec-dark border-elec-yellow/20"
+              className="bg-elec-dark border-elec-yellow/20 mt-1"
               rows={3}
             />
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className={`flex ${isMobile ? 'flex-col' : 'flex-wrap'} gap-3`}>
             <Button
               onClick={handleRecordResult}
-              className="bg-green-600 hover:bg-green-700"
+              className="bg-green-600 hover:bg-green-700 flex-1"
               disabled={status === 'completed'}
             >
-              <CheckCircle className="h-4 w-4 mr-1" />
+              <CheckCircle className="h-4 w-4 mr-2" />
               Record Pass
             </Button>
             
             <Button
               onClick={handleMarkFailed}
               variant="destructive"
+              className="flex-1"
               disabled={status === 'failed'}
             >
               Record Fail
             </Button>
             
             {mode === 'electrician' && (
-              <Button variant="outline">
-                <Camera className="h-4 w-4 mr-1" />
+              <Button variant="outline" className={isMobile ? 'w-full' : ''}>
+                <Camera className="h-4 w-4 mr-2" />
                 Add Photo
               </Button>
             )}

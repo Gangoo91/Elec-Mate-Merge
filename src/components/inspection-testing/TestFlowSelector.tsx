@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Clock, CheckCircle, AlertTriangle, Zap } from 'lucide-react';
 import { TestFlow } from '@/types/inspection-testing';
 import { testFlows } from '@/data/inspection-testing/testFlows';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface TestFlowSelectorProps {
   onSelectFlow: (flow: TestFlow) => void;
@@ -12,6 +13,8 @@ interface TestFlowSelectorProps {
 }
 
 const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
+  const isMobile = useIsMobile();
+
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'beginner': return 'bg-green-500';
@@ -49,27 +52,35 @@ const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
           </h3>
           
           <Card className="border-2 border-elec-yellow bg-gradient-to-br from-elec-gray to-elec-dark hover:border-elec-yellow/80 transition-all cursor-pointer shadow-lg">
-            <CardHeader>
+            <CardHeader className={isMobile ? "pb-4" : ""}>
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <CardTitle className="flex items-center gap-2 text-xl">
+                  <CardTitle className={`flex items-center gap-2 ${isMobile ? 'text-lg' : 'text-xl'}`}>
                     {comprehensiveFlow.name}
                     <Badge className="bg-elec-yellow text-black">
                       FEATURED
                     </Badge>
                   </CardTitle>
-                  <CardDescription className="mt-2 text-base">
+                  <CardDescription className={`mt-2 ${isMobile ? 'text-sm' : 'text-base'}`}>
                     {comprehensiveFlow.description}
                   </CardDescription>
                 </div>
-                <Badge className={`${getDifficultyColor(comprehensiveFlow.difficulty)} flex items-center gap-1`}>
+                {!isMobile && (
+                  <Badge className={`${getDifficultyColor(comprehensiveFlow.difficulty)} flex items-center gap-1`}>
+                    {getDifficultyIcon(comprehensiveFlow.difficulty)}
+                    {comprehensiveFlow.difficulty}
+                  </Badge>
+                )}
+              </div>
+              {isMobile && (
+                <Badge className={`${getDifficultyColor(comprehensiveFlow.difficulty)} flex items-center gap-1 w-fit`}>
                   {getDifficultyIcon(comprehensiveFlow.difficulty)}
                   {comprehensiveFlow.difficulty}
                 </Badge>
-              </div>
+              )}
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'} gap-4 text-sm`}>
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4 text-muted-foreground" />
                   <span>{getTotalEstimatedTime(comprehensiveFlow)} minutes</span>
@@ -84,32 +95,32 @@ const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
                 </div>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <h4 className="font-medium text-sm">Includes:</h4>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                    Visual Inspection
+                <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-2 text-xs`}>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full shrink-0"></div>
+                    <span>Visual Inspection</span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    Continuity Testing
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-500 rounded-full shrink-0"></div>
+                    <span>Continuity Testing</span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                    Insulation Resistance
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-yellow-500 rounded-full shrink-0"></div>
+                    <span>Insulation Resistance</span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                    Polarity Testing
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-purple-500 rounded-full shrink-0"></div>
+                    <span>Polarity Testing</span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                    Earth Fault Loop
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-orange-500 rounded-full shrink-0"></div>
+                    <span>Earth Fault Loop</span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                    RCD Testing
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-red-500 rounded-full shrink-0"></div>
+                    <span>RCD Testing</span>
                   </div>
                 </div>
               </div>
@@ -117,7 +128,7 @@ const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
               <Button 
                 onClick={() => onSelectFlow(comprehensiveFlow)}
                 className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
-                size="lg"
+                size={isMobile ? "default" : "lg"}
               >
                 Start Comprehensive Testing
               </Button>
@@ -129,22 +140,22 @@ const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
       {/* Individual Test Flows */}
       <div>
         <h3 className="text-lg font-semibold mb-4">Individual Test Procedures</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'} gap-4`}>
           {individualFlows.map((flow) => (
             <Card 
               key={flow.id} 
-              className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all cursor-pointer"
+              className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all cursor-pointer shadow-sm"
               onClick={() => onSelectFlow(flow)}
             >
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <CardTitle className="text-lg">{flow.name}</CardTitle>
+                  <div className="flex-1 min-w-0 pr-2">
+                    <CardTitle className={isMobile ? "text-base" : "text-lg"}>{flow.name}</CardTitle>
                     <CardDescription className="mt-1 text-sm">
                       {flow.description}
                     </CardDescription>
                   </div>
-                  <Badge className={getDifficultyColor(flow.difficulty)}>
+                  <Badge className={`${getDifficultyColor(flow.difficulty)} shrink-0 text-xs`}>
                     {flow.difficulty}
                   </Badge>
                 </div>
@@ -171,6 +182,7 @@ const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
                   onClick={() => onSelectFlow(flow)}
                   variant="outline" 
                   className="w-full"
+                  size={isMobile ? "sm" : "default"}
                 >
                   Select Test
                 </Button>
@@ -182,8 +194,8 @@ const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
 
       {mode === 'apprentice' && (
         <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
-          <h4 className="font-medium text-blue-200 mb-2">Learning Recommendation</h4>
-          <p className="text-sm text-blue-300">
+          <h4 className="font-medium text-blue-200 mb-2">💡 Learning Recommendation</h4>
+          <p className="text-sm text-blue-300 leading-relaxed">
             Start with individual test procedures to understand each testing method before attempting 
             the comprehensive "All Tests in One Go" option. This will help build your confidence and 
             ensure you understand the requirements for each test type.
