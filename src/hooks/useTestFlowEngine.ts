@@ -3,12 +3,14 @@ import { useState, useCallback, useEffect } from 'react';
 import { TestFlow, TestSession, TestResult, TestStatus } from '@/types/inspection-testing';
 import { toast } from '@/hooks/use-toast';
 
-export const useTestFlowEngine = (testFlow: TestFlow) => {
+export const useTestFlowEngine = (testFlow: TestFlow | null) => {
   const [session, setSession] = useState<TestSession | null>(null);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isSessionActive, setIsSessionActive] = useState(false);
 
   const startSession = useCallback((installationDetails: TestSession['installationDetails'], technician: TestSession['technician']) => {
+    if (!testFlow) return;
+
     const newSession: TestSession = {
       id: `session-${Date.now()}`,
       flowId: testFlow.id,
@@ -57,24 +59,26 @@ export const useTestFlowEngine = (testFlow: TestFlow) => {
       };
     });
 
-    toast({
-      title: "Result Recorded",
-      description: `Test result saved for step: ${testFlow.steps.find(s => s.id === stepId)?.title}`,
-    });
-  }, [session, testFlow.steps]);
+    if (testFlow) {
+      toast({
+        title: "Result Recorded",
+        description: `Test result saved for step: ${testFlow.steps.find(s => s.id === stepId)?.title}`,
+      });
+    }
+  }, [session, testFlow]);
 
   const nextStep = useCallback(() => {
-    if (currentStepIndex < testFlow.steps.length - 1) {
-      setCurrentStepIndex(prev => prev + 1);
-      setSession(prev => prev ? { ...prev, currentStepIndex: currentStepIndex + 1 } : prev);
-    }
-  }, [currentStepIndex, testFlow.steps.length]);
+    if (!testFlow || currentStepIndex >= testFlow.steps.length - 1) return;
+    
+    setCurrentStepIndex(prev => prev + 1);
+    setSession(prev => prev ? { ...prev, currentStepIndex: currentStepIndex + 1 } : prev);
+  }, [currentStepIndex, testFlow]);
 
   const previousStep = useCallback(() => {
-    if (currentStepIndex > 0) {
-      setCurrentStepIndex(prev => prev - 1);
-      setSession(prev => prev ? { ...prev, currentStepIndex: currentStepIndex - 1 } : prev);
-    }
+    if (currentStepIndex <= 0) return;
+    
+    setCurrentStepIndex(prev => prev - 1);
+    setSession(prev => prev ? { ...prev, currentStepIndex: currentStepIndex - 1 } : prev);
   }, [currentStepIndex]);
 
   const completeSession = useCallback(() => {
@@ -113,10 +117,11 @@ export const useTestFlowEngine = (testFlow: TestFlow) => {
     });
   }, []);
 
-  const currentStep = testFlow.steps[currentStepIndex];
+  // Safe access to testFlow properties
+  const currentStep = testFlow?.steps[currentStepIndex] || null;
   const currentStepResult = session?.results.find(r => r.stepId === currentStep?.id);
-  const progress = ((currentStepIndex + 1) / testFlow.steps.length) * 100;
-  const isLastStep = currentStepIndex === testFlow.steps.length - 1;
+  const progress = testFlow ? ((currentStepIndex + 1) / testFlow.steps.length) * 100 : 0;
+  const isLastStep = testFlow ? currentStepIndex === testFlow.steps.length - 1 : false;
   const isFirstStep = currentStepIndex === 0;
 
   return {

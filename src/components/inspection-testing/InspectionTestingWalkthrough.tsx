@@ -37,7 +37,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
     completeSession,
     pauseSession,
     resumeSession
-  } = useTestFlowEngine(selectedFlow!);
+  } = useTestFlowEngine(selectedFlow);
 
   const handleFlowSelection = (flow: TestFlow) => {
     setSelectedFlow(flow);

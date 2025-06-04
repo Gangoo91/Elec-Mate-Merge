@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import InspectionTestingWalkthrough from "@/components/inspection-testing/InspectionTestingWalkthrough";
 
 const InspectionTesting = () => {
+  console.log('InspectionTesting page rendered');
+  
   return (
     <div className="space-y-6 animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
