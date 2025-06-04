@@ -140,8 +140,8 @@ const DigitalEICRForm = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Clean Header */}
+    <div className="space-y-6 animate-fade-in">
+      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="p-3 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30">
@@ -168,20 +168,31 @@ const DigitalEICRForm = () => {
         </div>
       </div>
 
-      {/* Progress Card */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardContent className="pt-6">
-          <div className="space-y-4">
-            {/* Progress Bar */}
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>Step {currentStepIndex + 1} of {steps.length}</span>
-                <span>{Math.round(progress)}% Complete</span>
-              </div>
-              <Progress value={progress} className="h-2" />
+      {/* Progress Tracker */}
+      <Card className="border-elec-yellow/30 bg-elec-gray">
+        <CardHeader className="pb-4">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <CardTitle className="text-xl mb-2">
+                Step {currentStepIndex + 1} of {steps.length}: {steps[currentStepIndex]?.title}
+              </CardTitle>
+              <p className="text-muted-foreground">
+                {steps[currentStepIndex]?.description}
+              </p>
             </div>
-
-            {/* Step Navigation */}
+            <div className="text-right">
+              <p className="text-sm text-elec-yellow font-medium">{Math.round(progress)}% Complete</p>
+              <Badge variant="outline" className="mt-1">
+                {reportType.toUpperCase().replace('-', ' ')}
+              </Badge>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <div className="space-y-4">
+            <Progress value={progress} className="h-2" />
+            
+            {/* Step indicators */}
             <div className="flex gap-2 overflow-x-auto">
               {steps.map((step, index) => (
                 <div
@@ -203,27 +214,17 @@ const DigitalEICRForm = () => {
                 </div>
               ))}
             </div>
-
-            {/* Current Step Info */}
-            <div className="pt-2 border-t border-elec-yellow/10">
-              <h2 className="text-lg font-semibold mb-1">
-                {steps[currentStepIndex]?.title}
-              </h2>
-              <p className="text-sm text-muted-foreground">
-                {steps[currentStepIndex]?.description}
-              </p>
-            </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Content */}
+      {/* Main Content */}
       <div className="space-y-6">
         {renderStepContent()}
       </div>
 
-      {/* Footer Navigation */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      {/* Navigation */}
+      <Card className="border-elec-yellow/30 bg-elec-gray">
         <CardContent className="pt-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <Button
@@ -233,19 +234,27 @@ const DigitalEICRForm = () => {
               className="flex items-center gap-2"
             >
               <ArrowLeft className="h-4 w-4" />
-              Previous
+              Previous Step
             </Button>
 
-            <Badge variant="outline" className="text-xs">
-              {reportType.toUpperCase().replace('-', ' ')}
-            </Badge>
+            <div className="flex flex-wrap gap-2 justify-center">
+              <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">
+                BS 7671 Compliant
+              </Badge>
+              <Badge className="bg-green-500/20 text-green-300 border-green-500/30">
+                Automated Fault Detection
+              </Badge>
+              <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+                Professional PDF Export
+              </Badge>
+            </div>
 
             <Button
               onClick={handleNext}
               disabled={currentStepIndex === steps.length - 1 || !canProceed()}
               className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
             >
-              Next
+              Next Step
               <ArrowRight className="h-4 w-4" />
             </Button>
           </div>
