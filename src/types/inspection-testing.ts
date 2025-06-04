@@ -6,7 +6,8 @@ export type TestType =
   | 'earth-fault-loop'
   | 'rcd-test'
   | 'functional-test'
-  | 'visual-inspection';
+  | 'visual-inspection'
+  | 'all-tests'; // New type for comprehensive testing
 
 export type TestStatus = 'pending' | 'in-progress' | 'completed' | 'failed' | 'skipped';
 
@@ -37,6 +38,7 @@ export interface TestFlow {
   prerequisites?: string[];
   regulatoryStandards?: string[];
   difficulty: 'beginner' | 'intermediate' | 'advanced';
+  isComprehensive?: boolean; // New field for all-tests mode
 }
 
 export interface TestResult {
@@ -48,6 +50,7 @@ export interface TestResult {
   timestamp: Date;
   isWithinLimits?: boolean;
   photos?: string[];
+  testType?: TestType; // New field to track which test type this result belongs to
 }
 
 export interface TestSession {
@@ -68,6 +71,7 @@ export interface TestSession {
     name: string;
     certification?: string;
   };
+  isComprehensive?: boolean; // New field to track if this is an all-tests session
 }
 
 export interface TestReport {
@@ -82,4 +86,15 @@ export interface TestReport {
   };
   generatedAt: Date;
   recommendations?: string[];
+}
+
+// New interface for comprehensive test results grouping
+export interface ComprehensiveTestResults {
+  continuity: TestResult[];
+  insulationResistance: TestResult[];
+  polarity: TestResult[];
+  earthFaultLoop: TestResult[];
+  rcdTest: TestResult[];
+  functionalTest: TestResult[];
+  visualInspection: TestResult[];
 }

@@ -1,7 +1,10 @@
-
 import { TestFlow } from '@/types/inspection-testing';
+import { comprehensiveTestFlow } from './comprehensiveTestFlow';
 
 export const testFlows: TestFlow[] = [
+  // Add the comprehensive test flow first
+  comprehensiveTestFlow,
+  
   {
     id: 'continuity-test',
     name: 'Continuity Testing',

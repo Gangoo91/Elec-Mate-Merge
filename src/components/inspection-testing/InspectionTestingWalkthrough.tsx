@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { AlertTriangle, CheckCircle, Clock, FileText } from 'lucide-react';
+import { AlertTriangle, CheckCircle, Clock, FileText, Zap } from 'lucide-react';
 import { TestFlow } from '@/types/inspection-testing';
 import { useTestFlowEngine } from '@/hooks/useTestFlowEngine';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -14,6 +14,7 @@ import TestStepDisplay from './TestStepDisplay';
 import TestResultsPanel from './TestResultsPanel';
 import MobileTestView from './MobileTestView';
 import ConsolidatedTestSummary from './ConsolidatedTestSummary';
+import ComprehensiveTestResults from './ComprehensiveTestResults';
 
 interface InspectionTestingWalkthroughProps {
   mode: 'electrician' | 'apprentice';
@@ -82,6 +83,9 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
     }
   };
 
+  // Check if this is comprehensive testing
+  const isComprehensiveMode = selectedFlow?.isComprehensive || false;
+
   // Flow selection screen
   if (!selectedFlow) {
     return (
@@ -111,6 +115,12 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
               <Badge className={getDifficultyColor(selectedFlow.difficulty)}>
                 {selectedFlow.difficulty}
               </Badge>
+              {isComprehensiveMode && (
+                <Badge className="bg-elec-yellow text-black">
+                  <Zap className="h-3 w-3 mr-1" />
+                  COMPREHENSIVE
+                </Badge>
+              )}
             </h2>
             <p className="text-muted-foreground">{selectedFlow.description}</p>
           </div>
@@ -132,7 +142,15 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
     return (
       <div className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Test Complete</h2>
+          <h2 className="text-2xl font-bold flex items-center gap-2">
+            Test Complete
+            {isComprehensiveMode && (
+              <Badge className="bg-elec-yellow text-black">
+                <Zap className="h-3 w-3 mr-1" />
+                COMPREHENSIVE
+              </Badge>
+            )}
+          </h2>
           <Button variant="outline" onClick={() => setShowSummary(false)}>
             Back to Test
           </Button>
@@ -170,7 +188,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
     );
   }
 
-  // Desktop view - existing implementation
+  // Desktop view - enhanced for comprehensive mode
   return (
     <div className="space-y-6">
       {/* Session Header */}
@@ -183,9 +201,16 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
                 <Badge variant={isSessionActive ? "default" : "secondary"}>
                   {isSessionActive ? 'Active' : 'Paused'}
                 </Badge>
+                {isComprehensiveMode && (
+                  <Badge className="bg-elec-yellow text-black">
+                    <Zap className="h-3 w-3 mr-1" />
+                    ALL TESTS
+                  </Badge>
+                )}
               </CardTitle>
               <p className="text-sm text-muted-foreground">
                 Step {currentStepIndex + 1} of {selectedFlow.steps.length}
+                {isComprehensiveMode && ` • Comprehensive BS 7671 Testing`}
               </p>
             </div>
             <div className="flex gap-2">
@@ -242,11 +267,18 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
 
         {/* Results Panel */}
         <div>
-          <TestResultsPanel
-            testFlow={selectedFlow}
-            session={session}
-            mode={mode}
-          />
+          {isComprehensiveMode && session ? (
+            <ComprehensiveTestResults
+              testFlow={selectedFlow}
+              session={session}
+            />
+          ) : (
+            <TestResultsPanel
+              testFlow={selectedFlow}
+              session={session}
+              mode={mode}
+            />
+          )}
         </div>
       </div>
     </div>
