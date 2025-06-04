@@ -308,7 +308,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
               </Button>
             </div>
           </CardContent>
-        </div>
+        </Card>
       </div>
     );
   };
