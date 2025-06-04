@@ -21,7 +21,7 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
     { value: "healthcare", label: "Healthcare Facilities", icon: Hospital, description: "Hospitals, clinics, care homes" },
     { value: "educational", label: "Educational Buildings", icon: School, description: "Schools, colleges, universities" },
     { value: "retail", label: "Retail & Hospitality", icon: ShoppingCart, description: "Shops, hotels, entertainment venues" },
-    { value: "data-center", label: "Data Centers", icon: Cpu, description: "Server rooms, IT facilities" },
+    { value: "data-centre", label: "Data Centres", icon: Cpu, description: "Server rooms, IT facilities" },
     { value: "agricultural", label: "Agricultural", icon: Wind, description: "Farms, rural installations" },
     { value: "marine", label: "Marine & Offshore", icon: Ship, description: "Ships, offshore platforms" },
     { value: "transport", label: "Transport Infrastructure", icon: Truck, description: "Railways, airports, EV charging" },
@@ -35,14 +35,14 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
     { value: "heating", label: "Heating Circuit", icon: Fan, description: "Electric heating, underfloor heating", category: "Standard" },
     { value: "cooker", label: "Cooker Circuit", icon: Microwave, description: "Electric cookers, ovens, hobs", category: "Standard" },
     
-    // Specialized loads
+    // Specialised loads
     { value: "motor", label: "Motor Loads", icon: Fan, description: "Motors, pumps, fans, compressors", category: "Motor" },
     { value: "hvac", label: "HVAC Systems", icon: Snowflake, description: "Air conditioning, ventilation systems", category: "Motor" },
     { value: "welding", label: "Welding Equipment", icon: Flame, description: "Arc welders, resistance welders", category: "Industrial" },
     { value: "furnace", label: "Industrial Furnaces", icon: Flame, description: "Electric furnaces, kilns", category: "Industrial" },
     { value: "crane", label: "Crane & Hoist", icon: Warehouse, description: "Overhead cranes, lifting equipment", category: "Industrial" },
     
-    // Specialized installations
+    // Specialised installations
     { value: "ev-charging", label: "EV Charging", icon: Car, description: "Electric vehicle charging points", category: "Transport" },
     { value: "emergency", label: "Emergency Systems", icon: Zap, description: "Emergency lighting, fire alarms", category: "Safety" },
     { value: "it-equipment", label: "IT Equipment", icon: Cpu, description: "Servers, networking, UPS", category: "Data" },
@@ -56,7 +56,7 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold mb-2">Installation Type & Specialization</h2>
+        <h2 className="text-2xl font-bold mb-2">Installation Type & Specialisation</h2>
         <p className="text-muted-foreground mb-6">
           Select the installation environment and the specific type of electrical load you're planning to supply.
         </p>
@@ -91,7 +91,7 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
         </div>
 
         <div>
-          <Label className="text-lg font-medium mb-4 block">Load Type & Specialization</Label>
+          <Label className="text-lg font-medium mb-4 block">Load Type & Specialisation</Label>
           <div className="space-y-4 max-h-96 overflow-y-auto">
             {categories.map((category) => (
               <div key={category}>

@@ -1,3 +1,4 @@
+
 import { InstallPlanData, CableRecommendation, InstallationSuggestion, ComplianceCheck } from "./types";
 
 interface CableData {
@@ -58,8 +59,8 @@ const cableDatabase: Record<string, CableData[]> = {
     { size: "4.0mm²", currentCapacity: 42, voltageDropMvAmM: 10, cost: "high", availability: "special-order", installationComplexity: "complex", maxOperatingTemp: 250, specialApplications: ["high-temperature", "fire-resistant"] },
   ],
   "Data Cable": [
-    { size: "1.5mm²", currentCapacity: 16, voltageDropMvAmM: 35, cost: "medium", availability: "common", installationComplexity: "simple", specialApplications: ["data-centers", "it-equipment"] },
-    { size: "2.5mm²", currentCapacity: 23, voltageDropMvAmM: 22, cost: "medium", availability: "common", installationComplexity: "simple", specialApplications: ["data-centers", "it-equipment"] },
+    { size: "1.5mm²", currentCapacity: 16, voltageDropMvAmM: 35, cost: "medium", availability: "common", installationComplexity: "simple", specialApplications: ["data-centres", "it-equipment"] },
+    { size: "2.5mm²", currentCapacity: 23, voltageDropMvAmM: 22, cost: "medium", availability: "common", installationComplexity: "simple", specialApplications: ["data-centres", "it-equipment"] },
   ]
 };
 
@@ -148,7 +149,7 @@ export class CableSelectionEngine {
       return "LSOH Cable";
     }
     
-    if (planData.loadType === "it-equipment" && planData.installationType === "data-center") {
+    if (planData.loadType === "it-equipment" && planData.installationType === "data-centre") {
       return "Data Cable";
     }
     
@@ -259,21 +260,21 @@ export class CableSelectionEngine {
       }
     }
 
-    // Cost optimization suggestions
+    // Cost optimisation suggestions
     if (recommendedCable?.cost === "high" && cableOptions.some(c => c.suitability === "suitable" && c.cost === "medium")) {
       const mediumCostOption = cableOptions.find(c => c.suitability === "suitable" && c.cost === "medium");
       if (mediumCostOption) {
         suggestions.push({
           type: "cost-optimization",
           title: "Cost-Effective Alternative Available",
-          description: `Consider ${mediumCostOption.size} cable for better cost-effectiveness while maintaining compliance.`,
+          description: `Consider ${mediumCostOption.size} cable for better cost-effectiveness whilst maintaining compliance.`,
           impact: "low",
           cost: "medium"
         });
       }
     }
 
-    // Enhanced suggestions for specialized loads
+    // Enhanced suggestions for specialised loads
     if (planData.loadType === "ev-charging" && planData.totalLoad > 7000) {
       suggestions.push({
         type: "regulatory",
@@ -356,7 +357,7 @@ export class CableSelectionEngine {
       details: `${cableRecommendation.ratedCurrent}A device vs ${designCurrent.toFixed(1)}A load`
     });
 
-    // Enhanced compliance checks for specialized installations
+    // Enhanced compliance checks for specialised installations
     if (planData.loadType === "emergency") {
       checks.push({
         regulation: "BS 5266",

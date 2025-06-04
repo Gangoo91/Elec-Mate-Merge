@@ -84,7 +84,7 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
         phaseOptions: ["three"]
       },
       
-      // Specialized installations
+      // Specialised installations
       "ev-charging": {
         typical: "3.7-350kW",
         example: "Home chargers: 3.7-22kW, Rapid chargers: 50-350kW",
@@ -101,7 +101,7 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
       },
       "it-equipment": {
         typical: "1-100kW",
-        example: "Server racks: 5-20kW, Data centers: 50-100kW",
+        example: "Server racks: 5-20kW, Data centres: 50-100kW",
         defaultPF: 0.9,
         voltageOptions: ["230", "400"],
         phaseOptions: ["single", "three"]
