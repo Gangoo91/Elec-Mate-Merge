@@ -12,6 +12,7 @@ import { ukEicrTestFlows } from '@/data/inspection-testing/ukEicrTestFlows';
 import SimplifiedTestFlowSelector from './SimplifiedTestFlowSelector';
 import TestStepDisplay from './TestStepDisplay';
 import GuidedWorkflow from './GuidedWorkflow';
+import TestProgressTracker from './TestProgressTracker';
 import SessionSetup from './SessionSetup';
 import { EICRProvider } from '@/contexts/EICRContext';
 import EICRDashboard from './eicr/EICRDashboard';
@@ -24,8 +25,8 @@ interface InspectionTestingWalkthroughProps {
 const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWalkthroughProps) => {
   const [selectedFlow, setSelectedFlow] = useState<TestFlow | null>(null);
   const [showGuidedWorkflow, setShowGuidedWorkflow] = useState(true);
+  const [showProgressTracker, setShowProgressTracker] = useState(true);
   
-  // Use UK-specific EICR test flows
   const allTestFlows = ukEicrTestFlows;
   
   const {
@@ -142,7 +143,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
     // Active session - show testing interface with EICR integration
     return (
       <div className="space-y-6">
-        {/* EICR Dashboard - Simplified for active sessions */}
+        {/* EICR Dashboard */}
         <EICRDashboard />
 
         {/* Session Header */}
@@ -164,6 +165,13 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
                 </p>
               </div>
               <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => setShowProgressTracker(!showProgressTracker)}
+                >
+                  {showProgressTracker ? 'Hide' : 'Show'} Progress
+                </Button>
                 <Button variant="outline" size="sm" onClick={handleRestart}>
                   <RotateCcw className="h-4 w-4 mr-2" />
                   Restart
@@ -227,7 +235,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
         </Alert>
 
         {/* Main Content Area */}
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-6 lg:grid-cols-4">
           {/* Left Column: Current Step */}
           <div className="lg:col-span-2 space-y-6">
             {currentStep && (
@@ -240,26 +248,38 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
             )}
           </div>
 
-          {/* Right Column: Guided Workflow */}
-          {showGuidedWorkflow && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="font-medium">Guided Workflow</h3>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowGuidedWorkflow(!showGuidedWorkflow)}
-                >
-                  {showGuidedWorkflow ? 'Hide' : 'Show'}
-                </Button>
-              </div>
-              <GuidedWorkflow
-                currentStep={currentStep}
+          {/* Right Column: Sidebar */}
+          <div className="lg:col-span-2 space-y-4">
+            {/* Progress Tracker */}
+            {showProgressTracker && selectedFlow && (
+              <TestProgressTracker
                 session={session}
-                mode={mode}
+                flow={selectedFlow}
+                currentStepIndex={currentStepIndex}
               />
-            </div>
-          )}
+            )}
+
+            {/* Guided Workflow */}
+            {showGuidedWorkflow && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-medium">Guided Workflow</h3>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowGuidedWorkflow(!showGuidedWorkflow)}
+                  >
+                    {showGuidedWorkflow ? 'Hide' : 'Show'}
+                  </Button>
+                </div>
+                <GuidedWorkflow
+                  currentStep={currentStep}
+                  session={session}
+                  mode={mode}
+                />
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Navigation Footer */}

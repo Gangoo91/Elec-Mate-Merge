@@ -7,7 +7,7 @@ import TestStepInstructions from './TestStepInstructions';
 import TestStepValidation from './TestStepValidation';
 import SupplyTypeSelection from './SupplyTypeSelection';
 import VisualInspectionResult from './VisualInspectionResult';
-import MeasurementResult from './MeasurementResult';
+import EnhancedMeasurementResult from './EnhancedMeasurementResult';
 import ProceduralStepResult from './ProceduralStepResult';
 import { useEICR } from '@/contexts/EICRContext';
 
@@ -100,8 +100,6 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
 
   const handleRecordPass = () => {
     console.log('handleRecordPass called for step:', step.id);
-    console.log('Current step type:', stepType);
-    console.log('Is procedural step:', isProcedural);
     
     const resultData = {
       value: isMeasurement && value ? parseFloat(value) : undefined,
@@ -111,14 +109,8 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
       isWithinLimits: true
     };
     
-    console.log('Recording result data:', resultData);
-    
-    // Call the parent onRecordResult function
     onRecordResult(resultData);
-    
-    // Update local status
     setStatus('completed');
-    console.log('Status updated to completed');
 
     // Integrate with EICR
     const testResult = {
@@ -127,13 +119,10 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
       timestamp: new Date()
     };
     
-    console.log('Populating EICR with test result:', testResult);
     populateFromTestResult(step.id, testResult);
   };
 
   const handleRecordFail = () => {
-    console.log('Recording step as fail for step:', step.id);
-    
     const resultData = {
       value: isMeasurement && value ? parseFloat(value) : undefined,
       unit: isMeasurement ? unit : undefined,
@@ -142,8 +131,6 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
       isWithinLimits: false
     };
 
-    console.log('Recording failed result data:', resultData);
-    
     onRecordResult(resultData);
     setStatus('failed');
 
@@ -154,11 +141,22 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
       timestamp: new Date()
     };
     
-    console.log('Populating EICR with failed test result:', testResult);
     populateFromTestResult(step.id, testResult);
   };
 
-  // Check if this is a safe isolation step
+  const handleSaveDraft = () => {
+    const resultData = {
+      value: isMeasurement && value ? parseFloat(value) : undefined,
+      unit: isMeasurement ? unit : undefined,
+      status: 'in-progress' as const,
+      notes: isSupplySelection ? supplyType : notes,
+      isWithinLimits: undefined
+    };
+
+    onRecordResult(resultData);
+    setStatus('in-progress');
+  };
+
   const isSafeIsolationStep = step.id.startsWith('safe-isolation') || step.id.includes('isolation') || 
                                step.id.includes('proving') || step.id === 'supply-type-identification' || 
                                step.id === 'dead-testing' || step.id === 'additional-precautions';
@@ -211,9 +209,9 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
             />
           )}
 
-          {/* Measurement Mode */}
+          {/* Enhanced Measurement Mode */}
           {isMeasurement && (
-            <MeasurementResult
+            <EnhancedMeasurementResult
               value={value}
               unit={unit}
               notes={notes}
@@ -222,7 +220,9 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
               onNotesChange={setNotes}
               onRecordPass={handleRecordPass}
               onRecordFail={handleRecordFail}
+              onSaveDraft={handleSaveDraft}
               status={status}
+              stepId={step.id}
               canAddPhoto={mode === 'electrician'}
               stepType={stepType}
             />
