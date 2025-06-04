@@ -1,180 +1,234 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { FileText, AlertTriangle, CheckCircle, Download, Plus, Settings } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
+import { FileText, Zap, AlertTriangle, CheckCircle, Download, Settings } from 'lucide-react';
 import { useEICR } from '@/contexts/EICRContext';
-import FaultCodeManager from './FaultCodeManager';
+import EICRFormEngine from './EICRFormEngine';
 import CircuitManager from './CircuitManager';
-import EICRReportPreview from './EICRReportPreview';
-import EICRSettings from './EICRSettings';
+import FaultManager from './FaultManager';
 
 const EICRDashboard = () => {
   const { eicrSession, generateEICRReport } = useEICR();
 
   if (!eicrSession) {
     return (
-      <Card className="border-blue-500/30 bg-blue-500/5">
+      <Card className="border-elec-yellow/30 bg-elec-gray">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5 text-blue-400" />
-            EICR Integration
+            <FileText className="h-5 w-5 text-elec-yellow" />
+            EICR Dashboard
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
-            EICR integration will be available once you start a testing session.
-          </p>
+          <div className="text-center py-8">
+            <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-medium mb-2">No EICR in Progress</h3>
+            <p className="text-muted-foreground mb-4">
+              Start a testing session to begin creating an EICR report
+            </p>
+          </div>
         </CardContent>
       </Card>
     );
   }
 
-  const { eicr_report } = eicrSession;
-  const faultCounts = {
-    C1: eicr_report.faults.filter(f => f.faultCode === 'C1').length,
-    C2: eicr_report.faults.filter(f => f.faultCode === 'C2').length,
-    C3: eicr_report.faults.filter(f => f.faultCode === 'C3').length,
-    FI: eicr_report.faults.filter(f => f.faultCode === 'FI').length,
-  };
+  const report = eicrSession.eicr_report;
+  const circuits = report.circuits || [];
+  const faults = report.faults || [];
+  
+  const testedCircuits = circuits.filter(c => 
+    c.measured_zs !== undefined || 
+    c.insulation_resistance !== undefined ||
+    c.rcd_operation !== undefined ||
+    c.continuity_cpc !== undefined
+  ).length;
 
-  const handleExportEICR = () => {
-    const report = generateEICRReport();
-    if (report) {
-      // Create downloadable EICR report
-      const blob = new Blob([JSON.stringify(report, null, 2)], { 
-        type: 'application/json' 
-      });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `EICR-${report.id}-${new Date().toISOString().split('T')[0]}.json`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-  };
+  const completionPercentage = circuits.length > 0 ? (testedCircuits / circuits.length) * 100 : 0;
+
+  const c1Faults = faults.filter(f => f.faultCode === 'C1').length;
+  const c2Faults = faults.filter(f => f.faultCode === 'C2').length;
+  const c3Faults = faults.filter(f => f.faultCode === 'C3').length;
+  const fiFaults = faults.filter(f => f.faultCode === 'FI').length;
 
   return (
     <div className="space-y-6">
-      {/* EICR Status Header */}
+      {/* EICR Overview */}
       <Card className="border-elec-yellow/30 bg-elec-gray">
-        <CardHeader className="pb-3">
+        <CardHeader>
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <FileText className="h-6 w-6 text-elec-yellow" />
-              <div>
-                <CardTitle className="text-lg">EICR Report Generation</CardTitle>
-                <p className="text-sm text-muted-foreground">
-                  Live integration with testing results
-                </p>
-              </div>
-            </div>
+            <CardTitle className="flex items-center gap-2">
+              <FileText className="h-5 w-5 text-elec-yellow" />
+              EICR Dashboard
+            </CardTitle>
             <div className="flex gap-2">
-              <Button onClick={handleExportEICR} variant="outline" size="sm">
+              <Button variant="outline" size="sm">
+                <Settings className="h-4 w-4 mr-2" />
+                Settings
+              </Button>
+              <Button 
+                className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                size="sm"
+                disabled={circuits.length === 0}
+              >
                 <Download className="h-4 w-4 mr-2" />
                 Export EICR
               </Button>
             </div>
           </div>
         </CardHeader>
-        
-        <CardContent className="space-y-4">
-          {/* Overall Status */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              {eicr_report.overall_assessment === 'satisfactory' ? (
-                <CheckCircle className="h-5 w-5 text-green-400" />
-              ) : (
-                <AlertTriangle className="h-5 w-5 text-red-400" />
-              )}
-              <span className="font-medium">
-                Overall Assessment: {eicr_report.overall_assessment === 'satisfactory' ? 'Satisfactory' : 'Unsatisfactory'}
-              </span>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-500/20 rounded-lg">
+                <Zap className="h-5 w-5 text-blue-400" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Total Circuits</p>
+                <p className="text-xl font-bold">{circuits.length}</p>
+              </div>
             </div>
-            <Badge variant={eicr_report.overall_assessment === 'satisfactory' ? 'default' : 'destructive'}>
-              {eicr_report.overall_assessment === 'satisfactory' ? 'PASS' : 'FAIL'}
-            </Badge>
+            
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-green-500/20 rounded-lg">
+                <CheckCircle className="h-5 w-5 text-green-400" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Tested</p>
+                <p className="text-xl font-bold">{testedCircuits}</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-red-500/20 rounded-lg">
+                <AlertTriangle className="h-5 w-5 text-red-400" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Total Faults</p>
+                <p className="text-xl font-bold">{faults.length}</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-elec-yellow/20 rounded-lg">
+                <FileText className="h-5 w-5 text-elec-yellow" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Overall</p>
+                <Badge 
+                  className={report.overall_assessment === 'satisfactory' 
+                    ? 'bg-green-500/20 text-green-300' 
+                    : 'bg-red-500/20 text-red-300'
+                  }
+                >
+                  {report.overall_assessment}
+                </Badge>
+              </div>
+            </div>
+          </div>
+
+          {/* Progress Bar */}
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span>Testing Progress</span>
+              <span>{Math.round(completionPercentage)}% Complete</span>
+            </div>
+            <Progress value={completionPercentage} className="h-2" />
           </div>
 
           {/* Fault Summary */}
-          <div className="grid grid-cols-4 gap-3">
-            <div className="text-center p-3 rounded-lg bg-red-500/10 border border-red-500/30">
-              <div className="text-2xl font-bold text-red-400">{faultCounts.C1}</div>
-              <div className="text-xs text-red-300">C1 - Dangerous</div>
+          {faults.length > 0 && (
+            <div className="mt-4 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+              <h4 className="font-medium text-red-200 mb-2">Fault Classification Summary</h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                {c1Faults > 0 && (
+                  <div className="flex items-center gap-2">
+                    <Badge className="bg-red-600 text-white">C1</Badge>
+                    <span>{c1Faults} Dangerous</span>
+                  </div>
+                )}
+                {c2Faults > 0 && (
+                  <div className="flex items-center gap-2">
+                    <Badge className="bg-orange-600 text-white">C2</Badge>
+                    <span>{c2Faults} Potentially Dangerous</span>
+                  </div>
+                )}
+                {c3Faults > 0 && (
+                  <div className="flex items-center gap-2">
+                    <Badge className="bg-yellow-600 text-white">C3</Badge>
+                    <span>{c3Faults} Improvement Recommended</span>
+                  </div>
+                )}
+                {fiFaults > 0 && (
+                  <div className="flex items-center gap-2">
+                    <Badge className="bg-blue-600 text-white">FI</Badge>
+                    <span>{fiFaults} Further Investigation</span>
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="text-center p-3 rounded-lg bg-orange-500/10 border border-orange-500/30">
-              <div className="text-2xl font-bold text-orange-400">{faultCounts.C2}</div>
-              <div className="text-xs text-orange-300">C2 - Potentially Dangerous</div>
-            </div>
-            <div className="text-center p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/30">
-              <div className="text-2xl font-bold text-yellow-400">{faultCounts.C3}</div>
-              <div className="text-xs text-yellow-300">C3 - Improvement Recommended</div>
-            </div>
-            <div className="text-center p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <div className="text-2xl font-bold text-blue-400">{faultCounts.FI}</div>
-              <div className="text-xs text-blue-300">FI - Further Investigation</div>
-            </div>
-          </div>
-
-          {/* Critical Alerts */}
-          {(faultCounts.C1 > 0 || faultCounts.C2 > 0) && (
-            <Alert className="bg-red-500/10 border-red-500/30">
-              <AlertTriangle className="h-4 w-4 text-red-400" />
-              <AlertDescription className="text-red-200">
-                <strong>Critical Issues Detected:</strong> 
-                {faultCounts.C1 > 0 && ` ${faultCounts.C1} dangerous condition(s)`}
-                {faultCounts.C1 > 0 && faultCounts.C2 > 0 && ' and'}
-                {faultCounts.C2 > 0 && ` ${faultCounts.C2} potentially dangerous condition(s)`}
-                {' '}found. Immediate attention required.
-              </AlertDescription>
-            </Alert>
           )}
         </CardContent>
       </Card>
 
-      {/* EICR Management Tabs */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <Tabs defaultValue="faults" className="w-full">
-          <TabsList className="grid grid-cols-4 w-full">
-            <TabsTrigger value="faults" className="flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4" />
-              Fault Codes
-            </TabsTrigger>
-            <TabsTrigger value="circuits" className="flex items-center gap-2">
-              <Plus className="h-4 w-4" />
-              Circuits
-            </TabsTrigger>
-            <TabsTrigger value="preview" className="flex items-center gap-2">
-              <FileText className="h-4 w-4" />
-              Preview
-            </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center gap-2">
-              <Settings className="h-4 w-4" />
-              Settings
-            </TabsTrigger>
-          </TabsList>
+      {/* Installation Details */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardHeader>
+            <CardTitle className="text-lg">Installation Details</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div>
+              <p className="text-sm text-muted-foreground">Address</p>
+              <p className="font-medium">{report.installation_details.address || 'Not specified'}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Description</p>
+              <p className="font-medium">{report.installation_details.description || 'Not specified'}</p>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm text-muted-foreground">Earthing</p>
+                <p className="font-medium">{report.installation_details.earthing_arrangements || 'TBD'}</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Main Switch</p>
+                <p className="font-medium">{report.installation_details.main_switch_rating || 'TBD'}A</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
-          <TabsContent value="faults" className="mt-6">
-            <FaultCodeManager />
-          </TabsContent>
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardHeader>
+            <CardTitle className="text-lg">Inspector Details</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div>
+              <p className="text-sm text-muted-foreground">Inspector</p>
+              <p className="font-medium">{report.inspector_details.name || 'Not specified'}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Qualification</p>
+              <p className="font-medium">{report.inspector_details.qualification || 'Not specified'}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Report Created</p>
+              <p className="font-medium">{report.created_at.toLocaleDateString()}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Last Updated</p>
+              <p className="font-medium">{report.updated_at.toLocaleDateString()}</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
-          <TabsContent value="circuits" className="mt-6">
-            <CircuitManager />
-          </TabsContent>
-
-          <TabsContent value="preview" className="mt-6">
-            <EICRReportPreview />
-          </TabsContent>
-
-          <TabsContent value="settings" className="mt-6">
-            <EICRSettings />
-          </TabsContent>
-        </Tabs>
-      </Card>
+      {/* Main Management Sections */}
+      <EICRFormEngine />
+      <CircuitManager />
+      <FaultManager />
     </div>
   );
 };
