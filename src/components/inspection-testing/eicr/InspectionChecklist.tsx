@@ -287,69 +287,89 @@ const InspectionChecklist = ({ reportType, onComplete }: InspectionChecklistProp
       {/* Inspection Items by Category */}
       {Object.entries(groupedItems).map(([category, items]) => (
         <Card key={category} className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader className="pb-3">
+          <CardHeader className="pb-4">
             <CardTitle className="text-lg">{category}</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-3">
             {items.map((item) => (
               <div
                 key={item.id}
-                className={`p-4 rounded-lg border ${
+                className={`border rounded-lg transition-all ${
                   item.nonCompliant
-                    ? 'border-red-500/50 bg-red-500/10'
+                    ? 'border-red-500/50 bg-red-500/5'
                     : item.checked
-                    ? 'border-green-500/50 bg-green-500/10'
-                    : 'border-elec-yellow/20'
+                    ? 'border-green-500/50 bg-green-500/5'
+                    : 'border-elec-yellow/20 bg-elec-dark/50'
                 }`}
               >
-                <div className="flex items-start gap-3">
-                  <div className="flex items-start gap-3 pt-1">
-                    <Checkbox
-                      id={item.id}
-                      checked={item.checked}
-                      onCheckedChange={(checked) =>
-                        updateItem(item.id, 'checked', checked)
-                      }
-                    />
-                    <Checkbox
-                      id={`${item.id}-non-compliant`}
-                      checked={item.nonCompliant}
-                      onCheckedChange={(checked) =>
-                        updateItem(item.id, 'nonCompliant', checked)
-                      }
-                      className="data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between mb-2">
-                      <div>
-                        <h4 className="font-medium">{item.item}</h4>
-                        <p className="text-sm text-muted-foreground">
-                          {item.requirement}
-                        </p>
-                      </div>
-                      <div className="flex gap-1">
-                        {item.isRequired && (
-                          <Badge variant="outline" className="text-xs">
-                            Required
-                          </Badge>
-                        )}
-                        {item.checked && (
-                          <CheckCircle className="h-4 w-4 text-green-400" />
-                        )}
-                        {item.nonCompliant && (
-                          <AlertTriangle className="h-4 w-4 text-red-400" />
-                        )}
-                      </div>
+                {/* Header Section */}
+                <div className="p-4 pb-3">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <h4 className="font-medium text-base mb-1">{item.item}</h4>
+                      <p className="text-sm text-muted-foreground">{item.requirement}</p>
                     </div>
-                    <Textarea
-                      placeholder="Add inspection notes..."
-                      value={item.notes}
-                      onChange={(e) => updateItem(item.id, 'notes', e.target.value)}
-                      className="bg-elec-dark border-elec-yellow/20 text-sm"
-                      rows={2}
-                    />
+                    <div className="flex items-center gap-2 ml-4">
+                      {item.isRequired && (
+                        <Badge variant="outline" className="text-xs">
+                          Required
+                        </Badge>
+                      )}
+                      {item.checked && (
+                        <CheckCircle className="h-4 w-4 text-green-400" />
+                      )}
+                      {item.nonCompliant && (
+                        <AlertTriangle className="h-4 w-4 text-red-400" />
+                      )}
+                    </div>
                   </div>
+
+                  {/* Checkbox Controls */}
+                  <div className="flex items-center gap-6 mb-3">
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        id={`${item.id}-checked`}
+                        checked={item.checked}
+                        onCheckedChange={(checked) =>
+                          updateItem(item.id, 'checked', checked)
+                        }
+                        className="h-4 w-4"
+                      />
+                      <label 
+                        htmlFor={`${item.id}-checked`}
+                        className="text-sm font-medium cursor-pointer"
+                      >
+                        Inspected
+                      </label>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Checkbox
+                        id={`${item.id}-non-compliant`}
+                        checked={item.nonCompliant}
+                        onCheckedChange={(checked) =>
+                          updateItem(item.id, 'nonCompliant', checked)
+                        }
+                        className="h-4 w-4 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                      />
+                      <label 
+                        htmlFor={`${item.id}-non-compliant`}
+                        className="text-sm font-medium cursor-pointer"
+                      >
+                        Non-Compliant
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Notes Section */}
+                <div className="px-4 pb-4">
+                  <Textarea
+                    placeholder="Add inspection notes..."
+                    value={item.notes}
+                    onChange={(e) => updateItem(item.id, 'notes', e.target.value)}
+                    className="bg-elec-dark/80 border-elec-yellow/20 text-sm min-h-[80px] resize-none focus:border-elec-yellow/50 transition-colors"
+                    rows={3}
+                  />
                 </div>
               </div>
             ))}
