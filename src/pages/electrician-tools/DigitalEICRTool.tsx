@@ -5,7 +5,7 @@ import DigitalEICRForm from "@/components/inspection-testing/eicr/DigitalEICRFor
 const DigitalEICRTool = () => {
   return (
     <EICRProvider>
-      <div className="min-h-screen bg-elec-dark">
+      <div className="space-y-6 animate-fade-in">
         <DigitalEICRForm />
       </div>
     </EICRProvider>
