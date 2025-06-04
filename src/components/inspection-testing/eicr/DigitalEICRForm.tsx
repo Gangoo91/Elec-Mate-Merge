@@ -141,34 +141,32 @@ const DigitalEICRForm = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header Card */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <FileText className="h-6 w-6 text-elec-yellow" />
-              <div>
-                <CardTitle className="text-2xl">Digital EICR Tool</CardTitle>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Interactive electrical inspection and testing system
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline" size="sm">
-                <Save className="h-4 w-4 mr-2" />
-                Save Progress
-              </Button>
-              <Link to="/electrician-tools/eicr-reports">
-                <Button variant="outline" size="sm">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to EICR Reports
-                </Button>
-              </Link>
-            </div>
+      {/* Clean Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="p-3 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30">
+            <FileText className="h-8 w-8 text-elec-yellow" />
           </div>
-        </CardHeader>
-      </Card>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">Digital EICR Tool</h1>
+            <p className="text-muted-foreground">
+              Interactive electrical inspection and testing system
+            </p>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm">
+            <Save className="h-4 w-4 mr-2" />
+            Save Progress
+          </Button>
+          <Link to="/electrician-tools/eicr-reports">
+            <Button variant="outline" size="sm">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to EICR Reports
+            </Button>
+          </Link>
+        </div>
+      </div>
 
       {/* Progress Card */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
@@ -224,7 +222,7 @@ const DigitalEICRForm = () => {
         {renderStepContent()}
       </div>
 
-      {/* Footer Navigation Card */}
+      {/* Footer Navigation */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardContent className="pt-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -238,11 +236,9 @@ const DigitalEICRForm = () => {
               Previous
             </Button>
 
-            <div className="text-center">
-              <Badge variant="outline" className="text-xs">
-                {reportType.toUpperCase().replace('-', ' ')}
-              </Badge>
-            </div>
+            <Badge variant="outline" className="text-xs">
+              {reportType.toUpperCase().replace('-', ' ')}
+            </Badge>
 
             <Button
               onClick={handleNext}
