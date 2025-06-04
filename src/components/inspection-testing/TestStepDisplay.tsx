@@ -1,17 +1,17 @@
 
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Clock, AlertTriangle, CheckCircle, Camera, Wrench, Shield, Zap } from 'lucide-react';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Clock, AlertTriangle, CheckCircle, Wrench, Shield } from 'lucide-react';
 import { TestStep, TestResult } from '@/types/inspection-testing';
 import { BS7671Validator } from './BS7671Validator';
 import { useIsMobile } from '@/hooks/use-mobile';
+import VisualInspectionResult from './VisualInspectionResult';
+import MeasurementResult from './MeasurementResult';
 
 interface TestStepDisplayProps {
   step: TestStep;
@@ -48,24 +48,77 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
     }
   }
 
-  const handleRecordResult = () => {
-    const numericValue = parseFloat(value);
+  // Enhanced test step detection logic
+  const getStepType = () => {
+    const stepId = step.id.toLowerCase();
+    const stepTitle = step.title.toLowerCase();
+    
+    // Visual inspection steps
+    if (stepId.includes('visual') || stepTitle.includes('visual') || 
+        stepId.includes('inspection') || stepTitle.includes('inspection')) {
+      return 'visual-inspection';
+    }
+    
+    // Safe isolation and procedural steps
+    if (stepId.includes('isolation') || stepId.includes('proving') || 
+        stepId.includes('dead-testing') || stepId.includes('planning') ||
+        stepId.includes('execution') || stepId.includes('secure') ||
+        stepId.includes('precautions')) {
+      return 'procedural';
+    }
+    
+    // Supply type selection
+    if (stepId === 'safe-isolation-selection' || stepId === 'supply-type-identification') {
+      return 'supply-selection';
+    }
+    
+    // Measurement-based tests
+    if (stepId.includes('continuity') || stepId.includes('measurement')) {
+      return 'continuity';
+    }
+    if (stepId.includes('insulation') || stepId.includes('resistance')) {
+      return 'insulation';
+    }
+    if (stepId.includes('earth-fault-loop') || stepId.includes('zs')) {
+      return 'earth-fault-loop';
+    }
+    if (stepId.includes('rcd') || stepId.includes('trip')) {
+      return 'rcd';
+    }
+    if (stepId.includes('polarity')) {
+      return 'polarity';
+    }
+    
+    // Default to measurement for unknown types
+    return 'measurement';
+  };
+
+  const stepType = getStepType();
+  const isVisualInspection = stepType === 'visual-inspection';
+  const isSupplySelection = stepType === 'supply-selection';
+  const isProcedural = stepType === 'procedural';
+  const isMeasurement = !isVisualInspection && !isSupplySelection && !isProcedural;
+
+  const handleRecordPass = () => {
     const resultData = {
-      value: isNaN(numericValue) ? undefined : numericValue,
-      unit,
+      value: isMeasurement && value ? parseFloat(value) : undefined,
+      unit: isMeasurement ? unit : undefined,
       status: 'completed' as const,
-      notes: (step.id === 'safe-isolation-selection' || step.id === 'supply-type-identification') ? supplyType : notes,
-      isWithinLimits: true // This will be validated by BS7671Validator
+      notes: isSupplySelection ? supplyType : notes,
+      isWithinLimits: true
     };
     
     onRecordResult(resultData);
     setStatus('completed');
   };
 
-  const handleMarkFailed = () => {
+  const handleRecordFail = () => {
     onRecordResult({
+      value: isMeasurement && value ? parseFloat(value) : undefined,
+      unit: isMeasurement ? unit : undefined,
       status: 'failed',
-      notes: (step.id === 'safe-isolation-selection' || step.id === 'supply-type-identification') ? supplyType : notes
+      notes: isSupplySelection ? supplyType : notes,
+      isWithinLimits: false
     });
     setStatus('failed');
   };
@@ -81,13 +134,9 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
   };
 
   // Check if this is a safe isolation step
-  const isSafeIsolationStep = step.id.startsWith('safe-isolation') || step.id.includes('isolation') || step.id.includes('proving') || step.id === 'supply-type-identification' || step.id === 'dead-testing' || step.id === 'additional-precautions';
-
-  // Check if this step needs supply type selection
-  const needsSupplyTypeSelection = step.id === 'safe-isolation-selection' || step.id === 'supply-type-identification';
-
-  // Check if this is a procedural step (no measurements needed)
-  const isProceduralStep = step.id === 'isolation-planning' || step.id === 'isolation-execution' || step.id === 'secure-isolation' || step.id === 'voltage-tester-proving' || step.id === 'voltage-tester-re-proving' || step.id === 'additional-precautions' || step.id === 'dead-testing';
+  const isSafeIsolationStep = step.id.startsWith('safe-isolation') || step.id.includes('isolation') || 
+                               step.id.includes('proving') || step.id === 'supply-type-identification' || 
+                               step.id === 'dead-testing' || step.id === 'additional-precautions';
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray shadow-md">
@@ -187,12 +236,12 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
           </Alert>
         )}
 
-        {/* Result Recording - Enhanced for Safe Isolation Steps */}
+        {/* Result Recording Section */}
         <div className="border-t pt-6 space-y-4">
           <h4 className="font-medium">📝 Record Test Result</h4>
           
-          {/* Supply Type Selection for supply-type-identification step */}
-          {needsSupplyTypeSelection && (
+          {/* Supply Type Selection */}
+          {isSupplySelection && (
             <div className="space-y-4">
               <Label className="text-sm font-medium">Select Supply Type</Label>
               <RadioGroup value={supplyType} onValueChange={setSupplyType}>
@@ -209,77 +258,93 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
                   </Label>
                 </div>
               </RadioGroup>
+              <div>
+                <Label htmlFor="supply-notes" className="text-sm font-medium">Notes (Optional)</Label>
+                <Textarea
+                  id="supply-notes"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder="Add any additional supply details or observations..."
+                  className="bg-elec-dark border-elec-yellow/20 mt-1"
+                  rows={2}
+                />
+              </div>
             </div>
           )}
 
-          {/* Standard measurement inputs for measurement steps only */}
-          {!needsSupplyTypeSelection && !isProceduralStep && (
-            <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'} gap-4`}>
+          {/* Visual Inspection Mode */}
+          {isVisualInspection && (
+            <VisualInspectionResult
+              notes={notes}
+              onNotesChange={setNotes}
+              onRecordPass={handleRecordPass}
+              onRecordFail={handleRecordFail}
+              status={status}
+              canAddPhoto={mode === 'electrician'}
+            />
+          )}
+
+          {/* Measurement Mode */}
+          {isMeasurement && (
+            <MeasurementResult
+              value={value}
+              unit={unit}
+              notes={notes}
+              onValueChange={setValue}
+              onUnitChange={setUnit}
+              onNotesChange={setNotes}
+              onRecordPass={handleRecordPass}
+              onRecordFail={handleRecordFail}
+              status={status}
+              canAddPhoto={mode === 'electrician'}
+              stepType={stepType}
+            />
+          )}
+
+          {/* Procedural Steps */}
+          {isProcedural && !isSupplySelection && (
+            <div className="space-y-4">
               <div>
-                <Label htmlFor="value" className="text-sm font-medium">Measured Value</Label>
-                <Input
-                  id="value"
-                  type="number"
-                  step="0.001"
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
-                  placeholder="Enter measured value"
+                <Label htmlFor="procedural-notes" className="text-sm font-medium">
+                  Completion Notes & Observations
+                </Label>
+                <Textarea
+                  id="procedural-notes"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder="Record completion details, any issues encountered, or additional observations..."
                   className="bg-elec-dark border-elec-yellow/20 mt-1"
+                  rows={3}
                 />
               </div>
               
-              <div>
-                <Label htmlFor="unit" className="text-sm font-medium">Unit</Label>
-                <Input
-                  id="unit"
-                  value={unit}
-                  onChange={(e) => setUnit(e.target.value)}
-                  placeholder="e.g., Ω, V, A, MΩ, ms"
-                  className="bg-elec-dark border-elec-yellow/20 mt-1"
-                />
+              <div className={`flex ${isMobile ? 'flex-col' : 'flex-wrap'} gap-3`}>
+                <Button
+                  onClick={handleRecordPass}
+                  className="bg-red-600 hover:bg-red-700 flex-1"
+                  disabled={status === 'completed'}
+                >
+                  <CheckCircle className="h-4 w-4 mr-2" />
+                  Confirm Step Complete
+                </Button>
+                
+                <Button
+                  onClick={handleRecordFail}
+                  variant="destructive"
+                  className="flex-1"
+                  disabled={status === 'failed'}
+                >
+                  Record Issue/Failure
+                </Button>
+                
+                {mode === 'electrician' && (
+                  <Button variant="outline" className={isMobile ? 'w-full' : ''}>
+                    📷 Add Photo
+                  </Button>
+                )}
               </div>
             </div>
           )}
-
-          <div>
-            <Label htmlFor="notes" className="text-sm font-medium">Notes (Optional)</Label>
-            <Textarea
-              id="notes"
-              value={needsSupplyTypeSelection ? supplyType : notes}
-              onChange={(e) => needsSupplyTypeSelection ? setSupplyType(e.target.value) : setNotes(e.target.value)}
-              placeholder={needsSupplyTypeSelection ? 'Supply type will be recorded automatically' : 'Add any additional observations or notes'}
-              className="bg-elec-dark border-elec-yellow/20 mt-1"
-              rows={3}
-              disabled={needsSupplyTypeSelection}
-            />
-          </div>
-
-          <div className={`flex ${isMobile ? 'flex-col' : 'flex-wrap'} gap-3`}>
-            <Button
-              onClick={handleRecordResult}
-              className={`${isSafeIsolationStep ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'} flex-1`}
-              disabled={status === 'completed' || (needsSupplyTypeSelection && !supplyType)}
-            >
-              <CheckCircle className="h-4 w-4 mr-2" />
-              {isSafeIsolationStep ? 'Confirm Step Complete' : 'Record Pass'}
-            </Button>
-            
-            <Button
-              onClick={handleMarkFailed}
-              variant="destructive"
-              className="flex-1"
-              disabled={status === 'failed'}
-            >
-              Record Fail
-            </Button>
-            
-            {mode === 'electrician' && (
-              <Button variant="outline" className={isMobile ? 'w-full' : ''}>
-                <Camera className="h-4 w-4 mr-2" />
-                Add Photo
-              </Button>
-            )}
-          </div>
         </div>
       </CardContent>
     </Card>
