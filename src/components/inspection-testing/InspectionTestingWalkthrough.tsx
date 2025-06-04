@@ -90,11 +90,11 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
   if (!selectedFlow) {
     return (
       <div className="space-y-6 max-w-full overflow-hidden">
-        <div className="text-center space-y-4 px-4 sm:px-0">
+        <div className="text-center space-y-4 px-4 sm:px-6 lg:px-0">
           <h2 className="text-xl sm:text-2xl font-bold leading-tight">
             Inspection & Testing Walkthrough
           </h2>
-          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+          <p className="text-muted-foreground text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
             {mode === 'apprentice' 
               ? 'Learn electrical testing procedures with guided step-by-step instructions'
               : 'Professional testing procedures with validation and reporting'
@@ -110,29 +110,33 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
   if (!isSetupComplete) {
     return (
       <div className="space-y-6 max-w-full overflow-hidden">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-4 sm:px-0">
+        <div className="flex flex-col gap-4 px-4 sm:px-6 lg:px-0">
           <div className="min-w-0 flex-1">
             <div className="flex flex-col space-y-2">
-              <h2 className="text-xl sm:text-2xl font-bold flex flex-wrap items-center gap-2">
-                <span className="break-words">{selectedFlow.name}</span>
-                <Badge className={`${getDifficultyColor(selectedFlow.difficulty)} flex-shrink-0`}>
-                  {selectedFlow.difficulty}
-                </Badge>
-                {isComprehensiveMode && (
-                  <Badge className="bg-elec-yellow text-black flex-shrink-0">
-                    <Zap className="h-3 w-3 mr-1" />
-                    COMPREHENSIVE
-                  </Badge>
-                )}
-              </h2>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <h2 className="text-xl sm:text-2xl font-bold flex flex-wrap items-center gap-2">
+                  <span className="break-words">{selectedFlow.name}</span>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge className={`${getDifficultyColor(selectedFlow.difficulty)} flex-shrink-0`}>
+                      {selectedFlow.difficulty}
+                    </Badge>
+                    {isComprehensiveMode && (
+                      <Badge className="bg-elec-yellow text-black flex-shrink-0">
+                        <Zap className="h-3 w-3 mr-1" />
+                        COMPREHENSIVE
+                      </Badge>
+                    )}
+                  </div>
+                </h2>
+                <Button variant="outline" onClick={() => setSelectedFlow(null)} className="flex-shrink-0 w-full sm:w-auto">
+                  Change Test
+                </Button>
+              </div>
               <p className="text-muted-foreground text-sm leading-relaxed">
                 {selectedFlow.description}
               </p>
             </div>
           </div>
-          <Button variant="outline" onClick={() => setSelectedFlow(null)} className="flex-shrink-0">
-            Change Test
-          </Button>
         </div>
         <SessionSetup 
           testFlow={selectedFlow} 
@@ -147,19 +151,21 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
   if (showSummary && session) {
     return (
       <div className="space-y-6 max-w-full overflow-hidden">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-4 sm:px-0">
-          <h2 className="text-xl sm:text-2xl font-bold flex flex-wrap items-center gap-2">
-            <span>Test Complete</span>
-            {isComprehensiveMode && (
-              <Badge className="bg-elec-yellow text-black flex-shrink-0">
-                <Zap className="h-3 w-3 mr-1" />
-                COMPREHENSIVE
-              </Badge>
-            )}
-          </h2>
-          <Button variant="outline" onClick={() => setShowSummary(false)} className="flex-shrink-0">
-            Back to Test
-          </Button>
+        <div className="flex flex-col gap-4 px-4 sm:px-6 lg:px-0">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <h2 className="text-xl sm:text-2xl font-bold flex flex-wrap items-center gap-2">
+              <span>Test Complete</span>
+              {isComprehensiveMode && (
+                <Badge className="bg-elec-yellow text-black flex-shrink-0">
+                  <Zap className="h-3 w-3 mr-1" />
+                  COMPREHENSIVE
+                </Badge>
+              )}
+            </h2>
+            <Button variant="outline" onClick={() => setShowSummary(false)} className="flex-shrink-0 w-full sm:w-auto">
+              Back to Test
+            </Button>
+          </div>
         </div>
         <ConsolidatedTestSummary
           testFlow={selectedFlow}
@@ -196,7 +202,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
 
   // Desktop view - enhanced for comprehensive mode
   return (
-    <div className="space-y-6 max-w-full overflow-hidden">
+    <div className="space-y-6 max-w-full overflow-hidden px-4 sm:px-6 lg:px-0">
       {/* Session Header */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader className="pb-3">

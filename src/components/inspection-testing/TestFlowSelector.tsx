@@ -42,29 +42,33 @@ const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
   const individualFlows = testFlows.filter(flow => !flow.isComprehensive);
 
   return (
-    <div className="space-y-6 px-4 sm:px-0">
+    <div className="space-y-6">
       {/* Comprehensive Testing - Featured */}
       {comprehensiveFlow && (
         <div>
-          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <Zap className="h-5 w-5 text-elec-yellow" />
-            Comprehensive Testing
+          <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 px-4 sm:px-0">
+            <Zap className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+            <span>Comprehensive Testing</span>
           </h3>
           
-          <Card className="border-2 border-elec-yellow bg-gradient-to-br from-elec-gray to-elec-dark hover:border-elec-yellow/80 transition-all cursor-pointer shadow-lg">
+          <Card className="mx-4 sm:mx-0 border-2 border-elec-yellow bg-gradient-to-br from-elec-gray to-elec-dark hover:border-elec-yellow/80 transition-all cursor-pointer shadow-lg">
             <CardHeader className="pb-4">
               <div className="flex flex-col space-y-3">
-                <div className="flex flex-col space-y-2">
-                  <CardTitle className="text-xl sm:text-2xl leading-tight">
-                    {comprehensiveFlow.name}
+                <div className="flex flex-col space-y-3">
+                  <CardTitle className="text-xl sm:text-2xl leading-tight break-words pr-2">
+                    All Tests in One Go
                   </CardTitle>
                   <div className="flex flex-wrap gap-2">
-                    <Badge className="bg-elec-yellow text-black text-xs px-2 py-1 font-medium">
+                    <Badge className="bg-elec-yellow text-black text-xs px-2 py-1 font-medium flex-shrink-0">
                       FEATURED
                     </Badge>
-                    <Badge className={`${getDifficultyColor(comprehensiveFlow.difficulty)} flex items-center gap-1 text-xs px-2 py-1`}>
+                    <Badge className={`${getDifficultyColor(comprehensiveFlow.difficulty)} flex items-center gap-1 text-xs px-2 py-1 flex-shrink-0`}>
                       {getDifficultyIcon(comprehensiveFlow.difficulty)}
-                      {comprehensiveFlow.difficulty}
+                      <span>{comprehensiveFlow.difficulty}</span>
+                    </Badge>
+                    <Badge className="bg-elec-yellow text-black text-xs px-2 py-1 font-medium flex-shrink-0">
+                      <Zap className="h-3 w-3 mr-1 flex-shrink-0" />
+                      <span className="whitespace-nowrap">COMPREHENSIVE</span>
                     </Badge>
                   </div>
                 </div>
@@ -74,7 +78,7 @@ const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
               </div>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+              <div className="grid grid-cols-1 gap-3 text-sm">
                 <div className="flex items-center gap-2">
                   <Clock className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                   <span className="truncate">{getTotalEstimatedTime(comprehensiveFlow)} minutes</span>
@@ -132,8 +136,8 @@ const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
 
       {/* Individual Test Flows */}
       <div>
-        <h3 className="text-lg font-semibold mb-4">Individual Test Procedures</h3>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <h3 className="text-lg font-semibold mb-4 px-4 sm:px-0">Individual Test Procedures</h3>
+        <div className="grid grid-cols-1 gap-4 px-4 sm:px-0 sm:grid-cols-2">
           {individualFlows.map((flow) => (
             <Card 
               key={flow.id} 
@@ -143,7 +147,7 @@ const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
               <CardHeader className="pb-3">
                 <div className="flex flex-col space-y-2">
                   <div className="flex items-start justify-between gap-2">
-                    <CardTitle className="text-base leading-tight flex-1 min-w-0">
+                    <CardTitle className="text-base leading-tight flex-1 min-w-0 break-words">
                       {flow.name}
                     </CardTitle>
                     <Badge className={`${getDifficultyColor(flow.difficulty)} text-xs flex-shrink-0`}>
@@ -188,7 +192,7 @@ const TestFlowSelector = ({ onSelectFlow, mode }: TestFlowSelectorProps) => {
       </div>
 
       {mode === 'apprentice' && (
-        <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+        <div className="mt-6 mx-4 sm:mx-0 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
           <h4 className="font-medium text-blue-200 mb-2">💡 Learning Recommendation</h4>
           <p className="text-sm text-blue-300 leading-relaxed">
             Start with individual test procedures to understand each testing method before attempting 
