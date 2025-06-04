@@ -6,12 +6,14 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Clock, CheckCircle, AlertTriangle, User, FileText } from 'lucide-react';
 import { testFlows } from '@/data/inspection-testing/testFlows';
+import { expandedTestFlows } from '@/data/inspection-testing/expandedTestFlows';
 import { useTestFlowEngine } from '@/hooks/useTestFlowEngine';
 import TestStepDisplay from './TestStepDisplay';
-import TestFlowSelector from './TestFlowSelector';
+import EnhancedTestFlowSelector from './EnhancedTestFlowSelector';
 import SessionSetupForm from './SessionSetupForm';
 import TestProgressSidebar from './TestProgressSidebar';
 import TestCompletionSummary from './TestCompletionSummary';
+import GuidedWorkflow from './GuidedWorkflow';
 import { TestFlow, TestSession } from '@/types/inspection-testing';
 import { useIsMobile } from '@/hooks/use-mobile';
 
@@ -24,6 +26,11 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
   const [selectedFlow, setSelectedFlow] = useState<TestFlow | null>(null);
   const [showSetup, setShowSetup] = useState(false);
   const isMobile = useIsMobile();
+
+  // Combine original and expanded test flows, prioritizing expanded versions
+  const allFlows = [...expandedTestFlows, ...testFlows.filter(flow => 
+    !expandedTestFlows.some(expanded => expanded.type === flow.type)
+  )];
 
   const {
     session,
@@ -42,6 +49,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
   } = useTestFlowEngine(selectedFlow);
 
   const handleFlowSelection = (flow: TestFlow) => {
+    console.log('Selected flow:', flow.name, 'with', flow.steps.length, 'steps');
     setSelectedFlow(flow);
     setShowSetup(true);
   };
@@ -83,11 +91,12 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
             </CardTitle>
             <p className="text-muted-foreground">
               Choose the appropriate testing procedure for your electrical installation work.
+              {mode === 'apprentice' && ' Comprehensive procedures include detailed explanations and learning content.'}
             </p>
           </CardHeader>
           <CardContent>
-            <TestFlowSelector
-              flows={testFlows}
+            <EnhancedTestFlowSelector
+              flows={allFlows}
               onSelectFlow={handleFlowSelection}
               mode={mode}
             />
@@ -114,6 +123,9 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
           <div>
             <h2 className="text-xl font-semibold">{selectedFlow.name}</h2>
             <p className="text-muted-foreground">{selectedFlow.description}</p>
+            <Badge variant="outline" className="mt-1">
+              {selectedFlow.steps.length} detailed steps
+            </Badge>
           </div>
         </div>
         
@@ -145,14 +157,23 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
   if (session && currentStep && isSessionActive) {
     return (
       <div className={`${isMobile ? 'space-y-4' : 'grid grid-cols-1 lg:grid-cols-4 gap-6'}`}>
-        {/* Progress Sidebar */}
+        {/* Guided Workflow Sidebar */}
         <div className={isMobile ? 'order-2' : 'lg:col-span-1'}>
-          <TestProgressSidebar
-            session={session}
-            testFlow={selectedFlow}
-            currentStepIndex={currentStepIndex}
-            mode={mode}
-          />
+          <div className="space-y-4">
+            <GuidedWorkflow
+              currentStep={currentStep}
+              session={session}
+              mode={mode}
+            />
+            {!isMobile && (
+              <TestProgressSidebar
+                session={session}
+                testFlow={selectedFlow}
+                currentStepIndex={currentStepIndex}
+                mode={mode}
+              />
+            )}
+          </div>
         </div>
 
         {/* Main Testing Area */}
@@ -167,7 +188,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
                     {session.technician.name}
                   </CardTitle>
                   <p className="text-sm text-muted-foreground">
-                    {session.installationDetails.location}
+                    {session.installationDetails.location} • {selectedFlow.name}
                   </p>
                 </div>
                 <Badge variant="outline" className="bg-green-900/30 border-green-500/30">

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { TestStep, TestResult } from '@/types/inspection-testing';
@@ -59,7 +58,8 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
     if (stepId.includes('isolation') || stepId.includes('proving') || 
         stepId.includes('dead-testing') || stepId.includes('planning') ||
         stepId.includes('execution') || stepId.includes('secure') ||
-        stepId.includes('precautions')) {
+        stepId.includes('precautions') || stepId.includes('preparation') ||
+        stepId.includes('notification') || stepId.includes('documentation')) {
       return 'procedural';
     }
     
@@ -137,6 +137,7 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
         <TestStepInstructions
           step={step}
           isSafeIsolationStep={isSafeIsolationStep}
+          mode={mode}
         />
 
         <TestStepValidation validation={validation} />
