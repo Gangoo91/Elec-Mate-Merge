@@ -6,6 +6,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
 import { Clock, AlertTriangle, CheckCircle, Wrench, Shield } from 'lucide-react';
 import { TestStep, TestResult } from '@/types/inspection-testing';
 import { BS7671Validator } from './BS7671Validator';
