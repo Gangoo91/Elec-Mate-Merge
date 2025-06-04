@@ -7,10 +7,13 @@ import { Progress } from '@/components/ui/progress';
 import { AlertTriangle, CheckCircle, Clock, FileText } from 'lucide-react';
 import { TestFlow } from '@/types/inspection-testing';
 import { useTestFlowEngine } from '@/hooks/useTestFlowEngine';
+import { useIsMobile } from '@/hooks/use-mobile';
 import TestFlowSelector from './TestFlowSelector';
 import SessionSetup from './SessionSetup';
 import TestStepDisplay from './TestStepDisplay';
 import TestResultsPanel from './TestResultsPanel';
+import MobileTestView from './MobileTestView';
+import ConsolidatedTestSummary from './ConsolidatedTestSummary';
 
 interface InspectionTestingWalkthroughProps {
   mode: 'electrician' | 'apprentice';
@@ -20,6 +23,8 @@ interface InspectionTestingWalkthroughProps {
 const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWalkthroughProps) => {
   const [selectedFlow, setSelectedFlow] = useState<TestFlow | null>(null);
   const [isSetupComplete, setIsSetupComplete] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
+  const isMobile = useIsMobile();
 
   const {
     session,
@@ -42,6 +47,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
   const handleFlowSelection = (flow: TestFlow) => {
     setSelectedFlow(flow);
     setIsSetupComplete(false);
+    setShowSummary(false);
   };
 
   const handleSessionStart = (installationDetails: any, technician: any) => {
@@ -51,9 +57,20 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
 
   const handleTestComplete = () => {
     const completedSession = completeSession();
+    setShowSummary(true);
     if (completedSession && onComplete) {
       onComplete(completedSession);
     }
+  };
+
+  const handleGenerateReport = () => {
+    console.log('Generating BS 7671 compliance report');
+    // This would generate a comprehensive report
+  };
+
+  const handleExportResults = () => {
+    console.log('Exporting test results');
+    // This would export the test data
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -65,6 +82,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
     }
   };
 
+  // Flow selection screen
   if (!selectedFlow) {
     return (
       <div className="space-y-6">
@@ -82,6 +100,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
     );
   }
 
+  // Setup screen
   if (!isSetupComplete) {
     return (
       <div className="space-y-6">
@@ -108,6 +127,50 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
     );
   }
 
+  // Summary screen
+  if (showSummary && session) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold">Test Complete</h2>
+          <Button variant="outline" onClick={() => setShowSummary(false)}>
+            Back to Test
+          </Button>
+        </div>
+        <ConsolidatedTestSummary
+          testFlow={selectedFlow}
+          session={session}
+          onGenerateReport={handleGenerateReport}
+          onExportResults={handleExportResults}
+        />
+      </div>
+    );
+  }
+
+  // Mobile view
+  if (isMobile) {
+    return (
+      <MobileTestView
+        testFlow={selectedFlow}
+        session={session}
+        currentStep={currentStep}
+        currentStepResult={currentStepResult}
+        progress={progress}
+        isLastStep={isLastStep}
+        isFirstStep={isFirstStep}
+        isSessionActive={isSessionActive}
+        onRecordResult={(result) => recordResult(currentStep?.id || '', result)}
+        onNextStep={nextStep}
+        onPreviousStep={previousStep}
+        onCompleteSession={handleTestComplete}
+        onPauseSession={pauseSession}
+        onResumeSession={resumeSession}
+        mode={mode}
+      />
+    );
+  }
+
+  // Desktop view - existing implementation
   return (
     <div className="space-y-6">
       {/* Session Header */}

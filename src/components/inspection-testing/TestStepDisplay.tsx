@@ -7,8 +7,9 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Clock, AlertTriangle, CheckCircle, Camera, Wrench } from 'lucide-react';
+import { Clock, AlertTriangle, CheckCircle, Camera, Wrench, Shield } from 'lucide-react';
 import { TestStep, TestResult } from '@/types/inspection-testing';
+import { BS7671Validator } from './BS7671Validator';
 
 interface TestStepDisplayProps {
   step: TestStep;
@@ -19,21 +20,40 @@ interface TestStepDisplayProps {
 
 const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplayProps) => {
   const [value, setValue] = useState<string>(result?.value?.toString() || '');
-  const [unit, setUnit] = useState<string>(result?.unit || 'Ω');
+  const [unit, setUnit] = useState<string>(result?.unit || getDefaultUnit(step.id));
   const [notes, setNotes] = useState<string>(result?.notes || '');
   const [status, setStatus] = useState<'pending' | 'in-progress' | 'completed' | 'failed' | 'skipped'>(
     result?.status || 'pending'
   );
 
+  // Get validation for current result
+  const validation = result ? BS7671Validator.validateTestStep(step, result) : null;
+
+  function getDefaultUnit(stepId: string): string {
+    switch (stepId) {
+      case 'continuity-measurement':
+      case 'zs-measurement':
+        return 'Ω';
+      case 'insulation-test':
+        return 'MΩ';
+      case 'rcd-trip-test':
+        return 'ms';
+      default:
+        return '';
+    }
+  }
+
   const handleRecordResult = () => {
     const numericValue = parseFloat(value);
-    onRecordResult({
+    const resultData = {
       value: isNaN(numericValue) ? undefined : numericValue,
       unit,
-      status: 'completed',
+      status: 'completed' as const,
       notes,
-      isWithinLimits: true // This would be calculated based on expected values
-    });
+      isWithinLimits: true // This will be validated by BS7671Validator
+    };
+    
+    onRecordResult(resultData);
     setStatus('completed');
   };
 
@@ -128,6 +148,28 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
           )}
         </div>
 
+        {/* BS 7671 Validation Results */}
+        {validation && (
+          <Alert className={`${
+            validation.severity === 'error' ? 'bg-red-500/10 border-red-500/30' :
+            validation.severity === 'warning' ? 'bg-yellow-500/10 border-yellow-500/30' :
+            'bg-green-500/10 border-green-500/30'
+          }`}>
+            <Shield className={`h-4 w-4 ${
+              validation.severity === 'error' ? 'text-red-400' :
+              validation.severity === 'warning' ? 'text-yellow-400' :
+              'text-green-400'
+            }`} />
+            <AlertDescription className={
+              validation.severity === 'error' ? 'text-red-200' :
+              validation.severity === 'warning' ? 'text-yellow-200' :
+              'text-green-200'
+            }>
+              <strong>BS 7671 Validation:</strong> {validation.message}
+            </AlertDescription>
+          </Alert>
+        )}
+
         {/* Result Recording */}
         <div className="border-t pt-4 space-y-4">
           <h4 className="font-medium">Record Test Result</h4>
@@ -152,7 +194,7 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
                 id="unit"
                 value={unit}
                 onChange={(e) => setUnit(e.target.value)}
-                placeholder="e.g., Ω, V, A"
+                placeholder="e.g., Ω, V, A, MΩ, ms"
                 className="bg-elec-dark border-elec-yellow/20"
               />
             </div>
@@ -170,7 +212,7 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
             />
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <Button
               onClick={handleRecordResult}
               className="bg-green-600 hover:bg-green-700"
