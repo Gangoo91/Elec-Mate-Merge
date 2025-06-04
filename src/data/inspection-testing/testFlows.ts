@@ -5,6 +5,235 @@ export const testFlows: TestFlow[] = [
   // Add the comprehensive test flow first
   comprehensiveTestFlow,
   
+  // Safe Isolation - Standalone procedure (appears first in individual tests)
+  {
+    id: 'safe-isolation-procedure',
+    name: 'Safe Isolation Procedure',
+    type: 'safe-isolation',
+    description: 'Complete safe isolation procedure for electrical installations - the essential first step before any electrical work',
+    difficulty: 'intermediate',
+    steps: [
+      {
+        id: 'isolation-planning',
+        title: 'Pre-Isolation Planning and Permission',
+        description: 'Essential planning and authorization before commencing isolation',
+        instructions: [
+          'Obtain written permission from the person in charge of the installation',
+          'Notify all relevant personnel who may be affected by the isolation',
+          'Identify the circuit(s) to be isolated using circuit schedules/drawings',
+          'Confirm the location of isolation points (MCBs, switches, fuses)',
+          'Ensure you have the correct tools and equipment for the isolation',
+          'Check that isolation will not affect critical systems (fire alarms, emergency lighting)',
+          'Plan the sequence of isolation if multiple circuits are involved',
+          'Confirm emergency procedures are in place if needed'
+        ],
+        expectedResult: 'Authorization obtained and isolation plan confirmed with all stakeholders',
+        safetyNotes: [
+          'Never commence isolation without proper authorization',
+          'Ensure all affected parties are notified in advance',
+          'Have emergency contact numbers readily available',
+          'Consider the impact on other building systems'
+        ],
+        tools: ['Circuit schedules', 'Installation drawings', 'Authorization forms', 'Communication device'],
+        isRequired: true,
+        estimatedTime: 10
+      },
+      {
+        id: 'supply-type-identification',
+        title: 'Supply Type Identification',
+        description: 'Identify the electrical supply type to determine appropriate isolation procedure',
+        instructions: [
+          'Examine the distribution board or consumer unit to identify supply type',
+          'Count the number of incoming supply conductors',
+          'Check the voltage markings on the main switch or incoming supply',
+          'Verify if the supply is single-phase (230V L-N-E) or three-phase (400V L1-L2-L3-N-E)',
+          'Note any special supply arrangements (IT systems, DC supplies, etc.)',
+          'Document the supply characteristics for the isolation procedure',
+          'Select the appropriate isolation method based on supply type'
+        ],
+        expectedResult: 'Supply type correctly identified and documented',
+        safetyNotes: [
+          'Never assume supply type - always verify before proceeding',
+          'If in doubt about supply type, treat as three-phase for maximum safety',
+          'Be aware of multiple supply sources in complex installations',
+          'Check for backup supplies or UPS systems'
+        ],
+        tools: ['Voltage indicator', 'Circuit diagrams', 'Supply documentation'],
+        isRequired: true,
+        estimatedTime: 5
+      },
+      {
+        id: 'isolation-execution',
+        title: 'Execute Isolation Procedure',
+        description: 'Carry out the physical isolation of the electrical supply',
+        instructions: [
+          'Switch OFF the appropriate circuit breaker(s) or remove fuse(s)',
+          'For three-phase supplies, ensure ALL phases are isolated',
+          'Operate isolation devices in the correct sequence (load to supply)',
+          'Verify the isolation device is in the OFF position',
+          'Check that isolation devices are suitable for the circuit rating',
+          'Ensure isolation points are clearly visible and accessible',
+          'Record the position/identity of all isolation points used',
+          'Take photographs of isolation points if required for documentation'
+        ],
+        expectedResult: 'All relevant circuits physically isolated at appropriate points',
+        safetyNotes: [
+          'Use only approved isolation devices suitable for the circuit',
+          'Ensure isolation devices can be locked in the OFF position',
+          'Never rely on switches that cannot be locked off',
+          'Be prepared for arcing when operating under load'
+        ],
+        tools: ['Appropriate isolation tools', 'Circuit identification labels', 'Camera (if required)'],
+        isRequired: true,
+        estimatedTime: 10
+      },
+      {
+        id: 'secure-isolation',
+        title: 'Secure the Isolation',
+        description: 'Lock off isolation points and apply warning notices',
+        instructions: [
+          'Apply approved lock-off devices to all isolation points',
+          'Use personal locks with unique keys - never share keys',
+          'Attach danger/warning notices to all locked-off isolation points',
+          'Ensure notices clearly state "DANGER - DO NOT SWITCH ON"',
+          'Include contact details on warning notices for emergencies',
+          'Record lock numbers and key holders in isolation log',
+          'Photograph locked-off isolation points for records',
+          'Brief other team members on isolation arrangements'
+        ],
+        expectedResult: 'All isolation points securely locked with appropriate warning notices',
+        safetyNotes: [
+          'Only the person who applied the lock should remove it',
+          'Use robust lock-off devices suitable for the environment',
+          'Ensure warning notices are weatherproof if used outdoors',
+          'Never remove someone else\'s lock without proper procedures'
+        ],
+        tools: ['Personal safety locks', 'Lock-off devices', 'Danger notices', 'Permanent markers'],
+        isRequired: true,
+        estimatedTime: 10
+      },
+      {
+        id: 'voltage-tester-proving',
+        title: 'Prove Voltage Tester Before Use',
+        description: 'Test the voltage indicator on a known live source before dead testing',
+        instructions: [
+          'Select an approved voltage tester complying with GS 38',
+          'Check the tester for any visible damage to case, leads, or probes',
+          'Verify the tester is within calibration date',
+          'Test the voltage indicator on a KNOWN LIVE source',
+          'Confirm the tester indicates presence of voltage correctly',
+          'Check both audio and visual indication systems work',
+          'Test at the voltage level you expect to encounter',
+          'Record the proving test in your documentation'
+        ],
+        expectedResult: 'Voltage tester proven to be working correctly on known live source',
+        safetyNotes: [
+          'NEVER proceed with dead testing unless tester is proven working',
+          'Use only approved testers complying with GS 38',
+          'Ensure proving source is definitely live and suitable',
+          'If tester fails proving test, obtain alternative tester'
+        ],
+        tools: ['Approved voltage tester (GS 38)', 'Known live source', 'Testing log'],
+        isRequired: true,
+        estimatedTime: 5
+      },
+      {
+        id: 'dead-testing',
+        title: 'Test Dead at Point of Work',
+        description: 'Verify the circuit is dead at the actual work location',
+        instructions: [
+          'Go to the actual point where work will be carried out',
+          'Test between Line and Neutral conductors',
+          'Test between Line and Earth conductors',
+          'Test between Neutral and Earth conductors',
+          'For three-phase: test all phase combinations (L1-L2, L1-L3, L2-L3)',
+          'For three-phase: test all phases to neutral and earth',
+          'Ensure no voltage is detected on any combination',
+          'Apply sustained test pressure for adequate contact'
+        ],
+        expectedResult: 'No voltage detected between any conductor combinations',
+        safetyNotes: [
+          'Test ALL possible conductor combinations systematically',
+          'Maintain adequate test probe contact throughout test',
+          'If ANY voltage is detected, STOP and investigate',
+          'Be aware of induced voltages in long cable runs'
+        ],
+        tools: ['Proven voltage tester', 'GS 38 test probes', 'Testing checklist'],
+        isRequired: true,
+        estimatedTime: 10
+      },
+      {
+        id: 'voltage-tester-re-proving',
+        title: 'Re-prove Voltage Tester After Dead Testing',
+        description: 'Confirm the voltage tester is still working after dead testing',
+        instructions: [
+          'Return to the same KNOWN LIVE source used for initial proving',
+          'Re-test the voltage indicator to confirm it still works correctly',
+          'Verify both audio and visual indications are functioning',
+          'Confirm the tester responds as expected to the live source',
+          'If tester fails to indicate voltage, DO NOT proceed with work',
+          'Record the re-proving test in documentation',
+          'Only proceed with electrical work if re-proving is successful',
+          'Store the proven tester safely for duration of work'
+        ],
+        expectedResult: 'Voltage tester confirmed working correctly after dead testing sequence',
+        safetyNotes: [
+          'This step is CRITICAL - never skip re-proving the tester',
+          'If tester fails re-proving, repeat entire dead testing sequence',
+          'A failed re-proving test invalidates all previous dead test results',
+          'Keep the proven tester accessible throughout the work'
+        ],
+        tools: ['Voltage tester', 'Known live source', 'Testing documentation'],
+        isRequired: true,
+        estimatedTime: 5
+      },
+      {
+        id: 'additional-precautions',
+        title: 'Apply Additional Safety Precautions',
+        description: 'Implement additional safety measures before commencing work',
+        instructions: [
+          'Apply temporary equipotential bonding if required by risk assessment',
+          'Install additional earth connections where specified',
+          'Post warning notices at the point of work',
+          'Set up barriers or screens to prevent accidental contact',
+          'Ensure adequate lighting at the work location',
+          'Brief all team members on the isolation arrangements',
+          'Establish communication procedures during the work',
+          'Confirm emergency procedures with all personnel'
+        ],
+        expectedResult: 'All additional safety precautions implemented and verified',
+        safetyNotes: [
+          'Additional precautions may be required by site-specific risk assessments',
+          'Consider environmental factors (weather, location, etc.)',
+          'Ensure all team members understand safety arrangements',
+          'Maintain situational awareness throughout the work'
+        ],
+        tools: ['Temporary bonding leads', 'Warning notices', 'Barriers/screens', 'Communication devices'],
+        isRequired: true,
+        estimatedTime: 15
+      }
+    ],
+    prerequisites: [
+      'Completed safe isolation training and assessment',
+      'Approved voltage tester (GS 38) calibrated within last 12 months',
+      'Personal safety locks and lock-off devices available',
+      'Warning notices and isolation documentation prepared',
+      'Authorization to isolate obtained from responsible person',
+      'Circuit identification and drawings available',
+      'Emergency contact procedures established',
+      'Risk assessment completed for the specific work'
+    ],
+    regulatoryStandards: [
+      'BS 7671:2018+A2:2022 Section 514 (Isolation and Switching)',
+      'HSE Guidance HSG85 (Electricity at Work - Safe Working Practices)',
+      'Electricity at Work Regulations 1989',
+      'GS 38 (Electrical Test Equipment for Use by Electricians)',
+      'BS EN 60204-1 (Safety of machinery - Electrical equipment)',
+      'IET Code of Practice for In-Service Inspection and Testing'
+    ]
+  },
+
+  // ... keep existing code (continuity-test and other individual test flows)
   {
     id: 'continuity-test',
     name: 'Continuity Testing',
@@ -64,6 +293,8 @@ export const testFlows: TestFlow[] = [
     ],
     regulatoryStandards: ['BS 7671:2018+A2:2022 Section 612.2', 'GN3 Guidance Note 3']
   },
+
+  // ... keep existing code (all other test flows remain the same)
   {
     id: 'insulation-resistance',
     name: 'Insulation Resistance Testing',

@@ -54,7 +54,7 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
       value: isNaN(numericValue) ? undefined : numericValue,
       unit,
       status: 'completed' as const,
-      notes: step.id === 'safe-isolation-selection' ? supplyType : notes,
+      notes: (step.id === 'safe-isolation-selection' || step.id === 'supply-type-identification') ? supplyType : notes,
       isWithinLimits: true // This will be validated by BS7671Validator
     };
     
@@ -65,7 +65,7 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
   const handleMarkFailed = () => {
     onRecordResult({
       status: 'failed',
-      notes: step.id === 'safe-isolation-selection' ? supplyType : notes
+      notes: (step.id === 'safe-isolation-selection' || step.id === 'supply-type-identification') ? supplyType : notes
     });
     setStatus('failed');
   };
@@ -81,7 +81,13 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
   };
 
   // Check if this is a safe isolation step
-  const isSafeIsolationStep = step.id.startsWith('safe-isolation');
+  const isSafeIsolationStep = step.id.startsWith('safe-isolation') || step.id.includes('isolation') || step.id.includes('proving') || step.id === 'supply-type-identification' || step.id === 'dead-testing' || step.id === 'additional-precautions';
+
+  // Check if this step needs supply type selection
+  const needsSupplyTypeSelection = step.id === 'safe-isolation-selection' || step.id === 'supply-type-identification';
+
+  // Check if this is a procedural step (no measurements needed)
+  const isProceduralStep = step.id === 'isolation-planning' || step.id === 'isolation-execution' || step.id === 'secure-isolation' || step.id === 'voltage-tester-proving' || step.id === 'voltage-tester-re-proving' || step.id === 'additional-precautions' || step.id === 'dead-testing';
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray shadow-md">
@@ -185,8 +191,8 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
         <div className="border-t pt-6 space-y-4">
           <h4 className="font-medium">📝 Record Test Result</h4>
           
-          {/* Supply Type Selection for safe-isolation-selection step */}
-          {step.id === 'safe-isolation-selection' && (
+          {/* Supply Type Selection for supply-type-identification step */}
+          {needsSupplyTypeSelection && (
             <div className="space-y-4">
               <Label className="text-sm font-medium">Select Supply Type</Label>
               <RadioGroup value={supplyType} onValueChange={setSupplyType}>
@@ -206,8 +212,8 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
             </div>
           )}
 
-          {/* Standard measurement inputs for other steps */}
-          {step.id !== 'safe-isolation-selection' && !step.id.includes('safe-isolation-') && (
+          {/* Standard measurement inputs for measurement steps only */}
+          {!needsSupplyTypeSelection && !isProceduralStep && (
             <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'} gap-4`}>
               <div>
                 <Label htmlFor="value" className="text-sm font-medium">Measured Value</Label>
@@ -239,12 +245,12 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
             <Label htmlFor="notes" className="text-sm font-medium">Notes (Optional)</Label>
             <Textarea
               id="notes"
-              value={step.id === 'safe-isolation-selection' ? supplyType : notes}
-              onChange={(e) => step.id === 'safe-isolation-selection' ? setSupplyType(e.target.value) : setNotes(e.target.value)}
-              placeholder={step.id === 'safe-isolation-selection' ? 'Supply type will be recorded automatically' : 'Add any additional observations or notes'}
+              value={needsSupplyTypeSelection ? supplyType : notes}
+              onChange={(e) => needsSupplyTypeSelection ? setSupplyType(e.target.value) : setNotes(e.target.value)}
+              placeholder={needsSupplyTypeSelection ? 'Supply type will be recorded automatically' : 'Add any additional observations or notes'}
               className="bg-elec-dark border-elec-yellow/20 mt-1"
               rows={3}
-              disabled={step.id === 'safe-isolation-selection'}
+              disabled={needsSupplyTypeSelection}
             />
           </div>
 
@@ -252,10 +258,10 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
             <Button
               onClick={handleRecordResult}
               className={`${isSafeIsolationStep ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'} flex-1`}
-              disabled={status === 'completed' || (step.id === 'safe-isolation-selection' && !supplyType)}
+              disabled={status === 'completed' || (needsSupplyTypeSelection && !supplyType)}
             >
               <CheckCircle className="h-4 w-4 mr-2" />
-              {isSafeIsolationStep ? 'Confirm Safe Isolation' : 'Record Pass'}
+              {isSafeIsolationStep ? 'Confirm Step Complete' : 'Record Pass'}
             </Button>
             
             <Button
