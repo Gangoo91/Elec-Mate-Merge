@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { TestStep, TestResult } from '@/types/inspection-testing';
@@ -100,7 +99,9 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
   const isMeasurement = !isVisualInspection && !isSupplySelection && !isProcedural;
 
   const handleRecordPass = () => {
-    console.log('Recording step as pass for step:', step.id);
+    console.log('handleRecordPass called for step:', step.id);
+    console.log('Current step type:', stepType);
+    console.log('Is procedural step:', isProcedural);
     
     const resultData = {
       value: isMeasurement && value ? parseFloat(value) : undefined,
@@ -112,8 +113,12 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
     
     console.log('Recording result data:', resultData);
     
+    // Call the parent onRecordResult function
     onRecordResult(resultData);
+    
+    // Update local status
     setStatus('completed');
+    console.log('Status updated to completed');
 
     // Integrate with EICR
     const testResult = {

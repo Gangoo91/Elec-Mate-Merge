@@ -25,7 +25,8 @@ const ProceduralStepResult = ({
   const isMobile = useIsMobile();
 
   const handleConfirmComplete = () => {
-    console.log('Confirming step as complete');
+    console.log('Confirming step as complete - button clicked');
+    console.log('Current status:', status);
     onRecordPass();
   };
 
@@ -53,7 +54,7 @@ const ProceduralStepResult = ({
       <div className={`flex ${isMobile ? 'flex-col' : 'flex-wrap'} gap-3`}>
         <Button
           onClick={handleConfirmComplete}
-          className="bg-red-600 hover:bg-red-700 flex-1"
+          className="bg-green-600 hover:bg-green-700 text-white flex-1"
           disabled={status === 'completed'}
         >
           <CheckCircle className="h-4 w-4 mr-2" />
