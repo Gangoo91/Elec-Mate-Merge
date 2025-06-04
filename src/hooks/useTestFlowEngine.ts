@@ -1,54 +1,106 @@
 
 import { useState, useCallback, useEffect } from 'react';
 import { TestFlow, TestSession, TestResult, TestStatus } from '@/types/inspection-testing';
-import { toast } from '@/hooks/use-toast';
 
-export const useTestFlowEngine = (testFlow: TestFlow | null) => {
+interface TestFlowEngineHook {
+  session: TestSession | null;
+  currentStep: any;
+  currentStepIndex: number;
+  currentStepResult: TestResult | undefined;
+  progress: number;
+  isLastStep: boolean;
+  isFirstStep: boolean;
+  isSessionActive: boolean;
+  startSession: (installationDetails: any, technician: any) => void;
+  recordResult: (stepId: string, result: Omit<TestResult, 'stepId' | 'timestamp'>) => void;
+  nextStep: () => void;
+  previousStep: () => void;
+  completeSession: () => TestSession | null;
+  pauseSession: () => void;
+  resumeSession: () => void;
+}
+
+export const useTestFlowEngine = (testFlow: TestFlow | null): TestFlowEngineHook => {
   const [session, setSession] = useState<TestSession | null>(null);
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [isSessionActive, setIsSessionActive] = useState(false);
+  const [filteredSteps, setFilteredSteps] = useState<any[]>([]);
 
-  const startSession = useCallback((installationDetails: TestSession['installationDetails'], technician: TestSession['technician']) => {
+  // Update filtered steps when session changes
+  useEffect(() => {
+    if (!testFlow || !session) {
+      setFilteredSteps(testFlow?.steps || []);
+      return;
+    }
+
+    // For comprehensive testing, filter steps based on supply type selection
+    if (testFlow.isComprehensive) {
+      const supplyTypeResult = session.results.find(r => r.stepId === 'safe-isolation-selection');
+      
+      if (supplyTypeResult?.notes === 'single-phase') {
+        // Filter out three-phase isolation step
+        const filtered = testFlow.steps.filter(step => step.id !== 'safe-isolation-three-phase');
+        setFilteredSteps(filtered);
+      } else if (supplyTypeResult?.notes === 'three-phase') {
+        // Filter out single-phase isolation step
+        const filtered = testFlow.steps.filter(step => step.id !== 'safe-isolation-single-phase');
+        setFilteredSteps(filtered);
+      } else {
+        // No selection made yet, show all steps
+        setFilteredSteps(testFlow.steps);
+      }
+    } else {
+      setFilteredSteps(testFlow.steps);
+    }
+  }, [testFlow, session]);
+
+  const currentStep = filteredSteps[session?.currentStepIndex || 0];
+  const currentStepIndex = session?.currentStepIndex || 0;
+  const totalSteps = filteredSteps.length;
+  
+  const currentStepResult = session?.results.find(
+    result => result.stepId === currentStep?.id
+  );
+
+  const progress = totalSteps > 0 ? ((currentStepIndex + 1) / totalSteps) * 100 : 0;
+  const isLastStep = currentStepIndex === totalSteps - 1;
+  const isFirstStep = currentStepIndex === 0;
+  const isSessionActive = session?.status === 'in-progress';
+
+  const startSession = useCallback((installationDetails: any, technician: any) => {
     if (!testFlow) return;
 
     const newSession: TestSession = {
       id: `session-${Date.now()}`,
       flowId: testFlow.id,
       installationDetails,
+      technician,
       currentStepIndex: 0,
       results: [],
       startTime: new Date(),
       status: 'in-progress',
-      technician
+      isComprehensive: testFlow.isComprehensive
     };
 
     setSession(newSession);
-    setCurrentStepIndex(0);
-    setIsSessionActive(true);
-    
-    toast({
-      title: "Test Session Started",
-      description: `Beginning ${testFlow.name} testing procedure`,
-    });
+    console.log('Session started:', newSession);
   }, [testFlow]);
 
   const recordResult = useCallback((stepId: string, result: Omit<TestResult, 'stepId' | 'timestamp'>) => {
     if (!session) return;
 
     const newResult: TestResult = {
+      ...result,
       stepId,
-      timestamp: new Date(),
-      ...result
+      timestamp: new Date()
     };
 
     setSession(prev => {
-      if (!prev) return prev;
-      
-      const existingResultIndex = prev.results.findIndex(r => r.stepId === stepId);
+      if (!prev) return null;
+
+      const existingIndex = prev.results.findIndex(r => r.stepId === stepId);
       const updatedResults = [...prev.results];
-      
-      if (existingResultIndex >= 0) {
-        updatedResults[existingResultIndex] = newResult;
+
+      if (existingIndex >= 0) {
+        updatedResults[existingIndex] = newResult;
       } else {
         updatedResults.push(newResult);
       }
@@ -59,30 +111,62 @@ export const useTestFlowEngine = (testFlow: TestFlow | null) => {
       };
     });
 
-    if (testFlow) {
-      toast({
-        title: "Result Recorded",
-        description: `Test result saved for step: ${testFlow.steps.find(s => s.id === stepId)?.title}`,
-      });
-    }
-  }, [session, testFlow]);
+    console.log('Result recorded:', newResult);
+  }, [session]);
 
   const nextStep = useCallback(() => {
-    if (!testFlow || currentStepIndex >= testFlow.steps.length - 1) return;
-    
-    setCurrentStepIndex(prev => prev + 1);
-    setSession(prev => prev ? { ...prev, currentStepIndex: currentStepIndex + 1 } : prev);
-  }, [currentStepIndex, testFlow]);
+    if (!session || isLastStep) return;
+
+    setSession(prev => {
+      if (!prev) return null;
+      
+      let nextIndex = prev.currentStepIndex + 1;
+
+      // For comprehensive testing with supply type selection
+      if (testFlow?.isComprehensive && prev.currentStepIndex === 0) {
+        const supplyTypeResult = prev.results.find(r => r.stepId === 'safe-isolation-selection');
+        
+        if (supplyTypeResult?.notes === 'single-phase') {
+          // Skip to single-phase isolation (step index 1)
+          nextIndex = 1;
+        } else if (supplyTypeResult?.notes === 'three-phase') {
+          // Skip to three-phase isolation (step index 2)  
+          nextIndex = 2;
+        }
+      }
+
+      return {
+        ...prev,
+        currentStepIndex: Math.min(nextIndex, filteredSteps.length - 1)
+      };
+    });
+  }, [session, isLastStep, testFlow, filteredSteps]);
 
   const previousStep = useCallback(() => {
-    if (currentStepIndex <= 0) return;
-    
-    setCurrentStepIndex(prev => prev - 1);
-    setSession(prev => prev ? { ...prev, currentStepIndex: currentStepIndex - 1 } : prev);
-  }, [currentStepIndex]);
+    if (!session || isFirstStep) return;
+
+    setSession(prev => {
+      if (!prev) return null;
+
+      let prevIndex = prev.currentStepIndex - 1;
+
+      // Handle going back from isolation steps to selection
+      if (testFlow?.isComprehensive && (
+        filteredSteps[prev.currentStepIndex]?.id === 'safe-isolation-single-phase' ||
+        filteredSteps[prev.currentStepIndex]?.id === 'safe-isolation-three-phase'
+      )) {
+        prevIndex = 0; // Go back to selection step
+      }
+
+      return {
+        ...prev,
+        currentStepIndex: Math.max(prevIndex, 0)
+      };
+    });
+  }, [session, isFirstStep, testFlow, filteredSteps]);
 
   const completeSession = useCallback(() => {
-    if (!session) return;
+    if (!session) return null;
 
     const completedSession = {
       ...session,
@@ -91,38 +175,21 @@ export const useTestFlowEngine = (testFlow: TestFlow | null) => {
     };
 
     setSession(completedSession);
-    setIsSessionActive(false);
-
-    toast({
-      title: "Test Session Completed",
-      description: "All tests have been completed successfully",
-    });
-
+    console.log('Session completed:', completedSession);
     return completedSession;
   }, [session]);
 
   const pauseSession = useCallback(() => {
-    setIsSessionActive(false);
-    toast({
-      title: "Session Paused",
-      description: "Test session has been paused",
-    });
-  }, []);
+    if (!session) return;
+
+    setSession(prev => prev ? { ...prev, status: 'pending' as TestStatus } : null);
+  }, [session]);
 
   const resumeSession = useCallback(() => {
-    setIsSessionActive(true);
-    toast({
-      title: "Session Resumed",
-      description: "Test session has been resumed",
-    });
-  }, []);
+    if (!session) return;
 
-  // Safe access to testFlow properties
-  const currentStep = testFlow?.steps[currentStepIndex] || null;
-  const currentStepResult = session?.results.find(r => r.stepId === currentStep?.id);
-  const progress = testFlow ? ((currentStepIndex + 1) / testFlow.steps.length) * 100 : 0;
-  const isLastStep = testFlow ? currentStepIndex === testFlow.steps.length - 1 : false;
-  const isFirstStep = currentStepIndex === 0;
+    setSession(prev => prev ? { ...prev, status: 'in-progress' as TestStatus } : null);
+  }, [session]);
 
   return {
     session,

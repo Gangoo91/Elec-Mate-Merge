@@ -1,4 +1,3 @@
-
 import { TestFlow, TestType } from '@/types/inspection-testing';
 
 export const comprehensiveTestFlow: TestFlow = {
@@ -9,6 +8,98 @@ export const comprehensiveTestFlow: TestFlow = {
   difficulty: 'advanced',
   isComprehensive: true,
   steps: [
+    // Safe Isolation Procedure - New First Step
+    {
+      id: 'safe-isolation-selection',
+      title: 'Safe Isolation Procedure - Supply Type Selection',
+      description: 'Select the appropriate safe isolation procedure based on your electrical supply type',
+      instructions: [
+        'Identify whether you are working on a single-phase or three-phase electrical supply',
+        'Check the supply characteristics at the distribution board or consumer unit',
+        'Single-phase: Typically 230V with Line, Neutral, and Earth conductors',
+        'Three-phase: Typically 400V with L1, L2, L3, Neutral, and Earth conductors',
+        'Confirm supply type before proceeding with isolation',
+        'Select the appropriate isolation procedure below'
+      ],
+      expectedResult: 'Supply type correctly identified and appropriate isolation procedure selected',
+      safetyNotes: [
+        'Never assume supply type - always verify before proceeding',
+        'Ensure you have the correct test equipment for the supply type',
+        'If in doubt, treat as three-phase for maximum safety'
+      ],
+      tools: ['Voltage indicator', 'BS 7671', 'Approved voltage tester'],
+      isRequired: true,
+      estimatedTime: 5
+    },
+
+    {
+      id: 'safe-isolation-single-phase',
+      title: 'Safe Isolation - Single Phase Supply',
+      description: 'Complete safe isolation procedure for single-phase electrical installations',
+      instructions: [
+        '1. OBTAIN PERMISSION: Get authorization from person in charge and notify all affected parties',
+        '2. IDENTIFY CIRCUIT: Locate and identify the circuit to be isolated at the distribution board',
+        '3. ISOLATE SUPPLY: Switch off the appropriate circuit breaker or remove fuse',
+        '4. SECURE ISOLATION: Lock off the isolation point and attach warning notices',
+        '5. TEST VOLTAGE INDICATOR: Test your approved voltage tester on a known live source',
+        '6. TEST DEAD: Test between Line-Neutral, Line-Earth, and Neutral-Earth at the work location',
+        '7. RE-TEST VOLTAGE INDICATOR: Confirm your tester is still working on the known live source',
+        '8. APPLY TEMPORARY BONDS: Apply temporary equipotential bonding if required',
+        '9. POST NOTICES: Display appropriate warning notices at the work location',
+        '10. BEGIN WORK: Safe to commence electrical work after completing all steps'
+      ],
+      expectedResult: 'Circuit confirmed dead and secure, ready for safe electrical work',
+      safetyNotes: [
+        'NEVER work on live conductors unless absolutely necessary and properly trained',
+        'The voltage tester MUST be proven before and after use',
+        'If any test shows unexpected results, STOP and investigate',
+        'Warning notices must remain in place throughout the work'
+      ],
+      tools: [
+        'Approved voltage tester (GS 38)',
+        'Lock-off devices',
+        'Warning notices',
+        'Temporary bonding equipment',
+        'Known live source for testing'
+      ],
+      isRequired: true,
+      estimatedTime: 15
+    },
+
+    {
+      id: 'safe-isolation-three-phase',
+      title: 'Safe Isolation - Three Phase Supply',
+      description: 'Complete safe isolation procedure for three-phase electrical installations',
+      instructions: [
+        '1. OBTAIN PERMISSION: Get authorization from person in charge and notify all affected parties',
+        '2. IDENTIFY CIRCUIT: Locate and identify the three-phase circuit at the distribution board',
+        '3. ISOLATE SUPPLY: Switch off all three phases and neutral if switched',
+        '4. SECURE ISOLATION: Lock off all isolation points and attach warning notices',
+        '5. TEST VOLTAGE INDICATOR: Test your approved voltage tester on a known live source',
+        '6. TEST DEAD: Test between all phase combinations (L1-L2, L1-L3, L2-L3)',
+        '7. TEST TO NEUTRAL: Test L1-N, L2-N, L3-N at the work location',
+        '8. TEST TO EARTH: Test L1-E, L2-E, L3-E, N-E at the work location',
+        '9. RE-TEST VOLTAGE INDICATOR: Confirm your tester is still working on the known live source',
+        '10. COMPLETE ISOLATION: Apply temporary bonds, post notices, and begin work safely'
+      ],
+      expectedResult: 'All three phases confirmed dead and secure, ready for safe electrical work',
+      safetyNotes: [
+        'ALL phases must be tested - a single phase could still be live',
+        'Three-phase supplies can have higher fault levels - extra caution required',
+        'Ensure isolation devices are suitable for the supply voltage and current',
+        'Consider mechanical interlocking where multiple isolation points exist'
+      ],
+      tools: [
+        'Approved voltage tester (GS 38) rated for 400V+',
+        'Multi-pole lock-off devices',
+        'Warning notices',
+        'Temporary bonding equipment',
+        'Known live source for testing'
+      ],
+      isRequired: true,
+      estimatedTime: 20
+    },
+
     // Visual Inspection Steps
     {
       id: 'visual-inspection-general',
@@ -235,12 +326,17 @@ export const comprehensiveTestFlow: TestFlow = {
     'BS 7671 current edition and relevant guidance notes available',
     'Test certificates and documentation prepared',
     'Coordination with other trades if required',
-    'Client notification of testing schedule'
+    'Client notification of testing schedule',
+    'Appropriate PPE and safety equipment available',
+    'Lock-off devices and warning notices prepared'
   ],
   regulatoryStandards: [
     'BS 7671:2018+A2:2022 Chapter 61 (Initial Verification)',
     'BS 7671:2018+A2:2022 Chapter 62 (Periodic Inspection)',
+    'BS 7671:2018+A2:2022 Section 514 (Isolation and Switching)',
+    'GS 38 (Electrical Test Equipment for Use by Electricians)',
     'GN3 Guidance Note 3 (Inspection & Testing)',
+    'HSE Guidance HSG85 (Electricity at Work - Safe Working Practices)',
     'BS EN 61008 (RCCBs)',
     'BS EN 61009 (RCBOs)'
   ]

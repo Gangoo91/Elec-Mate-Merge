@@ -7,7 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Clock, AlertTriangle, CheckCircle, Camera, Wrench, Shield } from 'lucide-react';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Clock, AlertTriangle, CheckCircle, Camera, Wrench, Shield, Zap } from 'lucide-react';
 import { TestStep, TestResult } from '@/types/inspection-testing';
 import { BS7671Validator } from './BS7671Validator';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -23,6 +24,7 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
   const [value, setValue] = useState<string>(result?.value?.toString() || '');
   const [unit, setUnit] = useState<string>(result?.unit || getDefaultUnit(step.id));
   const [notes, setNotes] = useState<string>(result?.notes || '');
+  const [supplyType, setSupplyType] = useState<string>(result?.notes || '');
   const [status, setStatus] = useState<'pending' | 'in-progress' | 'completed' | 'failed' | 'skipped'>(
     result?.status || 'pending'
   );
@@ -52,7 +54,7 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
       value: isNaN(numericValue) ? undefined : numericValue,
       unit,
       status: 'completed' as const,
-      notes,
+      notes: step.id === 'safe-isolation-selection' ? supplyType : notes,
       isWithinLimits: true // This will be validated by BS7671Validator
     };
     
@@ -63,7 +65,7 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
   const handleMarkFailed = () => {
     onRecordResult({
       status: 'failed',
-      notes
+      notes: step.id === 'safe-isolation-selection' ? supplyType : notes
     });
     setStatus('failed');
   };
@@ -78,11 +80,15 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
     }
   };
 
+  // Check if this is a safe isolation step
+  const isSafeIsolationStep = step.id.startsWith('safe-isolation');
+
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray shadow-md">
       <CardHeader className={isMobile ? "pb-4" : ""}>
         <div className="flex items-center justify-between">
           <CardTitle className={`flex items-center gap-2 ${isMobile ? 'text-lg' : ''}`}>
+            {isSafeIsolationStep && <Shield className="h-5 w-5 text-red-400" />}
             {step.title}
             <Badge className={getStatusColor(status)}>
               {status}
@@ -120,12 +126,12 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
             </Alert>
           )}
 
-          {/* Safety Notes */}
+          {/* Safety Notes - Enhanced for Safe Isolation */}
           {step.safetyNotes && step.safetyNotes.length > 0 && (
-            <Alert className="mt-4 bg-amber-500/10 border-amber-500/30">
-              <AlertTriangle className="h-4 w-4 text-amber-400" />
-              <AlertDescription className="text-amber-200">
-                <strong>⚠️ Safety Notes:</strong>
+            <Alert className={`mt-4 ${isSafeIsolationStep ? 'bg-red-500/10 border-red-500/30' : 'bg-amber-500/10 border-amber-500/30'}`}>
+              <AlertTriangle className={`h-4 w-4 ${isSafeIsolationStep ? 'text-red-400' : 'text-amber-400'}`} />
+              <AlertDescription className={isSafeIsolationStep ? 'text-red-200' : 'text-amber-200'}>
+                <strong>⚠️ {isSafeIsolationStep ? 'CRITICAL SAFETY REQUIREMENTS:' : 'Safety Notes:'}</strong>
                 <ul className="list-disc list-inside mt-2 space-y-1">
                   {step.safetyNotes.map((note, index) => (
                     <li key={index}>{note}</li>
@@ -175,56 +181,81 @@ const TestStepDisplay = ({ step, result, onRecordResult, mode }: TestStepDisplay
           </Alert>
         )}
 
-        {/* Result Recording - Mobile Optimized */}
+        {/* Result Recording - Enhanced for Safe Isolation Steps */}
         <div className="border-t pt-6 space-y-4">
           <h4 className="font-medium">📝 Record Test Result</h4>
           
-          <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'} gap-4`}>
-            <div>
-              <Label htmlFor="value" className="text-sm font-medium">Measured Value</Label>
-              <Input
-                id="value"
-                type="number"
-                step="0.001"
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-                placeholder="Enter measured value"
-                className="bg-elec-dark border-elec-yellow/20 mt-1"
-              />
+          {/* Supply Type Selection for safe-isolation-selection step */}
+          {step.id === 'safe-isolation-selection' && (
+            <div className="space-y-4">
+              <Label className="text-sm font-medium">Select Supply Type</Label>
+              <RadioGroup value={supplyType} onValueChange={setSupplyType}>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="single-phase" id="single-phase" />
+                  <Label htmlFor="single-phase" className="text-sm">
+                    Single Phase (230V L-N-E)
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="three-phase" id="three-phase" />
+                  <Label htmlFor="three-phase" className="text-sm">
+                    Three Phase (400V L1-L2-L3-N-E)
+                  </Label>
+                </div>
+              </RadioGroup>
             </div>
-            
-            <div>
-              <Label htmlFor="unit" className="text-sm font-medium">Unit</Label>
-              <Input
-                id="unit"
-                value={unit}
-                onChange={(e) => setUnit(e.target.value)}
-                placeholder="e.g., Ω, V, A, MΩ, ms"
-                className="bg-elec-dark border-elec-yellow/20 mt-1"
-              />
+          )}
+
+          {/* Standard measurement inputs for other steps */}
+          {step.id !== 'safe-isolation-selection' && !step.id.includes('safe-isolation-') && (
+            <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'} gap-4`}>
+              <div>
+                <Label htmlFor="value" className="text-sm font-medium">Measured Value</Label>
+                <Input
+                  id="value"
+                  type="number"
+                  step="0.001"
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                  placeholder="Enter measured value"
+                  className="bg-elec-dark border-elec-yellow/20 mt-1"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="unit" className="text-sm font-medium">Unit</Label>
+                <Input
+                  id="unit"
+                  value={unit}
+                  onChange={(e) => setUnit(e.target.value)}
+                  placeholder="e.g., Ω, V, A, MΩ, ms"
+                  className="bg-elec-dark border-elec-yellow/20 mt-1"
+                />
+              </div>
             </div>
-          </div>
+          )}
 
           <div>
             <Label htmlFor="notes" className="text-sm font-medium">Notes (Optional)</Label>
             <Textarea
               id="notes"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="Add any additional observations or notes"
+              value={step.id === 'safe-isolation-selection' ? supplyType : notes}
+              onChange={(e) => step.id === 'safe-isolation-selection' ? setSupplyType(e.target.value) : setNotes(e.target.value)}
+              placeholder={step.id === 'safe-isolation-selection' ? 'Supply type will be recorded automatically' : 'Add any additional observations or notes'}
               className="bg-elec-dark border-elec-yellow/20 mt-1"
               rows={3}
+              disabled={step.id === 'safe-isolation-selection'}
             />
           </div>
 
           <div className={`flex ${isMobile ? 'flex-col' : 'flex-wrap'} gap-3`}>
             <Button
               onClick={handleRecordResult}
-              className="bg-green-600 hover:bg-green-700 flex-1"
-              disabled={status === 'completed'}
+              className={`${isSafeIsolationStep ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'} flex-1`}
+              disabled={status === 'completed' || (step.id === 'safe-isolation-selection' && !supplyType)}
             >
               <CheckCircle className="h-4 w-4 mr-2" />
-              Record Pass
+              {isSafeIsolationStep ? 'Confirm Safe Isolation' : 'Record Pass'}
             </Button>
             
             <Button
