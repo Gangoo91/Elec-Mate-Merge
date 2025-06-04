@@ -22,6 +22,13 @@ export interface InstallPlanData {
   protectiveDevice: string;
   earthingSystem: string;
   ze: number;
+  
+  // New specialized fields
+  environmentalConditions?: string;
+  specialRequirements?: string[];
+  hazardousArea?: string;
+  fireRating?: string;
+  mechanicalProtection?: string;
 }
 
 export interface CableRecommendation {
@@ -35,6 +42,7 @@ export interface CableRecommendation {
   cost?: "low" | "medium" | "high";
   availability?: "common" | "limited" | "special-order";
   installationComplexity?: "simple" | "moderate" | "complex";
+  specialConsiderations?: string[];
 }
 
 export interface InstallPlanResult {
@@ -53,11 +61,12 @@ export interface InstallPlanResult {
 }
 
 export interface InstallationSuggestion {
-  type: "cable-upgrade" | "installation-method" | "protective-device" | "cost-optimization" | "safety";
+  type: "cable-upgrade" | "installation-method" | "protective-device" | "cost-optimization" | "safety" | "environmental" | "regulatory";
   title: string;
   description: string;
   impact: "high" | "medium" | "low";
   cost?: "low" | "medium" | "high";
+  regulation?: string;
 }
 
 export interface ComplianceCheck {

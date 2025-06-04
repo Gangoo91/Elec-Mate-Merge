@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { InstallPlanData } from "./types";
-import { Calculator, Info } from "lucide-react";
+import { Calculator, Info, AlertTriangle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface LoadDetailsStepProps {
@@ -14,50 +14,128 @@ interface LoadDetailsStepProps {
 
 const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => {
   const getLoadGuidance = () => {
-    switch (planData.loadType) {
-      case "lighting":
-        return {
-          typical: "100-200W per room",
-          example: "LED downlights: 6W each, halogen: 50W each",
-          defaultPF: 0.9
-        };
-      case "power":
-        return {
-          typical: "2.5kW per socket circuit",
-          example: "13A socket outlets, general power",
-          defaultPF: 0.85
-        };
-      case "heating":
-        return {
-          typical: "1-3kW per room",
-          example: "Electric radiators, underfloor heating",
-          defaultPF: 1.0
-        };
-      case "cooker":
-        return {
-          typical: "6-10kW",
-          example: "Electric oven: 3kW, hob: 7kW",
-          defaultPF: 1.0
-        };
-      case "immersion":
-        return {
-          typical: "3kW",
-          example: "Standard immersion heater",
-          defaultPF: 1.0
-        };
-      case "motor":
-        return {
-          typical: "0.5-5kW",
-          example: "Pumps, fans, compressors",
-          defaultPF: 0.8
-        };
-      default:
-        return {
-          typical: "Varies",
-          example: "Check manufacturer specifications",
-          defaultPF: 0.85
-        };
-    }
+    const guidanceMap = {
+      // Standard loads
+      "lighting": {
+        typical: "100-200W per room",
+        example: "LED downlights: 6W each, halogen: 50W each",
+        defaultPF: 0.9,
+        voltageOptions: ["230", "400"],
+        phaseOptions: ["single", "three"]
+      },
+      "power": {
+        typical: "2.5kW per socket circuit",
+        example: "13A socket outlets, general power",
+        defaultPF: 0.85,
+        voltageOptions: ["230", "400"],
+        phaseOptions: ["single", "three"]
+      },
+      "heating": {
+        typical: "1-3kW per room",
+        example: "Electric radiators, underfloor heating",
+        defaultPF: 1.0,
+        voltageOptions: ["230", "400"],
+        phaseOptions: ["single", "three"]
+      },
+      "cooker": {
+        typical: "6-10kW",
+        example: "Electric oven: 3kW, hob: 7kW",
+        defaultPF: 1.0,
+        voltageOptions: ["230", "400"],
+        phaseOptions: ["single", "three"]
+      },
+      
+      // Motor loads
+      "motor": {
+        typical: "0.5-50kW",
+        example: "Pumps: 1-5kW, Fans: 0.5-10kW, Compressors: 5-50kW",
+        defaultPF: 0.8,
+        voltageOptions: ["230", "400"],
+        phaseOptions: ["single", "three"]
+      },
+      "hvac": {
+        typical: "5-100kW",
+        example: "Split units: 5-15kW, Central systems: 20-100kW",
+        defaultPF: 0.85,
+        voltageOptions: ["400"],
+        phaseOptions: ["three"]
+      },
+      
+      // Industrial loads
+      "welding": {
+        typical: "5-50kW",
+        example: "MIG welders: 5-15kW, Arc welders: 10-50kW",
+        defaultPF: 0.7,
+        voltageOptions: ["400"],
+        phaseOptions: ["three"]
+      },
+      "furnace": {
+        typical: "10-500kW",
+        example: "Small kilns: 10-50kW, Industrial furnaces: 100-500kW",
+        defaultPF: 1.0,
+        voltageOptions: ["400"],
+        phaseOptions: ["three"]
+      },
+      "crane": {
+        typical: "10-200kW",
+        example: "Workshop cranes: 10-50kW, Industrial cranes: 50-200kW",
+        defaultPF: 0.75,
+        voltageOptions: ["400"],
+        phaseOptions: ["three"]
+      },
+      
+      // Specialized installations
+      "ev-charging": {
+        typical: "3.7-350kW",
+        example: "Home chargers: 3.7-22kW, Rapid chargers: 50-350kW",
+        defaultPF: 0.95,
+        voltageOptions: ["230", "400"],
+        phaseOptions: ["single", "three"]
+      },
+      "emergency": {
+        typical: "0.5-5kW",
+        example: "Emergency lighting: 0.5-2kW, Fire alarms: 1-5kW",
+        defaultPF: 0.9,
+        voltageOptions: ["230"],
+        phaseOptions: ["single"]
+      },
+      "it-equipment": {
+        typical: "1-100kW",
+        example: "Server racks: 5-20kW, Data centers: 50-100kW",
+        defaultPF: 0.9,
+        voltageOptions: ["230", "400"],
+        phaseOptions: ["single", "three"]
+      },
+      "medical": {
+        typical: "0.5-50kW",
+        example: "Life support: 0.5-5kW, MRI scanners: 20-50kW",
+        defaultPF: 0.85,
+        voltageOptions: ["230", "400"],
+        phaseOptions: ["single", "three"]
+      },
+      "solar-pv": {
+        typical: "1-1000kW",
+        example: "Domestic: 1-10kW, Commercial: 50-1000kW",
+        defaultPF: 0.95,
+        voltageOptions: ["230", "400"],
+        phaseOptions: ["single", "three"]
+      },
+      "battery-storage": {
+        typical: "5-1000kWh",
+        example: "Home storage: 5-20kWh, Grid storage: 100-1000kWh",
+        defaultPF: 0.95,
+        voltageOptions: ["230", "400"],
+        phaseOptions: ["single", "three"]
+      }
+    };
+
+    return guidanceMap[planData.loadType as keyof typeof guidanceMap] || {
+      typical: "Varies",
+      example: "Check manufacturer specifications",
+      defaultPF: 0.85,
+      voltageOptions: ["230", "400"],
+      phaseOptions: ["single", "three"]
+    };
   };
 
   const guidance = getLoadGuidance();
@@ -73,16 +151,32 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
     return "0";
   };
 
+  const getSpecialConsiderations = () => {
+    const specialConsiderations = {
+      "motor": ["Starting current typically 5-8x full load current", "DOL, Star-Delta, or VFD starting methods may be required"],
+      "hvac": ["Seasonal diversity factors apply", "Consider heat pump COP variations"],
+      "welding": ["High inrush currents and voltage fluctuations", "Dedicated supply may be required"],
+      "ev-charging": ["Smart charging and load balancing considerations", "DNO notification may be required for >7kW"],
+      "medical": ["Isolated supply systems (IT systems) may be required", "Backup power supply essential"],
+      "solar-pv": ["DNO G99 application required", "Export limitation may apply"],
+      "emergency": ["Battery backup duration requirements", "Monthly testing regime required"]
+    };
+
+    return specialConsiderations[planData.loadType as keyof typeof specialConsiderations] || [];
+  };
+
+  const specialConsiderations = getSpecialConsiderations();
+
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-bold mb-2">Load Details</h2>
+        <h2 className="text-2xl font-bold mb-2">Load Details & Specifications</h2>
         <p className="text-muted-foreground mb-6">
           Specify the electrical load requirements for your {planData.loadType} circuit.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
           <div>
             <Label htmlFor="totalLoad" className="text-base font-medium">Total Load (W)</Label>
@@ -103,9 +197,9 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                <SelectItem value="230">230V (Single Phase)</SelectItem>
-                <SelectItem value="400">400V (Three Phase)</SelectItem>
-                <SelectItem value="110">110V (Site Supply)</SelectItem>
+                {guidance.voltageOptions.includes("110") && <SelectItem value="110">110V (Site Supply)</SelectItem>}
+                {guidance.voltageOptions.includes("230") && <SelectItem value="230">230V (Single Phase)</SelectItem>}
+                {guidance.voltageOptions.includes("400") && <SelectItem value="400">400V (Three Phase)</SelectItem>}
               </SelectContent>
             </Select>
           </div>
@@ -117,8 +211,8 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                <SelectItem value="single">Single Phase</SelectItem>
-                <SelectItem value="three">Three Phase</SelectItem>
+                {guidance.phaseOptions.includes("single") && <SelectItem value="single">Single Phase</SelectItem>}
+                {guidance.phaseOptions.includes("three") && <SelectItem value="three">Three Phase</SelectItem>}
               </SelectContent>
             </Select>
           </div>
@@ -144,7 +238,7 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
             <CardHeader>
               <CardTitle className="text-blue-300 flex items-center gap-2">
                 <Info className="h-5 w-5" />
-                Load Guidance
+                Load Guidance - {planData.loadType}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -155,6 +249,20 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
               </div>
             </CardContent>
           </Card>
+
+          {specialConsiderations.length > 0 && (
+            <Alert className="bg-amber-500/10 border-amber-500/30">
+              <AlertTriangle className="h-4 w-4 text-amber-300" />
+              <AlertDescription className="text-amber-200">
+                <strong>Special Considerations:</strong>
+                <ul className="mt-2 space-y-1">
+                  {specialConsiderations.map((consideration, index) => (
+                    <li key={index} className="text-sm">• {consideration}</li>
+                  ))}
+                </ul>
+              </AlertDescription>
+            </Alert>
+          )}
 
           {planData.totalLoad > 0 && (
             <Card className="bg-elec-yellow/10 border-elec-yellow/30">
@@ -179,7 +287,7 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
             <Info className="h-4 w-4 text-amber-300" />
             <AlertDescription className="text-amber-200">
               Consider diversity factors and future expansion when determining total load. 
-              This calculator uses the full load for conservative calculations.
+              For motor loads, include starting current considerations.
             </AlertDescription>
           </Alert>
         </div>
