@@ -1,8 +1,7 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Lightbulb, TrendingUp, Shield, DollarSign, Wrench } from "lucide-react";
+import { Lightbulb, TrendingUp, Shield, DollarSign, Wrench, CheckCircle } from "lucide-react";
 import { InstallationSuggestion } from "./types";
 
 interface InstallationSuggestionsCardProps {
