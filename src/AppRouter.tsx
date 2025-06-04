@@ -1,50 +1,78 @@
 
-import { Route, Routes } from 'react-router-dom';
-import Index from "./pages/Index";
-import Dashboard from "./pages/Dashboard";
-import ApprenticeHub from "./pages/ApprenticeHub";
-import ElectricalHub from "./pages/ElectricalHub";
-import ElectricianTools from "./pages/ElectricianTools";
-import StudyCentre from "./pages/apprentice/ApprenticeStudy";
-import InspectionTesting from "./pages/apprentice/InspectionTesting";
-import InstallPlanner from "./pages/electrician-tools/InstallPlanner";
-import InspectionTestingTools from "./pages/electrician-tools/InspectionTesting";
-import ProjectManagement from "./pages/electrician-tools/ProjectManagement";
-import AITooling from "./pages/electrician-tools/AITooling";
-import Calculations from "./pages/electrician-tools/Calculations";
-import Admin from "./pages/electrician-tools/Admin";
-import EICRReports from "./pages/electrician-tools/EICRReports";
-import Settings from "./pages/Settings";
-import Chat from "./pages/Chat";
-import NotFound from "./pages/NotFound";
+import { Routes, Route, Navigate } from "react-router-dom";
+import LandingPage from "@/pages/LandingPage";
+import Index from "@/pages/Index";
+import SignIn from "@/pages/auth/SignIn";
+import SignUp from "@/pages/auth/SignUp";
+import Layout from "@/components/layout/Layout";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import Dashboard from "@/pages/Dashboard";
+import Profile from "@/pages/Profile";
+import Settings from "@/pages/Settings";
+import Messenger from "@/pages/Messenger";
+import Subscriptions from "@/pages/Subscriptions";
+import PaymentSuccess from "@/pages/PaymentSuccess";
+import NotFound from "@/pages/NotFound";
+import VideoLessons from "@/pages/VideoLessons";
+import Leaderboards from "@/pages/Leaderboards";
+import ElectricianTools from "@/pages/ElectricianTools";
+import ElectricalHub from "@/pages/ElectricalHub";
+import Calculations from "@/pages/electrician-tools/Calculations";
+import Admin from "@/pages/electrician-tools/Admin";
+import ApprenticeRoutes from "@/routes/ApprenticeRoutes";
+import ElectricianHubRoutes from "@/routes/ElectricianHubRoutes";
+import ElectricianRoutes from "@/routes/ElectricianRoutes";
+import ApprenticeChat from "@/pages/apprentice/ApprenticeChat";
+import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
+import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
+import Chat from "@/pages/Chat";
+import NotificationsPage from "@/pages/NotificationsPage";
 
 const AppRouter = () => {
   return (
     <Routes>
-      {/* Main Routes */}
-      <Route path="/" element={<Index />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/electrical-hub" element={<ElectricalHub />} />
-      <Route path="/apprentice" element={<ApprenticeHub />} />
-      <Route path="/settings" element={<Settings />} />
-      <Route path="/chat" element={<Chat />} />
-
-      {/* Apprentice Routes */}
-      <Route path="/apprentice/study" element={<StudyCentre />} />
-      <Route path="/apprentice/inspection-testing" element={<InspectionTesting />} />
-
-      {/* Electrician Tools Routes */}
-      <Route path="/electrician-tools" element={<ElectricianTools />} />
-      <Route path="/electrician-tools/install-planner" element={<InstallPlanner />} />
-      <Route path="/electrician-tools/inspection-testing" element={<InspectionTestingTools />} />
-      <Route path="/electrician-tools/eicr-reports" element={<EICRReports />} />
-      <Route path="/electrician-tools/project-management" element={<ProjectManagement />} />
-      <Route path="/electrician-tools/ai-tooling" element={<AITooling />} />
-      <Route path="/electrician-tools/calculations" element={<Calculations />} />
-      <Route path="/electrician-tools/admin" element={<Admin />} />
-
-      {/* Catch all route for 404 */}
-      <Route path="*" element={<NotFound />} />
+      {/* Public Routes */}
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/index" element={<Index />} />
+      <Route path="/auth/signin" element={<SignIn />} />
+      <Route path="/auth/signup" element={<SignUp />} />
+      
+      {/* Main Protected Routes */}
+      <Route path="/" element={
+        <ProtectedRoute>
+          <Layout />
+        </ProtectedRoute>
+      }>
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="settings" element={<Settings />} />
+        <Route path="messages" element={<Messenger />} />
+        <Route path="notifications" element={<NotificationsPage />} />
+        <Route path="subscriptions" element={<Subscriptions />} />
+        <Route path="payment-success" element={<PaymentSuccess />} />
+        <Route path="*" element={<NotFound />} />
+        
+        {/* Top level routes for shared features */}
+        <Route path="chat" element={<Chat />} />
+        <Route path="mental-health" element={<ApprenticeMentalHealth />} />
+        <Route path="mentor" element={<ApprenticeMentor />} />
+        
+        {/* Video Lessons and Leaderboards */}
+        <Route path="videos" element={<VideoLessons />} />
+        <Route path="leaderboards" element={<Leaderboards />} />
+        
+        {/* Electrician Tools Routes */}
+        <Route path="electrician-tools" element={<ElectricianTools />} />
+        <Route path="electrician-tools/*" element={<ElectricianRoutes />} />
+        
+        {/* Electrical Hub Routes */}
+        <Route path="electrical-hub" element={<ElectricalHub />} />
+        <Route path="electrical-hub/*" element={<ElectricianHubRoutes />} />
+        <Route path="electrician/*" element={<ElectricianHubRoutes />} />
+        
+        {/* Apprentice Routes */}
+        <Route path="apprentice/*" element={<ApprenticeRoutes />} />
+      </Route>
     </Routes>
   );
 };
