@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
-import { BookOpen, Lightbulb, AlertTriangle, CheckCircle, Zap, Shield } from 'lucide-react';
+import { BookOpen, Lightbulb, AlertTriangle, CheckCircle, Zap, Shield, Calculator, FileText } from 'lucide-react';
 import { TestStep } from '@/types/inspection-testing';
 
 interface TestStepEducationalContentProps {
@@ -32,6 +32,12 @@ const TestStepEducationalContent = ({ step, mode }: TestStepEducationalContentPr
                 <li><strong>Legal requirement:</strong> Required by health and safety regulations</li>
                 <li><strong>Professional standard:</strong> Expected by employers and insurance</li>
               </ul>
+            </div>
+            <div className="bg-red-500/10 p-3 rounded border border-red-500/30">
+              <p className="text-xs text-red-200">
+                <strong>GS 38 Compliance:</strong> Always use approved voltage indicators and proving units. 
+                Test leads must be fused and insulated to prevent arc flash incidents.
+              </p>
             </div>
             <Alert className="bg-amber-500/10 border-amber-500/30">
               <AlertTriangle className="h-4 w-4 text-amber-400" />
@@ -67,6 +73,13 @@ const TestStepEducationalContent = ({ step, mode }: TestStepEducationalContentPr
                 Values significantly higher suggest loose connections or cable damage.
               </p>
             </div>
+            <div className="space-y-2">
+              <h4 className="font-medium text-sm">Ring Circuit Testing:</h4>
+              <p className="text-xs text-blue-200">
+                For ring circuits, test end-to-end resistance of line, neutral, and earth conductors separately, 
+                then cross-connect to verify ring continuity and identify any interconnections.
+              </p>
+            </div>
           </div>
         )
       };
@@ -89,6 +102,12 @@ const TestStepEducationalContent = ({ step, mode }: TestStepEducationalContentPr
                 <li><strong>Environmental factors:</strong> Moisture and temperature affect readings</li>
               </ul>
             </div>
+            <div className="bg-green-500/10 p-3 rounded border border-green-500/30">
+              <p className="text-xs text-green-200">
+                <strong>Test Sequence:</strong> Always test Line-Neutral, Line-Earth, and Neutral-Earth. 
+                Each must exceed 1MΩ for SELV/PELV circuits, or 0.5MΩ for other circuits.
+              </p>
+            </div>
             <Alert className="bg-green-500/10 border-green-500/30">
               <CheckCircle className="h-4 w-4 text-green-400" />
               <AlertDescription className="text-green-200 text-xs">
@@ -103,7 +122,7 @@ const TestStepEducationalContent = ({ step, mode }: TestStepEducationalContentPr
     if (id.includes('zs') || id.includes('earth-fault-loop')) {
       return {
         title: 'Earth Fault Loop Impedance - Ensuring Fast Disconnection',
-        icon: Zap,
+        icon: Calculator,
         color: 'yellow',
         content: (
           <div className="space-y-3">
@@ -121,6 +140,14 @@ const TestStepEducationalContent = ({ step, mode }: TestStepEducationalContentPr
               <p className="text-xs text-yellow-200">
                 <strong>Key Formula:</strong> Zs = Ze + (R1+R2) - This relationship helps verify test results and identify problems.
               </p>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-medium text-sm">Professional Testing Methods:</h4>
+              <ul className="list-disc list-inside text-xs text-yellow-200 space-y-1">
+                <li><strong>No-trip testing:</strong> For RCD-protected circuits to avoid nuisance tripping</li>
+                <li><strong>High-current testing:</strong> For non-RCD circuits, provides most accurate results</li>
+                <li><strong>Calculation method:</strong> Ze + (R1+R2) when direct testing isn't practical</li>
+              </ul>
             </div>
           </div>
         )
@@ -143,6 +170,12 @@ const TestStepEducationalContent = ({ step, mode }: TestStepEducationalContentPr
                 <li><strong>5x test:</strong> Must trip within 40ms (fast fault clearance)</li>
                 <li><strong>Test button:</strong> Only checks mechanics, not electrical operation</li>
               </ul>
+            </div>
+            <div className="bg-purple-500/10 p-3 rounded border border-purple-500/30">
+              <p className="text-xs text-purple-200">
+                <strong>RCD Types:</strong> Type AC (general use), Type A (electronic loads), 
+                Type F (higher frequency), Type B (DC faults). Each has specific test requirements.
+              </p>
             </div>
             <Alert className="bg-purple-500/10 border-purple-500/30">
               <Shield className="h-4 w-4 text-purple-400" />
@@ -174,8 +207,42 @@ const TestStepEducationalContent = ({ step, mode }: TestStepEducationalContentPr
             </div>
             <div className="bg-orange-500/10 p-3 rounded border border-orange-500/30">
               <p className="text-xs text-orange-200">
+                <strong>Testing Methods:</strong> Use continuity tester between phase at origin and 
+                switched pole of each outlet. Temporary link may be needed at distribution board.
+              </p>
+            </div>
+            <div className="bg-orange-500/10 p-3 rounded border border-orange-500/30">
+              <p className="text-xs text-orange-200">
                 <strong>Safety Impact:</strong> Incorrect polarity can leave equipment live even when switched "off", 
                 creating a serious shock risk.
+              </p>
+            </div>
+          </div>
+        )
+      };
+    }
+
+    if (id.includes('visual') || id.includes('inspection')) {
+      return {
+        title: 'Visual Inspection - First Line of Safety',
+        icon: FileText,
+        color: 'blue',
+        content: (
+          <div className="space-y-3">
+            <p className="text-sm">Visual inspection identifies obvious defects and non-compliances before electrical testing begins.</p>
+            <div className="space-y-2">
+              <h4 className="font-medium text-sm">Key Inspection Points:</h4>
+              <ul className="list-disc list-inside text-sm space-y-1">
+                <li><strong>Cable installation:</strong> Correct support, protection, and routing</li>
+                <li><strong>Terminations:</strong> Secure connections, no exposed conductors</li>
+                <li><strong>Earthing:</strong> Bonding connections present and accessible</li>
+                <li><strong>Enclosures:</strong> Appropriate IP ratings for environment</li>
+              </ul>
+            </div>
+            <div className="bg-blue-500/10 p-3 rounded border border-blue-500/30">
+              <p className="text-xs text-blue-200">
+                <strong>BS 7671 Section 611:</strong> Visual inspection must be completed before 
+                any testing begins. Many defects are visible without instruments.
               </p>
             </div>
           </div>

@@ -4,594 +4,585 @@ import { TestStep } from '@/types/inspection-testing';
 export const enhancedSafeIsolationSteps: TestStep[] = [
   {
     id: 'safe-isolation-selection',
-    title: 'Supply Type Identification & Selection',
-    description: 'Identify the electrical supply type and select appropriate isolation procedure',
+    title: 'Supply Type Identification and Isolation Planning',
+    description: 'Identify the electrical supply type and plan the appropriate isolation procedure',
     instructions: [
-      'Examine the electrical installation to determine supply type',
-      'Check distribution board labels and circuit breakers',
-      'Identify if supply is single-phase (230V) or three-phase (400V)',
-      'Note the earthing system type (TN-S, TN-C-S, TT, IT)',
-      'Select appropriate isolation procedure based on supply type',
-      'Document supply characteristics for test records'
+      'Examine the electrical installation and identify the supply type (single-phase or three-phase)',
+      'Locate the main isolation point(s) for the circuits to be tested',
+      'Check for multiple supplies or alternative feeds that may require isolation',
+      'Verify the isolation method is appropriate for the installation type',
+      'Ensure all relevant personnel are notified before isolation begins',
+      'Document the supply characteristics and planned isolation sequence'
     ],
-    expectedResult: 'Supply type correctly identified and appropriate isolation procedure selected',
+    expectedResult: 'Supply type identified and isolation procedure planned',
     safetyNotes: [
-      'Never assume supply type - always verify',
-      'Check for multiple supply sources',
-      'Identify any backup or emergency supplies'
+      'Always assume live until proven otherwise',
+      'Check for multiple supplies before beginning isolation',
+      'Notify all affected personnel before isolation'
     ],
-    tools: ['Distribution board schedule', 'Supply documentation', 'Visual inspection'],
+    tools: ['Installation drawings', 'Circuit schedules', 'Voltage indicator'],
     isRequired: true,
-    estimatedTime: 5
+    estimatedTime: 10
   },
   {
     id: 'safe-isolation-single-phase',
     title: 'Single-Phase Safe Isolation Procedure',
     description: 'Complete safe isolation procedure for single-phase electrical supply',
     instructions: [
-      'Locate and identify the correct single-phase circuit breaker',
-      'Inform all affected persons of planned isolation',
-      'Switch OFF the protective device at the distribution board',
-      'Apply lock-off device and isolation tag if required',
-      'Test for voltage between Line and Neutral using approved indicator',
-      'Test for voltage between Line and Earth using approved indicator',
-      'Test for voltage between Neutral and Earth using approved indicator',
-      'Prove voltage indicator on known live source after testing',
-      'Issue permit to work if required by site procedures'
+      'Select appropriate isolation point (main switch, MCB, or fuse)',
+      'Switch OFF or remove the protective device serving the circuit',
+      'Lock OFF the protective device using appropriate lock-off procedure',
+      'Display warning notice indicating work in progress',
+      'Test voltage indicator on known live source to prove it is working',
+      'Test for voltage between Line and Neutral at point of work',
+      'Test for voltage between Line and Earth at point of work',
+      'Test for voltage between Neutral and Earth at point of work',
+      'Re-prove voltage indicator on known live source',
+      'Apply additional precautions if working on stored energy equipment'
     ],
-    expectedResult: 'Single-phase circuit safely isolated and proven dead on all conductors',
+    expectedResult: 'Circuit confirmed dead and secured against re-energization',
     safetyNotes: [
-      'CRITICAL: Prove dead on ALL conductors',
-      'Always prove voltage indicator before AND after use',
-      'Ensure correct PPE for voltage level being tested'
+      'Use only GS 38 compliant voltage indicators',
+      'Always prove your tester before and after use',
+      'Test all conductor combinations',
+      'Maintain lock-off until work is complete'
     ],
-    tools: ['Approved voltage indicator', 'Lock-off devices', 'Proving unit', 'PPE'],
+    tools: ['GS 38 voltage indicator', 'Proving unit', 'Lock-off devices', 'Warning labels'],
     isRequired: true,
-    estimatedTime: 8
+    estimatedTime: 15
   },
   {
     id: 'safe-isolation-three-phase',
     title: 'Three-Phase Safe Isolation Procedure',
     description: 'Complete safe isolation procedure for three-phase electrical supply',
     instructions: [
-      'Locate and identify the correct three-phase circuit breaker or isolator',
-      'Inform all affected persons and coordinate isolation timing',
-      'Switch OFF all three phases simultaneously at isolation point',
-      'Apply lock-off devices to all phases and isolation tag',
-      'Test for voltage L1 to L2, L2 to L3, L3 to L1 (phase to phase)',
-      'Test for voltage L1 to N, L2 to N, L3 to N (phase to neutral)',
-      'Test for voltage L1 to E, L2 to E, L3 to E (phase to earth)',
-      'Test for voltage between Neutral and Earth',
-      'Prove voltage indicator on known live source after testing',
-      'Document isolation on permit to work system'
+      'Identify all three phases (L1, L2, L3) and neutral conductor',
+      'Switch OFF the three-phase protective device or isolator',
+      'Lock OFF all poles of the protective device',
+      'Display warning notices on all relevant points',
+      'Test voltage indicator on known live source to prove it is working',
+      'Test for voltage between each phase: L1-L2, L2-L3, L3-L1',
+      'Test for voltage between each phase and neutral: L1-N, L2-N, L3-N',
+      'Test for voltage between each phase and earth: L1-E, L2-E, L3-E',
+      'Test for voltage between neutral and earth: N-E',
+      'Re-prove voltage indicator on known live source',
+      'Verify no induced voltages from adjacent circuits'
     ],
-    expectedResult: 'Three-phase circuit safely isolated and proven dead on all phases',
+    expectedResult: 'All three phases confirmed dead and secured against re-energization',
     safetyNotes: [
-      'CRITICAL: Test ALL phase combinations for complete isolation',
-      'Ensure proper phase rotation understanding',
-      'Check for neutral supplies and control circuits'
+      'Test all phase combinations - total of 7 tests required',
+      'Watch for induced voltages from parallel circuits',
+      'Ensure all phases are locked off simultaneously',
+      'Be aware of stored energy in capacitors and inductors'
     ],
-    tools: ['Approved voltage indicator', 'Lock-off devices', 'Proving unit', 'Phase rotation meter'],
+    tools: ['GS 38 voltage indicator', 'Proving unit', 'Multi-pole lock-off devices', 'Warning labels'],
     isRequired: true,
-    estimatedTime: 12
+    estimatedTime: 20
   }
 ];
 
 export const enhancedContinuitySteps: TestStep[] = [
   {
-    id: 'continuity-preparation',
-    title: 'Continuity Test Preparation',
-    description: 'Prepare circuits and equipment for comprehensive continuity testing',
+    id: 'continuity-equipment-setup',
+    title: 'Continuity Test Equipment Setup and Calibration',
+    description: 'Prepare and calibrate low resistance ohmmeter for accurate continuity testing',
     instructions: [
-      'Confirm circuit isolation is maintained throughout testing',
-      'Gather and inspect low resistance ohmmeter and test leads',
-      'Zero the instrument by shorting test leads together',
-      'Set appropriate test current (typically 200mA for most circuits)',
-      'Identify all outlet points and equipment on the circuit',
-      'Prepare test record sheets with circuit details',
-      'Plan testing sequence to minimize disruption'
+      'Select appropriate continuity tester with minimum 200mA test current',
+      'Check test equipment calibration certificate is current',
+      'Zero the test leads by connecting them together and noting reading',
+      'Verify test equipment operation with known resistance values',
+      'Set up test leads with appropriate safety ratings',
+      'Ensure test probes are clean and making good contact',
+      'Record equipment details and calibration status'
     ],
-    expectedResult: 'All equipment ready and circuit prepared for systematic continuity testing',
+    expectedResult: 'Test equipment calibrated and ready for accurate measurements',
     safetyNotes: [
-      'Maintain electrical isolation throughout testing',
-      'Use only calibrated test equipment',
-      'Ensure test current is appropriate for cable size'
+      'Ensure circuit is isolated before connecting test equipment',
+      'Use test current of at least 200mA for protective conductor testing',
+      'Account for test lead resistance in final readings'
     ],
-    tools: ['Low resistance ohmmeter', 'Test leads', 'Circuit diagrams', 'Test record sheets'],
+    tools: ['Low resistance ohmmeter', 'Calibrated test leads', 'Test certificates'],
     isRequired: true,
-    estimatedTime: 8
+    estimatedTime: 10
   },
   {
-    id: 'r1-r2-measurement',
-    title: 'R1+R2 Continuity Measurement',
-    description: 'Measure line to CPC resistance (R1+R2) throughout the circuit',
+    id: 'protective-conductor-continuity',
+    title: 'Protective Conductor Continuity Testing',
+    description: 'Test continuity of all protective conductors (earth) throughout the installation',
     instructions: [
-      'Connect test leads to Line and CPC terminals at distribution board',
-      'Test at each socket outlet on the circuit in sequence',
-      'Record resistance reading at each test point',
-      'Test at each fixed equipment connection point',
-      'Note the highest reading obtained for each circuit',
-      'Test all switch positions where applicable',
-      'Compare readings with expected values for cable type and length',
-      'Investigate any unusually high or inconsistent readings'
+      'Connect test leads between main earthing terminal and each earth point',
+      'Test earth continuity at every socket outlet, switch, and fixture',
+      'Record resistance values for each protective conductor',
+      'Pay special attention to connection quality at distribution boards',
+      'Test earth continuity in metallic conduit and trunking systems',
+      'Verify supplementary bonding connections where required',
+      'Compare readings with expected values based on cable length and CSA',
+      'Investigate any readings significantly higher than expected'
     ],
-    expectedResult: 'Complete R1+R2 values recorded for all points on circuit',
+    expectedResult: 'All protective conductors confirmed continuous with acceptable resistance',
     safetyNotes: [
-      'Ensure good electrical contact at all test points',
-      'Be aware of parallel paths that may affect readings',
-      'Check connections are secure before energizing'
+      'High resistance readings indicate poor connections',
+      'Broken protective conductors create serious safety hazards',
+      'Re-test any suspect connections after maintenance'
     ],
-    tools: ['Low resistance ohmmeter', 'Test probes', 'Socket adapters', 'Record sheets'],
+    tools: ['Low resistance ohmmeter', 'Circuit schedules', 'Cable data sheets'],
     isRequired: true,
-    estimatedTime: 15
-  },
-  {
-    id: 'ring-circuit-continuity',
-    title: 'Ring Final Circuit Continuity Testing',
-    description: 'Specialized testing procedure for ring final circuits to verify integrity',
-    instructions: [
-      'Disconnect ring circuit at distribution board (L1, L2, N1, N2, E1, E2)',
-      'Measure resistance between L1 and L2 (should be circuit resistance)',
-      'Measure resistance between N1 and N2 (should be similar to line)',
-      'Measure resistance between E1 and E2 (should be similar to line)',
-      'Cross-connect: join L1 to N2 and N1 to L2 at distribution board',
-      'Test between Line and Neutral at each socket - readings should be similar',
-      'Cross-connect: join L1 to E2 and E1 to L2 at distribution board',
-      'Test between Line and Earth at each socket - readings should be similar',
-      'Verify no interconnection between Line and Neutral conductors'
-    ],
-    expectedResult: 'Ring circuit integrity confirmed with consistent readings around the ring',
-    safetyNotes: [
-      'Any break in ring will show as infinite resistance',
-      'Interconnections between conductors indicate serious fault',
-      'Spur circuits will show different resistance values'
-    ],
-    tools: ['Low resistance ohmmeter', 'Test leads', 'Socket tester'],
-    isRequired: false,
     estimatedTime: 25
   },
   {
-    id: 'bonding-conductor-continuity',
-    title: 'Equipotential Bonding Continuity',
-    description: 'Test continuity of main and supplementary bonding conductors',
+    id: 'ring-circuit-continuity',
+    title: 'Ring Circuit Continuity Testing (R1+R2 Method)',
+    description: 'Comprehensive testing of ring final circuits using the R1+R2 method',
     instructions: [
-      'Test main equipotential bonding from MET to gas service pipe',
-      'Test main equipotential bonding from MET to water service pipe',
-      'Test main equipotential bonding to structural steelwork if applicable',
-      'Test supplementary bonding in bathrooms and special locations',
-      'Measure bonding conductor resistance - should be very low',
-      'Check bonding connections are mechanically secure',
-      'Verify bonding conductor sizes comply with BS 7671 requirements',
-      'Test continuity to exposed metalwork in special locations'
+      'Identify ring circuit at distribution board - locate both ends',
+      'Disconnect line, neutral, and earth conductors at distribution board',
+      'Measure end-to-end resistance of line conductors (both legs)',
+      'Measure end-to-end resistance of neutral conductors (both legs)',
+      'Measure end-to-end resistance of earth conductors (both legs)',
+      'Cross-connect line and neutral at one end of ring',
+      'Test resistance between line and neutral at each socket outlet',
+      'Record R1+R2 values - should be approximately same at each point',
+      'Check for interconnections between rings',
+      'Verify no spurious connections exist',
+      'Calculate expected R1+R2 value: (R1+R2)/4',
+      'Reconnect all conductors ensuring correct polarity'
     ],
-    expectedResult: 'All bonding conductors provide low resistance path to main earthing terminal',
+    expectedResult: 'Ring circuit continuity confirmed with uniform R1+R2 values throughout',
     safetyNotes: [
-      'Ensure bonding clamps are clean and tight',
-      'Check for corrosion at connection points',
-      'Verify services are actually conductive before testing'
+      'Ensure ring is completely isolated before testing',
+      'Variation in R1+R2 readings indicates ring defects',
+      'Check all connections are secure before re-energizing'
     ],
-    tools: ['Low resistance ohmmeter', 'Test leads', 'BS 7671 tables'],
+    tools: ['Low resistance ohmmeter', 'Circuit identification equipment', 'Terminal blocks'],
     isRequired: true,
-    estimatedTime: 12
+    estimatedTime: 30
+  },
+  {
+    id: 'bonding-conductor-continuity',
+    title: 'Main and Supplementary Bonding Continuity',
+    description: 'Test continuity of main equipotential bonding and supplementary bonding conductors',
+    instructions: [
+      'Locate main equipotential bonding conductor at consumer unit/distribution board',
+      'Test continuity between main earthing terminal and gas meter',
+      'Test continuity between main earthing terminal and water service pipe',
+      'Test continuity between main earthing terminal and oil service pipe (if present)',
+      'Test continuity between main earthing terminal and structural steelwork',
+      'In bathrooms, test supplementary bonding between metal parts',
+      'Test bonding of exposed-conductive-parts to protective conductors',
+      'Verify bonding conductor sizes meet BS 7671 requirements',
+      'Check bonding connections are mechanically and electrically sound',
+      'Record all bonding conductor resistance values'
+    ],
+    expectedResult: 'All bonding conductors confirmed continuous with appropriate resistance values',
+    safetyNotes: [
+      'Poor bonding can create dangerous potential differences',
+      'Supplementary bonding may be omitted if conditions are met',
+      'Gas and water companies have specific bonding requirements'
+    ],
+    tools: ['Low resistance ohmmeter', 'BS 7671', 'Bonding conductor charts'],
+    isRequired: true,
+    estimatedTime: 20
   }
 ];
 
 export const enhancedInsulationSteps: TestStep[] = [
   {
     id: 'insulation-preparation',
-    title: 'Insulation Resistance Test Preparation',
-    description: 'Prepare installation for safe insulation resistance testing',
+    title: 'Equipment Preparation for Insulation Resistance Testing',
+    description: 'Systematically prepare installation for safe insulation resistance testing',
     instructions: [
-      'Identify and list all electronic equipment and sensitive devices',
-      'Disconnect or isolate electronic equipment, computers, and LED lights',
-      'Remove or bridge surge protective devices (SPDs) temporarily',
-      'Disconnect electronic switches, dimmers, and timer controls',
-      'Remove pilot lights and indicator lamps',
-      'Ensure all switches and circuit breakers are in ON position',
-      'Document all disconnections for reconnection after testing',
-      'Verify test voltage selection based on circuit nominal voltage'
+      'Identify and disconnect all electronic equipment and controls',
+      'Remove or isolate surge protection devices (SPDs)',
+      'Switch OFF all electronic switches and dimmers',
+      'Disconnect or bypass any equipment with semiconductor components',
+      'Remove indicator lamps and pilot lights where practical',
+      'Ensure all switches in circuits are in ON position',
+      'Link line and neutral conductors at distribution board if testing L+N to E',
+      'Document all disconnections for later reconnection',
+      'Verify test voltage (500V DC for most installations)',
+      'Check insulation tester calibration and operation'
     ],
-    expectedResult: 'Installation prepared to prevent equipment damage during high voltage testing',
+    expectedResult: 'Installation prepared for safe insulation resistance testing without equipment damage',
     safetyNotes: [
-      'Label all disconnected items clearly for reconnection',
-      'Take photographs if necessary to aid correct reconnection',
-      'Warn occupants about temporary equipment disconnection'
+      'Electronic equipment can be damaged by test voltage',
+      'SPDs will conduct during insulation testing',
+      'Always document what you disconnect'
     ],
-    tools: ['Tools for disconnection', 'Labels', 'Camera', 'Warning notices'],
+    tools: ['Insulation resistance tester', 'Circuit diagrams', 'Equipment manuals'],
     isRequired: true,
     estimatedTime: 20
   },
   {
-    id: 'insulation-line-neutral',
-    title: 'Line to Neutral Insulation Testing',
-    description: 'Test insulation resistance between line and neutral conductors',
+    id: 'insulation-resistance-testing',
+    title: 'Comprehensive Insulation Resistance Testing',
+    description: 'Systematic testing of insulation resistance between all conductor combinations',
     instructions: [
-      'Set insulation tester to 500V DC for circuits up to 500V nominal',
-      'Connect test leads to Line and Neutral at distribution board',
-      'Ensure all switches in circuit are closed (ON position)',
-      'Apply test voltage and maintain for minimum 1 minute',
-      'Read and record insulation resistance value in MΩ',
-      'Test should show minimum 1MΩ for new installations',
-      'Investigate any readings below 1MΩ before proceeding',
-      'Test each circuit separately for accurate results'
+      'Set insulation tester to 500V DC (or 250V for SELV circuits)',
+      'Test insulation resistance between Line and Neutral conductors',
+      'Test insulation resistance between Line and Earth conductors',
+      'Test insulation resistance between Neutral and Earth conductors',
+      'For three-phase installations, test all combinations: L1-L2, L2-L3, L3-L1',
+      'Test each combination for minimum 1 minute or until stable reading',
+      'Record all readings ensuring they meet minimum requirements',
+      'Test each circuit separately for fault location if required',
+      'Pay attention to environmental conditions affecting readings',
+      'Re-test any circuits showing marginal readings'
     ],
-    expectedResult: 'Insulation resistance ≥1MΩ between line and neutral conductors',
+    expectedResult: 'All insulation resistance values exceed minimum requirements (≥1MΩ for most circuits)',
     safetyNotes: [
-      'HIGH VOLTAGE WARNING: 500V DC test voltage present',
-      'Ensure test area is clear of personnel during testing',
-      'Do not touch conductors during or immediately after testing'
+      'Minimum 1MΩ required for circuits up to 500V',
+      'SELV/PELV circuits may have different requirements',
+      'Moisture can significantly reduce insulation resistance'
     ],
-    tools: ['Insulation resistance tester', 'Test leads', 'Timer', 'Warning signs'],
+    tools: ['500V insulation resistance tester', 'Test record sheets', 'BS 7671 Table 61'],
     isRequired: true,
-    estimatedTime: 10
+    estimatedTime: 25
   },
   {
-    id: 'insulation-line-earth',
-    title: 'Line to Earth Insulation Testing',
-    description: 'Test insulation resistance between line conductors and earth',
+    id: 'insulation-fault-investigation',
+    title: 'Insulation Fault Investigation and Resolution',
+    description: 'Investigate and resolve any insulation resistance failures found during testing',
     instructions: [
-      'Maintain 500V DC test voltage setting for standard circuits',
-      'Connect test leads to Line and Earth terminals',
-      'For comprehensive testing, disconnect neutral-earth link temporarily',
-      'Apply test voltage and maintain for minimum 1 minute',
-      'Read and record insulation resistance value in MΩ',
-      'For three-phase circuits, test each line conductor separately',
-      'Minimum acceptable value is 1MΩ for installations up to 500V',
-      'Restore neutral-earth link immediately after testing'
+      'Identify circuits with insulation resistance below minimum values',
+      'Isolate each circuit individually to locate the fault',
+      'Systematically disconnect sections of circuit to narrow down fault location',
+      'Check for moisture ingress in external accessories and junction boxes',
+      'Inspect cable runs for damage, particularly at bends and entries',
+      'Examine terminations for tracking or carbonization',
+      'Test individual cables if fault cannot be located',
+      'Replace or repair faulty cables/equipment as necessary',
+      'Re-test after repairs to confirm compliance',
+      'Document all faults found and remedial action taken'
     ],
-    expectedResult: 'Insulation resistance ≥1MΩ between line conductors and earth',
+    expectedResult: 'All insulation faults located and rectified, with compliant test results achieved',
     safetyNotes: [
-      'CRITICAL: Restore neutral-earth link after testing',
-      'Installation is unsafe without proper neutral-earth connection',
-      'Test each phase separately in three-phase systems'
+      'Low insulation resistance indicates potential shock hazard',
+      'Faults may worsen over time if not addressed',
+      'Environmental factors can cause temporary failures'
     ],
-    tools: ['Insulation resistance tester', 'Test leads', 'Isolation tools'],
+    tools: ['Insulation tester', 'Cable locator', 'Inspection tools', 'Replacement materials'],
     isRequired: true,
-    estimatedTime: 12
-  },
-  {
-    id: 'insulation-neutral-earth',
-    title: 'Neutral to Earth Insulation Testing',
-    description: 'Test insulation resistance between neutral and earth conductors',
-    instructions: [
-      'Disconnect neutral-earth link at main distribution board',
-      'Connect test leads to Neutral and Earth terminals',
-      'Apply 500V DC test voltage for minimum 1 minute',
-      'Read and record insulation resistance value in MΩ',
-      'Minimum acceptable value is 1MΩ for standard installations',
-      'This test verifies neutral conductor insulation integrity',
-      'IMMEDIATELY reconnect neutral-earth link after testing',
-      'Verify neutral-earth link connection is secure'
-    ],
-    expectedResult: 'Insulation resistance ≥1MΩ between neutral and earth, neutral-earth link restored',
-    safetyNotes: [
-      'CRITICAL SAFETY: Neutral-earth link MUST be restored',
-      'Installation will not be safe without neutral-earth connection',
-      'Double-check link is properly reconnected before re-energizing'
-    ],
-    tools: ['Insulation resistance tester', 'Test leads', 'Connection tools'],
-    isRequired: true,
-    estimatedTime: 8
-  },
-  {
-    id: 'equipment-reconnection',
-    title: 'Equipment Reconnection and Verification',
-    description: 'Systematically reconnect all equipment and verify correct operation',
-    instructions: [
-      'Reconnect all surge protective devices (SPDs) first',
-      'Restore electronic switches and dimmer controls',
-      'Reconnect electronic equipment and computers',
-      'Reinstall pilot lights and indicator lamps',
-      'Restore LED lighting and electronic ballasts',
-      'Check all connections are secure and correct',
-      'Test basic operation of reconnected equipment',
-      'Update test documentation with final installation configuration'
-    ],
-    expectedResult: 'All equipment correctly reconnected and operating normally',
-    safetyNotes: [
-      'Verify correct reconnection using photos/labels if needed',
-      'Test equipment operation before completing certification',
-      'Report any equipment damage that may have occurred'
-    ],
-    tools: ['Installation tools', 'Equipment manuals', 'Test equipment', 'Documentation'],
-    isRequired: true,
-    estimatedTime: 15
+    estimatedTime: 30
   }
 ];
 
 export const enhancedZsTestingSteps: TestStep[] = [
   {
-    id: 'zs-preparation',
-    title: 'Earth Fault Loop Impedance Test Preparation',
-    description: 'Prepare for accurate Zs testing with proper equipment setup',
-    instructions: [
-      'Ensure circuits are energized and operating normally',
-      'Check earth fault loop impedance tester calibration',
-      'Verify tester is suitable for installation earthing system',
-      'Identify protective device types and ratings for each circuit',
-      'Note any RCD protection that may trip during testing',
-      'Prepare comparison tables from BS 7671 for maximum Zs values',
-      'Plan testing sequence starting from distribution board outwards',
-      'Set up "no-trip" testing mode if RCDs are present'
-    ],
-    expectedResult: 'Test equipment ready and testing strategy planned for accurate Zs measurements',
-    safetyNotes: [
-      'Live testing - maintain appropriate safety distances',
-      'Warn occupants that brief power interruptions may occur',
-      'Ensure RCD testing won\'t affect life safety systems'
-    ],
-    tools: ['Earth fault loop impedance tester', 'BS 7671 tables', 'Circuit schedules'],
-    isRequired: true,
-    estimatedTime: 10
-  },
-  {
-    id: 'ze-measurement',
+    id: 'external-earthing-measurement',
     title: 'External Earth Fault Loop Impedance (Ze) Measurement',
-    description: 'Measure Ze at the origin of the electrical installation',
+    description: 'Measure the external earth fault loop impedance at the origin of the installation',
     instructions: [
-      'Test at the main distribution board incoming terminals',
-      'Disconnect installation earthing conductor temporarily if required',
-      'Connect Zs tester between incoming line and earth terminal',
-      'Take measurement with all final circuits disconnected',
-      'Record Ze value - this is the external earth fault loop impedance',
-      'For TN-S systems, typical Ze values are 0.35Ω or less',
-      'For TN-C-S systems, typical Ze values are 0.35Ω or less',
-      'Compare result with declared value from electricity supplier'
+      'Ensure main switch is ON and installation is energized',
+      'Connect earth fault loop impedance tester between incoming line and earth',
+      'Select appropriate test method (high current for non-RCD supplies)',
+      'Record Ze value at main earthing terminal',
+      'Compare reading with distribution company data if available',
+      'Note supply type (TN-S, TN-C-S, TT) and earthing arrangement',
+      'Check for parallel earth paths that might affect reading',
+      'Verify earth electrode resistance for TT systems',
+      'Record environmental conditions that may affect measurement',
+      'Document maximum permissible Ze for each protective device type'
     ],
-    expectedResult: 'Ze measured and recorded - forms basis for all circuit Zs calculations',
+    expectedResult: 'Ze measurement completed and recorded for installation design verification',
     safetyNotes: [
-      'Restore earth connections immediately after testing',
-      'High Ze values may indicate supply earth fault',
-      'Contact electricity supplier if Ze exceeds declared value'
+      'High Ze values may prevent protective device operation',
+      'TT systems typically have higher Ze values',
+      'Parallel earth paths can give misleadingly low readings'
     ],
-    tools: ['Earth fault loop impedance tester', 'Test leads', 'Supply documentation'],
+    tools: ['Earth fault loop impedance tester', 'Installation data', 'BS 7671 tables'],
     isRequired: true,
-    estimatedTime: 8
+    estimatedTime: 15
   },
   {
     id: 'circuit-zs-measurement',
     title: 'Circuit Earth Fault Loop Impedance Testing',
-    description: 'Measure Zs at the furthest point of each final circuit',
+    description: 'Test earth fault loop impedance at every point in each circuit',
     instructions: [
-      'Test at the furthest socket outlet on each final circuit',
-      'Connect Zs tester between line and earth terminals',
-      'Use "no-trip" mode if RCD protection is present',
-      'Take measurement and record Zs value in ohms',
-      'Compare with maximum permissible Zs for protective device',
-      'Consider temperature correction factors if required',
-      'Test both sockets on double socket outlets',
-      'Investigate any values approaching or exceeding limits'
+      'Select appropriate test method based on circuit protection type',
+      'For RCD-protected circuits, use no-trip test method',
+      'For non-RCD circuits, use high-current test for accuracy',
+      'Test Zs at the furthest point of each circuit (highest impedance)',
+      'Test at every socket outlet on ring circuits',
+      'Record all Zs measurements with location identification',
+      'Compare results with maximum permitted values for protective device',
+      'Note any readings approaching or exceeding limits',
+      'Account for temperature effects on cable resistance',
+      'Calculate expected Zs using Ze + (R1+R2) for verification'
     ],
-    expectedResult: 'All circuit Zs values within BS 7671 limits for installed protective devices',
+    expectedResult: 'All circuit Zs values within permitted limits for protective device operation',
     safetyNotes: [
-      'Some testers may cause RCD operation despite "no-trip" mode',
-      'Reset any RCDs that operate during testing',
-      'High Zs readings indicate poor earth fault path'
+      'High Zs prevents protective device operation in fault conditions',
+      'No-trip testing may give slightly higher readings',
+      'Temperature correction may be required for final assessment'
     ],
-    tools: ['Earth fault loop impedance tester', 'Socket adaptors', 'BS 7671 maximum Zs tables'],
+    tools: ['Earth fault loop impedance tester', 'Circuit schedules', 'Protective device data'],
     isRequired: true,
-    estimatedTime: 20
+    estimatedTime: 35
   },
   {
-    id: 'zs-verification',
-    title: 'Zs Results Analysis and Verification',
-    description: 'Analyze Zs test results and verify compliance with BS 7671',
+    id: 'zs-verification-calculation',
+    title: 'Zs Verification by Calculation Method',
+    description: 'Verify earth fault loop impedance measurements using calculation method',
     instructions: [
-      'Calculate expected Zs from Ze + (R1+R2) measurements',
-      'Compare calculated values with measured Zs results',
-      'Check all measured values against BS 7671 maximum limits',
-      'Apply temperature correction factors where necessary',
+      'Calculate expected Zs using formula: Zs = Ze + (R1+R2)',
+      'Use measured Ze value from external earth fault loop test',
+      'Use measured R1+R2 values from continuity testing',
+      'Compare calculated values with measured Zs readings',
       'Investigate significant discrepancies between calculated and measured values',
-      'Verify protective device characteristics match installation requirements',
-      'Document any circuits requiring remedial work',
-      'Confirm compliance with automatic disconnection requirements'
+      'Apply temperature correction factors where necessary',
+      'Consider parallel earth paths in calculation if present',
+      'Verify all calculations against BS 7671 maximum values',
+      'Document calculation method and results',
+      'Use calculation method where direct measurement impractical'
     ],
-    expectedResult: 'All Zs measurements verified compliant with BS 7671 disconnection times',
+    expectedResult: 'Calculated Zs values verify measured results and confirm protective device compliance',
     safetyNotes: [
-      'High Zs values compromise automatic disconnection of supply',
-      'Non-compliant circuits must be made safe before use',
-      'Consider RCD protection for circuits with high Zs values'
+      'Calculation method may be less accurate than measurement',
+      'Parallel paths can cause discrepancies',
+      'Temperature effects must be considered'
     ],
-    tools: ['Calculator', 'BS 7671 tables', 'Temperature correction tables'],
+    tools: ['Calculator', 'BS 7671 tables', 'Cable data', 'Test records'],
     isRequired: true,
     estimatedTime: 15
+  },
+  {
+    id: 'protective-device-verification',
+    title: 'Protective Device Operation Verification',
+    description: 'Verify that all protective devices will operate correctly based on Zs measurements',
+    instructions: [
+      'Identify protective device type and rating for each circuit',
+      'Look up maximum Zs values from BS 7671 for each device',
+      'Compare measured/calculated Zs with maximum permitted values',
+      'Consider disconnection time requirements (0.4s or 5s)',
+      'Apply temperature correction factors where required',
+      'Check special requirements for socket outlet circuits',
+      'Verify RCD operation where earth fault protection is provided by RCD',
+      'Document any circuits where Zs exceeds permitted values',
+      'Recommend remedial action for non-compliant circuits',
+      'Complete protective device compliance summary'
+    ],
+    expectedResult: 'All protective devices verified to operate within required disconnection times',
+    safetyNotes: [
+      'Non-compliant Zs values create serious safety hazards',
+      'Socket circuits require faster disconnection (0.4s)',
+      'RCDs provide backup protection but Zs must still be considered'
+    ],
+    tools: ['BS 7671 Appendix 3', 'Protective device data', 'Test certificates'],
+    isRequired: true,
+    estimatedTime: 20
   }
 ];
 
 export const enhancedRCDTestingSteps: TestStep[] = [
   {
-    id: 'rcd-identification',
-    title: 'RCD Identification and Test Planning',
-    description: 'Identify all RCD devices and plan comprehensive testing sequence',
+    id: 'rcd-identification-preparation',
+    title: 'RCD Identification and Test Preparation',
+    description: 'Identify all RCDs in the installation and prepare for comprehensive testing',
     instructions: [
-      'Locate all RCD devices in the installation (main switch, RCBOs, socket RCDs)',
-      'Identify RCD ratings (30mA, 100mA, 300mA) and types (AC, A, B)',
-      'Check RCD test button operation - should trip when pressed',
-      'Reset RCD and verify normal operation resumes',
-      'Plan testing sequence to minimize disruption to occupants',
-      'Identify circuits protected by each RCD device',
-      'Check for any equipment sensitive to power interruption',
-      'Prepare test record sheets for each RCD device'
+      'Locate all RCDs in the installation (main and circuit level)',
+      'Identify RCD type (Type AC, A, F, or B) from marking or documentation',
+      'Record RCD rated residual operating current (IΔn) - typically 30mA',
+      'Note rated voltage and number of poles for each RCD',
+      'Check RCD is energized and reset if necessary',
+      'Verify test equipment is suitable for RCD type and rating',
+      'Ensure test will not cause loss of supply to essential services',
+      'Select appropriate test point (usually furthest socket on protected circuit)',
+      'Connect RCD tester ensuring correct polarity and phase selection',
+      'Record ambient temperature and environmental conditions'
     ],
-    expectedResult: 'All RCD devices identified with ratings and types recorded for systematic testing',
+    expectedResult: 'All RCDs identified and test equipment correctly connected',
     safetyNotes: [
-      'Test button only checks mechanical operation, not electrical sensitivity',
-      'Warn occupants of temporary power interruptions during testing',
-      'Consider backup arrangements for critical equipment'
+      'RCD testing will cause temporary loss of supply',
+      'Notify occupants before testing begins',
+      'Check for equipment that should not be switched off'
     ],
-    tools: ['RCD tester', 'Circuit identification equipment', 'Test record sheets'],
-    isRequired: true,
-    estimatedTime: 12
-  },
-  {
-    id: 'rcd-sensitivity-testing',
-    title: 'RCD Electrical Sensitivity Testing',
-    description: 'Test RCD electrical operation at various current levels',
-    instructions: [
-      'Connect RCD tester to a socket on RCD-protected circuit',
-      'Test at 50% of rated tripping current (15mA for 30mA RCD)',
-      'RCD should NOT trip at 50% rated current',
-      'Test at 100% of rated tripping current (30mA for 30mA RCD)',
-      'RCD MUST trip within 300ms at rated current',
-      'Test at 150% of rated current - should trip faster',
-      'Record actual tripping current and time for each test',
-      'Repeat test after RCD has been reset and allowed to settle'
-    ],
-    expectedResult: 'RCD operates correctly: no trip at 50%, trip within 300ms at 100% rated current',
-    safetyNotes: [
-      'RCD protects against earth leakage and electrocution',
-      'Non-operation or slow operation compromises safety',
-      'Replace RCDs that fail to meet performance requirements'
-    ],
-    tools: ['RCD tester', 'Stopwatch', 'Test adaptors'],
+    tools: ['RCD tester', 'Circuit charts', 'RCD identification labels'],
     isRequired: true,
     estimatedTime: 15
   },
   {
-    id: 'rcd-fast-trip-testing',
-    title: 'RCD Fast Trip Testing (5x Rated Current)',
-    description: 'Test RCD operation at high fault current for fast disconnection',
+    id: 'rcd-operation-testing',
+    title: 'RCD Electrical Operation Testing',
+    description: 'Perform comprehensive electrical testing of RCD operation characteristics',
     instructions: [
-      'Set RCD tester to 5x rated current (150mA for 30mA RCD)',
-      'Apply test current and measure trip time',
-      'RCD MUST trip within 40ms at 5x rated current',
-      'This simulates a serious earth fault requiring immediate disconnection',
-      'Record actual trip time achieved',
-      'Reset RCD and verify normal operation',
-      'Test both positive and negative half-cycles where applicable',
-      'Document any RCDs with trip times exceeding 40ms'
+      'Test at 50% of rated current (½ × IΔn) - RCD should NOT operate',
+      'Test at 100% of rated current (1 × IΔn) - RCD must operate within 300ms',
+      'Test at 500% of rated current (5 × IΔn) - RCD must operate within 40ms',
+      'Test both positive and negative half cycles if RCD tester permits',
+      'For Type A RCDs, test with pulsating DC current if equipment available',
+      'Record all trip times and verify compliance with standards',
+      'Test RCD mechanical test button to verify operation',
+      'Reset RCD after each test and verify normal operation',
+      'Repeat tests if readings are marginal or inconsistent',
+      'Test ramp function if available to determine exact trip current'
     ],
-    expectedResult: 'RCD trips within 40ms at 5x rated current, providing fast fault clearance',
+    expectedResult: 'All RCD tests within acceptable limits proving correct operation',
     safetyNotes: [
-      'Fast trip ensures safety in high earth fault current conditions',
-      'Slow operation at high currents indicates RCD deterioration',
-      'Consider replacement if trip times consistently exceed limits'
+      'RCD must trip within specified times for effective protection',
+      'Mechanical test button only tests mechanics, not electrical operation',
+      'Failed RCD tests indicate life safety hazard'
     ],
-    tools: ['RCD tester', 'High-resolution timer', 'Test record sheets'],
+    tools: ['RCD tester with multiple test functions', 'Test record sheets', 'Stopwatch'],
     isRequired: true,
-    estimatedTime: 10
+    estimatedTime: 20
   },
   {
-    id: 'rcd-ramp-testing',
-    title: 'RCD Ramp Testing (Advanced)',
-    description: 'Perform ramp test to determine exact RCD tripping current',
+    id: 'rcd-discrimination-testing',
+    title: 'RCD Discrimination and Selectivity Testing',
+    description: 'Test RCD discrimination to ensure correct operation in installations with multiple RCDs',
     instructions: [
-      'Set RCD tester to ramp test mode',
-      'Gradually increase test current from zero',
-      'Record the exact current at which RCD trips',
-      'Tripping current should be between 50% and 100% of rated value',
-      'For 30mA RCD, trip current should be 15-30mA',
-      'Reset RCD and repeat test for consistency',
-      'Document actual tripping current for maintenance records',
-      'Compare results with manufacturer specifications'
+      'Identify upstream and downstream RCDs in the installation',
+      'Test downstream RCD first at standard test currents',
+      'Verify upstream RCD does not trip during downstream RCD testing',
+      'Test at discrimination current level if RCDs are time-delayed type',
+      'Check manufacturer specifications for discrimination requirements',
+      'Test unwanted tripping under normal load conditions',
+      'Verify RCD coordination with other protective devices',
+      'Test for nuisance tripping from harmonic currents if applicable',
+      'Document discrimination test results and any issues found',
+      'Recommend changes if discrimination is not achieved'
     ],
-    expectedResult: 'RCD trips consistently within 50-100% of rated current range',
+    expectedResult: 'RCD discrimination verified ensuring selective operation',
     safetyNotes: [
-      'Ramp testing provides detailed RCD performance data',
-      'Consistent results indicate reliable RCD operation',
-      'Variable trip currents may indicate RCD deterioration'
+      'Poor discrimination can cause unnecessary supply interruptions',
+      'Time-delayed RCDs require special testing procedures',
+      'Harmonic currents can cause nuisance tripping'
     ],
-    tools: ['Advanced RCD tester with ramp function', 'Test record sheets'],
-    isRequired: false,
-    estimatedTime: 8
+    tools: ['RCD tester', 'Installation schematic', 'RCD coordination charts'],
+    isRequired: true,
+    estimatedTime: 25
+  },
+  {
+    id: 'rcd-functionality-verification',
+    title: 'RCD Functionality and Reset Verification',
+    description: 'Verify complete RCD functionality including reset capability and indication',
+    instructions: [
+      'Test RCD mechanical test button monthly testing reminder',
+      'Verify RCD reset mechanism operates smoothly without binding',
+      'Check RCD trip indication (flag or window) operates correctly',
+      'Test RCD under various load conditions within protected circuits',
+      'Verify RCD contacts open and close correctly with clean break',
+      'Check for any signs of overheating or deterioration',
+      'Test RCD operation with realistic earth fault simulation',
+      'Verify protection extends to all intended circuits',
+      'Check RCD labeling is clear and correct',
+      'Document any maintenance requirements or recommendations'
+    ],
+    expectedResult: 'RCD functionality fully verified with normal operation confirmed',
+    safetyNotes: [
+      'RCD must be tested regularly to ensure continued protection',
+      'Any signs of deterioration require immediate attention',
+      'Poor contacts can cause fire risk'
+    ],
+    tools: ['RCD tester', 'Visual inspection tools', 'Load testing equipment'],
+    isRequired: true,
+    estimatedTime: 15
   }
 ];
 
 export const enhancedPolaritySteps: TestStep[] = [
   {
-    id: 'polarity-planning',
-    title: 'Polarity Test Planning and Preparation',
-    description: 'Plan systematic polarity testing to verify correct conductor connections',
+    id: 'polarity-test-preparation',
+    title: 'Polarity Test Setup and Circuit Preparation',
+    description: 'Prepare installation for comprehensive polarity testing of all circuits and devices',
     instructions: [
-      'Identify all single-pole protective devices and switches',
-      'Locate all Edison screw lampholders in the installation',
-      'Plan to test all socket outlets for correct polarity',
-      'Prepare continuity tester and socket testing equipment',
-      'Ensure circuits are isolated before testing connections',
-      'Review installation drawings for switch arrangements',
-      'Identify any special circuits requiring polarity verification',
-      'Prepare polarity test record sheets'
+      'Ensure all circuits are isolated and proven dead',
+      'Identify all single-pole switching devices in the installation',
+      'Locate all Edison screw lampholders requiring polarity verification',
+      'Prepare temporary links at distribution board for polarity testing',
+      'Set up continuity tester with appropriate test leads',
+      'Create systematic testing plan to cover all circuits',
+      'Document circuit identification and switching arrangements',
+      'Verify test equipment operation before commencing tests',
+      'Ensure all switches are in OFF position before testing',
+      'Prepare polarity test record sheets for documentation'
     ],
-    expectedResult: 'Comprehensive polarity testing plan covering all critical connection points',
+    expectedResult: 'Installation prepared for systematic polarity testing',
     safetyNotes: [
-      'Test with circuits isolated for safety',
-      'Incorrect polarity can cause shock even when switched off',
-      'Pay special attention to bathroom and outdoor circuits'
+      'Circuits must be isolated before polarity testing',
+      'Incorrect polarity creates serious safety hazards',
+      'Systematic approach prevents missing critical points'
     ],
-    tools: ['Continuity tester', 'Socket tester', 'Test leads', 'Circuit diagrams'],
+    tools: ['Continuity tester', 'Temporary links', 'Circuit schedules', 'Test leads'],
     isRequired: true,
-    estimatedTime: 8
+    estimatedTime: 10
   },
   {
-    id: 'distribution-board-polarity',
-    title: 'Distribution Board Polarity Verification',
-    description: 'Verify correct polarity connections at distribution board level',
+    id: 'switch-polarity-testing',
+    title: 'Single-Pole Switch and Control Device Polarity Testing',
+    description: 'Test polarity of all single-pole switches to ensure they break the line conductor',
     instructions: [
-      'Test that line conductor connects to line terminals of MCBs/RCBOs',
-      'Verify neutral conductor connects to neutral terminal block',
-      'Check earth conductor connects to earth terminal block',
-      'Test that single-pole devices break line conductor only',
-      'Verify RCD and RCBO line connections are correct',
-      'Check main switch connects to line side of installation',
-      'Test continuity from incoming supply to outgoing circuits',
-      'Document any incorrect connections requiring remedial work'
+      'Install temporary link between line and neutral at distribution board',
+      'Test continuity from temporary link to switch terminals',
+      'Verify switch breaks line conductor, not neutral',
+      'Test all light switches in ON and OFF positions',
+      'Check polarity of single-pole MCBs and fuses',
+      'Test polarity of single-pole contactors and relators',
+      'Verify correct connection of electronic switches and dimmers',
+      'Test emergency stop switches and isolation switches',
+      'Check polarity of any single-pole protective devices',
+      'Document any polarity errors found and location'
     ],
-    expectedResult: 'All distribution board connections correctly polarized according to BS 7671',
+    expectedResult: 'All single-pole switches confirmed to break line conductor only',
     safetyNotes: [
-      'Incorrect connections at distribution board affect entire installation',
-      'Verify isolation before working on distribution board',
-      'Double-check all connections before re-energizing'
+      'Switches must break line conductor for safety',
+      'Neutral switching can leave circuits live when switched off',
+      'Electronic devices may have specific polarity requirements'
     ],
-    tools: ['Continuity tester', 'Test leads', 'Distribution board schedule'],
+    tools: ['Continuity tester', 'Circuit diagrams', 'Switch identification charts'],
     isRequired: true,
-    estimatedTime: 12
+    estimatedTime: 25
   },
   {
     id: 'socket-outlet-polarity',
-    title: 'Socket Outlet Polarity Testing',
-    description: 'Test polarity of all socket outlets in the installation',
+    title: 'Socket Outlet and Fixed Equipment Polarity Testing',
+    description: 'Verify correct polarity connections at all socket outlets and fixed equipment',
     instructions: [
-      'Test each socket outlet using socket polarity tester',
-      'Verify line connects to line pin, neutral to neutral pin',
-      'Check earth connection is present and correct',
-      'Test both sockets on double socket outlets',
-      'Use continuity method if socket tester not available',
-      'Test with circuit isolated: line terminal to line pin continuity',
-      'Verify switch line connections where sockets are switched',
-      'Record any sockets with incorrect polarity for correction'
+      'Test polarity at every socket outlet using continuity method',
+      'Verify line conductor connects to correct pin/terminal',
+      'Test neutral conductor connection to designated terminal',
+      'Check earth connection to earth pin/terminal',
+      'Use socket tester for quick verification where appropriate',
+      'Test polarity of fixed equipment connections',
+      'Verify polarity of equipment with polarized plugs',
+      'Check three-phase socket outlets for phase rotation',
+      'Test industrial connectors and CEE form sockets',
+      'Document socket outlet test results and any errors'
     ],
-    expectedResult: 'All socket outlets correctly wired with proper line, neutral, and earth connections',
+    expectedResult: 'All socket outlets confirmed with correct polarity connections',
     safetyNotes: [
-      'Reversed polarity can cause equipment damage',
-      'Incorrect earth connections compromise safety',
-      'Test method depends on whether circuits are energized'
+      'Incorrect socket polarity can damage equipment',
+      'Phase rotation important for three-phase equipment',
+      'Some equipment may not function with reverse polarity'
     ],
-    tools: ['Socket polarity tester', 'Continuity tester', 'Test adaptors'],
+    tools: ['Continuity tester', 'Socket outlet tester', 'Phase rotation meter'],
     isRequired: true,
-    estimatedTime: 15
+    estimatedTime: 20
   },
   {
-    id: 'lighting-polarity',
-    title: 'Lighting Circuit Polarity Testing',
-    description: 'Test polarity of lighting circuits and switch connections',
+    id: 'lighting-circuit-polarity',
+    title: 'Lighting Circuit and Edison Screw Lampholder Polarity',
+    description: 'Test polarity of lighting circuits with special attention to Edison screw lampholders',
     instructions: [
-      'Test that switches break line conductor, not neutral',
-      'Verify Edison screw lampholders: line to center contact',
-      'Test bayonet cap holders for correct connections',
-      'Check pendant and fixed light fittings for proper polarity',
-      'Test two-way and intermediate switch connections',
-      'Verify emergency lighting polarity if present',
-      'Test that neutral conductor is continuous to all light points',
-      'Check any dimmer switch connections for correct polarity'
+      'Test polarity of all lighting circuits at each switching point',
+      'Pay special attention to Edison screw (ES) lampholders',
+      'Verify line conductor connects to center contact of ES holders',
+      'Test neutral connection to screw thread of ES holders',
+      'Check polarity of bayonet cap (BC) holders where relevant',
+      'Test two-way and intermediate switching arrangements',
+      'Verify polarity of emergency lighting circuits',
+      'Check polarity of external lighting installations',
+      'Test polarity of any lighting control systems',
+      'Document all lighting polarity test results'
     ],
-    expectedResult: 'All lighting circuits correctly polarized with switches on line conductor',
+    expectedResult: 'All lighting circuits confirmed with correct polarity, ES holders safe',
     safetyNotes: [
-      'Incorrect polarity in lampholders can cause shock',
-      'Switches must break line conductor for safety',
-      'Check both live and neutral at light fittings'
+      'ES lampholders with reverse polarity create shock risk',
+      'Screw thread must be connected to neutral',
+      'Emergency lighting polarity critical for operation'
     ],
-    tools: ['Continuity tester', 'Test leads', 'Lamp adaptors'],
+    tools: ['Continuity tester', 'Lampholder adapters', 'Lighting circuit diagrams'],
     isRequired: true,
-    estimatedTime: 18
+    estimatedTime: 15
   }
 ];

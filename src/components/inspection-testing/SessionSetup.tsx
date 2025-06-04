@@ -230,6 +230,7 @@ const SessionSetup = ({ flow, onStartSession, mode }: SessionSetupProps) => {
               <Select 
                 onValueChange={(value) => handleTechnicianChange('qualification', value)}
                 disabled={mode === 'apprentice'}
+                value={technicianDetails.qualification}
               >
                 <SelectTrigger>
                   <SelectValue placeholder={mode === 'apprentice' ? 'Apprentice Electrician' : 'Select qualification'} />
