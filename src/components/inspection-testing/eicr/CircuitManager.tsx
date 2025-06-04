@@ -1,19 +1,19 @@
 
-import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Edit, Trash2 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Plus, Edit, Trash2, Zap } from 'lucide-react';
+import { useState } from 'react';
 import { useEICR } from '@/contexts/EICRContext';
 import { EICRCircuit, CircuitType } from '@/types/eicr';
 
 const CircuitManager = () => {
   const { eicrSession, addCircuit, updateCircuit } = useEICR();
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [editingCircuit, setEditingCircuit] = useState<string | null>(null);
-  const [newCircuit, setNewCircuit] = useState<Partial<EICRCircuit>>({
+  const [isAddingCircuit, setIsAddingCircuit] = useState(false);
+  const [newCircuit, setNewCircuit] = useState<EICRCircuit>({
     ref: '',
     type: 'lighting',
     description: '',
@@ -22,16 +22,16 @@ const CircuitManager = () => {
     conductor_csa: '',
     earthing_conductor: '',
     max_zs: 0,
-    overall_condition: 'satisfactory',
+    overall_condition: 'satisfactory'
   });
 
   if (!eicrSession) return null;
 
-  const { eicr_report } = eicrSession;
+  const { circuits } = eicrSession.eicr_report;
 
   const handleAddCircuit = () => {
-    if (newCircuit.ref && newCircuit.type && newCircuit.description) {
-      addCircuit(newCircuit as EICRCircuit);
+    if (newCircuit.ref && newCircuit.description) {
+      addCircuit(newCircuit);
       setNewCircuit({
         ref: '',
         type: 'lighting',
@@ -41,119 +41,154 @@ const CircuitManager = () => {
         conductor_csa: '',
         earthing_conductor: '',
         max_zs: 0,
-        overall_condition: 'satisfactory',
+        overall_condition: 'satisfactory'
       });
-      setShowAddForm(false);
+      setIsAddingCircuit(false);
     }
+  };
+
+  const getConditionColor = (condition: string) => {
+    return condition === 'satisfactory' 
+      ? 'bg-green-500/20 text-green-300 border-green-500/30'
+      : 'bg-red-500/20 text-red-300 border-red-500/30';
   };
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h3 className="text-lg font-medium">Circuit Schedule Management</h3>
+          <p className="text-sm text-muted-foreground">
+            Manage circuits for EICR testing and populate test results
+          </p>
+        </div>
+        <Button 
+          onClick={() => setIsAddingCircuit(true)} 
+          className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+        >
+          <Plus className="h-4 w-4 mr-2" />
+          Add Circuit
+        </Button>
+      </div>
+
       {/* Add Circuit Form */}
-      {showAddForm && (
+      {isAddingCircuit && (
         <Card className="border-elec-yellow/30 bg-elec-gray">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Plus className="h-5 w-5" />
+              <Zap className="h-5 w-5 text-elec-yellow" />
               Add New Circuit
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="text-sm font-medium">Circuit Reference</label>
+                <Label htmlFor="circuit-ref">Circuit Reference</Label>
                 <Input
-                  value={newCircuit.ref || ''}
-                  onChange={(e) => setNewCircuit(prev => ({ ...prev, ref: e.target.value }))}
-                  placeholder="e.g., L1, C1, S1"
+                  id="circuit-ref"
+                  value={newCircuit.ref}
+                  onChange={(e) => setNewCircuit({...newCircuit, ref: e.target.value})}
+                  placeholder="e.g., L1, L2, C1"
+                  className="bg-elec-dark border-elec-yellow/20"
                 />
               </div>
               <div>
-                <label className="text-sm font-medium">Circuit Type</label>
-                <Select
-                  value={newCircuit.type}
-                  onValueChange={(value: CircuitType) => setNewCircuit(prev => ({ ...prev, type: value }))}
-                >
-                  <SelectTrigger>
+                <Label htmlFor="circuit-type">Type</Label>
+                <Select value={newCircuit.type} onValueChange={(value: CircuitType) => setNewCircuit({...newCircuit, type: value})}>
+                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="lighting">Lighting</SelectItem>
-                    <SelectItem value="power">Power</SelectItem>
+                    <SelectItem value="power">Power/Sockets</SelectItem>
                     <SelectItem value="cooker">Cooker</SelectItem>
                     <SelectItem value="shower">Shower</SelectItem>
-                    <SelectItem value="immersion">Immersion</SelectItem>
+                    <SelectItem value="immersion">Immersion Heater</SelectItem>
                     <SelectItem value="heating">Heating</SelectItem>
                     <SelectItem value="smoke-alarm">Smoke Alarm</SelectItem>
-                    <SelectItem value="security">Security</SelectItem>
+                    <SelectItem value="security">Security System</SelectItem>
                     <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div>
-                <label className="text-sm font-medium">Protective Device</label>
+                <Label htmlFor="description">Description</Label>
                 <Input
-                  value={newCircuit.protective_device || ''}
-                  onChange={(e) => setNewCircuit(prev => ({ ...prev, protective_device: e.target.value }))}
-                  placeholder="e.g., MCB, RCBO"
+                  id="description"
+                  value={newCircuit.description}
+                  onChange={(e) => setNewCircuit({...newCircuit, description: e.target.value})}
+                  placeholder="Ground floor lighting"
+                  className="bg-elec-dark border-elec-yellow/20"
                 />
               </div>
             </div>
 
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="text-sm font-medium">Rating (A)</label>
+                <Label htmlFor="protective-device">Protective Device</Label>
                 <Input
-                  value={newCircuit.rating || ''}
-                  onChange={(e) => setNewCircuit(prev => ({ ...prev, rating: e.target.value }))}
-                  placeholder="e.g., 6A, 32A"
+                  id="protective-device"
+                  value={newCircuit.protective_device}
+                  onChange={(e) => setNewCircuit({...newCircuit, protective_device: e.target.value})}
+                  placeholder="MCB Type B"
+                  className="bg-elec-dark border-elec-yellow/20"
                 />
               </div>
               <div>
-                <label className="text-sm font-medium">Conductor CSA</label>
+                <Label htmlFor="rating">Rating (A)</Label>
                 <Input
-                  value={newCircuit.conductor_csa || ''}
-                  onChange={(e) => setNewCircuit(prev => ({ ...prev, conductor_csa: e.target.value }))}
-                  placeholder="e.g., 2.5mm²"
+                  id="rating"
+                  value={newCircuit.rating}
+                  onChange={(e) => setNewCircuit({...newCircuit, rating: e.target.value})}
+                  placeholder="16"
+                  className="bg-elec-dark border-elec-yellow/20"
                 />
               </div>
               <div>
-                <label className="text-sm font-medium">CPC CSA</label>
+                <Label htmlFor="conductor-csa">Conductor CSA (mm²)</Label>
                 <Input
-                  value={newCircuit.earthing_conductor || ''}
-                  onChange={(e) => setNewCircuit(prev => ({ ...prev, earthing_conductor: e.target.value }))}
-                  placeholder="e.g., 1.5mm²"
+                  id="conductor-csa"
+                  value={newCircuit.conductor_csa}
+                  onChange={(e) => setNewCircuit({...newCircuit, conductor_csa: e.target.value})}
+                  placeholder="2.5"
+                  className="bg-elec-dark border-elec-yellow/20"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="earthing-conductor">Earthing Conductor (mm²)</Label>
+                <Input
+                  id="earthing-conductor"
+                  value={newCircuit.earthing_conductor}
+                  onChange={(e) => setNewCircuit({...newCircuit, earthing_conductor: e.target.value})}
+                  placeholder="1.5"
+                  className="bg-elec-dark border-elec-yellow/20"
                 />
               </div>
               <div>
-                <label className="text-sm font-medium">Max Zs (Ω)</label>
+                <Label htmlFor="max-zs">Maximum Zs (Ω)</Label>
                 <Input
+                  id="max-zs"
                   type="number"
                   step="0.01"
-                  value={newCircuit.max_zs || ''}
-                  onChange={(e) => setNewCircuit(prev => ({ ...prev, max_zs: parseFloat(e.target.value) || 0 }))}
-                  placeholder="e.g., 1.44"
+                  value={newCircuit.max_zs}
+                  onChange={(e) => setNewCircuit({...newCircuit, max_zs: parseFloat(e.target.value) || 0})}
+                  placeholder="2.87"
+                  className="bg-elec-dark border-elec-yellow/20"
                 />
               </div>
-            </div>
-
-            <div>
-              <label className="text-sm font-medium">Description</label>
-              <Input
-                value={newCircuit.description || ''}
-                onChange={(e) => setNewCircuit(prev => ({ ...prev, description: e.target.value }))}
-                placeholder="Circuit description and location"
-              />
             </div>
 
             <div className="flex gap-2">
-              <Button 
-                onClick={handleAddCircuit}
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-              >
+              <Button onClick={handleAddCircuit} className="bg-green-600 hover:bg-green-700">
                 Add Circuit
               </Button>
-              <Button variant="outline" onClick={() => setShowAddForm(false)}>
+              <Button 
+                variant="outline" 
+                onClick={() => setIsAddingCircuit(false)}
+              >
                 Cancel
               </Button>
             </div>
@@ -163,106 +198,78 @@ const CircuitManager = () => {
 
       {/* Circuits List */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold">Circuit Schedule ({eicr_report.circuits.length})</h3>
-          {!showAddForm && (
-            <Button 
-              onClick={() => setShowAddForm(true)}
-              className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Circuit
-            </Button>
-          )}
-        </div>
-
-        {eicr_report.circuits.length === 0 ? (
-          <Card className="border-blue-500/30 bg-blue-500/5">
+        {circuits.length === 0 ? (
+          <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardContent className="pt-6 text-center">
-              <p className="text-blue-200">No circuits added yet. Add circuits to begin testing.</p>
+              <Zap className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+              <p className="text-muted-foreground">No circuits added yet</p>
+              <p className="text-sm text-muted-foreground">
+                Add circuits to begin testing and populate EICR schedule
+              </p>
             </CardContent>
           </Card>
         ) : (
-          <div className="space-y-3">
-            {eicr_report.circuits.map((circuit) => (
+          <div className="grid gap-4">
+            {circuits.map((circuit) => (
               <Card key={circuit.ref} className="border-elec-yellow/20 bg-elec-gray">
-                <CardContent className="pt-4">
+                <CardContent className="pt-6">
                   <div className="flex items-start justify-between">
-                    <div className="flex-1 space-y-2">
-                      <div className="flex items-center gap-3">
-                        <Badge variant="outline" className="font-mono">
-                          {circuit.ref}
-                        </Badge>
-                        <span className="font-medium capitalize">
-                          {circuit.type.replace('-', ' ')}
-                        </span>
-                        <Badge 
-                          variant={circuit.overall_condition === 'satisfactory' ? 'default' : 'destructive'}
-                          className="text-xs"
-                        >
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="font-mono font-bold">{circuit.ref}</span>
+                        <Badge variant="outline">{circuit.type}</Badge>
+                        <Badge className={getConditionColor(circuit.overall_condition)}>
                           {circuit.overall_condition}
                         </Badge>
                       </div>
                       
-                      <p className="text-sm">{circuit.description}</p>
+                      <h4 className="font-medium mb-2">{circuit.description}</h4>
                       
-                      <div className="grid grid-cols-4 gap-4 text-xs">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                         <div>
-                          <span className="text-muted-foreground">Protective Device:</span>
-                          <div>{circuit.protective_device} {circuit.rating}</div>
+                          <span className="text-muted-foreground">Protection:</span>
+                          <div>{circuit.protective_device} {circuit.rating}A</div>
                         </div>
                         <div>
                           <span className="text-muted-foreground">Conductor:</span>
-                          <div>{circuit.conductor_csa}</div>
-                        </div>
-                        <div>
-                          <span className="text-muted-foreground">CPC:</span>
-                          <div>{circuit.earthing_conductor}</div>
+                          <div>{circuit.conductor_csa}mm² / {circuit.earthing_conductor}mm²</div>
                         </div>
                         <div>
                           <span className="text-muted-foreground">Max Zs:</span>
                           <div>{circuit.max_zs}Ω</div>
                         </div>
+                        <div>
+                          <span className="text-muted-foreground">Measured Zs:</span>
+                          <div>{circuit.measured_zs ? `${circuit.measured_zs}Ω` : 'Not tested'}</div>
+                        </div>
                       </div>
 
-                      {/* Test Results */}
-                      {(circuit.measured_zs || circuit.insulation_resistance || circuit.rcd_operation || circuit.continuity_cpc) && (
-                        <div className="mt-3 p-3 bg-elec-dark/30 rounded border">
-                          <div className="text-xs text-muted-foreground mb-2">Test Results:</div>
-                          <div className="grid grid-cols-4 gap-4 text-xs">
-                            {circuit.measured_zs && (
-                              <div>
-                                <span className="text-muted-foreground">Measured Zs:</span>
-                                <div className={circuit.measured_zs > circuit.max_zs ? 'text-red-400' : 'text-green-400'}>
-                                  {circuit.measured_zs}Ω
-                                </div>
-                              </div>
-                            )}
+                      {/* Test Results Summary */}
+                      {(circuit.insulation_resistance || circuit.polarity_correct !== undefined || circuit.rcd_operation || circuit.continuity_cpc) && (
+                        <div className="mt-3 p-3 bg-elec-dark/50 rounded-lg">
+                          <div className="text-xs text-muted-foreground mb-1">Test Results:</div>
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
                             {circuit.insulation_resistance && (
-                              <div>
-                                <span className="text-muted-foreground">Insulation:</span>
-                                <div className={circuit.insulation_resistance < 1 ? 'text-red-400' : 'text-green-400'}>
-                                  {circuit.insulation_resistance}MΩ
-                                </div>
-                              </div>
+                              <div>IR: {circuit.insulation_resistance}MΩ</div>
+                            )}
+                            {circuit.polarity_correct !== undefined && (
+                              <div>Polarity: {circuit.polarity_correct ? 'OK' : 'FAULT'}</div>
                             )}
                             {circuit.rcd_operation && (
-                              <div>
-                                <span className="text-muted-foreground">RCD:</span>
-                                <div className={circuit.rcd_operation > 300 ? 'text-red-400' : 'text-green-400'}>
-                                  {circuit.rcd_operation}ms
-                                </div>
-                              </div>
+                              <div>RCD: {circuit.rcd_operation}ms</div>
                             )}
                             {circuit.continuity_cpc && (
-                              <div>
-                                <span className="text-muted-foreground">R1+R2:</span>
-                                <div>{circuit.continuity_cpc}Ω</div>
-                              </div>
+                              <div>R1+R2: {circuit.continuity_cpc}Ω</div>
                             )}
                           </div>
                         </div>
                       )}
+                    </div>
+                    
+                    <div className="flex gap-1">
+                      <Button variant="ghost" size="sm">
+                        <Edit className="h-4 w-4" />
+                      </Button>
                     </div>
                   </div>
                 </CardContent>

@@ -8,9 +8,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle, Play, Pause, RotateCcw } from 'lucide-react';
 import { TestFlow, TestSession } from '@/types/inspection-testing';
 import { useTestFlowEngine } from '@/hooks/useTestFlowEngine';
-import { enhancedTestFlows } from '@/data/inspection-testing/enhancedTestFlows';
-import { expandedTestFlows } from '@/data/inspection-testing/expandedTestFlows';
-import { standardisedTestFlows } from '@/data/inspection-testing/standardisedTestFlows';
+import { ukEicrTestFlows } from '@/data/inspection-testing/ukEicrTestFlows';
 import SimplifiedTestFlowSelector from './SimplifiedTestFlowSelector';
 import TestStepDisplay from './TestStepDisplay';
 import GuidedWorkflow from './GuidedWorkflow';
@@ -27,8 +25,8 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
   const [selectedFlow, setSelectedFlow] = useState<TestFlow | null>(null);
   const [showGuidedWorkflow, setShowGuidedWorkflow] = useState(true);
   
-  // Combine all test flows with standardised flows taking priority
-  const allTestFlows = [...standardisedTestFlows, ...enhancedTestFlows, ...expandedTestFlows];
+  // Use UK-specific EICR test flows
+  const allTestFlows = ukEicrTestFlows;
   
   const {
     session,
@@ -50,12 +48,12 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
 
   const handleFlowSelection = (flow: TestFlow) => {
     setSelectedFlow(flow);
-    console.log('Selected test flow:', flow);
+    console.log('Selected UK EICR test flow:', flow);
   };
 
   const handleStartSession = (installationDetails: any, technician: any) => {
     startSession(installationDetails, technician);
-    console.log('Session started with details:', { installationDetails, technician });
+    console.log('UK EICR session started with details:', { installationDetails, technician });
   };
 
   const handleStepCompletion = () => {
@@ -157,6 +155,9 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
                   <Badge variant="outline" className="text-xs">
                     {session.status === 'in-progress' ? 'Active' : session.status}
                   </Badge>
+                  <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30 text-xs">
+                    BS 7671:2018+A2:2022
+                  </Badge>
                 </CardTitle>
                 <p className="text-sm text-muted-foreground mt-1">
                   {currentStep?.title || 'Loading...'}
@@ -214,6 +215,16 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
             )}
           </CardHeader>
         </Card>
+
+        {/* UK Compliance Notice */}
+        <Alert className="bg-blue-500/10 border-blue-500/30">
+          <AlertTriangle className="h-4 w-4 text-blue-400" />
+          <AlertDescription className="text-blue-200">
+            <strong>UK Compliance:</strong> This EICR testing procedure follows BS 7671:2018+A2:2022 requirements. 
+            All test results will be automatically classified using C1, C2, C3, and FI fault codes in accordance with 
+            IET Guidance Note 3. Ensure you hold appropriate qualifications before conducting electrical testing.
+          </AlertDescription>
+        </Alert>
 
         {/* Main Content Area */}
         <div className="grid gap-6 lg:grid-cols-3">
@@ -279,7 +290,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
                 disabled={!currentStepResult || currentStepResult.status !== 'completed'}
                 className="flex items-center gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90"
               >
-                {isLastStep ? 'Complete Testing' : 'Next Step'}
+                {isLastStep ? 'Complete EICR' : 'Next Step'}
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
