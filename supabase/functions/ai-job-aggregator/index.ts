@@ -3,7 +3,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { corsHeaders } from "../_shared/cors.ts";
 
-const openAIApiKey = Deno.env.get('OpenAI API');
+const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -32,32 +32,36 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: `You are an AI job matching specialist for UK electrical industry jobs. Analyse job listings and provide ONLY valid JSON with enhanced job objects. Do not include any markdown formatting, code blocks, or additional text - return only the JSON array.
+            content: `You are an AI job matching specialist for UK electrical industry jobs. Analyse job listings and provide enhanced job objects with AI insights.
+
+Return ONLY a valid JSON array with enhanced job objects. Do not include markdown formatting, code blocks, or any other text.
 
 For each job, add these AI enhancements:
 - relevanceScore: number (1-100)
-- aiTags: string array of relevant skills/categories
-- skillsRequired: string array
+- aiTags: string array of relevant skills/categories (max 5)
+- skillsRequired: string array of key skills (max 6)
 - experienceLevel: "entry" | "intermediate" | "senior" | "lead"
 - salaryCompetitiveness: "low" | "average" | "high"
-- careerProgression: brief string about career potential
+- careerProgression: brief string about career potential (max 100 chars)
 - estimatedSalaryMin: number (if salary mentioned)
 - estimatedSalaryMax: number (if salary mentioned)
 
-Return the enhanced jobs array as valid JSON only.`
+Keep all original job fields and add AI enhancements. Return valid JSON only.`
           },
           {
             role: 'user',
-            content: `Analyse these UK electrical jobs:
-Search Query: ${searchQuery || 'electrical jobs'}
-User Preferences: ${JSON.stringify(userPreferences || {})}
-Jobs: ${JSON.stringify(jobs.slice(0, 15))}
+            content: `Enhance these UK electrical jobs for search: "${searchQuery}"
 
-Return enhanced job array as valid JSON only, no formatting or extra text.`
+User preferences: ${JSON.stringify(userPreferences || {})}
+
+Jobs to enhance:
+${JSON.stringify(jobs.slice(0, 12))}
+
+Return enhanced jobs as valid JSON array only.`
           }
         ],
         temperature: 0.2,
-        max_tokens: 3000,
+        max_tokens: 4000,
       }),
     });
     
@@ -70,13 +74,23 @@ Return enhanced job array as valid JSON only, no formatting or extra text.`
     
     try {
       const aiContent = aiData.choices[0].message.content;
-      console.log('AI Response:', aiContent);
+      console.log('Raw AI Response:', aiContent);
       
-      // Clean the response - remove markdown formatting if present
-      const cleanContent = aiContent
-        .replace(/```json\n?/g, '')
-        .replace(/```\n?/g, '')
-        .trim();
+      // Multiple cleaning strategies for robust parsing
+      let cleanContent = aiContent.trim();
+      
+      // Remove markdown code blocks
+      cleanContent = cleanContent.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+      
+      // Remove any leading/trailing non-JSON content
+      const jsonStart = cleanContent.indexOf('[');
+      const jsonEnd = cleanContent.lastIndexOf(']') + 1;
+      
+      if (jsonStart !== -1 && jsonEnd > jsonStart) {
+        cleanContent = cleanContent.substring(jsonStart, jsonEnd);
+      }
+      
+      console.log('Cleaned content for parsing:', cleanContent.substring(0, 200) + '...');
       
       const parsedJobs = JSON.parse(cleanContent);
       
@@ -88,14 +102,29 @@ Return enhanced job array as valid JSON only, no formatting or extra text.`
       }
     } catch (parseError) {
       console.error('Failed to parse AI response:', parseError);
-      console.log('Raw AI content:', aiData.choices[0].message.content);
-      // Continue with original jobs
+      console.log('Attempting fallback parsing...');
+      
+      // Fallback: try to extract any valid JSON array from the response
+      try {
+        const content = aiData.choices[0].message.content;
+        const matches = content.match(/\[[\s\S]*\]/);
+        if (matches) {
+          const fallbackJobs = JSON.parse(matches[0]);
+          if (Array.isArray(fallbackJobs)) {
+            enhancedJobs = fallbackJobs;
+            console.log(`Fallback parsing successful: ${enhancedJobs.length} jobs`);
+          }
+        }
+      } catch (fallbackError) {
+        console.error('Fallback parsing also failed:', fallbackError);
+        // Continue with original jobs
+      }
     }
     
-    // Calculate insights from enhanced jobs
+    // Generate market insights
     const insights = {
       averageRelevance: enhancedJobs.reduce((sum, job) => sum + (job.relevanceScore || 75), 0) / enhancedJobs.length,
-      topCategories: [...new Set(enhancedJobs.flatMap(job => job.aiTags || []))].slice(0, 5),
+      topCategories: [...new Set(enhancedJobs.flatMap(job => job.aiTags || []))].slice(0, 6),
       salaryRange: {
         min: Math.min(...enhancedJobs.filter(j => j.estimatedSalaryMin).map(j => j.estimatedSalaryMin)) || 25000,
         max: Math.max(...enhancedJobs.filter(j => j.estimatedSalaryMax).map(j => j.estimatedSalaryMax)) || 65000
@@ -103,10 +132,11 @@ Return enhanced job array as valid JSON only, no formatting or extra text.`
       totalProcessed: jobs.length,
       marketTrends: [
         "High demand for 18th Edition qualified electricians",
-        "Solar PV installation skills increasingly valuable",
-        "EV charging point installation growing rapidly"
+        "Solar PV and renewable energy skills increasingly valuable",
+        "EV charging infrastructure installations growing rapidly",
+        "Smart home automation expertise in demand"
       ],
-      demandAreas: ["London", "Manchester", "Birmingham", "Leeds", "Bristol"]
+      demandAreas: ["London", "Manchester", "Birmingham", "Leeds", "Bristol", "Glasgow"]
     };
     
     return new Response(
@@ -120,7 +150,11 @@ Return enhanced job array as valid JSON only, no formatting or extra text.`
   } catch (error) {
     console.error('Error in AI job aggregator:', error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ 
+        error: error.message,
+        enhancedJobs: [],
+        aiInsights: null
+      }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

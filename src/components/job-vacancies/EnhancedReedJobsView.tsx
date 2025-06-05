@@ -6,8 +6,10 @@ import EnhancedJobCard from "./EnhancedJobCard";
 import JobPagination from "./JobPagination";
 import EnhancedJobSearch from "./EnhancedJobSearch";
 import AIJobInsights from "./AIJobInsights";
+import IntelligentJobSearch from "./IntelligentJobSearch";
 import { Card, CardContent } from "@/components/ui/card";
-import { Brain, Zap, TrendingUp, Clock } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Brain, Zap, TrendingUp, Clock, Search } from "lucide-react";
 
 interface EnhancedJobListing {
   id: string;
@@ -58,6 +60,7 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
   const [totalResults, setTotalResults] = useState(0);
   const [aiInsights, setAiInsights] = useState<any>(null);
   const [lastSearchTime, setLastSearchTime] = useState<number>(0);
+  const [activeTab, setActiveTab] = useState<"enhanced" | "intelligent">("intelligent");
   
   const [suggestedSkills] = useState([
     "18th Edition", "PAT Testing", "EICR", "NICEIC", "JIB Card",
@@ -65,17 +68,16 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
     "Industrial Wiring", "Domestic Installation", "Commercial"
   ]);
 
-  // Rapid search strategy: show jobs immediately, enhance with AI after
+  // Enhanced Reed search (existing functionality)
   const fetchReedJobsRapid = useCallback(async (filters: SearchFilters, page: number = 1) => {
     const searchStartTime = Date.now();
     setIsLoading(true);
     setAiInsights(null);
     
     try {
-      // Build Reed API request with UK focus
       const reedRequest = {
         keywords: filters.keywords,
-        location: filters.location || 'United Kingdom', // Default to UK
+        location: filters.location || 'United Kingdom',
         page,
         permanent: filters.jobType === 'full-time' || !filters.jobType,
         temp: filters.jobType === 'contract',
@@ -95,10 +97,9 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
       setTotalPages(Math.ceil((data.totalResults || 0) / 100));
       setCurrentPage(data.currentPage || 1);
       
-      // Apply client-side filtering for advanced filters
+      // Apply client-side filtering
       if (filters.salaryMin || filters.salaryMax || filters.skills.length > 0) {
         fetchedJobs = fetchedJobs.filter((job: any) => {
-          // Salary filtering (convert to pounds if needed)
           if (filters.salaryMin || filters.salaryMax) {
             const salaryText = job.salary || '';
             const salaryNumbers = salaryText.match(/[\d,]+/g);
@@ -109,7 +110,6 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
             }
           }
           
-          // Skills filtering
           if (filters.skills.length > 0) {
             const jobText = (job.title + ' ' + job.description).toLowerCase();
             return filters.skills.some(skill => 
@@ -121,14 +121,13 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
         });
       }
       
-      // Show jobs immediately for rapid UX
       setJobs(fetchedJobs);
       setLastSearchTime(Date.now() - searchStartTime);
       
       if (fetchedJobs.length === 0) {
         toast({
           title: "No jobs found",
-          description: "Try different search criteria or check back later",
+          description: "Try different search criteria or check the intelligent search tab",
         });
       } else {
         toast({
@@ -137,16 +136,15 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
         });
       }
       
-      // AI Enhancement - run in background after showing jobs
+      // AI Enhancement
       if (filters.aiEnhanced && fetchedJobs.length > 0) {
         setIsAIProcessing(true);
         
-        // Use setTimeout to ensure UI updates first
         setTimeout(async () => {
           try {
             const aiResponse = await supabase.functions.invoke('ai-job-aggregator', {
               body: {
-                jobs: fetchedJobs.slice(0, 15), // Limit for faster processing
+                jobs: fetchedJobs.slice(0, 15),
                 userPreferences: {
                   experienceLevel: filters.experienceLevel,
                   skills: filters.skills,
@@ -167,7 +165,6 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
             }
           } catch (aiError) {
             console.warn('AI enhancement failed:', aiError);
-            // Don't show error toast - jobs are already shown
           } finally {
             setIsAIProcessing(false);
           }
@@ -188,18 +185,19 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
   }, []);
 
   useEffect(() => {
-    // Initial load with UK-focused default search
-    fetchReedJobsRapid({
-      keywords: "electrician,electrical engineer,electrical technician",
-      location: "United Kingdom",
-      jobType: "",
-      experienceLevel: "",
-      salaryMin: "",
-      salaryMax: "",
-      skills: [],
-      aiEnhanced: true
-    });
-  }, [fetchReedJobsRapid]);
+    if (activeTab === "enhanced") {
+      fetchReedJobsRapid({
+        keywords: "electrician,electrical engineer,electrical technician",
+        location: "United Kingdom",
+        jobType: "",
+        experienceLevel: "",
+        salaryMin: "",
+        salaryMax: "",
+        skills: [],
+        aiEnhanced: true
+      });
+    }
+  }, [fetchReedJobsRapid, activeTab]);
 
   const handleSearch = (filters: SearchFilters) => {
     setCurrentPage(1);
@@ -208,7 +206,6 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    // Re-run search with current filters for the new page
     const currentFilters = {
       keywords: "electrician,electrical engineer,electrical technician",
       location: "United Kingdom",
@@ -233,90 +230,131 @@ const EnhancedReedJobsView: React.FC<EnhancedReedJobsViewProps> = ({ handleApply
 
   return (
     <div className="space-y-6">
-      {/* Search Performance Indicator */}
-      {lastSearchTime > 0 && (
-        <Card className="border-green-200 bg-green-50">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2 text-green-700">
-              <Clock className="h-4 w-4" />
-              <span className="text-sm">
-                Search completed in {lastSearchTime}ms • Showing live UK electrical jobs
-              </span>
+      {/* Tab Navigation */}
+      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as "enhanced" | "intelligent")}>
+        <TabsList className="grid w-full grid-cols-2 mb-6">
+          <TabsTrigger value="intelligent" className="text-base py-3">
+            <Brain className="h-4 w-4 mr-2" />
+            🔥 AI Multi-Site Search
+          </TabsTrigger>
+          <TabsTrigger value="enhanced" className="text-base py-3">
+            <Zap className="h-4 w-4 mr-2" />
+            Enhanced Reed Search
+          </TabsTrigger>
+        </TabsList>
+
+        {/* Intelligent Multi-Site Search */}
+        <TabsContent value="intelligent" className="mt-0">
+          <div className="mb-4 p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg">
+            <h3 className="text-sm font-medium text-green-800 mb-1 flex items-center gap-2">
+              <Brain className="h-4 w-4" />
+              🚀 AI-Powered Multi-Site Job Search
+            </h3>
+            <p className="text-xs text-green-700">
+              Search across Reed, Indeed, Totaljobs and more with AI-generated queries and smart matching
+            </p>
+          </div>
+          <IntelligentJobSearch />
+        </TabsContent>
+
+        {/* Enhanced Reed Search */}
+        <TabsContent value="enhanced" className="mt-0">
+          <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h3 className="text-sm font-medium text-blue-800 mb-1 flex items-center gap-2">
+              <Zap className="h-4 w-4" />
+              Reed Jobs with AI Enhancement
+            </h3>
+            <p className="text-xs text-blue-700">
+              Enhanced Reed job listings with AI scoring, insights and rapid search
+            </p>
+          </div>
+
+          {/* Search Performance Indicator */}
+          {lastSearchTime > 0 && (
+            <Card className="border-green-200 bg-green-50">
+              <CardContent className="p-3">
+                <div className="flex items-center gap-2 text-green-700">
+                  <Clock className="h-4 w-4" />
+                  <span className="text-sm">
+                    Search completed in {lastSearchTime}ms • Showing live UK electrical jobs
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Enhanced Search */}
+          <EnhancedJobSearch 
+            onSearch={handleSearch}
+            isLoading={isLoading}
+            suggestedSkills={suggestedSkills}
+            totalResults={totalResults}
+          />
+
+          {/* AI Processing Indicator */}
+          {isAIProcessing && (
+            <Card className="border-elec-yellow/20 bg-elec-yellow/5">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3 text-elec-yellow">
+                  <Brain className="h-5 w-5 animate-pulse" />
+                  <div>
+                    <p className="font-medium">AI Enhancement in Progress</p>
+                    <p className="text-sm text-muted-foreground">
+                      Analysing jobs and generating insights whilst you browse...
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* AI Insights */}
+          {aiInsights && (
+            <AIJobInsights insights={aiInsights} isLoading={isAIProcessing} />
+          )}
+
+          {/* Job Listings */}
+          {isLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="h-64 bg-gray-200 animate-pulse rounded-lg" />
+              ))}
             </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Enhanced Search */}
-      <EnhancedJobSearch 
-        onSearch={handleSearch}
-        isLoading={isLoading}
-        suggestedSkills={suggestedSkills}
-        totalResults={totalResults}
-      />
-
-      {/* AI Processing Indicator */}
-      {isAIProcessing && (
-        <Card className="border-elec-yellow/20 bg-elec-yellow/5">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3 text-elec-yellow">
-              <Brain className="h-5 w-5 animate-pulse" />
-              <div>
-                <p className="font-medium">AI Enhancement in Progress</p>
-                <p className="text-sm text-muted-foreground">
-                  Analysing jobs and generating insights whilst you browse...
-                </p>
-              </div>
+          ) : jobs.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {jobs.map(job => (
+                <EnhancedJobCard
+                  key={job.id}
+                  job={job}
+                  selectedJob={selectedJob}
+                  handleApply={(jobId, url) => {
+                    handleJobSelect(jobId);
+                    handleApply(jobId, url);
+                  }}
+                  isAIEnhanced={!!job.relevanceScore}
+                />
+              ))}
             </div>
-          </CardContent>
-        </Card>
-      )}
+          ) : (
+            <Card className="p-8 text-center border-dashed border-elec-yellow/20">
+              <Search className="h-12 w-12 text-elec-yellow/50 mx-auto mb-3" />
+              <h3 className="text-lg font-medium">No electrical jobs found</h3>
+              <p className="text-muted-foreground mt-1">
+                Try adjusting your search criteria or check the AI Multi-Site Search tab
+              </p>
+            </Card>
+          )}
 
-      {/* AI Insights */}
-      {aiInsights && (
-        <AIJobInsights insights={aiInsights} isLoading={isAIProcessing} />
-      )}
-
-      {/* Job Listings */}
-      {isLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-64 bg-gray-200 animate-pulse rounded-lg" />
-          ))}
-        </div>
-      ) : jobs.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {jobs.map(job => (
-            <EnhancedJobCard
-              key={job.id}
-              job={job}
-              selectedJob={selectedJob}
-              handleApply={(jobId, url) => {
-                handleJobSelect(jobId);
-                handleApply(jobId, url);
-              }}
-              isAIEnhanced={!!job.relevanceScore}
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <JobPagination 
+              currentPage={currentPage}
+              totalPages={totalPages}
+              paginate={handlePageChange}
             />
-          ))}
-        </div>
-      ) : (
-        <Card className="p-8 text-center border-dashed border-elec-yellow/20">
-          <Zap className="h-12 w-12 text-elec-yellow/50 mx-auto mb-3" />
-          <h3 className="text-lg font-medium">No electrical jobs found</h3>
-          <p className="text-muted-foreground mt-1">
-            Try adjusting your search criteria or check back later for new opportunities
-          </p>
-        </Card>
-      )}
-
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <JobPagination 
-          currentPage={currentPage}
-          totalPages={totalPages}
-          paginate={handlePageChange}
-        />
-      )}
+          )}
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
