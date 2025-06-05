@@ -53,7 +53,7 @@ export function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={cn("justify-between bg-white hover:bg-gray-50", className)}
+          className={cn("justify-between bg-elec-gray border-gray-700 text-white hover:bg-gray-700", className)}
         >
           {selectedOption ? selectedOption.label : placeholder}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
