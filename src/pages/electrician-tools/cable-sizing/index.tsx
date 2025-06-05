@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Cable, Sigma, History, BookOpen, Zap } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -20,6 +20,7 @@ import CableSizingInfo from "@/components/apprentice/calculators/cable-sizing/Ca
 
 const CableSizingCalculator = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   // Always call all hooks in the same order, regardless of state
   const [calculatorMode, setCalculatorMode] = useState<'enhanced' | 'classic'>('enhanced');
@@ -101,6 +102,16 @@ const CableSizingCalculator = () => {
     });
   };
 
+  const handleBackNavigation = () => {
+    try {
+      navigate("/electrician-tools/calculations");
+    } catch (error) {
+      console.error("Navigation error:", error);
+      // Fallback: redirect using window location
+      window.location.href = "/electrician-tools/calculations";
+    }
+  };
+
   return (
     <div className="space-y-4 sm:space-y-6 animate-fade-in pb-8 px-2 sm:px-4 lg:px-0">
       {/* Header - Mobile Optimized */}
@@ -135,11 +146,14 @@ const CableSizingCalculator = () => {
             </Button>
           </div>
           
-          <Link to="/electrician-tools/calculations" className="sm:w-auto">
-            <Button variant="outline" className="w-full sm:w-auto text-sm" size="sm">
-              <ArrowLeft className="h-4 w-4 mr-1 sm:mr-2" /> Back to Calculations
-            </Button>
-          </Link>
+          <Button 
+            variant="outline" 
+            className="w-full sm:w-auto text-sm" 
+            size="sm"
+            onClick={handleBackNavigation}
+          >
+            <ArrowLeft className="h-4 w-4 mr-1 sm:mr-2" /> Back to Calculations
+          </Button>
         </div>
       </div>
 
