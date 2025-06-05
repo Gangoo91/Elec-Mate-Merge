@@ -8,7 +8,7 @@ import { useLocationFilter } from "@/hooks/job-vacancies/useLocationFilter";
 import GoogleMapsLoader from "@/components/job-vacancies/GoogleMapsLoader";
 import LocationSearchBox from "@/components/job-vacancies/LocationSearchBox";
 import JobListingContent from "@/components/job-vacancies/JobListingContent";
-import ReedJobsView from "@/components/job-vacancies/ReedJobsView";
+import EnhancedReedJobsView from "@/components/job-vacancies/EnhancedReedJobsView";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Define a consistent JobListing interface to avoid type conflicts
@@ -98,12 +98,16 @@ const JobVacancies = () => {
         className="w-full"
       >
         <TabsList className="grid w-full grid-cols-2 mb-6">
-          <TabsTrigger value="live" className="text-base py-3">Live Jobs</TabsTrigger>
-          <TabsTrigger value="database" className="text-base py-3">Stored Listings</TabsTrigger>
+          <TabsTrigger value="live" className="text-base py-3">
+            🚀 AI-Enhanced Live Jobs
+          </TabsTrigger>
+          <TabsTrigger value="database" className="text-base py-3">
+            📊 Stored Listings
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="live" className="mt-0">
-          <ReedJobsView handleApply={handleApply} />
+          <EnhancedReedJobsView handleApply={handleApply} />
         </TabsContent>
 
         <TabsContent value="database" className="mt-0">
