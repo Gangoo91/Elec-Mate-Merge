@@ -20,9 +20,11 @@ import CableSizingInfo from "@/components/apprentice/calculators/cable-sizing/Ca
 
 const CableSizingCalculator = () => {
   const { toast } = useToast();
+  
+  // Always call all hooks in the same order, regardless of state
   const [calculatorMode, setCalculatorMode] = useState<'enhanced' | 'classic'>('enhanced');
   
-  // Enhanced calculator
+  // Enhanced calculator - always initialize
   const {
     inputs: enhancedInputs,
     result: enhancedResult,
@@ -38,7 +40,7 @@ const CableSizingCalculator = () => {
     availableTemplates
   } = useEnhancedCableSizing();
 
-  // Legacy calculator
+  // Legacy calculator - always initialize
   const {
     inputs: legacyInputs,
     result: legacyResult,
