@@ -26,8 +26,12 @@ serve(async (req) => {
       );
     }
     
-    // Search Reed Jobs only (skip Adzuna for now since it's failing)
-    const jobs = await searchReedJobs(query, location);
+    // Normalize location for better API results
+    const normalizedLocation = normalizeLocationForAPI(location);
+    console.log('📍 Normalized location for API:', normalizedLocation);
+    
+    // Search Reed Jobs with improved location handling
+    const jobs = await searchReedJobs(query, normalizedLocation);
     
     console.log(`✅ Found ${jobs.length} jobs from Reed`);
     
@@ -53,6 +57,37 @@ serve(async (req) => {
   }
 });
 
+function normalizeLocationForAPI(location: string): string {
+  if (!location) return 'United Kingdom';
+  
+  // Remove "United Kingdom" suffix if present
+  let normalized = location.replace(/,?\s*united kingdom$/i, '').trim();
+  
+  // If empty after removal, default to UK
+  if (!normalized) return 'United Kingdom';
+  
+  // Handle specific location mappings for better API results
+  const locationMappings: Record<string, string> = {
+    'cumbria': 'Cumbria',
+    'lake district': 'Cumbria',
+    'carlisle': 'Carlisle, Cumbria',
+    'kendal': 'Kendal, Cumbria',
+    'barrow': 'Barrow-in-Furness, Cumbria',
+    'penrith': 'Penrith, Cumbria',
+    'workington': 'Workington, Cumbria',
+    'whitehaven': 'Whitehaven, Cumbria',
+    'greater london': 'London',
+    'greater manchester': 'Manchester',
+    'west midlands': 'Birmingham',
+    'west yorkshire': 'Leeds',
+    'south wales': 'Cardiff',
+    'northern ireland': 'Belfast'
+  };
+  
+  const lowerNormalized = normalized.toLowerCase();
+  return locationMappings[lowerNormalized] || normalized;
+}
+
 async function searchReedJobs(query: string, location: string) {
   if (!reedApiKey) {
     console.log('🚫 Reed API key not available');
@@ -62,8 +97,8 @@ async function searchReedJobs(query: string, location: string) {
   try {
     const params = new URLSearchParams({
       keywords: query,
-      location: location || 'UK',
-      resultsToTake: '20'
+      location: location || 'United Kingdom',
+      resultsToTake: '50' // Increased to get more results for filtering
     });
     
     const apiUrl = `https://www.reed.co.uk/api/1.0/search?${params}`;
@@ -90,7 +125,7 @@ async function searchReedJobs(query: string, location: string) {
       return [];
     }
     
-    return data.results.map((job: any) => ({
+    const jobs = data.results.map((job: any) => ({
       id: `reed-${job.jobId}`,
       title: job.jobTitle,
       company: job.employerName,
@@ -104,8 +139,81 @@ async function searchReedJobs(query: string, location: string) {
       posted_date: job.date,
       source: 'Reed'
     }));
+
+    // Apply server-side location filtering if location is specific (not generic UK)
+    if (location && location.toLowerCase() !== 'united kingdom' && location.toLowerCase() !== 'uk') {
+      console.log('📍 Applying server-side location filtering for:', location);
+      const filteredJobs = filterJobsByLocation(jobs, location);
+      console.log(`Server-side filtering: ${filteredJobs.length}/${jobs.length} jobs match location`);
+      return filteredJobs;
+    }
+    
+    return jobs;
   } catch (error) {
     console.error('❌ Reed search failed:', error);
     return [];
   }
+}
+
+function filterJobsByLocation(jobs: any[], searchLocation: string): any[] {
+  const normalizedSearch = searchLocation.toLowerCase().trim();
+  console.log(`📍 Filtering jobs for location: "${normalizedSearch}"`);
+  
+  const filteredJobs = jobs.filter(job => {
+    const jobLocation = (job.location || '').toLowerCase();
+    
+    // Direct text matching
+    const directMatch = jobLocation.includes(normalizedSearch) || 
+                       normalizedSearch.includes(jobLocation);
+    
+    if (directMatch) {
+      console.log(`✅ Direct match: "${job.location}" matches "${searchLocation}"`);
+      return true;
+    }
+
+    // Check for common location aliases
+    const locationAliases: Record<string, string[]> = {
+      'cumbria': ['cumbria', 'lake district', 'carlisle', 'kendal', 'barrow', 'penrith', 'workington', 'whitehaven', 'cockermouth', 'keswick', 'windermere', 'ambleside', 'grasmere'],
+      'london': ['london', 'greater london', 'central london'],
+      'manchester': ['manchester', 'greater manchester', 'trafford', 'salford'],
+      'birmingham': ['birmingham', 'west midlands', 'solihull'],
+      'leeds': ['leeds', 'west yorkshire', 'bradford', 'wakefield'],
+      'glasgow': ['glasgow', 'greater glasgow', 'clyde'],
+      'edinburgh': ['edinburgh', 'lothian'],
+      'cardiff': ['cardiff', 'caerdydd', 'south wales'],
+      'belfast': ['belfast', 'northern ireland']
+    };
+
+    // Check if search location has aliases
+    for (const [region, aliases] of Object.entries(locationAliases)) {
+      if (aliases.includes(normalizedSearch)) {
+        const regionMatch = aliases.some(alias => jobLocation.includes(alias));
+        if (regionMatch) {
+          console.log(`✅ Alias match: "${job.location}" matches alias of "${searchLocation}"`);
+          return true;
+        }
+      }
+    }
+
+    // Broader word matching for partial matches
+    const searchWords = normalizedSearch.split(' ').filter(word => word.length > 2);
+    const jobWords = jobLocation.split(' ').filter(word => word.length > 2);
+    
+    const hasCommonWord = searchWords.some(searchWord => 
+      jobWords.some(jobWord => 
+        jobWord.includes(searchWord) || searchWord.includes(jobWord)
+      )
+    );
+
+    if (hasCommonWord) {
+      console.log(`✅ Word match: "${job.location}" has common words with "${searchLocation}"`);
+      return true;
+    }
+
+    console.log(`❌ No match: "${job.location}" doesn't match "${searchLocation}"`);
+    return false;
+  });
+
+  console.log(`📊 Location filtering result: ${filteredJobs.length}/${jobs.length} jobs match "${searchLocation}"`);
+  return filteredJobs;
 }

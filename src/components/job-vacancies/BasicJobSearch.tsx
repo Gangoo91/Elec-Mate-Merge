@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { formatDistanceToNow } from "date-fns";
+import { LocationService } from "@/services/locationService";
+import EnhancedJobCard from "./EnhancedJobCard";
 
 interface Job {
   id: string;
@@ -35,6 +37,24 @@ const BasicJobSearch = () => {
   const [location, setLocation] = useState("Cumbria");
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(false);
+  const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
+  const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
+
+  const handleLocationChange = (value: string) => {
+    setLocation(value);
+    if (value.length >= 2) {
+      const suggestions = LocationService.getLocationSuggestions(value);
+      setLocationSuggestions(suggestions);
+      setShowLocationSuggestions(suggestions.length > 0);
+    } else {
+      setShowLocationSuggestions(false);
+    }
+  };
+
+  const selectLocationSuggestion = (suggestion: string) => {
+    setLocation(suggestion);
+    setShowLocationSuggestions(false);
+  };
 
   const handleSearch = async () => {
     if (!query.trim()) {
@@ -75,7 +95,15 @@ const BasicJobSearch = () => {
         throw new Error(data.error);
       }
 
-      const jobResults = data.jobs || [];
+      let jobResults = data.jobs || [];
+      
+      // Apply client-side location filtering if specific location is provided
+      if (location.trim() && location.toLowerCase() !== 'uk' && location.toLowerCase() !== 'united kingdom') {
+        console.log('📍 Applying client-side location filtering for:', location);
+        jobResults = LocationService.filterJobsByLocation(jobResults, location, 100);
+        console.log(`Applied location filtering: ${jobResults.length} jobs within 100 miles of ${location}`);
+      }
+
       setJobs(jobResults);
 
       toast({
@@ -95,26 +123,21 @@ const BasicJobSearch = () => {
     }
   };
 
-  const formatDescription = (description: string) => {
-    const clean = description.replace(/<[^>]*>/g, '');
-    return clean.length > 150 ? clean.substring(0, 150) + "..." : clean;
-  };
-
-  const formatDate = (dateString: string) => {
-    try {
-      const date = new Date(dateString);
-      return formatDistanceToNow(date, { addSuffix: true });
-    } catch {
-      return "Recently posted";
-    }
+  const handleApply = (jobId: string, url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+    
+    toast({
+      title: "Application Opened",
+      description: "The job application has opened in a new tab. Good luck!"
+    });
   };
 
   return (
     <div className="space-y-6">
       {/* Search Form */}
-      <Card className="border-elec-yellow/20">
+      <Card className="border-elec-yellow/20 bg-elec-dark">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-white">
             <Search className="h-5 w-5 text-elec-yellow" />
             Job Search
           </CardTitle>
@@ -127,28 +150,44 @@ const BasicJobSearch = () => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                className="bg-elec-dark border-elec-yellow/20"
+                className="bg-elec-dark border-elec-yellow/20 text-white placeholder:text-gray-400"
               />
             </div>
             
-            <div className="md:col-span-1">
+            <div className="md:col-span-1 relative">
               <div className="relative">
                 <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
                   placeholder="Location (UK)"
                   value={location}
-                  onChange={(e) => setLocation(e.target.value)}
+                  onChange={(e) => handleLocationChange(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  className="pl-10 bg-elec-dark border-elec-yellow/20"
+                  className="pl-10 bg-elec-dark border-elec-yellow/20 text-white placeholder:text-gray-400"
                 />
               </div>
+              
+              {/* Location Suggestions */}
+              {showLocationSuggestions && (
+                <div className="absolute z-10 w-full mt-1 bg-elec-dark border border-elec-yellow/20 rounded-md shadow-lg">
+                  {locationSuggestions.map((suggestion, index) => (
+                    <button
+                      key={index}
+                      className="w-full text-left px-3 py-2 hover:bg-elec-yellow/10 text-sm text-white"
+                      onClick={() => selectLocationSuggestion(suggestion)}
+                    >
+                      <MapPin className="inline h-3 w-3 mr-2 text-gray-400" />
+                      {suggestion}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div>
               <Button 
                 onClick={handleSearch} 
                 disabled={loading}
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 w-full"
+                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 w-full font-medium"
               >
                 {loading ? (
                   <>
@@ -170,72 +209,18 @@ const BasicJobSearch = () => {
       {/* Results */}
       {jobs.length > 0 && (
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold">
+          <h3 className="text-lg font-semibold text-white">
             {jobs.length} Job{jobs.length !== 1 ? 's' : ''} Found
           </h3>
 
           <div className="grid gap-4">
             {jobs.map((job) => (
-              <Card key={job.id} className="border-l-4 border-l-gray-200 hover:border-l-elec-yellow/50 transition-all">
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-lg font-semibold text-gray-900 truncate mb-2">
-                        {job.title}
-                      </h3>
-                      
-                      <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
-                        <div className="flex items-center gap-1">
-                          <Building2 className="h-4 w-4" />
-                          <span className="font-medium">{job.company}</span>
-                        </div>
-                        
-                        <div className="flex items-center gap-1">
-                          <MapPin className="h-4 w-4" />
-                          <span>{job.location}</span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center gap-2 mb-3">
-                        <Badge variant="outline" className="bg-gray-50">
-                          {job.type}
-                        </Badge>
-                        
-                        <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-                          {job.source}
-                        </Badge>
-                      </div>
-
-                      <p className="text-sm text-gray-700 mb-4">
-                        {formatDescription(job.description)}
-                      </p>
-                    </div>
-
-                    <div className="flex flex-col items-end gap-2">
-                      {job.salary && (
-                        <div className="px-3 py-1 rounded-md border bg-gray-50 text-gray-700 border-gray-200 text-sm font-medium">
-                          {job.salary}
-                        </div>
-                      )}
-                      
-                      <div className="flex items-center gap-1 text-xs text-gray-500">
-                        <Calendar className="h-3 w-3" />
-                        {formatDate(job.posted_date)}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-end">
-                    <Button
-                      onClick={() => window.open(job.external_url, '_blank')}
-                      className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
-                    >
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      Apply Now
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+              <EnhancedJobCard
+                key={job.id}
+                job={job}
+                selectedJob={null}
+                handleApply={handleApply}
+              />
             ))}
           </div>
         </div>
@@ -243,13 +228,24 @@ const BasicJobSearch = () => {
 
       {/* Empty State */}
       {!loading && jobs.length === 0 && query && (
-        <Card className="border-elec-yellow/20">
+        <Card className="border-elec-yellow/20 bg-elec-dark">
           <CardContent className="text-center py-12">
             <AlertCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No Jobs Found</h3>
-            <p className="text-muted-foreground">
-              Try different keywords or check back later for new opportunities
+            <h3 className="text-lg font-semibold mb-2 text-white">No Jobs Found</h3>
+            <p className="text-gray-400 mb-4">
+              {location 
+                ? `No electrical jobs found matching "${query}" in or near ${location}`
+                : `No electrical jobs found matching "${query}"`
+              }
             </p>
+            <div className="text-sm text-gray-400">
+              <p>Try:</p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>Different keywords or job titles</li>
+                <li>Expanding your search location</li>
+                <li>Using broader terms like "electrician" or "electrical"</li>
+              </ul>
+            </div>
           </CardContent>
         </Card>
       )}

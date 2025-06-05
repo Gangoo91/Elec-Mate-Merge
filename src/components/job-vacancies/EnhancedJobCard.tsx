@@ -61,18 +61,18 @@ const EnhancedJobCard: React.FC<EnhancedJobCardProps> = ({
 
   const getSalaryCompetitivenessColor = (competitiveness?: string) => {
     switch (competitiveness) {
-      case 'high': return 'text-green-600 bg-green-50 border-green-200';
-      case 'low': return 'text-red-600 bg-red-50 border-red-200';
-      default: return 'text-blue-600 bg-blue-50 border-blue-200';
+      case 'high': return 'text-green-400 bg-green-950 border-green-800';
+      case 'low': return 'text-red-400 bg-red-950 border-red-800';
+      default: return 'text-blue-400 bg-blue-950 border-blue-800';
     }
   };
 
   const getSourceColor = (source: string) => {
     switch (source.toLowerCase()) {
-      case 'reed': return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'adzuna': return 'bg-purple-100 text-purple-800 border-purple-200';
-      case 'indeed': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'reed': return 'bg-blue-950 text-blue-300 border-blue-800';
+      case 'adzuna': return 'bg-purple-950 text-purple-300 border-purple-800';
+      case 'indeed': return 'bg-green-950 text-green-300 border-green-800';
+      default: return 'bg-gray-800 text-gray-300 border-gray-600';
     }
   };
 
@@ -86,17 +86,17 @@ const EnhancedJobCard: React.FC<EnhancedJobCardProps> = ({
   return (
     <Card 
       id={`job-${job.id}`}
-      className={`transition-all duration-200 hover:shadow-lg border-l-4 ${
+      className={`transition-all duration-200 hover:shadow-lg border-l-4 bg-elec-dark border-gray-700 ${
         isSelected 
           ? 'border-l-elec-yellow bg-elec-yellow/5 shadow-md' 
-          : 'border-l-gray-200 hover:border-l-elec-yellow/50'
+          : 'border-l-gray-600 hover:border-l-elec-yellow/50'
       } ${isAIEnhanced ? 'ring-1 ring-elec-yellow/20' : ''}`}
     >
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-2">
-              <h3 className="text-lg font-semibold text-gray-900 truncate">
+              <h3 className="text-lg font-semibold text-white truncate">
                 {job.title}
               </h3>
               {isAIEnhanced && job.relevanceScore && job.relevanceScore > 0.8 && (
@@ -107,10 +107,10 @@ const EnhancedJobCard: React.FC<EnhancedJobCardProps> = ({
               )}
             </div>
             
-            <div className="flex items-center gap-4 text-sm text-gray-600 mb-2">
+            <div className="flex items-center gap-4 text-sm text-gray-400 mb-2">
               <div className="flex items-center gap-1">
                 <Building2 className="h-4 w-4" />
-                <span className="font-medium">{job.company}</span>
+                <span className="font-medium text-gray-300">{job.company}</span>
               </div>
               
               <div className="flex items-center gap-1">
@@ -120,7 +120,7 @@ const EnhancedJobCard: React.FC<EnhancedJobCardProps> = ({
             </div>
 
             <div className="flex items-center gap-2 mb-3">
-              <Badge variant="outline" className="bg-gray-50">
+              <Badge variant="outline" className="bg-gray-800 text-gray-300 border-gray-600">
                 {job.type}
               </Badge>
               
@@ -132,7 +132,7 @@ const EnhancedJobCard: React.FC<EnhancedJobCardProps> = ({
               </Badge>
 
               {job.experienceLevel && (
-                <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                <Badge variant="outline" className="bg-blue-950 text-blue-300 border-blue-800">
                   {job.experienceLevel}
                 </Badge>
               )}
@@ -142,7 +142,7 @@ const EnhancedJobCard: React.FC<EnhancedJobCardProps> = ({
           <div className="flex flex-col items-end gap-2">
             {job.salary && (
               <div className={`px-3 py-1 rounded-md border text-sm font-medium ${
-                job.salaryCompetitiveness ? getSalaryCompetitivenessColor(job.salaryCompetitiveness) : 'bg-gray-50 text-gray-700 border-gray-200'
+                job.salaryCompetitiveness ? getSalaryCompetitivenessColor(job.salaryCompetitiveness) : 'bg-gray-800 text-gray-300 border-gray-600'
               }`}>
                 <div className="flex items-center gap-1">
                   <Banknote className="h-3 w-3" />
@@ -168,7 +168,7 @@ const EnhancedJobCard: React.FC<EnhancedJobCardProps> = ({
         {/* AI Tags */}
         {job.aiTags && job.aiTags.length > 0 && (
           <div className="mb-3">
-            <div className="flex items-center gap-1 mb-2 text-xs text-gray-600">
+            <div className="flex items-center gap-1 mb-2 text-xs text-gray-400">
               <Award className="h-3 w-3" />
               <span>Key Skills</span>
             </div>
@@ -183,7 +183,7 @@ const EnhancedJobCard: React.FC<EnhancedJobCardProps> = ({
                 </Badge>
               ))}
               {job.aiTags.length > 4 && (
-                <Badge variant="secondary" className="text-xs bg-gray-100 text-gray-600">
+                <Badge variant="secondary" className="text-xs bg-gray-800 text-gray-400">
                   +{job.aiTags.length - 4} more
                 </Badge>
               )}
@@ -193,26 +193,26 @@ const EnhancedJobCard: React.FC<EnhancedJobCardProps> = ({
 
         {/* Job Description */}
         <div className="mb-4">
-          <p className="text-sm text-gray-700 leading-relaxed">
+          <p className="text-sm text-gray-300 leading-relaxed">
             {truncateDescription(job.description)}
           </p>
         </div>
 
         {/* Career Progression */}
         {job.careerProgression && (
-          <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-md">
-            <div className="flex items-center gap-1 mb-1 text-xs text-green-700">
+          <div className="mb-4 p-3 bg-green-950 border border-green-800 rounded-md">
+            <div className="flex items-center gap-1 mb-1 text-xs text-green-400">
               <TrendingUp className="h-3 w-3" />
               <span>Career Progression</span>
             </div>
-            <p className="text-xs text-green-800">{job.careerProgression}</p>
+            <p className="text-xs text-green-300">{job.careerProgression}</p>
           </div>
         )}
 
         {/* Skills Required */}
         {job.skillsRequired && job.skillsRequired.length > 0 && (
           <div className="mb-4">
-            <div className="flex items-center gap-1 mb-2 text-xs text-gray-600">
+            <div className="flex items-center gap-1 mb-2 text-xs text-gray-400">
               <CheckCircle className="h-3 w-3" />
               <span>Requirements</span>
             </div>
@@ -221,13 +221,13 @@ const EnhancedJobCard: React.FC<EnhancedJobCardProps> = ({
                 <Badge 
                   key={index} 
                   variant="outline" 
-                  className="text-xs bg-gray-50 text-gray-700 border-gray-300"
+                  className="text-xs bg-gray-800 text-gray-300 border-gray-600"
                 >
                   {skill}
                 </Badge>
               ))}
               {job.skillsRequired.length > 3 && (
-                <Badge variant="outline" className="text-xs bg-gray-50 text-gray-600">
+                <Badge variant="outline" className="text-xs bg-gray-800 text-gray-400">
                   +{job.skillsRequired.length - 3} more
                 </Badge>
               )}
