@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -164,7 +163,7 @@ const IntelligentJobSearch: React.FC = () => {
                 <SelectValue placeholder="Job Type (Optional)" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Types</SelectItem>
+                <SelectItem value="all">All Types</SelectItem>
                 <SelectItem value="full-time">Full-time</SelectItem>
                 <SelectItem value="part-time">Part-time</SelectItem>
                 <SelectItem value="contract">Contract</SelectItem>
@@ -177,7 +176,7 @@ const IntelligentJobSearch: React.FC = () => {
                 <SelectValue placeholder="Experience Level (Optional)" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Levels</SelectItem>
+                <SelectItem value="all">All Levels</SelectItem>
                 <SelectItem value="entry">Entry Level</SelectItem>
                 <SelectItem value="intermediate">Intermediate</SelectItem>
                 <SelectItem value="senior">Senior</SelectItem>
