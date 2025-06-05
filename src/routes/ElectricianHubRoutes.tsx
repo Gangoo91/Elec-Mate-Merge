@@ -11,6 +11,7 @@ import Materials from "@/pages/Materials";
 import ToolsGuide from "@/pages/ToolsGuide";
 import LivePricing from "@/pages/LivePricing";
 import ElectricalHub from "@/pages/ElectricalHub";
+import CareerProgression from "@/pages/electrician/CareerProgression";
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -26,6 +27,7 @@ const ElectricianHubRoutes = () => (
     <Route path="live-pricing" element={<LivePricing />} />
     <Route path="mental-health" element={<ApprenticeMentalHealth />} />
     <Route path="mentor-connect" element={<ApprenticeMentor />} />
+    <Route path="career-progression" element={<CareerProgression />} />
   </Routes>
 );
 
