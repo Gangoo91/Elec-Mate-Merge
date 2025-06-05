@@ -20,10 +20,14 @@ serve(async (req) => {
     const sources = [];
     const searchQueries = [query];
     
+    // Normalize location for better API calls
+    const normalizedLocation = normalizeLocationForAPI(location);
+    console.log('Normalized location:', normalizedLocation);
+    
     // Search Reed Jobs
     if (reedApiKey) {
       try {
-        const reedJobs = await searchReedJobs(query, location, filters);
+        const reedJobs = await searchReedJobs(query, normalizedLocation, filters);
         allJobs.push(...reedJobs);
         sources.push('Reed');
         console.log(`Found ${reedJobs.length} jobs from Reed`);
@@ -35,7 +39,7 @@ serve(async (req) => {
     // Search Adzuna Jobs
     if (adzunaAppId && adzunaAppKey) {
       try {
-        const adzunaJobs = await searchAdzunaJobs(query, location, filters);
+        const adzunaJobs = await searchAdzunaJobs(query, normalizedLocation, filters);
         allJobs.push(...adzunaJobs);
         sources.push('Adzuna');
         console.log(`Found ${adzunaJobs.length} jobs from Adzuna`);
@@ -92,6 +96,31 @@ serve(async (req) => {
     );
   }
 });
+
+function normalizeLocationForAPI(location: string): string {
+  if (!location) return 'United Kingdom';
+  
+  // Remove "United Kingdom" suffix if present
+  let normalized = location.replace(/,?\s*united kingdom$/i, '').trim();
+  
+  // If empty after removal, default to UK
+  if (!normalized) return 'United Kingdom';
+  
+  // Handle specific location mappings for better API results
+  const locationMappings: Record<string, string> = {
+    'cumbria': 'Cumbria, England',
+    'lake district': 'Cumbria, England',
+    'greater london': 'London',
+    'greater manchester': 'Manchester',
+    'west midlands': 'Birmingham',
+    'west yorkshire': 'Leeds',
+    'south wales': 'Cardiff',
+    'northern ireland': 'Belfast'
+  };
+  
+  const lowerNormalized = normalized.toLowerCase();
+  return locationMappings[lowerNormalized] || normalized;
+}
 
 async function searchReedJobs(query: string, location: string, filters: any) {
   if (!reedApiKey) {
@@ -160,7 +189,14 @@ async function searchAdzunaJobs(query: string, location: string, filters: any) {
   }
   
   // Clean and format location for Adzuna API
-  const cleanLocation = location?.replace(/,?\s*united kingdom$/i, '') || 'uk';
+  let cleanLocation = location?.replace(/,?\s*united kingdom$/i, '') || 'uk';
+  
+  // Handle specific Adzuna location formatting
+  if (cleanLocation.toLowerCase().includes('cumbria')) {
+    cleanLocation = 'cumbria';
+  } else if (cleanLocation.toLowerCase() === 'united kingdom') {
+    cleanLocation = 'uk';
+  }
   
   const params = new URLSearchParams({
     app_id: adzunaAppId,
