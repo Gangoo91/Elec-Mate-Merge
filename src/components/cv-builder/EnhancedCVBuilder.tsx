@@ -5,14 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { FileText, Download, Eye, Save, Wand2, Sparkles } from "lucide-react";
-import { EnhancedCVForm } from "./EnhancedCVForm";
+import { CVForm } from "./CVForm";
 import { CVPreview } from "./CVPreview";
 import { SmartCVWizard } from "./ai/SmartCVWizard";
 import { CVData, defaultCVData } from "./types";
 import { generateCVPDF } from "./pdfGenerator";
 import { toast } from "@/hooks/use-toast";
 
-const CVBuilder = () => {
+const EnhancedCVBuilder = () => {
   const [cvData, setCVData] = useState<CVData>(defaultCVData);
   const [activeTab, setActiveTab] = useState("edit");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -155,7 +155,7 @@ const CVBuilder = () => {
                   </Button>
                 </div>
               )}
-              <EnhancedCVForm cvData={cvData} onChange={setCVData} />
+              <CVForm cvData={cvData} onChange={setCVData} />
             </TabsContent>
             
             <TabsContent value="preview" className="mt-6">
@@ -177,4 +177,4 @@ const CVBuilder = () => {
   );
 };
 
-export default CVBuilder;
+export default EnhancedCVBuilder;
