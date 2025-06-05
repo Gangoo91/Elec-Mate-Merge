@@ -1,15 +1,24 @@
 
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { 
+  Calculator, 
+  RotateCcw, 
+  Zap, 
+  Settings, 
+  Bookmark,
+  FileText,
+  Thermometer,
+  Shield
+} from "lucide-react";
 import { EnhancedCableSizingInputs, EnhancedCableSizingErrors } from "./useEnhancedCableSizing";
 import { industryTemplates } from "./enhancedCableSizeData";
-import { Building, Factory, Hospital, School, Home, Zap, Thermometer, Users, Settings } from "lucide-react";
 
 interface EnhancedCableSizingFormProps {
   inputs: EnhancedCableSizingInputs;
@@ -18,11 +27,11 @@ interface EnhancedCableSizingFormProps {
   applyTemplate: (templateId: string) => void;
   calculateCableSize: () => void;
   resetCalculator: () => void;
-  currentProject: string;
+  currentProject?: string;
   setCurrentProject: (name: string) => void;
 }
 
-const EnhancedCableSizingForm = ({
+const EnhancedCableSizingForm: React.FC<EnhancedCableSizingFormProps> = ({
   inputs,
   errors,
   updateInput,
@@ -31,164 +40,98 @@ const EnhancedCableSizingForm = ({
   resetCalculator,
   currentProject,
   setCurrentProject
-}: EnhancedCableSizingFormProps) => {
-
-  const getTemplateIcon = (templateId: string) => {
-    switch (templateId) {
-      case 'residential': return Home;
-      case 'commercial': return Building;
-      case 'industrial': return Factory;
-      case 'healthcare': return Hospital;
-      case 'education': return School;
-      default: return Building;
+}) => {
+  const handleTemplateChange = (templateId: string) => {
+    if (templateId !== "none") {
+      applyTemplate(templateId);
     }
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Project Information */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/50">
+      <Card className="border-elec-yellow/20">
         <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-medium">Project Information</CardTitle>
+          <CardTitle className="text-elec-yellow flex items-center gap-2 text-base sm:text-lg">
+            <FileText className="h-4 w-5" />
+            Project Information
+          </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="space-y-2">
-            <Label htmlFor="project-name">Project Name</Label>
-            <Input 
-              id="project-name" 
-              placeholder="Enter project name" 
-              className="bg-elec-dark border-elec-yellow/20"
-              value={currentProject}
+        <CardContent className="space-y-3 sm:space-y-4">
+          <div>
+            <Label htmlFor="project-name" className="text-xs sm:text-sm">Project Name</Label>
+            <Input
+              id="project-name"
+              value={currentProject || ''}
               onChange={(e) => setCurrentProject(e.target.value)}
+              placeholder="Enter project name..."
+              className="bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm"
             />
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Industry Templates */}
-      <Card className="border-elec-yellow/20 bg-elec-gray/50">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-medium">Industry Templates</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 gap-2">
-            {industryTemplates.map((template) => {
-              const Icon = getTemplateIcon(template.id);
-              return (
-                <Button
-                  key={template.id}
-                  variant={inputs.template === template.id ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => applyTemplate(template.id)}
-                  className={`justify-start h-auto p-3 ${
-                    inputs.template === template.id ? 'bg-elec-yellow text-black' : ''
-                  }`}
-                >
-                  <Icon className="h-4 w-4 mr-2" />
-                  <div className="text-left">
-                    <div className="font-medium">{template.name}</div>
-                    <div className="text-xs opacity-75">{template.industry}</div>
-                  </div>
-                </Button>
-              );
-            })}
-          </div>
-          {inputs.template && (
-            <div className="mt-3 p-3 bg-elec-dark rounded-md">
-              <div className="text-sm text-muted-foreground">
-                {industryTemplates.find(t => t.id === inputs.template)?.description}
-              </div>
-              <div className="flex flex-wrap gap-1 mt-2">
-                {industryTemplates.find(t => t.id === inputs.template)?.complianceStandards.map(standard => (
-                  <Badge key={standard} variant="outline" className="text-xs">
-                    {standard}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Main Calculator Inputs */}
-      <Tabs defaultValue="basic" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="basic" className="flex items-center gap-1">
-            <Zap className="h-3 w-3" />
-            Basic
-          </TabsTrigger>
-          <TabsTrigger value="environmental" className="flex items-center gap-1">
-            <Thermometer className="h-3 w-3" />
-            Environment
-          </TabsTrigger>
-          <TabsTrigger value="installation" className="flex items-center gap-1">
-            <Users className="h-3 w-3" />
-            Installation
-          </TabsTrigger>
-          <TabsTrigger value="advanced" className="flex items-center gap-1">
-            <Settings className="h-3 w-3" />
-            Advanced
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="basic" className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="current">Design Current (A)</Label>
-              <Input 
-                id="current" 
-                type="number" 
-                placeholder="Enter load current" 
-                className="bg-elec-dark border-elec-yellow/20"
-                value={inputs.current}
-                onChange={(e) => updateInput('current', e.target.value)}
-              />
-              {errors.current && <p className="text-xs text-destructive">{errors.current}</p>}
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="cable-length">Cable Length (m)</Label>
-              <Input 
-                id="cable-length" 
-                type="number" 
-                placeholder="Enter cable length" 
-                className="bg-elec-dark border-elec-yellow/20"
-                value={inputs.length}
-                onChange={(e) => updateInput('length', e.target.value)}
-              />
-              {errors.length && <p className="text-xs text-destructive">{errors.length}</p>}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Cable Type</Label>
-            <Select 
-              value={inputs.cableType} 
-              onValueChange={(value) => updateInput('cableType', value)}
-            >
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                <SelectValue placeholder="Select cable type" />
+          <div>
+            <Label htmlFor="template" className="text-xs sm:text-sm">Industry Template</Label>
+            <Select value={inputs.template || "none"} onValueChange={handleTemplateChange}>
+              <SelectTrigger className="bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm">
+                <SelectValue placeholder="Select industry template..." />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="twin-and-earth">Twin and Earth</SelectItem>
-                <SelectItem value="swa">Steel Wire Armored (SWA)</SelectItem>
-                <SelectItem value="lsf">Low Smoke and Fume (LSF)</SelectItem>
-                <SelectItem value="micc">Mineral Insulated (MICC)</SelectItem>
-                <SelectItem value="fplsoh">FP LSoH</SelectItem>
-                <SelectItem value="data">Data Cable</SelectItem>
-                <SelectItem value="fire-alarm">Fire Alarm Cable</SelectItem>
+                <SelectItem value="none">No template</SelectItem>
+                {industryTemplates.map(template => (
+                  <SelectItem key={template.id} value={template.id}>
+                    {template.name}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
+            {inputs.template && inputs.template !== "none" && (
+              <div className="mt-2">
+                <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow">
+                  {industryTemplates.find(t => t.id === inputs.template)?.name} Applied
+                </Badge>
+              </div>
+            )}
           </div>
+        </CardContent>
+      </Card>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="voltage">Supply Voltage (V)</Label>
-              <Select 
-                value={inputs.voltage} 
-                onValueChange={(value) => updateInput('voltage', value)}
-              >
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+      {/* Basic Electrical Parameters */}
+      <Card className="border-elec-yellow/20">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-elec-yellow flex items-center gap-2 text-base sm:text-lg">
+            <Zap className="h-4 w-5" />
+            Electrical Parameters
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3 sm:space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div>
+              <Label htmlFor="current" className="text-xs sm:text-sm">
+                Load Current (A) <span className="text-red-500">*</span>
+              </Label>
+              <Input
+                id="current"
+                type="number"
+                value={inputs.current}
+                onChange={(e) => updateInput('current', e.target.value)}
+                placeholder="Enter current in amps"
+                className={`bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm ${
+                  errors.current ? 'border-red-500' : ''
+                }`}
+              />
+              {errors.current && (
+                <p className="text-red-500 text-xs mt-1">{errors.current}</p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="voltage" className="text-xs sm:text-sm">
+                System Voltage (V) <span className="text-red-500">*</span>
+              </Label>
+              <Select value={inputs.voltage} onValueChange={(value) => updateInput('voltage', value)}>
+                <SelectTrigger className={`bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm ${
+                  errors.voltage ? 'border-red-500' : ''
+                }`}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -197,165 +140,224 @@ const EnhancedCableSizingForm = ({
                   <SelectItem value="110">110V (Site Supply)</SelectItem>
                 </SelectContent>
               </Select>
+              {errors.voltage && (
+                <p className="text-red-500 text-xs mt-1">{errors.voltage}</p>
+              )}
             </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="voltage-drop">Max Voltage Drop (%)</Label>
-              <Select 
-                value={inputs.voltageDrop} 
-                onValueChange={(value) => updateInput('voltageDrop', value)}
-              >
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+
+            <div>
+              <Label htmlFor="length" className="text-xs sm:text-sm">
+                Cable Length (m) <span className="text-red-500">*</span>
+              </Label>
+              <Input
+                id="length"
+                type="number"
+                value={inputs.length}
+                onChange={(e) => updateInput('length', e.target.value)}
+                placeholder="Enter length in metres"
+                className={`bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm ${
+                  errors.length ? 'border-red-500' : ''
+                }`}
+              />
+              {errors.length && (
+                <p className="text-red-500 text-xs mt-1">{errors.length}</p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="voltageDrop" className="text-xs sm:text-sm">
+                Max Voltage Drop (%) <span className="text-red-500">*</span>
+              </Label>
+              <Select value={inputs.voltageDrop} onValueChange={(value) => updateInput('voltageDrop', value)}>
+                <SelectTrigger className={`bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm ${
+                  errors.voltageDrop ? 'border-red-500' : ''
+                }`}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="3">3% (Lighting)</SelectItem>
-                  <SelectItem value="5">5% (Other Uses)</SelectItem>
-                  <SelectItem value="2.5">2.5% (Critical Systems)</SelectItem>
+                  <SelectItem value="5">5% (Power)</SelectItem>
+                  <SelectItem value="6">6% (Motors)</SelectItem>
+                  <SelectItem value="custom">Custom</SelectItem>
                 </SelectContent>
               </Select>
+              {errors.voltageDrop && (
+                <p className="text-red-500 text-xs mt-1">{errors.voltageDrop}</p>
+              )}
             </div>
           </div>
-        </TabsContent>
+        </CardContent>
+      </Card>
 
-        <TabsContent value="environmental" className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="ambient-temperature">Ambient Temperature (°C)</Label>
-              <Input 
-                id="ambient-temperature" 
-                type="number" 
-                placeholder="30" 
-                className="bg-elec-dark border-elec-yellow/20"
-                value={inputs.ambientTemperature}
-                onChange={(e) => updateInput('ambientTemperature', e.target.value)}
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="grouping-factor">Grouping Factor</Label>
-              <Select 
-                value={inputs.groupingFactor} 
-                onValueChange={(value) => updateInput('groupingFactor', value)}
-              >
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+      {/* Cable & Installation */}
+      <Card className="border-elec-yellow/20">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-elec-yellow flex items-center gap-2 text-base sm:text-lg">
+            <Settings className="h-4 w-5" />
+            Cable & Installation
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3 sm:space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div>
+              <Label htmlFor="cableType" className="text-xs sm:text-sm">Cable Type</Label>
+              <Select value={inputs.cableType} onValueChange={(value) => updateInput('cableType', value)}>
+                <SelectTrigger className="bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="1">1.0 (Single circuit)</SelectItem>
-                  <SelectItem value="0.8">0.8 (2-3 circuits)</SelectItem>
-                  <SelectItem value="0.7">0.7 (4-6 circuits)</SelectItem>
-                  <SelectItem value="0.65">0.65 (7-9 circuits)</SelectItem>
-                  <SelectItem value="0.6">0.6 (10+ circuits)</SelectItem>
+                  <SelectItem value="twin-and-earth">Twin & Earth</SelectItem>
+                  <SelectItem value="swa">SWA Armoured</SelectItem>
+                  <SelectItem value="micc">MICC Fire Resistant</SelectItem>
+                  <SelectItem value="fplsoh">FP LSoH</SelectItem>
+                  <SelectItem value="data">Data Cable</SelectItem>
+                  <SelectItem value="fire-alarm">Fire Alarm</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="installationType" className="text-xs sm:text-sm">Insulation Type</Label>
+              <Select value={inputs.installationType} onValueChange={(value) => updateInput('installationType', value)}>
+                <SelectTrigger className="bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pvc">PVC (70°C)</SelectItem>
+                  <SelectItem value="xlpe">XLPE (90°C)</SelectItem>
+                  <SelectItem value="epr">EPR (90°C)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="installationMethod" className="text-xs sm:text-sm">Installation Method</Label>
+              <Select value={inputs.installationMethod} onValueChange={(value) => updateInput('installationMethod', value)}>
+                <SelectTrigger className="bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="clipped-direct">Clipped Direct</SelectItem>
+                  <SelectItem value="in-conduit">In Conduit</SelectItem>
+                  <SelectItem value="in-trunking">In Trunking</SelectItem>
+                  <SelectItem value="on-tray">On Cable Tray</SelectItem>
+                  <SelectItem value="direct-buried">Direct Buried</SelectItem>
+                  <SelectItem value="in-duct">In Duct</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="environment" className="text-xs sm:text-sm">Environment</Label>
+              <Select value={inputs.environment} onValueChange={(value) => updateInput('environment', value)}>
+                <SelectTrigger className="bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="indoor-dry">Indoor Dry</SelectItem>
+                  <SelectItem value="indoor-damp">Indoor Damp</SelectItem>
+                  <SelectItem value="outdoor">Outdoor</SelectItem>
+                  <SelectItem value="underground">Underground</SelectItem>
+                  <SelectItem value="industrial">Industrial</SelectItem>
+                  <SelectItem value="corrosive">Corrosive</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
+        </CardContent>
+      </Card>
 
-          <div className="space-y-2">
-            <Label>Environment</Label>
-            <Select 
-              value={inputs.environment} 
-              onValueChange={(value) => updateInput('environment', value)}
-            >
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="indoor-dry">Indoor Dry</SelectItem>
-                <SelectItem value="indoor-damp">Indoor Damp</SelectItem>
-                <SelectItem value="outdoor">Outdoor</SelectItem>
-                <SelectItem value="underground">Underground</SelectItem>
-                <SelectItem value="corrosive">Corrosive Environment</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Installation Method</Label>
-            <Select 
-              value={inputs.installationMethod} 
-              onValueChange={(value) => updateInput('installationMethod', value)}
-            >
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="clipped-direct">Clipped Direct</SelectItem>
-                <SelectItem value="in-conduit">In Conduit</SelectItem>
-                <SelectItem value="in-trunking">In Trunking</SelectItem>
-                <SelectItem value="on-tray">On Tray</SelectItem>
-                <SelectItem value="direct-buried">Direct Buried</SelectItem>
-                <SelectItem value="in-duct">In Duct</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="installation" className="space-y-4">
-          <div className="space-y-2">
-            <Label>Cable Insulation Type</Label>
-            <RadioGroup 
-              value={inputs.installationType} 
-              onValueChange={(value: "pvc" | "xlpe" | "epr") => updateInput('installationType', value)}
-              className="flex space-x-4"
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="pvc" id="pvc" />
-                <Label htmlFor="pvc">PVC</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="xlpe" id="xlpe" />
-                <Label htmlFor="xlpe">XLPE</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="epr" id="epr" />
-                <Label htmlFor="epr">EPR</Label>
-              </div>
-            </RadioGroup>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Load Type</Label>
-            <Select 
-              value={inputs.loadType} 
-              onValueChange={(value) => updateInput('loadType', value)}
-            >
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="resistive">Resistive (Heating, Lighting)</SelectItem>
-                <SelectItem value="inductive">Inductive (Motors, Transformers)</SelectItem>
-                <SelectItem value="electronic">Electronic (IT Equipment)</SelectItem>
-                <SelectItem value="mixed">Mixed Load</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="advanced" className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="future-expansion">Future Expansion (%)</Label>
-              <Input 
-                id="future-expansion" 
-                type="number" 
-                placeholder="25" 
-                className="bg-elec-dark border-elec-yellow/20"
-                value={inputs.futureExpansion}
-                onChange={(e) => updateInput('futureExpansion', e.target.value)}
+      {/* Environmental Factors */}
+      <Card className="border-elec-yellow/20">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-elec-yellow flex items-center gap-2 text-base sm:text-lg">
+            <Thermometer className="h-4 w-5" />
+            Environmental Factors
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3 sm:space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div>
+              <Label htmlFor="ambientTemperature" className="text-xs sm:text-sm">
+                Ambient Temperature (°C)
+              </Label>
+              <Input
+                id="ambientTemperature"
+                type="number"
+                value={inputs.ambientTemperature}
+                onChange={(e) => updateInput('ambientTemperature', e.target.value)}
+                placeholder="30"
+                className="bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm"
               />
-              <p className="text-xs text-muted-foreground">Additional capacity for future loads</p>
             </div>
 
-            <div className="space-y-2">
-              <Label>MCB Type</Label>
-              <Select 
-                value={inputs.mcbType} 
-                onValueChange={(value) => updateInput('mcbType', value)}
-              >
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+            <div>
+              <Label htmlFor="groupingFactor" className="text-xs sm:text-sm">
+                Grouping Factor
+              </Label>
+              <Select value={inputs.groupingFactor} onValueChange={(value) => updateInput('groupingFactor', value)}>
+                <SelectTrigger className="bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1">1.0 (Single Cable)</SelectItem>
+                  <SelectItem value="0.8">0.8 (2-3 Cables)</SelectItem>
+                  <SelectItem value="0.7">0.7 (4-6 Cables)</SelectItem>
+                  <SelectItem value="0.65">0.65 (7-12 Cables)</SelectItem>
+                  <SelectItem value="0.6">0.6 (13-20 Cables)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="futureExpansion" className="text-xs sm:text-sm">
+                Future Expansion (%)
+              </Label>
+              <Select value={inputs.futureExpansion} onValueChange={(value) => updateInput('futureExpansion', value)}>
+                <SelectTrigger className="bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="0">0% (No expansion)</SelectItem>
+                  <SelectItem value="25">25% (Standard)</SelectItem>
+                  <SelectItem value="50">50% (High growth)</SelectItem>
+                  <SelectItem value="100">100% (Future doubling)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="loadType" className="text-xs sm:text-sm">Load Type</Label>
+              <Select value={inputs.loadType} onValueChange={(value) => updateInput('loadType', value)}>
+                <SelectTrigger className="bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="resistive">Resistive (Heating)</SelectItem>
+                  <SelectItem value="inductive">Inductive (Motors)</SelectItem>
+                  <SelectItem value="capacitive">Capacitive</SelectItem>
+                  <SelectItem value="non-linear">Non-linear (IT)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Protection & Compliance */}
+      <Card className="border-elec-yellow/20">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-elec-yellow flex items-center gap-2 text-base sm:text-lg">
+            <Shield className="h-4 w-5" />
+            Protection & Compliance
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3 sm:space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div>
+              <Label htmlFor="mcbType" className="text-xs sm:text-sm">MCB/RCBO Type</Label>
+              <Select value={inputs.mcbType} onValueChange={(value) => updateInput('mcbType', value)}>
+                <SelectTrigger className="bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -365,50 +367,55 @@ const EnhancedCableSizingForm = ({
                 </SelectContent>
               </Select>
             </div>
-          </div>
 
-          <div className="space-y-2">
-            <Label>Earthing System</Label>
-            <Select 
-              value={inputs.earthingSystem} 
-              onValueChange={(value) => updateInput('earthingSystem', value)}
-            >
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="tn-s">TN-S</SelectItem>
-                <SelectItem value="tn-c-s">TN-C-S</SelectItem>
-                <SelectItem value="tt">TT</SelectItem>
-                <SelectItem value="it">IT</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+            <div>
+              <Label htmlFor="earthingSystem" className="text-xs sm:text-sm">Earthing System</Label>
+              <Select value={inputs.earthingSystem} onValueChange={(value) => updateInput('earthingSystem', value)}>
+                <SelectTrigger className="bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="tn-s">TN-S</SelectItem>
+                  <SelectItem value="tn-c-s">TN-C-S</SelectItem>
+                  <SelectItem value="tt">TT</SelectItem>
+                  <SelectItem value="it">IT</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-          <div className="space-y-2">
-            <Label>Harmonics</Label>
-            <Select 
-              value={inputs.harmonics} 
-              onValueChange={(value) => updateInput('harmonics', value)}
-            >
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="none">None/Minimal</SelectItem>
-                <SelectItem value="moderate">Moderate (Office equipment)</SelectItem>
-                <SelectItem value="high">High (Data centres, LED lighting)</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="sm:col-span-2">
+              <Label htmlFor="harmonics" className="text-xs sm:text-sm">Harmonic Content</Label>
+              <Select value={inputs.harmonics} onValueChange={(value) => updateInput('harmonics', value)}>
+                <SelectTrigger className="bg-elec-gray-light/5 border-elec-yellow/20 focus:border-elec-yellow text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">None/Minimal</SelectItem>
+                  <SelectItem value="low">Low (Linear loads)</SelectItem>
+                  <SelectItem value="medium">Medium (Mixed loads)</SelectItem>
+                  <SelectItem value="high">High (IT/Variable drives)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-        </TabsContent>
-      </Tabs>
+        </CardContent>
+      </Card>
 
-      <div className="flex space-x-3 pt-4">
-        <Button onClick={calculateCableSize} className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90">
+      {/* Action Buttons */}
+      <div className="flex flex-col sm:flex-row gap-3 pt-2">
+        <Button
+          onClick={calculateCableSize}
+          className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80 text-sm sm:text-base py-2 sm:py-3"
+        >
+          <Calculator className="h-4 w-4 mr-2" />
           Calculate Cable Size
         </Button>
-        <Button variant="outline" onClick={resetCalculator} className="flex-1">
+        <Button
+          onClick={resetCalculator}
+          variant="outline"
+          className="flex-1 sm:flex-none border-elec-yellow/30 hover:bg-elec-yellow/10 text-sm sm:text-base py-2 sm:py-3"
+        >
+          <RotateCcw className="h-4 w-4 mr-2" />
           Reset
         </Button>
       </div>
