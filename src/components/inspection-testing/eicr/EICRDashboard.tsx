@@ -58,6 +58,11 @@ const EICRDashboard = () => {
     }
   };
 
+  const handleCircuitsChange = (circuits: any[]) => {
+    // Handle circuits change - this could update the EICR context if needed
+    console.log('Circuits updated:', circuits);
+  };
+
   return (
     <div className="space-y-6">
       {/* EICR Status Header */}
@@ -163,7 +168,7 @@ const EICRDashboard = () => {
           </TabsContent>
 
           <TabsContent value="circuits" className="mt-6">
-            <CircuitManager />
+            <CircuitManager onCircuitsChange={handleCircuitsChange} />
           </TabsContent>
 
           <TabsContent value="preview" className="mt-6">
