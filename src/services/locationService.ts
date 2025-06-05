@@ -12,7 +12,7 @@ const UK_LOCATIONS: LocationData[] = [
   {
     name: "Cumbria",
     coordinates: { lat: 54.4609, lng: -2.9623 },
-    aliases: ["cumbria", "lake district", "carlisle", "kendal", "barrow"],
+    aliases: ["cumbria", "lake district", "carlisle", "kendal", "barrow", "penrith", "workington", "whitehaven", "barrow-in-furness", "cockermouth", "keswick", "windermere", "ambleside", "grasmere"],
     region: "North West England",
     country: "England"
   },
@@ -139,30 +139,81 @@ export class LocationService {
   }
 
   static filterJobsByLocation(jobs: any[], searchLocation: string, maxDistanceMiles: number = 50): any[] {
-    const locationMatch = this.findLocationMatch(searchLocation);
-    
-    if (!locationMatch || !locationMatch.coordinates) {
-      // If we can't find coordinates, fall back to text matching
-      return jobs.filter(job => 
-        job.location.toLowerCase().includes(this.normalizeLocation(searchLocation))
-      );
+    if (!searchLocation || searchLocation.toLowerCase() === 'united kingdom') {
+      console.log('🌍 No specific location filter - returning all jobs');
+      return jobs;
     }
 
-    return jobs.filter(job => {
-      const jobLocationMatch = this.findLocationMatch(job.location);
+    const normalizedSearch = this.normalizeLocation(searchLocation);
+    console.log(`📍 Filtering jobs for location: "${normalizedSearch}"`);
+    
+    // Find the search location match
+    const searchLocationMatch = this.findLocationMatch(searchLocation);
+    console.log('🎯 Search location match:', searchLocationMatch?.name || 'Not found');
+
+    const filteredJobs = jobs.filter(job => {
+      const jobLocation = job.location || '';
+      const normalizedJobLocation = this.normalizeLocation(jobLocation);
       
-      if (jobLocationMatch && jobLocationMatch.coordinates) {
+      // Direct text matching first (most reliable)
+      const directMatch = normalizedJobLocation.includes(normalizedSearch) || 
+                         normalizedSearch.includes(normalizedJobLocation);
+      
+      if (directMatch) {
+        console.log(`✅ Direct match: "${jobLocation}" matches "${searchLocation}"`);
+        return true;
+      }
+
+      // Check if job location matches any aliases of the search location
+      if (searchLocationMatch) {
+        const aliasMatch = searchLocationMatch.aliases.some(alias => 
+          normalizedJobLocation.includes(alias) || alias.includes(normalizedJobLocation)
+        );
+        
+        if (aliasMatch) {
+          console.log(`✅ Alias match: "${jobLocation}" matches alias of "${searchLocation}"`);
+          return true;
+        }
+      }
+
+      // Check if job location is a known location that's nearby
+      const jobLocationMatch = this.findLocationMatch(jobLocation);
+      
+      if (searchLocationMatch && jobLocationMatch && 
+          searchLocationMatch.coordinates && jobLocationMatch.coordinates) {
         const distance = this.calculateDistance(
-          locationMatch.coordinates.lat,
-          locationMatch.coordinates.lng,
+          searchLocationMatch.coordinates.lat,
+          searchLocationMatch.coordinates.lng,
           jobLocationMatch.coordinates.lat,
           jobLocationMatch.coordinates.lng
         );
-        return distance <= maxDistanceMiles;
+        
+        if (distance <= maxDistanceMiles) {
+          console.log(`✅ Distance match: "${jobLocation}" is ${distance.toFixed(1)} miles from "${searchLocation}"`);
+          return true;
+        }
       }
+
+      // Broader matching for partial matches
+      const words = normalizedSearch.split(' ');
+      const jobWords = normalizedJobLocation.split(' ');
       
-      // Fall back to text matching if coordinates not available
-      return job.location.toLowerCase().includes(this.normalizeLocation(searchLocation));
+      const hasCommonWord = words.some(word => 
+        word.length > 2 && jobWords.some(jobWord => 
+          jobWord.includes(word) || word.includes(jobWord)
+        )
+      );
+
+      if (hasCommonWord) {
+        console.log(`✅ Word match: "${jobLocation}" has common words with "${searchLocation}"`);
+        return true;
+      }
+
+      console.log(`❌ No match: "${jobLocation}" doesn't match "${searchLocation}"`);
+      return false;
     });
+
+    console.log(`📊 Location filtering result: ${filteredJobs.length}/${jobs.length} jobs match "${searchLocation}"`);
+    return filteredJobs;
   }
 }

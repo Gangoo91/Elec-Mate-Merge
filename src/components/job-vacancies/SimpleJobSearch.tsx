@@ -103,14 +103,13 @@ const SimpleJobSearch = () => {
       return;
     }
 
-    // Validate location if provided
-    if (location && !LocationService.isValidUKLocation(location)) {
+    // Validate location if provided (but be more lenient)
+    if (location && location.toLowerCase() !== 'united kingdom' && !LocationService.isValidUKLocation(location)) {
       toast({
-        title: "Invalid Location",
-        description: `"${location}" doesn't appear to be a valid UK location. Try: London, Manchester, Birmingham, etc.`,
-        variant: "destructive"
+        title: "Location Note",
+        description: `"${location}" may not be a recognised UK location. Search will continue but results may be limited.`,
+        variant: "default"
       });
-      return;
     }
 
     console.log('🔍 Starting job search:', { query, location, filters });
@@ -162,12 +161,14 @@ const SimpleJobSearch = () => {
       console.log(`✅ Processed ${jobResults.length} jobs from API`);
       setJobs(jobResults);
 
-      // Apply location filtering if location is specified
+      // Apply location filtering if location is specified and not generic UK
       let locationFilteredJobs = jobResults;
-      if (location.trim()) {
+      if (location.trim() && location.toLowerCase() !== 'united kingdom') {
         console.log('📍 Applying location filtering for:', location);
-        locationFilteredJobs = LocationService.filterJobsByLocation(jobResults, location, 50);
-        console.log(`Applied location filtering: ${locationFilteredJobs.length} jobs within 50 miles of ${location}`);
+        locationFilteredJobs = LocationService.filterJobsByLocation(jobResults, location, 100); // Increased to 100 miles
+        console.log(`Applied location filtering: ${locationFilteredJobs.length} jobs within 100 miles of ${location}`);
+      } else {
+        console.log('🌍 No location filtering applied - showing all UK jobs');
       }
 
       setFilteredJobs(locationFilteredJobs);
@@ -196,7 +197,7 @@ const SimpleJobSearch = () => {
         toast({
           title: "No Jobs Found",
           description: location 
-            ? `Try expanding your search area or checking nearby locations to ${location}`
+            ? `No electrical jobs found matching "${query}" in or near ${location}. Try expanding your search area or using "United Kingdom" as location.`
             : "Try different keywords or remove some filters",
           variant: "destructive"
         });
