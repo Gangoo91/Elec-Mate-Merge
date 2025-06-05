@@ -1,135 +1,97 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Plus, Trash2, Zap, Info } from 'lucide-react';
+import { Plus, Trash2, Zap } from 'lucide-react';
 
 interface Circuit {
-  id: string;
   ref: string;
   description: string;
   type: string;
-  protection: string;
   rating: string;
-  location: string;
   cableType: string;
-  cableSize: string;
-  earthingArrangement: string;
+  method: string;
+  length: string;
 }
 
 interface CircuitManagerProps {
-  onCircuitsChange?: (circuits: Circuit[]) => void;
+  onCircuitsChange: (circuits: Circuit[]) => void;
 }
 
 const CircuitManager = ({ onCircuitsChange }: CircuitManagerProps) => {
-  const [circuits, setCircuits] = useState<Circuit[]>([
-    {
-      id: '1',
-      ref: 'C1',
-      description: 'Downstairs lights',
-      type: 'Lighting',
-      protection: 'RCBO',
-      rating: '6A',
-      location: 'Ground Floor',
-      cableType: 'Twin & Earth',
-      cableSize: '1.5mm²',
-      earthingArrangement: 'TN-C-S'
+  const [circuits, setCircuits] = useState<Circuit[]>([]);
+
+  useEffect(() => {
+    // Load existing circuits from localStorage if available
+    const savedCircuits = localStorage.getItem('eicr-circuits');
+    if (savedCircuits) {
+      const parsedCircuits = JSON.parse(savedCircuits);
+      setCircuits(parsedCircuits);
+    } else {
+      // Add default circuit
+      const defaultCircuit: Circuit = {
+        ref: 'C1',
+        description: 'Socket outlets',
+        type: 'Ring Final',
+        rating: '32A',
+        cableType: '2.5mm² T&E',
+        method: 'Clipped direct',
+        length: '50m',
+      };
+      setCircuits([defaultCircuit]);
     }
-  ]);
+  }, []);
 
-  const circuitTypes = [
-    'Lighting',
-    'Socket Outlets',
-    'Cooker',
-    'Shower',
-    'Immersion Heater',
-    'Smoke Alarms',
-    'Boiler',
-    'Electric Vehicle Charging',
-    'Other'
-  ];
-
-  const protectionTypes = [
-    'MCB',
-    'RCBO',
-    'RCD + MCB',
-    'Fuse',
-    'Other'
-  ];
-
-  const ratings = [
-    '6A', '10A', '16A', '20A', '25A', '32A', '40A', '45A', '50A', '63A'
-  ];
-
-  const cableTypes = [
-    'Twin & Earth',
-    'SWA',
-    'MICC',
-    'FP200',
-    'NYM',
-    'Other'
-  ];
-
-  const cableSizes = [
-    '1mm²', '1.5mm²', '2.5mm²', '4mm²', '6mm²', '10mm²', '16mm²', '25mm²', '35mm²'
-  ];
+  useEffect(() => {
+    onCircuitsChange(circuits);
+  }, [circuits, onCircuitsChange]);
 
   const addCircuit = () => {
+    const newRef = `C${circuits.length + 1}`;
     const newCircuit: Circuit = {
-      id: Date.now().toString(),
-      ref: `C${circuits.length + 1}`,
+      ref: newRef,
       description: '',
       type: '',
-      protection: '',
       rating: '',
-      location: '',
       cableType: '',
-      cableSize: '',
-      earthingArrangement: 'TN-C-S'
+      method: '',
+      length: '',
     };
-    
-    const updatedCircuits = [...circuits, newCircuit];
-    setCircuits(updatedCircuits);
-    onCircuitsChange?.(updatedCircuits);
+    setCircuits([...circuits, newCircuit]);
   };
 
-  const removeCircuit = (id: string) => {
-    const updatedCircuits = circuits.filter(circuit => circuit.id !== id);
-    setCircuits(updatedCircuits);
-    onCircuitsChange?.(updatedCircuits);
+  const removeCircuit = (index: number) => {
+    const updatedCircuits = circuits.filter((_, i) => i !== index);
+    // Update refs to maintain sequence
+    const resequencedCircuits = updatedCircuits.map((circuit, i) => ({
+      ...circuit,
+      ref: `C${i + 1}`,
+    }));
+    setCircuits(resequencedCircuits);
   };
 
-  const updateCircuit = (id: string, field: keyof Circuit, value: string) => {
-    const updatedCircuits = circuits.map(circuit =>
-      circuit.id === id ? { ...circuit, [field]: value } : circuit
+  const updateCircuit = (index: number, field: keyof Circuit, value: string) => {
+    const updatedCircuits = circuits.map((circuit, i) =>
+      i === index ? { ...circuit, [field]: value } : circuit
     );
     setCircuits(updatedCircuits);
-    onCircuitsChange?.(updatedCircuits);
   };
 
   return (
     <div className="space-y-6">
-      {/* Header Section */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
-        <CardHeader className="pb-4">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30">
-                <Zap className="h-5 w-5 text-elec-yellow" />
+                <Zap className="h-6 w-6 text-elec-yellow" />
               </div>
-              <div>
-                <CardTitle className="text-xl">Circuit Information</CardTitle>
-                <p className="text-sm text-muted-foreground">
-                  Add and configure circuits for this installation
-                </p>
-              </div>
+              <CardTitle>Circuit Information</CardTitle>
             </div>
-            <Button 
+            <Button
               onClick={addCircuit}
               className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
             >
@@ -139,214 +101,148 @@ const CircuitManager = ({ onCircuitsChange }: CircuitManagerProps) => {
           </div>
         </CardHeader>
         <CardContent>
-          <Alert className="bg-blue-500/10 border-blue-500/30">
-            <Info className="h-4 w-4 text-blue-400" />
-            <AlertDescription className="text-blue-200">
-              Circuit information is automatically included in the EICR schedule and test results.
-              Ensure all details are accurate for compliance.
-            </AlertDescription>
-          </Alert>
-        </CardContent>
-      </Card>
-
-      {/* Circuits List */}
-      <div className="space-y-4">
-        {circuits.map((circuit, index) => (
-          <Card key={circuit.id} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Badge variant="outline" className="text-elec-yellow border-elec-yellow/50">
-                    Circuit {index + 1}
-                  </Badge>
-                  <h3 className="font-medium">
-                    {circuit.description || 'New Circuit'}
-                  </h3>
-                </div>
-                {circuits.length > 1 && (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => removeCircuit(circuit.id)}
-                    className="text-red-400 border-red-400/50 hover:bg-red-500/10"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                )}
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {/* Basic Information Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor={`ref-${circuit.id}`} className="text-sm font-medium">
-                    Circuit Ref
-                  </Label>
-                  <Input
-                    id={`ref-${circuit.id}`}
-                    value={circuit.ref}
-                    onChange={(e) => updateCircuit(circuit.id, 'ref', e.target.value)}
-                    className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50"
-                    placeholder="e.g. C1, L1, S1"
-                  />
+          <div className="space-y-6">
+            {circuits.map((circuit, index) => (
+              <div
+                key={index}
+                className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-dark/50 space-y-4"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold">Circuit {circuit.ref}</h3>
+                  {circuits.length > 1 && (
+                    <Button
+                      onClick={() => removeCircuit(index)}
+                      variant="outline"
+                      size="sm"
+                      className="text-red-400 hover:text-red-300"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  )}
                 </div>
 
-                <div className="space-y-2 sm:col-span-2">
-                  <Label htmlFor={`description-${circuit.id}`} className="text-sm font-medium">
-                    Description
-                  </Label>
-                  <Input
-                    id={`description-${circuit.id}`}
-                    value={circuit.description}
-                    onChange={(e) => updateCircuit(circuit.id, 'description', e.target.value)}
-                    className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50"
-                    placeholder="e.g. Downstairs lights, Kitchen sockets"
-                  />
-                </div>
-              </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <Label htmlFor={`description-${index}`}>Circuit Description *</Label>
+                    <Input
+                      id={`description-${index}`}
+                      value={circuit.description}
+                      onChange={(e) => updateCircuit(index, 'description', e.target.value)}
+                      placeholder="e.g., Socket outlets, Lighting circuit"
+                      className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50"
+                    />
+                  </div>
 
-              {/* Circuit Type and Protection Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Type</Label>
-                  <Select 
-                    value={circuit.type} 
-                    onValueChange={(value) => updateCircuit(circuit.id, 'type', value)}
-                  >
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50">
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      {circuitTypes.map((type) => (
-                        <SelectItem key={type} value={type}>
-                          {type}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                  <div>
+                    <Label htmlFor={`type-${index}`}>Circuit Type</Label>
+                    <Select
+                      value={circuit.type}
+                      onValueChange={(value) => updateCircuit(index, 'type', value)}
+                    >
+                      <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50">
+                        <SelectValue placeholder="Select type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Ring Final">Ring Final</SelectItem>
+                        <SelectItem value="Radial">Radial</SelectItem>
+                        <SelectItem value="Lighting">Lighting</SelectItem>
+                        <SelectItem value="Cooker">Cooker</SelectItem>
+                        <SelectItem value="Immersion Heater">Immersion Heater</SelectItem>
+                        <SelectItem value="Electric Shower">Electric Shower</SelectItem>
+                        <SelectItem value="Other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Protection</Label>
-                  <Select 
-                    value={circuit.protection} 
-                    onValueChange={(value) => updateCircuit(circuit.id, 'protection', value)}
-                  >
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50">
-                      <SelectValue placeholder="Select protection" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      {protectionTypes.map((protection) => (
-                        <SelectItem key={protection} value={protection}>
-                          {protection}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                  <div>
+                    <Label htmlFor={`rating-${index}`}>MCB Rating</Label>
+                    <Select
+                      value={circuit.rating}
+                      onValueChange={(value) => updateCircuit(index, 'rating', value)}
+                    >
+                      <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50">
+                        <SelectValue placeholder="Select rating" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="6A">6A</SelectItem>
+                        <SelectItem value="10A">10A</SelectItem>
+                        <SelectItem value="16A">16A</SelectItem>
+                        <SelectItem value="20A">20A</SelectItem>
+                        <SelectItem value="25A">25A</SelectItem>
+                        <SelectItem value="32A">32A</SelectItem>
+                        <SelectItem value="40A">40A</SelectItem>
+                        <SelectItem value="45A">45A</SelectItem>
+                        <SelectItem value="50A">50A</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Rating</Label>
-                  <Select 
-                    value={circuit.rating} 
-                    onValueChange={(value) => updateCircuit(circuit.id, 'rating', value)}
-                  >
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50">
-                      <SelectValue placeholder="Select rating" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      {ratings.map((rating) => (
-                        <SelectItem key={rating} value={rating}>
-                          {rating}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <div>
+                    <Label htmlFor={`cable-${index}`}>Cable Type & Size</Label>
+                    <Input
+                      id={`cable-${index}`}
+                      value={circuit.cableType}
+                      onChange={(e) => updateCircuit(index, 'cableType', e.target.value)}
+                      placeholder="e.g., 2.5mm² T&E"
+                      className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor={`method-${index}`}>Installation Method</Label>
+                    <Select
+                      value={circuit.method}
+                      onValueChange={(value) => updateCircuit(index, 'method', value)}
+                    >
+                      <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50">
+                        <SelectValue placeholder="Select method" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Clipped direct">Clipped direct</SelectItem>
+                        <SelectItem value="In conduit">In conduit</SelectItem>
+                        <SelectItem value="In trunking">In trunking</SelectItem>
+                        <SelectItem value="Underground">Underground</SelectItem>
+                        <SelectItem value="Overhead">Overhead</SelectItem>
+                        <SelectItem value="In thermal insulation">In thermal insulation</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor={`length-${index}`}>Approximate Length</Label>
+                    <Input
+                      id={`length-${index}`}
+                      value={circuit.length}
+                      onChange={(e) => updateCircuit(index, 'length', e.target.value)}
+                      placeholder="e.g., 50m"
+                      className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50"
+                    />
+                  </div>
                 </div>
               </div>
+            ))}
 
-              {/* Cable Information Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor={`location-${circuit.id}`} className="text-sm font-medium">
-                    Location
-                  </Label>
-                  <Input
-                    id={`location-${circuit.id}`}
-                    value={circuit.location}
-                    onChange={(e) => updateCircuit(circuit.id, 'location', e.target.value)}
-                    className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50"
-                    placeholder="e.g. Ground Floor, First Floor"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Cable Type</Label>
-                  <Select 
-                    value={circuit.cableType} 
-                    onValueChange={(value) => updateCircuit(circuit.id, 'cableType', value)}
-                  >
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50">
-                      <SelectValue placeholder="Select cable type" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      {cableTypes.map((cableType) => (
-                        <SelectItem key={cableType} value={cableType}>
-                          {cableType}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium">Cable Size</Label>
-                  <Select 
-                    value={circuit.cableSize} 
-                    onValueChange={(value) => updateCircuit(circuit.id, 'cableSize', value)}
-                  >
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50">
-                      <SelectValue placeholder="Select cable size" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      {cableSizes.map((size) => (
-                        <SelectItem key={size} value={size}>
-                          {size}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {circuits.length === 0 && (
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="pt-6 text-center">
-            <div className="flex flex-col items-center gap-4">
-              <div className="p-3 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30">
-                <Zap className="h-8 w-8 text-elec-yellow" />
-              </div>
-              <div>
-                <h3 className="font-medium mb-2">No Circuits Added</h3>
-                <p className="text-sm text-muted-foreground mb-4">
-                  Add circuits to begin configuring your electrical installation
-                </p>
-                <Button 
+            {circuits.length === 0 && (
+              <div className="text-center py-8">
+                <p className="text-muted-foreground mb-4">No circuits added yet</p>
+                <Button
                   onClick={addCircuit}
                   className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
                 >
-                  <Plus className="h-4 w-4 mr-2" />
                   Add First Circuit
                 </Button>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="text-sm text-muted-foreground">
+        <p>
+          * Add all circuits that will be inspected and tested. Each circuit must have a unique reference 
+          and description to identify it clearly in the EICR report.
+        </p>
+      </div>
     </div>
   );
 };

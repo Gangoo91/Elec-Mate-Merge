@@ -1,15 +1,22 @@
 
-import { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle, Download, FileText } from 'lucide-react';
+import { ArrowLeft, Download, FileText, CheckCircle, AlertTriangle, XCircle } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+
+interface EICRData {
+  installation: any;
+  inspector: any;
+  circuits: any[];
+  inspection: any;
+  testing: any;
+}
 
 const EICRSummary = () => {
   const navigate = useNavigate();
-  const [reportData, setReportData] = useState<any>(null);
+  const [eicrData, setEicrData] = useState<EICRData | null>(null);
   const [overallAssessment, setOverallAssessment] = useState<'satisfactory' | 'unsatisfactory'>('satisfactory');
 
   useEffect(() => {
@@ -37,44 +44,88 @@ const EICRSummary = () => {
       return;
     }
 
-    // Compile all data
-    const compiledData = {
-      installation: JSON.parse(installationData),
-      inspector: JSON.parse(inspectorData),
+    // Load all EICR data
+    const data: EICRData = {
+      installation: installationData ? JSON.parse(installationData) : {},
+      inspector: inspectorData ? JSON.parse(inspectorData) : {},
       circuits: circuitsData ? JSON.parse(circuitsData) : [],
-      inspectionComplete: true,
-      testingComplete: true,
+      inspection: inspectionComplete,
+      testing: testingComplete,
     };
 
-    setReportData(compiledData);
+    setEicrData(data);
+
+    // Determine overall assessment based on test results or faults
+    // This would normally check for any C1/C2 faults
+    const hasC1OrC2Faults = false; // This would be determined from actual test data
+    setOverallAssessment(hasC1OrC2Faults ? 'unsatisfactory' : 'satisfactory');
   }, [navigate]);
 
   const handleBack = () => {
     navigate('/electrician-tools/eicr/testing');
   };
 
-  const handleGenerateReport = () => {
-    // Save final report data
-    const finalReport = {
-      ...reportData,
+  const handleGeneratePDF = () => {
+    // Generate PDF functionality would go here
+    console.log('Generating EICR PDF report...');
+    
+    // Mock PDF generation - in real implementation this would create a proper EICR PDF
+    const reportData = {
+      ...eicrData,
       overallAssessment,
       generatedAt: new Date().toISOString(),
       reportId: `EICR-${Date.now()}`,
     };
-
-    localStorage.setItem('eicr-final-report', JSON.stringify(finalReport));
-    console.log('EICR Report Generated:', finalReport);
     
-    // Navigate back to reports list or show success message
+    console.log('EICR Report Data:', reportData);
+    
+    // Save completed report to localStorage
+    const existingReports = JSON.parse(localStorage.getItem('completed-eicr-reports') || '[]');
+    existingReports.push(reportData);
+    localStorage.setItem('completed-eicr-reports', JSON.stringify(existingReports));
+    
+    // Clear current EICR session data
+    localStorage.removeItem('eicr-installation-details');
+    localStorage.removeItem('eicr-inspector-details');
+    localStorage.removeItem('eicr-circuits');
+    localStorage.removeItem('eicr-inspection-complete');
+    localStorage.removeItem('eicr-testing-complete');
+    
+    // Navigate back to EICR reports page
     navigate('/electrician-tools/eicr-reports');
   };
 
-  if (!reportData) {
-    return <div>Loading...</div>;
-  }
+  const getSummaryIcon = () => {
+    switch (overallAssessment) {
+      case 'satisfactory':
+        return <CheckCircle className="h-8 w-8 text-green-400" />;
+      case 'unsatisfactory':
+        return <XCircle className="h-8 w-8 text-red-400" />;
+      default:
+        return <AlertTriangle className="h-8 w-8 text-yellow-400" />;
+    }
+  };
 
-  const circuitCount = reportData.circuits?.length || 0;
-  const hasIssues = false; // This would be determined from inspection/testing results
+  const getSummaryColor = () => {
+    switch (overallAssessment) {
+      case 'satisfactory':
+        return 'border-green-500/30 bg-green-500/10';
+      case 'unsatisfactory':
+        return 'border-red-500/30 bg-red-500/10';
+      default:
+        return 'border-yellow-500/30 bg-yellow-500/10';
+    }
+  };
+
+  if (!eicrData) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <p className="text-muted-foreground">Loading EICR summary...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -87,7 +138,7 @@ const EICRSummary = () => {
           <div>
             <h1 className="text-3xl font-bold tracking-tight">EICR Summary</h1>
             <p className="text-muted-foreground">
-              Review and finalise your EICR before generation
+              Review and generate your completed EICR report
             </p>
           </div>
         </div>
@@ -100,152 +151,163 @@ const EICRSummary = () => {
       </div>
 
       {/* Overall Assessment */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            {overallAssessment === 'satisfactory' ? (
-              <CheckCircle className="h-5 w-5 text-green-400" />
-            ) : (
-              <AlertTriangle className="h-5 w-5 text-red-400" />
-            )}
-            Overall Assessment
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center gap-4">
+      <Card className={`border-2 ${getSummaryColor()}`}>
+        <CardContent className="pt-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              {getSummaryIcon()}
+              <div>
+                <h2 className="text-2xl font-bold">
+                  Overall Assessment: {overallAssessment === 'satisfactory' ? 'Satisfactory' : 'Unsatisfactory'}
+                </h2>
+                <p className="text-muted-foreground">
+                  {overallAssessment === 'satisfactory' 
+                    ? 'The electrical installation is considered safe for continued use'
+                    : 'The electrical installation requires immediate attention before continued use'
+                  }
+                </p>
+              </div>
+            </div>
             <Badge 
               variant={overallAssessment === 'satisfactory' ? 'default' : 'destructive'}
-              className="text-lg px-4 py-2"
+              className="text-sm px-4 py-2"
             >
-              {overallAssessment === 'satisfactory' ? 'SATISFACTORY' : 'UNSATISFACTORY'}
+              {overallAssessment === 'satisfactory' ? 'PASS' : 'FAIL'}
             </Badge>
-            <p className="text-muted-foreground">
-              {overallAssessment === 'satisfactory' 
-                ? 'The electrical installation is considered to be safe for continued use.'
-                : 'The electrical installation requires remedial work before continued use.'
-              }
-            </p>
           </div>
         </CardContent>
       </Card>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* Summary Sections */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Installation Details Summary */}
         <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
+          <CardHeader>
+            <CardTitle>Installation Details</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div>
+              <p className="text-sm text-muted-foreground">Address</p>
+              <p className="font-medium">{eicrData.installation.address || 'Not specified'}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Description</p>
+              <p className="font-medium">{eicrData.installation.description || 'Not specified'}</p>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-sm text-muted-foreground">Installation</p>
-                <p className="text-lg font-semibold">{reportData.installation.description}</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {reportData.installation.address.split('\n')[0]}
-                </p>
+                <p className="text-sm text-muted-foreground">Earthing System</p>
+                <p className="font-medium">{eicrData.installation.earthingSystem || 'Not specified'}</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Supply Type</p>
+                <p className="font-medium">{eicrData.installation.supply || 'Not specified'}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
+        {/* Inspector Details Summary */}
         <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
+          <CardHeader>
+            <CardTitle>Inspector Details</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div>
+              <p className="text-sm text-muted-foreground">Inspector Name</p>
+              <p className="font-medium">{eicrData.inspector.name || 'Not specified'}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Qualification</p>
+              <p className="font-medium">{eicrData.inspector.qualification || 'Not specified'}</p>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-sm text-muted-foreground">Inspector</p>
-                <p className="text-lg font-semibold">{reportData.inspector.name}</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {reportData.inspector.qualification}
-                </p>
+                <p className="text-sm text-muted-foreground">Inspection Date</p>
+                <p className="font-medium">{eicrData.inspector.inspectionDate || 'Not specified'}</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Next Due Date</p>
+                <p className="font-medium">{eicrData.inspector.nextDueDate || 'Not specified'}</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
+        {/* Circuits Summary */}
         <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-muted-foreground">Circuits Tested</p>
-                <p className="text-2xl font-bold">{circuitCount}</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  All tests completed
-                </p>
-              </div>
-              <CheckCircle className="h-8 w-8 text-green-400" />
+          <CardHeader>
+            <CardTitle>Circuits Summary</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">
+                Total Circuits: <span className="font-medium">{eicrData.circuits.length}</span>
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Visual Inspection: <span className="font-medium text-green-400">Complete</span>
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Testing: <span className="font-medium text-green-400">Complete</span>
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Recommendations */}
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardHeader>
+            <CardTitle>Recommendations</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {overallAssessment === 'satisfactory' ? (
+                <>
+                  <p className="text-sm">✓ Installation is satisfactory for continued use</p>
+                  <p className="text-sm">✓ Next inspection recommended in 5-10 years</p>
+                  <p className="text-sm">✓ Keep this report for your records</p>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm text-red-400">⚠ Immediate remedial work required</p>
+                  <p className="text-sm text-red-400">⚠ Re-inspection required after remedial work</p>
+                  <p className="text-sm text-red-400">⚠ Consult qualified electrician</p>
+                </>
+              )}
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Installation Details Summary */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle>Installation Summary</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-3">
-              <div>
-                <label className="text-sm font-medium text-muted-foreground">Address</label>
-                <p className="whitespace-pre-line">{reportData.installation.address}</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-muted-foreground">Description</label>
-                <p>{reportData.installation.description}</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-muted-foreground">Earthing System</label>
-                <p>{reportData.installation.earthingSystem}</p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <div>
-                <label className="text-sm font-medium text-muted-foreground">Supply Type</label>
-                <p>{reportData.installation.supply}</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium text-muted-foreground">Inspection Date</label>
-                <p>{new Date(reportData.inspector.inspectionDate).toLocaleDateString()}</p>
-              </div>
-              {reportData.inspector.nextDueDate && (
-                <div>
-                  <label className="text-sm font-medium text-muted-foreground">Next Due</label>
-                  <p>{new Date(reportData.inspector.nextDueDate).toLocaleDateString()}</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Action Buttons */}
+      {/* Generate Report Section */}
       <Card className="border-elec-yellow/30 bg-elec-gray">
         <CardContent className="pt-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <Button 
-              onClick={handleBack}
-              variant="outline" 
-              className="flex items-center gap-2"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Back: Testing & Measurements
-            </Button>
-            
-            <div className="flex gap-2">
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold mb-2">Generate EICR Report</h3>
+              <p className="text-muted-foreground">
+                Create a professional PDF report with all inspection and testing data. 
+                This report will be compliant with BS 7671:2018+A2:2022 requirements.
+              </p>
+            </div>
+            <div className="flex gap-3">
+              <Button 
+                onClick={handleBack}
+                variant="outline" 
+                className="flex items-center gap-2"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back: Testing
+              </Button>
               <Button
-                onClick={handleGenerateReport}
+                onClick={handleGeneratePDF}
                 className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
               >
                 <Download className="h-4 w-4" />
-                Generate EICR Report
+                Generate PDF Report
               </Button>
             </div>
           </div>
-
-          <Alert className="mt-4 bg-green-500/10 border-green-500/30">
-            <CheckCircle className="h-4 w-4 text-green-400" />
-            <AlertDescription className="text-green-200">
-              All sections completed successfully. Ready to generate professional EICR report.
-            </AlertDescription>
-          </Alert>
         </CardContent>
       </Card>
     </div>

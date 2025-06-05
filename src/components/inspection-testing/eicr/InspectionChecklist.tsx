@@ -3,205 +3,183 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Eye, CheckCircle, AlertTriangle, Info } from 'lucide-react';
-import { ReportType } from './DigitalEICRForm';
+import { ClipboardCheck, AlertTriangle } from 'lucide-react';
 
 interface InspectionItem {
   id: string;
   category: string;
   item: string;
-  requirement: string;
-  isRequired: boolean;
   checked: boolean;
-  nonCompliant: boolean;
   notes: string;
+  isCritical: boolean;
 }
 
 interface InspectionChecklistProps {
-  reportType: ReportType;
+  reportType: string;
   onComplete: () => void;
 }
 
 const InspectionChecklist = ({ reportType, onComplete }: InspectionChecklistProps) => {
-  const [inspectionItems, setInspectionItems] = useState<InspectionItem[]>([]);
-  const [showNonCompliantOnly, setShowNonCompliantOnly] = useState(false);
+  const [inspectionItems, setInspectionItems] = useState<InspectionItem[]>([
+    // Consumer Unit / Distribution Board
+    {
+      id: 'cu-1',
+      category: 'Consumer Unit',
+      item: 'Adequate access and working space around consumer unit',
+      checked: false,
+      notes: '',
+      isCritical: true,
+    },
+    {
+      id: 'cu-2',
+      category: 'Consumer Unit',
+      item: 'Enclosure suitable for environment and properly secured',
+      checked: false,
+      notes: '',
+      isCritical: true,
+    },
+    {
+      id: 'cu-3',
+      category: 'Consumer Unit',
+      item: 'All circuits properly identified and labelled',
+      checked: false,
+      notes: '',
+      isCritical: false,
+    },
+    {
+      id: 'cu-4',
+      category: 'Consumer Unit',
+      item: 'RCD(s) present and properly identified',
+      checked: false,
+      notes: '',
+      isCritical: true,
+    },
+
+    // Earthing and Bonding
+    {
+      id: 'earth-1',
+      category: 'Earthing & Bonding',
+      item: 'Main earthing conductor present and adequately sized',
+      checked: false,
+      notes: '',
+      isCritical: true,
+    },
+    {
+      id: 'earth-2',
+      category: 'Earthing & Bonding',
+      item: 'Main bonding conductors present to water and gas services',
+      checked: false,
+      notes: '',
+      isCritical: true,
+    },
+    {
+      id: 'earth-3',
+      category: 'Earthing & Bonding',
+      item: 'Supplementary bonding present where required',
+      checked: false,
+      notes: '',
+      isCritical: true,
+    },
+
+    // Wiring Systems
+    {
+      id: 'wire-1',
+      category: 'Wiring Systems',
+      item: 'Cables properly supported and protected from damage',
+      checked: false,
+      notes: '',
+      isCritical: false,
+    },
+    {
+      id: 'wire-2',
+      category: 'Wiring Systems',
+      item: 'Cables suitable for environmental conditions',
+      checked: false,
+      notes: '',
+      isCritical: true,
+    },
+    {
+      id: 'wire-3',
+      category: 'Wiring Systems',
+      item: 'Adequate protection against mechanical damage',
+      checked: false,
+      notes: '',
+      isCritical: true,
+    },
+    {
+      id: 'wire-4',
+      category: 'Wiring Systems',
+      item: 'Joints and connections accessible for inspection',
+      checked: false,
+      notes: '',
+      isCritical: false,
+    },
+
+    // Accessories and Equipment
+    {
+      id: 'acc-1',
+      category: 'Accessories',
+      item: 'Socket outlets and switches properly secured',
+      checked: false,
+      notes: '',
+      isCritical: false,
+    },
+    {
+      id: 'acc-2',
+      category: 'Accessories',
+      item: 'Adequate IP rating for location',
+      checked: false,
+      notes: '',
+      isCritical: true,
+    },
+    {
+      id: 'acc-3',
+      category: 'Accessories',
+      item: 'No damage or deterioration evident',
+      checked: false,
+      notes: '',
+      isCritical: false,
+    },
+
+    // Special Locations
+    {
+      id: 'special-1',
+      category: 'Special Locations',
+      item: 'Bathroom zones comply with BS 7671 requirements',
+      checked: false,
+      notes: '',
+      isCritical: true,
+    },
+    {
+      id: 'special-2',
+      category: 'Special Locations',
+      item: 'Kitchen requirements observed (where applicable)',
+      checked: false,
+      notes: '',
+      isCritical: false,
+    },
+  ]);
+
+  const [completionPercentage, setCompletionPercentage] = useState(0);
+  const [canComplete, setCanComplete] = useState(false);
 
   useEffect(() => {
-    // Initialize inspection items based on report type
-    const baseItems: Omit<InspectionItem, 'checked' | 'nonCompliant' | 'notes'>[] = [
-      // Consumer Unit / Distribution Board
-      {
-        id: 'cu-condition',
-        category: 'Consumer Unit',
-        item: 'General condition and suitability',
-        requirement: 'BS 7671 Regulation 421.1.201',
-        isRequired: true,
-      },
-      {
-        id: 'cu-enclosure',
-        category: 'Consumer Unit',
-        item: 'Enclosure condition and IP rating',
-        requirement: 'BS 7671 Section 416',
-        isRequired: true,
-      },
-      {
-        id: 'cu-labelling',
-        category: 'Consumer Unit',
-        item: 'Circuit labelling and identification',
-        requirement: 'BS 7671 Regulation 514.8',
-        isRequired: true,
-      },
-      
-      // Protective Devices
-      {
-        id: 'pd-mcbs',
-        category: 'Protective Devices',
-        item: 'MCB/RCBO condition and ratings',
-        requirement: 'BS 7671 Chapter 43',
-        isRequired: true,
-      },
-      {
-        id: 'pd-rcds',
-        category: 'Protective Devices',
-        item: 'RCD presence and ratings',
-        requirement: 'BS 7671 Regulation 411.3.3',
-        isRequired: true,
-      },
-      {
-        id: 'pd-coordination',
-        category: 'Protective Devices',
-        item: 'Protective device coordination',
-        requirement: 'BS 7671 Chapter 53',
-        isRequired: true,
-      },
+    const checkedItems = inspectionItems.filter(item => item.checked).length;
+    const totalItems = inspectionItems.length;
+    const percentage = Math.round((checkedItems / totalItems) * 100);
+    setCompletionPercentage(percentage);
 
-      // Earthing and Bonding
-      {
-        id: 'eb-earth-electrode',
-        category: 'Earthing & Bonding',
-        item: 'Earth electrode connection',
-        requirement: 'BS 7671 Regulation 542.3',
-        isRequired: true,
-      },
-      {
-        id: 'eb-main-bonding',
-        category: 'Earthing & Bonding',
-        item: 'Main protective bonding',
-        requirement: 'BS 7671 Regulation 411.3.1.2',
-        isRequired: true,
-      },
-      {
-        id: 'eb-supplementary',
-        category: 'Earthing & Bonding',
-        item: 'Supplementary bonding (where required)',
-        requirement: 'BS 7671 Regulation 415.2',
-        isRequired: false,
-      },
+    // Check if all critical items are checked
+    const criticalItems = inspectionItems.filter(item => item.isCritical);
+    const checkedCriticalItems = criticalItems.filter(item => item.checked);
+    const allCriticalChecked = checkedCriticalItems.length === criticalItems.length;
+    
+    setCanComplete(allCriticalChecked && percentage >= 80);
+  }, [inspectionItems]);
 
-      // Wiring Systems
-      {
-        id: 'ws-cable-condition',
-        category: 'Wiring Systems',
-        item: 'Cable condition and support',
-        requirement: 'BS 7671 Chapter 52',
-        isRequired: true,
-      },
-      {
-        id: 'ws-cable-routing',
-        category: 'Wiring Systems',
-        item: 'Cable routing and protection',
-        requirement: 'BS 7671 Section 522',
-        isRequired: true,
-      },
-      {
-        id: 'ws-connections',
-        category: 'Wiring Systems',
-        item: 'Connection integrity',
-        requirement: 'BS 7671 Section 526',
-        isRequired: true,
-      },
-
-      // Accessories and Equipment
-      {
-        id: 'ae-sockets',
-        category: 'Accessories',
-        item: 'Socket outlet condition and suitability',
-        requirement: 'BS 7671 Section 553',
-        isRequired: true,
-      },
-      {
-        id: 'ae-switches',
-        category: 'Accessories',
-        item: 'Switch and control gear condition',
-        requirement: 'BS 7671 Section 537',
-        isRequired: true,
-      },
-      {
-        id: 'ae-luminaires',
-        category: 'Accessories',
-        item: 'Luminaire fixings and condition',
-        requirement: 'BS 7671 Section 559',
-        isRequired: true,
-      },
-
-      // Safety and Protection
-      {
-        id: 'sp-isolation',
-        category: 'Safety',
-        item: 'Means of isolation and switching',
-        requirement: 'BS 7671 Chapter 46',
-        isRequired: true,
-      },
-      {
-        id: 'sp-barriers',
-        category: 'Safety',
-        item: 'Barriers and enclosures',
-        requirement: 'BS 7671 Section 416',
-        isRequired: true,
-      },
-      {
-        id: 'sp-warning-labels',
-        category: 'Safety',
-        item: 'Warning labels and notices',
-        requirement: 'BS 7671 Section 514',
-        isRequired: true,
-      },
-    ];
-
-    // Add report-specific items
-    if (reportType === 'initial-verification') {
-      baseItems.push(
-        {
-          id: 'iv-design-verification',
-          category: 'Design Verification',
-          item: 'Design calculations and documentation',
-          requirement: 'BS 7671 Chapter 31',
-          isRequired: true,
-        },
-        {
-          id: 'iv-installation-method',
-          category: 'Installation Method',
-          item: 'Installation method compliance',
-          requirement: 'BS 7671 Appendix 4',
-          isRequired: true,
-        }
-      );
-    }
-
-    setInspectionItems(
-      baseItems.map(item => ({
-        ...item,
-        checked: false,
-        nonCompliant: false,
-        notes: '',
-      }))
-    );
-  }, [reportType]);
-
-  const updateItem = (id: string, field: keyof InspectionItem, value: any) => {
+  const updateItem = (id: string, field: 'checked' | 'notes', value: boolean | string) => {
     setInspectionItems(prev =>
       prev.map(item =>
         item.id === id ? { ...item, [field]: value } : item
@@ -209,167 +187,90 @@ const InspectionChecklist = ({ reportType, onComplete }: InspectionChecklistProp
     );
   };
 
-  const getProgress = () => {
-    const requiredItems = inspectionItems.filter(item => item.isRequired);
-    const completedRequired = requiredItems.filter(item => item.checked);
-    return {
-      completed: completedRequired.length,
-      total: requiredItems.length,
-      percentage: (completedRequired.length / requiredItems.length) * 100,
+  const handleComplete = () => {
+    // Save inspection data
+    const inspectionData = {
+      items: inspectionItems,
+      completionPercentage,
+      completedAt: new Date().toISOString(),
     };
+    localStorage.setItem('eicr-inspection-data', JSON.stringify(inspectionData));
+    onComplete();
   };
 
-  const getNonCompliantCount = () => {
-    return inspectionItems.filter(item => item.nonCompliant).length;
-  };
-
-  const canComplete = () => {
-    const progress = getProgress();
-    return progress.completed === progress.total;
-  };
-
-  const filteredItems = showNonCompliantOnly
-    ? inspectionItems.filter(item => item.nonCompliant)
-    : inspectionItems;
-
-  const groupedItems = filteredItems.reduce((groups, item) => {
-    if (!groups[item.category]) {
-      groups[item.category] = [];
+  const groupedItems = inspectionItems.reduce((acc, item) => {
+    if (!acc[item.category]) {
+      acc[item.category] = [];
     }
-    groups[item.category].push(item);
-    return groups;
+    acc[item.category].push(item);
+    return acc;
   }, {} as Record<string, InspectionItem[]>);
-
-  const progress = getProgress();
-  const nonCompliantCount = getNonCompliantCount();
 
   return (
     <div className="space-y-6">
-      {/* Progress Summary */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
-        <CardHeader className="pb-3">
+      {/* Progress Header */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-2">
-              <Eye className="h-5 w-5 text-elec-yellow" />
-              Visual Inspection Progress
-            </CardTitle>
-            <div className="flex gap-2">
-              <Badge variant="outline">
-                {progress.completed}/{progress.total} Required Items
-              </Badge>
-              {nonCompliantCount > 0 && (
-                <Badge variant="destructive">
-                  {nonCompliantCount} Non-Compliant
-                </Badge>
-              )}
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30">
+                <ClipboardCheck className="h-6 w-6 text-elec-yellow" />
+              </div>
+              <div>
+                <CardTitle>Visual Inspection Progress</CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  {completionPercentage}% complete ({inspectionItems.filter(i => i.checked).length}/{inspectionItems.length} items)
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="text-right">
+                <p className="text-sm text-muted-foreground">Progress</p>
+                <div className="w-32 h-2 bg-elec-dark rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-elec-yellow transition-all duration-300" 
+                    style={{ width: `${completionPercentage}%` }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
-          <div className="w-full bg-elec-dark rounded-full h-2">
-            <div
-              className="bg-elec-yellow h-2 rounded-full transition-all"
-              style={{ width: `${progress.percentage}%` }}
-            />
-          </div>
         </CardHeader>
-        <CardContent>
-          <div className="flex gap-4">
-            <Button
-              variant={showNonCompliantOnly ? "default" : "outline"}
-              size="sm"
-              onClick={() => setShowNonCompliantOnly(!showNonCompliantOnly)}
-            >
-              {showNonCompliantOnly ? 'Show All Items' : 'Show Non-Compliant Only'}
-            </Button>
-          </div>
-        </CardContent>
       </Card>
 
-      {/* Inspection Items by Category */}
+      {/* Inspection Items */}
       {Object.entries(groupedItems).map(([category, items]) => (
         <Card key={category} className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader className="pb-4">
+          <CardHeader>
             <CardTitle className="text-lg">{category}</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-4">
             {items.map((item) => (
-              <div
-                key={item.id}
-                className={`border rounded-lg transition-all ${
-                  item.nonCompliant
-                    ? 'border-red-500/50 bg-red-500/5'
-                    : item.checked
-                    ? 'border-green-500/50 bg-green-500/5'
-                    : 'border-elec-yellow/20 bg-elec-dark/50'
-                }`}
-              >
-                {/* Header Section */}
-                <div className="p-4 pb-3">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h4 className="font-medium text-base mb-1">{item.item}</h4>
-                      <p className="text-sm text-muted-foreground">{item.requirement}</p>
-                    </div>
-                    <div className="flex items-center gap-2 ml-4">
-                      {item.isRequired && (
-                        <Badge variant="outline" className="text-xs">
-                          Required
-                        </Badge>
-                      )}
-                      {item.checked && (
-                        <CheckCircle className="h-4 w-4 text-green-400" />
-                      )}
-                      {item.nonCompliant && (
-                        <AlertTriangle className="h-4 w-4 text-red-400" />
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Checkbox Controls */}
-                  <div className="flex items-center gap-6 mb-3">
-                    <div className="flex items-center gap-2">
-                      <Checkbox
-                        id={`${item.id}-checked`}
-                        checked={item.checked}
-                        onCheckedChange={(checked) =>
-                          updateItem(item.id, 'checked', checked)
-                        }
-                        className="h-4 w-4"
-                      />
-                      <label 
-                        htmlFor={`${item.id}-checked`}
-                        className="text-sm font-medium cursor-pointer"
-                      >
-                        Inspected
-                      </label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Checkbox
-                        id={`${item.id}-non-compliant`}
-                        checked={item.nonCompliant}
-                        onCheckedChange={(checked) =>
-                          updateItem(item.id, 'nonCompliant', checked)
-                        }
-                        className="h-4 w-4 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
-                      />
-                      <label 
-                        htmlFor={`${item.id}-non-compliant`}
-                        className="text-sm font-medium cursor-pointer"
-                      >
-                        Non-Compliant
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Notes Section */}
-                <div className="px-4 pb-4">
-                  <Textarea
-                    placeholder="Add inspection notes..."
-                    value={item.notes}
-                    onChange={(e) => updateItem(item.id, 'notes', e.target.value)}
-                    className="bg-elec-dark/80 border-elec-yellow/20 text-sm min-h-[80px] resize-none focus:border-elec-yellow/50 transition-colors"
-                    rows={3}
+              <div key={item.id} className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <Checkbox
+                    checked={item.checked}
+                    onCheckedChange={(checked) => updateItem(item.id, 'checked', checked as boolean)}
+                    className="mt-1"
                   />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <Label className="text-sm font-medium">{item.item}</Label>
+                      {item.isCritical && (
+                        <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-red-500/20 border border-red-500/30">
+                          <AlertTriangle className="h-3 w-3 text-red-400" />
+                          <span className="text-xs text-red-400">Critical</span>
+                        </div>
+                      )}
+                    </div>
+                    <Textarea
+                      value={item.notes}
+                      onChange={(e) => updateItem(item.id, 'notes', e.target.value)}
+                      placeholder="Add notes or observations..."
+                      className="mt-2 bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50 text-sm"
+                      rows={2}
+                    />
+                  </div>
                 </div>
               </div>
             ))}
@@ -377,35 +278,29 @@ const InspectionChecklist = ({ reportType, onComplete }: InspectionChecklistProp
         </Card>
       ))}
 
-      {/* Completion Actions */}
+      {/* Completion Section */}
       <Card className="border-elec-yellow/30 bg-elec-gray">
         <CardContent className="pt-6">
-          {nonCompliantCount > 0 && (
-            <Alert className="mb-4 bg-red-500/10 border-red-500/30">
-              <AlertTriangle className="h-4 w-4 text-red-400" />
-              <AlertDescription className="text-red-200">
-                <strong>{nonCompliantCount} non-compliant items detected.</strong> These will be automatically
-                flagged in the EICR with appropriate fault codes.
-              </AlertDescription>
-            </Alert>
-          )}
-
-          <div className="flex justify-between items-center">
+          <div className="flex items-center justify-between">
             <div>
-              <p className="font-medium">
-                {canComplete() 
-                  ? 'Visual inspection complete - ready to proceed to testing'
-                  : `${progress.total - progress.completed} required items remaining`
-                }
-              </p>
-              <p className="text-sm text-muted-foreground">
-                All inspection items will be included in the final report
-              </p>
+              <h3 className="text-lg font-semibold mb-2">Inspection Completion</h3>
+              <div className="space-y-1">
+                <p className="text-sm text-muted-foreground">
+                  {canComplete ? (
+                    <span className="text-green-400">✓ All critical items checked - ready to proceed</span>
+                  ) : (
+                    <span className="text-yellow-400">⚠ Complete all critical items to proceed</span>
+                  )}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Critical items must be checked and overall completion should be at least 80%
+                </p>
+              </div>
             </div>
             <Button
-              onClick={onComplete}
-              disabled={!canComplete()}
-              className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              onClick={handleComplete}
+              disabled={!canComplete}
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 disabled:opacity-50"
             >
               Complete Inspection
             </Button>
