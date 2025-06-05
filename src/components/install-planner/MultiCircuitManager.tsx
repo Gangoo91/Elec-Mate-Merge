@@ -11,7 +11,7 @@ import InstallationTemplates from "./InstallationTemplates";
 import MultiCircuitEditor from "./MultiCircuitEditor";
 import QuickActionButtons from "./QuickActionButtons";
 import BulkCircuitActions from "./BulkCircuitActions";
-import { v4 as uuidv4 } from "uuid";
+import { createCircuitFromTemplate, getAvailableTemplatesForInstallationType } from "./CircuitDefaults";
 
 interface MultiCircuitManagerProps {
   planData: InstallPlanData;
@@ -26,38 +26,32 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
   const circuits = planData.circuits || [];
 
   const addCircuitFromType = (circuitType: string) => {
-    const circuitDefaults = {
-      lighting: { name: "Lighting Circuit", totalLoad: 800, voltage: 230, phases: "single" as const, cableLength: 25 },
-      power: { name: "Power Circuit", totalLoad: 2300, voltage: 230, phases: "single" as const, cableLength: 30 },
-      cooker: { name: "Cooker Circuit", totalLoad: 7000, voltage: 230, phases: "single" as const, cableLength: 15 },
-      heating: { name: "Heating Circuit", totalLoad: 3000, voltage: 230, phases: "single" as const, cableLength: 20 },
-      "ev-charging": { name: "EV Charging", totalLoad: 7400, voltage: 230, phases: "single" as const, cableLength: 25 },
-      hvac: { name: "HVAC System", totalLoad: 8000, voltage: 400, phases: "three" as const, cableLength: 30 },
-      "it-equipment": { name: "IT Equipment", totalLoad: 3000, voltage: 230, phases: "single" as const, cableLength: 40 },
-      emergency: { name: "Emergency Systems", totalLoad: 1000, voltage: 230, phases: "single" as const, cableLength: 50 },
-      motor: { name: "Motor Load", totalLoad: 15000, voltage: 400, phases: "three" as const, cableLength: 50 },
-      welding: { name: "Welding Equipment", totalLoad: 12000, voltage: 400, phases: "three" as const, cableLength: 20 },
-      crane: { name: "Crane & Hoist", totalLoad: 25000, voltage: 400, phases: "three" as const, cableLength: 75 },
-      furnace: { name: "Industrial Furnace", totalLoad: 50000, voltage: 400, phases: "three" as const, cableLength: 30 },
-      medical: { name: "Medical Equipment", totalLoad: 5000, voltage: 230, phases: "single" as const, cableLength: 35 }
-    };
-
-    const defaults = circuitDefaults[circuitType as keyof typeof circuitDefaults] || circuitDefaults.power;
-    
-    const newCircuit: Circuit = {
-      id: uuidv4(),
-      loadType: circuitType,
-      installationMethod: planData.installationType === "industrial" ? "tray" : 
-                         planData.installationType === "commercial" ? "trunking" : "clipped-direct",
-      cableType: planData.installationType === "domestic" ? "t&e" : "swa",
-      protectiveDevice: circuitType === "lighting" ? "mcb" : "rcbo",
-      enabled: true,
-      ...defaults
-    };
-
-    const updatedCircuits = [...circuits, newCircuit];
-    updatePlanData({ circuits: updatedCircuits });
-    setActiveTab("editor");
+    try {
+      const newCircuit = createCircuitFromTemplate(circuitType, planData.installationType);
+      const updatedCircuits = [...circuits, newCircuit];
+      updatePlanData({ circuits: updatedCircuits });
+      setActiveTab("editor");
+    } catch (error) {
+      console.error("Failed to create circuit from template:", error);
+      // Fallback to basic circuit creation
+      const basicCircuit: Circuit = {
+        id: crypto.randomUUID(),
+        name: `${circuitType.charAt(0).toUpperCase() + circuitType.slice(1)} Circuit`,
+        loadType: circuitType,
+        totalLoad: 1000,
+        voltage: 230,
+        phases: "single",
+        cableLength: 30,
+        installationMethod: planData.installationType === "industrial" ? "tray" : 
+                           planData.installationType === "commercial" ? "trunking" : "clipped-direct",
+        cableType: planData.installationType === "domestic" ? "t&e" : "swa",
+        protectiveDevice: "mcb",
+        enabled: true
+      };
+      const updatedCircuits = [...circuits, basicCircuit];
+      updatePlanData({ circuits: updatedCircuits });
+      setActiveTab("editor");
+    }
   };
 
   const removeLastCircuit = () => {
@@ -84,7 +78,7 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
         <div>
           <h2 className="text-2xl font-bold mb-2">Multi-Circuit Installation Design</h2>
           <p className="text-muted-foreground">
-            Design multiple circuits for your {planData.installationType} installation.
+            Design multiple circuits for your {planData.installationType} installation with BS 7671 compliance checking.
           </p>
         </div>
         <Badge variant="outline" className="border-blue-400/30 text-blue-400">
@@ -166,7 +160,7 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
                   <Grid className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">No Circuits Added</h3>
                   <p className="text-muted-foreground mb-4">
-                    Start by using quick actions, templates, or adding individual circuits.
+                    Start by using quick actions, templates, or adding individual circuits with accurate BS 7671 defaults.
                   </p>
                   <div className="flex gap-2 justify-center">
                     <Button 
@@ -204,8 +198,8 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
           </CardHeader>
           <CardContent>
             <p className="text-green-200">
-              You have configured {circuits.filter(c => c.enabled).length} active circuits. 
-              Click Next to proceed with environmental settings and analysis.
+              You have configured {circuits.filter(c => c.enabled).length} active circuits with accurate BS 7671 defaults. 
+              Click Next to proceed with environmental settings and comprehensive analysis.
             </p>
           </CardContent>
         </Card>

@@ -32,7 +32,6 @@ const CircuitControls: React.FC<CircuitControlsProps> = ({
         <Switch 
           checked={circuit.enabled}
           onCheckedChange={onToggleEnabled}
-          size="sm"
         />
         {!circuit.enabled && (
           <Badge variant="outline" className="border-gray-600/30 text-gray-400 text-xs">
