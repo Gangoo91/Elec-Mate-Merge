@@ -5,12 +5,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
-import { Trash2, Copy, Settings, Zap, Cable } from "lucide-react";
+import { Zap, Cable } from "lucide-react";
 import { Circuit } from "./types";
-import { v4 as uuidv4 } from "uuid";
+import CircuitControls from "./CircuitControls";
 
 interface MultiCircuitEditorProps {
   circuits: Circuit[];
@@ -43,7 +42,7 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
   const duplicateCircuit = (circuit: Circuit) => {
     const newCircuit: Circuit = {
       ...circuit,
-      id: uuidv4(),
+      id: crypto.randomUUID(),
       name: `${circuit.name} (Copy)`
     };
     const updatedCircuits = [...circuits, newCircuit];
@@ -98,33 +97,21 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                   <div>
                     <CardTitle className="text-base flex items-center gap-2">
                       {circuit.name}
-                      {!circuit.enabled && (
-                        <Badge variant="outline" className="border-gray-600/30 text-gray-400">
-                          Disabled
-                        </Badge>
-                      )}
                     </CardTitle>
                     <p className="text-sm text-muted-foreground">
                       {circuit.totalLoad}W • {circuit.voltage}V • {circuit.cableLength}m
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Switch 
-                    checked={circuit.enabled}
-                    onCheckedChange={(enabled) => updateCircuit(circuit.id, { enabled })}
-                  />
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleExpanded(circuit.id);
-                    }}
-                  >
-                    <Settings className="h-4 w-4" />
-                  </Button>
-                </div>
+                <CircuitControls
+                  circuit={circuit}
+                  onToggleEnabled={(enabled) => updateCircuit(circuit.id, { enabled })}
+                  onDuplicate={() => duplicateCircuit(circuit)}
+                  onDelete={() => deleteCircuit(circuit.id)}
+                  onToggleExpanded={() => toggleExpanded(circuit.id)}
+                  isExpanded={expandedCircuit === circuit.id}
+                  canDelete={circuits.length > 1}
+                />
               </div>
             </CardHeader>
 
@@ -300,28 +287,6 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                       </div>
                     </div>
                   </div>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex justify-end gap-2 mt-6 pt-4 border-t border-elec-yellow/10">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => duplicateCircuit(circuit)}
-                    className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-                  >
-                    <Copy className="h-4 w-4 mr-2" />
-                    Duplicate
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => deleteCircuit(circuit.id)}
-                    className="border-red-400/30 text-red-400 hover:bg-red-400/10"
-                  >
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Delete
-                  </Button>
                 </div>
               </CardContent>
             )}

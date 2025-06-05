@@ -9,6 +9,8 @@ import { InstallPlanData, Circuit } from "./types";
 import CircuitTypeSelector from "./CircuitTypeSelector";
 import InstallationTemplates from "./InstallationTemplates";
 import MultiCircuitEditor from "./MultiCircuitEditor";
+import QuickActionButtons from "./QuickActionButtons";
+import BulkCircuitActions from "./BulkCircuitActions";
 import { v4 as uuidv4 } from "uuid";
 
 interface MultiCircuitManagerProps {
@@ -20,7 +22,7 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
   planData, 
   updatePlanData 
 }) => {
-  const [activeTab, setActiveTab] = useState("templates");
+  const [activeTab, setActiveTab] = useState("quick-actions");
   const circuits = planData.circuits || [];
 
   const addCircuitFromType = (circuitType: string) => {
@@ -58,6 +60,13 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
     setActiveTab("editor");
   };
 
+  const removeLastCircuit = () => {
+    if (circuits.length > 0) {
+      const updatedCircuits = circuits.slice(0, -1);
+      updatePlanData({ circuits: updatedCircuits });
+    }
+  };
+
   const applyTemplate = (templateCircuits: Circuit[]) => {
     updatePlanData({ circuits: templateCircuits });
     setActiveTab("editor");
@@ -84,18 +93,22 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 bg-elec-dark border border-elec-yellow/20">
+        <TabsList className="grid w-full grid-cols-4 bg-elec-dark border border-elec-yellow/20">
+          <TabsTrigger value="quick-actions" className="flex items-center gap-2">
+            <Plus className="h-4 w-4" />
+            Quick Add
+          </TabsTrigger>
           <TabsTrigger value="templates" className="flex items-center gap-2">
             <Download className="h-4 w-4" />
             Templates
           </TabsTrigger>
-          <TabsTrigger value="add-circuits" className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            Add Circuits
+          <TabsTrigger value="advanced" className="flex items-center gap-2">
+            <Settings className="h-4 w-4" />
+            Advanced
           </TabsTrigger>
           <TabsTrigger value="editor" className="flex items-center gap-2" disabled={circuits.length === 0}>
-            <Settings className="h-4 w-4" />
-            Configure Circuits
+            <Grid className="h-4 w-4" />
+            Configure
             {circuits.length > 0 && (
               <Badge variant="secondary" className="ml-1 bg-elec-yellow/20 text-elec-yellow">
                 {circuits.length}
@@ -105,6 +118,26 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
         </TabsList>
 
         <div className="mt-6">
+          <TabsContent value="quick-actions">
+            <div className="space-y-6">
+              <QuickActionButtons
+                circuits={circuits}
+                onAddCircuit={addCircuitFromType}
+                onRemoveLastCircuit={removeLastCircuit}
+                onUseTemplate={() => setActiveTab("templates")}
+                installationType={planData.installationType}
+              />
+              
+              {circuits.length > 1 && (
+                <BulkCircuitActions
+                  circuits={circuits}
+                  onUpdateCircuits={updateCircuits}
+                  installationType={planData.installationType}
+                />
+              )}
+            </div>
+          </TabsContent>
+
           <TabsContent value="templates">
             <InstallationTemplates 
               installationType={planData.installationType}
@@ -112,7 +145,7 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
             />
           </TabsContent>
 
-          <TabsContent value="add-circuits">
+          <TabsContent value="advanced">
             <CircuitTypeSelector 
               onAddCircuit={addCircuitFromType}
               existingCircuits={circuits}
@@ -133,9 +166,17 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
                   <Grid className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">No Circuits Added</h3>
                   <p className="text-muted-foreground mb-4">
-                    Start by using a template or adding individual circuits.
+                    Start by using quick actions, templates, or adding individual circuits.
                   </p>
                   <div className="flex gap-2 justify-center">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setActiveTab("quick-actions")}
+                      className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Quick Add
+                    </Button>
                     <Button 
                       variant="outline" 
                       onClick={() => setActiveTab("templates")}
@@ -143,13 +184,6 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
                     >
                       <Download className="h-4 w-4 mr-2" />
                       Use Template
-                    </Button>
-                    <Button 
-                      onClick={() => setActiveTab("add-circuits")}
-                      className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Add Circuits
                     </Button>
                   </div>
                 </CardContent>
