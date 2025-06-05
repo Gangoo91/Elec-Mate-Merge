@@ -165,6 +165,7 @@ export type Database = {
       }
       industry_news: {
         Row: {
+          average_rating: number | null
           category: string
           content: string
           created_at: string
@@ -175,8 +176,10 @@ export type Database = {
           summary: string
           title: string
           updated_at: string
+          view_count: number | null
         }
         Insert: {
+          average_rating?: number | null
           category: string
           content: string
           created_at?: string
@@ -187,8 +190,10 @@ export type Database = {
           summary: string
           title: string
           updated_at?: string
+          view_count?: number | null
         }
         Update: {
+          average_rating?: number | null
           category?: string
           content?: string
           created_at?: string
@@ -199,6 +204,7 @@ export type Database = {
           summary?: string
           title?: string
           updated_at?: string
+          view_count?: number | null
         }
         Relationships: []
       }
@@ -249,6 +255,7 @@ export type Database = {
       }
       lfe_reports: {
         Row: {
+          average_rating: number | null
           content: string
           created_at: string
           date_published: string
@@ -259,8 +266,10 @@ export type Database = {
           summary: string
           title: string
           updated_at: string
+          view_count: number | null
         }
         Insert: {
+          average_rating?: number | null
           content: string
           created_at?: string
           date_published?: string
@@ -271,8 +280,10 @@ export type Database = {
           summary: string
           title: string
           updated_at?: string
+          view_count?: number | null
         }
         Update: {
+          average_rating?: number | null
           content?: string
           created_at?: string
           date_published?: string
@@ -283,11 +294,13 @@ export type Database = {
           summary?: string
           title?: string
           updated_at?: string
+          view_count?: number | null
         }
         Relationships: []
       }
       major_projects: {
         Row: {
+          average_rating: number | null
           awarded_to: string
           content: string
           created_at: string
@@ -300,8 +313,10 @@ export type Database = {
           summary: string
           title: string
           updated_at: string
+          view_count: number | null
         }
         Insert: {
+          average_rating?: number | null
           awarded_to: string
           content: string
           created_at?: string
@@ -314,8 +329,10 @@ export type Database = {
           summary: string
           title: string
           updated_at?: string
+          view_count?: number | null
         }
         Update: {
+          average_rating?: number | null
           awarded_to?: string
           content?: string
           created_at?: string
@@ -328,6 +345,7 @@ export type Database = {
           summary?: string
           title?: string
           updated_at?: string
+          view_count?: number | null
         }
         Relationships: []
       }
@@ -562,6 +580,7 @@ export type Database = {
       }
       safety_alerts: {
         Row: {
+          average_rating: number | null
           category: string
           content: string
           created_at: string
@@ -572,8 +591,10 @@ export type Database = {
           summary: string
           title: string
           updated_at: string
+          view_count: number | null
         }
         Insert: {
+          average_rating?: number | null
           category: string
           content: string
           created_at?: string
@@ -584,8 +605,10 @@ export type Database = {
           summary: string
           title: string
           updated_at?: string
+          view_count?: number | null
         }
         Update: {
+          average_rating?: number | null
           category?: string
           content?: string
           created_at?: string
@@ -596,15 +619,151 @@ export type Database = {
           summary?: string
           title?: string
           updated_at?: string
+          view_count?: number | null
+        }
+        Relationships: []
+      }
+      safety_bookmarks: {
+        Row: {
+          content_id: string
+          content_type: string
+          created_at: string | null
+          id: string
+          user_id: string
+        }
+        Insert: {
+          content_id: string
+          content_type: string
+          created_at?: string | null
+          id?: string
+          user_id: string
+        }
+        Update: {
+          content_id?: string
+          content_type?: string
+          created_at?: string | null
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      safety_content_admin: {
+        Row: {
+          action_type: string
+          approved_at: string | null
+          approved_by: string | null
+          content_id: string
+          content_type: string
+          created_at: string | null
+          id: string
+          new_data: Json | null
+          old_data: Json | null
+          status: string | null
+          user_id: string
+        }
+        Insert: {
+          action_type: string
+          approved_at?: string | null
+          approved_by?: string | null
+          content_id: string
+          content_type: string
+          created_at?: string | null
+          id?: string
+          new_data?: Json | null
+          old_data?: Json | null
+          status?: string | null
+          user_id: string
+        }
+        Update: {
+          action_type?: string
+          approved_at?: string | null
+          approved_by?: string | null
+          content_id?: string
+          content_type?: string
+          created_at?: string | null
+          id?: string
+          new_data?: Json | null
+          old_data?: Json | null
+          status?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      safety_content_ratings: {
+        Row: {
+          content_id: string
+          content_type: string
+          created_at: string | null
+          feedback: string | null
+          id: string
+          rating: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          content_id: string
+          content_type: string
+          created_at?: string | null
+          feedback?: string | null
+          id?: string
+          rating?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          content_id?: string
+          content_type?: string
+          created_at?: string | null
+          feedback?: string | null
+          id?: string
+          rating?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      safety_content_views: {
+        Row: {
+          content_id: string
+          content_type: string
+          created_at: string | null
+          id: string
+          ip_address: unknown | null
+          session_id: string | null
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          content_id: string
+          content_type: string
+          created_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          session_id?: string | null
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          content_id?: string
+          content_type?: string
+          created_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          session_id?: string | null
+          user_agent?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
       safety_resources: {
         Row: {
+          average_rating: number | null
           category: string
           created_at: string
           date_published: string
           download_count: number | null
+          file_bucket: string | null
+          file_path: string | null
           file_size: string | null
           file_type: string
           file_url: string | null
@@ -613,12 +772,16 @@ export type Database = {
           summary: string
           title: string
           updated_at: string
+          view_count: number | null
         }
         Insert: {
+          average_rating?: number | null
           category: string
           created_at?: string
           date_published?: string
           download_count?: number | null
+          file_bucket?: string | null
+          file_path?: string | null
           file_size?: string | null
           file_type: string
           file_url?: string | null
@@ -627,12 +790,16 @@ export type Database = {
           summary: string
           title: string
           updated_at?: string
+          view_count?: number | null
         }
         Update: {
+          average_rating?: number | null
           category?: string
           created_at?: string
           date_published?: string
           download_count?: number | null
+          file_bucket?: string | null
+          file_path?: string | null
           file_size?: string | null
           file_type?: string
           file_url?: string | null
@@ -641,6 +808,7 @@ export type Database = {
           summary?: string
           title?: string
           updated_at?: string
+          view_count?: number | null
         }
         Relationships: []
       }

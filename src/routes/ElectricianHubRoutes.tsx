@@ -1,68 +1,27 @@
-
-import { Route, Routes } from "react-router-dom";
-import ElectricalHub from "@/pages/ElectricalHub";
-import TradeEssentials from "@/pages/electrician/TradeEssentials";
-import MentorConnect from "@/pages/electrician/MentorConnect";
-import ElectricalChat from "@/pages/electrician/ElectricalChat";
-import JobVacancies from "@/pages/electrician/JobVacancies";
-import ElectricalMaterials from "@/pages/electrician/ElectricalMaterials";
-import SupplierMaterials from "@/pages/electrician/SupplierMaterials";
-import ElectricalTools from "@/pages/electrician/ElectricalTools";
+import { Routes, Route } from "react-router-dom";
 import SafetyShares from "@/pages/electrician/SafetyShares";
 import SafetyAlerts from "@/pages/electrician/safety-shares/SafetyAlerts";
-import LearningFromExperience from "@/pages/electrician/safety-shares/LearningFromExperience";
-import MajorProjects from "@/pages/electrician/safety-shares/MajorProjects";
 import IndustryNews from "@/pages/electrician/safety-shares/IndustryNews";
+import MajorProjects from "@/pages/electrician/safety-shares/MajorProjects";
+import LearningFromExperience from "@/pages/electrician/safety-shares/LearningFromExperience";
 import SafetyResources from "@/pages/electrician/safety-shares/SafetyResources";
-import LivePricing from "@/pages/electrician/LivePricing";
-import ElectricianMentalHealth from "@/pages/electrician/ElectricianMentalHealth";
-import StressManagement from "@/pages/apprentice/mental-health/StressManagement";
-import SupportNetwork from "@/pages/apprentice/mental-health/SupportNetwork";
-import WorkLifeBalance from "@/pages/apprentice/mental-health/WorkLifeBalance";
-import CrisisResources from "@/pages/apprentice/mental-health/CrisisResources";
-import BusinessDevelopment from "@/pages/electrician/BusinessDevelopment";
-import CareerProgression from "@/pages/electrician/CareerProgression";
-
-// Import placeholder business development section pages
-import BusinessStartup from "@/pages/electrician/business-development/BusinessStartup";
-import BusinessApprentices from "@/pages/electrician/business-development/BusinessApprentices";
-import BusinessElectricians from "@/pages/electrician/business-development/BusinessElectricians";
-import BusinessGrowth from "@/pages/electrician/business-development/BusinessGrowth";
-import BusinessCustomers from "@/pages/electrician/business-development/BusinessCustomers";
-import BusinessTemplates from "@/pages/electrician/business-development/BusinessTemplates";
+import SafetyAlertsEnhanced from "@/pages/electrician/safety-shares/SafetyAlertsEnhanced";
+import IndustryNewsEnhanced from "@/pages/electrician/safety-shares/IndustryNewsEnhanced";
+import SafetyResourcesEnhanced from "@/pages/electrician/safety-shares/SafetyResourcesEnhanced";
 
 const ElectricianHubRoutes = () => {
   return (
     <Routes>
-      <Route index element={<ElectricalHub />} />
-      <Route path="trade-essentials" element={<TradeEssentials />} />
-      <Route path="toolbox-talk" element={<TradeEssentials />} /> {/* Legacy redirect */}
-      <Route path="mentor-connect" element={<MentorConnect />} />
-      <Route path="chat" element={<ElectricalChat />} />
-      <Route path="job-vacancies" element={<JobVacancies />} />
-      <Route path="materials" element={<ElectricalMaterials />} />
-      <Route path="suppliers/:supplierSlug" element={<SupplierMaterials />} />
-      <Route path="tools" element={<ElectricalTools />} />
+      {/* Safety Shares Routes */}
       <Route path="safety-shares" element={<SafetyShares />} />
       <Route path="safety-shares/alerts" element={<SafetyAlerts />} />
-      <Route path="safety-shares/lfe" element={<LearningFromExperience />} />
-      <Route path="safety-shares/projects" element={<MajorProjects />} />
+      <Route path="safety-shares/alerts-enhanced" element={<SafetyAlertsEnhanced />} />
       <Route path="safety-shares/news" element={<IndustryNews />} />
+      <Route path="safety-shares/news-enhanced" element={<IndustryNewsEnhanced />} />
+      <Route path="safety-shares/projects" element={<MajorProjects />} />
+      <Route path="safety-shares/lfe" element={<LearningFromExperience />} />
       <Route path="safety-shares/resources" element={<SafetyResources />} />
-      <Route path="live-pricing" element={<LivePricing />} />
-      <Route path="mental-health" element={<ElectricianMentalHealth />} />
-      <Route path="mental-health/stress-management" element={<StressManagement />} />
-      <Route path="mental-health/support-network" element={<SupportNetwork />} />
-      <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
-      <Route path="mental-health/crisis-resources" element={<CrisisResources />} />
-      <Route path="career-progression" element={<CareerProgression />} />
-      <Route path="business-development" element={<BusinessDevelopment />} />
-      <Route path="business-development/startup" element={<BusinessStartup />} />
-      <Route path="business-development/apprentices" element={<BusinessApprentices />} />
-      <Route path="business-development/electricians" element={<BusinessElectricians />} />
-      <Route path="business-development/growth" element={<BusinessGrowth />} />
-      <Route path="business-development/customers" element={<BusinessCustomers />} />
-      <Route path="business-development/templates" element={<BusinessTemplates />} />
+      <Route path="safety-shares/resources-enhanced" element={<SafetyResourcesEnhanced />} />
     </Routes>
   );
 };
