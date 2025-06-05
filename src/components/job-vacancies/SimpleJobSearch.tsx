@@ -1,13 +1,28 @@
-import React, { useState, useCallback, useEffect } from "react";
+
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { 
+  Search, 
+  MapPin, 
+  Briefcase, 
+  Filter, 
+  Clock,
+  AlertCircle,
+  CheckCircle,
+  XCircle,
+  Loader2,
+  ExternalLink,
+  Building2,
+  Calendar,
+  Banknote
+} from "lucide-react";
 import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
-import { Search, MapPin, Clock, ExternalLink, X, Loader2, AlertTriangle, Filter, CheckCircle } from "lucide-react";
-import { Combobox, ComboboxOption } from "@/components/ui/combobox";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { formatDistanceToNow } from "date-fns";
 import { LocationService } from "@/services/locationService";
 import EnhancedJobCard from "./EnhancedJobCard";
 
@@ -24,413 +39,302 @@ interface JobResult {
   source: string;
 }
 
-interface SearchResults {
-  jobs: JobResult[];
-  totalFound: number;
-  searchQueries: string[];
-  sources: string[];
+interface JobSearchFilters {
+  jobType: string;
+  salaryMin: string;
+  salaryMax: string;
+  postedWithin: string;
 }
 
-// Common UK job search terms for suggestions
-const JOB_SEARCH_SUGGESTIONS = [
-  "electrician",
-  "electrical engineer", 
-  "electrical technician",
-  "electrical installer",
-  "electrical supervisor",
-  "maintenance electrician",
-  "commercial electrician",
-  "domestic electrician",
-  "industrial electrician",
-  "apprentice electrician"
-];
+interface SearchStatus {
+  searching: boolean;
+  sources: {
+    reed: 'idle' | 'searching' | 'success' | 'error';
+    adzuna: 'idle' | 'searching' | 'success' | 'error';
+  };
+  totalFound: number;
+  searchTime?: number;
+}
 
-const SimpleJobSearch: React.FC = () => {
-  const [query, setQuery] = useState("electrician");
-  const [location, setLocation] = useState("United Kingdom");
-  const [jobType, setJobType] = useState("all");
-  const [experienceLevel, setExperienceLevel] = useState("all");
-  const [sortBy, setSortBy] = useState("relevance");
-  const [locationRadius, setLocationRadius] = useState("25");
-  const [isSearching, setIsSearching] = useState(false);
-  const [results, setResults] = useState<SearchResults | null>(null);
-  const [filteredResults, setFilteredResults] = useState<SearchResults | null>(null);
-  const [searchTime, setSearchTime] = useState<number>(0);
-  const [showJobSuggestions, setShowJobSuggestions] = useState(false);
+const SimpleJobSearch = () => {
+  const [query, setQuery] = useState("");
+  const [location, setLocation] = useState("");
+  const [jobs, setJobs] = useState<JobResult[]>([]);
+  const [filteredJobs, setFilteredJobs] = useState<JobResult[]>([]);
+  const [selectedJob, setSelectedJob] = useState<string | null>(null);
+  const [showFilters, setShowFilters] = useState(false);
+  const [searchStatus, setSearchStatus] = useState<SearchStatus>({
+    searching: false,
+    sources: { reed: 'idle', adzuna: 'idle' },
+    totalFound: 0
+  });
+  const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
   const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
-  const [searchHistory, setSearchHistory] = useState<string[]>([]);
-  const [locationWarning, setLocationWarning] = useState<string>("");
-  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [filters, setFilters] = useState<JobSearchFilters>({
+    jobType: "all",
+    salaryMin: "",
+    salaryMax: "",
+    postedWithin: "30"
+  });
 
-  // Job type options for the combobox
-  const jobTypeOptions: ComboboxOption[] = [
-    { value: "all", label: "All Types" },
-    { value: "full-time", label: "Full-time" },
-    { value: "part-time", label: "Part-time" },
-    { value: "contract", label: "Contract" },
-  ];
-
-  // Experience level options for the combobox
-  const experienceLevelOptions: ComboboxOption[] = [
-    { value: "all", label: "All Levels" },
-    { value: "entry", label: "Entry Level" },
-    { value: "intermediate", label: "Intermediate" },
-    { value: "senior", label: "Senior" },
-    { value: "lead", label: "Lead/Management" },
-  ];
-
-  // Sort options
-  const sortOptions: ComboboxOption[] = [
-    { value: "relevance", label: "Most Relevant" },
-    { value: "date", label: "Most Recent" },
-    { value: "salary", label: "Highest Salary" },
-    { value: "distance", label: "Nearest Location" },
-  ];
-
-  // Location radius options
-  const radiusOptions: ComboboxOption[] = [
-    { value: "10", label: "Within 10 miles" },
-    { value: "25", label: "Within 25 miles" },
-    { value: "50", label: "Within 50 miles" },
-    { value: "100", label: "Within 100 miles" },
-    { value: "unlimited", label: "Unlimited" },
-  ];
-
-  // Load search history from localStorage on component mount
-  useEffect(() => {
-    const savedHistory = localStorage.getItem('jobSearchHistory');
-    if (savedHistory) {
-      setSearchHistory(JSON.parse(savedHistory));
-    }
-  }, []);
-
-  // Save search term to history
-  const saveToHistory = useCallback((searchTerm: string) => {
-    const updatedHistory = [searchTerm, ...searchHistory.filter(item => item !== searchTerm)].slice(0, 5);
-    setSearchHistory(updatedHistory);
-    localStorage.setItem('jobSearchHistory', JSON.stringify(updatedHistory));
-  }, [searchHistory]);
-
-  // Debounced search validation
-  const validateSearch = useCallback(() => {
-    if (!query.trim()) {
-      return "Please enter a job search term";
-    }
-    if (query.trim().length < 2) {
-      return "Search term must be at least 2 characters";
-    }
-    return null;
-  }, [query]);
-
-  // Location validation using the LocationService
-  const validateLocation = useCallback((locationInput: string) => {
-    if (!locationInput.trim()) return "";
-    
-    const isValid = LocationService.isValidUKLocation(locationInput);
-    if (!isValid) {
-      return "Location not recognised. Try a UK city, county, or region.";
-    }
-    return "";
-  }, []);
-
-  // Update location warning when location changes
-  useEffect(() => {
-    const warning = validateLocation(location);
-    setLocationWarning(warning);
-  }, [location, validateLocation]);
-
-  // Apply client-side filtering and sorting using LocationService
-  const applyClientSideFiltering = useCallback((searchResults: SearchResults) => {
-    if (!searchResults || !searchResults.jobs) return searchResults;
-
-    let filteredJobs = [...searchResults.jobs];
-
-    // Apply location filtering using LocationService
-    if (location && location !== "United Kingdom" && locationRadius !== "unlimited") {
-      const radiusMiles = parseInt(locationRadius);
-      filteredJobs = LocationService.filterJobsByLocation(filteredJobs, location, radiusMiles);
-      
-      console.log(`Applied location filtering: ${filteredJobs.length} jobs within ${radiusMiles} miles of ${location}`);
-    }
-
-    // Apply sorting
-    switch (sortBy) {
-      case "date":
-        filteredJobs.sort((a, b) => new Date(b.posted_date).getTime() - new Date(a.posted_date).getTime());
-        break;
-      case "salary":
-        filteredJobs.sort((a, b) => {
-          const aSalary = a.salary ? parseFloat(a.salary.replace(/[£,]/g, '')) : 0;
-          const bSalary = b.salary ? parseFloat(b.salary.replace(/[£,]/g, '')) : 0;
-          return bSalary - aSalary;
-        });
-        break;
-      case "distance":
-        // For now, keep original order as distance calculation would need coordinates
-        break;
-      default: // relevance
-        // Keep original order from API
-        break;
-    }
-
-    return {
-      ...searchResults,
-      jobs: filteredJobs,
-      totalFound: filteredJobs.length
-    };
-  }, [location, locationRadius, sortBy]);
-
-  const handleSearch = async () => {
-    const validationError = validateSearch();
-    if (validationError) {
-      toast({
-        title: "Search Validation",
-        description: validationError,
-        variant: "destructive",
-      });
-      return;
-    }
-
-    // Show location warning but don't prevent search
-    if (locationWarning) {
-      toast({
-        title: "Location Notice",
-        description: locationWarning + " Searching UK-wide instead.",
-        variant: "default",
-      });
-    }
-
-    setIsSearching(true);
-    const startTime = Date.now();
-
-    try {
-      console.log('🔍 Starting job search with:', { 
-        query: query.trim(), 
-        location: location.trim(),
-        locationRadius,
-        sortBy
-      });
-      
-      const { data, error } = await supabase.functions.invoke('intelligent-job-search', {
-        body: {
-          query: query.trim(),
-          location: location.trim() || "United Kingdom",
-          filters: {
-            jobType: jobType === "all" ? "" : jobType,
-            experienceLevel: experienceLevel === "all" ? "" : experienceLevel,
-          }
-        },
-      });
-
-      if (error) {
-        console.error('❌ Job search error:', error);
-        throw error;
-      }
-
-      const searchDuration = Date.now() - startTime;
-      setSearchTime(searchDuration);
-      setResults(data);
-      
-      // Apply client-side filtering and sorting with LocationService
-      const filtered = applyClientSideFiltering(data);
-      setFilteredResults(filtered);
-      
-      // Save successful search to history
-      saveToHistory(query.trim());
-
-      if (filtered.totalFound === 0) {
-        toast({
-          title: "No Results Found",
-          description: "Try different keywords, broader location, or adjust your filters",
-          variant: "destructive",
-        });
-      } else {
-        const locationInfo = location !== "United Kingdom" ? ` in ${location}` : "";
-        const sourcesInfo = data.sources && data.sources.length > 0 ? ` from ${data.sources.join(' & ')}` : "";
-        toast({
-          title: "Search Complete",
-          description: `Found ${filtered.totalFound} jobs${locationInfo}${sourcesInfo} in ${searchDuration}ms`,
-          action: data.sources && data.sources.length > 0 ? (
-            <div className="flex items-center gap-1 text-green-600">
-              <CheckCircle className="h-3 w-3" />
-              <span className="text-xs">APIs Connected</span>
-            </div>
-          ) : undefined
-        });
-      }
-
-    } catch (error) {
-      console.error('💥 Job search error:', error);
-      const errorMessage = error instanceof Error ? error.message : "Failed to search jobs";
-      
-      // Show more helpful error messages
-      let userMessage = errorMessage;
-      if (errorMessage.includes('API keys')) {
-        userMessage = "Job search APIs not properly configured. Please check your API keys.";
-      } else if (errorMessage.includes('temporarily unavailable')) {
-        userMessage = "Job search service temporarily unavailable. Please try again in a few moments.";
-      }
-      
-      toast({
-        title: "Search Failed", 
-        description: `${userMessage} Please check your connection and try again.`,
-        variant: "destructive",
-      });
-      
-      // Set empty results on error
-      setResults({ jobs: [], totalFound: 0, searchQueries: [], sources: [] });
-      setFilteredResults({ jobs: [], totalFound: 0, searchQueries: [], sources: [] });
-    } finally {
-      setIsSearching(false);
+  const handleLocationChange = (value: string) => {
+    setLocation(value);
+    if (value.length >= 2) {
+      const suggestions = LocationService.getLocationSuggestions(value);
+      setLocationSuggestions(suggestions);
+      setShowLocationSuggestions(suggestions.length > 0);
+    } else {
+      setShowLocationSuggestions(false);
     }
   };
 
-  // Re-apply filters when filter options change
-  useEffect(() => {
-    if (results) {
-      const filtered = applyClientSideFiltering(results);
-      setFilteredResults(filtered);
-    }
-  }, [results, applyClientSideFiltering]);
-
-  const handleJobSuggestionClick = (suggestion: string) => {
-    setQuery(suggestion);
-    setShowJobSuggestions(false);
-  };
-
-  const handleLocationSuggestionClick = (suggestion: string) => {
+  const selectLocationSuggestion = (suggestion: string) => {
     setLocation(suggestion);
     setShowLocationSuggestions(false);
   };
 
-  const clearAllFilters = () => {
-    setQuery("electrician");
-    setLocation("United Kingdom");
-    setJobType("all");
-    setExperienceLevel("all");
-    setSortBy("relevance");
-    setLocationRadius("25");
-    setResults(null);
-    setFilteredResults(null);
-    setLocationWarning("");
+  const handleSearch = async () => {
+    if (!query.trim()) {
+      toast({
+        title: "Search Query Required",
+        description: "Please enter a job title or keyword to search for.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate location if provided
+    if (location && !LocationService.isValidUKLocation(location)) {
+      toast({
+        title: "Invalid Location",
+        description: `"${location}" doesn't appear to be a valid UK location. Try: London, Manchester, Birmingham, etc.`,
+        variant: "destructive"
+      });
+      return;
+    }
+
+    console.log('🔍 Starting job search:', { query, location, filters });
+    
+    setSearchStatus({
+      searching: true,
+      sources: { reed: 'searching', adzuna: 'searching' },
+      totalFound: 0
+    });
+    setJobs([]);
+    setFilteredJobs([]);
+
+    try {
+      const startTime = Date.now();
+      const response = await fetch('/api/supabase/functions/v1/intelligent-job-search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: query.trim(),
+          location: location.trim() || 'United Kingdom',
+          filters
+        }),
+      });
+
+      const endTime = Date.now();
+      const searchTime = endTime - startTime;
+
+      if (!response.ok) {
+        throw new Error(`Search failed: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      console.log('📊 Search results received:', data);
+
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      const jobResults = data.jobs || [];
+      setJobs(jobResults);
+
+      // Apply location filtering if location is specified
+      let locationFilteredJobs = jobResults;
+      if (location.trim()) {
+        console.log('📍 Applying location filtering for:', location);
+        locationFilteredJobs = LocationService.filterJobsByLocation(jobResults, location, 50);
+        console.log(`Applied location filtering: ${locationFilteredJobs.length} jobs within 50 miles of ${location}`);
+      }
+
+      setFilteredJobs(locationFilteredJobs);
+
+      // Update search status
+      setSearchStatus({
+        searching: false,
+        sources: { 
+          reed: data.sources?.includes('Reed') ? 'success' : 'idle',
+          adzuna: data.sources?.includes('Adzuna') ? 'success' : 'idle'
+        },
+        totalFound: locationFilteredJobs.length,
+        searchTime
+      });
+
+      // Show success message
+      const sourceCount = data.sources?.length || 0;
+      const sourceText = sourceCount > 0 ? ` from ${sourceCount} source${sourceCount !== 1 ? 's' : ''}` : '';
+      
+      toast({
+        title: "Search Complete",
+        description: `Found ${locationFilteredJobs.length} job${locationFilteredJobs.length !== 1 ? 's' : ''}${sourceText} in ${(searchTime / 1000).toFixed(1)}s`,
+        variant: "success"
+      });
+
+      if (locationFilteredJobs.length === 0) {
+        toast({
+          title: "No Jobs Found",
+          description: location 
+            ? `Try expanding your search area or checking nearby locations to ${location}`
+            : "Try different keywords or remove some filters",
+          variant: "destructive"
+        });
+      }
+
+    } catch (error) {
+      console.error('❌ Search error:', error);
+      setSearchStatus({
+        searching: false,
+        sources: { reed: 'error', adzuna: 'error' },
+        totalFound: 0
+      });
+
+      toast({
+        title: "Search Failed",
+        description: error instanceof Error ? error.message : "Unable to search for jobs. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
-  const handleApply = (job: JobResult) => {
-    window.open(job.external_url, '_blank');
+  const handleApply = (jobId: string, url: string) => {
+    setSelectedJob(jobId);
+    window.open(url, '_blank', 'noopener,noreferrer');
+    
     toast({
-      title: "Application Started",
-      description: `Opening job listing for ${job.title}`,
+      title: "Application Opened",
+      description: "The job application has opened in a new tab. Good luck!"
     });
   };
 
-  const filteredJobSuggestions = JOB_SEARCH_SUGGESTIONS.filter(suggestion =>
-    suggestion.toLowerCase().includes(query.toLowerCase()) && suggestion !== query
-  );
+  const getStatusIcon = (status: 'idle' | 'searching' | 'success' | 'error') => {
+    switch (status) {
+      case 'searching': return <Loader2 className="h-3 w-3 animate-spin text-blue-500" />;
+      case 'success': return <CheckCircle className="h-3 w-3 text-green-500" />;
+      case 'error': return <XCircle className="h-3 w-3 text-red-500" />;
+      default: return <Clock className="h-3 w-3 text-gray-400" />;
+    }
+  };
 
-  const locationSuggestions = LocationService.getLocationSuggestions(location);
+  const getStatusText = (status: 'idle' | 'searching' | 'success' | 'error') => {
+    switch (status) {
+      case 'searching': return 'Searching...';
+      case 'success': return 'Complete';
+      case 'error': return 'Failed';
+      default: return 'Ready';
+    }
+  };
 
-  const displayResults = filteredResults || results;
+  // Apply additional filters
+  useEffect(() => {
+    let filtered = [...jobs];
+
+    // Apply location filtering
+    if (location.trim()) {
+      filtered = LocationService.filterJobsByLocation(filtered, location, 50);
+    }
+
+    // Apply job type filter
+    if (filters.jobType !== "all") {
+      filtered = filtered.filter(job => 
+        job.type.toLowerCase().includes(filters.jobType.toLowerCase()) ||
+        (filters.jobType === "permanent" && job.type.toLowerCase().includes("full"))
+      );
+    }
+
+    // Apply salary filter
+    if (filters.salaryMin) {
+      const minSalary = parseInt(filters.salaryMin);
+      filtered = filtered.filter(job => {
+        if (!job.salary) return false;
+        const salaryNumbers = job.salary.match(/[\d,]+/g);
+        if (salaryNumbers && salaryNumbers.length > 0) {
+          const salary = parseInt(salaryNumbers[0].replace(/,/g, ''));
+          return salary >= minSalary;
+        }
+        return false;
+      });
+    }
+
+    // Apply posted date filter
+    if (filters.postedWithin !== "all") {
+      const daysAgo = parseInt(filters.postedWithin);
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - daysAgo);
+      
+      filtered = filtered.filter(job => {
+        try {
+          const postedDate = new Date(job.posted_date);
+          return postedDate >= cutoffDate;
+        } catch {
+          return true; // Include jobs with invalid dates
+        }
+      });
+    }
+
+    setFilteredJobs(filtered);
+    setSearchStatus(prev => ({ ...prev, totalFound: filtered.length }));
+  }, [jobs, filters, location]);
 
   return (
     <div className="space-y-6">
-      {/* Search Interface */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-yellow/5 to-elec-gray/5">
+      {/* Search Header */}
+      <Card className="border-elec-yellow/20">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Search className="h-5 w-5 text-elec-yellow" />
-            Intelligent Job Search
-            {displayResults?.sources && displayResults.sources.length > 0 && (
-              <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">
-                <CheckCircle className="h-3 w-3 mr-1" />
-                {displayResults.sources.join(' & ')} Connected
-              </Badge>
-            )}
+            Job Search
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2 relative">
-              <label className="text-sm font-medium">Job Search</label>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onFocus={() => setShowJobSuggestions(true)}
-                  onBlur={() => setTimeout(() => setShowJobSuggestions(false), 200)}
-                  placeholder="e.g. electrician, electrical engineer"
-                  className="pl-10"
-                  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                />
-              </div>
-              
-              {/* Job Search Suggestions */}
-              {showJobSuggestions && (filteredJobSuggestions.length > 0 || searchHistory.length > 0) && (
-                <div className="absolute top-full left-0 right-0 z-50 bg-elec-gray border border-gray-700 rounded-md shadow-lg mt-1">
-                  {searchHistory.length > 0 && (
-                    <div className="p-2 border-b border-gray-700">
-                      <p className="text-xs text-gray-400 mb-1">Recent searches</p>
-                      {searchHistory.map((historyItem, index) => (
-                        <button
-                          key={index}
-                          onClick={() => handleJobSuggestionClick(historyItem)}
-                          className="block w-full text-left px-2 py-1 text-sm text-white hover:bg-gray-700 rounded"
-                        >
-                          <Clock className="inline h-3 w-3 mr-2" />
-                          {historyItem}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                  {filteredJobSuggestions.slice(0, 5).map((suggestion, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleJobSuggestionClick(suggestion)}
-                      className="block w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-700"
-                    >
-                      {suggestion}
-                    </button>
-                  ))}
-                </div>
-              )}
+          {/* Search Form */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="md:col-span-1">
+              <Input
+                placeholder="Job title, keywords..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                className="bg-elec-dark border-elec-yellow/20"
+              />
             </div>
-
-            <div className="space-y-2 relative">
-              <label className="text-sm font-medium flex items-center gap-2">
-                Location
-                {locationWarning && (
-                  <AlertTriangle className="h-4 w-4 text-yellow-500" />
-                )}
-              </label>
+            
+            <div className="md:col-span-1 relative">
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
+                  placeholder="Location (UK)"
                   value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  onFocus={() => setShowLocationSuggestions(true)}
-                  onBlur={() => setTimeout(() => setShowLocationSuggestions(false), 200)}
-                  placeholder="e.g. London, Manchester, Cumbria"
-                  className={`pl-10 ${locationWarning ? 'border-yellow-500' : ''}`}
+                  onChange={(e) => handleLocationChange(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                  className="pl-10 bg-elec-dark border-elec-yellow/20"
                 />
               </div>
-              
-              {locationWarning && (
-                <p className="text-xs text-yellow-600 flex items-center gap-1">
-                  <AlertTriangle className="h-3 w-3" />
-                  {locationWarning}
-                </p>
-              )}
               
               {/* Location Suggestions */}
-              {showLocationSuggestions && locationSuggestions.length > 0 && (
-                <div className="absolute top-full left-0 right-0 z-50 bg-elec-gray border border-gray-700 rounded-md shadow-lg mt-1">
+              {showLocationSuggestions && (
+                <div className="absolute z-10 w-full mt-1 bg-elec-dark border border-elec-yellow/20 rounded-md shadow-lg">
                   {locationSuggestions.map((suggestion, index) => (
                     <button
                       key={index}
-                      onClick={() => handleLocationSuggestionClick(suggestion)}
-                      className="block w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-700"
+                      className="w-full text-left px-3 py-2 hover:bg-elec-yellow/10 text-sm"
+                      onClick={() => selectLocationSuggestion(suggestion)}
                     >
-                      <MapPin className="inline h-3 w-3 mr-2" />
+                      <MapPin className="inline h-3 w-3 mr-2 text-gray-400" />
                       {suggestion}
                     </button>
                   ))}
@@ -438,187 +342,165 @@ const SimpleJobSearch: React.FC = () => {
               )}
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Job Type</label>
-              <Combobox
-                options={jobTypeOptions}
-                value={jobType}
-                onValueChange={setJobType}
-                placeholder="Select job type..."
-                searchPlaceholder="Search job types..."
-                emptyMessage="No job types found."
-                className="w-full"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Experience Level</label>
-              <Combobox
-                options={experienceLevelOptions}
-                value={experienceLevel}
-                onValueChange={setExperienceLevel}
-                placeholder="Select experience level..."
-                searchPlaceholder="Search experience levels..."
-                emptyMessage="No experience levels found."
-                className="w-full"
-              />
+            <div className="flex gap-2">
+              <Button 
+                onClick={handleSearch} 
+                disabled={searchStatus.searching}
+                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex-1"
+              >
+                {searchStatus.searching ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Searching...
+                  </>
+                ) : (
+                  <>
+                    <Search className="mr-2 h-4 w-4" />
+                    Search
+                  </>
+                )}
+              </Button>
+              
+              <Button
+                variant="outline"
+                onClick={() => setShowFilters(!showFilters)}
+                className="border-elec-yellow/20"
+              >
+                <Filter className="h-4 w-4" />
+              </Button>
             </div>
           </div>
 
-          {/* Advanced Filters Toggle */}
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
-              className="text-xs"
-            >
-              <Filter className="h-3 w-3 mr-1" />
-              {showAdvancedFilters ? 'Hide' : 'Show'} Advanced Filters
-            </Button>
-          </div>
-
-          {/* Advanced Filters */}
-          {showAdvancedFilters && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg border">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Sort Results</label>
-                <Combobox
-                  options={sortOptions}
-                  value={sortBy}
-                  onValueChange={setSortBy}
-                  placeholder="Sort by..."
-                  searchPlaceholder="Search sort options..."
-                  emptyMessage="No sort options found."
-                  className="w-full"
-                />
+          {/* Search Status */}
+          {(searchStatus.searching || searchStatus.totalFound > 0) && (
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  {getStatusIcon(searchStatus.sources.reed)}
+                  <span>Reed: {getStatusText(searchStatus.sources.reed)}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {getStatusIcon(searchStatus.sources.adzuna)}
+                  <span>Adzuna: {getStatusText(searchStatus.sources.adzuna)}</span>
+                </div>
               </div>
               
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Search Radius</label>
-                <Combobox
-                  options={radiusOptions}
-                  value={locationRadius}
-                  onValueChange={setLocationRadius}
-                  placeholder="Select radius..."
-                  searchPlaceholder="Search radius..."
-                  emptyMessage="No radius options found."
-                  className="w-full"
-                />
+              <div className="text-elec-yellow">
+                {searchStatus.totalFound} jobs found
+                {searchStatus.searchTime && ` in ${(searchStatus.searchTime / 1000).toFixed(1)}s`}
               </div>
             </div>
           )}
 
-          <div className="flex gap-2">
-            <Button 
-              onClick={handleSearch}
-              disabled={isSearching || !query.trim()}
-              className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-            >
-              {isSearching ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Searching...
-                </>
-              ) : (
-                <>
-                  <Search className="h-4 w-4 mr-2" />
-                  Search Jobs
-                </>
-              )}
-            </Button>
-            
-            <Button 
-              onClick={clearAllFilters}
-              variant="outline"
-              className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-            >
-              <X className="h-4 w-4 mr-2" />
-              Clear All
-            </Button>
-          </div>
+          {/* Filters */}
+          {showFilters && (
+            <>
+              <Separator />
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div>
+                  <label className="text-sm font-medium">Job Type</label>
+                  <Select value={filters.jobType} onValueChange={(value) => setFilters(prev => ({ ...prev, jobType: value }))}>
+                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Types</SelectItem>
+                      <SelectItem value="full-time">Full-time</SelectItem>
+                      <SelectItem value="part-time">Part-time</SelectItem>
+                      <SelectItem value="contract">Contract</SelectItem>
+                      <SelectItem value="permanent">Permanent</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium">Min Salary (£)</label>
+                  <Input
+                    type="number"
+                    placeholder="25000"
+                    value={filters.salaryMin}
+                    onChange={(e) => setFilters(prev => ({ ...prev, salaryMin: e.target.value }))}
+                    className="bg-elec-dark border-elec-yellow/20"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium">Max Salary (£)</label>
+                  <Input
+                    type="number"
+                    placeholder="50000"
+                    value={filters.salaryMax}
+                    onChange={(e) => setFilters(prev => ({ ...prev, salaryMax: e.target.value }))}
+                    className="bg-elec-dark border-elec-yellow/20"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-sm font-medium">Posted Within</label>
+                  <Select value={filters.postedWithin} onValueChange={(value) => setFilters(prev => ({ ...prev, postedWithin: value }))}>
+                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="1">Last 24 hours</SelectItem>
+                      <SelectItem value="3">Last 3 days</SelectItem>
+                      <SelectItem value="7">Last week</SelectItem>
+                      <SelectItem value="14">Last 2 weeks</SelectItem>
+                      <SelectItem value="30">Last month</SelectItem>
+                      <SelectItem value="all">Any time</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
 
-      {/* Search Results Summary */}
-      {displayResults && (
-        <Card className="border-green-200 bg-green-50">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-green-700">
-                <Search className="h-4 w-4" />
-                <span className="font-medium">
-                  Found {displayResults.totalFound} jobs
-                  {filteredResults && results && filteredResults.totalFound !== results.totalFound && (
-                    <span className="text-sm text-green-600 ml-1">
-                      (filtered from {results.totalFound})
-                    </span>
-                  )}
-                </span>
-                {displayResults.sources && displayResults.sources.length > 0 && (
-                  <span className="text-sm">
-                    from {displayResults.sources.join(' & ')}
-                  </span>
-                )}
-                {location !== "United Kingdom" && (
-                  <span className="text-sm text-green-600">
-                    • within {locationRadius === "unlimited" ? "unlimited distance" : `${locationRadius} miles`} of {location}
-                  </span>
-                )}
-              </div>
-              <div className="flex items-center gap-1 text-sm text-green-600">
-                <Clock className="h-3 w-3" />
-                {searchTime}ms
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
+      {/* Results */}
+      {filteredJobs.length > 0 && (
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold">
+              {filteredJobs.length} Job{filteredJobs.length !== 1 ? 's' : ''} Found
+            </h3>
+          </div>
 
-      {/* Job Results using Enhanced Job Cards */}
-      {displayResults && displayResults.jobs.length > 0 && (
-        <div className="grid grid-cols-1 gap-4">
-          {displayResults.jobs.map((job) => (
-            <EnhancedJobCard
-              key={job.id}
-              job={job}
-              selectedJob={null}
-              handleApply={(jobId, url) => handleApply(job)}
-              isAIEnhanced={true}
-            />
-          ))}
+          <div className="grid gap-4">
+            {filteredJobs.map((job) => (
+              <EnhancedJobCard
+                key={job.id}
+                job={job}
+                selectedJob={selectedJob}
+                handleApply={handleApply}
+              />
+            ))}
+          </div>
         </div>
       )}
 
-      {/* No Results */}
-      {displayResults && displayResults.jobs.length === 0 && (
-        <Card className="p-8 text-center border-dashed">
-          <Search className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
-          <h3 className="text-lg font-medium">No jobs found</h3>
-          <p className="text-muted-foreground mt-1">
-            Try different keywords, broader location, or adjust your filters
-          </p>
-          <div className="mt-4 space-y-2">
-            <p className="text-sm text-muted-foreground">Try these suggestions:</p>
-            <div className="flex flex-wrap gap-2 justify-center">
-              {JOB_SEARCH_SUGGESTIONS.slice(0, 3).map((suggestion, index) => (
-                <Button
-                  key={index}
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleJobSuggestionClick(suggestion)}
-                  className="text-xs"
-                >
-                  {suggestion}
-                </Button>
-              ))}
+      {/* Empty State */}
+      {!searchStatus.searching && filteredJobs.length === 0 && query && (
+        <Card className="border-elec-yellow/20">
+          <CardContent className="text-center py-12">
+            <AlertCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold mb-2">No Jobs Found</h3>
+            <p className="text-muted-foreground mb-4">
+              {location 
+                ? `No electrical jobs found matching "${query}" in ${location}`
+                : `No electrical jobs found matching "${query}"`
+              }
+            </p>
+            <div className="text-sm text-muted-foreground">
+              <p>Try:</p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>Different keywords or job titles</li>
+                <li>Expanding your search location</li>
+                <li>Removing some filters</li>
+                <li>Using broader terms like "electrician" or "electrical"</li>
+              </ul>
             </div>
-            {location !== "United Kingdom" && (
-              <p className="text-sm text-muted-foreground mt-2">
-                Or try searching in a broader area or increase your search radius
-              </p>
-            )}
-          </div>
+          </CardContent>
         </Card>
       )}
     </div>
