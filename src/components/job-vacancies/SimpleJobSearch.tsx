@@ -125,10 +125,13 @@ const SimpleJobSearch = () => {
 
     try {
       const startTime = Date.now();
-      const response = await fetch('/api/supabase/functions/v1/intelligent-job-search', {
+      
+      // Fixed API endpoint URL
+      const response = await fetch('https://jtwygbeceundfgnkirof.supabase.co/functions/v1/intelligent-job-search', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8`
         },
         body: JSON.stringify({
           query: query.trim(),
@@ -140,8 +143,12 @@ const SimpleJobSearch = () => {
       const endTime = Date.now();
       const searchTime = endTime - startTime;
 
+      console.log('📡 API Response status:', response.status, response.statusText);
+
       if (!response.ok) {
-        throw new Error(`Search failed: ${response.status} ${response.statusText}`);
+        const errorText = await response.text();
+        console.error('❌ API Error Response:', errorText);
+        throw new Error(`Search failed: ${response.status} ${response.statusText} - ${errorText}`);
       }
 
       const data = await response.json();
@@ -152,6 +159,7 @@ const SimpleJobSearch = () => {
       }
 
       const jobResults = data.jobs || [];
+      console.log(`✅ Processed ${jobResults.length} jobs from API`);
       setJobs(jobResults);
 
       // Apply location filtering if location is specified
@@ -181,8 +189,7 @@ const SimpleJobSearch = () => {
       
       toast({
         title: "Search Complete",
-        description: `Found ${locationFilteredJobs.length} job${locationFilteredJobs.length !== 1 ? 's' : ''}${sourceText} in ${(searchTime / 1000).toFixed(1)}s`,
-        variant: "success"
+        description: `Found ${locationFilteredJobs.length} job${locationFilteredJobs.length !== 1 ? 's' : ''}${sourceText} in ${(searchTime / 1000).toFixed(1)}s`
       });
 
       if (locationFilteredJobs.length === 0) {
@@ -203,9 +210,12 @@ const SimpleJobSearch = () => {
         totalFound: 0
       });
 
+      const errorMessage = error instanceof Error ? error.message : "Unable to search for jobs. Please try again.";
+      console.error('❌ Detailed error:', errorMessage);
+
       toast({
         title: "Search Failed",
-        description: error instanceof Error ? error.message : "Unable to search for jobs. Please try again.",
+        description: errorMessage,
         variant: "destructive"
       });
     }
