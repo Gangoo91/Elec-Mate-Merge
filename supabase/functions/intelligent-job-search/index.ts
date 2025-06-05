@@ -14,7 +14,11 @@ serve(async (req) => {
   
   try {
     const { query, location, filters } = await req.json();
-    console.log('Starting job search for:', { query, location, filters });
+    console.log('🔍 Starting job search for:', { query, location, filters });
+    console.log('🔑 API Keys available:', { 
+      reed: !!reedApiKey, 
+      adzuna: !!adzunaAppId && !!adzunaAppKey 
+    });
     
     const allJobs = [];
     const sources = [];
@@ -22,38 +26,46 @@ serve(async (req) => {
     
     // Normalize location for better API calls
     const normalizedLocation = normalizeLocationForAPI(location);
-    console.log('Normalized location:', normalizedLocation);
+    console.log('📍 Normalized location:', normalizedLocation);
     
     // Search Reed Jobs
     if (reedApiKey) {
       try {
+        console.log('🏢 Attempting Reed search...');
         const reedJobs = await searchReedJobs(query, normalizedLocation, filters);
         allJobs.push(...reedJobs);
         sources.push('Reed');
-        console.log(`Found ${reedJobs.length} jobs from Reed`);
+        console.log(`✅ Reed: Found ${reedJobs.length} jobs`);
       } catch (error) {
-        console.warn('Reed search failed:', error.message);
+        console.error('❌ Reed search failed:', error.message);
+        console.error('Reed error details:', error);
       }
+    } else {
+      console.log('⚠️ Reed API key not available');
     }
     
     // Search Adzuna Jobs
     if (adzunaAppId && adzunaAppKey) {
       try {
+        console.log('🔍 Attempting Adzuna search...');
         const adzunaJobs = await searchAdzunaJobs(query, normalizedLocation, filters);
         allJobs.push(...adzunaJobs);
         sources.push('Adzuna');
-        console.log(`Found ${adzunaJobs.length} jobs from Adzuna`);
+        console.log(`✅ Adzuna: Found ${adzunaJobs.length} jobs`);
       } catch (error) {
-        console.warn('Adzuna search failed:', error.message);
+        console.error('❌ Adzuna search failed:', error.message);
+        console.error('Adzuna error details:', error);
       }
+    } else {
+      console.log('⚠️ Adzuna API credentials not available');
     }
     
     // If no API keys are available
-    if (!reedApiKey && !adzunaAppId && !adzunaAppKey) {
-      console.error('No job search API keys found');
+    if (!reedApiKey && (!adzunaAppId || !adzunaAppKey)) {
+      console.error('🚫 No job search API keys found');
       return new Response(
         JSON.stringify({ 
-          error: "Job search service temporarily unavailable. Please try again later.",
+          error: "Job search service temporarily unavailable. Please check API keys configuration.",
           jobs: [],
           totalFound: 0,
           searchQueries: [query],
@@ -65,7 +77,7 @@ serve(async (req) => {
     
     // Deduplicate jobs
     const uniqueJobs = deduplicateJobs(allJobs);
-    console.log(`Found ${allJobs.length} total jobs, ${uniqueJobs.length} unique from sources: ${sources.join(', ')}`);
+    console.log(`📊 Total: ${allJobs.length} jobs, ${uniqueJobs.length} unique from sources: ${sources.join(', ')}`);
     
     // Sort by date (most recent first)
     uniqueJobs.sort((a, b) => {
@@ -83,7 +95,7 @@ serve(async (req) => {
     );
     
   } catch (error) {
-    console.error('Error in job search:', error);
+    console.error('💥 Error in job search:', error);
     return new Response(
       JSON.stringify({ 
         error: "An error occurred while searching for jobs. Please try again.",
@@ -108,8 +120,14 @@ function normalizeLocationForAPI(location: string): string {
   
   // Handle specific location mappings for better API results
   const locationMappings: Record<string, string> = {
-    'cumbria': 'Cumbria, England',
-    'lake district': 'Cumbria, England',
+    'cumbria': 'Cumbria',
+    'lake district': 'Cumbria',
+    'carlisle': 'Carlisle, Cumbria',
+    'kendal': 'Kendal, Cumbria',
+    'barrow': 'Barrow-in-Furness, Cumbria',
+    'penrith': 'Penrith, Cumbria',
+    'workington': 'Workington, Cumbria',
+    'whitehaven': 'Whitehaven, Cumbria',
     'greater london': 'London',
     'greater manchester': 'Manchester',
     'west midlands': 'Birmingham',
@@ -124,7 +142,7 @@ function normalizeLocationForAPI(location: string): string {
 
 async function searchReedJobs(query: string, location: string, filters: any) {
   if (!reedApiKey) {
-    console.log('Reed API key not available, skipping Reed search');
+    console.log('🚫 Reed API key not available, skipping Reed search');
     return [];
   }
   
@@ -143,26 +161,27 @@ async function searchReedJobs(query: string, location: string, filters: any) {
     params.append('temp', 'true');
   }
   
-  console.log('Calling Reed API with params:', params.toString());
+  const apiUrl = `https://www.reed.co.uk/api/1.0/search?${params}`;
+  console.log('🏢 Reed API URL:', apiUrl);
   
-  const response = await fetch(`https://www.reed.co.uk/api/1.0/search?${params}`, {
+  const response = await fetch(apiUrl, {
     headers: {
       'Authorization': `Basic ${btoa(reedApiKey + ':')}`
     }
   });
   
   if (!response.ok) {
-    console.error(`Reed API error: ${response.status} ${response.statusText}`);
     const errorText = await response.text();
+    console.error(`❌ Reed API error: ${response.status} ${response.statusText}`);
     console.error('Reed API error response:', errorText);
-    throw new Error(`Reed API error: ${response.statusText}`);
+    throw new Error(`Reed API error: ${response.status} ${response.statusText}`);
   }
   
   const data = await response.json();
-  console.log(`Reed API returned ${data.totalResults} total results, processing ${data.results?.length || 0} jobs`);
+  console.log(`📊 Reed API returned ${data.totalResults} total results, processing ${data.results?.length || 0} jobs`);
   
   if (!data.results || data.results.length === 0) {
-    console.log('No results from Reed API');
+    console.log('📭 No results from Reed API');
     return [];
   }
   
@@ -184,7 +203,7 @@ async function searchReedJobs(query: string, location: string, filters: any) {
 
 async function searchAdzunaJobs(query: string, location: string, filters: any) {
   if (!adzunaAppId || !adzunaAppKey) {
-    console.log('Adzuna API credentials not available, skipping Adzuna search');
+    console.log('🚫 Adzuna API credentials not available, skipping Adzuna search');
     return [];
   }
   
@@ -216,22 +235,23 @@ async function searchAdzunaJobs(query: string, location: string, filters: any) {
     params.append('contract', '1');
   }
   
-  console.log('Calling Adzuna API with params:', params.toString());
+  const apiUrl = `https://api.adzuna.com/v1/api/jobs/gb/search/1?${params}`;
+  console.log('🔍 Adzuna API URL:', apiUrl);
   
-  const response = await fetch(`https://api.adzuna.com/v1/api/jobs/gb/search/1?${params}`);
+  const response = await fetch(apiUrl);
   
   if (!response.ok) {
-    console.error(`Adzuna API error: ${response.status} ${response.statusText}`);
     const errorText = await response.text();
+    console.error(`❌ Adzuna API error: ${response.status} ${response.statusText}`);
     console.error('Adzuna API error response:', errorText);
-    throw new Error(`Adzuna API error: ${response.statusText}`);
+    throw new Error(`Adzuna API error: ${response.status} ${response.statusText}`);
   }
   
   const data = await response.json();
-  console.log(`Adzuna API returned ${data.count} total results, processing ${data.results?.length || 0} jobs`);
+  console.log(`📊 Adzuna API returned ${data.count} total results, processing ${data.results?.length || 0} jobs`);
   
   if (!data.results || data.results.length === 0) {
-    console.log('No results from Adzuna API');
+    console.log('📭 No results from Adzuna API');
     return [];
   }
   
@@ -275,7 +295,7 @@ function deduplicateJobs(jobs: any[]) {
       seen.add(key);
       unique.push(job);
     } else {
-      console.log(`Duplicate job filtered: ${job.title} at ${job.company}`);
+      console.log(`🔄 Duplicate job filtered: ${job.title} at ${job.company}`);
     }
   }
   

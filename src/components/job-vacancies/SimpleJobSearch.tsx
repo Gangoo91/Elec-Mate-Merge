@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Search, MapPin, Clock, ExternalLink, X, Loader2, AlertTriangle, Filter } from "lucide-react";
+import { Search, MapPin, Clock, ExternalLink, X, Loader2, AlertTriangle, Filter, CheckCircle } from "lucide-react";
 import { Combobox, ComboboxOption } from "@/components/ui/combobox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { LocationService } from "@/services/locationService";
@@ -205,7 +204,7 @@ const SimpleJobSearch: React.FC = () => {
     const startTime = Date.now();
 
     try {
-      console.log('Starting job search with:', { 
+      console.log('🔍 Starting job search with:', { 
         query: query.trim(), 
         location: location.trim(),
         locationRadius,
@@ -224,7 +223,7 @@ const SimpleJobSearch: React.FC = () => {
       });
 
       if (error) {
-        console.error('Job search error:', error);
+        console.error('❌ Job search error:', error);
         throw error;
       }
 
@@ -247,19 +246,34 @@ const SimpleJobSearch: React.FC = () => {
         });
       } else {
         const locationInfo = location !== "United Kingdom" ? ` in ${location}` : "";
+        const sourcesInfo = data.sources && data.sources.length > 0 ? ` from ${data.sources.join(' & ')}` : "";
         toast({
           title: "Search Complete",
-          description: `Found ${filtered.totalFound} jobs${locationInfo} in ${searchDuration}ms`,
+          description: `Found ${filtered.totalFound} jobs${locationInfo}${sourcesInfo} in ${searchDuration}ms`,
+          action: data.sources && data.sources.length > 0 ? (
+            <div className="flex items-center gap-1 text-green-600">
+              <CheckCircle className="h-3 w-3" />
+              <span className="text-xs">APIs Connected</span>
+            </div>
+          ) : undefined
         });
       }
 
     } catch (error) {
-      console.error('Job search error:', error);
+      console.error('💥 Job search error:', error);
       const errorMessage = error instanceof Error ? error.message : "Failed to search jobs";
+      
+      // Show more helpful error messages
+      let userMessage = errorMessage;
+      if (errorMessage.includes('API keys')) {
+        userMessage = "Job search APIs not properly configured. Please check your API keys.";
+      } else if (errorMessage.includes('temporarily unavailable')) {
+        userMessage = "Job search service temporarily unavailable. Please try again in a few moments.";
+      }
       
       toast({
         title: "Search Failed", 
-        description: `${errorMessage}. Please check your connection and try again.`,
+        description: `${userMessage} Please check your connection and try again.`,
         variant: "destructive",
       });
       
@@ -325,6 +339,12 @@ const SimpleJobSearch: React.FC = () => {
           <CardTitle className="flex items-center gap-2">
             <Search className="h-5 w-5 text-elec-yellow" />
             Intelligent Job Search
+            {displayResults?.sources && displayResults.sources.length > 0 && (
+              <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200">
+                <CheckCircle className="h-3 w-3 mr-1" />
+                {displayResults.sources.join(' & ')} Connected
+              </Badge>
+            )}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -537,7 +557,7 @@ const SimpleJobSearch: React.FC = () => {
                 </span>
                 {displayResults.sources && displayResults.sources.length > 0 && (
                   <span className="text-sm">
-                    from {displayResults.sources.join(', ')}
+                    from {displayResults.sources.join(' & ')}
                   </span>
                 )}
                 {location !== "United Kingdom" && (
@@ -563,7 +583,7 @@ const SimpleJobSearch: React.FC = () => {
               key={job.id}
               job={job}
               selectedJob={null}
-              handleApply={() => handleApply(job)}
+              handleApply={(jobId, url) => handleApply(job)}
               isAIEnhanced={true}
             />
           ))}
