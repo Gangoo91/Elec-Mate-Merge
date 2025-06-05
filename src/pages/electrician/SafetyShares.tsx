@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AlertTriangle, BookOpen, Newspaper, Building, Shield, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import SampleDataLoader from "@/components/electrician/safety-shares/SampleDataLoader";
 
 const SafetyShares = () => {
   const safetyCategories = [
@@ -60,6 +61,9 @@ const SafetyShares = () => {
             Essential safety information and knowledge sharing for electrical professionals
           </p>
         </div>
+
+        {/* Database Status Component */}
+        <SampleDataLoader />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {safetyCategories.map((category) => (
