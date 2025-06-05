@@ -15,8 +15,8 @@ const IndustryNews = () => {
         <meta name="description" content="Latest electrical industry news and regulatory updates" />
       </Helmet>
       
-      <div className="container mx-auto py-6 px-4">
-        <div className="flex items-center gap-4 mb-8">
+      <div className="space-y-8 animate-fade-in">
+        <div className="flex items-center gap-4">
           <Button
             variant="outline"
             size="sm"
@@ -31,8 +31,8 @@ const IndustryNews = () => {
               <Newspaper className="h-6 w-6 text-elec-dark" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-elec-yellow">Industry News</h1>
-              <p className="text-gray-300 text-lg">
+              <h1 className="text-3xl font-bold tracking-tight text-elec-yellow">Industry News</h1>
+              <p className="text-muted-foreground">
                 Latest news and updates from regulatory bodies and industry leaders
               </p>
             </div>
