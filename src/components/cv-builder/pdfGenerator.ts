@@ -21,9 +21,9 @@ export const generateCVPDF = async (cvData: CVData): Promise<void> => {
   };
 
   // Helper function to add text with word wrapping
-  const addText = (text: string, x: number, y: number, fontSize: number = 10, maxWidth: number = maxWidth): number => {
+  const addText = (text: string, x: number, y: number, fontSize: number = 10, textMaxWidth: number = maxWidth): number => {
     pdf.setFontSize(fontSize);
-    const lines = pdf.splitTextToSize(text, maxWidth);
+    const lines = pdf.splitTextToSize(text, textMaxWidth);
     pdf.text(lines, x, y);
     return y + (lines.length * (fontSize * 0.35));
   };
