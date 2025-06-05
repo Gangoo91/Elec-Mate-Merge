@@ -3,7 +3,7 @@ import { Award, Briefcase, Building, TrendingUp, Trophy, GraduationCap, ShieldCh
 
 export const careerPaths = [
   {
-    id: 5,
+    id: "5",
     title: "Maintenance Electrician",
     requirements: "Level 3 NVQ + specialized maintenance experience",
     description: "Maintain, troubleshoot, and repair electrical systems in factories, plants, or commercial buildings.",
@@ -13,7 +13,7 @@ export const careerPaths = [
     timeToAchieve: "3-5 years"
   },
   {
-    id: 2,
+    id: "2",
     title: "Installation Electrician",
     requirements: "Level 3 NVQ Diploma + AM2 assessment",
     description: "Install, maintain, and repair electrical systems in domestic, commercial and industrial environments.",
@@ -23,7 +23,7 @@ export const careerPaths = [
     timeToAchieve: "3-4 years"
   },
   {
-    id: 8,
+    id: "8",
     title: "Specialist Electrician",
     requirements: "Standard qualification + specialist training",
     description: "Focus on specific areas like renewable energy, electric vehicles, or building management systems.",
@@ -33,7 +33,7 @@ export const careerPaths = [
     timeToAchieve: "4-6 years"
   },
   {
-    id: 1,
+    id: "1",
     title: "Approved Electrician",
     requirements: "Level 3 qualification + 2 years post-qualification experience + AM2 assessment",
     description: "An approved status electrician is qualified to supervise others and can work on most electrical installations independently.",
@@ -43,7 +43,7 @@ export const careerPaths = [
     timeToAchieve: "3-5 years"
   },
   {
-    id: 4,
+    id: "4",
     title: "Electrical Engineer",
     requirements: "Degree in Electrical Engineering + professional experience",
     description: "Design, develop and test electrical equipment and systems for buildings, transportation, or power generation.",
@@ -53,7 +53,7 @@ export const careerPaths = [
     timeToAchieve: "5-7 years (including education)"
   },
   {
-    id: 10,
+    id: "10",
     title: "Electrical Designer",
     requirements: "HNC/HND in Electrical Engineering or equivalent + design software proficiency",
     description: "Create detailed electrical designs and drawings for construction projects using CAD and BIM software.",
@@ -63,7 +63,7 @@ export const careerPaths = [
     timeToAchieve: "4-6 years"
   },
   {
-    id: 6,
+    id: "6",
     title: "Electrical Inspector",
     requirements: "Advanced certification + extensive field experience",
     description: "Ensure electrical installations comply with regulations and safety standards, working with local authorities.",
@@ -73,7 +73,7 @@ export const careerPaths = [
     timeToAchieve: "6-8 years"
   },
   {
-    id: 11,
+    id: "11",
     title: "Commissioning Technician",
     requirements: "Advanced electrical qualification + specialized commissioning training",
     description: "Test, verify and commission new electrical systems to ensure they operate according to specification.",
@@ -83,7 +83,7 @@ export const careerPaths = [
     timeToAchieve: "5-7 years"
   },
   {
-    id: 12,
+    id: "12",
     title: "Commissioning Engineer",
     requirements: "Degree in Electrical Engineering + commissioning experience",
     description: "Lead complex commissioning projects for major electrical and control systems in commercial and industrial facilities.",
@@ -93,7 +93,7 @@ export const careerPaths = [
     timeToAchieve: "7-10 years"
   },
   {
-    id: 7,
+    id: "7",
     title: "Project Manager",
     requirements: "Extensive electrical experience + management qualifications",
     description: "Oversee large-scale electrical projects, coordinate teams, and manage budgets and timelines.",
@@ -103,7 +103,7 @@ export const careerPaths = [
     timeToAchieve: "7-10 years"
   },
   {
-    id: 3,
+    id: "3",
     title: "Electrical Contractor",
     requirements: "Journey-level experience + business license + certification",
     description: "Run your own electrical contracting business focusing on residential, commercial, or industrial work.",

@@ -12,53 +12,88 @@ const CareerPathways = () => {
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
 
   if (selectedPath) {
-    const path = careerPaths.find(p => p.id === selectedPath);
+    const path = careerPaths.find(p => p.id.toString() === selectedPath);
     if (!path) return null;
 
     // Define milestones for each career path
     const getMilestones = (pathId: string) => {
       const milestoneMap: Record<string, string[]> = {
-        "qualified-electrician": [
-          "Complete Level 3 Electrical Installation NVQ",
-          "Pass AM2 practical assessment", 
-          "Achieve 18th Edition BS 7671 certification",
-          "Complete required on-the-job hours",
-          "Register with JIB grading scheme"
-        ],
-        "approved-electrician": [
+        "1": [
           "Gain 2+ years post-qualification experience",
           "Complete Inspection & Testing (2391) qualification",
           "Register with NICEIC or NAPIT scheme",
           "Obtain professional indemnity insurance",
           "Complete first self-certification project"
         ],
-        "specialist-electrician": [
-          "Choose specialization area",
-          "Complete specialist training courses",
-          "Gain manufacturer certifications",
-          "Build portfolio of specialist projects",
-          "Develop ongoing CPD plan"
+        "2": [
+          "Complete Level 3 Electrical Installation NVQ",
+          "Pass AM2 practical assessment", 
+          "Achieve 18th Edition BS 7671 certification",
+          "Complete required on-the-job hours",
+          "Register with JIB grading scheme"
         ],
-        "electrical-contractor": [
+        "3": [
           "Achieve approved electrician status",
           "Develop business management skills",
           "Create business plan and financial projections",
           "Register company and obtain insurances",
           "Secure first commercial contract"
         ],
-        "electrical-supervisor": [
-          "Gain extensive practical experience",
-          "Develop leadership and communication skills",
-          "Complete health and safety qualifications (SMSTS/SSSTS)",
-          "Lead first team project",
-          "Master project coordination skills"
-        ],
-        "electrical-engineer": [
+        "4": [
           "Obtain relevant higher education qualification",
           "Develop design software proficiency",
           "Work towards Chartered Engineer status",
           "Complete complex engineering project",
           "Join professional engineering body"
+        ],
+        "5": [
+          "Complete specialist maintenance training",
+          "Gain PLC systems experience",
+          "Master fault diagnosis techniques",
+          "Develop preventative maintenance skills",
+          "Obtain relevant industry certifications"
+        ],
+        "6": [
+          "Achieve advanced certification",
+          "Gain extensive field experience",
+          "Develop regulatory expertise",
+          "Build documentation skills",
+          "Establish professional network"
+        ],
+        "7": [
+          "Gain extensive electrical experience",
+          "Complete management qualifications",
+          "Develop leadership skills",
+          "Build stakeholder management abilities",
+          "Master budgeting and scheduling"
+        ],
+        "8": [
+          "Complete standard electrical qualification",
+          "Choose specialization area",
+          "Complete specialist training courses",
+          "Gain manufacturer certifications",
+          "Build portfolio of specialist projects"
+        ],
+        "10": [
+          "Complete HNC/HND in Electrical Engineering",
+          "Master CAD software proficiency",
+          "Learn design standards and regulations",
+          "Develop load calculation skills",
+          "Build technical drawing expertise"
+        ],
+        "11": [
+          "Achieve advanced electrical qualification",
+          "Complete specialized commissioning training",
+          "Develop system testing skills",
+          "Master troubleshooting techniques",
+          "Build documentation expertise"
+        ],
+        "12": [
+          "Complete Degree in Electrical Engineering",
+          "Gain commissioning experience",
+          "Develop project management skills",
+          "Master control systems knowledge",
+          "Build client management abilities"
         ]
       };
       return milestoneMap[pathId] || [];
@@ -84,9 +119,9 @@ const CareerPathways = () => {
           </div>
           <div>
             <ProgressTracker
-              careerPathId={path.id}
+              careerPathId={path.id.toString()}
               careerPathTitle={path.title}
-              milestones={getMilestones(path.id)}
+              milestones={getMilestones(path.id.toString())}
               onUpdateProgress={() => {
                 // Progress updated - could trigger any necessary refreshes
                 console.log('Progress updated for', path.title);
@@ -110,7 +145,7 @@ const CareerPathways = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {careerPaths.map((path) => (
-          <div key={path.id} onClick={() => setSelectedPath(path.id)} className="cursor-pointer">
+          <div key={path.id} onClick={() => setSelectedPath(path.id.toString())} className="cursor-pointer">
             <CareerPathCard 
               title={path.title}
               requirements={path.requirements}
