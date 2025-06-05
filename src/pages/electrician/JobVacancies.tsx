@@ -1,7 +1,8 @@
 
 import { useState } from "react";
 import JobVacancyHeader from "@/components/job-vacancies/JobVacancyHeader";
-import IntelligentJobSearch from "@/components/job-vacancies/IntelligentJobSearch";
+import SimpleJobSearch from "@/components/job-vacancies/SimpleJobSearch";
+import CVBuilderBox from "@/components/electrician-tools/CVBuilderBox";
 import { useJobListings } from "@/hooks/job-vacancies/useJobListings";
 
 // Define a consistent JobListing interface to avoid type conflicts
@@ -27,16 +28,17 @@ const JobVacancies = () => {
     <div className="space-y-6 animate-fade-in">
       <JobVacancyHeader />
 
-      <div className="mb-4 p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg">
-        <h3 className="text-sm font-medium text-green-800 mb-1 flex items-center gap-2">
-          🚀 AI-Powered Multi-Site Job Search
-        </h3>
-        <p className="text-xs text-green-700">
-          Search across Reed, Indeed, Totaljobs and more with AI-generated queries and smart matching
-        </p>
-      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {/* Main Content - Job Search */}
+        <div className="lg:col-span-3">
+          <SimpleJobSearch />
+        </div>
 
-      <IntelligentJobSearch />
+        {/* Sidebar - CV Builder */}
+        <div className="lg:col-span-1">
+          <CVBuilderBox />
+        </div>
+      </div>
     </div>
   );
 };
