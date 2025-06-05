@@ -123,30 +123,34 @@ async function scrapeSource(source: ScrapingSource) {
   try {
     console.log(`Scraping ${source.name} from ${source.url}`);
     
-    // Since we can't use external libraries for web scraping in edge functions,
-    // we'll use a simplified approach with fetch and basic text parsing
-    const response = await fetch(source.url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-      }
-    });
+    // Build proper search URL with electrical keywords
+    const searchUrl = buildSearchUrl(source);
+    console.log(`Using search URL: ${searchUrl}`);
+    
+    // Fetch with proper headers and error handling
+    const response = await fetchWithRetry(searchUrl);
     
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
     
     const html = await response.text();
+    console.log(`Received ${html.length} characters of HTML`);
     
     // Parse projects based on source configuration
-    const projects = parseProjectsFromHtml(html, source);
+    const projects = await parseProjectsFromHtml(html, source);
     projectsFound = projects.length;
     
     console.log(`Found ${projectsFound} potential projects from ${source.name}`);
     
     // Process and save projects
     for (const project of projects) {
-      const added = await saveProject(project, source.name);
-      if (added) projectsAdded++;
+      try {
+        const added = await saveProject(project, source.name);
+        if (added) projectsAdded++;
+      } catch (error) {
+        console.error(`Error saving project "${project.title}":`, error);
+      }
     }
     
     // Update last scraped timestamp
@@ -184,127 +188,253 @@ async function scrapeSource(source: ScrapingSource) {
   };
 }
 
-function parseProjectsFromHtml(html: string, source: ScrapingSource): ScrapedProject[] {
+function buildSearchUrl(source: ScrapingSource): string {
+  const electricalKeywords = [
+    'electrical', 'power', 'energy', 'lighting', 'wiring', 
+    'installation', 'substation', 'transformer', 'cable'
+  ];
+  
+  if (source.name === 'Contracts Finder') {
+    // Build search URL for Contracts Finder with electrical keywords
+    const keyword = electricalKeywords[Math.floor(Math.random() * electricalKeywords.length)];
+    return `https://www.contractsfinder.service.gov.uk/Search/Results?&keywords=${encodeURIComponent(keyword)}&isSubcontract=&publishedFrom=&publishedTo=&updatedFrom=&updatedTo=&awardedFrom=&awardedTo=&valueFrom=&valueTo=&postcode=&distance=0&lot=&organisation=&cpv=&stage%5B%5D=4&stage%5B%5D=6&stage%5B%5D=7&stage%5B%5D=8`;
+  } else if (source.name === 'Find a Tender') {
+    // Build search URL for Find a Tender with electrical keywords
+    const keyword = electricalKeywords[Math.floor(Math.random() * electricalKeywords.length)];
+    return `https://www.find-tender.service.gov.uk/Search?keywords=${encodeURIComponent(keyword)}`;
+  }
+  
+  return source.url;
+}
+
+async function fetchWithRetry(url: string, maxRetries = 3): Promise<Response> {
+  const headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+    'Accept-Language': 'en-GB,en;q=0.5',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Connection': 'keep-alive',
+    'Upgrade-Insecure-Requests': '1',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'none',
+    'Cache-Control': 'max-age=0'
+  };
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      console.log(`Attempt ${attempt} to fetch ${url}`);
+      
+      const response = await fetch(url, {
+        headers,
+        redirect: 'follow'
+      });
+      
+      if (response.ok) {
+        return response;
+      }
+      
+      console.log(`Attempt ${attempt} failed with status: ${response.status}`);
+      
+      if (attempt === maxRetries) {
+        return response; // Return the last response for error handling
+      }
+      
+      // Wait before retry (exponential backoff)
+      await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
+      
+    } catch (error) {
+      console.error(`Attempt ${attempt} failed:`, error);
+      
+      if (attempt === maxRetries) {
+        throw error;
+      }
+      
+      // Wait before retry
+      await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
+    }
+  }
+  
+  throw new Error(`Failed to fetch after ${maxRetries} attempts`);
+}
+
+async function parseProjectsFromHtml(html: string, source: ScrapingSource): Promise<ScrapedProject[]> {
   const projects: ScrapedProject[] = [];
   
   try {
-    // Simple regex-based parsing for demonstration
-    // In a real implementation, you'd want to use a proper HTML parser
+    console.log(`Starting to parse HTML for ${source.name}`);
     
     if (source.name === 'Contracts Finder') {
-      // Parse Contracts Finder format
-      const projectMatches = html.match(/<div[^>]*class="[^"]*search-result[^"]*"[^>]*>[\s\S]*?<\/div>/gi) || [];
-      
-      for (const match of projectMatches.slice(0, 10)) { // Limit to 10 projects per scrape
-        const project = parseContractsFinderProject(match, source.name);
-        if (project && isElectricalProject(project)) {
-          projects.push(project);
-        }
-      }
+      await parseContractsFinderProjects(html, projects, source.name);
     } else if (source.name === 'Find a Tender') {
-      // Parse Find a Tender format
-      const projectMatches = html.match(/<div[^>]*class="[^"]*tender-result[^"]*"[^>]*>[\s\S]*?<\/div>/gi) || [];
-      
-      for (const match of projectMatches.slice(0, 10)) {
-        const project = parseFindTenderProject(match, source.name);
-        if (project && isElectricalProject(project)) {
-          projects.push(project);
-        }
-      }
+      await parseFindTenderProjects(html, projects, source.name);
     }
+    
+    console.log(`Parsed ${projects.length} projects from ${source.name}`);
+    
   } catch (error) {
-    console.error('Error parsing HTML:', error);
+    console.error(`Error parsing HTML for ${source.name}:`, error);
   }
   
   return projects;
 }
 
-function parseContractsFinderProject(html: string, sourceName: string): ScrapedProject | null {
-  try {
-    // Extract title
-    const titleMatch = html.match(/<a[^>]*class="[^"]*search-result-title[^"]*"[^>]*>(.*?)<\/a>/i);
-    const title = titleMatch ? titleMatch[1].replace(/<[^>]*>/g, '').trim() : '';
+async function parseContractsFinderProjects(html: string, projects: ScrapedProject[], sourceName: string) {
+  // Look for multiple patterns that might indicate project listings
+  const patterns = [
+    // Search result items
+    /<article[^>]*class="[^"]*search-result[^"]*"[^>]*>([\s\S]*?)<\/article>/gi,
+    /<div[^>]*class="[^"]*result[^"]*"[^>]*>([\s\S]*?)<\/div>/gi,
+    /<li[^>]*class="[^"]*opportunity[^"]*"[^>]*>([\s\S]*?)<\/li>/gi,
+    // Table rows
+    /<tr[^>]*>([\s\S]*?)<\/tr>/gi
+  ];
+
+  for (const pattern of patterns) {
+    const matches = html.match(pattern) || [];
+    console.log(`Found ${matches.length} potential matches with pattern`);
     
-    // Extract summary
-    const summaryMatch = html.match(/<div[^>]*class="[^"]*search-result-summary[^"]*"[^>]*>(.*?)<\/div>/i);
-    const summary = summaryMatch ? summaryMatch[1].replace(/<[^>]*>/g, '').trim() : '';
+    for (const match of matches.slice(0, 15)) { // Limit processing
+      const project = extractProjectFromMatch(match, sourceName, 'contracts-finder');
+      if (project && isElectricalProject(project)) {
+        projects.push(project);
+      }
+    }
     
-    // Extract value
-    const valueMatch = html.match(/<div[^>]*class="[^"]*search-result-value[^"]*"[^>]*>(.*?)<\/div>/i);
-    const projectValue = valueMatch ? valueMatch[1].replace(/<[^>]*>/g, '').trim() : 'Not specified';
-    
-    // Extract location
-    const locationMatch = html.match(/<div[^>]*class="[^"]*search-result-location[^"]*"[^>]*>(.*?)<\/div>/i);
-    const location = locationMatch ? locationMatch[1].replace(/<[^>]*>/g, '').trim() : 'UK';
-    
-    if (!title) return null;
-    
-    return {
-      title,
-      summary,
-      content: `${summary}\n\nSource: ${sourceName}`,
-      awarded_to: 'To be announced',
-      project_value: projectValue,
-      location,
-      status: 'open_tender',
-      external_id: generateExternalId(title, sourceName),
-      source_name: sourceName
-    };
-  } catch (error) {
-    console.error('Error parsing Contracts Finder project:', error);
-    return null;
+    if (projects.length > 0) break; // Use first successful pattern
   }
 }
 
-function parseFindTenderProject(html: string, sourceName: string): ScrapedProject | null {
+async function parseFindTenderProjects(html: string, projects: ScrapedProject[], sourceName: string) {
+  // Look for multiple patterns for Find a Tender
+  const patterns = [
+    /<div[^>]*class="[^"]*tender[^"]*"[^>]*>([\s\S]*?)<\/div>/gi,
+    /<article[^>]*class="[^"]*notice[^"]*"[^>]*>([\s\S]*?)<\/article>/gi,
+    /<li[^>]*class="[^"]*opportunity[^"]*"[^>]*>([\s\S]*?)<\/li>/gi,
+    /<tr[^>]*>([\s\S]*?)<\/tr>/gi
+  ];
+
+  for (const pattern of patterns) {
+    const matches = html.match(pattern) || [];
+    console.log(`Found ${matches.length} potential matches with pattern`);
+    
+    for (const match of matches.slice(0, 15)) { // Limit processing
+      const project = extractProjectFromMatch(match, sourceName, 'find-tender');
+      if (project && isElectricalProject(project)) {
+        projects.push(project);
+      }
+    }
+    
+    if (projects.length > 0) break; // Use first successful pattern
+  }
+}
+
+function extractProjectFromMatch(html: string, sourceName: string, sourceType: string): ScrapedProject | null {
   try {
-    // Extract title
-    const titleMatch = html.match(/<div[^>]*class="[^"]*tender-title[^"]*"[^>]*>(.*?)<\/div>/i);
-    const title = titleMatch ? titleMatch[1].replace(/<[^>]*>/g, '').trim() : '';
+    // Extract text content from HTML
+    const textContent = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
     
-    // Extract description
-    const descMatch = html.match(/<div[^>]*class="[^"]*tender-description[^"]*"[^>]*>(.*?)<\/div>/i);
-    const summary = descMatch ? descMatch[1].replace(/<[^>]*>/g, '').trim() : '';
+    if (textContent.length < 50) return null; // Skip very short content
     
-    // Extract value
-    const valueMatch = html.match(/<div[^>]*class="[^"]*tender-value[^"]*"[^>]*>(.*?)<\/div>/i);
-    const projectValue = valueMatch ? valueMatch[1].replace(/<[^>]*>/g, '').trim() : 'Not specified';
+    // Extract potential title (first significant text or link text)
+    const titleMatch = html.match(/<a[^>]*>([^<]+)<\/a>/) || 
+                      html.match(/<h[1-6][^>]*>([^<]+)<\/h[1-6]>/) ||
+                      html.match(/^([^.!?]{10,100})/);
     
-    // Extract location
-    const locationMatch = html.match(/<div[^>]*class="[^"]*tender-location[^"]*"[^>]*>(.*?)<\/div>/i);
-    const location = locationMatch ? locationMatch[1].replace(/<[^>]*>/g, '').trim() : 'UK';
+    const title = titleMatch ? titleMatch[1].trim() : textContent.substring(0, 100) + '...';
     
-    if (!title) return null;
+    if (!title || title.length < 10) return null;
     
-    return {
-      title,
-      summary,
-      content: `${summary}\n\nSource: ${sourceName}`,
-      awarded_to: 'To be announced',
+    // Extract summary (first portion of text content)
+    const summary = textContent.substring(0, 300).trim();
+    
+    // Extract potential value information
+    const valuePatterns = [
+      /£[\d,]+(?:\.\d{2})?(?:\s*(?:million|m|k|thousand))?/gi,
+      /value[:\s]*£?[\d,]+/gi,
+      /worth[:\s]*£?[\d,]+/gi,
+      /\b\d+(?:,\d{3})*(?:\.\d{2})?\s*(?:pounds?|gbp)\b/gi
+    ];
+    
+    let projectValue = 'Not specified';
+    for (const pattern of valuePatterns) {
+      const match = textContent.match(pattern);
+      if (match) {
+        projectValue = match[0];
+        break;
+      }
+    }
+    
+    // Extract location information
+    const locationPatterns = [
+      /\b(?:London|Birmingham|Manchester|Liverpool|Leeds|Sheffield|Bristol|Newcastle|Nottingham|Leicester|Cardiff|Edinburgh|Glasgow|Belfast)\b/gi,
+      /\b[A-Z]{1,2}\d{1,2}[A-Z]?\s*\d[A-Z]{2}\b/g, // UK postcodes
+      /location[:\s]*([^,.\n]{5,50})/gi
+    ];
+    
+    let location = 'UK';
+    for (const pattern of locationPatterns) {
+      const match = textContent.match(pattern);
+      if (match) {
+        location = match[0].replace(/location[:\s]*/gi, '').trim();
+        break;
+      }
+    }
+    
+    // Determine status based on source and content
+    let status = 'open_tender';
+    if (textContent.toLowerCase().includes('awarded') || textContent.toLowerCase().includes('won')) {
+      status = 'awarded';
+    } else if (textContent.toLowerCase().includes('closed') || textContent.toLowerCase().includes('expired')) {
+      status = 'closed';
+    }
+    
+    const project: ScrapedProject = {
+      title: title.substring(0, 200), // Limit title length
+      summary: summary.substring(0, 500), // Limit summary length
+      content: `${summary}\n\nSource: ${sourceName}\nExtracted from: ${sourceType}`,
+      awarded_to: status === 'awarded' ? 'To be confirmed' : 'To be announced',
       project_value: projectValue,
-      location,
-      status: 'open_tender',
+      location: location.substring(0, 100), // Limit location length
+      status,
       external_id: generateExternalId(title, sourceName),
       source_name: sourceName
     };
+    
+    console.log(`Extracted project: ${title.substring(0, 50)}...`);
+    return project;
+    
   } catch (error) {
-    console.error('Error parsing Find a Tender project:', error);
+    console.error('Error extracting project from match:', error);
     return null;
   }
 }
 
 function isElectricalProject(project: ScrapedProject): boolean {
-  const keywords = ['electrical', 'power', 'energy', 'electric', 'lighting', 'wiring', 'installation', 'cable', 'substation', 'transformer', 'grid', 'renewable'];
-  const text = `${project.title} ${project.summary}`.toLowerCase();
+  const keywords = [
+    'electrical', 'power', 'energy', 'electric', 'lighting', 'wiring', 
+    'installation', 'cable', 'substation', 'transformer', 'grid', 
+    'renewable', 'solar', 'wind', 'battery', 'inverter', 'switchgear',
+    'distribution', 'transmission', 'circuit', 'meter', 'panel',
+    'conduit', 'earthing', 'protection', 'automation', 'control'
+  ];
   
-  return keywords.some(keyword => text.includes(keyword));
+  const text = `${project.title} ${project.summary}`.toLowerCase();
+  const hasKeyword = keywords.some(keyword => text.includes(keyword));
+  
+  if (hasKeyword) {
+    console.log(`Project "${project.title.substring(0, 50)}..." matches electrical keywords`);
+  }
+  
+  return hasKeyword;
 }
 
 function generateExternalId(title: string, sourceName: string): string {
   // Create a consistent ID based on title and source
   const cleanTitle = title.toLowerCase().replace(/[^a-z0-9]/g, '');
   const cleanSource = sourceName.toLowerCase().replace(/[^a-z0-9]/g, '');
-  return `${cleanSource}_${cleanTitle.substring(0, 50)}`;
+  const timestamp = Date.now().toString().slice(-6); // Last 6 digits for uniqueness
+  return `${cleanSource}_${cleanTitle.substring(0, 40)}_${timestamp}`;
 }
 
 async function saveProject(project: ScrapedProject, sourceName: string): Promise<boolean> {
@@ -315,10 +445,10 @@ async function saveProject(project: ScrapedProject, sourceName: string): Promise
       .select('id')
       .eq('external_id', project.external_id)
       .eq('source_name', sourceName)
-      .single();
+      .maybeSingle();
     
     if (existing) {
-      console.log(`Project already exists: ${project.title}`);
+      console.log(`Project already exists: ${project.title.substring(0, 50)}...`);
       return false;
     }
     
@@ -357,7 +487,7 @@ async function saveProject(project: ScrapedProject, sourceName: string): Promise
       // Don't return false here, as the project was still added
     }
     
-    console.log(`Successfully added project: ${project.title}`);
+    console.log(`Successfully added project: ${project.title.substring(0, 50)}...`);
     return true;
     
   } catch (error) {
