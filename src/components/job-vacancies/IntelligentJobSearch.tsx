@@ -42,8 +42,8 @@ interface SearchResults {
 const IntelligentJobSearch: React.FC = () => {
   const [query, setQuery] = useState("electrician");
   const [location, setLocation] = useState("United Kingdom");
-  const [jobType, setJobType] = useState("");
-  const [experienceLevel, setExperienceLevel] = useState("");
+  const [jobType, setJobType] = useState("all");
+  const [experienceLevel, setExperienceLevel] = useState("all");
   const [isSearching, setIsSearching] = useState(false);
   const [results, setResults] = useState<SearchResults | null>(null);
   const [searchTime, setSearchTime] = useState<number>(0);
@@ -67,8 +67,8 @@ const IntelligentJobSearch: React.FC = () => {
           query: query.trim(),
           location: location.trim() || "United Kingdom",
           filters: {
-            jobType,
-            experienceLevel,
+            jobType: jobType === "all" ? "" : jobType,
+            experienceLevel: experienceLevel === "all" ? "" : experienceLevel,
           }
         },
       });
@@ -171,7 +171,7 @@ const IntelligentJobSearch: React.FC = () => {
                 <SelectValue placeholder="Job Type (Optional)" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Types</SelectItem>
+                <SelectItem value="all">All Types</SelectItem>
                 <SelectItem value="full-time">Full-time</SelectItem>
                 <SelectItem value="part-time">Part-time</SelectItem>
                 <SelectItem value="contract">Contract</SelectItem>
@@ -183,7 +183,7 @@ const IntelligentJobSearch: React.FC = () => {
                 <SelectValue placeholder="Experience Level (Optional)" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Levels</SelectItem>
+                <SelectItem value="all">All Levels</SelectItem>
                 <SelectItem value="entry">Entry Level</SelectItem>
                 <SelectItem value="intermediate">Intermediate</SelectItem>
                 <SelectItem value="senior">Senior</SelectItem>
