@@ -1,12 +1,12 @@
 
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Search, MapPin, Clock, ExternalLink } from "lucide-react";
+import { Search, MapPin, Clock, ExternalLink, X, Loader2 } from "lucide-react";
 import { Combobox, ComboboxOption } from "@/components/ui/combobox";
 
 interface JobResult {
@@ -29,6 +29,37 @@ interface SearchResults {
   sources: string[];
 }
 
+// Common UK job search terms for suggestions
+const JOB_SEARCH_SUGGESTIONS = [
+  "electrician",
+  "electrical engineer",
+  "electrical technician",
+  "electrical installer",
+  "electrical supervisor",
+  "maintenance electrician",
+  "commercial electrician",
+  "domestic electrician",
+  "industrial electrician",
+  "apprentice electrician"
+];
+
+// Common UK locations for suggestions
+const UK_LOCATION_SUGGESTIONS = [
+  "London",
+  "Manchester",
+  "Birmingham",
+  "Leeds",
+  "Glasgow",
+  "Liverpool",
+  "Sheffield",
+  "Edinburgh",
+  "Bristol",
+  "Newcastle",
+  "Cardiff",
+  "Belfast",
+  "United Kingdom"
+];
+
 const SimpleJobSearch: React.FC = () => {
   const [query, setQuery] = useState("electrician");
   const [location, setLocation] = useState("United Kingdom");
@@ -37,6 +68,9 @@ const SimpleJobSearch: React.FC = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [results, setResults] = useState<SearchResults | null>(null);
   const [searchTime, setSearchTime] = useState<number>(0);
+  const [showJobSuggestions, setShowJobSuggestions] = useState(false);
+  const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
+  const [searchHistory, setSearchHistory] = useState<string[]>([]);
 
   // Job type options for the combobox
   const jobTypeOptions: ComboboxOption[] = [
@@ -55,11 +89,38 @@ const SimpleJobSearch: React.FC = () => {
     { value: "lead", label: "Lead/Management" },
   ];
 
-  const handleSearch = async () => {
+  // Load search history from localStorage on component mount
+  useEffect(() => {
+    const savedHistory = localStorage.getItem('jobSearchHistory');
+    if (savedHistory) {
+      setSearchHistory(JSON.parse(savedHistory));
+    }
+  }, []);
+
+  // Save search term to history
+  const saveToHistory = useCallback((searchTerm: string) => {
+    const updatedHistory = [searchTerm, ...searchHistory.filter(item => item !== searchTerm)].slice(0, 5);
+    setSearchHistory(updatedHistory);
+    localStorage.setItem('jobSearchHistory', JSON.stringify(updatedHistory));
+  }, [searchHistory]);
+
+  // Debounced search validation
+  const validateSearch = useCallback(() => {
     if (!query.trim()) {
+      return "Please enter a job search term";
+    }
+    if (query.trim().length < 2) {
+      return "Search term must be at least 2 characters";
+    }
+    return null;
+  }, [query]);
+
+  const handleSearch = async () => {
+    const validationError = validateSearch();
+    if (validationError) {
       toast({
-        title: "Search Required",
-        description: "Please enter a job search term",
+        title: "Search Validation",
+        description: validationError,
         variant: "destructive",
       });
       return;
@@ -69,6 +130,8 @@ const SimpleJobSearch: React.FC = () => {
     const startTime = Date.now();
 
     try {
+      console.log('Starting job search with:', { query: query.trim(), location: location.trim() });
+      
       const { data, error } = await supabase.functions.invoke('intelligent-job-search', {
         body: {
           query: query.trim(),
@@ -81,28 +144,63 @@ const SimpleJobSearch: React.FC = () => {
       });
 
       if (error) {
+        console.error('Job search error:', error);
         throw error;
       }
 
       const searchDuration = Date.now() - startTime;
       setSearchTime(searchDuration);
       setResults(data);
+      
+      // Save successful search to history
+      saveToHistory(query.trim());
 
-      toast({
-        title: "Search Complete",
-        description: `Found ${data.totalFound} jobs in ${searchDuration}ms`,
-      });
+      if (data.totalFound === 0) {
+        toast({
+          title: "No Results Found",
+          description: "Try different keywords or broaden your search criteria",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Search Complete",
+          description: `Found ${data.totalFound} jobs in ${searchDuration}ms`,
+        });
+      }
 
     } catch (error) {
       console.error('Job search error:', error);
+      const errorMessage = error instanceof Error ? error.message : "Failed to search jobs";
+      
       toast({
-        title: "Search Failed",
-        description: error instanceof Error ? error.message : "Failed to search jobs",
+        title: "Search Failed", 
+        description: `${errorMessage}. Please check your connection and try again.`,
         variant: "destructive",
       });
+      
+      // Set empty results on error
+      setResults({ jobs: [], totalFound: 0, searchQueries: [], sources: [] });
     } finally {
       setIsSearching(false);
     }
+  };
+
+  const handleJobSuggestionClick = (suggestion: string) => {
+    setQuery(suggestion);
+    setShowJobSuggestions(false);
+  };
+
+  const handleLocationSuggestionClick = (suggestion: string) => {
+    setLocation(suggestion);
+    setShowLocationSuggestions(false);
+  };
+
+  const clearAllFilters = () => {
+    setQuery("electrician");
+    setLocation("United Kingdom");
+    setJobType("all");
+    setExperienceLevel("all");
+    setResults(null);
   };
 
   const handleApply = (job: JobResult) => {
@@ -112,6 +210,14 @@ const SimpleJobSearch: React.FC = () => {
       description: `Opening job listing for ${job.title}`,
     });
   };
+
+  const filteredJobSuggestions = JOB_SEARCH_SUGGESTIONS.filter(suggestion =>
+    suggestion.toLowerCase().includes(query.toLowerCase()) && suggestion !== query
+  );
+
+  const filteredLocationSuggestions = UK_LOCATION_SUGGESTIONS.filter(suggestion =>
+    suggestion.toLowerCase().includes(location.toLowerCase()) && suggestion !== location
+  );
 
   return (
     <div className="space-y-6">
@@ -125,31 +231,81 @@ const SimpleJobSearch: React.FC = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
+            <div className="space-y-2 relative">
               <label className="text-sm font-medium">Job Search</label>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
+                  onFocus={() => setShowJobSuggestions(true)}
+                  onBlur={() => setTimeout(() => setShowJobSuggestions(false), 200)}
                   placeholder="e.g. electrician, electrical engineer"
                   className="pl-10"
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
                 />
               </div>
+              
+              {/* Job Search Suggestions */}
+              {showJobSuggestions && (filteredJobSuggestions.length > 0 || searchHistory.length > 0) && (
+                <div className="absolute top-full left-0 right-0 z-50 bg-white border border-gray-200 rounded-md shadow-lg mt-1">
+                  {searchHistory.length > 0 && (
+                    <div className="p-2 border-b">
+                      <p className="text-xs text-muted-foreground mb-1">Recent searches</p>
+                      {searchHistory.map((historyItem, index) => (
+                        <button
+                          key={index}
+                          onClick={() => handleJobSuggestionClick(historyItem)}
+                          className="block w-full text-left px-2 py-1 text-sm hover:bg-gray-100 rounded"
+                        >
+                          <Clock className="inline h-3 w-3 mr-2" />
+                          {historyItem}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                  {filteredJobSuggestions.slice(0, 5).map((suggestion, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleJobSuggestionClick(suggestion)}
+                      className="block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                    >
+                      {suggestion}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-2 relative">
               <label className="text-sm font-medium">Location</label>
               <div className="relative">
                 <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
+                  onFocus={() => setShowLocationSuggestions(true)}
+                  onBlur={() => setTimeout(() => setShowLocationSuggestions(false), 200)}
                   placeholder="e.g. London, Manchester, UK"
                   className="pl-10"
                 />
               </div>
+              
+              {/* Location Suggestions */}
+              {showLocationSuggestions && filteredLocationSuggestions.length > 0 && (
+                <div className="absolute top-full left-0 right-0 z-50 bg-white border border-gray-200 rounded-md shadow-lg mt-1">
+                  {filteredLocationSuggestions.slice(0, 5).map((suggestion, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleLocationSuggestionClick(suggestion)}
+                      className="block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                    >
+                      <MapPin className="inline h-3 w-3 mr-2" />
+                      {suggestion}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -161,7 +317,7 @@ const SimpleJobSearch: React.FC = () => {
                 placeholder="Select job type..."
                 searchPlaceholder="Search job types..."
                 emptyMessage="No job types found."
-                className="w-full"
+                className="w-full bg-white"
               />
             </div>
 
@@ -174,28 +330,39 @@ const SimpleJobSearch: React.FC = () => {
                 placeholder="Select experience level..."
                 searchPlaceholder="Search experience levels..."
                 emptyMessage="No experience levels found."
-                className="w-full"
+                className="w-full bg-white"
               />
             </div>
           </div>
 
-          <Button 
-            onClick={handleSearch}
-            disabled={isSearching || !query.trim()}
-            className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
-          >
-            {isSearching ? (
-              <>
-                <Search className="h-4 w-4 mr-2 animate-spin" />
-                Searching...
-              </>
-            ) : (
-              <>
-                <Search className="h-4 w-4 mr-2" />
-                Search Jobs
-              </>
-            )}
-          </Button>
+          <div className="flex gap-2">
+            <Button 
+              onClick={handleSearch}
+              disabled={isSearching || !query.trim()}
+              className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            >
+              {isSearching ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Searching...
+                </>
+              ) : (
+                <>
+                  <Search className="h-4 w-4 mr-2" />
+                  Search Jobs
+                </>
+              )}
+            </Button>
+            
+            <Button 
+              onClick={clearAllFilters}
+              variant="outline"
+              className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+            >
+              <X className="h-4 w-4 mr-2" />
+              Clear All
+            </Button>
+          </div>
         </CardContent>
       </Card>
 
@@ -279,6 +446,22 @@ const SimpleJobSearch: React.FC = () => {
           <p className="text-muted-foreground mt-1">
             Try different keywords or broaden your search criteria
           </p>
+          <div className="mt-4 space-y-2">
+            <p className="text-sm text-muted-foreground">Try these suggestions:</p>
+            <div className="flex flex-wrap gap-2 justify-center">
+              {JOB_SEARCH_SUGGESTIONS.slice(0, 3).map((suggestion, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleJobSuggestionClick(suggestion)}
+                  className="text-xs"
+                >
+                  {suggestion}
+                </Button>
+              ))}
+            </div>
+          </div>
         </Card>
       )}
     </div>

@@ -53,18 +53,18 @@ export function Combobox({
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className={cn("justify-between", className)}
+          className={cn("justify-between bg-white hover:bg-gray-50", className)}
         >
           {selectedOption ? selectedOption.label : placeholder}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0" align="start">
-        <Command>
-          <CommandInput placeholder={searchPlaceholder} />
-          <CommandList>
-            <CommandEmpty>{emptyMessage}</CommandEmpty>
-            <CommandGroup>
+      <PopoverContent className="w-full p-0 bg-white border border-gray-200 shadow-lg z-50" align="start">
+        <Command className="bg-white">
+          <CommandInput placeholder={searchPlaceholder} className="border-none" />
+          <CommandList className="bg-white">
+            <CommandEmpty className="p-4 text-sm text-muted-foreground">{emptyMessage}</CommandEmpty>
+            <CommandGroup className="bg-white">
               {options.map((option) => (
                 <CommandItem
                   key={option.value}
@@ -73,6 +73,7 @@ export function Combobox({
                     onValueChange?.(currentValue === value ? "" : currentValue)
                     setOpen(false)
                   }}
+                  className="bg-white hover:bg-gray-100 cursor-pointer"
                 >
                   <Check
                     className={cn(

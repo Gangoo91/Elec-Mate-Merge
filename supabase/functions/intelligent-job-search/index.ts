@@ -14,17 +14,31 @@ serve(async (req) => {
     const { query, location, filters } = await req.json();
     console.log('Starting job search for:', { query, location, filters });
     
+    // Check if API key is available
+    if (!reedApiKey) {
+      console.error('Reed API key not found in environment variables');
+      return new Response(
+        JSON.stringify({ 
+          error: "Job search service temporarily unavailable. Please try again later.",
+          jobs: [],
+          totalFound: 0,
+          searchQueries: [query],
+          sources: []
+        }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    
     const allJobs = [];
     
-    // Search Reed Jobs only (remove Adzuna for now to simplify)
-    if (reedApiKey) {
-      try {
-        const reedJobs = await searchReedJobs(query, location, filters);
-        allJobs.push(...reedJobs);
-        console.log(`Found ${reedJobs.length} jobs from Reed`);
-      } catch (error) {
-        console.warn('Reed search failed:', error.message);
-      }
+    // Search Reed Jobs
+    try {
+      const reedJobs = await searchReedJobs(query, location, filters);
+      allJobs.push(...reedJobs);
+      console.log(`Found ${reedJobs.length} jobs from Reed`);
+    } catch (error) {
+      console.warn('Reed search failed:', error.message);
+      // Don't throw here, just log the error and continue
     }
     
     // Deduplicate jobs
@@ -50,9 +64,11 @@ serve(async (req) => {
     console.error('Error in job search:', error);
     return new Response(
       JSON.stringify({ 
-        error: error.message,
+        error: "An error occurred while searching for jobs. Please try again.",
         jobs: [],
-        totalFound: 0
+        totalFound: 0,
+        searchQueries: [],
+        sources: []
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
@@ -60,7 +76,10 @@ serve(async (req) => {
 });
 
 async function searchReedJobs(query: string, location: string, filters: any) {
-  if (!reedApiKey) return [];
+  if (!reedApiKey) {
+    console.log('Reed API key not available, skipping Reed search');
+    return [];
+  }
   
   const params = new URLSearchParams({
     keywords: query,
@@ -77,6 +96,8 @@ async function searchReedJobs(query: string, location: string, filters: any) {
     params.append('temp', 'true');
   }
   
+  console.log('Calling Reed API with params:', params.toString());
+  
   const response = await fetch(`https://www.reed.co.uk/api/1.0/search?${params}`, {
     headers: {
       'Authorization': `Basic ${btoa(reedApiKey + ':')}`
@@ -84,11 +105,21 @@ async function searchReedJobs(query: string, location: string, filters: any) {
   });
   
   if (!response.ok) {
+    console.error(`Reed API error: ${response.status} ${response.statusText}`);
+    const errorText = await response.text();
+    console.error('Reed API error response:', errorText);
     throw new Error(`Reed API error: ${response.statusText}`);
   }
   
   const data = await response.json();
-  return (data.results || []).map((job: any) => ({
+  console.log(`Reed API returned ${data.totalResults} total results, processing ${data.results?.length || 0} jobs`);
+  
+  if (!data.results || data.results.length === 0) {
+    console.log('No results from Reed API');
+    return [];
+  }
+  
+  return data.results.map((job: any) => ({
     id: `reed-${job.jobId}`,
     title: job.jobTitle,
     company: job.employerName,
