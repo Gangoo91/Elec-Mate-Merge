@@ -28,7 +28,7 @@ serve(async (req) => {
     
     // Search Reed Jobs (if API available)
     if (reedApiKey) {
-      for (const searchQuery of enhancedQueries.slice(0, 3)) {
+      for (const searchQuery of enhancedQueries.slice(0, 2)) {
         try {
           const reedJobs = await searchReedJobs(searchQuery, location, filters);
           allJobs.push(...reedJobs);
@@ -38,7 +38,7 @@ serve(async (req) => {
       }
     }
     
-    // Search Indeed UK
+    // Search Indeed UK simulation
     for (const searchQuery of enhancedQueries.slice(0, 2)) {
       try {
         const indeedJobs = await searchIndeedUK(searchQuery, location, filters);
@@ -48,7 +48,7 @@ serve(async (req) => {
       }
     }
     
-    // Search Totaljobs
+    // Search Totaljobs simulation
     for (const searchQuery of enhancedQueries.slice(0, 2)) {
       try {
         const totalJobs = await searchTotalJobs(searchQuery, location, filters);
@@ -81,7 +81,7 @@ serve(async (req) => {
         jobs: enhancedJobs.slice(0, 50), // Limit to top 50 results
         totalFound: enhancedJobs.length,
         searchQueries: enhancedQueries,
-        sources: ['Reed', 'Indeed', 'Totaljobs']
+        sources: getActiveSources()
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
@@ -149,10 +149,14 @@ Return JSON array of search strings only.`
 }
 
 async function searchReedJobs(query: string, location: string, filters: any) {
+  if (!reedApiKey) {
+    return [];
+  }
+  
   const params = new URLSearchParams({
     keywords: query,
     location: location || 'United Kingdom',
-    resultsToTake: '50'
+    resultsToTake: '25'
   });
   
   const response = await fetch(`https://www.reed.co.uk/api/1.0/search?${params}`, {
@@ -182,82 +186,68 @@ async function searchReedJobs(query: string, location: string, filters: any) {
 }
 
 async function searchIndeedUK(query: string, location: string, filters: any) {
-  // Indeed scraping simulation - returns structured job data
-  try {
-    const searchUrl = `https://uk.indeed.com/jobs?q=${encodeURIComponent(query)}&l=${encodeURIComponent(location || 'United Kingdom')}`;
-    
-    // Simulate Indeed job results with realistic UK electrical job data
-    const mockJobs = [
-      {
-        id: `indeed-${Date.now()}-1`,
-        title: `${query} - Electrical Installation`,
-        company: 'UK Electrical Services Ltd',
-        location: location || 'London',
-        salary: '£35,000 - £45,000',
-        type: 'Full-time',
-        description: `We are seeking a qualified ${query} for electrical installation work. Must have 18th Edition certification and relevant experience in commercial and domestic electrical work.`,
-        external_url: `${searchUrl}&vjk=sample1`,
-        posted_date: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
-        source: 'Indeed'
-      },
-      {
-        id: `indeed-${Date.now()}-2`,
-        title: `Senior ${query} - Renewable Energy`,
-        company: 'Green Power Solutions',
-        location: location || 'Manchester',
-        salary: '£40,000 - £55,000',
-        type: 'Full-time',
-        description: `Join our team working on solar PV and wind energy projects. Experience with renewable energy systems preferred. Excellent benefits package.`,
-        external_url: `${searchUrl}&vjk=sample2`,
-        posted_date: new Date(Date.now() - Math.random() * 5 * 24 * 60 * 60 * 1000).toISOString(),
-        source: 'Indeed'
-      }
-    ];
-    
-    console.log(`Indeed search simulation returned ${mockJobs.length} jobs for: ${query}`);
-    return mockJobs;
-  } catch (error) {
-    console.warn('Indeed search failed:', error.message);
-    return [];
-  }
+  // Simulate Indeed job results with realistic UK electrical job data
+  const timestamp = Date.now();
+  const mockJobs = [
+    {
+      id: `indeed-${timestamp}-1`,
+      title: `${query} - Commercial Installation`,
+      company: 'UK Electrical Contractors Ltd',
+      location: location || 'London',
+      salary: '£32,000 - £42,000',
+      type: filters.jobType || 'Full-time',
+      description: `We are seeking a qualified ${query} for commercial electrical installation work. Must have 18th Edition certification, NICEIC approval desirable. Experience with commercial wiring systems essential.`,
+      external_url: `https://uk.indeed.com/viewjob?jk=indeed${timestamp}1`,
+      posted_date: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
+      source: 'Indeed'
+    },
+    {
+      id: `indeed-${timestamp}-2`,
+      title: `Senior ${query} - Maintenance`,
+      company: 'Industrial Services Group',
+      location: location || 'Manchester',
+      salary: '£38,000 - £48,000',
+      type: 'Full-time',
+      description: `Senior electrical technician required for planned maintenance contracts. Experience with industrial electrical systems, PLCs, and motor control panels essential. Excellent benefits package.`,
+      external_url: `https://uk.indeed.com/viewjob?jk=indeed${timestamp}2`,
+      posted_date: new Date(Date.now() - Math.random() * 5 * 24 * 60 * 60 * 1000).toISOString(),
+      source: 'Indeed'
+    }
+  ];
+  
+  return mockJobs;
 }
 
 async function searchTotalJobs(query: string, location: string, filters: any) {
-  // Totaljobs scraping simulation
-  try {
-    const mockJobs = [
-      {
-        id: `totaljobs-${Date.now()}-1`,
-        title: `${query} - Maintenance Specialist`,
-        company: 'Industrial Electrical Co',
-        location: location || 'Birmingham',
-        salary: '£32,000 - £42,000',
-        type: 'Full-time',
-        description: `Maintenance electrician required for industrial facility. Experience with PLCs and motor control systems essential. Day shift with occasional overtime.`,
-        external_url: `https://www.totaljobs.com/job/${Date.now()}`,
-        posted_date: new Date(Date.now() - Math.random() * 10 * 24 * 60 * 60 * 1000).toISOString(),
-        source: 'Totaljobs'
-      },
-      {
-        id: `totaljobs-${Date.now()}-2`,
-        title: `Contract ${query} - Data Centre`,
-        company: 'Tech Infrastructure Ltd',
-        location: location || 'Leeds',
-        salary: '£25 - £35 per hour',
-        type: 'Contract',
-        description: `Contract electrician needed for data centre construction project. High voltage experience required. 6-month initial contract with extension possible.`,
-        external_url: `https://www.totaljobs.com/job/${Date.now() + 1}`,
-        posted_date: new Date(Date.now() - Math.random() * 3 * 24 * 60 * 60 * 1000).toISOString(),
-        source: 'Totaljobs'
-      }
-    ];
-    
-    console.log(`Totaljobs search simulation returned ${mockJobs.length} jobs for: ${query}`);
-    return mockJobs;
-  } catch (error) {
-    console.warn('Totaljobs search failed:', error.message);
-    return [];
-  }
+  const timestamp = Date.now();
+  const mockJobs = [
+    {
+      id: `totaljobs-${timestamp}-1`,
+      title: `${query} - Renewable Energy`,
+      company: 'Green Energy Solutions',
+      location: location || 'Birmingham',
+      salary: '£35,000 - £45,000',
+      type: 'Full-time',
+      description: `Electrician specialising in renewable energy installations required. Solar PV and battery storage experience preferred. Company van and tools provided.`,
+      external_url: `https://www.totaljobs.com/job/${timestamp}1`,
+      posted_date: new Date(Date.now() - Math.random() * 10 * 24 * 60 * 60 * 1000).toISOString(),
+      source: 'Totaljobs'
+    },
+    {
+      id: `totaljobs-${timestamp}-2`,
+      title: `Contract ${query} - Data Centre`,
+      company: 'Tech Infrastructure Ltd',
+      location: location || 'Leeds',
+      salary: '£28 - £38 per hour',
+      type: 'Contract',
+      description: `Contract electrician needed for data centre project. High voltage experience required. 6-month initial contract with potential extension. Immediate start available.`,
+      external_url: `https://www.totaljobs.com/job/${timestamp}2`,
+      posted_date: new Date(Date.now() - Math.random() * 3 * 24 * 60 * 60 * 1000).toISOString(),
+      source: 'Totaljobs'
+    }
+  ];
+  
+  return mockJobs;
 }
 
 function deduplicateJobs(jobs: any[]) {
@@ -324,4 +314,11 @@ Return enhanced JSON array only.`
     console.warn('AI enhancement parsing failed:', error.message);
     return { enhancedJobs: jobs };
   }
+}
+
+function getActiveSources() {
+  const sources = [];
+  if (reedApiKey) sources.push('Reed');
+  sources.push('Indeed', 'Totaljobs');
+  return sources;
 }

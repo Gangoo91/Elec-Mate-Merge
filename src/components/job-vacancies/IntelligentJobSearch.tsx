@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -5,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Search, Brain, Zap, MapPin, Clock, ExternalLink } from "lucide-react";
+import { Search, Brain, Zap, MapPin, Clock, ExternalLink, AlertCircle } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -47,6 +48,7 @@ const IntelligentJobSearch: React.FC = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [results, setResults] = useState<SearchResults | null>(null);
   const [searchTime, setSearchTime] = useState<number>(0);
+  const [hasApiError, setHasApiError] = useState(false);
 
   const handleSearch = async () => {
     if (!query.trim()) {
@@ -59,6 +61,7 @@ const IntelligentJobSearch: React.FC = () => {
     }
 
     setIsSearching(true);
+    setHasApiError(false);
     const startTime = Date.now();
 
     try {
@@ -73,7 +76,19 @@ const IntelligentJobSearch: React.FC = () => {
         },
       });
 
-      if (error) throw error;
+      if (error) {
+        if (error.message.includes('OpenAI API key')) {
+          setHasApiError(true);
+          toast({
+            title: "API Configuration Required",
+            description: "OpenAI API key needs to be configured. Please contact your administrator.",
+            variant: "destructive",
+          });
+        } else {
+          throw error;
+        }
+        return;
+      }
 
       const searchDuration = Date.now() - startTime;
       setSearchTime(searchDuration);
@@ -130,6 +145,15 @@ const IntelligentJobSearch: React.FC = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+          {hasApiError && (
+            <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+              <div className="flex items-center gap-2 text-red-700">
+                <AlertCircle className="h-4 w-4" />
+                <p className="text-sm">AI features require OpenAI API configuration. Search will work with limited functionality.</p>
+              </div>
+            </div>
+          )}
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">Job Search</label>

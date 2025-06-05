@@ -74,7 +74,7 @@ Return enhanced jobs as valid JSON array only.`
     
     try {
       const aiContent = aiData.choices[0].message.content;
-      console.log('Raw AI Response:', aiContent);
+      console.log('Raw AI Response received, processing...');
       
       // Multiple cleaning strategies for robust parsing
       let cleanContent = aiContent.trim();
@@ -90,8 +90,6 @@ Return enhanced jobs as valid JSON array only.`
         cleanContent = cleanContent.substring(jsonStart, jsonEnd);
       }
       
-      console.log('Cleaned content for parsing:', cleanContent.substring(0, 200) + '...');
-      
       const parsedJobs = JSON.parse(cleanContent);
       
       if (Array.isArray(parsedJobs) && parsedJobs.length > 0) {
@@ -102,23 +100,7 @@ Return enhanced jobs as valid JSON array only.`
       }
     } catch (parseError) {
       console.error('Failed to parse AI response:', parseError);
-      console.log('Attempting fallback parsing...');
-      
-      // Fallback: try to extract any valid JSON array from the response
-      try {
-        const content = aiData.choices[0].message.content;
-        const matches = content.match(/\[[\s\S]*\]/);
-        if (matches) {
-          const fallbackJobs = JSON.parse(matches[0]);
-          if (Array.isArray(fallbackJobs)) {
-            enhancedJobs = fallbackJobs;
-            console.log(`Fallback parsing successful: ${enhancedJobs.length} jobs`);
-          }
-        }
-      } catch (fallbackError) {
-        console.error('Fallback parsing also failed:', fallbackError);
-        // Continue with original jobs
-      }
+      // Continue with original jobs as fallback
     }
     
     // Generate market insights
@@ -132,7 +114,7 @@ Return enhanced jobs as valid JSON array only.`
       totalProcessed: jobs.length,
       marketTrends: [
         "High demand for 18th Edition qualified electricians",
-        "Solar PV and renewable energy skills increasingly valuable",
+        "Solar PV and renewable energy skills increasingly valuable", 
         "EV charging infrastructure installations growing rapidly",
         "Smart home automation expertise in demand"
       ],
