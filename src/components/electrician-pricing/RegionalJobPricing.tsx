@@ -1,9 +1,10 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, TrendingUp, TrendingDown, Info } from "lucide-react";
+import { logger } from "@/utils/logger";
 
 interface RegionalPricingData {
   id: string;
@@ -29,12 +30,67 @@ const RegionalJobPricing = ({ regionalData }: RegionalJobPricingProps) => {
   const [selectedRegion, setSelectedRegion] = useState<string>("all");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  // Get unique regions and categories
-  const regions = ["all", ...new Set(regionalData.map(item => item.region))];
-  const categories = ["all", ...new Set(regionalData.map(item => item.job_category))];
+  // Debug logging for component mounting and data
+  useEffect(() => {
+    logger.info('RegionalJobPricing component mounted with data:', {
+      dataCount: regionalData?.length || 0,
+      hasData: !!regionalData,
+      firstItem: regionalData?.[0] || null
+    });
+  }, [regionalData]);
+
+  // Ensure we have valid data
+  if (!regionalData || !Array.isArray(regionalData)) {
+    logger.warn('RegionalJobPricing: Invalid or missing regionalData');
+    return (
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="text-xl flex items-center gap-2">
+            <MapPin className="h-5 w-5 text-elec-yellow" />
+            UK Regional Job Pricing
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-center py-8 text-muted-foreground">
+            <Info className="h-12 w-12 mx-auto mb-4 opacity-50" />
+            <p>Regional pricing data is not available at the moment.</p>
+            <p className="text-sm mt-2">Please try refreshing the page.</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  if (regionalData.length === 0) {
+    logger.warn('RegionalJobPricing: Empty regionalData array');
+    return (
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="text-xl flex items-center gap-2">
+            <MapPin className="h-5 w-5 text-elec-yellow" />
+            UK Regional Job Pricing
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-center py-8 text-muted-foreground">
+            <Info className="h-12 w-12 mx-auto mb-4 opacity-50" />
+            <p>No regional pricing data available yet.</p>
+            <p className="text-sm mt-2">We're working to populate this data.</p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Get unique regions and categories with error handling
+  const regions = ["all", ...new Set(regionalData.map(item => item?.region).filter(Boolean))];
+  const categories = ["all", ...new Set(regionalData.map(item => item?.job_category).filter(Boolean))];
+
+  logger.info('RegionalJobPricing: Available regions and categories:', { regions, categories });
 
   // Filter data based on selections
   const filteredData = regionalData.filter(item => {
+    if (!item) return false;
     const regionMatch = selectedRegion === "all" || item.region === selectedRegion;
     const categoryMatch = selectedCategory === "all" || item.job_category === selectedCategory;
     return regionMatch && categoryMatch;
@@ -42,6 +98,7 @@ const RegionalJobPricing = ({ regionalData }: RegionalJobPricingProps) => {
 
   // Group by region for better display
   const groupedData = filteredData.reduce((acc, item) => {
+    if (!item?.region) return acc;
     if (!acc[item.region]) {
       acc[item.region] = [];
     }
@@ -50,7 +107,7 @@ const RegionalJobPricing = ({ regionalData }: RegionalJobPricingProps) => {
   }, {} as Record<string, RegionalPricingData[]>);
 
   const getComplexityColor = (complexity: string) => {
-    switch (complexity) {
+    switch (complexity?.toLowerCase()) {
       case 'simple': return 'bg-green-100 text-green-800';
       case 'standard': return 'bg-blue-100 text-blue-800';
       case 'complex': return 'bg-red-100 text-red-800';
@@ -59,6 +116,9 @@ const RegionalJobPricing = ({ regionalData }: RegionalJobPricingProps) => {
   };
 
   const formatPrice = (price: number, currency: string = 'GBP') => {
+    if (typeof price !== 'number' || isNaN(price)) {
+      return '£0.00';
+    }
     return new Intl.NumberFormat('en-GB', {
       style: 'currency',
       currency: currency
@@ -70,7 +130,7 @@ const RegionalJobPricing = ({ regionalData }: RegionalJobPricingProps) => {
       <CardHeader className="pb-4">
         <CardTitle className="text-xl flex items-center gap-2">
           <MapPin className="h-5 w-5 text-elec-yellow" />
-          UK Regional Job Pricing
+          UK Regional Job Pricing ({regionalData.length} jobs)
         </CardTitle>
         <div className="flex flex-col sm:flex-row gap-4">
           <Select value={selectedRegion} onValueChange={setSelectedRegion}>

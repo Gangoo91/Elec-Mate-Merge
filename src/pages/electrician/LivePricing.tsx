@@ -7,12 +7,23 @@ import MarketAlerts from "@/components/electrician-pricing/MarketAlerts";
 import RegionalJobPricing from "@/components/electrician-pricing/RegionalJobPricing";
 import { useLiveMetalPrices } from "@/hooks/useLiveMetalPrices";
 import ScrapMerchantFinder from "@/components/electrician-pricing/ScrapMerchantFinder";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
+import { logger } from "@/utils/logger";
 
 const LivePricing = () => {
   const { data, isLoading, refreshPrices } = useLiveMetalPrices();
   const [showMerchantFinder, setShowMerchantFinder] = useState(false);
+  
+  // Debug logging for data changes
+  useEffect(() => {
+    logger.info('LivePricing component data updated:', {
+      hasData: !!data,
+      isLoading,
+      regionalJobPricingCount: data?.regionalJobPricing?.length || 0,
+      dataStructure: data ? Object.keys(data) : []
+    });
+  }, [data, isLoading]);
   
   return (
     <div className="space-y-8 animate-fade-in">
@@ -88,10 +99,52 @@ const LivePricing = () => {
             <MarketAlerts alerts={data.marketAlerts} />
           </div>
 
-          {/* Regional Job Pricing Section */}
-          {data.regionalJobPricing && data.regionalJobPricing.length > 0 && (
-            <RegionalJobPricing regionalData={data.regionalJobPricing} />
-          )}
+          {/* Enhanced Regional Job Pricing Section with debugging */}
+          <div className="space-y-4">
+            {/* Debug information in development */}
+            {process.env.NODE_ENV === 'development' && (
+              <div className="p-4 bg-yellow-100 border border-yellow-300 rounded-lg text-sm">
+                <h4 className="font-semibold">Debug Information:</h4>
+                <p>Regional Job Pricing Data: {data.regionalJobPricing ? data.regionalJobPricing.length : 0} items</p>
+                <p>Has regionalJobPricing: {data.regionalJobPricing ? 'Yes' : 'No'}</p>
+                <p>Data keys: {Object.keys(data).join(', ')}</p>
+              </div>
+            )}
+
+            {/* Show Regional Job Pricing with improved conditional logic */}
+            {data.regionalJobPricing && Array.isArray(data.regionalJobPricing) ? (
+              data.regionalJobPricing.length > 0 ? (
+                <RegionalJobPricing regionalData={data.regionalJobPricing} />
+              ) : (
+                <Card className="p-8 border-elec-yellow/20 bg-elec-gray">
+                  <div className="text-center">
+                    <Info className="h-12 w-12 mx-auto mb-4 text-elec-yellow opacity-70" />
+                    <h3 className="text-lg font-medium mb-2">Regional Job Pricing Data</h3>
+                    <p className="text-muted-foreground">
+                      Regional job pricing data is currently being updated. Please check back later.
+                    </p>
+                  </div>
+                </Card>
+              )
+            ) : (
+              <Card className="p-8 border-elec-yellow/20 bg-elec-gray">
+                <div className="text-center">
+                  <Info className="h-12 w-12 mx-auto mb-4 text-elec-yellow opacity-70" />
+                  <h3 className="text-lg font-medium mb-2">Loading Regional Job Pricing</h3>
+                  <p className="text-muted-foreground">
+                    We're loading UK regional job pricing data. This feature provides pricing information across different UK regions.
+                  </p>
+                  <Button 
+                    onClick={refreshPrices} 
+                    className="mt-4"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? 'Loading...' : 'Retry Loading Data'}
+                  </Button>
+                </div>
+              </Card>
+            )}
+          </div>
         </>
       ) : (
         <div className="p-8 border rounded-lg bg-elec-gray border-elec-yellow/20 flex flex-col items-center gap-4">
