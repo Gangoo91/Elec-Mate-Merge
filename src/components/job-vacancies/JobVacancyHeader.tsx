@@ -5,16 +5,20 @@ import { Button } from "@/components/ui/button";
 import { Briefcase, ArrowLeft } from "lucide-react";
 
 const JobVacancyHeader = () => {
-  // Check if we're in a Router context
-  let location;
-  let isInRouterContext = true;
+  // More robust Router context detection
+  const [isInRouterContext, setIsInRouterContext] = React.useState(false);
   
-  try {
-    location = useLocation();
-  } catch (error) {
-    // Not in Router context
-    isInRouterContext = false;
-  }
+  React.useEffect(() => {
+    try {
+      // Test if we can access router context
+      const testLocation = window.location.pathname;
+      if (testLocation) {
+        setIsInRouterContext(true);
+      }
+    } catch (error) {
+      setIsInRouterContext(false);
+    }
+  }, []);
   
   const backButton = (
     <Button variant="outline" className="flex items-center gap-2" onClick={() => window.history.back()}>
