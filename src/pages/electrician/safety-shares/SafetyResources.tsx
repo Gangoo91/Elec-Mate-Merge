@@ -15,24 +15,24 @@ const SafetyResources = () => {
         <meta name="description" content="Download safety guides, toolbox talks, and training materials" />
       </Helmet>
       
-      <div className="container mx-auto py-4 md:py-8 px-2 md:px-4 lg:px-8">
-        <div className="flex items-center gap-4 mb-6">
+      <div className="container mx-auto py-6 px-4">
+        <div className="flex items-center gap-4 mb-8">
           <Button
             variant="outline"
             size="sm"
             onClick={() => navigate(-1)}
-            className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
+            className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 hover:border-elec-yellow/40 bg-transparent"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back
           </Button>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow flex items-center justify-center">
-              <Shield className="h-5 w-5 text-elec-dark" />
+            <div className="w-12 h-12 rounded-full bg-elec-yellow flex items-center justify-center">
+              <Shield className="h-6 w-6 text-elec-dark" />
             </div>
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-elec-yellow">Safety Resources</h1>
-              <p className="text-gray-300 text-sm md:text-base">
+              <h1 className="text-3xl font-bold text-elec-yellow">Safety Resources</h1>
+              <p className="text-gray-300 text-lg">
                 Essential safety guides, toolbox talks, and training materials
               </p>
             </div>
