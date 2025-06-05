@@ -4,12 +4,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useIsMobile } from "@/hooks/use-mobile";
 import CareerSectionCard from "@/components/apprentice/career/CareerSectionCard";
 import CareerPathways from "@/components/apprentice/career/CareerPathways";
 import CareerCourses from "@/components/apprentice/career/CareerCourses";
 import FurtherEducation from "@/components/apprentice/career/FurtherEducation";
 import ProfessionalAccreditation from "@/components/apprentice/career/ProfessionalAccreditation";
+import InteractiveCareerRoadmap from "@/components/career/InteractiveCareerRoadmap";
+import FavoritesPanel from "@/components/career/FavoritesPanel";
 import { careerSections } from "@/components/apprentice/career/SectionData";
 
 const CareerProgression = () => {
@@ -80,17 +83,52 @@ const CareerProgression = () => {
       </div>
 
       {activeSection === null ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {electricianCareerSections.map((section) => (
-            <CareerSectionCard 
-              key={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              onClick={() => setActiveSection(section.id)}
-            />
-          ))}
-        </div>
+        <Tabs defaultValue="overview" className="w-full">
+          <TabsList className="grid w-full grid-cols-4 bg-elec-dark border border-elec-yellow/20">
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="roadmap">Roadmap</TabsTrigger>
+            <TabsTrigger value="sections">Sections</TabsTrigger>
+            <TabsTrigger value="favorites">Favorites</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="overview" className="space-y-6">
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardContent className="p-6 text-center">
+                <h3 className="text-lg font-semibold mb-2 text-white">Welcome to Electrician Career Progression</h3>
+                <p className="text-muted-foreground mb-4">
+                  Advance your electrical career with specialized resources designed for qualified electricians.
+                  Explore advanced certifications, business development opportunities, and leadership roles.
+                </p>
+              </CardContent>
+            </Card>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <InteractiveCareerRoadmap />
+              <FavoritesPanel onSelectPath={(pathId) => console.log('Navigate to:', pathId)} />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="roadmap">
+            <InteractiveCareerRoadmap />
+          </TabsContent>
+
+          <TabsContent value="sections">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+              {electricianCareerSections.map((section) => (
+                <CareerSectionCard 
+                  key={section.id}
+                  title={section.title}
+                  description={section.description}
+                  icon={section.icon}
+                  onClick={() => setActiveSection(section.id)}
+                />
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="favorites">
+            <FavoritesPanel onSelectPath={(pathId) => console.log('Navigate to:', pathId)} />
+          </TabsContent>
+        </Tabs>
       ) : (
         <div className="space-y-4">
           {renderSectionContent()}

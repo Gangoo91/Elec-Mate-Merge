@@ -1,6 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ReactNode } from "react";
+import BookmarkButton from "@/components/career/BookmarkButton";
 
 interface CareerPathCardProps {
   title: string;
@@ -21,12 +22,18 @@ const CareerPathCard = ({
   salaryRange,
   timeToAchieve
 }: CareerPathCardProps) => {
+  // Generate a consistent ID from the title
+  const careerPathId = title.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray h-full flex flex-col">
       <CardHeader className="flex flex-row items-start gap-4 pb-2">
         {icon}
-        <div>
-          <CardTitle className="text-xl">{title}</CardTitle>
+        <div className="flex-1">
+          <div className="flex items-start justify-between">
+            <CardTitle className="text-xl">{title}</CardTitle>
+            <BookmarkButton careerPathId={careerPathId} />
+          </div>
           <p className="text-sm text-amber-400">{requirements}</p>
         </div>
       </CardHeader>

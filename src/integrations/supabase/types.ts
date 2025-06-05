@@ -9,6 +9,60 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      career_bookmarks: {
+        Row: {
+          career_path_id: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          career_path_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          career_path_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      career_progress: {
+        Row: {
+          career_path_id: string
+          created_at: string
+          id: string
+          milestones_completed: string[] | null
+          progress_percentage: number
+          target_completion_date: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          career_path_id: string
+          created_at?: string
+          id?: string
+          milestones_completed?: string[] | null
+          progress_percentage?: number
+          target_completion_date?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          career_path_id?: string
+          created_at?: string
+          id?: string
+          milestones_completed?: string[] | null
+          progress_percentage?: number
+          target_completion_date?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       community_stats: {
         Row: {
           active_users: number | null
