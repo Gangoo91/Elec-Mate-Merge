@@ -11,7 +11,8 @@ import {
   Brain, 
   Sliders,
   X,
-  Sparkles
+  Sparkles,
+  Zap
 } from "lucide-react";
 import {
   Select,
@@ -46,8 +47,8 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
   totalResults = 0
 }) => {
   const [filters, setFilters] = useState<SearchFilters>({
-    keywords: "electrical,electrician,electrical engineer",
-    location: "",
+    keywords: "electrician,electrical engineer,electrical technician",
+    location: "United Kingdom",
     jobType: "",
     experienceLevel: "",
     salaryMin: "",
@@ -58,6 +59,13 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
   
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [skillInput, setSkillInput] = useState("");
+
+  // UK-specific location suggestions
+  const ukLocations = [
+    "London", "Manchester", "Birmingham", "Leeds", "Glasgow",
+    "Liverpool", "Bristol", "Sheffield", "Edinburgh", "Newcastle",
+    "Nottingham", "Cardiff", "Leicester", "Coventry", "Bradford"
+  ];
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,8 +98,8 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
 
   const clearFilters = () => {
     setFilters({
-      keywords: "electrical,electrician,electrical engineer",
-      location: "",
+      keywords: "electrician,electrical engineer,electrical technician",
+      location: "United Kingdom",
       jobType: "",
       experienceLevel: "",
       salaryMin: "",
@@ -99,6 +107,11 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
       skills: [],
       aiEnhanced: true
     });
+  };
+
+  const quickLocationSearch = (location: string) => {
+    setFilters(prev => ({ ...prev, location }));
+    onSearch({ ...filters, location });
   };
 
   return (
@@ -123,7 +136,7 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
               <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 type="text"
-                placeholder="Location (e.g., London, Manchester)"
+                placeholder="Location (e.g., London, Manchester, Birmingham)"
                 value={filters.location}
                 onChange={(e) => setFilters(prev => ({ ...prev, location: e.target.value }))}
                 className="pl-10"
@@ -151,6 +164,21 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
             </div>
           </div>
 
+          {/* Quick UK Location Filters */}
+          <div className="flex flex-wrap gap-2">
+            <span className="text-sm font-medium text-muted-foreground">Quick locations:</span>
+            {ukLocations.slice(0, 6).map((location) => (
+              <Badge 
+                key={location}
+                variant="outline" 
+                className="cursor-pointer hover:bg-elec-yellow/10 text-xs"
+                onClick={() => quickLocationSearch(location)}
+              >
+                {location}
+              </Badge>
+            ))}
+          </div>
+
           {/* AI Enhancement Toggle */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -168,13 +196,13 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
               </label>
               <Badge variant="secondary" className="text-xs bg-elec-yellow/10 text-elec-yellow">
                 <Sparkles className="h-3 w-3 mr-1" />
-                Smart
+                Rapid
               </Badge>
             </div>
             
             {totalResults > 0 && (
               <p className="text-sm text-muted-foreground">
-                {totalResults} jobs found
+                {totalResults.toLocaleString()} jobs found
               </p>
             )}
           </div>
@@ -210,14 +238,14 @@ const EnhancedJobSearch: React.FC<EnhancedJobSearchProps> = ({
                 <div className="flex gap-2">
                   <Input
                     type="number"
-                    placeholder="Min Salary"
+                    placeholder="Min Salary (£)"
                     value={filters.salaryMin}
                     onChange={(e) => setFilters(prev => ({ ...prev, salaryMin: e.target.value }))}
                     className="text-sm"
                   />
                   <Input
                     type="number"
-                    placeholder="Max Salary"
+                    placeholder="Max Salary (£)"
                     value={filters.salaryMax}
                     onChange={(e) => setFilters(prev => ({ ...prev, salaryMax: e.target.value }))}
                     className="text-sm"

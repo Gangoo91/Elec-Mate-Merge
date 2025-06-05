@@ -65,7 +65,7 @@ const JobVacancies = () => {
   const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
 
   const [viewMode, setViewMode] = useState<"list" | "map">("list");
-  const [activeTab, setActiveTab] = useState<"database" | "live">("live");
+  const [activeTab, setActiveTab] = useState<"live" | "database">("live");
 
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -94,19 +94,25 @@ const JobVacancies = () => {
       <Tabs 
         defaultValue="live" 
         value={activeTab} 
-        onValueChange={(value) => setActiveTab(value as "database" | "live")}
+        onValueChange={(value) => setActiveTab(value as "live" | "database")}
         className="w-full"
       >
         <TabsList className="grid w-full grid-cols-2 mb-6">
           <TabsTrigger value="live" className="text-base py-3">
-            🚀 AI-Enhanced Live Jobs
+            ⚡ Rapid Live Job Search
           </TabsTrigger>
           <TabsTrigger value="database" className="text-base py-3">
-            📊 Stored Listings
+            📊 Saved Job Listings
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="live" className="mt-0">
+          <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <h3 className="text-sm font-medium text-green-800 mb-1">🇬🇧 UK-Focused Job Search</h3>
+            <p className="text-xs text-green-700">
+              Rapid search across UK electrical jobs with AI-powered insights and instant results
+            </p>
+          </div>
           <EnhancedReedJobsView handleApply={handleApply} />
         </TabsContent>
 
