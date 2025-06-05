@@ -59,12 +59,12 @@ export function Combobox({
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full p-0 bg-white border border-gray-200 shadow-lg z-50" align="start">
-        <Command className="bg-white">
-          <CommandInput placeholder={searchPlaceholder} className="border-none" />
-          <CommandList className="bg-white">
-            <CommandEmpty className="p-4 text-sm text-muted-foreground">{emptyMessage}</CommandEmpty>
-            <CommandGroup className="bg-white">
+      <PopoverContent className="w-full p-0 bg-elec-gray border border-gray-700 shadow-lg z-50" align="start">
+        <Command className="bg-elec-gray">
+          <CommandInput placeholder={searchPlaceholder} className="border-none bg-elec-gray text-white placeholder:text-gray-400" />
+          <CommandList className="bg-elec-gray">
+            <CommandEmpty className="p-4 text-sm text-gray-400">{emptyMessage}</CommandEmpty>
+            <CommandGroup className="bg-elec-gray">
               {options.map((option) => (
                 <CommandItem
                   key={option.value}
@@ -73,7 +73,7 @@ export function Combobox({
                     onValueChange?.(currentValue === value ? "" : currentValue)
                     setOpen(false)
                   }}
-                  className="bg-white hover:bg-gray-100 cursor-pointer"
+                  className="bg-elec-gray hover:bg-gray-700 cursor-pointer text-white"
                 >
                   <Check
                     className={cn(
