@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Search, Brain, Zap, MapPin, Clock, ExternalLink, AlertCircle } from "lucide-react";
+import { Search, Brain, Zap, MapPin, Clock, ExternalLink, AlertCircle, CheckCircle } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -30,7 +30,6 @@ interface IntelligentJobResult {
   aiTags?: string[];
   skillsRequired?: string[];
   experienceLevel?: string;
-  salaryCompetitiveness?: string;
 }
 
 interface SearchResults {
@@ -48,7 +47,6 @@ const IntelligentJobSearch: React.FC = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [results, setResults] = useState<SearchResults | null>(null);
   const [searchTime, setSearchTime] = useState<number>(0);
-  const [hasApiError, setHasApiError] = useState(false);
 
   const handleSearch = async () => {
     if (!query.trim()) {
@@ -61,7 +59,6 @@ const IntelligentJobSearch: React.FC = () => {
     }
 
     setIsSearching(true);
-    setHasApiError(false);
     const startTime = Date.now();
 
     try {
@@ -77,17 +74,7 @@ const IntelligentJobSearch: React.FC = () => {
       });
 
       if (error) {
-        if (error.message.includes('OpenAI API key')) {
-          setHasApiError(true);
-          toast({
-            title: "API Configuration Required",
-            description: "OpenAI API key needs to be configured. Please contact your administrator.",
-            variant: "destructive",
-          });
-        } else {
-          throw error;
-        }
-        return;
+        throw error;
       }
 
       const searchDuration = Date.now() - startTime;
@@ -96,7 +83,7 @@ const IntelligentJobSearch: React.FC = () => {
 
       toast({
         title: "Search Complete",
-        description: `Found ${data.totalFound} jobs across ${data.sources.length} sources in ${searchDuration}ms`,
+        description: `Found ${data.totalFound} jobs across ${data.sources.length} sources`,
       });
 
     } catch (error) {
@@ -125,12 +112,11 @@ const IntelligentJobSearch: React.FC = () => {
     return 'text-gray-600 bg-gray-50 border-gray-200';
   };
 
-  const getSalaryCompetitivenessColor = (level: string) => {
-    switch (level) {
-      case 'high': return 'text-green-600 bg-green-50';
-      case 'average': return 'text-blue-600 bg-blue-50';
-      case 'low': return 'text-gray-600 bg-gray-50';
-      default: return 'text-gray-600 bg-gray-50';
+  const getSourceBadgeColor = (source: string) => {
+    switch (source) {
+      case 'Reed': return 'bg-blue-100 text-blue-700';
+      case 'Adzuna': return 'bg-green-100 text-green-700';
+      default: return 'bg-gray-100 text-gray-700';
     }
   };
 
@@ -141,18 +127,16 @@ const IntelligentJobSearch: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Brain className="h-5 w-5 text-elec-yellow" />
-            AI-Powered Job Search
+            AI-Powered Multi-Site Job Search
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          {hasApiError && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-              <div className="flex items-center gap-2 text-red-700">
-                <AlertCircle className="h-4 w-4" />
-                <p className="text-sm">AI features require OpenAI API configuration. Search will work with limited functionality.</p>
-              </div>
+          <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+            <div className="flex items-center gap-2 text-green-700">
+              <CheckCircle className="h-4 w-4" />
+              <p className="text-sm font-medium">Now searching real UK job listings from Reed and Adzuna!</p>
             </div>
-          )}
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
@@ -187,11 +171,10 @@ const IntelligentJobSearch: React.FC = () => {
                 <SelectValue placeholder="Job Type (Optional)" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Types</SelectItem>
+                <SelectItem value="">All Types</SelectItem>
                 <SelectItem value="full-time">Full-time</SelectItem>
                 <SelectItem value="part-time">Part-time</SelectItem>
                 <SelectItem value="contract">Contract</SelectItem>
-                <SelectItem value="apprenticeship">Apprenticeship</SelectItem>
               </SelectContent>
             </Select>
 
@@ -200,7 +183,7 @@ const IntelligentJobSearch: React.FC = () => {
                 <SelectValue placeholder="Experience Level (Optional)" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Levels</SelectItem>
+                <SelectItem value="">All Levels</SelectItem>
                 <SelectItem value="entry">Entry Level</SelectItem>
                 <SelectItem value="intermediate">Intermediate</SelectItem>
                 <SelectItem value="senior">Senior</SelectItem>
@@ -217,12 +200,12 @@ const IntelligentJobSearch: React.FC = () => {
             {isSearching ? (
               <>
                 <Brain className="h-4 w-4 mr-2 animate-pulse" />
-                Searching across job sites...
+                Searching live job sites...
               </>
             ) : (
               <>
                 <Search className="h-4 w-4 mr-2" />
-                Search All UK Job Sites
+                Search Real UK Jobs
               </>
             )}
           </Button>
@@ -237,7 +220,7 @@ const IntelligentJobSearch: React.FC = () => {
               <div className="flex items-center gap-2 text-green-700">
                 <Zap className="h-4 w-4" />
                 <span className="font-medium">
-                  Found {results.totalFound} jobs across {results.sources.join(', ')}
+                  Found {results.totalFound} real jobs from {results.sources.join(', ')}
                 </span>
               </div>
               <div className="flex items-center gap-1 text-sm text-green-600">
@@ -278,7 +261,7 @@ const IntelligentJobSearch: React.FC = () => {
                         {job.relevanceScore}% match
                       </Badge>
                     )}
-                    <Badge variant="outline" className="text-xs">
+                    <Badge className={`text-xs ${getSourceBadgeColor(job.source)}`}>
                       {job.source}
                     </Badge>
                   </div>
@@ -292,11 +275,6 @@ const IntelligentJobSearch: React.FC = () => {
                   {job.salary && (
                     <div className="flex items-center gap-1">
                       <span>{job.salary}</span>
-                      {job.salaryCompetitiveness && (
-                        <Badge className={`text-xs ${getSalaryCompetitivenessColor(job.salaryCompetitiveness)}`}>
-                          {job.salaryCompetitiveness}
-                        </Badge>
-                      )}
                     </div>
                   )}
                   <Badge variant="outline" className="text-xs">{job.type}</Badge>
