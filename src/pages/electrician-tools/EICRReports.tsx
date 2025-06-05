@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, FileText, Plus, Download } from "lucide-react";
+import { ArrowLeft, FileText, Plus, Download, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -29,15 +29,15 @@ const EICRReports = () => {
                 <ArrowLeft className="h-4 w-4" /> Back to Testing
               </Button>
             </Link>
-            <Link to="/electrician-tools/digital-eicr">
+            <Link to="/electrician-tools/eicr/installation-details">
               <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2">
-                <Plus className="h-4 w-4" /> New Digital EICR
+                <Plus className="h-4 w-4" /> New EICR
               </Button>
             </Link>
           </div>
         </div>
 
-        {/* Digital EICR Tool Feature */}
+        {/* Multi-Page EICR Workflow Feature */}
         <Card className="border-elec-yellow/30 bg-gradient-to-r from-elec-gray to-elec-gray/80">
           <CardHeader className="pb-4">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -47,34 +47,35 @@ const EICRReports = () => {
                 </div>
                 <div className="flex-1">
                   <CardTitle className="text-2xl mb-2">
-                    Interactive Digital EICR Tool
+                    Step-by-Step EICR Creation
                   </CardTitle>
                   <p className="text-base text-muted-foreground">
-                    Complete step-by-step EICR creation with guided inspection checklists, automated test result validation, 
-                    real-time fault classification, and professional report generation. Perfect for both experienced electricians 
-                    and those learning the EICR process.
+                    Our comprehensive multi-page EICR process guides you through every step: installation details, 
+                    inspector information, circuit configuration, visual inspection checklist, testing procedures, 
+                    and final report generation. Each step is validated and saved automatically.
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <Link to="/electrician-tools/digital-eicr">
-                  <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    Launch Digital Tool
+                <Link to="/electrician-tools/eicr/installation-details">
+                  <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2">
+                    Start New EICR
+                    <ArrowRight className="h-4 w-4" />
                   </Button>
                 </Link>
               </div>
             </div>
           </CardHeader>
           <CardContent className="pt-0">
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mb-4">
               <span className="px-3 py-1 bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-full text-xs font-medium">
-                Interactive Inspection Checklist
+                Guided Step-by-Step Process
               </span>
               <span className="px-3 py-1 bg-green-500/20 text-green-300 border border-green-500/30 rounded-full text-xs font-medium">
-                Automated Test Validation
+                Automatic Data Validation
               </span>
               <span className="px-3 py-1 bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-full text-xs font-medium">
-                Real-time Fault Classification
+                Progress Persistence
               </span>
               <span className="px-3 py-1 bg-orange-500/20 text-orange-300 border border-orange-500/30 rounded-full text-xs font-medium">
                 Professional PDF Generation
@@ -82,6 +83,25 @@ const EICRReports = () => {
               <span className="px-3 py-1 bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30 rounded-full text-xs font-medium">
                 BS 7671:2018+A2:2022 Compliant
               </span>
+            </div>
+
+            {/* EICR Process Steps */}
+            <div className="grid grid-cols-2 lg:grid-cols-6 gap-2">
+              {[
+                'Installation Details',
+                'Inspector Info',
+                'Circuit Config',
+                'Visual Inspection',
+                'Testing',
+                'Generate Report'
+              ].map((step, index) => (
+                <div key={step} className="text-center p-2 bg-elec-dark/50 rounded border border-elec-yellow/10">
+                  <div className="w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs flex items-center justify-center mx-auto mb-1">
+                    {index + 1}
+                  </div>
+                  <p className="text-xs text-muted-foreground">{step}</p>
+                </div>
+              ))}
             </div>
           </CardContent>
         </Card>

@@ -15,7 +15,14 @@ import DocumentTemplates from "@/pages/electrician-tools/DocumentTemplates";
 import InstallPlanner from "@/pages/electrician-tools/InstallPlanner";
 import InspectionTesting from "@/pages/electrician-tools/InspectionTesting";
 import EICRReports from "@/pages/electrician-tools/EICRReports";
-import DigitalEICRTool from "@/pages/electrician-tools/DigitalEICRTool";
+// Remove DigitalEICRTool as it's being replaced
+// Add new EICR pages
+import EICRInstallationDetails from "@/pages/electrician-tools/eicr/EICRInstallationDetails";
+import EICRInspectorDetails from "@/pages/electrician-tools/eicr/EICRInspectorDetails";
+import EICRCircuits from "@/pages/electrician-tools/eicr/EICRCircuits";
+import EICRInspection from "@/pages/electrician-tools/eicr/EICRInspection";
+import EICRTesting from "@/pages/electrician-tools/eicr/EICRTesting";
+import EICRSummary from "@/pages/electrician-tools/eicr/EICRSummary";
 // Add Staff Management page
 import StaffManagement from "@/pages/electrician-tools/StaffManagement";
 // Add Schedule Manager page
@@ -41,7 +48,13 @@ const ElectricianRoutes = () => (
     <Route path="install-planner" element={<InstallPlanner />} />
     <Route path="inspection-testing" element={<InspectionTesting />} />
     <Route path="eicr-reports" element={<EICRReports />} />
-    <Route path="digital-eicr" element={<DigitalEICRTool />} />
+    {/* New EICR multi-page routes */}
+    <Route path="eicr/installation-details" element={<EICRInstallationDetails />} />
+    <Route path="eicr/inspector-details" element={<EICRInspectorDetails />} />
+    <Route path="eicr/circuits" element={<EICRCircuits />} />
+    <Route path="eicr/inspection" element={<EICRInspection />} />
+    <Route path="eicr/testing" element={<EICRTesting />} />
+    <Route path="eicr/summary" element={<EICRSummary />} />
     {/* Add new routes */}
     <Route path="staff-management" element={<StaffManagement />} />
     <Route path="schedule" element={<ScheduleManager />} />
