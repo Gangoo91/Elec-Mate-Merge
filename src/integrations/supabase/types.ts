@@ -839,6 +839,115 @@ export type Database = {
         }
         Relationships: []
       }
+      scraped_project_tracking: {
+        Row: {
+          created_at: string
+          external_id: string
+          id: string
+          project_id: string | null
+          source_name: string
+        }
+        Insert: {
+          created_at?: string
+          external_id: string
+          id?: string
+          project_id?: string | null
+          source_name: string
+        }
+        Update: {
+          created_at?: string
+          external_id?: string
+          id?: string
+          project_id?: string | null
+          source_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scraped_project_tracking_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "major_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scraping_logs: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          execution_time_ms: number | null
+          id: string
+          projects_added: number | null
+          projects_found: number | null
+          source_id: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          execution_time_ms?: number | null
+          id?: string
+          projects_added?: number | null
+          projects_found?: number | null
+          source_id?: string | null
+          status: string
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          execution_time_ms?: number | null
+          id?: string
+          projects_added?: number | null
+          projects_found?: number | null
+          source_id?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scraping_logs_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "scraping_sources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      scraping_sources: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          last_scraped_at: string | null
+          name: string
+          scrape_frequency_hours: number
+          selector_config: Json
+          updated_at: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_scraped_at?: string | null
+          name: string
+          scrape_frequency_hours?: number
+          selector_config: Json
+          updated_at?: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_scraped_at?: string | null
+          name?: string
+          scrape_frequency_hours?: number
+          selector_config?: Json
+          updated_at?: string
+          url?: string
+        }
+        Relationships: []
+      }
       study_sessions: {
         Row: {
           activity: string
