@@ -352,43 +352,55 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
         <TabsContent value="assignments" className="space-y-4">
           <h3 className="text-lg font-semibold">Circuit Zone Assignments</h3>
 
-          <div className="space-y-3">
-            {circuits.map((circuit) => (
-              <Card key={circuit.id} className="border-elec-yellow/20 bg-elec-dark/50">
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Shield className="h-5 w-5 text-elec-yellow" />
-                      <div>
-                        <h4 className="font-medium">{circuit.name}</h4>
-                        <p className="text-sm text-muted-foreground">
-                          {circuit.totalLoad}W • {circuit.voltage}V • {circuit.cableLength}m
-                        </p>
+          {circuits.length === 0 ? (
+            <Card className="border-elec-yellow/20 bg-elec-dark/50">
+              <CardContent className="text-center py-8">
+                <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <h4 className="text-lg font-medium mb-2">No Circuits Available</h4>
+                <p className="text-muted-foreground">
+                  Add circuits in the Circuit Design step to assign them to environmental zones.
+                </p>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="space-y-3">
+              {circuits.map((circuit) => (
+                <Card key={circuit.id} className="border-elec-yellow/20 bg-elec-dark/50">
+                  <CardContent className="p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Shield className="h-5 w-5 text-elec-yellow" />
+                        <div>
+                          <h4 className="font-medium">{circuit.name}</h4>
+                          <p className="text-sm text-muted-foreground">
+                            {circuit.totalLoad}W • {circuit.voltage}V • {circuit.cableLength}m
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Select
+                          value={circuit.installationZone || "no-zone"}
+                          onValueChange={(value) => assignCircuitToZone(circuit.id, value === "no-zone" ? null : value)}
+                        >
+                          <SelectTrigger className="bg-elec-dark border-elec-yellow/20 w-48">
+                            <SelectValue placeholder="Assign to zone" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
+                            <SelectItem value="no-zone">No specific zone</SelectItem>
+                            {(environmentalSettings.installationZones || []).map((zone) => (
+                              <SelectItem key={zone.id} value={zone.id}>
+                                {zone.name}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Select
-                        value={circuit.installationZone || ""}
-                        onValueChange={(value) => assignCircuitToZone(circuit.id, value || null)}
-                      >
-                        <SelectTrigger className="bg-elec-dark border-elec-yellow/20 w-48">
-                          <SelectValue placeholder="Assign to zone" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                          <SelectItem value="">No specific zone</SelectItem>
-                          {(environmentalSettings.installationZones || []).map((zone) => (
-                            <SelectItem key={zone.id} value={zone.id}>
-                              {zone.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </TabsContent>
       </Tabs>
     </div>
