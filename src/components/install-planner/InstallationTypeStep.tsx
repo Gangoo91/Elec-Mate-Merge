@@ -28,6 +28,63 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
     { value: "renewable", label: "Renewable Energy", icon: Sun, description: "Solar, wind, battery storage" }
   ];
 
+  // For multi-circuit mode, only show installation environment selection
+  if (planData.designMode === "multi") {
+    return (
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold mb-2">Installation Environment</h2>
+          <p className="text-muted-foreground mb-6">
+            Select the type of environment where this electrical installation will be located. 
+            This will determine appropriate circuit types, regulations, and safety requirements.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+          {installationTypes.map((type) => (
+            <Card
+              key={type.value}
+              className={`cursor-pointer border-2 transition-all hover:scale-105 ${
+                planData.installationType === type.value
+                  ? 'border-elec-yellow bg-elec-yellow/10'
+                  : 'border-elec-yellow/20 hover:border-elec-yellow/40'
+              }`}
+              onClick={() => updatePlanData({ installationType: type.value })}
+            >
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-3 text-base">
+                  <type.icon className="h-6 w-6 text-elec-yellow flex-shrink-0" />
+                  <div>
+                    <div>{type.label}</div>
+                    <p className="text-sm text-muted-foreground font-normal">{type.description}</p>
+                  </div>
+                </CardTitle>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+
+        {planData.installationType && (
+          <Card className="bg-green-500/10 border-green-500/30">
+            <CardHeader>
+              <CardTitle className="text-green-300 flex items-center gap-2">
+                <Zap className="h-5 w-5" />
+                Environment Selected
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-green-200">
+                You've selected <strong>{planData.installationType}</strong> installation environment. 
+                Next, you'll design the individual circuits for this installation.
+              </p>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+    );
+  }
+
+  // Original single-circuit mode with both installation type and load type
   const loadTypes = [
     // Standard loads
     { value: "lighting", label: "Lighting Circuit", icon: Lightbulb, description: "General lighting, LED, fluorescent", category: "Standard" },
