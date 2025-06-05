@@ -10,11 +10,12 @@ import JobVacancies from "@/pages/JobVacancies";
 import Materials from "@/pages/Materials";
 import ToolsGuide from "@/pages/ToolsGuide";
 import LivePricing from "@/pages/LivePricing";
+import ElectricalHub from "@/pages/ElectricalHub";
 
 const ElectricianHubRoutes = () => (
   <Routes>
-    {/* Default route - show Trade Essentials as the home page */}
-    <Route index element={<TradeEssentials />} />
+    {/* Default route - show Electrical Hub as the main page */}
+    <Route index element={<ElectricalHub />} />
     <Route path="trade-essentials" element={<TradeEssentials />} />
     <Route path="chat" element={<Chat />} />
     <Route path="job-vacancies" element={<JobVacancies />} />
