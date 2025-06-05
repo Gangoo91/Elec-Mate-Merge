@@ -248,15 +248,15 @@ const SimpleJobSearch: React.FC = () => {
               
               {/* Job Search Suggestions */}
               {showJobSuggestions && (filteredJobSuggestions.length > 0 || searchHistory.length > 0) && (
-                <div className="absolute top-full left-0 right-0 z-50 bg-white border border-gray-200 rounded-md shadow-lg mt-1">
+                <div className="absolute top-full left-0 right-0 z-50 bg-elec-gray border border-gray-700 rounded-md shadow-lg mt-1">
                   {searchHistory.length > 0 && (
-                    <div className="p-2 border-b">
-                      <p className="text-xs text-muted-foreground mb-1">Recent searches</p>
+                    <div className="p-2 border-b border-gray-700">
+                      <p className="text-xs text-gray-400 mb-1">Recent searches</p>
                       {searchHistory.map((historyItem, index) => (
                         <button
                           key={index}
                           onClick={() => handleJobSuggestionClick(historyItem)}
-                          className="block w-full text-left px-2 py-1 text-sm hover:bg-gray-100 rounded"
+                          className="block w-full text-left px-2 py-1 text-sm text-white hover:bg-gray-700 rounded"
                         >
                           <Clock className="inline h-3 w-3 mr-2" />
                           {historyItem}
@@ -268,7 +268,7 @@ const SimpleJobSearch: React.FC = () => {
                     <button
                       key={index}
                       onClick={() => handleJobSuggestionClick(suggestion)}
-                      className="block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                      className="block w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-700"
                     >
                       {suggestion}
                     </button>
@@ -293,12 +293,12 @@ const SimpleJobSearch: React.FC = () => {
               
               {/* Location Suggestions */}
               {showLocationSuggestions && filteredLocationSuggestions.length > 0 && (
-                <div className="absolute top-full left-0 right-0 z-50 bg-white border border-gray-200 rounded-md shadow-lg mt-1">
+                <div className="absolute top-full left-0 right-0 z-50 bg-elec-gray border border-gray-700 rounded-md shadow-lg mt-1">
                   {filteredLocationSuggestions.slice(0, 5).map((suggestion, index) => (
                     <button
                       key={index}
                       onClick={() => handleLocationSuggestionClick(suggestion)}
-                      className="block w-full text-left px-3 py-2 text-sm hover:bg-gray-100"
+                      className="block w-full text-left px-3 py-2 text-sm text-white hover:bg-gray-700"
                     >
                       <MapPin className="inline h-3 w-3 mr-2" />
                       {suggestion}
