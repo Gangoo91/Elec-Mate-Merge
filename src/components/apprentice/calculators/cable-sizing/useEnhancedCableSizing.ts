@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { enhancedCableSizes, EnhancedCableSizeOption, industryTemplates, CableTemplate } from "./enhancedCableSizeData";
 
@@ -19,6 +18,12 @@ export interface EnhancedCableSizingInputs {
   harmonics: string;
   earthingSystem: string;
   mcbType: string;
+  description: string;
+  powerFactor: string;
+  phases: string;
+  protectiveDeviceRating: string;
+  soilThermalResistivity: string;
+  diversityFactor: string;
 }
 
 export interface EnhancedCableSizingErrors {
@@ -89,7 +94,13 @@ export const useEnhancedCableSizing = () => {
     futureExpansion: "25",
     harmonics: "none",
     earthingSystem: "tn-s",
-    mcbType: "type-b"
+    mcbType: "type-b",
+    description: "",
+    powerFactor: "0.85",
+    phases: "single",
+    protectiveDeviceRating: "",
+    soilThermalResistivity: "2.5",
+    diversityFactor: "1"
   });
 
   const [result, setResult] = useState<EnhancedCableSizingResult>({
@@ -395,7 +406,13 @@ export const useEnhancedCableSizing = () => {
       futureExpansion: "25",
       harmonics: "none",
       earthingSystem: "tn-s",
-      mcbType: "type-b"
+      mcbType: "type-b",
+      description: "",
+      powerFactor: "0.85",
+      phases: "single",
+      protectiveDeviceRating: "",
+      soilThermalResistivity: "2.5",
+      diversityFactor: "1"
     });
     setResult({
       recommendedCable: null,
