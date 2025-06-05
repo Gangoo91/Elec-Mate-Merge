@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { PoundSterling, ArrowLeft, RefreshCw, Search } from "lucide-react";
@@ -100,13 +99,13 @@ const LivePricing = () => {
         </Card>
       )}
 
-      {/* Compact Market Alerts */}
+      {/* Search-Driven Regional Job Pricing */}
+      <SearchDrivenRegionalPricing regionalData={data?.regionalJobPricing || []} />
+
+      {/* Compact Market Alerts - Moved to bottom */}
       {data?.marketAlerts && (
         <CompactMarketAlerts alerts={data.marketAlerts} />
       )}
-
-      {/* Search-Driven Regional Job Pricing */}
-      <SearchDrivenRegionalPricing regionalData={data?.regionalJobPricing || []} />
 
       {/* Compact Disclaimer */}
       <div className="text-xs text-muted-foreground p-3 border border-elec-yellow/20 rounded bg-elec-gray/50">
