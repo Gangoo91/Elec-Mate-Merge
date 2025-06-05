@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -122,7 +123,7 @@ const SimpleJobSearch: React.FC = () => {
     return null;
   }, [query]);
 
-  // Location validation
+  // Location validation using the LocationService
   const validateLocation = useCallback((locationInput: string) => {
     if (!locationInput.trim()) return "";
     
@@ -139,16 +140,18 @@ const SimpleJobSearch: React.FC = () => {
     setLocationWarning(warning);
   }, [location, validateLocation]);
 
-  // Apply client-side filtering and sorting
+  // Apply client-side filtering and sorting using LocationService
   const applyClientSideFiltering = useCallback((searchResults: SearchResults) => {
     if (!searchResults || !searchResults.jobs) return searchResults;
 
     let filteredJobs = [...searchResults.jobs];
 
-    // Apply location filtering if specific location is provided
+    // Apply location filtering using LocationService
     if (location && location !== "United Kingdom" && locationRadius !== "unlimited") {
       const radiusMiles = parseInt(locationRadius);
       filteredJobs = LocationService.filterJobsByLocation(filteredJobs, location, radiusMiles);
+      
+      console.log(`Applied location filtering: ${filteredJobs.length} jobs within ${radiusMiles} miles of ${location}`);
     }
 
     // Apply sorting
@@ -229,7 +232,7 @@ const SimpleJobSearch: React.FC = () => {
       setSearchTime(searchDuration);
       setResults(data);
       
-      // Apply client-side filtering and sorting
+      // Apply client-side filtering and sorting with LocationService
       const filtered = applyClientSideFiltering(data);
       setFilteredResults(filtered);
       
@@ -243,9 +246,10 @@ const SimpleJobSearch: React.FC = () => {
           variant: "destructive",
         });
       } else {
+        const locationInfo = location !== "United Kingdom" ? ` in ${location}` : "";
         toast({
           title: "Search Complete",
-          description: `Found ${filtered.totalFound} jobs in ${searchDuration}ms`,
+          description: `Found ${filtered.totalFound} jobs${locationInfo} in ${searchDuration}ms`,
         });
       }
 
@@ -536,6 +540,11 @@ const SimpleJobSearch: React.FC = () => {
                     from {displayResults.sources.join(', ')}
                   </span>
                 )}
+                {location !== "United Kingdom" && (
+                  <span className="text-sm text-green-600">
+                    • within {locationRadius === "unlimited" ? "unlimited distance" : `${locationRadius} miles`} of {location}
+                  </span>
+                )}
               </div>
               <div className="flex items-center gap-1 text-sm text-green-600">
                 <Clock className="h-3 w-3" />
@@ -546,7 +555,7 @@ const SimpleJobSearch: React.FC = () => {
         </Card>
       )}
 
-      {/* Job Results */}
+      {/* Job Results using Enhanced Job Cards */}
       {displayResults && displayResults.jobs.length > 0 && (
         <div className="grid grid-cols-1 gap-4">
           {displayResults.jobs.map((job) => (
@@ -584,6 +593,11 @@ const SimpleJobSearch: React.FC = () => {
                 </Button>
               ))}
             </div>
+            {location !== "United Kingdom" && (
+              <p className="text-sm text-muted-foreground mt-2">
+                Or try searching in a broader area or increase your search radius
+              </p>
+            )}
           </div>
         </Card>
       )}
