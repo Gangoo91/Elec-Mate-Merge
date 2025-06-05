@@ -2,15 +2,27 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from "@/components/ui/separator";
+import { Progress } from "@/components/ui/progress";
 import { 
-  Zap, CheckCircle, AlertTriangle, TrendingUp, Shield, 
-  Thermometer, MapPin, Calculator, FileText, Download 
+  InstallPlanData, 
+  MultiCircuitResult, 
+  CircuitResult,
+  CableRecommendation,
+  AppliedEnvironmentalFactors 
+} from "./types";
+import { 
+  Zap, 
+  Cable, 
+  Shield, 
+  AlertTriangle, 
+  CheckCircle, 
+  Info,
+  Thermometer,
+  Users,
+  MapPin
 } from "lucide-react";
-import { InstallPlanData, MultiCircuitResult, EnvironmentalAnalysis } from "./types";
-import { Button } from "@/components/ui/button";
 
 interface MultiCircuitResultsProps {
   planData: InstallPlanData;
@@ -18,136 +30,122 @@ interface MultiCircuitResultsProps {
 }
 
 const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) => {
-  const circuits = planData.circuits?.filter(c => c.enabled) || [];
-  const environmentalSettings = planData.environmentalSettings || {
-    ambientTemperature: 30,
-    environmentalConditions: "Indoor dry locations",
-    earthingSystem: "TN-S",
-    ze: 0.35,
-    globalGroupingFactor: 1,
-    specialRequirements: [],
-    installationZones: []
-  };
-
-  // Calculate multi-circuit results with environmental analysis
+  // Mock calculation function - in real implementation this would use proper electrical calculations
   const calculateMultiCircuitResults = (): MultiCircuitResult => {
-    const circuitResults = circuits.map(circuit => {
+    const enabledCircuits = planData.circuits?.filter(c => c.enabled) || [];
+    
+    if (enabledCircuits.length === 0) {
+      return {
+        circuits: [],
+        totalSystemLoad: 0,
+        mainSupplyRequirements: {
+          totalDemand: 0,
+          recommendedSupplyRating: 100,
+          mainSwitchRating: 100,
+          earthingRequirements: []
+        },
+        diversityCalculations: {
+          totalConnectedLoad: 0,
+          diversifiedLoad: 0,
+          diversityFactor: 1
+        },
+        complianceChecks: [],
+        warnings: [],
+        recommendations: [],
+        environmentalAnalysis: {
+          globalFactors: {
+            temperatureDerating: planData.environmentalSettings?.globalGroupingFactor || 1,
+            groupingFactor: planData.environmentalSettings?.globalGroupingFactor || 1,
+            overallDerating: planData.environmentalSettings?.globalGroupingFactor || 1,
+            environmentalWarnings: [],
+            recommendedMitigations: [],
+            complianceNotes: []
+          },
+          circuitSpecificFactors: {},
+          zoneAnalysis: [],
+          systemWideRecommendations: [],
+          environmentalCompliance: []
+        }
+      };
+    }
+
+    const totalConnectedLoad = enabledCircuits.reduce((sum, circuit) => sum + circuit.totalLoad, 0);
+    const diversityFactor = totalConnectedLoad > 10000 ? 0.8 : 0.9;
+    const diversifiedLoad = totalConnectedLoad * diversityFactor;
+
+    const circuitResults: CircuitResult[] = enabledCircuits.map(circuit => {
+      const designCurrent = circuit.totalLoad / circuit.voltage;
+      const protectiveDeviceRating = Math.ceil(designCurrent / 5) * 5;
+      
       // Get environmental factors for this circuit
-      const circuitEnvironment = circuit.installationZone 
-        ? environmentalSettings.installationZones?.find(z => z.id === circuit.installationZone)
-        : null;
-
-      const ambientTemp = circuitEnvironment?.ambientTemperature || environmentalSettings.ambientTemperature;
-      const conditions = circuitEnvironment?.environmentalConditions || environmentalSettings.environmentalConditions;
-
+      const environmentalSettings = planData.environmentalSettings!;
+      const zone = environmentalSettings.installationZones?.find(z => z.id === circuit.installationZone);
+      const ambientTemp = zone?.ambientTemperature || environmentalSettings.ambientTemperature;
+      
       // Calculate derating factors
-      const temperatureDerating = ambientTemp <= 30 ? 1.0 : 
-                                 ambientTemp <= 40 ? 0.94 :
-                                 ambientTemp <= 50 ? 0.87 : 0.79;
-
+      const temperatureDerating = ambientTemp > 30 ? 0.87 : 1.0;
       const groupingFactor = environmentalSettings.globalGroupingFactor;
       const overallDerating = temperatureDerating * groupingFactor;
 
-      // Calculate design current
-      const designCurrent = circuit.phases === "three" 
-        ? circuit.totalLoad / (Math.sqrt(3) * circuit.voltage * (circuit.powerFactor || 0.85))
-        : circuit.totalLoad / circuit.voltage;
-
-      const adjustedCurrent = designCurrent / overallDerating;
-
-      // Simple cable sizing logic
-      const getCableSize = (current: number) => {
-        if (current <= 20) return "2.5mm²";
-        if (current <= 32) return "4.0mm²";
-        if (current <= 43) return "6.0mm²";
-        if (current <= 57) return "10mm²";
-        if (current <= 76) return "16mm²";
-        if (current <= 101) return "25mm²";
-        if (current <= 138) return "35mm²";
-        return "50mm²";
+      const appliedEnvironmentalFactors: AppliedEnvironmentalFactors = {
+        ambientTemperature: ambientTemp,
+        temperatureDerating,
+        groupingFactor,
+        overallDerating,
+        environmentalConditions: zone?.environmentalConditions || environmentalSettings.environmentalConditions,
+        specialRequirements: zone?.specialRequirements || environmentalSettings.specialRequirements,
+        mitigationMeasures: []
       };
 
-      const cableSize = getCableSize(adjustedCurrent);
-      const protectiveDeviceRating = Math.ceil(adjustedCurrent / 5) * 5;
+      // Calculate cable size based on derating
+      const deratedCurrent = designCurrent / overallDerating;
+      const cableSize = deratedCurrent <= 16 ? "2.5mm²" : 
+                      deratedCurrent <= 25 ? "4mm²" : 
+                      deratedCurrent <= 32 ? "6mm²" : "10mm²";
 
-      // Voltage drop calculation (simplified)
-      const voltageDropPercentage = (designCurrent * circuit.cableLength * 0.018) / circuit.voltage * 100;
-      const voltageDropCompliance = voltageDropPercentage <= 5;
+      const recommendedCable: CableRecommendation = {
+        size: cableSize,
+        type: circuit.cableType,
+        currentCarryingCapacity: Math.ceil(deratedCurrent * 1.2),
+        voltageDropPercentage: (circuit.cableLength * deratedCurrent * 0.018) / circuit.voltage * 100,
+        ratedCurrent: Math.ceil(deratedCurrent),
+        suitability: deratedCurrent <= 32 ? "suitable" as const : "marginal" as const,
+        notes: [`Designed for ${circuit.loadType}`, `Installation: ${circuit.installationMethod}`],
+        temperatureDerating,
+        groupingDerating: groupingFactor,
+        environmentalSuitability: ambientTemp <= 40 ? "Good" : "Requires attention"
+      };
 
-      // Zs calculation (simplified)
-      const zsValue = environmentalSettings.ze + (circuit.cableLength * 0.01);
-      const zsCompliance = zsValue <= 1.44; // Simplified BS 7671 requirement
-
-      const warnings: string[] = [];
-      if (!voltageDropCompliance) warnings.push("Voltage drop exceeds 5%");
-      if (!zsCompliance) warnings.push("Zs value exceeds maximum permitted");
-      if (ambientTemp > 40) warnings.push("High ambient temperature affects cable rating");
+      const zsValue = 0.8 + (circuit.cableLength * 0.02);
+      const zsCompliance = zsValue <= 1.44;
+      const voltageDropCompliance = recommendedCable.voltageDropPercentage <= 5;
 
       return {
         circuit,
-        recommendedCable: {
-          size: cableSize,
-          type: circuit.cableType,
-          currentCarryingCapacity: adjustedCurrent,
-          voltageDropPercentage,
-          ratedCurrent: protectiveDeviceRating,
-          suitability: warnings.length === 0 ? "suitable" : warnings.length === 1 ? "marginal" : "unsuitable",
-          notes: warnings,
-          temperatureDerating,
-          groupingDerating: groupingFactor,
-          environmentalSuitability: conditions
-        },
+        recommendedCable,
         alternativeCables: [],
         designCurrent,
         protectiveDeviceRating,
         zsValue,
         zsCompliance,
         voltageDropCompliance,
-        warnings,
-        appliedEnvironmentalFactors: {
-          ambientTemperature: ambientTemp,
-          temperatureDerating,
-          groupingFactor,
-          overallDerating,
-          environmentalConditions: conditions,
-          specialRequirements: circuitEnvironment?.specialRequirements || environmentalSettings.specialRequirements,
-          mitigationMeasures: []
-        }
+        warnings: zsCompliance ? [] : [`Zs value (${zsValue.toFixed(2)}Ω) exceeds maximum for ${protectiveDeviceRating}A protection`],
+        appliedEnvironmentalFactors
       };
     });
-
-    const totalConnectedLoad = circuits.reduce((sum, circuit) => sum + circuit.totalLoad, 0);
-    const diversityFactor = totalConnectedLoad > 10000 ? 0.75 : totalConnectedLoad > 5000 ? 0.85 : 0.95;
-    const diversifiedLoad = totalConnectedLoad * diversityFactor;
-
-    // Environmental analysis
-    const globalEnvironmentalAnalysis: EnvironmentalAnalysis = {
-      temperatureDerating: environmentalSettings.ambientTemperature <= 30 ? 1.0 : 
-                          environmentalSettings.ambientTemperature <= 40 ? 0.94 : 0.87,
-      groupingFactor: environmentalSettings.globalGroupingFactor,
-      overallDerating: 0.94 * environmentalSettings.globalGroupingFactor,
-      environmentalWarnings: environmentalSettings.ambientTemperature > 40 ? ["High ambient temperature"] : [],
-      recommendedMitigations: [],
-      complianceNotes: []
-    };
-
-    const zoneAnalysis = (environmentalSettings.installationZones || []).map(zone => ({
-      zone,
-      circuitCount: zone.circuitIds.length,
-      totalLoad: circuits.filter(c => zone.circuitIds.includes(c.id)).reduce((sum, c) => sum + c.totalLoad, 0),
-      averageDerating: zone.ambientTemperature <= 30 ? 1.0 : 0.94,
-      criticalFactors: zone.ambientTemperature > 40 ? ["High temperature"] : [],
-      recommendations: zone.ambientTemperature > 40 ? ["Consider ventilation improvements"] : []
-    }));
 
     return {
       circuits: circuitResults,
       totalSystemLoad: diversifiedLoad,
       mainSupplyRequirements: {
         totalDemand: diversifiedLoad,
-        recommendedSupplyRating: Math.ceil(diversifiedLoad / 230) + 20,
-        mainSwitchRating: Math.ceil(diversifiedLoad / 230 / 5) * 5,
-        earthingRequirements: [`${environmentalSettings.earthingSystem} earthing system`, "Main earthing terminal required"]
+        recommendedSupplyRating: Math.ceil(diversifiedLoad / 230 / 0.8 / 10) * 10,
+        mainSwitchRating: Math.ceil(diversifiedLoad / 230 / 0.8 / 10) * 10,
+        earthingRequirements: [
+          "Main earth terminal required",
+          "Equipotential bonding to gas and water services",
+          planData.environmentalSettings?.earthingSystem === "TT" ? "Earth electrode required" : ""
+        ].filter(Boolean)
       },
       diversityCalculations: {
         totalConnectedLoad,
@@ -156,397 +154,379 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
       },
       complianceChecks: [
         {
-          regulation: "BS 7671",
-          requirement: "Circuit protection",
-          status: circuitResults.every(r => r.zsCompliance) ? "pass" : "fail",
-          reference: "Chapter 43",
-          details: "All circuits must have adequate fault protection"
+          regulation: "BS 7671:2018",
+          requirement: "Voltage drop limitation",
+          status: circuitResults.every(c => c.voltageDropCompliance) ? "pass" : "warning",
+          reference: "Section 525",
+          details: "Maximum 5% voltage drop for lighting and power circuits"
+        },
+        {
+          regulation: "BS 7671:2018", 
+          requirement: "Earth fault loop impedance",
+          status: circuitResults.every(c => c.zsCompliance) ? "pass" : "fail",
+          reference: "Section 411",
+          details: "Zs values must not exceed maximum values for protective devices"
         }
       ],
-      warnings: circuitResults.flatMap(r => r.warnings),
+      warnings: circuitResults.flatMap(c => c.warnings),
       recommendations: [
-        "Regular testing and inspection required",
-        "Maintain circuit documentation",
-        "Consider energy monitoring systems"
+        "Consider RCD protection for all circuits",
+        "Label all circuits clearly at distribution board",
+        "Provide circuit schedules and as-built drawings"
       ],
       environmentalAnalysis: {
-        globalFactors: globalEnvironmentalAnalysis,
+        globalFactors: {
+          temperatureDerating: planData.environmentalSettings?.ambientTemperature || 30 > 30 ? 0.87 : 1.0,
+          groupingFactor: planData.environmentalSettings?.globalGroupingFactor || 1,
+          overallDerating: (planData.environmentalSettings?.ambientTemperature || 30 > 30 ? 0.87 : 1.0) * (planData.environmentalSettings?.globalGroupingFactor || 1),
+          environmentalWarnings: planData.environmentalSettings?.ambientTemperature || 30 > 40 ? ["High ambient temperature conditions"] : [],
+          recommendedMitigations: [],
+          complianceNotes: []
+        },
         circuitSpecificFactors: {},
-        zoneAnalysis,
+        zoneAnalysis: planData.environmentalSettings?.installationZones?.map(zone => ({
+          zone,
+          circuitCount: enabledCircuits.filter(c => c.installationZone === zone.id).length,
+          totalLoad: enabledCircuits.filter(c => c.installationZone === zone.id).reduce((sum, c) => sum + c.totalLoad, 0),
+          averageDerating: zone.ambientTemperature > 30 ? 0.87 : 1.0,
+          criticalFactors: zone.ambientTemperature > 40 ? ["High temperature"] : [],
+          recommendations: []
+        })) || [],
         systemWideRecommendations: [
-          "Monitor ambient temperatures regularly",
-          "Ensure adequate ventilation in high-load areas",
-          "Consider environmental protection upgrades"
+          "Implement comprehensive labelling system",
+          "Consider future expansion requirements"
         ],
-        environmentalCompliance: [
-          {
-            requirement: "Temperature management",
-            standard: "BS 7671",
-            status: environmentalSettings.ambientTemperature <= 40 ? "compliant" : "requires-attention",
-            details: "Installation temperature within acceptable limits",
-            affectedCircuits: circuits.map(c => c.id),
-            recommendedActions: environmentalSettings.ambientTemperature > 40 ? ["Improve ventilation", "Consider cable derating"] : []
-          }
-        ]
+        environmentalCompliance: []
       }
     };
   };
 
   const results = calculateMultiCircuitResults();
-  const overallCompliance = results.circuits.every(r => r.zsCompliance && r.voltageDropCompliance);
+
+  if (!planData.circuits || planData.circuits.length === 0) {
+    return (
+      <div className="space-y-6">
+        <div className="text-center py-12">
+          <Zap className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-xl font-semibold mb-2">No Circuits Defined</h3>
+          <p className="text-muted-foreground">
+            Please add circuits in the Circuit Design step to see multi-circuit analysis results.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const enabledCircuits = planData.circuits.filter(c => c.enabled);
+  
+  if (enabledCircuits.length === 0) {
+    return (
+      <div className="space-y-6">
+        <div className="text-center py-12">
+          <Shield className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+          <h3 className="text-xl font-semibold mb-2">No Active Circuits</h3>
+          <p className="text-muted-foreground">
+            Please enable at least one circuit to see analysis results.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const hasWarnings = results.warnings.length > 0;
+  const hasFailedCompliance = results.complianceChecks.some(check => check.status === "fail");
 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold mb-2">Multi-Circuit Installation Analysis</h2>
-          <p className="text-muted-foreground">
-            Comprehensive analysis of your {circuits.length} circuit installation with environmental considerations.
-          </p>
-        </div>
-        <Badge 
-          variant="outline" 
-          className={`${overallCompliance ? 'border-green-400/30 text-green-400' : 'border-amber-400/30 text-amber-400'}`}
-        >
-          {overallCompliance ? 'Compliant' : 'Requires Attention'}
-        </Badge>
+      <div>
+        <h2 className="text-2xl font-bold mb-2">Multi-Circuit Installation Analysis</h2>
+        <p className="text-muted-foreground">
+          Comprehensive analysis of your {enabledCircuits.length} circuit installation with environmental considerations and BS 7671 compliance checking.
+        </p>
       </div>
 
       {/* System Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <Zap className="h-5 w-5 text-elec-yellow" />
+      <Card className="border-elec-yellow/20 bg-elec-dark/50">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Zap className="h-5 w-5 text-elec-yellow" />
+            System Overview
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-elec-yellow">
+                {enabledCircuits.length}
+              </div>
+              <div className="text-sm text-muted-foreground">Active Circuits</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-400">
+                {(results.totalSystemLoad / 1000).toFixed(1)}kW
+              </div>
+              <div className="text-sm text-muted-foreground">Total Demand</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-400">
+                {results.mainSupplyRequirements.recommendedSupplyRating}A
+              </div>
+              <div className="text-sm text-muted-foreground">Supply Rating</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-purple-400">
+                {(results.diversityCalculations.diversityFactor * 100).toFixed(0)}%
+              </div>
+              <div className="text-sm text-muted-foreground">Diversity Factor</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Warnings and Compliance */}
+      {(hasWarnings || hasFailedCompliance) && (
+        <div className="space-y-3">
+          {hasFailedCompliance && (
+            <Alert className="bg-red-500/10 border-red-500/30">
+              <AlertTriangle className="h-4 w-4 text-red-300" />
+              <AlertDescription className="text-red-200">
+                <strong>Compliance Issues Detected:</strong> Some circuits do not meet BS 7671 requirements. Review the circuit details below.
+              </AlertDescription>
+            </Alert>
+          )}
+          
+          {hasWarnings && (
+            <Alert className="bg-amber-500/10 border-amber-500/30">
+              <Info className="h-4 w-4 text-amber-300" />
+              <AlertDescription className="text-amber-200">
+                <strong>System Warnings:</strong> {results.warnings.join("; ")}
+              </AlertDescription>
+            </Alert>
+          )}
+        </div>
+      )}
+
+      {/* Environmental Analysis Summary */}
+      {planData.environmentalSettings && (
+        <Card className="border-green-500/20 bg-green-500/5">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Thermometer className="h-5 w-5 text-green-400" />
+              Environmental Analysis Summary
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <p className="text-sm text-muted-foreground">Total Load</p>
-                <p className="text-lg font-bold">{Math.round(results.totalSystemLoad)}W</p>
+                <h4 className="font-medium mb-2">Global Conditions</h4>
+                <p className="text-sm text-muted-foreground">
+                  {planData.environmentalSettings.ambientTemperature}°C ambient, {planData.environmentalSettings.earthingSystem} earthing
+                </p>
+                <div className="mt-1">
+                  <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">
+                    Derating: {(results.environmentalAnalysis.globalFactors.overallDerating * 100).toFixed(0)}%
+                  </span>
+                </div>
+              </div>
+              <div>
+                <h4 className="font-medium mb-2">Installation Zones</h4>
+                <p className="text-sm text-muted-foreground">
+                  {results.environmentalAnalysis.zoneAnalysis.length} zones defined
+                </p>
+                {results.environmentalAnalysis.zoneAnalysis.map(zone => (
+                  <div key={zone.zone.id} className="mt-1">
+                    <span className="text-xs bg-blue-400/20 text-blue-400 px-2 py-1 rounded">
+                      {zone.zone.name}: {zone.circuitCount} circuits
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <div>
+                <h4 className="font-medium mb-2">Special Requirements</h4>
+                <div className="space-y-1">
+                  {planData.environmentalSettings.specialRequirements.slice(0, 3).map(req => (
+                    <div key={req} className="text-xs bg-purple-400/20 text-purple-400 px-2 py-1 rounded">
+                      {req}
+                    </div>
+                  ))}
+                  {planData.environmentalSettings.specialRequirements.length > 3 && (
+                    <div className="text-xs text-muted-foreground">
+                      +{planData.environmentalSettings.specialRequirements.length - 3} more
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </CardContent>
         </Card>
+      )}
 
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <Calculator className="h-5 w-5 text-elec-yellow" />
-              <div>
-                <p className="text-sm text-muted-foreground">Diversity Factor</p>
-                <p className="text-lg font-bold">{(results.diversityCalculations.diversityFactor * 100).toFixed(0)}%</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <Thermometer className="h-5 w-5 text-elec-yellow" />
-              <div>
-                <p className="text-sm text-muted-foreground">Ambient Temp</p>
-                <p className="text-lg font-bold">{environmentalSettings.ambientTemperature}°C</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <MapPin className="h-5 w-5 text-elec-yellow" />
-              <div>
-                <p className="text-sm text-muted-foreground">Install Zones</p>
-                <p className="text-lg font-bold">{environmentalSettings.installationZones?.length || 0}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Tabs defaultValue="circuits" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 bg-elec-dark border border-elec-yellow/20">
-          <TabsTrigger value="circuits">Circuit Analysis</TabsTrigger>
-          <TabsTrigger value="environmental">Environmental</TabsTrigger>
-          <TabsTrigger value="compliance">Compliance</TabsTrigger>
-          <TabsTrigger value="summary">Summary</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="circuits" className="space-y-4">
-          {results.circuits.map((circuitResult) => (
-            <Card key={circuitResult.circuit.id} className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <div className="flex justify-between items-center">
-                  <CardTitle className="text-base">{circuitResult.circuit.name}</CardTitle>
+      {/* Circuit Results */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold flex items-center gap-2">
+          <Cable className="h-5 w-5" />
+          Individual Circuit Analysis
+        </h3>
+        
+        {results.circuits.map((circuitResult, index) => (
+          <Card key={circuitResult.circuit.id} className="border-elec-yellow/20 bg-elec-dark/50">
+            <CardHeader>
+              <div className="flex justify-between items-start">
+                <div>
+                  <CardTitle className="text-lg">{circuitResult.circuit.name}</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    {circuitResult.circuit.loadType} • {circuitResult.circuit.totalLoad}W • {circuitResult.circuit.cableLength}m
+                  </p>
+                </div>
+                <div className="flex gap-2">
                   <Badge 
                     variant="outline"
                     className={`${
-                      circuitResult.recommendedCable.suitability === 'suitable' ? 'border-green-400/30 text-green-400' :
-                      circuitResult.recommendedCable.suitability === 'marginal' ? 'border-amber-400/30 text-amber-400' :
-                      'border-red-400/30 text-red-400'
+                      circuitResult.recommendedCable.suitability === "suitable" ? "border-green-400/30 text-green-400" :
+                      circuitResult.recommendedCable.suitability === "marginal" ? "border-amber-400/30 text-amber-400" :
+                      "border-red-400/30 text-red-400"
                     }`}
                   >
                     {circuitResult.recommendedCable.suitability}
                   </Badge>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                  <div>
-                    <span className="text-muted-foreground">Cable Size:</span>
-                    <p className="font-medium">{circuitResult.recommendedCable.size}</p>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground">Protection:</span>
-                    <p className="font-medium">{circuitResult.protectiveDeviceRating}A</p>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground">Voltage Drop:</span>
-                    <p className="font-medium">{circuitResult.recommendedCable.voltageDropPercentage.toFixed(2)}%</p>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground">Environment:</span>
-                    <p className="font-medium">{circuitResult.appliedEnvironmentalFactors.ambientTemperature}°C</p>
-                  </div>
-                </div>
-
-                {circuitResult.warnings.length > 0 && (
-                  <div className="mt-3">
-                    <Alert className="bg-amber-500/10 border-amber-500/30">
-                      <AlertTriangle className="h-4 w-4 text-amber-300" />
-                      <AlertDescription className="text-amber-200">
-                        <ul className="list-disc list-inside">
-                          {circuitResult.warnings.map((warning, index) => (
-                            <li key={index}>{warning}</li>
-                          ))}
-                        </ul>
-                      </AlertDescription>
-                    </Alert>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          ))}
-        </TabsContent>
-
-        <TabsContent value="environmental" className="space-y-4">
-          {/* Global Environmental Factors */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Thermometer className="h-5 w-5 text-elec-yellow" />
-                Global Environmental Analysis
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div>
-                  <span className="text-muted-foreground">Temperature Derating:</span>
-                  <p className="font-medium">{(results.environmentalAnalysis.globalFactors.temperatureDerating * 100).toFixed(0)}%</p>
-                </div>
-                <div>
-                  <span className="text-muted-foreground">Grouping Factor:</span>
-                  <p className="font-medium">{(results.environmentalAnalysis.globalFactors.groupingFactor * 100).toFixed(0)}%</p>
-                </div>
-                <div>
-                  <span className="text-muted-foreground">Overall Derating:</span>
-                  <p className="font-medium">{(results.environmentalAnalysis.globalFactors.overallDerating * 100).toFixed(0)}%</p>
-                </div>
-                <div>
-                  <span className="text-muted-foreground">Earthing System:</span>
-                  <p className="font-medium">{environmentalSettings.earthingSystem}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Zone Analysis */}
-          {results.environmentalAnalysis.zoneAnalysis.length > 0 && (
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5 text-elec-yellow" />
-                  Installation Zone Analysis
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {results.environmentalAnalysis.zoneAnalysis.map((zoneAnalysis) => (
-                    <div key={zoneAnalysis.zone.id} className="border border-elec-yellow/20 rounded p-4">
-                      <h4 className="font-medium mb-2">{zoneAnalysis.zone.name}</h4>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                        <div>
-                          <span className="text-muted-foreground">Circuits:</span>
-                          <p className="font-medium">{zoneAnalysis.circuitCount}</p>
-                        </div>
-                        <div>
-                          <span className="text-muted-foreground">Total Load:</span>
-                          <p className="font-medium">{zoneAnalysis.totalLoad}W</p>
-                        </div>
-                        <div>
-                          <span className="text-muted-foreground">Temperature:</span>
-                          <p className="font-medium">{zoneAnalysis.zone.ambientTemperature}°C</p>
-                        </div>
-                        <div>
-                          <span className="text-muted-foreground">Conditions:</span>
-                          <p className="font-medium">{zoneAnalysis.zone.environmentalConditions}</p>
-                        </div>
-                      </div>
-                      {zoneAnalysis.recommendations.length > 0 && (
-                        <div className="mt-2">
-                          <span className="text-muted-foreground text-sm">Recommendations:</span>
-                          <ul className="text-sm list-disc list-inside mt-1">
-                            {zoneAnalysis.recommendations.map((rec, index) => (
-                              <li key={index}>{rec}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </TabsContent>
-
-        <TabsContent value="compliance" className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Shield className="h-5 w-5 text-elec-yellow" />
-                Compliance Checks
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {results.complianceChecks.map((check, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 border border-elec-yellow/20 rounded">
-                    <div>
-                      <h4 className="font-medium">{check.requirement}</h4>
-                      <p className="text-sm text-muted-foreground">{check.regulation} - {check.reference}</p>
-                    </div>
-                    <Badge 
-                      variant="outline"
-                      className={`${
-                        check.status === 'pass' ? 'border-green-400/30 text-green-400' :
-                        check.status === 'warning' ? 'border-amber-400/30 text-amber-400' :
-                        'border-red-400/30 text-red-400'
-                      }`}
-                    >
-                      {check.status}
+                  {circuitResult.zsCompliance && circuitResult.voltageDropCompliance ? (
+                    <Badge variant="outline" className="border-green-400/30 text-green-400">
+                      <CheckCircle className="h-3 w-3 mr-1" />
+                      Compliant
                     </Badge>
-                  </div>
-                ))}
+                  ) : (
+                    <Badge variant="outline" className="border-red-400/30 text-red-400">
+                      <AlertTriangle className="h-3 w-3 mr-1" />
+                      Issues
+                    </Badge>
+                  )}
+                </div>
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Environmental Compliance */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Environmental Compliance</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-3">
-                {results.environmentalAnalysis.environmentalCompliance.map((check, index) => (
-                  <div key={index} className="p-3 border border-elec-yellow/20 rounded">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-medium">{check.requirement}</h4>
-                      <Badge 
-                        variant="outline"
-                        className={`${
-                          check.status === 'compliant' ? 'border-green-400/30 text-green-400' :
-                          check.status === 'requires-attention' ? 'border-amber-400/30 text-amber-400' :
-                          'border-red-400/30 text-red-400'
-                        }`}
-                      >
-                        {check.status}
-                      </Badge>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Cable Recommendation */}
+                <div>
+                  <h4 className="font-medium mb-3 flex items-center gap-2">
+                    <Cable className="h-4 w-4" />
+                    Recommended Cable
+                  </h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Size:</span>
+                      <span className="font-medium">{circuitResult.recommendedCable.size}</span>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-2">{check.details}</p>
-                    {check.recommendedActions.length > 0 && (
-                      <div>
-                        <span className="text-sm font-medium">Recommended Actions:</span>
-                        <ul className="text-sm list-disc list-inside mt-1">
-                          {check.recommendedActions.map((action, actionIndex) => (
-                            <li key={actionIndex}>{action}</li>
-                          ))}
-                        </ul>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Type:</span>
+                      <span className="font-medium">{circuitResult.recommendedCable.type}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Current Capacity:</span>
+                      <span className="font-medium">{circuitResult.recommendedCable.currentCarryingCapacity}A</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Voltage Drop:</span>
+                      <span className={`font-medium ${
+                        circuitResult.recommendedCable.voltageDropPercentage <= 3 ? "text-green-400" :
+                        circuitResult.recommendedCable.voltageDropPercentage <= 5 ? "text-amber-400" :
+                        "text-red-400"
+                      }`}>
+                        {circuitResult.recommendedCable.voltageDropPercentage.toFixed(2)}%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Environmental Factors */}
+                <div>
+                  <h4 className="font-medium mb-3 flex items-center gap-2">
+                    <Thermometer className="h-4 w-4" />
+                    Environmental Factors
+                  </h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Ambient Temp:</span>
+                      <span className="font-medium">{circuitResult.appliedEnvironmentalFactors.ambientTemperature}°C</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Temperature Derating:</span>
+                      <span className="font-medium">{(circuitResult.appliedEnvironmentalFactors.temperatureDerating * 100).toFixed(0)}%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Grouping Factor:</span>
+                      <span className="font-medium">{(circuitResult.appliedEnvironmentalFactors.groupingFactor * 100).toFixed(0)}%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Overall Derating:</span>
+                      <span className="font-medium">{(circuitResult.appliedEnvironmentalFactors.overallDerating * 100).toFixed(0)}%</span>
+                    </div>
+                    {circuitResult.circuit.installationZone && (
+                      <div className="flex items-center gap-1 mt-2">
+                        <MapPin className="h-3 w-3 text-blue-400" />
+                        <span className="text-xs text-blue-400">
+                          Zone: {planData.environmentalSettings?.installationZones?.find(z => z.id === circuitResult.circuit.installationZone)?.name}
+                        </span>
                       </div>
                     )}
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="summary" className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <FileText className="h-5 w-5 text-elec-yellow" />
-                Installation Summary
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-medium mb-2">System Requirements</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <span className="text-muted-foreground">Total Connected Load:</span>
-                      <p className="font-medium">{results.diversityCalculations.totalConnectedLoad}W</p>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Diversified Load:</span>
-                      <p className="font-medium">{Math.round(results.diversityCalculations.diversifiedLoad)}W</p>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Main Supply Rating:</span>
-                      <p className="font-medium">{results.mainSupplyRequirements.recommendedSupplyRating}A</p>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Main Switch Rating:</span>
-                      <p className="font-medium">{results.mainSupplyRequirements.mainSwitchRating}A</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h4 className="font-medium mb-2">System Recommendations</h4>
-                  <ul className="text-sm list-disc list-inside space-y-1">
-                    {results.recommendations.map((rec, index) => (
-                      <li key={index}>{rec}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-medium mb-2">Environmental Recommendations</h4>
-                  <ul className="text-sm list-disc list-inside space-y-1">
-                    {results.environmentalAnalysis.systemWideRecommendations.map((rec, index) => (
-                      <li key={index}>{rec}</li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="flex gap-2 pt-4">
-                  <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                    <Download className="h-4 w-4 mr-2" />
-                    Export Report
-                  </Button>
-                  <Button variant="outline" className="border-elec-yellow/30 hover:bg-elec-yellow/10">
-                    <FileText className="h-4 w-4 mr-2" />
-                    Generate Certificate
-                  </Button>
                 </div>
               </div>
+
+              {/* Protection and Compliance */}
+              <Separator className="my-4" />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div>
+                  <span className="text-muted-foreground">Design Current:</span>
+                  <p className="font-medium">{circuitResult.designCurrent.toFixed(1)}A</p>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">Protection:</span>
+                  <p className="font-medium">{circuitResult.protectiveDeviceRating}A MCB</p>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">Zs Value:</span>
+                  <p className={`font-medium ${circuitResult.zsCompliance ? "text-green-400" : "text-red-400"}`}>
+                    {circuitResult.zsValue.toFixed(2)}Ω
+                  </p>
+                </div>
+              </div>
+
+              {/* Warnings for this circuit */}
+              {circuitResult.warnings.length > 0 && (
+                <Alert className="bg-amber-500/10 border-amber-500/30 mt-4">
+                  <AlertTriangle className="h-4 w-4 text-amber-300" />
+                  <AlertDescription className="text-amber-200">
+                    {circuitResult.warnings.join("; ")}
+                  </AlertDescription>
+                </Alert>
+              )}
             </CardContent>
           </Card>
-        </TabsContent>
-      </Tabs>
+        ))}
+      </div>
+
+      {/* Recommendations */}
+      {results.recommendations.length > 0 && (
+        <Card className="border-blue-500/20 bg-blue-500/5">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Info className="h-5 w-5 text-blue-400" />
+              System Recommendations
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-2">
+              {results.recommendations.map((recommendation, index) => (
+                <li key={index} className="flex items-start gap-2 text-sm">
+                  <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                  {recommendation}
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };
