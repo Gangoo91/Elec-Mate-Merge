@@ -12,7 +12,7 @@ const IndustryNews = () => {
     <div className="min-h-screen bg-elec-dark text-white">
       <Helmet>
         <title>Industry News - Elec-Mate</title>
-        <meta name="description" content="Latest electrical industry news and regulatory updates" />
+        <meta name="description" content="Latest regulatory updates and compliance information from industry bodies" />
       </Helmet>
       
       <div className="space-y-8 animate-fade-in">
@@ -33,7 +33,7 @@ const IndustryNews = () => {
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-elec-yellow">Industry News</h1>
               <p className="text-muted-foreground">
-                Latest news and updates from regulatory bodies and industry leaders
+                Latest regulatory updates and compliance information from industry bodies
               </p>
             </div>
           </div>

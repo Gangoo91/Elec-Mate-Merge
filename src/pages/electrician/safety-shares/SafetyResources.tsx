@@ -12,7 +12,7 @@ const SafetyResources = () => {
     <div className="min-h-screen bg-elec-dark text-white">
       <Helmet>
         <title>Safety Resources - Elec-Mate</title>
-        <meta name="description" content="Download safety guides, toolbox talks, and training materials" />
+        <meta name="description" content="Essential safety guides, toolbox talks, and training materials" />
       </Helmet>
       
       <div className="space-y-8 animate-fade-in">
@@ -27,8 +27,8 @@ const SafetyResources = () => {
             Back
           </Button>
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-elec-yellow flex items-center justify-center">
-              <Shield className="h-6 w-6 text-elec-dark" />
+            <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center">
+              <Shield className="h-6 w-6 text-white" />
             </div>
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-elec-yellow">Safety Resources</h1>

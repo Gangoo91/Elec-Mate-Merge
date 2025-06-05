@@ -12,7 +12,7 @@ const SafetyAlerts = () => {
     <div className="min-h-screen bg-elec-dark text-white">
       <Helmet>
         <title>Safety Alerts - Elec-Mate</title>
-        <meta name="description" content="Latest electrical safety alerts and warnings for professionals" />
+        <meta name="description" content="Critical safety warnings and real-time alerts for electrical professionals" />
       </Helmet>
       
       <div className="space-y-8 animate-fade-in">
@@ -33,7 +33,7 @@ const SafetyAlerts = () => {
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-elec-yellow">Safety Alerts</h1>
               <p className="text-muted-foreground">
-                Critical safety information and alerts for electrical professionals
+                Critical safety warnings and real-time alerts for electrical professionals
               </p>
             </div>
           </div>

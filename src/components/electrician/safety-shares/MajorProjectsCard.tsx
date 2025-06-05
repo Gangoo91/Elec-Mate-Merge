@@ -105,8 +105,9 @@ const MajorProjectsCard = () => {
   };
 
   const formatProjectValue = (value: string) => {
+    // Ensure all values start with £ for UK currency
     if (value.includes('£')) return value;
-    if (value.includes('million')) return `£${value}`;
+    if (value.includes('million') || value.includes('billion')) return `£${value}`;
     return `£${value}`;
   };
 
@@ -273,7 +274,7 @@ const MajorProjectsCard = () => {
                         </Badge>
                         <div className="flex items-center gap-1 text-xs text-gray-400 ml-auto">
                           <Clock className="h-3 w-3" />
-                          {new Date(project.date_awarded).toLocaleDateString()}
+                          {new Date(project.date_awarded).toLocaleDateString('en-GB')}
                         </div>
                       </div>
                     </div>
@@ -303,7 +304,7 @@ const MajorProjectsCard = () => {
                       </Badge>
                       <div className="flex items-center gap-1 text-sm text-gray-400">
                         <Clock className="h-4 w-4" />
-                        {new Date(selectedProject.date_awarded).toLocaleDateString()}
+                        {new Date(selectedProject.date_awarded).toLocaleDateString('en-GB')}
                       </div>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">

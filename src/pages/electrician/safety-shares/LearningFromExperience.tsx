@@ -12,7 +12,7 @@ const LearningFromExperience = () => {
     <div className="min-h-screen bg-elec-dark text-white">
       <Helmet>
         <title>Learning From Experience - Elec-Mate</title>
-        <meta name="description" content="Learn from real incidents and near misses in the electrical industry" />
+        <meta name="description" content="Real electrical incidents, near misses, and lessons learned from the field" />
       </Helmet>
       
       <div className="space-y-8 animate-fade-in">
@@ -27,8 +27,8 @@ const LearningFromExperience = () => {
             Back
           </Button>
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center">
-              <BookOpen className="h-6 w-6 text-white" />
+            <div className="w-12 h-12 rounded-full bg-elec-yellow flex items-center justify-center">
+              <BookOpen className="h-6 w-6 text-elec-dark" />
             </div>
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-elec-yellow">Learning From Experience</h1>
