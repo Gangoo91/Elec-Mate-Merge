@@ -28,16 +28,14 @@ const JobVacancies = () => {
     <div className="space-y-6 animate-fade-in">
       <JobVacancyHeader />
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Main Content - Job Search */}
-        <div className="lg:col-span-3">
-          <SimpleJobSearch />
-        </div>
+      {/* CV Builder - Full width at top */}
+      <div className="w-full">
+        <CVBuilderBox />
+      </div>
 
-        {/* Sidebar - CV Builder */}
-        <div className="lg:col-span-1">
-          <CVBuilderBox />
-        </div>
+      {/* Job Search - Full width below CV Builder */}
+      <div className="w-full">
+        <SimpleJobSearch />
       </div>
     </div>
   );
