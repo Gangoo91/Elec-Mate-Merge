@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,13 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Search, Brain, Zap, MapPin, Clock, ExternalLink, AlertCircle, CheckCircle } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Combobox, ComboboxOption } from "@/components/ui/combobox";
 
 interface IntelligentJobResult {
   id: string;
@@ -47,6 +40,23 @@ const IntelligentJobSearch: React.FC = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [results, setResults] = useState<SearchResults | null>(null);
   const [searchTime, setSearchTime] = useState<number>(0);
+
+  // Job type options for the combobox
+  const jobTypeOptions: ComboboxOption[] = [
+    { value: "all", label: "All Types" },
+    { value: "full-time", label: "Full-time" },
+    { value: "part-time", label: "Part-time" },
+    { value: "contract", label: "Contract" },
+  ];
+
+  // Experience level options for the combobox
+  const experienceLevelOptions: ComboboxOption[] = [
+    { value: "all", label: "All Levels" },
+    { value: "entry", label: "Entry Level" },
+    { value: "intermediate", label: "Intermediate" },
+    { value: "senior", label: "Senior" },
+    { value: "lead", label: "Lead/Management" },
+  ];
 
   const handleSearch = async () => {
     if (!query.trim()) {
@@ -166,30 +176,31 @@ const IntelligentJobSearch: React.FC = () => {
               </div>
             </div>
 
-            <Select value={jobType} onValueChange={setJobType}>
-              <SelectTrigger>
-                <SelectValue placeholder="Job Type (Optional)" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Types</SelectItem>
-                <SelectItem value="full-time">Full-time</SelectItem>
-                <SelectItem value="part-time">Part-time</SelectItem>
-                <SelectItem value="contract">Contract</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Job Type</label>
+              <Combobox
+                options={jobTypeOptions}
+                value={jobType}
+                onValueChange={setJobType}
+                placeholder="Select job type..."
+                searchPlaceholder="Search job types..."
+                emptyMessage="No job types found."
+                className="w-full"
+              />
+            </div>
 
-            <Select value={experienceLevel} onValueChange={setExperienceLevel}>
-              <SelectTrigger>
-                <SelectValue placeholder="Experience Level (Optional)" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Levels</SelectItem>
-                <SelectItem value="entry">Entry Level</SelectItem>
-                <SelectItem value="intermediate">Intermediate</SelectItem>
-                <SelectItem value="senior">Senior</SelectItem>
-                <SelectItem value="lead">Lead/Management</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Experience Level</label>
+              <Combobox
+                options={experienceLevelOptions}
+                value={experienceLevel}
+                onValueChange={setExperienceLevel}
+                placeholder="Select experience level..."
+                searchPlaceholder="Search experience levels..."
+                emptyMessage="No experience levels found."
+                className="w-full"
+              />
+            </div>
           </div>
 
           <Button 
