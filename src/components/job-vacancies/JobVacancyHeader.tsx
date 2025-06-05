@@ -13,9 +13,9 @@ const JobVacancyHeader = () => {
           Job Vacancies
         </h1>
       </div>
-      <Link to="/electrician/toolbox-talk">
+      <Link to="/electrician/trade-essentials">
         <Button variant="outline" className="flex items-center gap-2">
-          <ArrowLeft className="h-4 w-4" /> Back to Toolbox Talk
+          <ArrowLeft className="h-4 w-4" /> Back to Trade Essentials
         </Button>
       </Link>
     </div>

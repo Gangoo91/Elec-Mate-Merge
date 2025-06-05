@@ -1,7 +1,7 @@
 
 import { Route, Routes } from "react-router-dom";
 import ElectricalHub from "@/pages/ElectricalHub";
-import ElectricalToolboxTalk from "@/pages/electrician/ElectricalToolboxTalk";
+import TradeEssentials from "@/pages/electrician/TradeEssentials";
 import MentorConnect from "@/pages/electrician/MentorConnect";
 import ElectricalChat from "@/pages/electrician/ElectricalChat";
 import JobVacancies from "@/pages/electrician/JobVacancies";
@@ -35,7 +35,8 @@ const ElectricianHubRoutes = () => {
   return (
     <Routes>
       <Route index element={<ElectricalHub />} />
-      <Route path="toolbox-talk" element={<ElectricalToolboxTalk />} />
+      <Route path="trade-essentials" element={<TradeEssentials />} />
+      <Route path="toolbox-talk" element={<TradeEssentials />} /> {/* Legacy redirect */}
       <Route path="mentor-connect" element={<MentorConnect />} />
       <Route path="chat" element={<ElectricalChat />} />
       <Route path="job-vacancies" element={<JobVacancies />} />

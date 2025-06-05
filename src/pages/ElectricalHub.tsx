@@ -8,10 +8,10 @@ const ElectricalHub = () => {
   const hubCards = [
     {
       id: 1,
-      title: "Toolbox Talk",
-      description: "Access practical guides and safety information for on-site work",
+      title: "Trade Essentials",
+      description: "Essential tools, materials, safety updates and industry resources for daily work",
       icon: <Wrench className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/electrician/toolbox-talk"
+      link: "/electrician/trade-essentials"
     },
     {
       id: 2,
