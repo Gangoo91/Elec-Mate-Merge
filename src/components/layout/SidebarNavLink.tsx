@@ -11,9 +11,18 @@ const SidebarNavLink = ({ item }: SidebarNavLinkProps) => {
   const location = useLocation();
   const isActive = location.pathname === item.path || location.pathname.startsWith(`${item.path}/`);
   
+  const handleClick = () => {
+    console.log('Sidebar navigation clicked:', { 
+      from: location.pathname, 
+      to: item.path, 
+      itemName: item.name 
+    });
+  };
+  
   return (
     <Link
       to={item.path}
+      onClick={handleClick}
       className={cn(
         "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
         isActive

@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 
 interface BackButtonProps {
   courseSlug?: string;
@@ -20,6 +20,7 @@ const BackButton = ({
 }: BackButtonProps) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
   const courseId = searchParams.get("courseId");
   
   // Helper function to add courseId to URL if present
@@ -31,24 +32,40 @@ const BackButton = ({
   };
 
   const handleClick = () => {
+    console.log('BackButton clicked:', { 
+      currentPath: location.pathname, 
+      customUrl, 
+      courseSlug, 
+      unitSlug, 
+      sectionId 
+    });
+
     if (customUrl) {
-      navigate(addCourseIdToUrl(customUrl));
+      const finalUrl = addCourseIdToUrl(customUrl);
+      console.log('Navigating to custom URL:', finalUrl);
+      navigate(finalUrl);
       return;
     }
 
     if (courseSlug && unitSlug && sectionId) {
       // We have section ID, navigate to unit page
       const url = `/apprentice/study/eal/${courseSlug}/unit/${unitSlug}`;
-      navigate(addCourseIdToUrl(url));
+      const finalUrl = addCourseIdToUrl(url);
+      console.log('Navigating to unit page:', finalUrl);
+      navigate(finalUrl);
     } else if (courseSlug && unitSlug) {
       // We have unit slug, navigate to course page
       const url = `/apprentice/study/eal/${courseSlug}`;
-      navigate(addCourseIdToUrl(url));
+      const finalUrl = addCourseIdToUrl(url);
+      console.log('Navigating to course page:', finalUrl);
+      navigate(finalUrl);
     } else if (courseSlug) {
       // We have course slug, navigate to courses list
+      console.log('Navigating to courses list');
       navigate('/apprentice/study/eal');
     } else {
       // No info, go back in history
+      console.log('Going back in history');
       navigate(-1);
     }
   };

@@ -25,6 +25,7 @@ import ElectricianRoutes from "@/routes/ElectricianRoutes";
 import ApprenticeChat from "@/pages/apprentice/ApprenticeChat";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
+import RightsAndPay from "@/pages/apprentice/RightsAndPay";
 import Chat from "@/pages/Chat";
 import NotificationsPage from "@/pages/NotificationsPage";
 
@@ -36,6 +37,9 @@ const AppRouter = () => {
       <Route path="/index" element={<Index />} />
       <Route path="/auth/signin" element={<SignIn />} />
       <Route path="/auth/signup" element={<SignUp />} />
+      
+      {/* Legacy/Direct Access Routes - Redirect to proper paths */}
+      <Route path="/rights-and-pay" element={<Navigate to="/apprentice/rights-and-pay" replace />} />
       
       {/* Main Protected Routes */}
       <Route path="/" element={
@@ -50,7 +54,6 @@ const AppRouter = () => {
         <Route path="notifications" element={<NotificationsPage />} />
         <Route path="subscriptions" element={<Subscriptions />} />
         <Route path="payment-success" element={<PaymentSuccess />} />
-        <Route path="*" element={<NotFound />} />
         
         {/* Top level routes for shared features */}
         <Route path="chat" element={<Chat />} />
@@ -72,6 +75,9 @@ const AppRouter = () => {
         
         {/* Apprentice Routes */}
         <Route path="apprentice/*" element={<ApprenticeRoutes />} />
+        
+        {/* Catch-all route for 404 */}
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
