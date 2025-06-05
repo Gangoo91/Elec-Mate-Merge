@@ -34,7 +34,7 @@ export interface EnhancedCableSizeOption {
   complianceNotes?: string[];
 }
 
-// Enhanced cable database with corrected voltage drop values
+// Enhanced cable database with comprehensive cable sizes up to 400mm²
 export const enhancedCableSizes: EnhancedCableSizeOption[] = [
   // Twin and Earth - Domestic installations
   {
@@ -140,7 +140,7 @@ export const enhancedCableSizes: EnhancedCableSizeOption[] = [
     mechanicalProtection: 'light'
   },
 
-  // SWA Cables - Industrial and outdoor applications
+  // SWA Cables - Small to Medium sizes
   {
     value: "1.5-swa-3c",
     size: "1.5 mm²",
@@ -256,6 +256,178 @@ export const enhancedCableSizes: EnhancedCableSizeOption[] = [
     applications: ["main-distribution", "large-industrial-supplies"],
     priceCategory: 'medium',
     availability: 'common',
+    standards: ["BS 5467", "BS 7671"],
+    environmentalRating: "Indoor/Outdoor",
+    mechanicalProtection: 'heavy'
+  },
+
+  // SWA Cables - Large sizes for industrial applications
+  {
+    value: "35-swa-3c",
+    size: "35 mm²",
+    coreConfig: "3C+E",
+    currentRating: { pvc: 115, xlpe: 138, swa: 125 },
+    voltageDropPerAmpereMeter: 1.3, // mV/A/m
+    impedance: { r1: 0.524, r2: 0.524, x: 0.052 },
+    maxOperatingTemp: 70,
+    installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
+    cableType: 'swa',
+    applications: ["main-distribution", "large-industrial-supplies", "sub-stations"],
+    priceCategory: 'high',
+    availability: 'common',
+    standards: ["BS 5467", "BS 7671"],
+    environmentalRating: "Indoor/Outdoor",
+    mechanicalProtection: 'heavy'
+  },
+  {
+    value: "50-swa-3c",
+    size: "50 mm²",
+    coreConfig: "3C+E",
+    currentRating: { pvc: 144, xlpe: 173, swa: 156 },
+    voltageDropPerAmpereMeter: 0.93, // mV/A/m
+    impedance: { r1: 0.387, r2: 0.387, x: 0.05 },
+    maxOperatingTemp: 70,
+    installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
+    cableType: 'swa',
+    applications: ["main-distribution", "large-industrial-supplies", "sub-stations"],
+    priceCategory: 'high',
+    availability: 'common',
+    standards: ["BS 5467", "BS 7671"],
+    environmentalRating: "Indoor/Outdoor",
+    mechanicalProtection: 'heavy'
+  },
+  {
+    value: "70-swa-3c",
+    size: "70 mm²",
+    coreConfig: "3C+E",
+    currentRating: { pvc: 184, xlpe: 221, swa: 200 },
+    voltageDropPerAmpereMeter: 0.65, // mV/A/m
+    impedance: { r1: 0.268, r2: 0.268, x: 0.048 },
+    maxOperatingTemp: 70,
+    installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
+    cableType: 'swa',
+    applications: ["main-distribution", "large-industrial-supplies", "sub-stations"],
+    priceCategory: 'high',
+    availability: 'common',
+    standards: ["BS 5467", "BS 7671"],
+    environmentalRating: "Indoor/Outdoor",
+    mechanicalProtection: 'heavy'
+  },
+  {
+    value: "95-swa-3c",
+    size: "95 mm²",
+    coreConfig: "3C+E",
+    currentRating: { pvc: 223, xlpe: 268, swa: 242 },
+    voltageDropPerAmpereMeter: 0.49, // mV/A/m
+    impedance: { r1: 0.193, r2: 0.193, x: 0.046 },
+    maxOperatingTemp: 70,
+    installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
+    cableType: 'swa',
+    applications: ["main-distribution", "large-industrial-supplies", "sub-stations"],
+    priceCategory: 'high',
+    availability: 'common',
+    standards: ["BS 5467", "BS 7671"],
+    environmentalRating: "Indoor/Outdoor",
+    mechanicalProtection: 'heavy'
+  },
+  {
+    value: "120-swa-3c",
+    size: "120 mm²",
+    coreConfig: "3C+E",
+    currentRating: { pvc: 258, xlpe: 310, swa: 280 },
+    voltageDropPerAmpereMeter: 0.39, // mV/A/m
+    impedance: { r1: 0.153, r2: 0.153, x: 0.044 },
+    maxOperatingTemp: 70,
+    installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
+    cableType: 'swa',
+    applications: ["main-distribution", "large-industrial-supplies", "sub-stations"],
+    priceCategory: 'high',
+    availability: 'common',
+    standards: ["BS 5467", "BS 7671"],
+    environmentalRating: "Indoor/Outdoor",
+    mechanicalProtection: 'heavy'
+  },
+  {
+    value: "150-swa-3c",
+    size: "150 mm²",
+    coreConfig: "3C+E",
+    currentRating: { pvc: 299, xlpe: 359, swa: 325 },
+    voltageDropPerAmpereMeter: 0.32, // mV/A/m
+    impedance: { r1: 0.124, r2: 0.124, x: 0.042 },
+    maxOperatingTemp: 70,
+    installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
+    cableType: 'swa',
+    applications: ["main-distribution", "large-industrial-supplies", "sub-stations"],
+    priceCategory: 'high',
+    availability: 'limited',
+    standards: ["BS 5467", "BS 7671"],
+    environmentalRating: "Indoor/Outdoor",
+    mechanicalProtection: 'heavy'
+  },
+  {
+    value: "185-swa-3c",
+    size: "185 mm²",
+    coreConfig: "3C+E",
+    currentRating: { pvc: 341, xlpe: 409, swa: 370 },
+    voltageDropPerAmpereMeter: 0.26, // mV/A/m
+    impedance: { r1: 0.099, r2: 0.099, x: 0.041 },
+    maxOperatingTemp: 70,
+    installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
+    cableType: 'swa',
+    applications: ["main-distribution", "large-industrial-supplies", "sub-stations"],
+    priceCategory: 'high',
+    availability: 'limited',
+    standards: ["BS 5467", "BS 7671"],
+    environmentalRating: "Indoor/Outdoor",
+    mechanicalProtection: 'heavy'
+  },
+  {
+    value: "240-swa-3c",
+    size: "240 mm²",
+    coreConfig: "3C+E",
+    currentRating: { pvc: 406, xlpe: 487, swa: 440 },
+    voltageDropPerAmpereMeter: 0.193, // mV/A/m
+    impedance: { r1: 0.075, r2: 0.075, x: 0.04 },
+    maxOperatingTemp: 70,
+    installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
+    cableType: 'swa',
+    applications: ["main-distribution", "large-industrial-supplies", "sub-stations"],
+    priceCategory: 'premium',
+    availability: 'limited',
+    standards: ["BS 5467", "BS 7671"],
+    environmentalRating: "Indoor/Outdoor",
+    mechanicalProtection: 'heavy'
+  },
+  {
+    value: "300-swa-3c",
+    size: "300 mm²",
+    coreConfig: "3C+E",
+    currentRating: { pvc: 464, xlpe: 557, swa: 505 },
+    voltageDropPerAmpereMeter: 0.154, // mV/A/m
+    impedance: { r1: 0.060, r2: 0.060, x: 0.039 },
+    maxOperatingTemp: 70,
+    installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
+    cableType: 'swa',
+    applications: ["main-distribution", "large-industrial-supplies", "sub-stations"],
+    priceCategory: 'premium',
+    availability: 'special-order',
+    standards: ["BS 5467", "BS 7671"],
+    environmentalRating: "Indoor/Outdoor",
+    mechanicalProtection: 'heavy'
+  },
+  {
+    value: "400-swa-3c",
+    size: "400 mm²",
+    coreConfig: "3C+E",
+    currentRating: { pvc: 546, xlpe: 655, swa: 595 },
+    voltageDropPerAmpereMeter: 0.116, // mV/A/m
+    impedance: { r1: 0.047, r2: 0.047, x: 0.038 },
+    maxOperatingTemp: 70,
+    installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
+    cableType: 'swa',
+    applications: ["main-distribution", "large-industrial-supplies", "sub-stations"],
+    priceCategory: 'premium',
+    availability: 'special-order',
     standards: ["BS 5467", "BS 7671"],
     environmentalRating: "Indoor/Outdoor",
     mechanicalProtection: 'heavy'
