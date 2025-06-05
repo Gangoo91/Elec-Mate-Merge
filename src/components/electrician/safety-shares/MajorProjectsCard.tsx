@@ -1,12 +1,13 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Building, Clock, Filter, Search, X, MapPin, PoundSterling } from "lucide-react";
+import { Building, Clock, Filter, Search, X, MapPin, PoundSterling, RefreshCw, Wifi, WifiOff } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 
 interface MajorProject {
   id: string;
@@ -25,19 +26,15 @@ const MajorProjectsCard = () => {
   const [filteredProjects, setFilteredProjects] = useState<MajorProject[]>([]);
   const [selectedProject, setSelectedProject] = useState<MajorProject | null>(null);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [locationFilter, setLocationFilter] = useState("all");
+  const [isOnline, setIsOnline] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
+  const { toast } = useToast();
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  useEffect(() => {
-    filterProjects();
-  }, [projects, searchTerm, statusFilter, locationFilter]);
-
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async (showToast = false) => {
     try {
       const { data, error } = await supabase
         .from('major_projects')
@@ -46,13 +43,144 @@ const MajorProjectsCard = () => {
         .order('date_awarded', { ascending: false });
 
       if (error) throw error;
+      
       setProjects(data || []);
+      setLastUpdated(new Date());
+      
+      if (showToast) {
+        toast({
+          title: "Projects updated",
+          description: `Loaded ${data?.length || 0} projects successfully`,
+        });
+      }
     } catch (error) {
       console.error('Error fetching major projects:', error);
-    } finally {
-      setLoading(false);
+      setIsOnline(false);
+      if (showToast) {
+        toast({
+          title: "Update failed",
+          description: "Unable to fetch latest projects. Check your connection.",
+          variant: "destructive",
+        });
+      }
     }
+  }, [toast]);
+
+  const handleManualRefresh = async () => {
+    setRefreshing(true);
+    await fetchProjects(true);
+    setRefreshing(false);
   };
+
+  // Initial data fetch
+  useEffect(() => {
+    const loadInitialData = async () => {
+      setLoading(true);
+      await fetchProjects();
+      setLoading(false);
+    };
+    
+    loadInitialData();
+  }, [fetchProjects]);
+
+  // Set up Supabase Realtime subscription
+  useEffect(() => {
+    console.log('Setting up real-time subscription for major_projects...');
+    
+    const channel = supabase
+      .channel('major_projects_changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'major_projects'
+        },
+        (payload) => {
+          console.log('Real-time update received:', payload);
+          setIsOnline(true);
+          
+          if (payload.eventType === 'INSERT') {
+            setProjects(prev => [payload.new as MajorProject, ...prev]);
+            toast({
+              title: "New project added",
+              description: `${(payload.new as MajorProject).title} has been added`,
+            });
+          } else if (payload.eventType === 'UPDATE') {
+            setProjects(prev => 
+              prev.map(project => 
+                project.id === payload.new.id ? payload.new as MajorProject : project
+              )
+            );
+            toast({
+              title: "Project updated",
+              description: `${(payload.new as MajorProject).title} has been updated`,
+            });
+          } else if (payload.eventType === 'DELETE') {
+            setProjects(prev => 
+              prev.filter(project => project.id !== payload.old.id)
+            );
+            toast({
+              title: "Project removed",
+              description: "A project has been removed from the list",
+            });
+          }
+          
+          setLastUpdated(new Date());
+        }
+      )
+      .subscribe((status) => {
+        console.log('Subscription status:', status);
+        if (status === 'SUBSCRIBED') {
+          setIsOnline(true);
+          toast({
+            title: "Live updates enabled",
+            description: "You'll receive real-time project updates",
+          });
+        } else if (status === 'CHANNEL_ERROR') {
+          setIsOnline(false);
+        }
+      });
+
+    return () => {
+      console.log('Cleaning up real-time subscription');
+      supabase.removeChannel(channel);
+    };
+  }, [toast]);
+
+  // Periodic refresh every 5 minutes
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log('Performing periodic refresh...');
+      fetchProjects();
+    }, 5 * 60 * 1000); // 5 minutes
+
+    return () => clearInterval(interval);
+  }, [fetchProjects]);
+
+  // Network status monitoring
+  useEffect(() => {
+    const handleOnline = () => {
+      setIsOnline(true);
+      fetchProjects(true);
+    };
+    
+    const handleOffline = () => {
+      setIsOnline(false);
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, [fetchProjects]);
+
+  useEffect(() => {
+    filterProjects();
+  }, [projects, searchTerm, statusFilter, locationFilter]);
 
   const filterProjects = () => {
     let filtered = projects;
@@ -111,6 +239,17 @@ const MajorProjectsCard = () => {
     return `£${value}`;
   };
 
+  const formatLastUpdated = (date: Date | null) => {
+    if (!date) return 'Never';
+    const now = new Date();
+    const diff = Math.floor((now.getTime() - date.getTime()) / 1000);
+    
+    if (diff < 60) return 'Just now';
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+    return date.toLocaleDateString('en-GB');
+  };
+
   if (loading) {
     return (
       <div className="space-y-6">
@@ -143,6 +282,39 @@ const MajorProjectsCard = () => {
 
   return (
     <div className="space-y-6">
+      {/* Status Bar */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardContent className="p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                {isOnline ? (
+                  <Wifi className="h-4 w-4 text-green-400" />
+                ) : (
+                  <WifiOff className="h-4 w-4 text-red-400" />
+                )}
+                <span className="text-sm text-gray-400">
+                  {isOnline ? 'Live updates active' : 'Offline mode'}
+                </span>
+              </div>
+              <div className="text-xs text-gray-500">
+                Last updated: {formatLastUpdated(lastUpdated)}
+              </div>
+            </div>
+            <Button
+              onClick={handleManualRefresh}
+              disabled={refreshing}
+              size="sm"
+              variant="outline"
+              className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10"
+            >
+              <RefreshCw className={`h-4 w-4 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
+              {refreshing ? 'Refreshing...' : 'Refresh'}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Filters Section */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader className="pb-4">
