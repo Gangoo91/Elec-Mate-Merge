@@ -1,21 +1,31 @@
 
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Briefcase, ArrowLeft } from "lucide-react";
 
 const JobVacancyHeader = () => {
-  // More robust Router context detection
+  // Test if we're in a Router context by trying to access it
   const [isInRouterContext, setIsInRouterContext] = React.useState(false);
   
   React.useEffect(() => {
+    // Check if Router context is available by testing if we can import useLocation
     try {
-      // Test if we can access router context
-      const testLocation = window.location.pathname;
-      if (testLocation) {
-        setIsInRouterContext(true);
-      }
+      // Try to dynamically import and use useLocation
+      import('react-router-dom').then((routerModule) => {
+        try {
+          // Test if we can access the router context
+          const RouterContext = React.createContext(null);
+          const context = React.useContext(RouterContext);
+          // If we get here without errors, we have router context
+          setIsInRouterContext(true);
+        } catch (error) {
+          console.log('No router context available:', error);
+          setIsInRouterContext(false);
+        }
+      });
     } catch (error) {
+      console.log('Router not available:', error);
       setIsInRouterContext(false);
     }
   }, []);
@@ -35,13 +45,8 @@ const JobVacancyHeader = () => {
         </h1>
       </div>
       
-      {isInRouterContext ? (
-        <Link to="/electrician/trade-essentials">
-          {backButton}
-        </Link>
-      ) : (
-        backButton
-      )}
+      {/* Always render as button since Link is causing issues outside Router context */}
+      {backButton}
     </div>
   );
 };
