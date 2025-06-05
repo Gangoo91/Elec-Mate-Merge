@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import JobVacancyHeader from "@/components/job-vacancies/JobVacancyHeader";
-import SimpleJobSearch from "@/components/job-vacancies/SimpleJobSearch";
+import BasicJobSearch from "@/components/job-vacancies/BasicJobSearch";
 import CVBuilderBox from "@/components/electrician-tools/CVBuilderBox";
 import { useJobListings } from "@/hooks/job-vacancies/useJobListings";
 
@@ -33,9 +33,9 @@ const JobVacancies = () => {
         <CVBuilderBox />
       </div>
 
-      {/* Job Search - Full width below CV Builder */}
+      {/* Basic Job Search - Simplified version */}
       <div className="w-full">
-        <SimpleJobSearch />
+        <BasicJobSearch />
       </div>
     </div>
   );
