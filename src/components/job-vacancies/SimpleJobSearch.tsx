@@ -317,7 +317,7 @@ const SimpleJobSearch: React.FC = () => {
                 placeholder="Select job type..."
                 searchPlaceholder="Search job types..."
                 emptyMessage="No job types found."
-                className="w-full bg-white"
+                className="w-full"
               />
             </div>
 
@@ -330,7 +330,7 @@ const SimpleJobSearch: React.FC = () => {
                 placeholder="Select experience level..."
                 searchPlaceholder="Search experience levels..."
                 emptyMessage="No experience levels found."
-                className="w-full bg-white"
+                className="w-full"
               />
             </div>
           </div>
