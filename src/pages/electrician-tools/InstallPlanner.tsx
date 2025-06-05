@@ -11,6 +11,9 @@ import LoadDetailsStep from "@/components/install-planner/LoadDetailsStep";
 import CableRunStep from "@/components/install-planner/CableRunStep";
 import EnvironmentStep from "@/components/install-planner/EnvironmentStep";
 import ResultsStep from "@/components/install-planner/ResultsStep";
+import DesignModeSelector from "@/components/install-planner/DesignModeSelector";
+import MultiCircuitManager from "@/components/install-planner/MultiCircuitManager";
+import MultiCircuitResults from "@/components/install-planner/MultiCircuitResults";
 import { InstallPlanData } from "@/components/install-planner/types";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "@/hooks/use-toast";
@@ -32,30 +35,77 @@ const InstallPlanner = () => {
     derating: 1,
     protectiveDevice: "",
     earthingSystem: "TN-S",
-    ze: 0.35
+    ze: 0.35,
+    designMode: undefined
   });
 
-  const steps = [
+  // Define steps based on design mode
+  const getSingleCircuitSteps = () => [
     { 
       id: 1, 
+      title: "Design Mode", 
+      subtitle: "Single or Multi-Circuit",
+      component: DesignModeSelector,
+      icon: "🎯"
+    },
+    { 
+      id: 2, 
       title: "Installation Type", 
       subtitle: "Environment & Load Type",
       component: InstallationTypeStep,
       icon: "🏠"
     },
     { 
-      id: 2, 
+      id: 3, 
       title: "Load Details", 
       subtitle: "Power & Electrical Specs",
       component: LoadDetailsStep,
       icon: "⚡"
     },
     { 
-      id: 3, 
+      id: 4, 
       title: "Cable Run", 
       subtitle: "Installation Method & Route",
       component: CableRunStep,
       icon: "🔌"
+    },
+    { 
+      id: 5, 
+      title: "Environment", 
+      subtitle: "Conditions & Protection",
+      component: EnvironmentStep,
+      icon: "🛡️"
+    },
+    { 
+      id: 6, 
+      title: "Results", 
+      subtitle: "Recommendations & Compliance",
+      component: ResultsStep,
+      icon: "📊"
+    }
+  ];
+
+  const getMultiCircuitSteps = () => [
+    { 
+      id: 1, 
+      title: "Design Mode", 
+      subtitle: "Single or Multi-Circuit",
+      component: DesignModeSelector,
+      icon: "🎯"
+    },
+    { 
+      id: 2, 
+      title: "Installation Type", 
+      subtitle: "Environment & System Type",
+      component: InstallationTypeStep,
+      icon: "🏠"
+    },
+    { 
+      id: 3, 
+      title: "Circuit Design", 
+      subtitle: "Define Multiple Circuits",
+      component: MultiCircuitManager,
+      icon: "⚡"
     },
     { 
       id: 4, 
@@ -67,12 +117,13 @@ const InstallPlanner = () => {
     { 
       id: 5, 
       title: "Results", 
-      subtitle: "Recommendations & Compliance",
-      component: ResultsStep,
+      subtitle: "System Analysis & Compliance",
+      component: MultiCircuitResults,
       icon: "📊"
     }
   ];
 
+  const steps = planData.designMode === "multi" ? getMultiCircuitSteps() : getSingleCircuitSteps();
   const currentStepData = steps.find(step => step.id === currentStep);
   const CurrentStepComponent = currentStepData?.component;
 
@@ -97,7 +148,16 @@ const InstallPlanner = () => {
   };
 
   const updatePlanData = (updates: Partial<InstallPlanData>) => {
-    setPlanData(prev => ({ ...prev, ...updates }));
+    setPlanData(prev => {
+      const newData = { ...prev, ...updates };
+      
+      // Reset step when changing design mode
+      if (updates.designMode && updates.designMode !== prev.designMode) {
+        setCurrentStep(2); // Go to installation type step
+      }
+      
+      return newData;
+    });
   };
 
   const resetPlan = () => {
@@ -115,7 +175,8 @@ const InstallPlanner = () => {
       derating: 1,
       protectiveDevice: "",
       earthingSystem: "TN-S",
-      ze: 0.35
+      ze: 0.35,
+      designMode: undefined
     });
     setCurrentStep(1);
     toast({
@@ -127,12 +188,23 @@ const InstallPlanner = () => {
   const canProceed = () => {
     switch (currentStep) {
       case 1:
-        return planData.installationType && planData.loadType;
+        return planData.designMode !== undefined;
       case 2:
-        return planData.totalLoad > 0;
+        return planData.installationType && (planData.designMode === "multi" || planData.loadType);
       case 3:
-        return planData.cableLength > 0 && planData.installationMethod && planData.cableType;
+        if (planData.designMode === "multi") {
+          return planData.circuits && planData.circuits.length > 0 && planData.circuits.some(c => c.enabled);
+        }
+        return planData.totalLoad > 0;
       case 4:
+        if (planData.designMode === "multi") {
+          return planData.protectiveDevice && planData.earthingSystem;
+        }
+        return planData.cableLength > 0 && planData.installationMethod && planData.cableType;
+      case 5:
+        if (planData.designMode === "multi") {
+          return true; // Results step
+        }
         return planData.protectiveDevice && planData.earthingSystem;
       default:
         return true;
@@ -156,7 +228,10 @@ const InstallPlanner = () => {
               Professional Installation Planner
             </h1>
             <p className="text-muted-foreground text-sm md:text-base mt-1">
-              Design electrical installations with professional guidance, visual circuit diagrams, and BS 7671 compliance checking.
+              {planData.designMode === "multi" 
+                ? "Design multi-circuit electrical installations with comprehensive system analysis and BS 7671 compliance."
+                : "Design electrical installations with professional guidance, visual circuit diagrams, and BS 7671 compliance checking."
+              }
             </p>
           </div>
           <div className="flex gap-2 justify-end">
@@ -179,7 +254,7 @@ const InstallPlanner = () => {
         </div>
       </div>
 
-      {/* Enhanced Progress Section with Step Indicator */}
+      {/* Enhanced Progress Section */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader className="pb-3 px-4 md:px-6">
           <div className="space-y-4">
@@ -203,6 +278,14 @@ const InstallPlanner = () => {
                 >
                   {Math.round(progress)}% Complete
                 </Badge>
+                {planData.designMode && (
+                  <Badge 
+                    variant="outline" 
+                    className="border-blue-400/30 text-blue-400"
+                  >
+                    {planData.designMode === "multi" ? "Multi-Circuit" : "Single Circuit"}
+                  </Badge>
+                )}
               </div>
             </div>
 
@@ -210,7 +293,7 @@ const InstallPlanner = () => {
             <div className="space-y-2">
               <Progress value={progress} className="h-2" />
               
-              {/* Step Indicators - Hidden on mobile to save space */}
+              {/* Step Indicators - Hidden on mobile */}
               {!isMobile && (
                 <div className="flex justify-between text-xs">
                   {steps.map((step) => {
@@ -224,7 +307,6 @@ const InstallPlanner = () => {
                           "text-muted-foreground"
                         }`}
                         onClick={() => {
-                          // Allow navigation to completed steps and current step
                           if (step.id <= currentStep) {
                             setCurrentStep(step.id);
                           }
@@ -260,7 +342,7 @@ const InstallPlanner = () => {
         </CardContent>
       </Card>
 
-      {/* Enhanced Navigation Section */}
+      {/* Navigation Section */}
       <div className="flex flex-col md:flex-row justify-between gap-3 md:gap-0 px-2 md:px-0">
         <Button
           variant="outline"
@@ -276,7 +358,6 @@ const InstallPlanner = () => {
         </Button>
 
         <div className="flex items-center gap-2">
-          {/* Validation indicator */}
           {currentStep < steps.length && (
             <div className={`text-xs px-2 py-1 rounded ${
               canProceed() ? 'text-green-400 bg-green-400/10' : 'text-amber-400 bg-amber-400/10'
@@ -310,14 +391,17 @@ const InstallPlanner = () => {
         )}
       </div>
 
-      {/* Mobile-specific completion summary */}
-      {isMobile && currentStep === steps.length && planData.installationType && (
+      {/* Mobile completion summary */}
+      {isMobile && currentStep === steps.length && (
         <Card className="border-green-500/30 bg-green-500/10">
           <CardContent className="p-4">
             <div className="text-center">
               <h3 className="font-bold text-green-400 mb-2">Installation Plan Complete! 🎉</h3>
               <p className="text-sm text-green-300">
-                {planData.installationType} installation for {planData.loadType} load
+                {planData.designMode === "multi" 
+                  ? `Multi-circuit ${planData.installationType} installation with ${planData.circuits?.filter(c => c.enabled).length || 0} circuits`
+                  : `${planData.installationType} installation for ${planData.loadType} load`
+                }
               </p>
             </div>
           </CardContent>

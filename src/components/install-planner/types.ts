@@ -29,6 +29,26 @@ export interface InstallPlanData {
   hazardousArea?: string;
   fireRating?: string;
   mechanicalProtection?: string;
+  
+  // Multi-circuit fields
+  circuits?: Circuit[];
+  designMode?: "single" | "multi";
+}
+
+export interface Circuit {
+  id: string;
+  name: string;
+  loadType: string;
+  totalLoad: number;
+  voltage: number;
+  phases: "single" | "three";
+  powerFactor?: number;
+  cableLength: number;
+  installationMethod: string;
+  cableType: string;
+  protectiveDevice: string;
+  enabled: boolean;
+  notes?: string;
 }
 
 export interface CableRecommendation {
@@ -58,6 +78,37 @@ export interface InstallPlanResult {
   recommendations: string[];
   suggestions: InstallationSuggestion[];
   complianceChecks: ComplianceCheck[];
+}
+
+export interface MultiCircuitResult {
+  circuits: CircuitResult[];
+  totalSystemLoad: number;
+  mainSupplyRequirements: {
+    totalDemand: number;
+    recommendedSupplyRating: number;
+    mainSwitchRating: number;
+    earthingRequirements: string[];
+  };
+  diversityCalculations: {
+    totalConnectedLoad: number;
+    diversifiedLoad: number;
+    diversityFactor: number;
+  };
+  complianceChecks: ComplianceCheck[];
+  warnings: string[];
+  recommendations: string[];
+}
+
+export interface CircuitResult {
+  circuit: Circuit;
+  recommendedCable: CableRecommendation;
+  alternativeCables: CableRecommendation[];
+  designCurrent: number;
+  protectiveDeviceRating: number;
+  zsValue: number;
+  zsCompliance: boolean;
+  voltageDropCompliance: boolean;
+  warnings: string[];
 }
 
 export interface InstallationSuggestion {
