@@ -88,9 +88,9 @@ const Calculations = () => {
     },
     {
       id: "cable-size",
-      name: "Cable Sizing",
+      name: "Enhanced Cable Sizing",
       category: "distribution",
-      description: "Determine appropriate cable sizes for installations",
+      description: "Advanced cable sizing with industry templates and compliance checking",
       icon: Cable,
       difficulty: 'advanced' as const,
       isFavourite: true,
@@ -102,6 +102,26 @@ const Calculations = () => {
   ];
 
   const renderCalculator = () => {
+    // Redirect cable sizing to dedicated page
+    if (calculatorType === 'cable-size') {
+      return (
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardContent className="p-8 text-center">
+            <Cable className="h-16 w-16 text-elec-yellow mx-auto mb-4" />
+            <h3 className="text-xl font-medium mb-2">Enhanced Cable Sizing Calculator</h3>
+            <p className="text-muted-foreground mb-4">
+              Advanced cable sizing with industry templates, compliance checking, and comprehensive analysis.
+            </p>
+            <Link to="/electrician-tools/cable-sizing">
+              <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+                Open Enhanced Calculator
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      );
+    }
+
     // For demonstration, we'll show the enhanced interface for Ohm's Law
     if (viewMode === 'enhanced' && calculatorType === 'ohms-law') {
       return (
