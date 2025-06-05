@@ -18,11 +18,28 @@ interface Alert {
   type: "warning" | "info";
 }
 
+interface RegionalPricingData {
+  id: string;
+  region: string;
+  county: string;
+  job_type: string;
+  job_category: string;
+  min_price: number;
+  max_price: number;
+  average_price: number;
+  currency: string;
+  unit: string;
+  complexity_level: string;
+  last_updated: string;
+  data_source: string;
+}
+
 interface MetalPricesData {
   metalPrices: PriceMetric[];
   cablePrices: PriceMetric[];
   equipmentPrices: PriceMetric[];
   marketAlerts: Alert[];
+  regionalJobPricing: RegionalPricingData[];
   lastUpdated: string;
 }
 
@@ -69,7 +86,7 @@ export const useLiveMetalPrices = () => {
     if (newData) {
       toast({
         title: 'Prices Updated',
-        description: 'Latest material pricing data has been loaded',
+        description: 'Latest material pricing and regional job data has been loaded',
       });
     }
   };

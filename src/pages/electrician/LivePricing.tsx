@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { PoundSterling, ArrowLeft, RefreshCw, Info, MapPin, Search } from "lucide-react";
 import LivePricingMetricsCard from "@/components/electrician-pricing/LivePricingMetricsCard";
 import MarketAlerts from "@/components/electrician-pricing/MarketAlerts";
+import RegionalJobPricing from "@/components/electrician-pricing/RegionalJobPricing";
 import { useLiveMetalPrices } from "@/hooks/useLiveMetalPrices";
 import ScrapMerchantFinder from "@/components/electrician-pricing/ScrapMerchantFinder";
 import { useState } from "react";
@@ -22,7 +23,7 @@ const LivePricing = () => {
         </div>
         
         <div className="flex flex-wrap gap-3">
-          <Link to="/electrician/toolbox-talk">
+          <Link to="/electrician/trade-essentials">
             <Button variant="outline" className="flex items-center gap-2">
               <ArrowLeft className="h-4 w-4" /> Back
             </Button>
@@ -86,6 +87,11 @@ const LivePricing = () => {
           <div className="grid grid-cols-1 gap-6">
             <MarketAlerts alerts={data.marketAlerts} />
           </div>
+
+          {/* Regional Job Pricing Section */}
+          {data.regionalJobPricing && data.regionalJobPricing.length > 0 && (
+            <RegionalJobPricing regionalData={data.regionalJobPricing} />
+          )}
         </>
       ) : (
         <div className="p-8 border rounded-lg bg-elec-gray border-elec-yellow/20 flex flex-col items-center gap-4">

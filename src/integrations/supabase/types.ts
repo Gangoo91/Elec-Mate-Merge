@@ -503,6 +503,63 @@ export type Database = {
         }
         Relationships: []
       }
+      regional_job_pricing: {
+        Row: {
+          average_price: number
+          complexity_level: string
+          county: string | null
+          created_at: string
+          currency: string
+          data_source: string | null
+          id: string
+          is_active: boolean
+          job_category: string
+          job_type: string
+          last_updated: string
+          max_price: number
+          min_price: number
+          region: string
+          unit: string
+          updated_at: string
+        }
+        Insert: {
+          average_price: number
+          complexity_level?: string
+          county?: string | null
+          created_at?: string
+          currency?: string
+          data_source?: string | null
+          id?: string
+          is_active?: boolean
+          job_category: string
+          job_type: string
+          last_updated?: string
+          max_price: number
+          min_price: number
+          region: string
+          unit?: string
+          updated_at?: string
+        }
+        Update: {
+          average_price?: number
+          complexity_level?: string
+          county?: string | null
+          created_at?: string
+          currency?: string
+          data_source?: string | null
+          id?: string
+          is_active?: boolean
+          job_category?: string
+          job_type?: string
+          last_updated?: string
+          max_price?: number
+          min_price?: number
+          region?: string
+          unit?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       safety_alerts: {
         Row: {
           category: string
@@ -677,6 +734,39 @@ export type Database = {
           is_automatic?: boolean | null
           notes?: string | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      uk_regions: {
+        Row: {
+          county: string | null
+          created_at: string
+          economic_factor: number | null
+          id: string
+          is_active: boolean
+          population: number | null
+          region_name: string
+          region_type: string
+        }
+        Insert: {
+          county?: string | null
+          created_at?: string
+          economic_factor?: number | null
+          id?: string
+          is_active?: boolean
+          population?: number | null
+          region_name: string
+          region_type?: string
+        }
+        Update: {
+          county?: string | null
+          created_at?: string
+          economic_factor?: number | null
+          id?: string
+          is_active?: boolean
+          population?: number | null
+          region_name?: string
+          region_type?: string
         }
         Relationships: []
       }
