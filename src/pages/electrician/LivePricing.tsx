@@ -54,6 +54,31 @@ const LivePricing = () => {
         </div>
       </div>
 
+      {/* Compact Scrap Merchant Finder - Moved to top */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <div className="p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Search className="h-5 w-5 text-elec-yellow" />
+              <h3 className="font-medium">Find Local Scrap Merchants</h3>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowMerchantFinder(!showMerchantFinder)}
+            >
+              {showMerchantFinder ? "Hide" : "Search"}
+            </Button>
+          </div>
+          
+          {showMerchantFinder && (
+            <div className="mt-4 pt-4 border-t border-elec-yellow/20">
+              <CompactScrapMerchantFinder />
+            </div>
+          )}
+        </div>
+      </Card>
+
       {/* Compact Pricing Grid */}
       {isLoading ? (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-32">
@@ -82,31 +107,6 @@ const LivePricing = () => {
 
       {/* Search-Driven Regional Job Pricing */}
       <SearchDrivenRegionalPricing regionalData={data?.regionalJobPricing || []} />
-
-      {/* Compact Scrap Merchant Finder */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <div className="p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Search className="h-5 w-5 text-elec-yellow" />
-              <h3 className="font-medium">Find Local Scrap Merchants</h3>
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowMerchantFinder(!showMerchantFinder)}
-            >
-              {showMerchantFinder ? "Hide" : "Search"}
-            </Button>
-          </div>
-          
-          {showMerchantFinder && (
-            <div className="mt-4 pt-4 border-t border-elec-yellow/20">
-              <CompactScrapMerchantFinder />
-            </div>
-          )}
-        </div>
-      </Card>
 
       {/* Compact Disclaimer */}
       <div className="text-xs text-muted-foreground p-3 border border-elec-yellow/20 rounded bg-elec-gray/50">
