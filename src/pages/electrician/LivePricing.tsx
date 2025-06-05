@@ -1,15 +1,15 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { PoundSterling, ArrowLeft, RefreshCw, Info, MapPin, Search } from "lucide-react";
-import LivePricingMetricsCard from "@/components/electrician-pricing/LivePricingMetricsCard";
-import MarketAlerts from "@/components/electrician-pricing/MarketAlerts";
-import RegionalJobPricing from "@/components/electrician-pricing/RegionalJobPricing";
+import { PoundSterling, ArrowLeft, RefreshCw, Search } from "lucide-react";
 import { useLiveMetalPrices } from "@/hooks/useLiveMetalPrices";
-import ScrapMerchantFinder from "@/components/electrician-pricing/ScrapMerchantFinder";
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { logger } from "@/utils/logger";
+import CompactPricingGrid from "@/components/electrician-pricing/CompactPricingGrid";
+import SearchDrivenRegionalPricing from "@/components/electrician-pricing/SearchDrivenRegionalPricing";
+import CompactMarketAlerts from "@/components/electrician-pricing/CompactMarketAlerts";
+import CompactScrapMerchantFinder from "@/components/electrician-pricing/CompactScrapMerchantFinder";
 
 const LivePricing = () => {
   const { data, isLoading, refreshPrices } = useLiveMetalPrices();
@@ -26,141 +26,92 @@ const LivePricing = () => {
   }, [data, isLoading]);
   
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="flex flex-col space-y-4">
-        <div className="flex items-center">
-          <PoundSterling className="h-8 w-8 text-elec-yellow mr-2" />
-          <h1 className="text-3xl font-bold tracking-tight">UK Live Pricing</h1>
+    <div className="space-y-6 animate-fade-in">
+      {/* Compact Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <PoundSterling className="h-7 w-7 text-elec-yellow" />
+          <h1 className="text-2xl font-bold tracking-tight">UK Live Pricing</h1>
         </div>
         
-        <div className="flex flex-wrap gap-3">
+        <div className="flex gap-2">
           <Link to="/electrician/trade-essentials">
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button variant="outline" size="sm" className="flex items-center gap-1">
               <ArrowLeft className="h-4 w-4" /> Back
             </Button>
           </Link>
           
           <Button 
             variant="outline" 
-            className="flex items-center gap-2"
+            size="sm"
+            className="flex items-center gap-1"
             onClick={refreshPrices}
             disabled={isLoading}
           >
             <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
-            Refresh UK Prices
+            Refresh
           </Button>
         </div>
-        
-        <Card className="p-4 border-elec-yellow/20 bg-elec-gray">
-          <div className="flex flex-col gap-3">
-            <h3 className="text-lg font-medium flex items-center gap-2">
-              <MapPin className="h-5 w-5 text-elec-yellow" />
-              Find UK Scrap Merchants Near You
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              Search for nearby scrap merchants using your UK postcode to get current prices for your materials.
-            </p>
-            <Button
-              variant={showMerchantFinder ? "secondary" : "default"}
-              className="w-fit flex items-center gap-2"
-              onClick={() => setShowMerchantFinder(!showMerchantFinder)}
-            >
-              <Search className="h-4 w-4" />
-              {showMerchantFinder ? "Hide Merchant Finder" : "Find Local Scrap Merchants"}
-            </Button>
-          </div>
-        </Card>
       </div>
 
-      {showMerchantFinder && (
-        <ScrapMerchantFinder />
-      )}
-
-      <div className="border p-4 rounded-lg bg-elec-gray border-elec-yellow/20 flex justify-between items-center">
-        <h2 className="text-xl font-medium">UK Material Market Prices</h2>
-        <div className="text-sm text-muted-foreground">Last updated: {data?.lastUpdated || "Loading..."}</div>
-      </div>
-
+      {/* Compact Pricing Grid */}
       {isLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-48">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-32">
           {[1, 2, 3].map((i) => (
             <div key={i} className="rounded-lg border border-elec-yellow/20 bg-elec-gray animate-pulse h-full" />
           ))}
         </div>
       ) : data ? (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <LivePricingMetricsCard title="UK Metal Prices" metrics={data.metalPrices} />
-            <LivePricingMetricsCard title="UK Cable Prices" metrics={data.cablePrices} />
-            <LivePricingMetricsCard title="UK Equipment Prices" metrics={data.equipmentPrices} />
-          </div>
-
-          <div className="grid grid-cols-1 gap-6">
-            <MarketAlerts alerts={data.marketAlerts} />
-          </div>
-
-          {/* Enhanced Regional Job Pricing Section with debugging */}
-          <div className="space-y-4">
-            {/* Debug information in development */}
-            {process.env.NODE_ENV === 'development' && (
-              <div className="p-4 bg-yellow-100 border border-yellow-300 rounded-lg text-sm">
-                <h4 className="font-semibold">Debug Information:</h4>
-                <p>Regional Job Pricing Data: {data.regionalJobPricing ? data.regionalJobPricing.length : 0} items</p>
-                <p>Has regionalJobPricing: {data.regionalJobPricing ? 'Yes' : 'No'}</p>
-                <p>Data keys: {Object.keys(data).join(', ')}</p>
-              </div>
-            )}
-
-            {/* Show Regional Job Pricing with improved conditional logic */}
-            {data.regionalJobPricing && Array.isArray(data.regionalJobPricing) ? (
-              data.regionalJobPricing.length > 0 ? (
-                <RegionalJobPricing regionalData={data.regionalJobPricing} />
-              ) : (
-                <Card className="p-8 border-elec-yellow/20 bg-elec-gray">
-                  <div className="text-center">
-                    <Info className="h-12 w-12 mx-auto mb-4 text-elec-yellow opacity-70" />
-                    <h3 className="text-lg font-medium mb-2">Regional Job Pricing Data</h3>
-                    <p className="text-muted-foreground">
-                      Regional job pricing data is currently being updated. Please check back later.
-                    </p>
-                  </div>
-                </Card>
-              )
-            ) : (
-              <Card className="p-8 border-elec-yellow/20 bg-elec-gray">
-                <div className="text-center">
-                  <Info className="h-12 w-12 mx-auto mb-4 text-elec-yellow opacity-70" />
-                  <h3 className="text-lg font-medium mb-2">Loading Regional Job Pricing</h3>
-                  <p className="text-muted-foreground">
-                    We're loading UK regional job pricing data. This feature provides pricing information across different UK regions.
-                  </p>
-                  <Button 
-                    onClick={refreshPrices} 
-                    className="mt-4"
-                    disabled={isLoading}
-                  >
-                    {isLoading ? 'Loading...' : 'Retry Loading Data'}
-                  </Button>
-                </div>
-              </Card>
-            )}
-          </div>
-        </>
+        <CompactPricingGrid
+          metalPrices={data.metalPrices}
+          cablePrices={data.cablePrices}
+          equipmentPrices={data.equipmentPrices}
+          lastUpdated={data.lastUpdated}
+        />
       ) : (
-        <div className="p-8 border rounded-lg bg-elec-gray border-elec-yellow/20 flex flex-col items-center gap-4">
-          <Info className="h-12 w-12 text-elec-yellow opacity-70" />
-          <p className="text-lg">Could not load UK pricing data. Please try refreshing.</p>
-          <Button onClick={refreshPrices}>Try Again</Button>
-        </div>
+        <Card className="p-6 border-elec-yellow/20 bg-elec-gray text-center">
+          <p className="text-muted-foreground mb-4">Could not load UK pricing data</p>
+          <Button onClick={refreshPrices} size="sm">Try Again</Button>
+        </Card>
       )}
-      
-      <div className="border p-4 rounded-lg bg-elec-gray border-elec-yellow/20">
-        <h2 className="text-lg font-medium mb-2">UK Price Information Disclaimer</h2>
-        <p className="text-sm text-muted-foreground">
-          Prices shown are indicative of UK market rates and may vary by supplier and region. Always confirm current
-          prices with your local UK supplier before making purchasing decisions. Market data is provided
-          for informational purposes only and should not be considered as financial advice.
-        </p>
+
+      {/* Compact Market Alerts */}
+      {data?.marketAlerts && (
+        <CompactMarketAlerts alerts={data.marketAlerts} />
+      )}
+
+      {/* Search-Driven Regional Job Pricing */}
+      <SearchDrivenRegionalPricing regionalData={data?.regionalJobPricing || []} />
+
+      {/* Compact Scrap Merchant Finder */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <div className="p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Search className="h-5 w-5 text-elec-yellow" />
+              <h3 className="font-medium">Find Local Scrap Merchants</h3>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowMerchantFinder(!showMerchantFinder)}
+            >
+              {showMerchantFinder ? "Hide" : "Search"}
+            </Button>
+          </div>
+          
+          {showMerchantFinder && (
+            <div className="mt-4 pt-4 border-t border-elec-yellow/20">
+              <CompactScrapMerchantFinder />
+            </div>
+          )}
+        </div>
+      </Card>
+
+      {/* Compact Disclaimer */}
+      <div className="text-xs text-muted-foreground p-3 border border-elec-yellow/20 rounded bg-elec-gray/50">
+        <strong>Disclaimer:</strong> Prices are indicative of UK market rates and may vary by supplier and region. 
+        Always confirm current prices with your local UK supplier before making purchasing decisions.
       </div>
     </div>
   );
