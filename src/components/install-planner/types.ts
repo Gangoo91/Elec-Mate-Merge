@@ -15,24 +15,68 @@ export interface InstallPlanData {
   installationMethod: string;
   cableType: string;
   
-  // Environment
-  ambientTemperature: number;
-  groupingFactor: number;
-  derating: number;
-  protectiveDevice: string;
-  earthingSystem: string;
-  ze: number;
+  // Environment - Enhanced for multi-circuit
+  environmentalSettings: EnvironmentalSettings;
   
-  // New specialized fields
+  // Multi-circuit fields
+  circuits?: Circuit[];
+  designMode?: "single" | "multi";
+  
+  // Legacy single-circuit environment fields (for backward compatibility)
+  ambientTemperature?: number;
+  groupingFactor?: number;
+  derating?: number;
+  protectiveDevice?: string;
+  earthingSystem?: string;
+  ze?: number;
   environmentalConditions?: string;
   specialRequirements?: string[];
   hazardousArea?: string;
   fireRating?: string;
   mechanicalProtection?: string;
+}
+
+export interface EnvironmentalSettings {
+  // Global environmental conditions
+  ambientTemperature: number;
+  environmentalConditions: string;
+  earthingSystem: string;
+  ze: number;
   
-  // Multi-circuit fields
-  circuits?: Circuit[];
-  designMode?: "single" | "multi";
+  // Circuit-specific overrides
+  circuitEnvironments?: { [circuitId: string]: CircuitEnvironmentalOverride };
+  
+  // System-wide settings
+  globalGroupingFactor: number;
+  specialRequirements: string[];
+  hazardousArea?: string;
+  fireRating?: string;
+  mechanicalProtection?: string;
+  
+  // Installation-specific environmental factors
+  installationZones?: InstallationZone[];
+  corrosionCategory?: string;
+  seismicRequirements?: boolean;
+  floodRiskArea?: boolean;
+}
+
+export interface CircuitEnvironmentalOverride {
+  ambientTemperature?: number;
+  environmentalConditions?: string;
+  groupingFactor?: number;
+  specialRequirements?: string[];
+  installationZone?: string;
+  notes?: string;
+}
+
+export interface InstallationZone {
+  id: string;
+  name: string;
+  description: string;
+  ambientTemperature: number;
+  environmentalConditions: string;
+  specialRequirements: string[];
+  circuitIds: string[];
 }
 
 export interface Circuit {
@@ -49,6 +93,10 @@ export interface Circuit {
   protectiveDevice: string;
   enabled: boolean;
   notes?: string;
+  
+  // Environmental context
+  environmentalOverride?: CircuitEnvironmentalOverride;
+  installationZone?: string;
 }
 
 export interface CableRecommendation {
@@ -63,6 +111,11 @@ export interface CableRecommendation {
   availability?: "common" | "limited" | "special-order";
   installationComplexity?: "simple" | "moderate" | "complex";
   specialConsiderations?: string[];
+  
+  // Environmental considerations
+  temperatureDerating?: number;
+  groupingDerating?: number;
+  environmentalSuitability?: string;
 }
 
 export interface InstallPlanResult {
@@ -78,6 +131,9 @@ export interface InstallPlanResult {
   recommendations: string[];
   suggestions: InstallationSuggestion[];
   complianceChecks: ComplianceCheck[];
+  
+  // Environmental analysis
+  environmentalAnalysis?: EnvironmentalAnalysis;
 }
 
 export interface MultiCircuitResult {
@@ -97,6 +153,9 @@ export interface MultiCircuitResult {
   complianceChecks: ComplianceCheck[];
   warnings: string[];
   recommendations: string[];
+  
+  // Enhanced environmental analysis
+  environmentalAnalysis: MultiCircuitEnvironmentalAnalysis;
 }
 
 export interface CircuitResult {
@@ -109,6 +168,54 @@ export interface CircuitResult {
   zsCompliance: boolean;
   voltageDropCompliance: boolean;
   warnings: string[];
+  
+  // Environmental factors applied
+  appliedEnvironmentalFactors: AppliedEnvironmentalFactors;
+}
+
+export interface EnvironmentalAnalysis {
+  temperatureDerating: number;
+  groupingFactor: number;
+  overallDerating: number;
+  environmentalWarnings: string[];
+  recommendedMitigations: string[];
+  complianceNotes: string[];
+}
+
+export interface MultiCircuitEnvironmentalAnalysis {
+  globalFactors: EnvironmentalAnalysis;
+  circuitSpecificFactors: { [circuitId: string]: EnvironmentalAnalysis };
+  zoneAnalysis: ZoneEnvironmentalAnalysis[];
+  systemWideRecommendations: string[];
+  environmentalCompliance: EnvironmentalComplianceCheck[];
+}
+
+export interface AppliedEnvironmentalFactors {
+  ambientTemperature: number;
+  temperatureDerating: number;
+  groupingFactor: number;
+  overallDerating: number;
+  environmentalConditions: string;
+  specialRequirements: string[];
+  mitigationMeasures: string[];
+}
+
+export interface ZoneEnvironmentalAnalysis {
+  zone: InstallationZone;
+  circuitCount: number;
+  totalLoad: number;
+  averageDerating: number;
+  criticalFactors: string[];
+  recommendations: string[];
+}
+
+export interface EnvironmentalComplianceCheck {
+  requirement: string;
+  standard: string;
+  status: "compliant" | "non-compliant" | "requires-attention";
+  details: string;
+  affectedCircuits: string[];
+  recommendedActions: string[];
 }
 
 export interface InstallationSuggestion {

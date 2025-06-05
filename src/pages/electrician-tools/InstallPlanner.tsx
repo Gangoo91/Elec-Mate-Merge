@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, MapPin, ChevronRight, ChevronLeft, RotateCcw } from "lucide-react";
@@ -30,13 +29,26 @@ const InstallPlanner = () => {
     cableLength: 0,
     installationMethod: "",
     cableType: "",
+    designMode: undefined,
+    
+    // Initialize environmental settings
+    environmentalSettings: {
+      ambientTemperature: 30,
+      environmentalConditions: "Indoor dry locations",
+      earthingSystem: "TN-S",
+      ze: 0.35,
+      globalGroupingFactor: 1,
+      specialRequirements: [],
+      installationZones: []
+    },
+    
+    // Legacy fields for backward compatibility
     ambientTemperature: 30,
     groupingFactor: 1,
     derating: 1,
     protectiveDevice: "",
     earthingSystem: "TN-S",
-    ze: 0.35,
-    designMode: undefined
+    ze: 0.35
   });
 
   // Define steps based on design mode
@@ -170,13 +182,24 @@ const InstallPlanner = () => {
       cableLength: 0,
       installationMethod: "",
       cableType: "",
+      designMode: undefined,
+      
+      environmentalSettings: {
+        ambientTemperature: 30,
+        environmentalConditions: "Indoor dry locations",
+        earthingSystem: "TN-S",
+        ze: 0.35,
+        globalGroupingFactor: 1,
+        specialRequirements: [],
+        installationZones: []
+      },
+      
       ambientTemperature: 30,
       groupingFactor: 1,
       derating: 1,
       protectiveDevice: "",
       earthingSystem: "TN-S",
-      ze: 0.35,
-      designMode: undefined
+      ze: 0.35
     });
     setCurrentStep(1);
     toast({
@@ -198,7 +221,7 @@ const InstallPlanner = () => {
         return planData.totalLoad > 0;
       case 4:
         if (planData.designMode === "multi") {
-          return planData.protectiveDevice && planData.earthingSystem;
+          return planData.environmentalSettings && planData.environmentalSettings.earthingSystem;
         }
         return planData.cableLength > 0 && planData.installationMethod && planData.cableType;
       case 5:
@@ -229,7 +252,7 @@ const InstallPlanner = () => {
             </h1>
             <p className="text-muted-foreground text-sm md:text-base mt-1">
               {planData.designMode === "multi" 
-                ? "Design multi-circuit electrical installations with comprehensive system analysis and BS 7671 compliance."
+                ? "Design multi-circuit electrical installations with comprehensive system analysis, environmental zones, and BS 7671 compliance."
                 : "Design electrical installations with professional guidance, visual circuit diagrams, and BS 7671 compliance checking."
               }
             </p>
@@ -284,6 +307,14 @@ const InstallPlanner = () => {
                     className="border-blue-400/30 text-blue-400"
                   >
                     {planData.designMode === "multi" ? "Multi-Circuit" : "Single Circuit"}
+                  </Badge>
+                )}
+                {planData.environmentalSettings?.installationZones && planData.environmentalSettings.installationZones.length > 0 && (
+                  <Badge 
+                    variant="outline" 
+                    className="border-green-400/30 text-green-400"
+                  >
+                    {planData.environmentalSettings.installationZones.length} Zones
                   </Badge>
                 )}
               </div>
@@ -399,7 +430,7 @@ const InstallPlanner = () => {
               <h3 className="font-bold text-green-400 mb-2">Installation Plan Complete! 🎉</h3>
               <p className="text-sm text-green-300">
                 {planData.designMode === "multi" 
-                  ? `Multi-circuit ${planData.installationType} installation with ${planData.circuits?.filter(c => c.enabled).length || 0} circuits`
+                  ? `Multi-circuit ${planData.installationType} installation with ${planData.circuits?.filter(c => c.enabled).length || 0} circuits across ${planData.environmentalSettings?.installationZones?.length || 0} zones`
                   : `${planData.installationType} installation for ${planData.loadType} load`
                 }
               </p>
