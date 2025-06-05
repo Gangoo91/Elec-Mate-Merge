@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { enhancedCableSizes, EnhancedCableSizeOption, industryTemplates, CableTemplate } from "./enhancedCableSizeData";
 
@@ -182,6 +183,21 @@ export const useEnhancedCableSizing = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const getCircuitVoltageDropLimit = (loadType: string): number => {
+    // BS 7671 voltage drop limits based on circuit type
+    switch (loadType) {
+      case 'lighting':
+        return 3; // 3% for lighting circuits
+      case 'power':
+      case 'socket-outlets':
+      case 'motor':
+        return 5; // 5% for power circuits
+      case 'other':
+      default:
+        return parseFloat(inputs.voltageDrop); // Use user-specified limit
+    }
+  };
+
   const calculateTemperatureDerating = (ambientTemp: number): number => {
     // Temperature derating factors based on BS 7671 Appendix 4
     if (ambientTemp <= 30) return 1.0;
@@ -199,10 +215,39 @@ export const useEnhancedCableSizing = () => {
     return Math.max(0.5, Math.min(1.0, groupingFactor));
   };
 
+  const calculateVoltageDropForCable = (
+    cable: EnhancedCableSizeOption, 
+    current: number, 
+    length: number,
+    phases: string,
+    powerFactor: number
+  ): number => {
+    // Cable voltage drop values are in mV/A/m - convert to V
+    const resistiveDropPerAmpMeter = cable.voltageDropPerAmpereMeter / 1000; // Convert mV to V
+    const reactiveDropPerAmpMeter = (cable.impedance.x / 1000) * 0.001; // Reactance contribution
+    
+    if (phases === "three-phase") {
+      // Three-phase calculation: Vd = √3 × I × L × (R × cos φ + X × sin φ)
+      const cosφ = powerFactor;
+      const sinφ = Math.sqrt(1 - cosφ * cosφ);
+      
+      const voltageDropPerAmpMeter = resistiveDropPerAmpMeter * cosφ + reactiveDropPerAmpMeter * sinφ;
+      return Math.sqrt(3) * current * length * voltageDropPerAmpMeter;
+    } else {
+      // Single-phase calculation: Vd = I × L × (R × cos φ + X × sin φ)
+      const cosφ = powerFactor;
+      const sinφ = Math.sqrt(1 - cosφ * cosφ);
+      
+      const voltageDropPerAmpMeter = resistiveDropPerAmpMeter * cosφ + reactiveDropPerAmpMeter * sinφ;
+      return current * length * voltageDropPerAmpMeter;
+    }
+  };
+
   const performComplianceChecks = (
     cable: EnhancedCableSizeOption,
     designCurrent: number,
-    voltageDrop: number
+    voltageDropPercent: number,
+    circuitVoltageDropLimit: number
   ): ComplianceCheck[] => {
     const checks: ComplianceCheck[] = [];
 
@@ -210,9 +255,9 @@ export const useEnhancedCableSizing = () => {
     checks.push({
       regulation: "BS 7671",
       requirement: "Voltage drop limits",
-      status: voltageDrop <= parseFloat(inputs.voltageDrop) ? "pass" : "fail",
+      status: voltageDropPercent <= circuitVoltageDropLimit ? "pass" : "fail",
       reference: "Appendix 4 Section 6.4",
-      details: `Calculated: ${voltageDrop.toFixed(2)}%, Limit: ${inputs.voltageDrop}%`
+      details: `Calculated: ${voltageDropPercent.toFixed(2)}%, Limit: ${circuitVoltageDropLimit}%`
     });
 
     // Current carrying capacity
@@ -243,11 +288,14 @@ export const useEnhancedCableSizing = () => {
     
     const loadCurrent = parseFloat(inputs.current);
     const cableLength = parseFloat(inputs.length);
-    const maxVoltageDropPercent = parseFloat(inputs.voltageDrop);
-    const maxVoltageDrop = (maxVoltageDropPercent / 100) * parseFloat(inputs.voltage);
+    const systemVoltage = parseFloat(inputs.voltage);
     const ambientTemp = parseFloat(inputs.ambientTemperature);
     const groupingFactor = parseFloat(inputs.groupingFactor);
     const expansionFactor = 1 + (parseFloat(inputs.futureExpansion) / 100);
+    const powerFactor = parseFloat(inputs.powerFactor);
+    
+    // Get circuit-specific voltage drop limit
+    const circuitVoltageDropLimit = getCircuitVoltageDropLimit(inputs.loadType);
 
     // Calculate environmental derating factors
     const tempDerating = calculateTemperatureDerating(ambientTemp);
@@ -276,11 +324,20 @@ export const useEnhancedCableSizing = () => {
     const suitableCables = availableCables
       .map(cable => {
         const currentRating = cable.currentRating[inputs.installationType] || 0;
-        const voltageDrop = cable.voltageDropPerAmpereMeter * loadCurrent * cableLength;
-        const voltageDropPercent = (voltageDrop / parseFloat(inputs.voltage)) * 100;
+        
+        // Calculate voltage drop correctly
+        const voltageDrop = calculateVoltageDropForCable(
+          cable, 
+          loadCurrent, 
+          cableLength, 
+          inputs.phases,
+          powerFactor
+        );
+        
+        const voltageDropPercent = (voltageDrop / systemVoltage) * 100;
         
         const meetsCurrentRequirement = currentRating >= designCurrent;
-        const meetsVoltageDropRequirement = voltageDrop <= maxVoltageDrop;
+        const meetsVoltageDropRequirement = voltageDropPercent <= circuitVoltageDropLimit;
         
         // Calculate suitability score
         let suitabilityScore = 0;
@@ -306,29 +363,42 @@ export const useEnhancedCableSizing = () => {
         };
 
         if (!meetsCurrentRequirement) {
-          recommendation.warningNotes.push("Insufficient current capacity");
+          recommendation.warningNotes.push(`Insufficient current capacity: ${currentRating}A < ${designCurrent.toFixed(1)}A required`);
         }
         if (!meetsVoltageDropRequirement) {
-          recommendation.warningNotes.push("Voltage drop exceeds limits");
+          recommendation.warningNotes.push(`Voltage drop too high: ${voltageDropPercent.toFixed(2)}% > ${circuitVoltageDropLimit}% limit`);
         }
 
         return recommendation;
       })
-      .filter(rec => rec.suitabilityScore > 0)
-      .sort((a, b) => b.suitabilityScore - a.suitabilityScore);
+      .sort((a, b) => {
+        // First sort by compliance (both current and voltage drop)
+        const aCompliant = a.warningNotes.length === 0;
+        const bCompliant = b.warningNotes.length === 0;
+        
+        if (aCompliant && !bCompliant) return -1;
+        if (!aCompliant && bCompliant) return 1;
+        
+        // Then by cable size (smaller first for compliant cables)
+        const aSizeNum = parseFloat(a.cable.size);
+        const bSizeNum = parseFloat(b.cable.size);
+        
+        return aSizeNum - bSizeNum;
+      });
 
-    // Generate compliance checks
+    // Generate compliance checks for the best cable
     const complianceChecks = suitableCables.length > 0 ? 
       performComplianceChecks(
         suitableCables[0].cable, 
         designCurrent, 
-        (suitableCables[0].cable.calculatedVoltageDrop! / parseFloat(inputs.voltage)) * 100
+        (suitableCables[0].cable.calculatedVoltageDrop! / systemVoltage) * 100,
+        circuitVoltageDropLimit
       ) : [];
 
     // Calculate Zs (simplified)
     const r1r2 = suitableCables.length > 0 ? 
       (suitableCables[0].cable.impedance.r1 + suitableCables[0].cable.impedance.r2) * cableLength / 1000 : 0;
-    const ze = 0.35; // Assumed Ze value
+    const ze = 0.35; // Assumed Ze value for TN-S system
     const zs = ze + r1r2;
     const maxZs = inputs.mcbType === "type-b" ? 2.3 : inputs.mcbType === "type-c" ? 1.15 : 0.46;
 
@@ -339,11 +409,18 @@ export const useEnhancedCableSizing = () => {
     if (suitableCables.length === 0) {
       warnings.push("No cables meet the specified requirements");
       recommendations.push("Consider increasing cable size or reducing load current");
+    } else if (suitableCables[0].warningNotes.length > 0) {
+      warnings.push("Recommended cable has compliance issues");
+      recommendations.push("Consider next size up or review installation parameters");
     }
 
     if (overallDerating < 0.8) {
       warnings.push("High derating factors applied due to environmental conditions");
       recommendations.push("Consider improving installation conditions or using higher rated cables");
+    }
+
+    if (circuitVoltageDropLimit !== parseFloat(inputs.voltageDrop)) {
+      recommendations.push(`Using ${circuitVoltageDropLimit}% voltage drop limit for ${inputs.loadType} circuits as per BS 7671`);
     }
 
     setResult({

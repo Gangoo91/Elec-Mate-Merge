@@ -13,11 +13,11 @@ export interface EnhancedCableSizeOption {
     micc?: number; // Mineral Insulated Copper Clad
     fplsoh?: number; // Fire Performance Low Smoke Zero Halogen
   };
-  voltageDropPerAmpereMeter: number;
+  voltageDropPerAmpereMeter: number; // mV/A/m
   impedance: {
-    r1: number; // Line conductor resistance
-    r2: number; // CPC resistance
-    x: number;  // Reactance
+    r1: number; // Line conductor resistance (mΩ/m)
+    r2: number; // CPC resistance (mΩ/m)
+    x: number;  // Reactance (mΩ/m)
   };
   maxOperatingTemp: number;
   installationMethods: string[];
@@ -34,7 +34,7 @@ export interface EnhancedCableSizeOption {
   complianceNotes?: string[];
 }
 
-// Enhanced cable database with comprehensive UK electrical cables
+// Enhanced cable database with corrected voltage drop values
 export const enhancedCableSizes: EnhancedCableSizeOption[] = [
   // Twin and Earth - Domestic installations
   {
@@ -42,7 +42,7 @@ export const enhancedCableSizes: EnhancedCableSizeOption[] = [
     size: "1.0 mm²",
     coreConfig: "2C+E",
     currentRating: { pvc: 13, xlpe: 15 },
-    voltageDropPerAmpereMeter: 0.044,
+    voltageDropPerAmpereMeter: 44, // mV/A/m
     impedance: { r1: 18.1, r2: 18.1, x: 0.15 },
     maxOperatingTemp: 70,
     installationMethods: ["clipped-direct", "in-conduit", "in-trunking"],
@@ -59,7 +59,7 @@ export const enhancedCableSizes: EnhancedCableSizeOption[] = [
     size: "1.5 mm²",
     coreConfig: "2C+E",
     currentRating: { pvc: 16, xlpe: 19 },
-    voltageDropPerAmpereMeter: 0.029,
+    voltageDropPerAmpereMeter: 29, // mV/A/m
     impedance: { r1: 12.1, r2: 12.1, x: 0.14 },
     maxOperatingTemp: 70,
     installationMethods: ["clipped-direct", "in-conduit", "in-trunking"],
@@ -76,7 +76,7 @@ export const enhancedCableSizes: EnhancedCableSizeOption[] = [
     size: "2.5 mm²",
     coreConfig: "2C+E",
     currentRating: { pvc: 22, xlpe: 26 },
-    voltageDropPerAmpereMeter: 0.018,
+    voltageDropPerAmpereMeter: 18, // mV/A/m
     impedance: { r1: 7.3, r2: 7.3, x: 0.13 },
     maxOperatingTemp: 70,
     installationMethods: ["clipped-direct", "in-conduit", "in-trunking"],
@@ -93,13 +93,47 @@ export const enhancedCableSizes: EnhancedCableSizeOption[] = [
     size: "4.0 mm²",
     coreConfig: "2C+E",
     currentRating: { pvc: 29, xlpe: 35 },
-    voltageDropPerAmpereMeter: 0.011,
+    voltageDropPerAmpereMeter: 11, // mV/A/m
     impedance: { r1: 4.6, r2: 4.6, x: 0.12 },
     maxOperatingTemp: 70,
     installationMethods: ["clipped-direct", "in-conduit", "in-trunking"],
     cableType: 'twin-and-earth',
     applications: ["cooker-circuits", "shower-circuits", "large-appliances"],
     priceCategory: 'low',
+    availability: 'common',
+    standards: ["BS 6004", "BS 7671"],
+    environmentalRating: "Indoor dry",
+    mechanicalProtection: 'light'
+  },
+  {
+    value: "6-twin",
+    size: "6.0 mm²",
+    coreConfig: "2C+E",
+    currentRating: { pvc: 37, xlpe: 44 },
+    voltageDropPerAmpereMeter: 7.3, // mV/A/m
+    impedance: { r1: 3.08, r2: 3.08, x: 0.11 },
+    maxOperatingTemp: 70,
+    installationMethods: ["clipped-direct", "in-conduit", "in-trunking"],
+    cableType: 'twin-and-earth',
+    applications: ["large-appliances", "sub-mains"],
+    priceCategory: 'low',
+    availability: 'common',
+    standards: ["BS 6004", "BS 7671"],
+    environmentalRating: "Indoor dry",
+    mechanicalProtection: 'light'
+  },
+  {
+    value: "10-twin",
+    size: "10 mm²",
+    coreConfig: "2C+E",
+    currentRating: { pvc: 50, xlpe: 60 },
+    voltageDropPerAmpereMeter: 4.4, // mV/A/m
+    impedance: { r1: 1.83, r2: 1.83, x: 0.10 },
+    maxOperatingTemp: 70,
+    installationMethods: ["clipped-direct", "in-conduit", "in-trunking"],
+    cableType: 'twin-and-earth',
+    applications: ["sub-mains", "large-loads"],
+    priceCategory: 'medium',
     availability: 'common',
     standards: ["BS 6004", "BS 7671"],
     environmentalRating: "Indoor dry",
@@ -112,7 +146,7 @@ export const enhancedCableSizes: EnhancedCableSizeOption[] = [
     size: "1.5 mm²",
     coreConfig: "3C+E",
     currentRating: { pvc: 17, xlpe: 21, swa: 19 },
-    voltageDropPerAmpereMeter: 0.029,
+    voltageDropPerAmpereMeter: 29, // mV/A/m
     impedance: { r1: 12.1, r2: 12.1, x: 0.08 },
     maxOperatingTemp: 70,
     installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
@@ -129,7 +163,7 @@ export const enhancedCableSizes: EnhancedCableSizeOption[] = [
     size: "2.5 mm²",
     coreConfig: "3C+E",
     currentRating: { pvc: 23, xlpe: 28, swa: 26 },
-    voltageDropPerAmpereMeter: 0.018,
+    voltageDropPerAmpereMeter: 18, // mV/A/m
     impedance: { r1: 7.3, r2: 7.3, x: 0.075 },
     maxOperatingTemp: 70,
     installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
@@ -146,8 +180,25 @@ export const enhancedCableSizes: EnhancedCableSizeOption[] = [
     size: "4.0 mm²",
     coreConfig: "3C+E",
     currentRating: { pvc: 31, xlpe: 37, swa: 34 },
-    voltageDropPerAmpereMeter: 0.011,
+    voltageDropPerAmpereMeter: 11, // mV/A/m
     impedance: { r1: 4.6, r2: 4.6, x: 0.07 },
+    maxOperatingTemp: 70,
+    installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
+    cableType: 'swa',
+    applications: ["sub-mains", "motor-circuits", "industrial-supplies"],
+    priceCategory: 'medium',
+    availability: 'common',
+    standards: ["BS 5467", "BS 7671"],
+    environmentalRating: "Indoor/Outdoor",
+    mechanicalProtection: 'heavy'
+  },
+  {
+    value: "6-swa-3c",
+    size: "6.0 mm²",
+    coreConfig: "3C+E",
+    currentRating: { pvc: 40, xlpe: 48, swa: 44 },
+    voltageDropPerAmpereMeter: 7.3, // mV/A/m
+    impedance: { r1: 3.08, r2: 3.08, x: 0.065 },
     maxOperatingTemp: 70,
     installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
     cableType: 'swa',
@@ -163,12 +214,46 @@ export const enhancedCableSizes: EnhancedCableSizeOption[] = [
     size: "10 mm²",
     coreConfig: "3C+E",
     currentRating: { pvc: 52, xlpe: 63, swa: 58 },
-    voltageDropPerAmpereMeter: 0.0044,
+    voltageDropPerAmpereMeter: 4.4, // mV/A/m
     impedance: { r1: 1.83, r2: 1.83, x: 0.065 },
     maxOperatingTemp: 70,
     installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
     cableType: 'swa',
     applications: ["main-distribution", "large-motors", "industrial-feeders"],
+    priceCategory: 'medium',
+    availability: 'common',
+    standards: ["BS 5467", "BS 7671"],
+    environmentalRating: "Indoor/Outdoor",
+    mechanicalProtection: 'heavy'
+  },
+  {
+    value: "16-swa-3c",
+    size: "16 mm²",
+    coreConfig: "3C+E",
+    currentRating: { pvc: 68, xlpe: 82, swa: 75 },
+    voltageDropPerAmpereMeter: 2.8, // mV/A/m
+    impedance: { r1: 1.15, r2: 1.15, x: 0.06 },
+    maxOperatingTemp: 70,
+    installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
+    cableType: 'swa',
+    applications: ["main-distribution", "large-motors", "industrial-feeders"],
+    priceCategory: 'medium',
+    availability: 'common',
+    standards: ["BS 5467", "BS 7671"],
+    environmentalRating: "Indoor/Outdoor",
+    mechanicalProtection: 'heavy'
+  },
+  {
+    value: "25-swa-3c",
+    size: "25 mm²",
+    coreConfig: "3C+E",
+    currentRating: { pvc: 89, xlpe: 108, swa: 98 },
+    voltageDropPerAmpereMeter: 1.8, // mV/A/m
+    impedance: { r1: 0.727, r2: 0.727, x: 0.055 },
+    maxOperatingTemp: 70,
+    installationMethods: ["direct-buried", "in-duct", "clipped-direct", "on-tray"],
+    cableType: 'swa',
+    applications: ["main-distribution", "large-industrial-supplies"],
     priceCategory: 'medium',
     availability: 'common',
     standards: ["BS 5467", "BS 7671"],
@@ -182,7 +267,7 @@ export const enhancedCableSizes: EnhancedCableSizeOption[] = [
     size: "1.5 mm²",
     coreConfig: "2C",
     currentRating: { pvc: 23, xlpe: 25, micc: 25 },
-    voltageDropPerAmpereMeter: 0.029,
+    voltageDropPerAmpereMeter: 29, // mV/A/m
     impedance: { r1: 12.1, r2: 12.1, x: 0.05 },
     maxOperatingTemp: 250,
     installationMethods: ["clipped-direct", "in-conduit", "exposed"],
@@ -200,7 +285,7 @@ export const enhancedCableSizes: EnhancedCableSizeOption[] = [
     size: "2.5 mm²",
     coreConfig: "2C",
     currentRating: { pvc: 31, xlpe: 35, micc: 33 },
-    voltageDropPerAmpereMeter: 0.018,
+    voltageDropPerAmpereMeter: 18, // mV/A/m
     impedance: { r1: 7.3, r2: 7.3, x: 0.045 },
     maxOperatingTemp: 250,
     installationMethods: ["clipped-direct", "in-conduit", "exposed"],
@@ -220,7 +305,7 @@ export const enhancedCableSizes: EnhancedCableSizeOption[] = [
     size: "1.5 mm²",
     coreConfig: "2C+E",
     currentRating: { pvc: 18, xlpe: 21, fplsoh: 20 },
-    voltageDropPerAmpereMeter: 0.029,
+    voltageDropPerAmpereMeter: 29, // mV/A/m
     impedance: { r1: 12.1, r2: 12.1, x: 0.08 },
     maxOperatingTemp: 90,
     installationMethods: ["clipped-direct", "in-conduit", "in-trunking"],
@@ -240,7 +325,7 @@ export const enhancedCableSizes: EnhancedCableSizeOption[] = [
     size: "23 AWG",
     coreConfig: "4P",
     currentRating: { pvc: 1, xlpe: 1 }, // Very low current for data
-    voltageDropPerAmpereMeter: 0.1,
+    voltageDropPerAmpereMeter: 100, // mV/A/m (high for data applications)
     impedance: { r1: 93.8, r2: 93.8, x: 43.7 },
     maxOperatingTemp: 60,
     installationMethods: ["in-conduit", "in-trunking", "clipped-direct"],
@@ -259,7 +344,7 @@ export const enhancedCableSizes: EnhancedCableSizeOption[] = [
     size: "1.5 mm²",
     coreConfig: "2C",
     currentRating: { pvc: 15, xlpe: 18, fplsoh: 17 },
-    voltageDropPerAmpereMeter: 0.029,
+    voltageDropPerAmpereMeter: 29, // mV/A/m
     impedance: { r1: 12.1, r2: 12.1, x: 0.08 },
     maxOperatingTemp: 70,
     installationMethods: ["clipped-direct", "in-conduit", "in-trunking"],
