@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, MapPin, ChevronRight, ChevronLeft, RotateCcw } from "lucide-react";
@@ -241,203 +242,227 @@ const InstallPlanner = () => {
   };
 
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in px-2 md:px-0">
-      {/* Header Section */}
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div className="flex-1">
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight flex items-center gap-2">
-              <MapPin className="h-6 w-6 md:h-8 md:w-8 text-elec-yellow flex-shrink-0" />
-              Professional Installation Planner
-            </h1>
-            <p className="text-muted-foreground text-sm md:text-base mt-1">
-              {planData.designMode === "multi" 
-                ? "Design multi-circuit electrical installations with comprehensive system analysis, environmental zones, and BS 7671 compliance."
-                : "Design electrical installations with professional guidance, visual circuit diagrams, and BS 7671 compliance checking."
-              }
-            </p>
-          </div>
-          <div className="flex gap-2 justify-end">
-            <Button 
-              variant="outline" 
-              size={isMobile ? "sm" : "default"} 
-              onClick={resetPlan}
-              className="flex items-center gap-2"
-            >
-              <RotateCcw className="h-4 w-4" /> 
-              Reset
-            </Button>
-            <Link to="/electrician-tools">
-              <Button variant="outline" size={isMobile ? "sm" : "default"} className="flex items-center gap-2">
-                <ArrowLeft className="h-4 w-4" /> 
-                <span className={isMobile ? "text-sm" : ""}>Back</span>
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Enhanced Progress Section */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader className="pb-3 px-4 md:px-6">
+    <div className="min-h-screen bg-background">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 max-w-6xl">
+        <div className="space-y-4 sm:space-y-6 animate-fade-in">
+          {/* Header Section - Improved mobile layout */}
           <div className="space-y-4">
-            {/* Current Step Info */}
-            <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
-              <div className="flex items-center gap-3">
-                <div className="text-2xl">{currentStepData?.icon}</div>
-                <div>
-                  <CardTitle className="text-base md:text-lg">
-                    Step {currentStep} of {steps.length}: {currentStepData?.title}
-                  </CardTitle>
-                  <p className="text-sm text-muted-foreground">
-                    {currentStepData?.subtitle}
+            <div className="flex flex-col space-y-4">
+              <div className="flex-1 space-y-2">
+                <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight flex items-start gap-3">
+                  <MapPin className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 text-elec-yellow flex-shrink-0 mt-1" />
+                  <span className="leading-tight">Professional Installation Planner</span>
+                </h1>
+                <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
+                  {planData.designMode === "multi" 
+                    ? "Design multi-circuit electrical installations with comprehensive system analysis, environmental zones, and BS 7671 compliance."
+                    : "Design electrical installations with professional guidance, visual circuit diagrams, and BS 7671 compliance checking."
+                  }
+                </p>
+              </div>
+              
+              {/* Action buttons - Better mobile layout */}
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                <Button 
+                  variant="outline" 
+                  onClick={resetPlan}
+                  className="flex items-center justify-center gap-2 h-10 sm:h-9"
+                >
+                  <RotateCcw className="h-4 w-4" /> 
+                  Reset Plan
+                </Button>
+                <Link to="/electrician-tools" className="w-full sm:w-auto">
+                  <Button 
+                    variant="outline" 
+                    className="flex items-center justify-center gap-2 w-full h-10 sm:h-9"
+                  >
+                    <ArrowLeft className="h-4 w-4" /> 
+                    Back to Tools
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Enhanced Progress Section - Mobile optimized */}
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader className="pb-3 px-4 sm:px-6">
+              <div className="space-y-4">
+                {/* Current Step Info - Improved mobile layout */}
+                <div className="space-y-3 sm:space-y-0 sm:flex sm:justify-between sm:items-start">
+                  <div className="flex items-start gap-3">
+                    <div className="text-xl sm:text-2xl flex-shrink-0">{currentStepData?.icon}</div>
+                    <div className="min-w-0 flex-1">
+                      <CardTitle className="text-base sm:text-lg lg:text-xl leading-tight">
+                        Step {currentStep} of {steps.length}: {currentStepData?.title}
+                      </CardTitle>
+                      <p className="text-xs sm:text-sm text-muted-foreground mt-1 leading-relaxed">
+                        {currentStepData?.subtitle}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Badges - Better mobile wrapping */}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge 
+                      variant="outline" 
+                      className="border-elec-yellow/30 text-elec-yellow text-xs whitespace-nowrap"
+                    >
+                      {Math.round(progress)}% Complete
+                    </Badge>
+                    {planData.designMode && (
+                      <Badge 
+                        variant="outline" 
+                        className="border-blue-400/30 text-blue-400 text-xs whitespace-nowrap"
+                      >
+                        {planData.designMode === "multi" ? "Multi-Circuit" : "Single Circuit"}
+                      </Badge>
+                    )}
+                    {planData.environmentalSettings?.installationZones && planData.environmentalSettings.installationZones.length > 0 && (
+                      <Badge 
+                        variant="outline" 
+                        className="border-green-400/30 text-green-400 text-xs whitespace-nowrap"
+                      >
+                        {planData.environmentalSettings.installationZones.length} Zones
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+
+                {/* Progress Bar */}
+                <div className="space-y-3">
+                  <Progress value={progress} className="h-2 sm:h-2.5" />
+                  
+                  {/* Step Indicators - Hidden on mobile, enhanced for tablet+ */}
+                  <div className="hidden md:flex justify-between text-xs">
+                    {steps.map((step) => {
+                      const status = getStepStatus(step.id);
+                      return (
+                        <div
+                          key={step.id}
+                          className={`flex flex-col items-center cursor-pointer transition-colors min-w-0 ${
+                            status === "completed" ? "text-green-400" :
+                            status === "current" ? "text-elec-yellow" :
+                            "text-muted-foreground"
+                          }`}
+                          onClick={() => {
+                            if (step.id <= currentStep) {
+                              setCurrentStep(step.id);
+                            }
+                          }}
+                        >
+                          <div className={`w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 flex items-center justify-center mb-2 text-xs ${
+                            status === "completed" ? "border-green-400 bg-green-400/20" :
+                            status === "current" ? "border-elec-yellow bg-elec-yellow/20" :
+                            "border-muted-foreground/30"
+                          }`}>
+                            {status === "completed" ? "✓" : step.id}
+                          </div>
+                          <span className="text-center max-w-16 lg:max-w-20 leading-tight truncate">{step.title}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Mobile step indicator */}
+                  <div className="md:hidden flex justify-center">
+                    <div className="flex items-center gap-2">
+                      {steps.map((step) => {
+                        const status = getStepStatus(step.id);
+                        return (
+                          <div
+                            key={step.id}
+                            className={`w-2 h-2 rounded-full transition-colors ${
+                              status === "completed" ? "bg-green-400" :
+                              status === "current" ? "bg-elec-yellow" :
+                              "bg-muted-foreground/30"
+                            }`}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+
+          {/* Step Content - Enhanced mobile padding */}
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardContent className="p-4 sm:p-6 lg:p-8 min-h-[400px] sm:min-h-[500px]">
+              {CurrentStepComponent && (
+                <CurrentStepComponent
+                  planData={planData}
+                  updatePlanData={updatePlanData}
+                />
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Navigation Section - Improved mobile layout */}
+          <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:justify-between sm:items-center">
+            <Button
+              variant="outline"
+              onClick={handlePrevious}
+              disabled={currentStep === 1}
+              className={`flex items-center justify-center gap-2 h-11 sm:h-10 ${
+                currentStep === 1 ? 'opacity-50' : ''
+              }`}
+            >
+              <ChevronLeft className="h-4 w-4" />
+              Previous Step
+            </Button>
+
+            {/* Progress indicator for mobile navigation */}
+            <div className="flex items-center justify-center gap-2 order-first sm:order-none">
+              <div className={`text-xs px-3 py-1.5 rounded-full border ${
+                canProceed() ? 'text-green-400 bg-green-400/10 border-green-400/30' : 'text-amber-400 bg-amber-400/10 border-amber-400/30'
+              }`}>
+                {canProceed() ? '✓ Ready to continue' : '⚠ Complete required fields'}
+              </div>
+            </div>
+
+            {currentStep < steps.length ? (
+              <Button
+                onClick={handleNext}
+                disabled={!canProceed()}
+                className={`bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center justify-center gap-2 h-11 sm:h-10 ${
+                  !canProceed() ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+              >
+                Next Step
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            ) : (
+              <Button
+                onClick={resetPlan}
+                className="bg-green-600 hover:bg-green-700 text-white h-11 sm:h-10"
+              >
+                <RotateCcw className="h-4 w-4 mr-2" />
+                New Installation Plan
+              </Button>
+            )}
+          </div>
+
+          {/* Mobile completion summary - Enhanced */}
+          {currentStep === steps.length && (
+            <Card className="border-green-500/30 bg-green-500/5">
+              <CardContent className="p-4 sm:p-6">
+                <div className="text-center space-y-2">
+                  <div className="text-3xl sm:text-4xl mb-2">🎉</div>
+                  <h3 className="font-bold text-green-400 text-lg sm:text-xl">Installation Plan Complete!</h3>
+                  <p className="text-sm sm:text-base text-green-300 leading-relaxed">
+                    {planData.designMode === "multi" 
+                      ? `Multi-circuit ${planData.installationType} installation with ${planData.circuits?.filter(c => c.enabled).length || 0} circuits across ${planData.environmentalSettings?.installationZones?.length || 0} zones`
+                      : `${planData.installationType} installation for ${planData.loadType} load`
+                    }
                   </p>
                 </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Badge 
-                  variant="outline" 
-                  className="border-elec-yellow/30 text-elec-yellow"
-                >
-                  {Math.round(progress)}% Complete
-                </Badge>
-                {planData.designMode && (
-                  <Badge 
-                    variant="outline" 
-                    className="border-blue-400/30 text-blue-400"
-                  >
-                    {planData.designMode === "multi" ? "Multi-Circuit" : "Single Circuit"}
-                  </Badge>
-                )}
-                {planData.environmentalSettings?.installationZones && planData.environmentalSettings.installationZones.length > 0 && (
-                  <Badge 
-                    variant="outline" 
-                    className="border-green-400/30 text-green-400"
-                  >
-                    {planData.environmentalSettings.installationZones.length} Zones
-                  </Badge>
-                )}
-              </div>
-            </div>
-
-            {/* Progress Bar */}
-            <div className="space-y-2">
-              <Progress value={progress} className="h-2" />
-              
-              {/* Step Indicators - Hidden on mobile */}
-              {!isMobile && (
-                <div className="flex justify-between text-xs">
-                  {steps.map((step) => {
-                    const status = getStepStatus(step.id);
-                    return (
-                      <div
-                        key={step.id}
-                        className={`flex flex-col items-center cursor-pointer transition-colors ${
-                          status === "completed" ? "text-green-400" :
-                          status === "current" ? "text-elec-yellow" :
-                          "text-muted-foreground"
-                        }`}
-                        onClick={() => {
-                          if (step.id <= currentStep) {
-                            setCurrentStep(step.id);
-                          }
-                        }}
-                      >
-                        <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center mb-1 ${
-                          status === "completed" ? "border-green-400 bg-green-400/20" :
-                          status === "current" ? "border-elec-yellow bg-elec-yellow/20" :
-                          "border-muted-foreground/30"
-                        }`}>
-                          {status === "completed" ? "✓" : step.id}
-                        </div>
-                        <span className="text-center max-w-16">{step.title}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          </div>
-        </CardHeader>
-      </Card>
-
-      {/* Step Content */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardContent className="p-4 md:p-6 min-h-[400px] md:min-h-[500px]">
-          {CurrentStepComponent && (
-            <CurrentStepComponent
-              planData={planData}
-              updatePlanData={updatePlanData}
-            />
-          )}
-        </CardContent>
-      </Card>
-
-      {/* Navigation Section */}
-      <div className="flex flex-col md:flex-row justify-between gap-3 md:gap-0 px-2 md:px-0">
-        <Button
-          variant="outline"
-          onClick={handlePrevious}
-          disabled={currentStep === 1}
-          className={`flex items-center gap-2 ${isMobile ? 'w-full justify-center' : ''} ${
-            currentStep === 1 ? 'opacity-50' : ''
-          }`}
-          size={isMobile ? "lg" : "default"}
-        >
-          <ChevronLeft className="h-4 w-4" />
-          Previous
-        </Button>
-
-        <div className="flex items-center gap-2">
-          {currentStep < steps.length && (
-            <div className={`text-xs px-2 py-1 rounded ${
-              canProceed() ? 'text-green-400 bg-green-400/10' : 'text-amber-400 bg-amber-400/10'
-            }`}>
-              {canProceed() ? '✓ Ready to continue' : '⚠ Complete required fields'}
-            </div>
+              </CardContent>
+            </Card>
           )}
         </div>
-
-        {currentStep < steps.length ? (
-          <Button
-            onClick={handleNext}
-            disabled={!canProceed()}
-            className={`bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2 ${
-              isMobile ? 'w-full justify-center' : ''
-            } ${!canProceed() ? 'opacity-50 cursor-not-allowed' : ''}`}
-            size={isMobile ? "lg" : "default"}
-          >
-            Next Step
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        ) : (
-          <Button
-            onClick={resetPlan}
-            className={`bg-green-600 hover:bg-green-700 text-white ${isMobile ? 'w-full justify-center' : ''}`}
-            size={isMobile ? "lg" : "default"}
-          >
-            <RotateCcw className="h-4 w-4 mr-2" />
-            New Installation Plan
-          </Button>
-        )}
       </div>
-
-      {/* Mobile completion summary */}
-      {isMobile && currentStep === steps.length && (
-        <Card className="border-green-500/30 bg-green-500/10">
-          <CardContent className="p-4">
-            <div className="text-center">
-              <h3 className="font-bold text-green-400 mb-2">Installation Plan Complete! 🎉</h3>
-              <p className="text-sm text-green-300">
-                {planData.designMode === "multi" 
-                  ? `Multi-circuit ${planData.installationType} installation with ${planData.circuits?.filter(c => c.enabled).length || 0} circuits across ${planData.environmentalSettings?.installationZones?.length || 0} zones`
-                  : `${planData.installationType} installation for ${planData.loadType} load`
-                }
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-      )}
     </div>
   );
 };
