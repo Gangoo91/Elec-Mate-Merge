@@ -100,7 +100,7 @@ const EALLevel2Diploma = () => {
               onClick={() => handleUnitSelect(unit.id)}
             >
               <CardHeader className="flex flex-row items-center gap-4">
-                <div className="p-2 rounded-md bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors">
+                <div className="p-2 rounded-md bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colours">
                   <UnitIcon className="h-8 w-8 text-elec-yellow" />
                 </div>
                 <div>

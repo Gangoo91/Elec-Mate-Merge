@@ -30,7 +30,7 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
   useEffect(() => {
     if (!window.google?.maps?.places || !inputRef.current) return;
 
-    // Initialize Google Places Autocomplete
+    // Initialise Google Places Autocomplete
     autocompleteRef.current = new window.google.maps.places.Autocomplete(inputRef.current, {
       types: ['(cities)'],
       componentRestrictions: { country: 'gb' }
@@ -153,7 +153,7 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
               <Badge
                 key={radius}
                 variant={searchRadius === radius ? "default" : "outline"}
-                className={`cursor-pointer transition-colors ${
+                className={`cursor-pointer transition-colours ${
                   searchRadius === radius 
                     ? "bg-elec-yellow text-elec-dark" 
                     : "border-elec-yellow/30 hover:bg-elec-yellow/10"

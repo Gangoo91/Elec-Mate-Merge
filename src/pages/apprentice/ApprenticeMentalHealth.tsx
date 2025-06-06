@@ -59,7 +59,7 @@ const ApprenticeMentalHealth = () => {
             Your Wellbeing Matters
           </CardTitle>
           <CardDescription className="text-sm">
-            The electrical trade can be demanding. Remember to prioritize your mental health.
+            The electrical trade can be demanding. Remember to prioritise your mental health.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -82,7 +82,7 @@ const ApprenticeMentalHealth = () => {
             key={resource.id} 
             className="block transition-all hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow focus-visible:ring-offset-2 rounded-lg"
           >
-            <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:shadow-md hover:border-elec-yellow/30 transition-colors">
+            <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:shadow-md hover:border-elec-yellow/30 transition-colours">
               <CardHeader className="pb-2">
                 <div className="flex justify-between items-start">
                   <CardTitle className="text-base sm:text-xl">{resource.title}</CardTitle>

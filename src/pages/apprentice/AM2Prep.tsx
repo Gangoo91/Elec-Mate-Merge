@@ -16,7 +16,7 @@ const AM2Prep = () => {
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <GraduationCap className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">What to expect</h2>
-            <p className="text-center text-muted-foreground">
+            <p className="text-centre text-muted-foreground">
               Overview of the AM2/AM2S assessment structure
             </p>
           </CardContent>
@@ -26,7 +26,7 @@ const AM2Prep = () => {
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <GraduationCap className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Mock assessments</h2>
-            <p className="text-center text-muted-foreground">
+            <p className="text-centre text-muted-foreground">
               Practice tests and simulated assessment scenarios
             </p>
           </CardContent>
@@ -36,7 +36,7 @@ const AM2Prep = () => {
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <GraduationCap className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Portfolio checklists</h2>
-            <p className="text-center text-muted-foreground">
+            <p className="text-centre text-muted-foreground">
               Essential documentation and evidence requirements
             </p>
           </CardContent>
@@ -46,7 +46,7 @@ const AM2Prep = () => {
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <GraduationCap className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Common fail points + how to avoid them</h2>
-            <p className="text-center text-muted-foreground">
+            <p className="text-centre text-muted-foreground">
               Critical errors to avoid during assessment
             </p>
           </CardContent>

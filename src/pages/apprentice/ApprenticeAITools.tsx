@@ -31,7 +31,7 @@ const ApprenticeAITools = () => {
     {
       id: 5,
       title: "Learning Assistant",
-      description: "Personalized learning support for EAL and City & Guilds curriculum",
+      description: "Personalised learning support for EAL and City & Guilds curriculum",
       status: "Available", 
       icon: Book
     },
@@ -47,7 +47,7 @@ const ApprenticeAITools = () => {
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <h1 className="text-3xl font-bold tracking-tight text-center">AI Tools for Apprentices</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-centre">AI Tools for Apprentices</h1>
         <div className="flex-grow"></div>
         <BackButton customUrl="/apprentice/hub" label="Back to Apprentice Hub" />
       </div>
@@ -64,7 +64,7 @@ const ApprenticeAITools = () => {
         </CardHeader>
         <CardContent>
           <p className="mb-4">
-            Our AI tools provide instant feedback, personalized learning, and practical guidance
+            Our AI tools provide instant feedback, personalised learning, and practical guidance
             to supplement your formal training and on-site experience. All tools are built with
             UK electrical standards and practices in mind.
           </p>

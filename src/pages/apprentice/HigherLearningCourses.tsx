@@ -44,7 +44,7 @@ const HigherLearningCourses = () => {
               ) : (
                 <GraduationCap className="h-8 w-8 text-elec-yellow mb-4 opacity-80" />
               )}
-              <h3 className="text-base sm:text-lg font-medium text-center">
+              <h3 className="text-base sm:text-lg font-medium text-centre">
                 {course}
               </h3>
             </CardContent>

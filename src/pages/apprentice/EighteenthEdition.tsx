@@ -16,7 +16,7 @@ const EighteenthEdition = () => {
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Library className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Part 1: Scope, object and fundamental principles</h2>
-            <p className="text-center text-muted-foreground">
+            <p className="text-centre text-muted-foreground">
               Understanding the purpose and core principles of BS 7671
             </p>
           </CardContent>
@@ -26,7 +26,7 @@ const EighteenthEdition = () => {
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Library className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Part 2: Definitions</h2>
-            <p className="text-center text-muted-foreground">
+            <p className="text-centre text-muted-foreground">
               Key terminology and definitions in the regulations
             </p>
           </CardContent>
@@ -36,7 +36,7 @@ const EighteenthEdition = () => {
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Library className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Parts 4–7: Protection, selection, special installations</h2>
-            <p className="text-center text-muted-foreground">
+            <p className="text-centre text-muted-foreground">
               Specific requirements for different installation types
             </p>
           </CardContent>
@@ -46,7 +46,7 @@ const EighteenthEdition = () => {
           <CardContent className="flex flex-col items-center justify-center p-6 h-full">
             <Library className="h-12 w-12 text-elec-yellow mb-4" />
             <h2 className="text-xl font-bold mb-2">Appendices and tables</h2>
-            <p className="text-center text-muted-foreground">
+            <p className="text-centre text-muted-foreground">
               Reference materials and calculation tables
             </p>
           </CardContent>

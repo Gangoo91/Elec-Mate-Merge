@@ -10,7 +10,7 @@ interface LocationState {
 
 export const useLocationBasedCourses = (
   allCourses: CareerCourse[],
-  allCenters: TrainingCenter[]
+  allCentres: TrainingCenter[]
 ) => {
   const [locationState, setLocationState] = useState<LocationState>({
     location: null,
@@ -106,26 +106,26 @@ export const useLocationBasedCourses = (
     });
   }, [allCourses, locationState.coordinates, locationState.searchRadius, getMockCoordinates, calculateDistance]);
 
-  // Filter training centers based on location and radius
-  const filteredCenters = useMemo(() => {
+  // Filter training centres based on location and radius
+  const filteredCentres = useMemo(() => {
     if (!locationState.coordinates) {
-      return allCenters;
+      return allCentres;
     }
 
-    return allCenters.filter(center => {
-      const centerCoords = getMockCoordinates(center.location);
-      if (!centerCoords) return false;
+    return allCentres.filter(centre => {
+      const centreCoords = getMockCoordinates(centre.location);
+      if (!centreCoords) return false;
 
       const distance = calculateDistance(
         locationState.coordinates!.lat,
         locationState.coordinates!.lng,
-        centerCoords.lat,
-        centerCoords.lng
+        centreCoords.lat,
+        centreCoords.lng
       );
 
       return distance <= locationState.searchRadius;
     });
-  }, [allCenters, locationState.coordinates, locationState.searchRadius, getMockCoordinates, calculateDistance]);
+  }, [allCentres, locationState.coordinates, locationState.searchRadius, getMockCoordinates, calculateDistance]);
 
   const clearLocation = useCallback(() => {
     setLocationState({
@@ -140,7 +140,7 @@ export const useLocationBasedCourses = (
     handleLocationSelect,
     handleRadiusChange,
     filteredCourses,
-    filteredCenters,
+    filteredCentres,
     clearLocation,
     isLocationFiltered: !!locationState.coordinates
   };
