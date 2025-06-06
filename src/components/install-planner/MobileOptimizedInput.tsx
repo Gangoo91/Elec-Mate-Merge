@@ -9,7 +9,7 @@ interface MobileOptimizedInputProps {
   id: string;
   label: string;
   type?: string;
-  inputMode?: string;
+  inputMode?: "search" | "text" | "email" | "tel" | "url" | "decimal" | "none" | "numeric";
   value: string | number;
   onChange: (value: string) => void;
   placeholder?: string;
