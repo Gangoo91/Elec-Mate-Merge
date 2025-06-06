@@ -10,7 +10,7 @@ import EmptySearchResults from "./courses/EmptySearchResults";
 import LocationBasedCourseSearch from "./courses/LocationBasedCourseSearch";
 import { useCoursesAndCentres } from "./courses/useCoursesAndCenters";
 import { useLocationBasedCourses } from "./courses/useLocationBasedCourses";
-import { ukLocations, careerCourses, trainingCentres } from "./courses/coursesData";
+import { ukLocations, careerCourses, trainingCenters } from "./courses/coursesData";
 import { Button } from "@/components/ui/button";
 import { MapPin, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -22,10 +22,10 @@ const CareerCourses = () => {
     activeTab,
     setActiveTab,
     selectedCourse,
-    selectedCentre,
+    selectedCenter,
     handleSearch,
     viewCourseDetails,
-    viewCentreDetails,
+    viewCenterDetails,
     handleClose,
     resetFilters
   } = useCoursesAndCentres();
@@ -35,20 +35,20 @@ const CareerCourses = () => {
     handleLocationSelect,
     handleRadiusChange,
     filteredCourses: locationFilteredCourses,
-    filteredCentres: locationFilteredCentres,
+    filteredCentres: locationFilteredCenters,
     clearLocation,
     isLocationFiltered
-  } = useLocationBasedCourses(careerCourses, trainingCentres);
+  } = useLocationBasedCourses(careerCourses, trainingCenters);
 
   // Apply both search and location filters
   const [searchFilteredCourses, setSearchFilteredCourses] = useState(locationFilteredCourses);
-  const [searchFilteredCentres, setSearchFilteredCentres] = useState(locationFilteredCentres);
+  const [searchFilteredCenters, setSearchFilteredCenters] = useState(locationFilteredCenters);
 
   // Update search filters when location filters change
   React.useEffect(() => {
     setSearchFilteredCourses(locationFilteredCourses);
-    setSearchFilteredCentres(locationFilteredCentres);
-  }, [locationFilteredCourses, locationFilteredCentres]);
+    setSearchFilteredCenters(locationFilteredCenters);
+  }, [locationFilteredCourses, locationFilteredCenters]);
 
   const handleSearchWithLocation = (values: { location: string; searchQuery: string }) => {
     const { location, searchQuery } = values;
@@ -67,16 +67,16 @@ const CareerCourses = () => {
     setSearchFilteredCourses(coursesResult);
     
     // Filter centres based on search criteria
-    const centresResult = locationFilteredCentres.filter(centre => {
-      const locationMatch = location === "All Locations" || centre.location === location;
+    const centersResult = locationFilteredCenters.filter(center => {
+      const locationMatch = location === "All Locations" || center.location === location;
       const searchMatch = searchQuery === "" || 
-        centre.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        centre.courses.some(course => course.toLowerCase().includes(searchQuery.toLowerCase()));
+        center.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+        center.courses.some(course => course.toLowerCase().includes(searchQuery.toLowerCase()));
       
       return locationMatch && searchMatch;
     });
     
-    setSearchFilteredCentres(centresResult);
+    setSearchFilteredCenters(centersResult);
   };
 
   const handleResetAll = () => {
@@ -127,7 +127,7 @@ const CareerCourses = () => {
               Showing results within {locationState.searchRadius} miles of {locationState.location}
             </span>
             <Badge variant="outline" className="ml-auto">
-              {searchFilteredCourses.length + searchFilteredCentres.length} results
+              {searchFilteredCourses.length + searchFilteredCenters.length} results
             </Badge>
           </div>
         )}
@@ -152,10 +152,10 @@ const CareerCourses = () => {
           Available Courses ({searchFilteredCourses.length})
         </button>
         <button 
-          className={`px-4 py-2 font-medium ${activeTab === "directory" ? "text-elec-yellow border-b-2 border-elec-yellow" : "text-gray-400"}`}
-          onClick={() => setActiveTab("directory")}
+          className={`px-4 py-2 font-medium ${activeTab === "centers" ? "text-elec-yellow border-b-2 border-elec-yellow" : "text-gray-400"}`}
+          onClick={() => setActiveTab("centers")}
         >
-          Training Centres ({searchFilteredCentres.length})
+          Training Centres ({searchFilteredCenters.length})
         </button>
       </div>
       
@@ -183,17 +183,17 @@ const CareerCourses = () => {
       )}
       
       {/* Training Centres Directory Tab Content */}
-      {activeTab === "directory" && (
+      {activeTab === "centers" && (
         <div className="space-y-6">
-          {searchFilteredCentres.map((centre) => (
+          {searchFilteredCenters.map((center) => (
             <TrainingCentreCard 
-              key={centre.id} 
-              centre={centre}
-              onViewDetails={viewCentreDetails}
+              key={center.id} 
+              center={center}
+              onViewDetails={viewCenterDetails}
             />
           ))}
           
-          {searchFilteredCentres.length === 0 && (
+          {searchFilteredCenters.length === 0 && (
             <EmptySearchResults type="centres" onReset={handleResetAll} />
           )}
         </div>
@@ -203,7 +203,7 @@ const CareerCourses = () => {
       <CourseDetailsModal course={selectedCourse} onClose={handleClose} />
       
       {/* Training Centre Details Modal */}
-      <TrainingCentreDetailsModal centre={selectedCentre} onClose={handleClose} />
+      <TrainingCentreDetailsModal center={selectedCenter} onClose={handleClose} />
 
       {/* Course Selection Tips */}
       <CourseSelectionTips />

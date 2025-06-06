@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { careerCourses, trainingCentres, CareerCourse, TrainingCenter } from "./coursesData";
+import { careerCourses, trainingCenters, CareerCourse, TrainingCenter } from "./coursesData";
 import { useForm } from "react-hook-form";
 
 interface SearchFormValues {
@@ -9,9 +9,9 @@ interface SearchFormValues {
 }
 
 export const useCoursesAndCentres = () => {
-  const [activeTab, setActiveTab] = useState("courses"); // courses or directory
+  const [activeTab, setActiveTab] = useState("courses"); // courses or centers
   const [selectedCourse, setSelectedCourse] = useState<CareerCourse | null>(null);
-  const [selectedCentre, setSelectedCentre] = useState<TrainingCenter | null>(null);
+  const [selectedCenter, setSelectedCenter] = useState<TrainingCenter | null>(null);
   
   const form = useForm<SearchFormValues>({
     defaultValues: {
@@ -31,13 +31,13 @@ export const useCoursesAndCentres = () => {
     setSelectedCourse(course);
   };
   
-  const viewCentreDetails = (centre: TrainingCenter) => {
-    setSelectedCentre(centre);
+  const viewCenterDetails = (center: TrainingCenter) => {
+    setSelectedCenter(center);
   };
   
   const handleClose = () => {
     setSelectedCourse(null);
-    setSelectedCentre(null);
+    setSelectedCenter(null);
   };
 
   const resetFilters = () => {
@@ -51,11 +51,11 @@ export const useCoursesAndCentres = () => {
     activeTab,
     setActiveTab,
     selectedCourse,
-    selectedCentre,
+    selectedCenter,
     form,
     handleSearch,
     viewCourseDetails,
-    viewCentreDetails,
+    viewCenterDetails,
     handleClose,
     resetFilters
   };
