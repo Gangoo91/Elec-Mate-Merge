@@ -6,10 +6,10 @@ import MajorProjects from "@/pages/electrician/safety-shares/MajorProjects";
 import Chat from "@/pages/Chat";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
-import JobVacancies from "@/pages/JobVacancies";
+import JobVacancies from "@/pages/electrician/JobVacancies";
 import Materials from "@/pages/Materials";
 import ToolsGuide from "@/pages/ToolsGuide";
-import LivePricing from "@/pages/LivePricing";
+import LivePricing from "@/pages/electrician/LivePricing";
 import ElectricalHub from "@/pages/ElectricalHub";
 import CareerProgression from "@/pages/electrician/CareerProgression";
 
