@@ -18,9 +18,6 @@ const ProfessionalDevelopment = () => {
             <CardContent className="flex flex-col items-center justify-center p-6 h-full">
               <GraduationCap className="h-12 w-12 text-elec-yellow mb-4 group-hover:scale-110 transition-transform" />
               <h2 className="text-xl font-bold mb-2 text-center">Career Progression Paths</h2>
-              <p className="text-center text-muted-foreground text-sm">
-                Explore different career advancement routes from apprentice to specialised electrician roles, including management and contracting opportunities
-              </p>
             </CardContent>
           </Card>
         </Link>
@@ -30,9 +27,6 @@ const ProfessionalDevelopment = () => {
             <CardContent className="flex flex-col items-center justify-center p-6 h-full">
               <Award className="h-12 w-12 text-elec-yellow mb-4 group-hover:scale-110 transition-transform" />
               <h2 className="text-xl font-bold mb-2 text-center">Professional Certifications</h2>
-              <p className="text-center text-muted-foreground text-sm">
-                Discover additional qualifications and certifications to enhance your electrical career, including inspection and testing qualifications
-              </p>
             </CardContent>
           </Card>
         </Link>
@@ -42,9 +36,6 @@ const ProfessionalDevelopment = () => {
             <CardContent className="flex flex-col items-center justify-center p-6 h-full">
               <BookOpen className="h-12 w-12 text-elec-yellow mb-4 group-hover:scale-110 transition-transform" />
               <h2 className="text-xl font-bold mb-2 text-center">Continuing Education</h2>
-              <p className="text-center text-muted-foreground text-sm">
-                Ongoing training opportunities to keep your skills current with industry standards and emerging technologies
-              </p>
             </CardContent>
           </Card>
         </Link>
@@ -54,9 +45,6 @@ const ProfessionalDevelopment = () => {
             <CardContent className="flex flex-col items-center justify-center p-6 h-full">
               <Briefcase className="h-12 w-12 text-elec-yellow mb-4 group-hover:scale-110 transition-transform" />
               <h2 className="text-xl font-bold mb-2 text-center">Industry Networking</h2>
-              <p className="text-center text-muted-foreground text-sm">
-                Connect with industry professionals and build your professional network through trade associations and events
-              </p>
             </CardContent>
           </Card>
         </Link>
