@@ -194,7 +194,7 @@ const CareerCourses = () => {
           ))}
           
           {searchFilteredCenters.length === 0 && (
-            <EmptySearchResults type="centres" onReset={handleResetAll} />
+            <EmptySearchResults type="centers" onReset={handleResetAll} />
           )}
         </div>
       )}
