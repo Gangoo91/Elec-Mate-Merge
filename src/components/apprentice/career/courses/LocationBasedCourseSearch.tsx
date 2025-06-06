@@ -23,7 +23,6 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
 }) => {
   const [searchInput, setSearchInput] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const [suggestions, setSuggestions] = useState<google.maps.places.PlaceResult[]>([]);
   const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();

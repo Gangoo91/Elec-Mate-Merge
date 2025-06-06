@@ -52,7 +52,31 @@ declare namespace google {
       height: number;
     }
 
+    // Event handling
+    namespace event {
+      function clearInstanceListeners(instance: any): void;
+    }
+
     namespace places {
+      class Autocomplete {
+        constructor(inputField: HTMLInputElement, opts?: AutocompleteOptions);
+        addListener(eventName: string, handler: () => void): MapsEventListener;
+        getPlace(): PlaceResult;
+      }
+
+      interface AutocompleteOptions {
+        bounds?: LatLngBounds;
+        componentRestrictions?: ComponentRestrictions;
+        fields?: string[];
+        origin?: LatLng | LatLngLiteral;
+        strictBounds?: boolean;
+        types?: string[];
+      }
+
+      interface ComponentRestrictions {
+        country: string | string[];
+      }
+
       class PlacesService {
         constructor(attrContainer: Map | Element);
         nearbySearch(request: PlaceSearchRequest, callback: (results: PlaceResult[], status: PlacesServiceStatus, pagination: PlaceSearchPagination) => void): void;
