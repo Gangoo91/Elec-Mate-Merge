@@ -32,8 +32,7 @@ const QuizTimerDisplay = ({ timeRemaining, totalTime }: QuizTimerDisplayProps) =
       </div>
       <Progress 
         value={timeProgress} 
-        className="h-2" 
-        indicatorClassName={isTimeRunningLow ? "bg-red-500" : "bg-elec-yellow"} 
+        className={`h-2 ${isTimeRunningLow ? '[&>div]:bg-red-500' : '[&>div]:bg-elec-yellow'}`}
       />
     </div>
   );

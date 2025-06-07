@@ -31,8 +31,7 @@ const QuizResults = ({
           <div className="flex justify-center items-center mb-2">
             <Progress 
               value={percentage} 
-              className="h-2 w-64" 
-              indicatorClassName={isPassing ? "bg-green-500" : "bg-amber-500"} 
+              className={`h-2 w-64 ${isPassing ? '[&>div]:bg-green-500' : '[&>div]:bg-amber-500'}`}
             />
           </div>
           
