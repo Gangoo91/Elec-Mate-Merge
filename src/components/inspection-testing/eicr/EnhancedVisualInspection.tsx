@@ -8,12 +8,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Progress } from '@/components/ui/progress';
 import { ClipboardCheck, AlertTriangle, CheckCircle, Eye, FileText, Download } from 'lucide-react';
 import { 
-  visualInspectionSections, 
+  enhancedVisualInspectionSections, 
   outcomeDefinitions, 
+  getInspectionStats,
+  getOverallAssessment,
   type InspectionOutcome, 
   type InspectionItem, 
   type InspectionSection 
-} from '@/data/eicr/visualInspectionData';
+} from '@/data/eicr/enhancedVisualInspectionData';
 
 interface EnhancedVisualInspectionProps {
   reportType: string;
@@ -21,23 +23,12 @@ interface EnhancedVisualInspectionProps {
 }
 
 const EnhancedVisualInspection = ({ reportType, onComplete }: EnhancedVisualInspectionProps) => {
-  const [inspectionData, setInspectionData] = useState<InspectionSection[]>(visualInspectionSections);
+  const [inspectionData, setInspectionData] = useState<InspectionSection[]>(enhancedVisualInspectionSections);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [overallProgress, setOverallProgress] = useState(0);
-  const [summaryStats, setSummaryStats] = useState({
-    total: 0,
-    acceptable: 0,
-    c1: 0,
-    c2: 0,
-    c3: 0,
-    nv: 0,
-    lim: 0,
-    na: 0
-  });
 
   useEffect(() => {
     calculateProgress();
-    calculateStats();
   }, [inspectionData]);
 
   const calculateProgress = () => {
@@ -48,27 +39,7 @@ const EnhancedVisualInspection = ({ reportType, onComplete }: EnhancedVisualInsp
     setOverallProgress(totalItems > 0 ? (inspectedItems / totalItems) * 100 : 0);
   };
 
-  const calculateStats = () => {
-    const stats = {
-      total: 0,
-      acceptable: 0,
-      c1: 0,
-      c2: 0,
-      c3: 0,
-      nv: 0,
-      lim: 0,
-      na: 0
-    };
-
-    inspectionData.forEach(section => {
-      section.items.forEach(item => {
-        stats.total++;
-        stats[item.outcome]++;
-      });
-    });
-
-    setSummaryStats(stats);
-  };
+  const summaryStats = getInspectionStats(inspectionData);
 
   const updateItemOutcome = (sectionId: string, itemId: string, outcome: InspectionOutcome) => {
     setInspectionData(prev => prev.map(section => 
@@ -102,12 +73,20 @@ const EnhancedVisualInspection = ({ reportType, onComplete }: EnhancedVisualInsp
     ));
   };
 
+  const markSectionComplete = (sectionId: string) => {
+    setInspectionData(prev => prev.map(section => 
+      section.id === sectionId 
+        ? { ...section, isComplete: true, completedAt: new Date().toISOString() }
+        : section
+    ));
+  };
+
   const handleComplete = () => {
     const inspectionResults = {
       sections: inspectionData,
       stats: summaryStats,
       completedAt: new Date().toISOString(),
-      overallAssessment: summaryStats.c1 > 0 || summaryStats.c2 > 0 ? 'unsatisfactory' : 'satisfactory'
+      overallAssessment: getOverallAssessment(inspectionData)
     };
     
     localStorage.setItem('eicr-visual-inspection-results', JSON.stringify(inspectionResults));
@@ -116,6 +95,7 @@ const EnhancedVisualInspection = ({ reportType, onComplete }: EnhancedVisualInsp
 
   const currentSection = inspectionData[currentSectionIndex];
   const hasDefects = summaryStats.c1 > 0 || summaryStats.c2 > 0 || summaryStats.c3 > 0;
+  const completedSections = inspectionData.filter(section => section.isComplete).length;
 
   return (
     <div className="space-y-6">
@@ -128,7 +108,7 @@ const EnhancedVisualInspection = ({ reportType, onComplete }: EnhancedVisualInsp
                 <Eye className="h-6 w-6 text-elec-yellow" />
               </div>
               <div>
-                <CardTitle>EICR Visual Inspection</CardTitle>
+                <CardTitle>Enhanced EICR Visual Inspection</CardTitle>
                 <p className="text-sm text-muted-foreground">
                   Section {currentSectionIndex + 1} of {inspectionData.length}: {currentSection.title}
                 </p>
@@ -165,14 +145,17 @@ const EnhancedVisualInspection = ({ reportType, onComplete }: EnhancedVisualInsp
               );
             })}
           </div>
-          {hasDefects && (
-            <div className="mt-4 p-3 bg-red-500/10 border border-red-500/30 rounded">
+          <div className="mt-4 flex items-center justify-between">
+            <div className="text-sm text-muted-foreground">
+              {completedSections}/{inspectionData.length} sections completed
+            </div>
+            {hasDefects && (
               <div className="flex items-center gap-2 text-red-400">
                 <AlertTriangle className="h-4 w-4" />
-                <span className="font-medium">Defects Found - Remedial Action Required</span>
+                <span className="text-sm font-medium">Defects Found - Remedial Action Required</span>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </CardContent>
       </Card>
 
@@ -187,6 +170,9 @@ const EnhancedVisualInspection = ({ reportType, onComplete }: EnhancedVisualInsp
             className="flex items-center gap-2"
           >
             <span className="text-xs">{index + 1}</span>
+            {section.isComplete && (
+              <CheckCircle className="h-3 w-3 text-green-400" />
+            )}
             {section.items.some(item => ['c1', 'c2', 'c3'].includes(item.outcome)) && (
               <AlertTriangle className="h-3 w-3 text-red-400" />
             )}
@@ -197,11 +183,35 @@ const EnhancedVisualInspection = ({ reportType, onComplete }: EnhancedVisualInsp
       {/* Current Section Inspection */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CheckCircle className="h-5 w-5 text-elec-yellow" />
-            {currentSection.title}
-          </CardTitle>
-          <p className="text-sm text-muted-foreground">{currentSection.description}</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <CheckCircle className="h-5 w-5 text-elec-yellow" />
+                {currentSection.title}
+              </CardTitle>
+              <p className="text-sm text-muted-foreground mt-1">{currentSection.description}</p>
+              <p className="text-xs text-blue-300 mt-1">{currentSection.regulation}</p>
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => markSectionComplete(currentSection.id)}
+              disabled={currentSection.isComplete}
+              className="flex items-center gap-2"
+            >
+              {currentSection.isComplete ? (
+                <>
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  Complete
+                </>
+              ) : (
+                <>
+                  <ClipboardCheck className="h-4 w-4" />
+                  Mark Complete
+                </>
+              )}
+            </Button>
+          </div>
         </CardHeader>
         <CardContent className="space-y-6">
           {currentSection.items.map((item) => (

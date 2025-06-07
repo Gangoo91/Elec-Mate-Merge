@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Download, FileText, AlertTriangle, CheckCircle, Eye } from 'lucide-react';
-import { outcomeDefinitions, type InspectionSection } from '@/data/eicr/visualInspectionData';
+import { outcomeDefinitions, type InspectionSection } from '@/data/eicr/enhancedVisualInspectionData';
 
 interface VisualInspectionResultsProps {
   onExport?: () => void;
@@ -26,8 +26,7 @@ const VisualInspectionResults = ({ onExport }: VisualInspectionResultsProps) => 
   }, []);
 
   const exportToPDF = () => {
-    // Implementation for PDF export would go here
-    console.log('Exporting visual inspection results to PDF...');
+    console.log('Exporting enhanced visual inspection results to PDF...');
     onExport?.();
   };
 
@@ -60,7 +59,7 @@ const VisualInspectionResults = ({ onExport }: VisualInspectionResultsProps) => 
               </div>
               <div>
                 <CardTitle className={overallAssessment === 'satisfactory' ? 'text-green-300' : 'text-red-300'}>
-                  Visual Inspection: {overallAssessment.toUpperCase()}
+                  Enhanced Visual Inspection: {overallAssessment.toUpperCase()}
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">
                   Completed: {new Date(completedAt).toLocaleString()}
@@ -155,8 +154,16 @@ const VisualInspectionResults = ({ onExport }: VisualInspectionResultsProps) => 
             <Card key={section.id} className="border-elec-yellow/20 bg-elec-gray">
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg">{section.title}</CardTitle>
+                  <div>
+                    <CardTitle className="text-lg">{section.title}</CardTitle>
+                    <p className="text-xs text-blue-300 mt-1">{section.regulation}</p>
+                  </div>
                   <div className="flex items-center gap-2">
+                    {section.isComplete && (
+                      <Badge variant="outline" className="text-xs border-green-500/30 text-green-400">
+                        Complete
+                      </Badge>
+                    )}
                     {sectionStats.defects > 0 ? (
                       <Badge variant="destructive" className="text-xs">
                         {sectionStats.defects} defects
