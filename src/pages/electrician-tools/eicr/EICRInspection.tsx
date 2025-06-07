@@ -71,9 +71,9 @@ const EICRInspection = () => {
             <Eye className="h-8 w-8 text-elec-yellow" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">EICR Visual Inspection</h1>
+            <h1 className="text-3xl font-bold tracking-tight">EICR Numbered Visual Inspection</h1>
             <p className="text-muted-foreground">
-              Enhanced BS 7671 Schedule of Inspections - comprehensive visual inspection system
+              BS 7671 numbered inspection system with 10 sections and 40 numbered inspection points
             </p>
           </div>
         </div>
@@ -124,9 +124,9 @@ const EICRInspection = () => {
             <div className="flex items-center gap-3">
               <CheckCircle className="h-6 w-6 text-green-400" />
               <div>
-                <h3 className="font-medium text-green-300">Visual Inspection Complete</h3>
+                <h3 className="font-medium text-green-300">Numbered Visual Inspection Complete</h3>
                 <p className="text-sm text-muted-foreground">
-                  Enhanced visual inspection has been completed. You can proceed to testing or review the results.
+                  BS 7671 compliant numbered visual inspection has been completed. All 40 inspection points reviewed.
                 </p>
               </div>
             </div>
@@ -155,10 +155,10 @@ const EICRInspection = () => {
             
             <div className="text-center">
               <p className="text-sm text-muted-foreground mb-1">
-                {isInspectionComplete ? 'Proceed to Testing Phase' : 'Complete Enhanced Visual Inspection'}
+                {isInspectionComplete ? 'Proceed to Testing Phase' : 'Complete Numbered Visual Inspection'}
               </p>
               <p className="text-xs text-muted-foreground">
-                Based on BS 7671 Schedule of Inspections
+                40 numbered inspection points based on BS 7671 Schedule of Inspections
               </p>
             </div>
 
@@ -202,7 +202,7 @@ const EICRInspection = () => {
                 {isInspectionComplete ? '✓' : '4'}
               </div>
               <span className={isInspectionComplete ? 'text-green-400' : 'text-elec-yellow font-medium'}>
-                Visual Inspection
+                Numbered Visual Inspection
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -211,7 +211,7 @@ const EICRInspection = () => {
             </div>
           </div>
           <p className="text-xs text-muted-foreground mt-3">
-            Enhanced visual inspection includes 10 main sections with 80+ inspection points compliant with BS 7671
+            Numbered visual inspection system with 10 sections (1-10) and 40 inspection points (1.1, 1.2, etc.) compliant with BS 7671
           </p>
         </CardContent>
       </Card>
