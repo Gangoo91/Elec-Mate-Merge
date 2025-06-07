@@ -1,32 +1,39 @@
 
 import React, { useState } from "react";
-import CourseCard from "./courses/CourseCard";
-import TrainingCentreCard from "./courses/TrainingCenterCard";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import EnhancedCourseCard from "./courses/EnhancedCourseCard";
+import EnhancedTrainingCenterCard from "./courses/EnhancedTrainingCenterCard";
 import CourseDetailsModal from "./courses/CourseDetailsModal";
 import TrainingCentreDetailsModal from "./courses/TrainingCenterDetailsModal";
 import CourseSearchForm from "./courses/CourseSearchForm";
 import CourseSelectionTips from "./courses/CourseSelectionTips";
 import EmptySearchResults from "./courses/EmptySearchResults";
 import LocationBasedCourseSearch from "./courses/LocationBasedCourseSearch";
+import CourseAnalyticsDashboard from "./courses/CourseAnalyticsDashboard";
 import { useCoursesAndCentres } from "./courses/useCoursesAndCenters";
 import { useLocationBasedCourses } from "./courses/useLocationBasedCourses";
-import { ukLocations, careerCourses, trainingCenters } from "./courses/coursesData";
+import { ukLocations } from "./courses/coursesData";
+import { 
+  enhancedCareerCourses, 
+  enhancedTrainingCenters, 
+  courseCategories,
+  EnhancedCareerCourse,
+  EnhancedTrainingCenter
+} from "./courses/enhancedCoursesData";
 import { Button } from "@/components/ui/button";
-import { MapPin, X } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { MapPin, X, Filter, TrendingUp, BookOpen, Users } from "lucide-react";
 
 const CareerCourses = () => {
   const [showLocationSearch, setShowLocationSearch] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("All Categories");
+  const [selectedCourse, setSelectedCourse] = useState<EnhancedCareerCourse | null>(null);
+  const [selectedCenter, setSelectedCenter] = useState<EnhancedTrainingCenter | null>(null);
   
   const {
     activeTab,
     setActiveTab,
-    selectedCourse,
-    selectedCenter,
-    handleSearch,
-    viewCourseDetails,
-    viewCenterDetails,
-    handleClose,
     resetFilters
   } = useCoursesAndCentres();
 
@@ -34,104 +41,120 @@ const CareerCourses = () => {
     locationState,
     handleLocationSelect,
     handleRadiusChange,
-    filteredCourses: locationFilteredCourses,
-    filteredCentres: locationFilteredCenters,
     clearLocation,
     isLocationFiltered
-  } = useLocationBasedCourses(careerCourses, trainingCenters);
+  } = useLocationBasedCourses(enhancedCareerCourses, enhancedTrainingCenters);
 
-  // Apply both search and location filters
-  const [searchFilteredCourses, setSearchFilteredCourses] = useState(locationFilteredCourses);
-  const [searchFilteredCenters, setSearchFilteredCenters] = useState(locationFilteredCenters);
+  // Apply location and category filters
+  const filteredCourses = enhancedCareerCourses.filter(course => {
+    const categoryMatch = selectedCategory === "All Categories" || course.category === selectedCategory;
+    const locationMatch = !isLocationFiltered || course.locations.some(loc => 
+      locationState.location === "All Locations" || loc.includes(locationState.location)
+    );
+    return categoryMatch && locationMatch;
+  });
 
-  // Update search filters when location filters change
-  React.useEffect(() => {
-    setSearchFilteredCourses(locationFilteredCourses);
-    setSearchFilteredCenters(locationFilteredCenters);
-  }, [locationFilteredCourses, locationFilteredCenters]);
+  const filteredCenters = enhancedTrainingCenters.filter(center => {
+    const locationMatch = !isLocationFiltered || 
+      locationState.location === "All Locations" || 
+      center.location.includes(locationState.location);
+    return locationMatch;
+  });
 
   const handleSearchWithLocation = (values: { location: string; searchQuery: string }) => {
-    const { location, searchQuery } = values;
-    
-    // Filter courses based on search criteria
-    const coursesResult = locationFilteredCourses.filter(course => {
-      const locationMatch = location === "All Locations" || course.locations.includes(location);
-      const searchMatch = searchQuery === "" || 
-        course.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        course.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        course.provider.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      return locationMatch && searchMatch;
-    });
-    
-    setSearchFilteredCourses(coursesResult);
-    
-    // Filter centres based on search criteria
-    const centersResult = locationFilteredCenters.filter(center => {
-      const locationMatch = location === "All Locations" || center.location === location;
-      const searchMatch = searchQuery === "" || 
-        center.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        center.courses.some(course => course.toLowerCase().includes(searchQuery.toLowerCase()));
-      
-      return locationMatch && searchMatch;
-    });
-    
-    setSearchFilteredCenters(centersResult);
+    // Search functionality implementation would go here
+    console.log('Search values:', values);
   };
 
   const handleResetAll = () => {
     resetFilters();
     clearLocation();
+    setSelectedCategory("All Categories");
     setShowLocationSearch(false);
+  };
+
+  const viewCourseDetails = (course: EnhancedCareerCourse) => {
+    setSelectedCourse(course);
+  };
+
+  const viewCenterDetails = (center: EnhancedTrainingCenter) => {
+    setSelectedCenter(center);
+  };
+
+  const handleClose = () => {
+    setSelectedCourse(null);
+    setSelectedCenter(null);
   };
 
   return (
     <div className="space-y-6">
-      <div className="space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h2 className="text-2xl font-semibold">Career Courses</h2>
-            <p className="text-muted-foreground">
-              Professional development courses are essential for staying current with industry standards and expanding your skillset.
+      {/* Header Section */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-xl sm:text-2xl">
+            <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+            UK Electrical Career Courses & Training
+          </CardTitle>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <p className="text-sm sm:text-base text-muted-foreground">
+              Comprehensive professional development courses to advance your electrical career in the UK market
             </p>
-          </div>
-          
-          <div className="flex gap-2">
-            <Button
-              variant={showLocationSearch ? "default" : "outline"}
-              onClick={() => setShowLocationSearch(!showLocationSearch)}
-              className="flex items-center gap-2"
-            >
-              <MapPin className="h-4 w-4" />
-              Location Search
-            </Button>
             
-            {(isLocationFiltered || showLocationSearch) && (
+            <div className="flex gap-2">
               <Button
-                variant="outline"
-                onClick={handleResetAll}
+                variant={showLocationSearch ? "default" : "outline"}
+                onClick={() => setShowLocationSearch(!showLocationSearch)}
                 className="flex items-center gap-2"
               >
-                <X className="h-4 w-4" />
-                Clear All
+                <MapPin className="h-4 w-4" />
+                Location Search
               </Button>
-            )}
+              
+              {(isLocationFiltered || selectedCategory !== "All Categories" || showLocationSearch) && (
+                <Button
+                  variant="outline"
+                  onClick={handleResetAll}
+                  className="flex items-center gap-2"
+                >
+                  <X className="h-4 w-4" />
+                  Clear Filters
+                </Button>
+              )}
+            </div>
           </div>
-        </div>
+        </CardHeader>
+      </Card>
 
-        {/* Location filter indicator */}
-        {isLocationFiltered && (
-          <div className="flex items-center gap-2 p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg">
-            <MapPin className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm">
-              Showing results within {locationState.searchRadius} miles of {locationState.location}
-            </span>
-            <Badge variant="outline" className="ml-auto">
-              {searchFilteredCourses.length + searchFilteredCenters.length} results
-            </Badge>
-          </div>
-        )}
-      </div>
+      {/* Course Analytics Dashboard */}
+      <CourseAnalyticsDashboard />
+
+      {/* Active Filters Display */}
+      {(isLocationFiltered || selectedCategory !== "All Categories") && (
+        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 flex-wrap">
+              <Filter className="h-4 w-4 text-elec-yellow" />
+              <span className="text-sm font-medium">Active Filters:</span>
+              
+              {isLocationFiltered && (
+                <Badge variant="outline" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30">
+                  {locationState.location} ({locationState.searchRadius} miles)
+                </Badge>
+              )}
+              
+              {selectedCategory !== "All Categories" && (
+                <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30">
+                  {selectedCategory}
+                </Badge>
+              )}
+              
+              <Badge variant="outline" className="ml-auto">
+                {filteredCourses.length + filteredCenters.length} results
+              </Badge>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Location-based search */}
       {showLocationSearch && (
@@ -143,67 +166,106 @@ const CareerCourses = () => {
         />
       )}
 
-      {/* Tab Navigation */}
-      <div className="flex border-b border-elec-yellow/20">
-        <button 
-          className={`px-4 py-2 font-medium ${activeTab === "courses" ? "text-elec-yellow border-b-2 border-elec-yellow" : "text-gray-400"}`}
-          onClick={() => setActiveTab("courses")}
-        >
-          Available Courses ({searchFilteredCourses.length})
-        </button>
-        <button 
-          className={`px-4 py-2 font-medium ${activeTab === "centers" ? "text-elec-yellow border-b-2 border-elec-yellow" : "text-gray-400"}`}
-          onClick={() => setActiveTab("centers")}
-        >
-          Training Centres ({searchFilteredCenters.length})
-        </button>
-      </div>
-      
-      {/* Search and Filter */}
-      <CourseSearchForm 
-        locations={ukLocations} 
-        onSearch={handleSearchWithLocation}
-      />
+      {/* Category Filter */}
+      <Card className="border-elec-yellow/20 bg-elec-gray/50">
+        <CardContent className="p-4">
+          <div className="flex items-center gap-3 mb-3">
+            <TrendingUp className="h-4 w-4 text-elec-yellow" />
+            <span className="text-sm font-medium">Filter by Category:</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {courseCategories.map((category) => (
+              <Button
+                key={category}
+                variant={selectedCategory === category ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedCategory(category)}
+                className={selectedCategory === category ? 
+                  "bg-elec-yellow text-elec-dark" : 
+                  "border-elec-yellow/30 hover:bg-elec-yellow/10"
+                }
+              >
+                {category}
+                {category !== "All Categories" && (
+                  <Badge variant="secondary" className="ml-2 h-4 px-1">
+                    {enhancedCareerCourses.filter(c => c.category === category).length}
+                  </Badge>
+                )}
+              </Button>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-      {/* Courses Tab Content */}
-      {activeTab === "courses" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {searchFilteredCourses.map((course) => (
-            <CourseCard 
-              key={course.id} 
-              course={course}
-              onViewDetails={viewCourseDetails}
-            />
-          ))}
-          
-          {searchFilteredCourses.length === 0 && (
+      {/* Tab Navigation */}
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+        <TabsList className="grid w-full grid-cols-2 bg-elec-dark border border-elec-yellow/20">
+          <TabsTrigger 
+            value="courses" 
+            className="data-[state=active]:bg-elec-yellow/20 flex items-center gap-2"
+          >
+            <BookOpen className="h-4 w-4" />
+            Courses ({filteredCourses.length})
+          </TabsTrigger>
+          <TabsTrigger 
+            value="centers" 
+            className="data-[state=active]:bg-elec-yellow/20 flex items-center gap-2"
+          >
+            <Users className="h-4 w-4" />
+            Training Centres ({filteredCenters.length})
+          </TabsTrigger>
+        </TabsList>
+
+        {/* Search Form */}
+        <CourseSearchForm 
+          locations={ukLocations} 
+          onSearch={handleSearchWithLocation}
+        />
+
+        {/* Courses Tab Content */}
+        <TabsContent value="courses" className="space-y-6">
+          {filteredCourses.length > 0 ? (
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              {filteredCourses.map((course) => (
+                <EnhancedCourseCard 
+                  key={course.id} 
+                  course={course}
+                  onViewDetails={viewCourseDetails}
+                />
+              ))}
+            </div>
+          ) : (
             <EmptySearchResults type="courses" onReset={handleResetAll} />
           )}
-        </div>
-      )}
-      
-      {/* Training Centres Directory Tab Content */}
-      {activeTab === "centers" && (
-        <div className="space-y-6">
-          {searchFilteredCenters.map((center) => (
-            <TrainingCentreCard 
-              key={center.id} 
-              center={center}
-              onViewDetails={viewCenterDetails}
-            />
-          ))}
-          
-          {searchFilteredCenters.length === 0 && (
+        </TabsContent>
+        
+        {/* Training Centres Tab Content */}
+        <TabsContent value="centers" className="space-y-6">
+          {filteredCenters.length > 0 ? (
+            <div className="space-y-6">
+              {filteredCenters.map((center) => (
+                <EnhancedTrainingCenterCard 
+                  key={center.id} 
+                  center={center}
+                  onViewDetails={viewCenterDetails}
+                />
+              ))}
+            </div>
+          ) : (
             <EmptySearchResults type="centers" onReset={handleResetAll} />
           )}
-        </div>
-      )}
+        </TabsContent>
+      </Tabs>
       
       {/* Course Details Modal */}
-      <CourseDetailsModal course={selectedCourse} onClose={handleClose} />
+      {selectedCourse && (
+        <CourseDetailsModal course={selectedCourse} onClose={handleClose} />
+      )}
       
       {/* Training Centre Details Modal */}
-      <TrainingCentreDetailsModal center={selectedCenter} onClose={handleClose} />
+      {selectedCenter && (
+        <TrainingCentreDetailsModal center={selectedCenter} onClose={handleClose} />
+      )}
 
       {/* Course Selection Tips */}
       <CourseSelectionTips />
