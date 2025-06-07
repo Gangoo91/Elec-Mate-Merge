@@ -2,102 +2,44 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, CheckSquare, Clock, BookOpen, AlertTriangle } from "lucide-react";
+import { ArrowLeft, CheckSquare, Clock, BookOpen, AlertTriangle, Zap, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Progress } from "@/components/ui/progress";
+import { enhancedBS7671Steps } from "@/data/bs7671-steps/enhancedStepData";
 
 const BS7671RunThrough = () => {
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
 
-  const inspectionSteps = [
-    {
-      id: 1,
-      title: "Initial Documentation Review",
-      description: "Check electrical installation certificates and drawings",
-      estimatedTime: "10-15 minutes",
-      difficulty: "Easy"
-    },
-    {
-      id: 2,
-      title: "Visual Inspection - External",
-      description: "External condition of installation, intake position, earthing arrangements",
-      estimatedTime: "15-20 minutes", 
-      difficulty: "Easy"
-    },
-    {
-      id: 3,
-      title: "Visual Inspection - Internal",
-      description: "Consumer unit, circuit protection, cable routing and support",
-      estimatedTime: "20-30 minutes",
-      difficulty: "Medium"
-    },
-    {
-      id: 4,
-      title: "Safe Isolation Procedures",
-      description: "Proper isolation and proving dead before testing",
-      estimatedTime: "10-15 minutes",
-      difficulty: "Critical"
-    },
-    {
-      id: 5,
-      title: "Continuity Testing (R1+R2)",
-      description: "Test continuity of protective conductors and CPC",
-      estimatedTime: "15-25 minutes",
-      difficulty: "Medium"
-    },
-    {
-      id: 6,
-      title: "Insulation Resistance Testing",
-      description: "Test insulation resistance between conductors",
-      estimatedTime: "15-20 minutes",
-      difficulty: "Medium"
-    },
-    {
-      id: 7,
-      title: "Polarity Testing",
-      description: "Verify correct connection of phase and neutral conductors",
-      estimatedTime: "10-15 minutes",
-      difficulty: "Easy"
-    },
-    {
-      id: 8,
-      title: "Earth Fault Loop Impedance (Zs)",
-      description: "Measure earth fault loop impedance values",
-      estimatedTime: "15-25 minutes",
-      difficulty: "Medium"
-    },
-    {
-      id: 9,
-      title: "RCD Testing",
-      description: "Test operation and trip times of RCD devices",
-      estimatedTime: "10-20 minutes",
-      difficulty: "Medium"
-    },
-    {
-      id: 10,
-      title: "Final Documentation",
-      description: "Complete certificates and schedule any remedial work",
-      estimatedTime: "15-20 minutes",
-      difficulty: "Easy"
-    }
-  ];
-
-  const totalSteps = inspectionSteps.length;
+  const totalSteps = enhancedBS7671Steps.length;
   const progressPercentage = (completedSteps.size / totalSteps) * 100;
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case "Easy": return "text-green-400";
-      case "Medium": return "text-yellow-400";
-      case "Critical": return "text-red-400";
+  const getDifficultyColor = (category: string) => {
+    switch (category) {
+      case "Safety Critical": return "text-red-400";
+      case "Electrical Testing": return "text-blue-400";
+      case "Visual Inspection": return "text-green-400";
+      case "Documentation": return "text-purple-400";
       default: return "text-gray-400";
     }
   };
 
-  const getDifficultyIcon = (difficulty: string) => {
-    switch (difficulty) {
-      case "Critical": return <AlertTriangle className="h-4 w-4" />;
-      default: return <CheckSquare className="h-4 w-4" />;
+  const getDifficultyIcon = (category: string) => {
+    switch (category) {
+      case "Safety Critical": return <AlertTriangle className="h-4 w-4" />;
+      case "Electrical Testing": return <Zap className="h-4 w-4" />;
+      case "Visual Inspection": return <CheckSquare className="h-4 w-4" />;
+      case "Documentation": return <BookOpen className="h-4 w-4" />;
+      default: return <Settings className="h-4 w-4" />;
+    }
+  };
+
+  const getCategoryDescription = (category: string) => {
+    switch (category) {
+      case "Safety Critical": return "Life-critical safety procedures";
+      case "Electrical Testing": return "Electrical measurements and testing";
+      case "Visual Inspection": return "Physical inspection and observation";
+      case "Documentation": return "Record keeping and compliance";
+      default: return "General procedures";
     }
   };
 
@@ -106,7 +48,7 @@ const BS7671RunThrough = () => {
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">BS7671 Inspection & Testing Run-Through</h1>
-          <p className="text-muted-foreground">Complete step-by-step inspection and testing process</p>
+          <p className="text-muted-foreground">Comprehensive electrical safety testing procedures for apprentices</p>
         </div>
         <Link to="/apprentice/on-job-tools" className="flex-shrink-0">
           <Button variant="outline">
@@ -116,6 +58,40 @@ const BS7671RunThrough = () => {
         </Link>
       </div>
 
+      {/* Enhanced Features Highlight */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Settings className="h-5 w-5 text-elec-yellow" />
+            Enhanced Learning Features
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="text-center p-3 bg-blue-500/10 rounded border border-blue-500/30">
+              <Zap className="h-6 w-6 text-blue-400 mx-auto mb-2" />
+              <h4 className="font-medium text-blue-300 text-sm">MFT Settings</h4>
+              <p className="text-xs text-blue-200">Detailed test equipment configuration</p>
+            </div>
+            <div className="text-center p-3 bg-green-500/10 rounded border border-green-500/30">
+              <CheckSquare className="h-6 w-6 text-green-400 mx-auto mb-2" />
+              <h4 className="font-medium text-green-300 text-sm">Connection Guides</h4>
+              <p className="text-xs text-green-200">Step-by-step wiring instructions</p>
+            </div>
+            <div className="text-center p-3 bg-yellow-500/10 rounded border border-yellow-500/30">
+              <AlertTriangle className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
+              <h4 className="font-medium text-yellow-300 text-sm">Troubleshooting</h4>
+              <p className="text-xs text-yellow-200">Common issues and solutions</p>
+            </div>
+            <div className="text-center p-3 bg-purple-500/10 rounded border border-purple-500/30">
+              <BookOpen className="h-6 w-6 text-purple-400 mx-auto mb-2" />
+              <h4 className="font-medium text-purple-300 text-sm">System Types</h4>
+              <p className="text-xs text-purple-200">Single-phase & three-phase guidance</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Progress Overview */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
@@ -124,7 +100,7 @@ const BS7671RunThrough = () => {
             Progress Overview
           </CardTitle>
           <CardDescription>
-            Complete all 10 steps for a thorough inspection and testing process
+            Complete all {totalSteps} steps for a thorough inspection and testing process
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -135,7 +111,7 @@ const BS7671RunThrough = () => {
             </div>
             <Progress value={progressPercentage} className="h-2" />
             <p className="text-xs text-muted-foreground">
-              Estimated total time: 2.5 - 3.5 hours
+              Estimated total time: 3-5 hours (depending on installation complexity)
             </p>
           </div>
         </CardContent>
@@ -146,21 +122,40 @@ const BS7671RunThrough = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-red-400">
             <AlertTriangle className="h-5 w-5" />
-            Safety First
+            Safety First - Read This Before Starting
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-red-100">
-            This is a learning tool for apprentices. <strong>Always work under supervision</strong> and 
-            follow your company's safety procedures. Never attempt electrical testing without proper 
-            training and authorisation.
-          </p>
+          <div className="space-y-3">
+            <p className="text-sm text-red-100">
+              This is a comprehensive learning tool for apprentices. <strong>Always work under supervision</strong> and 
+              follow your company's safety procedures.
+            </p>
+            <ul className="text-sm text-red-100 space-y-1">
+              <li className="flex items-start gap-2">
+                <span className="text-red-400 mt-1">⚠️</span>
+                Never attempt electrical testing without proper training and authorisation
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400 mt-1">⚠️</span>
+                Use only calibrated test equipment that complies with GS38
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400 mt-1">⚠️</span>
+                Follow safe isolation procedures - proving dead is life critical
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-red-400 mt-1">⚠️</span>
+                When in doubt, ask your supervisor - safety is paramount
+              </li>
+            </ul>
+          </div>
         </CardContent>
       </Card>
 
       {/* Steps Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {inspectionSteps.map((step) => (
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {enhancedBS7671Steps.map((step) => (
           <Card 
             key={step.id} 
             className={`border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors cursor-pointer ${
@@ -173,7 +168,12 @@ const BS7671RunThrough = () => {
                   <span className="bg-elec-yellow/10 text-elec-yellow rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
                     {step.id}
                   </span>
-                  {step.title}
+                  <div className="flex flex-col">
+                    {step.title}
+                    <span className="text-xs text-muted-foreground font-normal">
+                      {getCategoryDescription(step.category)}
+                    </span>
+                  </div>
                 </CardTitle>
                 {completedSteps.has(step.id) && (
                   <CheckSquare className="h-5 w-5 text-green-500" />
@@ -181,17 +181,41 @@ const BS7671RunThrough = () => {
               </div>
             </CardHeader>
             <CardContent className="space-y-3">
-              <CardDescription>{step.description}</CardDescription>
+              <CardDescription className="leading-relaxed">{step.description}</CardDescription>
               
               <div className="flex items-center gap-4 text-xs">
                 <div className="flex items-center gap-1">
                   <Clock className="h-3 w-3" />
-                  <span>{step.estimatedTime}</span>
+                  <span>10-20 min</span>
                 </div>
-                <div className={`flex items-center gap-1 ${getDifficultyColor(step.difficulty)}`}>
-                  {getDifficultyIcon(step.difficulty)}
-                  <span>{step.difficulty}</span>
+                <div className={`flex items-center gap-1 ${getDifficultyColor(step.category)}`}>
+                  {getDifficultyIcon(step.category)}
+                  <span>{step.category}</span>
                 </div>
+              </div>
+
+              {/* Step Features */}
+              <div className="flex flex-wrap gap-1">
+                {step.mftSettings && (
+                  <span className="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded">
+                    MFT Settings
+                  </span>
+                )}
+                {step.connections && (
+                  <span className="text-xs bg-green-500/20 text-green-300 px-2 py-1 rounded">
+                    Connections
+                  </span>
+                )}
+                {step.troubleshooting && (
+                  <span className="text-xs bg-amber-500/20 text-amber-300 px-2 py-1 rounded">
+                    Troubleshooting
+                  </span>
+                )}
+                {step.systemTypes && (
+                  <span className="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded">
+                    System Types
+                  </span>
+                )}
               </div>
 
               <div className="pt-2">
@@ -211,11 +235,11 @@ const BS7671RunThrough = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-elec-yellow" />
-            Quick Reference
+            Quick Reference & Additional Tools
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
             <Link to="/apprentice/on-job-tools/testing-procedures">
               <Button variant="outline" className="w-full justify-start" size="sm">
                 Testing Procedures Mini Toolkit
@@ -224,6 +248,26 @@ const BS7671RunThrough = () => {
             <Link to="/apprentice/on-job-tools/calculations">
               <Button variant="outline" className="w-full justify-start" size="sm">
                 Electrical Calculations
+              </Button>
+            </Link>
+            <Link to="/apprentice/on-job-tools/supervisor-knowledge">
+              <Button variant="outline" className="w-full justify-start" size="sm">
+                Ask a Supervisor
+              </Button>
+            </Link>
+            <Link to="/apprentice/on-job-tools/flashcards">
+              <Button variant="outline" className="w-full justify-start" size="sm">
+                Quick Reference Cards
+              </Button>
+            </Link>
+            <Link to="/apprentice/on-job-tools/incident-logging">
+              <Button variant="outline" className="w-full justify-start" size="sm">
+                Incident Logging
+              </Button>
+            </Link>
+            <Link to="/apprentice/electrical-installation-guides/bs7671-reference">
+              <Button variant="outline" className="w-full justify-start" size="sm">
+                BS7671 Quick Reference
               </Button>
             </Link>
           </div>

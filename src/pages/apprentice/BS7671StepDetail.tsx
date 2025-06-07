@@ -3,143 +3,24 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, ArrowRight, CheckSquare, AlertTriangle, BookOpen, Calculator, Eye, ClipboardCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckSquare, AlertTriangle, BookOpen, Calculator, Timer, ClipboardCheck } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
+import { enhancedBS7671Steps } from "@/data/bs7671-steps/enhancedStepData";
+import TestingInstructions from "@/components/apprentice/bs7671/TestingInstructions";
+import TroubleshootingGuide from "@/components/apprentice/bs7671/TroubleshootingGuide";
+import SystemTypeSelector from "@/components/apprentice/bs7671/SystemTypeSelector";
 
 const BS7671StepDetail = () => {
   const { stepId } = useParams<{ stepId: string }>();
   const currentStep = parseInt(stepId || "1");
   const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
   const [stepCompleted, setStepCompleted] = useState(false);
+  const [systemType, setSystemType] = useState<string>("");
+  const [installationType, setInstallationType] = useState<string>("");
 
-  const stepData = {
-    1: {
-      title: "Initial Documentation Review",
-      description: "Review all available documentation before starting any physical inspection",
-      category: "Documentation",
-      checklist: [
-        "Check for current electrical installation certificate (EIC)",
-        "Review building plans and electrical drawings",
-        "Identify the type of electrical installation",
-        "Note any previous inspection reports",
-        "Check for any specific client requirements",
-        "Verify the scope of inspection required"
-      ],
-      safetyNotes: [
-        "Ensure you have permission to access all areas",
-        "Note any areas that may require special safety precautions"
-      ],
-      regulations: [
-        "BS7671 Chapter 64 - Initial verification",
-        "IET Guidance Note 3 - Inspection & Testing"
-      ],
-      nextSteps: "Once documentation is reviewed, proceed to external visual inspection"
-    },
-    2: {
-      title: "Visual Inspection - External",
-      description: "Conduct a thorough external visual inspection of the electrical installation",
-      category: "Visual Inspection",
-      checklist: [
-        "Check condition of incoming supply cables",
-        "Inspect meter position and sealing",
-        "Examine earthing arrangements (rod, clamp, conductor)",
-        "Check main equipotential bonding connections",
-        "Inspect external distribution boards/enclosures",
-        "Check IP ratings are appropriate for location",
-        "Verify adequate ventilation around equipment"
-      ],
-      safetyNotes: [
-        "Do not remove any supplier seals",
-        "Take photos for documentation but respect privacy",
-        "Report any obvious damage to supplier equipment immediately"
-      ],
-      regulations: [
-        "BS7671 Section 512 - Operational conditions",
-        "BS7671 Section 522 - Selection and erection of wiring systems"
-      ],
-      nextSteps: "Move to internal visual inspection of consumer units and circuits"
-    },
-    3: {
-      title: "Visual Inspection - Internal",
-      description: "Detailed visual inspection of internal electrical installations",
-      category: "Visual Inspection", 
-      checklist: [
-        "Inspect consumer unit/distribution board condition",
-        "Check all protective devices are correctly rated",
-        "Verify cable types and current carrying capacity",
-        "Check cable supports and routing",
-        "Examine socket outlets and switches",
-        "Inspect lighting circuits and fittings",
-        "Check for any signs of overheating or damage",
-        "Verify compliance with current regulations"
-      ],
-      safetyNotes: [
-        "Do not remove covers while installation is live",
-        "Look for signs of DIY work that may not comply",
-        "Note any immediate safety concerns for urgent attention"
-      ],
-      regulations: [
-        "BS7671 Section 526 - Electrical connections",
-        "BS7671 Section 543 - Protective conductors"
-      ],
-      nextSteps: "Prepare for safe isolation before electrical testing"
-    },
-    4: {
-      title: "Safe Isolation Procedures",
-      description: "Critical safety step - proper isolation and proving dead",
-      category: "Safety Critical",
-      checklist: [
-        "Identify the correct isolation point",
-        "Inform all relevant parties of isolation",
-        "Isolate the supply using appropriate device",
-        "Lock off and tag the isolation point",
-        "Test voltage indicator on known live source",
-        "Test all conductors to confirm dead",
-        "Test voltage indicator again on known live source",
-        "Apply warning notices at isolation point"
-      ],
-      safetyNotes: [
-        "NEVER skip proving dead - this is life critical",
-        "Use appropriate PPE at all times",
-        "If in doubt, get supervision immediately",
-        "Follow your company's isolation procedures exactly"
-      ],
-      regulations: [
-        "HSE GS38 - Electrical test equipment for use by electricians",
-        "BS7671 Section 462 - Isolation and switching"
-      ],
-      nextSteps: "Begin electrical testing with continuity measurements"
-    },
-    5: {
-      title: "Continuity Testing (R1+R2)",
-      description: "Test the continuity of protective conductors and ring circuits",
-      category: "Electrical Testing",
-      checklist: [
-        "Set up continuity tester correctly",
-        "Test each protective conductor continuity",
-        "Measure R1+R2 values for each circuit",
-        "Check ring circuit continuity (if applicable)",
-        "Record all measurements accurately",
-        "Compare readings with design values",
-        "Investigate any anomalous readings"
-      ],
-      safetyNotes: [
-        "Ensure installation remains isolated during testing",
-        "Double-check test lead connections",
-        "Be aware of parallel paths affecting readings"
-      ],
-      regulations: [
-        "BS7671 Section 612.2 - Continuity of protective conductors",
-        "IET Guidance Note 3 - Section 10.3"
-      ],
-      nextSteps: "Proceed to insulation resistance testing"
-    }
-    // Add remaining steps...
-  };
-
-  const currentStepData = stepData[currentStep as keyof typeof stepData];
-  const totalItems = currentStepData?.checklist.length || 0;
+  const stepData = enhancedBS7671Steps.find(step => step.id === currentStep);
+  const totalItems = stepData?.checklist.length || 0;
   const completionPercentage = totalItems > 0 ? (checkedItems.size / totalItems) * 100 : 0;
 
   const handleChecklistChange = (item: string, checked: boolean) => {
@@ -156,10 +37,16 @@ const BS7671StepDetail = () => {
     if (completionPercentage === 100) {
       setStepCompleted(true);
       // In a real app, this would save to localStorage or database
+      console.log(`Step ${currentStep} completed with system: ${systemType}, installation: ${installationType}`);
     }
   };
 
-  if (!currentStepData) {
+  const handleSystemSelection = (system: string, installation: string) => {
+    setSystemType(system);
+    setInstallationType(installation);
+  };
+
+  if (!stepData) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Card className="border-red-500/20 bg-red-900/10">
@@ -176,15 +63,34 @@ const BS7671StepDetail = () => {
     );
   }
 
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case "Safety Critical": return "text-red-400 bg-red-500/10 border-red-500/30";
+      case "Electrical Testing": return "text-blue-400 bg-blue-500/10 border-blue-500/30";
+      case "Visual Inspection": return "text-green-400 bg-green-500/10 border-green-500/30";
+      case "Documentation": return "text-purple-400 bg-purple-500/10 border-purple-500/30";
+      default: return "text-elec-yellow bg-elec-yellow/10 border-elec-yellow/30";
+    }
+  };
+
   return (
-    <div className="space-y-6 animate-fade-in pb-20 max-w-4xl mx-auto">
+    <div className="space-y-6 animate-fade-in pb-20 max-w-6xl mx-auto">
       {/* Header */}
       <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">
-            Step {currentStep}: {currentStepData.title}
-          </h1>
-          <p className="text-muted-foreground">{currentStepData.description}</p>
+        <div className="space-y-2">
+          <div className="flex items-center gap-3">
+            <h1 className="text-2xl font-bold tracking-tight">
+              Step {currentStep}: {stepData.title}
+            </h1>
+            <div className={`px-2 py-1 rounded text-xs border ${getCategoryColor(stepData.category)}`}>
+              {stepData.category}
+            </div>
+          </div>
+          <p className="text-muted-foreground">{stepData.description}</p>
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Timer className="h-4 w-4" />
+            <span>Estimated time: 10-20 minutes</span>
+          </div>
         </div>
         <Link to="/apprentice/on-job-tools/bs7671-runthrough">
           <Button variant="outline">
@@ -193,6 +99,11 @@ const BS7671StepDetail = () => {
           </Button>
         </Link>
       </div>
+
+      {/* System Type Selection - Show for first step or testing steps */}
+      {(currentStep === 1 || stepData.category === "Electrical Testing") && (
+        <SystemTypeSelector onSelectionChange={handleSystemSelection} />
+      )}
 
       {/* Progress */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
@@ -211,7 +122,7 @@ const BS7671StepDetail = () => {
       </Card>
 
       {/* Safety Notes */}
-      {currentStepData.safetyNotes && (
+      {stepData.safetyNotes && stepData.safetyNotes.length > 0 && (
         <Card className="border-red-500/20 bg-red-900/10">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-red-400">
@@ -221,10 +132,35 @@ const BS7671StepDetail = () => {
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
-              {currentStepData.safetyNotes.map((note, index) => (
+              {stepData.safetyNotes.map((note, index) => (
                 <li key={index} className="flex items-start gap-2 text-sm text-red-100">
-                  <span className="text-red-400 mt-1">•</span>
+                  <span className="text-red-400 mt-1">⚠️</span>
                   {note}
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Testing Instructions - MFT Settings, Connections, Expected Results */}
+      <TestingInstructions stepData={stepData} />
+
+      {/* Installation Type Specific Guidance */}
+      {stepData.installationTypes && installationType && (
+        <Card className="border-indigo-500/30 bg-indigo-500/5">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-indigo-300">
+              <BookOpen className="h-5 w-5" />
+              {installationType.charAt(0).toUpperCase() + installationType.slice(1)} Installation Guidance
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-2">
+              {stepData.installationTypes[installationType as keyof typeof stepData.installationTypes]?.map((item, index) => (
+                <li key={index} className="flex items-start gap-2 text-sm text-indigo-100">
+                  <span className="text-indigo-400 mt-1">•</span>
+                  {item}
                 </li>
               ))}
             </ul>
@@ -237,12 +173,12 @@ const BS7671StepDetail = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <ClipboardCheck className="h-5 w-5 text-elec-yellow" />
-            {currentStepData.category} Checklist
+            {stepData.category} Checklist
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {currentStepData.checklist.map((item, index) => (
+            {stepData.checklist.map((item, index) => (
               <div key={index} className="flex items-start gap-3">
                 <Checkbox
                   id={`item-${index}`}
@@ -252,7 +188,7 @@ const BS7671StepDetail = () => {
                 />
                 <label 
                   htmlFor={`item-${index}`}
-                  className={`text-sm cursor-pointer ${
+                  className={`text-sm cursor-pointer leading-relaxed ${
                     checkedItems.has(item) ? 'text-green-400 line-through' : ''
                   }`}
                 >
@@ -264,19 +200,23 @@ const BS7671StepDetail = () => {
         </CardContent>
       </Card>
 
+      {/* Troubleshooting Guide */}
+      <TroubleshootingGuide stepData={stepData} />
+
       {/* Regulations Reference */}
       <Card className="border-blue-500/20 bg-blue-900/10">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-blue-400">
             <BookOpen className="h-5 w-5" />
-            Relevant Regulations
+            Relevant Regulations & Standards
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <ul className="space-y-1">
-            {currentStepData.regulations.map((reg, index) => (
-              <li key={index} className="text-sm text-blue-100">
-                • {reg}
+          <ul className="space-y-2">
+            {stepData.regulations.map((reg, index) => (
+              <li key={index} className="text-sm text-blue-100 flex items-start gap-2">
+                <span className="text-blue-400 mt-1">📋</span>
+                {reg}
               </li>
             ))}
           </ul>
@@ -288,7 +228,7 @@ const BS7671StepDetail = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calculator className="h-5 w-5 text-elec-yellow" />
-            Related Tools
+            Related Tools & Resources
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -305,7 +245,30 @@ const BS7671StepDetail = () => {
                 Electrical Calculations
               </Button>
             </Link>
+            <Link to="/apprentice/on-job-tools/supervisor-knowledge">
+              <Button variant="outline" size="sm" className="w-full justify-start">
+                Ask a Supervisor
+              </Button>
+            </Link>
+            <Link to="/apprentice/on-job-tools/flashcards">
+              <Button variant="outline" size="sm" className="w-full justify-start">
+                Quick Reference Cards
+              </Button>
+            </Link>
           </div>
+        </CardContent>
+      </Card>
+
+      {/* Next Steps */}
+      <Card className="border-green-500/30 bg-green-500/5">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-green-300">
+            <ArrowRight className="h-5 w-5" />
+            Next Steps
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-sm text-green-200">{stepData.nextSteps}</p>
         </CardContent>
       </Card>
 
@@ -330,7 +293,7 @@ const BS7671StepDetail = () => {
             </Button>
           )}
           
-          {currentStep < 10 && (
+          {currentStep < enhancedBS7671Steps.length && (
             <Link to={`/apprentice/on-job-tools/bs7671-runthrough/step/${currentStep + 1}`}>
               <Button>
                 Next Step
