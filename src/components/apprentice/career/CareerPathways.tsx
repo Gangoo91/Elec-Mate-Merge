@@ -2,11 +2,16 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { careerPaths } from "./careerPathsData";
 import CareerPathCard from "./CareerPathCard";
 import CareerAdvancementTips from "./CareerAdvancementTips";
 import CareerProgressionPaths from "./CareerProgressionPaths";
 import ProgressTracker from "@/components/career/ProgressTracker";
+import UKCareerProgressionTimeline from "./UKCareerProgressionTimeline";
+import UKRegionalJobMarkets from "./UKRegionalJobMarkets";
+import UKWorkSectors from "./UKWorkSectors";
+import JIBGradingScheme from "./JIBGradingScheme";
 
 const CareerPathways = () => {
   const [selectedPath, setSelectedPath] = useState<string | null>(null);
@@ -136,31 +141,62 @@ const CareerPathways = () => {
   return (
     <div className="space-y-6">
       <div className="space-y-4">
-        <h2 className="text-2xl font-semibold">Career Pathways</h2>
+        <h2 className="text-2xl font-semibold">UK Electrical Career Pathways</h2>
         <p className="text-muted-foreground">
-          The electrical industry offers diverse career paths with opportunities for advancement based on your interests, skills, and goals. 
-          Below are key pathways you can explore as you progress in your electrical career, sorted by typical salary ranges from entry-level to advanced positions.
+          Comprehensive guide to electrical career progression in the UK, including JIB grading schemes, 
+          regional opportunities, and sector-specific information to help you navigate your professional journey.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {careerPaths.map((path) => (
-          <div key={path.id} onClick={() => setSelectedPath(path.id.toString())} className="cursor-pointer">
-            <CareerPathCard 
-              title={path.title}
-              requirements={path.requirements}
-              description={path.description}
-              icon={path.icon}
-              skills={path.skills}
-              salaryRange={path.salaryRange}
-              timeToAchieve={path.timeToAchieve}
-            />
-          </div>
-        ))}
-      </div>
+      <Tabs defaultValue="overview" className="space-y-6">
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-6 bg-elec-dark border border-elec-yellow/20">
+          <TabsTrigger value="overview" className="data-[state=active]:bg-elec-yellow/20">Overview</TabsTrigger>
+          <TabsTrigger value="timeline" className="data-[state=active]:bg-elec-yellow/20">Timeline</TabsTrigger>
+          <TabsTrigger value="jib" className="data-[state=active]:bg-elec-yellow/20">JIB Grades</TabsTrigger>
+          <TabsTrigger value="sectors" className="data-[state=active]:bg-elec-yellow/20">Work Sectors</TabsTrigger>
+          <TabsTrigger value="regions" className="data-[state=active]:bg-elec-yellow/20">Regional Markets</TabsTrigger>
+          <TabsTrigger value="paths" className="data-[state=active]:bg-elec-yellow/20">Career Paths</TabsTrigger>
+        </TabsList>
 
-      <CareerAdvancementTips />
-      <CareerProgressionPaths />
+        <TabsContent value="overview" className="space-y-6">
+          <CareerAdvancementTips />
+          <CareerProgressionPaths />
+        </TabsContent>
+
+        <TabsContent value="timeline" className="space-y-6">
+          <UKCareerProgressionTimeline />
+        </TabsContent>
+
+        <TabsContent value="jib" className="space-y-6">
+          <JIBGradingScheme />
+        </TabsContent>
+
+        <TabsContent value="sectors" className="space-y-6">
+          <UKWorkSectors />
+        </TabsContent>
+
+        <TabsContent value="regions" className="space-y-6">
+          <UKRegionalJobMarkets />
+        </TabsContent>
+
+        <TabsContent value="paths" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {careerPaths.map((path) => (
+              <div key={path.id} onClick={() => setSelectedPath(path.id.toString())} className="cursor-pointer">
+                <CareerPathCard 
+                  title={path.title}
+                  requirements={path.requirements}
+                  description={path.description}
+                  icon={path.icon}
+                  skills={path.skills}
+                  salaryRange={path.salaryRange}
+                  timeToAchieve={path.timeToAchieve}
+                />
+              </div>
+            ))}
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

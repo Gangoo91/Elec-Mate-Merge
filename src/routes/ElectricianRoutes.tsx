@@ -31,6 +31,8 @@ import ScheduleManager from "@/pages/electrician-tools/ScheduleManager";
 import BusinessAnalytics from "@/pages/electrician-tools/BusinessAnalytics";
 // Add Financial Tools page
 import FinancialTools from "@/pages/electrician-tools/FinancialTools";
+// Add Career Progression page
+import CareerProgression from "@/pages/electrician/CareerProgression";
 
 const ElectricianRoutes = () => (
   <Routes>
@@ -60,6 +62,7 @@ const ElectricianRoutes = () => (
     <Route path="schedule" element={<ScheduleManager />} />
     <Route path="business-analytics" element={<BusinessAnalytics />} />
     <Route path="financial-tools" element={<FinancialTools />} />
+    <Route path="career-progression" element={<CareerProgression />} />
   </Routes>
 );
 
