@@ -20,6 +20,8 @@ import TestingProcedures from "@/pages/apprentice/TestingProcedures";
 import SupervisorKnowledge from "@/pages/apprentice/SupervisorKnowledge";
 import FlashcardsLearning from "@/pages/apprentice/FlashcardsLearning";
 import IncidentLogging from "@/pages/apprentice/IncidentLogging";
+import BS7671RunThrough from "@/pages/apprentice/BS7671RunThrough";
+import BS7671StepDetail from "@/pages/apprentice/BS7671StepDetail";
 import StressManagement from "@/pages/apprentice/mental-health/StressManagement";
 import SupportNetwork from "@/pages/apprentice/mental-health/SupportNetwork";
 import WorkLifeBalance from "@/pages/apprentice/mental-health/WorkLifeBalance";
@@ -124,6 +126,8 @@ const ApprenticeRoutes = () => {
       <Route path="on-job-tools/supervisor-knowledge" element={<SupervisorKnowledge />} />
       <Route path="on-job-tools/flashcards" element={<FlashcardsLearning />} />
       <Route path="on-job-tools/incident-logging" element={<IncidentLogging />} />
+      <Route path="on-job-tools/bs7671-runthrough" element={<BS7671RunThrough />} />
+      <Route path="on-job-tools/bs7671-runthrough/step/:stepId" element={<BS7671StepDetail />} />
       
       <Route path="study">
         <Route index element={<ApprenticeStudy />} />
