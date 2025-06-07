@@ -3,11 +3,16 @@ export interface BS7671StepData {
   id: number;
   title: string;
   description: string;
-  category: string;
+  category: "Safety Critical" | "Electrical Testing" | "Visual Inspection" | "Documentation";
   checklist: string[];
   safetyNotes: string[];
   regulations: string[];
   nextSteps: string;
+  installationTypes?: {
+    domestic?: string[];
+    commercial?: string[];
+    industrial?: string[];
+  };
   mftSettings?: {
     testType: string;
     voltage: string;
@@ -17,9 +22,9 @@ export interface BS7671StepData {
   };
   connections?: string[];
   expectedResults?: {
-    acceptable: string;
     typical: string;
-    investigate: string;
+    minimum: string;
+    maximum: string;
   };
   troubleshooting?: {
     issue: string;
@@ -27,613 +32,512 @@ export interface BS7671StepData {
     solutions: string[];
   }[];
   systemTypes?: {
-    singlePhase: string[];
-    threePhase: string[];
+    singlePhase?: string[];
+    threePhase?: string[];
   };
-  installationTypes?: {
-    domestic: string[];
-    commercial: string[];
-    industrial: string[];
-  };
-  diagrams?: {
-    type: 'safe-isolation' | 'continuity' | 'visual-inspection' | 'mft-connection' | 'insulation' | 'earth-fault-loop' | 'rcd' | 'polarity';
-    title: string;
-    description: string;
-  }[];
 }
 
 export const enhancedBS7671Steps: BS7671StepData[] = [
   {
     id: 1,
-    title: "Initial Documentation Review",
-    description: "Review all available documentation before starting any physical inspection",
+    title: "Initial Verification Planning & Documentation Review",
+    description: "Review installation documentation, drawings, and ensure compliance with BS 7671 before commencement of inspection and testing.",
     category: "Documentation",
     checklist: [
-      "Check for current electrical installation certificate (EIC)",
-      "Review building plans and electrical drawings",
-      "Identify the type of electrical installation (domestic/commercial/industrial)",
-      "Note any previous inspection reports and remedial work",
-      "Check for any specific client requirements or limitations",
-      "Verify the scope of inspection required (full/partial/specific circuits)",
-      "Identify supply characteristics (voltage, frequency, earthing arrangement)",
-      "Note any special installations (swimming pools, medical locations, etc.)"
+      "Review electrical installation drawings and specifications",
+      "Verify design calculations and cable schedules are available",
+      "Check protective device coordination schedules",
+      "Confirm installation methods comply with manufacturer instructions",
+      "Verify special location requirements have been identified",
+      "Check earthing and bonding arrangements are documented",
+      "Review risk assessment for inspection and testing activities",
+      "Ensure all relevant British Standards and regulations are referenced"
     ],
     safetyNotes: [
-      "Ensure you have permission to access all areas",
-      "Note any areas that may require special safety precautions",
-      "Identify any potentially dangerous substances or environments",
-      "Check for any ongoing work that might affect testing"
+      "Do not commence inspection until all documentation is reviewed",
+      "Ensure competent persons are assigned for inspection and testing",
+      "Verify installation is ready for inspection (not energised)",
+      "Check test equipment is calibrated and suitable for the installation"
     ],
     regulations: [
-      "BS7671 Chapter 64 - Initial verification",
-      "IET Guidance Note 3 - Inspection & Testing",
-      "BS7671 Section 511 - Compliance with standards"
+      "BS 7671:2018 Regulation 610.1 - Initial verification requirements",
+      "BS 7671:2018 Regulation 610.2 - Competent person requirements",
+      "BS 7671:2018 Chapter 61 - Initial verification procedures",
+      "BS 7671:2018 Appendix 6 - Model forms for certification"
     ],
-    nextSteps: "Once documentation is reviewed, proceed to external visual inspection",
+    nextSteps: "Once documentation review is complete, proceed to visual inspection of the installation in accordance with the schedule of inspections.",
     installationTypes: {
       domestic: [
-        "Single-phase supply typical",
-        "Consumer unit with RCD protection",
-        "Basic circuits: lighting, sockets, cooker, shower"
+        "Check Part P Building Regulations compliance",
+        "Verify consumer unit location and accessibility",
+        "Review special location requirements (bathrooms, kitchens)",
+        "Confirm RCD protection requirements for socket circuits"
       ],
       commercial: [
-        "Three-phase supply common",
-        "Distribution boards with RCBO protection",
-        "Emergency lighting and fire alarm systems",
-        "IT equipment and air conditioning loads"
+        "Review fire alarm and emergency lighting integration",
+        "Check compliance with Workplace Regulations",
+        "Verify discrimination and selectivity studies",
+        "Confirm maintenance access arrangements"
       ],
       industrial: [
-        "High voltage supplies possible",
-        "Motor control centres and variable speed drives",
-        "Process control and instrumentation",
-        "Hazardous area classifications may apply"
+        "Review hazardous area classifications",
+        "Check motor protection and control arrangements",
+        "Verify compliance with relevant industry standards",
+        "Confirm earthing and equipotential bonding requirements"
       ]
-    },
-    diagrams: [
-      {
-        type: 'visual-inspection',
-        title: 'Documentation Review Checklist',
-        description: 'Visual guide to essential documentation and planning requirements'
-      }
-    ]
+    }
   },
   {
     id: 2,
-    title: "Visual Inspection - External",
-    description: "Conduct a thorough external visual inspection of the electrical installation",
+    title: "Visual Inspection - External Installation",
+    description: "Systematic visual inspection of external electrical installation components including service position, earthing, and external equipment.",
     category: "Visual Inspection",
     checklist: [
-      "Check condition of incoming supply cables and supports",
-      "Inspect meter position, sealing, and accessibility",
-      "Examine earthing electrode and conductor condition",
-      "Check main equipotential bonding to water, gas, and structural steel",
-      "Inspect external distribution boards and IP ratings",
-      "Check cable entry methods and sealing",
-      "Verify adequate ventilation around equipment",
-      "Look for signs of unauthorized modifications"
+      "Inspect service head and meter position for damage and security",
+      "Verify earthing conductor size and connections comply with Table 54.7",
+      "Check main equipotential bonding to water and gas services",
+      "Inspect external equipment IP ratings for environmental suitability",
+      "Verify cable entries are sealed against moisture ingress",
+      "Check overhead line clearances and supports",
+      "Inspect underground cable routes and protection",
+      "Verify external isolation and switching arrangements"
     ],
     safetyNotes: [
-      "Do not remove any supplier seals - this is illegal",
-      "Take photos for documentation but respect privacy",
-      "Report any obvious damage to supplier equipment immediately",
-      "Be aware of overhead lines and underground cables"
+      "Do not remove service head seals - contact DNO if inspection required",
+      "Ensure safe access to all external equipment",
+      "Be aware of live incoming supply at service position",
+      "Use appropriate PPE for external inspection activities"
     ],
     regulations: [
-      "BS7671 Section 512 - Operational conditions",
-      "BS7671 Section 522 - Selection and erection of wiring systems",
-      "BS7671 Section 544 - Earthing arrangements"
+      "BS 7671:2018 Section 544 - Earthing arrangements",
+      "BS 7671:2018 Section 416 - Provisions for basic protection",
+      "BS 7671:2018 Chapter 52 - Wiring systems",
+      "BS 7671:2018 Regulation 544.1.2 - Main protective bonding"
     ],
-    nextSteps: "Move to internal visual inspection of consumer units and circuits",
-    systemTypes: {
-      singlePhase: [
-        "230V between line and neutral",
-        "Single earthing conductor from electrode",
-        "Simple bonding arrangements"
+    nextSteps: "Continue with internal visual inspection of consumer unit, circuits, and accessories.",
+    installationTypes: {
+      domestic: [
+        "Check 10mm² main earthing conductor minimum",
+        "Verify gas and water bonding within 600mm of entry",
+        "Inspect meter cabinet and consumer unit locations",
+        "Check external socket outlet RCD protection"
       ],
-      threePhase: [
-        "400V between lines, 230V line to neutral",
-        "May have separate or common neutral",
-        "More complex earthing and bonding"
+      commercial: [
+        "Verify multiple service positions and earthing",
+        "Check external emergency lighting provisions",
+        "Inspect fire alarm cable entries and sealing",
+        "Verify external isolation for maintenance"
+      ],
+      industrial: [
+        "Check earthing arrangements for large installations",
+        "Verify hazardous area equipment protection",
+        "Inspect cable containment systems",
+        "Check multiple supply arrangements"
       ]
-    },
-    diagrams: [
-      {
-        type: 'visual-inspection',
-        title: 'External Inspection Points',
-        description: 'Key areas to inspect on external electrical installations'
-      }
-    ]
+    }
   },
   {
     id: 3,
-    title: "Visual Inspection - Internal", 
-    description: "Detailed visual inspection of internal electrical installations",
+    title: "Visual Inspection - Internal Installation",
+    description: "Comprehensive visual inspection of internal electrical installation including consumer units, circuits, accessories, and connections.",
     category: "Visual Inspection",
     checklist: [
       "Inspect consumer unit/distribution board condition and labelling",
-      "Check all protective devices are correctly rated for circuits",
-      "Verify cable types match current carrying capacity requirements",
-      "Check cable supports, routing, and protection methods",
-      "Examine socket outlets, switches, and accessories",
-      "Inspect lighting circuits, fittings, and control systems",
-      "Check for any signs of overheating, burning, or damage",
-      "Verify compliance with current BS7671 requirements",
-      "Look for non-standard or dangerous practices"
+      "Verify protective device types and ratings match design",
+      "Check RCD test button operation and quarterly test labels",
+      "Inspect cable installation methods and support intervals",
+      "Verify socket outlet RCD protection ≤20A circuits",
+      "Check switch and accessory mounting and operation",
+      "Inspect all visible connections for tightness and condition",
+      "Verify circuit identification and labelling compliance"
     ],
     safetyNotes: [
-      "Do not remove covers while installation is live",
-      "Look for signs of DIY work that may not comply with regulations",
-      "Note any immediate safety concerns for urgent attention",
-      "Check for presence of asbestos in older installations"
+      "Ensure installation is isolated before removing covers",
+      "Do not operate RCD test buttons until ready for testing",
+      "Check for signs of overheating or burning at connections",
+      "Be aware of potential stored energy in capacitors"
     ],
     regulations: [
-      "BS7671 Section 526 - Electrical connections", 
-      "BS7671 Section 543 - Protective conductors",
-      "BS7671 Section 521 - Selection and erection of cables"
+      "BS 7671:2018 Section 411.3.3 - Additional protection by RCD",
+      "BS 7671:2018 Section 514.9 - Circuit identification",
+      "BS 7671:2018 Section 526 - Electrical connections",
+      "BS 7671:2018 Table 52.2 - Support intervals for cables"
     ],
-    nextSteps: "Prepare for safe isolation before electrical testing",
-    diagrams: [
-      {
-        type: 'visual-inspection',
-        title: 'Internal Inspection Areas',
-        description: 'Comprehensive guide to internal electrical inspection points'
-      }
-    ]
+    nextSteps: "Complete schedule of inspections documentation and prepare for electrical testing procedures.",
+    installationTypes: {
+      domestic: [
+        "Check 30mA RCD protection for socket outlets ≤20A",
+        "Verify bathroom zone requirements compliance",
+        "Inspect kitchen socket outlet positioning",
+        "Check supplementary bonding where required"
+      ],
+      commercial: [
+        "Verify emergency lighting circuit protection",
+        "Check fire alarm system cable segregation",
+        "Inspect three-phase distribution arrangements",
+        "Verify isolation arrangements for maintenance"
+      ],
+      industrial: [
+        "Check motor circuit protection and isolation",
+        "Verify control circuit arrangements",
+        "Inspect hazardous area equipment installation",
+        "Check earthing and equipotential bonding systems"
+      ]
+    }
   },
   {
     id: 4,
     title: "Safe Isolation Procedures",
-    description: "Critical safety step - proper isolation and proving dead",
+    description: "Critical safety procedure to safely isolate electrical circuits before testing. This step is life-critical and must be performed correctly.",
     category: "Safety Critical",
     checklist: [
-      "Identify the correct isolation point for the circuits to be tested",
-      "Inform all relevant parties of isolation (building occupants, security, etc.)",
-      "Isolate the supply using appropriate switching device",
-      "Lock off the isolation point with approved lock and tag",
-      "Test voltage indicator on known live source (prove before)",
-      "Test all conductors (L-N, L-E, N-E) to confirm dead",
-      "Test voltage indicator again on known live source (prove after)",
-      "Apply warning notices at isolation point and work area"
+      "Identify the correct isolation point for the circuit",
+      "Inform all relevant parties of the isolation",
+      "Isolate the supply and lock off with approved lock",
+      "Prove voltage indicator on known live supply",
+      "Test between all conductors (L-N, L-E, N-E)",
+      "Prove voltage indicator again on known live supply",
+      "Post warning notices at isolation points",
+      "Ensure only authorised persons have access to keys"
     ],
     safetyNotes: [
-      "NEVER skip proving dead - this is life critical",
-      "Use appropriate PPE at all times during isolation",
-      "If in doubt about isolation, get supervision immediately", 
-      "Follow your company's isolation procedures exactly",
-      "Use only GS38 compliant voltage indicators and test probes"
+      "This is a life-critical procedure - any mistakes can be fatal",
+      "Always use GS38 compliant voltage indicators",
+      "Prove before and after testing - 'Prove before you test, test then prove again'",
+      "Never work on circuits without proper isolation",
+      "Use appropriate PPE including insulated gloves where required"
     ],
     regulations: [
-      "HSE GS38 - Electrical test equipment for use by electricians",
-      "BS7671 Section 462 - Isolation and switching",
+      "GS38 - Electrical test equipment for use by electricians",
+      "BS 7671:2018 Section 461 - Isolation and switching",
+      "HSE HSG85 - Electricity at work: Safe working practices",
       "Electricity at Work Regulations 1989"
     ],
-    nextSteps: "Begin electrical testing with continuity measurements",
-    mftSettings: {
-      testType: "Voltage Detection",
-      voltage: "As per installation voltage",
-      current: "N/A",
-      duration: "Continuous until proven dead",
-      leads: ["Test probes to GS38", "Voltage indicator"]
-    },
-    troubleshooting: [
-      {
-        issue: "Voltage still present after isolation",
-        causes: ["Wrong isolation point", "Parallel supply", "Backfeed from other circuits"],
-        solutions: ["Re-check isolation point", "Trace all supply routes", "Isolate additional sources"]
-      }
-    ],
-    diagrams: [
-      {
-        type: 'safe-isolation',
-        title: 'Safe Isolation Procedure',
-        description: 'Step-by-step safe isolation and proving dead sequence'
-      }
-    ]
+    nextSteps: "Once safe isolation is confirmed, proceed with continuity testing of protective conductors (R1+R2).",
+    systemTypes: {
+      singlePhase: [
+        "Test L-N, L-E, N-E combinations",
+        "Check RCD isolation if present",
+        "Verify single-phase supply isolation"
+      ],
+      threePhase: [
+        "Test all phase combinations L1-L2, L1-L3, L2-L3",
+        "Test each phase to neutral L1-N, L2-N, L3-N",
+        "Test each phase to earth L1-E, L2-E, L3-E",
+        "Test neutral to earth N-E"
+      ]
+    }
   },
   {
     id: 5,
     title: "Continuity Testing (R1+R2)",
-    description: "Test the continuity of protective conductors and ring circuits",
+    description: "Testing the continuity of protective conductors and the combined resistance of line and protective conductors for each circuit.",
     category: "Electrical Testing",
     checklist: [
-      "Set up MFT for continuity testing (low resistance ohmmeter)",
-      "Null test leads to remove their resistance from measurements",
-      "Test each protective conductor from consumer unit to outlet",
-      "Measure R1+R2 values for each final circuit",
-      "For ring circuits, test end-to-end resistance of each conductor",
-      "Cross-connect ring circuits to verify continuity and detect spurs",
-      "Record all measurements accurately on test schedule",
-      "Compare readings with calculated values and regulatory limits"
+      "Verify safe isolation has been completed",
+      "Set MFT to low resistance/continuity function",
+      "Null the test leads together",
+      "For ring circuits: perform end-to-end tests first",
+      "Cross-connect ring circuit conductors",
+      "Test R1+R2 at each socket outlet on ring circuits",
+      "Test R1+R2 at the furthest point of radial circuits",
+      "Record all readings on test results schedule"
     ],
     safetyNotes: [
-      "Ensure installation remains isolated during testing",
-      "Double-check test lead connections are secure",
-      "Be aware of parallel paths that may affect readings",
-      "Remove or isolate electronic equipment that could be damaged"
+      "Ensure circuit is isolated and proved dead",
+      "Use test current of at least 200mA DC",
+      "Check for voltage before connecting test leads",
+      "Be aware that some electronic equipment may be damaged by test current"
     ],
-    regulations: [
-      "BS7671 Section 612.2 - Continuity of protective conductors",
-      "IET Guidance Note 3 - Section 10.3",
-      "BS7671 Appendix 15 - Ring and radial final circuit conductors"
-    ],
-    nextSteps: "Proceed to insulation resistance testing",
     mftSettings: {
-      testType: "Continuity/Low Resistance",
-      voltage: "4V to 24V DC",
-      current: "≥200mA",
-      duration: "Until stable reading obtained",
-      leads: ["Red test lead to Line at consumer unit", "Black test lead to Earth at test point"]
+      testType: "Low Resistance/Continuity",
+      voltage: "6-24V DC",
+      current: "≥200mA DC",
+      duration: "Instantaneous",
+      leads: ["Red probe", "Black probe", "Long trailing leads for distant points"]
     },
     connections: [
-      "Connect red lead to Line terminal at consumer unit",
-      "Connect black lead to Earth terminal at outlet being tested",
-      "For ring circuits: test L-L, N-N, E-E end-to-end first",
-      "Then cross-connect: L-N, L-E, N-E to verify ring integrity"
+      "Connect red lead to line terminal at consumer unit",
+      "Connect black lead to earth terminal at circuit end point",
+      "For ring circuits: cross-connect L1 to N2, L2 to N1 at CU",
+      "Test between line and earth at each socket outlet"
     ],
     expectedResults: {
-      acceptable: "Low resistance values, typically <1Ω for most circuits",
-      typical: "2.5mm² T&E: ~7.41mΩ/m, 1.5mm² T&E: ~12.02mΩ/m",
-      investigate: "High resistance (>expected calculated value + 20%)"
+      typical: "0.05-2.0Ω depending on cable size and length",
+      minimum: "No minimum specified",
+      maximum: "Must enable disconnection times per Table 41.1"
     },
     troubleshooting: [
       {
-        issue: "High R1+R2 reading",
-        causes: ["Loose connections", "Damaged cable", "Wrong cable size", "Poor terminations"],
-        solutions: ["Check all connections", "Inspect cable route", "Verify cable specification", "Re-terminate connections"]
+        issue: "Very high resistance readings (>10Ω)",
+        causes: ["Poor connection at terminations", "Damaged cable", "Incorrect test method"],
+        solutions: ["Check and tighten all connections", "Inspect cable for damage", "Verify test lead connections"]
       },
       {
-        issue: "Open circuit reading",
-        causes: ["Broken conductor", "Disconnected terminal", "Wrong test points"],
-        solutions: ["Trace circuit path", "Check terminations", "Verify test point selection"]
+        issue: "Open circuit readings (OL)",
+        causes: ["Broken conductor", "Loose connection", "Wrong terminals tested"],
+        solutions: ["Check circuit continuity first", "Inspect all joints and terminations", "Verify test setup"]
       }
     ],
+    regulations: [
+      "BS 7671:2018 Section 643.2.3 - Continuity of protective conductors",
+      "BS 7671:2018 Table 41.1 - Maximum disconnection times",
+      "GS38 - Electrical test equipment safety"
+    ],
+    nextSteps: "Proceed with insulation resistance testing once all continuity tests are satisfactory.",
     systemTypes: {
       singlePhase: [
-        "Test L-E path resistance",
-        "Single phase circuits only",
-        "Simpler ring circuit testing"
+        "Test each circuit individually",
+        "Record L-CPC resistance for each circuit"
       ],
       threePhase: [
-        "Test L1-E, L2-E, L3-E separately",
-        "Consider load balancing",
-        "More complex ring arrangements possible"
+        "Test each phase separately",
+        "Consider load balancing when testing",
+        "Test neutral integrity"
       ]
-    },
-    diagrams: [
-      {
-        type: 'continuity',
-        title: 'R1+R2 Testing Setup',
-        description: 'MFT connections and ring circuit testing procedures'
-      },
-      {
-        type: 'mft-connection',
-        title: 'MFT Configuration',
-        description: 'Detailed MFT setup for continuity measurements'
-      }
-    ]
+    }
   },
   {
     id: 6,
     title: "Insulation Resistance Testing",
-    description: "Test insulation resistance between conductors and to earth",
+    description: "Testing the insulation resistance between conductors and between conductors and earth to ensure adequate insulation.",
     category: "Electrical Testing",
     checklist: [
-      "Set MFT to insulation resistance test mode",
+      "Disconnect or bypass all electronic equipment",
+      "Ensure all switches and circuit breakers are closed",
+      "Remove all lamps from lampholders",
+      "Link line and neutral together for L-E and N-E tests",
+      "Set MFT to insulation resistance function",
       "Select appropriate test voltage (250V, 500V, or 1000V)",
-      "Ensure all electronic equipment is disconnected or bypassed",
-      "Test between Line and Neutral conductors",
-      "Test between Line and Earth conductors", 
-      "Test between Neutral and Earth conductors",
-      "Record all readings and compare with minimum values",
-      "Investigate any readings below acceptable limits"
+      "Test between all conductor combinations",
+      "Record all readings ≥1MΩ (≥0.5MΩ for SELV)"
     ],
     safetyNotes: [
-      "Disconnect or bypass electronic equipment to prevent damage",
-      "Ensure all switches and circuit breakers are closed during testing",
-      "Use appropriate test voltage for the installation voltage",
-      "Be aware that some readings may take time to stabilise"
+      "Disconnect electronic equipment to prevent damage",
+      "Ensure no one touches conductors during test",
+      "Be aware of stored charge after testing",
+      "Use appropriate test voltage for circuit voltage"
     ],
-    regulations: [
-      "BS7671 Section 612.3 - Insulation resistance",
-      "IET Guidance Note 3 - Section 10.4",
-      "BS7671 Table 61 - Minimum insulation resistance values"
-    ],
-    nextSteps: "Proceed to polarity testing",
     mftSettings: {
       testType: "Insulation Resistance",
-      voltage: "500V DC (typical for 230V installations)",
+      voltage: "500V DC (for low voltage circuits)",
       current: "1mA maximum",
-      duration: "1 minute minimum",
-      leads: ["Test lead to first conductor", "Test lead to second conductor/earth"]
+      duration: "1 minute",
+      leads: ["Red probe", "Black probe", "Earth probe"]
     },
     connections: [
-      "Connect first test lead to Line conductor",
-      "Connect second test lead to Neutral conductor",
-      "Repeat for Line to Earth and Neutral to Earth",
-      "Ensure all circuits under test are connected in parallel"
+      "Link line and neutral together with test lead",
+      "Connect red probe to linked L+N",
+      "Connect black probe to earth terminal",
+      "Test each circuit individually"
     ],
     expectedResults: {
-      acceptable: "≥1MΩ for 230V installations, ≥0.5MΩ for 120V installations",
-      typical: "10MΩ to 100MΩ for new installations",
-      investigate: "Readings below 1MΩ require investigation"
+      typical: "10-100MΩ for new installations",
+      minimum: "≥1MΩ for low voltage circuits, ≥0.5MΩ for SELV",
+      maximum: "No maximum limit"
     },
     troubleshooting: [
       {
-        issue: "Low insulation resistance reading",
-        causes: ["Moisture in cables", "Damaged cable insulation", "Connected electronic equipment", "Dirty connections"],
-        solutions: ["Check for moisture ingress", "Locate damaged cables", "Disconnect electronics", "Clean terminals"]
+        issue: "Low insulation resistance (<1MΩ)",
+        causes: ["Moisture ingress", "Damaged cable insulation", "Contamination", "Electronic equipment connected"],
+        solutions: ["Check for damp conditions", "Inspect cable for damage", "Clean terminals", "Ensure all equipment disconnected"]
       },
       {
-        issue: "Unstable readings",
-        causes: ["Charging current in long cables", "Electronic equipment influence", "Poor connections"],
-        solutions: ["Allow longer stabilisation time", "Disconnect electronics", "Check test lead connections"]
+        issue: "Gradually decreasing readings",
+        causes: ["Charging effect of long cables", "Electronic equipment partially connected"],
+        solutions: ["Allow time for cable charging", "Double-check equipment isolation", "Use longer test duration"]
       }
     ],
+    regulations: [
+      "BS 7671:2018 Section 643.4 - Insulation resistance",
+      "BS 7671:2018 Table 61 - Minimum insulation resistance values"
+    ],
+    nextSteps: "Continue with polarity testing to verify correct connection of line and neutral conductors.",
     systemTypes: {
       singlePhase: [
-        "Test L-N, L-E, N-E",
-        "Simple two-conductor systems",
-        "Check each circuit separately"
+        "Test L-N, L-E, N-E combinations",
+        "Use 500V test voltage for 230V circuits"
       ],
       threePhase: [
-        "Test all combinations: L1-L2, L1-L3, L2-L3",
-        "Test each line to neutral and earth",
-        "Consider system earthing arrangement"
+        "Test between all phase combinations",
+        "Test each phase to neutral and earth",
+        "Use 500V test for 400V systems"
       ]
-    },
-    diagrams: [
-      {
-        type: 'insulation',
-        title: 'Insulation Resistance Testing',
-        description: 'MFT setup and conductor combinations for insulation testing'
-      }
-    ]
+    }
   },
   {
     id: 7,
     title: "Polarity Testing",
-    description: "Verify correct polarity of all circuits and single-pole devices",
-    category: "Electrical Testing", 
+    description: "Verification that line and neutral conductors are correctly connected and that switches are in the line conductor.",
+    category: "Electrical Testing",
     checklist: [
+      "Verify safe isolation is maintained",
       "Check polarity at the origin of the installation",
-      "Verify polarity at all socket outlets",
-      "Test polarity at all lighting points and switches",
-      "Check single-pole devices are connected in line conductor only",
+      "Test polarity at each distribution board",
+      "Verify switches are connected in line conductors only",
+      "Check correct polarity at all socket outlets",
+      "Test polarity at all fixed equipment connections",
       "Verify Edison screw lampholders have line to centre contact",
-      "Check polarity of all fixed appliances",
-      "Ensure correct polarity at all distribution boards",
-      "Record any polarity errors found"
+      "Record polarity as correct or incorrect for each circuit"
     ],
     safetyNotes: [
-      "Polarity testing can be done live or dead",
-      "If testing live, use extreme caution and proper PPE",
-      "Dead testing requires temporary connections for continuity",
-      "Mark any circuits with incorrect polarity clearly"
+      "Maintain isolation throughout polarity testing",
+      "Double-check connections before re-energising",
+      "Incorrect polarity is a serious safety hazard",
+      "Pay particular attention to lighting circuits"
     ],
     regulations: [
-      "BS7671 Section 612.6 - Polarity",
-      "BS7671 Section 643.7 - Polarity", 
-      "IET Guidance Note 3 - Section 10.7"
+      "BS 7671:2018 Section 643.6 - Polarity testing",
+      "BS 7671:2018 Regulation 132.14 - Protective conductor continuity"
     ],
-    nextSteps: "Proceed to earth fault loop impedance testing",
-    mftSettings: {
-      testType: "Continuity or Live Polarity Test",
-      voltage: "Low voltage DC or line voltage",
-      current: "Test current as appropriate",
-      duration: "Until reading obtained",
-      leads: ["Line test lead", "Neutral/Earth test lead"]
-    },
-    connections: [
-      "For dead testing: link L-N at consumer unit, test continuity to outlets",
-      "For live testing: use appropriate polarity tester",
-      "Check socket outlets using socket tester",
-      "Test lighting circuits at switches and lampholders"
-    ],
-    expectedResults: {
-      acceptable: "Correct polarity at all points tested",
-      typical: "Line connected to correct terminals throughout",
-      investigate: "Any incorrect polarity connections"
-    },
-    troubleshooting: [
-      {
-        issue: "Incorrect polarity at socket",
-        causes: ["Wires crossed during installation", "Incorrect socket wiring", "Fault in distribution"],
-        solutions: ["Check wiring at socket", "Trace back to distribution point", "Correct crossed conductors"]
-      },
-      {
-        issue: "Switch in neutral instead of line",
-        causes: ["Installation error", "Crossed conductors", "DIY work"],
-        solutions: ["Rewire switch correctly", "Check all switching points", "Verify at consumer unit"]
-      }
-    ],
-    diagrams: [
-      {
-        type: 'polarity',
-        title: 'Polarity Testing Methods',
-        description: 'Live and dead testing techniques for polarity verification'
-      }
-    ]
+    nextSteps: "If all polarity tests are correct, proceed with earth fault loop impedance testing (Zs).",
+    systemTypes: {
+      singlePhase: [
+        "Verify L-N polarity throughout installation",
+        "Check single-phase socket outlet wiring"
+      ],
+      threePhase: [
+        "Verify phase sequence L1-L2-L3",
+        "Check three-phase socket outlet connections",
+        "Verify motor connection phase rotation"
+      ]
+    }
   },
   {
     id: 8,
-    title: "Earth Fault Loop Impedance (Zs)",
-    description: "Measure earth fault loop impedance to verify protective device operation",
+    title: "Earth Fault Loop Impedance Testing (Zs)",
+    description: "Measurement of the earth fault loop impedance to ensure automatic disconnection of supply will occur within required times.",
     category: "Electrical Testing",
     checklist: [
-      "Set up MFT for earth fault loop impedance testing",
+      "Ensure installation is fully energised and operational",
+      "Set MFT to earth fault loop impedance function",
       "Test Zs at the origin of the installation",
-      "Measure Zs at all socket outlets and fixed equipment",
-      "Test each distribution board",
-      "Record all Zs readings accurately",
-      "Compare readings with maximum permitted values",
-      "Check RCD doesn't trip during testing (use no-trip mode if available)",
-      "Verify protective device coordination"
+      "Test Zs at each distribution board",
+      "Test Zs at the furthest point of each circuit",
+      "Compare results with maximum values in BS 7671",
+      "Consider temperature correction factors",
+      "Record all Zs readings on test schedule"
     ],
     safetyNotes: [
-      "This test is normally carried out live",
-      "RCDs may trip during testing - use no-trip facilities where available",
-      "High current test may affect sensitive equipment",
-      "Ensure good connection to test probes"
+      "Installation must be energised for this test",
+      "RCDs may trip during testing - use no-trip mode if available",
+      "Be aware of parallel earth paths affecting readings",
+      "Ensure proper earth connection at test point"
     ],
-    regulations: [
-      "BS7671 Section 612.9 - Earth fault loop impedance",
-      "BS7671 Section 411.5 - Additional protection",
-      "IET Guidance Note 3 - Section 10.6"
-    ],
-    nextSteps: "Proceed to RCD testing if applicable",
     mftSettings: {
-      testType: "Earth Fault Loop Impedance",
-      voltage: "Line voltage",
-      current: "Test current typically 15A-25A",
-      duration: "Very short duration pulse",
-      leads: ["Line test probe", "Earth test probe"]
+      testType: "Earth Fault Loop Impedance (Zs)",
+      voltage: "Supply voltage (230V/400V)",
+      current: "15A test current (brief duration)",
+      duration: "40ms typical",
+      leads: ["Line probe", "Earth probe", "Neutral reference"]
     },
     connections: [
-      "Connect line probe to line terminal at test point",
+      "Connect line probe to line terminal",
       "Connect earth probe to earth terminal",
-      "Ensure good electrical contact",
-      "Test at socket outlets using appropriate adaptors"
+      "Ensure good earth connection at test point",
+      "Use appropriate socket adapter for outlet testing"
     ],
     expectedResults: {
-      acceptable: "Zs ≤ maximum values in BS7671 tables",
-      typical: "Domestic installations: typically 0.35Ω to 1.44Ω depending on protective device",
-      investigate: "High Zs readings that exceed maximum permitted values"
+      typical: "0.1-2.0Ω for TN systems",
+      minimum: "No minimum specified",
+      maximum: "Per BS 7671 Tables 41.2-41.4 depending on protective device"
     },
     troubleshooting: [
       {
-        issue: "High Zs reading",
-        causes: ["Poor earth connections", "High supply impedance", "Damaged earth conductor", "Corroded connections"],
-        solutions: ["Check earth bonding", "Test supply Ze", "Inspect earth continuity", "Clean connections"]
+        issue: "Zs readings higher than maximum permitted",
+        causes: ["Poor earth connections", "High external loop impedance (Ze)", "Cable size too small", "Long circuit length"],
+        solutions: ["Check earth connections", "Verify Ze at origin", "Consider cable upgrade", "Install RCD protection"]
       },
       {
-        issue: "RCD trips during test",
-        causes: ["Test current causing imbalance", "Sensitive RCD", "Leakage current present"],
-        solutions: ["Use no-trip test facility", "Test RCD separately", "Check for earth leakage"]
+        issue: "RCD tripping during test",
+        causes: ["Normal RCD operation during earth fault simulation", "Sensitive RCD settings"],
+        solutions: ["Use no-trip test method", "Temporarily bypass RCD if safe to do so", "Calculate Zs from Ze + R1+R2"]
       }
     ],
-    diagrams: [
-      {
-        type: 'earth-fault-loop',
-        title: 'Earth Fault Loop Testing',
-        description: 'Zs measurement setup and protective device coordination'
-      }
-    ]
+    regulations: [
+      "BS 7671:2018 Section 643.7 - Earth fault loop impedance",
+      "BS 7671:2018 Chapter 41 - Protection against electric shock",
+      "BS 7671:2018 Tables 41.2-41.4 - Maximum earth fault loop impedance"
+    ],
+    nextSteps: "Complete testing with RCD testing if RCDs are installed in the circuits.",
+    systemTypes: {
+      singlePhase: [
+        "Test at each socket outlet and fixed equipment",
+        "Verify disconnection times for MCBs/RCBOs"
+      ],
+      threePhase: [
+        "Test each phase separately",
+        "Consider phase-to-earth fault conditions",
+        "Verify three-phase equipment protection"
+      ]
+    }
   },
   {
     id: 9,
     title: "RCD Testing",
-    description: "Test RCD operation and disconnection times",
+    description: "Testing the operation of Residual Current Devices (RCDs) to ensure they provide additional protection against electric shock.",
     category: "Electrical Testing",
     checklist: [
-      "Test RCD using test button (functional test)",
-      "Set up MFT for RCD testing mode",
-      "Test at 50% of rated current (should not trip)",
-      "Test at 100% of rated current (should trip)",
-      "Test at 5× rated current for disconnection time",
-      "Test both positive and negative half cycles",
-      "Record trip times and currents",
-      "Reset RCD after each test"
+      "Identify all RCDs in the installation",
+      "Test RCD using integral test button first",
+      "Set MFT to RCD test function",
+      "Test at half rated current (should not trip)",
+      "Test at rated current (should trip within limits)",
+      "Test at 5x rated current for fast trip time",
+      "Test ramp function to determine actual trip current",
+      "Record trip times and currents for each RCD"
     ],
     safetyNotes: [
-      "Always test RCD test button first",
-      "Ensure RCD resets properly after each test",
-      "Check no equipment is affected by RCD operation",
-      "Some RCDs may require multiple tests to stabilise"
+      "RCD testing will disconnect the supply temporarily",
+      "Inform occupants before testing",
+      "Check for equipment that may be affected by power interruption",
+      "Ensure RCD resets properly after each test"
     ],
-    regulations: [
-      "BS7671 Section 612.10 - Additional protection",
-      "BS7671 Section 531.3.3 - RCD requirements",
-      "IET Guidance Note 3 - Section 10.8"
-    ],
-    nextSteps: "Complete testing documentation and certification",
     mftSettings: {
       testType: "RCD Test",
-      voltage: "Line voltage",
-      current: "½×, 1×, and 5× rated trip current",
-      duration: "As per test sequence",
-      leads: ["Line and neutral test leads", "Earth connection"]
+      voltage: "Supply voltage",
+      current: "½In, In, 5×In (where In = rated residual current)",
+      duration: "Variable - measured by instrument",
+      leads: ["Line probe", "Neutral probe", "Earth probe"]
     },
     connections: [
-      "Connect test leads to line and neutral downstream of RCD",
-      "Connect earth reference",
-      "Select appropriate RCD rating on MFT",
-      "Ensure RCD is energised and reset before testing"
+      "Connect to load side of RCD being tested",
+      "Ensure proper line, neutral and earth connections",
+      "Use RCD adapter or hard-wired connection as appropriate"
     ],
     expectedResults: {
-      acceptable: "Trip at 100% rated current, <300ms at 1× In, <40ms at 5× In",
-      typical: "Trip times: 30A RCD ~20-40ms at 5× In, 100mA RCD ~15-25ms",
-      investigate: "Failure to trip, slow trip times, or nuisance tripping"
+      typical: "30mA RCD: <300ms at 1×In, <40ms at 5×In",
+      minimum: "Must trip at rated current",
+      maximum: "300ms at rated current, 40ms at 5× rated current"
     },
     troubleshooting: [
       {
-        issue: "RCD won't trip during test",
-        causes: ["Faulty RCD", "Incorrect test setup", "RCD bypassed", "Wrong rating selected"],
-        solutions: ["Check RCD functionality", "Verify test connections", "Check RCD wiring", "Confirm RCD rating"]
+        issue: "RCD does not trip at rated current",
+        causes: ["Faulty RCD mechanism", "Incorrect test connections", "RCD current setting too high"],
+        solutions: ["Replace RCD", "Check test lead connections", "Verify RCD rating and settings"]
       },
       {
-        issue: "Slow trip times",
-        causes: ["Worn RCD contacts", "Mechanical problems", "Interference", "Temperature effects"],
-        solutions: ["Replace RCD", "Check mechanical operation", "Test in different conditions", "Verify test method"]
+        issue: "RCD trips at less than half rated current",
+        causes: ["RCD too sensitive", "Existing earth leakage", "Faulty RCD"],
+        solutions: ["Check for earth leakage in circuits", "Test individual circuits", "Consider RCD replacement"]
       }
-    ],
-    diagrams: [
-      {
-        type: 'rcd',
-        title: 'RCD Testing Procedure',
-        description: 'RCD test setup and trip time measurement methods'
-      }
-    ]
-  },
-  {
-    id: 10,
-    title: "Final Documentation and Certification",
-    description: "Complete all testing documentation and issue certificates",
-    category: "Documentation",
-    checklist: [
-      "Complete all test result schedules accurately",
-      "Calculate maximum Zs values and verify compliance",
-      "Document any defects or limitations found",
-      "Prepare electrical installation certificate or inspection report",
-      "Include recommendations for remedial work if required",
-      "Provide client with appropriate certification",
-      "File copies as required by company procedures",
-      "Schedule any follow-up inspections needed"
-    ],
-    safetyNotes: [
-      "Ensure all circuits are properly restored after testing",
-      "Check all protective devices are correctly reset",
-      "Verify normal operation of installation",
-      "Brief client on any immediate safety concerns"
     ],
     regulations: [
-      "BS7671 Part 6 - Inspection and testing",
-      "IET Guidance Note 3 - Certification requirements",
-      "Electrical Safety First Best Practice Guide 4"
+      "BS 7671:2018 Section 643.8 - Additional protection",
+      "BS 4293 - Specification for residual current devices",
+      "BS EN 61008 - RCD standards"
     ],
-    nextSteps: "Archive documentation and plan any required remedial work",
-    installationTypes: {
-      domestic: [
-        "Electrical Installation Certificate (EIC) for new work",
-        "Electrical Installation Condition Report (EICR) for existing",
-        "Minor Works Certificate for small additions"
+    nextSteps: "Complete all documentation including Electrical Installation Certificate and schedules of inspection and test results.",
+    systemTypes: {
+      singlePhase: [
+        "Test main RCD and any additional RCDs",
+        "Verify 30mA protection for socket circuits"
       ],
-      commercial: [
-        "Full inspection and test certificates required",
-        "Emergency lighting and fire alarm certificates",
-        "Detailed defect schedules and recommendations"
-      ],
-      industrial: [
-        "Comprehensive documentation for complex installations",
-        "Coordination with other trades and systems",
-        "Detailed maintenance schedules and requirements"
+      threePhase: [
+        "Test three-phase RCDs",
+        "Check type A or type AC as appropriate",
+        "Verify correct operation on all phases"
       ]
-    },
-    diagrams: [
-      {
-        type: 'visual-inspection',
-        title: 'Documentation Checklist',
-        description: 'Essential certification and reporting requirements'
-      }
-    ]
+    }
   }
 ];

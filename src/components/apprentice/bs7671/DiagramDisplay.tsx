@@ -9,6 +9,9 @@ import MFTConnectionDiagram from "./diagrams/MFTConnectionDiagram";
 import InsulationTestingDiagram from "./diagrams/InsulationTestingDiagram";
 import EarthFaultLoopDiagram from "./diagrams/EarthFaultLoopDiagram";
 import RCDTestingDiagram from "./diagrams/RCDTestingDiagram";
+import InitialVerificationDiagram from "./diagrams/InitialVerificationDiagram";
+import ComplianceChecklistDiagram from "./diagrams/ComplianceChecklistDiagram";
+import DocumentationRequirementsDiagram from "./diagrams/DocumentationRequirementsDiagram";
 
 interface DiagramDisplayProps {
   stepData: BS7671StepData;
@@ -21,6 +24,21 @@ const DiagramDisplay = ({ stepData, systemType, installationType }: DiagramDispl
     const stepId = stepData.id;
     const category = stepData.category;
     const title = stepData.title.toLowerCase();
+
+    // Initial verification and planning steps
+    if (stepId === 1 || title.includes('initial verification') || title.includes('planning')) {
+      return <InitialVerificationDiagram stepType={stepData.title} installationType={installationType} />;
+    }
+
+    // Compliance and regulation checking
+    if (stepId === 2 || title.includes('compliance') || title.includes('regulation')) {
+      return <ComplianceChecklistDiagram installationType={installationType} />;
+    }
+
+    // Documentation requirements
+    if (stepId === 3 || title.includes('documentation') || title.includes('certificate')) {
+      return <DocumentationRequirementsDiagram installationType={installationType} />;
+    }
 
     // Safe isolation procedures
     if (stepId === 4 || title.includes('isolation')) {
@@ -59,7 +77,7 @@ const DiagramDisplay = ({ stepData, systemType, installationType }: DiagramDispl
 
     // Default fallback for documentation steps
     if (category === "Documentation") {
-      return <VisualInspectionDiagram stepType={stepData.title} installationType={installationType} />;
+      return <DocumentationRequirementsDiagram installationType={installationType} />;
     }
 
     return null;
