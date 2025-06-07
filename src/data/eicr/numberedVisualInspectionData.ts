@@ -1,4 +1,3 @@
-
 export type InspectionOutcome = 'acceptable' | 'c1' | 'c2' | 'c3' | 'fi' | 'lim' | 'na';
 
 export interface NumberedInspectionItem {
@@ -27,37 +26,37 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-1",
     number: "1.0",
-    title: "Adequacy of earthing and main protective bonding conductors",
-    description: "Assessment of the earthing arrangements and main protective bonding conductor installations, connections and adequacy",
-    regulation: "BS 7671:2018+A2:2022 Section 544.1",
+    title: "External condition of intake equipment or overhead lines",
+    description: "Visual inspection of external electrical supply equipment including overhead lines, service heads, and intake arrangements",
+    regulation: "BS 7671:2018+A2:2022 Section 132.12",
     isComplete: false,
     items: [
       {
         id: "1.1",
         number: "1.1",
-        item: "Condition and adequacy of earthing conductor",
-        regulation: "BS 7671 Section 543.1",
+        item: "Condition of overhead line supports and conductors",
+        regulation: "BS 7671 Section 132.12",
         outcome: "acceptable"
       },
       {
         id: "1.2",
         number: "1.2", 
-        item: "Condition of earthing conductor connections",
-        regulation: "BS 7671 Section 543.3",
+        item: "Service head condition and security",
+        regulation: "BS 7671 Section 132.12",
         outcome: "acceptable"
       },
       {
         id: "1.3",
         number: "1.3",
-        item: "Presence and condition of main protective bonding conductors",
-        regulation: "BS 7671 Section 544.1.1",
+        item: "Meter tails condition and support",
+        regulation: "BS 7671 Section 526.3",
         outcome: "acceptable"
       },
       {
         id: "1.4",
         number: "1.4",
-        item: "Main bonding conductor connections and clamps",
-        regulation: "BS 7671 Section 544.1.2",
+        item: "External intake equipment weatherproofing",
+        regulation: "BS 7671 Section 512.2",
         outcome: "acceptable"
       }
     ]
@@ -65,37 +64,37 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-2",
     number: "2.0",
-    title: "Condition of electrical equipment and accessories",
-    description: "Visual inspection of electrical equipment, accessories, switches, socket outlets and other electrical components for condition and suitability",
-    regulation: "BS 7671:2018+A2:2022 Section 553",
+    title: "Condition of equipment, including switchgear",
+    description: "Assessment of electrical equipment condition including distribution boards, switches, and control equipment",
+    regulation: "BS 7671:2018+A2:2022 Section 511",
     isComplete: false,
     items: [
       {
         id: "2.1",
         number: "2.1",
-        item: "Condition and security of socket outlets",
-        regulation: "BS 7671 Section 553.1",
+        item: "Consumer unit or distribution board condition",
+        regulation: "BS 7671 Section 511.1",
         outcome: "acceptable"
       },
       {
         id: "2.2",
         number: "2.2",
-        item: "Condition and operation of switches and control equipment",
+        item: "Switchgear operation and condition",
         regulation: "BS 7671 Section 537.1",
         outcome: "acceptable"
       },
       {
         id: "2.3",
         number: "2.3",
-        item: "Condition of joint boxes and junction points",
-        regulation: "BS 7671 Section 526.3",
+        item: "Equipment mounting and fixing security",
+        regulation: "BS 7671 Section 134.1.1",
         outcome: "acceptable"
       },
       {
         id: "2.4",
         number: "2.4",
-        item: "Presence and condition of covers and enclosures",
-        regulation: "BS 7671 Section 416.2.1",
+        item: "Equipment suitability for environment",
+        regulation: "BS 7671 Section 512.2",
         outcome: "acceptable"
       }
     ]
@@ -103,37 +102,37 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-3",
     number: "3.0",
-    title: "Condition of conductors",
-    description: "Assessment of electrical conductors including cables, cable sheaths, routing, support and mechanical protection arrangements",
+    title: "Condition of all conductors",
+    description: "Inspection of all electrical conductors including cables, flexible cords, and conductor connections",
     regulation: "BS 7671:2018+A2:2022 Section 522",
     isComplete: false,
     items: [
       {
         id: "3.1",
         number: "3.1",
-        item: "Condition of cables and cable sheaths",
+        item: "Fixed wiring conductor condition",
         regulation: "BS 7671 Section 522.1",
         outcome: "acceptable"
       },
       {
         id: "3.2",
         number: "3.2",
-        item: "Adequacy of cable support and routing",
-        regulation: "BS 7671 Section 522.8",
+        item: "Flexible cord and cable condition",
+        regulation: "BS 7671 Section 521.9",
         outcome: "acceptable"
       },
       {
         id: "3.3",
         number: "3.3",
-        item: "Mechanical protection of cables",
-        regulation: "BS 7671 Section 522.6",
+        item: "Conductor support and protection",
+        regulation: "BS 7671 Section 522.8",
         outcome: "acceptable"
       },
       {
         id: "3.4",
         number: "3.4",
-        item: "Cables routed in prescribed zones or adequately protected",
-        regulation: "BS 7671 Section 522.6.202",
+        item: "Conductor termination condition",
+        regulation: "BS 7671 Section 526.1",
         outcome: "acceptable"
       }
     ]
@@ -141,37 +140,37 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-4",
     number: "4.0",
-    title: "Identification",
-    description: "Verification of circuit identification, labelling of electrical equipment, switches and protective devices",
-    regulation: "BS 7671:2018+A2:2022 Section 514",
+    title: "Condition of all accessories and equipment",
+    description: "Assessment of socket outlets, switches, lighting accessories, and other electrical equipment",
+    regulation: "BS 7671:2018+A2:2022 Section 553",
     isComplete: false,
     items: [
       {
         id: "4.1",
         number: "4.1",
-        item: "Adequacy of circuit identification and labelling",
-        regulation: "BS 7671 Section 514.8",
+        item: "Socket outlet condition and security",
+        regulation: "BS 7671 Section 553.1",
         outcome: "acceptable"
       },
       {
         id: "4.2",
         number: "4.2",
-        item: "Identification and labelling of main switch",
-        regulation: "BS 7671 Section 514.11",
+        item: "Switch and control equipment condition",
+        regulation: "BS 7671 Section 537.2",
         outcome: "acceptable"
       },
       {
         id: "4.3",
         number: "4.3",
-        item: "Identification of protective conductors",
-        regulation: "BS 7671 Section 514.3.1",
+        item: "Lighting accessories and fittings",
+        regulation: "BS 7671 Section 559.4",
         outcome: "acceptable"
       },
       {
         id: "4.4",
         number: "4.4",
-        item: "Warning notices and labels where required",
-        regulation: "BS 7671 Section 514.12",
+        item: "Other electrical accessories condition",
+        regulation: "BS 7671 Section 553.2",
         outcome: "acceptable"
       }
     ]
@@ -179,37 +178,37 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-5",
     number: "5.0",
-    title: "Protective devices and switches",
-    description: "Assessment of circuit protective devices including MCBs, RCBOs, fuses, switches and their suitability and condition",
-    regulation: "BS 7671:2018+A2:2022 Section 431",
+    title: "Connection of conductors",
+    description: "Inspection of conductor connections, joints, and terminations throughout the installation",
+    regulation: "BS 7671:2018+A2:2022 Section 526",
     isComplete: false,
     items: [
       {
         id: "5.1",
         number: "5.1",
-        item: "Type and rating of protective devices",
-        regulation: "BS 7671 Section 431.1",
+        item: "Main switch and distribution connections",
+        regulation: "BS 7671 Section 526.5",
         outcome: "acceptable"
       },
       {
         id: "5.2",
         number: "5.2",
-        item: "Condition and operation of circuit breakers",
-        regulation: "BS 7671 Section 531.3",
+        item: "Circuit protective device connections",
+        regulation: "BS 7671 Section 526.5",
         outcome: "acceptable"
       },
       {
         id: "5.3",
         number: "5.3",
-        item: "Operation and condition of main switch",
-        regulation: "BS 7671 Section 537.1.2",
+        item: "Accessory and equipment connections",
+        regulation: "BS 7671 Section 526.1",
         outcome: "acceptable"
       },
       {
         id: "5.4",
         number: "5.4",
-        item: "Condition of fuse carriers and fuses",
-        regulation: "BS 7671 Section 533.1",
+        item: "Junction box and joint connections",
+        regulation: "BS 7671 Section 526.3",
         outcome: "acceptable"
       }
     ]
@@ -217,37 +216,37 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-6",
     number: "6.0",
-    title: "Terminations and connections",
-    description: "Inspection of electrical terminations, connections and joints for security and condition",
-    regulation: "BS 7671:2018+A2:2022 Section 526",
+    title: "Identification of conductors and protective devices",
+    description: "Verification of proper identification, labelling, and marking of conductors and protective devices",
+    regulation: "BS 7671:2018+A2:2022 Section 514",
     isComplete: false,
     items: [
       {
         id: "6.1",
         number: "6.1",
-        item: "Condition of main switch connections",
-        regulation: "BS 7671 Section 526.5",
+        item: "Conductor identification and colour coding",
+        regulation: "BS 7671 Section 514.3",
         outcome: "acceptable"
       },
       {
         id: "6.2",
         number: "6.2",
-        item: "Condition of busbars and connections within board",
-        regulation: "BS 7671 Section 526.5",
+        item: "Circuit identification and labelling",
+        regulation: "BS 7671 Section 514.8",
         outcome: "acceptable"
       },
       {
         id: "6.3",
         number: "6.3",
-        item: "Security and condition of all terminations",
-        regulation: "BS 7671 Section 526.1",
+        item: "Protective device identification",
+        regulation: "BS 7671 Section 514.8",
         outcome: "acceptable"
       },
       {
         id: "6.4",
         number: "6.4",
-        item: "Adequacy of connection methods",
-        regulation: "BS 7671 Section 526.2",
+        item: "Emergency switching identification",
+        regulation: "BS 7671 Section 514.11",
         outcome: "acceptable"
       }
     ]
@@ -255,37 +254,37 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-7",
     number: "7.0",
-    title: "Presence and adequacy of warning notices",
-    description: "Verification of the presence and adequacy of warning notices, labels and documentation as required",
-    regulation: "BS 7671:2018+A2:2022 Section 514.12",
+    title: "Single pole switching or control in line conductors only",
+    description: "Verification that single pole switching and control devices are connected in line conductors only",
+    regulation: "BS 7671:2018+A2:2022 Section 132.14.1",
     isComplete: false,
     items: [
       {
         id: "7.1",
         number: "7.1",
-        item: "RCD test button operation and labelling",
-        regulation: "BS 7671 Section 514.12.2",
+        item: "Single pole switch connections",
+        regulation: "BS 7671 Section 132.14.1",
         outcome: "acceptable"
       },
       {
         id: "7.2",
         number: "7.2",
-        item: "Voltage warning notices where required",
-        regulation: "BS 7671 Section 514.10.1",
+        item: "Control device pole configuration",
+        regulation: "BS 7671 Section 537.2.1",
         outcome: "acceptable"
       },
       {
         id: "7.3",
         number: "7.3",
-        item: "Emergency switching notices",
-        regulation: "BS 7671 Section 514.11.1",
+        item: "Neutral conductor switching",
+        regulation: "BS 7671 Section 132.14.2",
         outcome: "acceptable"
       },
       {
         id: "7.4",
         number: "7.4",
-        item: "Installation certificates and schedules available",
-        regulation: "BS 7671 Section 631.1",
+        item: "Emergency switching arrangements",
+        regulation: "BS 7671 Section 537.4",
         outcome: "acceptable"
       }
     ]
@@ -293,37 +292,37 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-8",
     number: "8.0",
-    title: "Presence and condition of barriers and enclosures",
-    description: "Assessment of barriers, enclosures and IP ratings for electrical equipment and installations",
-    regulation: "BS 7671:2018+A2:2022 Section 416",
+    title: "Correct connection of socket outlets, lamps and fixed equipment",
+    description: "Verification of proper connection and polarity of socket outlets, lighting, and fixed electrical equipment",
+    regulation: "BS 7671:2018+A2:2022 Section 612.6",
     isComplete: false,
     items: [
       {
         id: "8.1",
         number: "8.1",
-        item: "Condition of enclosure and IP rating suitability",
-        regulation: "BS 7671 Section 416.2",
+        item: "Socket outlet polarity and connections",
+        regulation: "BS 7671 Section 612.6",
         outcome: "acceptable"
       },
       {
         id: "8.2",
         number: "8.2",
-        item: "Adequacy of barriers to prevent contact",
-        regulation: "BS 7671 Section 416.2.1",
+        item: "Lighting circuit connections and polarity",
+        regulation: "BS 7671 Section 612.6",
         outcome: "acceptable"
       },
       {
         id: "8.3",
         number: "8.3",
-        item: "Security of enclosure fastenings",
-        regulation: "BS 7671 Section 416.2.4",
+        item: "Fixed equipment connections",
+        regulation: "BS 7671 Section 554.1",
         outcome: "acceptable"
       },
       {
         id: "8.4",
         number: "8.4",
-        item: "Access restrictions where required",
-        regulation: "BS 7671 Section 416.2.5",
+        item: "Earth terminal connections",
+        regulation: "BS 7671 Section 543.3",
         outcome: "acceptable"
       }
     ]
@@ -331,37 +330,37 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-9",
     number: "9.0",
-    title: "Suitability of equipment for external influences",
-    description: "Assessment of electrical equipment suitability for environmental and external influences including IP ratings and special locations",
-    regulation: "BS 7671:2018+A2:2022 Section 512.2",
+    title: "Presence and correct connection of earthing and bonding conductors",
+    description: "Assessment of earthing arrangements and main protective bonding conductor installations and connections",
+    regulation: "BS 7671:2018+A2:2022 Section 544.1",
     isComplete: false,
     items: [
       {
         id: "9.1",
         number: "9.1",
-        item: "Environmental suitability of electrical equipment",
-        regulation: "BS 7671 Section 512.2.1",
+        item: "Main earthing conductor presence and condition",
+        regulation: "BS 7671 Section 543.1",
         outcome: "acceptable"
       },
       {
         id: "9.2",
         number: "9.2",
-        item: "IP rating compliance for location",
-        regulation: "BS 7671 Section 512.2.4",
+        item: "Main bonding conductor connections",
+        regulation: "BS 7671 Section 544.1.1",
         outcome: "acceptable"
       },
       {
         id: "9.3",
         number: "9.3",
-        item: "Special location requirements compliance",
-        regulation: "BS 7671 Part 7",
+        item: "Supplementary bonding where required",
+        regulation: "BS 7671 Section 544.2",
         outcome: "acceptable"
       },
       {
         id: "9.4",
         number: "9.4",
-        item: "External influences assessment",
-        regulation: "BS 7671 Appendix 5",
+        item: "Circuit protective conductor continuity",
+        regulation: "BS 7671 Section 543.2",
         outcome: "acceptable"
       }
     ]
@@ -369,37 +368,37 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-10",
     number: "10.0",
-    title: "Selection and erection to minimise the spread of fire",
-    description: "Assessment of installation methods and equipment selection to prevent fire spread and comply with fire safety requirements",
-    regulation: "BS 7671:2018+A2:2022 Section 527",
+    title: "Adequacy of arrangements for other safety services",
+    description: "Assessment of safety service arrangements including emergency lighting, fire alarm systems, and other safety installations",
+    regulation: "BS 7671:2018+A2:2022 Section 560",
     isComplete: false,
     items: [
       {
         id: "10.1",
         number: "10.1",
-        item: "Fire barrier penetrations sealed appropriately",
-        regulation: "BS 7671 Section 527.1.3",
+        item: "Emergency lighting system adequacy",
+        regulation: "BS 7671 Section 560.7",
         outcome: "acceptable"
       },
       {
         id: "10.2",
         number: "10.2",
-        item: "Cable selection for fire performance",
-        regulation: "BS 7671 Section 521.10.1",
+        item: "Fire alarm and detection systems",
+        regulation: "BS 7671 Section 560.8",
         outcome: "acceptable"
       },
       {
         id: "10.3",
         number: "10.3",
-        item: "Segregation of safety circuits",
-        regulation: "BS 7671 Section 528.1",
+        item: "Safety service supply arrangements",
+        regulation: "BS 7671 Section 560.5",
         outcome: "acceptable"
       },
       {
         id: "10.4",
         number: "10.4",
-        item: "Fire stopping of cable routes",
-        regulation: "BS 7671 Section 527.1.4",
+        item: "Segregation of safety circuits",
+        regulation: "BS 7671 Section 528.1",
         outcome: "acceptable"
       }
     ]
