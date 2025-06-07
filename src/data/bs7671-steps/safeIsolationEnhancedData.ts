@@ -174,6 +174,57 @@ export const safeIsolationEnhancedData = {
     }
   ],
 
+  troubleshooting: [
+    {
+      issue: "Test equipment shows voltage when circuit should be dead",
+      causes: [
+        "Incorrect isolation point selected",
+        "Alternative supply route not identified",
+        "Induced voltage from adjacent circuits",
+        "Faulty isolation switch or contactor"
+      ],
+      solutions: [
+        "Double-check isolation points against drawings",
+        "Look for alternative supply routes",
+        "Check for backfeed from other circuits",
+        "Test isolation device operation",
+        "Consult supervisor if uncertainty remains"
+      ]
+    },
+    {
+      issue: "Test equipment appears to have failed during testing",
+      causes: [
+        "Damaged test leads",
+        "Low battery in voltage indicator",
+        "Excessive fault current damage",
+        "Water ingress or contamination"
+      ],
+      solutions: [
+        "Replace test equipment immediately",
+        "Start isolation procedure from beginning",
+        "Check equipment calibration dates",
+        "Report equipment failure to supervisor",
+        "Use alternative calibrated equipment"
+      ]
+    },
+    {
+      issue: "Unable to achieve secure isolation",
+      causes: [
+        "No lockable isolation point available",
+        "Multiple supply sources present",
+        "Generator or UPS backup systems",
+        "Complex distribution arrangement"
+      ],
+      solutions: [
+        "Identify all supply sources systematically",
+        "Use multiple isolation points if required",
+        "Coordinate with building management",
+        "Implement permit-to-work procedures",
+        "Consider alternative work methods"
+      ]
+    }
+  ],
+
   emergencyProcedures: {
     ifVoltageDetected: [
       "Do not touch any conductors",
