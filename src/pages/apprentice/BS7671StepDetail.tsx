@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight, CheckSquare, AlertTriangle, BookOpen, Calculator
 import { Progress } from "@/components/ui/progress";
 import { Checkbox } from "@/components/ui/checkbox";
 import { enhancedBS7671Steps } from "@/data/bs7671-steps/enhancedStepData";
+import { safeIsolationEnhancedData } from "@/data/bs7671-steps/safeIsolationEnhancedData";
 import TestingInstructions from "@/components/apprentice/bs7671/TestingInstructions";
 import TroubleshootingGuide from "@/components/apprentice/bs7671/TroubleshootingGuide";
 import SystemTypeSelector from "@/components/apprentice/bs7671/SystemTypeSelector";
@@ -20,8 +21,24 @@ const BS7671StepDetail = () => {
   const [systemType, setSystemType] = useState<string>("");
   const [installationType, setInstallationType] = useState<string>("");
 
+  // Get step data from enhanced steps or safe isolation data
   const stepData = enhancedBS7671Steps.find(step => step.id === currentStep);
-  const totalItems = stepData?.checklist.length || 0;
+  const isSafeIsolationStep = currentStep === 4;
+  
+  // For safe isolation step, we need to adapt the data structure
+  const adaptedStepData = isSafeIsolationStep ? {
+    ...stepData,
+    checklist: safeIsolationEnhancedData.procedureSteps.flatMap(step => step.actions),
+    safetyNotes: safeIsolationEnhancedData.safetyNotes,
+    regulations: [
+      "BS 7671 Regulation 537.2.1.1 - Isolation",
+      "HSE Guidance HSG85 - Electricity at work: Safe working practices", 
+      "HSE Guidance GS38 - Electrical test equipment for use on low voltage electrical systems"
+    ],
+    nextSteps: "With the installation safely isolated, begin continuity testing of protective conductors"
+  } : stepData;
+
+  const totalItems = adaptedStepData?.checklist?.length || 0;
   const completionPercentage = totalItems > 0 ? (checkedItems.size / totalItems) * 100 : 0;
 
   const handleChecklistChange = (item: string, checked: boolean) => {
@@ -47,7 +64,7 @@ const BS7671StepDetail = () => {
     setInstallationType(installation);
   };
 
-  if (!stepData) {
+  if (!adaptedStepData) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <Card className="border-red-500/20 bg-red-900/10">
@@ -81,13 +98,13 @@ const BS7671StepDetail = () => {
         <div className="space-y-2">
           <div className="flex items-center gap-3">
             <h1 className="text-2xl font-bold tracking-tight">
-              Step {currentStep}: {stepData.title}
+              Step {currentStep}: {adaptedStepData.title}
             </h1>
-            <div className={`px-2 py-1 rounded text-xs border ${getCategoryColor(stepData.category)}`}>
-              {stepData.category}
+            <div className={`px-2 py-1 rounded text-xs border ${getCategoryColor(adaptedStepData.category)}`}>
+              {adaptedStepData.category}
             </div>
           </div>
-          <p className="text-muted-foreground">{stepData.description}</p>
+          <p className="text-muted-foreground">{adaptedStepData.description}</p>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Timer className="h-4 w-4" />
             <span>Estimated time: 10-20 minutes</span>
@@ -102,7 +119,7 @@ const BS7671StepDetail = () => {
       </div>
 
       {/* System Type Selection - Show for first step or testing steps */}
-      {(currentStep === 1 || stepData.category === "Electrical Testing") && (
+      {(currentStep === 1 || adaptedStepData.category === "Electrical Testing") && (
         <SystemTypeSelector onSelectionChange={handleSystemSelection} />
       )}
 
@@ -124,13 +141,13 @@ const BS7671StepDetail = () => {
 
       {/* Diagram Display - New visual guide section */}
       <DiagramDisplay 
-        stepData={stepData} 
+        stepData={adaptedStepData} 
         systemType={systemType} 
         installationType={installationType} 
       />
 
       {/* Safety Notes */}
-      {stepData.safetyNotes && stepData.safetyNotes.length > 0 && (
+      {adaptedStepData.safetyNotes && Array.isArray(adaptedStepData.safetyNotes) && adaptedStepData.safetyNotes.length > 0 && (
         <Card className="border-red-500/20 bg-red-900/10">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-red-400">
@@ -140,7 +157,7 @@ const BS7671StepDetail = () => {
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
-              {stepData.safetyNotes.map((note, index) => (
+              {adaptedStepData.safetyNotes.map((note, index) => (
                 <li key={index} className="flex items-start gap-2 text-sm text-red-100">
                   <span className="text-red-400 mt-1">⚠️</span>
                   {note}
@@ -152,10 +169,10 @@ const BS7671StepDetail = () => {
       )}
 
       {/* Testing Instructions - MFT Settings, Connections, Expected Results */}
-      <TestingInstructions stepData={stepData} />
+      <TestingInstructions stepData={adaptedStepData} />
 
       {/* Installation Type Specific Guidance */}
-      {stepData.installationTypes && installationType && (
+      {adaptedStepData.installationTypes && installationType && (
         <Card className="border-indigo-500/30 bg-indigo-500/5">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-indigo-300">
@@ -165,7 +182,7 @@ const BS7671StepDetail = () => {
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
-              {stepData.installationTypes[installationType as keyof typeof stepData.installationTypes]?.map((item, index) => (
+              {adaptedStepData.installationTypes[installationType as keyof typeof adaptedStepData.installationTypes]?.map((item, index) => (
                 <li key={index} className="flex items-start gap-2 text-sm text-indigo-100">
                   <span className="text-indigo-400 mt-1">•</span>
                   {item}
@@ -181,12 +198,12 @@ const BS7671StepDetail = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <ClipboardCheck className="h-5 w-5 text-elec-yellow" />
-            {stepData.category} Checklist
+            {adaptedStepData.category} Checklist
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {stepData.checklist.map((item, index) => (
+            {adaptedStepData.checklist && adaptedStepData.checklist.map((item, index) => (
               <div key={index} className="flex items-start gap-3">
                 <Checkbox
                   id={`item-${index}`}
@@ -209,7 +226,7 @@ const BS7671StepDetail = () => {
       </Card>
 
       {/* Troubleshooting Guide */}
-      <TroubleshootingGuide stepData={stepData} />
+      <TroubleshootingGuide stepData={adaptedStepData} />
 
       {/* Regulations Reference */}
       <Card className="border-blue-500/20 bg-blue-900/10">
@@ -221,7 +238,7 @@ const BS7671StepDetail = () => {
         </CardHeader>
         <CardContent>
           <ul className="space-y-2">
-            {stepData.regulations.map((reg, index) => (
+            {adaptedStepData.regulations && adaptedStepData.regulations.map((reg, index) => (
               <li key={index} className="text-sm text-blue-100 flex items-start gap-2">
                 <span className="text-blue-400 mt-1">📋</span>
                 {reg}
@@ -276,7 +293,7 @@ const BS7671StepDetail = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-green-200">{stepData.nextSteps}</p>
+          <p className="text-sm text-green-200">{adaptedStepData.nextSteps}</p>
         </CardContent>
       </Card>
 
