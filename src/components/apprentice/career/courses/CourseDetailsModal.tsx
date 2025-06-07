@@ -1,150 +1,344 @@
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MapPin } from "lucide-react";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { 
+  X, MapPin, Clock, Users, BookOpen, TrendingUp, 
+  PoundSterling, Award, Target, CheckCircle, 
+  Calendar, Mail, Star, Briefcase, GraduationCap
+} from "lucide-react";
+import { EnhancedCareerCourse } from "./enhancedCoursesData";
 
 interface CourseDetailsModalProps {
-  course: {
-    id: number;
-    title: string;
-    provider: string;
-    description: string;
-    duration: string;
-    level: string;
-    price: string;
-    format: string;
-    nextDates: string[];
-    rating: number;
-    locations: string[];
-  } | null;
+  course: EnhancedCareerCourse;
   onClose: () => void;
 }
 
 const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
-  if (!course) return null;
+  const getDemandColor = (demand: string) => {
+    switch (demand) {
+      case "High": return "bg-green-500/20 text-green-400 border-green-500/30";
+      case "Medium": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
+      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+    }
+  };
+
+  const getCategoryColor = (category: string) => {
+    switch (category) {
+      case "Essential Qualifications": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
+      case "Emerging Technologies": return "bg-green-500/20 text-green-400 border-green-500/30";
+      case "Safety & Compliance": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
+      case "Specialized Skills": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
+      case "Business & Management": return "bg-indigo-500/20 text-indigo-400 border-indigo-500/30";
+      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-      <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto">
-        <div className="p-6 space-y-4">
+      <div className="bg-elec-dark border border-elec-yellow/20 rounded-lg w-full max-w-5xl max-h-[90vh] overflow-y-auto">
+        <div className="p-6 space-y-6">
+          {/* Header */}
           <div className="flex justify-between items-start">
-            <div>
-              <h3 className="text-2xl font-semibold">{course.title}</h3>
-              <p className="text-amber-400">{course.provider}</p>
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-2">
+                <Badge className={`${getCategoryColor(course.category)} text-xs`}>
+                  {course.category}
+                </Badge>
+                <div className="flex items-center gap-1 bg-amber-400/20 text-amber-400 px-2 py-1 rounded text-xs">
+                  <Star className="h-3 w-3 fill-amber-400" />
+                  <span>{course.rating}</span>
+                </div>
+              </div>
+              <h3 className="text-2xl font-semibold mb-1">{course.title}</h3>
+              <p className="text-elec-yellow text-lg">{course.provider}</p>
+              <p className="text-muted-foreground mt-2">{course.description}</p>
             </div>
             <Button variant="ghost" size="sm" onClick={onClose}>
-              Close
+              <X className="h-4 w-4" />
             </Button>
           </div>
-          
-          <p>{course.description}</p>
-          
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-elec-yellow/10 pt-4">
-            <div>
-              <h4 className="text-sm text-elec-yellow">Duration</h4>
-              <p className="text-sm">{course.duration}</p>
-            </div>
-            <div>
-              <h4 className="text-sm text-elec-yellow">Level</h4>
-              <p className="text-sm">{course.level}</p>
-            </div>
-            <div>
-              <h4 className="text-sm text-elec-yellow">Format</h4>
-              <p className="text-sm">{course.format}</p>
-            </div>
-            <div>
-              <h4 className="text-sm text-elec-yellow">Price</h4>
-              <p className="text-sm">{course.price}</p>
-            </div>
+
+          {/* Key Information Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Card className="bg-elec-dark/30 border-elec-yellow/10">
+              <CardContent className="p-4 text-center">
+                <Clock className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
+                <div className="font-medium">{course.duration}</div>
+                <div className="text-xs text-muted-foreground">Duration</div>
+              </CardContent>
+            </Card>
+            <Card className="bg-elec-dark/30 border-elec-yellow/10">
+              <CardContent className="p-4 text-center">
+                <Users className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
+                <div className="font-medium">{course.level}</div>
+                <div className="text-xs text-muted-foreground">Level</div>
+              </CardContent>
+            </Card>
+            <Card className="bg-elec-dark/30 border-elec-yellow/10">
+              <CardContent className="p-4 text-center">
+                <PoundSterling className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
+                <div className="font-medium text-sm">{course.price}</div>
+                <div className="text-xs text-muted-foreground">Price Range</div>
+              </CardContent>
+            </Card>
+            <Card className="bg-elec-dark/30 border-elec-yellow/10">
+              <CardContent className="p-4 text-center">
+                <TrendingUp className="h-5 w-5 text-elec-yellow mx-auto mb-2" />
+                <div className="font-medium">{course.futureProofing}/5</div>
+                <div className="text-xs text-muted-foreground">Future-Proof</div>
+              </CardContent>
+            </Card>
           </div>
-          
-          <div className="border-t border-elec-yellow/10 pt-4">
-            <h4 className="text-sm text-elec-yellow mb-2">Available Locations</h4>
-            <div className="flex flex-wrap gap-2">
-              {course.locations.map((location, idx) => (
-                <span 
-                  key={idx} 
-                  className="text-xs bg-elec-gray px-2 py-1 rounded-md flex items-center gap-1"
-                >
-                  <MapPin className="h-3 w-3" />
-                  {location}
-                </span>
-              ))}
-            </div>
+
+          {/* Industry Information */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="border-elec-yellow/10 bg-elec-dark/30">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <TrendingUp className="h-4 w-4 text-elec-yellow" />
+                  Industry Outlook
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Industry Demand:</span>
+                  <Badge className={`${getDemandColor(course.industryDemand)} text-xs`}>
+                    {course.industryDemand}
+                  </Badge>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Salary Impact:</span>
+                  <span className="text-sm text-green-400 font-medium">{course.salaryImpact}</span>
+                </div>
+                {course.employerSupport && (
+                  <div className="flex items-center gap-2 text-sm text-green-400">
+                    <Briefcase className="h-4 w-4" />
+                    <span>Employer Support Available</span>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            <Card className="border-elec-yellow/10 bg-elec-dark/30">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Award className="h-4 w-4 text-elec-yellow" />
+                  Accreditations
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-2">
+                  {course.accreditation.map((acc, idx) => (
+                    <Badge key={idx} variant="outline" className="text-xs bg-blue-500/10 text-blue-300 border-blue-500/30">
+                      {acc}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </div>
-          
-          <div className="border-t border-elec-yellow/10 pt-4">
-            <h4 className="text-sm text-elec-yellow mb-2">Upcoming Course Dates</h4>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Location</TableHead>
-                  <TableHead>Availability</TableHead>
-                  <TableHead className="text-right">Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {course.nextDates.map((date, idx) => (
-                  <TableRow key={idx}>
-                    <TableCell>{date}</TableCell>
-                    <TableCell>{course.locations[idx % course.locations.length]}</TableCell>
-                    <TableCell>
-                      <span className={`px-2 py-0.5 rounded text-xs ${idx % 3 === 0 ? "bg-red-500/20 text-red-300" : "bg-green-500/20 text-green-300"}`}>
-                        {idx % 3 === 0 ? "Limited spaces" : "Available"}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Button size="sm" variant="outline">Enquire</Button>
-                    </TableCell>
-                  </TableRow>
+
+          {/* Course Content */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card className="border-elec-yellow/10 bg-elec-dark/30">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <BookOpen className="h-4 w-4 text-elec-yellow" />
+                  Course Outline
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  {course.courseOutline.map((item, idx) => (
+                    <div key={idx} className="flex items-start gap-2 text-sm">
+                      <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-muted-foreground">{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-elec-yellow/10 bg-elec-dark/30">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Target className="h-4 w-4 text-elec-yellow" />
+                  Career Outcomes
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  {course.careerOutcomes.map((outcome, idx) => (
+                    <div key={idx} className="flex items-start gap-2 text-sm">
+                      <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
+                      <span className="text-muted-foreground">{outcome}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Assessment & Prerequisites */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="border-elec-yellow/10 bg-elec-dark/30">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <GraduationCap className="h-4 w-4 text-elec-yellow" />
+                  Assessment
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="text-sm">
+                  <span className="font-medium">Method: </span>
+                  <span className="text-muted-foreground">{course.assessmentMethod}</span>
+                </div>
+                <div className="text-sm">
+                  <span className="font-medium">Continuous Assessment: </span>
+                  <span className="text-muted-foreground">
+                    {course.continuousAssessment ? "Yes" : "Final exam only"}
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-elec-yellow/10 bg-elec-dark/30">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg">Prerequisites</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-1">
+                  {course.prerequisites.map((prereq, idx) => (
+                    <div key={idx} className="flex items-center gap-2 text-sm">
+                      <div className="w-1 h-1 rounded-full bg-elec-yellow" />
+                      <span className="text-muted-foreground">{prereq}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Locations */}
+          <Card className="border-elec-yellow/10 bg-elec-dark/30">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-elec-yellow" />
+                Available Locations
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-2">
+                {course.locations.map((location, idx) => (
+                  <span 
+                    key={idx} 
+                    className="text-sm bg-elec-gray/60 px-3 py-1 rounded-md flex items-center gap-1"
+                  >
+                    <MapPin className="h-3 w-3" />
+                    {location}
+                  </span>
                 ))}
-              </TableBody>
-            </Table>
-          </div>
-          
-          <div className="border-t border-elec-yellow/10 pt-4">
-            <h4 className="text-sm text-elec-yellow mb-2">Course Enquiry</h4>
-            <form className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-sm">Name</label>
-                  <Input placeholder="Your full name" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm">Email</label>
-                  <Input type="email" placeholder="Your email address" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm">Phone</label>
-                  <Input placeholder="Your contact number" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-sm">Preferred location</label>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select location" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {course.locations.map((location) => (
-                        <SelectItem key={location} value={location}>{location}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
               </div>
-              <div className="space-y-2">
-                <label className="text-sm">Message</label>
-                <Textarea placeholder="Any specific questions or requirements..." />
-              </div>
-              <Button className="w-full bg-elec-yellow text-elec-dark hover:bg-amber-400">
-                Submit Enquiry
-              </Button>
-            </form>
-          </div>
+            </CardContent>
+          </Card>
+
+          {/* Course Dates */}
+          <Card className="border-elec-yellow/10 bg-elec-dark/30">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Calendar className="h-4 w-4 text-elec-yellow" />
+                Upcoming Course Dates
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Start Date</TableHead>
+                    <TableHead>Location</TableHead>
+                    <TableHead>Format</TableHead>
+                    <TableHead>Availability</TableHead>
+                    <TableHead className="text-right">Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {course.nextDates.map((date, idx) => (
+                    <TableRow key={idx}>
+                      <TableCell>{date}</TableCell>
+                      <TableCell>{course.locations[idx % course.locations.length]}</TableCell>
+                      <TableCell>{course.format.split(',')[0]}</TableCell>
+                      <TableCell>
+                        <span className={`px-2 py-0.5 rounded text-xs ${
+                          idx % 3 === 0 ? "bg-red-500/20 text-red-300" : "bg-green-500/20 text-green-300"
+                        }`}>
+                          {idx % 3 === 0 ? "Limited spaces" : "Available"}
+                        </span>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <Button size="sm" variant="outline" className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10">
+                          Enquire
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+
+          {/* Contact Form */}
+          <Card className="border-elec-yellow/20 bg-elec-gray/50">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-lg flex items-center gap-2">
+                <Mail className="h-4 w-4 text-elec-yellow" />
+                Course Enquiry
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Full Name</label>
+                    <Input placeholder="Your full name" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Email Address</label>
+                    <Input type="email" placeholder="your.email@example.com" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Phone Number</label>
+                    <Input placeholder="Your contact number" />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Preferred Location</label>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select location" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {course.locations.map((location) => (
+                          <SelectItem key={location} value={location}>{location}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Message</label>
+                  <Textarea placeholder="Please tell us about your experience level, preferred dates, or any specific questions about this course..." rows={4} />
+                </div>
+                <Button className="w-full bg-elec-yellow text-elec-dark hover:bg-amber-400">
+                  <Mail className="mr-2 h-4 w-4" />
+                  Submit Course Enquiry
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
