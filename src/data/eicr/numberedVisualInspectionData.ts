@@ -1,11 +1,16 @@
 
+export type InspectionOutcome = 'acceptable' | 'c1' | 'c2' | 'c3' | 'fi' | 'lim' | 'na';
+
 export interface NumberedInspectionItem {
   id: string;
   number: string; // e.g., "1.1", "1.2"
   item: string;
   regulation: string;
-  outcome: string;
+  outcome: InspectionOutcome;
   notes?: string;
+  isCritical?: boolean;
+  requiresAction?: boolean;
+  description?: string;
 }
 
 export interface NumberedInspectionSection {
@@ -445,4 +450,36 @@ export const outcomeDefinitions = {
     bgColor: 'bg-gray-500/20',
     borderColor: 'border-gray-500/30'
   }
+};
+
+// Utility function to calculate inspection statistics
+export const getInspectionStats = (sections: NumberedInspectionSection[]) => {
+  const stats = {
+    total: 0,
+    acceptable: 0,
+    c1: 0,
+    c2: 0,
+    c3: 0,
+    fi: 0,
+    lim: 0,
+    na: 0
+  };
+
+  sections.forEach(section => {
+    section.items.forEach(item => {
+      stats.total++;
+      stats[item.outcome]++;
+    });
+  });
+
+  return stats;
+};
+
+// Utility function to determine overall assessment
+export const getOverallAssessment = (sections: NumberedInspectionSection[]): 'satisfactory' | 'unsatisfactory' => {
+  const hasC1OrC2 = sections.some(section => 
+    section.items.some(item => item.outcome === 'c1' || item.outcome === 'c2')
+  );
+  
+  return hasC1OrC2 ? 'unsatisfactory' : 'satisfactory';
 };

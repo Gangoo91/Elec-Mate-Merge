@@ -6,15 +6,15 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Progress } from '@/components/ui/progress';
-import { ClipboardCheck, AlertTriangle, CheckCircle, Eye, FileText, Hash } from 'lucide-react';
+import { CheckCircle, AlertTriangle, Hash, ArrowRight, ArrowLeft, FileText } from 'lucide-react';
 import { 
   numberedVisualInspectionSections, 
   outcomeDefinitions, 
-  getInspectionStats,
+  getInspectionStats, 
   getOverallAssessment,
-  type InspectionOutcome, 
-  type NumberedInspectionItem, 
-  type NumberedInspectionSection 
+  type InspectionOutcome,
+  type NumberedInspectionSection,
+  type NumberedInspectionItem
 } from '@/data/eicr/numberedVisualInspectionData';
 
 interface NumberedVisualInspectionProps {
@@ -23,91 +23,135 @@ interface NumberedVisualInspectionProps {
 }
 
 const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInspectionProps) => {
-  const [inspectionData, setInspectionData] = useState<NumberedInspectionSection[]>(numberedVisualInspectionSections);
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
-  const [overallProgress, setOverallProgress] = useState(0);
+  const [sections, setSections] = useState<NumberedInspectionSection[]>(numberedVisualInspectionSections);
+  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    calculateProgress();
-  }, [inspectionData]);
+    // Load saved data from localStorage if available
+    const savedData = localStorage.getItem('eicr-numbered-visual-inspection');
+    if (savedData) {
+      try {
+        const parsedData = JSON.parse(savedData);
+        setSections(parsedData.sections || numberedVisualInspectionSections);
+        setCurrentSectionIndex(parsedData.currentSectionIndex || 0);
+        setIsComplete(parsedData.isComplete || false);
+      } catch (error) {
+        console.error('Error loading saved inspection data:', error);
+      }
+    }
+  }, []);
 
-  const calculateProgress = () => {
-    const totalItems = inspectionData.reduce((sum, section) => sum + section.items.length, 0);
-    const inspectedItems = inspectionData.reduce((sum, section) => 
-      sum + section.items.filter(item => item.outcome && item.outcome !== 'acceptable' || item.notes !== '').length, 0
-    );
-    setOverallProgress(totalItems > 0 ? (inspectedItems / totalItems) * 100 : 0);
-  };
-
-  const summaryStats = getInspectionStats(inspectionData);
+  useEffect(() => {
+    // Auto-save to localStorage
+    const dataToSave = {
+      sections,
+      currentSectionIndex,
+      isComplete,
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem('eicr-numbered-visual-inspection', JSON.stringify(dataToSave));
+  }, [sections, currentSectionIndex, isComplete]);
 
   const updateItemOutcome = (sectionId: string, itemId: string, outcome: InspectionOutcome) => {
-    setInspectionData(prev => prev.map(section => 
-      section.id === sectionId 
-        ? {
-            ...section,
-            items: section.items.map(item =>
-              item.id === itemId 
-                ? { 
-                    ...item, 
-                    outcome,
-                    requiresAction: ['c1', 'c2', 'c3'].includes(outcome)
-                  }
-                : item
-            )
-          }
-        : section
-    ));
+    setSections(prevSections => 
+      prevSections.map(section => 
+        section.id === sectionId 
+          ? {
+              ...section,
+              items: section.items.map(item => 
+                item.id === itemId ? { ...item, outcome } : item
+              )
+            }
+          : section
+      )
+    );
   };
 
   const updateItemNotes = (sectionId: string, itemId: string, notes: string) => {
-    setInspectionData(prev => prev.map(section => 
-      section.id === sectionId 
-        ? {
-            ...section,
-            items: section.items.map(item =>
-              item.id === itemId ? { ...item, notes } : item
-            )
-          }
-        : section
-    ));
+    setSections(prevSections => 
+      prevSections.map(section => 
+        section.id === sectionId 
+          ? {
+              ...section,
+              items: section.items.map(item => 
+                item.id === itemId ? { ...item, notes } : item
+              )
+            }
+          : section
+      )
+    );
   };
 
   const markSectionComplete = (sectionId: string) => {
-    setInspectionData(prev => prev.map(section => 
-      section.id === sectionId 
-        ? { ...section, isComplete: true, completedAt: new Date().toISOString() }
-        : section
-    ));
+    setSections(prevSections => 
+      prevSections.map(section => 
+        section.id === sectionId ? { ...section, isComplete: true } : section
+      )
+    );
   };
 
-  const handleComplete = () => {
-    const inspectionResults = {
-      sections: inspectionData,
-      stats: summaryStats,
-      completedAt: new Date().toISOString(),
-      overallAssessment: getOverallAssessment(inspectionData)
+  const nextSection = () => {
+    if (currentSectionIndex < sections.length - 1) {
+      markSectionComplete(sections[currentSectionIndex].id);
+      setCurrentSectionIndex(currentSectionIndex + 1);
+    } else {
+      completeInspection();
+    }
+  };
+
+  const previousSection = () => {
+    if (currentSectionIndex > 0) {
+      setCurrentSectionIndex(currentSectionIndex - 1);
+    }
+  };
+
+  const completeInspection = () => {
+    markSectionComplete(sections[currentSectionIndex].id);
+    
+    const stats = getInspectionStats(sections);
+    const overallAssessment = getOverallAssessment(sections);
+    
+    const results = {
+      sections,
+      stats,
+      overallAssessment,
+      completedAt: new Date().toISOString()
     };
     
-    localStorage.setItem('eicr-visual-inspection-results', JSON.stringify(inspectionResults));
+    localStorage.setItem('eicr-visual-inspection-results', JSON.stringify(results));
+    setIsComplete(true);
     onComplete();
   };
 
-  const currentSection = inspectionData[currentSectionIndex];
-  const hasDefects = summaryStats.c1 > 0 || summaryStats.c2 > 0 || summaryStats.c3 > 0;
-  const completedSections = inspectionData.filter(section => section.isComplete).length;
+  const currentSection = sections[currentSectionIndex];
+  const progress = ((currentSectionIndex + 1) / sections.length) * 100;
+  const stats = getInspectionStats(sections);
 
-  // Helper function to safely get outcome definition
-  const getOutcomeDefinition = (outcome: InspectionOutcome | undefined) => {
-    if (!outcome || !outcomeDefinitions[outcome]) {
-      return outcomeDefinitions['acceptable']; // Default fallback
-    }
-    return outcomeDefinitions[outcome];
-  };
+  if (isComplete) {
+    return (
+      <Card className="border-green-500/30 bg-green-500/5">
+        <CardHeader>
+          <div className="flex items-center gap-3">
+            <CheckCircle className="h-6 w-6 text-green-400" />
+            <CardTitle className="text-green-300">Numbered Visual Inspection Complete</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground mb-4">
+            All numbered inspection sections have been completed. The results have been saved.
+          </p>
+          <Button onClick={onComplete} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+            Continue to Results
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <div className="space-y-6">
-      {/* Header and Progress */}
+      {/* Progress Header */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <div className="flex items-center justify-between">
@@ -116,231 +160,153 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
                 <Hash className="h-6 w-6 text-elec-yellow" />
               </div>
               <div>
-                <CardTitle>Numbered EICR Visual Inspection</CardTitle>
-                <p className="text-sm text-muted-foreground">
+                <CardTitle>
                   Section {currentSection.number}: {currentSection.title}
-                </p>
+                </CardTitle>
+                <p className="text-sm text-muted-foreground">{currentSection.description}</p>
+                <p className="text-xs text-blue-300 mt-1">{currentSection.regulation}</p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-sm text-muted-foreground">Overall Progress</p>
-              <div className="w-32 h-2 bg-elec-dark rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-elec-yellow transition-all duration-300" 
-                  style={{ width: `${overallProgress}%` }}
-                />
-              </div>
-              <p className="text-xs text-muted-foreground mt-1">{Math.round(overallProgress)}%</p>
+              <p className="text-sm font-medium">Progress</p>
+              <Progress value={progress} className="w-32 h-2" />
+              <p className="text-xs text-muted-foreground mt-1">
+                {currentSectionIndex + 1} of {sections.length}
+              </p>
             </div>
           </div>
         </CardHeader>
       </Card>
 
-      {/* Summary Statistics */}
+      {/* Statistics */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-lg">Inspection Summary</CardTitle>
+          <CardTitle className="text-lg">Current Statistics</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2">
-            {Object.entries(summaryStats).filter(([key]) => key !== 'total').map(([key, count]) => {
-              const outcome = outcomeDefinitions[key as InspectionOutcome];
-              if (!outcome) return null; // Skip if outcome definition doesn't exist
-              
+          <div className="grid grid-cols-4 md:grid-cols-7 gap-3">
+            {Object.entries(stats).filter(([key]) => key !== 'total').map(([key, count]) => {
+              const outcome = outcomeDefinitions[key as keyof typeof outcomeDefinitions];
               return (
                 <div key={key} className={`text-center p-2 rounded border ${outcome.bgColor} ${outcome.borderColor}`}>
-                  <div className={`text-lg font-bold ${outcome.color}`}>{count}</div>
-                  <div className={`text-xs ${outcome.color}`}>{outcome.label.split(' - ')[0]}</div>
+                  <div className={`text-xl font-bold ${outcome.color}`}>{count}</div>
+                  <div className={`text-xs ${outcome.color} font-medium`}>
+                    {outcome.label.split(' - ')[0]}
+                  </div>
                 </div>
               );
             })}
           </div>
-          <div className="mt-4 flex items-center justify-between">
-            <div className="text-sm text-muted-foreground">
-              {completedSections}/{inspectionData.length} sections completed • {summaryStats.total} total items
-            </div>
-            {hasDefects && (
-              <div className="flex items-center gap-2 text-red-400">
-                <AlertTriangle className="h-4 w-4" />
-                <span className="text-sm font-medium">Defects Found - Remedial Action Required</span>
-              </div>
-            )}
-          </div>
         </CardContent>
       </Card>
 
-      {/* Section Navigation */}
-      <div className="flex flex-wrap gap-2">
-        {inspectionData.map((section, index) => (
-          <Button
-            key={section.id}
-            variant={index === currentSectionIndex ? "default" : "outline"}
-            size="sm"
-            onClick={() => setCurrentSectionIndex(index)}
-            className="flex items-center gap-2"
-          >
-            <span className="text-xs font-mono">{section.number}</span>
-            {section.isComplete && (
-              <CheckCircle className="h-3 w-3 text-green-400" />
-            )}
-            {section.items.some(item => item.outcome && ['c1', 'c2', 'c3'].includes(item.outcome)) && (
-              <AlertTriangle className="h-3 w-3 text-red-400" />
-            )}
-          </Button>
-        ))}
-      </div>
-
-      {/* Current Section Inspection */}
+      {/* Current Section Items */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="flex items-center gap-2">
-                <div className="flex items-center gap-2 px-2 py-1 bg-elec-yellow/20 rounded border border-elec-yellow/30">
-                  <Hash className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-elec-yellow font-mono">{currentSection.number}</span>
-                </div>
-                {currentSection.title}
-              </CardTitle>
-              <p className="text-sm text-muted-foreground mt-1">{currentSection.description}</p>
-              <p className="text-xs text-blue-300 mt-1">{currentSection.regulation}</p>
+          <CardTitle className="flex items-center gap-2">
+            <div className="flex items-center gap-2 px-2 py-1 bg-elec-yellow/20 rounded border border-elec-yellow/30">
+              <Hash className="h-4 w-4 text-elec-yellow" />
+              <span className="text-elec-yellow font-mono">{currentSection.number}</span>
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => markSectionComplete(currentSection.id)}
-              disabled={currentSection.isComplete}
-              className="flex items-center gap-2"
-            >
-              {currentSection.isComplete ? (
-                <>
-                  <CheckCircle className="h-4 w-4 text-green-400" />
-                  Complete
-                </>
-              ) : (
-                <>
-                  <ClipboardCheck className="h-4 w-4" />
-                  Mark Complete
-                </>
-              )}
-            </Button>
-          </div>
+            Inspection Items
+          </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-6">
-          {currentSection.items.map((item) => {
-            const itemOutcome = item.outcome || 'acceptable'; // Default to 'acceptable' if undefined
-            const outcomeDefinition = getOutcomeDefinition(item.outcome);
-            
-            return (
-              <div key={item.id} className="space-y-3 p-4 border border-elec-yellow/10 rounded-lg bg-elec-dark/30">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="flex items-center gap-2 px-2 py-1 bg-blue-500/20 rounded border border-blue-500/30">
-                        <span className="text-blue-300 font-mono text-sm">{item.number}</span>
-                      </div>
-                      <h4 className="font-medium text-sm">{item.item}</h4>
-                      {item.isCritical && (
-                        <Badge variant="destructive" className="text-xs">Critical</Badge>
-                      )}
-                      {item.requiresAction && (
-                        <Badge variant="outline" className="text-xs border-orange-500/30 text-orange-400">
-                          Action Required
-                        </Badge>
-                      )}
+        <CardContent className="space-y-4">
+          {currentSection.items.map((item) => (
+            <Card key={item.id} className="border-elec-yellow/10 bg-elec-dark">
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 px-2 py-1 bg-elec-yellow/10 rounded border border-elec-yellow/20">
+                      <span className="text-elec-yellow font-mono text-sm">{item.number}</span>
                     </div>
-                    {item.description && (
-                      <p className="text-xs text-muted-foreground mb-2">{item.description}</p>
-                    )}
-                    {item.regulation && (
-                      <p className="text-xs text-blue-300 mb-2">{item.regulation}</p>
-                    )}
+                    <CardTitle className="text-base">{item.item}</CardTitle>
                   </div>
-                  <div className="min-w-[200px]">
-                    <Select
-                      value={itemOutcome}
-                      onValueChange={(value: InspectionOutcome) => 
-                        updateItemOutcome(currentSection.id, item.id, value)
-                      }
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {Object.entries(outcomeDefinitions).map(([key, def]) => (
-                          <SelectItem key={key} value={key}>
-                            <div className="flex items-center gap-2">
-                              <div className={`w-2 h-2 rounded-full ${def.bgColor.replace('/20', '')}`} />
-                              {def.label}
-                            </div>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <Badge 
+                    className={`${outcomeDefinitions[item.outcome].bgColor} ${outcomeDefinitions[item.outcome].color} border-0`}
+                  >
+                    {outcomeDefinitions[item.outcome].label.split(' - ')[0]}
+                  </Badge>
                 </div>
-                
-                <Textarea
-                  value={item.notes || ''}
-                  onChange={(e) => updateItemNotes(currentSection.id, item.id, e.target.value)}
-                  placeholder="Add notes, observations, or remedial actions required..."
-                  className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50 text-sm"
-                  rows={2}
-                />
+                <p className="text-xs text-blue-300">{item.regulation}</p>
+              </CardHeader>
+              <CardContent className="pt-0 space-y-3">
+                <div>
+                  <label className="text-sm font-medium mb-2 block">Outcome</label>
+                  <Select
+                    value={item.outcome}
+                    onValueChange={(value: InspectionOutcome) => updateItemOutcome(currentSection.id, item.id, value)}
+                  >
+                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.entries(outcomeDefinitions).map(([key, def]) => (
+                        <SelectItem key={key} value={key}>
+                          <div className="flex items-center gap-2">
+                            <div className={`w-3 h-3 rounded ${def.bgColor.replace('/20', '')}`} />
+                            {def.label}
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-                {itemOutcome !== 'acceptable' && itemOutcome !== 'na' && (
-                  <div className={`p-2 rounded text-xs ${outcomeDefinition.bgColor} ${outcomeDefinition.borderColor} border`}>
-                    <span className={outcomeDefinition.color}>
-                      {outcomeDefinition.description}
-                    </span>
+                {item.outcome !== 'acceptable' && (
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Notes and Observations</label>
+                    <Textarea
+                      placeholder="Add detailed notes about the defect or issue observed..."
+                      value={item.notes || ''}
+                      onChange={(e) => updateItemNotes(currentSection.id, item.id, e.target.value)}
+                      className="bg-elec-dark border-elec-yellow/20"
+                      rows={3}
+                    />
                   </div>
                 )}
-              </div>
-            );
-          })}
+              </CardContent>
+            </Card>
+          ))}
         </CardContent>
       </Card>
 
       {/* Navigation */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardContent className="pt-6">
           <div className="flex justify-between items-center">
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                onClick={() => setCurrentSectionIndex(Math.max(0, currentSectionIndex - 1))}
-                disabled={currentSectionIndex === 0}
-              >
-                Previous Section
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => setCurrentSectionIndex(Math.min(inspectionData.length - 1, currentSectionIndex + 1))}
-                disabled={currentSectionIndex === inspectionData.length - 1}
-              >
-                Next Section
-              </Button>
+            <Button
+              variant="outline"
+              onClick={previousSection}
+              disabled={currentSectionIndex === 0}
+              className="flex items-center gap-2"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Previous Section
+            </Button>
+
+            <div className="text-center">
+              <p className="text-sm text-muted-foreground">
+                Section {currentSectionIndex + 1} of {sections.length}
+              </p>
             </div>
-            
-            <div className="flex items-center gap-4">
-              <div className="text-right">
-                <p className="text-sm text-muted-foreground">
-                  {Math.round(overallProgress)}% Complete
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  {summaryStats.total} items • BS 7671 compliant
-                </p>
-              </div>
-              
-              <Button
-                onClick={handleComplete}
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                disabled={overallProgress < 80}
-              >
-                <FileText className="mr-2 h-4 w-4" />
-                Complete Inspection
-              </Button>
-            </div>
+
+            <Button
+              onClick={nextSection}
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
+            >
+              {currentSectionIndex === sections.length - 1 ? (
+                <>
+                  Complete Inspection
+                  <FileText className="h-4 w-4" />
+                </>
+              ) : (
+                <>
+                  Next Section
+                  <ArrowRight className="h-4 w-4" />
+                </>
+              )}
+            </Button>
           </div>
         </CardContent>
       </Card>
