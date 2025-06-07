@@ -10,6 +10,7 @@ import { enhancedBS7671Steps } from "@/data/bs7671-steps/enhancedStepData";
 import TestingInstructions from "@/components/apprentice/bs7671/TestingInstructions";
 import TroubleshootingGuide from "@/components/apprentice/bs7671/TroubleshootingGuide";
 import SystemTypeSelector from "@/components/apprentice/bs7671/SystemTypeSelector";
+import DiagramDisplay from "@/components/apprentice/bs7671/DiagramDisplay";
 
 const BS7671StepDetail = () => {
   const { stepId } = useParams<{ stepId: string }>();
@@ -61,7 +62,7 @@ const BS7671StepDetail = () => {
         </Card>
       </div>
     );
-  }
+  };
 
   const getCategoryColor = (category: string) => {
     switch (category) {
@@ -120,6 +121,13 @@ const BS7671StepDetail = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Diagram Display - New visual guide section */}
+      <DiagramDisplay 
+        stepData={stepData} 
+        systemType={systemType} 
+        installationType={installationType} 
+      />
 
       {/* Safety Notes */}
       {stepData.safetyNotes && stepData.safetyNotes.length > 0 && (
