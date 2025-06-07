@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle, Play, Pause, RotateCcw, FileText } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle, Play, Pause, RotateCcw } from 'lucide-react';
 import { TestFlow, TestSession } from '@/types/inspection-testing';
 import { useTestFlowEngine } from '@/hooks/useTestFlowEngine';
 import { ukEicrTestFlows } from '@/data/inspection-testing/ukEicrTestFlows';
@@ -13,8 +13,6 @@ import SimplifiedTestFlowSelector from './SimplifiedTestFlowSelector';
 import TestStepDisplay from './TestStepDisplay';
 import GuidedWorkflow from './GuidedWorkflow';
 import SessionSetup from './SessionSetup';
-import { EICRProvider } from '@/contexts/EICRContext';
-import { Link } from 'react-router-dom';
 
 interface InspectionTestingWalkthroughProps {
   mode: 'electrician' | 'apprentice';
@@ -24,7 +22,6 @@ interface InspectionTestingWalkthroughProps {
 const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWalkthroughProps) => {
   const [selectedFlow, setSelectedFlow] = useState<TestFlow | null>(null);
   const [showGuidedWorkflow, setShowGuidedWorkflow] = useState(true);
-  const [eicrIntegrationEnabled, setEicrIntegrationEnabled] = useState(false);
   
   // Use UK-specific EICR test flows
   const allTestFlows = ukEicrTestFlows;
@@ -52,10 +49,9 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
     console.log('Selected UK EICR test flow:', flow);
   };
 
-  const handleStartSession = (installationDetails: any, technician: any, enableEicr: boolean = false) => {
-    setEicrIntegrationEnabled(enableEicr);
+  const handleStartSession = (installationDetails: any, technician: any) => {
     startSession(installationDetails, technician);
-    console.log('UK EICR session started with details:', { installationDetails, technician, enableEicr });
+    console.log('UK EICR session started with details:', { installationDetails, technician });
   };
 
   const handleStepCompletion = () => {
@@ -72,7 +68,6 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
   const handleRestart = () => {
     setSelectedFlow(null);
     setShowGuidedWorkflow(true);
-    setEicrIntegrationEnabled(false);
   };
 
   const getSessionStatusInfo = () => {
@@ -158,25 +153,12 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
                   <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30 text-xs">
                     BS 7671:2018+A2:2022
                   </Badge>
-                  {eicrIntegrationEnabled && (
-                    <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs">
-                      EICR Enabled
-                    </Badge>
-                  )}
                 </CardTitle>
                 <p className="text-sm text-muted-foreground mt-1">
                   {currentStep?.title || 'Loading...'}
                 </p>
               </div>
               <div className="flex gap-2">
-                {eicrIntegrationEnabled && (
-                  <Link to="/electrician-tools/eicr-reports">
-                    <Button variant="outline" size="sm" className="flex items-center gap-2">
-                      <FileText className="h-4 w-4" />
-                      View EICR Dashboard
-                    </Button>
-                  </Link>
-                )}
                 <Button variant="outline" size="sm" onClick={handleRestart}>
                   <RotateCcw className="h-4 w-4 mr-2" />
                   Restart
@@ -234,7 +216,6 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
           <AlertTriangle className="h-4 w-4 text-blue-400" />
           <AlertDescription className="text-blue-200">
             <strong>UK Compliance:</strong> This EICR testing procedure follows BS 7671:2018+A2:2022 requirements. 
-            {eicrIntegrationEnabled && ' All test results will be automatically classified using C1, C2, C3, and FI fault codes in accordance with IET Guidance Note 3.'} 
             Ensure you hold appropriate qualifications before conducting electrical testing.
           </AlertDescription>
         </Alert>
@@ -303,7 +284,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
                 disabled={!currentStepResult || currentStepResult.status !== 'completed'}
                 className="flex items-center gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90"
               >
-                {isLastStep ? 'Complete EICR' : 'Next Step'}
+                {isLastStep ? 'Complete Testing' : 'Next Step'}
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
@@ -313,11 +294,7 @@ const InspectionTestingWalkthrough = ({ mode, onComplete }: InspectionTestingWal
     );
   };
 
-  return (
-    <EICRProvider>
-      {renderContent()}
-    </EICRProvider>
-  );
+  return renderContent();
 };
 
 export default InspectionTestingWalkthrough;
