@@ -1,3 +1,4 @@
+
 export type InspectionOutcome = 'acceptable' | 'c1' | 'c2' | 'c3' | 'fi' | 'lim' | 'na';
 
 export interface NumberedInspectionItem {
@@ -64,7 +65,7 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-2",
     number: "2.0",
-    title: "Condition of equipment, including switchgear",
+    title: "Condition of equipment, switchgear and components",
     description: "Assessment of electrical equipment condition including distribution boards, switches, and control equipment",
     regulation: "BS 7671:2018+A2:2022 Section 511",
     isComplete: false,
@@ -140,7 +141,7 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-4",
     number: "4.0",
-    title: "Condition of all accessories and equipment",
+    title: "Condition of all accessories including socket outlets, switches and joint boxes",
     description: "Assessment of socket outlets, switches, lighting accessories, and other electrical equipment",
     regulation: "BS 7671:2018+A2:2022 Section 553",
     isComplete: false,
@@ -216,7 +217,7 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-6",
     number: "6.0",
-    title: "Identification of conductors and protective devices",
+    title: "Identification of conductors",
     description: "Verification of proper identification, labelling, and marking of conductors and protective devices",
     regulation: "BS 7671:2018+A2:2022 Section 514",
     isComplete: false,
@@ -292,7 +293,7 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-8",
     number: "8.0",
-    title: "Correct connection of socket outlets, lamps and fixed equipment",
+    title: "Correct connection of socket outlets, lamps and equipment",
     description: "Verification of proper connection and polarity of socket outlets, lighting, and fixed electrical equipment",
     regulation: "BS 7671:2018+A2:2022 Section 612.6",
     isComplete: false,
@@ -368,7 +369,7 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-10",
     number: "10.0",
-    title: "Adequacy of arrangements for other safety services",
+    title: "Adequacy of arrangement for other safety services",
     description: "Assessment of safety service arrangements including emergency lighting, fire alarm systems, and other safety installations",
     regulation: "BS 7671:2018+A2:2022 Section 560",
     isComplete: false,
