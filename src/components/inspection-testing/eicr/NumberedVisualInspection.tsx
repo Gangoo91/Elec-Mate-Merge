@@ -34,7 +34,7 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
   const calculateProgress = () => {
     const totalItems = inspectionData.reduce((sum, section) => sum + section.items.length, 0);
     const inspectedItems = inspectionData.reduce((sum, section) => 
-      sum + section.items.filter(item => item.outcome !== 'acceptable' || item.notes !== '').length, 0
+      sum + section.items.filter(item => item.outcome && item.outcome !== 'acceptable' || item.notes !== '').length, 0
     );
     setOverallProgress(totalItems > 0 ? (inspectedItems / totalItems) * 100 : 0);
   };
@@ -97,6 +97,14 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
   const hasDefects = summaryStats.c1 > 0 || summaryStats.c2 > 0 || summaryStats.c3 > 0;
   const completedSections = inspectionData.filter(section => section.isComplete).length;
 
+  // Helper function to safely get outcome definition
+  const getOutcomeDefinition = (outcome: InspectionOutcome | undefined) => {
+    if (!outcome || !outcomeDefinitions[outcome]) {
+      return outcomeDefinitions['acceptable']; // Default fallback
+    }
+    return outcomeDefinitions[outcome];
+  };
+
   return (
     <div className="space-y-6">
       {/* Header and Progress */}
@@ -137,6 +145,8 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2">
             {Object.entries(summaryStats).filter(([key]) => key !== 'total').map(([key, count]) => {
               const outcome = outcomeDefinitions[key as InspectionOutcome];
+              if (!outcome) return null; // Skip if outcome definition doesn't exist
+              
               return (
                 <div key={key} className={`text-center p-2 rounded border ${outcome.bgColor} ${outcome.borderColor}`}>
                   <div className={`text-lg font-bold ${outcome.color}`}>{count}</div>
@@ -173,7 +183,7 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
             {section.isComplete && (
               <CheckCircle className="h-3 w-3 text-green-400" />
             )}
-            {section.items.some(item => ['c1', 'c2', 'c3'].includes(item.outcome)) && (
+            {section.items.some(item => item.outcome && ['c1', 'c2', 'c3'].includes(item.outcome)) && (
               <AlertTriangle className="h-3 w-3 text-red-400" />
             )}
           </Button>
@@ -217,72 +227,77 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
           </div>
         </CardHeader>
         <CardContent className="space-y-6">
-          {currentSection.items.map((item) => (
-            <div key={item.id} className="space-y-3 p-4 border border-elec-yellow/10 rounded-lg bg-elec-dark/30">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="flex items-center gap-2 px-2 py-1 bg-blue-500/20 rounded border border-blue-500/30">
-                      <span className="text-blue-300 font-mono text-sm">{item.number}</span>
+          {currentSection.items.map((item) => {
+            const itemOutcome = item.outcome || 'acceptable'; // Default to 'acceptable' if undefined
+            const outcomeDefinition = getOutcomeDefinition(item.outcome);
+            
+            return (
+              <div key={item.id} className="space-y-3 p-4 border border-elec-yellow/10 rounded-lg bg-elec-dark/30">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="flex items-center gap-2 px-2 py-1 bg-blue-500/20 rounded border border-blue-500/30">
+                        <span className="text-blue-300 font-mono text-sm">{item.number}</span>
+                      </div>
+                      <h4 className="font-medium text-sm">{item.item}</h4>
+                      {item.isCritical && (
+                        <Badge variant="destructive" className="text-xs">Critical</Badge>
+                      )}
+                      {item.requiresAction && (
+                        <Badge variant="outline" className="text-xs border-orange-500/30 text-orange-400">
+                          Action Required
+                        </Badge>
+                      )}
                     </div>
-                    <h4 className="font-medium text-sm">{item.item}</h4>
-                    {item.isCritical && (
-                      <Badge variant="destructive" className="text-xs">Critical</Badge>
+                    {item.description && (
+                      <p className="text-xs text-muted-foreground mb-2">{item.description}</p>
                     )}
-                    {item.requiresAction && (
-                      <Badge variant="outline" className="text-xs border-orange-500/30 text-orange-400">
-                        Action Required
-                      </Badge>
+                    {item.regulation && (
+                      <p className="text-xs text-blue-300 mb-2">{item.regulation}</p>
                     )}
                   </div>
-                  {item.description && (
-                    <p className="text-xs text-muted-foreground mb-2">{item.description}</p>
-                  )}
-                  {item.regulation && (
-                    <p className="text-xs text-blue-300 mb-2">{item.regulation}</p>
-                  )}
+                  <div className="min-w-[200px]">
+                    <Select
+                      value={itemOutcome}
+                      onValueChange={(value: InspectionOutcome) => 
+                        updateItemOutcome(currentSection.id, item.id, value)
+                      }
+                    >
+                      <SelectTrigger className="w-full">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Object.entries(outcomeDefinitions).map(([key, def]) => (
+                          <SelectItem key={key} value={key}>
+                            <div className="flex items-center gap-2">
+                              <div className={`w-2 h-2 rounded-full ${def.bgColor.replace('/20', '')}`} />
+                              {def.label}
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
-                <div className="min-w-[200px]">
-                  <Select
-                    value={item.outcome}
-                    onValueChange={(value: InspectionOutcome) => 
-                      updateItemOutcome(currentSection.id, item.id, value)
-                    }
-                  >
-                    <SelectTrigger className="w-full">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Object.entries(outcomeDefinitions).map(([key, def]) => (
-                        <SelectItem key={key} value={key}>
-                          <div className="flex items-center gap-2">
-                            <div className={`w-2 h-2 rounded-full ${def.bgColor.replace('/20', '')}`} />
-                            {def.label}
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-              
-              <Textarea
-                value={item.notes}
-                onChange={(e) => updateItemNotes(currentSection.id, item.id, e.target.value)}
-                placeholder="Add notes, observations, or remedial actions required..."
-                className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50 text-sm"
-                rows={2}
-              />
+                
+                <Textarea
+                  value={item.notes || ''}
+                  onChange={(e) => updateItemNotes(currentSection.id, item.id, e.target.value)}
+                  placeholder="Add notes, observations, or remedial actions required..."
+                  className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50 text-sm"
+                  rows={2}
+                />
 
-              {item.outcome !== 'acceptable' && item.outcome !== 'na' && (
-                <div className={`p-2 rounded text-xs ${outcomeDefinitions[item.outcome].bgColor} ${outcomeDefinitions[item.outcome].borderColor} border`}>
-                  <span className={outcomeDefinitions[item.outcome].color}>
-                    {outcomeDefinitions[item.outcome].description}
-                  </span>
-                </div>
-              )}
-            </div>
-          ))}
+                {itemOutcome !== 'acceptable' && itemOutcome !== 'na' && (
+                  <div className={`p-2 rounded text-xs ${outcomeDefinition.bgColor} ${outcomeDefinition.borderColor} border`}>
+                    <span className={outcomeDefinition.color}>
+                      {outcomeDefinition.description}
+                    </span>
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </CardContent>
       </Card>
 
