@@ -11,10 +11,31 @@ interface ScenarioCardProps {
 }
 
 const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onClick }) => {
+  console.log('ScenarioCard - Rendering scenario:', scenario.id, scenario.title);
+
+  const handleClick = () => {
+    console.log('ScenarioCard - Card clicked for scenario:', scenario.id);
+    try {
+      onClick();
+    } catch (error) {
+      console.error('ScenarioCard - Error in onClick handler:', error);
+    }
+  };
+
+  const handleButtonClick = (e: React.MouseEvent) => {
+    console.log('ScenarioCard - Button clicked for scenario:', scenario.id);
+    e.stopPropagation(); // Prevent event bubbling
+    try {
+      onClick();
+    } catch (error) {
+      console.error('ScenarioCard - Error in button onClick handler:', error);
+    }
+  };
+
   return (
     <Card 
       className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 cursor-pointer transition-colors"
-      onClick={onClick}
+      onClick={handleClick}
     >
       <CardHeader className="pb-2">
         <div className="flex items-center gap-3">
@@ -30,7 +51,13 @@ const ScenarioCard: React.FC<ScenarioCardProps> = ({ scenario, onClick }) => {
         </CardDescription>
       </CardContent>
       <CardFooter>
-        <Button variant="outline" className="w-full">View Scenario</Button>
+        <Button 
+          variant="outline" 
+          className="w-full"
+          onClick={handleButtonClick}
+        >
+          View Scenario
+        </Button>
       </CardFooter>
     </Card>
   );

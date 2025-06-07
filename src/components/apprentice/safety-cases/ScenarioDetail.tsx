@@ -2,7 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { HardHat, AlertTriangle, Check, Info } from "lucide-react";
+import { HardHat } from "lucide-react";
 import ScenarioOption from "./ScenarioOption";
 import { SafetyScenario } from "./safetyScenarios";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -29,6 +29,51 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
   isLastScenario,
 }) => {
   const isMobile = useIsMobile();
+
+  console.log('ScenarioDetail - Rendering scenario:', {
+    scenarioId: scenario.id,
+    scenarioTitle: scenario.title,
+    selectedOption,
+    showFeedback,
+    isLastScenario,
+    optionsCount: scenario.options?.length || 0
+  });
+
+  const handleOptionSelect = (optionId: string) => {
+    console.log('ScenarioDetail - Option selected:', optionId);
+    try {
+      onOptionSelect(optionId);
+    } catch (error) {
+      console.error('ScenarioDetail - Error selecting option:', error);
+    }
+  };
+
+  const handleSubmitAnswer = () => {
+    console.log('ScenarioDetail - Submitting answer:', selectedOption);
+    try {
+      onSubmitAnswer();
+    } catch (error) {
+      console.error('ScenarioDetail - Error submitting answer:', error);
+    }
+  };
+
+  const handleReset = () => {
+    console.log('ScenarioDetail - Resetting to scenario list');
+    try {
+      onReset();
+    } catch (error) {
+      console.error('ScenarioDetail - Error resetting:', error);
+    }
+  };
+
+  const handleNextScenario = () => {
+    console.log('ScenarioDetail - Moving to next scenario');
+    try {
+      onNextScenario();
+    } catch (error) {
+      console.error('ScenarioDetail - Error moving to next scenario:', error);
+    }
+  };
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
@@ -58,21 +103,32 @@ const ScenarioDetail: React.FC<ScenarioDetailProps> = ({
               outcome={option.outcome}
               regulation={option.regulation}
               showFeedback={showFeedback}
-              onClick={() => onOptionSelect(option.id)}
+              onClick={() => handleOptionSelect(option.id)}
             />
           ))}
         </div>
       </CardContent>
       <CardFooter className={`flex ${isMobile ? "flex-col" : "justify-end"} gap-3`}>
-        <Button variant="outline" onClick={onReset} className={isMobile ? "w-full" : ""}>
+        <Button 
+          variant="outline" 
+          onClick={handleReset} 
+          className={isMobile ? "w-full" : ""}
+        >
           Back to Scenarios
         </Button>
         {!showFeedback ? (
-          <Button onClick={onSubmitAnswer} disabled={!selectedOption} className={isMobile ? "w-full" : ""}>
+          <Button 
+            onClick={handleSubmitAnswer} 
+            disabled={!selectedOption} 
+            className={isMobile ? "w-full" : ""}
+          >
             Submit Answer
           </Button>
         ) : (
-          <Button onClick={onNextScenario} className={isMobile ? "w-full" : ""}>
+          <Button 
+            onClick={handleNextScenario} 
+            className={isMobile ? "w-full" : ""}
+          >
             {isLastScenario ? "Complete All Scenarios" : "Next Scenario"}
           </Button>
         )}

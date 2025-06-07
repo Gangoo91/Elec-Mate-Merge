@@ -25,9 +25,25 @@ const ScenarioOption = ({
   showFeedback,
   onClick,
 }: ScenarioOptionProps) => {
+  console.log('ScenarioOption - Rendering option:', {
+    optionId,
+    isSelected,
+    isCorrect,
+    showFeedback
+  });
+
+  const handleClick = () => {
+    console.log('ScenarioOption - Option clicked:', optionId);
+    try {
+      onClick();
+    } catch (error) {
+      console.error('ScenarioOption - Error in onClick handler:', error);
+    }
+  };
+
   return (
     <div
-      onClick={onClick}
+      onClick={handleClick}
       className={`
         p-4 rounded-md border cursor-pointer transition-colors
         ${isSelected ? 'border-elec-yellow bg-elec-yellow/10' : 'border-elec-gray/30 hover:border-elec-yellow/30'}
