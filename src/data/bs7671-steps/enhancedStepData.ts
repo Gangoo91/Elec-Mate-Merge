@@ -1,4 +1,3 @@
-
 export interface BS7671StepData {
   id: number;
   title: string;
@@ -187,44 +186,108 @@ export const enhancedBS7671Steps: BS7671StepData[] = [
   },
   {
     id: 4,
-    title: "Safe Isolation Procedures",
-    description: "Critical safety procedure to safely isolate electrical circuits before testing. This step is life-critical and must be performed correctly.",
+    title: "Safe Isolation",
+    description: "Safely isolate electrical supplies and prove dead before commencing work",
     category: "Safety Critical",
     checklist: [
-      "Identify the correct isolation point for the circuit",
-      "Inform all relevant parties of the isolation",
-      "Isolate the supply and lock off with approved lock",
-      "Prove voltage indicator on known live supply",
-      "Test between all conductors (L-N, L-E, N-E)",
-      "Prove voltage indicator again on known live supply",
-      "Post warning notices at isolation points",
-      "Ensure only authorised persons have access to keys"
+      "Identify all sources of supply to the work area",
+      "Inform all relevant parties of planned isolation",
+      "Secure isolation using appropriate devices and apply locks/labels",
+      "Visually inspect test equipment and check calibration certificates",
+      "Prove test equipment on known live source before testing",
+      "Connect EARTH lead FIRST when proving dead",
+      "Test all conductor combinations following correct sequence",
+      "Remove earth lead LAST after completing all tests",
+      "Re-prove test equipment on known live source after testing",
+      "Apply warning notices and secure work area",
+      "Brief all workers on isolation status and safety procedures"
     ],
     safetyNotes: [
-      "This is a life-critical procedure - any mistakes can be fatal",
-      "Always use GS38 compliant voltage indicators",
-      "Prove before and after testing - 'Prove before you test, test then prove again'",
-      "Never work on circuits without proper isolation",
-      "Use appropriate PPE including insulated gloves where required"
+      "CRITICAL: Always connect test leads to EARTH FIRST when proving dead - this practice can save your life",
+      "Never assume a circuit is dead - always prove it using the complete test sequence",
+      "Use only GS38 compliant test equipment with current calibration certificates",
+      "If voltage is detected during proving dead, stop immediately and investigate",
+      "Lock off procedures must use approved personal locks with unique keys",
+      "If in any doubt about isolation safety, seek supervision before proceeding"
     ],
     regulations: [
+      "BS 7671 Regulation 514.11.1 - Warning notices for isolation",
+      "BS 7671 Regulation 462.2 - Isolation and switching requirements",
       "GS38 - Electrical test equipment for use by electricians",
-      "BS 7671:2018 Section 461 - Isolation and switching",
-      "HSE HSG85 - Electricity at work: Safe working practices",
-      "Electricity at Work Regulations 1989"
+      "Electricity at Work Regulations 1989 - Reg 12 & 13",
+      "IET Code of Practice for In-Service Inspection and Testing",
+      "BS EN 60204-1 - Safety of machinery electrical equipment"
     ],
-    nextSteps: "Once safe isolation is confirmed, proceed with continuity testing of protective conductors (R1+R2).",
+    mftSettings: {
+      testType: "Voltage Detection",
+      voltage: "As per installation (230V/400V)",
+      current: "N/A (Voltage detection only)",
+      duration: "Continuous during test sequence",
+      leads: ["L1 Test Lead", "L2 Test Lead", "L3 Test Lead", "N Test Lead", "E Test Lead"]
+    },
+    connections: [
+      "Connect EARTH test lead to earth terminal FIRST - this is critical for safety",
+      "Test between each live conductor and earth using appropriate test lead",
+      "Test between live conductors where applicable (L1-L2, L2-L3, L1-L3)",
+      "Test between neutral and earth conductors",
+      "Remove earth test lead LAST after completing all voltage tests",
+      "Always maintain contact with earth throughout the testing process"
+    ],
+    expectedResults: {
+      typical: "0V between all conductor combinations when properly isolated",
+      maximum: "Maximum 50V AC or 120V DC (above this indicates live circuit)",
+      minimum: "Absolute minimum: 0V (any voltage reading requires investigation)"
+    },
     systemTypes: {
       singlePhase: [
-        "Test L-N, L-E, N-E combinations",
-        "Check RCD isolation if present",
-        "Verify single-phase supply isolation"
+        "Test sequence: L-E, L-N, N-E (with earth connection maintained)",
+        "Ensure neutral is also tested as it may be live in fault conditions",
+        "Check for backfeed through connected equipment",
+        "Verify isolation covers all poles of supply"
       ],
       threePhase: [
-        "Test all phase combinations L1-L2, L1-L3, L2-L3",
-        "Test each phase to neutral L1-N, L2-N, L3-N",
-        "Test each phase to earth L1-E, L2-E, L3-E",
-        "Test neutral to earth N-E"
+        "Complete test sequence: L1-E, L2-E, L3-E, L1-L2, L2-L3, L1-L3, L1-N, L2-N, L3-N, N-E",
+        "Maintain earth connection throughout all tests",
+        "Check for supply from alternative sources or parallel feeds",
+        "Verify all phases are isolated simultaneously"
+      ]
+    },
+    troubleshooting: [
+      {
+        issue: "Voltage detected during proving dead",
+        cause: "Isolation not effective or alternative supply present",
+        solution: "Investigate isolation points, check for backfeed, identify all supply sources"
+      },
+      {
+        issue: "Test equipment gives inconsistent readings",
+        cause: "Equipment fault or poor connection",
+        solution: "Re-test on known live source, check test lead connections, replace if faulty"
+      },
+      {
+        issue: "Unable to achieve secure isolation",
+        cause: "Complex supply arrangement or unknown circuits",
+        solution: "Trace all supply routes, consult drawings, seek technical assistance"
+      }
+    ],
+    nextSteps: "Once safe isolation is confirmed and documented, proceed to continuity testing (R1+R2). Never skip or rush the isolation procedure.",
+    installationTypes: {
+      domestic: [
+        "Isolation typically at consumer unit main switch",
+        "Check for solar PV or other generation that may backfeed",
+        "Consider smart meters and their communication systems",
+        "Verify no temporary supplies or extension leads connected"
+      ],
+      commercial: [
+        "May require multiple isolation points for different supplies",
+        "Consider emergency lighting and fire alarm systems",
+        "Check for UPS systems that may maintain power",
+        "Coordinate with building management for safe isolation"
+      ],
+      industrial: [
+        "Complex isolation procedures may be required",
+        "Multiple supply sources and parallel feeds common",
+        "High voltage supplies may be present",
+        "Permit-to-work systems usually mandatory"
       ]
     }
   },
