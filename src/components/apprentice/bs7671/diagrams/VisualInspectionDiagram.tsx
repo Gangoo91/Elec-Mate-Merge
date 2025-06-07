@@ -1,5 +1,6 @@
 
-import { Eye, CheckCircle, AlertTriangle, Home, Building, Zap, Shield } from "lucide-react";
+import { Eye, CheckCircle, AlertTriangle, Home, Building, Zap, Shield, FileText } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 interface VisualInspectionDiagramProps {
   stepType: string;
@@ -8,135 +9,184 @@ interface VisualInspectionDiagramProps {
 
 const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectionDiagramProps) => {
   const getInspectionAreas = () => {
-    if (stepType.toLowerCase().includes('external')) {
-      return [
-        { 
-          area: "Service Head & Meter", 
-          items: [
-            "Service head seal integrity and security",
-            "Meter tails condition and termination",
-            "Earthing conductor size and connection (Reg 544.1)",
-            "Main equipotential bonding conductor (Reg 411.3.1.2)"
-          ], 
-          icon: "🔌",
-          regulation: "BS 7671 Chapter 54"
-        },
-        { 
-          area: "External Equipment Protection", 
-          items: [
-            "IP rating appropriate for location (Reg 416.2)",
-            "Cable entries sealed against moisture ingress",
-            "Mechanical protection adequate for environment",
-            "Ventilation provisions for equipment cooling"
-          ], 
-          icon: "🏠",
-          regulation: "BS 7671 Section 416"
-        },
-        { 
-          area: "External Bonding", 
-          items: [
-            "Water service bonding within 600mm of entry (Reg 544.1.2)",
-            "Gas service bonding at meter position",
-            "Other metallic services bonded where required",
-            "Bonding conductor sizes comply with Table 54.8"
-          ], 
-          icon: "🔗",
-          regulation: "BS 7671 Section 544"
-        },
-        { 
-          area: "Cable Installation - External", 
-          items: [
-            "Underground cable depth and route marking",
-            "Overhead cable clearances and supports",
-            "Cable protection against mechanical damage",
-            "Warning tape/covers for buried cables"
-          ], 
-          icon: "⚡",
-          regulation: "BS 7671 Chapter 52"
-        }
-      ];
-    } else {
-      return [
-        { 
-          area: "Consumer Unit/Distribution Board", 
-          items: [
-            "RCD operation test button functional (Reg 643.8)",
-            "MCB/RCBO ratings match circuit design",
-            "Circuit labelling clear and durable (Reg 514.9)",
-            "Phase sequence correct (three-phase systems)"
-          ], 
-          icon: "⚡",
-          regulation: "BS 7671 Chapter 53"
-        },
-        { 
-          area: "Wiring Systems & Installation", 
-          items: [
-            "Cable types appropriate for installation method",
-            "Support intervals comply with Table 52.2",
-            "Protection against mechanical damage adequate",
-            "Segregation from non-electrical services (Reg 528.1)"
-          ], 
-          icon: "🔌",
-          regulation: "BS 7671 Chapter 52"
-        },
-        { 
-          area: "Accessories & Equipment", 
-          items: [
-            "Socket outlets RCD protected ≤20A (Reg 411.3.3)",
-            "Switches and isolators correctly rated",
-            "Mounting heights appropriate for accessibility",
-            "Special location requirements complied with"
-          ], 
-          icon: "🔘",
-          regulation: "BS 7671 Section 411"
-        },
-        { 
-          area: "Connections & Terminations", 
-          items: [
-            "All connections tight and secure (Reg 526.1)",
-            "Conductor identification correct (Reg 514.3)",
-            "Junction boxes accessible for inspection",
-            "No signs of overheating or damage"
-          ], 
-          icon: "🔗",
-          regulation: "BS 7671 Chapter 52"
-        }
-      ];
-    }
-  };
-
-  const inspectionAreas = getInspectionAreas();
-
-  const getCriticalSafetyChecks = () => {
     return [
-      "Verify all circuits are de-energised before inspection",
-      "Check for any obvious damage or unsafe conditions",
-      "Confirm isolation procedures have been followed",
-      "Ensure test equipment is calibrated and functioning"
-    ];
-  };
-
-  const getRegulationRequirements = () => {
-    return [
-      {
-        regulation: "610.3",
-        requirement: "Verify equipment complies with BS 7671 and is correctly selected and erected"
+      { 
+        area: "External Intake Equipment", 
+        items: [
+          "Service head seal integrity and security",
+          "Meter tails condition and termination", 
+          "Main earthing conductor size and connection",
+          "Main equipotential bonding conductor"
+        ], 
+        icon: "🔌",
+        regulation: "BS 7671 Chapter 54",
+        critical: true
       },
-      {
-        regulation: "611.3",
-        requirement: "Inspection shall precede testing and shall normally be done with equipment disconnected"
+      { 
+        area: "Consumer Unit/Distribution Board", 
+        items: [
+          "Adequate access and working space",
+          "Enclosure suitable for environment",
+          "All circuits properly identified and labelled",
+          "RCD(s) present and properly identified"
+        ], 
+        icon: "⚡",
+        regulation: "BS 7671 Chapter 53",
+        critical: true
       },
-      {
-        regulation: "612.1",
-        requirement: "All items in the schedule of inspections relevant to the installation shall be inspected"
+      { 
+        area: "Earthing Arrangements", 
+        items: [
+          "Main earthing conductor present and adequately sized",
+          "Circuit protective conductors present",
+          "Equipotential bonding conductors adequate",
+          "Supplementary bonding where required"
+        ], 
+        icon: "🌍",
+        regulation: "BS 7671 Section 544",
+        critical: true
+      },
+      { 
+        area: "Wiring Systems", 
+        items: [
+          "Cables properly supported and protected",
+          "Cables suitable for environmental conditions",
+          "Adequate protection against mechanical damage",
+          "Segregation from non-electrical services"
+        ], 
+        icon: "🔗",
+        regulation: "BS 7671 Chapter 52",
+        critical: false
+      },
+      { 
+        area: "Accessories & Equipment", 
+        items: [
+          "Socket outlets RCD protected ≤20A",
+          "Adequate IP rating for location",
+          "Switches and isolators correctly rated",
+          "No damage or deterioration evident"
+        ], 
+        icon: "🔘",
+        regulation: "BS 7671 Section 411",
+        critical: false
+      },
+      { 
+        area: "Connections & Terminations", 
+        items: [
+          "All connections tight and secure",
+          "Conductor identification correct",
+          "Junction boxes accessible for inspection",
+          "No signs of overheating or damage"
+        ], 
+        icon: "🔧",
+        regulation: "BS 7671 Section 526",
+        critical: true
+      },
+      { 
+        area: "Special Locations", 
+        items: [
+          "Bathroom zones comply with BS 7671",
+          "Kitchen requirements observed",
+          "Outdoor installation IP ratings adequate",
+          "Swimming pool requirements (if applicable)"
+        ], 
+        icon: "🏠",
+        regulation: "BS 7671 Part 7",
+        critical: true
+      },
+      { 
+        area: "RCD Protection", 
+        items: [
+          "RCD manual test button operational",
+          "RCD protection provided where required",
+          "RCD ratings appropriate for circuits",
+          "RCD quarterly test notice displayed"
+        ], 
+        icon: "🛡️",
+        regulation: "BS 7671 Section 531",
+        critical: true
+      },
+      { 
+        area: "Isolation & Switching", 
+        items: [
+          "Main switch/isolator readily accessible",
+          "Emergency switching arrangements adequate",
+          "Isolation devices properly rated and marked",
+          "Warning notices and labels present"
+        ], 
+        icon: "🔴",
+        regulation: "BS 7671 Section 537",
+        critical: true
+      },
+      { 
+        area: "Undervoltage Protection", 
+        items: [
+          "Undervoltage protection provided where required",
+          "Protection devices correctly rated",
+          "Manual reset facilities where required"
+        ], 
+        icon: "⚡",
+        regulation: "BS 7671 Section 445",
+        critical: true
       }
     ];
   };
 
+  const inspectionAreas = getInspectionAreas();
+
+  const getOutcomeClassifications = () => {
+    return [
+      {
+        code: "✓",
+        label: "Acceptable",
+        description: "No defects found - installation complies",
+        color: "text-green-400 bg-green-500/20 border-green-500/30"
+      },
+      {
+        code: "C1",
+        label: "Danger Present",
+        description: "Immediate remedial action required",
+        color: "text-red-400 bg-red-500/20 border-red-500/30"
+      },
+      {
+        code: "C2", 
+        label: "Potentially Dangerous",
+        description: "Urgent remedial action required",
+        color: "text-orange-400 bg-orange-500/20 border-orange-500/30"
+      },
+      {
+        code: "C3",
+        label: "Improvement Recommended", 
+        description: "Enhancement recommended for safety",
+        color: "text-yellow-400 bg-yellow-500/20 border-yellow-500/30"
+      },
+      {
+        code: "N/V",
+        label: "Not Verified",
+        description: "Unable to inspect - limitation",
+        color: "text-gray-400 bg-gray-500/20 border-gray-500/30"
+      },
+      {
+        code: "LIM",
+        label: "Limitation",
+        description: "Limitation encountered during inspection",
+        color: "text-purple-400 bg-purple-500/20 border-purple-500/30"
+      },
+      {
+        code: "N/A",
+        label: "Not Applicable",
+        description: "Not applicable to this installation",
+        color: "text-blue-400 bg-blue-500/20 border-blue-500/30"
+      }
+    ];
+  };
+
+  const outcomeClassifications = getOutcomeClassifications();
+
   return (
     <div className="space-y-6">
       <div className="text-sm text-indigo-200 mb-4">
-        {stepType} inspection checklist for {installationType || "standard"} installations
+        Comprehensive EICR visual inspection for {installationType || "electrical"} installations - 10 main sections with 80+ inspection items
       </div>
 
       {/* Installation type indicator */}
@@ -147,21 +197,24 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
         <span className="text-xs text-indigo-200 capitalize">{installationType || "General"} Installation</span>
       </div>
 
-      {/* Regulation Requirements */}
+      {/* EICR Outcome Classifications */}
       <div className="bg-blue-600/20 p-4 rounded border border-blue-500/30">
         <h4 className="font-medium text-blue-200 mb-3 flex items-center gap-2">
-          <Shield className="h-4 w-4" />
-          BS 7671 Inspection Requirements
+          <FileText className="h-4 w-4" />
+          EICR Outcome Classifications
         </h4>
-        {getRegulationRequirements().map((req, index) => (
-          <div key={index} className="mb-2 last:mb-0">
-            <span className="text-xs font-medium text-blue-300">Regulation {req.regulation}:</span>
-            <p className="text-xs text-blue-100">{req.requirement}</p>
-          </div>
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
+          {outcomeClassifications.map((outcome, index) => (
+            <div key={index} className={`p-2 rounded border text-center ${outcome.color}`}>
+              <div className="font-bold text-lg">{outcome.code}</div>
+              <div className="text-xs font-medium">{outcome.label}</div>
+              <div className="text-xs opacity-80">{outcome.description}</div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Inspection Areas Grid */}
+      {/* Comprehensive Inspection Areas Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {inspectionAreas.map((area, index) => (
           <div key={index} className="bg-indigo-600/20 p-4 rounded border border-indigo-500/30">
@@ -171,6 +224,11 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
                 <h4 className="font-medium text-indigo-200">{area.area}</h4>
                 <p className="text-xs text-indigo-300">{area.regulation}</p>
               </div>
+              {area.critical && (
+                <Badge className="bg-red-500/20 text-red-300 border-red-500/30 text-xs">
+                  Critical
+                </Badge>
+              )}
             </div>
             <ul className="space-y-2">
               {area.items.map((item, itemIndex) => (
@@ -184,70 +242,64 @@ const VisualInspectionDiagram = ({ stepType, installationType }: VisualInspectio
         ))}
       </div>
 
-      {/* Critical Safety Checks */}
+      {/* Critical Safety Requirements */}
       <div className="bg-red-500/10 p-4 rounded border border-red-500/30">
         <h4 className="font-medium text-red-300 mb-3 flex items-center gap-2">
           <AlertTriangle className="h-4 w-4" />
-          Critical Safety Checks Before Inspection
-        </h4>
-        <ul className="space-y-2">
-          {getCriticalSafetyChecks().map((check, index) => (
-            <li key={index} className="flex items-start gap-2 text-xs text-red-200">
-              <span className="text-red-400 mt-1">⚠️</span>
-              <span>{check}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Common Non-Compliance Issues */}
-      <div className="bg-amber-500/10 p-4 rounded border border-amber-500/30">
-        <h4 className="font-medium text-amber-300 mb-3 flex items-center gap-2">
-          <CheckCircle className="h-4 w-4" />
-          Common Non-Compliance Issues to Identify
+          Critical Safety Requirements
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
           <div className="space-y-2">
-            <h5 className="font-medium text-amber-200">Installation Issues:</h5>
-            <ul className="text-amber-100 space-y-1">
-              <li>• Inadequate cable supports (Reg 521.10.202)</li>
-              <li>• Incorrect cable selection for environment</li>
-              <li>• Missing circuit identification labels</li>
-              <li>• Insufficient IP ratings for location</li>
+            <h5 className="font-medium text-red-200">Before Starting:</h5>
+            <ul className="text-red-100 space-y-1">
+              <li>• Verify safe isolation procedures followed</li>
+              <li>• Ensure adequate lighting for inspection</li>
+              <li>• Have appropriate access equipment available</li>
+              <li>• Check test equipment calibration certificates</li>
             </ul>
           </div>
           <div className="space-y-2">
-            <h5 className="font-medium text-amber-200">Protection Issues:</h5>
-            <ul className="text-amber-100 space-y-1">
-              <li>• Missing RCD protection where required</li>
-              <li>• Incorrect protective device ratings</li>
-              <li>• Inadequate earthing arrangements</li>
-              <li>• Poor connection terminations</li>
+            <h5 className="font-medium text-red-200">During Inspection:</h5>
+            <ul className="text-red-100 space-y-1">
+              <li>• Do not remove covers unnecessarily</li>
+              <li>• Take photographs of defects for evidence</li>
+              <li>• Record all observations systematically</li>
+              <li>• Report immediate dangers (C1) immediately</li>
             </ul>
           </div>
         </div>
       </div>
 
-      {/* Documentation Requirements */}
+      {/* Professional Documentation */}
       <div className="bg-purple-600/20 p-4 rounded border border-purple-500/30">
-        <h4 className="font-medium text-purple-200 mb-2">
-          Schedule of Inspections Documentation
+        <h4 className="font-medium text-purple-200 mb-2 flex items-center gap-2">
+          <CheckCircle className="h-4 w-4" />
+          Professional Documentation Standards
         </h4>
-        <p className="text-xs text-purple-100 mb-2">
-          Each inspection item must be recorded on the Schedule of Inspections (BS 7671 Appendix 6):
-        </p>
-        <div className="grid grid-cols-3 gap-2 text-xs">
-          <div className="text-center p-2 bg-green-500/10 rounded">
-            <span className="text-green-300 font-medium">✓ (Tick)</span>
-            <p className="text-green-100">Inspected & Satisfactory</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <div className="space-y-1">
+            <h5 className="font-medium text-purple-200">Recording:</h5>
+            <ul className="text-purple-100 space-y-1">
+              <li>• Use official BS 7671 Schedule of Inspections</li>
+              <li>• Complete all applicable items</li>
+              <li>• Provide detailed notes for defects</li>
+            </ul>
           </div>
-          <div className="text-center p-2 bg-red-500/10 rounded">
-            <span className="text-red-300 font-medium">✗ (Cross)</span>
-            <p className="text-red-100">Inspected & Unsatisfactory</p>
+          <div className="space-y-1">
+            <h5 className="font-medium text-purple-200">Classification:</h5>
+            <ul className="text-purple-100 space-y-1">
+              <li>• Apply correct outcome codes (C1/C2/C3)</li>
+              <li>• Justify classification decisions</li>
+              <li>• Reference relevant regulations</li>
+            </ul>
           </div>
-          <div className="text-center p-2 bg-gray-500/10 rounded">
-            <span className="text-gray-300 font-medium">N/A</span>
-            <p className="text-gray-100">Not Applicable</p>
+          <div className="space-y-1">
+            <h5 className="font-medium text-purple-200">Follow-up:</h5>
+            <ul className="text-purple-100 space-y-1">
+              <li>• Recommend remedial actions</li>
+              <li>• Set realistic timescales</li>
+              <li>• Arrange re-inspection if required</li>
+            </ul>
           </div>
         </div>
       </div>

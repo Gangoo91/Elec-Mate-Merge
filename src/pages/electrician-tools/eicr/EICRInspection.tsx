@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import InspectionChecklist from '@/components/inspection-testing/eicr/InspectionChecklist';
+import EnhancedVisualInspection from '@/components/inspection-testing/eicr/EnhancedVisualInspection';
 
 const EICRInspection = () => {
   const navigate = useNavigate();
@@ -39,9 +39,9 @@ const EICRInspection = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Visual Inspection</h1>
+          <h1 className="text-3xl font-bold tracking-tight">EICR Visual Inspection</h1>
           <p className="text-muted-foreground">
-            Complete the visual inspection checklist
+            Complete the comprehensive visual inspection using the BS 7671 Schedule of Inspections
           </p>
         </div>
         <Link to="/electrician-tools/eicr-reports">
@@ -52,8 +52,8 @@ const EICRInspection = () => {
         </Link>
       </div>
 
-      {/* Inspection Checklist */}
-      <InspectionChecklist 
+      {/* Enhanced Visual Inspection Component */}
+      <EnhancedVisualInspection 
         reportType="eicr" 
         onComplete={handleInspectionComplete}
       />
@@ -73,7 +73,7 @@ const EICRInspection = () => {
             
             <div className="text-center">
               <p className="text-sm text-muted-foreground">
-                Complete all required inspection items to proceed
+                Complete all sections of the visual inspection to proceed to testing
               </p>
             </div>
           </div>
