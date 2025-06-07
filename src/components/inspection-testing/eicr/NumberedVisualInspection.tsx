@@ -6,12 +6,14 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Progress } from '@/components/ui/progress';
-import { CheckCircle, AlertTriangle, Hash, ArrowRight, ArrowLeft, FileText } from 'lucide-react';
+import { CheckCircle, AlertTriangle, Hash, ArrowRight, ArrowLeft, FileText, AlertCircle } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { 
   numberedVisualInspectionSections, 
   outcomeDefinitions, 
   getInspectionStats, 
   getOverallAssessment,
+  TOTAL_INSPECTION_ITEMS,
   type InspectionOutcome,
   type NumberedInspectionSection,
   type NumberedInspectionItem
@@ -116,7 +118,8 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
       sections,
       stats,
       overallAssessment,
-      completedAt: new Date().toISOString()
+      completedAt: new Date().toISOString(),
+      totalItems: TOTAL_INSPECTION_ITEMS
     };
     
     localStorage.setItem('eicr-visual-inspection-results', JSON.stringify(results));
@@ -134,12 +137,12 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
         <CardHeader>
           <div className="flex items-center gap-3">
             <CheckCircle className="h-6 w-6 text-green-400" />
-            <CardTitle className="text-green-300">Numbered Visual Inspection Complete</CardTitle>
+            <CardTitle className="text-green-300">Official EICR Numbered Visual Inspection Complete</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground mb-4">
-            All numbered inspection sections have been completed. The results have been saved.
+            All {TOTAL_INSPECTION_ITEMS} numbered inspection items across 10 sections have been completed according to the official EICR Schedule of Inspections.
           </p>
           <Button onClick={onComplete} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
             Continue to Results
@@ -151,6 +154,15 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
 
   return (
     <div className="space-y-6">
+      {/* Official EICR Notice */}
+      <Alert className="bg-blue-500/10 border-blue-500/30">
+        <AlertCircle className="h-4 w-4 text-blue-400" />
+        <AlertDescription className="text-blue-200">
+          <strong>Official EICR Form:</strong> This inspection uses the exact numbered items from the official EICR Schedule of Inspections 
+          as per BS 7671:2018+A2:2022. Total items: {TOTAL_INSPECTION_ITEMS} across 10 sections.
+        </AlertDescription>
+      </Alert>
+
       {/* Progress Header */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
@@ -165,10 +177,13 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">{currentSection.description}</p>
                 <p className="text-xs text-blue-300 mt-1">{currentSection.regulation}</p>
+                <p className="text-xs text-elec-yellow mt-1">
+                  {currentSection.items.length} inspection items in this section
+                </p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-sm font-medium">Progress</p>
+              <p className="text-sm font-medium">Section Progress</p>
               <Progress value={progress} className="w-32 h-2" />
               <p className="text-xs text-muted-foreground mt-1">
                 {currentSectionIndex + 1} of {sections.length}
@@ -181,7 +196,12 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
       {/* Statistics */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-lg">Current Statistics</CardTitle>
+          <CardTitle className="text-lg flex items-center justify-between">
+            Overall Progress Statistics
+            <Badge variant="outline" className="text-xs">
+              {stats.total}/{TOTAL_INSPECTION_ITEMS} Items Reviewed
+            </Badge>
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-4 md:grid-cols-7 gap-3">
@@ -208,7 +228,7 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
               <Hash className="h-4 w-4 text-elec-yellow" />
               <span className="text-elec-yellow font-mono">{currentSection.number}</span>
             </div>
-            Inspection Items
+            Inspection Items ({currentSection.items.length} items)
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -232,7 +252,7 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
               </CardHeader>
               <CardContent className="pt-0 space-y-3">
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Outcome</label>
+                  <label className="text-sm font-medium mb-2 block">Inspection Outcome</label>
                   <Select
                     value={item.outcome}
                     onValueChange={(value: InspectionOutcome) => updateItemOutcome(currentSection.id, item.id, value)}
@@ -255,9 +275,14 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
 
                 {item.outcome !== 'acceptable' && (
                   <div>
-                    <label className="text-sm font-medium mb-2 block">Notes and Observations</label>
+                    <label className="text-sm font-medium mb-2 block">
+                      Detailed Notes and Observations 
+                      {(item.outcome === 'c1' || item.outcome === 'c2') && 
+                        <span className="text-red-400 ml-1">*Required for defect codes</span>
+                      }
+                    </label>
                     <Textarea
-                      placeholder="Add detailed notes about the defect or issue observed..."
+                      placeholder="Provide detailed description of the defect, location, and recommended remedial action..."
                       value={item.notes || ''}
                       onChange={(e) => updateItemNotes(currentSection.id, item.id, e.target.value)}
                       className="bg-elec-dark border-elec-yellow/20"
@@ -288,6 +313,9 @@ const NumberedVisualInspection = ({ reportType, onComplete }: NumberedVisualInsp
             <div className="text-center">
               <p className="text-sm text-muted-foreground">
                 Section {currentSectionIndex + 1} of {sections.length}
+              </p>
+              <p className="text-xs text-elec-yellow">
+                {currentSection.items.length} items in current section
               </p>
             </div>
 

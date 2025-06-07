@@ -1,5 +1,8 @@
 
-export type InspectionOutcome = 'acceptable' | 'c1' | 'c2' | 'c3' | 'not-verified' | 'limitation' | 'not-applicable';
+// Official EICR Numbered Visual Inspection Data
+// Based on BS 7671:2018+A2:2022 Schedule of Inspections
+
+export type InspectionOutcome = 'acceptable' | 'c1' | 'c2' | 'c3' | 'not_verified' | 'limitation' | 'not_applicable';
 
 export interface NumberedInspectionItem {
   id: string;
@@ -17,12 +20,12 @@ export interface NumberedInspectionSection {
   description: string;
   regulation: string;
   items: NumberedInspectionItem[];
-  isComplete: boolean;
+  isComplete?: boolean;
 }
 
 export const outcomeDefinitions = {
   acceptable: {
-    label: 'Acceptable',
+    label: 'Acceptable - ✓',
     color: 'text-green-400',
     bgColor: 'bg-green-500/20',
     borderColor: 'border-green-500/30'
@@ -45,7 +48,7 @@ export const outcomeDefinitions = {
     bgColor: 'bg-yellow-500/20',
     borderColor: 'border-yellow-500/30'
   },
-  'not-verified': {
+  not_verified: {
     label: 'N/V - Not Verified',
     color: 'text-gray-400',
     bgColor: 'bg-gray-500/20',
@@ -57,7 +60,7 @@ export const outcomeDefinitions = {
     bgColor: 'bg-purple-500/20',
     borderColor: 'border-purple-500/30'
   },
-  'not-applicable': {
+  not_applicable: {
     label: 'N/A - Not Applicable',
     color: 'text-blue-400',
     bgColor: 'bg-blue-500/20',
@@ -67,452 +70,548 @@ export const outcomeDefinitions = {
 
 export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
-    id: 'external-intake',
+    id: 'section-1',
     number: '1',
-    title: 'EXTERNAL INTAKE EQUIPMENT',
-    description: 'Service head, earthing and meter arrangements',
-    regulation: 'BS 7671 Section 444, 542, 543',
-    isComplete: false,
+    title: 'EXTERNAL CONDITION OF INTAKE EQUIPMENT OR GENERATOR',
+    description: 'Visual inspection of external electrical intake equipment',
+    regulation: 'BS 7671:2018+A2:2022 Section 514',
     items: [
       {
         id: '1.1',
         number: '1.1',
-        item: 'Service cable',
-        regulation: 'BS 7671 Section 444',
-        outcome: 'acceptable'
-      },
-      {
-        id: '1.2',
-        number: '1.2', 
         item: 'Service head',
         regulation: 'BS 7671 Section 444',
         outcome: 'acceptable'
       },
       {
+        id: '1.2',
+        number: '1.2',
+        item: 'Earthing conductor',
+        regulation: 'BS 7671 Section 544',
+        outcome: 'acceptable'
+      },
+      {
         id: '1.3',
         number: '1.3',
-        item: 'Earthing conductor',
-        regulation: 'BS 7671 Section 542',
+        item: 'Earthing conductor connection',
+        regulation: 'BS 7671 Section 544.1',
         outcome: 'acceptable'
       },
       {
         id: '1.4',
         number: '1.4',
-        item: 'Main earthing terminal',
-        regulation: 'BS 7671 Section 542.4',
+        item: 'Earthing conductor identification',
+        regulation: 'BS 7671 Section 514.3',
         outcome: 'acceptable'
       }
     ]
   },
   {
-    id: 'parallel-conductors',
+    id: 'section-2',
     number: '2',
-    title: 'PARALLEL CONDUCTORS',
-    description: 'Assessment of parallel conductor arrangements',
-    regulation: 'BS 7671 Section 523',
-    isComplete: false,
+    title: 'PARALLEL OR SWITCHED ALTERNATIVE SOURCES OF SUPPLY',
+    description: 'Inspection of alternative supply arrangements',
+    regulation: 'BS 7671:2018+A2:2022 Section 551',
     items: [
       {
         id: '2.1',
         number: '2.1',
-        item: 'Parallel conductors of live conductors',
-        regulation: 'BS 7671 Section 523.7',
-        outcome: 'acceptable'
-      },
-      {
-        id: '2.2',
-        number: '2.2',
-        item: 'Parallel conductors of protective conductors',
-        regulation: 'BS 7671 Section 523.7',
-        outcome: 'acceptable'
-      }
-    ]
-  },
-  {
-    id: 'conductor-identification',
-    number: '3',
-    title: 'CONDUCTOR IDENTIFICATION',
-    description: 'Verification of conductor colour coding and identification',
-    regulation: 'BS 7671 Section 514',
-    isComplete: false,
-    items: [
-      {
-        id: '3.1',
-        number: '3.1',
-        item: 'Live conductors',
-        regulation: 'BS 7671 Section 514.3',
-        outcome: 'acceptable'
-      },
-      {
-        id: '3.2',
-        number: '3.2',
-        item: 'Protective conductors',
-        regulation: 'BS 7671 Section 514.4',
-        outcome: 'acceptable'
-      },
-      {
-        id: '3.3',
-        number: '3.3',
-        item: 'PEN conductors',
-        regulation: 'BS 7671 Section 514.4.2',
-        outcome: 'acceptable'
-      }
-    ]
-  },
-  {
-    id: 'connections',
-    number: '4',
-    title: 'CONNECTIONS',
-    description: 'Assessment of electrical connections and terminations',
-    regulation: 'BS 7671 Section 526',
-    isComplete: false,
-    items: [
-      {
-        id: '4.1',
-        number: '4.1',
-        item: 'Connections of live conductors',
-        regulation: 'BS 7671 Section 526.1',
-        outcome: 'acceptable'
-      },
-      {
-        id: '4.2',
-        number: '4.2',
-        item: 'Connections of protective conductors',
-        regulation: 'BS 7671 Section 526.1',
-        outcome: 'acceptable'
-      }
-    ]
-  },
-  {
-    id: 'distribution-equipment',
-    number: '5',
-    title: 'DISTRIBUTION EQUIPMENT',
-    description: 'Consumer units, distribution boards and switching equipment',
-    regulation: 'BS 7671 Section 530, 531, 537',
-    isComplete: false,
-    items: [
-      {
-        id: '5.1',
-        number: '5.1',
-        item: 'Presence and condition of appropriate devices for isolation and switching',
-        regulation: 'BS 7671 Section 537',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.2',
-        number: '5.2',
-        item: 'Presence of undervoltage protective devices',
-        regulation: 'BS 7671 Section 445',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.3',
-        number: '5.3',
-        item: 'Choice and setting of protective and monitoring devices',
-        regulation: 'BS 7671 Chapter 43',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.4',
-        number: '5.4',
-        item: 'Presence of RCD(s)',
-        regulation: 'BS 7671 Section 531.2',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.5',
-        number: '5.5',
-        item: 'RCD operating times and the selectivity between RCDs',
-        regulation: 'BS 7671 Section 531.2.9',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.6',
-        number: '5.6',
-        item: 'Presence of circuit charts, labels and warnings',
-        regulation: 'BS 7671 Section 514.8',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.7',
-        number: '5.7',
-        item: 'Presence of non-standard mix of equipment',
-        regulation: 'BS 7671 Section 530.3',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.8',
-        number: '5.8',
-        item: 'Presence of adequate arrangements for alternative supplies',
-        regulation: 'BS 7671 Section 551',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.9',
-        number: '5.9',
-        item: 'Presence of adequate arrangements for isolation of electric vehicle charging point',
-        regulation: 'BS 7671 Section 722.537.2',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.10',
-        number: '5.10',
-        item: 'Presence of fire barriers, sealing arrangements',
-        regulation: 'BS 7671 Section 527.2',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.11',
-        number: '5.11',
-        item: 'Adequacy of access to switchgear',
-        regulation: 'BS 7671 Section 513.1',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.12',
-        number: '5.12',
-        item: 'Particular protective measures for special installations and locations',
-        regulation: 'BS 7671 Part 7',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.13',
-        number: '5.13',
-        item: 'Connection of single-pole devices for protection or switching in line conductors only',
-        regulation: 'BS 7671 Section 530.3.3',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.14',
-        number: '5.14',
-        item: 'Correct connection of accessories and equipment',
-        regulation: 'BS 7671 Section 526',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.15',
-        number: '5.15',
-        item: 'Presence of danger notices and warning labels',
-        regulation: 'BS 7671 Section 514.13',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.16',
-        number: '5.16',
-        item: 'Presence of diagrams, instructions and similar information',
-        regulation: 'BS 7671 Section 514.9',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.17',
-        number: '5.17',
-        item: 'Erection methods',
-        regulation: 'BS 7671 Chapter 52',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.18',
-        number: '5.18',
-        item: 'Selection of equipment and protective measures appropriate to external influences',
-        regulation: 'BS 7671 Section 512.2',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.19',
-        number: '5.19',
-        item: 'Adequacy of working space/accessibility to equipment',
-        regulation: 'BS 7671 Section 513.1',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.20',
-        number: '5.20',
-        item: 'Presence of basic protection by insulation of live parts',
-        regulation: 'BS 7671 Section 416',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.21',
-        number: '5.21',
-        item: 'Presence of basic protection by barriers or enclosures',
-        regulation: 'BS 7671 Section 417',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.22',
-        number: '5.22',
-        item: 'Presence of additional protection by RCD',
-        regulation: 'BS 7671 Section 415.1',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.23',
-        number: '5.23',
-        item: 'Presence of earthing arrangements for combined protective and functional purposes',
-        regulation: 'BS 7671 Section 543.7',
-        outcome: 'acceptable'
-      },
-      {
-        id: '5.24',
-        number: '5.24',
-        item: 'Presence of adequate arrangements where a generating set operates as a switched alternative to the public supply',
+        item: 'Adequate arrangements where multiple sources of supply exist',
         regulation: 'BS 7671 Section 551.4',
         outcome: 'acceptable'
       }
     ]
   },
   {
-    id: 'final-circuits',
+    id: 'section-3',
+    number: '3',
+    title: 'AUTOMATIC DISCONNECTION OF SUPPLY',
+    description: 'Verification of protective measures',
+    regulation: 'BS 7671:2018+A2:2022 Section 411',
+    items: [
+      {
+        id: '3.1',
+        number: '3.1',
+        item: 'Presence of earthing conductor',
+        regulation: 'BS 7671 Section 411.3.1.1',
+        outcome: 'acceptable'
+      },
+      {
+        id: '3.2',
+        number: '3.2',
+        item: 'Presence of circuit protective conductors',
+        regulation: 'BS 7671 Section 411.3.1.1',
+        outcome: 'acceptable'
+      },
+      {
+        id: '3.3',
+        number: '3.3',
+        item: 'Presence of main equipotential bonding conductors',
+        regulation: 'BS 7671 Section 411.3.1.2',
+        outcome: 'acceptable'
+      },
+      {
+        id: '3.4',
+        number: '3.4',
+        item: 'Presence of supplementary equipotential bonding conductors',
+        regulation: 'BS 7671 Section 415.2',
+        outcome: 'acceptable'
+      },
+      {
+        id: '3.5',
+        number: '3.5',
+        item: 'Presence of earthing arrangements for combined protective and functional purposes',
+        regulation: 'BS 7671 Section 543.6',
+        outcome: 'acceptable'
+      },
+      {
+        id: '3.6',
+        number: '3.6',
+        item: 'Presence of adequate arrangements where IT system used',
+        regulation: 'BS 7671 Section 411.6',
+        outcome: 'acceptable'
+      }
+    ]
+  },
+  {
+    id: 'section-4',
+    number: '4',
+    title: 'OTHER PROTECTIVE MEASURES',
+    description: 'Additional protective measures verification',
+    regulation: 'BS 7671:2018+A2:2022 Sections 412-418',
+    items: [
+      {
+        id: '4.1',
+        number: '4.1',
+        item: 'Presence of obstacles',
+        regulation: 'BS 7671 Section 417',
+        outcome: 'acceptable'
+      },
+      {
+        id: '4.2',
+        number: '4.2',
+        item: 'Placing out of reach',
+        regulation: 'BS 7671 Section 417',
+        outcome: 'acceptable'
+      },
+      {
+        id: '4.3',
+        number: '4.3',
+        item: 'Non-conducting location',
+        regulation: 'BS 7671 Section 418',
+        outcome: 'acceptable'
+      },
+      {
+        id: '4.4',
+        number: '4.4',
+        item: 'Earth-free local equipotential bonding',
+        regulation: 'BS 7671 Section 418',
+        outcome: 'acceptable'
+      },
+      {
+        id: '4.5',
+        number: '4.5',
+        item: 'Electrical separation',
+        regulation: 'BS 7671 Section 413',
+        outcome: 'acceptable'
+      }
+    ]
+  },
+  {
+    id: 'section-5',
+    number: '5',
+    title: 'DISTRIBUTION EQUIPMENT',
+    description: 'Consumer units, distribution boards and switchgear',
+    regulation: 'BS 7671:2018+A2:2022 Section 530',
+    items: [
+      {
+        id: '5.1',
+        number: '5.1',
+        item: 'Adequate access to switchgear',
+        regulation: 'BS 7671 Section 132.12',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.2',
+        number: '5.2',
+        item: 'Adequate working space/access to equipment',
+        regulation: 'BS 7671 Section 132.12',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.3',
+        number: '5.3',
+        item: 'Particular protective measures for special installations and locations',
+        regulation: 'BS 7671 Part 7',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.4',
+        number: '5.4',
+        item: 'Enclosures suitable for external influences',
+        regulation: 'BS 7671 Section 512.2',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.5',
+        number: '5.5',
+        item: 'Compatibility of equipment',
+        regulation: 'BS 7671 Section 512.1',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.6',
+        number: '5.6',
+        item: 'Single-pole switching or control in line conductor only',
+        regulation: 'BS 7671 Section 132.14.1',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.7',
+        number: '5.7',
+        item: 'Protection against mechanical damage',
+        regulation: 'BS 7671 Section 522.6',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.8',
+        number: '5.8',
+        item: 'Protection against effects of moisture',
+        regulation: 'BS 7671 Section 512.2',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.9',
+        number: '5.9',
+        item: 'Protection against corrosion',
+        regulation: 'BS 7671 Section 512.2',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.10',
+        number: '5.10',
+        item: 'Adequate arrangements for disconnection of installation or part thereof',
+        regulation: 'BS 7671 Section 537.1',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.11',
+        number: '5.11',
+        item: 'Adequate arrangements for isolation',
+        regulation: 'BS 7671 Section 537.2',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.12',
+        number: '5.12',
+        item: 'RCD provided for fault protection',
+        regulation: 'BS 7671 Section 411.4',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.13',
+        number: '5.13',
+        item: 'RCD provided for additional protection',
+        regulation: 'BS 7671 Section 415.1',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.14',
+        number: '5.14',
+        item: 'Correct identification of circuits, fuses, switches, terminals',
+        regulation: 'BS 7671 Section 514.8',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.15',
+        number: '5.15',
+        item: 'Presence of diagrams, instructions, circuit charts and similar information',
+        regulation: 'BS 7671 Section 514.9',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.16',
+        number: '5.16',
+        item: 'Presence of warning notice - isolation',
+        regulation: 'BS 7671 Section 514.11',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.17',
+        number: '5.17',
+        item: 'Presence of warning notice - earthing and bonding connections',
+        regulation: 'BS 7671 Section 514.13.1',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.18',
+        number: '5.18',
+        item: 'Presence of warning notice - alternative supplies',
+        regulation: 'BS 7671 Section 514.15',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.19',
+        number: '5.19',
+        item: 'Presence of warning notice - nominal voltage',
+        regulation: 'BS 7671 Section 514.10',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.20',
+        number: '5.20',
+        item: 'Presence of warning notice - periodic inspection and testing',
+        regulation: 'BS 7671 Section 514.12.1',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.21',
+        number: '5.21',
+        item: 'Presence of warning notice - RCD quarterly testing',
+        regulation: 'BS 7671 Section 514.12.2',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.22',
+        number: '5.22',
+        item: 'Presence of warning notice - non-standard colours',
+        regulation: 'BS 7671 Section 514.14',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.23',
+        number: '5.23',
+        item: 'Presence of fire barriers, suitable seals and protection against thermal effects',
+        regulation: 'BS 7671 Section 527',
+        outcome: 'acceptable'
+      },
+      {
+        id: '5.24',
+        number: '5.24',
+        item: 'Band II circuits separated from Band I circuits',
+        regulation: 'BS 7671 Section 528.1',
+        outcome: 'acceptable'
+      }
+    ]
+  },
+  {
+    id: 'section-6',
     number: '6',
     title: 'FINAL CIRCUITS',
-    description: 'Final circuit wiring, outlets and accessories',
-    regulation: 'BS 7671 Chapter 41, 52',
-    isComplete: false,
+    description: 'Final circuit wiring and accessories',
+    regulation: 'BS 7671:2018+A2:2022 Chapter 52',
     items: [
       {
         id: '6.1',
         number: '6.1',
-        item: 'Routing of cables in prescribed zones',
-        regulation: 'BS 7671 Section 522.6.101',
+        item: 'Identification of conductors',
+        regulation: 'BS 7671 Section 514.3',
         outcome: 'acceptable'
       },
       {
         id: '6.2',
         number: '6.2',
-        item: 'Cables incorporating earthed armour or sheath, or run within an earthed wiring system',
-        regulation: 'BS 7671 Section 543.2.1',
+        item: 'Cables correctly supported throughout their run',
+        regulation: 'BS 7671 Section 522.8',
         outcome: 'acceptable'
       },
       {
         id: '6.3',
         number: '6.3',
-        item: 'Additional protection for cables concealed in walls',
-        regulation: 'BS 7671 Section 522.6.103',
+        item: 'Condition of insulation of live parts',
+        regulation: 'BS 7671 Section 416.1',
         outcome: 'acceptable'
       },
       {
         id: '6.4',
         number: '6.4',
-        item: 'Additional protection for socket outlets',
+        item: 'Non-sheathed cables protected by enclosure in conduit, ducting or trunking',
+        regulation: 'BS 7671 Section 521.10.1',
+        outcome: 'acceptable'
+      },
+      {
+        id: '6.5',
+        number: '6.5',
+        item: 'Adequate protection against mechanical damage',
+        regulation: 'BS 7671 Section 522.6',
+        outcome: 'acceptable'
+      },
+      {
+        id: '6.6',
+        number: '6.6',
+        item: 'Cables installed in prescribed zones',
+        regulation: 'BS 7671 Section 522.6.202',
+        outcome: 'acceptable'
+      },
+      {
+        id: '6.7',
+        number: '6.7',
+        item: 'Cables concealed under floors, above ceilings or in walls/partitions suitably protected against damage',
+        regulation: 'BS 7671 Section 522.6.203',
+        outcome: 'acceptable'
+      },
+      {
+        id: '6.8',
+        number: '6.8',
+        item: 'Provision of additional protection by 30mA RCD for socket-outlets',
         regulation: 'BS 7671 Section 411.3.3',
+        outcome: 'acceptable'
+      },
+      {
+        id: '6.9',
+        number: '6.9',
+        item: 'Provision of additional protection by 30mA RCD for mobile equipment outdoors',
+        regulation: 'BS 7671 Section 411.3.3',
+        outcome: 'acceptable'
+      },
+      {
+        id: '6.10',
+        number: '6.10',
+        item: 'Provision of additional protection by 30mA RCD for cables concealed in walls',
+        regulation: 'BS 7671 Section 522.6.202',
         outcome: 'acceptable'
       }
     ]
   },
   {
-    id: 'location-environment',
+    id: 'section-7',
     number: '7',
-    title: 'LOCATION/ENVIRONMENT',
-    description: 'Special locations and environmental considerations',
-    regulation: 'BS 7671 Part 7',
-    isComplete: false,
+    title: 'LOCATION(S) CONTAINING A BATH OR SHOWER',
+    description: 'Special requirements for bathroom installations',
+    regulation: 'BS 7671:2018+A2:2022 Section 701',
     items: [
       {
         id: '7.1',
         number: '7.1',
-        item: 'Bathroom/shower room installations',
-        regulation: 'BS 7671 Section 701',
+        item: 'Appropriate IP rating',
+        regulation: 'BS 7671 Section 701.512.2',
         outcome: 'acceptable'
       },
       {
         id: '7.2',
         number: '7.2',
-        item: 'Swimming pools and fountains',
-        regulation: 'BS 7671 Section 702',
+        item: 'Circuits comply with requirements for the respective zones',
+        regulation: 'BS 7671 Section 701.512',
         outcome: 'acceptable'
       },
       {
         id: '7.3',
         number: '7.3',
-        item: 'Hot air saunas',
-        regulation: 'BS 7671 Section 703',
-        outcome: 'acceptable'
-      },
-      {
-        id: '7.4',
-        number: '7.4',
-        item: 'Construction and demolition site installations',
-        regulation: 'BS 7671 Section 704',
+        item: 'Supplementary equipotential bonding',
+        regulation: 'BS 7671 Section 701.415.2',
         outcome: 'acceptable'
       }
     ]
   },
   {
-    id: 'general',
+    id: 'section-8',
     number: '8',
-    title: 'GENERAL',
-    description: 'General installation requirements and compliance',
-    regulation: 'BS 7671 Chapter 13, 51',
-    isComplete: false,
+    title: 'OTHER SPECIAL INSTALLATIONS OR LOCATIONS',
+    description: 'Additional special location requirements',
+    regulation: 'BS 7671:2018+A2:2022 Part 7',
     items: [
       {
         id: '8.1',
         number: '8.1',
-        item: 'Adequacy of conductor cross-sectional area with respect to shock risk and thermal effects',
-        regulation: 'BS 7671 Section 524',
-        outcome: 'acceptable'
-      },
-      {
-        id: '8.2',
-        number: '8.2',
-        item: 'Coordination between conductor and overload protective device',
-        regulation: 'BS 7671 Section 433',
-        outcome: 'acceptable'
-      },
-      {
-        id: '8.3',
-        number: '8.3',
-        item: 'Presence of fire barriers, sealing arrangements and protection against thermal effects',
-        regulation: 'BS 7671 Section 527',
+        item: 'Appropriate to the particular requirements',
+        regulation: 'BS 7671 Part 7',
         outcome: 'acceptable'
       }
     ]
   },
   {
-    id: 'schedule-items',
+    id: 'section-9',
     number: '9',
-    title: 'SCHEDULE OF ITEMS INSPECTED',
-    description: 'Additional specific items requiring inspection',
-    regulation: 'BS 7671 Schedule of Inspections',
-    isComplete: false,
+    title: 'GENERAL',
+    description: 'General installation requirements',
+    regulation: 'BS 7671:2018+A2:2022 Various',
     items: [
       {
         id: '9.1',
         number: '9.1',
-        item: 'Other items inspected (specify)',
-        regulation: 'BS 7671 Schedule of Inspections',
+        item: 'Accessories and equipment properly fixed and secure',
+        regulation: 'BS 7671 Section 134.1.1',
+        outcome: 'acceptable'
+      },
+      {
+        id: '9.2',
+        number: '9.2',
+        item: 'Suitability of accessories and equipment for external influences',
+        regulation: 'BS 7671 Section 512.2',
+        outcome: 'acceptable'
+      },
+      {
+        id: '9.3',
+        number: '9.3',
+        item: 'Adequacy of working space/accessibility to equipment',
+        regulation: 'BS 7671 Section 132.12',
+        outcome: 'acceptable'
+      },
+      {
+        id: '9.4',
+        number: '9.4',
+        item: 'Presence of danger notices and other warning notices',
+        regulation: 'BS 7671 Section 514.10',
+        outcome: 'acceptable'
+      },
+      {
+        id: '9.5',
+        number: '9.5',
+        item: 'Presence of diagrams, instructions, circuit charts and similar information',
+        regulation: 'BS 7671 Section 514.9',
+        outcome: 'acceptable'
+      },
+      {
+        id: '9.6',
+        number: '9.6',
+        item: 'Erection methods used',
+        regulation: 'BS 7671 Chapter 52',
         outcome: 'acceptable'
       }
     ]
   },
   {
-    id: 'limitations',
+    id: 'section-10',
     number: '10',
-    title: 'LIMITATIONS',
-    description: 'Areas not inspected and reasons',
-    regulation: 'BS 7671 Schedule of Inspections',
-    isComplete: false,
+    title: 'CONDITION REPORT INSPECTION',
+    description: 'Specific EICR inspection requirements',
+    regulation: 'BS 7671:2018+A2:2022 Appendix 6',
     items: [
       {
         id: '10.1',
         number: '10.1',
-        item: 'Agreed limitations to inspection (specify)',
-        regulation: 'BS 7671 Schedule of Inspections',
-        outcome: 'limitation'
+        item: 'Connection of conductors',
+        regulation: 'BS 7671 Section 526',
+        outcome: 'acceptable'
+      },
+      {
+        id: '10.2',
+        number: '10.2',
+        item: 'Condition of accessories including socket-outlets, isolation and switching devices',
+        regulation: 'BS 7671 Section 543.3',
+        outcome: 'acceptable'
+      },
+      {
+        id: '10.3',
+        number: '10.3',
+        item: 'Condition of wiring systems including cables and conductors',
+        regulation: 'BS 7671 Chapter 52',
+        outcome: 'acceptable'
       }
     ]
   }
 ];
 
+// Utility functions for statistics and assessment
 export const getInspectionStats = (sections: NumberedInspectionSection[]) => {
   const stats = {
     acceptable: 0,
     c1: 0,
     c2: 0,
     c3: 0,
-    'not-verified': 0,
+    not_verified: 0,
     limitation: 0,
-    'not-applicable': 0,
+    not_applicable: 0,
     total: 0
   };
 
@@ -532,17 +631,15 @@ export const getOverallAssessment = (sections: NumberedInspectionSection[]) => {
   if (stats.c1 > 0) {
     return {
       status: 'unsatisfactory',
-      code: 'C1',
-      description: 'Danger present - immediate remedial action required',
+      reason: 'Immediate danger present (C1 codes found)',
       priority: 'immediate'
     };
   }
   
   if (stats.c2 > 0) {
     return {
-      status: 'unsatisfactory', 
-      code: 'C2',
-      description: 'Potentially dangerous - urgent remedial action required',
+      status: 'unsatisfactory',
+      reason: 'Potentially dangerous defects found (C2 codes)',
       priority: 'urgent'
     };
   }
@@ -550,16 +647,22 @@ export const getOverallAssessment = (sections: NumberedInspectionSection[]) => {
   if (stats.c3 > 0) {
     return {
       status: 'satisfactory',
-      code: 'C3', 
-      description: 'Improvement recommended',
+      reason: 'Installation generally satisfactory with recommendations',
       priority: 'improvement'
     };
   }
   
   return {
     status: 'satisfactory',
-    code: '✓',
-    description: 'Installation satisfactory',
-    priority: 'none'
+    reason: 'No defects found - installation satisfactory',
+    priority: 'routine'
   };
 };
+
+// Export total item count for validation
+export const TOTAL_INSPECTION_ITEMS = numberedVisualInspectionSections.reduce(
+  (total, section) => total + section.items.length, 
+  0
+);
+
+console.log(`Total numbered inspection items: ${TOTAL_INSPECTION_ITEMS}`);
