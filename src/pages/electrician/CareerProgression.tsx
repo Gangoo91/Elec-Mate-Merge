@@ -9,6 +9,7 @@ import CareerPathways from "@/components/apprentice/career/CareerPathways";
 import CareerCourses from "@/components/apprentice/career/CareerCourses";
 import EnhancedFurtherEducation from "@/components/apprentice/career/EnhancedFurtherEducation";
 import ProfessionalAccreditation from "@/components/apprentice/career/ProfessionalAccreditation";
+import CPDTracker from "@/components/apprentice/career/cpd/CPDTracker";
 import { careerSections } from "@/components/apprentice/career/SectionData";
 
 const CareerProgression = () => {
@@ -28,6 +29,8 @@ const CareerProgression = () => {
         return <EnhancedFurtherEducation />;
       case "accreditation":
         return <ProfessionalAccreditation />;
+      case "cpd":
+        return <CPDTracker />;
       default:
         return null;
     }

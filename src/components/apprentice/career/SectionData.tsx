@@ -5,6 +5,7 @@ import {
   BookOpen, 
   Briefcase,
   Building,
+  Clock
 } from "lucide-react";
 
 export const careerSections = [
@@ -31,6 +32,12 @@ export const careerSections = [
     title: "Professional Accreditation",
     description: "Essential qualifications and certifications for career advancement",
     icon: <Award className="h-12 w-12 text-elec-yellow opacity-80" />
+  },
+  {
+    id: "cpd",
+    title: "CPD Tracker",
+    description: "Track and manage your Continuing Professional Development hours and goals",
+    icon: <Clock className="h-12 w-12 text-elec-yellow opacity-80" />
   },
   {
     id: "business",
