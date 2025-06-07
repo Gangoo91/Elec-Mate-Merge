@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import CareerSectionCard from "@/components/apprentice/career/CareerSectionCard";
 import CareerPathways from "@/components/apprentice/career/CareerPathways";
 import CareerCourses from "@/components/apprentice/career/CareerCourses";
-import FurtherEducation from "@/components/apprentice/career/FurtherEducation";
+import EnhancedFurtherEducation from "@/components/apprentice/career/EnhancedFurtherEducation";
 import ProfessionalAccreditation from "@/components/apprentice/career/ProfessionalAccreditation";
 import BusinessBuilder from "@/components/electrician/business/BusinessBuilder";
 import { careerSections } from "@/components/apprentice/career/SectionData";
@@ -25,7 +25,7 @@ const CareerProgression = () => {
       case "courses":
         return <CareerCourses />;
       case "education":
-        return <FurtherEducation />;
+        return <EnhancedFurtherEducation />;
       case "accreditation":
         return <ProfessionalAccreditation />;
       case "business":
