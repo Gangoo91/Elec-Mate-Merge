@@ -31,7 +31,7 @@ const InsulationTestingDiagram = ({ systemType, installationType }: InsulationTe
           </div>
           <div className="text-center p-2 bg-blue-500/10 rounded">
             <div className="font-medium text-blue-300">High Voltage</div>
-            <div className="text-blue-100">>500V: Use 1000V test</div>
+            <div className="text-blue-100">&gt;500V: Use 1000V test</div>
           </div>
         </div>
       </div>
