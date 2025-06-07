@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -9,7 +10,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { ArrowLeft, ArrowRight, Building } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { EICRDataManager } from '@/utils/eicrDataPersistence';
-import EICRProgressIndicator from '@/components/eicr/EICRProgressIndicator';
 
 const EICRInstallationDetails = () => {
   const navigate = useNavigate();
@@ -74,9 +74,6 @@ const EICRInstallationDetails = () => {
           </Button>
         </Link>
       </div>
-
-      {/* Progress Indicator */}
-      <EICRProgressIndicator currentStep="installation-details" />
 
       {/* Enhanced Main Form */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
