@@ -97,17 +97,21 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
           <CardContent>
             <div className="space-y-3">
               <div>
-                <span className="text-sm font-medium text-green-300">✓ Acceptable:</span>
-                <p className="text-sm text-yellow-100 ml-4">{stepData.expectedResults.acceptable}</p>
-              </div>
-              <div>
-                <span className="text-sm font-medium text-yellow-300">~ Typical Values:</span>
+                <span className="text-sm font-medium text-green-300">~ Typical Values:</span>
                 <p className="text-sm text-yellow-100 ml-4">{stepData.expectedResults.typical}</p>
               </div>
-              <div>
-                <span className="text-sm font-medium text-red-300">⚠ Investigate If:</span>
-                <p className="text-sm text-yellow-100 ml-4">{stepData.expectedResults.investigate}</p>
-              </div>
+              {stepData.expectedResults.minimum && (
+                <div>
+                  <span className="text-sm font-medium text-blue-300">⬇ Minimum Acceptable:</span>
+                  <p className="text-sm text-yellow-100 ml-4">{stepData.expectedResults.minimum}</p>
+                </div>
+              )}
+              {stepData.expectedResults.maximum && (
+                <div>
+                  <span className="text-sm font-medium text-red-300">⬆ Maximum Acceptable:</span>
+                  <p className="text-sm text-yellow-100 ml-4">{stepData.expectedResults.maximum}</p>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>
