@@ -2,16 +2,17 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { GraduationCap, ArrowLeft, BookOpen, PoundSterling, Users, Target } from "lucide-react";
+import { GraduationCap, ArrowLeft, BookOpen, PoundSterling, Users, Target, Calculator } from "lucide-react";
 import EducationSearchForm, { SearchFilters } from "./education/EducationSearchForm";
 import EnhancedEducationCard from "./education/EnhancedEducationCard";
 import EducationAnalyticsDashboard from "./education/EducationAnalyticsDashboard";
+import FundingCalculator from "./education/FundingCalculator";
 import { enhancedEducationOptions, EnhancedEducationOption } from "./education/enhancedEducationData";
 
 const EnhancedFurtherEducation = () => {
   const [filteredOptions, setFilteredOptions] = useState<EnhancedEducationOption[]>(enhancedEducationOptions);
   const [selectedOption, setSelectedOption] = useState<EnhancedEducationOption | null>(null);
-  const [viewMode, setViewMode] = useState<"grid" | "details">("grid");
+  const [viewMode, setViewMode] = useState<"grid" | "details" | "funding">("grid");
 
   const handleSearch = (filters: SearchFilters) => {
     let filtered = enhancedEducationOptions;
@@ -74,6 +75,24 @@ const EnhancedFurtherEducation = () => {
     setViewMode("grid");
   };
 
+  const handleShowFundingCalculator = () => {
+    setViewMode("funding");
+  };
+
+  if (viewMode === "funding") {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center gap-4">
+          <Button variant="outline" onClick={handleBackToGrid}>
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Education Options
+          </Button>
+        </div>
+        <FundingCalculator />
+      </div>
+    );
+  }
+
   if (viewMode === "details" && selectedOption) {
     return (
       <div className="space-y-6">
@@ -122,6 +141,18 @@ const EnhancedFurtherEducation = () => {
       {/* Analytics Dashboard */}
       <EducationAnalyticsDashboard />
 
+      {/* Action Buttons */}
+      <div className="flex flex-wrap gap-2">
+        <Button 
+          onClick={handleShowFundingCalculator}
+          variant="outline"
+          className="border-elec-yellow/30 hover:bg-elec-yellow/10"
+        >
+          <Calculator className="mr-2 h-4 w-4" />
+          Funding Calculator
+        </Button>
+      </div>
+
       {/* Search and Filters */}
       <EducationSearchForm onSearch={handleSearch} onReset={handleReset} />
 
@@ -162,12 +193,12 @@ const EnhancedFurtherEducation = () => {
         </Card>
       )}
 
-      {/* Funding Information Card */}
+      {/* Enhanced Funding Information Card */}
       <Card className="border-elec-yellow/20 bg-elec-gray/50">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-lg">
             <PoundSterling className="h-5 w-5 text-elec-yellow" />
-            Education Funding Support
+            UK Education Funding Support
           </CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -175,32 +206,46 @@ const EnhancedFurtherEducation = () => {
             <h4 className="font-medium mb-3 text-amber-400">Government Support</h4>
             <div className="space-y-3 text-sm">
               <div>
-                <h5 className="font-medium text-white">Advanced Learner Loan</h5>
+                <h5 className="font-medium text-white">Advanced Learner Loan (19+)</h5>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Available for Level 3-6 qualifications. No upfront fees, only repay when earning £25,000+
+                  Available for Level 3-6 qualifications. No upfront fees, only repay when earning £25,000+. 
+                  9% of income above threshold.
                 </p>
               </div>
               <div>
-                <h5 className="font-medium text-white">Student Finance</h5>
+                <h5 className="font-medium text-white">Student Finance England</h5>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Tuition fee loans and maintenance support for degree-level study
+                  Tuition fee loans up to £9,250 for degrees. Maintenance loans available based on household income. 
+                  Repayment at 9% above £27,295.
+                </p>
+              </div>
+              <div>
+                <h5 className="font-medium text-white">Postgraduate Loan</h5>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Up to £12,167 for Master's study. 6% interest rate. Same repayment terms as undergraduate loans.
                 </p>
               </div>
             </div>
           </div>
           <div>
-            <h4 className="font-medium mb-3 text-amber-400">Industry Support</h4>
+            <h4 className="font-medium mb-3 text-amber-400">Industry & Employer Support</h4>
             <div className="space-y-3 text-sm">
               <div>
-                <h5 className="font-medium text-white">Employer Sponsorship</h5>
+                <h5 className="font-medium text-white">Apprenticeship Levy</h5>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Many employers fund education that benefits their business. Ask your HR department
+                  Large employers (£3M+ payroll) contribute 0.5% to apprenticeship levy. Can fund degree apprenticeships.
                 </p>
               </div>
               <div>
                 <h5 className="font-medium text-white">Professional Body Grants</h5>
                 <p className="text-xs text-muted-foreground mt-1">
-                  IET, ECA, and other organizations offer scholarships for electrical engineering study
+                  IET scholarships (£1,000-£10,000), ECA Educational Trust grants, NECA bursaries for electrical study.
+                </p>
+              </div>
+              <div>
+                <h5 className="font-medium text-white">Career Development Loans</h5>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Bank loans for vocational training. Government pays interest during study and one month after.
                 </p>
               </div>
             </div>

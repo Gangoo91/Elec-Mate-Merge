@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { ArrowLeft, School, GraduationCap } from "lucide-react";
 import { courseCategories } from "@/data/courseCategories";
-import FurtherEducation from "@/components/apprentice/career/FurtherEducation";
+import EnhancedFurtherEducation from "@/components/apprentice/career/EnhancedFurtherEducation";
 
 const HigherLearningCourses = () => {
   // Find the higher learning courses category
@@ -55,7 +55,7 @@ const HigherLearningCourses = () => {
       {/* Display detailed information about higher education options */}
       <div className="mt-12 pt-8 border-t border-elec-yellow/20">
         <h2 className="text-2xl font-bold mb-6">Further Education Pathways</h2>
-        <FurtherEducation />
+        <EnhancedFurtherEducation />
       </div>
     </div>
   );

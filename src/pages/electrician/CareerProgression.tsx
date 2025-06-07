@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import CareerSectionCard from "@/components/apprentice/career/CareerSectionCard";
 import CareerPathways from "@/components/apprentice/career/CareerPathways";
 import CareerCourses from "@/components/apprentice/career/CareerCourses";
-import FurtherEducation from "@/components/apprentice/career/FurtherEducation";
+import EnhancedFurtherEducation from "@/components/apprentice/career/EnhancedFurtherEducation";
 import ProfessionalAccreditation from "@/components/apprentice/career/ProfessionalAccreditation";
 import { careerSections } from "@/components/apprentice/career/SectionData";
 
@@ -25,7 +25,7 @@ const CareerProgression = () => {
       case "courses":
         return <CareerCourses />;
       case "education":
-        return <FurtherEducation />;
+        return <EnhancedFurtherEducation />;
       case "accreditation":
         return <ProfessionalAccreditation />;
       default:
@@ -75,9 +75,9 @@ const CareerProgression = () => {
                 Advance Your Electrical Career
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                Take your electrical career to the next level with specialized resources designed for qualified electricians. 
+                Take your electrical career to the next level with specialised resources designed for qualified electricians. 
                 Explore advanced certifications, leadership opportunities, and business development pathways to achieve 
-                your professional goals and maximize your earning potential.
+                your professional goals and maximise your earning potential.
               </p>
             </CardContent>
           </Card>
