@@ -1,4 +1,3 @@
-
 export type InspectionOutcome = 'acceptable' | 'c1' | 'c2' | 'c3' | 'fi' | 'lim' | 'na';
 
 export interface NumberedInspectionItem {
@@ -15,7 +14,7 @@ export interface NumberedInspectionItem {
 
 export interface NumberedInspectionSection {
   id: string;
-  number: string; // e.g., "1", "2"
+  number: string; // e.g., "1.0", "2.0"
   title: string;
   description: string;
   regulation: string;
@@ -26,16 +25,16 @@ export interface NumberedInspectionSection {
 export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   {
     id: "section-1",
-    number: "1",
-    title: "External Condition of Electrical Equipment",
-    description: "Visual inspection of external condition and suitability of electrical equipment",
-    regulation: "BS 7671:2018 Section 611.2",
+    number: "1.0",
+    title: "External condition of electrical equipment",
+    description: "Visual inspection of the external condition and suitability of electrical equipment and enclosures",
+    regulation: "BS 7671:2018+A2:2022 Section 611.2",
     isComplete: false,
     items: [
       {
         id: "1.1",
         number: "1.1",
-        item: "Adequacy of electrical equipment for the environment",
+        item: "Adequacy of electrical equipment for the environment and external influences",
         regulation: "BS 7671 Section 512.2",
         outcome: "acceptable"
       },
@@ -49,14 +48,14 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
       {
         id: "1.3",
         number: "1.3",
-        item: "Presence and condition of warning notices, labels and signs",
-        regulation: "BS 7671 Section 514",
+        item: "Presence and condition of warning notices, labels and safety signs",
+        regulation: "BS 7671 Section 514.12",
         outcome: "acceptable"
       },
       {
         id: "1.4",
         number: "1.4",
-        item: "Presence of diagrams, instructions and similar information",
+        item: "Presence of charts, diagrams, instructions and similar information",
         regulation: "BS 7671 Section 514.9",
         outcome: "acceptable"
       }
@@ -64,113 +63,113 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   },
   {
     id: "section-2",
-    number: "2",
-    title: "Condition of Conductor Terminations and Connections",
-    description: "Inspection of all accessible conductor terminations and connections",
-    regulation: "BS 7671:2018 Section 526",
+    number: "2.0",
+    title: "Condition of consumer unit/distribution board and connections",
+    description: "Assessment of consumer unit or distribution board condition, type and suitability",
+    regulation: "BS 7671:2018+A2:2022 Section 611.3",
     isComplete: false,
     items: [
       {
         id: "2.1",
         number: "2.1",
-        item: "Condition of conductors and cable sheaths",
-        regulation: "BS 7671 Section 526.1",
+        item: "Type and condition of consumer unit/distribution board",
+        regulation: "BS 7671 Section 421.1.201",
         outcome: "acceptable"
       },
       {
         id: "2.2",
         number: "2.2",
-        item: "Adequacy of conductor terminations",
-        regulation: "BS 7671 Section 526.2",
+        item: "Condition of enclosure and IP rating suitability",
+        regulation: "BS 7671 Section 416.2",
         outcome: "acceptable"
       },
       {
         id: "2.3",
         number: "2.3",
-        item: "Security of connections",
+        item: "Condition of busbars and connections within board",
         regulation: "BS 7671 Section 526.5",
         outcome: "acceptable"
       },
       {
         id: "2.4",
         number: "2.4",
-        item: "Presence of adequate strain relief",
-        regulation: "BS 7671 Section 526.6",
+        item: "Adequacy of circuit identification and labelling",
+        regulation: "BS 7671 Section 514.8",
         outcome: "acceptable"
       }
     ]
   },
   {
     id: "section-3",
-    number: "3",
-    title: "Identification of Conductors",
-    description: "Verification of proper conductor identification throughout the installation",
-    regulation: "BS 7671:2018 Section 514.3",
+    number: "3.0",
+    title: "Condition of accessories and switchgear",
+    description: "Inspection of switches, socket outlets and other electrical accessories",
+    regulation: "BS 7671:2018+A2:2022 Section 611.3",
     isComplete: false,
     items: [
       {
         id: "3.1",
         number: "3.1",
-        item: "Identification of protective conductors",
-        regulation: "BS 7671 Section 514.3.1",
+        item: "Condition and security of socket outlets",
+        regulation: "BS 7671 Section 553.1",
         outcome: "acceptable"
       },
       {
         id: "3.2",
         number: "3.2",
-        item: "Identification of neutral conductors",
-        regulation: "BS 7671 Section 514.3.2",
+        item: "Condition and operation of switches and control equipment",
+        regulation: "BS 7671 Section 537.1",
         outcome: "acceptable"
       },
       {
         id: "3.3",
         number: "3.3",
-        item: "Identification of line conductors",
-        regulation: "BS 7671 Section 514.3.3",
+        item: "Condition of joint boxes and junction points",
+        regulation: "BS 7671 Section 526.3",
         outcome: "acceptable"
       },
       {
         id: "3.4",
         number: "3.4",
-        item: "Identification of PEN conductors",
-        regulation: "BS 7671 Section 514.3.4",
+        item: "Presence and condition of covers and enclosures",
+        regulation: "BS 7671 Section 416.2.1",
         outcome: "acceptable"
       }
     ]
   },
   {
     id: "section-4",
-    number: "4",
-    title: "Routing of Cables in Prescribed Zones or Protected Against Mechanical Damage",
-    description: "Verification of cable routing compliance and mechanical protection",
-    regulation: "BS 7671:2018 Section 522",
+    number: "4.0",
+    title: "Condition of wiring systems and cables",
+    description: "Assessment of cable conditions, routing and mechanical protection",
+    regulation: "BS 7671:2018+A2:2022 Section 522",
     isComplete: false,
     items: [
       {
         id: "4.1",
         number: "4.1",
-        item: "Cables routed in prescribed zones",
-        regulation: "BS 7671 Section 522.6.201",
+        item: "Condition of cables and cable sheaths",
+        regulation: "BS 7671 Section 522.1",
         outcome: "acceptable"
       },
       {
         id: "4.2",
         number: "4.2",
-        item: "Adequate mechanical protection of cables",
-        regulation: "BS 7671 Section 522.6",
+        item: "Adequacy of cable support and routing",
+        regulation: "BS 7671 Section 522.8",
         outcome: "acceptable"
       },
       {
         id: "4.3",
         number: "4.3",
-        item: "Protection against thermal effects",
-        regulation: "BS 7671 Section 522.2",
+        item: "Mechanical protection of cables",
+        regulation: "BS 7671 Section 522.6",
         outcome: "acceptable"
       },
       {
         id: "4.4",
         number: "4.4",
-        item: "Cables buried in walls adequately protected",
+        item: "Cables routed in prescribed zones or adequately protected",
         regulation: "BS 7671 Section 522.6.202",
         outcome: "acceptable"
       }
@@ -178,228 +177,228 @@ export const numberedVisualInspectionSections: NumberedInspectionSection[] = [
   },
   {
     id: "section-5",
-    number: "5",
-    title: "Selection of Conductors for Current-carrying Capacity and Voltage Drop",
-    description: "Assessment of conductor sizing adequacy for load requirements",
-    regulation: "BS 7671:2018 Section 523",
+    number: "5.0",
+    title: "Earthing and protective conductor arrangements",
+    description: "Verification of earthing arrangements and protective conductor installations",
+    regulation: "BS 7671:2018+A2:2022 Section 543",
     isComplete: false,
     items: [
       {
         id: "5.1",
         number: "5.1",
-        item: "Adequacy of conductor current-carrying capacity",
-        regulation: "BS 7671 Section 523.1",
+        item: "Condition and adequacy of earthing conductor",
+        regulation: "BS 7671 Section 543.1",
         outcome: "acceptable"
       },
       {
         id: "5.2",
         number: "5.2",
-        item: "Consideration of grouping factors",
-        regulation: "BS 7671 Section 523.5",
+        item: "Condition of earthing conductor connections",
+        regulation: "BS 7671 Section 543.3",
         outcome: "acceptable"
       },
       {
         id: "5.3",
         number: "5.3",
-        item: "Thermal insulation derating applied",
-        regulation: "BS 7671 Section 523.9",
+        item: "Adequacy of protective conductor arrangements",
+        regulation: "BS 7671 Section 543.2",
         outcome: "acceptable"
       },
       {
         id: "5.4",
         number: "5.4",
-        item: "Voltage drop within acceptable limits",
-        regulation: "BS 7671 Section 525",
+        item: "Identification of protective conductors",
+        regulation: "BS 7671 Section 514.3.1",
         outcome: "acceptable"
       }
     ]
   },
   {
     id: "section-6",
-    number: "6",
-    title: "Connection of Conductors",
-    description: "Inspection of conductor connections and termination methods",
-    regulation: "BS 7671:2018 Section 526",
+    number: "6.0",
+    title: "Protective bonding arrangements",
+    description: "Assessment of main and supplementary protective bonding conductor installations",
+    regulation: "BS 7671:2018+A2:2022 Section 544",
     isComplete: false,
     items: [
       {
         id: "6.1",
         number: "6.1",
-        item: "Adequacy of earthing conductor connections",
-        regulation: "BS 7671 Section 543.3",
+        item: "Presence and condition of main protective bonding conductors",
+        regulation: "BS 7671 Section 544.1.1",
         outcome: "acceptable"
       },
       {
         id: "6.2",
         number: "6.2",
-        item: "Adequacy of protective bonding conductor connections",
-        regulation: "BS 7671 Section 544.1",
+        item: "Main bonding conductor connections and clamps",
+        regulation: "BS 7671 Section 544.1.2",
         outcome: "acceptable"
       },
       {
         id: "6.3",
         number: "6.3",
-        item: "Prevention of mutual detrimental influence",
-        regulation: "BS 7671 Section 515",
+        item: "Supplementary bonding where required",
+        regulation: "BS 7671 Section 544.2",
         outcome: "acceptable"
       },
       {
         id: "6.4",
         number: "6.4",
-        item: "Segregation of circuits",
-        regulation: "BS 7671 Section 528",
+        item: "Adequacy of bonding conductor cross-sectional areas",
+        regulation: "BS 7671 Section 544.1.1",
         outcome: "acceptable"
       }
     ]
   },
   {
     id: "section-7",
-    number: "7",
-    title: "Presence of Fire Barriers, Suitable Seals and Protection Against Thermal Effects",
-    description: "Assessment of fire safety measures and thermal protection",
-    regulation: "BS 7671:2018 Section 527",
+    number: "7.0",
+    title: "RCD/RCBO protection and operation",
+    description: "Verification of residual current device installation and labelling",
+    regulation: "BS 7671:2018+A2:2022 Section 411.3.3",
     isComplete: false,
     items: [
       {
         id: "7.1",
         number: "7.1",
-        item: "Sealing of wiring system penetrations",
-        regulation: "BS 7671 Section 527.1",
+        item: "Presence of RCD protection where required",
+        regulation: "BS 7671 Section 411.3.3",
         outcome: "acceptable"
       },
       {
         id: "7.2",
         number: "7.2",
-        item: "Protection against spread of fire",
-        regulation: "BS 7671 Section 527.1.3",
+        item: "Correct type and rating of RCD/RCBO devices",
+        regulation: "BS 7671 Section 531.3.1",
         outcome: "acceptable"
       },
       {
         id: "7.3",
         number: "7.3",
-        item: "Protection against thermal effects",
-        regulation: "BS 7671 Section 421",
+        item: "RCD test button operation and labelling",
+        regulation: "BS 7671 Section 514.12.2",
         outcome: "acceptable"
       },
       {
         id: "7.4",
         number: "7.4",
-        item: "Presence of fire barriers",
-        regulation: "BS 7671 Section 527.1.4",
+        item: "Time delay coordination between RCD devices",
+        regulation: "BS 7671 Section 531.2.9",
         outcome: "acceptable"
       }
     ]
   },
   {
     id: "section-8",
-    number: "8",
-    title: "Methods of Protection Against Electric Shock",
-    description: "Verification of protective measures against electric shock",
-    regulation: "BS 7671:2018 Section 411",
+    number: "8.0",
+    title: "Isolation and switching arrangements",
+    description: "Assessment of isolation and switching devices for accessibility and operation",
+    regulation: "BS 7671:2018+A2:2022 Section 537",
     isComplete: false,
     items: [
       {
         id: "8.1",
         number: "8.1",
-        item: "Presence of earthing conductor",
-        regulation: "BS 7671 Section 411.3.1.1",
+        item: "Presence and accessibility of main isolation device",
+        regulation: "BS 7671 Section 537.1.4",
         outcome: "acceptable"
       },
       {
         id: "8.2",
         number: "8.2",
-        item: "Presence of protective bonding conductors",
-        regulation: "BS 7671 Section 411.3.1.2",
+        item: "Emergency switching arrangements where required",
+        regulation: "BS 7671 Section 537.4",
         outcome: "acceptable"
       },
       {
         id: "8.3",
         number: "8.3",
-        item: "PELV/SELV arrangements",
-        regulation: "BS 7671 Section 414",
+        item: "Functional switching provisions",
+        regulation: "BS 7671 Section 537.5",
         outcome: "acceptable"
       },
       {
         id: "8.4",
         number: "8.4",
-        item: "Presence and correct type of RCD protection",
-        regulation: "BS 7671 Section 411.3.3",
+        item: "Isolation device identification and labelling",
+        regulation: "BS 7671 Section 514.11",
         outcome: "acceptable"
       }
     ]
   },
   {
     id: "section-9",
-    number: "9",
-    title: "Prevention of Mutual Detrimental Influence",
-    description: "Assessment of electromagnetic compatibility and interference prevention",
-    regulation: "BS 7671:2018 Section 515",
+    number: "9.0",
+    title: "Special locations (if applicable)",
+    description: "Additional requirements for special locations such as bathrooms, swimming pools, etc.",
+    regulation: "BS 7671:2018+A2:2022 Part 7",
     isComplete: false,
     items: [
       {
         id: "9.1",
         number: "9.1",
-        item: "Separation of low voltage and ELV circuits",
-        regulation: "BS 7671 Section 528.1",
+        item: "Bathroom zones and IP ratings compliance",
+        regulation: "BS 7671 Section 701.512.3",
         outcome: "acceptable"
       },
       {
         id: "9.2",
         number: "9.2",
-        item: "Separation of safety circuits",
-        regulation: "BS 7671 Section 560.6.1",
+        item: "Supplementary bonding in special locations",
+        regulation: "BS 7671 Section 701.415.2",
         outcome: "acceptable"
       },
       {
         id: "9.3",
         number: "9.3",
-        item: "Electromagnetic compatibility provisions",
-        regulation: "BS 7671 Section 515.1",
+        item: "RCD protection in special locations",
+        regulation: "BS 7671 Section 701.411.3.3",
         outcome: "acceptable"
       },
       {
         id: "9.4",
         number: "9.4",
-        item: "Protection against overvoltage",
-        regulation: "BS 7671 Section 443",
+        item: "Electrical equipment suitability for location",
+        regulation: "BS 7671 Section 701.512.1",
         outcome: "acceptable"
       }
     ]
   },
   {
     id: "section-10",
-    number: "10",
-    title: "Presence and Correct Location of Appropriate Devices for Isolation and Switching",
-    description: "Verification of isolation and switching device installation",
-    regulation: "BS 7671:2018 Section 537",
+    number: "10.0",
+    title: "Additions and alterations since previous inspection",
+    description: "Assessment of any additions or alterations made since the last inspection",
+    regulation: "BS 7671:2018+A2:2022 Section 132.16",
     isComplete: false,
     items: [
       {
         id: "10.1",
         number: "10.1",
-        item: "Presence of main switch or circuit-breaker",
-        regulation: "BS 7671 Section 537.1.4",
+        item: "Documentation of additions and alterations",
+        regulation: "BS 7671 Section 132.16",
         outcome: "acceptable"
       },
       {
         id: "10.2",
         number: "10.2",
-        item: "Operation of switching and isolation devices",
-        regulation: "BS 7671 Section 537.2.1.1",
+        item: "Compliance of new work with current standards",
+        regulation: "BS 7671 Section 132.16",
         outcome: "acceptable"
       },
       {
         id: "10.3",
         number: "10.3",
-        item: "Correct identification and labelling of circuits",
-        regulation: "BS 7671 Section 514.8",
+        item: "Integration with existing installation",
+        regulation: "BS 7671 Section 132.16",
         outcome: "acceptable"
       },
       {
         id: "10.4",
         number: "10.4",
-        item: "Accessibility of isolation devices",
-        regulation: "BS 7671 Section 537.2.1.2",
+        item: "Presence of electrical installation certificates",
+        regulation: "BS 7671 Section 631.1",
         outcome: "acceptable"
       }
     ]
