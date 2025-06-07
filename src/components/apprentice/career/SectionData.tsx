@@ -10,6 +10,12 @@ import {
 
 export const careerSections = [
   {
+    id: "cpd",
+    title: "CPD Tracker",
+    description: "Track and manage your Continuing Professional Development hours and goals",
+    icon: <Clock className="h-12 w-12 text-elec-yellow opacity-80" />
+  },
+  {
     id: "pathways",
     title: "Career Pathways",
     description: "Explore different career advancement routes in the electrical industry",
@@ -32,12 +38,6 @@ export const careerSections = [
     title: "Professional Accreditation",
     description: "Essential qualifications and certifications for career advancement",
     icon: <Award className="h-12 w-12 text-elec-yellow opacity-80" />
-  },
-  {
-    id: "cpd",
-    title: "CPD Tracker",
-    description: "Track and manage your Continuing Professional Development hours and goals",
-    icon: <Clock className="h-12 w-12 text-elec-yellow opacity-80" />
   },
   {
     id: "business",
