@@ -1,7 +1,7 @@
 
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import SafeLink from "@/components/common/SafeLink";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Target } from "lucide-react";
 
@@ -9,12 +9,12 @@ const BusinessCustomersHeader = () => {
   return (
     <>
       <div className="flex items-center gap-2">
-        <Link to="/electrician/business-development">
+        <SafeLink to="/electrician/business-development">
           <Button variant="ghost" size="sm" className="gap-1">
             <ArrowLeft className="h-4 w-4" />
             <span>Back</span>
           </Button>
-        </Link>
+        </SafeLink>
         <h1 className="text-2xl font-bold">Customer Acquisition for Electricians</h1>
       </div>
       
