@@ -1,292 +1,292 @@
-import { useState, useEffect } from "react";
+
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { RotateCw, AlertCircle, CheckCircle } from "lucide-react";
+import { Calculator, AlertTriangle, CheckCircle, Info } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import RingCircuitEducation from "./ring-circuit/RingCircuitEducation";
 
-interface RingTestResult {
+interface RingCircuitResult {
+  r1: number;
+  r2: number;
+  rn: number;
   r1PlusR2: number;
-  endToEnd: number;
-  valid: boolean;
+  isValid: boolean;
+  continuityStatus: string;
   recommendations: string[];
-  issues: string[];
 }
 
 const RingCircuitCalculator = () => {
-  const [cableSize, setCableSize] = useState<string>("");
-  const [r1, setR1] = useState<string>("");
-  const [rn, setRn] = useState<string>("");
-  const [r2, setR2] = useState<string>("");
-  const [testMethod, setTestMethod] = useState<string>("");
-  const [result, setResult] = useState<RingTestResult | null>(null);
+  const [readings, setReadings] = useState({
+    endToEndLive: "",
+    endToEndNeutral: "", 
+    endToEndCpc: "",
+    liveToNeutral: "",
+    liveToCpc: "",
+    neutralToCpc: ""
+  });
+  const [cableType, setCableType] = useState("");
+  const [result, setResult] = useState<RingCircuitResult | null>(null);
 
-  // Resistance values per meter for common cable sizes (mΩ/m at 20°C)
-  const cableResistances = {
-    "1.5": 12.1,
-    "2.5": 7.41,
-    "4.0": 4.61,
-    "6.0": 3.08,
-    "10.0": 1.83,
-    "16.0": 1.15,
-  };
+  const calculateValues = () => {
+    const endToEndLive = parseFloat(readings.endToEndLive) || 0;
+    const endToEndNeutral = parseFloat(readings.endToEndNeutral) || 0;
+    const endToEndCpc = parseFloat(readings.endToEndCpc) || 0;
+    const liveToNeutral = parseFloat(readings.liveToNeutral) || 0;
+    const liveToCpc = parseFloat(readings.liveToCpc) || 0;
+    const neutralToCpc = parseFloat(readings.neutralToCpc) || 0;
 
-  const calculateRingCircuit = (): RingTestResult | null => {
-    const r1Value = parseFloat(r1);
-    const rnValue = parseFloat(rn);
-    const r2Value = parseFloat(r2);
+    // Calculate R1, R2, and Rn values
+    const r1 = endToEndLive / 4;
+    const r2 = endToEndCpc / 4;
+    const rn = endToEndNeutral / 4;
+    const r1PlusR2 = r1 + r2;
 
-    if (!r1Value || !rnValue || !r2Value || !testMethod) return null;
+    // Validation checks
+    const isR1R2Valid = Math.abs(liveToNeutral - (r1 + rn)) < 0.05;
+    const isR1RcpcValid = Math.abs(liveToCpc - r1PlusR2) < 0.05;
+    const isRnRcpcValid = Math.abs(neutralToCpc - (rn + r2)) < 0.05;
 
-    // Calculate R1 + R2 at the midpoint
-    const r1PlusR2 = (r1Value + r2Value) / 4;
-    
-    // Calculate end-to-end resistance
-    const endToEnd = (r1Value + r2Value) / 2;
-    
-    // Validation checks for ring circuit
+    const isValid = isR1R2Valid && isR1RcpcValid && isRnRcpcValid;
+
+    let continuityStatus = "";
     const recommendations: string[] = [];
-    const issues: string[] = [];
-    let valid = true;
 
-    // Check if readings are within acceptable ranges
-    const ratio = Math.max(r1Value, r2Value) / Math.min(r1Value, r2Value);
-    if (ratio > 1.67) { // More than 67% difference
-      issues.push("High resistance difference between legs - check for poor connections");
-      valid = false;
+    if (isValid) {
+      continuityStatus = "Ring circuit continuity confirmed";
+      recommendations.push("Circuit is properly connected and within acceptable limits");
+    } else {
+      continuityStatus = "Ring circuit continuity issues detected";
+      if (!isR1R2Valid) recommendations.push("Check live to neutral connections");
+      if (!isR1RcpcValid) recommendations.push("Check live to CPC connections");
+      if (!isRnRcpcValid) recommendations.push("Check neutral to CPC connections");
     }
 
-    // Check for opens in neutral
-    if (rnValue > r1Value * 1.5 || rnValue > r2Value * 1.5) {
-      issues.push("High neutral resistance - check neutral connections");
-      valid = false;
-    }
-
-    // Check overall resistance is reasonable for cable size
-    if (cableSize) {
-      const expectedResistance = cableResistances[cableSize as keyof typeof cableResistances];
-      if (expectedResistance && r1PlusR2 > expectedResistance * 0.1) { // Assuming 100m max ring
-        issues.push("Resistance higher than expected for cable size - check installation");
-      }
-    }
-
-    if (valid) {
-      recommendations.push("Ring circuit test results are within acceptable limits");
-      recommendations.push("Ensure test measurements are taken at room temperature");
-      recommendations.push("Document all readings on installation certificate");
-    }
-
-    return {
-      r1PlusR2: Math.round(r1PlusR2 * 1000) / 1000,
-      endToEnd: Math.round(endToEnd * 1000) / 1000,
-      valid,
-      recommendations,
-      issues
+    const calculatedResult: RingCircuitResult = {
+      r1,
+      r2,
+      rn,
+      r1PlusR2,
+      isValid,
+      continuityStatus,
+      recommendations
     };
+
+    setResult(calculatedResult);
   };
 
-  // Auto-calculate when inputs change
-  useEffect(() => {
-    if (r1 && rn && r2 && testMethod) {
-      const newResult = calculateRingCircuit();
-      setResult(newResult);
-    } else {
-      setResult(null);
+  const handleInputChange = (field: string, value: string) => {
+    const newReadings = { ...readings, [field]: value };
+    setReadings(newReadings);
+    
+    // Auto-calculate if all required fields are filled
+    const hasAllValues = Object.values(newReadings).every(val => val !== "");
+    if (hasAllValues) {
+      // Use setTimeout to ensure state is updated before calculation
+      setTimeout(calculateValues, 0);
     }
-  }, [r1, rn, r2, testMethod, cableSize]);
+  };
 
   const resetCalculator = () => {
-    setCableSize("");
-    setR1("");
-    setRn("");
-    setR2("");
-    setTestMethod("");
+    setReadings({
+      endToEndLive: "",
+      endToEndNeutral: "",
+      endToEndCpc: "",
+      liveToNeutral: "",
+      liveToCpc: "",
+      neutralToCpc: ""
+    });
+    setCableType("");
     setResult(null);
   };
 
-  const isFormValid = r1 && rn && r2 && testMethod;
-
   return (
     <div className="space-y-6">
+      {/* Educational Content - Now Above Calculator */}
+      <RingCircuitEducation />
+
+      {/* Calculator */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <div className="flex items-center gap-2">
-            <RotateCw className="h-5 w-5 text-elec-yellow" />
-            <CardTitle>Ring Final Circuit Calculator</CardTitle>
-          </div>
+          <CardTitle className="flex items-center gap-2">
+            <Calculator className="h-5 w-5 text-elec-yellow" />
+            Ring Final Circuit Calculator
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Input Section */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-elec-yellow">Test Parameters</h3>
-              
-              <div className="space-y-2">
-                <Label htmlFor="cable-size">Cable Size (mm²)</Label>
-                <Select value={cableSize} onValueChange={setCableSize}>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white">
-                    <SelectValue placeholder="Select cable size" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
-                    <SelectItem value="1.5" className="text-white hover:bg-elec-yellow/10">1.5mm²</SelectItem>
-                    <SelectItem value="2.5" className="text-white hover:bg-elec-yellow/10">2.5mm²</SelectItem>
-                    <SelectItem value="4.0" className="text-white hover:bg-elec-yellow/10">4.0mm²</SelectItem>
-                    <SelectItem value="6.0" className="text-white hover:bg-elec-yellow/10">6.0mm²</SelectItem>
-                    <SelectItem value="10.0" className="text-white hover:bg-elec-yellow/10">10.0mm²</SelectItem>
-                    <SelectItem value="16.0" className="text-white hover:bg-elec-yellow/10">16.0mm²</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+          {/* Cable Type Selection */}
+          <div className="space-y-2">
+            <Label htmlFor="cable-type">Cable Type</Label>
+            <Select value={cableType} onValueChange={setCableType}>
+              <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
+                <SelectValue placeholder="Select cable type" />
+              </SelectTrigger>
+              <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
+                <SelectItem value="2.5mm-twin">2.5mm² Twin & Earth</SelectItem>
+                <SelectItem value="4mm-twin">4.0mm² Twin & Earth</SelectItem>
+                <SelectItem value="6mm-twin">6.0mm² Twin & Earth</SelectItem>
+                <SelectItem value="10mm-twin">10.0mm² Twin & Earth</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
+          {/* End-to-End Readings */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-elec-yellow">End-to-End Readings (Ω)</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="test-method">Test Method</Label>
-                <Select value={testMethod} onValueChange={setTestMethod}>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20 text-white">
-                    <SelectValue placeholder="Select test method" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
-                    <SelectItem value="live-live" className="text-white hover:bg-elec-yellow/10">Live to Live</SelectItem>
-                    <SelectItem value="live-neutral" className="text-white hover:bg-elec-yellow/10">Live to Neutral</SelectItem>
-                    <SelectItem value="live-earth" className="text-white hover:bg-elec-yellow/10">Live to Earth</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="r1">R1 - Phase Conductor (Ω)</Label>
+                <Label htmlFor="end-to-end-live">Live Conductor</Label>
                 <Input
-                  id="r1"
+                  id="end-to-end-live"
                   type="number"
-                  step="0.001"
-                  value={r1}
-                  onChange={(e) => setR1(e.target.value)}
-                  placeholder="Enter R1 reading"
-                  className="bg-elec-dark border-elec-yellow/20 text-white placeholder:text-gray-400"
+                  step="0.01"
+                  placeholder="e.g. 1.20"
+                  value={readings.endToEndLive}
+                  onChange={(e) => handleInputChange("endToEndLive", e.target.value)}
+                  className="bg-elec-dark border-elec-yellow/30"
                 />
               </div>
-
               <div className="space-y-2">
-                <Label htmlFor="rn">Rn - Neutral Conductor (Ω)</Label>
+                <Label htmlFor="end-to-end-neutral">Neutral Conductor</Label>
                 <Input
-                  id="rn"
+                  id="end-to-end-neutral"
                   type="number"
-                  step="0.001"
-                  value={rn}
-                  onChange={(e) => setRn(e.target.value)}
-                  placeholder="Enter Rn reading"
-                  className="bg-elec-dark border-elec-yellow/20 text-white placeholder:text-gray-400"
+                  step="0.01"
+                  placeholder="e.g. 1.20"
+                  value={readings.endToEndNeutral}
+                  onChange={(e) => handleInputChange("endToEndNeutral", e.target.value)}
+                  className="bg-elec-dark border-elec-yellow/30"
                 />
               </div>
-
               <div className="space-y-2">
-                <Label htmlFor="r2">R2 - Earth/CPC Conductor (Ω)</Label>
+                <Label htmlFor="end-to-end-cpc">CPC (Earth)</Label>
                 <Input
-                  id="r2"
+                  id="end-to-end-cpc"
                   type="number"
-                  step="0.001"
-                  value={r2}
-                  onChange={(e) => setR2(e.target.value)}
-                  placeholder="Enter R2 reading"
-                  className="bg-elec-dark border-elec-yellow/20 text-white placeholder:text-gray-400"
+                  step="0.01"
+                  placeholder="e.g. 1.92"
+                  value={readings.endToEndCpc}
+                  onChange={(e) => handleInputChange("endToEndCpc", e.target.value)}
+                  className="bg-elec-dark border-elec-yellow/30"
                 />
-              </div>
-
-              <div className="flex gap-2 pt-4">
-                <Button 
-                  onClick={() => setResult(calculateRingCircuit())} 
-                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex-1"
-                  disabled={!isFormValid}
-                >
-                  <RotateCw className="mr-2 h-4 w-4" />
-                  Recalculate
-                </Button>
-                <Button variant="outline" onClick={resetCalculator} className="border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10">
-                  Reset
-                </Button>
               </div>
             </div>
+          </div>
 
-            {/* Results Section */}
-            <div className="bg-elec-dark/50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-elec-yellow mb-4">Test Results</h3>
-              {result ? (
-                <div className="space-y-4">
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-elec-light/80">R1 + R2 (midpoint):</span>
-                      <span className="text-xl font-bold text-white">{result.r1PlusR2}Ω</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-elec-light/80">End-to-End:</span>
-                      <span className="text-lg font-semibold text-white">{result.endToEnd}Ω</span>
-                    </div>
-                  </div>
+          {/* Cross-Connected Readings */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-elec-yellow">Cross-Connected Readings (Ω)</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="live-to-neutral">Live to Neutral</Label>
+                <Input
+                  id="live-to-neutral"
+                  type="number"
+                  step="0.01"
+                  placeholder="e.g. 0.60"
+                  value={readings.liveToNeutral}
+                  onChange={(e) => handleInputChange("liveToNeutral", e.target.value)}
+                  className="bg-elec-dark border-elec-yellow/30"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="live-to-cpc">Live to CPC</Label>
+                <Input
+                  id="live-to-cpc"
+                  type="number"
+                  step="0.01"
+                  placeholder="e.g. 1.56"
+                  value={readings.liveToCpc}
+                  onChange={(e) => handleInputChange("liveToCpc", e.target.value)}
+                  className="bg-elec-dark border-elec-yellow/30"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="neutral-to-cpc">Neutral to CPC</Label>
+                <Input
+                  id="neutral-to-cpc"
+                  type="number"
+                  step="0.01"
+                  placeholder="e.g. 1.56"
+                  value={readings.neutralToCpc}
+                  onChange={(e) => handleInputChange("neutralToCpc", e.target.value)}
+                  className="bg-elec-dark border-elec-yellow/30"
+                />
+              </div>
+            </div>
+          </div>
 
-                  <div className={`p-3 rounded-lg border flex items-center gap-2 ${
-                    result.valid 
-                      ? 'bg-green-500/10 border-green-500/30' 
-                      : 'bg-red-500/10 border-red-500/30'
-                  }`}>
-                    {result.valid ? (
-                      <CheckCircle className="h-5 w-5 text-green-400" />
-                    ) : (
-                      <AlertCircle className="h-5 w-5 text-red-400" />
-                    )}
-                    <p className={`text-sm font-medium ${
-                      result.valid ? 'text-green-300' : 'text-red-300'
-                    }`}>
-                      {result.valid ? 'Test Results Valid' : 'Issues Detected'}
-                    </p>
-                  </div>
+          {/* Control Buttons */}
+          <div className="flex flex-col sm:flex-row gap-2">
+            <Button onClick={calculateValues} className="flex-1">
+              <Calculator className="mr-2 h-4 w-4" />
+              Calculate Ring Circuit
+            </Button>
+            <Button onClick={resetCalculator} variant="outline" className="flex-1">
+              Reset Calculator
+            </Button>
+          </div>
 
-                  {result.issues.length > 0 && (
-                    <div className="space-y-2">
-                      <h4 className="text-sm font-medium text-red-300">Issues:</h4>
-                      {result.issues.map((issue, index) => (
-                        <p key={index} className="text-xs text-red-200 flex items-start gap-1">
-                          <AlertCircle className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                          {issue}
-                        </p>
-                      ))}
-                    </div>
-                  )}
+          {/* Results */}
+          {result && (
+            <div className="space-y-4 pt-4 border-t border-elec-yellow/20">
+              <h3 className="text-lg font-semibold text-elec-yellow">Results</h3>
+              
+              {/* Status Alert */}
+              <Alert className={`border ${result.isValid ? 'border-green-500/50 bg-green-500/10' : 'border-red-500/50 bg-red-500/10'}`}>
+                {result.isValid ? (
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                ) : (
+                  <AlertTriangle className="h-4 w-4 text-red-400" />
+                )}
+                <AlertDescription className={result.isValid ? 'text-green-400' : 'text-red-400'}>
+                  {result.continuityStatus}
+                </AlertDescription>
+              </Alert>
 
-                  {result.recommendations.length > 0 && (
-                    <div className="space-y-2">
-                      <h4 className="text-sm font-medium text-green-300">Recommendations:</h4>
-                      {result.recommendations.map((rec, index) => (
-                        <p key={index} className="text-xs text-elec-light/80 flex items-start gap-1">
-                          <CheckCircle className="h-3 w-3 mt-0.5 flex-shrink-0 text-green-400" />
-                          {rec}
-                        </p>
-                      ))}
-                    </div>
-                  )}
+              {/* Calculated Values */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="p-3 rounded-lg bg-elec-dark/30">
+                  <div className="text-sm text-elec-light/70">R1 (Live)</div>
+                  <div className="text-lg font-semibold text-elec-yellow">{result.r1.toFixed(3)} Ω</div>
                 </div>
-              ) : (
-                <div className="text-center py-8">
-                  <RotateCw className="h-12 w-12 text-elec-light/20 mx-auto mb-4" />
-                  <p className="text-elec-light/60">Enter test readings to calculate ring circuit values</p>
-                  <p className="text-xs text-elec-light/40 mt-2">Results will update automatically as you type</p>
+                <div className="p-3 rounded-lg bg-elec-dark/30">
+                  <div className="text-sm text-elec-light/70">R2 (CPC)</div>
+                  <div className="text-lg font-semibold text-elec-yellow">{result.r2.toFixed(3)} Ω</div>
+                </div>
+                <div className="p-3 rounded-lg bg-elec-dark/30">
+                  <div className="text-sm text-elec-light/70">Rn (Neutral)</div>
+                  <div className="text-lg font-semibold text-elec-yellow">{result.rn.toFixed(3)} Ω</div>
+                </div>
+                <div className="p-3 rounded-lg bg-elec-dark/30">
+                  <div className="text-sm text-elec-light/70">R1 + R2</div>
+                  <div className="text-lg font-semibold text-elec-yellow">{result.r1PlusR2.toFixed(3)} Ω</div>
+                </div>
+              </div>
+
+              {/* Recommendations */}
+              {result.recommendations.length > 0 && (
+                <div className="space-y-2">
+                  <h4 className="font-semibold flex items-center gap-2">
+                    <Info className="h-4 w-4 text-blue-400" />
+                    Recommendations
+                  </h4>
+                  <ul className="space-y-1">
+                    {result.recommendations.map((rec, index) => (
+                      <li key={index} className="text-sm text-elec-light/80 pl-4 border-l-2 border-blue-400/30">
+                        {rec}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
             </div>
-          </div>
-
-          <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-            <h4 className="text-sm font-medium text-blue-300 mb-2">Ring Final Circuit Testing</h4>
-            <p className="text-xs text-elec-light/80">
-              Ring final circuits must be tested to verify continuity and proper installation. 
-              The resistance of each leg should be similar, and R1 + R2 is measured at the midpoint 
-              to ensure proper earthing arrangements. Results update automatically as you enter values.
-            </p>
-          </div>
+          )}
         </CardContent>
       </Card>
-
-      <RingCircuitEducation />
     </div>
   );
 };
