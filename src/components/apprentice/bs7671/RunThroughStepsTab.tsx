@@ -1,298 +1,402 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, AlertTriangle, Info } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { 
+  CheckCircle, 
+  Clock, 
+  AlertTriangle, 
+  FileText, 
+  Zap, 
+  Eye,
+  ArrowRight,
+  Lightbulb,
+  Shield,
+  BookOpen
+} from "lucide-react";
 
 const RunThroughStepsTab = () => {
-  const testingSteps = [
+  const testingSequence = [
     {
-      id: "safe-isolation",
-      title: "Safe Isolation Procedures",
-      time: "15-20 minutes",
-      importance: "Critical",
-      description: "Essential safety procedures before any testing begins",
-      steps: [
-        "Switch off and lock off the main switch",
-        "Place warning notices at the distribution board",
-        "Test voltage indicator on known live source",
-        "Test the circuit to confirm it's dead",
-        "Re-test voltage indicator on known live source",
-        "Fit warning labels on the circuit under test"
-      ],
-      safetyNotes: [
-        "Never assume a circuit is dead without testing",
-        "Always use a properly functioning voltage indicator",
-        "Ensure warning notices are clearly visible"
-      ]
-    },
-    {
-      id: "visual-inspection",
+      id: 1,
       title: "Visual Inspection",
-      time: "30-45 minutes",
-      importance: "Essential",
-      description: "Thorough visual examination of the installation",
-      steps: [
-        "Check general condition of equipment",
-        "Verify correct cable types and ratings",
-        "Inspect connections for signs of overheating",
-        "Check protective devices are correctly rated",
-        "Verify earthing and bonding arrangements",
-        "Examine accessibility of equipment"
+      description: "Comprehensive visual examination of all electrical installation components",
+      duration: "30-45 mins",
+      priority: "CRITICAL",
+      icon: Eye,
+      requirements: [
+        "Check all electrical equipment for damage",
+        "Verify conductor condition and connections", 
+        "Confirm protective device ratings",
+        "Validate earthing and bonding arrangements"
       ],
       safetyNotes: [
-        "Look for signs of damage or deterioration",
-        "Check for non-standard or dangerous modifications"
+        "Prove dead before opening any equipment",
+        "Use appropriate PPE throughout inspection"
       ]
     },
     {
-      id: "continuity-testing",
-      title: "Continuity Testing",
-      time: "20-30 minutes",
-      importance: "Essential",
-      description: "Testing continuity of protective conductors and ring circuits",
-      steps: [
-        "Test continuity of protective conductors",
-        "Perform ring final circuit continuity tests",
-        "Record R1 + R2 values",
-        "Verify polarity of single-pole devices",
-        "Check continuity of supplementary bonding"
+      id: 2,
+      title: "Continuity of Protective Conductors",
+      description: "Test continuity of CPC throughout installation",
+      duration: "15-25 mins",
+      priority: "HIGH",
+      icon: Zap,
+      requirements: [
+        "Test main protective bonding conductors",
+        "Verify CPC continuity to all points",
+        "Check supplementary bonding where required",
+        "Record all resistance values"
       ],
       safetyNotes: [
-        "Ensure all circuits are isolated",
-        "Use lowest voltage setting on test instrument"
+        "Ensure complete isolation before testing",
+        "Use minimum 200mA test current"
       ]
     },
     {
-      id: "insulation-resistance",
-      title: "Insulation Resistance Testing",
-      time: "15-25 minutes",
-      importance: "Essential",
-      description: "Testing insulation between conductors",
-      steps: [
-        "Disconnect electronic equipment",
-        "Test between phase and neutral conductors",
-        "Test between phase and earth",
-        "Test between neutral and earth",
-        "Record all readings and compare with minimum values"
+      id: 3,
+      title: "Continuity of Ring Final Circuits",
+      description: "Verify ring circuit integrity and correct wiring",
+      duration: "20-30 mins",
+      priority: "HIGH",
+      icon: Zap,
+      requirements: [
+        "End-to-end continuity tests",
+        "Figure-of-eight test procedure",
+        "Verify R1+R2 values at outlets",
+        "Check for spurious interconnections"
       ],
       safetyNotes: [
-        "Remove or isolate electronic equipment",
-        "Use appropriate test voltage (250V or 500V)"
+        "Disconnect all loads from ring circuit",
+        "Ensure proper conductor identification"
       ]
     },
     {
-      id: "polarity-testing",
+      id: 4,
+      title: "Insulation Resistance",
+      description: "Test insulation between conductors and to earth",
+      duration: "25-35 mins",
+      priority: "CRITICAL",
+      icon: Shield,
+      requirements: [
+        "Test L-N, L-E, N-E at 500V DC",
+        "Minimum 1MΩ for ≤500V circuits",
+        "Remove/isolate electronic equipment",
+        "Document all readings"
+      ],
+      safetyNotes: [
+        "High voltage testing - protect equipment",
+        "Discharge circuits after testing"
+      ]
+    },
+    {
+      id: 5,
       title: "Polarity Testing",
-      time: "10-15 minutes",
-      importance: "Important",
-      description: "Verify correct polarity connections",
-      steps: [
-        "Check polarity at the origin of the installation",
-        "Verify polarity at all socket outlets",
-        "Test polarity of lighting circuits",
-        "Check single-pole switching devices"
+      description: "Verify correct polarity connections throughout",
+      duration: "15-20 mins",
+      priority: "MEDIUM",
+      icon: CheckCircle,
+      requirements: [
+        "Check switching device connections",
+        "Verify socket outlet polarity",
+        "Test ES lampholder connections",
+        "Confirm correct phase rotation"
       ],
       safetyNotes: [
-        "Incorrect polarity can be dangerous",
-        "Pay special attention to bathroom circuits"
+        "Complete before energising circuits",
+        "Pay attention to Edison screw fittings"
       ]
     },
     {
-      id: "earth-fault-loop",
-      title: "Earth Fault Loop Impedance",
-      time: "20-30 minutes",
-      importance: "Critical",
-      description: "Testing earth fault loop impedance (Zs)",
-      steps: [
-        "Connect test instrument correctly",
-        "Test at the furthest point of each circuit",
-        "Record Zs values",
+      id: 6,
+      title: "Earth Electrode Resistance",
+      description: "Measure earth electrode performance (TT systems)",
+      duration: "30-40 mins",
+      priority: "HIGH",
+      icon: Zap,
+      requirements: [
+        "Fall-of-potential measurement method",
+        "Verify resistance within RCD limits",
+        "Check electrode connections",
+        "Document soil conditions"
+      ],
+      safetyNotes: [
+        "Check for buried services before spike insertion",
+        "Use appropriate test spacing"
+      ],
+      applicability: "TT Systems Only"
+    },
+    {
+      id: 7,
+      title: "Earth Fault Loop Impedance (Zs)",
+      description: "Measure fault loop impedance for protection verification",
+      duration: "20-30 mins",
+      priority: "CRITICAL",
+      icon: Zap,
+      requirements: [
+        "Test at furthest points of circuits",
+        "Use no-trip method for RCD circuits",
         "Compare with maximum permitted values",
-        "Test prospective fault current if required"
+        "Apply temperature correction factors"
       ],
       safetyNotes: [
-        "Ensure RCDs are temporarily bridged out",
-        "Use appropriate test method for the installation"
+        "Ensure test method appropriate for circuit type",
+        "Consider parallel earth paths"
       ]
     },
     {
-      id: "rcd-testing",
+      id: 8,
       title: "RCD Testing",
-      time: "15-20 minutes",
-      importance: "Critical", 
-      description: "Testing RCD operation and trip times",
-      steps: [
-        "Perform RCD push button test",
-        "Test RCD trip time at rated current",
-        "Test RCD trip time at 5 times rated current",
-        "Check RCD doesn't trip at 50% rated current",
-        "Record all trip times"
+      description: "Comprehensive RCD operation and time testing",
+      duration: "25-35 mins",
+      priority: "CRITICAL",
+      icon: Shield,
+      requirements: [
+        "Push button test verification",
+        "Trip time at 1× and 5× rated current",
+        "Half-rated current non-trip test",
+        "Test at 0° and 180° phase angles"
       ],
       safetyNotes: [
-        "Ensure all circuits protected by RCD are isolated",
-        "Check RCD resets properly after each test"
+        "Test push button operation first",
+        "Ensure RCD resets between tests"
       ]
     },
     {
-      id: "functional-testing",
-      title: "Functional Testing",
-      time: "15-30 minutes",
-      importance: "Important",
-      description: "Testing operation of switchgear and controls",
-      steps: [
-        "Test all switching devices",
-        "Check operation of emergency stops",
-        "Verify interlocks function correctly",
-        "Test indication and warning systems",
-        "Check automatic controls operate correctly"
+      id: 9,
+      title: "Prospective Short Circuit Current",
+      description: "Verify protective device breaking capacity",
+      duration: "20-25 mins",
+      priority: "HIGH",
+      icon: AlertTriangle,
+      requirements: [
+        "Measure PSCC at origin and major points",
+        "Verify against device breaking capacity",
+        "Test both L-N and L-E fault currents",
+        "Check discrimination between devices"
       ],
       safetyNotes: [
-        "Ensure safe operation of all controls",
-        "Test emergency systems thoroughly"
+        "Use no-trip measurement methods",
+        "Verify equipment ratings adequate"
       ]
+    },
+    {
+      id: 10,
+      title: "Phase Sequence",
+      description: "Verify correct three-phase rotation",
+      duration: "10-15 mins",
+      priority: "MEDIUM",
+      icon: CheckCircle,
+      requirements: [
+        "Check L1-L2-L3 sequence at supply",
+        "Verify sequence at motor connections",
+        "Test three-phase socket outlets",
+        "Confirm phase voltage balance"
+      ],
+      safetyNotes: [
+        "Test before energising rotating equipment",
+        "Use appropriate phase sequence indicator"
+      ],
+      applicability: "Three-Phase Systems"
     }
   ];
 
-  const getImportanceColor = (importance: string) => {
-    switch (importance) {
-      case 'Critical': return 'bg-red-500/10 text-red-400 border-red-500/30';
-      case 'Essential': return 'bg-orange-500/10 text-orange-400 border-orange-500/30';
-      case 'Important': return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30';
-      default: return 'bg-blue-500/10 text-blue-400 border-blue-500/30';
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'CRITICAL': return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'HIGH': return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
+      case 'MEDIUM': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      default: return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
     }
   };
 
+  const totalDuration = testingSequence.reduce((total, step) => {
+    const minutes = parseInt(step.duration.split('-')[1] || step.duration.split(' ')[0]);
+    return total + minutes;
+  }, 0);
+
   return (
     <div className="space-y-6">
-      {/* Overview Card */}
+      {/* Overview */}
       <Card className="border-blue-500/30 bg-blue-500/10">
         <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
-            <Info className="h-5 w-5" />
-            BS 7671 Testing Sequence Overview
+          <CardTitle className="text-blue-300 flex items-center gap-2">
+            <FileText className="h-5 w-5" />
+            BS 7671 Complete Testing Sequence
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="text-center p-3 border border-blue-500/20 rounded-lg">
-              <div className="text-2xl font-bold text-blue-400">{testingSteps.length}</div>
+          <p className="text-muted-foreground mb-4">
+            Complete step-by-step testing sequence following BS 7671:2018 requirements. This systematic 
+            approach ensures all required tests are completed in the correct order for accurate results.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="bg-green-500/10 rounded-lg p-3 border border-green-500/20 text-center">
+              <div className="text-2xl font-bold text-green-400">{testingSequence.length}</div>
               <div className="text-sm text-muted-foreground">Testing Steps</div>
             </div>
-            <div className="text-center p-3 border border-blue-500/20 rounded-lg">
-              <div className="text-2xl font-bold text-blue-400">2-4 hrs</div>
-              <div className="text-sm text-muted-foreground">Typical Duration</div>
+            <div className="bg-blue-500/10 rounded-lg p-3 border border-blue-500/20 text-center">
+              <div className="text-2xl font-bold text-blue-400">~{Math.round(totalDuration/60)}h</div>
+              <div className="text-sm text-muted-foreground">Est. Duration</div>
             </div>
-            <div className="text-center p-3 border border-blue-500/20 rounded-lg">
-              <div className="text-2xl font-bold text-blue-400">BS 7671</div>
-              <div className="text-sm text-muted-foreground">18th Edition</div>
+            <div className="bg-purple-500/10 rounded-lg p-3 border border-purple-500/20 text-center">
+              <div className="text-2xl font-bold text-purple-400">100%</div>
+              <div className="text-sm text-muted-foreground">BS 7671 Compliant</div>
+            </div>
+            <div className="bg-yellow-500/10 rounded-lg p-3 border border-yellow-500/20 text-center">
+              <div className="text-2xl font-bold text-yellow-400">9</div>
+              <div className="text-sm text-muted-foreground">Core Tests</div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Testing Steps Accordion */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Step-by-Step Testing Procedures</CardTitle>
-          <p className="text-muted-foreground">
-            Follow these procedures in the correct sequence for BS 7671 compliance
-          </p>
-        </CardHeader>
-        <CardContent>
-          <Accordion type="single" collapsible className="w-full">
-            {testingSteps.map((step, index) => (
-              <AccordionItem key={step.id} value={step.id} className="border-elec-yellow/20">
-                <AccordionTrigger className="hover:text-elec-yellow">
-                  <div className="flex items-center justify-between w-full mr-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-elec-yellow text-elec-dark flex items-center justify-center font-bold text-sm">
-                        {index + 1}
-                      </div>
-                      <span className="font-medium">{step.title}</span>
+      {/* Testing Steps */}
+      <div className="space-y-4">
+        {testingSequence.map((step, index) => {
+          const IconComponent = step.icon;
+          return (
+            <Card key={step.id} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-colors">
+              <CardHeader>
+                <div className="flex items-start justify-between">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-full bg-elec-yellow/20 flex items-center justify-center">
+                      <IconComponent className="h-6 w-6 text-elec-yellow" />
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="border-blue-500/40 text-blue-400 text-xs">
-                        <Clock className="h-3 w-3 mr-1" />
-                        {step.time}
-                      </Badge>
-                      <Badge variant="outline" className={getImportanceColor(step.importance)}>
-                        {step.importance}
-                      </Badge>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-3">
+                        <CardTitle className="text-white">
+                          {step.id}. {step.title}
+                        </CardTitle>
+                        <Badge className={getPriorityColor(step.priority)}>
+                          {step.priority}
+                        </Badge>
+                        {step.applicability && (
+                          <Badge variant="outline" className="text-xs border-cyan-500/30 text-cyan-400">
+                            {step.applicability}
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground">{step.description}</p>
+                      <div className="flex items-center gap-4">
+                        <Badge className="bg-blue-500/20 text-blue-400">
+                          <Clock className="h-3 w-3 mr-1" />
+                          {step.duration}
+                        </Badge>
+                        <span className="text-xs text-muted-foreground">
+                          Step {index + 1} of {testingSequence.length}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="pt-4 space-y-4">
-                    <p className="text-muted-foreground">{step.description}</p>
-                    
-                    <div>
-                      <h4 className="font-medium text-white mb-3">Procedure Steps:</h4>
-                      <div className="space-y-2">
-                        {step.steps.map((procedureStep, stepIndex) => (
-                          <div key={stepIndex} className="flex items-start gap-3 p-2 bg-elec-dark/30 rounded">
-                            <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm">{procedureStep}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {step.safetyNotes && step.safetyNotes.length > 0 && (
-                      <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-                        <h4 className="font-medium text-red-400 mb-2 flex items-center gap-2">
-                          <AlertTriangle className="h-4 w-4" />
-                          Safety Notes
-                        </h4>
-                        <ul className="space-y-1">
-                          {step.safetyNotes.map((note, noteIndex) => (
-                            <li key={noteIndex} className="text-sm text-muted-foreground flex items-start gap-2">
-                              <span className="text-red-400">•</span>
-                              {note}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+                </div>
+              </CardHeader>
+              
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Requirements */}
+                  <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
+                    <h4 className="font-medium text-blue-300 mb-3 flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4" />
+                      Key Requirements
+                    </h4>
+                    <ul className="space-y-2">
+                      {step.requirements.map((req, idx) => (
+                        <li key={idx} className="text-sm text-blue-100 flex items-start gap-2">
+                          <span className="text-blue-400 mt-1">•</span>
+                          {req}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </CardContent>
-      </Card>
 
-      {/* Quick Reference Card */}
+                  {/* Safety Notes */}
+                  <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/20">
+                    <h4 className="font-medium text-amber-300 mb-3 flex items-center gap-2">
+                      <AlertTriangle className="h-4 w-4" />
+                      Safety Considerations
+                    </h4>
+                    <ul className="space-y-2">
+                      {step.safetyNotes.map((note, idx) => (
+                        <li key={idx} className="text-sm text-amber-100 flex items-start gap-2">
+                          <span className="text-amber-400 mt-1">•</span>
+                          {note}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="flex justify-end pt-2">
+                  <Button 
+                    size="sm"
+                    className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                  >
+                    View Detailed Guide
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+
+      {/* Professional Tips */}
       <Card className="border-green-500/30 bg-green-500/10">
         <CardHeader>
-          <CardTitle className="text-green-400">Quick Reference</CardTitle>
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <Lightbulb className="h-5 w-5" />
+            Professional Testing Tips
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h4 className="font-semibold mb-3 text-green-300">Test Sequence (Must Follow Order)</h4>
-              <ol className="space-y-1 text-sm">
-                <li>1. Safe isolation</li>
-                <li>2. Visual inspection</li>
-                <li>3. Continuity testing</li>
-                <li>4. Insulation resistance</li>
-                <li>5. Polarity</li>
-                <li>6. Earth fault loop impedance</li>
-                <li>7. RCD testing</li>
-                <li>8. Functional testing</li>
-              </ol>
+              <h4 className="font-semibold mb-3 text-green-300">Before Testing</h4>
+              <ul className="space-y-2 text-sm text-green-100">
+                <li>• Obtain and review installation drawings and specifications</li>
+                <li>• Ensure all test equipment is calibrated and functioning</li>
+                <li>• Complete thorough visual inspection before electrical testing</li>
+                <li>• Plan testing sequence to minimise repeated isolation</li>
+                <li>• Identify and protect electronic equipment from test voltages</li>
+              </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-3 text-green-300">Essential Equipment</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
-                <li>• Multifunction tester (MFT)</li>
-                <li>• RCD tester</li>
-                <li>• Voltage indicator</li>
-                <li>• Proving unit</li>
-                <li>• Test leads and probes</li>
-                <li>• Lock-off devices</li>
-                <li>• Warning labels</li>
+              <h4 className="font-semibold mb-3 text-green-300">During Testing</h4>
+              <ul className="space-y-2 text-sm text-green-100">
+                <li>• Follow the prescribed testing sequence strictly</li>
+                <li>• Record all readings, even if within acceptable limits</li>
+                <li>• Take photographs of test setups and any defects found</li>
+                <li>• Investigate any unusual or unexpected results immediately</li>
+                <li>• Ensure proper earthing arrangements before energising</li>
               </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Regulation Reference */}
+      <Card className="border-purple-500/30 bg-purple-500/10">
+        <CardHeader>
+          <CardTitle className="text-purple-300 flex items-center gap-2">
+            <BookOpen className="h-5 w-5" />
+            Regulatory Compliance
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <p className="text-purple-100">
+              This testing sequence complies with BS 7671:2018 Part 6 - Inspection and Testing requirements. 
+              All tests must be completed by competent persons using calibrated equipment.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Badge className="bg-purple-500/20 text-purple-400">BS 7671:2018 Part 6</Badge>
+              <Badge className="bg-purple-500/20 text-purple-400">Guidance Note 3</Badge>
+              <Badge className="bg-purple-500/20 text-purple-400">IET On-Site Guide</Badge>
+              <Badge className="bg-purple-500/20 text-purple-400">Building Regulations Part P</Badge>
             </div>
           </div>
         </CardContent>
