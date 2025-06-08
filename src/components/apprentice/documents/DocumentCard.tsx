@@ -43,7 +43,6 @@ const DocumentCard = ({ document, onPreview, onDownload }: DocumentCardProps) =>
             onClick={() => onPreview(document)}
           >
             <Eye className="h-4 w-4" />
-            Preview
           </Button>
           <Button 
             size="sm" 
@@ -51,7 +50,6 @@ const DocumentCard = ({ document, onPreview, onDownload }: DocumentCardProps) =>
             onClick={() => onDownload(document)}
           >
             <Download className="h-4 w-4" />
-            Download
           </Button>
         </div>
       </CardContent>
