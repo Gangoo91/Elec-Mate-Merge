@@ -46,7 +46,7 @@ const ToolsGuide = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-gray to-elec-dark">
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6 animate-fade-in max-w-6xl">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-6 animate-fade-in max-w-7xl">
         {/* Header */}
         <div className="space-y-4">
           <div className="flex justify-start">
@@ -66,16 +66,16 @@ const ToolsGuide = () => {
             <h1 className={`font-bold tracking-tight text-elec-yellow leading-tight ${isMobile ? 'text-2xl' : 'text-4xl'}`}>
               Apprentice Tool Guide
             </h1>
-            <p className={`text-muted-foreground leading-relaxed max-w-2xl mx-auto ${isMobile ? 'text-sm px-1' : 'text-base'}`}>
-              Essential tools, equipment and materials for UK electrical apprentices. 
-              Learn what you need, when to buy it, and where to get the best value.
+            <p className={`text-muted-foreground leading-relaxed max-w-3xl mx-auto ${isMobile ? 'text-sm px-1' : 'text-base'}`}>
+              Complete guide to essential tools, equipment and materials for UK electrical apprentices. 
+              Learn what you need, when to buy it, and where to get the best value for professional-grade equipment.
             </p>
           </div>
         </div>
 
         {/* Tool Categories Grid */}
         <div className="bg-elec-gray/30 backdrop-blur border border-elec-yellow/20 rounded-lg shadow-lg p-4 sm:p-6">
-          <h2 className="text-xl sm:text-2xl font-semibold text-elec-yellow mb-4 sm:mb-6 text-center">
+          <h2 className="text-xl sm:text-2xl font-semibold text-elec-yellow mb-6 text-center">
             Tool Categories
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
@@ -93,15 +93,11 @@ const ToolsGuide = () => {
         </div>
 
         {/* Information Sections */}
-        <div className="space-y-4 sm:space-y-6">
+        <div className="space-y-6">
           <Separator className="bg-elec-yellow/20" />
           
           <div className="bg-elec-gray/30 backdrop-blur border border-elec-yellow/20 rounded-lg shadow-lg overflow-hidden">
             <SupplierFinder />
-          </div>
-
-          <div className="bg-elec-gray/30 backdrop-blur border border-elec-yellow/20 rounded-lg shadow-lg overflow-hidden">
-            <ToolStorage />
           </div>
 
           <div className="bg-elec-gray/30 backdrop-blur border border-elec-yellow/20 rounded-lg shadow-lg overflow-hidden">
@@ -111,13 +107,17 @@ const ToolsGuide = () => {
           <div className="bg-elec-gray/30 backdrop-blur border border-elec-yellow/20 rounded-lg shadow-lg overflow-hidden">
             <BuildingCollection />
           </div>
+
+          <div className="bg-elec-gray/30 backdrop-blur border border-elec-yellow/20 rounded-lg shadow-lg overflow-hidden">
+            <ToolStorage />
+          </div>
         </div>
 
         {/* Footer Message */}
-        <div className="bg-gradient-to-r from-elec-yellow/10 to-green-500/10 border border-elec-yellow/30 rounded-lg p-4 sm:p-6 mt-6 sm:mt-8 shadow-lg">
+        <div className="bg-gradient-to-r from-elec-yellow/10 to-green-500/10 border border-elec-yellow/30 rounded-lg p-4 sm:p-6 mt-8 shadow-lg">
           <p className={`text-center text-muted-foreground leading-relaxed ${isMobile ? 'text-sm' : 'text-base'}`}>
             <strong className="text-elec-yellow">Remember:</strong> Quality tools are an investment in your career. 
-            Buy once, use for years. Always prioritise safety equipment and testing instruments first.
+            Buy once, use for years. Always prioritise safety equipment and testing instruments first, then build your collection systematically.
           </p>
         </div>
       </div>
