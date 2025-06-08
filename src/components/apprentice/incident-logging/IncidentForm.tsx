@@ -1,529 +1,352 @@
 
-import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
+import { Checkbox } from "@/components/ui/checkbox";
+import { AlertTriangle, Calendar, MapPin, User, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Save, Send, Calendar, MapPin, AlertCircle } from "lucide-react";
 
 interface IncidentFormProps {
-  incidentId?: string;
-  onBack: () => void;
-  onSave: () => void;
+  onSubmit?: (data: any) => void;
+  onCancel?: () => void;
+  initialData?: any;
 }
 
-const IncidentForm = ({ incidentId, onBack, onSave }: IncidentFormProps) => {
-  const { user } = useAuth();
+const IncidentForm = ({ onSubmit, onCancel, initialData }: IncidentFormProps) => {
   const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-
   const [formData, setFormData] = useState({
-    incident_type: '',
-    title: '',
-    description: '',
-    location: '',
-    date_occurred: '',
-    time_occurred: '',
-    severity: '',
-    immediate_actions: '',
-    witnesses: '',
-    injuries_details: '',
-    property_damage_details: '',
-    environmental_impact: '',
-    root_cause_analysis: '',
-    preventive_measures: '',
-    additional_notes: ''
+    title: initialData?.title || '',
+    incident_type: initialData?.incident_type || '',
+    date_occurred: initialData?.date_occurred ? new Date(initialData.date_occurred).toISOString().slice(0, 16) : '',
+    location: initialData?.location || '',
+    description: initialData?.description || '',
+    severity: initialData?.severity || 'medium',
+    injuries_sustained: initialData?.injuries_sustained || '',
+    equipment_involved: initialData?.equipment_involved || '',
+    witnesses: initialData?.witnesses || '',
+    supervisor_name: initialData?.supervisor_name || '',
+    supervisor_notified: initialData?.supervisor_notified || false,
+    first_aid_given: initialData?.first_aid_given || false,
+    immediate_action_taken: initialData?.immediate_action_taken || '',
+    potential_consequences: initialData?.potential_consequences || '',
+    follow_up_required: initialData?.follow_up_required || false,
+    follow_up_notes: initialData?.follow_up_notes || '',
   });
 
-  useEffect(() => {
-    if (incidentId) {
-      loadIncident();
-    }
-  }, [incidentId]);
-
-  const loadIncident = async () => {
-    if (!user || !incidentId) return;
-
-    try {
-      setIsLoading(true);
-      const { data, error } = await supabase
-        .from('incidents')
-        .select('*')
-        .eq('id', incidentId)
-        .eq('user_id', user.id)
-        .maybeSingle();
-
-      if (error) throw error;
-
-      if (data) {
-        setFormData({
-          incident_type: data.incident_type || '',
-          title: data.title || '',
-          description: data.description || '',
-          location: data.location || '',
-          date_occurred: data.date_occurred ? data.date_occurred.split('T')[0] : '',
-          time_occurred: data.date_occurred ? data.date_occurred.split('T')[1]?.substring(0, 5) || '' : '',
-          severity: data.severity || '',
-          immediate_actions: data.immediate_actions || '',
-          witnesses: data.witnesses || '',
-          injuries_details: data.injuries_details || '',
-          property_damage_details: data.property_damage_details || '',
-          environmental_impact: data.environmental_impact || '',
-          root_cause_analysis: data.root_cause_analysis || '',
-          preventive_measures: data.preventive_measures || '',
-          additional_notes: data.additional_notes || ''
-        });
-      }
-    } catch (error) {
-      console.error('Error loading incident:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load incident details",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field: string, value: any) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
   };
 
-  const validateForm = () => {
-    const requiredFields = ['incident_type', 'title', 'description', 'location', 'date_occurred', 'severity'];
-    const missingFields = requiredFields.filter(field => !formData[field as keyof typeof formData]);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     
-    if (missingFields.length > 0) {
+    if (!formData.title || !formData.incident_type || !formData.date_occurred || !formData.location || !formData.description) {
       toast({
         title: "Validation Error",
-        description: `Please fill in all required fields: ${missingFields.join(', ')}`,
-        variant: "destructive",
+        description: "Please fill in all required fields",
+        variant: "destructive"
       });
-      return false;
+      return;
     }
-    return true;
-  };
 
-  const saveDraft = async () => {
-    if (!user) return;
+    const submitData = {
+      ...formData,
+      date_occurred: new Date(formData.date_occurred).toISOString(),
+      status: initialData ? 'updated' : 'draft'
+    };
 
-    try {
-      setIsSaving(true);
-      
-      const dateTime = formData.date_occurred && formData.time_occurred 
-        ? `${formData.date_occurred}T${formData.time_occurred}:00`
-        : formData.date_occurred 
-        ? `${formData.date_occurred}T00:00:00`
-        : new Date().toISOString();
-
-      const incidentData = {
-        user_id: user.id,
-        incident_type: formData.incident_type as 'near_miss' | 'unsafe_practice' | 'faulty_equipment' | 'injury' | 'property_damage' | 'environmental' | 'security' | 'other',
-        title: formData.title,
-        description: formData.description,
-        location: formData.location,
-        date_occurred: dateTime,
-        severity: formData.severity as 'low' | 'medium' | 'high' | 'critical',
-        status: 'draft' as const,
-        immediate_actions: formData.immediate_actions,
-        witnesses: formData.witnesses,
-        injuries_details: formData.injuries_details,
-        property_damage_details: formData.property_damage_details,
-        environmental_impact: formData.environmental_impact,
-        root_cause_analysis: formData.root_cause_analysis,
-        preventive_measures: formData.preventive_measures,
-        additional_notes: formData.additional_notes
-      };
-
-      let result;
-      if (incidentId) {
-        result = await supabase
-          .from('incidents')
-          .update(incidentData)
-          .eq('id', incidentId)
-          .eq('user_id', user.id);
-      } else {
-        result = await supabase
-          .from('incidents')
-          .insert([incidentData]);
-      }
-
-      if (result.error) throw result.error;
-
-      toast({
-        title: "Draft Saved",
-        description: "Your incident report has been saved as a draft",
-      });
-
-      onSave();
-    } catch (error) {
-      console.error('Error saving draft:', error);
-      toast({
-        title: "Error",
-        description: "Failed to save incident report",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSaving(false);
+    if (onSubmit) {
+      onSubmit(submitData);
     }
+
+    toast({
+      title: "Incident Report Saved",
+      description: initialData ? "Incident report updated successfully" : "Incident report created successfully"
+    });
   };
-
-  const submitIncident = async () => {
-    if (!user || !validateForm()) return;
-
-    try {
-      setIsSaving(true);
-      
-      const dateTime = formData.date_occurred && formData.time_occurred 
-        ? `${formData.date_occurred}T${formData.time_occurred}:00`
-        : formData.date_occurred 
-        ? `${formData.date_occurred}T00:00:00`
-        : new Date().toISOString();
-
-      const incidentData = {
-        user_id: user.id,
-        incident_type: formData.incident_type as 'near_miss' | 'unsafe_practice' | 'faulty_equipment' | 'injury' | 'property_damage' | 'environmental' | 'security' | 'other',
-        title: formData.title,
-        description: formData.description,
-        location: formData.location,
-        date_occurred: dateTime,
-        severity: formData.severity as 'low' | 'medium' | 'high' | 'critical',
-        status: 'submitted' as const,
-        submitted_at: new Date().toISOString(),
-        immediate_actions: formData.immediate_actions,
-        witnesses: formData.witnesses,
-        injuries_details: formData.injuries_details,
-        property_damage_details: formData.property_damage_details,
-        environmental_impact: formData.environmental_impact,
-        root_cause_analysis: formData.root_cause_analysis,
-        preventive_measures: formData.preventive_measures,
-        additional_notes: formData.additional_notes
-      };
-
-      let result;
-      if (incidentId) {
-        result = await supabase
-          .from('incidents')
-          .update(incidentData)
-          .eq('id', incidentId)
-          .eq('user_id', user.id);
-      } else {
-        result = await supabase
-          .from('incidents')
-          .insert([incidentData]);
-      }
-
-      if (result.error) throw result.error;
-
-      toast({
-        title: "Incident Submitted",
-        description: "Your incident report has been submitted successfully",
-      });
-
-      onSave();
-    } catch (error) {
-      console.error('Error submitting incident:', error);
-      toast({
-        title: "Error",
-        description: "Failed to submit incident report",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardContent className="p-8 text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-elec-yellow mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Loading incident details...</p>
-        </CardContent>
-      </Card>
-    );
-  }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <Button variant="outline" onClick={onBack} className="border-elec-yellow/30">
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to List
-        </Button>
-        <h2 className="text-2xl font-bold">
-          {incidentId ? 'Edit Incident Report' : 'New Incident Report'}
-        </h2>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
-          {/* Basic Information */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <AlertCircle className="h-5 w-5 text-elec-yellow" />
-                Basic Information
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="incident_type">Incident Type *</Label>
-                  <Select value={formData.incident_type} onValueChange={(value) => handleInputChange('incident_type', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select incident type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="near_miss">Near Miss</SelectItem>
-                      <SelectItem value="unsafe_practice">Unsafe Practice</SelectItem>
-                      <SelectItem value="faulty_equipment">Faulty Equipment</SelectItem>
-                      <SelectItem value="injury">Injury</SelectItem>
-                      <SelectItem value="property_damage">Property Damage</SelectItem>
-                      <SelectItem value="environmental">Environmental</SelectItem>
-                      <SelectItem value="security">Security</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div>
-                  <Label htmlFor="severity">Severity *</Label>
-                  <Select value={formData.severity} onValueChange={(value) => handleInputChange('severity', value)}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select severity" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="low">Low</SelectItem>
-                      <SelectItem value="medium">Medium</SelectItem>
-                      <SelectItem value="high">High</SelectItem>
-                      <SelectItem value="critical">Critical</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div>
-                <Label htmlFor="title">Incident Title *</Label>
+    <div className="max-w-4xl mx-auto p-6 space-y-6">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-elec-yellow">
+            <AlertTriangle className="h-5 w-5" />
+            {initialData ? 'Edit Incident Report' : 'New Incident Report'}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Basic Information */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="title" className="text-elec-light">
+                  Incident Title *
+                </Label>
                 <Input
                   id="title"
                   value={formData.title}
                   onChange={(e) => handleInputChange('title', e.target.value)}
                   placeholder="Brief description of the incident"
+                  className="bg-elec-dark border-elec-yellow/30"
+                  required
                 />
               </div>
 
-              <div>
-                <Label htmlFor="description">Description *</Label>
-                <Textarea
-                  id="description"
-                  value={formData.description}
-                  onChange={(e) => handleInputChange('description', e.target.value)}
-                  placeholder="Detailed description of what happened"
-                  rows={4}
+              <div className="space-y-2">
+                <Label htmlFor="incident_type" className="text-elec-light">
+                  Incident Type *
+                </Label>
+                <Select value={formData.incident_type} onValueChange={(value) => handleInputChange('incident_type', value)}>
+                  <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
+                    <SelectValue placeholder="Select incident type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="electrical_shock">Electrical Shock</SelectItem>
+                    <SelectItem value="burns">Burns</SelectItem>
+                    <SelectItem value="falls">Falls</SelectItem>
+                    <SelectItem value="cuts">Cuts/Lacerations</SelectItem>
+                    <SelectItem value="equipment_failure">Equipment Failure</SelectItem>
+                    <SelectItem value="near_miss">Near Miss</SelectItem>
+                    <SelectItem value="property_damage">Property Damage</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="date_occurred" className="text-elec-light flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  Date & Time Occurred *
+                </Label>
+                <Input
+                  id="date_occurred"
+                  type="datetime-local"
+                  value={formData.date_occurred}
+                  onChange={(e) => handleInputChange('date_occurred', e.target.value)}
+                  className="bg-elec-dark border-elec-yellow/30"
+                  required
                 />
               </div>
-            </CardContent>
-          </Card>
 
-          {/* Location and Time */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-elec-yellow" />
-                Location & Time
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="location">Location *</Label>
+              <div className="space-y-2">
+                <Label htmlFor="location" className="text-elec-light flex items-center gap-2">
+                  <MapPin className="h-4 w-4" />
+                  Location *
+                </Label>
                 <Input
                   id="location"
                   value={formData.location}
                   onChange={(e) => handleInputChange('location', e.target.value)}
                   placeholder="Where did the incident occur?"
+                  className="bg-elec-dark border-elec-yellow/30"
+                  required
                 />
               </div>
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="date_occurred">Date Occurred *</Label>
-                  <Input
-                    id="date_occurred"
-                    type="date"
-                    value={formData.date_occurred}
-                    onChange={(e) => handleInputChange('date_occurred', e.target.value)}
-                  />
-                </div>
-                
-                <div>
-                  <Label htmlFor="time_occurred">Time Occurred</Label>
-                  <Input
-                    id="time_occurred"
-                    type="time"
-                    value={formData.time_occurred}
-                    onChange={(e) => handleInputChange('time_occurred', e.target.value)}
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            {/* Severity */}
+            <div className="space-y-2">
+              <Label htmlFor="severity" className="text-elec-light">
+                Severity Level
+              </Label>
+              <Select value={formData.severity} onValueChange={(value) => handleInputChange('severity', value)}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="low">Low</SelectItem>
+                  <SelectItem value="medium">Medium</SelectItem>
+                  <SelectItem value="high">High</SelectItem>
+                  <SelectItem value="critical">Critical</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-          {/* Additional Details */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Additional Details</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="immediate_actions">Immediate Actions Taken</Label>
+            {/* Description */}
+            <div className="space-y-2">
+              <Label htmlFor="description" className="text-elec-light flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                Incident Description *
+              </Label>
+              <Textarea
+                id="description"
+                value={formData.description}
+                onChange={(e) => handleInputChange('description', e.target.value)}
+                placeholder="Provide a detailed description of what happened..."
+                className="bg-elec-dark border-elec-yellow/30 min-h-[100px]"
+                required
+              />
+            </div>
+
+            {/* Additional Details */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="injuries_sustained" className="text-elec-light">
+                  Injuries Sustained
+                </Label>
                 <Textarea
-                  id="immediate_actions"
-                  value={formData.immediate_actions}
-                  onChange={(e) => handleInputChange('immediate_actions', e.target.value)}
-                  placeholder="What immediate actions were taken?"
-                  rows={3}
+                  id="injuries_sustained"
+                  value={formData.injuries_sustained}
+                  onChange={(e) => handleInputChange('injuries_sustained', e.target.value)}
+                  placeholder="Describe any injuries..."
+                  className="bg-elec-dark border-elec-yellow/30"
                 />
               </div>
 
-              <div>
-                <Label htmlFor="witnesses">Witnesses</Label>
+              <div className="space-y-2">
+                <Label htmlFor="equipment_involved" className="text-elec-light">
+                  Equipment Involved
+                </Label>
+                <Textarea
+                  id="equipment_involved"
+                  value={formData.equipment_involved}
+                  onChange={(e) => handleInputChange('equipment_involved', e.target.value)}
+                  placeholder="List any equipment involved..."
+                  className="bg-elec-dark border-elec-yellow/30"
+                />
+              </div>
+            </div>
+
+            {/* People Involved */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="witnesses" className="text-elec-light flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  Witnesses
+                </Label>
                 <Textarea
                   id="witnesses"
                   value={formData.witnesses}
                   onChange={(e) => handleInputChange('witnesses', e.target.value)}
-                  placeholder="Names and contact details of witnesses"
-                  rows={2}
+                  placeholder="Names and contact details of witnesses..."
+                  className="bg-elec-dark border-elec-yellow/30"
                 />
               </div>
 
-              <div>
-                <Label htmlFor="injuries_details">Injury Details (if applicable)</Label>
-                <Textarea
-                  id="injuries_details"
-                  value={formData.injuries_details}
-                  onChange={(e) => handleInputChange('injuries_details', e.target.value)}
-                  placeholder="Details of any injuries sustained"
-                  rows={3}
+              <div className="space-y-2">
+                <Label htmlFor="supervisor_name" className="text-elec-light">
+                  Supervisor Name
+                </Label>
+                <Input
+                  id="supervisor_name"
+                  value={formData.supervisor_name}
+                  onChange={(e) => handleInputChange('supervisor_name', e.target.value)}
+                  placeholder="Name of supervising person"
+                  className="bg-elec-dark border-elec-yellow/30"
                 />
               </div>
+            </div>
 
-              <div>
-                <Label htmlFor="property_damage_details">Property Damage Details (if applicable)</Label>
-                <Textarea
-                  id="property_damage_details"
-                  value={formData.property_damage_details}
-                  onChange={(e) => handleInputChange('property_damage_details', e.target.value)}
-                  placeholder="Details of any property damage"
-                  rows={3}
+            {/* Action Taken */}
+            <div className="space-y-2">
+              <Label htmlFor="immediate_action_taken" className="text-elec-light">
+                Immediate Action Taken
+              </Label>
+              <Textarea
+                id="immediate_action_taken"
+                value={formData.immediate_action_taken}
+                onChange={(e) => handleInputChange('immediate_action_taken', e.target.value)}
+                placeholder="What immediate actions were taken?"
+                className="bg-elec-dark border-elec-yellow/30"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="potential_consequences" className="text-elec-light">
+                Potential Consequences
+              </Label>
+              <Textarea
+                id="potential_consequences"
+                value={formData.potential_consequences}
+                onChange={(e) => handleInputChange('potential_consequences', e.target.value)}
+                placeholder="What could have happened?"
+                className="bg-elec-dark border-elec-yellow/30"
+              />
+            </div>
+
+            {/* Follow-up */}
+            <div className="space-y-4">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="follow_up_required"
+                  checked={formData.follow_up_required}
+                  onCheckedChange={(checked) => handleInputChange('follow_up_required', checked)}
                 />
+                <Label htmlFor="follow_up_required" className="text-elec-light">
+                  Follow-up Required
+                </Label>
               </div>
 
-              <div>
-                <Label htmlFor="environmental_impact">Environmental Impact (if applicable)</Label>
-                <Textarea
-                  id="environmental_impact"
-                  value={formData.environmental_impact}
-                  onChange={(e) => handleInputChange('environmental_impact', e.target.value)}
-                  placeholder="Any environmental impact"
-                  rows={2}
-                />
-              </div>
-            </CardContent>
-          </Card>
+              {formData.follow_up_required && (
+                <div className="space-y-2">
+                  <Label htmlFor="follow_up_notes" className="text-elec-light">
+                    Follow-up Notes
+                  </Label>
+                  <Textarea
+                    id="follow_up_notes"
+                    value={formData.follow_up_notes}
+                    onChange={(e) => handleInputChange('follow_up_notes', e.target.value)}
+                    placeholder="Describe required follow-up actions..."
+                    className="bg-elec-dark border-elec-yellow/30"
+                  />
+                </div>
+              )}
+            </div>
 
-          {/* Analysis */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Analysis & Prevention</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="root_cause_analysis">Root Cause Analysis</Label>
-                <Textarea
-                  id="root_cause_analysis"
-                  value={formData.root_cause_analysis}
-                  onChange={(e) => handleInputChange('root_cause_analysis', e.target.value)}
-                  placeholder="What was the root cause of this incident?"
-                  rows={3}
+            {/* Checkboxes */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="supervisor_notified"
+                  checked={formData.supervisor_notified}
+                  onCheckedChange={(checked) => handleInputChange('supervisor_notified', checked)}
                 />
-              </div>
-
-              <div>
-                <Label htmlFor="preventive_measures">Preventive Measures</Label>
-                <Textarea
-                  id="preventive_measures"
-                  value={formData.preventive_measures}
-                  onChange={(e) => handleInputChange('preventive_measures', e.target.value)}
-                  placeholder="What measures can be taken to prevent similar incidents?"
-                  rows={3}
-                />
+                <Label htmlFor="supervisor_notified" className="text-elec-light">
+                  Supervisor Notified
+                </Label>
               </div>
 
-              <div>
-                <Label htmlFor="additional_notes">Additional Notes</Label>
-                <Textarea
-                  id="additional_notes"
-                  value={formData.additional_notes}
-                  onChange={(e) => handleInputChange('additional_notes', e.target.value)}
-                  placeholder="Any additional information"
-                  rows={3}
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="first_aid_given"
+                  checked={formData.first_aid_given}
+                  onCheckedChange={(checked) => handleInputChange('first_aid_given', checked)}
                 />
+                <Label htmlFor="first_aid_given" className="text-elec-light">
+                  First Aid Given
+                </Label>
               </div>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
 
-        {/* Actions Sidebar */}
-        <div className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Actions</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <Button 
-                onClick={saveDraft} 
-                className="w-full bg-elec-yellow/10 hover:bg-elec-yellow hover:text-black"
-                disabled={isSaving}
+            {/* Submit Buttons */}
+            <div className="flex gap-4 pt-4">
+              <Button
+                type="submit"
+                className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
               >
-                <Save className="h-4 w-4 mr-2" />
-                Save Draft
+                {initialData ? 'Update Report' : 'Save Report'}
               </Button>
-              
-              <Button 
-                onClick={submitIncident} 
-                className="w-full bg-green-600 hover:bg-green-700"
-                disabled={isSaving}
-              >
-                <Send className="h-4 w-4 mr-2" />
-                Submit Report
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-sm">Important Notes</CardTitle>
-            </CardHeader>
-            <CardContent className="text-sm text-muted-foreground space-y-2">
-              <p>• Fields marked with * are required for submission</p>
-              <p>• Drafts can be saved and completed later</p>
-              <p>• Submitted reports cannot be edited</p>
-              <p>• Be thorough and accurate in your reporting</p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
+              {onCancel && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={onCancel}
+                  className="border-elec-yellow/30 text-elec-light hover:bg-elec-yellow/10"
+                >
+                  Cancel
+                </Button>
+              )}
+            </div>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 };
