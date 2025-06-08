@@ -3,7 +3,7 @@ import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlertTriangle, Brain, Users, Target, CheckCircle, Heart, Phone, MessageCircle, BookOpen, Timer } from "lucide-react";
+import { AlertTriangle, Brain, Users, Target, CheckCircle, Heart, Phone, MessageCircle, BookOpen } from "lucide-react";
 import MistakeCategoriesTab from "@/components/apprentice/learning-mistakes/MistakeCategoriesTab";
 import RecoveryStrategiesTab from "@/components/apprentice/learning-mistakes/RecoveryStrategiesTab";
 import ResilienceTab from "@/components/apprentice/learning-mistakes/ResilienceTab";
@@ -22,13 +22,12 @@ const LearningFromMistakes = () => {
       onClick: () => window.open('tel:116123', '_blank') // Samaritans
     },
     {
-      title: "Recovery Timer",
-      description: "Use structured approach to handle a mistake",
-      action: "Start Recovery",
-      icon: Timer,
+      title: "Recovery Strategies",
+      description: "Learn structured approaches to handle mistakes",
+      action: "View Strategies",
+      icon: Target,
       color: "bg-blue-500/20 border-blue-500/50 hover:bg-blue-500/30",
       onClick: () => {
-        // This would navigate to the recovery strategies tab
         const recoveryTab = document.querySelector('[value="recovery"]') as HTMLElement;
         recoveryTab?.click();
       }
