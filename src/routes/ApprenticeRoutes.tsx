@@ -1,4 +1,3 @@
-
 import { Route, Routes } from "react-router-dom";
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
@@ -45,6 +44,7 @@ import Year1 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year1"
 import Year2 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year2";
 import Year3 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year3";
 import Year4 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year4";
+import TimeManagement from "@/pages/apprentice/toolbox/TimeManagement";
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -77,6 +77,7 @@ const ApprenticeRoutes = () => (
     <Route path="toolbox/study-tips" element={<StudyTips />} />
     <Route path="toolbox/learning-from-mistakes" element={<LearningFromMistakes />} />
     <Route path="toolbox/safety-fundamentals" element={<SafetyFundamentals />} />
+    <Route path="toolbox/time-management" element={<TimeManagement />} />
     <Route path="professional-development" element={<ProfessionalDevelopment />} />
     <Route path="professional-development/career-pathways" element={<CareerPathways />} />
     <Route path="professional-development/certifications" element={<Certifications />} />
