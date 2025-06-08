@@ -41,6 +41,10 @@ import HandTools from "@/pages/apprentice/toolbox/tools-guide/HandTools";
 import PowerTools from "@/pages/apprentice/toolbox/tools-guide/PowerTools";
 import TestEquipment from "@/pages/apprentice/toolbox/tools-guide/TestEquipment";
 import PPESafety from "@/pages/apprentice/toolbox/tools-guide/PPESafety";
+import Year1 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year1";
+import Year2 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year2";
+import Year3 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year3";
+import Year4 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year4";
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -62,6 +66,10 @@ const ApprenticeRoutes = () => (
     <Route path="toolbox/electrical-installation-guides/industrial" element={<IndustrialInstallations />} />
     <Route path="toolbox/electrical-installation-guides/outdoor" element={<OutdoorInstallations />} />
     <Route path="toolbox/apprenticeship-expectations" element={<ApprenticeshipExpectations />} />
+    <Route path="toolbox/apprenticeship-expectations/year-1" element={<Year1 />} />
+    <Route path="toolbox/apprenticeship-expectations/year-2" element={<Year2 />} />
+    <Route path="toolbox/apprenticeship-expectations/year-3" element={<Year3 />} />
+    <Route path="toolbox/apprenticeship-expectations/year-4" element={<Year4 />} />
     <Route path="toolbox/off-job-training-guide" element={<OffJobTrainingGuide />} />
     <Route path="toolbox/site-jargon" element={<SiteJargon />} />
     <Route path="toolbox/portfolio-building" element={<PortfolioBuilding />} />
