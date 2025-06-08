@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Book, Clock, AlertTriangle, Lightbulb, CheckCircle, ArrowRight } from "lucide-react";
 import InteractiveTestingGuide from "./InteractiveTestingGuide";
-import { comprehensiveTestingGuides, EnhancedTestGuide } from "@/data/bs7671-testing/comprehensiveTestingGuides";
+import { allBS7671Tests, BS7671Test } from "@/data/bs7671-testing/allBS7671Tests";
 
 const ComprehensiveTestingGuidesTab = () => {
-  const [selectedGuide, setSelectedGuide] = useState<EnhancedTestGuide | null>(null);
+  const [selectedGuide, setSelectedGuide] = useState<BS7671Test | null>(null);
 
-  const handleGuideSelect = (guide: EnhancedTestGuide) => {
+  const handleGuideSelect = (guide: BS7671Test) => {
     setSelectedGuide(guide);
   };
 
@@ -60,7 +60,7 @@ const ComprehensiveTestingGuidesTab = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
-              <div className="text-2xl font-bold text-green-400">{comprehensiveTestingGuides.length}</div>
+              <div className="text-2xl font-bold text-green-400">{allBS7671Tests.length}</div>
               <div className="text-sm text-muted-foreground">Available Guides</div>
             </div>
             <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
@@ -76,7 +76,7 @@ const ComprehensiveTestingGuidesTab = () => {
       </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {comprehensiveTestingGuides.map((guide) => (
+        {allBS7671Tests.map((guide) => (
           <Card key={guide.id} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-colors">
             <CardHeader>
               <div className="flex items-start justify-between">
@@ -88,7 +88,7 @@ const ComprehensiveTestingGuidesTab = () => {
                     </Badge>
                     <Badge className="bg-blue-500/20 text-blue-400">
                       <Clock className="h-3 w-3 mr-1" />
-                      {guide.duration}
+                      {guide.estimatedTime}
                     </Badge>
                   </div>
                 </div>
@@ -103,7 +103,7 @@ const ComprehensiveTestingGuidesTab = () => {
                   <p className="text-sm text-muted-foreground">{guide.purpose}</p>
                 </div>
 
-                {guide.testLimits.length > 0 && (
+                {guide.testLimits && guide.testLimits.length > 0 && (
                   <div className="bg-green-500/10 rounded-lg p-3 border border-green-500/20">
                     <h4 className="font-medium text-green-300 mb-2">Test Limits</h4>
                     <div className="space-y-1">
