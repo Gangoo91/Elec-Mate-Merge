@@ -1,244 +1,284 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Wrench, Smartphone, Calendar, Brain } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Wrench, Smartphone, Laptop, Clock, Target, BookOpen } from "lucide-react";
+import { useState } from "react";
 
 const ProductivityToolsTab = () => {
-  const digitalTools = [
+  const [selectedCategory, setSelectedCategory] = useState<string>("apps");
+
+  const toolCategories = [
+    { id: "apps", label: "Mobile Apps", icon: Smartphone },
+    { id: "techniques", label: "Techniques", icon: Target },
+    { id: "physical", label: "Physical Tools", icon: Wrench },
+    { id: "study", label: "Study Tools", icon: BookOpen }
+  ];
+
+  const mobileApps = [
     {
-      category: "Time Management Apps",
-      icon: Calendar,
-      color: "border-blue-500/20 bg-blue-500/10",
-      tools: [
-        {
-          name: "Google Calendar",
-          purpose: "Schedule management and reminders",
-          features: ["Multiple calendars", "Mobile sync", "Reminder notifications"],
-          cost: "Free",
-          electricianTip: "Create separate calendars for work shifts, study time, and personal life"
-        },
-        {
-          name: "Toggl Track",
-          purpose: "Time tracking and analysis",
-          features: ["Project tracking", "Detailed reports", "Mobile app"],
-          cost: "Free tier available",
-          electricianTip: "Track time spent on different study topics to identify focus areas"
-        },
-        {
-          name: "Any.do",
-          purpose: "Task management and to-do lists",
-          features: ["Voice input", "Location reminders", "Calendar integration"],
-          cost: "Free with premium options",
-          electricianTip: "Use voice input for quick task capture whilst on site"
-        }
-      ]
+      name: "Forest",
+      category: "Focus & Time Management",
+      description: "Plant virtual trees while staying focused. Perfect for study sessions.",
+      features: ["Pomodoro timer", "Focus tracking", "Study statistics", "Gamification"],
+      cost: "Free with premium features",
+      bestFor: "Staying off your phone during study time"
     },
     {
-      category: "Study & Learning Tools",
-      icon: Brain,
-      color: "border-green-500/20 bg-green-500/10",
-      tools: [
-        {
-          name: "Anki",
-          purpose: "Spaced repetition flashcards",
-          features: ["Smart scheduling", "Image support", "Progress tracking"],
-          cost: "Free (iOS app paid)",
-          electricianTip: "Create flashcards for BS 7671 regulations and circuit calculations"
-        },
-        {
-          name: "Forest",
-          purpose: "Focus and concentration",
-          features: ["Pomodoro timer", "Focus tracking", "Achievement system"],
-          cost: "Small one-time fee",
-          electricianTip: "Use during study sessions to avoid phone distractions"
-        },
-        {
-          name: "Notion",
-          purpose: "All-in-one workspace",
-          features: ["Note-taking", "Project planning", "Knowledge base"],
-          cost: "Free for personal use",
-          electricianTip: "Build your electrical knowledge base with diagrams and notes"
-        }
-      ]
+      name: "Notion",
+      category: "All-in-One Workspace",
+      description: "Create study notes, track progress, and manage apprenticeship tasks.",
+      features: ["Note-taking", "Task management", "Progress tracking", "Templates"],
+      cost: "Free for personal use",
+      bestFor: "Organising all apprenticeship materials in one place"
     },
     {
-      category: "Communication & Coordination",
-      icon: Smartphone,
-      color: "border-purple-500/20 bg-purple-500/10",
-      tools: [
-        {
-          name: "WhatsApp",
-          purpose: "Quick communication with supervisors and colleagues",
-          features: ["Voice messages", "Document sharing", "Group chats"],
-          cost: "Free",
-          electricianTip: "Create groups for different projects to keep communication organised"
-        },
-        {
-          name: "Microsoft Teams",
-          purpose: "Professional communication and file sharing",
-          features: ["Video calls", "Document collaboration", "Calendar integration"],
-          cost: "Free tier available",
-          electricianTip: "Use for formal communication with training providers"
-        },
-        {
-          name: "Slack",
-          purpose: "Team communication and project coordination",
-          features: ["Channels", "File sharing", "Integration with other tools"],
-          cost: "Free for small teams",
-          electricianTip: "Join electrical communities and apprentice support groups"
-        }
-      ]
+      name: "Google Calendar",
+      category: "Scheduling",
+      description: "Essential for managing work shifts, college, and study time.",
+      features: ["Multi-calendar view", "Reminders", "Integration", "Sharing"],
+      cost: "Free",
+      bestFor: "Coordinating work and study schedules"
+    },
+    {
+      name: "Todoist",
+      category: "Task Management",
+      description: "Powerful task management with natural language processing.",
+      features: ["Natural language input", "Project organisation", "Due dates", "Labels"],
+      cost: "Free with premium features",
+      bestFor: "Managing daily tasks and college assignments"
+    },
+    {
+      name: "Anki",
+      category: "Learning",
+      description: "Spaced repetition flashcards for electrical theory and regulations.",
+      features: ["Spaced repetition", "Custom decks", "Multimedia cards", "Sync"],
+      cost: "Free (iOS paid)",
+      bestFor: "Memorising electrical codes and formulas"
+    },
+    {
+      name: "RescueTime",
+      category: "Time Tracking",
+      description: "Automatic time tracking to understand how you spend your time.",
+      features: ["Automatic tracking", "Detailed reports", "Goal setting", "Website blocking"],
+      cost: "Free with premium features",
+      bestFor: "Understanding and improving time usage patterns"
     }
   ];
 
-  const analogueTools = [
+  const productivityTechniques = [
     {
-      tool: "Physical Planner/Diary",
-      benefits: [
-        "No battery required",
-        "Quick visual overview",
-        "Satisfying to physically tick off tasks",
-        "No digital distractions"
+      name: "Pomodoro Technique",
+      description: "25-minute focused work sessions with 5-minute breaks",
+      implementation: [
+        "Choose a task to work on",
+        "Set timer for 25 minutes",
+        "Work until timer rings",
+        "Take a 5-minute break",
+        "After 4 cycles, take a 15-30 minute break"
       ],
-      bestFor: "Weekly planning and daily task lists",
-      tip: "Use colour coding: blue for work, green for study, red for urgent"
+      bestFor: "Study sessions and coursework",
+      tips: ["Use physical timer to avoid phone distractions", "Adjust timing if 25 minutes feels too long/short"]
     },
     {
-      tool: "Wall Calendar",
-      benefits: [
-        "Visible to family/housemates",
-        "Shows monthly overview",
-        "Easy to mark important dates",
-        "Physical presence creates accountability"
+      name: "Time Blocking",
+      description: "Allocate specific time slots for different activities",
+      implementation: [
+        "List all your regular activities (work, study, meals, etc.)",
+        "Estimate time needed for each",
+        "Block out fixed commitments first (work, college)",
+        "Schedule study time in your most productive hours",
+        "Include buffer time for unexpected delays"
       ],
-      bestFor: "Long-term planning and family coordination",
-      tip: "Mark college days, work shifts, and important deadlines in different colours"
+      bestFor: "Weekly and daily planning",
+      tips: ["Colour-code different types of activities", "Review and adjust blocks weekly"]
     },
     {
-      tool: "Notebook for Ideas",
-      benefits: [
-        "Quick capture anywhere",
-        "Sketches and diagrams",
-        "No tech learning curve",
-        "Personal and private"
+      name: "Getting Things Done (GTD)",
+      description: "Capture, clarify, organise, reflect, and engage with your tasks",
+      implementation: [
+        "Capture: Write down all tasks and ideas",
+        "Clarify: Is it actionable? What's the next action?",
+        "Organise: Put tasks in appropriate lists/contexts",
+        "Reflect: Review your system regularly",
+        "Engage: Choose actions based on context and energy"
       ],
-      bestFor: "On-site learning notes and technical sketches",
-      tip: "Keep a small notebook in your tool bag for quick electrical diagrams and notes"
-    },
-    {
-      tool: "Sticky Note System",
-      benefits: [
-        "Visual reminders",
-        "Moveable and flexible",
-        "Colour coding possible",
-        "Satisfying to remove when done"
-      ],
-      bestFor: "Immediate reminders and priority tasks",
-      tip: "Use on your bedroom mirror or laptop for daily priorities"
+      bestFor: "Managing multiple responsibilities",
+      tips: ["Use a 'capture' notebook for quick task notes", "Weekly reviews are essential"]
     }
   ];
 
-  const productivityHacks = [
+  const physicalTools = [
     {
-      hack: "The Two-Minute Rule",
-      description: "If it takes less than 2 minutes, do it immediately",
-      example: "Reply to text messages, file documents, update your logbook entry"
+      name: "Physical Planner",
+      description: "Hands-on planning away from digital distractions",
+      benefits: ["No digital distractions", "Better memory retention", "Tactile satisfaction"],
+      features: ["Weekly/monthly views", "Goal tracking", "Habit tracking"],
+      cost: "£10-30"
     },
     {
-      hack: "Batch Similar Tasks",
-      description: "Group similar activities together to reduce mental switching",
-      example: "Do all your electrical calculations in one session, reply to all messages at once"
+      name: "Whiteboard/Cork Board",
+      description: "Visual task management and study aid",
+      benefits: ["Visual organisation", "Easy to update", "Space for diagrams"],
+      features: ["Magnetic surface", "Different coloured pens", "Removable sections"],
+      cost: "£15-50"
     },
     {
-      hack: "Time Blocking",
-      description: "Assign specific time blocks to different types of work",
-      example: "7-8am: Study theory, 8am-5pm: Work, 6-7pm: Portfolio updates"
+      name: "Study Timer",
+      description: "Dedicated timer for focused work sessions",
+      benefits: ["No phone distractions", "Visual time remaining", "Multiple timing options"],
+      features: ["Silent vibration", "Multiple presets", "Portable"],
+      cost: "£10-25"
     },
     {
-      hack: "The 80/20 Rule (Pareto Principle)",
-      description: "Focus on the 20% of tasks that give 80% of results",
-      example: "Master key electrical principles that appear in most situations"
+      name: "Filing System",
+      description: "Organised storage for apprenticeship documents",
+      benefits: ["Easy document retrieval", "Professional organisation", "Backup for digital files"],
+      features: ["Labelled sections", "Portable folders", "Waterproof options"],
+      cost: "£20-40"
     }
   ];
 
-  return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Wrench className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Digital Productivity Tools</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-8">
-            {digitalTools.map((category, categoryIndex) => {
-              const IconComponent = category.icon;
-              
-              return (
-                <div key={categoryIndex} className={`border rounded-lg p-6 ${category.color}`}>
-                  <div className="flex items-center gap-3 mb-6">
-                    <IconComponent className="h-6 w-6 text-white" />
-                    <h3 className="text-xl font-semibold text-white">{category.category}</h3>
+  const studyTools = [
+    {
+      name: "Mind Mapping Software",
+      description: "Visual learning and concept connection",
+      examples: ["XMind", "MindMeister", "SimpleMind"],
+      benefits: ["Visual learning", "Concept connection", "Memory aid"],
+      cost: "Free to £10/month"
+    },
+    {
+      name: "Note-Taking Apps",
+      description: "Digital note organisation with search and sync",
+      examples: ["Obsidian", "OneNote", "Evernote"],
+      benefits: ["Searchable notes", "Cross-device sync", "Rich formatting"],
+      cost: "Free to £15/month"
+    },
+    {
+      name: "Video Speed Controllers",
+      description: "Watch training videos at optimal speed",
+      examples: ["Video Speed Controller (Chrome)", "VLC Player"],
+      benefits: ["Faster consumption", "Better retention", "Time saving"],
+      cost: "Free"
+    },
+    {
+      name: "PDF Annotation Tools",
+      description: "Mark up regulations and technical documents",
+      examples: ["Adobe Acrobat", "PDF Expert", "Xodo"],
+      benefits: ["Active reading", "Easy review", "Searchable annotations"],
+      cost: "Free to £20/month"
+    }
+  ];
+
+  const renderContent = () => {
+    switch (selectedCategory) {
+      case "apps":
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {mobileApps.map((app, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <h4 className="font-semibold text-white">{app.name}</h4>
+                    <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow mt-1">
+                      {app.category}
+                    </Badge>
                   </div>
-                  
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    {category.tools.map((tool, toolIndex) => (
-                      <div key={toolIndex} className="bg-black/20 rounded-lg p-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <h4 className="font-semibold text-white">{tool.name}</h4>
-                          <Badge className="bg-green-500/20 text-green-400 border-green-500/40 text-xs">
-                            {tool.cost}
-                          </Badge>
-                        </div>
-                        
-                        <p className="text-sm text-muted-foreground mb-3">{tool.purpose}</p>
-                        
-                        <div className="space-y-2">
-                          <div>
-                            <p className="text-xs font-medium text-white">Features:</p>
-                            <ul className="text-xs text-muted-foreground">
-                              {tool.features.map((feature, featureIndex) => (
-                                <li key={featureIndex} className="flex items-center gap-1">
-                                  <div className="w-1 h-1 bg-elec-yellow rounded-full"></div>
-                                  {feature}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          
-                          <div className="mt-3 p-2 bg-elec-yellow/10 rounded border border-elec-yellow/20">
-                            <p className="text-xs font-medium text-elec-yellow">💡 Electrician Tip:</p>
-                            <p className="text-xs text-muted-foreground">{tool.electricianTip}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                  <Badge variant="outline" className="text-xs border-green-400/30 text-green-400">
+                    {app.cost}
+                  </Badge>
                 </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Analogue Tools & Methods</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {analogueTools.map((item, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-3">{item.tool}</h4>
+                
+                <p className="text-sm text-muted-foreground mb-3">{app.description}</p>
                 
                 <div className="space-y-3">
                   <div>
-                    <p className="text-sm font-medium text-white mb-1">Benefits:</p>
+                    <h5 className="font-medium text-white text-sm mb-2">Key Features:</h5>
+                    <div className="flex flex-wrap gap-2">
+                      {app.features.map((feature, featureIndex) => (
+                        <Badge key={featureIndex} variant="outline" className="text-xs border-blue-400/30 text-blue-400">
+                          {feature}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h5 className="font-medium text-white text-sm mb-1">Best For:</h5>
+                    <p className="text-xs text-muted-foreground">{app.bestFor}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+
+      case "techniques":
+        return (
+          <div className="space-y-6">
+            {productivityTechniques.map((technique, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
+                <h4 className="font-semibold text-white mb-3">{technique.name}</h4>
+                <p className="text-sm text-muted-foreground mb-4">{technique.description}</p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h5 className="font-medium text-white mb-2">Implementation Steps:</h5>
+                    <ol className="space-y-1">
+                      {technique.implementation.map((step, stepIndex) => (
+                        <li key={stepIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <span className="text-elec-yellow font-medium">{stepIndex + 1}.</span>
+                          {step}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                  
+                  <div>
+                    <div className="mb-3">
+                      <h5 className="font-medium text-white mb-1">Best For:</h5>
+                      <p className="text-sm text-muted-foreground">{technique.bestFor}</p>
+                    </div>
+                    
+                    <div>
+                      <h5 className="font-medium text-white mb-2">Pro Tips:</h5>
+                      <ul className="space-y-1">
+                        {technique.tips.map((tip, tipIndex) => (
+                          <li key={tipIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                            <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                            {tip}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+
+      case "physical":
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {physicalTools.map((tool, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
+                <div className="flex items-start justify-between mb-3">
+                  <h4 className="font-semibold text-white">{tool.name}</h4>
+                  <Badge variant="outline" className="text-xs border-green-400/30 text-green-400">
+                    {tool.cost}
+                  </Badge>
+                </div>
+                
+                <p className="text-sm text-muted-foreground mb-4">{tool.description}</p>
+                
+                <div className="space-y-3">
+                  <div>
+                    <h5 className="font-medium text-white text-sm mb-2">Benefits:</h5>
                     <ul className="space-y-1">
-                      {item.benefits.map((benefit, benefitIndex) => (
+                      {tool.benefits.map((benefit, benefitIndex) => (
                         <li key={benefitIndex} className="text-sm text-muted-foreground flex items-start gap-2">
-                          <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                          <div className="w-1 h-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
                           {benefit}
                         </li>
                       ))}
@@ -246,37 +286,132 @@ const ProductivityToolsTab = () => {
                   </div>
                   
                   <div>
-                    <p className="text-sm font-medium text-white">Best for: <span className="font-normal text-muted-foreground">{item.bestFor}</span></p>
-                  </div>
-                  
-                  <div className="p-2 bg-elec-yellow/10 rounded border border-elec-yellow/20">
-                    <p className="text-xs font-medium text-elec-yellow">💡 Pro Tip:</p>
-                    <p className="text-xs text-muted-foreground">{item.tip}</p>
+                    <h5 className="font-medium text-white text-sm mb-2">Key Features:</h5>
+                    <div className="flex flex-wrap gap-2">
+                      {tool.features.map((feature, featureIndex) => (
+                        <Badge key={featureIndex} variant="outline" className="text-xs border-blue-400/30 text-blue-400">
+                          {feature}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
+        );
+
+      case "study":
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {studyTools.map((tool, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
+                <div className="flex items-start justify-between mb-3">
+                  <h4 className="font-semibold text-white">{tool.name}</h4>
+                  <Badge variant="outline" className="text-xs border-green-400/30 text-green-400">
+                    {tool.cost}
+                  </Badge>
+                </div>
+                
+                <p className="text-sm text-muted-foreground mb-4">{tool.description}</p>
+                
+                <div className="space-y-3">
+                  <div>
+                    <h5 className="font-medium text-white text-sm mb-2">Examples:</h5>
+                    <div className="flex flex-wrap gap-2">
+                      {tool.examples.map((example, exampleIndex) => (
+                        <Badge key={exampleIndex} variant="outline" className="text-xs border-blue-400/30 text-blue-400">
+                          {example}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <h5 className="font-medium text-white text-sm mb-2">Benefits:</h5>
+                    <ul className="space-y-1">
+                      {tool.benefits.map((benefit, benefitIndex) => (
+                        <li key={benefitIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                          <div className="w-1 h-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
+                          {benefit}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Wrench className="h-6 w-6 text-elec-yellow" />
+            <CardTitle className="text-elec-yellow">Productivity Tools & Resources</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {toolCategories.map((category) => {
+              const IconComponent = category.icon;
+              return (
+                <Button
+                  key={category.id}
+                  variant={selectedCategory === category.id ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`${
+                    selectedCategory === category.id 
+                      ? "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90" 
+                      : "border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+                  }`}
+                >
+                  <IconComponent className="h-4 w-4 mr-2" />
+                  {category.label}
+                </Button>
+              );
+            })}
+          </div>
+
+          {renderContent()}
         </CardContent>
       </Card>
 
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-elec-yellow">Productivity Hacks for Apprentices</CardTitle>
+          <CardTitle className="text-elec-yellow">Tool Selection Guidelines</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {productivityHacks.map((hack, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-2">{hack.hack}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{hack.description}</p>
-                
-                <div className="p-3 bg-blue-500/10 rounded border border-blue-500/20">
-                  <p className="text-xs font-medium text-blue-400">🔧 Electrical Example:</p>
-                  <p className="text-xs text-muted-foreground">{hack.example}</p>
-                </div>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="border border-elec-yellow/20 rounded-lg p-4">
+              <h4 className="font-semibold text-white mb-3">🎯 Choosing the Right Tools</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>• Start with free tools before investing in premium</li>
+                <li>• Pick tools that integrate well together</li>
+                <li>• Consider your learning style (visual, auditory, kinesthetic)</li>
+                <li>• Test tools for 1-2 weeks before committing</li>
+                <li>• Don't use too many tools - focus on 3-5 core ones</li>
+              </ul>
+            </div>
+            
+            <div className="border border-elec-yellow/20 rounded-lg p-4">
+              <h4 className="font-semibold text-white mb-3">⚡ Electrical Apprentice Priorities</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>• Calendar app (essential for work/study coordination)</li>
+                <li>• Note-taking app (regulations and theory notes)</li>
+                <li>• Timer/focus app (structured study sessions)</li>
+                <li>• Flashcard app (electrical codes and formulas)</li>
+                <li>• Task manager (assignments and deadlines)</li>
+              </ul>
+            </div>
           </div>
         </CardContent>
       </Card>

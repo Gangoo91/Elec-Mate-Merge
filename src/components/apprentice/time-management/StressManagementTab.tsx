@@ -1,175 +1,195 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Brain, Activity, Shield } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Heart, Brain, Zap, Shield, AlertTriangle, Target, Users } from "lucide-react";
 import { useState } from "react";
 
 const StressManagementTab = () => {
-  const [breathingActive, setBreathingActive] = useState(false);
-  const [breathingPhase, setBreathingPhase] = useState<'inhale' | 'hold' | 'exhale'>('inhale');
-  const [breathingCount, setBreathingCount] = useState(0);
+  const [activeStressor, setActiveStressor] = useState<string | null>(null);
+  const [activeTechnique, setActiveTechnique] = useState<string | null>(null);
 
-  const stressManagementTechniques = [
+  const apprenticeStressors = [
     {
-      title: "4-7-8 Breathing Technique",
-      description: "A simple breathing pattern to reduce anxiety and promote calm",
-      icon: Activity,
+      id: "performance",
+      title: "Performance Pressure",
+      description: "Feeling overwhelmed by expectations",
+      icon: Target,
+      triggers: [
+        "Making mistakes in front of experienced electricians",
+        "Not understanding technical concepts quickly enough",
+        "Pressure to prove yourself on site",
+        "Comparing yourself to other apprentices"
+      ],
+      solutions: [
+        "Remember everyone started as a beginner",
+        "Focus on your own progress, not others'",
+        "Ask questions - it shows engagement, not weakness",
+        "Keep a progress journal to see how far you've come"
+      ]
+    },
+    {
+      id: "workload",
+      title: "Overwhelming Workload",
+      description: "Balancing work, study, and personal life",
+      icon: AlertTriangle,
+      triggers: [
+        "Multiple college assignments due simultaneously",
+        "Long working hours followed by study requirements",
+        "Feeling behind on coursework",
+        "Physical exhaustion affecting concentration"
+      ],
+      solutions: [
+        "Break large tasks into smaller, manageable chunks",
+        "Use the Pomodoro Technique for focused study",
+        "Communicate with tutors about workload concerns",
+        "Prioritise tasks using the Eisenhower Matrix"
+      ]
+    },
+    {
+      id: "social",
+      title: "Social and Workplace Stress",
+      description: "Fitting in and building relationships",
+      icon: Users,
+      triggers: [
+        "Feeling like an outsider on established teams",
+        "Workplace banter or culture shock",
+        "Difficulty communicating with supervisors",
+        "Isolation from peers due to different sites"
+      ],
+      solutions: [
+        "Join apprentice groups and forums",
+        "Practice assertive communication techniques",
+        "Find a workplace mentor or buddy",
+        "Remember workplace relationships take time to develop"
+      ]
+    }
+  ];
+
+  const stressTechniques = [
+    {
+      id: "breathing",
+      title: "Box Breathing",
+      duration: "2-5 minutes",
+      situation: "Before difficult conversations or exams",
+      icon: Brain,
       color: "border-blue-500/20 bg-blue-500/10",
       steps: [
-        "Exhale completely through your mouth",
-        "Inhale through nose for 4 counts",
-        "Hold breath for 7 counts",
-        "Exhale through mouth for 8 counts",
-        "Repeat 3-4 times"
+        "Inhale for 4 counts",
+        "Hold for 4 counts", 
+        "Exhale for 4 counts",
+        "Hold empty for 4 counts",
+        "Repeat 4-8 cycles"
       ],
-      whenToUse: "Before exams, during work stress, before sleep"
+      benefits: ["Reduces anxiety", "Improves focus", "Can be done anywhere"]
     },
     {
-      title: "Progressive Muscle Relaxation",
-      description: "Systematically tense and relax muscle groups",
-      icon: Brain,
+      id: "grounding",
+      title: "5-4-3-2-1 Grounding",
+      duration: "3-5 minutes",
+      situation: "When feeling overwhelmed or panicked",
+      icon: Shield,
       color: "border-green-500/20 bg-green-500/10",
       steps: [
-        "Start with your toes, tense for 5 seconds",
-        "Release and notice the relaxation",
-        "Move up to calves, thighs, abdomen",
-        "Continue through arms, shoulders, face",
-        "End with whole-body tension and release"
-      ],
-      whenToUse: "After long work days, before important meetings"
-    },
-    {
-      title: "Grounding Technique (5-4-3-2-1)",
-      description: "Use your senses to stay present and reduce overwhelm",
-      icon: Shield,
-      color: "border-purple-500/20 bg-purple-500/10",
-      steps: [
-        "5 things you can see around you",
+        "5 things you can see",
         "4 things you can touch",
         "3 things you can hear",
         "2 things you can smell",
         "1 thing you can taste"
       ],
-      whenToUse: "During panic attacks, overwhelming situations"
+      benefits: ["Brings you to present moment", "Reduces overwhelm", "Works during panic attacks"]
+    },
+    {
+      id: "progressive",
+      title: "Progressive Muscle Relaxation",
+      duration: "10-15 minutes",
+      situation: "Before sleep or during breaks",
+      icon: Heart,
+      color: "border-purple-500/20 bg-purple-500/10",
+      steps: [
+        "Tense feet for 5 seconds, then relax",
+        "Move up to calves, thighs, abdomen",
+        "Continue with hands, arms, shoulders",
+        "Finish with face and head",
+        "Notice the difference between tension and relaxation"
+      ],
+      benefits: ["Improves sleep quality", "Reduces physical tension", "Increases body awareness"]
     }
   ];
 
-  const wellbeingTips = [
-    {
-      category: "Physical Wellbeing",
-      tips: [
-        "Maintain regular sleep schedule (7-9 hours)",
-        "Stay hydrated throughout the day",
-        "Take short walks during breaks",
-        "Stretch regularly to prevent muscle tension",
-        "Eat balanced meals to maintain energy"
-      ]
-    },
-    {
-      category: "Mental Wellbeing",
-      tips: [
-        "Practice mindfulness for 5-10 minutes daily",
-        "Keep a gratitude journal",
-        "Set realistic daily goals",
-        "Celebrate small achievements",
-        "Learn to say 'no' to non-essential commitments"
-      ]
-    },
-    {
-      category: "Social Wellbeing",
-      tips: [
-        "Maintain connections with friends and family",
-        "Join apprentice support groups",
-        "Communicate openly with your mentor",
-        "Seek help when needed - it's a sign of strength",
-        "Balance social time with alone time"
-      ]
-    }
+  const quickStressReliefs = [
+    { technique: "Deep breath and count to 10", time: "30 seconds", situation: "Immediate frustration" },
+    { technique: "Step outside for fresh air", time: "2 minutes", situation: "Feeling trapped" },
+    { technique: "Listen to calming music", time: "3-5 minutes", situation: "Break time" },
+    { technique: "Text a supportive friend", time: "1 minute", situation: "Feeling isolated" },
+    { technique: "Do desk stretches", time: "2 minutes", situation: "Physical tension" },
+    { technique: "Drink cold water slowly", time: "1 minute", situation: "Feeling overwhelmed" }
   ];
-
-  const warningSignsAndSolutions = [
-    {
-      warning: "Constant fatigue despite adequate sleep",
-      solution: "Review workload and study schedule, consider reducing non-essential activities",
-      urgency: "medium"
-    },
-    {
-      warning: "Difficulty concentrating on simple tasks",
-      solution: "Take regular breaks, practice mindfulness, check for underlying health issues",
-      urgency: "medium"
-    },
-    {
-      warning: "Increased irritability with colleagues or family",
-      solution: "Practice stress management techniques, communicate your needs, consider counselling",
-      urgency: "high"
-    },
-    {
-      warning: "Loss of motivation or enjoyment in work/study",
-      solution: "Speak with mentor or college support services, review career goals",
-      urgency: "high"
-    },
-    {
-      warning: "Physical symptoms: headaches, muscle tension, stomach issues",
-      solution: "Consult healthcare provider, review stress levels, implement relaxation techniques",
-      urgency: "high"
-    }
-  ];
-
-  const startBreathingExercise = () => {
-    setBreathingActive(true);
-    setBreathingPhase('inhale');
-    setBreathingCount(0);
-    
-    // Simple breathing timer simulation
-    setTimeout(() => {
-      setBreathingActive(false);
-    }, 60000); // 1 minute exercise
-  };
 
   return (
     <div className="space-y-6">
       <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Heart className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Stress Management Techniques</CardTitle>
+            <AlertTriangle className="h-6 w-6 text-elec-yellow" />
+            <CardTitle className="text-elec-yellow">Common Apprentice Stressors</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {stressManagementTechniques.map((technique, index) => {
-              const IconComponent = technique.icon;
+          <div className="space-y-4">
+            {apprenticeStressors.map((stressor) => {
+              const IconComponent = stressor.icon;
+              const isActive = activeStressor === stressor.id;
               
               return (
-                <div key={index} className={`border rounded-lg p-6 ${technique.color}`}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <IconComponent className="h-6 w-6 text-white" />
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">{technique.title}</h3>
-                      <p className="text-sm text-muted-foreground">{technique.description}</p>
+                <div key={stressor.id} className="border border-elec-yellow/20 rounded-lg">
+                  <div 
+                    className="p-4 cursor-pointer hover:bg-elec-yellow/5 transition-colors"
+                    onClick={() => setActiveStressor(isActive ? null : stressor.id)}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <IconComponent className="h-5 w-5 text-elec-yellow" />
+                        <div>
+                          <h4 className="font-semibold text-white">{stressor.title}</h4>
+                          <p className="text-sm text-muted-foreground">{stressor.description}</p>
+                        </div>
+                      </div>
+                      <Button variant="ghost" size="sm">
+                        {isActive ? 'Hide' : 'Show'} Details
+                      </Button>
                     </div>
                   </div>
                   
-                  <div className="space-y-3">
-                    <div>
-                      <h4 className="font-medium text-white mb-2">Steps:</h4>
-                      <ol className="space-y-1">
-                        {technique.steps.map((step, stepIndex) => (
-                          <li key={stepIndex} className="text-sm text-muted-foreground flex items-start gap-2">
-                            <span className="text-elec-yellow font-medium text-xs mt-0.5">{stepIndex + 1}.</span>
-                            <span>{step}</span>
-                          </li>
-                        ))}
-                      </ol>
+                  {isActive && (
+                    <div className="px-4 pb-4 border-t border-elec-yellow/10">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div>
+                          <h5 className="font-medium text-white mb-2">Common Triggers:</h5>
+                          <ul className="space-y-1">
+                            {stressor.triggers.map((trigger, index) => (
+                              <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                                <div className="w-1 h-1 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                                {trigger}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        
+                        <div>
+                          <h5 className="font-medium text-white mb-2">Coping Strategies:</h5>
+                          <ul className="space-y-1">
+                            {stressor.solutions.map((solution, index) => (
+                              <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                                <div className="w-1 h-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
+                                {solution}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-                    
-                    <div>
-                      <h4 className="font-medium text-white mb-2">When to use:</h4>
-                      <p className="text-xs text-muted-foreground">{technique.whenToUse}</p>
-                    </div>
-                  </div>
+                  )}
                 </div>
               );
             })}
@@ -180,99 +200,94 @@ const StressManagementTab = () => {
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Activity className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Quick Breathing Exercise</CardTitle>
+            <Brain className="h-6 w-6 text-elec-yellow" />
+            <CardTitle className="text-elec-yellow">Stress Reduction Techniques</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="text-center space-y-4">
-            {!breathingActive ? (
-              <div>
-                <p className="text-muted-foreground mb-4">
-                  Take a moment to practice the 4-7-8 breathing technique. This can help reduce stress and anxiety.
-                </p>
-                <Button onClick={startBreathingExercise} className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80">
-                  Start Breathing Exercise
-                </Button>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                <div className="text-2xl font-bold text-elec-yellow">
-                  {breathingPhase === 'inhale' && 'Breathe In...'}
-                  {breathingPhase === 'hold' && 'Hold...'}
-                  {breathingPhase === 'exhale' && 'Breathe Out...'}
-                </div>
-                <div className="w-24 h-24 mx-auto rounded-full border-4 border-elec-yellow animate-pulse flex items-center justify-center">
-                  <Activity className="h-8 w-8 text-elec-yellow" />
-                </div>
-                <p className="text-sm text-muted-foreground">Follow the breathing pattern for 1 minute</p>
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Wellbeing Foundation</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {wellbeingTips.map((category, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-3">{category.category}</h4>
-                <ul className="space-y-2">
-                  {category.tips.map((tip, tipIndex) => (
-                    <li key={tipIndex} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                      {tip}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Warning Signs & Actions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {warningSignsAndSolutions.map((item, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex items-start gap-3">
-                  <Badge 
-                    className={`mt-1 ${
-                      item.urgency === 'high' 
-                        ? 'bg-red-500/20 text-red-400 border-red-500/40' 
-                        : 'bg-amber-500/20 text-amber-400 border-amber-500/40'
-                    }`}
-                  >
-                    {item.urgency === 'high' ? 'High Priority' : 'Monitor'}
-                  </Badge>
-                  <div className="flex-1">
-                    <h4 className="font-medium text-white mb-2">{item.warning}</h4>
-                    <p className="text-sm text-muted-foreground">{item.solution}</p>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {stressTechniques.map((technique) => {
+              const IconComponent = technique.icon;
+              const isActive = activeTechnique === technique.id;
+              
+              return (
+                <div key={technique.id} className={`border rounded-lg p-6 ${technique.color} transition-all duration-200 hover:scale-102`}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <IconComponent className="h-6 w-6 text-white" />
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{technique.title}</h3>
+                      <div className="flex gap-2 mt-1">
+                        <Badge variant="outline" className="text-xs border-white/20">
+                          {technique.duration}
+                        </Badge>
+                      </div>
+                    </div>
                   </div>
+                  
+                  <p className="text-sm text-muted-foreground mb-4">{technique.situation}</p>
+                  
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="w-full border-white/20 text-white hover:bg-white/10 mb-4"
+                    onClick={() => setActiveTechnique(isActive ? null : technique.id)}
+                  >
+                    {isActive ? 'Hide Steps' : 'Show Steps'}
+                  </Button>
+
+                  {isActive && (
+                    <div className="space-y-3">
+                      <div>
+                        <h4 className="font-medium text-white mb-2">Steps:</h4>
+                        <ol className="space-y-1">
+                          {technique.steps.map((step, index) => (
+                            <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                              <span className="text-elec-yellow font-medium">{index + 1}.</span>
+                              {step}
+                            </li>
+                          ))}
+                        </ol>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-medium text-white mb-2">Benefits:</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {technique.benefits.map((benefit, index) => (
+                            <Badge key={index} variant="outline" className="text-xs border-green-400/30 text-green-400">
+                              {benefit}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Zap className="h-6 w-6 text-elec-yellow" />
+            <CardTitle className="text-elec-yellow">Quick Stress Relief (1-5 minutes)</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {quickStressReliefs.map((relief, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+                <div className="flex items-start justify-between mb-2">
+                  <h4 className="font-medium text-white text-sm">{relief.technique}</h4>
+                  <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-yellow">
+                    {relief.time}
+                  </Badge>
+                </div>
+                <p className="text-xs text-muted-foreground">{relief.situation}</p>
               </div>
             ))}
-          </div>
-          
-          <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
-            <h4 className="font-semibold text-blue-400 mb-2">Remember: Professional Help is Available</h4>
-            <p className="text-sm text-muted-foreground">
-              If you're experiencing persistent stress, anxiety, or mental health concerns, don't hesitate to reach out to:
-            </p>
-            <ul className="text-sm text-muted-foreground mt-2 space-y-1">
-              <li>• Your college's student support services</li>
-              <li>• Samaritans: 116 123 (free, 24/7)</li>
-              <li>• Mind: 0300 123 3393</li>
-              <li>• Your GP or NHS 111</li>
-            </ul>
           </div>
         </CardContent>
       </Card>
