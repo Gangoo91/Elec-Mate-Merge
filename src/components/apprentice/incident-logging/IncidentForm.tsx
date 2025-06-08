@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Save } from "lucide-react";
 
 interface IncidentFormProps {
+  incidentId: string;
   onBack: () => void;
   onSave: () => void;
 }
 
-const IncidentForm = ({ onBack, onSave }: IncidentFormProps) => {
+const IncidentForm = ({ incidentId, onBack, onSave }: IncidentFormProps) => {
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
