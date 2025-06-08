@@ -1,600 +1,491 @@
 
-export interface SafetyScenarioOption {
-  id: string;
-  text: string;
-  isCorrect: boolean;
-  feedback: string;
-  outcome: string;
-  regulation?: string;
-}
-
 export interface SafetyScenario {
   id: number;
   title: string;
   description: string;
-  question: string;
-  options: SafetyScenarioOption[];
   category: string;
-  difficulty: string;
+  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  industry: string;
+  riskLevel: "Low" | "Medium" | "High" | "Critical";
   duration: string;
-  riskLevel: 'Low' | 'Medium' | 'High' | 'Critical';
-  industry: 'Domestic' | 'Commercial' | 'Industrial' | 'All';
   tags: string[];
+  scenario: string;
+  options: {
+    id: string;
+    text: string;
+    isCorrect: boolean;
+    feedback: string;
+  }[];
+  learningOutcomes: string[];
 }
 
-export const safetyScenarios: SafetyScenario[] = [
-  // Emergency Response Scenarios
-  {
-    id: 1,
-    title: "Electrical Shock Incident",
-    description: "An apprentice receives an electric shock while working on a domestic installation. You need to respond immediately and appropriately.",
-    question: "You witness an apprentice receive an electric shock from a live circuit. They are conscious but shaken. What is your immediate priority?",
-    category: "Emergency Response",
-    difficulty: "Beginner",
-    duration: "10-15 mins",
-    riskLevel: "Critical",
-    industry: "All",
-    tags: ["first-aid", "emergency", "isolation"],
-    options: [
-      {
-        id: "A",
-        text: "Check if they are injured and call for medical assistance",
-        isCorrect: false,
-        feedback: "While checking for injuries is important, you must first ensure the power source is safe.",
-        outcome: "This could put you at risk of electric shock as well.",
-        regulation: "HSE guidance states isolation comes before assistance."
-      },
-      {
-        id: "B",
-        text: "Immediately isolate the power source before approaching",
-        isCorrect: true,
-        feedback: "Correct! Always isolate the power source first to prevent further injury.",
-        outcome: "The area is made safe, preventing additional casualties.",
-        regulation: "Electricity at Work Regulations 1989 - safe isolation procedures."
-      },
-      {
-        id: "C",
-        text: "Touch the person to check if they're responsive",
-        isCorrect: false,
-        feedback: "Never touch someone who may still be in contact with live electrical parts.",
-        outcome: "You could receive an electric shock yourself.",
-        regulation: "This violates basic electrical safety principles."
-      },
-      {
-        id: "D",
-        text: "Shout for help and wait for someone else to handle it",
-        isCorrect: false,
-        feedback: "While calling for help is good, you should take immediate action to isolate the power.",
-        outcome: "Delays could result in further injury to the victim.",
-        regulation: "You have a duty of care to act promptly and safely."
-      }
-    ]
-  },
-  {
-    id: 2,
-    title: "Arc Flash Near Miss",
-    description: "A near-miss arc flash incident occurs at an industrial facility during maintenance work on a 400V distribution board.",
-    question: "During work on a 400V distribution board, you notice signs that could lead to an arc flash incident. What should be your immediate action?",
-    category: "PPE & Safety",
-    difficulty: "Intermediate",
-    duration: "15-20 mins",
-    riskLevel: "Critical",
-    industry: "Industrial",
-    tags: ["arc-flash", "ppe", "high-voltage"],
-    options: [
-      {
-        id: "A",
-        text: "Continue working but be more careful",
-        isCorrect: false,
-        feedback: "Arc flash incidents can cause severe burns and fatalities. Never continue when risks are identified.",
-        outcome: "Potential for severe injury or death from arc flash.",
-        regulation: "This violates the fundamental principle of 'stop work authority'."
-      },
-      {
-        id: "B",
-        text: "Stop work immediately and reassess the situation",
-        isCorrect: true,
-        feedback: "Correct! Always stop work when arc flash risks are identified.",
-        outcome: "Work stops safely, risks are properly assessed and mitigated.",
-        regulation: "CDM Regulations 2015 require stopping work when new hazards are identified."
-      },
-      {
-        id: "C",
-        text: "Put on additional PPE and continue",
-        isCorrect: false,
-        feedback: "PPE alone may not be sufficient protection against arc flash. The hazard must be eliminated first.",
-        outcome: "PPE may fail, resulting in severe burns.",
-        regulation: "Hierarchy of controls places elimination before PPE."
-      },
-      {
-        id: "D",
-        text: "Work faster to finish the job quickly",
-        isCorrect: false,
-        feedback: "Rushing increases the likelihood of making mistakes that could trigger an arc flash.",
-        outcome: "Increased risk of error leading to arc flash incident.",
-        regulation: "This goes against all safety principles and procedures."
-      }
-    ]
-  },
-  {
-    id: 3,
-    title: "Lockout/Tagout Failure",
-    description: "You discover that a colleague has not properly followed lockout/tagout procedures on a high-voltage isolation.",
-    question: "You find electrical equipment that should be isolated but the lockout/tagout procedure appears incomplete. What do you do?",
-    category: "Isolation Procedures",
-    difficulty: "Advanced",
-    duration: "20-25 mins",
-    riskLevel: "High",
-    industry: "All",
-    tags: ["loto", "isolation", "procedures"],
-    options: [
-      {
-        id: "A",
-        text: "Complete the lockout procedure yourself",
-        isCorrect: false,
-        feedback: "Only the person who started the isolation should complete it unless proper handover procedures are followed.",
-        outcome: "Confusion about isolation status could lead to accidents.",
-        regulation: "BS EN 50110 specifies who can operate isolation procedures."
-      },
-      {
-        id: "B",
-        text: "Treat the equipment as live and find the responsible person",
-        isCorrect: true,
-        feedback: "Correct! Always treat inadequately isolated equipment as live and find the responsible person.",
-        outcome: "Equipment remains safe, proper procedures are followed.",
-        regulation: "Electricity at Work Regulations 1989 - prove dead before work."
-      },
-      {
-        id: "C",
-        text: "Test the equipment to see if it's really dead",
-        isCorrect: false,
-        feedback: "Testing should only be done after proper isolation procedures are complete.",
-        outcome: "Risk of electric shock if isolation is incomplete.",
-        regulation: "Testing comes after isolation, not before verification of isolation status."
-      },
-      {
-        id: "D",
-        text: "Remove the incomplete locks and start fresh",
-        isCorrect: false,
-        feedback: "Never remove another person's locks without proper authorization and procedures.",
-        outcome: "Could energize equipment unexpectedly, causing injury or death.",
-        regulation: "This violates fundamental lockout/tagout principles."
-      }
-    ]
-  },
-  {
-    id: 4,
-    title: "Confined Space Emergency",
-    description: "An emergency situation develops while electrical work is being performed in a confined space with limited access.",
-    question: "During electrical work in a confined space, your colleague suddenly becomes unresponsive. What is your first priority?",
-    category: "Hazardous Environments",
-    difficulty: "Advanced",
-    duration: "25-30 mins",
-    riskLevel: "Critical",
-    industry: "Industrial",
-    tags: ["confined-space", "emergency", "rescue"],
-    options: [
-      {
-        id: "A",
-        text: "Enter the space immediately to help your colleague",
-        isCorrect: false,
-        feedback: "Never enter a confined space during an emergency without proper rescue procedures.",
-        outcome: "You could become the second casualty due to atmospheric hazards.",
-        regulation: "Confined Spaces Regulations 1997 require trained rescue teams."
-      },
-      {
-        id: "B",
-        text: "Call the emergency services and the trained rescue team",
-        isCorrect: true,
-        feedback: "Correct! Follow the confined space emergency procedure and call trained rescuers.",
-        outcome: "Professional rescue is initiated while you remain safe.",
-        regulation: "Confined Spaces Regulations 1997 require emergency procedures and trained rescue."
-      },
-      {
-        id: "C",
-        text: "Try to pull them out using a rope",
-        isCorrect: false,
-        feedback: "Untrained rescue attempts in confined spaces often create additional casualties.",
-        outcome: "Risk of injuring the casualty or becoming trapped yourself.",
-        regulation: "Only trained rescue teams should perform confined space rescue."
-      },
-      {
-        id: "D",
-        text: "Ventilate the space first, then enter",
-        isCorrect: false,
-        feedback: "Emergency ventilation should be done by trained personnel with proper equipment.",
-        outcome: "Delay in professional rescue while you attempt inadequate ventilation.",
-        regulation: "Emergency response requires trained personnel and proper procedures."
-      }
-    ]
-  },
-  // New Working at Height Scenarios
-  {
-    id: 5,
-    title: "Ladder Safety Assessment",
-    description: "You're preparing to install lighting circuits in a commercial building and need to work at height.",
-    question: "Before using a ladder to access ceiling mounted equipment, what is the most critical safety check?",
-    category: "Working at Height",
-    difficulty: "Beginner",
-    duration: "10-15 mins",
-    riskLevel: "Medium",
-    industry: "Commercial",
-    tags: ["ladders", "height", "inspection"],
-    options: [
-      {
-        id: "A",
-        text: "Check the ladder's weight rating and condition",
-        isCorrect: true,
-        feedback: "Correct! Always inspect the ladder for damage and ensure it can safely support your weight plus tools.",
-        outcome: "Safe working platform established, reducing risk of falls.",
-        regulation: "Work at Height Regulations 2005 require proper equipment inspection."
-      },
-      {
-        id: "B",
-        text: "Find someone to hold the bottom of the ladder",
-        isCorrect: false,
-        feedback: "While having a spotter helps, the ladder itself must be safe and properly set up first.",
-        outcome: "Damaged ladder could still fail even with someone holding it.",
-        regulation: "Equipment inspection comes before use, regardless of assistance."
-      },
-      {
-        id: "C",
-        text: "Clear the area below of people",
-        isCorrect: false,
-        feedback: "Area clearance is important but doesn't address the ladder's structural integrity.",
-        outcome: "Still risk of ladder failure and personal injury.",
-        regulation: "Primary safety comes from proper equipment, not just area management."
-      },
-      {
-        id: "D",
-        text: "Check for overhead power lines",
-        isCorrect: false,
-        feedback: "While checking for overhead hazards is important, the ladder's condition is the primary concern.",
-        outcome: "Safe from electrical hazards but still at risk from equipment failure.",
-        regulation: "Multiple safety checks are needed, but equipment integrity comes first."
-      }
-    ]
-  },
-  {
-    id: 6,
-    title: "Scaffold Safety Concern",
-    description: "You arrive at a construction site where scaffolding has been erected for electrical installation work.",
-    question: "You notice the scaffold doesn't have a current inspection tag. What should you do?",
-    category: "Working at Height",
-    difficulty: "Intermediate",
-    duration: "15-20 mins",
-    riskLevel: "High",
-    industry: "Commercial",
-    tags: ["scaffold", "inspection", "documentation"],
-    options: [
-      {
-        id: "A",
-        text: "Use the scaffold if it looks structurally sound",
-        isCorrect: false,
-        feedback: "Visual inspection by untrained personnel is not sufficient for scaffold safety verification.",
-        outcome: "Risk of scaffold collapse due to undetected structural issues.",
-        regulation: "Work at Height Regulations 2005 require competent person inspection."
-      },
-      {
-        id: "B",
-        text: "Do not use the scaffold and report to site management",
-        isCorrect: true,
-        feedback: "Correct! Never use uninspected scaffolding. It must be inspected by a competent person.",
-        outcome: "Work stops safely until proper inspection is completed.",
-        regulation: "Scaffolds must be inspected every 7 days and after adverse weather."
-      },
-      {
-        id: "C",
-        text: "Ask other workers if they've been using it safely",
-        isCorrect: false,
-        feedback: "Other workers' opinions don't replace formal safety inspections by competent persons.",
-        outcome: "Continued risk exposure based on informal assessments.",
-        regulation: "Formal inspection procedures cannot be replaced by informal consultations."
-      },
-      {
-        id: "D",
-        text: "Inspect it yourself before use",
-        isCorrect: false,
-        feedback: "Unless you're a competent person trained in scaffold inspection, you cannot certify its safety.",
-        outcome: "Inadequate inspection could miss critical safety issues.",
-        regulation: "Only competent persons can conduct formal scaffold inspections."
-      }
-    ]
-  },
-  // New Tool Safety Scenarios
-  {
-    id: 7,
-    title: "Portable Tool Inspection",
-    description: "You're about to use a portable electric drill for cable installation work on a construction site.",
-    question: "What is your first safety check before using any portable electrical tool on site?",
-    category: "Tool Safety",
-    difficulty: "Beginner",
-    duration: "10-15 mins",
-    riskLevel: "Medium",
-    industry: "All",
-    tags: ["pat-testing", "tools", "inspection"],
-    options: [
-      {
-        id: "A",
-        text: "Check it has a current PAT test label",
-        isCorrect: true,
-        feedback: "Correct! All portable electrical equipment must have current PAT testing certification.",
-        outcome: "Verified safe electrical condition reduces risk of electric shock.",
-        regulation: "Electricity at Work Regulations 1989 require regular testing of portable equipment."
-      },
-      {
-        id: "B",
-        text: "Test it quickly to see if it works",
-        isCorrect: false,
-        feedback: "A functional test doesn't verify electrical safety or insulation integrity.",
-        outcome: "Risk of electric shock from faulty insulation or earthing.",
-        regulation: "Proper electrical testing requires specialised equipment and procedures."
-      },
-      {
-        id: "C",
-        text: "Check the power cable for visible damage",
-        isCorrect: false,
-        feedback: "Visual inspection is important but doesn't replace formal PAT testing requirements.",
-        outcome: "Hidden electrical faults could still pose serious risks.",
-        regulation: "Visual inspection alone is insufficient for electrical safety verification."
-      },
-      {
-        id: "D",
-        text: "Make sure it's the right tool for the job",
-        isCorrect: false,
-        feedback: "Tool selection is important but electrical safety verification comes first.",
-        outcome: "Even the right tool can be dangerous if electrically unsafe.",
-        regulation: "Safety verification must precede task suitability assessment."
-      }
-    ]
-  },
-  {
-    id: 8,
-    title: "Angle Grinder Safety",
-    description: "You need to cut cable tray using an angle grinder in a busy workshop environment.",
-    question: "Before starting to cut with an angle grinder, what is the most critical safety consideration?",
-    category: "Tool Safety",
-    difficulty: "Intermediate",
-    duration: "15-20 mins",
-    riskLevel: "High",
-    industry: "All",
-    tags: ["angle-grinder", "cutting", "ppe"],
-    options: [
-      {
-        id: "A",
-        text: "Ensure all nearby personnel are wearing eye protection",
-        isCorrect: false,
-        feedback: "While eye protection for others is important, the operator's full PPE is the priority.",
-        outcome: "Other workers protected but operator still at risk from sparks and debris.",
-        regulation: "Operator safety is the primary responsibility before considering others."
-      },
-      {
-        id: "B",
-        text: "Wear full face protection, safety glasses, and appropriate clothing",
-        isCorrect: true,
-        feedback: "Correct! Angle grinders create high-speed sparks and debris requiring comprehensive protection.",
-        outcome: "Operator protected from burns, cuts, and eye injuries.",
-        regulation: "PPE Regulations require appropriate protection for specific hazards."
-      },
-      {
-        id: "C",
-        text: "Check the disc is suitable for cutting metal",
-        isCorrect: false,
-        feedback: "Correct disc selection is vital but personal protection must be established first.",
-        outcome: "Right disc but operator vulnerable to injury from sparks and debris.",
-        regulation: "Personal safety takes priority over equipment selection."
-      },
-      {
-        id: "D",
-        text: "Clear the area of flammable materials",
-        isCorrect: false,
-        feedback: "Fire prevention is important but doesn't protect the operator from immediate physical hazards.",
-        outcome: "Fire risk reduced but operator still exposed to cuts and burns.",
-        regulation: "Multiple safety measures required, but personal protection comes first."
-      }
-    ]
-  },
-  // New Site Safety Scenarios
-  {
-    id: 9,
-    title: "Site Induction Requirements",
-    description: "You're starting work at a new construction site and notice some workers without hard hats.",
-    question: "As a responsible electrician, what should you do about workers not wearing mandatory PPE?",
-    category: "Site Safety",
-    difficulty: "Beginner",
-    duration: "10-15 mins",
-    riskLevel: "Medium",
-    industry: "Commercial",
-    tags: ["site-safety", "ppe", "responsibility"],
-    options: [
-      {
-        id: "A",
-        text: "Inform the site supervisor immediately",
-        isCorrect: true,
-        feedback: "Correct! Site safety violations should be reported to site management for proper action.",
-        outcome: "Site safety standards maintained, protecting all workers.",
-        regulation: "CDM Regulations 2015 require all workers to contribute to site safety."
-      },
-      {
-        id: "B",
-        text: "Ignore it as it's not your responsibility",
-        isCorrect: false,
-        feedback: "All workers have a duty of care to identify and report safety issues.",
-        outcome: "Risk of head injuries and potential prosecution for failing duty of care.",
-        regulation: "Health and Safety at Work Act 1974 - duty of care applies to all."
-      },
-      {
-        id: "C",
-        text: "Tell the workers directly to put on hard hats",
-        isCorrect: false,
-        feedback: "Direct confrontation may not be effective and could create conflict.",
-        outcome: "Possible confrontation and workers may still not comply.",
-        regulation: "Site hierarchy should be followed for enforcement actions."
-      },
-      {
-        id: "D",
-        text: "Continue working but stay away from those workers",
-        isCorrect: false,
-        feedback: "Avoiding the issue doesn't resolve the safety violation or protect the workers.",
-        outcome: "Safety standards compromised, potential for serious injuries.",
-        regulation: "Passive avoidance doesn't fulfil duty of care obligations."
-      }
-    ]
-  },
-  {
-    id: 10,
-    title: "Excavation Work Hazard",
-    description: "You need to install underground cables near an excavation where other trades are working.",
-    question: "What is your primary concern when working near excavations?",
-    category: "Site Safety",
-    difficulty: "Intermediate",
-    duration: "15-20 mins",
-    riskLevel: "High",
-    industry: "Commercial",
-    tags: ["excavation", "underground", "utilities"],
-    options: [
-      {
-        id: "A",
-        text: "Ensure excavation is properly supported and safe to work near",
-        isCorrect: true,
-        feedback: "Correct! Excavation collapse is a major risk requiring proper support systems.",
-        outcome: "Work proceeds safely with appropriate excavation protection measures.",
-        regulation: "CDM Regulations 2015 require safe excavation practices and support systems."
-      },
-      {
-        id: "B",
-        text: "Check for existing underground utilities",
-        isCorrect: false,
-        feedback: "While utility location is important, the immediate physical danger is excavation collapse.",
-        outcome: "Utilities located but workers still at risk from unstable excavation.",
-        regulation: "Multiple hazards exist but structural safety takes precedence."
-      },
-      {
-        id: "C",
-        text: "Coordinate with other trades working in the area",
-        isCorrect: false,
-        feedback: "Coordination is important but doesn't address the primary hazard of excavation collapse.",
-        outcome: "Good communication but fundamental safety risks remain unaddressed.",
-        regulation: "Communication supports safety but doesn't replace risk control measures."
-      },
-      {
-        id: "D",
-        text: "Use appropriate tools for underground work",
-        isCorrect: false,
-        feedback: "Tool selection is important but secondary to ensuring the work environment is safe.",
-        outcome: "Right tools but unsafe working environment poses greater risk.",
-        regulation: "Safe systems of work require safe environment before tool considerations."
-      }
-    ]
-  },
-  // New Risk Assessment Scenarios
-  {
-    id: 11,
-    title: "Domestic Installation Risk Assessment",
-    description: "You're asked to rewire an occupied family home during renovation work.",
-    question: "What is the most important consideration for your risk assessment?",
-    category: "Risk Assessment",
-    difficulty: "Intermediate",
-    duration: "15-20 mins",
-    riskLevel: "Medium",
-    industry: "Domestic",
-    tags: ["risk-assessment", "domestic", "occupied-premises"],
-    options: [
-      {
-        id: "A",
-        text: "Protection of occupants, especially children, from electrical hazards",
-        isCorrect: true,
-        feedback: "Correct! Occupied premises require special consideration for vulnerable persons.",
-        outcome: "Family safety prioritised with appropriate protective measures.",
-        regulation: "CDM Regulations 2015 - special consideration for occupied premises."
-      },
-      {
-        id: "B",
-        text: "Coordination with other renovation trades",
-        isCorrect: false,
-        feedback: "Trade coordination is important but occupant safety is the primary concern.",
-        outcome: "Good coordination but family still exposed to electrical risks.",
-        regulation: "Occupant welfare takes priority in domestic work environments."
-      },
-      {
-        id: "C",
-        text: "Minimising disruption to household routine",
-        isCorrect: false,
-        feedback: "Convenience is secondary to safety in risk assessment priorities.",
-        outcome: "Minimal disruption but safety risks not properly addressed.",
-        regulation: "Safety considerations must outweigh convenience factors."
-      },
-      {
-        id: "D",
-        text: "Ensuring adequate lighting during work",
-        isCorrect: false,
-        feedback: "Working conditions are important but don't address the primary risks to occupants.",
-        outcome: "Good visibility but family safety concerns unaddressed.",
-        regulation: "Risk assessment must prioritise the highest risks first."
-      }
-    ]
-  },
-  {
-    id: 12,
-    title: "Industrial Maintenance Risk Assessment",
-    description: "You're planning maintenance work on industrial machinery during a production shutdown.",
-    question: "What is the critical first step in your risk assessment process?",
-    category: "Risk Assessment",
-    difficulty: "Advanced",
-    duration: "20-25 mins",
-    riskLevel: "High",
-    industry: "Industrial",
-    tags: ["maintenance", "industrial", "shutdown"],
-    options: [
-      {
-        id: "A",
-        text: "Identify all energy sources that require isolation",
-        isCorrect: true,
-        feedback: "Correct! Industrial machinery often has multiple energy sources requiring comprehensive isolation.",
-        outcome: "All energy sources identified and safely isolated before work begins.",
-        regulation: "BS EN 50110 - comprehensive energy isolation in industrial settings."
-      },
-      {
-        id: "B",
-        text: "Coordinate with production management on timing",
-        isCorrect: false,
-        feedback: "Scheduling is important but safety identification comes before timing considerations.",
-        outcome: "Good timing but potentially missed energy sources create serious risks.",
-        regulation: "Safety assessment must precede operational considerations."
-      },
-      {
-        id: "C",
-        text: "Gather the appropriate tools and equipment",
-        isCorrect: false,
-        feedback: "Equipment preparation follows risk identification and control planning.",
-        outcome: "Well-equipped team but hazards not properly identified or controlled.",
-        regulation: "Risk identification drives equipment selection, not the reverse."
-      },
-      {
-        id: "D",
-        text: "Review maintenance documentation",
-        isCorrect: false,
-        feedback: "Documentation review is valuable but hazard identification takes priority.",
-        outcome: "Good understanding of procedures but active hazards not secured.",
-        regulation: "Live hazards must be controlled before detailed procedure review."
-      }
-    ]
-  }
-];
-
 export const scenarioCategories = [
-  "Emergency Response",
-  "PPE & Safety",
-  "Isolation Procedures", 
-  "Hazardous Environments",
+  "Electrical Shock",
+  "Arc Flash",
   "Working at Height",
-  "Tool Safety",
+  "Tool Safety", 
   "Site Safety",
-  "Risk Assessment"
+  "Risk Assessment",
+  "PPE Usage",
+  "Emergency Response"
 ];
 
 export const difficultyLevels = ["Beginner", "Intermediate", "Advanced"];
 
-export const industryTypes = ["Domestic", "Commercial", "Industrial", "All"];
+export const industryTypes = [
+  "All",
+  "Domestic",
+  "Commercial", 
+  "Industrial",
+  "Construction",
+  "Maintenance"
+];
 
 export const riskLevels = ["Low", "Medium", "High", "Critical"];
+
+export const safetyScenarios: SafetyScenario[] = [
+  {
+    id: 1,
+    title: "Live Wire Contact in Domestic Property",
+    description: "An apprentice encounters an exposed live wire while working on a domestic installation.",
+    category: "Electrical Shock",
+    difficulty: "Beginner",
+    industry: "Domestic",
+    riskLevel: "Critical",
+    duration: "5 mins",
+    tags: ["live wire", "domestic", "shock", "PPE"],
+    scenario: "You're working on a domestic rewire and notice an exposed live wire that wasn't properly isolated. The homeowner is nearby and there's water on the floor from a recent leak. What's your immediate action?",
+    options: [
+      {
+        id: "a",
+        text: "Quickly grab the wire with insulated pliers to secure it",
+        isCorrect: false,
+        feedback: "Never touch live conductors, even with tools. Always isolate first."
+      },
+      {
+        id: "b", 
+        text: "Immediately turn off the main supply and secure the area",
+        isCorrect: true,
+        feedback: "Correct! Always isolate the supply first and ensure the area is safe."
+      },
+      {
+        id: "c",
+        text: "Warn the homeowner and continue working carefully around it",
+        isCorrect: false,
+        feedback: "This puts everyone at risk. The circuit must be made safe immediately."
+      }
+    ],
+    learningOutcomes: [
+      "Understanding safe isolation procedures",
+      "Risk assessment in domestic environments",
+      "Emergency response protocols"
+    ]
+  },
+  {
+    id: 2,
+    title: "Arc Flash During Panel Inspection",
+    description: "While performing routine inspection on a commercial panel, you notice signs of potential arc flash risk.",
+    category: "Arc Flash",
+    difficulty: "Advanced",
+    industry: "Commercial",
+    riskLevel: "Critical", 
+    duration: "7 mins",
+    tags: ["arc flash", "commercial", "inspection", "PPE"],
+    scenario: "During a commercial panel inspection, you notice burn marks, loose connections, and hear crackling sounds. The panel is energised and client operations depend on this supply. What's your approach?",
+    options: [
+      {
+        id: "a",
+        text: "Quickly tighten the loose connections while the panel is live",
+        isCorrect: false,
+        feedback: "Never work on live equipment showing signs of arcing. This could trigger an arc flash."
+      },
+      {
+        id: "b",
+        text: "De-energise the panel, don appropriate arc flash PPE, and investigate safely",
+        isCorrect: true,
+        feedback: "Correct! Arc flash risks require proper PPE and de-energisation before investigation."
+      },
+      {
+        id: "c",
+        text: "Continue the inspection but stand further back from the panel",
+        isCorrect: false,
+        feedback: "Distance alone won't protect from arc flash. Proper procedures must be followed."
+      }
+    ],
+    learningOutcomes: [
+      "Arc flash hazard recognition",
+      "Appropriate PPE selection",
+      "Commercial safety protocols"
+    ]
+  },
+  {
+    id: 3,
+    title: "Ladder Safety on Construction Site",
+    description: "Setting up access equipment for electrical installation work at height on a busy construction site.",
+    category: "Working at Height",
+    difficulty: "Intermediate",
+    industry: "Construction",
+    riskLevel: "High",
+    duration: "6 mins",
+    tags: ["ladder", "height", "construction", "access"],
+    scenario: "You need to install lighting circuits at 4 metres height on a construction site. Other trades are working nearby with overhead crane operations. How do you ensure safe access?",
+    options: [
+      {
+        id: "a",
+        text: "Use a ladder and work quickly between crane movements",
+        isCorrect: false,
+        feedback: "Working around overhead operations requires proper coordination and safer access methods."
+      },
+      {
+        id: "b",
+        text: "Request scaffold or MEWP access and coordinate with site management",
+        isCorrect: true,
+        feedback: "Correct! Proper access equipment and site coordination are essential for safety."
+      },
+      {
+        id: "c",
+        text: "Wait until all other trades have finished their work",
+        isCorrect: false,
+        feedback: "While coordination is important, proper access methods can allow safe concurrent working."
+      }
+    ],
+    learningOutcomes: [
+      "Work at height regulations",
+      "Site coordination procedures",
+      "Access equipment selection"
+    ]
+  },
+  {
+    id: 4,
+    title: "Faulty Power Tool Detection",
+    description: "Discovering a power tool with damaged casing and exposed conductors during routine work.",
+    category: "Tool Safety",
+    difficulty: "Beginner",
+    industry: "All",
+    riskLevel: "Medium",
+    duration: "4 mins",
+    tags: ["power tools", "PAT", "inspection", "maintenance"],
+    scenario: "You pick up a power drill and notice the casing is cracked with visible internal wiring. The tool was working yesterday and you need it to complete urgent work. What do you do?",
+    options: [
+      {
+        id: "a",
+        text: "Use the tool carefully, avoiding the damaged area",
+        isCorrect: false,
+        feedback: "Never use damaged electrical equipment. This creates serious shock and fire risks."
+      },
+      {
+        id: "b",
+        text: "Remove the tool from service immediately and tag it as defective",
+        isCorrect: true,
+        feedback: "Correct! Damaged tools must be removed from service immediately to prevent accidents."
+      },
+      {
+        id: "c",
+        text: "Tape over the damage and continue using it",
+        isCorrect: false,
+        feedback: "Temporary repairs on electrical equipment are not acceptable. Proper repair or replacement is required."
+      }
+    ],
+    learningOutcomes: [
+      "Tool inspection procedures",
+      "PAT testing requirements",
+      "Equipment maintenance protocols"
+    ]
+  },
+  {
+    id: 5,
+    title: "Site Emergency Evacuation",
+    description: "A fire alarm sounds while you're working in a basement electrical room of a large commercial building.",
+    category: "Site Safety",
+    difficulty: "Intermediate",
+    industry: "Commercial",
+    riskLevel: "High",
+    duration: "5 mins",
+    tags: ["emergency", "evacuation", "fire", "procedures"],
+    scenario: "You're working in a basement electrical room when the fire alarm sounds. You're halfway through connecting a critical circuit and have tools scattered around. What's your immediate response?",
+    options: [
+      {
+        id: "a",
+        text: "Quickly finish the connection to make the area safe, then evacuate",
+        isCorrect: false,
+        feedback: "Emergency evacuation takes priority over all work activities. Leave immediately."
+      },
+      {
+        id: "b",
+        text: "Immediately stop work, make safe what you can quickly, and evacuate via the designated route",
+        isCorrect: true,
+        feedback: "Correct! Emergency evacuation is the priority. Make safe only what can be done in seconds."
+      },
+      {
+        id: "c",
+        text: "Gather all your tools and equipment before evacuating",
+        isCorrect: false,
+        feedback: "Personal safety is more important than tools. Evacuate immediately without delay."
+      }
+    ],
+    learningOutcomes: [
+      "Emergency response procedures",
+      "Risk prioritisation",
+      "Site safety protocols"
+    ]
+  },
+  {
+    id: 6,
+    title: "Confined Space Risk Assessment",
+    description: "Asked to install electrical systems in a confined basement plant room with limited ventilation.",
+    category: "Risk Assessment",
+    difficulty: "Advanced",
+    industry: "Industrial",
+    riskLevel: "High",
+    duration: "8 mins",
+    tags: ["confined space", "risk assessment", "ventilation", "permits"],
+    scenario: "You're tasked with installing motor controls in a basement plant room with one access point, poor ventilation, and potential for gas accumulation. How do you proceed?",
+    options: [
+      {
+        id: "a",
+        text: "Start work immediately as it's just electrical installation",
+        isCorrect: false,
+        feedback: "Confined spaces require specific risk assessments and safety procedures before entry."
+      },
+      {
+        id: "b",
+        text: "Conduct a confined space risk assessment and implement required controls before starting",
+        isCorrect: true,
+        feedback: "Correct! Confined spaces require specific assessments, permits, and safety measures."
+      },
+      {
+        id: "c",
+        text: "Work quickly to minimise time in the space",
+        isCorrect: false,
+        feedback: "Speed doesn't address the hazards. Proper controls and procedures are essential."
+      }
+    ],
+    learningOutcomes: [
+      "Confined space regulations",
+      "Risk assessment methodology",
+      "Permit to work systems"
+    ]
+  },
+  {
+    id: 7,
+    title: "Inadequate PPE for Live Working",
+    description: "Being asked to perform live electrical work but only basic PPE is available on site.",
+    category: "PPE Usage",
+    difficulty: "Intermediate",
+    industry: "Maintenance",
+    riskLevel: "Critical",
+    duration: "5 mins",
+    tags: ["PPE", "live working", "voltage", "protection"],
+    scenario: "You're asked to replace a contactor in a live 400V panel. Only basic PPE (hard hat, safety boots, hi-vis) is available. The client says it's urgent and can't wait for proper equipment. What do you do?",
+    options: [
+      {
+        id: "a",
+        text: "Proceed with the available PPE as it's urgent work",
+        isCorrect: false,
+        feedback: "Never compromise on appropriate PPE for electrical work. The risks are too high."
+      },
+      {
+        id: "b",
+        text: "Refuse to work until appropriate electrical PPE is provided",
+        isCorrect: true,
+        feedback: "Correct! Appropriate PPE is non-negotiable for electrical work. Never compromise on safety."
+      },
+      {
+        id: "c",
+        text: "Work extra carefully and quickly to minimise exposure",
+        isCorrect: false,
+        feedback: "Care and speed don't replace proper protection. Appropriate PPE is essential."
+      }
+    ],
+    learningOutcomes: [
+      "PPE requirements for electrical work",
+      "Right to refuse unsafe work",
+      "Electrical safety standards"
+    ]
+  },
+  {
+    id: 8,
+    title: "Colleague Electrical Shock Incident",
+    description: "A colleague receives an electrical shock and is unconscious. You need to respond appropriately.",
+    category: "Emergency Response",
+    difficulty: "Advanced",
+    industry: "All",
+    riskLevel: "Critical",
+    duration: "6 mins",
+    tags: ["shock", "first aid", "emergency", "response"],
+    scenario: "Your colleague has received an electric shock from a 230V circuit and is unconscious on the floor. The equipment appears to still be energised. What's your immediate response?",
+    options: [
+      {
+        id: "a",
+        text: "Immediately touch the person to check for pulse and breathing",
+        isCorrect: false,
+        feedback: "Never touch someone who may still be in contact with electricity. Make safe first."
+      },
+      {
+        id: "b",
+        text: "Switch off the supply, check the area is safe, then provide first aid and call emergency services",
+        isCorrect: true,
+        feedback: "Correct! Isolate the supply first, ensure safety, then provide first aid and call for help."
+      },
+      {
+        id: "c",
+        text: "Call emergency services and wait for them to arrive",
+        isCorrect: false,
+        feedback: "While calling emergency services is important, immediate first aid after making safe could be life-saving."
+      }
+    ],
+    learningOutcomes: [
+      "Emergency response procedures",
+      "First aid for electrical shock",
+      "Scene safety assessment"
+    ]
+  },
+  {
+    id: 9,
+    title: "Overhead Power Line Proximity",
+    description: "Working near overhead power lines with mobile access equipment on an outdoor installation.",
+    category: "Working at Height",
+    difficulty: "Advanced",
+    industry: "Construction",
+    riskLevel: "Critical",
+    duration: "7 mins",
+    tags: ["overhead lines", "MEWP", "clearance", "exclusion zone"],
+    scenario: "You're using a MEWP to install external lighting near overhead 11kV power lines. Wind is moving the platform and you estimate you're about 2 metres from the nearest conductor. What should you do?",
+    options: [
+      {
+        id: "a",
+        text: "Continue working but be extra careful about platform movement",
+        isCorrect: false,
+        feedback: "2 metres is insufficient clearance for 11kV lines. Minimum safe distances must be maintained."
+      },
+      {
+        id: "b",
+        text: "Immediately lower the platform and establish proper exclusion zones before continuing",
+        isCorrect: true,
+        feedback: "Correct! Proper exclusion zones and clearances must be maintained around overhead lines."
+      },
+      {
+        id: "c",
+        text: "Ask the power company to isolate the lines temporarily",
+        isCorrect: false,
+        feedback: "While isolation is ideal, proper planning and exclusion zones can allow safe working."
+      }
+    ],
+    learningOutcomes: [
+      "Overhead line safety regulations",
+      "Exclusion zone requirements",
+      "MEWP safe operation procedures"
+    ]
+  },
+  {
+    id: 10,
+    title: "Damaged Test Equipment",
+    description: "Your multifunction tester shows inconsistent readings and has visible damage to test leads.",
+    category: "Tool Safety",
+    difficulty: "Intermediate",
+    industry: "All",
+    riskLevel: "High",
+    duration: "5 mins",
+    tags: ["test equipment", "calibration", "leads", "accuracy"],
+    scenario: "During an EICR, your multifunction tester gives inconsistent readings and you notice the test leads have damaged insulation near the probes. You have a tight deadline to complete the inspection. What do you do?",
+    options: [
+      {
+        id: "a",
+        text: "Continue testing but note the equipment issues in your report",
+        isCorrect: false,
+        feedback: "Damaged test equipment can give false readings and create safety risks. It must not be used."
+      },
+      {
+        id: "b",
+        text: "Stop testing immediately and arrange for properly calibrated, undamaged equipment",
+        isCorrect: true,
+        feedback: "Correct! Test equipment must be in good condition and properly calibrated for accurate, safe results."
+      },
+      {
+        id: "c",
+        text: "Use the equipment but double-check critical readings with a different method",
+        isCorrect: false,
+        feedback: "Damaged equipment should never be used. All readings could be compromised."
+      }
+    ],
+    learningOutcomes: [
+      "Test equipment maintenance",
+      "Calibration requirements",
+      "Equipment inspection procedures"
+    ]
+  },
+  {
+    id: 11,
+    title: "Chemical Hazard in Electrical Room",
+    description: "Discovering chemical spills near electrical equipment in an industrial facility.",
+    category: "Site Safety",
+    difficulty: "Advanced",
+    industry: "Industrial",
+    riskLevel: "High",
+    duration: "6 mins",
+    tags: ["chemicals", "COSHH", "contamination", "electrical"],
+    scenario: "You enter an electrical room to perform maintenance and discover chemical spillage near the main switchgear. There's a strong chemical odour and you can see liquid on the floor around electrical equipment. How do you respond?",
+    options: [
+      {
+        id: "a",
+        text: "Quickly complete the electrical work and leave the area",
+        isCorrect: false,
+        feedback: "Chemical contamination creates serious risks. The area must be made safe before any work."
+      },
+      {
+        id: "b",
+        text: "Evacuate immediately, report the incident, and coordinate with chemical and electrical safety specialists",
+        isCorrect: true,
+        feedback: "Correct! Chemical/electrical combinations require specialist assessment and coordinated response."
+      },
+      {
+        id: "c",
+        text: "Clean up the spill yourself before starting electrical work",
+        isCorrect: false,
+        feedback: "Chemical spills require specialist knowledge and equipment. Don't attempt cleanup without proper training."
+      }
+    ],
+    learningOutcomes: [
+      "COSHH regulations",
+      "Multi-hazard situations",
+      "Incident reporting procedures"
+    ]
+  },
+  {
+    id: 12,
+    title: "Workplace Violence Risk Assessment",
+    description: "Assessing personal safety risks when visiting unfamiliar domestic properties for electrical work.",
+    category: "Risk Assessment",
+    difficulty: "Intermediate",
+    industry: "Domestic",
+    riskLevel: "Medium",
+    duration: "4 mins",
+    tags: ["personal safety", "domestic", "lone working", "assessment"],
+    scenario: "You're sent to a domestic property you've never visited before for emergency electrical work. It's evening, the property is in an unfamiliar area, and you'll be working alone. How do you assess and manage personal safety risks?",
+    options: [
+      {
+        id: "a",
+        text: "Just go and complete the work quickly to minimise time on site",
+        isCorrect: false,
+        feedback: "Personal safety requires proper assessment and precautions, not just speed."
+      },
+      {
+        id: "b",
+        text: "Conduct a personal risk assessment, inform your employer of your location, and establish check-in procedures",
+        isCorrect: true,
+        feedback: "Correct! Lone working requires risk assessment, communication protocols, and safety procedures."
+      },
+      {
+        id: "c",
+        text: "Ask the customer to provide references before attending",
+        isCorrect: false,
+        feedback: "While customer verification can help, proper lone working procedures are more practical and effective."
+      }
+    ],
+    learningOutcomes: [
+      "Personal safety risk assessment",
+      "Lone working procedures",
+      "Communication protocols"
+    ]
+  }
+];
