@@ -23,7 +23,7 @@ import CareerPathways from "@/pages/apprentice/professional-development/CareerPa
 import Certifications from "@/pages/apprentice/professional-development/Certifications";
 import ContinuingEducation from "@/pages/apprentice/professional-development/ContinuingEducation";
 import IndustryNetworking from "@/pages/apprentice/professional-development/IndustryNetworking";
-import ToolsGuide from "@/pages/apprentice/toolbox/ToolsGuide";
+import ToolsGuide from "@/pages/apprentice/ToolsGuide";
 import ElectricalInstallationGuides from "@/pages/apprentice/toolbox/ElectricalInstallationGuides";
 import ApprenticeshipExpectations from "@/pages/apprentice/toolbox/ApprenticeshipExpectations";
 import OffJobTrainingGuide from "@/pages/apprentice/toolbox/OffJobTrainingGuide";
@@ -37,6 +37,10 @@ import DomesticInstallations from "@/pages/apprentice/DomesticInstallations";
 import CommercialInstallations from "@/pages/apprentice/toolbox/CommercialInstallations";
 import IndustrialInstallations from "@/pages/apprentice/toolbox/IndustrialInstallations";
 import OutdoorInstallations from "@/pages/apprentice/toolbox/OutdoorInstallations";
+import HandTools from "@/pages/apprentice/toolbox/tools-guide/HandTools";
+import PowerTools from "@/pages/apprentice/toolbox/tools-guide/PowerTools";
+import TestEquipment from "@/pages/apprentice/toolbox/tools-guide/TestEquipment";
+import PPESafety from "@/pages/apprentice/toolbox/tools-guide/PPESafety";
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -48,6 +52,10 @@ const ApprenticeRoutes = () => (
     <Route path="rights-and-pay" element={<RightsAndPay />} />
     <Route path="toolbox" element={<ApprenticeToolbox />} />
     <Route path="toolbox/tools-guide" element={<ToolsGuide />} />
+    <Route path="toolbox/tools-guide/hand-tools" element={<HandTools />} />
+    <Route path="toolbox/tools-guide/power-tools" element={<PowerTools />} />
+    <Route path="toolbox/tools-guide/test-equipment" element={<TestEquipment />} />
+    <Route path="toolbox/tools-guide/ppe-safety" element={<PPESafety />} />
     <Route path="toolbox/electrical-installation-guides" element={<ElectricalInstallationGuides />} />
     <Route path="toolbox/electrical-installation-guides/domestic" element={<DomesticInstallations />} />
     <Route path="toolbox/electrical-installation-guides/commercial" element={<CommercialInstallations />} />
