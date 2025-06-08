@@ -4,29 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle, Info, Play } from "lucide-react";
-
-interface TestStep {
-  id: string;
-  title: string;
-  instruction: string;
-  expectedResult: string;
-  safetyWarning?: string;
-  tips?: string[];
-  equipment: string[];
-}
-
-interface TestGuide {
-  id: string;
-  title: string;
-  description: string;
-  duration: string;
-  difficulty: "Beginner" | "Intermediate" | "Advanced";
-  steps: TestStep[];
-}
+import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle, Info, Wrench, Clock, BookOpen, Target } from "lucide-react";
+import { EnhancedTestGuide } from "@/data/bs7671-testing/comprehensiveTestingGuides";
 
 interface InteractiveTestingGuideProps {
-  guide: TestGuide;
+  guide: EnhancedTestGuide;
   onComplete: () => void;
   onBack: () => void;
 }
@@ -78,15 +60,36 @@ const InteractiveTestingGuide = ({ guide, onComplete, onBack }: InteractiveTesti
             Back to Guides
           </Button>
         </div>
-        <div className="flex items-center gap-4">
+        
+        <div className="flex items-center gap-4 flex-wrap">
           <Badge className={getDifficultyColor(guide.difficulty)}>
             {guide.difficulty}
           </Badge>
           <Badge className="bg-blue-500/20 text-blue-400">
+            <Clock className="h-3 w-3 mr-1" />
             {guide.duration}
           </Badge>
+          {currentStepData.estimatedTime && (
+            <Badge className="bg-purple-500/20 text-purple-400">
+              Step: {currentStepData.estimatedTime}
+            </Badge>
+          )}
+          {currentStepData.difficulty && (
+            <Badge className={getDifficultyColor(currentStepData.difficulty)}>
+              {currentStepData.difficulty}
+            </Badge>
+          )}
         </div>
+        
         <p className="text-muted-foreground">{guide.description}</p>
+        
+        <div className="bg-blue-500/10 rounded-lg p-3 border border-blue-500/20">
+          <h4 className="font-medium text-blue-300 mb-1 flex items-center gap-2">
+            <Target className="h-4 w-4" />
+            Purpose
+          </h4>
+          <p className="text-sm text-muted-foreground">{guide.purpose}</p>
+        </div>
         
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
@@ -135,6 +138,16 @@ const InteractiveTestingGuide = ({ guide, onComplete, onBack }: InteractiveTesti
               </div>
             )}
 
+            {currentStepData.technicalNotes && (
+              <div className="bg-cyan-500/10 rounded-lg p-4 border border-cyan-500/20">
+                <h4 className="font-medium text-cyan-400 mb-2 flex items-center gap-2">
+                  <Info className="h-4 w-4" />
+                  Technical Notes
+                </h4>
+                <p className="text-sm text-muted-foreground">{currentStepData.technicalNotes}</p>
+              </div>
+            )}
+
             {currentStepData.tips && currentStepData.tips.length > 0 && (
               <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
                 <h4 className="font-medium text-blue-400 mb-2 flex items-center gap-2">
@@ -152,6 +165,23 @@ const InteractiveTestingGuide = ({ guide, onComplete, onBack }: InteractiveTesti
               </div>
             )}
 
+            {currentStepData.troubleshooting && currentStepData.troubleshooting.length > 0 && (
+              <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/20">
+                <h4 className="font-medium text-amber-400 mb-2 flex items-center gap-2">
+                  <Wrench className="h-4 w-4" />
+                  Troubleshooting
+                </h4>
+                <ul className="space-y-1">
+                  {currentStepData.troubleshooting.map((tip, index) => (
+                    <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <span className="text-amber-400">•</span>
+                      {tip}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
               <h4 className="font-medium text-purple-400 mb-2">Required Equipment</h4>
               <div className="flex flex-wrap gap-2">
@@ -162,6 +192,22 @@ const InteractiveTestingGuide = ({ guide, onComplete, onBack }: InteractiveTesti
                 ))}
               </div>
             </div>
+
+            {currentStepData.regulationReferences && currentStepData.regulationReferences.length > 0 && (
+              <div className="bg-orange-500/10 rounded-lg p-4 border border-orange-500/20">
+                <h4 className="font-medium text-orange-400 mb-2 flex items-center gap-2">
+                  <BookOpen className="h-4 w-4" />
+                  Regulation References
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {currentStepData.regulationReferences.map((ref, index) => (
+                    <Badge key={index} variant="outline" className="border-orange-500/40 text-orange-300 text-xs">
+                      {ref}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Navigation */}
