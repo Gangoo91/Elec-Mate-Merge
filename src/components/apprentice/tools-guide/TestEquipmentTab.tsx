@@ -1,8 +1,84 @@
 
 import ToolCard from "./ToolCard";
-import { CircuitBoard, Shield } from "lucide-react";
+import { CircuitBoard, Shield, AlertTriangle } from "lucide-react";
 
 const TestEquipmentTab = () => {
+  const basicTestTools = [
+    {
+      name: "Voltage indicator (2-pole type)",
+      description: "Proving dead before work - essential safety tool",
+      priceRange: "£15-30",
+      priority: "essential" as const,
+      ukStandard: "GS38 compliant"
+    },
+    {
+      name: "Proving unit for voltage indicator",
+      description: "Test your tester before every use",
+      priceRange: "£20-40",
+      priority: "essential" as const,
+      ukStandard: "Must match indicator"
+    },
+    {
+      name: "Continuity tester (buzzer type)",
+      description: "Basic continuity checks during installation",
+      priceRange: "£10-25",
+      priority: "essential" as const,
+      ukStandard: "Low voltage output"
+    },
+    {
+      name: "Socket tester (13A plug-in type)",
+      description: "Quick checks of domestic socket wiring",
+      priceRange: "£8-20",
+      priority: "recommended" as const,
+      ukStandard: "BS 1363 compliant"
+    },
+    {
+      name: "Test leads with fused probes",
+      description: "Safe connection to electrical systems",
+      priceRange: "£15-35",
+      priority: "essential" as const,
+      ukStandard: "GS38 specification"
+    }
+  ];
+
+  const advancedTestTools = [
+    {
+      name: "Multifunction installation tester",
+      description: "Professional testing for certification work",
+      priceRange: "£400-1200",
+      priority: "essential" as const,
+      ukStandard: "18th Edition compliant"
+    },
+    {
+      name: "Earth loop impedance tester",
+      description: "Ze and Zs measurements for safety verification",
+      priceRange: "£300-800",
+      priority: "essential" as const,
+      ukStandard: "BS 7671 compliant"
+    },
+    {
+      name: "RCD tester (all types)",
+      description: "Test 30mA, 100mA, and 300mA RCDs",
+      priceRange: "£200-500",
+      priority: "essential" as const,
+      ukStandard: "Type A, AC, F testing"
+    },
+    {
+      name: "Insulation resistance tester",
+      description: "500V and 1000V insulation testing",
+      priceRange: "£150-400",
+      priority: "essential" as const,
+      ukStandard: "BS 7671 Part 6"
+    },
+    {
+      name: "Professional test lead set",
+      description: "Various probes and adaptors for all tests",
+      priceRange: "£80-150",
+      priority: "recommended" as const,
+      ukStandard: "CAT III rated"
+    }
+  ];
+
   return (
     <div className="p-6 space-y-6">
       <div className="text-center space-y-2">
@@ -15,43 +91,61 @@ const TestEquipmentTab = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <ToolCard
-          title="Basic Test Equipment"
+          title="Basic Test Equipment (Year 1-2)"
           icon={<CircuitBoard className="h-8 w-8 text-elec-yellow" />}
-          description="Essential testing tools for day-to-day electrical work. These form the foundation of your test equipment collection."
-          items={[
-            "Voltage indicator (approved to GS38)",
-            "Proving unit for testing your voltage indicator",
-            "Continuity tester",
-            "Socket tester (13A plug-in type)",
-            "Test leads with fused probes (GS38 compliant)"
-          ]}
+          description="Essential testing tools for day-to-day electrical work during early apprenticeship."
+          items={basicTestTools}
+          apprenticeTip="Start with a good voltage indicator and proving unit - these are used daily. Many basic testers are included in apprentice starter kits. Always prove dead before starting work!"
+          ukConsideration="GS38 compliance is mandatory for test equipment. Your voltage indicator must be 2-pole type for safety. Never use a multimeter for proving dead."
         />
 
         <ToolCard
-          title="Advanced Testing (Later Years)"
+          title="Advanced Testing (Year 3-4)"
           icon={<Shield className="h-8 w-8 text-elec-yellow" />}
-          description="Equipment needed as you progress to testing and inspection work. Essential for certification and compliance testing."
-          items={[
-            "Multifunction installation tester (18th Edition compliant)",
-            "Earth loop impedance tester (Ze, Zs measurements)",
-            "RCD tester (30mA, 100mA, 300mA)",
-            "Insulation resistance tester (500V, 1000V)",
-            "Test leads and accessories"
-          ]}
+          description="Professional equipment needed for testing and inspection work leading to certification."
+          items={advancedTestTools}
+          apprenticeTip="Don't rush to buy expensive test equipment early. Many employers provide these for qualified staff. Focus on understanding how to use them properly first."
+          ukConsideration="18th Edition testing requires specific capabilities. Ensure any multifunction tester can perform all required tests to current standards. Annual calibration is mandatory."
         />
       </div>
 
       <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
         <h3 className="text-lg font-medium text-blue-300 mb-2 flex items-center gap-2">
           <Shield className="h-5 w-5" />
-          18th Edition Testing Requirements
+          18th Edition Testing Requirements & Progression Guide
         </h3>
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          The BS 7671:2018 Amendment 2:2022 (18th Edition) of the IET Wiring Regulations specifies requirements 
-          for electrical installations. Your test equipment must comply with these regulations and relevant standards. 
-          Always ensure your equipment is calibrated annually and has valid certificates. Uncalibrated equipment 
-          can give false readings, compromising safety.
-        </p>
+        <div className="space-y-3 text-sm text-muted-foreground leading-relaxed">
+          <p>
+            <strong>Year 1-2:</strong> Focus on basic safety equipment. Learn to use voltage indicators, 
+            proving units, and simple continuity testers. Understand the principles before using complex equipment.
+          </p>
+          <p>
+            <strong>Year 3-4:</strong> Begin using multifunction testers under supervision. Learn all test 
+            sequences and understand what the readings mean. Practice on training installations first.
+          </p>
+          <p>
+            <strong>Calibration:</strong> All test equipment must be calibrated annually with valid certificates. 
+            Uncalibrated equipment can give false readings, compromising safety and invalidating test results.
+          </p>
+          <p>
+            <strong>Investment Strategy:</strong> Basic equipment: £100-150. Advanced equipment: £1000-2000. 
+            Consider finance options or employer schemes for expensive items.
+          </p>
+        </div>
+      </div>
+
+      <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+        <h3 className="text-lg font-medium text-red-300 mb-2 flex items-center gap-2">
+          <AlertTriangle className="h-5 w-5" />
+          Critical Safety Reminders
+        </h3>
+        <ul className="space-y-1 text-sm text-muted-foreground">
+          <li>• Always prove your voltage indicator is working before and after use</li>
+          <li>• Never use a digital multimeter to prove an installation is dead</li>
+          <li>• Test equipment must be regularly PAT tested and calibrated</li>
+          <li>• Follow the "prove dead" procedure every time - no exceptions</li>
+          <li>• Damaged test equipment must be taken out of service immediately</li>
+        </ul>
       </div>
     </div>
   );
