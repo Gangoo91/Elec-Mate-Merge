@@ -1,55 +1,44 @@
 
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Activity, Zap, Shield, TestTube, PlayCircle, FileText } from "lucide-react";
+import { Activity, Zap, Shield, TestTube, PlayCircle, FileText, ArrowLeft } from "lucide-react";
+import { testingGuides, getTestGuideById, TestGuide } from "@/data/bs7671-testing/testingGuidesData";
+import InteractiveTestingGuide from "./InteractiveTestingGuide";
 
 const TestingGuidesTab = () => {
+  const [activeGuide, setActiveGuide] = useState<TestGuide | null>(null);
+
   const testingCategories = [
     {
       id: "continuity",
       title: "Continuity Testing",
       icon: Zap,
       description: "R1+R2 and protective conductor continuity",
-      tests: [
-        { name: "Protective Conductor Continuity", time: "10-15 mins", difficulty: "Beginner" },
-        { name: "Ring Final Circuit Continuity", time: "15-20 mins", difficulty: "Intermediate" },
-        { name: "R1+R2 Values", time: "20-30 mins", difficulty: "Intermediate" }
-      ]
+      guides: testingGuides.filter(guide => guide.id.includes("continuity"))
     },
     {
       id: "insulation",
       title: "Insulation Resistance",
       icon: Shield,
       description: "IR testing between conductors and earth",
-      tests: [
-        { name: "Phase to Neutral IR", time: "5-10 mins", difficulty: "Beginner" },
-        { name: "Phase to Earth IR", time: "5-10 mins", difficulty: "Beginner" },
-        { name: "Neutral to Earth IR", time: "5-10 mins", difficulty: "Beginner" }
-      ]
+      guides: testingGuides.filter(guide => guide.id.includes("insulation"))
     },
     {
       id: "earth-loop",
       title: "Earth Fault Loop",
       icon: Activity,
       description: "Zs testing and protective device operation",
-      tests: [
-        { name: "Earth Fault Loop Impedance", time: "10-15 mins", difficulty: "Intermediate" },
-        { name: "Prospective Fault Current", time: "10-15 mins", difficulty: "Advanced" },
-        { name: "Maximum Zs Values Check", time: "5-10 mins", difficulty: "Intermediate" }
-      ]
+      guides: []
     },
     {
       id: "rcd",
       title: "RCD Testing",
       icon: TestTube,
       description: "RCD operation and trip times",
-      tests: [
-        { name: "RCD Trip Time Test", time: "10-15 mins", difficulty: "Intermediate" },
-        { name: "RCD Ramp Test", time: "15-20 mins", difficulty: "Advanced" },
-        { name: "RCD Push Button Test", time: "2-5 mins", difficulty: "Beginner" }
-      ]
+      guides: testingGuides.filter(guide => guide.id.includes("rcd"))
     }
   ];
 
@@ -62,6 +51,32 @@ const TestingGuidesTab = () => {
     }
   };
 
+  const handleStartGuide = (guideId: string) => {
+    const guide = getTestGuideById(guideId);
+    if (guide) {
+      setActiveGuide(guide);
+    }
+  };
+
+  const handleCompleteGuide = () => {
+    // Here you could track completion, update progress, etc.
+    setActiveGuide(null);
+  };
+
+  const handleBackToGuides = () => {
+    setActiveGuide(null);
+  };
+
+  if (activeGuide) {
+    return (
+      <InteractiveTestingGuide
+        guide={activeGuide}
+        onComplete={handleCompleteGuide}
+        onBack={handleBackToGuides}
+      />
+    );
+  }
+
   return (
     <div className="space-y-6">
       {/* Testing Overview */}
@@ -69,7 +84,7 @@ const TestingGuidesTab = () => {
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <TestTube className="h-5 w-5" />
-            Testing Sequence Overview
+            Interactive Testing Guides
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -104,15 +119,18 @@ const TestingGuidesTab = () => {
               </ol>
             </div>
             <div>
-              <h4 className="font-semibold mb-3">Essential Equipment</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Multifunction Tester (MFT)</li>
-                <li>• RCD Tester</li>
-                <li>• Voltage Indicator</li>
-                <li>• Proving Unit</li>
-                <li>• Test Leads and Probes</li>
-                <li>• Lock-off Devices</li>
-              </ul>
+              <h4 className="font-semibold mb-3">Available Guides</h4>
+              <div className="space-y-2">
+                <div className="text-sm text-muted-foreground">
+                  <span className="font-medium text-green-400">{testingGuides.filter(g => g.difficulty === 'Beginner').length}</span> Beginner guides
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  <span className="font-medium text-yellow-400">{testingGuides.filter(g => g.difficulty === 'Intermediate').length}</span> Intermediate guides
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  <span className="font-medium text-red-400">{testingGuides.filter(g => g.difficulty === 'Advanced').length}</span> Advanced guides
+                </div>
+              </div>
             </div>
           </div>
         </CardContent>
@@ -142,37 +160,81 @@ const TestingGuidesTab = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {category.tests.map((test, index) => (
-                    <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <h4 className="font-medium text-white">{test.name}</h4>
-                        <div className="flex items-center gap-2">
-                          <Badge variant="outline" className="border-blue-500/40 text-blue-400">
-                            {test.time}
-                          </Badge>
-                          <Badge variant="outline" className={getDifficultyColor(test.difficulty)}>
-                            {test.difficulty}
-                          </Badge>
+                  {category.guides.length > 0 ? (
+                    category.guides.map((guide, index) => (
+                      <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <h4 className="font-medium text-white">{guide.title}</h4>
+                          <div className="flex items-center gap-2">
+                            <Badge variant="outline" className="border-blue-500/40 text-blue-400">
+                              {guide.duration}
+                            </Badge>
+                            <Badge variant="outline" className={getDifficultyColor(guide.difficulty)}>
+                              {guide.difficulty}
+                            </Badge>
+                          </div>
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-4">{guide.description}</p>
+                        <div className="flex gap-2">
+                          <Button 
+                            size="sm" 
+                            className="flex-1"
+                            onClick={() => handleStartGuide(guide.id)}
+                          >
+                            <PlayCircle className="h-3 w-3 mr-1" />
+                            Start Interactive Guide
+                          </Button>
+                          <Button size="sm" variant="outline">
+                            <FileText className="h-3 w-3 mr-1" />
+                            Reference
+                          </Button>
                         </div>
                       </div>
-                      <div className="flex gap-2">
-                        <Button size="sm" className="flex-1">
-                          <PlayCircle className="h-3 w-3 mr-1" />
-                          Start Guide
-                        </Button>
-                        <Button size="sm" variant="outline">
-                          <FileText className="h-3 w-3 mr-1" />
-                          Reference
-                        </Button>
-                      </div>
+                    ))
+                  ) : (
+                    <div className="text-center py-8 border border-elec-yellow/20 rounded-lg">
+                      <TestTube className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                      <h4 className="font-medium text-white mb-2">Guides Coming Soon</h4>
+                      <p className="text-sm text-muted-foreground">
+                        Interactive guides for {category.title.toLowerCase()} are being developed.
+                      </p>
                     </div>
-                  ))}
+                  )}
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
         ))}
       </Tabs>
+
+      {/* Quick Reference Card */}
+      <Card className="border-blue-500/30 bg-blue-500/10">
+        <CardHeader>
+          <CardTitle className="text-blue-400">Testing Best Practices</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="font-semibold mb-3 text-blue-300">Before Testing</h4>
+              <ul className="space-y-1 text-sm text-muted-foreground">
+                <li>• Ensure safe isolation is complete</li>
+                <li>• Check test equipment is calibrated</li>
+                <li>• Remove or isolate electronic devices</li>
+                <li>• Have appropriate test certificates ready</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-3 text-blue-300">During Testing</h4>
+              <ul className="space-y-1 text-sm text-muted-foreground">
+                <li>• Follow the correct test sequence</li>
+                <li>• Record all readings accurately</li>
+                <li>• Compare results with acceptable limits</li>
+                <li>• Note any unusual readings or observations</li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
