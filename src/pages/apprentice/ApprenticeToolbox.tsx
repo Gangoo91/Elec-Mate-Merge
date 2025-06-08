@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Wrench, MapPin, MessageCircle, FileText, PoundSterling, Users, Clock, BookOpen, AlertTriangle, CheckCircle, Heart } from "lucide-react";
+import { ArrowLeft, Wrench, MapPin, MessageCircle, FileText, PoundSterling, Users, Clock, BookOpen, AlertTriangle, CheckCircle, TrendingUp, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import ToolboxGrid from "@/components/apprentice/toolbox/ToolboxGrid";
 import ToolboxHeader from "@/components/apprentice/toolbox/ToolboxHeader";
@@ -85,18 +85,18 @@ const ApprenticeToolbox = () => {
       description: "How to handle errors professionally and turn them into learning opportunities"
     },
     {
-      id: "safety-fundamentals",
-      title: "Safety Fundamentals",
-      icon: <AlertTriangle className="h-6 w-6 text-red-400" />,
-      link: "/apprentice/toolbox/safety-fundamentals",
-      description: "Core safety principles and practices for electrical work environments"
+      id: "professional-development",
+      title: "Professional Development & Career Planning",
+      icon: <TrendingUp className="h-6 w-6 text-blue-400" />,
+      link: "/apprentice/professional-development",
+      description: "Plan your career progression, explore specialisations, and develop professional skills"
     },
     {
-      id: "mental-health",
-      title: "Mental Health Support",
-      icon: <Heart className="h-6 w-6 text-pink-400" />,
-      link: "/apprentice/mental-health",
-      description: "Resources and support for maintaining mental wellbeing during your apprenticeship"
+      id: "time-management",
+      title: "Time Management & Work-Life Balance",
+      icon: <Calendar className="h-6 w-6 text-green-400" />,
+      link: "/apprentice/toolbox/time-management",
+      description: "Manage your apprenticeship workload whilst maintaining a healthy work-life balance"
     }
   ];
 
