@@ -1,268 +1,219 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, AlertTriangle, Target, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CheckCircle, AlertTriangle, BookOpen, ExternalLink } from "lucide-react";
+import { useState } from "react";
 
 const CaseStudiesTab = () => {
+  const [selectedCase, setSelectedCase] = useState<number | null>(null);
+
   const caseStudies = [
     {
-      title: "The Mis-wired Consumer Unit",
-      apprentice: "Jamie, 1st Year Apprentice",
+      id: 1,
+      title: "The Wrong Circuit Breaker",
       category: "Technical Error",
-      severity: "High",
-      scenario: {
-        background: "Jamie was tasked with connecting circuits in a new consumer unit during a house rewire. Eager to impress, Jamie worked quickly and didn't double-check the circuit labelling.",
-        mistake: "Connected the upstairs lighting circuit to a 32A MCB instead of a 6A MCB, and connected the ring main to the 6A breaker.",
-        discovery: "During testing, the upstairs lights wouldn't work, and the ring main kept tripping immediately."
-      },
-      impact: {
-        immediate: ["Lights wouldn't function", "Ring circuit constantly tripping", "Half day's work lost"],
-        potential: ["Fire risk from undersized protection", "Damage to lighting circuits", "Failed inspection"]
-      },
-      recovery: {
-        steps: [
-          "Immediately isolated the entire consumer unit",
-          "Called supervisor to report the error honestly",
-          "Together, methodically checked every connection",
-          "Re-terminated all circuits with proper labelling",
-          "Conducted thorough testing of all circuits"
-        ],
-        timeImpact: "4 hours to correct",
-        cost: "£50 in supervisor time"
-      },
-      lessons: [
-        "Always double-check circuit schedules against actual connections",
-        "Label cables clearly during first fix to prevent confusion",
-        "Test each circuit individually before energising the board",
-        "When in doubt, ask rather than guess",
-        "Rushing quality work always costs more time in the end"
+      severity: "Moderate",
+      scenario: "Jamie, a second-year apprentice, was tasked with replacing a faulty 20A MCB in a domestic consumer unit. In a rush to finish before lunch, Jamie grabbed what looked like the right breaker from the van and installed it without checking the rating. It was actually a 32A MCB.",
+      discovery: "During testing, the electrician noticed the wrong rating and questioned Jamie about it. The error was caught before the installation was energised.",
+      consequences: [
+        "Circuit would have been overprotected",
+        "Potential fire risk from cable overload",
+        "Non-compliance with BS 7671",
+        "Time lost replacing the correct MCB"
       ],
-      outcome: "Jamie developed a systematic checking procedure and never repeated this type of error. The supervisor appreciated the honest reporting and used it as a training example for other apprentices."
+      lessons: [
+        "Always verify component ratings before installation",
+        "Rushing leads to mistakes - plan time properly",
+        "Double-check work before calling for inspection",
+        "Keep different ratings clearly separated in van stock"
+      ],
+      outcome: "Jamie implemented a labelling system in the van and created a pre-installation checklist. No similar errors occurred in the following 6 months.",
+      prevention: "Use proper lighting in van, organise stock clearly, and always verify ratings"
     },
     {
-      title: "The Emergency Stop Incident",
-      apprentice: "Alex, 3rd Year Apprentice",
-      category: "Safety Procedure",
-      severity: "Critical",
-      scenario: {
-        background: "Alex was working on industrial machinery commissioning and needed to test motor operation. The usual supervisor was off sick, and Alex felt confident to proceed alone.",
-        mistake: "Bypassed the emergency stop circuit 'temporarily' to test the motor, but forgot to reconnect it before declaring the work complete.",
-        discovery: "During final commissioning, the client's engineer discovered the bypassed emergency stop during safety checks."
-      },
-      impact: {
-        immediate: ["Work failed final inspection", "Client lost confidence in company", "Mandatory safety retraining"],
-        potential: ["Serious injury if emergency occurred", "Legal liability for company", "Contract termination"]
-      },
-      recovery: {
-        steps: [
-          "Immediately admitted the bypass and reasoning",
-          "Assisted in full safety system check",
-          "Attended emergency safety retraining course",
-          "Developed personal safety checklist for all future work",
-          "Agreed to work under closer supervision until confidence restored"
-        ],
-        timeImpact: "2 days additional work",
-        cost: "£800 in delays and retraining"
-      },
-      lessons: [
-        "Safety systems must never be bypassed, even temporarily",
-        "Always work with proper supervision on critical systems",
-        "Use systematic checklists for safety-critical work",
-        "If you don't know proper procedure, stop and ask",
-        "Professional reputation takes years to build, seconds to damage"
+      id: 2,
+      title: "The Live Working Incident",
+      category: "Safety Violation",
+      severity: "Serious",
+      scenario: "Alex was changing a faulty socket outlet in an office. The socket appeared dead (no power to a plugged-in device), so Alex assumed it was safe to work on without proper isolation. Unknown to Alex, the socket was on a different circuit that was still live.",
+      discovery: "When Alex touched the live terminal while unscrewing the faceplate, there was an arc flash. Fortunately, Alex was wearing safety glasses and wasn't seriously injured, but it was a close call.",
+      consequences: [
+        "Risk of electrocution or serious burns",
+        "Arc flash could have caused eye injury",
+        "Potential for fire in the workplace",
+        "Regulatory investigation possible"
       ],
-      outcome: "Alex completed apprenticeship successfully but with renewed respect for safety procedures. Now mentors other apprentices on safety culture and has never had another safety incident."
+      lessons: [
+        "Never assume a circuit is dead without proper testing",
+        "Use approved voltage indicators and test them",
+        "Follow the isolation procedure completely",
+        "PPE can prevent serious injury"
+      ],
+      outcome: "Alex attended additional safety training and now uses proper isolation procedures religiously. This experience reinforced the importance of safety protocols.",
+      prevention: "Always test for dead, use proper PPE, follow isolation procedures without exception"
     },
     {
-      title: "The Cable Calculation Error",
-      apprentice: "Sam, 2nd Year Apprentice",
-      category: "Design Calculation",
-      severity: "Medium",
-      scenario: {
-        background: "Sam was asked to calculate cable sizes for a small commercial installation. Having recently covered the theory, Sam felt confident to work independently.",
-        mistake: "Used incorrect derating factors and didn't account for grouping, resulting in undersized cables for the load.",
-        discovery: "During routine inspection, the building control officer questioned the cable sizes and asked to see the calculations."
-      },
-      impact: {
-        immediate: ["Installation failed inspection", "All undersized cables needed replacement", "Project delayed by one week"],
-        potential: ["Cable overheating and fire risk", "Insurance issues if problem not caught", "Prosecution under Building Regulations"]
-      },
-      recovery: {
-        steps: [
-          "Recalculated all cable sizes with supervisor oversight",
-          "Ordered correct cables and scheduled replacement",
-          "Reviewed calculation methodology with training officer",
-          "Created reference sheets for future cable calculations",
-          "Practiced similar calculations until confident"
-        ],
-        timeImpact: "5 days additional work",
-        cost: "£400 in cable replacement plus labour"
-      },
-      lessons: [
-        "Always have calculations checked by qualified person",
-        "Understand all factors affecting cable sizing",
-        "Create systematic calculation procedures",
-        "Know when to seek help rather than guess",
-        "Keep reference materials easily accessible"
+      id: 3,
+      title: "The Communication Breakdown",
+      category: "Communication",
+      severity: "Minor",
+      scenario: "Morgan was working on a lighting circuit and needed to isolate the supply. Morgan told the site supervisor 'I'm turning off the lights for a bit' but didn't specify which lights or for how long. The supervisor assumed it was just for 10 minutes.",
+      discovery: "After 45 minutes, office workers complained they couldn't work in the dark. The supervisor came looking for Morgan, frustrated about the lack of communication.",
+      consequences: [
+        "Disrupted office productivity",
+        "Frustrated building occupants",
+        "Strained relationship with client",
+        "Poor reflection on the company"
       ],
-      outcome: "Sam became very methodical with calculations and eventually became the go-to person for complex cable sizing in the company. The mistake became a valuable learning foundation."
+      lessons: [
+        "Be specific when communicating about work impacts",
+        "Provide time estimates and regular updates",
+        "Consider the client's business needs",
+        "Establish clear communication protocols"
+      ],
+      outcome: "Morgan learned to provide detailed work schedules and regular updates. Client relationships improved significantly.",
+      prevention: "Clear communication plans, regular updates, and consideration for building users"
     }
   ];
 
-  const recoveryMetrics = [
-    { metric: "Average Recovery Time", value: "4.3 hours", description: "Time to fully resolve typical apprentice mistakes" },
-    { metric: "Learning Retention", value: "94%", description: "Apprentices who don't repeat similar mistakes after proper recovery" },
-    { metric: "Career Impact", value: "Minimal", description: "Long-term effect on career progression when handled professionally" },
-    { metric: "Supervisor Trust", value: "Increased", description: "Trust levels after honest mistake reporting and good recovery" }
-  ];
+  const getSeverityColor = (severity: string) => {
+    switch (severity) {
+      case 'Serious':
+        return 'destructive';
+      case 'Moderate':
+        return 'default';
+      case 'Minor':
+        return 'outline';
+      default:
+        return 'outline';
+    }
+  };
 
   return (
     <div className="space-y-6">
       <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <CheckCircle className="h-6 w-6 text-elec-yellow" />
+            <BookOpen className="h-6 w-6 text-elec-yellow" />
             <CardTitle className="text-elec-yellow">Real Apprentice Case Studies</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-8">
-            {caseStudies.map((study, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-white">{study.title}</h3>
-                    <p className="text-sm text-muted-foreground">{study.apprentice}</p>
-                  </div>
-                  <div className="flex gap-2">
-                    <Badge variant="outline" className="border-blue-500/40 text-blue-400">
-                      {study.category}
-                    </Badge>
-                    <Badge 
-                      variant={study.severity === 'Critical' ? 'destructive' : study.severity === 'High' ? 'destructive' : 'outline'}
-                      className={study.severity === 'Medium' ? 'border-amber-500/40 text-amber-400' : ''}
-                    >
-                      {study.severity}
-                    </Badge>
-                  </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {caseStudies.map((caseStudy) => (
+              <div
+                key={caseStudy.id}
+                className={`border rounded-lg p-4 cursor-pointer transition-all hover:bg-white/5 ${
+                  selectedCase === caseStudy.id ? 'border-elec-yellow bg-elec-yellow/10' : 'border-elec-yellow/20'
+                }`}
+                onClick={() => setSelectedCase(selectedCase === caseStudy.id ? null : caseStudy.id)}
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <h3 className="font-semibold text-white text-sm">{caseStudy.title}</h3>
+                  <Badge variant={getSeverityColor(caseStudy.severity)} className="text-xs">
+                    {caseStudy.severity}
+                  </Badge>
                 </div>
-
-                <div className="space-y-4">
-                  {/* Scenario */}
-                  <div className="bg-black/20 rounded-lg p-4">
-                    <h4 className="font-medium text-white mb-2 flex items-center gap-2">
-                      <AlertTriangle className="h-4 w-4 text-amber-400" />
-                      What Happened
-                    </h4>
-                    <div className="space-y-2 text-sm text-muted-foreground">
-                      <p><strong>Background:</strong> {study.scenario.background}</p>
-                      <p><strong>The Mistake:</strong> {study.scenario.mistake}</p>
-                      <p><strong>Discovery:</strong> {study.scenario.discovery}</p>
-                    </div>
-                  </div>
-
-                  {/* Impact */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-                      <h4 className="font-medium text-red-300 mb-2">Impact</h4>
-                      <div className="space-y-2">
-                        <div>
-                          <h5 className="text-sm font-medium text-white">Immediate:</h5>
-                          <ul className="text-sm text-muted-foreground">
-                            {study.impact.immediate.map((item, i) => (
-                              <li key={i}>• {item}</li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div>
-                          <h5 className="text-sm font-medium text-white">Potential:</h5>
-                          <ul className="text-sm text-muted-foreground">
-                            {study.impact.potential.map((item, i) => (
-                              <li key={i}>• {item}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                      <h4 className="font-medium text-blue-300 mb-2">Recovery Process</h4>
-                      <div className="space-y-2">
-                        <ol className="text-sm text-muted-foreground space-y-1">
-                          {study.recovery.steps.map((step, i) => (
-                            <li key={i}>{i + 1}. {step}</li>
-                          ))}
-                        </ol>
-                        <div className="pt-2 border-t border-blue-500/30">
-                          <p className="text-sm"><strong>Time:</strong> {study.recovery.timeImpact}</p>
-                          <p className="text-sm"><strong>Cost:</strong> {study.recovery.cost}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Lessons */}
-                  <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-                    <h4 className="font-medium text-green-300 mb-2 flex items-center gap-2">
-                      <Target className="h-4 w-4" />
-                      Key Lessons Learned
-                    </h4>
-                    <ul className="space-y-1">
-                      {study.lessons.map((lesson, i) => (
-                        <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                          {lesson}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Outcome */}
-                  <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-                    <h4 className="font-medium text-elec-yellow mb-2">Long-term Outcome</h4>
-                    <p className="text-sm text-muted-foreground">{study.outcome}</p>
-                  </div>
-                </div>
+                
+                <Badge variant="outline" className="mb-3 text-xs border-elec-yellow/40 text-elec-yellow">
+                  {caseStudy.category}
+                </Badge>
+                
+                <p className="text-xs text-muted-foreground line-clamp-3">
+                  {caseStudy.scenario}
+                </p>
+                
+                {selectedCase === caseStudy.id && (
+                  <Button
+                    size="sm"
+                    className="mt-3 w-full"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      // This would open a detailed view
+                    }}
+                  >
+                    <ExternalLink className="h-3 w-3 mr-1" />
+                    View Full Case
+                  </Button>
+                )}
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Users className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Recovery Success Metrics</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {recoveryMetrics.map((metric, index) => (
-              <div key={index} className="text-center p-4 border border-elec-yellow/20 rounded-lg">
-                <div className="text-2xl font-bold text-elec-yellow mb-1">{metric.value}</div>
-                <div className="font-medium text-white mb-2">{metric.metric}</div>
-                <div className="text-sm text-muted-foreground">{metric.description}</div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      {selectedCase && (
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardHeader>
+            <CardTitle className="text-elec-yellow">
+              {caseStudies.find(c => c.id === selectedCase)?.title}
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {(() => {
+              const currentCase = caseStudies.find(c => c.id === selectedCase);
+              if (!currentCase) return null;
 
-      <Card className="border-green-500/50 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-300">The Common Thread</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">
-            In every successful recovery story, the apprentice took ownership of the mistake, 
-            communicated honestly with supervisors, learned systematically from the error, 
-            and implemented changes to prevent recurrence. These case studies show that 
-            mistakes, when handled professionally, become the foundation of expertise and 
-            professional credibility.
-          </p>
-        </CardContent>
-      </Card>
+              return (
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="font-semibold text-white mb-2">The Scenario</h4>
+                    <p className="text-sm text-muted-foreground">{currentCase.scenario}</p>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-white mb-2">How It Was Discovered</h4>
+                    <p className="text-sm text-muted-foreground">{currentCase.discovery}</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <h4 className="font-semibold text-orange-300 mb-2 flex items-center gap-2">
+                        <AlertTriangle className="h-4 w-4" />
+                        Consequences
+                      </h4>
+                      <ul className="space-y-1">
+                        {currentCase.consequences.map((consequence, index) => (
+                          <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                            <div className="w-1 h-1 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
+                            {consequence}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-green-300 mb-2 flex items-center gap-2">
+                        <CheckCircle className="h-4 w-4" />
+                        Lessons Learned
+                      </h4>
+                      <ul className="space-y-1">
+                        {currentCase.lessons.map((lesson, index) => (
+                          <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                            <div className="w-1 h-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
+                            {lesson}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-blue-300 mb-2">Final Outcome</h4>
+                    <p className="text-sm text-muted-foreground">{currentCase.outcome}</p>
+                  </div>
+
+                  <div className="bg-elec-yellow/10 p-4 rounded-lg">
+                    <h4 className="font-semibold text-elec-yellow mb-2">Prevention Strategy</h4>
+                    <p className="text-sm text-muted-foreground">{currentCase.prevention}</p>
+                  </div>
+                </div>
+              );
+            })()}
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

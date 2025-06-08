@@ -1,160 +1,125 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Brain, Heart, Target, CheckCircle } from "lucide-react";
+import { Brain, Heart, TrendingUp, Users } from "lucide-react";
+import { useState } from "react";
 
 const ResilienceTab = () => {
-  const resilienceSkills = [
+  const [resilienceScore, setResilienceScore] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answers, setAnswers] = useState<number[]>([]);
+  const [showResults, setShowResults] = useState(false);
+
+  const resilienceQuestions = [
     {
-      skill: "Emotional Regulation",
+      question: "When I make a mistake at work, I...",
+      options: [
+        { text: "Panic and worry about being fired", score: 1 },
+        { text: "Feel embarrassed but tell my supervisor", score: 3 },
+        { text: "Calmly assess the situation and fix it", score: 5 },
+        { text: "Learn from it and improve my process", score: 4 }
+      ]
+    },
+    {
+      question: "If a colleague criticises my work, I...",
+      options: [
+        { text: "Take it personally and get defensive", score: 1 },
+        { text: "Listen but feel hurt", score: 2 },
+        { text: "Consider their feedback objectively", score: 4 },
+        { text: "Thank them and ask for specific advice", score: 5 }
+      ]
+    },
+    {
+      question: "When facing a challenging task, I...",
+      options: [
+        { text: "Avoid it or ask someone else to do it", score: 1 },
+        { text: "Worry but attempt it anyway", score: 2 },
+        { text: "Break it down into smaller steps", score: 4 },
+        { text: "See it as an opportunity to learn", score: 5 }
+      ]
+    },
+    {
+      question: "After a difficult day at work, I...",
+      options: [
+        { text: "Dwell on what went wrong", score: 1 },
+        { text: "Try to forget about it", score: 2 },
+        { text: "Reflect on lessons learned", score: 4 },
+        { text: "Plan how to improve tomorrow", score: 5 }
+      ]
+    }
+  ];
+
+  const handleAnswer = (score: number) => {
+    const newAnswers = [...answers, score];
+    setAnswers(newAnswers);
+
+    if (currentQuestion < resilienceQuestions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+    } else {
+      const totalScore = newAnswers.reduce((sum, answer) => sum + answer, 0);
+      const maxScore = resilienceQuestions.length * 5;
+      const percentage = (totalScore / maxScore) * 100;
+      setResilienceScore(percentage);
+      setShowResults(true);
+    }
+  };
+
+  const resetQuiz = () => {
+    setCurrentQuestion(0);
+    setAnswers([]);
+    setShowResults(false);
+    setResilienceScore(0);
+  };
+
+  const getResilienceLevel = (score: number) => {
+    if (score >= 80) return { level: "High", color: "text-green-400", description: "You have excellent resilience skills" };
+    if (score >= 60) return { level: "Good", color: "text-blue-400", description: "You're developing strong resilience" };
+    if (score >= 40) return { level: "Moderate", color: "text-yellow-400", description: "There's room for improvement" };
+    return { level: "Developing", color: "text-orange-400", description: "Focus on building resilience skills" };
+  };
+
+  const resilienceStrategies = [
+    {
+      title: "Growth Mindset",
+      icon: TrendingUp,
+      description: "View challenges as opportunities to learn and grow",
+      techniques: [
+        "Replace 'I can't do this' with 'I can't do this yet'",
+        "Focus on the learning process, not just results",
+        "Celebrate small improvements and progress"
+      ]
+    },
+    {
+      title: "Emotional Regulation",
       icon: Heart,
-      description: "Managing emotional responses to mistakes",
-      importance: 95,
+      description: "Manage your emotional responses to setbacks",
       techniques: [
-        {
-          technique: "The Pause Method",
-          description: "Take 3 deep breaths before reacting to a mistake",
-          practice: "When you realize you've made an error, count to 10 before speaking or acting"
-        },
-        {
-          technique: "Reframing Thoughts",
-          description: "Change negative self-talk into learning opportunities",
-          practice: "Instead of 'I'm stupid,' think 'This is a learning moment that will make me better'"
-        },
-        {
-          technique: "Emotional Acknowledgment",
-          description: "Accept that feeling frustrated or embarrassed is normal",
-          practice: "Say 'It's normal to feel disappointed, but this doesn't define my abilities'"
-        }
+        "Practice deep breathing when stressed",
+        "Take a moment to pause before reacting",
+        "Acknowledge feelings without being controlled by them"
       ]
     },
     {
-      skill: "Growth Mindset",
+      title: "Support Networks",
+      icon: Users,
+      description: "Build strong relationships for guidance and encouragement",
+      techniques: [
+        "Connect with mentors and experienced colleagues",
+        "Join apprentice support groups",
+        "Share experiences with fellow learners"
+      ]
+    },
+    {
+      title: "Self-Reflection",
       icon: Brain,
-      description: "Viewing mistakes as learning opportunities, not failures",
-      importance: 90,
+      description: "Regularly assess your progress and learning",
       techniques: [
-        {
-          technique: "The Learning Question",
-          description: "Always ask 'What can I learn from this?'",
-          practice: "After every mistake, write down one specific lesson learned"
-        },
-        {
-          technique: "Progress Recognition",
-          description: "Focus on how mistakes show you're pushing boundaries",
-          practice: "Keep a record of mistakes that led to significant learning breakthroughs"
-        },
-        {
-          technique: "Competence Building",
-          description: "View each mistake as adding to your professional competence",
-          practice: "Track how recovering from mistakes improves your problem-solving skills"
-        }
-      ]
-    },
-    {
-      skill: "Professional Confidence",
-      icon: Target,
-      description: "Maintaining self-assurance while learning from errors",
-      importance: 85,
-      techniques: [
-        {
-          technique: "Competence Inventory",
-          description: "Regularly list things you've learned and can do well",
-          practice: "Weekly review of new skills gained and successful completions"
-        },
-        {
-          technique: "Mentor Perspective",
-          description: "Remember that experienced professionals made similar mistakes",
-          practice: "Ask supervisors about mistakes they made as apprentices"
-        },
-        {
-          technique: "Future Self Visualization",
-          description: "Imagine how today's mistakes contribute to future expertise",
-          practice: "Write a letter from your future qualified self thanking your apprentice self for learning"
-        }
+        "Keep a learning journal",
+        "Review mistakes objectively",
+        "Identify patterns in your challenges"
       ]
     }
-  ];
-
-  const resilienceBuilders = [
-    {
-      area: "Physical Resilience",
-      practices: [
-        "Get adequate sleep to maintain clear thinking",
-        "Take proper breaks to avoid fatigue-related errors",
-        "Maintain good nutrition for sustained concentration",
-        "Exercise regularly to manage stress and build mental toughness"
-      ]
-    },
-    {
-      area: "Mental Resilience",
-      practices: [
-        "Practice mindfulness to stay present during challenges",
-        "Develop problem-solving routines for consistent responses",
-        "Use positive self-talk to maintain motivation",
-        "Set realistic daily goals to build success momentum"
-      ]
-    },
-    {
-      area: "Social Resilience",
-      practices: [
-        "Build supportive relationships with fellow apprentices",
-        "Communicate openly about challenges and mistakes",
-        "Seek feedback regularly to normalize the learning process",
-        "Offer support to others facing similar challenges"
-      ]
-    },
-    {
-      area: "Professional Resilience",
-      practices: [
-        "Maintain focus on long-term career goals",
-        "Document progress to see improvement over time",
-        "Celebrate small wins and learning milestones",
-        "Stay curious about new techniques and technologies"
-      ]
-    }
-  ];
-
-  const stressManagement = [
-    {
-      trigger: "Making a Costly Mistake",
-      symptoms: ["Anxiety about supervisor reaction", "Fear of repeating the error", "Self-doubt about abilities"],
-      strategies: [
-        "Focus on the lesson learned rather than the cost",
-        "Remember that all apprentices make expensive mistakes",
-        "Channel anxiety into more careful work practices",
-        "Discuss the mistake openly to reduce shame"
-      ]
-    },
-    {
-      trigger: "Repeated Similar Mistakes",
-      symptoms: ["Frustration with slow progress", "Questioning career choice", "Feeling overwhelmed"],
-      strategies: [
-        "Analyze the pattern to identify root causes",
-        "Break down complex tasks into smaller steps",
-        "Seek additional training on problem areas",
-        "Celebrate other areas where you're improving"
-      ]
-    },
-    {
-      trigger: "Public Mistakes",
-      symptoms: ["Embarrassment in front of colleagues", "Worried about reputation", "Avoiding challenging tasks"],
-      strategies: [
-        "Remember everyone makes mistakes publicly",
-        "Use humour appropriately to defuse tension",
-        "Focus on your response, not the mistake itself",
-        "Continue taking on challenges to build confidence"
-      ]
-    }
-  ];
-
-  const confidenceBuilders = [
-    "Every qualified electrician was once exactly where you are now",
-    "Mistakes during apprenticeship are expected and factored into training",
-    "Your questions and errors show you're thinking critically about the work",
-    "The electrical trade values problem-solving ability over perfection",
-    "Each mistake handled professionally builds your reputation",
-    "Learning from errors is more valuable than avoiding them through inaction"
   ];
 
   return (
@@ -163,126 +128,85 @@ const ResilienceTab = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Brain className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Core Resilience Skills</CardTitle>
+            <CardTitle className="text-elec-yellow">Resilience Assessment</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
-            {resilienceSkills.map((skill, index) => {
-              const IconComponent = skill.icon;
-              return (
-                <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <IconComponent className="h-6 w-6 text-elec-yellow" />
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-white">{skill.skill}</h3>
-                      <p className="text-sm text-muted-foreground">{skill.description}</p>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm text-elec-yellow font-medium">{skill.importance}% importance</div>
-                      <Progress value={skill.importance} className="w-20 mt-1" />
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4">
-                    {skill.techniques.map((technique, techIndex) => (
-                      <div key={techIndex} className="bg-black/20 rounded-lg p-4">
-                        <h4 className="font-medium text-white mb-2">{technique.technique}</h4>
-                        <p className="text-sm text-muted-foreground mb-3">{technique.description}</p>
-                        <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                          <h5 className="font-medium text-green-300 mb-1">Practice:</h5>
-                          <p className="text-sm text-muted-foreground">{technique.practice}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+          {!showResults ? (
+            <div className="space-y-6">
+              <div className="flex items-center gap-4 mb-6">
+                <Progress value={(currentQuestion / resilienceQuestions.length) * 100} className="flex-1" />
+                <span className="text-sm text-muted-foreground">
+                  {currentQuestion + 1} of {resilienceQuestions.length}
+                </span>
+              </div>
+              
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-white">
+                  {resilienceQuestions[currentQuestion].question}
+                </h3>
+                
+                <div className="grid grid-cols-1 gap-3">
+                  {resilienceQuestions[currentQuestion].options.map((option, index) => (
+                    <Button
+                      key={index}
+                      variant="outline"
+                      onClick={() => handleAnswer(option.score)}
+                      className="border-elec-yellow/30 hover:bg-elec-yellow/10 text-left justify-start h-auto p-4"
+                    >
+                      {option.text}
+                    </Button>
+                  ))}
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-white mb-2">Your Resilience Score</h3>
+                <div className="text-4xl font-bold text-elec-yellow mb-2">{Math.round(resilienceScore)}%</div>
+                <div className={`text-lg ${getResilienceLevel(resilienceScore).color}`}>
+                  {getResilienceLevel(resilienceScore).level} Resilience
+                </div>
+                <p className="text-muted-foreground mt-2">
+                  {getResilienceLevel(resilienceScore).description}
+                </p>
+              </div>
+              
+              <Button onClick={resetQuiz} className="w-full">
+                Take Assessment Again
+              </Button>
+            </div>
+          )}
         </CardContent>
       </Card>
 
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <div className="flex items-center gap-2">
-            <Target className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Building Resilience</CardTitle>
-          </div>
+          <CardTitle className="text-elec-yellow">Building Resilience</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {resilienceBuilders.map((builder, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-3">{builder.area}</h4>
-                <ul className="space-y-2">
-                  {builder.practices.map((practice, practiceIndex) => (
-                    <li key={practiceIndex} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                      {practice}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Heart className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Stress Management Strategies</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {stressManagement.map((scenario, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-3">{scenario.trigger}</h4>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  <div>
-                    <h5 className="font-medium text-orange-300 mb-2">Common Symptoms:</h5>
-                    <ul className="space-y-1">
-                      {scenario.symptoms.map((symptom, sIndex) => (
-                        <li key={sIndex} className="text-sm text-muted-foreground">• {symptom}</li>
-                      ))}
-                    </ul>
+            {resilienceStrategies.map((strategy, index) => {
+              const IconComponent = strategy.icon;
+              return (
+                <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+                  <div className="flex items-center gap-3 mb-3">
+                    <IconComponent className="h-5 w-5 text-elec-yellow" />
+                    <h4 className="font-semibold text-white">{strategy.title}</h4>
                   </div>
-                  <div>
-                    <h5 className="font-medium text-green-300 mb-2">Management Strategies:</h5>
-                    <ul className="space-y-1">
-                      {scenario.strategies.map((strategy, stIndex) => (
-                        <li key={stIndex} className="text-sm text-muted-foreground flex items-start gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                          {strategy}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <p className="text-sm text-muted-foreground mb-3">{strategy.description}</p>
+                  <ul className="space-y-1">
+                    {strategy.techniques.map((technique, techIndex) => (
+                      <li key={techIndex} className="text-xs text-muted-foreground flex items-start gap-2">
+                        <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
+                        {technique}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-green-500/50 bg-green-500/10">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <CheckCircle className="h-6 w-6 text-green-300" />
-            <CardTitle className="text-green-300">Confidence Building Reminders</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {confidenceBuilders.map((reminder, index) => (
-              <div key={index} className="flex items-start gap-3 p-3 bg-green-500/5 rounded-lg">
-                <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                <p className="text-sm text-muted-foreground">{reminder}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </CardContent>
       </Card>
