@@ -19,6 +19,9 @@ import BusinessStartup from "@/pages/electrician/business-development/BusinessSt
 import BusinessApprentices from "@/pages/electrician/business-development/BusinessApprentices";
 import BusinessElectricians from "@/pages/electrician/business-development/BusinessElectricians";
 import BusinessGrowth from "@/pages/electrician/business-development/BusinessGrowth";
+import ElectricianMentalHealth from "@/pages/electrician/ElectricianMentalHealth";
+import WorkLifeBalance from "@/pages/electrician/mental-health/WorkLifeBalance";
+import MentalHealthResources from "@/pages/electrician/mental-health/MentalHealthResources";
 
 const ElectricianHubRoutes = () => (
   <Routes>
@@ -32,7 +35,9 @@ const ElectricianHubRoutes = () => (
     <Route path="safety-shares" element={<SafetyShares />} />
     <Route path="safety-shares/projects" element={<MajorProjects />} />
     <Route path="live-pricing" element={<LivePricing />} />
-    <Route path="mental-health" element={<ApprenticeMentalHealth />} />
+    <Route path="mental-health" element={<ElectricianMentalHealth />} />
+    <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
+    <Route path="mental-health/resources" element={<MentalHealthResources />} />
     <Route path="mentor-connect" element={<ApprenticeMentor />} />
     <Route path="career-progression" element={<CareerProgression />} />
     

@@ -1,10 +1,12 @@
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Heart } from "lucide-react";
-import { Link } from "react-router-dom";
+import MentalHealthHubLayout from "@/components/mental-health/MentalHealthHubLayout";
 import MentalHealthMate from "@/components/mental-health/MentalHealthMate";
 import LocalResourceFinder from "@/components/mental-health/crisis/LocalResourceFinder";
+import MoodTracker from "@/components/mental-health/interactive/MoodTracker";
+import SelfCareReminders from "@/components/mental-health/interactive/SelfCareReminders";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const ApprenticeMentalHealth = () => {
   const resources = [
@@ -39,42 +41,20 @@ const ApprenticeMentalHealth = () => {
   ];
 
   return (
-    <div className="space-y-6 animate-fade-in pb-6">
-      <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Mental Health Hub</h1>
-          <p className="text-sm sm:text-base text-muted-foreground mt-1">
-            Resources and support for maintaining wellbeing during your apprenticeship journey
-          </p>
-        </div>
-        <Link to="/apprentice/hub" className="self-start sm:self-auto">
-          <Button variant="outline" size="sm" className="w-full sm:w-auto">Back to Apprentice Hub</Button>
-        </Link>
+    <MentalHealthHubLayout>
+      {/* Interactive Features */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <MoodTracker />
+        <SelfCareReminders />
       </div>
-      
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
-            <Heart className="h-5 w-5 text-elec-yellow" />
-            Your Wellbeing Matters
-          </CardTitle>
-          <CardDescription className="text-sm">
-            The electrical trade can be demanding. Remember to prioritise your mental health.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm sm:text-base mb-4">
-            If you're experiencing distress or need immediate support, contact the Samaritans at <span className="font-medium">116 123</span> (free, 24/7) or the Construction Industry Helpline at <span className="font-medium">0345 605 1956</span> (8am-8pm, 7 days)
-          </p>
-        </CardContent>
-      </Card>
 
-      {/* Local Mental Health Resources Finder */}
+      {/* Local Resources Finder */}
       <LocalResourceFinder />
       
-      {/* Mental Health Mate feature */}
+      {/* Mental Health Mate */}
       <MentalHealthMate />
 
+      {/* Resource Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         {resources.map((resource) => (
           <Link 
@@ -99,7 +79,7 @@ const ApprenticeMentalHealth = () => {
           </Link>
         ))}
       </div>
-    </div>
+    </MentalHealthHubLayout>
   );
 };
 
