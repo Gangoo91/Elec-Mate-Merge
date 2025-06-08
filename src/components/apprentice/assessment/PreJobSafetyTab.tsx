@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { CheckSquare, Shield, AlertTriangle, Download } from "lucide-react";
+import { CheckSquare, Shield, AlertTriangle, Download, Clock, User, FileText } from "lucide-react";
 import { useState } from "react";
 
 const PreJobSafetyTab = () => {
@@ -13,43 +13,83 @@ const PreJobSafetyTab = () => {
   const safetyChecklist = [
     {
       category: "Personal Protective Equipment",
+      icon: Shield,
       items: [
         "Hard hat - BS EN 397 compliant with electrical protection",
         "Safety glasses - BS EN 166 impact resistant",
         "Insulated gloves - voltage rated for the task",
         "Safety boots - BS EN ISO 20345 with electrical protection",
-        "High-visibility clothing - appropriate to site requirements"
+        "High-visibility clothing - appropriate to site requirements",
+        "Hearing protection if required for noisy environments",
+        "Respiratory protection for dusty conditions"
       ]
     },
     {
-      category: "Electrical Safety",
+      category: "Electrical Safety Equipment",
+      icon: Shield,
       items: [
         "Voltage indicator/tester calibrated and functioning",
         "Lock-off devices available and in good condition",
         "Prove dead device tested before and after use",
-        "Safe isolation procedures understood and documented",
-        "Emergency contact numbers readily available"
+        "GS38 compliant test leads and probes",
+        "Insulated tools rated for working voltage",
+        "Emergency contact numbers readily available",
+        "First aid kit with electrical injury procedures"
       ]
     },
     {
-      category: "Work Environment",
+      category: "Work Environment Assessment",
+      icon: AlertTriangle,
       items: [
         "Adequate lighting for the work area",
         "Weather conditions suitable for electrical work",
         "Work area clear of water and moisture",
         "Access routes safe and unobstructed",
-        "Emergency evacuation route identified"
+        "Emergency evacuation route identified",
+        "Fire extinguisher location noted",
+        "Ventilation adequate for the work being undertaken"
       ]
     },
     {
       category: "Documentation & Communication",
+      icon: FileText,
       items: [
         "Method statement reviewed and understood",
         "Risk assessment completed and communicated",
         "Permit to work obtained if required",
         "All team members briefed on safety procedures",
-        "Supervisor contact details confirmed"
+        "Supervisor contact details confirmed",
+        "Site induction completed",
+        "Insurance and certification documents available"
       ]
+    },
+    {
+      category: "Tool and Equipment Check",
+      icon: CheckSquare,
+      items: [
+        "All tools PAT tested and in date",
+        "Extension leads and portable equipment checked",
+        "Ladder inspection completed if required",
+        "Scaffolding certification checked",
+        "Vehicle safety check completed",
+        "Material handling equipment inspected",
+        "Communication devices tested and charged"
+      ]
+    }
+  ];
+
+  const safetyTips = [
+    {
+      title: "Safe Isolation Procedure",
+      content: "Always follow the 7-step safe isolation procedure: 1) Identify 2) Isolate 3) Secure 4) Test dead 5) Re-test tester 6) Issue permit 7) Begin work"
+    },
+    {
+      title: "Emergency Procedures",
+      content: "Know the emergency contact numbers, location of first aid equipment, and evacuation procedures. Report any incidents immediately."
+    },
+    {
+      title: "Weather Considerations",
+      content: "Do not work on outdoor electrical installations during wet weather, high winds, or electrical storms. Monitor weather conditions throughout the day."
     }
   ];
 
@@ -80,9 +120,9 @@ const PreJobSafetyTab = () => {
         <CardContent>
           <p className="text-muted-foreground mb-4">
             Complete this comprehensive safety checklist before starting any electrical work. 
-            Each item must be verified to ensure a safe working environment.
+            Each item must be verified to ensure a safe working environment. This assessment helps ensure compliance with the Electricity at Work Regulations 1989 and CDM Regulations 2015.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center">
               <div className="text-3xl font-bold text-elec-yellow mb-1">
                 {checkedItems.length}
@@ -95,6 +135,12 @@ const PreJobSafetyTab = () => {
               </div>
               <div className="text-sm text-muted-foreground">Total Items</div>
             </div>
+            <div className="text-center">
+              <div className="text-3xl font-bold text-blue-400 mb-1">
+                <Clock className="h-8 w-8 mx-auto" />
+              </div>
+              <div className="text-sm text-muted-foreground">Est. 15-20 mins</div>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -103,7 +149,7 @@ const PreJobSafetyTab = () => {
         <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
-              <CheckSquare className="h-5 w-5 text-elec-yellow" />
+              <category.icon className="h-5 w-5 text-elec-yellow" />
               {category.category}
             </CardTitle>
           </CardHeader>
@@ -132,6 +178,25 @@ const PreJobSafetyTab = () => {
           </CardContent>
         </Card>
       ))}
+
+      <Card className="border-blue-500/20 bg-blue-500/10">
+        <CardHeader>
+          <CardTitle className="text-blue-300 flex items-center gap-2">
+            <Shield className="h-5 w-5" />
+            Essential Safety Tips
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {safetyTips.map((tip, index) => (
+              <div key={index} className="border-l-4 border-blue-400 pl-4">
+                <h4 className="font-semibold text-white mb-1">{tip.title}</h4>
+                <p className="text-sm text-muted-foreground">{tip.content}</p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>

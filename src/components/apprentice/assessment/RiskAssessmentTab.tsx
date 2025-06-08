@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, CheckSquare } from "lucide-react";
+import { AlertTriangle, CheckSquare, FileText, Shield, Users, ClipboardList } from "lucide-react";
 import { useState } from "react";
 
 const RiskAssessmentTab = () => {
@@ -12,24 +12,57 @@ const RiskAssessmentTab = () => {
   const [riskNotes, setRiskNotes] = useState("");
 
   const hazardTypes = [
-    { name: "Electrical shock", severity: "High", category: "electrical" },
-    { name: "Arc flash/blast", severity: "High", category: "electrical" },
-    { name: "Working at height", severity: "Medium", category: "physical" },
-    { name: "Manual handling", severity: "Medium", category: "physical" },
-    { name: "Dust inhalation", severity: "Low", category: "health" },
-    { name: "Noise exposure", severity: "Medium", category: "health" },
-    { name: "Confined spaces", severity: "High", category: "environmental" },
-    { name: "Fire/explosion risk", severity: "High", category: "environmental" },
-    { name: "Chemical exposure", severity: "Medium", category: "health" },
-    { name: "Cuts from tools/materials", severity: "Medium", category: "physical" }
+    { name: "Electrical shock", severity: "High", category: "electrical", likelihood: "Possible" },
+    { name: "Arc flash/blast", severity: "High", category: "electrical", likelihood: "Unlikely" },
+    { name: "Working at height", severity: "Medium", category: "physical", likelihood: "Likely" },
+    { name: "Manual handling", severity: "Medium", category: "physical", likelihood: "Very Likely" },
+    { name: "Dust inhalation", severity: "Low", category: "health", likelihood: "Possible" },
+    { name: "Noise exposure", severity: "Medium", category: "health", likelihood: "Likely" },
+    { name: "Confined spaces", severity: "High", category: "environmental", likelihood: "Unlikely" },
+    { name: "Fire/explosion risk", severity: "High", category: "environmental", likelihood: "Unlikely" },
+    { name: "Chemical exposure", severity: "Medium", category: "health", likelihood: "Possible" },
+    { name: "Cuts from tools/materials", severity: "Medium", category: "physical", likelihood: "Likely" },
+    { name: "Eye injury from debris", severity: "Medium", category: "physical", likelihood: "Possible" },
+    { name: "Slips, trips and falls", severity: "Medium", category: "physical", likelihood: "Likely" }
   ];
 
   const riskMatrix = [
-    { probability: "Very Unlikely", impact: "Minor", risk: "Very Low", color: "green" },
-    { probability: "Unlikely", impact: "Moderate", risk: "Low", color: "yellow" },
-    { probability: "Possible", impact: "Major", risk: "Medium", color: "orange" },
-    { probability: "Likely", impact: "Severe", risk: "High", color: "red" },
-    { probability: "Very Likely", impact: "Catastrophic", risk: "Very High", color: "red" }
+    { probability: "Very Unlikely", impact: "Minor", risk: "Very Low", color: "green", action: "Accept risk - monitor regularly" },
+    { probability: "Unlikely", impact: "Moderate", risk: "Low", color: "green", action: "Accept risk - review annually" },
+    { probability: "Possible", impact: "Major", risk: "Medium", color: "orange", action: "Additional controls required" },
+    { probability: "Likely", impact: "Severe", risk: "High", color: "red", action: "Immediate action required" },
+    { probability: "Very Likely", impact: "Catastrophic", risk: "Very High", color: "red", action: "Stop work immediately" }
+  ];
+
+  const controlMeasureExamples = [
+    {
+      hazard: "Electrical Shock",
+      hierarchy: [
+        { level: "Elimination", example: "Use battery-powered tools where possible" },
+        { level: "Substitution", example: "Use lower voltage equipment" },
+        { level: "Engineering", example: "Install RCD protection" },
+        { level: "Administrative", example: "Safe isolation procedures" },
+        { level: "PPE", example: "Insulated gloves and tools" }
+      ]
+    },
+    {
+      hazard: "Working at Height",
+      hierarchy: [
+        { level: "Elimination", example: "Work from ground level where possible" },
+        { level: "Substitution", example: "Use extension tools" },
+        { level: "Engineering", example: "Install scaffold or platforms" },
+        { level: "Administrative", example: "Height work training and permits" },
+        { level: "PPE", example: "Safety harness and hard hat" }
+      ]
+    }
+  ];
+
+  const riskAssessmentSteps = [
+    { step: 1, title: "Identify Hazards", description: "Systematically identify all potential hazards in the work environment" },
+    { step: 2, title: "Identify People at Risk", description: "Consider workers, visitors, public, and vulnerable groups" },
+    { step: 3, title: "Evaluate Risks", description: "Assess likelihood and severity of potential harm" },
+    { step: 4, title: "Record Findings", description: "Document significant findings and control measures" },
+    { step: 5, title: "Review and Update", description: "Regularly review and update the assessment" }
   ];
 
   const toggleHazard = (hazard: string) => {
@@ -61,7 +94,32 @@ const RiskAssessmentTab = () => {
         <CardContent>
           <p className="text-muted-foreground">
             Systematic evaluation of potential hazards and implementation of appropriate control measures.
+            This process is required under the Management of Health and Safety at Work Regulations 1999.
           </p>
+        </CardContent>
+      </Card>
+
+      <Card className="border-blue-500/20 bg-blue-500/10">
+        <CardHeader>
+          <CardTitle className="text-blue-300 flex items-center gap-2">
+            <ClipboardList className="h-5 w-5" />
+            Risk Assessment Process
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            {riskAssessmentSteps.map((step, index) => (
+              <div key={index} className="flex items-start gap-3 p-3 border border-blue-400/20 rounded-lg">
+                <div className="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                  {step.step}
+                </div>
+                <div>
+                  <h4 className="font-semibold text-white">{step.title}</h4>
+                  <p className="text-sm text-muted-foreground">{step.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </CardContent>
       </Card>
 
@@ -92,9 +150,11 @@ const RiskAssessmentTab = () => {
                   )}
                 </button>
                 <span className="text-sm text-muted-foreground flex-1">{hazard.name}</span>
-                <Badge className={getSeverityColor(hazard.severity)}>
-                  {hazard.severity}
-                </Badge>
+                <div className="flex gap-1">
+                  <Badge className={getSeverityColor(hazard.severity)} variant="outline">
+                    {hazard.severity}
+                  </Badge>
+                </div>
               </div>
             ))}
           </div>
@@ -124,20 +184,49 @@ const RiskAssessmentTab = () => {
                     <td className="p-3">
                       <Badge className={`${row.color === 'red' ? 'bg-red-500/20 text-red-400' : 
                                         row.color === 'orange' ? 'bg-orange-500/20 text-orange-400' :
-                                        row.color === 'yellow' ? 'bg-yellow-500/20 text-yellow-400' :
                                         'bg-green-500/20 text-green-400'}`}>
                         {row.risk}
                       </Badge>
                     </td>
-                    <td className="p-3 text-sm text-muted-foreground">
-                      {row.risk === 'Very High' || row.risk === 'High' ? 'Stop work - immediate action required' :
-                       row.risk === 'Medium' ? 'Additional controls needed' :
-                       'Monitor and review'}
-                    </td>
+                    <td className="p-3 text-sm text-muted-foreground">{row.action}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-green-500/20 bg-green-500/10">
+        <CardHeader>
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <Shield className="h-5 w-5" />
+            Control Measures Hierarchy
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground mb-4">
+            Apply control measures in order of effectiveness (most effective first):
+          </p>
+          <div className="space-y-4">
+            {controlMeasureExamples.map((example, index) => (
+              <div key={index} className="border border-green-400/20 rounded-lg p-4">
+                <h4 className="font-semibold text-white mb-3">{example.hazard} - Control Hierarchy</h4>
+                <div className="space-y-2">
+                  {example.hierarchy.map((control, idx) => (
+                    <div key={idx} className="flex items-center gap-3 p-2 bg-green-500/5 rounded">
+                      <Badge variant="outline" className="text-green-300 border-green-300">
+                        {idx + 1}
+                      </Badge>
+                      <div>
+                        <span className="font-medium text-green-200">{control.level}:</span>
+                        <span className="text-sm text-muted-foreground ml-2">{control.example}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
@@ -150,7 +239,7 @@ const RiskAssessmentTab = () => {
           <Textarea
             value={controlMeasures}
             onChange={(e) => setControlMeasures(e.target.value)}
-            placeholder="Detail the specific control measures to be implemented for each identified hazard..."
+            placeholder="Detail the specific control measures to be implemented for each identified hazard, following the hierarchy of controls..."
             className="min-h-24 mb-4"
           />
         </CardContent>
@@ -164,12 +253,34 @@ const RiskAssessmentTab = () => {
           <Textarea
             value={riskNotes}
             onChange={(e) => setRiskNotes(e.target.value)}
-            placeholder="Record any additional risk factors, monitoring requirements, or review schedules..."
+            placeholder="Record any additional risk factors, monitoring requirements, review schedules, or specific considerations for this work activity..."
             className="min-h-24 mb-4"
           />
           <Button className="w-full">
             Complete Risk Assessment
           </Button>
+        </CardContent>
+      </Card>
+
+      <Card className="border-purple-500/50 bg-purple-500/10">
+        <CardHeader>
+          <CardTitle className="text-purple-300 flex items-center gap-2">
+            <Users className="h-5 w-5" />
+            People at Risk
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground mb-2">
+            Consider all people who may be affected by the work:
+          </p>
+          <ul className="space-y-1 text-sm text-muted-foreground">
+            <li>• Workers directly involved in the electrical work</li>
+            <li>• Other trades working in the same area</li>
+            <li>• Building occupants and visitors</li>
+            <li>• Members of the public</li>
+            <li>• Vulnerable groups (elderly, disabled, children)</li>
+            <li>• Emergency service personnel</li>
+          </ul>
         </CardContent>
       </Card>
     </div>
