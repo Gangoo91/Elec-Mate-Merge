@@ -1,10 +1,9 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, CheckCircle, FileText, Wrench, ArrowLeft, Microscope } from "lucide-react";
+import { BookOpen, CheckCircle, FileText, Wrench, ArrowLeft } from "lucide-react";
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import RunThroughStepsTab from "@/components/apprentice/bs7671/RunThroughStepsTab";
-import TestingGuidesTab from "@/components/apprentice/bs7671/TestingGuidesTab";
 import ComprehensiveTestingGuidesTab from "@/components/apprentice/bs7671/ComprehensiveTestingGuidesTab";
 import DocumentationTab from "@/components/apprentice/bs7671/DocumentationTab";
 import ResourcesTab from "@/components/apprentice/bs7671/ResourcesTab";
@@ -21,18 +20,14 @@ const OnJobBS7671RunThrough = () => {
       </div>
 
       <Tabs defaultValue="steps" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="steps" className="flex items-center gap-2">
             <CheckCircle className="h-4 w-4" />
             Run-Through Steps
           </TabsTrigger>
           <TabsTrigger value="guides" className="flex items-center gap-2">
             <Wrench className="h-4 w-4" />
-            Basic Guides
-          </TabsTrigger>
-          <TabsTrigger value="comprehensive" className="flex items-center gap-2">
-            <Microscope className="h-4 w-4" />
-            Comprehensive Guides
+            Testing Guides
           </TabsTrigger>
           <TabsTrigger value="documentation" className="flex items-center gap-2">
             <FileText className="h-4 w-4" />
@@ -49,10 +44,6 @@ const OnJobBS7671RunThrough = () => {
         </TabsContent>
 
         <TabsContent value="guides">
-          <TestingGuidesTab />
-        </TabsContent>
-
-        <TabsContent value="comprehensive">
           <ComprehensiveTestingGuidesTab />
         </TabsContent>
 
