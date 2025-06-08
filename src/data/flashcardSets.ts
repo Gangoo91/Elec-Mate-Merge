@@ -1,5 +1,5 @@
 
-import { Zap, Shield, BookOpen, Tool, AlertTriangle, FileText, Wrench, HardHat } from "lucide-react";
+import { Zap, Shield, BookOpen, Wrench, AlertTriangle, FileText, HardHat } from "lucide-react";
 
 export const flashcardSets = [
   {
@@ -136,7 +136,7 @@ export const flashcardSets = [
   {
     id: "tools-equipment",
     title: "Electrical Tools & Equipment",
-    icon: Tool,
+    icon: Wrench,
     description: "Essential tools, their uses and safety considerations",
     count: 20,
     difficulty: "beginner" as const,
