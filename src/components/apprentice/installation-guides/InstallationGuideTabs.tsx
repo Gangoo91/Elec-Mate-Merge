@@ -7,7 +7,9 @@ import {
   Wrench, 
   Shield, 
   Zap,
-  Search
+  Search,
+  ClipboardList,
+  TestTube
 } from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
@@ -30,6 +32,9 @@ interface InstallationGuideTabsProps {
   safetyContent: string;
   complianceContent: string;
   additionalCards?: React.ReactNode;
+  enhancedPlanningComponent?: React.ReactNode;
+  enhancedCircuitComponent?: React.ReactNode;
+  enhancedTestingComponent?: React.ReactNode;
   safetyNotice: {
     title: string;
     points: Array<{
@@ -50,6 +55,9 @@ const InstallationGuideTabs = ({
   safetyContent,
   complianceContent,
   additionalCards,
+  enhancedPlanningComponent,
+  enhancedCircuitComponent,
+  enhancedTestingComponent,
   safetyNotice
 }: InstallationGuideTabsProps) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -91,21 +99,25 @@ const InstallationGuideTabs = ({
 
       {/* Tabs */}
       <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5 lg:grid-cols-5">
           <TabsTrigger value="overview" className="flex items-center gap-2">
             <BookOpen className="h-4 w-4" />
             <span className="hidden sm:inline">Overview</span>
           </TabsTrigger>
-          <TabsTrigger value="technical" className="flex items-center gap-2">
-            <Wrench className="h-4 w-4" />
-            <span className="hidden sm:inline">Technical</span>
-          </TabsTrigger>
           <TabsTrigger value="planning" className="flex items-center gap-2">
-            <Shield className="h-4 w-4" />
+            <ClipboardList className="h-4 w-4" />
             <span className="hidden sm:inline">Planning</span>
           </TabsTrigger>
-          <TabsTrigger value="reference" className="flex items-center gap-2">
+          <TabsTrigger value="circuits" className="flex items-center gap-2">
             <Zap className="h-4 w-4" />
+            <span className="hidden sm:inline">Circuits</span>
+          </TabsTrigger>
+          <TabsTrigger value="testing" className="flex items-center gap-2">
+            <TestTube className="h-4 w-4" />
+            <span className="hidden sm:inline">Testing</span>
+          </TabsTrigger>
+          <TabsTrigger value="reference" className="flex items-center gap-2">
+            <Shield className="h-4 w-4" />
             <span className="hidden sm:inline">Reference</span>
           </TabsTrigger>
         </TabsList>
@@ -132,10 +144,77 @@ const InstallationGuideTabs = ({
           </Card>
 
           {additionalCards}
+
+          {/* Safety Notice */}
+          <Card className="border-orange-500/50 bg-gradient-to-r from-orange-500/10 to-red-500/10">
+            <CardHeader>
+              <CardTitle className="text-orange-300 flex items-center gap-2">
+                <Shield className="h-6 w-6" />
+                {safetyNotice.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 md:p-6">
+              <div className="space-y-3">
+                {safetyNotice.points.map((point, index) => (
+                  <p key={index} className="text-sm text-muted-foreground">
+                    <strong className="text-orange-300">{point.title}:</strong> {point.content}
+                  </p>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </TabsContent>
 
-        {/* Technical Details Tab */}
-        <TabsContent value="technical" className="space-y-6">
+        {/* Planning Tab */}
+        <TabsContent value="planning" className="space-y-6">
+          {enhancedPlanningComponent || (
+            <Card className="border-elec-yellow/30 bg-elec-gray">
+              <CardHeader>
+                <CardTitle className="text-elec-yellow">Planning Considerations</CardTitle>
+              </CardHeader>
+              <CardContent className="p-4">
+                <p className="text-sm text-muted-foreground">
+                  {planningContent}
+                </p>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+
+        {/* Circuits Tab */}
+        <TabsContent value="circuits" className="space-y-6">
+          {enhancedCircuitComponent || (
+            <Card className="border-elec-yellow/30 bg-elec-gray">
+              <CardHeader>
+                <CardTitle className="text-elec-yellow">Circuit Design</CardTitle>
+              </CardHeader>
+              <CardContent className="p-4">
+                <p className="text-sm text-muted-foreground">
+                  Circuit design information and cable specifications.
+                </p>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+
+        {/* Testing Tab */}
+        <TabsContent value="testing" className="space-y-6">
+          {enhancedTestingComponent || (
+            <Card className="border-elec-yellow/30 bg-elec-gray">
+              <CardHeader>
+                <CardTitle className="text-elec-yellow">Testing & Certification</CardTitle>
+              </CardHeader>
+              <CardContent className="p-4">
+                <p className="text-sm text-muted-foreground">
+                  {complianceContent}
+                </p>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+
+        {/* Reference Tab */}
+        <TabsContent value="reference" className="space-y-6">
           <Card className="border-elec-yellow/30 bg-elec-gray">
             <CardHeader>
               <CardTitle className="text-elec-yellow">Cable Types & Protection</CardTitle>
@@ -186,101 +265,6 @@ const InstallationGuideTabs = ({
               </div>
             </CardContent>
           </Card>
-        </TabsContent>
-
-        {/* Planning & Safety Tab */}
-        <TabsContent value="planning" className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <Card className="border-elec-yellow/30 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="text-elec-yellow text-lg">Planning Considerations</CardTitle>
-              </CardHeader>
-              <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground">
-                  {planningContent}
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-elec-yellow/30 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="text-elec-yellow text-lg">Safety Procedures</CardTitle>
-              </CardHeader>
-              <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground">
-                  {safetyContent}
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-elec-yellow/30 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="text-elec-yellow text-lg">Testing & Certification</CardTitle>
-              </CardHeader>
-              <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground">
-                  {complianceContent}
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Safety Notice */}
-          <Card className="border-orange-500/50 bg-gradient-to-r from-orange-500/10 to-red-500/10">
-            <CardHeader>
-              <CardTitle className="text-orange-300 flex items-center gap-2">
-                <Shield className="h-6 w-6" />
-                {safetyNotice.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-4 md:p-6">
-              <div className="space-y-3">
-                {safetyNotice.points.map((point, index) => (
-                  <p key={index} className="text-sm text-muted-foreground">
-                    <strong className="text-orange-300">{point.title}:</strong> {point.content}
-                  </p>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Quick Reference Tab */}
-        <TabsContent value="reference" className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="border-elec-yellow/30 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="text-elec-yellow">Quick Cable Reference</CardTitle>
-              </CardHeader>
-              <CardContent className="p-4">
-                <div className="space-y-2">
-                  {cableTypes.slice(0, 4).map((cable, index) => (
-                    <div key={index} className="flex justify-between items-center text-sm">
-                      <span className="text-white">{cable.application}</span>
-                      <Badge variant="outline" className="border-elec-yellow text-elec-yellow text-xs">
-                        {cable.cable}
-                      </Badge>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-elec-yellow/30 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="text-elec-yellow">Essential Standards</CardTitle>
-              </CardHeader>
-              <CardContent className="p-4">
-                <div className="space-y-2">
-                  {keyStandards.slice(0, 4).map((standard, index) => (
-                    <div key={index} className="text-sm text-muted-foreground">
-                      • {standard.split(' ')[0]} {standard.split(' ')[1]}
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
         </TabsContent>
       </Tabs>
     </div>

@@ -1,6 +1,8 @@
 
 import BackButton from "@/components/common/BackButton";
 import InstallationGuideTabs from "@/components/apprentice/installation-guides/InstallationGuideTabs";
+import CommercialPlanningSection from "@/components/apprentice/installation-guides/commercial/CommercialPlanningSection";
+import CommercialCircuitGuide from "@/components/apprentice/installation-guides/commercial/CommercialCircuitGuide";
 import { Building } from "lucide-react";
 
 const CommercialInstallations = () => {
@@ -46,6 +48,8 @@ const CommercialInstallations = () => {
         planningContent="Commercial installations require careful load calculations and future expansion planning. Consider three-phase distribution for balanced loads, emergency lighting requirements, and fire alarm integration. Coordination with other building services is essential."
         safetyContent="Ensure all work complies with workplace regulations and fire safety requirements. Emergency lighting must meet BS 5266 standards. All circuits require appropriate RCD protection and regular testing schedules must be established."
         complianceContent="Commercial installations require comprehensive testing including emergency lighting function tests, fire alarm verification, and periodic inspection schedules. Provide detailed test certificates and maintenance schedules to building owners."
+        enhancedPlanningComponent={<CommercialPlanningSection />}
+        enhancedCircuitComponent={<CommercialCircuitGuide />}
         safetyNotice={{
           title: "Commercial Installation Requirements",
           points: [

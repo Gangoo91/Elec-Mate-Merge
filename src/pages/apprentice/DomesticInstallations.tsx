@@ -1,6 +1,9 @@
 
 import BackButton from "@/components/common/BackButton";
 import InstallationGuideTabs from "@/components/apprentice/installation-guides/InstallationGuideTabs";
+import DomesticPlanningSection from "@/components/apprentice/installation-guides/domestic/DomesticPlanningSection";
+import DomesticCircuitGuide from "@/components/apprentice/installation-guides/domestic/DomesticCircuitGuide";
+import DomesticTestingGuide from "@/components/apprentice/installation-guides/domestic/DomesticTestingGuide";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Home, BadgePoundSterling } from "lucide-react";
@@ -85,6 +88,9 @@ const DomesticInstallations = () => {
         safetyContent="Isolate the supply at the main switch before commencing work. Use a suitable voltage tester to prove dead and lock off the supply. Ensure all RCD protection is tested and functional. Use appropriate PPE including safety boots and eye protection."
         complianceContent="Upon completion, issue an Electrical Installation Certificate (EIC) for new circuits or a Minor Electrical Installation Works Certificate (MEIWC) for additions. Include schedule of test results and provide customer with Building Control notification if required under Part P."
         additionalCards={costConsiderationsCard}
+        enhancedPlanningComponent={<DomesticPlanningSection />}
+        enhancedCircuitComponent={<DomesticCircuitGuide />}
+        enhancedTestingComponent={<DomesticTestingGuide />}
         safetyNotice={{
           title: "Important Safety Notice",
           points: [
