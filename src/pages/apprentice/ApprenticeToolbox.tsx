@@ -18,42 +18,42 @@ const ApprenticeToolbox = () => {
       id: "tools-guide",
       title: "Tools & Materials Guide",
       icon: <Wrench className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/tools-guide",
+      link: "/apprentice/toolbox/tools-guide",
       description: "Essential tools, materials, and equipment guides for electrical work"
     },
     {
       id: "electrical-guides",
       title: "Electrical Installation Guides",
       icon: <BookOpen className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/electrical-installation-guides",
+      link: "/apprentice/toolbox/electrical-installation-guides",
       description: "Step-by-step guides for domestic, commercial, and industrial installations"
     },
     {
       id: "apprenticeship-expectations",
       title: "Apprenticeship Expectations",
       icon: <CheckCircle className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/apprenticeship-expectations",
+      link: "/apprentice/toolbox/apprenticeship-expectations",
       description: "What to expect during your electrical apprenticeship journey"
     },
     {
       id: "off-job-training",
       title: "Off-the-Job Training Guide",
       icon: <Clock className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/off-job-training-guide",
+      link: "/apprentice/toolbox/off-job-training-guide",
       description: "Understanding your 20% off-the-job training requirements"
     },
     {
       id: "site-jargon",
       title: "Site Jargon & Terminology",
       icon: <MessageCircle className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/site-jargon",
+      link: "/apprentice/toolbox/site-jargon",
       description: "Common electrical and construction terms you'll hear on site"
     },
     {
       id: "portfolio-building",
       title: "Portfolio Building",
       icon: <FileText className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/portfolio-building",
+      link: "/apprentice/toolbox/portfolio-building",
       description: "How to document your work and build a professional portfolio"
     },
     {
@@ -67,28 +67,28 @@ const ApprenticeToolbox = () => {
       id: "communication-skills",
       title: "Communication Skills",
       icon: <Users className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/communication-skills",
+      link: "/apprentice/toolbox/communication-skills",
       description: "How to speak with supervisors, report problems, and take feedback professionally"
     },
     {
       id: "study-tips",
       title: "Study Tips & Techniques",
       icon: <BookOpen className="h-6 w-6 text-elec-yellow" />,
-      link: "/apprentice/study-tips",
+      link: "/apprentice/toolbox/study-tips",
       description: "Effective learning strategies for electrical theory and practical skills"
     },
     {
       id: "learning-from-mistakes",
       title: "Learning from Mistakes",
       icon: <AlertTriangle className="h-6 w-6 text-amber-400" />,
-      link: "/apprentice/learning-from-mistakes",
+      link: "/apprentice/toolbox/learning-from-mistakes",
       description: "How to handle errors professionally and turn them into learning opportunities"
     },
     {
       id: "safety-fundamentals",
       title: "Safety Fundamentals",
       icon: <AlertTriangle className="h-6 w-6 text-red-400" />,
-      link: "/apprentice/safety-fundamentals",
+      link: "/apprentice/toolbox/safety-fundamentals",
       description: "Core safety principles and practices for electrical work environments"
     },
     {
@@ -109,10 +109,10 @@ const ApprenticeToolbox = () => {
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <ToolboxHeader 
           title="Apprentice Guidance Area"
-          linkPath="/apprentice/hub"
+          linkPath="/apprentice"
           linkText="Back to Hub"
         />
-        <Link to="/apprentice/hub" className="flex-shrink-0">
+        <Link to="/apprentice" className="flex-shrink-0">
           <Button variant="outline">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Hub

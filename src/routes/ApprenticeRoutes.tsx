@@ -23,6 +23,16 @@ import CareerPathways from "@/pages/apprentice/professional-development/CareerPa
 import Certifications from "@/pages/apprentice/professional-development/Certifications";
 import ContinuingEducation from "@/pages/apprentice/professional-development/ContinuingEducation";
 import IndustryNetworking from "@/pages/apprentice/professional-development/IndustryNetworking";
+import ToolsGuide from "@/pages/apprentice/toolbox/ToolsGuide";
+import ElectricalInstallationGuides from "@/pages/apprentice/toolbox/ElectricalInstallationGuides";
+import ApprenticeshipExpectations from "@/pages/apprentice/toolbox/ApprenticeshipExpectations";
+import OffJobTrainingGuide from "@/pages/apprentice/toolbox/OffJobTrainingGuide";
+import SiteJargon from "@/pages/apprentice/toolbox/SiteJargon";
+import PortfolioBuilding from "@/pages/apprentice/toolbox/PortfolioBuilding";
+import CommunicationSkills from "@/pages/apprentice/toolbox/CommunicationSkills";
+import StudyTips from "@/pages/apprentice/toolbox/StudyTips";
+import LearningFromMistakes from "@/pages/apprentice/toolbox/LearningFromMistakes";
+import SafetyFundamentals from "@/pages/apprentice/toolbox/SafetyFundamentals";
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -33,6 +43,16 @@ const ApprenticeRoutes = () => (
     <Route path="mentor" element={<ApprenticeMentor />} />
     <Route path="rights-and-pay" element={<RightsAndPay />} />
     <Route path="toolbox" element={<ApprenticeToolbox />} />
+    <Route path="toolbox/tools-guide" element={<ToolsGuide />} />
+    <Route path="toolbox/electrical-installation-guides" element={<ElectricalInstallationGuides />} />
+    <Route path="toolbox/apprenticeship-expectations" element={<ApprenticeshipExpectations />} />
+    <Route path="toolbox/off-job-training-guide" element={<OffJobTrainingGuide />} />
+    <Route path="toolbox/site-jargon" element={<SiteJargon />} />
+    <Route path="toolbox/portfolio-building" element={<PortfolioBuilding />} />
+    <Route path="toolbox/communication-skills" element={<CommunicationSkills />} />
+    <Route path="toolbox/study-tips" element={<StudyTips />} />
+    <Route path="toolbox/learning-from-mistakes" element={<LearningFromMistakes />} />
+    <Route path="toolbox/safety-fundamentals" element={<SafetyFundamentals />} />
     <Route path="professional-development" element={<ProfessionalDevelopment />} />
     <Route path="professional-development/career-pathways" element={<CareerPathways />} />
     <Route path="professional-development/certifications" element={<Certifications />} />
