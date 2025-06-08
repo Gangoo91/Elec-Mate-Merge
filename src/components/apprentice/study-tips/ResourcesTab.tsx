@@ -268,25 +268,25 @@ const ResourcesTab = () => {
 
       <Card className="border-blue-500/50 bg-blue-500/10">
         <CardHeader>
-          <CardTitle className="text-blue-300">Study Budget Tips</CardTitle>
+          <CardTitle className="text-blue-300">Study Budget Tips with Elec-Mate</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
             <div>
               <h4 className="font-medium text-white mb-2">Free First</h4>
-              <p>Start with free resources before investing in paid materials. Many apprentices pass using mainly free resources.</p>
+              <p>Start with free resources before investing in paid materials. Many apprentices pass using mainly free resources available through Elec-Mate and other platforms.</p>
             </div>
             <div>
               <h4 className="font-medium text-white mb-2">Essential vs Nice-to-Have</h4>
-              <p>BS 7671 and On-Site Guide are essential. Other books can wait until you've mastered the basics.</p>
+              <p>BS 7671 and On-Site Guide are essential. Other books can wait until you've mastered the basics with Elec-Mate's study tools.</p>
             </div>
             <div>
               <h4 className="font-medium text-white mb-2">Second-Hand Options</h4>
-              <p>Look for used textbooks from previous students, but ensure they're the current edition.</p>
+              <p>Look for used textbooks from previous students, but ensure they're the current edition. Use Elec-Mate's community to find study partners for cost sharing.</p>
             </div>
             <div>
               <h4 className="font-medium text-white mb-2">Library Access</h4>
-              <p>Many local libraries have electrical textbooks, and college libraries often have extended borrowing periods.</p>
+              <p>Many local libraries have electrical textbooks, and college libraries often have extended borrowing periods. Complement this with Elec-Mate's digital resources.</p>
             </div>
           </div>
         </CardContent>

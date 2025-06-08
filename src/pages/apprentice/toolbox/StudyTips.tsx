@@ -5,8 +5,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BookOpen, Target, Brain, Clock, Heart } from "lucide-react";
 import ExamStrategiesTab from "@/components/apprentice/study-tips/ExamStrategiesTab";
 import RevisionTechniquesTab from "@/components/apprentice/study-tips/RevisionTechniquesTab";
-import ResourcesTab from "@/components/apprentice/study-tips/ResourcesTab";
 import TimeManagementTab from "@/components/apprentice/study-tips/TimeManagementTab";
+import ResourcesTab from "@/components/apprentice/study-tips/ResourcesTab";
 
 const StudyTips = () => {
   return (
