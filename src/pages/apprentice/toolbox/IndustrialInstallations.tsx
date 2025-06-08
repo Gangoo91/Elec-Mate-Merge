@@ -1,33 +1,38 @@
 
 import BackButton from "@/components/common/BackButton";
 import InstallationGuideTabs from "@/components/apprentice/installation-guides/InstallationGuideTabs";
+import IndustrialPlanningSection from "@/components/apprentice/installation-guides/industrial/IndustrialPlanningSection";
+import IndustrialCircuitGuide from "@/components/apprentice/installation-guides/industrial/IndustrialCircuitGuide";
+import IndustrialOverviewCards from "@/components/apprentice/installation-guides/industrial/IndustrialOverviewCards";
+import IndustrialReferenceGuide from "@/components/apprentice/installation-guides/industrial/IndustrialReferenceGuide";
 import { Factory } from "lucide-react";
 
 const IndustrialInstallations = () => {
   const commonTypes = [
-    "Motor control systems",
-    "High bay lighting installations", 
-    "Heavy machinery connections",
-    "Control panel installations",
-    "Conveyor system electrics",
-    "Industrial heating systems"
+    "Motor control systems and VFD installations",
+    "High bay lighting for manufacturing facilities", 
+    "Heavy machinery electrical connections",
+    "ATEX certified hazardous area installations",
+    "Control panel and PLC system integration",
+    "Industrial heating and welding systems"
   ];
 
   const cableTypes = [
-    { application: "Motor circuits", cable: "6mm² SWA", protection: "25A MCB + Overload", notes: "Three-phase motors" },
-    { application: "High bay lighting", cable: "2.5mm² SWA", protection: "16A MCB", notes: "HID/LED fittings" },
-    { application: "Control circuits", cable: "1.5mm² Multi-core", protection: "6A MCB", notes: "24V/110V systems" },
-    { application: "Heavy machinery", cable: "25mm² SWA", protection: "63A MCB", notes: "Large industrial loads" },
-    { application: "Emergency systems", cable: "4mm² FP200", protection: "20A MCB", notes: "Fire-rated supplies" },
-    { application: "Welding outlets", cable: "16mm² SWA", protection: "50A MCB", notes: "High current demand" }
+    { application: "Motor circuits (up to 15kW)", cable: "6-10mm² SWA", protection: "32A MCB + Overload", notes: "Star-delta or soft start" },
+    { application: "Heavy machinery (45kW+)", cable: "35mm²+ SWA", protection: "100A+ MCB + VFD", notes: "Variable frequency drive control" },
+    { application: "High bay lighting", cable: "2.5-4mm² SWA", protection: "16A MCB + RCD", notes: "200-400W LED fittings" },
+    { application: "Control circuits (24V)", cable: "Multi-core screened", protection: "6A Fused", notes: "PLC and automation systems" },
+    { application: "Emergency systems", cable: "4mm² FP200", protection: "20A MCB", notes: "Fire-rated cable required" },
+    { application: "Welding outlets", cable: "16-25mm² SWA", protection: "50-63A MCB", notes: "High current demand circuits" }
   ];
 
   const keyStandards = [
     "BS 7671:2018+A2:2022 (18th Edition Wiring Regulations)",
+    "ATEX Directive 2014/34/EU (Equipment for explosive atmospheres)",
+    "DSEAR Regulations 2002 (Dangerous substances and explosive atmospheres)",
     "BS EN 60204-1 Safety of machinery - Electrical equipment",
-    "BS 5266 Emergency lighting in industrial premises",
-    "DSEAR Regulations (Dangerous Substances and Explosive Atmospheres)",
-    "PUWER Regulations (Provision and Use of Work Equipment)"
+    "BS EN 60079 Series Explosive atmospheres protection standards",
+    "PUWER Regulations 1998 (Provision and use of work equipment)"
   ];
 
   return (
@@ -39,27 +44,31 @@ const IndustrialInstallations = () => {
       <InstallationGuideTabs
         title="Industrial Installations"
         icon={Factory}
-        description="Comprehensive guide to industrial electrical installations including manufacturing facilities, heavy machinery connections, and hazardous area installations."
+        description="Comprehensive guide to industrial electrical installations including manufacturing facilities, heavy machinery connections, hazardous area installations, and complex motor control systems in the UK."
         commonTypes={commonTypes}
         cableTypes={cableTypes}
         keyStandards={keyStandards}
-        planningContent="Industrial motor installations require proper overload protection, correct starter selection, and emergency stop integration. Consider soft-start requirements for large motors and ensure proper earthing for motor frames."
-        safetyContent="ATEX compliance is mandatory for explosive atmospheres. Use certified equipment with appropriate IP ratings. Understand zone classifications and implement proper cable sealing and earthing techniques."
-        complianceContent="Design installations with maintenance in mind. Provide adequate access to control panels, junction boxes, and testing points. Implement lock-out/tag-out procedures and ensure proper labelling of all circuits and equipment."
+        planningContent="Industrial installations require comprehensive hazard assessment, ATEX compliance for explosive atmospheres, and coordination with production schedules. Consider three-phase motor starting methods, control system integration, and maintenance access requirements. All work must comply with machinery safety directives and DSEAR regulations."
+        safetyContent="ATEX compliance is mandatory for explosive atmospheres with appropriate zone classifications and certified equipment. Implement arc flash protection measures for high voltage systems and ensure proper lock-out/tag-out procedures. All personnel must have appropriate industrial electrical qualifications and competency assessments."
+        complianceContent="Complete comprehensive testing including motor insulation testing, earth fault loop impedance verification, and emergency stop system functionality. Provide detailed commissioning documentation, maintenance schedules, and operator training. Ensure compliance with machinery safety directives and workplace regulations."
+        enhancedOverviewComponent={<IndustrialOverviewCards />}
+        enhancedPlanningComponent={<IndustrialPlanningSection />}
+        enhancedCircuitComponent={<IndustrialCircuitGuide />}
+        enhancedReferenceComponent={<IndustrialReferenceGuide />}
         safetyNotice={{
-          title: "Industrial Safety Requirements",
+          title: "Critical Industrial Safety Requirements",
           points: [
             {
-              title: "High Voltage Awareness",
-              content: "Industrial installations often involve high voltage systems. Ensure proper training and competency before working on such systems."
+              title: "ATEX Compliance",
+              content: "All equipment in explosive atmospheres must have appropriate ATEX certification. Zone classifications must be verified and equipment temperature ratings must not exceed auto-ignition temperatures."
             },
             {
               title: "Arc Flash Protection",
-              content: "Implement appropriate arc flash protection measures and ensure workers are trained in arc flash hazards and PPE requirements."
+              content: "High voltage industrial systems present significant arc flash risks. Appropriate PPE, risk assessments, and safety procedures must be implemented for all electrical work."
             },
             {
-              title: "Emergency Procedures",
-              content: "Establish clear emergency shutdown procedures and ensure all personnel are familiar with emergency stop locations and isolation procedures."
+              title: "Machinery Safety Integration",
+              content: "All electrical installations must integrate with emergency stop systems and safety interlocks. Compliance with BS EN 60204-1 and machinery safety directives is mandatory."
             }
           ]
         }}
