@@ -5,18 +5,59 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Play, BookOpen, Target, Trophy, Clock, CheckCircle } from "lucide-react";
 import { useState } from "react";
+import LearningModuleContent from "./LearningModuleContent";
+
+interface LearningModule {
+  id: string;
+  title: string;
+  description: string;
+  duration: string;
+  progress: number;
+  lessons: Array<{
+    id: string;
+    title: string;
+    content: string;
+    type: "text" | "video" | "interactive";
+    duration: number;
+  }>;
+  completedLessons: number;
+  difficulty: "Beginner" | "Intermediate" | "Advanced";
+  badge: string;
+}
 
 const InteractiveLearningFeatures = () => {
-  const [activeModule, setActiveModule] = useState<string | null>(null);
+  const [activeModule, setActiveModule] = useState<LearningModule | null>(null);
   
-  const learningModules = [
+  const learningModules: LearningModule[] = [
     {
       id: "photo-masterclass",
       title: "Photography Masterclass",
       description: "Learn professional photography techniques for electrical work documentation",
       duration: "45 mins",
       progress: 75,
-      lessons: 8,
+      lessons: [
+        {
+          id: "lighting-basics",
+          title: "Lighting Fundamentals",
+          content: "Understanding natural and artificial lighting for electrical work photography. Learn how to use work lights effectively and position yourself for optimal lighting conditions.",
+          type: "text",
+          duration: 8
+        },
+        {
+          id: "composition-techniques",
+          title: "Composition Techniques",
+          content: "Master the art of framing your electrical work to show context, detail, and professionalism. Learn about angles, perspective, and background considerations.",
+          type: "video",
+          duration: 12
+        },
+        {
+          id: "safety-considerations",
+          title: "Safety While Photographing",
+          content: "Essential safety protocols when documenting live electrical work. Understanding when and how to safely capture your work without compromising safety.",
+          type: "text",
+          duration: 10
+        }
+      ],
       completedLessons: 6,
       difficulty: "Beginner",
       badge: "Photography Pro"
@@ -27,7 +68,22 @@ const InteractiveLearningFeatures = () => {
       description: "Master the art of reflective writing for effective learning documentation",
       duration: "60 mins",
       progress: 40,
-      lessons: 10,
+      lessons: [
+        {
+          id: "reflection-structure",
+          title: "Structure of Reflection",
+          content: "Learn the STAR method (Situation, Task, Action, Result) for structuring your reflective entries. Understand how to link theory to practice effectively.",
+          type: "text",
+          duration: 15
+        },
+        {
+          id: "critical-analysis",
+          title: "Critical Analysis Skills",
+          content: "Develop skills to critically analyse your work, identify learning points, and articulate areas for improvement.",
+          type: "interactive",
+          duration: 20
+        }
+      ],
       completedLessons: 4,
       difficulty: "Intermediate",
       badge: "Reflection Master"
@@ -38,7 +94,22 @@ const InteractiveLearningFeatures = () => {
       description: "Organise and structure your digital portfolio for maximum impact",
       duration: "30 mins",
       progress: 100,
-      lessons: 6,
+      lessons: [
+        {
+          id: "file-naming",
+          title: "File Naming Conventions",
+          content: "Establish consistent naming conventions for your portfolio files. Learn best practices for organising photos, documents, and evidence.",
+          type: "text",
+          duration: 10
+        },
+        {
+          id: "folder-structure",
+          title: "Folder Structure Best Practices",
+          content: "Create a logical folder structure that grows with your apprenticeship. Understand how to organise by date, project, or competency.",
+          type: "interactive",
+          duration: 15
+        }
+      ],
       completedLessons: 6,
       difficulty: "Beginner",
       badge: "Organisation Expert"
@@ -49,7 +120,22 @@ const InteractiveLearningFeatures = () => {
       description: "Prepare your portfolio for end-point assessment and professional review",
       duration: "90 mins",
       progress: 20,
-      lessons: 12,
+      lessons: [
+        {
+          id: "epa-requirements",
+          title: "EPA Requirements Overview",
+          content: "Understand the specific requirements for end-point assessment portfolios. Learn what assessors are looking for and how to structure your evidence.",
+          type: "video",
+          duration: 25
+        },
+        {
+          id: "evidence-mapping",
+          title: "Evidence Mapping",
+          content: "Map your portfolio evidence to specific assessment criteria. Learn to cross-reference your work with competency frameworks.",
+          type: "interactive",
+          duration: 30
+        }
+      ],
       completedLessons: 2,
       difficulty: "Advanced",
       badge: "Assessment Ready"
@@ -89,6 +175,21 @@ const InteractiveLearningFeatures = () => {
     }
   };
 
+  const handleModuleProgress = (moduleId: string, lessonIndex: number) => {
+    // Update module progress logic here
+    console.log(`Module ${moduleId} progress: lesson ${lessonIndex}`);
+  };
+
+  if (activeModule) {
+    return (
+      <LearningModuleContent
+        module={activeModule}
+        onProgress={handleModuleProgress}
+        onClose={() => setActiveModule(null)}
+      />
+    );
+  }
+
   return (
     <Card className="border-cyan-500/30 bg-gradient-to-br from-cyan-500/10 to-blue-500/10">
       <CardHeader>
@@ -122,7 +223,7 @@ const InteractiveLearningFeatures = () => {
                     </div>
                     <div className="flex items-center gap-1">
                       <BookOpen className="h-3 w-3" />
-                      {module.completedLessons}/{module.lessons} lessons
+                      {module.completedLessons}/{module.lessons.length} lessons
                     </div>
                   </div>
                   
@@ -144,7 +245,7 @@ const InteractiveLearningFeatures = () => {
                   <Button 
                     size="sm" 
                     className="w-full"
-                    onClick={() => setActiveModule(module.id)}
+                    onClick={() => setActiveModule(module)}
                   >
                     <Play className="h-3 w-3 mr-1" />
                     {module.progress === 0 ? "Start Module" : "Continue"}

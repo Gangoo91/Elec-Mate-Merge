@@ -12,6 +12,7 @@ interface DigitalTool {
   platform: string[];
   cost: "Free" | "Paid" | "Freemium";
   icon: React.ReactNode;
+  url: string;
 }
 
 const DigitalToolsIntegration = () => {
@@ -19,11 +20,12 @@ const DigitalToolsIntegration = () => {
     {
       name: "Google Drive",
       category: "Cloud Storage",
-      description: "Store and organize your portfolio files in the cloud",
+      description: "Store and organise your portfolio files in the cloud",
       features: ["15GB free storage", "Document collaboration", "Mobile access", "Version history"],
       platform: ["Web", "iOS", "Android"],
       cost: "Freemium",
-      icon: <Cloud className="h-5 w-5" />
+      icon: <Cloud className="h-5 w-5" />,
+      url: "https://drive.google.com"
     },
     {
       name: "Adobe Creative Cloud",
@@ -32,7 +34,8 @@ const DigitalToolsIntegration = () => {
       features: ["Photo editing", "Video creation", "PDF documents", "Portfolio templates"],
       platform: ["Windows", "Mac", "Mobile"],
       cost: "Paid",
-      icon: <Camera className="h-5 w-5" />
+      icon: <Camera className="h-5 w-5" />,
+      url: "https://www.adobe.com/uk/creativecloud.html"
     },
     {
       name: "Microsoft 365",
@@ -41,7 +44,8 @@ const DigitalToolsIntegration = () => {
       features: ["Word documents", "PowerPoint presentations", "Excel tracking", "OneDrive storage"],
       platform: ["Web", "Windows", "Mac", "Mobile"],
       cost: "Freemium",
-      icon: <FileText className="h-5 w-5" />
+      icon: <FileText className="h-5 w-5" />,
+      url: "https://www.microsoft.com/en-gb/microsoft-365"
     },
     {
       name: "Canva",
@@ -50,7 +54,8 @@ const DigitalToolsIntegration = () => {
       features: ["Portfolio templates", "Drag-and-drop design", "Photo editing", "Brand consistency"],
       platform: ["Web", "iOS", "Android"],
       cost: "Freemium",
-      icon: <Video className="h-5 w-5" />
+      icon: <Video className="h-5 w-5" />,
+      url: "https://www.canva.com"
     }
   ];
 
@@ -61,6 +66,10 @@ const DigitalToolsIntegration = () => {
       case "Freemium": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
       default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
     }
+  };
+
+  const handleLearnMore = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -111,7 +120,12 @@ const DigitalToolsIntegration = () => {
                 </span>
               </div>
               
-              <Button variant="outline" size="sm" className="w-full">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full"
+                onClick={() => handleLearnMore(tool.url)}
+              >
                 <ExternalLink className="h-3 w-3 mr-1" />
                 Learn More
               </Button>

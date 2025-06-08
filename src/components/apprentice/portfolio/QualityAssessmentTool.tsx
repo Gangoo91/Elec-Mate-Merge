@@ -3,8 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, AlertCircle, XCircle, Eye, Download } from "lucide-react";
+import { CheckCircle, AlertCircle, XCircle, Eye, Download, RefreshCw } from "lucide-react";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import { downloadAssessmentReport } from "@/services/assessmentReportService";
 
 interface AssessmentCriteria {
   id: string;
@@ -16,9 +18,11 @@ interface AssessmentCriteria {
 }
 
 const QualityAssessmentTool = () => {
-  const [assessmentComplete, setAssessmentComplete] = useState(false);
+  const { toast } = useToast();
+  const [isRunningAssessment, setIsRunningAssessment] = useState(false);
+  const [assessmentComplete, setAssessmentComplete] = useState(true);
   
-  const criteria: AssessmentCriteria[] = [
+  const [criteria, setCriteria] = useState<AssessmentCriteria[]>([
     {
       id: "evidence-quality",
       category: "Evidence Quality",
@@ -67,7 +71,7 @@ const QualityAssessmentTool = () => {
       status: "missing",
       feedback: "Add more examples showing skill development over time."
     }
-  ];
+  ]);
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -103,6 +107,43 @@ const QualityAssessmentTool = () => {
     }, 0);
     
     return Math.round((weightedScore / totalWeight) * 100);
+  };
+
+  const runAssessment = async () => {
+    setIsRunningAssessment(true);
+    
+    // Simulate assessment process
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Randomly update some criteria for demo purposes
+    const updatedCriteria = criteria.map(item => {
+      const randomUpdate = Math.random();
+      if (randomUpdate > 0.7) {
+        const statuses: Array<"excellent" | "good" | "needs-improvement" | "missing"> = 
+          ["excellent", "good", "needs-improvement", "missing"];
+        const newStatus = statuses[Math.floor(Math.random() * statuses.length)];
+        return { ...item, status: newStatus };
+      }
+      return item;
+    });
+    
+    setCriteria(updatedCriteria);
+    setIsRunningAssessment(false);
+    setAssessmentComplete(true);
+    
+    toast({
+      title: "Assessment Complete",
+      description: "Your portfolio has been analysed and scored.",
+    });
+  };
+
+  const exportReport = () => {
+    const overallScore = calculateOverallScore();
+    downloadAssessmentReport(criteria, overallScore);
+    toast({
+      title: "Report Downloaded",
+      description: "Your portfolio assessment report has been generated.",
+    });
   };
 
   const overallScore = calculateOverallScore();
@@ -151,11 +192,29 @@ const QualityAssessmentTool = () => {
         </div>
 
         <div className="mt-6 flex gap-3">
-          <Button className="flex-1">
-            <Eye className="h-4 w-4 mr-1" />
-            Run Assessment
+          <Button 
+            className="flex-1" 
+            onClick={runAssessment}
+            disabled={isRunningAssessment}
+          >
+            {isRunningAssessment ? (
+              <>
+                <RefreshCw className="h-4 w-4 mr-1 animate-spin" />
+                Running Assessment...
+              </>
+            ) : (
+              <>
+                <Eye className="h-4 w-4 mr-1" />
+                Run Assessment
+              </>
+            )}
           </Button>
-          <Button variant="outline" className="flex-1">
+          <Button 
+            variant="outline" 
+            className="flex-1"
+            onClick={exportReport}
+            disabled={!assessmentComplete}
+          >
             <Download className="h-4 w-4 mr-1" />
             Export Report
           </Button>
