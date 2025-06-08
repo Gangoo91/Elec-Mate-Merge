@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import { FileText, Download, Eye, Star, Filter, TrendingUp } from "lucide-react";
+import { FileText, Download, Eye, Star, Filter } from "lucide-react";
 import DocumentFilters from "./DocumentFilters";
 import DocumentCard from "./DocumentCard";
 import DocumentPreviewDialog from "./DocumentPreviewDialog";
@@ -27,10 +27,6 @@ const TemplateLibraryTab = () => {
       return matchesSearch && matchesType;
     });
   }, [searchQuery, documentType]);
-
-  const popularTemplates = useMemo(() => {
-    return documentTemplates.slice(0, 3);
-  }, []);
 
   const handlePreview = (document: DocumentTemplate) => {
     setCurrentDocument(document);
@@ -63,46 +59,6 @@ const TemplateLibraryTab = () => {
 
   return (
     <div className="space-y-6">
-      {/* Popular Templates Section */}
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <TrendingUp className="h-5 w-5" />
-            Most Popular Templates
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {popularTemplates.map((template) => (
-              <div key={template.id} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <FileText className="h-4 w-4 text-elec-yellow" />
-                  <h4 className="font-medium text-white">{template.title}</h4>
-                </div>
-                <p className="text-sm text-muted-foreground mb-3">{template.description}</p>
-                <div className="flex gap-2">
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
-                    onClick={() => handlePreview(template)}
-                  >
-                    <Eye className="h-3 w-3 mr-1" />
-                    Preview
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    onClick={() => handleDownload(template)}
-                  >
-                    <Download className="h-3 w-3 mr-1" />
-                    Download
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Template Categories Overview */}
       <Card className="border-blue-500/30 bg-blue-500/10">
         <CardHeader>
