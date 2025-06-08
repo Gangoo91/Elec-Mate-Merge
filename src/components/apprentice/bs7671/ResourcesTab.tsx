@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, ExternalLink, Calculator, FileText, Video, Globe, Tool } from "lucide-react";
+import { BookOpen, ExternalLink, Calculator, FileText, Video, Globe, Wrench } from "lucide-react";
 
 const ResourcesTab = () => {
   const resources = [
@@ -128,7 +128,7 @@ const ResourcesTab = () => {
       <Card className="border-red-500/30 bg-red-500/10">
         <CardHeader>
           <CardTitle className="text-red-400 flex items-center gap-2">
-            <Tool className="h-5 w-5" />
+            <Wrench className="h-5 w-5" />
             Emergency Contacts
           </CardTitle>
         </CardHeader>
