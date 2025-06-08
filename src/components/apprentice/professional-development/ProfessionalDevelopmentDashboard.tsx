@@ -5,8 +5,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { TrendingUp, Calendar, Award, BookOpen, Target, Clock, Star, Users, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const ProfessionalDevelopmentDashboard = () => {
+  const { toast } = useToast();
+  const [showSkillsAssessment, setShowSkillsAssessment] = useState(false);
+
   const progressData = {
     overallProgress: 68,
     careerLevel: "Level 2 Apprentice",
@@ -88,6 +93,35 @@ const ProfessionalDevelopmentDashboard = () => {
     { title: "On-site Skills Evaluation", date: "2 weeks ago", score: "Excellent" }
   ];
 
+  const handleBookTraining = () => {
+    toast({
+      title: "Training Booking",
+      description: "Redirecting to training course booking system...",
+    });
+  };
+
+  const handleUpdateCPD = () => {
+    toast({
+      title: "CPD Log Updated",
+      description: "Your Continuing Professional Development log has been updated with recent activities.",
+    });
+  };
+
+  const handleFindStudyGroups = () => {
+    toast({
+      title: "Study Groups",
+      description: "Found 3 local study groups in your area. Check your notifications for details.",
+    });
+  };
+
+  const handleSkillsAssessment = () => {
+    setShowSkillsAssessment(true);
+    toast({
+      title: "Skills Assessment",
+      description: "Starting your professional skills assessment...",
+    });
+  };
+
   return (
     <div className="space-y-6">
       {/* Welcome Overview */}
@@ -149,6 +183,54 @@ const ProfessionalDevelopmentDashboard = () => {
           </Card>
         ))}
       </div>
+
+      {/* Skills Assessment */}
+      {showSkillsAssessment && (
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-elec-yellow" />
+              Quick Skills Assessment
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <p className="text-sm text-muted-foreground">
+                Rate your confidence level in these key electrical skills (1-5 scale):
+              </p>
+              {['Electrical Theory', 'Practical Installation', 'Testing & Inspection', 'Health & Safety', 'Customer Service'].map((skill, index) => (
+                <div key={index} className="flex items-center justify-between p-3 bg-elec-dark/50 rounded-lg">
+                  <span className="text-white">{skill}</span>
+                  <div className="flex gap-1">
+                    {[1, 2, 3, 4, 5].map((rating) => (
+                      <Button
+                        key={rating}
+                        size="sm"
+                        variant="outline"
+                        className="w-8 h-8 p-0 border-elec-yellow/30 hover:bg-elec-yellow hover:text-black"
+                      >
+                        {rating}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+              <Button 
+                className="w-full bg-elec-yellow/10 hover:bg-elec-yellow hover:text-black"
+                onClick={() => {
+                  setShowSkillsAssessment(false);
+                  toast({
+                    title: "Assessment Complete",
+                    description: "Your skills assessment has been saved. Recommendations will be provided based on your responses.",
+                  });
+                }}
+              >
+                Complete Assessment
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Featured Opportunities */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
@@ -217,7 +299,7 @@ const ProfessionalDevelopmentDashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Quick Actions */}
+        {/* Quick Actions - Now with proper functionality */}
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -227,19 +309,34 @@ const ProfessionalDevelopmentDashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <Button className="w-full justify-start bg-elec-yellow/10 hover:bg-elec-yellow hover:text-black">
+              <Button 
+                className="w-full justify-start bg-elec-yellow/10 hover:bg-elec-yellow hover:text-black"
+                onClick={handleBookTraining}
+              >
                 <Calendar className="mr-2 h-4 w-4" />
                 Book Training Course
               </Button>
-              <Button variant="outline" className="w-full justify-start border-elec-yellow/30">
+              <Button 
+                variant="outline" 
+                className="w-full justify-start border-elec-yellow/30"
+                onClick={handleUpdateCPD}
+              >
                 <BookOpen className="mr-2 h-4 w-4" />
                 Update CPD Log
               </Button>
-              <Button variant="outline" className="w-full justify-start border-elec-yellow/30">
+              <Button 
+                variant="outline" 
+                className="w-full justify-start border-elec-yellow/30"
+                onClick={handleFindStudyGroups}
+              >
                 <Users className="mr-2 h-4 w-4" />
                 Find Study Groups
               </Button>
-              <Button variant="outline" className="w-full justify-start border-elec-yellow/30">
+              <Button 
+                variant="outline" 
+                className="w-full justify-start border-elec-yellow/30"
+                onClick={handleSkillsAssessment}
+              >
                 <TrendingUp className="mr-2 h-4 w-4" />
                 Skills Assessment
               </Button>

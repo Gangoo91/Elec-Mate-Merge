@@ -1,3 +1,4 @@
+
 import { Route, Routes } from "react-router-dom";
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";

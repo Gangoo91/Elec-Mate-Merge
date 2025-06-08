@@ -1,267 +1,271 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { BookOpen, Video, FileText, Link as LinkIcon, Download, Search, Filter, Star } from "lucide-react";
-import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { BookOpen, FileText, Video, ExternalLink, Download, Clock, Star } from "lucide-react";
 
 const ResourceLibrary = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-
-  const categories = [
-    { id: "all", label: "All Resources", count: 156 },
-    { id: "guides", label: "Study Guides", count: 45 },
-    { id: "videos", label: "Video Tutorials", count: 38 },
-    { id: "templates", label: "Templates", count: 23 },
-    { id: "regulations", label: "Regulations", count: 28 },
-    { id: "tools", label: "Tools & Apps", count: 22 }
-  ];
-
   const resources = [
     {
-      id: 1,
-      title: "Complete Guide to BS 7671 18th Edition",
-      type: "guide",
+      title: "IET Wiring Regulations (BS 7671:2018+A2:2022)",
+      type: "Regulation",
       format: "PDF",
-      category: "Regulations",
-      rating: 4.8,
-      downloads: 2340,
-      description: "Comprehensive overview of the latest wiring regulations with practical examples and case studies.",
-      tags: ["18th Edition", "Wiring Regulations", "Compliance"],
-      featured: true
+      description: "Complete electrical installation regulations for the UK",
+      provider: "IET",
+      rating: 5,
+      downloads: "2.5k",
+      icon: FileText,
+      category: "Essential"
     },
     {
-      id: 2,
-      title: "Cable Sizing Calculator Pro",
-      type: "tool",
-      format: "Web App",
-      category: "Tools & Apps",
-      rating: 4.9,
-      downloads: 1856,
-      description: "Advanced cable sizing calculator with voltage drop, current capacity, and protection calculations.",
-      tags: ["Calculations", "Cable Sizing", "Design"],
-      featured: true
-    },
-    {
-      id: 3,
-      title: "Electrical Testing Procedures Video Series",
-      type: "video",
-      format: "MP4",
-      category: "Video Tutorials",
-      rating: 4.7,
-      downloads: 3102,
-      description: "Step-by-step video guides for all electrical testing procedures including PAT testing.",
-      tags: ["Testing", "Inspection", "Practical Skills"],
-      featured: false
-    },
-    {
-      id: 4,
-      title: "Risk Assessment Template Pack",
-      type: "template",
-      format: "DOC/PDF",
-      category: "Templates",
-      rating: 4.6,
-      downloads: 1423,
-      description: "Ready-to-use risk assessment templates for electrical work environments.",
-      tags: ["Health & Safety", "Risk Assessment", "Documentation"],
-      featured: false
-    },
-    {
-      id: 5,
-      title: "Renewable Energy Systems Guide",
-      type: "guide",
+      title: "Electrical Safety First Guidelines",
+      type: "Safety Guide",
       format: "PDF",
-      category: "Study Guides",
-      rating: 4.8,
-      downloads: 987,
-      description: "Complete guide to solar PV, wind, and battery storage systems installation.",
-      tags: ["Solar PV", "Renewable Energy", "Installation"],
-      featured: true
+      description: "Comprehensive safety guidelines for electrical work",
+      provider: "Electrical Safety First",
+      rating: 5,
+      downloads: "1.8k",
+      icon: FileText,
+      category: "Safety"
     },
     {
-      id: 6,
-      title: "Electrical Symbols Reference Chart",
-      type: "reference",
+      title: "JIB Grading Scheme Handbook",
+      type: "Career Guide",
       format: "PDF",
-      category: "Study Guides",
-      rating: 4.5,
-      downloads: 2156,
-      description: "Comprehensive reference chart of electrical symbols used in UK installations.",
-      tags: ["Symbols", "Reference", "Standards"],
-      featured: false
+      description: "Understanding electrical industry grading and progression",
+      provider: "JIB",
+      rating: 4,
+      downloads: "980",
+      icon: BookOpen,
+      category: "Career"
+    },
+    {
+      title: "Solar PV Installation Best Practices",
+      type: "Technical Guide",
+      format: "Video Series",
+      description: "Complete guide to photovoltaic system installation",
+      provider: "NICEIC",
+      rating: 5,
+      downloads: "1.2k",
+      icon: Video,
+      category: "Renewable"
+    },
+    {
+      title: "EV Charging Infrastructure Guide",
+      type: "Technical Guide",
+      format: "PDF + Video",
+      description: "Electric vehicle charging point installation guidance",
+      provider: "BEAMA",
+      rating: 4,
+      downloads: "756",
+      icon: FileText,
+      category: "EV Technology"
+    },
+    {
+      title: "Smart Home Electrical Systems",
+      type: "Technical Guide",
+      format: "Interactive",
+      description: "IoT and smart building electrical installations",
+      provider: "KNX UK",
+      rating: 4,
+      downloads: "543",
+      icon: BookOpen,
+      category: "Smart Tech"
     }
   ];
 
-  const getResourceIcon = (type: string) => {
-    switch (type) {
-      case "video": return Video;
-      case "guide": return BookOpen;
-      case "template": return FileText;
-      case "tool": return LinkIcon;
-      default: return FileText;
+  const categories = [
+    { name: "All", count: 24, active: true },
+    { name: "Essential", count: 8, active: false },
+    { name: "Safety", count: 6, active: false },
+    { name: "Career", count: 4, active: false },
+    { name: "Renewable", count: 3, active: false },
+    { name: "Smart Tech", count: 3, active: false }
+  ];
+
+  const webinars = [
+    {
+      title: "Future of Electrical Work",
+      date: "15 March 2024",
+      time: "14:00 GMT",
+      speaker: "Dr. Sarah Wilson, IET",
+      registrations: 245
+    },
+    {
+      title: "18th Edition Amendment Updates",
+      date: "22 March 2024",
+      time: "10:00 GMT", 
+      speaker: "Mark Thompson, City & Guilds",
+      registrations: 189
+    },
+    {
+      title: "Career Progression in Renewables",
+      date: "5 April 2024",
+      time: "15:30 GMT",
+      speaker: "Emma Davies, Solar Power Portal",
+      registrations: 167
     }
+  ];
+
+  const getFormatIcon = (format: string) => {
+    if (format.includes('Video')) return Video;
+    if (format.includes('PDF')) return FileText;
+    return BookOpen;
   };
 
-  const filteredResources = resources.filter(resource => {
-    const matchesSearch = searchQuery === "" || 
-      resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      resource.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      resource.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    
-    const matchesCategory = selectedCategory === "all" || 
-      resource.category.toLowerCase().replace(" & ", "").replace(" ", "") === selectedCategory;
-    
-    return matchesSearch && matchesCategory;
-  });
-
-  const featuredResources = resources.filter(resource => resource.featured);
+  const getCategoryColor = (category: string) => {
+    const colors = {
+      Essential: 'bg-red-500/20 text-red-400',
+      Safety: 'bg-orange-500/20 text-orange-400',
+      Career: 'bg-blue-500/20 text-blue-400',
+      Renewable: 'bg-green-500/20 text-green-400',
+      'EV Technology': 'bg-purple-500/20 text-purple-400',
+      'Smart Tech': 'bg-cyan-500/20 text-cyan-400'
+    };
+    return colors[category as keyof typeof colors] || 'bg-gray-500/20 text-gray-400';
+  };
 
   return (
     <div className="space-y-6">
-      {/* Header with Search */}
+      {/* Resource Categories */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <BookOpen className="h-5 w-5 text-elec-yellow" />
-            Professional Development Resource Library
+            Resource Categories
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search resources, guides, videos..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-elec-dark border-elec-yellow/30"
-              />
-            </div>
-            <Button variant="outline" className="border-elec-yellow/30">
-              <Filter className="mr-2 h-4 w-4" />
-              Advanced Filter
-            </Button>
+          <div className="flex flex-wrap gap-2">
+            {categories.map((category, index) => (
+              <Button
+                key={index}
+                variant={category.active ? "default" : "outline"}
+                size="sm"
+                className={category.active ? "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30" : "border-elec-yellow/30"}
+              >
+                {category.name} ({category.count})
+              </Button>
+            ))}
           </div>
         </CardContent>
       </Card>
 
-      {/* Categories */}
-      <div className="flex flex-wrap gap-2">
-        {categories.map((category) => (
-          <Button
-            key={category.id}
-            variant={selectedCategory === category.id ? "default" : "outline"}
-            size="sm"
-            onClick={() => setSelectedCategory(category.id)}
-            className={selectedCategory === category.id 
-              ? "bg-elec-yellow text-black" 
-              : "border-elec-yellow/30 hover:bg-elec-yellow/10"
-            }
-          >
-            {category.label} ({category.count})
-          </Button>
-        ))}
-      </div>
-
-      {/* Featured Resources */}
-      {selectedCategory === "all" && (
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Star className="h-5 w-5 text-elec-yellow" />
-              Featured Resources
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {featuredResources.map((resource) => {
-                const IconComponent = getResourceIcon(resource.type);
-                return (
-                  <Card key={resource.id} className="border-elec-yellow/10 bg-elec-dark/50">
-                    <CardContent className="p-4">
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="p-2 rounded bg-elec-yellow/10">
-                          <IconComponent className="h-4 w-4 text-elec-yellow" />
-                        </div>
-                        <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs">
-                          Featured
-                        </Badge>
-                      </div>
-                      <h3 className="font-semibold text-white mb-2 line-clamp-2">{resource.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                        {resource.description}
-                      </p>
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className="flex items-center gap-1">
-                          <Star className="h-3 w-3 text-yellow-400 fill-current" />
-                          <span className="text-xs text-muted-foreground">{resource.rating}</span>
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Download className="h-3 w-3 text-muted-foreground" />
-                          <span className="text-xs text-muted-foreground">{resource.downloads}</span>
-                        </div>
-                      </div>
-                      <Button size="sm" className="w-full bg-elec-yellow/10 hover:bg-elec-yellow hover:text-black">
-                        Access Resource
-                      </Button>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* All Resources */}
+      {/* Resource Library */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle>All Resources ({filteredResources.length})</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <FileText className="h-5 w-5 text-elec-yellow" />
+            Professional Development Resources
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {resources.map((resource, index) => {
+              const FormatIcon = getFormatIcon(resource.format);
+              return (
+                <Card key={index} className="border-elec-yellow/10 bg-elec-dark/50">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <FormatIcon className="h-4 w-4 text-elec-yellow" />
+                        <Badge className={getCategoryColor(resource.category)} variant="outline">
+                          {resource.category}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`h-3 w-3 ${i < resource.rating ? 'text-yellow-400 fill-current' : 'text-gray-400'}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <h3 className="font-semibold text-white mb-2">{resource.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-1">{resource.provider}</p>
+                    <p className="text-sm text-elec-light/80 mb-3">{resource.description}</p>
+                    
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                        <span>{resource.format}</span>
+                        <span>{resource.downloads} downloads</span>
+                      </div>
+                      <Button size="sm" variant="outline" className="border-elec-yellow/30">
+                        <Download className="mr-1 h-3 w-3" />
+                        Access
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Upcoming Webinars */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Video className="h-5 w-5 text-elec-yellow" />
+            Upcoming Professional Development Webinars
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
-            {filteredResources.map((resource) => {
-              const IconComponent = getResourceIcon(resource.type);
-              return (
-                <div key={resource.id} className="flex items-center justify-between p-4 bg-elec-dark/50 rounded-lg">
-                  <div className="flex items-center gap-4">
-                    <div className="p-2 rounded bg-elec-yellow/10">
-                      <IconComponent className="h-5 w-5 text-elec-yellow" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-medium text-white">{resource.title}</h3>
-                        {resource.featured && (
-                          <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs">
-                            Featured
-                          </Badge>
-                        )}
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-2">{resource.description}</p>
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                        <span>{resource.format}</span>
-                        <span>★ {resource.rating}</span>
-                        <span>{resource.downloads} downloads</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="flex flex-wrap gap-1">
-                      {resource.tags.slice(0, 2).map((tag, index) => (
-                        <Badge key={index} variant="outline" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    <Button size="sm" variant="outline" className="border-elec-yellow/30">
-                      Access
-                    </Button>
+            {webinars.map((webinar, index) => (
+              <div key={index} className="flex items-center justify-between p-4 bg-elec-dark/50 rounded-lg">
+                <div>
+                  <h3 className="font-medium text-white">{webinar.title}</h3>
+                  <p className="text-sm text-muted-foreground">{webinar.speaker}</p>
+                  <div className="flex items-center gap-4 mt-1 text-xs text-muted-foreground">
+                    <span className="flex items-center gap-1">
+                      <Clock className="h-3 w-3" />
+                      {webinar.date} at {webinar.time}
+                    </span>
+                    <span>{webinar.registrations} registered</span>
                   </div>
                 </div>
-              );
-            })}
+                <Button size="sm" className="bg-elec-yellow/10 hover:bg-elec-yellow hover:text-black">
+                  Register
+                  <ExternalLink className="ml-1 h-3 w-3" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quick Links */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <ExternalLink className="h-5 w-5 text-elec-yellow" />
+            External Professional Resources
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Button variant="outline" className="justify-start border-elec-yellow/30 h-auto p-4">
+              <div className="text-left">
+                <div className="font-medium">IET Standards</div>
+                <div className="text-xs text-muted-foreground">Technical standards and guidance</div>
+              </div>
+            </Button>
+            <Button variant="outline" className="justify-start border-elec-yellow/30 h-auto p-4">
+              <div className="text-left">
+                <div className="font-medium">HSE Guidance</div>
+                <div className="text-xs text-muted-foreground">Health and safety regulations</div>
+              </div>
+            </Button>
+            <Button variant="outline" className="justify-start border-elec-yellow/30 h-auto p-4">
+              <div className="text-left">
+                <div className="font-medium">BEIS Updates</div>
+                <div className="text-xs text-muted-foreground">Government policy changes</div>
+              </div>
+            </Button>
           </div>
         </CardContent>
       </Card>
