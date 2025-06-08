@@ -21,32 +21,32 @@ interface DocumentCardProps {
 
 const DocumentCard = ({ document, onPreview, onDownload }: DocumentCardProps) => {
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors">
-      <CardHeader>
+    <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors h-full flex flex-col">
+      <CardHeader className="flex-shrink-0">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-md bg-elec-yellow/10">
             <FileText className="h-6 w-6 text-elec-yellow" />
           </div>
-          <CardTitle className="text-lg">{document.title}</CardTitle>
+          <CardTitle className="text-lg line-clamp-2">{document.title}</CardTitle>
         </div>
-        <CardDescription className="mt-2">{document.description}</CardDescription>
+        <CardDescription className="mt-2 line-clamp-3 min-h-[4.5rem]">{document.description}</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 flex-grow flex flex-col justify-between">
         <div className="text-sm">
           <span className="text-muted-foreground">Document Type:</span> {document.type}
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 mt-auto">
           <Button 
             variant="outline" 
             size="sm" 
-            className="flex gap-1 items-center"
+            className="flex gap-1 items-center flex-1"
             onClick={() => onPreview(document)}
           >
             <Eye className="h-4 w-4" />
           </Button>
           <Button 
             size="sm" 
-            className="flex gap-1 items-center"
+            className="flex gap-1 items-center flex-1"
             onClick={() => onDownload(document)}
           >
             <Download className="h-4 w-4" />
