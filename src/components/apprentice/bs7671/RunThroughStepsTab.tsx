@@ -3,37 +3,43 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
+import { Input } from "@/components/ui/input";
 import { 
-  CheckCircle, 
+  BookOpen, 
   Clock, 
+  AlertTriangle, 
+  Lightbulb, 
+  CheckCircle, 
   ArrowRight, 
-  Play,
-  BookOpen,
-  Cable,
-  AlertTriangle,
-  Zap
+  Search,
+  Filter,
+  Zap,
+  Shield,
+  Activity,
+  GitBranch,
+  Eye,
+  RotateCcw,
+  TestTube
 } from "lucide-react";
 import InteractiveTestingGuide from "./InteractiveTestingGuide";
-import { comprehensiveTestingGuides, EnhancedTestGuide } from "@/data/bs7671-testing/comprehensiveTestingGuides";
+import { allBS7671Tests, BS7671Test } from "@/data/bs7671-testing/allBS7671Tests";
 
 const RunThroughStepsTab = () => {
-  const [selectedGuide, setSelectedGuide] = useState<EnhancedTestGuide | null>(null);
-  const [completedGuides, setCompletedGuides] = useState<Set<string>>(new Set());
+  const [selectedTest, setSelectedTest] = useState<BS7671Test | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [difficultyFilter, setDifficultyFilter] = useState<string>("All");
 
-  const handleGuideSelect = (guide: EnhancedTestGuide) => {
-    setSelectedGuide(guide);
+  const handleTestSelect = (test: BS7671Test) => {
+    setSelectedTest(test);
   };
 
-  const handleGuideComplete = (guideId: string) => {
-    const newCompleted = new Set(completedGuides);
-    newCompleted.add(guideId);
-    setCompletedGuides(newCompleted);
-    setSelectedGuide(null);
+  const handleTestComplete = () => {
+    console.log("Test completed!");
+    setSelectedTest(null);
   };
 
-  const handleBackToSteps = () => {
-    setSelectedGuide(null);
+  const handleBackToTests = () => {
+    setSelectedTest(null);
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -45,263 +51,255 @@ const RunThroughStepsTab = () => {
     }
   };
 
-  const overallProgress = (completedGuides.size / comprehensiveTestingGuides.length) * 100;
+  const getTestIcon = (testId: string) => {
+    switch (testId) {
+      case 'continuity-protective-conductor':
+        return <Shield className="h-5 w-5" />;
+      case 'ring-circuit-continuity':
+        return <RotateCcw className="h-5 w-5" />;
+      case 'insulation-resistance-testing':
+        return <Activity className="h-5 w-5" />;
+      case 'polarity-testing':
+        return <GitBranch className="h-5 w-5" />;
+      case 'earth-fault-loop-impedance':
+        return <Zap className="h-5 w-5" />;
+      case 'rcd-testing':
+        return <Shield className="h-5 w-5" />;
+      case 'prospective-fault-current':
+        return <AlertTriangle className="h-5 w-5" />;
+      case 'phase-sequence':
+        return <RotateCcw className="h-5 w-5" />;
+      case 'functional-testing':
+        return <TestTube className="h-5 w-5" />;
+      default:
+        return <Eye className="h-5 w-5" />;
+    }
+  };
 
-  if (selectedGuide) {
+  const filteredTests = allBS7671Tests.filter(test => {
+    const matchesSearch = test.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         test.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesDifficulty = difficultyFilter === "All" || test.difficulty === difficultyFilter;
+    return matchesSearch && matchesDifficulty;
+  });
+
+  if (selectedTest) {
     return (
       <InteractiveTestingGuide
-        guide={selectedGuide}
-        onComplete={() => handleGuideComplete(selectedGuide.id)}
-        onBack={handleBackToSteps}
+        guide={selectedTest}
+        onComplete={handleTestComplete}
+        onBack={handleBackToTests}
       />
     );
   }
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/30 bg-gradient-to-r from-elec-yellow/10 to-amber-500/10">
+      <Card className="border-cyan-500/30 bg-gradient-to-br from-cyan-500/10 to-blue-500/10">
         <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <CheckCircle className="h-5 w-5" />
-            BS7671 Testing Run-Through Steps
+          <CardTitle className="text-cyan-400 flex items-center gap-2">
+            <BookOpen className="h-5 w-5" />
+            Complete BS7671 Testing Guide
           </CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground mb-4">
-            Complete step-by-step guides for all essential BS7671 testing procedures. Each guide includes 
-            detailed Wago connection instructions, safety warnings, and troubleshooting tips.
+            Comprehensive step-by-step testing procedures covering all required BS 7671 (18th Edition) 
+            inspection and testing requirements. Each test includes detailed instructions, safety warnings, 
+            regulation references, and troubleshooting guidance.
           </p>
           
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium">Overall Progress</span>
-              <span className="text-sm text-muted-foreground">
-                {completedGuides.size} of {comprehensiveTestingGuides.length} completed
-              </span>
-            </div>
-            <Progress value={overallProgress} className="h-2" />
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
-              <div className="text-2xl font-bold text-blue-400">{comprehensiveTestingGuides.length}</div>
-              <div className="text-sm text-muted-foreground">Testing Procedures</div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
-              <div className="text-2xl font-bold text-green-400">{completedGuides.size}</div>
-              <div className="text-sm text-muted-foreground">Completed</div>
+              <div className="text-2xl font-bold text-green-400">{allBS7671Tests.length}</div>
+              <div className="text-sm text-muted-foreground">Complete Tests</div>
             </div>
-            <div className="bg-orange-500/10 rounded-lg p-4 border border-orange-500/20">
-              <div className="text-2xl font-bold text-orange-400">100%</div>
-              <div className="text-sm text-muted-foreground">Wago Compatible</div>
+            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
+              <div className="text-2xl font-bold text-blue-400">
+                {allBS7671Tests.reduce((total, test) => total + test.steps.length, 0)}+
+              </div>
+              <div className="text-sm text-muted-foreground">Detailed Steps</div>
             </div>
             <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
               <div className="text-2xl font-bold text-purple-400">BS 7671</div>
+              <div className="text-sm text-muted-foreground">18th Edition</div>
+            </div>
+            <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/20">
+              <div className="text-2xl font-bold text-amber-400">100%</div>
               <div className="text-sm text-muted-foreground">Compliant</div>
             </div>
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Essential Testing Sequence */}
-      <Card className="border-cyan-500/30 bg-cyan-500/5">
-        <CardHeader>
-          <CardTitle className="text-cyan-300 flex items-center gap-2">
-            <Zap className="h-5 w-5" />
-            Essential Testing Sequence
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-cyan-100 mb-4">
-            Follow this sequence for comprehensive BS7671 testing. Each step builds upon the previous 
-            to ensure safe and systematic testing procedures.
-          </p>
-          
-          <div className="grid grid-cols-1 gap-4">
-            {comprehensiveTestingGuides.map((guide, index) => {
-              const isCompleted = completedGuides.has(guide.id);
-              const canStart = index === 0 || completedGuides.has(comprehensiveTestingGuides[index - 1].id);
-              
-              return (
-                <Card 
-                  key={guide.id} 
-                  className={`border-elec-yellow/20 bg-elec-gray transition-colors ${
-                    canStart ? 'hover:border-elec-yellow/40 cursor-pointer' : 'opacity-60'
-                  }`}
-                >
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                          isCompleted 
-                            ? 'bg-green-500' 
-                            : canStart 
-                              ? 'bg-elec-yellow' 
-                              : 'bg-gray-600'
-                        }`}>
-                          {isCompleted ? (
-                            <CheckCircle className="h-6 w-6 text-white" />
-                          ) : (
-                            <span className={`font-bold ${canStart ? 'text-elec-dark' : 'text-gray-300'}`}>
-                              {index + 1}
-                            </span>
-                          )}
-                        </div>
-                        <div>
-                          <CardTitle className="text-white text-lg">{guide.title}</CardTitle>
-                          <p className="text-sm text-muted-foreground">{guide.description}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Badge className={getDifficultyColor(guide.difficulty)}>
-                          {guide.difficulty}
-                        </Badge>
-                        <Badge className="bg-blue-500/20 text-blue-400">
-                          <Clock className="h-3 w-3 mr-1" />
-                          {guide.duration}
-                        </Badge>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  
-                  <CardContent className="space-y-4">
-                    <div className="bg-blue-500/10 rounded-lg p-3 border border-blue-500/20">
-                      <h4 className="font-medium text-blue-300 mb-2">Purpose</h4>
-                      <p className="text-sm text-blue-100">{guide.purpose}</p>
-                    </div>
-
-                    {guide.testLimits.length > 0 && (
-                      <div className="bg-green-500/10 rounded-lg p-3 border border-green-500/20">
-                        <h4 className="font-medium text-green-300 mb-2">Key Test Limits</h4>
-                        <div className="grid grid-cols-2 gap-2">
-                          {guide.testLimits.slice(0, 2).map((limit, idx) => (
-                            <div key={idx} className="text-sm text-green-100 flex justify-between">
-                              <span>{limit.parameter}:</span>
-                              <span className="font-mono">{limit.limit} {limit.unit}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="bg-orange-500/10 rounded-lg p-3 border border-orange-500/20">
-                      <h4 className="font-medium text-orange-300 mb-2 flex items-center gap-2">
-                        <Cable className="h-4 w-4" />
-                        Wago Connection Features
-                      </h4>
-                      <ul className="space-y-1">
-                        <li className="text-sm text-orange-100 flex items-center gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-400" />
-                          Step-by-step Wago connector instructions
-                        </li>
-                        <li className="text-sm text-orange-100 flex items-center gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-400" />
-                          Safe connection practices for testing
-                        </li>
-                        <li className="text-sm text-orange-100 flex items-center gap-2">
-                          <CheckCircle className="h-3 w-3 text-green-400" />
-                          Recommended connector types for each test
-                        </li>
-                      </ul>
-                    </div>
-
-                    {guide.commonIssues.length > 0 && (
-                      <div className="bg-amber-500/10 rounded-lg p-3 border border-amber-500/20">
-                        <h4 className="font-medium text-amber-300 mb-2 flex items-center gap-2">
-                          <AlertTriangle className="h-4 w-4" />
-                          Common Issues to Watch For
-                        </h4>
-                        <ul className="space-y-1">
-                          {guide.commonIssues.slice(0, 2).map((issue, idx) => (
-                            <li key={idx} className="text-xs text-amber-100 flex items-start gap-2">
-                              <span className="text-amber-400 mt-1">•</span>
-                              {issue}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                    <div className="pt-2 flex items-center justify-between">
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <BookOpen className="h-4 w-4" />
-                          {guide.steps.length} steps
-                        </span>
-                        {isCompleted && (
-                          <Badge className="bg-green-500/20 text-green-400">
-                            <CheckCircle className="h-3 w-3 mr-1" />
-                            Completed
-                          </Badge>
-                        )}
-                      </div>
-                      
-                      <Button 
-                        onClick={() => handleGuideSelect(guide)}
-                        disabled={!canStart}
-                        className={
-                          isCompleted 
-                            ? "bg-green-600 hover:bg-green-700" 
-                            : "bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                        }
-                      >
-                        {isCompleted ? (
-                          <>
-                            <BookOpen className="h-4 w-4 mr-2" />
-                            Review Guide
-                          </>
-                        ) : (
-                          <>
-                            <Play className="h-4 w-4 mr-2" />
-                            Start Guide
-                          </>
-                        )}
-                        <ArrowRight className="h-4 w-4 ml-2" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
+          {/* Search and Filter Controls */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-6">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search tests..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <Filter className="h-4 w-4 text-muted-foreground" />
+              <select
+                value={difficultyFilter}
+                onChange={(e) => setDifficultyFilter(e.target.value)}
+                className="bg-elec-dark border border-elec-yellow/20 rounded-md px-3 py-2 text-white"
+              >
+                <option value="All">All Levels</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+            </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Key Features */}
-      <Card className="border-purple-500/30 bg-purple-500/5">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {filteredTests.map((test) => (
+          <Card key={test.id} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-colors">
+            <CardHeader>
+              <div className="flex items-start justify-between">
+                <div className="space-y-2">
+                  <CardTitle className="text-white text-lg flex items-center gap-2">
+                    {getTestIcon(test.id)}
+                    {test.title}
+                  </CardTitle>
+                  <div className="flex items-center gap-2">
+                    <Badge className={getDifficultyColor(test.difficulty)}>
+                      {test.difficulty}
+                    </Badge>
+                    <Badge className="bg-blue-500/20 text-blue-400">
+                      <Clock className="h-3 w-3 mr-1" />
+                      {test.duration}
+                    </Badge>
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm text-muted-foreground">{test.description}</p>
+              <div className="text-xs text-cyan-400">{test.regulationClause}</div>
+            </CardHeader>
+            
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <div className="bg-blue-500/10 rounded-lg p-3 border border-blue-500/20">
+                  <h4 className="font-medium text-blue-300 mb-2">Purpose</h4>
+                  <p className="text-sm text-muted-foreground">{test.purpose}</p>
+                </div>
+
+                {test.testLimits.length > 0 && (
+                  <div className="bg-green-500/10 rounded-lg p-3 border border-green-500/20">
+                    <h4 className="font-medium text-green-300 mb-2">Test Limits</h4>
+                    <div className="space-y-1">
+                      {test.testLimits.slice(0, 2).map((limit, index) => (
+                        <div key={index} className="text-sm text-muted-foreground flex justify-between">
+                          <span>{limit.parameter}:</span>
+                          <span className="font-mono">{limit.limit} {limit.unit}</span>
+                        </div>
+                      ))}
+                      {test.testLimits.length > 2 && (
+                        <div className="text-xs text-muted-foreground italic">
+                          +{test.testLimits.length - 2} more limits...
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                <div className="bg-amber-500/10 rounded-lg p-3 border border-amber-500/20">
+                  <h4 className="font-medium text-amber-300 mb-2 flex items-center gap-2">
+                    <AlertTriangle className="h-4 w-4" />
+                    Common Issues
+                  </h4>
+                  <ul className="space-y-1">
+                    {test.commonIssues.slice(0, 2).map((issue, index) => (
+                      <li key={index} className="text-xs text-muted-foreground flex items-start gap-2">
+                        <span className="text-amber-400">•</span>
+                        {issue}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-purple-500/10 rounded-lg p-3 border border-purple-500/20">
+                  <h4 className="font-medium text-purple-300 mb-2">Test Features</h4>
+                  <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-1">
+                      <CheckCircle className="h-3 w-3 text-green-400" />
+                      {test.steps.length} detailed steps
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <CheckCircle className="h-3 w-3 text-green-400" />
+                      Safety warnings
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <CheckCircle className="h-3 w-3 text-green-400" />
+                      Equipment lists
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <CheckCircle className="h-3 w-3 text-green-400" />
+                      Regulation refs
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <Button 
+                    onClick={() => handleTestSelect(test)}
+                    className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                  >
+                    Start Test Procedure
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {filteredTests.length === 0 && (
+        <Card className="border-amber-500/30 bg-amber-500/10">
+          <CardContent className="text-center py-8">
+            <Search className="h-12 w-12 text-amber-400 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-amber-300 mb-2">No Tests Found</h3>
+            <p className="text-muted-foreground">
+              No tests match your current search criteria. Try adjusting your search terms or filters.
+            </p>
+          </CardContent>
+        </Card>
+      )}
+
+      <Card className="border-amber-500/30 bg-amber-500/10">
         <CardHeader>
-          <CardTitle className="text-purple-300 flex items-center gap-2">
-            <CheckCircle className="h-5 w-5" />
-            Enhanced Features
+          <CardTitle className="text-amber-400 flex items-center gap-2">
+            <Lightbulb className="h-5 w-5" />
+            Testing Best Practices
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h4 className="font-semibold mb-3 text-purple-200">Wago Integration</h4>
+              <h4 className="font-semibold mb-3 text-amber-300">Before Testing</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Detailed Wago connector selection guidance</li>
-                <li>• Step-by-step connection procedures</li>
-                <li>• Safety tips for testing applications</li>
-                <li>• Visual connection verification methods</li>
+                <li>• Complete safe isolation procedure and prove dead</li>
+                <li>• Verify test equipment calibration and functionality</li>
+                <li>• Have circuit diagrams and schedules available</li>
+                <li>• Plan testing sequence to minimise re-isolation</li>
+                <li>• Ensure adequate lighting and access</li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-3 text-purple-200">Interactive Learning</h4>
+              <h4 className="font-semibold mb-3 text-amber-300">During Testing</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Progress tracking through each procedure</li>
-                <li>• Step-by-step guided instructions</li>
-                <li>• Equipment setup and configuration</li>
-                <li>• Real-time troubleshooting support</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-3 text-purple-200">Professional Standards</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• BS 7671:2018+A2:2022 compliant procedures</li>
-                <li>• Industry best practice methods</li>
-                <li>• Safety warnings and precautions</li>
-                <li>• Professional documentation guidance</li>
+                <li>• Record all readings, even satisfactory ones</li>
+                <li>• Take photographs of test setups for records</li>
+                <li>• Double-check unusual or borderline readings</li>
+                <li>• Follow the prescribed testing sequence</li>
+                <li>• Document any deviations or observations</li>
               </ul>
             </div>
           </div>
