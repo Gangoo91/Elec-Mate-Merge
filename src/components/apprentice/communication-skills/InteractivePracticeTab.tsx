@@ -2,154 +2,182 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Lightbulb, Play, RotateCcw, CheckCircle } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 import { useState } from "react";
+import { Lightbulb, Play, CheckCircle, RotateCcw, Target } from "lucide-react";
 
 const InteractivePracticeTab = () => {
   const [currentScenario, setCurrentScenario] = useState<number | null>(null);
-  const [selectedResponse, setSelectedResponse] = useState<number | null>(null);
+  const [completedScenarios, setCompletedScenarios] = useState<number[]>([]);
+  const [selectedResponse, setSelectedResponse] = useState<string | null>(null);
   const [showFeedback, setShowFeedback] = useState(false);
 
   const practiceScenarios = [
     {
-      title: "First Day Site Instructions",
-      situation: "It's your first day on a new site. Your supervisor gives you a complex set of instructions about safety procedures, site layout, and your tasks for the day. There's a lot to remember.",
+      id: 1,
+      title: "First Day Nerves",
+      situation: "It's your first day on a new site. You don't know anyone and you're feeling nervous about making a good impression.",
+      context: "You've been assigned to work with an experienced electrician who seems quite busy and focused on their work.",
       responses: [
         {
-          text: "Nod along and hope you remember everything",
-          feedback: "This approach risks missing important details. Don't be afraid to ask questions or take notes.",
-          score: 1,
-          type: "poor"
+          text: "Wait quietly until they talk to you first",
+          type: "poor",
+          feedback: "While being respectful is good, this passive approach might make you seem uninterested or lacking initiative. Your supervisor needs to know you're ready to learn and contribute."
         },
         {
-          text: "Take notes and ask to clarify the key safety points",
-          feedback: "Excellent! Taking notes shows professionalism and asking about safety shows the right priorities.",
-          score: 5,
-          type: "excellent"
+          text: "Interrupt them immediately to introduce yourself",
+          type: "poor", 
+          feedback: "Interrupting someone focused on work, especially electrical work which requires concentration for safety, shows poor awareness and could be dangerous."
         },
         {
-          text: "Listen carefully and repeat back the main points to confirm",
-          feedback: "Very good approach. Repeating back key information ensures understanding and shows engagement.",
-          score: 4,
-          type: "good"
-        },
-        {
-          text: "Interrupt to ask questions as they're speaking",
-          feedback: "While questions are good, interrupting can be disruptive. Better to listen first, then ask questions.",
-          score: 2,
-          type: "fair"
+          text: "Wait for a natural break, then introduce yourself professionally",
+          type: "good",
+          feedback: "Perfect! This shows respect for their work while demonstrating professionalism. You might say: 'Good morning, I'm [name], the new apprentice. When you have a moment, could you let me know how I can best help you today?'"
         }
       ]
     },
     {
-      title: "Client Asks About Extra Work",
-      situation: "You're working in a client's home when they ask if you can add an extra socket in their kitchen. You're not sure if this was part of the original quote or how much it would cost.",
+      id: 2,
+      title: "Made a Mistake",
+      situation: "You've accidentally damaged a cable while pulling it through conduit. The cable will need to be replaced, causing delays.",
+      context: "Your supervisor is under pressure to complete this job on time, and materials are expensive.",
       responses: [
         {
-          text: "Say 'Sure, no problem' to be helpful",
-          feedback: "Never agree to work without checking with your supervisor. This could cause billing issues and safety concerns.",
-          score: 1,
-          type: "poor"
+          text: "Try to hide the damage and hope no one notices",
+          type: "poor",
+          feedback: "This is dangerous and dishonest. Hidden damage could cause serious safety issues later. Always report damage immediately - honesty builds trust and ensures safety."
         },
         {
-          text: "Tell them it will cost £50 extra",
-          feedback: "Don't quote prices you're not authorised to give. Always check with your supervisor for pricing decisions.",
-          score: 1,
-          type: "poor"
+          text: "Blame the conduit for being too sharp or the cable for being faulty",
+          type: "poor",
+          feedback: "Making excuses undermines your credibility and shows you're not taking responsibility. Even if external factors contributed, focus on the solution rather than blame."
         },
         {
-          text: "Explain that you'll need to check with your supervisor and get back to them",
-          feedback: "Perfect! This shows professionalism while ensuring proper procedures are followed.",
-          score: 5,
-          type: "excellent"
-        },
-        {
-          text: "Say you can't do any extra work",
-          feedback: "This might be true, but it's better to check first. The extra work might be possible with supervisor approval.",
-          score: 2,
-          type: "fair"
+          text: "Immediately inform your supervisor, explain what happened, and ask how to prevent it happening again",
+          type: "good",
+          feedback: "Excellent! This shows integrity, responsibility, and a commitment to learning. You might say: 'I need to report that I've damaged the cable. I think I pulled too hard when it caught. What's the procedure for replacement, and how can I avoid this in future?'"
         }
       ]
     },
     {
-      title: "Supervisor Seems Stressed",
-      situation: "Your supervisor has been under pressure all morning due to delays on another job. When you ask a question about the wiring diagram, they snap at you saying 'Just figure it out yourself!'",
+      id: 3,
+      title: "Client Complaint",
+      situation: "A homeowner approaches you while you're working and complains that the work is taking too long and creating too much mess.",
+      context: "Your supervisor is in another part of the house. The client seems frustrated and is raising their voice.",
       responses: [
         {
-          text: "Get upset and stop asking questions for the rest of the day",
-          feedback: "Understandable reaction, but this affects your learning. Their stress isn't about you personally.",
-          score: 2,
-          type: "fair"
+          text: "Tell them it's not your fault and they need to talk to your boss",
+          type: "poor",
+          feedback: "This response sounds defensive and unhelpful. Even though you may not be in charge, you represent the company and should handle the situation professionally."
         },
         {
-          text: "Argue back that it's their job to help you",
-          feedback: "This will make the situation worse. Even if you're right, this approach is unprofessional.",
-          score: 1,
-          type: "poor"
+          text: "Argue that electrical work always takes this long and creates mess",
+          type: "poor",
+          feedback: "Arguing with a customer is never appropriate. This dismisses their concerns and could escalate the situation. Always acknowledge their feelings first."
         },
         {
-          text: "Say 'I understand you're busy. I'll have a go and check back with you later.'",
-          feedback: "Excellent! This acknowledges their pressure while showing initiative and respect.",
-          score: 5,
-          type: "excellent"
-        },
-        {
-          text: "Go and ask another colleague instead",
-          feedback: "This can work, but it's better to acknowledge your supervisor's situation first before seeking help elsewhere.",
-          score: 3,
-          type: "good"
+          text: "Listen to their concerns, acknowledge them, and get your supervisor to speak with them",
+          type: "good",
+          feedback: "Perfect approach! You might say: 'I understand this is disruptive for you. Let me get my supervisor to come and discuss the timeline and what we can do to minimise the impact. We want to make sure you're happy with our work.'"
         }
       ]
     }
   ];
 
-  const communicationTips = [
-    {
-      category: "Before You Speak",
-      tips: ["Think about your goal", "Consider the other person's perspective", "Choose the right time and place", "Prepare key points"]
-    },
-    {
-      category: "While Speaking",
-      tips: ["Use clear, simple language", "Be specific with examples", "Watch their body language", "Check for understanding"]
-    },
-    {
-      category: "After Speaking",
-      tips: ["Listen to the response", "Ask if they have questions", "Confirm next steps", "Follow up if needed"]
-    }
-  ];
-
-  const startScenario = (index: number) => {
-    setCurrentScenario(index);
+  const handleStartScenario = (scenarioId: number) => {
+    setCurrentScenario(scenarioId);
     setSelectedResponse(null);
     setShowFeedback(false);
   };
 
-  const selectResponse = (responseIndex: number) => {
-    setSelectedResponse(responseIndex);
+  const handleResponseSelect = (responseText: string) => {
+    setSelectedResponse(responseText);
     setShowFeedback(true);
+    
+    // Mark scenario as completed
+    if (!completedScenarios.includes(currentScenario!)) {
+      setCompletedScenarios([...completedScenarios, currentScenario!]);
+    }
   };
 
-  const resetScenario = () => {
+  const handleReset = () => {
     setCurrentScenario(null);
     setSelectedResponse(null);
     setShowFeedback(false);
   };
 
-  const getScoreColor = (score: number) => {
-    if (score >= 4) return "text-green-400";
-    if (score >= 3) return "text-yellow-400";
-    return "text-red-400";
-  };
+  const progressPercentage = (completedScenarios.length / practiceScenarios.length) * 100;
 
-  const getTypeColor = (type: string) => {
-    switch (type) {
-      case "excellent": return "border-green-500/40 bg-green-500/10 text-green-400";
-      case "good": return "border-blue-500/40 bg-blue-500/10 text-blue-400";
-      case "fair": return "border-yellow-500/40 bg-yellow-500/10 text-yellow-400";
-      case "poor": return "border-red-500/40 bg-red-500/10 text-red-400";
-      default: return "border-gray-500/40 bg-gray-500/10 text-gray-400";
-    }
-  };
+  if (currentScenario !== null) {
+    const scenario = practiceScenarios.find(s => s.id === currentScenario);
+    const selectedResponseObj = scenario?.responses.find(r => r.text === selectedResponse);
+
+    return (
+      <div className="space-y-6">
+        <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-elec-yellow flex items-center gap-2">
+                <Target className="h-6 w-6" />
+                {scenario?.title}
+              </CardTitle>
+              <Button variant="outline" onClick={handleReset} size="sm">
+                <RotateCcw className="h-4 w-4 mr-2" />
+                Back to Scenarios
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-6">
+              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                <h3 className="font-medium text-blue-300 mb-2">The Situation</h3>
+                <p className="text-sm text-muted-foreground mb-3">{scenario?.situation}</p>
+                <p className="text-sm text-muted-foreground italic">{scenario?.context}</p>
+              </div>
+
+              <div>
+                <h3 className="font-medium text-white mb-3">How would you respond?</h3>
+                <div className="space-y-3">
+                  {scenario?.responses.map((response, index) => (
+                    <Button
+                      key={index}
+                      variant="outline"
+                      className={`w-full text-left justify-start h-auto p-4 ${
+                        selectedResponse === response.text 
+                          ? response.type === 'good' 
+                            ? 'border-green-500 bg-green-500/10' 
+                            : 'border-red-500 bg-red-500/10'
+                          : 'border-elec-yellow/20'
+                      }`}
+                      onClick={() => handleResponseSelect(response.text)}
+                      disabled={showFeedback}
+                    >
+                      <span className="text-sm">{response.text}</span>
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {showFeedback && selectedResponseObj && (
+                <div className={`border rounded-lg p-4 ${
+                  selectedResponseObj.type === 'good' 
+                    ? 'border-green-500/30 bg-green-500/10' 
+                    : 'border-red-500/30 bg-red-500/10'
+                }`}>
+                  <h4 className={`font-medium mb-2 ${
+                    selectedResponseObj.type === 'good' ? 'text-green-300' : 'text-red-300'
+                  }`}>
+                    {selectedResponseObj.type === 'good' ? 'Great Choice!' : 'Consider This...'}
+                  </h4>
+                  <p className="text-sm text-muted-foreground">{selectedResponseObj.feedback}</p>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -157,107 +185,73 @@ const InteractivePracticeTab = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Lightbulb className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Interactive Communication Practice</CardTitle>
+            <CardTitle className="text-elec-yellow">Interactive Practice Scenarios</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
-          {currentScenario === null ? (
-            <div className="space-y-4">
-              <p className="text-muted-foreground mb-6">
-                Practice your communication skills with these real-world scenarios. Choose how you would respond and get feedback on your approach.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-                {practiceScenarios.map((scenario, index) => (
-                  <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 hover:bg-elec-yellow/5 transition-colors">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="font-semibold text-white mb-2">{scenario.title}</h3>
-                        <p className="text-sm text-muted-foreground">{scenario.situation.substring(0, 120)}...</p>
-                      </div>
-                      <Button 
-                        onClick={() => startScenario(index)}
-                        className="ml-4 flex-shrink-0"
-                      >
-                        <Play className="h-4 w-4 mr-2" />
-                        Practice
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
+          <div className="space-y-4 mb-6">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-muted-foreground">Progress</span>
+              <span className="text-sm text-elec-yellow font-medium">
+                {completedScenarios.length} of {practiceScenarios.length} completed
+              </span>
             </div>
-          ) : (
-            <div className="space-y-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-semibold text-white">{practiceScenarios[currentScenario].title}</h3>
-                <Button variant="outline" onClick={resetScenario}>
-                  <RotateCcw className="h-4 w-4 mr-2" />
-                  Back to Scenarios
+            <Progress value={progressPercentage} className="h-2" />
+          </div>
+
+          <div className="grid grid-cols-1 gap-4">
+            {practiceScenarios.map((scenario) => (
+              <div key={scenario.id} className="border border-elec-yellow/20 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="font-semibold text-white flex items-center gap-2">
+                    {scenario.title}
+                    {completedScenarios.includes(scenario.id) && (
+                      <CheckCircle className="h-4 w-4 text-green-400" />
+                    )}
+                  </h3>
+                  <Badge variant="outline" className="text-xs">
+                    {completedScenarios.includes(scenario.id) ? 'Completed' : 'Practice'}
+                  </Badge>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">{scenario.situation}</p>
+                <Button 
+                  onClick={() => handleStartScenario(scenario.id)}
+                  size="sm"
+                  className="flex items-center gap-2"
+                >
+                  <Play className="h-4 w-4" />
+                  {completedScenarios.includes(scenario.id) ? 'Practice Again' : 'Start Scenario'}
                 </Button>
               </div>
-              
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                <h4 className="font-medium text-blue-300 mb-2">Scenario</h4>
-                <p className="text-muted-foreground">{practiceScenarios[currentScenario].situation}</p>
-              </div>
-              
-              <div>
-                <h4 className="font-medium text-white mb-3">How would you respond?</h4>
-                <div className="space-y-3">
-                  {practiceScenarios[currentScenario].responses.map((response, index) => (
-                    <div key={index}>
-                      <Button
-                        variant="outline"
-                        className="w-full text-left justify-start h-auto p-4 border-elec-yellow/20 hover:bg-elec-yellow/10"
-                        onClick={() => selectResponse(index)}
-                        disabled={showFeedback}
-                      >
-                        <span className="mr-3 text-elec-yellow font-bold">{String.fromCharCode(65 + index)}.</span>
-                        {response.text}
-                      </Button>
-                      
-                      {showFeedback && selectedResponse === index && (
-                        <div className={`mt-2 p-4 rounded-lg border ${getTypeColor(response.type)}`}>
-                          <div className="flex items-center gap-2 mb-2">
-                            <CheckCircle className="h-4 w-4" />
-                            <span className="font-medium">
-                              Score: <span className={getScoreColor(response.score)}>{response.score}/5</span>
-                            </span>
-                            <Badge className={getTypeColor(response.type)}>
-                              {response.type}
-                            </Badge>
-                          </div>
-                          <p className="text-sm">{response.feedback}</p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
+            ))}
+          </div>
         </CardContent>
       </Card>
 
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-elec-yellow">Communication Checklist</CardTitle>
+          <CardTitle className="text-elec-yellow">Practice Tips</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {communicationTips.map((category, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-3">{category.category}</h4>
-                <ul className="space-y-2">
-                  {category.tips.map((tip, tipIndex) => (
-                    <li key={tipIndex} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                      {tip}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <h4 className="font-medium text-white">Before Responding:</h4>
+              <ul className="text-sm text-muted-foreground space-y-1">
+                <li>• Take a moment to think</li>
+                <li>• Consider the other person's perspective</li>
+                <li>• Think about safety implications</li>
+                <li>• Consider your role and authority</li>
+              </ul>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-medium text-white">Good Communication Shows:</h4>
+              <ul className="text-sm text-muted-foreground space-y-1">
+                <li>• Respect for others</li>
+                <li>• Professional maturity</li>
+                <li>• Commitment to safety</li>
+                <li>• Willingness to learn</li>
+              </ul>
+            </div>
           </div>
         </CardContent>
       </Card>

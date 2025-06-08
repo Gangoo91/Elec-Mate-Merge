@@ -1,62 +1,75 @@
 
-import { Button } from "@/components/ui/button";
+import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Users, MessageSquare, Phone, Mail } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MessageCircle, Users, AlertTriangle, Lightbulb, Heart } from "lucide-react";
+import WorkplaceCommunicationTab from "@/components/apprentice/communication-skills/WorkplaceCommunicationTab";
+import ProfessionalSkillsTab from "@/components/apprentice/communication-skills/ProfessionalSkillsTab";
+import DifficultSituationsTab from "@/components/apprentice/communication-skills/DifficultSituationsTab";
+import InteractivePracticeTab from "@/components/apprentice/communication-skills/InteractivePracticeTab";
 
 const CommunicationSkills = () => {
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Communication Skills</h1>
-          <p className="text-muted-foreground">How to communicate effectively with supervisors, colleagues, and customers</p>
-        </div>
-        <Link to="/apprentice/toolbox" className="flex-shrink-0">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Toolbox
-          </Button>
-        </Link>
+    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
+      <div className="flex flex-col items-center justify-center mb-6">
+        <h1 className="text-3xl font-bold tracking-tight mb-4">Communication Skills for Apprentices</h1>
+        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+          Master essential communication skills for the electrical trade - from site conversations to client interactions
+        </p>
+        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <Users className="h-6 w-6 text-elec-yellow" />
-              <CardTitle>Working with Supervisors</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <ul className="text-sm space-y-2 text-elec-light/80">
-              <li>• Ask questions when unsure</li>
-              <li>• Report problems immediately</li>
-              <li>• Accept feedback positively</li>
-              <li>• Communicate progress regularly</li>
-              <li>• Be honest about your capabilities</li>
-            </ul>
-          </CardContent>
-        </Card>
+      <Tabs defaultValue="workplace" className="w-full">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="workplace" className="flex items-center gap-2">
+            <Users className="h-4 w-4" />
+            Workplace
+          </TabsTrigger>
+          <TabsTrigger value="professional" className="flex items-center gap-2">
+            <MessageCircle className="h-4 w-4" />
+            Professional
+          </TabsTrigger>
+          <TabsTrigger value="difficult" className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4" />
+            Difficult Situations
+          </TabsTrigger>
+          <TabsTrigger value="practice" className="flex items-center gap-2">
+            <Lightbulb className="h-4 w-4" />
+            Practice
+          </TabsTrigger>
+        </TabsList>
 
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <MessageSquare className="h-6 w-6 text-elec-yellow" />
-              <CardTitle>Customer Interaction</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <ul className="text-sm space-y-2 text-elec-light/80">
-              <li>• Be polite and professional</li>
-              <li>• Explain work in simple terms</li>
-              <li>• Keep customers informed</li>
-              <li>• Respect their property</li>
-              <li>• Address concerns promptly</li>
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
+        <TabsContent value="workplace">
+          <WorkplaceCommunicationTab />
+        </TabsContent>
+
+        <TabsContent value="professional">
+          <ProfessionalSkillsTab />
+        </TabsContent>
+
+        <TabsContent value="difficult">
+          <DifficultSituationsTab />
+        </TabsContent>
+
+        <TabsContent value="practice">
+          <InteractivePracticeTab />
+        </TabsContent>
+      </Tabs>
+
+      <Card className="border-green-500/50 bg-green-500/10">
+        <CardHeader>
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <Heart className="h-5 w-5" />
+            Remember
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">
+            Good communication in the electrical trade isn't just about being polite - it's about safety, efficiency, and building a reputation as a professional. 
+            Clear communication prevents mistakes, builds trust with clients, and helps you learn faster from experienced colleagues.
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 };
