@@ -1,11 +1,16 @@
 
 import MentalHealthPageLayout from "@/components/mental-health/MentalHealthPageLayout";
 import { AlertTriangle } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import InteractiveStressAssessment from "@/components/mental-health/stress/InteractiveStressAssessment";
+import BreathingExercise from "@/components/mental-health/stress/BreathingExercise";
+import ApprenticeScenarios from "@/components/mental-health/stress/ApprenticeScenarios";
 import StressSignsCards from "@/components/mental-health/stress/StressSignsCards";
 import ApprenticeStressors from "@/components/mental-health/stress/ApprenticeStressors";
 import QuickTips from "@/components/mental-health/stress/QuickTips";
 import AdvancedTechniques from "@/components/mental-health/stress/AdvancedTechniques";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import ResourcesSection from "@/components/mental-health/stress/ResourcesSection";
+import SupportCallout from "@/components/mental-health/stress/SupportCallout";
 
 const StressManagement = () => {
   return (
@@ -16,6 +21,13 @@ const StressManagement = () => {
       color="orange"
     >
       <div className="space-y-6">
+        <InteractiveStressAssessment />
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <BreathingExercise />
+          <ApprenticeScenarios />
+        </div>
+        
         <ApprenticeStressors />
         
         <StressSignsCards />
@@ -29,6 +41,8 @@ const StressManagement = () => {
             <AdvancedTechniques />
           </CardContent>
         </Card>
+
+        <ResourcesSection />
 
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
@@ -60,6 +74,8 @@ const StressManagement = () => {
             </div>
           </CardContent>
         </Card>
+
+        <SupportCallout />
       </div>
     </MentalHealthPageLayout>
   );
