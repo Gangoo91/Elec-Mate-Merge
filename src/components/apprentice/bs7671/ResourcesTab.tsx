@@ -47,7 +47,7 @@ const ResourcesTab = () => {
   const quickLinks = [
     { name: "IET Website", url: "https://www.theiet.org", icon: Globe },
     { name: "NICEIC Guidance", url: "#", icon: FileText },
-    { name: "NAPIT Resources", url: "#", icon: Tool },
+    { name: "NAPIT Resources", url: "#", icon: Wrench },
     { name: "Building Regulations", url: "#", icon: BookOpen }
   ];
 
