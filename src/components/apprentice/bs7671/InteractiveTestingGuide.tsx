@@ -25,6 +25,29 @@ const InteractiveTestingGuide = ({ guide, onComplete, onBack }: InteractiveTesti
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
 
+  // Safety check to ensure guide and steps exist
+  if (!guide || !guide.steps || guide.steps.length === 0) {
+    console.error('InteractiveTestingGuide: Invalid guide data', guide);
+    return (
+      <div className="space-y-6">
+        <Card className="border-red-500/30 bg-red-500/10">
+          <CardHeader>
+            <CardTitle className="text-red-400">Error Loading Guide</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground">
+              Unable to load the testing guide. Please try again or select a different guide.
+            </p>
+            <Button onClick={onBack} className="mt-4">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Guides
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   const currentStep = guide.steps[currentStepIndex];
   const isLastStep = currentStepIndex === guide.steps.length - 1;
   const isStepCompleted = completedSteps.has(currentStepIndex);
@@ -161,7 +184,7 @@ const InteractiveTestingGuide = ({ guide, onComplete, onBack }: InteractiveTesti
           <div className="space-y-4">
             <h4 className="font-semibold text-blue-300">Instructions</h4>
             <ol className="space-y-3">
-              {currentStep.instructions.map((instruction, index) => (
+              {currentStep.instructions && currentStep.instructions.map((instruction, index) => (
                 <li key={index} className="flex items-start gap-3">
                   <span className="bg-elec-yellow text-elec-dark rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">
                     {index + 1}
@@ -186,7 +209,7 @@ const InteractiveTestingGuide = ({ guide, onComplete, onBack }: InteractiveTesti
           )}
 
           {/* Expected Results */}
-          {currentStep.expectedResults && (
+          {currentStep.expectedResults && currentStep.expectedResults.length > 0 && (
             <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
               <h5 className="font-semibold text-green-300 mb-2">Expected Results</h5>
               <ul className="space-y-1">
