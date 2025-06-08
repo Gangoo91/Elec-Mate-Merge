@@ -17,6 +17,12 @@ import OnJobBS7671RunThrough from "@/pages/apprentice/OnJobBS7671RunThrough";
 import OnJobSupervisorKnowledge from "@/pages/apprentice/OnJobSupervisorKnowledge";
 import OnJobFlashcards from "@/pages/apprentice/OnJobFlashcards";
 import OnJobIncidentLogging from "@/pages/apprentice/OnJobIncidentLogging";
+import ApprenticeToolbox from "@/pages/apprentice/ApprenticeToolbox";
+import ProfessionalDevelopment from "@/pages/apprentice/ProfessionalDevelopment";
+import CareerPathways from "@/pages/apprentice/professional-development/CareerPathways";
+import Certifications from "@/pages/apprentice/professional-development/Certifications";
+import ContinuingEducation from "@/pages/apprentice/professional-development/ContinuingEducation";
+import IndustryNetworking from "@/pages/apprentice/professional-development/IndustryNetworking";
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -26,6 +32,12 @@ const ApprenticeRoutes = () => (
     <Route path="mental-health/resources" element={<MentalHealthResources />} />
     <Route path="mentor" element={<ApprenticeMentor />} />
     <Route path="rights-and-pay" element={<RightsAndPay />} />
+    <Route path="toolbox" element={<ApprenticeToolbox />} />
+    <Route path="professional-development" element={<ProfessionalDevelopment />} />
+    <Route path="professional-development/career-pathways" element={<CareerPathways />} />
+    <Route path="professional-development/certifications" element={<Certifications />} />
+    <Route path="professional-development/continuing-education" element={<ContinuingEducation />} />
+    <Route path="professional-development/industry-networking" element={<IndustryNetworking />} />
     <Route path="on-job-tools" element={<OnJobTools />} />
     <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
     <Route path="on-job-tools/documents" element={<OnJobDocuments />} />
