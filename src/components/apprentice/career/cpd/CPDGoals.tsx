@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -23,7 +22,7 @@ const CPDGoals = () => {
     deadline: "",
     category: "",
     description: "",
-    status: "Active" as const,
+    status: "Active" as CPDGoal['status'],
   });
 
   const handleSubmit = () => {
@@ -170,7 +169,10 @@ const CPDGoals = () => {
                 
                 <div>
                   <Label htmlFor="status" className="text-white">Status</Label>
-                  <Select value={formData.status} onValueChange={(value: CPDGoal['status']) => setFormData({ ...formData, status: value })}>
+                  <Select 
+                    value={formData.status} 
+                    onValueChange={(value: CPDGoal['status']) => setFormData({ ...formData, status: value })}
+                  >
                     <SelectTrigger className="bg-elec-dark border-elec-yellow/30 text-white">
                       <SelectValue />
                     </SelectTrigger>
