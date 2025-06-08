@@ -1,29 +1,26 @@
 
+export interface WagoConnectionInstructions {
+  connectorType: string;
+  steps: string[];
+  safetyTips?: string[];
+  visualReference?: string;
+}
+
 export interface TestLimit {
   parameter: string;
   limit: string;
   unit: string;
 }
 
-export interface TestEquipment {
-  name: string;
-  purpose: string;
-  settings?: string[];
-}
-
-export interface SafetyWarning {
-  level: 'HIGH' | 'MEDIUM' | 'LOW';
-  message: string;
-}
-
-export interface TestStep {
+export interface EnhancedTestStep {
   id: string;
   title: string;
-  instruction: string;
-  safetyWarnings?: SafetyWarning[];
-  tips?: string[];
-  expectedResult: string;
+  description: string;
+  safetyWarnings?: string[];
+  equipment?: string[];
   troubleshooting?: string[];
+  wagoInstructions?: WagoConnectionInstructions;
+  expectedResults?: string;
   regulationReference?: string;
 }
 
@@ -33,1057 +30,816 @@ export interface EnhancedTestGuide {
   description: string;
   purpose: string;
   duration: string;
-  difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
-  category: 'Initial Verification' | 'Periodic Inspection' | 'Visual Inspection';
-  regulationReference: string;
-  equipment: TestEquipment[];
+  difficulty: "Beginner" | "Intermediate" | "Advanced";
   testLimits: TestLimit[];
-  safetyPrecautions: string[];
   commonIssues: string[];
-  steps: TestStep[];
-  professionalTips: string[];
-  troubleshootingGuide: {
-    symptom: string;
-    possibleCauses: string[];
-    solutions: string[];
-  }[];
+  steps: EnhancedTestStep[];
 }
 
 export const comprehensiveTestingGuides: EnhancedTestGuide[] = [
   {
-    id: "visual-inspection",
-    title: "Visual Inspection",
-    description: "Comprehensive visual examination of electrical installation components",
-    purpose: "To identify obvious defects, damage, and non-compliance without dismantling or testing",
-    duration: "30-45 mins",
+    id: "safe-isolation",
+    title: "Safe Isolation Procedure",
+    description: "Complete safe isolation procedure following HSE guidance and BS7671 requirements",
+    purpose: "To ensure the electrical installation is safely isolated before testing or maintenance work",
+    duration: "5-10 mins",
     difficulty: "Beginner",
-    category: "Visual Inspection",
-    regulationReference: "BS 7671:2018 Part 6, Section 611",
-    equipment: [
-      { name: "Torch/Flashlight", purpose: "Illuminate dark areas and enclosed spaces" },
-      { name: "Screwdriver Set", purpose: "Remove covers and access panels safely" },
-      { name: "Voltage Indicator", purpose: "Prove dead before opening equipment" },
-      { name: "Digital Camera", purpose: "Document defects and observations" }
-    ],
     testLimits: [],
-    safetyPrecautions: [
-      "Ensure installation is properly isolated before opening equipment",
-      "Use appropriate PPE including safety glasses and gloves",
-      "Be aware of live parts that may remain energised",
-      "Never touch conductors or terminals without proving dead"
-    ],
     commonIssues: [
-      "Damaged cable insulation or sheathing",
-      "Loose connections or overheated terminals",
-      "Missing earth connections",
-      "Inadequate IP ratings for environment",
-      "Non-compliant cable management"
+      "Inadequate testing of voltage indicator",
+      "Not testing all phases and neutral",
+      "Failure to lock off adequately",
+      "Not using appropriate PPE"
     ],
     steps: [
       {
-        id: "external-condition",
-        title: "External Condition of Equipment",
-        instruction: "Examine all electrical equipment for signs of damage, corrosion, or deterioration. Check enclosure integrity and IP ratings.",
-        expectedResult: "All equipment in good condition with appropriate IP ratings for location",
-        tips: [
-          "Look for cracks in plastic enclosures",
-          "Check for signs of water ingress",
-          "Verify equipment is suitable for environment"
-        ],
-        regulationReference: "611.2(i)"
-      },
-      {
-        id: "conductors-connections",
-        title: "Conductors and Connections",
-        instruction: "Inspect all visible conductors for damage and examine accessible connections for security and condition.",
-        expectedResult: "All conductors intact with secure, clean connections showing no signs of overheating",
+        id: "identify-circuits",
+        title: "Identify and Select Circuits",
+        description: "Identify all circuits to be isolated using circuit schedules and labels",
         safetyWarnings: [
-          {
-            level: "HIGH",
-            message: "Prove dead before examining any connections"
-          }
+          "Verify circuit identification is accurate and up to date",
+          "Consider all sources of supply including emergency lighting"
         ],
-        tips: [
-          "Look for discoloured terminals indicating overheating",
-          "Check conductor identification and sizing",
-          "Verify proper connection methods used"
-        ],
+        equipment: ["Circuit schedules", "Torch", "Labels"],
         troubleshooting: [
-          "Discoloured terminals may indicate loose connections",
-          "Damaged insulation requires immediate attention"
-        ],
-        regulationReference: "611.2(ii)"
+          "If circuit labels are unclear, use a suitable detector to identify conductors",
+          "Check for borrowed neutrals in older installations"
+        ]
       },
       {
-        id: "identification-notices",
-        title: "Identification and Notices",
-        instruction: "Verify all circuits are properly identified and required notices/labels are present and legible.",
-        expectedResult: "All circuits clearly identified with durable labels, all required notices present",
-        tips: [
-          "Check circuit charts match actual installation",
-          "Verify emergency switching notices are present",
-          "Ensure warning labels are clearly visible"
+        id: "switch-off",
+        title: "Switch Off and Disconnect",
+        description: "Switch off the circuit at the distribution board and remove fuses or lock off MCBs",
+        safetyWarnings: [
+          "Ensure all poles are isolated including neutral where required",
+          "Use appropriate lockout/tagout procedures"
         ],
-        regulationReference: "611.2(iii)"
+        equipment: ["Lockout devices", "Warning tags", "Personal locks"],
+        wagoInstructions: {
+          connectorType: "Not applicable for isolation procedure",
+          steps: [],
+          safetyTips: ["Isolation must be made at the supply source, not with connectors"]
+        },
+        troubleshooting: [
+          "If circuits cannot be isolated, consider alternative isolation methods",
+          "Ensure all team members are aware of isolation status"
+        ]
       },
       {
-        id: "protective-measures",
-        title: "Protective Measures",
-        instruction: "Examine protective devices, RCDs, and earthing arrangements for correct type and rating.",
-        expectedResult: "All protective devices correctly rated and properly installed",
-        tips: [
-          "Verify RCD ratings match circuit requirements",
-          "Check earth bonding is complete and secure",
-          "Ensure protective device discrimination"
+        id: "secure-isolation",
+        title: "Secure the Isolation",
+        description: "Lock off the circuit using appropriate lockout devices and apply warning notices",
+        safetyWarnings: [
+          "Use personal locks - never share lockout keys",
+          "Apply clear warning notices visible to all personnel"
         ],
-        regulationReference: "611.2(iv)"
-      }
-    ],
-    professionalTips: [
-      "Use a systematic approach - work from incoming supply outwards",
-      "Document everything with photos for future reference",
-      "Pay special attention to any modifications or additions",
-      "Look for signs of DIY work that may not comply"
-    ],
-    troubleshootingGuide: [
+        equipment: ["Lockout devices", "Warning notices", "Personal padlocks"],
+        troubleshooting: [
+          "If lockout devices don't fit, use alternative securing methods",
+          "Ensure notices are clearly visible and weather-resistant if outdoors"
+        ]
+      },
       {
-        symptom: "Discoloured or burnt terminals",
-        possibleCauses: ["Loose connections", "Overloaded circuit", "Poor contact resistance"],
-        solutions: ["Retighten connections", "Check load calculations", "Replace damaged terminals"]
+        id: "test-dead",
+        title: "Test Dead - Initial Test",
+        description: "Test between all live conductors and between live conductors and earth using a suitable voltage indicator",
+        safetyWarnings: [
+          "Always test the voltage indicator before and after use",
+          "Test all combinations of conductors in three-phase systems"
+        ],
+        equipment: ["Approved voltage indicator", "GS38 test leads", "Proving unit"],
+        wagoInstructions: {
+          connectorType: "Wago 773 Series (Push-In with Test Points)",
+          steps: [
+            "Strip 12mm of insulation from test lead",
+            "Insert test lead into Wago 773 connector firmly",
+            "Connect other test lead to earth point using second 773 connector",
+            "Verify connection security before applying voltage indicator",
+            "Use test points on connectors for safe measurement access"
+          ],
+          safetyTips: [
+            "Connectors provide safe, secure test points",
+            "Avoid direct contact with conductors during testing",
+            "Test connectors ensure repeatable contact for accurate readings"
+          ]
+        },
+        troubleshooting: [
+          "If voltage is still present, check isolation procedure",
+          "Consider other sources of supply or back-feeds"
+        ]
+      },
+      {
+        id: "test-voltage-indicator",
+        title: "Test Voltage Indicator",
+        description: "Test the voltage indicator on a known live source to ensure it's functioning correctly",
+        safetyWarnings: [
+          "Use appropriate PPE when testing on live circuits",
+          "Ensure the proving unit is calibrated and functioning"
+        ],
+        equipment: ["Voltage indicator", "Proving unit", "Known live source"],
+        troubleshooting: [
+          "If indicator doesn't respond, check battery and leads",
+          "Use alternative voltage indicator if primary device fails"
+        ]
+      },
+      {
+        id: "retest-dead",
+        title: "Re-test Dead",
+        description: "Repeat the dead testing procedure to confirm the circuit remains isolated",
+        safetyWarnings: [
+          "This is a critical safety check - never skip this step",
+          "If any voltage is detected, investigate immediately"
+        ],
+        equipment: ["Approved voltage indicator", "GS38 test leads"],
+        wagoInstructions: {
+          connectorType: "Wago 773 Series (Push-In with Test Points)",
+          steps: [
+            "Reconnect test leads to the same Wago 773 connectors used previously",
+            "Verify mechanical connection by gentle pull test",
+            "Use connector test points for voltage measurement",
+            "Test all conductor combinations systematically",
+            "Document results clearly"
+          ],
+          safetyTips: [
+            "Consistent connection points ensure reliable retesting",
+            "Test connectors eliminate risk of poor contact during retesting"
+          ]
+        },
+        troubleshooting: [
+          "If voltage appears during retest, check for circuit restoration",
+          "Verify isolation points haven't been disturbed"
+        ]
       }
     ]
   },
   {
     id: "continuity-protective-conductor",
     title: "Continuity of Protective Conductors",
-    description: "Test continuity of protective conductors (CPC) throughout installation",
-    purpose: "To verify protective conductors provide continuous path to earth for fault current",
-    duration: "15-25 mins",
-    difficulty: "Beginner",
-    category: "Initial Verification",
-    regulationReference: "BS 7671:2018 Section 612.2.1",
-    equipment: [
-      { 
-        name: "Multifunction Tester", 
-        purpose: "Measure low resistance with test current ≥200mA",
-        settings: ["Continuity mode", "Test current 200mA minimum", "Resolution 0.01Ω"]
-      },
-      { name: "Test Leads", purpose: "High quality leads with secure connections" },
-      { name: "Crocodile Clips", purpose: "Secure connection to terminals" }
-    ],
+    description: "Test the continuity of protective conductors including earth and bonding conductors",
+    purpose: "To verify that protective conductors provide an effective path for fault current",
+    duration: "15-20 mins",
+    difficulty: "Intermediate",
     testLimits: [
-      { parameter: "Maximum Resistance", limit: "R1 + R2 values per Table 54.7", unit: "Ω" },
-      { parameter: "Test Current", limit: "≥ 200", unit: "mA" }
-    ],
-    safetyPrecautions: [
-      "Ensure all circuits are isolated and proved dead",
-      "Remove or disconnect electronic equipment that may be damaged",
-      "Lock off supply and post warning notices",
-      "Verify test equipment is functioning correctly"
+      { parameter: "Maximum resistance", limit: "As per circuit design", unit: "Ω" },
+      { parameter: "Typical values", limit: "< 1", unit: "Ω" }
     ],
     commonIssues: [
-      "High resistance readings indicating poor connections",
-      "Open circuit in protective conductor",
-      "Incorrect conductor sizing",
+      "High resistance due to poor connections",
+      "Broken conductors not visible externally",
+      "Corroded connections in damp environments",
       "Missing earth connections at accessories"
     ],
     steps: [
       {
-        id: "isolation-setup",
-        title: "Safe Isolation and Setup",
-        instruction: "Isolate all circuits, prove dead, and set up multifunction tester in continuity mode with test current ≥200mA.",
+        id: "setup-equipment",
+        title: "Setup Test Equipment",
+        description: "Configure multifunction tester for continuity testing and connect test leads",
         safetyWarnings: [
-          {
-            level: "HIGH",
-            message: "Ensure complete isolation before connecting test equipment"
-          }
+          "Ensure circuit is isolated and proven dead",
+          "Check test leads for damage before use"
         ],
-        expectedResult: "All circuits safely isolated, tester calibrated and ready",
-        tips: [
-          "Use appropriate test current for accurate measurement",
-          "Check tester calibration before use",
-          "Ensure secure test lead connections"
-        ],
-        regulationReference: "612.1"
-      },
-      {
-        id: "identify-conductors",
-        title: "Identify Test Points",
-        instruction: "Identify protective conductor connections at distribution board and furthest points of each circuit.",
-        expectedResult: "Clear identification of all protective conductor test points",
-        tips: [
-          "Mark conductors to avoid confusion",
-          "Start with shortest circuits first",
-          "Document test point locations"
+        equipment: ["Multifunction tester", "Test leads", "Continuity probes"],
+        troubleshooting: [
+          "If readings are unstable, check lead connections",
+          "Null test leads to remove their resistance"
         ]
       },
       {
-        id: "measure-continuity",
-        title: "Measure Continuity",
-        instruction: "Connect test leads between earth terminal at DB and protective conductor at each point. Record resistance values.",
-        expectedResult: "Resistance values within acceptable limits for conductor size and length",
-        tips: [
-          "Allow readings to stabilise before recording",
-          "Test each circuit separately",
-          "Include socket outlets and fixed equipment"
+        id: "main-earth-terminal",
+        title: "Test from Main Earth Terminal",
+        description: "Connect one test lead to the main earth terminal at the consumer unit",
+        safetyWarnings: [
+          "Ensure good electrical contact at main earth terminal",
+          "Verify terminal is clean and tight"
         ],
+        equipment: ["Multifunction tester", "Test probe", "Wire brush if needed"],
+        wagoInstructions: {
+          connectorType: "Wago 221 Series (Lever Nuts) - 2-way connector",
+          steps: [
+            "Strip 10-11mm insulation from test lead end",
+            "Open orange lever on 221 connector fully",
+            "Insert test lead into connector until it stops",
+            "Close lever firmly until it clicks",
+            "Connect second conductor from main earth terminal to other side",
+            "Verify secure connection with pull test"
+          ],
+          safetyTips: [
+            "221 connectors provide reliable temporary test connections",
+            "Visual verification possible through connector body",
+            "Reusable for multiple test points"
+          ]
+        },
+        troubleshooting: [
+          "If no continuity to earth terminal, check terminal tightness",
+          "Clean terminals if corrosion is present"
+        ]
+      },
+      {
+        id: "circuit-protective-conductors",
+        title: "Test Circuit Protective Conductors",
+        description: "Test continuity from main earth terminal to each circuit's protective conductor",
+        safetyWarnings: [
+          "Test each circuit systematically",
+          "Record all readings accurately"
+        ],
+        equipment: ["Multifunction tester", "Circuit schedule", "Test leads"],
+        wagoInstructions: {
+          connectorType: "Wago 221 Series (Lever Nuts) - 3-way connector for T-connections",
+          steps: [
+            "Use 3-way 221 connector for branching test leads",
+            "Connect main test lead to first position",
+            "Connect circuit earth conductor to second position", 
+            "Use third position for onward connection if testing multiple points",
+            "Ensure all levers are fully closed and secure",
+            "Test continuity through the established connection path"
+          ],
+          safetyTips: [
+            "3-way connectors allow efficient testing of multiple circuits",
+            "Maintain connection integrity throughout test sequence"
+          ]
+        },
         troubleshooting: [
           "High readings may indicate loose connections",
-          "Open circuit indicates broken conductor"
-        ],
-        regulationReference: "612.2.1"
+          "Check for broken conductors in flexible cables"
+        ]
       },
       {
-        id: "verify-bonding",
-        title: "Test Main Bonding Conductors",
-        instruction: "Test continuity between main earthing terminal and all bonded services (gas, water, etc.).",
-        expectedResult: "All bonding conductors showing continuity with resistance ≤0.05Ω",
-        tips: [
-          "Clean connection points for accurate readings",
-          "Test to actual service pipes, not just clamps",
-          "Check supplementary bonding if required"
+        id: "socket-outlets",
+        title: "Test Socket Outlet Earth Connections",
+        description: "Test continuity to earth pin of each socket outlet on the circuit",
+        safetyWarnings: [
+          "Remove socket faceplates to access earth terminals",
+          "Check for additional earth connections (e.g., metal back boxes)"
         ],
-        regulationReference: "612.2.1"
-      }
-    ],
-    professionalTips: [
-      "Temperature affects resistance - take ambient temperature into account",
-      "Long test leads can affect readings - use shortest practical length",
-      "Document all readings even if within limits for future comparison",
-      "Pay attention to any readings that seem unusual"
-    ],
-    troubleshootingGuide: [
-      {
-        symptom: "Very high resistance reading",
-        possibleCauses: ["Loose terminal connection", "Broken conductor", "Poor test lead contact"],
-        solutions: ["Check all connections", "Inspect conductor integrity", "Clean contact points"]
+        equipment: ["Multifunction tester", "Screwdriver set", "Test probes"],
+        wagoInstructions: {
+          connectorType: "Wago 221 Series (Lever Nuts) - 2-way connector",
+          steps: [
+            "At socket location, connect test lead to earth terminal using 221 connector",
+            "Strip earth conductor to 10-11mm length",
+            "Open lever and insert earth conductor fully",
+            "Insert test lead into second position",
+            "Close lever and verify secure connection",
+            "Measure continuity back to main earth terminal"
+          ],
+          safetyTips: [
+            "Secure connection ensures accurate readings",
+            "No damage to conductor ends during testing"
+          ]
+        },
+        troubleshooting: [
+          "If socket outlet shows high resistance, check earth terminal tightness",
+          "Verify earth sleeving hasn't been omitted"
+        ]
       },
       {
-        symptom: "Inconsistent readings",
-        possibleCauses: ["Temperature variation", "Poor connections", "Faulty test equipment"],
-        solutions: ["Allow temperature stabilisation", "Retighten connections", "Check equipment calibration"]
+        id: "supplementary-bonding",
+        title: "Test Supplementary Bonding",
+        description: "Test continuity of supplementary bonding conductors where installed",
+        safetyWarnings: [
+          "Check bonding is connected to correct points",
+          "Verify bonding conductor size is adequate"
+        ],
+        equipment: ["Multifunction tester", "Test leads", "Bonding location list"],
+        wagoInstructions: {
+          connectorType: "Wago 221 Series (Lever Nuts) - appropriate size for bonding conductor",
+          steps: [
+            "Select appropriate 221 connector size for bonding conductor gauge",
+            "Connect test lead to one side of bonding connection using connector",
+            "Measure continuity to other bonded items",
+            "Document resistance values for each bonding path",
+            "Remove test connections when complete"
+          ],
+          safetyTips: [
+            "Choose connector rated for bonding conductor size",
+            "Ensure no damage to bonding conductor during testing"
+          ]
+        },
+        troubleshooting: [
+          "High resistance may indicate corroded connections",
+          "Check bonding clamps are tight and clean"
+        ]
       }
     ]
   },
   {
-    id: "continuity-ring-final",
-    title: "Continuity of Ring Final Circuit Conductors",
-    description: "Comprehensive testing to verify ring circuit integrity and correct connections",
-    purpose: "To ensure ring circuits are complete and correctly wired with proper conductor sizing",
+    id: "ring-circuit-continuity", 
+    title: "Ring Final Circuit Continuity",
+    description: "Comprehensive testing of ring final circuits including cross-connection method",
+    purpose: "To verify ring circuit integrity and identify any breaks or interconnections",
     duration: "20-30 mins",
-    difficulty: "Intermediate",
-    category: "Initial Verification",
-    regulationReference: "BS 7671:2018 Section 612.2.2",
-    equipment: [
-      { 
-        name: "Multifunction Tester", 
-        purpose: "Low resistance measurement",
-        settings: ["Continuity mode", "Test current ≥200mA"]
-      },
-      { name: "Test Leads", purpose: "Quality leads for accurate measurement" },
-      { name: "Socket Tester", purpose: "Verify socket wiring" }
-    ],
+    difficulty: "Advanced",
     testLimits: [
-      { parameter: "End-to-end resistance", limit: "Typically < 1.0", unit: "Ω" },
-      { parameter: "R1+R2 at each socket", limit: "Approximately 1/4 of end-to-end", unit: "Ω" }
-    ],
-    safetyPrecautions: [
-      "Ensure ring circuit is completely isolated",
-      "Disconnect all equipment connected to ring",
-      "Verify isolation at each socket outlet",
-      "Use only calibrated test equipment"
+      { parameter: "End-to-end resistance", limit: "< 1.67", unit: "Ω" },
+      { parameter: "Socket resistance variation", limit: "< 0.05", unit: "Ω" },
+      { parameter: "R1+R2 final reading", limit: "≈ 1/4 end-to-end", unit: "Ω" }
     ],
     commonIssues: [
-      "Broken ring creating radial circuit",
-      "Interconnections between rings",
-      "Spurs exceeding regulation limits",
-      "Incorrect conductor sizing"
+      "Ring circuit not actually forming a ring (broken ring)",
+      "Interconnected rings causing confusion",
+      "Spurs incorrectly identified as part of ring",
+      "Poor connections at socket outlets"
     ],
     steps: [
       {
         id: "identify-ring-ends",
         title: "Identify Ring Circuit Ends",
-        instruction: "At the distribution board, identify and separate the two ends of the ring circuit conductors (Line, Neutral, and Earth).",
-        expectedResult: "Clear identification of both legs of ring circuit with proper labelling",
+        description: "At the consumer unit, identify and separate the two ends of the ring final circuit",
         safetyWarnings: [
-          {
-            level: "HIGH",
-            message: "Ensure circuit is isolated and proved dead before working"
-          }
+          "Ensure circuit is isolated and proven dead",
+          "Verify you have the correct circuit before proceeding"
         ],
-        tips: [
-          "Use temporary labels to avoid confusion",
-          "Verify isolation with approved voltage indicator",
-          "Ensure no interconnections with other circuits"
-        ]
-      },
-      {
-        id: "end-to-end-test",
-        title: "End-to-End Continuity Test",
-        instruction: "Measure resistance between the two ends of each conductor separately (L1-L2, N1-N2, E1-E2).",
-        expectedResult: "Similar resistance values for line and neutral, earth may be slightly different",
-        tips: [
-          "Record all three measurements",
-          "Readings should be consistent with conductor length",
-          "Significant differences indicate potential issues"
-        ],
+        equipment: ["Multifunction tester", "Labels", "Continuity tester"],
+        wagoInstructions: {
+          connectorType: "Wago 221 Series (Lever Nuts) - 2-way connectors for separation",
+          steps: [
+            "Carefully disconnect line conductors from MCB",
+            "Use separate 221 connectors for each leg of the ring",
+            "Connect one line conductor to first 221 connector",
+            "Connect second line conductor to second 221 connector", 
+            "Add test leads to each connector for identification",
+            "Label each leg clearly (Leg 1, Leg 2)"
+          ],
+          safetyTips: [
+            "221 connectors provide secure temporary isolation",
+            "Clear labelling prevents confusion during testing",
+            "Easy reconnection when testing complete"
+          ]
+        },
         troubleshooting: [
-          "Very high reading indicates broken conductor",
-          "Zero reading may indicate short circuit"
+          "If uncertain which conductors form the ring, use continuity testing",
+          "Check circuit schedule for ring circuit identification"
         ]
       },
       {
-        id: "figure-of-eight-test",
-        title: "Figure-of-Eight Test",
-        instruction: "Connect L1 to N2 and N1 to L2, then test between L and N at each socket outlet on the ring.",
-        expectedResult: "Each socket should show approximately the same resistance reading",
-        tips: [
-          "This test reveals the ring structure",
-          "Readings should decrease towards middle of ring",
-          "Significant variations indicate spurs or faults"
+        id: "end-to-end-continuity",
+        title: "End-to-End Continuity Tests",
+        description: "Test continuity between the ring ends for line, neutral, and earth conductors",
+        safetyWarnings: [
+          "Test each conductor type separately",
+          "Record all readings for comparison"
         ],
-        regulationReference: "612.2.2"
+        equipment: ["Multifunction tester", "Test leads", "Test sheet"],
+        wagoInstructions: {
+          connectorType: "Wago 221 Series (Lever Nuts) - Multiple 2-way connectors",
+          steps: [
+            "Connect test lead to line conductor of Leg 1 using 221 connector",
+            "Connect second test lead to line conductor of Leg 2 using separate connector",
+            "Measure and record line-to-line resistance",
+            "Repeat process for neutral-to-neutral using new connectors",
+            "Finally test earth-to-earth using additional connectors",
+            "Ensure all readings are within expected limits"
+          ],
+          safetyTips: [
+            "Use separate connectors for each test to maintain connection integrity",
+            "221 connectors ensure consistent contact pressure"
+          ]
+        },
+        troubleshooting: [
+          "If no continuity, check for broken ring",
+          "High resistance may indicate poor connections"
+        ],
+        expectedResults: "Typically less than 1Ω for domestic ring circuits"
       },
       {
-        id: "final-ring-verification",
-        title: "Final Ring Verification",
-        instruction: "Reconnect conductors correctly and verify R1+R2 values at each socket outlet.",
-        expectedResult: "R1+R2 values approximately 1/4 of end-to-end readings",
-        tips: [
-          "This confirms correct reconnection",
-          "Values should be consistent around ring",
-          "Higher values at spurs are acceptable"
+        id: "cross-connection-test",
+        title: "Cross-Connection Test Setup",
+        description: "Connect line of leg 1 to neutral of leg 2, and neutral of leg 1 to line of leg 2",
+        safetyWarnings: [
+          "This creates a figure-8 configuration for testing",
+          "Ensure connections are secure before testing"
+        ],
+        equipment: ["Multifunction tester", "Test leads", "Circuit diagram"],
+        wagoInstructions: {
+          connectorType: "Wago 221 Series (Lever Nuts) - 3-way connectors for cross-connections",
+          steps: [
+            "Use 3-way 221 connector to join line from Leg 1 with neutral from Leg 2",
+            "Use second 3-way connector to join neutral from Leg 1 with line from Leg 2",
+            "Connect test leads to third positions in each connector",
+            "This creates the cross-connection pattern for testing",
+            "Verify all connections are secure before proceeding"
+          ],
+          safetyTips: [
+            "3-way connectors simplify cross-connection setup",
+            "Visual verification of connections through connector body",
+            "No risk of conductor damage during connection changes"
+          ]
+        },
+        troubleshooting: [
+          "If confused about cross-connections, draw diagram first",
+          "Double-check connections before measuring"
         ]
-      }
-    ],
-    professionalTips: [
-      "Always perform tests in correct sequence to avoid confusion",
-      "Document socket positions and readings for future reference",
-      "Pay attention to any unusual readings that may indicate hidden faults",
-      "Consider load diversity when planning circuit modifications"
-    ],
-    troubleshootingGuide: [
-      {
-        symptom: "Open circuit reading on one conductor",
-        possibleCauses: ["Broken conductor", "Loose connection", "Incorrectly identified conductors"],
-        solutions: ["Trace conductor path", "Check all connections", "Re-verify conductor identification"]
       },
       {
-        symptom: "Uneven readings around ring",
-        possibleCauses: ["Spurious interconnections", "Hidden junction boxes", "Conductor damage"],
-        solutions: ["Investigate wiring routes", "Check for unauthorized connections", "Consider circuit modifications"]
+        id: "socket-outlet-testing",
+        title: "Test at Each Socket Outlet",
+        description: "Measure resistance at each socket outlet to verify ring continuity",
+        safetyWarnings: [
+          "Test at every socket on the circuit",
+          "Look for consistent readings indicating proper ring"
+        ],
+        equipment: ["Multifunction tester", "Socket tester leads", "Test sheet"],
+        wagoInstructions: {
+          connectorType: "Wago 773 Series (Push-In with Test Points) for socket testing",
+          steps: [
+            "At each socket, connect test leads using 773 connectors to line and neutral terminals",
+            "Push test leads firmly into 773 connectors",
+            "Use test points on connectors for meter connection",
+            "Record resistance reading for each socket location",
+            "Move systematically around the ring circuit",
+            "Compare readings for consistency"
+          ],
+          safetyTips: [
+            "773 connectors provide safe test points at each socket",
+            "Consistent connection method ensures reliable readings",
+            "Test points eliminate risk of short circuits during measurement"
+          ]
+        },
+        troubleshooting: [
+          "Significant variation in readings may indicate spurs or poor connections",
+          "Very high readings suggest broken ring or poor socket connection"
+        ],
+        expectedResults: "All socket readings should be similar (within 0.05Ω)"
+      },
+      {
+        id: "final-reconnection",
+        title: "Final R1+R2 Test and Reconnection",
+        description: "Reconnect circuit normally and perform final R1+R2 measurement",
+        safetyWarnings: [
+          "Ensure all connections are remade properly",
+          "Verify circuit operates correctly after reconnection"
+        ],
+        equipment: ["Multifunction tester", "Screwdriver", "Circuit schedule"],
+        wagoInstructions: {
+          connectorType: "Return to original MCB connections (remove Wago connectors)",
+          steps: [
+            "Remove all 221 connectors used for testing",
+            "Reconnect both line conductors to the MCB terminals",
+            "Ensure terminal screws are tightened to correct torque",
+            "Reconnect neutral conductors to neutral bar",
+            "Perform final R1+R2 test from furthest socket",
+            "Document final readings on test certificate"
+          ],
+          safetyTips: [
+            "Ensure all temporary test connections are removed",
+            "Verify proper polarity during reconnection"
+          ]
+        },
+        troubleshooting: [
+          "If final R1+R2 reading is incorrect, check all connections",
+          "Reading should be approximately 1/4 of end-to-end readings"
+        ],
+        expectedResults: "R1+R2 should be approximately 1/4 of the end-to-end resistance readings"
       }
     ]
   },
   {
     id: "insulation-resistance",
-    title: "Insulation Resistance Testing",
+    title: "Insulation Resistance Testing", 
     description: "Test insulation resistance between conductors and to earth",
-    purpose: "To verify adequate insulation between conductors and to earth to prevent dangerous leakage currents",
-    duration: "25-35 mins",
+    purpose: "To verify electrical insulation integrity and identify potential breakdown paths",
+    duration: "20-25 mins",
     difficulty: "Intermediate",
-    category: "Initial Verification",
-    regulationReference: "BS 7671:2018 Section 612.3",
-    equipment: [
-      { 
-        name: "Insulation Resistance Tester", 
-        purpose: "Apply test voltage and measure resistance",
-        settings: ["500V DC for circuits ≤500V", "1000V DC for circuits >500V"]
-      },
-      { name: "Insulation Test Leads", purpose: "High voltage test leads" }
-    ],
     testLimits: [
-      { parameter: "Minimum IR (≤500V)", limit: "≥ 1.0", unit: "MΩ" },
-      { parameter: "Minimum IR (>500V)", limit: "≥ 1.0", unit: "MΩ" },
-      { parameter: "SELV/PELV circuits", limit: "≥ 0.25", unit: "MΩ" }
-    ],
-    safetyPrecautions: [
-      "Remove or disconnect all electronic equipment",
-      "Ensure all switches and contactors are closed",
-      "Disconnect surge protection devices",
-      "Warn others of high voltage testing in progress"
+      { parameter: "Minimum resistance", limit: "> 1", unit: "MΩ" },
+      { parameter: "Test voltage", limit: "500", unit: "V DC" },
+      { parameter: "SELV circuits", limit: "> 0.5", unit: "MΩ" }
     ],
     commonIssues: [
-      "Low readings due to damp conditions",
-      "Electronic equipment causing low readings",
-      "Neutral-earth connections in TN-C-S systems",
-      "Inadequate cable insulation"
+      "Low readings due to dampness",
+      "Electronic equipment not isolated properly",
+      "Neon indicators causing low readings",
+      "Surge protection devices affecting results"
     ],
     steps: [
       {
-        id: "preparation",
-        title: "Test Preparation",
-        instruction: "Remove/isolate electronic equipment, close all switches, disconnect SPDs. Set tester to appropriate voltage.",
+        id: "isolate-equipment",
+        title: "Isolate Electronic Equipment",
+        description: "Remove or isolate all electronic equipment, lamps, and surge protection devices",
         safetyWarnings: [
-          {
-            level: "HIGH",
-            message: "High test voltage can damage electronic equipment"
-          }
+          "Failure to isolate equipment may damage it or give false readings",
+          "Remove all lamps including LED and fluorescent types"
         ],
-        expectedResult: "All sensitive equipment protected, circuit ready for testing",
-        tips: [
-          "Make list of disconnected equipment for reconnection",
-          "Use 250V test voltage if electronic equipment cannot be removed",
-          "Ensure test leads are suitable for test voltage"
-        ]
-      },
-      {
-        id: "line-neutral-test",
-        title: "Line to Neutral Test",
-        instruction: "Connect test leads between line and neutral conductors. Apply test voltage for minimum 1 minute.",
-        expectedResult: "Minimum 1MΩ for circuits ≤500V, reading should be stable",
-        tips: [
-          "Allow reading to stabilise before recording",
-          "Test each phase separately in 3-phase circuits",
-          "Maintain steady test voltage throughout"
-        ],
+        equipment: ["Equipment list", "Labels for reconnection", "Lamp removal tools"],
+        wagoInstructions: {
+          connectorType: "Wago 221 Series (Lever Nuts) for equipment isolation",
+          steps: [
+            "Identify equipment to be isolated (dimmer switches, electronic timers, etc.)",
+            "Use 221 connectors to safely disconnect equipment temporarily",
+            "Connect equipment conductors to one side of connector",
+            "Leave circuit conductors in second side for testing",
+            "Label all connections for easy reconnection",
+            "Document what has been isolated"
+          ],
+          safetyTips: [
+            "221 connectors provide safe, temporary isolation",
+            "Clear labelling ensures correct reconnection",
+            "No risk of losing small screws or components"
+          ]
+        },
         troubleshooting: [
-          "Low readings may indicate damp conditions",
-          "Falling readings suggest current leakage"
+          "If unsure what to isolate, check manufacturer guidance",
+          "Consider using 250V test instead of 500V for sensitive circuits"
         ]
       },
       {
-        id: "line-earth-test",
-        title: "Line to Earth Test",
-        instruction: "Connect test leads between line conductor and earth. Apply test voltage and record reading.",
-        expectedResult: "Minimum 1MΩ, consistent with line-neutral test",
-        tips: [
-          "Ensure good earth connection for accurate reading",
-          "Test all phases to earth in polyphase circuits",
-          "Note any significant difference from L-N test"
-        ]
-      },
-      {
-        id: "neutral-earth-test",
-        title: "Neutral to Earth Test",
-        instruction: "Connect test leads between neutral and earth conductors. Apply test and record final reading.",
-        expectedResult: "Minimum 1MΩ (may be lower in TN-C-S systems due to multiple earth paths)",
-        tips: [
-          "Lower readings are acceptable in TN-C-S systems",
-          "Very low readings may indicate N-E link",
-          "Compare with supply system type"
-        ]
-      }
-    ],
-    professionalTips: [
-      "Weather conditions significantly affect insulation resistance",
-      "Always discharge circuits after insulation testing",
-      "Document environmental conditions during testing",
-      "Consider retesting if readings are marginal"
-    ],
-    troubleshootingGuide: [
-      {
-        symptom: "Low insulation resistance readings",
-        possibleCauses: ["Moisture ingress", "Damaged cable insulation", "Connected equipment"],
-        solutions: ["Allow time for drying", "Investigate cable routes", "Check all equipment is disconnected"]
-      }
-    ]
-  },
-  {
-    id: "polarity-testing",
-    title: "Polarity Testing",
-    description: "Verify correct polarity of all connections in single-phase circuits",
-    purpose: "To ensure line conductors are connected to correct terminals and switching devices interrupt line conductors only",
-    duration: "15-20 mins",
-    difficulty: "Beginner",
-    category: "Initial Verification",
-    regulationReference: "BS 7671:2018 Section 612.6",
-    equipment: [
-      { name: "Multifunction Tester", purpose: "Continuity testing between DB and outlets" },
-      { name: "Socket Tester", purpose: "Quick polarity verification at socket outlets" },
-      { name: "Test Lamp", purpose: "Visual indication of circuit energisation" }
-    ],
-    testLimits: [],
-    safetyPrecautions: [
-      "Complete polarity testing before energising circuits",
-      "Ensure correct identification of line and neutral",
-      "Verify switching arrangements before connection",
-      "Use only approved test equipment"
-    ],
-    commonIssues: [
-      "Line and neutral reversed at accessories",
-      "Switches connected in neutral instead of line",
-      "Incorrect polarity at lampholders",
-      "Mixed up connections at distribution board"
-    ],
-    steps: [
-      {
-        id: "db-connections",
-        title: "Distribution Board Connections",
-        instruction: "Verify line connections go to MCB/RCBO line terminals and neutrals go to neutral bar.",
-        expectedResult: "All line conductors connected to switching devices, neutrals to neutral bar",
-        tips: [
-          "Check each circuit systematically",
-          "Verify correct MCB ratings",
-          "Ensure proper neutral grouping"
-        ]
-      },
-      {
-        id: "switching-devices",
-        title: "Switching Device Connections",
-        instruction: "Test continuity to verify switches interrupt line conductors only, not neutrals.",
-        expectedResult: "Continuity through switch when closed, open circuit when open (line side only)",
-        tips: [
-          "Test with switch in both positions",
-          "Verify two-way switching arrangements",
-          "Check intermediate switches if present"
-        ]
-      },
-      {
-        id: "socket-outlets",
-        title: "Socket Outlet Polarity",
-        instruction: "Use socket tester or continuity testing to verify correct polarity at all socket outlets.",
-        expectedResult: "Line to right terminal (facing outlet), neutral to left, earth to top",
-        tips: [
-          "Use socket tester for quick verification",
-          "Check both single and double sockets",
-          "Verify correct terminal identification"
-        ]
-      },
-      {
-        id: "lighting-circuits",
-        title: "Lighting Circuit Polarity",
-        instruction: "Verify correct polarity at lamp holders, especially Edison screw types.",
-        expectedResult: "Line connected to centre contact of ES lampholders, neutral to outer thread",
+        id: "test-line-neutral",
+        title: "Line to Neutral Insulation Test",
+        description: "Connect test leads between line and neutral conductors and perform 500V insulation test",
         safetyWarnings: [
-          {
-            level: "MEDIUM",
-            message: "Incorrect polarity at ES lampholders creates shock risk during lamp changing"
-          }
+          "Ensure all equipment is isolated before applying 500V",
+          "Hold test button for full duration to get stable reading"
         ],
-        tips: [
-          "Pay special attention to ES lampholders",
-          "Check pendant and ceiling roses",
-          "Verify switch line connections"
-        ]
-      }
-    ],
-    professionalTips: [
-      "Correct polarity is critical for safety and proper RCD operation",
-      "Use systematic approach to avoid missing circuits",
-      "Document any polarity corrections made",
-      "Retest after any corrections"
-    ],
-    troubleshootingGuide: [
-      {
-        symptom: "RCD trips unexpectedly when circuit is energised",
-        possibleCauses: ["Incorrect polarity causing N-E fault", "Mixed neutrals between RCD circuits"],
-        solutions: ["Check polarity at all outlets", "Verify neutral separation", "Test with loads disconnected"]
-      }
-    ]
-  },
-  {
-    id: "earth-electrode-resistance",
-    title: "Earth Electrode Resistance",
-    description: "Measure resistance of earth electrodes in TT systems",
-    purpose: "To verify earth electrode provides adequate resistance for effective earthing in TT installations",
-    duration: "30-40 mins",
-    difficulty: "Advanced",
-    category: "Initial Verification",
-    regulationReference: "BS 7671:2018 Section 612.7",
-    equipment: [
-      { 
-        name: "Earth Electrode Tester", 
-        purpose: "3-terminal or 4-terminal measurement",
-        settings: ["Fall of potential method", "Test current typically 25mA"]
-      },
-      { name: "Test Spikes", purpose: "Current and potential electrodes" },
-      { name: "Test Leads", purpose: "Long leads for proper spacing" }
-    ],
-    testLimits: [
-      { parameter: "Maximum resistance (30mA RCD)", limit: "≤ 1667", unit: "Ω" },
-      { parameter: "Maximum resistance (100mA RCD)", limit: "≤ 500", unit: "Ω" }
-    ],
-    safetyPrecautions: [
-      "Ensure installation is isolated from supply",
-      "Disconnect earth electrode from installation",
-      "Be aware of buried services when driving test spikes",
-      "Use insulated test leads throughout"
-    ],
-    commonIssues: [
-      "High resistance due to dry soil conditions",
-      "Corroded electrode connections",
-      "Inadequate electrode depth or size",
-      "Poor soil conductivity"
-    ],
-    steps: [
-      {
-        id: "electrode-preparation",
-        title: "Electrode Preparation",
-        instruction: "Disconnect earth electrode from installation earthing system. Clean electrode connection point.",
-        expectedResult: "Electrode isolated and connection clean for accurate testing",
-        tips: [
-          "Remove all corrosion from connections",
-          "Ensure complete isolation from installation",
-          "Document electrode type and installation method"
-        ]
-      },
-      {
-        id: "test-spike-positioning",
-        title: "Position Test Spikes",
-        instruction: "Drive current spike at distance >10× electrode length, potential spike at 62% of distance between.",
-        expectedResult: "Proper geometric arrangement for accurate fall-of-potential measurement",
-        safetyWarnings: [
-          {
-            level: "MEDIUM",
-            message: "Check for buried services before driving spikes"
-          }
-        ],
-        tips: [
-          "Use straight line arrangement if possible",
-          "Ensure spikes make good ground contact",
-          "Allow for cable routing to tester"
-        ]
-      },
-      {
-        id: "resistance-measurement",
-        title: "Measure Electrode Resistance",
-        instruction: "Connect tester and measure resistance using fall-of-potential method. Take multiple readings.",
-        expectedResult: "Stable resistance reading within acceptable limits for RCD rating",
-        tips: [
-          "Take readings at different potential spike positions",
-          "Ensure readings are consistent",
-          "Note soil conditions and weather"
-        ]
-      },
-      {
-        id: "verification-test",
-        title: "Verification and Documentation",
-        instruction: "Verify reading stability and document results with soil conditions and electrode details.",
-        expectedResult: "Documented proof of electrode performance with environmental conditions",
-        tips: [
-          "Include soil type and moisture conditions",
-          "Document electrode material and dimensions",
-          "Consider seasonal variations"
-        ]
-      }
-    ],
-    professionalTips: [
-      "Soil moisture dramatically affects readings - consider seasonal testing",
-      "Multiple electrodes in parallel reduce overall resistance",
-      "Consider soil treatment if readings are consistently high",
-      "Regular retesting recommended for TT installations"
-    ],
-    troubleshootingGuide: [
-      {
-        symptom: "Resistance too high for RCD rating",
-        possibleCauses: ["Dry soil conditions", "Inadequate electrode", "Poor connections"],
-        solutions: ["Consider additional electrodes", "Improve electrode connections", "Use lower rated RCD"]
-      }
-    ]
-  },
-  {
-    id: "earth-fault-loop-impedance",
-    title: "Earth Fault Loop Impedance (Zs)",
-    description: "Measure earth fault loop impedance to verify protective device operation",
-    purpose: "To ensure earth fault loop impedance is low enough for protective devices to operate within required time",
-    duration: "20-30 mins",
-    difficulty: "Intermediate",
-    category: "Initial Verification",
-    regulationReference: "BS 7671:2018 Section 612.9",
-    equipment: [
-      { 
-        name: "Earth Fault Loop Impedance Tester", 
-        purpose: "Measure Zs without RCD tripping",
-        settings: ["No-trip test current <30mA", "Standard test for non-RCD circuits"]
-      },
-      { name: "Test Leads", purpose: "Connect to line and earth terminals" }
-    ],
-    testLimits: [
-      { parameter: "Maximum Zs", limit: "Per BS 7671 Tables 41.2-41.4", unit: "Ω" },
-      { parameter: "Temperature correction", limit: "Multiply by 0.8 for 70°C", unit: "-" }
-    ],
-    safetyPrecautions: [
-      "Use no-trip mode for RCD protected circuits",
-      "Ensure adequate earth connection for testing",
-      "Verify test equipment is suitable for installation type",
-      "Consider parallel earth paths in measurement"
-    ],
-    commonIssues: [
-      "High Zs readings preventing protective device operation",
-      "RCD tripping during standard Zs test",
-      "Parallel earth paths affecting readings",
-      "Temperature effects on conductor resistance"
-    ],
-    steps: [
-      {
-        id: "circuit-identification",
-        title: "Circuit Identification and Preparation",
-        instruction: "Identify circuit type, protective device rating, and required maximum Zs value from regulations.",
-        expectedResult: "Clear understanding of acceptable Zs limits for each circuit",
-        tips: [
-          "Refer to BS 7671 Tables 41.2-41.4",
-          "Consider protective device characteristics",
-          "Note any special requirements"
-        ]
-      },
-      {
-        id: "test-method-selection",
-        title: "Select Appropriate Test Method",
-        instruction: "Choose no-trip method for RCD circuits, standard method for non-RCD circuits.",
-        expectedResult: "Correct test method selected to avoid unwanted RCD tripping",
-        tips: [
-          "Use no-trip for RCD/RCBO protected circuits",
-          "Standard test acceptable for MCB-only circuits",
-          "Consider supply impedance in calculations"
-        ]
-      },
-      {
-        id: "zs-measurement",
-        title: "Measure Earth Fault Loop Impedance",
-        instruction: "Connect tester between line and earth at furthest point of circuit. Record Zs reading.",
-        expectedResult: "Zs reading within acceptable limits considering temperature correction",
-        tips: [
-          "Test at furthest point from origin",
-          "Allow reading to stabilise",
-          "Apply temperature correction factor"
-        ],
+        equipment: ["Multifunction tester", "Insulation test leads", "Test certificate"],
+        wagoInstructions: {
+          connectorType: "Wago 773 Series (Push-In with Test Points) for test connections",
+          steps: [
+            "At distribution board, connect test lead to line conductor using 773 connector",
+            "Connect second test lead to neutral conductor using separate 773 connector",
+            "Ensure firm insertion into connectors",
+            "Connect meter leads to test points on connectors",
+            "Apply 500V test voltage for recommended duration",
+            "Record reading when stable"
+          ],
+          safetyTips: [
+            "Test points provide safe measurement access",
+            "No risk of short circuit during connection",
+            "Consistent contact pressure ensures accurate readings"
+          ]
+        },
         troubleshooting: [
-          "High readings may indicate poor earth connections",
-          "Very low readings suggest parallel earth paths"
-        ]
+          "Low readings may indicate damp conditions - allow drying time",
+          "Check for missed equipment that should be isolated"
+        ],
+        expectedResults: "Minimum 1MΩ for circuits up to 500V"
       },
       {
-        id: "verification-calculation",
-        title: "Verify Against Regulations",
-        instruction: "Compare measured Zs with maximum permitted values, applying temperature correction if necessary.",
-        expectedResult: "All circuits comply with maximum Zs requirements",
-        tips: [
-          "Apply 0.8 multiplier for ambient temperature correction",
-          "Consider actual operating temperature",
-          "Document any marginal readings"
-        ]
-      }
-    ],
-    professionalTips: [
-      "External loop impedance (Ze) affects all circuit measurements",
-      "Consider diversity factor for final circuit calculations",
-      "Parallel earth paths can give misleadingly low readings",
-      "Regular Ze testing recommended for supply verification"
-    ],
-    troubleshootingGuide: [
+        id: "test-line-earth",
+        title: "Line to Earth Insulation Test", 
+        description: "Test insulation resistance between line conductor and earth",
+        safetyWarnings: [
+          "Ensure good connection to earth conductor",
+          "Test each line conductor separately in three-phase circuits"
+        ],
+        equipment: ["Multifunction tester", "Insulation test leads", "Earth connection point"],
+        wagoInstructions: {
+          connectorType: "Wago 773 Series (Push-In with Test Points)",
+          steps: [
+            "Connect test lead to line conductor using 773 connector as before",
+            "Connect second test lead to earth conductor using separate 773 connector",
+            "Verify earth connection is to main earth terminal",
+            "Use connector test points for meter connections",
+            "Apply 500V test and record reading",
+            "Repeat for each line conductor in three-phase systems"
+          ],
+          safetyTips: [
+            "Ensure earth connection is to main earth terminal not local earth",
+            "Test points eliminate risk of accidental short circuits"
+          ]
+        },
+        troubleshooting: [
+          "Low readings to earth may indicate insulation breakdown",
+          "Check for water ingress in external circuits"
+        ],
+        expectedResults: "Minimum 1MΩ for circuits up to 500V"
+      },
       {
-        symptom: "Zs reading exceeds maximum permitted value",
-        possibleCauses: ["High external impedance", "Poor circuit earth connection", "Undersized conductors"],
-        solutions: ["Check Ze at origin", "Improve earth connections", "Consider circuit modification"]
+        id: "test-neutral-earth",
+        title: "Neutral to Earth Insulation Test",
+        description: "Test insulation resistance between neutral conductor and earth",
+        safetyWarnings: [
+          "In TN-C-S systems, this test may show lower readings",
+          "Consider system earthing arrangement when interpreting results"
+        ],
+        equipment: ["Multifunction tester", "Insulation test leads", "System earthing diagram"],
+        wagoInstructions: {
+          connectorType: "Wago 773 Series (Push-In with Test Points)",
+          steps: [
+            "Connect test lead to neutral conductor using 773 connector",
+            "Connect second test lead to earth conductor using separate 773 connector",
+            "Ensure connection is at the same point in the installation",
+            "Use test points for meter connections",
+            "Apply test voltage and record reading",
+            "Note any system-specific considerations"
+          ],
+          safetyTips: [
+            "Be aware of earthing system type when interpreting readings",
+            "Document any system-specific results clearly"
+          ]
+        },
+        troubleshooting: [
+          "Low readings may be normal in some earthing systems",
+          "Check system earthing arrangement if readings seem unusual"
+        ],
+        expectedResults: "Minimum 1MΩ, but may be lower in some earthing systems"
+      },
+      {
+        id: "reconnect-equipment",
+        title: "Reconnect Isolated Equipment",
+        description: "Systematically reconnect all equipment that was isolated for testing",
+        safetyWarnings: [
+          "Ensure all equipment is reconnected correctly",
+          "Check polarity and phase rotation where applicable"
+        ],
+        equipment: ["Equipment list", "Connection labels", "Basic tools"],
+        wagoInstructions: {
+          connectorType: "Remove 221 connectors and restore original connections",
+          steps: [
+            "Work through isolation list systematically",
+            "Remove 221 connectors and restore equipment connections",
+            "Ensure all conductors are properly terminated",
+            "Check terminal tightness after reconnection",
+            "Test equipment operation where possible",
+            "Update test documentation"
+          ],
+          safetyTips: [
+            "Double-check all connections before energising",
+            "Verify no tools or materials left in equipment"
+          ]
+        },
+        troubleshooting: [
+          "If equipment doesn't work after reconnection, check connections",
+          "Some electronic equipment may need reset after insulation testing"
+        ]
       }
     ]
   },
   {
     id: "rcd-testing",
-    title: "RCD Testing (Residual Current Device)",
-    description: "Comprehensive testing of RCD operation including trip times and sensitivity",
-    purpose: "To verify RCDs operate correctly within specified time limits for personal protection",
-    duration: "25-35 mins",
+    title: "RCD Testing Procedures",
+    description: "Comprehensive RCD testing including ramp test and trip time measurements",
+    purpose: "To verify RCD operates correctly within specified parameters for personal protection",
+    duration: "15-20 mins", 
     difficulty: "Intermediate",
-    category: "Initial Verification",
-    regulationReference: "BS 7671:2018 Section 612.13",
-    equipment: [
-      { 
-        name: "RCD Tester", 
-        purpose: "Test trip current and time",
-        settings: ["Test currents: ½×IΔn, 1×IΔn, 5×IΔn", "Phase angles: 0° and 180°"]
-      },
-      { name: "Test Leads", purpose: "Connect to line, neutral and earth" }
-    ],
     testLimits: [
-      { parameter: "Trip time at 1×IΔn", limit: "≤ 300", unit: "ms" },
-      { parameter: "Trip time at 5×IΔn", limit: "≤ 40", unit: "ms" },
-      { parameter: "No trip at ½×IΔn", limit: "∞", unit: "ms" }
-    ],
-    safetyPrecautions: [
-      "Test RCD push-button operation first",
-      "Ensure downstream circuits are isolated during testing",
-      "Use appropriate test equipment for RCD type",
-      "Reset RCD after each test"
+      { parameter: "Trip current", limit: "50-100% of rated", unit: "mA" },
+      { parameter: "Trip time @ 1x In", limit: "< 300", unit: "ms" },
+      { parameter: "Trip time @ 5x In", limit: "< 40", unit: "ms" }
     ],
     commonIssues: [
       "RCD not tripping within time limits",
-      "Nuisance tripping during normal operation",
-      "Failure to reset after test",
-      "Incorrect RCD type for application"
+      "Nuisance tripping due to background leakage",
+      "False readings due to poor test connections",
+      "RCD damaged by insulation testing"
     ],
     steps: [
       {
-        id: "push-button-test",
-        title: "Push Button Test",
-        instruction: "Operate RCD test button to verify mechanical operation. RCD should trip and be resettable.",
-        expectedResult: "RCD trips reliably and can be reset without difficulty",
+        id: "rcd-identification",
+        title: "Identify and Prepare RCD",
+        description: "Locate RCD to be tested and verify its rating and type",
         safetyWarnings: [
-          {
-            level: "HIGH",
-            message: "If push button test fails, do not proceed with electrical testing"
-          }
+          "Ensure RCD is de-energised for initial inspection",
+          "Check RCD is not damaged before testing"
         ],
-        tips: [
-          "Test button should be operated monthly",
-          "RCD should trip immediately when pressed",
-          "Check reset operation is smooth"
+        equipment: ["RCD tester", "RCD identification chart", "Test leads"],
+        troubleshooting: [
+          "If RCD rating is unclear, check manufacturer markings",
+          "Verify RCD type (AC, A, or B) before testing"
         ]
       },
       {
-        id: "half-rated-current-test",
-        title: "Half Rated Current Test",
-        instruction: "Apply test current of ½×IΔn for maximum test duration. RCD should NOT trip.",
-        expectedResult: "RCD remains closed throughout test period",
-        tips: [
-          "This tests RCD sensitivity threshold",
-          "Test should run for full duration without trip",
-          "Check both 0° and 180° phase angles"
-        ]
+        id: "functional-test",
+        title: "RCD Functional Test (Push Button)",
+        description: "Perform mechanical test using RCD push button to verify basic operation",
+        safetyWarnings: [
+          "This tests mechanical operation only",
+          "If push button test fails, do not proceed with electrical testing"
+        ],
+        equipment: ["None required for push button test"],
+        troubleshooting: [
+          "If RCD doesn't trip on push button, check for mechanical fault",
+          "Ensure RCD can be reset after push button test"
+        ],
+        expectedResults: "RCD should trip immediately and reset successfully"
       },
       {
-        id: "rated-current-test",
-        title: "Rated Current Test (1×IΔn)",
-        instruction: "Apply test current of 1×IΔn and measure trip time. Test at both 0° and 180° phase angles.",
-        expectedResult: "Trip time ≤300ms at worst case phase angle",
-        tips: [
-          "Record the longer of the two trip times",
-          "Ensure RCD resets between tests",
-          "Note any significant difference between angles"
-        ]
-      },
-      {
-        id: "five-times-current-test",
-        title: "Five Times Current Test (5×IΔn)",
-        instruction: "Apply test current of 5×IΔn and measure trip time for fast disconnection verification.",
-        expectedResult: "Trip time ≤40ms ensuring rapid fault clearance",
-        tips: [
-          "This tests fast trip capability",
-          "Essential for shock protection",
-          "Should be consistently fast"
+        id: "connect-rcd-tester",
+        title: "Connect RCD Tester",
+        description: "Connect RCD tester leads to line, neutral, and earth at appropriate test points",
+        safetyWarnings: [
+          "Ensure circuit is energised for RCD testing",
+          "Verify correct connection of test leads"
+        ],
+        equipment: ["RCD tester", "Test leads", "Socket outlet or test points"],
+        wagoInstructions: {
+          connectorType: "Wago 773 Series (Push-In with Test Points) for RCD test connections",
+          steps: [
+            "At test location (typically socket outlet), connect RCD tester leads",
+            "Use 773 connector for line connection - push test lead in firmly",
+            "Connect neutral test lead to separate 773 connector",
+            "Connect earth lead to earth terminal or earth connector",
+            "Use test points on connectors for secure meter connection",
+            "Verify all connections before energising"
+          ],
+          safetyTips: [
+            "Test points provide safe, reliable connections for RCD testing",
+            "No risk of loose connections during testing",
+            "Easy to verify connection security"
+          ]
+        },
+        troubleshooting: [
+          "If tester doesn't detect RCD, check connections and energisation",
+          "Ensure tester is set for correct RCD rating"
         ]
       },
       {
         id: "ramp-test",
-        title: "Ramp Test (Optional)",
-        instruction: "Gradually increase test current to determine actual trip threshold.",
-        expectedResult: "Trip current between 50% and 100% of rated residual current",
-        tips: [
-          "Useful for determining RCD sensitivity",
-          "Should trip between ½IΔn and IΔn",
-          "Indicates RCD condition"
-        ]
-      }
-    ],
-    professionalTips: [
-      "Test RCDs quarterly in commercial installations",
-      "Document any deterioration in performance over time",
-      "Consider Type A or Type F RCDs for electronic loads",
-      "Ensure correct discrimination between RCDs"
-    ],
-    troubleshootingGuide: [
-      {
-        symptom: "RCD fails to trip at rated current",
-        possibleCauses: ["Faulty RCD mechanism", "Incorrect test connections", "Electronic interference"],
-        solutions: ["Replace RCD", "Check test lead connections", "Test with loads isolated"]
-      },
-      {
-        symptom: "Trip time exceeds limits",
-        possibleCauses: ["Worn RCD contacts", "Mechanical wear", "Temperature effects"],
-        solutions: ["Replace RCD", "Check operating temperature", "Consider environmental factors"]
-      }
-    ]
-  },
-  {
-    id: "prospective-short-circuit-current",
-    title: "Prospective Short Circuit Current (PSCC)",
-    description: "Measure maximum fault current to verify protective device breaking capacity",
-    purpose: "To ensure protective devices can safely interrupt maximum prospective fault currents",
-    duration: "20-25 mins",
-    difficulty: "Advanced",
-    category: "Initial Verification",
-    regulationReference: "BS 7671:2018 Section 612.11",
-    equipment: [
-      { 
-        name: "Prospective Short Circuit Current Tester", 
-        purpose: "Measure fault current capacity",
-        settings: ["Test between L-N and L-E", "No-trip mode for safety"]
-      },
-      { name: "Loop Impedance Tester", purpose: "Alternative calculation method" }
-    ],
-    testLimits: [
-      { parameter: "PSCC at origin", limit: "Must not exceed protective device breaking capacity", unit: "kA" },
-      { parameter: "Minimum PSCC", limit: "Must ensure protective device operation", unit: "A" }
-    ],
-    safetyPrecautions: [
-      "Use no-trip test methods only",
-      "Ensure all equipment rated for measured fault levels",
-      "Verify protective device breaking capacity",
-      "Consider supply authority fault levels"
-    ],
-    commonIssues: [
-      "PSCC exceeding protective device rating",
-      "Insufficient fault current for protection operation",
-      "Supply impedance changes affecting calculations",
-      "Parallel path effects on measurements"
-    ],
-    steps: [
-      {
-        id: "breaking-capacity-verification",
-        title: "Verify Protective Device Ratings",
-        instruction: "Check breaking capacity (Icn or Ics) of all protective devices against expected fault levels.",
-        expectedResult: "All devices have adequate breaking capacity for installation",
-        tips: [
-          "Check device nameplate ratings",
-          "Consider both MCB and RCD ratings",
-          "Verify coordination between devices"
-        ]
-      },
-      {
-        id: "pscc-measurement-ln",
-        title: "Measure Line-Neutral PSCC",
-        instruction: "Connect tester between line and neutral at origin. Measure prospective fault current.",
-        expectedResult: "PSCC reading within protective device breaking capacity",
-        tips: [
-          "Test at main distribution board",
-          "Use no-trip measurement mode",
-          "Record maximum value"
-        ]
-      },
-      {
-        id: "pscc-measurement-le",
-        title: "Measure Line-Earth PSCC",
-        instruction: "Connect tester between line and earth to measure earth fault current capacity.",
-        expectedResult: "Earth fault current sufficient for protective device operation",
-        tips: [
-          "Usually lower than L-N fault current",
-          "Critical for earth fault protection",
-          "Compare with Zs measurements"
-        ]
-      },
-      {
-        id: "downstream-verification",
-        title: "Verify Downstream Protection",
-        instruction: "Calculate or measure PSCC at downstream distribution boards and major circuits.",
-        expectedResult: "All downstream devices adequately rated for local fault levels",
-        tips: [
-          "Fault current reduces with distance",
-          "Consider cable impedance effects",
-          "Check sub-main protection coordination"
-        ]
-      }
-    ],
-    professionalTips: [
-      "Supply authority can provide fault level data",
-      "PSCC can change with supply modifications",
-      "Consider future load increases in calculations",
-      "Document fault levels for future reference"
-    ],
-    troubleshootingGuide: [
-      {
-        symptom: "PSCC exceeds device breaking capacity",
-        possibleCauses: ["Undersized protective devices", "High supply fault level", "Parallel supply paths"],
-        solutions: ["Install higher rated devices", "Add current limiting devices", "Modify supply arrangement"]
-      }
-    ]
-  },
-  {
-    id: "phase-sequence",
-    title: "Phase Sequence Testing",
-    description: "Verify correct phase rotation in three-phase installations",
-    purpose: "To ensure three-phase equipment operates correctly with proper phase sequence",
-    duration: "10-15 mins",
-    difficulty: "Beginner",
-    category: "Initial Verification",
-    regulationReference: "BS 7671:2018 Section 612.12",
-    equipment: [
-      { name: "Phase Sequence Indicator", purpose: "Visual indication of phase rotation" },
-      { name: "Three-phase Socket Tester", purpose: "Quick verification at outlets" },
-      { name: "Multimeter", purpose: "Phase-to-phase voltage verification" }
-    ],
-    testLimits: [
-      { parameter: "Phase sequence", limit: "L1, L2, L3 (clockwise rotation)", unit: "-" },
-      { parameter: "Phase voltage balance", limit: "Within ±5% of nominal", unit: "V" }
-    ],
-    safetyPrecautions: [
-      "Verify safe working voltage before testing",
-      "Use appropriate category test equipment",
-      "Ensure proper phase identification before energising loads",
-      "Test on isolated circuits where possible"
-    ],
-    commonIssues: [
-      "Incorrect phase sequence causing motor reverse rotation",
-      "Phase imbalance affecting equipment operation",
-      "Swapped phases in distribution systems",
-      "Inconsistent phase labelling"
-    ],
-    steps: [
-      {
-        id: "supply-verification",
-        title: "Supply Phase Verification",
-        instruction: "Verify three-phase supply at main distribution board using phase sequence indicator.",
-        expectedResult: "Correct L1-L2-L3 sequence confirmed at supply origin",
-        tips: [
-          "Connect indicator to incoming supply",
-          "Verify with supply documentation",
-          "Check phase voltage balance"
-        ]
-      },
-      {
-        id: "distribution-sequence",
-        title: "Distribution Board Sequence",
-        instruction: "Verify phase sequence maintained throughout distribution system.",
-        expectedResult: "Consistent phase sequence at all distribution points",
-        tips: [
-          "Check each distribution board systematically",
-          "Verify correct phase identification labels",
-          "Ensure no inadvertent phase swapping"
-        ]
-      },
-      {
-        id: "motor-connections",
-        title: "Motor Connection Verification",
-        instruction: "Verify correct phase sequence at motor connection points before energising.",
-        expectedResult: "Motors will rotate in correct direction when energised",
+        title: "RCD Ramp Test",
+        description: "Perform ramp test to determine actual trip current of the RCD",
         safetyWarnings: [
-          {
-            level: "MEDIUM",
-            message: "Incorrect sequence may damage equipment or create safety hazards"
-          }
+          "Ensure RCD resets between tests",
+          "Allow cooling time between multiple tests"
         ],
-        tips: [
-          "Test before connecting motor loads",
-          "Document correct connections",
-          "Consider direction of rotation requirements"
-        ]
+        equipment: ["RCD tester", "Test certificate", "Timer"],
+        wagoInstructions: {
+          connectorType: "Maintain 773 connections established in previous step",
+          steps: [
+            "Verify 773 connectors remain securely connected",
+            "Check test points are clean and making good contact",
+            "Initiate ramp test on RCD tester",
+            "Monitor test progress and record trip current",
+            "Allow RCD to reset before next test",
+            "Repeat if required for verification"
+          ],
+          safetyTips: [
+            "Stable connections ensure accurate ramp test results",
+            "Test points maintain consistent contact throughout test"
+          ]
+        },
+        troubleshooting: [
+          "If RCD doesn't trip during ramp test, check for correct wiring",
+          "High trip current may indicate RCD degradation"
+        ],
+        expectedResults: "RCD should trip between 50% and 100% of rated current"
       },
       {
-        id: "three-phase-outlets",
-        title: "Three-Phase Outlet Testing",
-        instruction: "Test phase sequence at all three-phase socket outlets using appropriate tester.",
-        expectedResult: "All outlets provide correct phase sequence for connected equipment",
-        tips: [
-          "Use three-phase socket tester",
-          "Check industrial outlets and CEE connections",
-          "Verify outlet labelling matches actual phases"
-        ]
-      }
-    ],
-    professionalTips: [
-      "Phase sequence affects motor rotation and equipment operation",
-      "Document phase arrangements for future maintenance",
-      "Consider using phase monitoring relays for critical equipment",
-      "Check sequence after any electrical modifications"
-    ],
-    troubleshootingGuide: [
+        id: "trip-time-1x",
+        title: "Trip Time Test at 1× Rated Current",
+        description: "Measure RCD trip time at 1× rated current (e.g., 30mA for 30mA RCD)",
+        safetyWarnings: [
+          "Test at both 0° and 180° phase angles",
+          "Record the longer of the two readings"
+        ],
+        equipment: ["RCD tester", "Test certificate"],
+        wagoInstructions: {
+          connectorType: "Continue using established 773 connections",
+          steps: [
+            "Maintain secure 773 connector connections throughout testing",
+            "Set RCD tester to 1× rated current mode",
+            "Perform test at 0° phase angle first",
+            "Record trip time result",
+            "Reset RCD and test at 180° phase angle", 
+            "Record longer of the two trip times"
+          ],
+          safetyTips: [
+            "Consistent connections ensure repeatable results",
+            "No connection disturbance between phase angle tests"
+          ]
+        },
+        troubleshooting: [
+          "If trip time is too long, check RCD condition",
+          "Verify test current is correct for RCD rating"
+        ],
+        expectedResults: "Trip time should be less than 300ms for general purpose RCDs"
+      },
       {
-        symptom: "Motor rotating in wrong direction",
-        possibleCauses: ["Incorrect phase sequence", "Swapped motor connections", "Wrong phase at outlet"],
-        solutions: ["Correct phase sequence", "Swap any two motor phases", "Rectify outlet connections"]
+        id: "trip-time-5x",
+        title: "Trip Time Test at 5× Rated Current",
+        description: "Measure RCD trip time at 5× rated current (e.g., 150mA for 30mA RCD)",
+        safetyWarnings: [
+          "This is the fastest trip time test",
+          "Ensure RCD can handle the higher test current"
+        ],
+        equipment: ["RCD tester", "Test certificate"],
+        wagoInstructions: {
+          connectorType: "Continue using established 773 connections",
+          steps: [
+            "Verify 773 connections remain secure for final test",
+            "Set RCD tester to 5× rated current mode",
+            "Perform single test at this current level",
+            "Record trip time immediately",
+            "Check RCD resets normally after test",
+            "Remove test connections carefully"
+          ],
+          safetyTips: [
+            "Final test requires stable connections for accurate timing",
+            "Safe removal of test connections after completion"
+          ]
+        },
+        troubleshooting: [
+          "If RCD doesn't trip quickly at 5× current, investigate fault",
+          "Check for overheating after high current test"
+        ],
+        expectedResults: "Trip time should be less than 40ms"
       }
     ]
   }
 ];
 
-export const getTestGuideById = (id: string): EnhancedTestGuide | undefined => {
+export const getEnhancedTestGuideById = (id: string): EnhancedTestGuide | undefined => {
   return comprehensiveTestingGuides.find(guide => guide.id === id);
 };
 
-export const getTestGuidesByDifficulty = (difficulty: 'Beginner' | 'Intermediate' | 'Advanced'): EnhancedTestGuide[] => {
+export const getEnhancedTestGuidesByDifficulty = (difficulty: "Beginner" | "Intermediate" | "Advanced"): EnhancedTestGuide[] => {
   return comprehensiveTestingGuides.filter(guide => guide.difficulty === difficulty);
-};
-
-export const getTestGuidesByCategory = (category: 'Initial Verification' | 'Periodic Inspection' | 'Visual Inspection'): EnhancedTestGuide[] => {
-  return comprehensiveTestingGuides.filter(guide => guide.category === category);
 };

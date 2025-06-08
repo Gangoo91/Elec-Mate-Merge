@@ -3,23 +3,23 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Progress } from "@/components/ui/progress";
 import { 
   ArrowLeft, 
   ArrowRight, 
   CheckCircle, 
   AlertTriangle, 
-  Info, 
-  Clock,
+  Settings, 
+  Cable, 
   Zap,
-  Shield,
-  BookOpen,
-  Camera,
-  FileText,
-  Lightbulb
+  Eye,
+  Clock,
+  BookOpen
 } from "lucide-react";
-import { EnhancedTestGuide, TestStep, SafetyWarning } from "@/data/bs7671-testing/comprehensiveTestingGuides";
+import { EnhancedTestGuide } from "@/data/bs7671-testing/comprehensiveTestingGuides";
+import TestingInstructions from "./TestingInstructions";
+import WagoConnectionMethods from "./WagoConnectionMethods";
 
 interface InteractiveTestingGuideProps {
   guide: EnhancedTestGuide;
@@ -28,76 +28,86 @@ interface InteractiveTestingGuideProps {
 }
 
 const InteractiveTestingGuide = ({ guide, onComplete, onBack }: InteractiveTestingGuideProps) => {
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
-  const [stepNotes, setStepNotes] = useState<Record<number, string>>({});
-  const [showTroubleshooting, setShowTroubleshooting] = useState(false);
+  const [showWagoGuide, setShowWagoGuide] = useState(false);
+
+  const currentStep = guide.steps[currentStepIndex];
+  const progress = ((completedSteps.size) / guide.steps.length) * 100;
 
   const handleStepComplete = () => {
-    setCompletedSteps(prev => new Set([...prev, currentStep]));
-    if (currentStep < guide.steps.length - 1) {
-      setCurrentStep(currentStep + 1);
+    const newCompleted = new Set(completedSteps);
+    newCompleted.add(currentStepIndex);
+    setCompletedSteps(newCompleted);
+    
+    if (currentStepIndex < guide.steps.length - 1) {
+      setCurrentStepIndex(currentStepIndex + 1);
     }
   };
 
-  const handlePreviousStep = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
+  const handlePrevious = () => {
+    if (currentStepIndex > 0) {
+      setCurrentStepIndex(currentStepIndex - 1);
     }
   };
 
-  const handleNextStep = () => {
-    if (currentStep < guide.steps.length - 1) {
-      setCurrentStep(currentStep + 1);
+  const handleNext = () => {
+    if (currentStepIndex < guide.steps.length - 1) {
+      setCurrentStepIndex(currentStepIndex + 1);
     }
   };
 
-  const handleGuideComplete = () => {
-    if (completedSteps.size === guide.steps.length) {
-      onComplete();
-    }
+  const handleFinish = () => {
+    onComplete();
   };
 
-  const currentStepData = guide.steps[currentStep];
-  const progressPercentage = (completedSteps.size / guide.steps.length) * 100;
+  const isStepCompleted = completedSteps.has(currentStepIndex);
+  const allStepsCompleted = completedSteps.size === guide.steps.length;
 
-  const getSafetyIcon = (level: string) => {
-    switch (level) {
-      case 'HIGH': return <AlertTriangle className="h-4 w-4 text-red-400" />;
-      case 'MEDIUM': return <AlertTriangle className="h-4 w-4 text-yellow-400" />;
-      case 'LOW': return <Info className="h-4 w-4 text-blue-400" />;
-      default: return <Info className="h-4 w-4 text-blue-400" />;
-    }
-  };
-
-  const getSafetyBorderColor = (level: string) => {
-    switch (level) {
-      case 'HIGH': return 'border-red-500/50';
-      case 'MEDIUM': return 'border-yellow-500/50';
-      case 'LOW': return 'border-blue-500/50';
-      default: return 'border-blue-500/50';
-    }
-  };
+  if (showWagoGuide) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold text-elec-yellow">Wago Connection Methods</h2>
+            <p className="text-muted-foreground">for {guide.title}</p>
+          </div>
+          <Button variant="outline" onClick={() => setShowWagoGuide(false)}>
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Testing Guide
+          </Button>
+        </div>
+        <WagoConnectionMethods />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <Button
-          variant="outline"
-          onClick={onBack}
-          className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Guides
-        </Button>
-        <div className="text-right">
-          <p className="text-sm text-muted-foreground">
-            Step {currentStep + 1} of {guide.steps.length}
-          </p>
-          <p className="text-xs text-muted-foreground">
-            {completedSteps.size} completed
-          </p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-elec-yellow">{guide.title}</h2>
+          <p className="text-muted-foreground">{guide.description}</p>
+          <div className="flex items-center gap-4 mt-2">
+            <Badge className="bg-blue-500/20 text-blue-400">
+              <Clock className="h-3 w-3 mr-1" />
+              {guide.duration}
+            </Badge>
+            <Badge className="bg-purple-500/20 text-purple-400">
+              {guide.difficulty}
+            </Badge>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => setShowWagoGuide(true)}>
+            <Cable className="h-4 w-4 mr-2" />
+            Wago Connections
+          </Button>
+          <Button variant="outline" onClick={onBack}>
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Guides
+          </Button>
         </div>
       </div>
 
@@ -105,16 +115,10 @@ const InteractiveTestingGuide = ({ guide, onComplete, onBack }: InteractiveTesti
       <Card className="border-green-500/30 bg-green-500/5">
         <CardContent className="pt-6">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="font-medium text-green-300">{guide.title}</h3>
-            <Badge className="bg-green-500/20 text-green-400">
-              <Clock className="h-3 w-3 mr-1" />
-              {guide.duration}
-            </Badge>
+            <span className="text-sm font-medium text-green-300">Progress</span>
+            <span className="text-sm text-green-200">{completedSteps.size} of {guide.steps.length} steps</span>
           </div>
-          <Progress value={progressPercentage} className="mb-2" />
-          <p className="text-sm text-muted-foreground">
-            {Math.round(progressPercentage)}% Complete
-          </p>
+          <Progress value={progress} className="h-2" />
         </CardContent>
       </Card>
 
@@ -122,172 +126,176 @@ const InteractiveTestingGuide = ({ guide, onComplete, onBack }: InteractiveTesti
       <Card className="border-elec-yellow/30 bg-elec-gray">
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-elec-yellow flex items-center gap-2">
-              {completedSteps.has(currentStep) ? (
-                <CheckCircle className="h-5 w-5 text-green-400" />
-              ) : (
-                <span className="w-5 h-5 rounded-full bg-elec-yellow text-elec-dark text-xs flex items-center justify-center font-bold">
-                  {currentStep + 1}
-                </span>
-              )}
-              {currentStepData.title}
-            </CardTitle>
-            <Badge className="bg-blue-500/20 text-blue-400">
-              {guide.difficulty}
+            <div className="flex items-center gap-3">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                isStepCompleted ? 'bg-green-500' : 'bg-elec-yellow'
+              }`}>
+                {isStepCompleted ? (
+                  <CheckCircle className="h-5 w-5 text-white" />
+                ) : (
+                  <span className="text-elec-dark font-medium">{currentStepIndex + 1}</span>
+                )}
+              </div>
+              <div>
+                <CardTitle className="text-white">{currentStep.title}</CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Step {currentStepIndex + 1} of {guide.steps.length}
+                </p>
+              </div>
+            </div>
+            <Badge variant={isStepCompleted ? "default" : "secondary"}>
+              {isStepCompleted ? "Completed" : "In Progress"}
             </Badge>
           </div>
         </CardHeader>
+        
         <CardContent className="space-y-6">
-          {/* Step Instruction */}
+          {/* Step Description */}
           <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
-            <h4 className="font-medium text-blue-300 mb-3 flex items-center gap-2">
-              <FileText className="h-4 w-4" />
-              Instructions
-            </h4>
-            <p className="text-blue-100">{currentStepData.instruction}</p>
+            <h4 className="font-medium text-blue-300 mb-2">Step Instructions</h4>
+            <p className="text-blue-100">{currentStep.description}</p>
           </div>
 
-          {/* Expected Result */}
-          <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
-            <h4 className="font-medium text-green-300 mb-3 flex items-center gap-2">
-              <CheckCircle className="h-4 w-4" />
-              Expected Result
-            </h4>
-            <p className="text-green-100">{currentStepData.expectedResult}</p>
-          </div>
+          {/* Wago Connection Instructions (if applicable) */}
+          {currentStep.wagoInstructions && (
+            <Card className="border-orange-500/30 bg-orange-500/5">
+              <CardHeader>
+                <CardTitle className="text-orange-300 flex items-center gap-2">
+                  <Cable className="h-5 w-5" />
+                  Wago Connector Instructions
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div>
+                    <h5 className="font-medium text-orange-200 mb-2">Recommended Connector:</h5>
+                    <p className="text-sm text-orange-100">{currentStep.wagoInstructions.connectorType}</p>
+                  </div>
+                  
+                  <div>
+                    <h5 className="font-medium text-orange-200 mb-2">Connection Steps:</h5>
+                    <ol className="space-y-2">
+                      {currentStep.wagoInstructions.steps.map((step, index) => (
+                        <li key={index} className="text-sm text-orange-100 flex gap-3">
+                          <span className="flex-shrink-0 w-5 h-5 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs">
+                            {index + 1}
+                          </span>
+                          {step}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+
+                  {currentStep.wagoInstructions.safetyTips && (
+                    <Alert className="border-red-500/30 bg-red-500/10">
+                      <AlertTriangle className="h-4 w-4 text-red-400" />
+                      <AlertDescription className="text-red-100">
+                        <span className="font-medium">Safety Tips: </span>
+                        {currentStep.wagoInstructions.safetyTips.join(" • ")}
+                      </AlertDescription>
+                    </Alert>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Safety Warnings */}
-          {currentStepData.safetyWarnings && currentStepData.safetyWarnings.length > 0 && (
-            <div className="space-y-3">
-              <h4 className="font-medium text-red-300 flex items-center gap-2">
-                <Shield className="h-4 w-4" />
-                Safety Warnings
-              </h4>
-              {currentStepData.safetyWarnings.map((warning, index) => (
-                <Alert key={index} className={`${getSafetyBorderColor(warning.level)} bg-red-500/10`}>
-                  <div className="flex items-center gap-2">
-                    {getSafetyIcon(warning.level)}
-                    <Badge variant="outline" className="text-xs">
-                      {warning.level}
+          {currentStep.safetyWarnings && currentStep.safetyWarnings.length > 0 && (
+            <Alert className="border-red-500/30 bg-red-500/10">
+              <AlertTriangle className="h-4 w-4 text-red-400" />
+              <AlertDescription className="text-red-100">
+                <span className="font-medium">Safety Warnings: </span>
+                <ul className="mt-2 space-y-1">
+                  {currentStep.safetyWarnings.map((warning, index) => (
+                    <li key={index} className="flex items-start gap-2">
+                      <span className="text-red-400 mt-1">•</span>
+                      {warning}
+                    </li>
+                  ))}
+                </ul>
+              </AlertDescription>
+            </Alert>
+          )}
+
+          {/* Equipment Required */}
+          {currentStep.equipment && currentStep.equipment.length > 0 && (
+            <Card className="border-cyan-500/30 bg-cyan-500/5">
+              <CardHeader>
+                <CardTitle className="text-cyan-300 flex items-center gap-2 text-sm">
+                  <Settings className="h-4 w-4" />
+                  Equipment Required
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-wrap gap-2">
+                  {currentStep.equipment.map((item, index) => (
+                    <Badge key={index} variant="outline" className="text-xs border-cyan-400/30 text-cyan-200">
+                      {item}
                     </Badge>
-                  </div>
-                  <AlertDescription className="mt-2 text-red-100">
-                    {warning.message}
-                  </AlertDescription>
-                </Alert>
-              ))}
-            </div>
-          )}
-
-          {/* Tips */}
-          {currentStepData.tips && currentStepData.tips.length > 0 && (
-            <div className="bg-yellow-500/10 rounded-lg p-4 border border-yellow-500/20">
-              <h4 className="font-medium text-yellow-300 mb-3 flex items-center gap-2">
-                <Lightbulb className="h-4 w-4" />
-                Professional Tips
-              </h4>
-              <ul className="space-y-2">
-                {currentStepData.tips.map((tip, index) => (
-                  <li key={index} className="text-yellow-100 flex items-start gap-2">
-                    <span className="text-yellow-400 mt-1">•</span>
-                    {tip}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Troubleshooting */}
-          {currentStepData.troubleshooting && currentStepData.troubleshooting.length > 0 && (
-            <div className="bg-orange-500/10 rounded-lg p-4 border border-orange-500/20">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowTroubleshooting(!showTroubleshooting)}
-                className="mb-3 border-orange-500/30 text-orange-300"
-              >
-                <Zap className="h-4 w-4 mr-2" />
-                {showTroubleshooting ? 'Hide' : 'Show'} Troubleshooting
-              </Button>
-              {showTroubleshooting && (
-                <div>
-                  <h4 className="font-medium text-orange-300 mb-3">Common Issues</h4>
-                  <ul className="space-y-2">
-                    {currentStepData.troubleshooting.map((issue, index) => (
-                      <li key={index} className="text-orange-100 flex items-start gap-2">
-                        <span className="text-orange-400 mt-1">•</span>
-                        {issue}
-                      </li>
-                    ))}
-                  </ul>
+                  ))}
                 </div>
-              )}
-            </div>
+              </CardContent>
+            </Card>
           )}
 
-          {/* Regulation Reference */}
-          {currentStepData.regulationReference && (
-            <div className="bg-purple-500/10 rounded-lg p-3 border border-purple-500/20">
-              <p className="text-purple-300 text-sm flex items-center gap-2">
-                <BookOpen className="h-4 w-4" />
-                <strong>Regulation Reference:</strong> {currentStepData.regulationReference}
-              </p>
-            </div>
+          {/* Troubleshooting Tips */}
+          {currentStep.troubleshooting && currentStep.troubleshooting.length > 0 && (
+            <Card className="border-amber-500/30 bg-amber-500/5">
+              <CardHeader>
+                <CardTitle className="text-amber-300 flex items-center gap-2 text-sm">
+                  <BookOpen className="h-4 w-4" />
+                  Troubleshooting Tips
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  {currentStep.troubleshooting.map((tip, index) => (
+                    <li key={index} className="text-amber-100 text-sm flex items-start gap-2">
+                      <span className="text-amber-400 mt-1">•</span>
+                      {tip}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
           )}
 
-          {/* Step Notes */}
-          <div className="bg-gray-500/10 rounded-lg p-4 border border-gray-500/20">
-            <h4 className="font-medium text-gray-300 mb-3 flex items-center gap-2">
-              <Camera className="h-4 w-4" />
-              Step Notes & Observations
-            </h4>
-            <textarea
-              value={stepNotes[currentStep] || ''}
-              onChange={(e) => setStepNotes(prev => ({ ...prev, [currentStep]: e.target.value }))}
-              placeholder="Record your observations, measurements, or any issues encountered..."
-              className="w-full bg-gray-800/50 border border-gray-600/30 rounded p-3 text-gray-100 placeholder-gray-400 min-h-[100px]"
-            />
-          </div>
-
-          {/* Step Controls */}
-          <div className="flex items-center justify-between pt-4 border-t border-gray-600/30">
+          {/* Navigation */}
+          <div className="flex items-center justify-between pt-4 border-t border-elec-yellow/20">
             <Button
               variant="outline"
-              onClick={handlePreviousStep}
-              disabled={currentStep === 0}
-              className="border-gray-600/30 text-gray-300"
+              onClick={handlePrevious}
+              disabled={currentStepIndex === 0}
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous
             </Button>
 
-            <div className="flex gap-3">
-              {!completedSteps.has(currentStep) && (
+            <div className="flex gap-2">
+              {!isStepCompleted && (
                 <Button
                   onClick={handleStepComplete}
-                  className="bg-green-600 hover:bg-green-700 text-white"
+                  className="bg-green-600 hover:bg-green-700"
                 >
                   <CheckCircle className="h-4 w-4 mr-2" />
                   Mark Complete
                 </Button>
               )}
-
-              {currentStep < guide.steps.length - 1 ? (
-                <Button
-                  onClick={handleNextStep}
-                  className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-                >
+              
+              {currentStepIndex < guide.steps.length - 1 ? (
+                <Button onClick={handleNext}>
                   Next
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               ) : (
-                <Button
-                  onClick={handleGuideComplete}
-                  disabled={completedSteps.size !== guide.steps.length}
-                  className="bg-green-600 hover:bg-green-700 text-white disabled:opacity-50"
+                <Button 
+                  onClick={handleFinish}
+                  disabled={!allStepsCompleted}
+                  className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
                 >
-                  Complete Guide
-                  <CheckCircle className="h-4 w-4 ml-2" />
+                  <CheckCircle className="h-4 w-4 mr-2" />
+                  Finish Guide
                 </Button>
               )}
             </div>
@@ -295,37 +303,26 @@ const InteractiveTestingGuide = ({ guide, onComplete, onBack }: InteractiveTesti
         </CardContent>
       </Card>
 
-      {/* Step Navigator */}
-      <Card className="border-gray-600/30 bg-gray-800/50">
+      {/* Quick Step Navigation */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-gray-300 text-lg">Step Navigator</CardTitle>
+          <CardTitle className="text-sm text-elec-yellow">Quick Navigation</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-10 gap-2">
             {guide.steps.map((step, index) => (
               <Button
                 key={index}
-                variant="outline"
+                variant={currentStepIndex === index ? "default" : "outline"}
                 size="sm"
-                onClick={() => setCurrentStep(index)}
-                className={`justify-start text-left ${
-                  index === currentStep 
-                    ? 'border-elec-yellow/50 bg-elec-yellow/10 text-elec-yellow' 
-                    : completedSteps.has(index)
-                    ? 'border-green-500/50 bg-green-500/10 text-green-400'
-                    : 'border-gray-600/30 text-gray-300'
-                }`}
+                className={`h-10 ${completedSteps.has(index) ? 'border-green-500 bg-green-500/20' : ''}`}
+                onClick={() => setCurrentStepIndex(index)}
               >
-                <span className="mr-2">
-                  {completedSteps.has(index) ? (
-                    <CheckCircle className="h-4 w-4 text-green-400" />
-                  ) : (
-                    <span className="w-4 h-4 rounded-full bg-current text-xs flex items-center justify-center font-bold opacity-60">
-                      {index + 1}
-                    </span>
-                  )}
-                </span>
-                <span className="truncate text-xs">{step.title}</span>
+                {completedSteps.has(index) ? (
+                  <CheckCircle className="h-4 w-4" />
+                ) : (
+                  index + 1
+                )}
               </Button>
             ))}
           </div>
