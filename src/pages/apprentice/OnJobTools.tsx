@@ -83,7 +83,7 @@ const OnJobTools = () => {
     <div className="space-y-8 animate-fade-in">
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <h1 className="text-3xl font-bold tracking-tight">On the Job Tools</h1>
-        <Link to="/apprentice/hub" className="flex-shrink-0">
+        <Link to="/apprentice" className="flex-shrink-0">
           <Button variant="outline">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Apprentice Hub
