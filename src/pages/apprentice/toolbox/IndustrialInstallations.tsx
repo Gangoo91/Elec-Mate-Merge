@@ -5,6 +5,7 @@ import IndustrialPlanningSection from "@/components/apprentice/installation-guid
 import IndustrialCircuitGuide from "@/components/apprentice/installation-guides/industrial/IndustrialCircuitGuide";
 import IndustrialOverviewCards from "@/components/apprentice/installation-guides/industrial/IndustrialOverviewCards";
 import IndustrialReferenceGuide from "@/components/apprentice/installation-guides/industrial/IndustrialReferenceGuide";
+import IndustrialTestingGuide from "@/components/apprentice/installation-guides/industrial/IndustrialTestingGuide";
 import { Factory } from "lucide-react";
 
 const IndustrialInstallations = () => {
@@ -54,6 +55,7 @@ const IndustrialInstallations = () => {
         enhancedOverviewComponent={<IndustrialOverviewCards />}
         enhancedPlanningComponent={<IndustrialPlanningSection />}
         enhancedCircuitComponent={<IndustrialCircuitGuide />}
+        enhancedTestingComponent={<IndustrialTestingGuide />}
         enhancedReferenceComponent={<IndustrialReferenceGuide />}
         safetyNotice={{
           title: "Critical Industrial Safety Requirements",

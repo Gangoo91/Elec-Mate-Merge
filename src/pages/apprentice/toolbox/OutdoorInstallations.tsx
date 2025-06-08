@@ -5,6 +5,7 @@ import OutdoorPlanningSection from "@/components/apprentice/installation-guides/
 import OutdoorCircuitGuide from "@/components/apprentice/installation-guides/outdoor/OutdoorCircuitGuide";
 import OutdoorOverviewCards from "@/components/apprentice/installation-guides/outdoor/OutdoorOverviewCards";
 import OutdoorReferenceGuide from "@/components/apprentice/installation-guides/outdoor/OutdoorReferenceGuide";
+import OutdoorTestingGuide from "@/components/apprentice/installation-guides/outdoor/OutdoorTestingGuide";
 import { MapPin } from "lucide-react";
 
 const OutdoorInstallations = () => {
@@ -54,6 +55,7 @@ const OutdoorInstallations = () => {
         enhancedOverviewComponent={<OutdoorOverviewCards />}
         enhancedPlanningComponent={<OutdoorPlanningSection />}
         enhancedCircuitComponent={<OutdoorCircuitGuide />}
+        enhancedTestingComponent={<OutdoorTestingGuide />}
         enhancedReferenceComponent={<OutdoorReferenceGuide />}
         safetyNotice={{
           title: "Essential Outdoor Installation Safety",
