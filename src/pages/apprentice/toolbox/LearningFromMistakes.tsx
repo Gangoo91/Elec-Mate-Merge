@@ -1,80 +1,92 @@
 
-import { Button } from "@/components/ui/button";
+import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, AlertTriangle, CheckCircle, TrendingUp } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AlertTriangle, Brain, Users, Target, CheckCircle, Heart } from "lucide-react";
+import MistakeCategoriesTab from "@/components/apprentice/learning-mistakes/MistakeCategoriesTab";
+import RecoveryStrategiesTab from "@/components/apprentice/learning-mistakes/RecoveryStrategiesTab";
+import ResilienceTab from "@/components/apprentice/learning-mistakes/ResilienceTab";
+import CaseStudiesTab from "@/components/apprentice/learning-mistakes/CaseStudiesTab";
+import PreventionTab from "@/components/apprentice/learning-mistakes/PreventionTab";
+import SupportSystemsTab from "@/components/apprentice/learning-mistakes/SupportSystemsTab";
 
 const LearningFromMistakes = () => {
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Learning from Mistakes</h1>
-          <p className="text-muted-foreground">How to handle errors professionally and turn them into learning opportunities</p>
-        </div>
-        <Link to="/apprentice/toolbox" className="flex-shrink-0">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Toolbox
-          </Button>
-        </Link>
+    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
+      <div className="flex flex-col items-center justify-center mb-6">
+        <h1 className="text-3xl font-bold tracking-tight mb-4">Learning From Mistakes</h1>
+        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+          Master the art of turning mistakes into learning opportunities. Build resilience, develop professional recovery skills, and transform setbacks into career advancement in the electrical trade.
+        </p>
+        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="border-green-500/20 bg-elec-gray">
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <CheckCircle className="h-6 w-6 text-green-400" />
-              <CardTitle>Safe to Make</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <p className="text-elec-light/80 mb-4">Mistakes that are part of learning:</p>
-            <ul className="text-sm space-y-1 text-elec-light/80">
-              <li>• Wrong cable size initially</li>
-              <li>• Incorrect circuit calculations</li>
-              <li>• Poor cable management</li>
-              <li>• Messy first attempts</li>
-            </ul>
-          </CardContent>
-        </Card>
+      <Tabs defaultValue="categories" className="w-full">
+        <TabsList className="grid w-full grid-cols-6">
+          <TabsTrigger value="categories" className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4" />
+            Categories
+          </TabsTrigger>
+          <TabsTrigger value="recovery" className="flex items-center gap-2">
+            <Target className="h-4 w-4" />
+            Recovery
+          </TabsTrigger>
+          <TabsTrigger value="resilience" className="flex items-center gap-2">
+            <Brain className="h-4 w-4" />
+            Resilience
+          </TabsTrigger>
+          <TabsTrigger value="case-studies" className="flex items-center gap-2">
+            <CheckCircle className="h-4 w-4" />
+            Case Studies
+          </TabsTrigger>
+          <TabsTrigger value="prevention" className="flex items-center gap-2">
+            <Brain className="h-4 w-4" />
+            Prevention
+          </TabsTrigger>
+          <TabsTrigger value="support" className="flex items-center gap-2">
+            <Users className="h-4 w-4" />
+            Support
+          </TabsTrigger>
+        </TabsList>
 
-        <Card className="border-amber-500/20 bg-elec-gray">
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <AlertTriangle className="h-6 w-6 text-amber-400" />
-              <CardTitle>Learn Quickly From</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <p className="text-elec-light/80 mb-4">Mistakes requiring immediate correction:</p>
-            <ul className="text-sm space-y-1 text-elec-light/80">
-              <li>• Inadequate earthing</li>
-              <li>• Wrong protection devices</li>
-              <li>• Poor connections</li>
-              <li>• Skipping safety checks</li>
-            </ul>
-          </CardContent>
-        </Card>
+        <TabsContent value="categories">
+          <MistakeCategoriesTab />
+        </TabsContent>
 
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <TrendingUp className="h-6 w-6 text-elec-yellow" />
-              <CardTitle>Growth Mindset</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <p className="text-elec-light/80 mb-4">How to approach mistakes:</p>
-            <ul className="text-sm space-y-1 text-elec-light/80">
-              <li>• Ask "What can I learn?"</li>
-              <li>• Discuss with supervisor</li>
-              <li>• Document lessons learned</li>
-              <li>• Practice the correct method</li>
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
+        <TabsContent value="recovery">
+          <RecoveryStrategiesTab />
+        </TabsContent>
+
+        <TabsContent value="resilience">
+          <ResilienceTab />
+        </TabsContent>
+
+        <TabsContent value="case-studies">
+          <CaseStudiesTab />
+        </TabsContent>
+
+        <TabsContent value="prevention">
+          <PreventionTab />
+        </TabsContent>
+
+        <TabsContent value="support">
+          <SupportSystemsTab />
+        </TabsContent>
+      </Tabs>
+
+      <Card className="border-green-500/50 bg-green-500/10">
+        <CardHeader>
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <Heart className="h-5 w-5" />
+            Remember: Growth Through Learning
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">
+            Every skilled electrician has a story of mistakes that shaped their expertise. The electrical trade rewards those who learn quickly, adapt professionally, and turn setbacks into stepping stones. Your apprenticeship is the perfect time to develop these crucial skills in a supportive environment.
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 };
