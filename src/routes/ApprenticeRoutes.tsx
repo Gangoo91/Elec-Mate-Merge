@@ -5,6 +5,9 @@ import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
 import RightsAndPay from "@/pages/apprentice/RightsAndPay";
 import WorkLifeBalance from "@/pages/apprentice/mental-health/WorkLifeBalance";
 import MentalHealthResources from "@/pages/apprentice/mental-health/MentalHealthResources";
+import StressManagement from "@/pages/apprentice/mental-health/StressManagement";
+import CrisisResources from "@/pages/apprentice/mental-health/CrisisResources";
+import SupportNetwork from "@/pages/apprentice/mental-health/SupportNetwork";
 import OnJobTools from "@/pages/apprentice/OnJobTools";
 import OnJobCalculations from "@/pages/apprentice/OnJobCalculations";
 import OnJobDocuments from "@/pages/apprentice/OnJobDocuments";
@@ -52,6 +55,9 @@ const ApprenticeRoutes = () => (
     <Route path="mental-health" element={<ApprenticeMentalHealth />} />
     <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
     <Route path="mental-health/resources" element={<MentalHealthResources />} />
+    <Route path="mental-health/stress-management" element={<StressManagement />} />
+    <Route path="mental-health/crisis-resources" element={<CrisisResources />} />
+    <Route path="mental-health/support-network" element={<SupportNetwork />} />
     <Route path="mentor" element={<ApprenticeMentor />} />
     <Route path="rights-and-pay" element={<RightsAndPay />} />
     <Route path="toolbox" element={<ApprenticeToolbox />} />
