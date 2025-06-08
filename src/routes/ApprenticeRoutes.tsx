@@ -33,6 +33,10 @@ import CommunicationSkills from "@/pages/apprentice/toolbox/CommunicationSkills"
 import StudyTips from "@/pages/apprentice/toolbox/StudyTips";
 import LearningFromMistakes from "@/pages/apprentice/toolbox/LearningFromMistakes";
 import SafetyFundamentals from "@/pages/apprentice/toolbox/SafetyFundamentals";
+import DomesticInstallations from "@/pages/apprentice/DomesticInstallations";
+import CommercialInstallations from "@/pages/apprentice/toolbox/CommercialInstallations";
+import IndustrialInstallations from "@/pages/apprentice/toolbox/IndustrialInstallations";
+import OutdoorInstallations from "@/pages/apprentice/toolbox/OutdoorInstallations";
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -45,6 +49,10 @@ const ApprenticeRoutes = () => (
     <Route path="toolbox" element={<ApprenticeToolbox />} />
     <Route path="toolbox/tools-guide" element={<ToolsGuide />} />
     <Route path="toolbox/electrical-installation-guides" element={<ElectricalInstallationGuides />} />
+    <Route path="toolbox/electrical-installation-guides/domestic" element={<DomesticInstallations />} />
+    <Route path="toolbox/electrical-installation-guides/commercial" element={<CommercialInstallations />} />
+    <Route path="toolbox/electrical-installation-guides/industrial" element={<IndustrialInstallations />} />
+    <Route path="toolbox/electrical-installation-guides/outdoor" element={<OutdoorInstallations />} />
     <Route path="toolbox/apprenticeship-expectations" element={<ApprenticeshipExpectations />} />
     <Route path="toolbox/off-job-training-guide" element={<OffJobTrainingGuide />} />
     <Route path="toolbox/site-jargon" element={<SiteJargon />} />

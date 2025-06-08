@@ -10,25 +10,29 @@ const ElectricalInstallationGuides = () => {
       title: "Domestic Installations",
       icon: Home,
       description: "Residential electrical work including lighting, sockets, and consumer units",
-      features: ["Socket circuits", "Lighting circuits", "Cooker circuits", "Shower circuits"]
+      features: ["Socket circuits", "Lighting circuits", "Cooker circuits", "Shower circuits"],
+      path: "/apprentice/toolbox/electrical-installation-guides/domestic"
     },
     {
       title: "Commercial Installations",
       icon: Building,
       description: "Office buildings, shops, and small commercial premises",
-      features: ["Distribution boards", "Emergency lighting", "Fire alarm systems", "Data cabling"]
+      features: ["Distribution boards", "Emergency lighting", "Fire alarm systems", "Data cabling"],
+      path: "/apprentice/toolbox/electrical-installation-guides/commercial"
     },
     {
       title: "Industrial Installations",
       icon: Factory,
       description: "Manufacturing facilities and heavy industrial environments",
-      features: ["Motor control", "High voltage systems", "Control panels", "Industrial lighting"]
+      features: ["Motor control", "High voltage systems", "Control panels", "Industrial lighting"],
+      path: "/apprentice/toolbox/electrical-installation-guides/industrial"
     },
     {
       title: "Outdoor Installations",
       icon: MapPin,
       description: "External electrical work and street lighting",
-      features: ["Street lighting", "Car park lighting", "External sockets", "Underground cables"]
+      features: ["Street lighting", "Car park lighting", "External sockets", "Underground cables"],
+      path: "/apprentice/toolbox/electrical-installation-guides/outdoor"
     }
   ];
 
@@ -71,9 +75,11 @@ const ElectricalInstallationGuides = () => {
                   ))}
                 </ul>
               </div>
-              <Button className="w-full" size="sm">
-                View Installation Guide
-              </Button>
+              <Link to={type.path}>
+                <Button className="w-full" size="sm">
+                  View Installation Guide
+                </Button>
+              </Link>
             </CardContent>
           </Card>
         ))}
