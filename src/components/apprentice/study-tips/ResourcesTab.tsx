@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Globe, Phone, Users } from "lucide-react";
@@ -268,25 +267,33 @@ const ResourcesTab = () => {
 
       <Card className="border-blue-500/50 bg-blue-500/10">
         <CardHeader>
-          <CardTitle className="text-blue-300">Study Budget Tips with Elec-Mate</CardTitle>
+          <CardTitle className="text-blue-300">Study Budget Tips</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
             <div>
               <h4 className="font-medium text-white mb-2">Free First</h4>
-              <p>Start with free resources before investing in paid materials. Many apprentices pass using mainly free resources available through Elec-Mate and other platforms.</p>
+              <p>Start with free resources before investing in paid materials. Many apprentices pass using mainly free resources available online and through training providers.</p>
             </div>
             <div>
               <h4 className="font-medium text-white mb-2">Essential vs Nice-to-Have</h4>
-              <p>BS 7671 and On-Site Guide are essential. Other books can wait until you've mastered the basics with Elec-Mate's study tools.</p>
+              <p>BS 7671 and On-Site Guide are essential purchases. Other books and premium study apps can wait until you've mastered the basics.</p>
             </div>
             <div>
               <h4 className="font-medium text-white mb-2">Second-Hand Options</h4>
-              <p>Look for used textbooks from previous students, but ensure they're the current edition. Use Elec-Mate's community to find study partners for cost sharing.</p>
+              <p>Look for used textbooks from previous students, but ensure they're the current edition. Join online communities to find study partners for cost sharing.</p>
             </div>
             <div>
               <h4 className="font-medium text-white mb-2">Library Access</h4>
-              <p>Many local libraries have electrical textbooks, and college libraries often have extended borrowing periods. Complement this with Elec-Mate's digital resources.</p>
+              <p>Many local libraries have electrical textbooks, and college libraries often have extended borrowing periods. This can save significant money on reference materials.</p>
+            </div>
+            <div>
+              <h4 className="font-medium text-white mb-2">Premium Study Platforms</h4>
+              <p>Platforms like Elec-Mate offer comprehensive study tools and resources, but consider your budget carefully. Start with free resources and upgrade if you need additional support.</p>
+            </div>
+            <div>
+              <h4 className="font-medium text-white mb-2">Training Provider Resources</h4>
+              <p>Maximise the resources already included in your course fees. Many training providers offer extensive online materials, practice papers, and study support at no extra cost.</p>
             </div>
           </div>
         </CardContent>
