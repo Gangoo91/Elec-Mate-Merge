@@ -2,7 +2,7 @@
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlertTriangle, Brain, Users, Target, CheckCircle, Heart } from "lucide-react";
+import { AlertTriangle, Brain, Users, Target, CheckCircle } from "lucide-react";
 import MistakeCategoriesTab from "@/components/apprentice/learning-mistakes/MistakeCategoriesTab";
 import RecoveryStrategiesTab from "@/components/apprentice/learning-mistakes/RecoveryStrategiesTab";
 import ResilienceTab from "@/components/apprentice/learning-mistakes/ResilienceTab";
@@ -73,20 +73,6 @@ const LearningFromMistakes = () => {
           <SupportSystemsTab />
         </TabsContent>
       </Tabs>
-
-      <Card className="border-green-500/50 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
-            <Heart className="h-5 w-5" />
-            Remember: Growth Through Learning
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground">
-            Every skilled electrician has a story of mistakes that shaped their expertise. The electrical trade rewards those who learn quickly, adapt professionally, and turn setbacks into stepping stones. Your apprenticeship is the perfect time to develop these crucial skills in a supportive environment.
-          </p>
-        </CardContent>
-      </Card>
     </div>
   );
 };
