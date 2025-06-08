@@ -217,6 +217,119 @@ export type Database = {
           },
         ]
       }
+      incident_photos: {
+        Row: {
+          description: string | null
+          id: string
+          incident_id: string
+          photo_url: string
+          uploaded_at: string
+        }
+        Insert: {
+          description?: string | null
+          id?: string
+          incident_id: string
+          photo_url: string
+          uploaded_at?: string
+        }
+        Update: {
+          description?: string | null
+          id?: string
+          incident_id?: string
+          photo_url?: string
+          uploaded_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "incident_photos_incident_id_fkey"
+            columns: ["incident_id"]
+            isOneToOne: false
+            referencedRelation: "incidents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      incidents: {
+        Row: {
+          created_at: string
+          date_occurred: string
+          description: string
+          equipment_involved: string | null
+          first_aid_given: boolean | null
+          follow_up_notes: string | null
+          follow_up_required: boolean | null
+          id: string
+          immediate_action_taken: string | null
+          incident_type: Database["public"]["Enums"]["incident_type"]
+          injuries_sustained: string | null
+          location: string
+          photos_attached: boolean | null
+          potential_consequences: string | null
+          resolved_at: string | null
+          severity: Database["public"]["Enums"]["severity_level"]
+          status: Database["public"]["Enums"]["incident_status"]
+          submitted_at: string | null
+          supervisor_name: string | null
+          supervisor_notified: boolean | null
+          title: string
+          updated_at: string
+          user_id: string
+          witnesses: string | null
+        }
+        Insert: {
+          created_at?: string
+          date_occurred: string
+          description: string
+          equipment_involved?: string | null
+          first_aid_given?: boolean | null
+          follow_up_notes?: string | null
+          follow_up_required?: boolean | null
+          id?: string
+          immediate_action_taken?: string | null
+          incident_type: Database["public"]["Enums"]["incident_type"]
+          injuries_sustained?: string | null
+          location: string
+          photos_attached?: boolean | null
+          potential_consequences?: string | null
+          resolved_at?: string | null
+          severity?: Database["public"]["Enums"]["severity_level"]
+          status?: Database["public"]["Enums"]["incident_status"]
+          submitted_at?: string | null
+          supervisor_name?: string | null
+          supervisor_notified?: boolean | null
+          title: string
+          updated_at?: string
+          user_id: string
+          witnesses?: string | null
+        }
+        Update: {
+          created_at?: string
+          date_occurred?: string
+          description?: string
+          equipment_involved?: string | null
+          first_aid_given?: boolean | null
+          follow_up_notes?: string | null
+          follow_up_required?: boolean | null
+          id?: string
+          immediate_action_taken?: string | null
+          incident_type?: Database["public"]["Enums"]["incident_type"]
+          injuries_sustained?: string | null
+          location?: string
+          photos_attached?: boolean | null
+          potential_consequences?: string | null
+          resolved_at?: string | null
+          severity?: Database["public"]["Enums"]["severity_level"]
+          status?: Database["public"]["Enums"]["incident_status"]
+          submitted_at?: string | null
+          supervisor_name?: string | null
+          supervisor_notified?: boolean | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+          witnesses?: string | null
+        }
+        Relationships: []
+      }
       industry_news: {
         Row: {
           average_rating: number | null
@@ -1159,7 +1272,23 @@ export type Database = {
       }
     }
     Enums: {
-      [_ in never]: never
+      incident_status:
+        | "draft"
+        | "submitted"
+        | "under_review"
+        | "investigating"
+        | "resolved"
+        | "closed"
+      incident_type:
+        | "near_miss"
+        | "unsafe_practice"
+        | "faulty_equipment"
+        | "injury"
+        | "property_damage"
+        | "environmental"
+        | "security"
+        | "other"
+      severity_level: "low" | "medium" | "high" | "critical"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1274,6 +1403,26 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      incident_status: [
+        "draft",
+        "submitted",
+        "under_review",
+        "investigating",
+        "resolved",
+        "closed",
+      ],
+      incident_type: [
+        "near_miss",
+        "unsafe_practice",
+        "faulty_equipment",
+        "injury",
+        "property_damage",
+        "environmental",
+        "security",
+        "other",
+      ],
+      severity_level: ["low", "medium", "high", "critical"],
+    },
   },
 } as const

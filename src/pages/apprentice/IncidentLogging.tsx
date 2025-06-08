@@ -1,325 +1,235 @@
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, Plus, AlertTriangle, Search, Filter, Calendar } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import BackButton from "@/components/common/BackButton";
-import { ClipboardList, FileText, AlertTriangle, Download } from "lucide-react";
-import { useState } from "react";
-import { toast } from "@/hooks/use-toast";
-
-interface IncidentLog {
-  id: string;
-  type: string;
-  date: string;
-  location: string;
-  description: string;
-  actions: string;
-  severity: string;
-}
+import IncidentForm from "@/components/apprentice/incident-logging/IncidentForm";
+import IncidentList from "@/components/apprentice/incident-logging/IncidentList";
+import IncidentStats from "@/components/apprentice/incident-logging/IncidentStats";
+import IncidentGuidelines from "@/components/apprentice/incident-logging/IncidentGuidelines";
 
 const IncidentLogging = () => {
-  const [incidents, setIncidents] = useState<IncidentLog[]>([
-    {
-      id: "1",
-      type: "Near Miss",
-      date: "2025-05-15",
-      location: "Main Building Site - Floor 3",
-      description: "Loose wire nearly caused trip hazard in walkway",
-      actions: "Secured wire properly and reported to supervisor",
-      severity: "Medium"
-    },
-    {
-      id: "2",
-      type: "Unsafe Practice",
-      date: "2025-05-10",
-      location: "Housing Development - Unit 7",
-      description: "Observed contractor working without proper PPE while drilling into concrete",
-      actions: "Informed site supervisor who stopped work until PPE was worn",
-      severity: "High"
-    }
-  ]);
-  
-  const [formData, setFormData] = useState({
-    type: "Near Miss",
-    date: new Date().toISOString().split('T')[0],
-    location: "",
-    description: "",
-    actions: "",
-    severity: "Medium"
-  });
-  
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-  
-  const handleSelectChange = (name: string, value: string) => {
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-  
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    const newIncident = {
-      id: (incidents.length + 1).toString(),
-      ...formData
-    };
-    
-    setIncidents([...incidents, newIncident]);
-    
-    toast({
-      title: "Incident Logged Successfully",
-      description: "Your incident report has been saved securely.",
-      variant: "success",
-    });
-    
-    // Reset form
-    setFormData({
-      type: "Near Miss",
-      date: new Date().toISOString().split('T')[0],
-      location: "",
-      description: "",
-      actions: "",
-      severity: "Medium"
-    });
-  };
-  
-  const exportToPdf = () => {
-    toast({
-      title: "Export Started",
-      description: "Your incident logs are being exported as PDF.",
-      variant: "default",
-    });
-    
-    // In a real implementation, this would use a library like jsPDF to generate a PDF
-    setTimeout(() => {
-      toast({
-        title: "Export Complete",
-        description: "Your incident log PDF has been downloaded.",
-        variant: "success",
-      });
-    }, 1500);
+  const [currentView, setCurrentView] = useState<'overview' | 'form' | 'view'>('overview');
+  const [selectedIncidentId, setSelectedIncidentId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [typeFilter, setTypeFilter] = useState("all");
+
+  const handleCreateIncident = () => {
+    setSelectedIncidentId(null);
+    setCurrentView('form');
   };
 
-  return (
-    <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
-      <div className="flex flex-col md:flex-row items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold tracking-tight">Incident Logging Tool</h1>
-        <BackButton customUrl="/apprentice/on-job-tools" label="Back to Tools" />
+  const handleEditIncident = (incidentId: string) => {
+    setSelectedIncidentId(incidentId);
+    setCurrentView('form');
+  };
+
+  const handleViewIncident = (incidentId: string) => {
+    setSelectedIncidentId(incidentId);
+    setCurrentView('view');
+  };
+
+  const handleBackToOverview = () => {
+    setCurrentView('overview');
+    setSelectedIncidentId(null);
+  };
+
+  if (currentView === 'form') {
+    return (
+      <div className="space-y-8 animate-fade-in">
+        <IncidentForm 
+          incidentId={selectedIncidentId}
+          onBack={handleBackToOverview}
+          onSave={handleBackToOverview}
+        />
       </div>
-      
-      <div className="bg-elec-gray p-4 sm:p-6 rounded-lg border border-elec-yellow/20">
-        <div className="flex flex-col md:flex-row gap-6 items-start">
-          <div className="bg-elec-yellow/10 p-3 rounded-md">
-            <ClipboardList size={36} className="text-elec-yellow" />
-          </div>
-          <div className="flex-1">
-            <h2 className="text-xl font-semibold mb-2">Safety Incident Logger</h2>
-            <p className="text-muted-foreground">
-              A simple tool for apprentices to log near misses, unsafe practices, and faulty equipment incidents.
-              Records are stored securely and can be exported as needed for future reference.
-            </p>
-          </div>
+    );
+  }
+
+  return (
+    <div className="space-y-8 animate-fade-in">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Incident Logging</h1>
+          <p className="text-muted-foreground">Report and track workplace incidents, near misses, and safety concerns</p>
+        </div>
+        <div className="flex gap-2">
+          <Link to="/apprentice/on-job-tools" className="flex-shrink-0">
+            <Button variant="outline">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to Tools
+            </Button>
+          </Link>
+          <Button onClick={handleCreateIncident} className="bg-elec-yellow/10 hover:bg-elec-yellow hover:text-black">
+            <Plus className="mr-2 h-4 w-4" />
+            New Incident
+          </Button>
         </div>
       </div>
-      
-      <Tabs defaultValue="new" className="w-full">
-        <TabsList className="grid grid-cols-2 mb-6">
-          <TabsTrigger value="new">Log New Incident</TabsTrigger>
-          <TabsTrigger value="history">View Incident History</TabsTrigger>
+
+      <Tabs defaultValue="incidents" className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="incidents" className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4" />
+            My Incidents
+          </TabsTrigger>
+          <TabsTrigger value="stats" className="flex items-center gap-2">
+            <Calendar className="h-4 w-4" />
+            Statistics
+          </TabsTrigger>
+          <TabsTrigger value="guidelines" className="flex items-center gap-2">
+            <Search className="h-4 w-4" />
+            Guidelines
+          </TabsTrigger>
         </TabsList>
-        
-        <TabsContent value="new">
-          <Card className="border-elec-yellow/20 bg-elec-gray/50">
+
+        <TabsContent value="incidents" className="space-y-6">
+          {/* Enhanced Overview Header */}
+          <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray via-elec-dark/50 to-elec-gray">
             <CardHeader>
-              <div className="flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-amber-500" />
-                <CardTitle>New Incident Report</CardTitle>
+              <div className="flex items-center gap-3">
+                <div className="p-3 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30">
+                  <AlertTriangle className="h-8 w-8 text-elec-yellow" />
+                </div>
+                <div>
+                  <CardTitle className="text-2xl text-elec-yellow">Incident Management Centre</CardTitle>
+                  <p className="text-muted-foreground">Comprehensive incident reporting and tracking system</p>
+                </div>
               </div>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="type">Incident Type</Label>
-                    <Select 
-                      value={formData.type} 
-                      onValueChange={(value) => handleSelectChange("type", value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select Type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Near Miss">Near Miss</SelectItem>
-                        <SelectItem value="Unsafe Practice">Unsafe Practice</SelectItem>
-                        <SelectItem value="Faulty Equipment">Faulty Equipment</SelectItem>
-                        <SelectItem value="PPE Issue">PPE Issue</SelectItem>
-                        <SelectItem value="Other">Other</SelectItem>
-                      </SelectContent>
-                    </Select>
+              <p className="text-muted-foreground mb-6">
+                Report workplace incidents, near misses, and safety concerns in compliance with UK health and safety regulations. 
+                All reports are confidential and help improve workplace safety for everyone.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div className="p-4 rounded-lg bg-elec-dark/50 border border-elec-yellow/10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <AlertTriangle className="h-5 w-5 text-orange-400" />
+                    <span className="text-sm font-medium">Report Incidents</span>
                   </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="date">Date of Incident</Label>
-                    <Input 
-                      id="date"
-                      name="date"
-                      type="date"
-                      value={formData.date}
-                      onChange={handleFormChange}
-                      required
-                    />
+                  <p className="text-xs text-muted-foreground">
+                    Document workplace incidents and near misses promptly
+                  </p>
+                </div>
+                <div className="p-4 rounded-lg bg-elec-dark/50 border border-elec-yellow/10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Search className="h-5 w-5 text-blue-400" />
+                    <span className="text-sm font-medium">Track Progress</span>
                   </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="location">Location</Label>
-                    <Input 
-                      id="location"
-                      name="location"
-                      placeholder="Where did this happen?"
-                      value={formData.location}
-                      onChange={handleFormChange}
-                      required
-                    />
+                  <p className="text-xs text-muted-foreground">
+                    Monitor investigation status and follow-up actions
+                  </p>
+                </div>
+                <div className="p-4 rounded-lg bg-elec-dark/50 border border-elec-yellow/10">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Calendar className="h-5 w-5 text-green-400" />
+                    <span className="text-sm font-medium">Prevent Future</span>
                   </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="severity">Severity</Label>
-                    <Select 
-                      value={formData.severity} 
-                      onValueChange={(value) => handleSelectChange("severity", value)}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select Severity" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Low">Low - Minor concern</SelectItem>
-                        <SelectItem value="Medium">Medium - Significant issue</SelectItem>
-                        <SelectItem value="High">High - Serious hazard</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    Learn from incidents to improve workplace safety
+                  </p>
                 </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description of Incident</Label>
-                  <Textarea 
-                    id="description"
-                    name="description"
-                    placeholder="Describe what happened in detail..."
-                    value={formData.description}
-                    onChange={handleFormChange}
-                    rows={4}
-                    required
-                  />
+              </div>
+
+              <div className="p-4 bg-elec-yellow/5 border border-elec-yellow/20 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <AlertTriangle className="h-4 w-4 text-elec-yellow" />
+                  <span className="text-sm font-medium text-elec-yellow">Important Reminder</span>
                 </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="actions">Actions Taken</Label>
-                  <Textarea 
-                    id="actions"
-                    name="actions"
-                    placeholder="What actions did you take after the incident?"
-                    value={formData.actions}
-                    onChange={handleFormChange}
-                    rows={3}
-                    required
-                  />
-                </div>
-                
-                <div className="pt-2">
-                  <Button type="submit" className="w-full">Submit Incident Report</Button>
-                </div>
-              </form>
+                <p className="text-xs text-muted-foreground">
+                  Report all incidents immediately to your supervisor. For serious injuries or dangerous occurrences, 
+                  contact emergency services first, then complete this form as soon as it's safe to do so.
+                </p>
+              </div>
             </CardContent>
           </Card>
-          
-          <div className="bg-amber-950/20 border border-amber-600/30 rounded-md p-6 mt-6">
-            <h3 className="text-lg font-semibold text-elec-yellow mb-2">Why Report Incidents?</h3>
-            <p className="text-sm text-amber-200/90 mb-4">
-              Reporting incidents, even minor ones, helps identify patterns and prevent more serious accidents in the future. 
-              As an apprentice, your observations are valuable for improving site safety for everyone.
-            </p>
-            <ul className="text-sm text-amber-200/90 space-y-2 list-disc pl-5">
-              <li>Your reports are confidential and securely stored</li>
-              <li>Documentation provides protection if issues escalate later</li>
-              <li>Helps build a culture of safety awareness</li>
-              <li>Demonstrates your professional approach to workplace safety</li>
-            </ul>
-          </div>
+
+          {/* Filters */}
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Filter className="h-5 w-5" />
+                Filter Incidents
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Search</label>
+                  <div className="relative">
+                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Search incidents..."
+                      className="pl-8 bg-elec-dark border-elec-yellow/20"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Status</label>
+                  <Select value={statusFilter} onValueChange={setStatusFilter}>
+                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                      <SelectItem value="all">All Statuses</SelectItem>
+                      <SelectItem value="draft">Draft</SelectItem>
+                      <SelectItem value="submitted">Submitted</SelectItem>
+                      <SelectItem value="under_review">Under Review</SelectItem>
+                      <SelectItem value="investigating">Investigating</SelectItem>
+                      <SelectItem value="resolved">Resolved</SelectItem>
+                      <SelectItem value="closed">Closed</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Type</label>
+                  <Select value={typeFilter} onValueChange={setTypeFilter}>
+                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                      <SelectItem value="all">All Types</SelectItem>
+                      <SelectItem value="near_miss">Near Miss</SelectItem>
+                      <SelectItem value="unsafe_practice">Unsafe Practice</SelectItem>
+                      <SelectItem value="faulty_equipment">Faulty Equipment</SelectItem>
+                      <SelectItem value="injury">Injury</SelectItem>
+                      <SelectItem value="property_damage">Property Damage</SelectItem>
+                      <SelectItem value="environmental">Environmental</SelectItem>
+                      <SelectItem value="security">Security</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Incidents List */}
+          <IncidentList 
+            searchQuery={searchQuery}
+            statusFilter={statusFilter}
+            typeFilter={typeFilter}
+            onEdit={handleEditIncident}
+            onView={handleViewIncident}
+          />
         </TabsContent>
-        
-        <TabsContent value="history">
-          <Card className="border-elec-yellow/20 bg-elec-gray/50">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <FileText className="h-5 w-5 text-muted-foreground" />
-                  <CardTitle>Incident History</CardTitle>
-                </div>
-                <Button variant="outline" onClick={exportToPdf} className="flex gap-2">
-                  <Download className="h-4 w-4" />
-                  Export PDF
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              {incidents.length > 0 ? (
-                <div className="space-y-4">
-                  {incidents.map((incident) => (
-                    <Card key={incident.id} className="bg-background/50 border-border/50">
-                      <CardContent className="p-4">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-3">
-                          <div className="flex items-center gap-2">
-                            <div className={`px-3 py-1 rounded-full text-xs font-medium ${
-                              incident.severity === "High" ? "bg-red-900/20 text-red-400" :
-                              incident.severity === "Medium" ? "bg-amber-900/20 text-amber-400" :
-                              "bg-green-900/20 text-green-400"
-                            }`}>
-                              {incident.severity}
-                            </div>
-                            <span className="font-medium">{incident.type}</span>
-                          </div>
-                          <span className="text-muted-foreground text-sm">{incident.date}</span>
-                        </div>
-                        <p className="font-medium">Location: {incident.location}</p>
-                        <p className="mt-2 text-muted-foreground">{incident.description}</p>
-                        <div className="mt-3 pt-3 border-t border-border/50">
-                          <p className="text-sm font-medium">Actions taken:</p>
-                          <p className="text-sm text-muted-foreground">{incident.actions}</p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-12">
-                  <p className="text-muted-foreground">No incident reports found</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-          
-          <div className="bg-blue-950/20 border border-blue-500/30 rounded-md p-6 mt-6">
-            <div className="flex items-start gap-4">
-              <AlertTriangle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="text-lg font-semibold text-blue-300 mb-2">Incident Record Security</h3>
-                <p className="text-sm text-blue-200/90 mb-3">
-                  Your incident logs are stored securely and can be exported as PDF documents for your records
-                  or to share with supervisors when appropriate.
-                </p>
-                <p className="text-sm text-blue-200/90">
-                  Always follow your employer's specific incident reporting procedures in addition to logging
-                  incidents here. This tool provides an additional personal record for your protection.
-                </p>
-              </div>
-            </div>
-          </div>
+
+        <TabsContent value="stats">
+          <IncidentStats />
+        </TabsContent>
+
+        <TabsContent value="guidelines">
+          <IncidentGuidelines />
         </TabsContent>
       </Tabs>
     </div>
