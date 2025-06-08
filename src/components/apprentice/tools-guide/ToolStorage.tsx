@@ -9,49 +9,49 @@ const ToolStorage = () => {
   
   const storageOptions = [
     {
-      type: "Toolbox Systems",
+      type: "Portable Tool Storage",
       icon: Package,
       options: [
         {
-          name: "CK Magma Professional Case",
-          price: "£150-250",
-          features: ["Modular design", "Weather resistant", "Professional appearance"],
+          name: "Professional Tool Cases",
+          price: "£80-200",
+          features: ["Weather resistant", "Organised compartments", "Professional appearance"],
           bestFor: "Site work & client visits"
         },
         {
-          name: "DeWalt TSTAK System",
-          price: "£80-150",
-          features: ["Stackable modules", "Robust construction", "Multiple sizes"],
-          bestFor: "Van storage & organisation"
+          name: "Modular Tool Systems",
+          price: "£60-150",
+          features: ["Stackable design", "Multiple configurations", "Easy transport"],
+          bestFor: "Van storage & flexibility"
         },
         {
-          name: "Wiha Tool Cases",
-          price: "£50-120",
-          features: ["Precise tool organisation", "Foam inserts", "Compact design"],
-          bestFor: "Hand tool storage"
+          name: "Tool Bags & Pouches",
+          price: "£25-80",
+          features: ["Lightweight", "Quick access", "Belt mounting"],
+          bestFor: "Daily carry tools"
         }
       ]
     },
     {
-      type: "Van Storage",
+      type: "Vehicle Storage",
       icon: Truck,
       options: [
         {
           name: "Van Racking Systems",
           price: "£300-800",
-          features: ["Custom fit", "Maximises space", "Professional appearance"],
+          features: ["Custom fit", "Maximises space", "Secure mounting"],
           bestFor: "Mobile electricians"
         },
         {
-          name: "Tool Drawers & Cabinets",
+          name: "Secure Tool Cabinets",
           price: "£200-500",
-          features: ["Secure storage", "Easy access", "Weather protection"],
-          bestFor: "Expensive equipment"
+          features: ["Lockable storage", "Weather protection", "Organised drawers"],
+          bestFor: "Valuable equipment"
         },
         {
-          name: "Cable Reels & Holders",
+          name: "Cable & Material Racks",
           price: "£50-150",
-          features: ["Organised cable storage", "Easy deployment", "Reduces tangling"],
+          features: ["Organised storage", "Easy access", "Space efficient"],
           bestFor: "Cable management"
         }
       ]
@@ -61,46 +61,46 @@ const ToolStorage = () => {
       icon: Home,
       options: [
         {
-          name: "Tool Chests & Cabinets",
-          price: "£200-600",
+          name: "Tool Chests",
+          price: "£150-500",
           features: ["Large capacity", "Multiple drawers", "Secure locking"],
-          bestFor: "Home workshop"
+          bestFor: "Home workshop base"
         },
         {
-          name: "Wall-Mounted Systems",
+          name: "Wall Storage Systems",
+          price: "£50-200",
+          features: ["Space saving", "Visual organisation", "Easy access"],
+          bestFor: "Workshop walls"
+        },
+        {
+          name: "Mobile Tool Trolleys",
           price: "£100-300",
-          features: ["Space efficient", "Easy access", "Customisable layout"],
-          bestFor: "Small workshops"
-        },
-        {
-          name: "Pegboard Systems",
-          price: "£30-100",
-          features: ["Flexible organisation", "Visual tool tracking", "Easy reconfiguration"],
-          bestFor: "Hand tool display"
+          features: ["Wheels for mobility", "Multiple levels", "Workspace top"],
+          bestFor: "Workshop flexibility"
         }
       ]
     },
     {
-      type: "Security Solutions",
+      type: "Security & Protection",
       icon: Shield,
       options: [
         {
-          name: "Van Security Systems",
-          price: "£150-400",
-          features: ["Deadlocks & alarms", "Tool safes", "Window protection"],
-          bestFor: "Theft prevention"
-        },
-        {
           name: "Tool Insurance",
-          price: "£10-50/month",
-          features: ["Comprehensive cover", "Replacement costs", "Public liability"],
+          price: "£10-40/month",
+          features: ["Theft protection", "Replacement cover", "Public liability"],
           bestFor: "Financial protection"
         },
         {
-          name: "GPS Tracking",
-          price: "£20-80",
-          features: ["Real-time location", "Theft alerts", "Recovery assistance"],
-          bestFor: "Expensive equipment"
+          name: "Vehicle Security",
+          price: "£100-300",
+          features: ["Deadlocks", "Alarms", "Visible deterrents"],
+          bestFor: "Theft prevention"
+        },
+        {
+          name: "Tool Marking",
+          price: "£10-30",
+          features: ["UV marking", "Postcode etching", "Identification"],
+          bestFor: "Recovery assistance"
         }
       ]
     }
@@ -111,11 +111,10 @@ const ToolStorage = () => {
       <div className="text-center mb-6">
         <h2 className="text-xl sm:text-2xl font-semibold text-elec-yellow mb-2 flex items-center justify-center gap-2">
           <Package className="h-6 w-6" />
-          Tool Storage & Organisation
+          Tool Storage Solutions
         </h2>
         <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
-          Proper tool storage protects your investment, improves efficiency, and maintains professional appearance. 
-          Choose storage solutions that match your working environment and tool collection size.
+          Protect your investment with proper storage. Good organisation improves efficiency and maintains professional standards.
         </p>
       </div>
 
@@ -165,30 +164,30 @@ const ToolStorage = () => {
         <div className="p-4 bg-gradient-to-r from-elec-yellow/5 to-green-500/5 border border-elec-yellow/20 rounded-lg">
           <h3 className="font-medium text-elec-yellow mb-2">📋 Organisation Tips</h3>
           <ul className="text-sm text-muted-foreground space-y-1">
-            <li>• Label everything clearly</li>
-            <li>• Keep frequently used tools accessible</li>
-            <li>• Create a tool inventory list</li>
-            <li>• Check tools before each job</li>
+            <li>• Label storage clearly</li>
+            <li>• Keep daily tools accessible</li>
+            <li>• Maintain tool inventories</li>
+            <li>• Regular condition checks</li>
           </ul>
         </div>
         
         <div className="p-4 bg-gradient-to-r from-blue-500/5 to-elec-yellow/5 border border-blue-500/20 rounded-lg">
-          <h3 className="font-medium text-blue-400 mb-2">🔒 Security Best Practices</h3>
+          <h3 className="font-medium text-blue-400 mb-2">🔒 Security Essentials</h3>
           <ul className="text-sm text-muted-foreground space-y-1">
             <li>• Never leave tools visible in vehicles</li>
-            <li>• Use multiple security layers</li>
-            <li>• Keep receipts for insurance</li>
-            <li>• Mark tools with postcode</li>
+            <li>• Use multiple security measures</li>
+            <li>• Keep purchase receipts safe</li>
+            <li>• Mark tools for identification</li>
           </ul>
         </div>
         
         <div className="p-4 bg-gradient-to-r from-purple-500/5 to-elec-yellow/5 border border-purple-500/20 rounded-lg">
-          <h3 className="font-medium text-purple-400 mb-2">💡 Efficiency Hacks</h3>
+          <h3 className="font-medium text-purple-400 mb-2">💡 Efficiency Tips</h3>
           <ul className="text-sm text-muted-foreground space-y-1">
-            <li>• Use foam inserts for organisation</li>
-            <li>• Keep spares of essential items</li>
-            <li>• Clean tools after each use</li>
-            <li>• Regular maintenance schedules</li>
+            <li>• Foam inserts for organisation</li>
+            <li>• Keep spare consumables</li>
+            <li>• Clean tools after use</li>
+            <li>• Schedule maintenance</li>
           </ul>
         </div>
       </div>

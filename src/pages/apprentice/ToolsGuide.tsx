@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Link } from "react-router-dom";
@@ -64,11 +63,11 @@ const ToolsGuide = () => {
           
           <div className="text-center space-y-3 px-2">
             <h1 className={`font-bold tracking-tight text-elec-yellow leading-tight ${isMobile ? 'text-2xl' : 'text-4xl'}`}>
-              Apprentice Tool Guide
+              Professional Tool Guide
             </h1>
             <p className={`text-muted-foreground leading-relaxed max-w-3xl mx-auto ${isMobile ? 'text-sm px-1' : 'text-base'}`}>
-              Complete guide to essential tools, equipment and materials for UK electrical apprentices. 
-              Learn what you need, when to buy it, and where to get the best value for professional-grade equipment.
+              Essential tools and equipment for UK electrical professionals. 
+              Learn what you need, where to buy it, and how to build your toolkit strategically for career success.
             </p>
           </div>
         </div>

@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Calendar, PoundSterling, Users } from "lucide-react";
+import { TrendingUp, Calendar, PoundSterling, Wrench } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const BuildingCollection = () => {
@@ -10,58 +10,58 @@ const BuildingCollection = () => {
   const phases = [
     {
       phase: "Phase 1",
-      title: "Essential Safety & Basic Tools",
+      title: "Essential Safety & Basic Hand Tools",
       timeframe: "Months 1-6",
       budget: "£300-500",
       priority: "Critical",
       items: [
         "Safety boots & hard hat",
         "Basic multimeter",
-        "Screwdriver set", 
-        "Wire strippers",
-        "Voltage tester"
+        "Screwdriver set (insulated)", 
+        "Wire strippers & side cutters",
+        "Voltage tester (two-pole)"
       ]
     },
     {
       phase: "Phase 2", 
-      title: "Installation & Testing Equipment",
+      title: "Testing Equipment & Power Tools",
       timeframe: "Months 6-12",
       budget: "£400-700",
       priority: "High",
       items: [
         "Insulation resistance tester",
-        "Cordless drill",
-        "Spirit level",
+        "Cordless drill & bits",
+        "Spirit level (torpedo)",
         "Cable detector",
         "RCD tester"
       ]
     },
     {
       phase: "Phase 3",
-      title: "Advanced Testing & Power Tools",
+      title: "Advanced Testing & Installation Tools",
       timeframe: "Months 12-24",
       budget: "£600-1000",
       priority: "Medium",
       items: [
         "Loop impedance tester",
-        "Angle grinder",
-        "SDS drill",
-        "Cable puller",
-        "Thermal imaging camera"
+        "Angle grinder (115mm)",
+        "SDS drill & bits",
+        "Cable pulling system",
+        "Advanced multimeter"
       ]
     },
     {
       phase: "Phase 4",
-      title: "Professional Specialisation",
+      title: "Professional Specialisation Tools",
       timeframe: "Months 24+",
       budget: "£500-800",
       priority: "Future",
       items: [
         "Advanced PAT tester",
-        "Oscilloscope",
+        "Thermal imaging camera",
         "Specialised test equipment",
-        "Professional toolbox",
-        "Vehicle setup"
+        "Professional tool storage",
+        "Vehicle tool setup"
       ]
     }
   ];
@@ -81,11 +81,11 @@ const BuildingCollection = () => {
       <div className="text-center mb-6">
         <h2 className="text-xl sm:text-2xl font-semibold text-elec-yellow mb-2 flex items-center justify-center gap-2">
           <TrendingUp className="h-6 w-6" />
-          Building Your Tool Collection
+          Tool Collection Strategy
         </h2>
         <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
-          A strategic approach to building your electrical toolkit over time. Prioritise safety and testing equipment first, 
-          then expand to power tools and specialised equipment as your career progresses.
+          A strategic approach to building your electrical tool collection. Prioritise safety and testing tools first, 
+          then expand to power tools as your career progresses.
         </p>
       </div>
 
@@ -126,8 +126,8 @@ const BuildingCollection = () => {
               
               <div className="bg-elec-gray/50 border border-elec-yellow/20 rounded-lg p-3">
                 <h4 className="font-medium text-sm text-elec-yellow mb-2 flex items-center gap-1.5">
-                  <Users className="h-4 w-4" />
-                  Essential Items
+                  <Wrench className="h-4 w-4" />
+                  Essential Tools
                 </h4>
                 <ul className="space-y-1.5">
                   {phase.items.map((item, idx) => (
@@ -145,22 +145,22 @@ const BuildingCollection = () => {
       
       <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="p-4 bg-gradient-to-r from-elec-yellow/5 to-green-500/5 border border-elec-yellow/20 rounded-lg">
-          <h3 className="font-medium text-elec-yellow mb-2">💡 Smart Purchasing Tips</h3>
+          <h3 className="font-medium text-elec-yellow mb-2">💡 Smart Tool Purchasing</h3>
           <ul className="text-sm text-muted-foreground space-y-1">
-            <li>• Buy quality over quantity - tools are an investment</li>
-            <li>• Check if your employer provides any tools or allowances</li>
+            <li>• Invest in quality tools that will last your career</li>
+            <li>• Check if your employer provides tool allowances</li>
             <li>• Consider tool insurance for expensive equipment</li>
-            <li>• Look for apprentice discounts at major suppliers</li>
+            <li>• Look for apprentice trade discounts</li>
           </ul>
         </div>
         
         <div className="p-4 bg-gradient-to-r from-blue-500/5 to-elec-yellow/5 border border-blue-500/20 rounded-lg">
-          <h3 className="font-medium text-blue-400 mb-2">🎯 Funding Options</h3>
+          <h3 className="font-medium text-blue-400 mb-2">🎯 Funding Your Tools</h3>
           <ul className="text-sm text-muted-foreground space-y-1">
-            <li>• Apprenticeship training provider loans</li>
+            <li>• Apprenticeship training provider schemes</li>
             <li>• Government grants for apprentices</li>
-            <li>• Employer tool allowances or purchase schemes</li>
-            <li>• Tool hire for expensive one-off requirements</li>
+            <li>• Employer tool purchase programmes</li>
+            <li>• Hire tools for one-off requirements</li>
           </ul>
         </div>
       </div>

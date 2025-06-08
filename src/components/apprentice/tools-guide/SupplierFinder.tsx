@@ -2,8 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, ExternalLink, Tag, Star } from "lucide-react";
-import { supplierData } from "@/data/electrician/supplierData";
+import { MapPin, ExternalLink, Star, Wrench } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const SupplierFinder = () => {
@@ -11,32 +10,40 @@ const SupplierFinder = () => {
   
   const suppliers = [
     {
-      ...supplierData.screwfix,
+      name: "Screwfix",
+      description: "Wide range of electrical tools and equipment with excellent availability across the UK. Known for competitive pricing on professional-grade tools and same-day collection services.",
       website: "https://www.screwfix.com",
       rating: 4.2,
       deliveryTime: "Next Day",
-      locations: "500+ stores nationwide"
+      locations: "500+ stores nationwide",
+      toolSpecialty: "Power tools & hand tools"
     },
     {
-      ...supplierData["city-electrical-factors"],
+      name: "City Electrical Factors (CEF)",
+      description: "Specialist electrical wholesaler with extensive tool selection and trade-focused service. Excellent for professional testing equipment and electrical tools.",
       website: "https://www.cef.co.uk",
       rating: 4.0,
       deliveryTime: "Same Day",
-      locations: "400+ branches"
+      locations: "400+ branches",
+      toolSpecialty: "Testing equipment & professional tools"
     },
     {
-      ...supplierData.electricaldirect,
+      name: "Electrical Direct",
+      description: "Online electrical supplier offering competitive prices on tools and equipment. Good selection of both budget and premium tool brands.",
       website: "https://www.electricaldirect.co.uk",
       rating: 4.3,
       deliveryTime: "2-3 Days",
-      locations: "Online + Collection Points"
+      locations: "Online + Collection Points",
+      toolSpecialty: "Wide range of electrical tools"
     },
     {
-      ...supplierData.toolstation,
+      name: "Toolstation",
+      description: "Trade supplier focused on tools and hardware. Excellent for hand tools, power tools, and trade accessories with competitive pricing.",
       website: "https://www.toolstation.com",
       rating: 4.1,
       deliveryTime: "Click & Collect",
-      locations: "450+ stores nationwide"
+      locations: "450+ stores nationwide",
+      toolSpecialty: "Hand tools & power tools"
     }
   ];
 
@@ -44,11 +51,11 @@ const SupplierFinder = () => {
     <div className="p-4 sm:p-6">
       <div className="text-center mb-6">
         <h2 className="text-xl sm:text-2xl font-semibold text-elec-yellow mb-2 flex items-center justify-center gap-2">
-          <MapPin className="h-6 w-6" />
-          UK Supplier Directory
+          <Wrench className="h-6 w-6" />
+          UK Tool Suppliers
         </h2>
         <p className="text-sm sm:text-base text-muted-foreground">
-          Compare prices and find the best deals from trusted electrical suppliers across the UK
+          Find the best suppliers for electrical tools and equipment across the UK
         </p>
       </div>
 
@@ -89,53 +96,26 @@ const SupplierFinder = () => {
                 {supplier.description}
               </p>
               
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <MapPin className="h-3.5 w-3.5" />
-                {supplier.locations}
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-3.5 w-3.5" />
+                  {supplier.locations}
+                </div>
+                <Badge variant="secondary" className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 text-xs">
+                  {supplier.toolSpecialty}
+                </Badge>
               </div>
               
-              {/* Deal of the Day */}
-              <div className="bg-elec-gray/50 border border-elec-yellow/20 rounded-lg p-3 space-y-3">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-medium text-sm text-elec-yellow flex items-center gap-1.5">
-                    <Tag className="h-4 w-4" />
-                    Deal of the Day
-                  </h4>
-                  <Badge variant="destructive" className="text-xs">
-                    {supplier.dealOfTheDay.discount} OFF
-                  </Badge>
-                </div>
-                
-                <div>
-                  <h5 className="font-medium text-sm">{supplier.dealOfTheDay.name}</h5>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="font-bold text-green-400">{supplier.dealOfTheDay.price}</span>
-                    <span className="text-xs text-muted-foreground line-through">
-                      {supplier.dealOfTheDay.regularPrice}
-                    </span>
-                  </div>
-                </div>
-                
-                <ul className="space-y-1">
-                  {supplier.dealOfTheDay.features.slice(0, 2).map((feature, idx) => (
-                    <li key={idx} className="text-xs text-muted-foreground flex items-center gap-1.5">
-                      <div className="w-1 h-1 bg-elec-yellow rounded-full flex-shrink-0"></div>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                
-                <Button 
-                  size="sm" 
-                  className="w-full bg-elec-yellow/20 border border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-300"
-                  asChild
-                >
-                  <a href={supplier.website} target="_blank" rel="noopener noreferrer">
-                    Visit {supplier.name}
-                    <ExternalLink className="h-3.5 w-3.5 ml-1.5" />
-                  </a>
-                </Button>
-              </div>
+              <Button 
+                size="sm" 
+                className="w-full bg-elec-yellow/20 border border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow hover:text-black transition-all duration-300"
+                asChild
+              >
+                <a href={supplier.website} target="_blank" rel="noopener noreferrer">
+                  Visit {supplier.name}
+                  <ExternalLink className="h-3.5 w-3.5 ml-1.5" />
+                </a>
+              </Button>
             </CardContent>
           </Card>
         ))}
@@ -143,8 +123,8 @@ const SupplierFinder = () => {
       
       <div className="mt-6 p-4 bg-gradient-to-r from-elec-yellow/5 to-green-500/5 border border-elec-yellow/20 rounded-lg">
         <p className="text-center text-sm text-muted-foreground">
-          <strong className="text-elec-yellow">Pro Tip:</strong> Compare prices across suppliers and check for bulk discounts. 
-          Many suppliers offer trade accounts with additional savings for apprentices and qualified electricians.
+          <strong className="text-elec-yellow">Pro Tip:</strong> Compare prices across suppliers and check for trade accounts. 
+          Many suppliers offer apprentice discounts and bulk pricing for tool purchases.
         </p>
       </div>
     </div>
