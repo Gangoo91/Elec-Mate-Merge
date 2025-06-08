@@ -30,9 +30,6 @@ import Chat from "@/pages/Chat";
 import NotificationsPage from "@/pages/NotificationsPage";
 
 const AppRouter = () => {
-  // Add debugging for route resolution
-  console.log('AppRouter: Routing configuration loaded');
-
   return (
     <Routes>
       {/* Public Routes */}
@@ -76,14 +73,8 @@ const AppRouter = () => {
         <Route path="electrical-hub/*" element={<ElectricianHubRoutes />} />
         <Route path="electrician/*" element={<ElectricianHubRoutes />} />
         
-        {/* Apprentice Routes - Fixed TypeScript error */}
-        <Route 
-          path="apprentice/*" 
-          element={(() => {
-            console.log('AppRouter: Apprentice route matched');
-            return <ApprenticeRoutes />;
-          })()} 
-        />
+        {/* Apprentice Routes */}
+        <Route path="apprentice/*" element={<ApprenticeRoutes />} />
         
         {/* Catch-all route for 404 */}
         <Route path="*" element={<NotFound />} />
