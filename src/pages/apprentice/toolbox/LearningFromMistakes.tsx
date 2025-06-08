@@ -1,9 +1,8 @@
 
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlertTriangle, Brain, Users, Target, CheckCircle, Heart, Phone, MessageCircle, BookOpen } from "lucide-react";
+import { AlertTriangle, Brain, Users, Target, CheckCircle, Heart } from "lucide-react";
 import MistakeCategoriesTab from "@/components/apprentice/learning-mistakes/MistakeCategoriesTab";
 import RecoveryStrategiesTab from "@/components/apprentice/learning-mistakes/RecoveryStrategiesTab";
 import ResilienceTab from "@/components/apprentice/learning-mistakes/ResilienceTab";
@@ -12,47 +11,6 @@ import PreventionTab from "@/components/apprentice/learning-mistakes/PreventionT
 import SupportSystemsTab from "@/components/apprentice/learning-mistakes/SupportSystemsTab";
 
 const LearningFromMistakes = () => {
-  const quickActions = [
-    {
-      title: "Emergency Support",
-      description: "Need immediate help or feeling overwhelmed?",
-      action: "Get Help Now",
-      icon: Phone,
-      color: "bg-red-500/20 border-red-500/50 hover:bg-red-500/30",
-      onClick: () => window.open('tel:116123', '_blank') // Samaritans
-    },
-    {
-      title: "Recovery Strategies",
-      description: "Learn structured approaches to handle mistakes",
-      action: "View Strategies",
-      icon: Target,
-      color: "bg-blue-500/20 border-blue-500/50 hover:bg-blue-500/30",
-      onClick: () => {
-        const recoveryTab = document.querySelector('[value="recovery"]') as HTMLElement;
-        recoveryTab?.click();
-      }
-    },
-    {
-      title: "Peer Support",
-      description: "Connect with other apprentices",
-      action: "Join Community",
-      icon: MessageCircle,
-      color: "bg-green-500/20 border-green-500/50 hover:bg-green-500/30",
-      onClick: () => window.open('/chat', '_blank')
-    },
-    {
-      title: "Learn from Cases",
-      description: "Study real scenarios and outcomes",
-      action: "View Cases",
-      icon: BookOpen,
-      color: "bg-purple-500/20 border-purple-500/50 hover:bg-purple-500/30",
-      onClick: () => {
-        const casesTab = document.querySelector('[value="case-studies"]') as HTMLElement;
-        casesTab?.click();
-      }
-    }
-  ];
-
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
@@ -62,35 +20,6 @@ const LearningFromMistakes = () => {
         </p>
         <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
       </div>
-
-      {/* Quick Action Buttons */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Quick Actions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {quickActions.map((action, index) => {
-              const IconComponent = action.icon;
-              return (
-                <Button
-                  key={index}
-                  variant="outline"
-                  onClick={action.onClick}
-                  className={`h-auto p-4 flex flex-col items-center gap-3 ${action.color}`}
-                >
-                  <IconComponent className="h-8 w-8" />
-                  <div className="text-center">
-                    <div className="font-semibold text-sm">{action.title}</div>
-                    <div className="text-xs text-muted-foreground mt-1">{action.description}</div>
-                    <div className="text-xs font-medium mt-2">{action.action}</div>
-                  </div>
-                </Button>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
 
       <Tabs defaultValue="categories" className="w-full">
         <TabsList className="grid w-full grid-cols-6">
