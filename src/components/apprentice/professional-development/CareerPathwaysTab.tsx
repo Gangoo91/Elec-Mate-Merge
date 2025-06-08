@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, GraduationCap, Target, Users, Briefcase, Clock } from "lucide-react";
+import { TrendingUp, GraduationCap, Target, Users, Briefcase, Clock, Zap, Building, Wrench, Shield, Cpu, Factory } from "lucide-react";
 
 const CareerPathwaysTab = () => {
   const careerPaths = [
@@ -15,6 +15,33 @@ const CareerPathwaysTab = () => {
       color: "text-blue-400"
     },
     {
+      title: "Installation Electrician",
+      timeframe: "3-5 years",
+      requirements: ["18th Edition", "Testing & Inspection", "Installation experience"],
+      description: "Specialise in new electrical installations across domestic and commercial properties",
+      salaryRange: "£28k - £38k",
+      icon: Wrench,
+      color: "text-green-400"
+    },
+    {
+      title: "Maintenance Electrician",
+      timeframe: "3-6 years",
+      requirements: ["Fault finding skills", "PLC knowledge", "Industrial experience"],
+      description: "Focus on maintaining and repairing electrical systems in industrial settings",
+      salaryRange: "£30k - £42k",
+      icon: Factory,
+      color: "text-orange-400"
+    },
+    {
+      title: "Testing & Inspection Engineer",
+      timeframe: "4-6 years",
+      requirements: ["2391 qualification", "BS7671 expertise", "EICR certification"],
+      description: "Specialise in electrical testing, inspection, and certification work",
+      salaryRange: "£32k - £45k",
+      icon: Shield,
+      color: "text-purple-400"
+    },
+    {
       title: "Specialist Electrician",
       timeframe: "3-6 years",
       requirements: ["Additional certifications", "Specialist training", "Experience"],
@@ -22,6 +49,15 @@ const CareerPathwaysTab = () => {
       salaryRange: "£35k - £45k",
       icon: Target,
       color: "text-green-400"
+    },
+    {
+      title: "Controls & Automation Technician",
+      timeframe: "4-7 years",
+      requirements: ["PLC programming", "SCADA systems", "Industrial controls"],
+      description: "Work with automated systems, PLCs, and industrial control equipment",
+      salaryRange: "£38k - £52k",
+      icon: Cpu,
+      color: "text-cyan-400"
     },
     {
       title: "Electrical Supervisor",
@@ -33,6 +69,15 @@ const CareerPathwaysTab = () => {
       color: "text-purple-400"
     },
     {
+      title: "Electrical Designer",
+      timeframe: "4-7 years",
+      requirements: ["CAD software", "Design standards", "HNC/HND"],
+      description: "Design electrical systems using CAD software and engineering principles",
+      salaryRange: "£38k - £50k",
+      icon: Building,
+      color: "text-blue-400"
+    },
+    {
       title: "Electrical Engineer",
       timeframe: "4-7 years",
       requirements: ["HNC/HND", "Degree (optional)", "Chartered status"],
@@ -40,6 +85,33 @@ const CareerPathwaysTab = () => {
       salaryRange: "£45k - £70k",
       icon: Briefcase,
       color: "text-orange-400"
+    },
+    {
+      title: "Project Manager",
+      timeframe: "7-10 years",
+      requirements: ["Project management qualification", "Leadership experience", "Technical knowledge"],
+      description: "Manage large electrical projects from conception to completion",
+      salaryRange: "£50k - £75k",
+      icon: Target,
+      color: "text-red-400"
+    },
+    {
+      title: "Electrical Contractor",
+      timeframe: "5+ years",
+      requirements: ["Business skills", "Insurance", "Established client base"],
+      description: "Run your own electrical contracting business",
+      salaryRange: "£40k - £100k+",
+      icon: Briefcase,
+      color: "text-yellow-400"
+    },
+    {
+      title: "Electrical Consultant",
+      timeframe: "8+ years",
+      requirements: ["Expert knowledge", "Professional qualifications", "Industry reputation"],
+      description: "Provide specialist electrical consultancy services",
+      salaryRange: "£60k - £120k+",
+      icon: GraduationCap,
+      color: "text-emerald-400"
     }
   ];
 
@@ -48,6 +120,12 @@ const CareerPathwaysTab = () => {
       area: "Renewable Energy",
       description: "Solar PV, wind, battery storage systems",
       growth: "+45%",
+      demandLevel: "Very High"
+    },
+    {
+      area: "Electric Vehicle Infrastructure",
+      description: "EV charging points, high voltage systems",
+      growth: "+67%",
       demandLevel: "Very High"
     },
     {
@@ -63,10 +141,28 @@ const CareerPathwaysTab = () => {
       demandLevel: "High"
     },
     {
-      area: "Electric Vehicle Infrastructure",
-      description: "EV charging points, high voltage systems",
-      growth: "+67%",
-      demandLevel: "Very High"
+      area: "Data Centres",
+      description: "Critical power systems, UPS, cooling",
+      growth: "+32%",
+      demandLevel: "High"
+    },
+    {
+      area: "Marine & Offshore",
+      description: "Ships, oil rigs, offshore wind",
+      growth: "+25%",
+      demandLevel: "Medium-High"
+    },
+    {
+      area: "Aerospace",
+      description: "Aircraft electrical systems",
+      growth: "+18%",
+      demandLevel: "Medium"
+    },
+    {
+      area: "Railway Systems",
+      description: "Train electrification, signalling",
+      growth: "+22%",
+      demandLevel: "Medium-High"
     }
   ];
 
