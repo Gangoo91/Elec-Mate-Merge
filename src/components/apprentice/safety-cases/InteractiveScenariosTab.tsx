@@ -1,12 +1,10 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Target, AlertTriangle } from "lucide-react";
 import { useState } from "react";
 import ScenarioCard from "./ScenarioCard";
 import ScenarioDetail from "./ScenarioDetail";
 import ProgressCard from "./ProgressCard";
-import ScenarioFilters from "./ScenarioFilters";
 import { useScenarios } from "./useScenarios";
 import SafetyCasesLoading from "./SafetyCasesLoading";
 import SafetyCasesErrorBoundary from "./SafetyCasesErrorBoundary";
@@ -22,20 +20,11 @@ const InteractiveScenariosTab = () => {
     showFeedback,
     completedScenarios,
     isLastScenario,
-    selectedCategory,
-    selectedDifficulty,
-    selectedIndustry,
-    selectedRiskLevel,
     handleSelectScenario,
     handleOptionSelect,
     handleSubmitAnswer,
     handleReset,
-    handleNextScenario,
-    handleCategoryChange,
-    handleDifficultyChange,
-    handleIndustryChange,
-    handleRiskLevelChange,
-    handleClearFilters
+    handleNextScenario
   } = useScenarios();
 
   if (error) {
@@ -72,7 +61,7 @@ const InteractiveScenariosTab = () => {
             Experience realistic safety scenarios through interactive decision-making exercises. 
             Each scenario is based on real incidents and provides valuable learning outcomes for electrical safety.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center">
               <div className="text-2xl font-bold text-elec-yellow mb-1">
                 {completedScenarios.length}
@@ -84,12 +73,6 @@ const InteractiveScenariosTab = () => {
                 {allScenarios.length}
               </div>
               <div className="text-sm text-muted-foreground">Total Scenarios</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-400 mb-1">
-                {scenarios.length}
-              </div>
-              <div className="text-sm text-muted-foreground">Filtered Results</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-purple-400 mb-1">
@@ -119,49 +102,16 @@ const InteractiveScenariosTab = () => {
             totalScenarios={allScenarios.length}
           />
 
-          <ScenarioFilters
-            selectedCategory={selectedCategory}
-            selectedDifficulty={selectedDifficulty}
-            selectedIndustry={selectedIndustry}
-            selectedRiskLevel={selectedRiskLevel}
-            onCategoryChange={handleCategoryChange}
-            onDifficultyChange={handleDifficultyChange}
-            onIndustryChange={handleIndustryChange}
-            onRiskLevelChange={handleRiskLevelChange}
-            onClearFilters={handleClearFilters}
-            scenarioCount={scenarios.length}
-            totalScenarios={allScenarios.length}
-          />
-
-          {scenarios.length === 0 ? (
-            <Card className="border-yellow-500/20 bg-yellow-500/10">
-              <CardContent className="text-center py-8">
-                <AlertTriangle className="h-12 w-12 text-yellow-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-yellow-300 mb-2">No scenarios match your filters</h3>
-                <p className="text-muted-foreground mb-4">
-                  Try adjusting your filter criteria to see more scenarios.
-                </p>
-                <Badge 
-                  variant="outline" 
-                  className="cursor-pointer hover:bg-yellow-500/20"
-                  onClick={handleClearFilters}
-                >
-                  Clear All Filters
-                </Badge>
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {scenarios.map((scenario) => (
-                <ScenarioCard
-                  key={scenario.id}
-                  scenario={scenario}
-                  onClick={() => handleSelectScenario(scenario)}
-                  isCompleted={completedScenarios.includes(scenario.id)}
-                />
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {scenarios.map((scenario) => (
+              <ScenarioCard
+                key={scenario.id}
+                scenario={scenario}
+                onClick={() => handleSelectScenario(scenario)}
+                isCompleted={completedScenarios.includes(scenario.id)}
+              />
+            ))}
+          </div>
         </>
       )}
 
@@ -187,10 +137,10 @@ const InteractiveScenariosTab = () => {
             <div>
               <h4 className="font-semibold text-white mb-2">Enhanced Features</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Risk level categorisation</li>
-                <li>• Industry-specific filtering</li>
-                <li>• Progress tracking by category</li>
-                <li>• Detailed scenario tagging</li>
+                <li>• Interactive decision making</li>
+                <li>• Real-world case studies</li>
+                <li>• Progress tracking</li>
+                <li>• Detailed feedback</li>
                 <li>• Completion status indicators</li>
               </ul>
             </div>

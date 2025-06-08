@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { SafetyScenario, safetyScenarios } from "./safetyScenarios";
 
@@ -11,24 +11,7 @@ export const useScenarios = () => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [completedScenarios, setCompletedScenarios] = useState<number[]>([]);
   
-  // New filter states
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
-  const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
-  const [selectedRiskLevel, setSelectedRiskLevel] = useState<string | null>(null);
-  
   const { toast } = useToast();
-
-  // Filter scenarios based on selected filters
-  const filteredScenarios = useMemo(() => {
-    return safetyScenarios.filter(scenario => {
-      if (selectedCategory && scenario.category !== selectedCategory) return false;
-      if (selectedDifficulty && scenario.difficulty !== selectedDifficulty) return false;
-      if (selectedIndustry && scenario.industry !== selectedIndustry && scenario.industry !== "All") return false;
-      if (selectedRiskLevel && scenario.riskLevel !== selectedRiskLevel) return false;
-      return true;
-    });
-  }, [selectedCategory, selectedDifficulty, selectedIndustry, selectedRiskLevel]);
 
   // Initialize hook with logging
   useEffect(() => {
@@ -150,17 +133,17 @@ export const useScenarios = () => {
     }
     
     try {
-      const currentFilteredIndex = filteredScenarios.findIndex(s => s.id === selectedScenario.id);
-      console.log('useScenarios - Current filtered index:', currentFilteredIndex, 'of', filteredScenarios.length);
+      const currentIndex = safetyScenarios.findIndex(s => s.id === selectedScenario.id);
+      console.log('useScenarios - Current index:', currentIndex, 'of', safetyScenarios.length);
       
-      if (currentFilteredIndex < filteredScenarios.length - 1) {
-        handleSelectScenario(filteredScenarios[currentFilteredIndex + 1]);
+      if (currentIndex < safetyScenarios.length - 1) {
+        handleSelectScenario(safetyScenarios[currentIndex + 1]);
       } else {
-        console.log('useScenarios - All filtered scenarios completed, resetting');
+        console.log('useScenarios - All scenarios completed, resetting');
         handleReset();
         toast({
           title: "All scenarios completed!",
-          description: "You've completed all scenarios in this category. Well done!",
+          description: "You've completed all scenarios. Well done!",
           variant: "default"
         });
       }
@@ -170,31 +153,21 @@ export const useScenarios = () => {
     }
   };
 
-  const handleClearFilters = () => {
-    console.log('useScenarios - Clearing all filters');
-    setSelectedCategory(null);
-    setSelectedDifficulty(null);
-    setSelectedIndustry(null);
-    setSelectedRiskLevel(null);
-  };
-
   const isLastScenario = selectedScenario 
-    ? filteredScenarios.findIndex(s => s.id === selectedScenario.id) === filteredScenarios.length - 1
+    ? safetyScenarios.findIndex(s => s.id === selectedScenario.id) === safetyScenarios.length - 1
     : false;
 
   console.log('useScenarios - Current state:', {
     isLoading,
     error,
     totalScenariosCount: safetyScenarios?.length || 0,
-    filteredScenariosCount: filteredScenarios.length,
     selectedScenarioId: selectedScenario?.id,
     completedCount: completedScenarios.length,
-    isLastScenario,
-    activeFilters: { selectedCategory, selectedDifficulty, selectedIndustry, selectedRiskLevel }
+    isLastScenario
   });
 
   return {
-    scenarios: filteredScenarios,
+    scenarios: safetyScenarios || [],
     allScenarios: safetyScenarios || [],
     isLoading,
     error,
@@ -203,21 +176,10 @@ export const useScenarios = () => {
     showFeedback,
     completedScenarios,
     isLastScenario,
-    // Filter states and handlers
-    selectedCategory,
-    selectedDifficulty,
-    selectedIndustry,
-    selectedRiskLevel,
     handleSelectScenario,
     handleOptionSelect,
     handleSubmitAnswer,
     handleReset,
-    handleNextScenario,
-    // Filter handlers
-    handleCategoryChange: setSelectedCategory,
-    handleDifficultyChange: setSelectedDifficulty,
-    handleIndustryChange: setSelectedIndustry,
-    handleRiskLevelChange: setSelectedRiskLevel,
-    handleClearFilters
+    handleNextScenario
   };
 };
