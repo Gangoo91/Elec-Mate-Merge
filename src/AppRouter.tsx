@@ -76,15 +76,13 @@ const AppRouter = () => {
         <Route path="electrical-hub/*" element={<ElectricianHubRoutes />} />
         <Route path="electrician/*" element={<ElectricianHubRoutes />} />
         
-        {/* Apprentice Routes - This is the critical section */}
+        {/* Apprentice Routes - Fixed TypeScript error */}
         <Route 
           path="apprentice/*" 
-          element={
-            <div>
-              {console.log('AppRouter: Apprentice route matched')}
-              <ApprenticeRoutes />
-            </div>
-          } 
+          element={(() => {
+            console.log('AppRouter: Apprentice route matched');
+            return <ApprenticeRoutes />;
+          })()} 
         />
         
         {/* Catch-all route for 404 */}
