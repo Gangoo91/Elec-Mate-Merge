@@ -162,7 +162,7 @@ const ResourcesTab = () => {
                     </div>
                     <p className="text-xs text-muted-foreground mb-3">{resource.description}</p>
                     <div className="flex items-center justify-between">
-                      <Badge className={getCategoryColor(resource.category)} variant="outline" size="sm">
+                      <Badge className={getCategoryColor(resource.category)} variant="outline">
                         {resource.category}
                       </Badge>
                       <Button size="sm" variant="outline" className="h-7 text-xs">

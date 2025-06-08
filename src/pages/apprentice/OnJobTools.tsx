@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import OnTheJobToolsBox from "@/components/apprentice/OnTheJobToolsBox";
-import { Calculator, FileText, Settings, HardHat, MessageSquare, TestTube, HelpCircle, BookOpen, ClipboardList, CheckSquare } from "lucide-react";
+import { Calculator, FileText, Settings, HardHat, MessageSquare, HelpCircle, BookOpen, ClipboardList, CheckSquare } from "lucide-react";
 
 const OnJobTools = () => {
   const onJobTools = [
@@ -44,34 +44,27 @@ const OnJobTools = () => {
     },
     {
       id: 6,
-      title: "Testing Procedures (Mini Toolkit)",
-      icon: TestTube,
-      description: "R1+R2, IR, Zs, polarity testing with step-by-step guides and diagrams",
-      link: "/apprentice/on-job-tools/testing-procedures"
-    },
-    {
-      id: 7,
       title: "BS7671 Inspection & Testing Run-Through",
       icon: CheckSquare,
       description: "Complete step-by-step inspection and testing process for apprentices",
       link: "/apprentice/on-job-tools/bs7671-runthrough"
     },
     {
-      id: 8,
+      id: 7,
       title: "Ask a Supervisor",
       icon: HelpCircle,
       description: "Knowledge bank with FAQs from real-world site questions and expert answers",
       link: "/apprentice/on-job-tools/supervisor-knowledge"
     },
     {
-      id: 9,
+      id: 8,
       title: "Flashcards & Microlearning",
       icon: BookOpen,
       description: "Quick-fire revision flashcards for cable colors, regulations, EICR codes, and more",
       link: "/apprentice/on-job-tools/flashcards"
     },
     {
-      id: 10,
+      id: 9,
       title: "Incident Logging Tool",
       icon: ClipboardList,
       description: "Log near misses, unsafe practices, and faulty equipment with secure storage",
