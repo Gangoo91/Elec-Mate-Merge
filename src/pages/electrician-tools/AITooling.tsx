@@ -1,8 +1,10 @@
 
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Brain, Image, FileText, MessageSquare, Code, Book, Zap } from "lucide-react";
-import AIToolingHeader from "@/components/electrician-tools/ai-tools/AIToolingHeader";
+import { Brain, Image, FileText, Book, Zap, ArrowLeft, Lightbulb } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import AIAssistant from "@/components/electrician-tools/ai-tools/AIAssistant";
 import VisualAnalysis from "@/components/electrician-tools/ai-tools/VisualAnalysis";
 import ReportWriter from "@/components/electrician-tools/ai-tools/ReportWriter";
@@ -13,10 +15,20 @@ const AITooling = () => {
   const [activeTab, setActiveTab] = useState("assistant");
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <AIToolingHeader />
+    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
+      <div className="flex flex-col items-center justify-center mb-6">
+        <h1 className="text-3xl font-bold tracking-tight mb-4">AI Tooling</h1>
+        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+          Advanced AI tools to enhance your electrical work efficiency and accuracy with UK standards compliance
+        </p>
+        <Link to="/electrician-tools">
+          <Button variant="outline" className="flex items-center gap-2">
+            <ArrowLeft className="h-4 w-4" /> Back to Electrician Tools
+          </Button>
+        </Link>
+      </div>
 
-      <Tabs defaultValue="assistant" value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+      <Tabs defaultValue="assistant" value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid sm:grid-cols-3 lg:grid-cols-5 max-w-full overflow-x-auto">
           <TabsTrigger value="assistant" className="flex items-center gap-2">
             <Brain className="h-4 w-4" />
@@ -45,31 +57,42 @@ const AITooling = () => {
           </TabsTrigger>
         </TabsList>
 
-        {/* AI Assistant Tab */}
         <TabsContent value="assistant">
           <AIAssistant />
         </TabsContent>
 
-        {/* Visual Analysis Tab */}
         <TabsContent value="visual">
           <VisualAnalysis />
         </TabsContent>
 
-        {/* Report Writer Tab */}
         <TabsContent value="reports">
           <ReportWriter />
         </TabsContent>
 
-        {/* Regulations Tab */}
         <TabsContent value="regulations">
           <RegulationsAssistant />
         </TabsContent>
 
-        {/* Circuit Design Tab */}
         <TabsContent value="circuit">
           <CircuitDesigner />
         </TabsContent>
       </Tabs>
+
+      <Card className="border-blue-500/50 bg-gradient-to-r from-blue-500/10 to-blue-500/5">
+        <CardHeader>
+          <CardTitle className="text-blue-400 flex items-center gap-2">
+            <Lightbulb className="h-5 w-5" />
+            AI Tools Best Practices
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">
+            These AI tools are designed to complement your professional expertise, not replace it. 
+            Always verify AI-generated recommendations against current UK electrical standards and 
+            use your professional judgement when implementing suggestions.
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 };
