@@ -1,7 +1,8 @@
 
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Wrench, ArrowLeft, AlertTriangle, TrendingUp, ShoppingCart, Star, Clock, MapPin } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ArrowLeft, ShoppingCart, AlertTriangle, TrendingUp, MapPin, Star, Clock, Search, Package, BookOpen, Users } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import ToolSearch from "@/components/electrician-tools/ToolSearch";
@@ -12,6 +13,9 @@ import ToolBuyingGuides from "@/components/electrician-tools/ToolBuyingGuides";
 import LivePriceComparison from "@/components/electrician-tools/LivePriceComparison";
 import AmazonToolsSection from "@/components/electrician-tools/AmazonToolsSection";
 import FeaturedDealsCarousel from "@/components/electrician-tools/FeaturedDealsCarousel";
+import ToolCategoryBrowser from "@/components/electrician-tools/ToolCategoryBrowser";
+import PriceAlertsTab from "@/components/electrician-tools/PriceAlertsTab";
+import ReviewsRatingsTab from "@/components/electrician-tools/ReviewsRatingsTab";
 
 const ElectricalTools = () => {
   const keyStats = [
@@ -82,32 +86,70 @@ const ElectricalTools = () => {
           </AlertDescription>
         </Alert>
 
-        {/* Enhanced Search */}
-        <ToolSearch />
+        {/* Tabbed Interface */}
+        <Tabs defaultValue="browse" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 bg-elec-gray/50 border border-elec-yellow/20">
+            <TabsTrigger value="browse" className="flex items-center gap-2">
+              <Search className="h-4 w-4" />
+              Browse & Search
+            </TabsTrigger>
+            <TabsTrigger value="deals" className="flex items-center gap-2">
+              <Star className="h-4 w-4" />
+              Deals & Offers
+            </TabsTrigger>
+            <TabsTrigger value="suppliers" className="flex items-center gap-2">
+              <MapPin className="h-4 w-4" />
+              UK Suppliers
+            </TabsTrigger>
+            <TabsTrigger value="guides" className="flex items-center gap-2">
+              <BookOpen className="h-4 w-4" />
+              Buying Guides
+            </TabsTrigger>
+            <TabsTrigger value="alerts" className="flex items-center gap-2">
+              <TrendingUp className="h-4 w-4" />
+              Price Alerts
+            </TabsTrigger>
+            <TabsTrigger value="reviews" className="flex items-center gap-2">
+              <Users className="h-4 w-4" />
+              Reviews
+            </TabsTrigger>
+          </TabsList>
 
-        {/* Featured Deals Carousel */}
-        <FeaturedDealsCarousel />
+          <TabsContent value="browse" className="space-y-6">
+            <ToolSearch />
+            <ToolCategoryBrowser />
+          </TabsContent>
 
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Deal of the Day */}
-          <div className="lg:col-span-2 space-y-6">
-            <DealOfTheDay />
+          <TabsContent value="deals" className="space-y-6">
+            <FeaturedDealsCarousel />
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-2">
+                <DealOfTheDay />
+              </div>
+              <div className="space-y-6">
+                <ToolPricingWidget />
+                <AmazonToolsSection />
+              </div>
+            </div>
             <LivePriceComparison />
-          </div>
-          
-          {/* Right Column - Pricing Widget */}
-          <div className="space-y-6">
-            <ToolPricingWidget />
-            <AmazonToolsSection />
-          </div>
-        </div>
+          </TabsContent>
 
-        {/* UK Wholesalers Directory */}
-        <UKWholesalersDirectory />
+          <TabsContent value="suppliers" className="space-y-6">
+            <UKWholesalersDirectory />
+          </TabsContent>
 
-        {/* Tool Buying Guides */}
-        <ToolBuyingGuides />
+          <TabsContent value="guides" className="space-y-6">
+            <ToolBuyingGuides />
+          </TabsContent>
+
+          <TabsContent value="alerts" className="space-y-6">
+            <PriceAlertsTab />
+          </TabsContent>
+
+          <TabsContent value="reviews" className="space-y-6">
+            <ReviewsRatingsTab />
+          </TabsContent>
+        </Tabs>
 
         {/* Call to Action */}
         <div className="bg-gradient-to-r from-elec-yellow/10 to-blue-500/10 border border-elec-yellow/30 rounded-lg p-6 shadow-lg">
@@ -124,7 +166,7 @@ const ElectricalTools = () => {
                 Browse All Tools
               </Button>
               <Button variant="outline" className="border-elec-yellow/30 hover:bg-elec-yellow/10">
-                View Price Alerts
+                Set Up Price Alerts
               </Button>
             </div>
           </div>
