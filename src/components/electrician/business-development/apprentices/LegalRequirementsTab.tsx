@@ -124,7 +124,7 @@ const LegalRequirementsTab = () => {
             <ul className="text-sm text-blue-200 space-y-1">
               <li>• £3,000 incentive for hiring apprentices aged 16-18</li>
               <li>• £1,500 incentive for apprentices aged 19-24</li>
-              <li>• Additional support for small employers (< 50 employees)</li>
+              <li>• Additional support for small employers (&lt; 50 employees)</li>
               <li>• 100% funding for apprentices aged 16-18</li>
             </ul>
           </div>
