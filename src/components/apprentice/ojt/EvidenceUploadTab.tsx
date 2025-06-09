@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Upload, FileText, CheckCircle, Clock } from "lucide-react";
+import { Upload, FileText, Camera, Award } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -23,12 +23,12 @@ const EvidenceUploadTab = () => {
     evidence_type: "",
     learning_outcome: "",
     unit_reference: "",
-    witness_name: "",
-    date_achieved: new Date().toISOString().split('T')[0]
+    date_achieved: new Date().toISOString().split('T')[0],
+    witness_name: ""
   });
 
   // Fetch evidence uploads
-  const { data: evidenceItems = [] } = useQuery({
+  const { data: evidenceUploads = [] } = useQuery({
     queryKey: ['evidence-uploads', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
@@ -54,8 +54,8 @@ const EvidenceUploadTab = () => {
         .from('evidence_uploads')
         .insert({
           user_id: user.id,
-          file_url: `placeholder-file-${Date.now()}`, // In real app, would upload file first
-          file_name: `${item.title}.pdf`,
+          file_url: '', // Would be populated with actual file upload
+          file_name: `evidence_${Date.now()}`,
           ...item
         });
       
@@ -70,11 +70,11 @@ const EvidenceUploadTab = () => {
         evidence_type: "",
         learning_outcome: "",
         unit_reference: "",
-        witness_name: "",
-        date_achieved: new Date().toISOString().split('T')[0]
+        date_achieved: new Date().toISOString().split('T')[0],
+        witness_name: ""
       });
       toast({
-        title: "Evidence Added",
+        title: "Evidence Uploaded",
         description: "Your evidence has been uploaded successfully."
       });
     }
@@ -93,27 +93,16 @@ const EvidenceUploadTab = () => {
     addEvidenceMutation.mutate(evidenceItem);
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'verified':
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
-      case 'pending':
-        return <Clock className="h-4 w-4 text-yellow-500" />;
-      default:
-        return <FileText className="h-4 w-4 text-gray-500" />;
-    }
-  };
-
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Evidence</CardTitle>
             <FileText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{evidenceItems.length}</div>
+            <div className="text-2xl font-bold">{evidenceUploads.length}</div>
             <p className="text-xs text-muted-foreground">
               Uploaded items
             </p>
@@ -123,14 +112,14 @@ const EvidenceUploadTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Verified</CardTitle>
-            <CheckCircle className="h-4 w-4 text-green-500" />
+            <Award className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {evidenceItems.filter(item => item.verification_status === 'verified').length}
+              {evidenceUploads.filter(item => item.verification_status === 'verified').length}
             </div>
             <p className="text-xs text-muted-foreground">
-              Approved evidence
+              Verified evidence
             </p>
           </CardContent>
         </Card>
@@ -138,34 +127,14 @@ const EvidenceUploadTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Pending</CardTitle>
-            <Clock className="h-4 w-4 text-yellow-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {evidenceItems.filter(item => item.verification_status === 'pending').length}
-            </div>
-            <p className="text-xs text-muted-foreground">
-              Awaiting review
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">This Month</CardTitle>
             <Upload className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {evidenceItems.filter(item => {
-                const itemDate = new Date(item.created_at);
-                const monthAgo = new Date();
-                monthAgo.setMonth(monthAgo.getMonth() - 1);
-                return itemDate >= monthAgo;
-              }).length}
+              {evidenceUploads.filter(item => item.verification_status === 'pending').length}
             </div>
             <p className="text-xs text-muted-foreground">
-              Recent uploads
+              Awaiting review
             </p>
           </CardContent>
         </Card>
@@ -181,27 +150,15 @@ const EvidenceUploadTab = () => {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="title">Title</Label>
-                  <Input
-                    id="title"
-                    placeholder="e.g. Installation Certificate"
-                    value={evidenceItem.title}
-                    onChange={(e) => setEvidenceItem(prev => ({ ...prev, title: e.target.value }))}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="date">Date Achieved</Label>
-                  <Input
-                    id="date"
-                    type="date"
-                    value={evidenceItem.date_achieved}
-                    onChange={(e) => setEvidenceItem(prev => ({ ...prev, date_achieved: e.target.value }))}
-                    required
-                  />
-                </div>
+              <div>
+                <Label htmlFor="title">Title</Label>
+                <Input
+                  id="title"
+                  placeholder="e.g. Electrical Installation Certificate"
+                  value={evidenceItem.title}
+                  onChange={(e) => setEvidenceItem(prev => ({ ...prev, title: e.target.value }))}
+                  required
+                />
               </div>
               
               <div>
@@ -212,43 +169,42 @@ const EvidenceUploadTab = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="certificate">Certificate</SelectItem>
-                    <SelectItem value="photo">Photograph</SelectItem>
+                    <SelectItem value="photo">Photo Evidence</SelectItem>
                     <SelectItem value="document">Document</SelectItem>
-                    <SelectItem value="report">Report</SelectItem>
                     <SelectItem value="witness_statement">Witness Statement</SelectItem>
+                    <SelectItem value="work_product">Work Product</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="unit_reference">Unit Reference</Label>
-                  <Input
-                    id="unit_reference"
-                    placeholder="e.g. Unit 301"
-                    value={evidenceItem.unit_reference}
-                    onChange={(e) => setEvidenceItem(prev => ({ ...prev, unit_reference: e.target.value }))}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="witness_name">Witness Name</Label>
-                  <Input
-                    id="witness_name"
-                    placeholder="e.g. Supervisor name"
-                    value={evidenceItem.witness_name}
-                    onChange={(e) => setEvidenceItem(prev => ({ ...prev, witness_name: e.target.value }))}
-                  />
-                </div>
-              </div>
-              
               <div>
                 <Label htmlFor="learning_outcome">Learning Outcome</Label>
-                <Textarea
+                <Input
                   id="learning_outcome"
-                  placeholder="Describe what learning outcome this evidence demonstrates..."
+                  placeholder="e.g. LO1: Install electrical wiring systems"
                   value={evidenceItem.learning_outcome}
                   onChange={(e) => setEvidenceItem(prev => ({ ...prev, learning_outcome: e.target.value }))}
-                  rows={2}
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="unit_reference">Unit Reference</Label>
+                <Input
+                  id="unit_reference"
+                  placeholder="e.g. Unit 201"
+                  value={evidenceItem.unit_reference}
+                  onChange={(e) => setEvidenceItem(prev => ({ ...prev, unit_reference: e.target.value }))}
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="date_achieved">Date Achieved</Label>
+                <Input
+                  id="date_achieved"
+                  type="date"
+                  value={evidenceItem.date_achieved}
+                  onChange={(e) => setEvidenceItem(prev => ({ ...prev, date_achieved: e.target.value }))}
+                  required
                 />
               </div>
               
@@ -256,7 +212,7 @@ const EvidenceUploadTab = () => {
                 <Label htmlFor="description">Description</Label>
                 <Textarea
                   id="description"
-                  placeholder="Additional details about this evidence..."
+                  placeholder="Describe the evidence and how it demonstrates competency..."
                   value={evidenceItem.description}
                   onChange={(e) => setEvidenceItem(prev => ({ ...prev, description: e.target.value }))}
                   rows={3}
@@ -264,7 +220,7 @@ const EvidenceUploadTab = () => {
               </div>
               
               <Button type="submit" className="w-full" disabled={addEvidenceMutation.isPending}>
-                {addEvidenceMutation.isPending ? "Adding..." : "Add Evidence"}
+                {addEvidenceMutation.isPending ? "Uploading..." : "Upload Evidence"}
               </Button>
             </form>
           </CardContent>
@@ -279,27 +235,28 @@ const EvidenceUploadTab = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4 max-h-96 overflow-y-auto">
-              {evidenceItems.length === 0 ? (
+              {evidenceUploads.length === 0 ? (
                 <p className="text-muted-foreground text-center py-4">
                   No evidence uploaded yet
                 </p>
               ) : (
-                evidenceItems.slice(0, 10).map((item) => (
+                evidenceUploads.slice(0, 10).map((item) => (
                   <div key={item.id} className="border rounded-lg p-3">
                     <div className="flex justify-between items-start mb-2">
                       <h4 className="font-medium">{item.title}</h4>
-                      <div className="flex items-center gap-1">
-                        {getStatusIcon(item.verification_status)}
-                        <span className="text-sm text-muted-foreground capitalize">
-                          {item.verification_status}
-                        </span>
-                      </div>
+                      <span className={`text-sm px-2 py-1 rounded ${
+                        item.verification_status === 'verified' ? 'bg-green-500/20 text-green-400' :
+                        item.verification_status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
+                        'bg-red-500/20 text-red-400'
+                      }`}>
+                        {item.verification_status}
+                      </span>
                     </div>
                     <p className="text-sm text-muted-foreground mb-1">
                       {item.evidence_type} • {new Date(item.date_achieved).toLocaleDateString()}
                     </p>
                     {item.learning_outcome && (
-                      <p className="text-sm text-muted-foreground line-clamp-2">{item.learning_outcome}</p>
+                      <p className="text-sm text-muted-foreground">{item.learning_outcome}</p>
                     )}
                   </div>
                 ))

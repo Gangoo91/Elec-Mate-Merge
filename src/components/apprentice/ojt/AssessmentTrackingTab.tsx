@@ -6,8 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Progress } from "@/components/ui/progress";
-import { BookOpen, Clock, CheckCircle, AlertCircle, Calendar } from "lucide-react";
+import { Calendar, BookOpen, Award, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -70,17 +69,17 @@ const AssessmentTrackingTab = () => {
       });
       toast({
         title: "Assessment Added",
-        description: "Assessment has been added to your tracking list."
+        description: "Assessment has been added to your tracker."
       });
     }
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!assessment.unit_code || !assessment.unit_title || !assessment.assessment_type) {
+    if (!assessment.unit_code || !assessment.unit_title) {
       toast({
         title: "Missing Information",
-        description: "Please fill in required fields.",
+        description: "Please fill in unit code and title.",
         variant: "destructive"
       });
       return;
@@ -88,50 +87,27 @@ const AssessmentTrackingTab = () => {
     addAssessmentMutation.mutate(assessment);
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'completed':
-        return <CheckCircle className="h-4 w-4 text-green-500" />;
-      case 'in_progress':
-        return <Clock className="h-4 w-4 text-blue-500" />;
-      case 'overdue':
-        return <AlertCircle className="h-4 w-4 text-red-500" />;
-      default:
-        return <BookOpen className="h-4 w-4 text-gray-500" />;
-    }
-  };
-
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed':
-        return 'text-green-500';
-      case 'in_progress':
-        return 'text-blue-500';
-      case 'overdue':
-        return 'text-red-500';
-      default:
-        return 'text-gray-500';
+      case 'completed': return 'bg-green-500/20 text-green-400';
+      case 'in_progress': return 'bg-blue-500/20 text-blue-400';
+      case 'overdue': return 'bg-red-500/20 text-red-400';
+      default: return 'bg-gray-500/20 text-gray-400';
     }
   };
-
-  // Calculate progress
-  const totalAssessments = assessments.length;
-  const completedAssessments = assessments.filter(a => a.status === 'completed').length;
-  const progressPercentage = totalAssessments > 0 ? (completedAssessments / totalAssessments) * 100 : 0;
 
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Assessments</CardTitle>
+            <CardTitle className="text-sm font-medium">Total</CardTitle>
             <BookOpen className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalAssessments}</div>
-            <Progress value={progressPercentage} className="mt-2" />
-            <p className="text-xs text-muted-foreground mt-1">
-              {completedAssessments} completed
+            <div className="text-2xl font-bold">{assessments.length}</div>
+            <p className="text-xs text-muted-foreground">
+              Total assessments
             </p>
           </CardContent>
         </Card>
@@ -139,12 +115,14 @@ const AssessmentTrackingTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Completed</CardTitle>
-            <CheckCircle className="h-4 w-4 text-green-500" />
+            <Award className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{completedAssessments}</div>
+            <div className="text-2xl font-bold">
+              {assessments.filter(item => item.status === 'completed').length}
+            </div>
             <p className="text-xs text-muted-foreground">
-              Assessments passed
+              Finished assessments
             </p>
           </CardContent>
         </Card>
@@ -152,11 +130,11 @@ const AssessmentTrackingTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">In Progress</CardTitle>
-            <Clock className="h-4 w-4 text-blue-500" />
+            <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {assessments.filter(a => a.status === 'in_progress').length}
+              {assessments.filter(item => item.status === 'in_progress').length}
             </div>
             <p className="text-xs text-muted-foreground">
               Currently working on
@@ -167,21 +145,14 @@ const AssessmentTrackingTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Upcoming</CardTitle>
-            <Calendar className="h-4 w-4 text-orange-500" />
+            <Calendar className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {assessments.filter(a => {
-                if (!a.due_date) return false;
-                const dueDate = new Date(a.due_date);
-                const today = new Date();
-                const twoWeeks = new Date();
-                twoWeeks.setDate(today.getDate() + 14);
-                return dueDate >= today && dueDate <= twoWeeks && a.status !== 'completed';
-              }).length}
+              {assessments.filter(item => item.due_date && new Date(item.due_date) > new Date() && item.status === 'not_started').length}
             </div>
             <p className="text-xs text-muted-foreground">
-              Due within 2 weeks
+              Due soon
             </p>
           </CardContent>
         </Card>
@@ -206,45 +177,58 @@ const AssessmentTrackingTab = () => {
                   <SelectContent>
                     <SelectItem value="written_exam">Written Exam</SelectItem>
                     <SelectItem value="practical_assessment">Practical Assessment</SelectItem>
+                    <SelectItem value="coursework">Coursework</SelectItem>
                     <SelectItem value="portfolio_review">Portfolio Review</SelectItem>
-                    <SelectItem value="professional_discussion">Professional Discussion</SelectItem>
                     <SelectItem value="observation">Workplace Observation</SelectItem>
-                    <SelectItem value="end_point_assessment">End Point Assessment</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="unit_code">Unit Code</Label>
-                  <Input
-                    id="unit_code"
-                    placeholder="e.g. Unit 301"
-                    value={assessment.unit_code}
-                    onChange={(e) => setAssessment(prev => ({ ...prev, unit_code: e.target.value }))}
-                    required
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="due_date">Due Date</Label>
-                  <Input
-                    id="due_date"
-                    type="date"
-                    value={assessment.due_date}
-                    onChange={(e) => setAssessment(prev => ({ ...prev, due_date: e.target.value }))}
-                  />
-                </div>
+              <div>
+                <Label htmlFor="unit_code">Unit Code</Label>
+                <Input
+                  id="unit_code"
+                  placeholder="e.g. EAL-8202-01"
+                  value={assessment.unit_code}
+                  onChange={(e) => setAssessment(prev => ({ ...prev, unit_code: e.target.value }))}
+                  required
+                />
               </div>
               
               <div>
                 <Label htmlFor="unit_title">Unit Title</Label>
                 <Input
                   id="unit_title"
-                  placeholder="e.g. Understanding Health and Safety in Construction"
+                  placeholder="e.g. Understanding electrical principles"
                   value={assessment.unit_title}
                   onChange={(e) => setAssessment(prev => ({ ...prev, unit_title: e.target.value }))}
                   required
                 />
+              </div>
+
+              <div>
+                <Label htmlFor="due_date">Due Date</Label>
+                <Input
+                  id="due_date"
+                  type="date"
+                  value={assessment.due_date}
+                  onChange={(e) => setAssessment(prev => ({ ...prev, due_date: e.target.value }))}
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="status">Status</Label>
+                <Select value={assessment.status} onValueChange={(value) => setAssessment(prev => ({ ...prev, status: value }))}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="not_started">Not Started</SelectItem>
+                    <SelectItem value="in_progress">In Progress</SelectItem>
+                    <SelectItem value="completed">Completed</SelectItem>
+                    <SelectItem value="overdue">Overdue</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               
               <Button type="submit" className="w-full" disabled={addAssessmentMutation.isPending}>
@@ -265,32 +249,24 @@ const AssessmentTrackingTab = () => {
             <div className="space-y-4 max-h-96 overflow-y-auto">
               {assessments.length === 0 ? (
                 <p className="text-muted-foreground text-center py-4">
-                  No assessments scheduled yet
+                  No assessments scheduled
                 </p>
               ) : (
-                assessments.map((assessment) => (
-                  <div key={assessment.id} className="border rounded-lg p-3">
+                assessments.map((item) => (
+                  <div key={item.id} className="border rounded-lg p-3">
                     <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-medium">{assessment.unit_code}</h4>
-                      <div className="flex items-center gap-1">
-                        {getStatusIcon(assessment.status)}
-                        <span className={`text-sm capitalize ${getStatusColor(assessment.status)}`}>
-                          {assessment.status.replace('_', ' ')}
-                        </span>
-                      </div>
+                      <h4 className="font-medium">{item.unit_code}</h4>
+                      <span className={`text-sm px-2 py-1 rounded ${getStatusColor(item.status)}`}>
+                        {item.status.replace('_', ' ')}
+                      </span>
                     </div>
-                    <p className="text-sm font-medium mb-1">{assessment.unit_title}</p>
+                    <p className="text-sm font-medium mb-1">{item.unit_title}</p>
                     <p className="text-sm text-muted-foreground mb-1">
-                      {assessment.assessment_type.replace('_', ' ')}
+                      {item.assessment_type?.replace('_', ' ')}
                     </p>
-                    {assessment.due_date && (
+                    {item.due_date && (
                       <p className="text-sm text-muted-foreground">
-                        Due: {new Date(assessment.due_date).toLocaleDateString()}
-                      </p>
-                    )}
-                    {assessment.grade && (
-                      <p className="text-sm font-medium text-green-600 mt-1">
-                        Grade: {assessment.grade}
+                        Due: {new Date(item.due_date).toLocaleDateString()}
                       </p>
                     )}
                   </div>
