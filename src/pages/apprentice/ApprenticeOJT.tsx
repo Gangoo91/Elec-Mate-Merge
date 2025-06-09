@@ -11,6 +11,8 @@ import ComplianceDashboardTab from "@/components/apprentice/ojt/ComplianceDashbo
 import CareerPlanningTab from "@/components/apprentice/ojt/CareerPlanningTab";
 
 const ApprenticeOJT = () => {
+  console.log('ApprenticeOJT component rendering');
+  
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
