@@ -2,85 +2,110 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { PoundSterling, TrendingUp, Users, Building, ExternalLink, Calculator } from "lucide-react";
+import { PoundSterling, TrendingUp, Building, Users, ExternalLink, Calculator, Shield, CheckCircle } from "lucide-react";
 
 const FundingOptionsTab = () => {
   const fundingOptions = [
     {
-      type: "Personal Savings",
-      amount: "£5K-15K",
-      timeframe: "Immediate",
-      difficulty: "Easy",
-      equity: "0%",
-      pros: ["Full control", "No debt", "Quick access"],
-      cons: ["Limited capital", "Personal risk", "Depletes savings"],
-      bestFor: "Small start with basic tools and van"
+      title: "Start Up Loans",
+      type: "Government Backed",
+      amount: "£500 - £25,000",
+      rate: "6% fixed",
+      term: "1-5 years",
+      description: "Government-backed personal loans for new and early-stage businesses",
+      pros: ["No upfront fees", "Fixed interest rate", "12-month repayment holiday available"],
+      cons: ["Personal guarantee required", "Limited to £25k", "Requires business plan"],
+      suitability: "high"
     },
     {
-      type: "Start Up Loans",
-      amount: "£500-25K",
-      timeframe: "4-6 weeks",
-      difficulty: "Medium",
-      equity: "0%",
-      pros: ["Government backed", "Competitive rates", "Business support"],
-      cons: ["Personal guarantee", "Fixed repayments", "Credit checks"],
-      bestFor: "Established plan with cash flow projections"
+      title: "Bounce Back Loan",
+      type: "Government Scheme",
+      amount: "Up to £50,000",
+      rate: "2.5%",
+      term: "6 years",
+      description: "Government scheme for businesses affected by COVID-19 (if still available)",
+      pros: ["Low interest rate", "No personal guarantee", "100% government guarantee"],
+      cons: ["Limited availability", "Specific criteria", "May require existing business"],
+      suitability: "medium"
     },
     {
-      type: "Bank Business Loan",
-      amount: "£10K-50K",
-      timeframe: "6-8 weeks",
-      difficulty: "Hard",
-      equity: "0%",
-      pros: ["Large amounts", "Build credit history", "Tax deductible"],
-      cons: ["Strict criteria", "Security required", "High rates"],
-      bestFor: "Established business expanding operations"
+      title: "Bank Business Loan",
+      type: "Traditional Banking",
+      amount: "£1,000 - £500,000",
+      rate: "4-15%",
+      term: "1-25 years",
+      description: "Traditional business loans from high street banks",
+      pros: ["Large amounts available", "Flexible terms", "Relationship building"],
+      cons: ["Strict criteria", "Personal guarantees", "Lengthy application"],
+      suitability: "medium"
     },
     {
-      type: "Equipment Finance",
-      amount: "£5K-100K",
-      timeframe: "2-4 weeks",
-      difficulty: "Medium",
-      equity: "0%",
-      pros: ["Asset secured", "Preserve cash", "Tax benefits"],
-      cons: ["Asset risk", "Higher rates", "Depreciation"],
-      bestFor: "Purchasing vehicles, tools, and equipment"
+      title: "Asset Finance",
+      type: "Equipment Funding",
+      amount: "£1,000 - £1,000,000",
+      rate: "3-12%",
+      term: "2-7 years",
+      description: "Finance specifically for purchasing tools, vehicles, and equipment",
+      pros: ["Asset acts as security", "Preserve cash flow", "Tax advantages"],
+      cons: ["Asset depreciation risk", "Early settlement fees", "Limited to assets"],
+      suitability: "high"
     }
   ];
 
-  const grantOpportunities = [
+  const grants = [
     {
       name: "New Enterprise Allowance",
-      amount: "£1,274 + loan",
-      description: "For those on benefits starting a business",
-      eligibility: "JSA, ESA, or Universal Credit recipients"
+      amount: "£1,274 + mentoring",
+      eligibility: "Unemployed individuals starting a business",
+      description: "Weekly allowance for 26 weeks plus business mentoring support"
     },
     {
-      name: "Regional Growth Fund",
-      amount: "£1K-10K",
-      description: "Local enterprise partnerships funding",
-      eligibility: "Location and sector specific"
+      name: "Local Council Grants",
+      amount: "£500 - £10,000",
+      eligibility: "Varies by council area",
+      description: "Local authority grants for new businesses and job creation"
     },
     {
-      name: "Green Business Fund",
-      amount: "£2K-15K",
-      description: "For eco-friendly electrical services",
-      eligibility: "Solar, EV charging, energy efficiency focus"
+      name: "Prince's Trust Grants",
+      amount: "Up to £7,500",
+      eligibility: "18-30 years old, meets criteria",
+      description: "Grants and low-interest loans for young entrepreneurs"
     }
   ];
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty.toLowerCase()) {
-      case 'easy': return 'bg-green-500/20 text-green-400 border-green-500/30';
+  const alternativeFunding = [
+    {
+      name: "Invoice Factoring",
+      description: "Sell your invoices to improve cash flow",
+      rate: "1-3% per month",
+      suitability: "Established businesses with regular clients"
+    },
+    {
+      name: "Peer-to-Peer Lending",
+      description: "Borrow from individual investors",
+      rate: "3-15%",
+      suitability: "Good credit score, detailed business plan"
+    },
+    {
+      name: "Business Credit Cards",
+      description: "Short-term financing for purchases",
+      rate: "15-30% APR",
+      suitability: "Small purchases, building credit history"
+    }
+  ];
+
+  const getSuitabilityColor = (suitability: string) => {
+    switch (suitability) {
+      case 'high': return 'bg-green-500/20 text-green-400 border-green-500/30';
       case 'medium': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-      case 'hard': return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'low': return 'bg-red-500/20 text-red-400 border-red-500/30';
       default: return 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30';
     }
   };
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/5 to-green-500/5">
+      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/5 to-blue-500/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <PoundSterling className="h-5 w-5" />
@@ -88,160 +113,184 @@ const FundingOptionsTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
-              <div className="text-2xl font-bold text-blue-400">£8K</div>
-              <div className="text-sm text-muted-foreground">Average Startup Cost</div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
-              <div className="text-2xl font-bold text-green-400">£15K</div>
-              <div className="text-sm text-muted-foreground">Recommended Capital</div>
+              <Calculator className="h-5 w-5 text-green-400 mb-2" />
+              <div className="text-sm text-muted-foreground">Typical Startup Cost</div>
+              <div className="text-xl font-bold text-green-400">£5K-15K</div>
+            </div>
+            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
+              <TrendingUp className="h-5 w-5 text-blue-400 mb-2" />
+              <div className="text-sm text-muted-foreground">Working Capital</div>
+              <div className="text-xl font-bold text-blue-400">£10K-25K</div>
             </div>
             <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
-              <div className="text-2xl font-bold text-purple-400">3-6</div>
-              <div className="text-sm text-muted-foreground">Months Cash Flow</div>
-            </div>
-            <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/20">
-              <div className="text-2xl font-bold text-amber-400">85%</div>
-              <div className="text-sm text-muted-foreground">Approval Rate</div>
+              <Shield className="h-5 w-5 text-purple-400 mb-2" />
+              <div className="text-sm text-muted-foreground">Emergency Fund</div>
+              <div className="text-xl font-bold text-purple-400">3-6 months</div>
             </div>
           </div>
-          
-          <p className="text-muted-foreground">
-            Choose the right funding mix for your electrical contracting business. Most successful startups combine 
-            2-3 funding sources to minimise risk and maximise growth potential.
-          </p>
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <h3 className="text-xl font-semibold text-white mb-4">Primary Funding Options</h3>
-          {fundingOptions.map((option, index) => (
-            <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-white text-lg">{option.type}</CardTitle>
-                  <Badge className={getDifficultyColor(option.difficulty)}>
-                    {option.difficulty}
-                  </Badge>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-3 gap-4 text-sm">
-                  <div>
-                    <span className="text-green-400 font-medium">Amount:</span>
-                    <p className="text-white">{option.amount}</p>
-                  </div>
-                  <div>
-                    <span className="text-blue-400 font-medium">Timeframe:</span>
-                    <p className="text-white">{option.timeframe}</p>
-                  </div>
-                  <div>
-                    <span className="text-purple-400 font-medium">Equity:</span>
-                    <p className="text-white">{option.equity}</p>
-                  </div>
-                </div>
-                
-                <div>
-                  <p className="text-sm text-amber-300 font-medium mb-1">Best for:</p>
-                  <p className="text-xs text-muted-foreground">{option.bestFor}</p>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-xs font-medium text-green-300 mb-1">Pros:</p>
-                    <ul className="text-xs space-y-1">
-                      {option.pros.map((pro, i) => (
-                        <li key={i} className="text-green-200">• {pro}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-xs font-medium text-red-300 mb-1">Cons:</p>
-                    <ul className="text-xs space-y-1">
-                      {option.cons.map((con, i) => (
-                        <li key={i} className="text-red-200">• {con}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <div className="space-y-6">
-          <Card className="border-green-500/30 bg-green-500/10">
+      <div className="space-y-6">
+        <h3 className="text-xl font-semibold text-white">Primary Funding Options</h3>
+        {fundingOptions.map((option, index) => (
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="text-green-300 flex items-center gap-2">
-                <TrendingUp className="h-5 w-5" />
-                Government Grants & Support
-              </CardTitle>
+              <div className="flex items-start justify-between">
+                <div>
+                  <CardTitle className="text-white text-lg">{option.title}</CardTitle>
+                  <p className="text-sm text-muted-foreground">{option.type}</p>
+                </div>
+                <Badge className={getSuitabilityColor(option.suitability)}>
+                  {option.suitability} suitability
+                </Badge>
+              </div>
             </CardHeader>
-            <CardContent className="space-y-4">
-              {grantOpportunities.map((grant, index) => (
-                <div key={index} className="border border-green-500/20 rounded-lg p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-semibold text-green-200">{grant.name}</h4>
-                    <span className="text-green-400 font-bold">{grant.amount}</span>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-elec-dark/50 p-3 rounded">
+                    <div className="text-xs text-muted-foreground">Amount</div>
+                    <div className="font-semibold text-white">{option.amount}</div>
                   </div>
-                  <p className="text-sm text-green-100 mb-2">{grant.description}</p>
-                  <p className="text-xs text-green-300">Eligibility: {grant.eligibility}</p>
+                  <div className="bg-elec-dark/50 p-3 rounded">
+                    <div className="text-xs text-muted-foreground">Interest Rate</div>
+                    <div className="font-semibold text-white">{option.rate}</div>
+                  </div>
+                  <div className="bg-elec-dark/50 p-3 rounded">
+                    <div className="text-xs text-muted-foreground">Term</div>
+                    <div className="font-semibold text-white">{option.term}</div>
+                  </div>
+                </div>
+
+                <p className="text-sm text-muted-foreground">{option.description}</p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h5 className="font-medium text-green-400 mb-2">Advantages</h5>
+                    <ul className="space-y-1">
+                      {option.pros.map((pro, proIndex) => (
+                        <li key={proIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                          {pro}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-medium text-amber-400 mb-2">Considerations</h5>
+                    <ul className="space-y-1">
+                      {option.cons.map((con, conIndex) => (
+                        <li key={conIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <div className="w-3 h-3 border border-amber-400 rounded-full mt-0.5 flex-shrink-0" />
+                          {con}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card className="border-green-500/20 bg-green-500/10">
+          <CardHeader>
+            <CardTitle className="text-green-400 flex items-center gap-2">
+              <Building className="h-5 w-5" />
+              Grants & Free Money
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {grants.map((grant, index) => (
+                <div key={index} className="border border-green-500/20 rounded-lg p-3">
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="font-semibold text-white">{grant.name}</h4>
+                    <Badge className="bg-green-500/20 text-green-400">{grant.amount}</Badge>
+                  </div>
+                  <p className="text-xs text-green-300 mb-1">{grant.eligibility}</p>
+                  <p className="text-sm text-muted-foreground">{grant.description}</p>
                 </div>
               ))}
-              
-              <Button className="w-full bg-green-500 text-green-900 hover:bg-green-400">
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Find Local Grants
-              </Button>
-            </CardContent>
-          </Card>
+            </div>
+          </CardContent>
+        </Card>
 
-          <Card className="border-blue-500/30 bg-blue-500/10">
-            <CardHeader>
-              <CardTitle className="text-blue-300 flex items-center gap-2">
-                <Calculator className="h-5 w-5" />
-                Funding Calculator
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-sm text-blue-200">Initial Equipment:</span>
-                  <span className="text-blue-100 font-medium">£5,000</span>
+        <Card className="border-blue-500/20 bg-blue-500/10">
+          <CardHeader>
+            <CardTitle className="text-blue-400 flex items-center gap-2">
+              <Users className="h-5 w-5" />
+              Alternative Funding
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {alternativeFunding.map((option, index) => (
+                <div key={index} className="border border-blue-500/20 rounded-lg p-3">
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="font-semibold text-white">{option.name}</h4>
+                    <span className="text-xs text-blue-400">{option.rate}</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-1">{option.description}</p>
+                  <p className="text-xs text-blue-300">{option.suitability}</p>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-sm text-blue-200">Vehicle & Signage:</span>
-                  <span className="text-blue-100 font-medium">£8,000</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-sm text-blue-200">Working Capital:</span>
-                  <span className="text-blue-100 font-medium">£3,000</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-sm text-blue-200">Insurance & Legal:</span>
-                  <span className="text-blue-100 font-medium">£1,200</span>
-                </div>
-                <hr className="border-blue-500/30" />
-                <div className="flex justify-between font-bold">
-                  <span className="text-blue-300">Total Required:</span>
-                  <span className="text-blue-400">£17,200</span>
-                </div>
-              </div>
-              
-              <div className="bg-blue-600/20 rounded-lg p-3">
-                <p className="text-xs text-blue-200 mb-2">Recommended Mix:</p>
-                <ul className="text-xs space-y-1">
-                  <li className="text-blue-100">• £7K Personal savings (40%)</li>
-                  <li className="text-blue-100">• £7K Start Up Loan (40%)</li>
-                  <li className="text-blue-100">• £3.2K Equipment finance (20%)</li>
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
+
+      <Card className="border-amber-500/30 bg-amber-500/10">
+        <CardHeader>
+          <CardTitle className="text-amber-400">Funding Application Tips</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="font-semibold mb-3 text-amber-300">Before You Apply</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>• Check your personal credit score</li>
+                <li>• Prepare detailed business plan</li>
+                <li>• Gather financial projections</li>
+                <li>• Research multiple lenders</li>
+                <li>• Understand all terms and fees</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-3 text-amber-300">Improve Your Chances</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>• Show relevant industry experience</li>
+                <li>• Demonstrate market research</li>
+                <li>• Provide realistic financial forecasts</li>
+                <li>• Have some personal investment</li>
+                <li>• Get professional advice</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="mt-6 pt-4 border-t border-amber-500/20">
+            <div className="flex flex-wrap gap-3">
+              <Button variant="outline" className="border-amber-500/30">
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Start Up Loans
+              </Button>
+              <Button variant="outline" className="border-blue-500/30">
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Business Bank Comparison
+              </Button>
+              <Button variant="outline" className="border-green-500/30">
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Government Grants
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
