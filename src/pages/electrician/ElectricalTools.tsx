@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, ShoppingCart, AlertTriangle, TrendingUp, MapPin, Star, Clock, Search, Package, BookOpen, Users } from "lucide-react";
+import { ArrowLeft, ShoppingCart, AlertTriangle, Search, MapPin, BookOpen, TrendingUp, Users } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import ToolSearch from "@/components/electrician-tools/ToolSearch";
@@ -18,13 +18,6 @@ import PriceAlertsTab from "@/components/electrician-tools/PriceAlertsTab";
 import ReviewsRatingsTab from "@/components/electrician-tools/ReviewsRatingsTab";
 
 const ElectricalTools = () => {
-  const keyStats = [
-    { label: "Active Deals", value: "127", icon: Star, color: "text-amber-400" },
-    { label: "UK Suppliers", value: "24", icon: MapPin, color: "text-blue-400" },
-    { label: "Updated Today", value: "Real-time", icon: Clock, color: "text-green-400" },
-    { label: "Average Savings", value: "23%", icon: TrendingUp, color: "text-purple-400" }
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-gray to-elec-dark">
       <div className="container mx-auto px-4 py-6 space-y-8 animate-fade-in">
@@ -64,19 +57,6 @@ const ElectricalTools = () => {
           </div>
         </div>
 
-        {/* Key Stats */}
-        <div className="bg-elec-gray/30 backdrop-blur border border-elec-yellow/20 rounded-lg shadow-lg p-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {keyStats.map((stat, index) => (
-              <div key={index} className="text-center p-4 bg-elec-dark/50 rounded-lg">
-                <stat.icon className={`h-6 w-6 mx-auto mb-2 ${stat.color}`} />
-                <div className={`text-xl font-bold ${stat.color}`}>{stat.value}</div>
-                <div className="text-xs text-muted-foreground">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Disclaimer */}
         <Alert className="bg-elec-gray/50 border-elec-yellow/30">
           <AlertTriangle className="h-4 w-4 text-elec-yellow" />
@@ -94,7 +74,7 @@ const ElectricalTools = () => {
               Browse & Search
             </TabsTrigger>
             <TabsTrigger value="deals" className="flex items-center gap-2">
-              <Star className="h-4 w-4" />
+              <TrendingUp className="h-4 w-4" />
               Deals & Offers
             </TabsTrigger>
             <TabsTrigger value="suppliers" className="flex items-center gap-2">
