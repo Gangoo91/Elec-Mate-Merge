@@ -13,8 +13,7 @@ const TradeEssentials = () => {
       description: "Connect with other electricians and share knowledge",
       icon: <MessageSquare className="h-6 w-6 text-elec-yellow" />,
       link: "/electrician/chat",
-      badge: "Community",
-      color: "from-blue-500/10 to-elec-yellow/10"
+      badge: "Community"
     },
     {
       id: 2,
@@ -22,8 +21,7 @@ const TradeEssentials = () => {
       description: "Find the latest electrical job opportunities",
       icon: <Briefcase className="h-6 w-6 text-elec-yellow" />,
       link: "/electrician/job-vacancies",
-      badge: "Careers",
-      color: "from-green-500/10 to-elec-yellow/10"
+      badge: "Careers"
     },
     {
       id: 3,
@@ -31,8 +29,7 @@ const TradeEssentials = () => {
       description: "Browse and source electrical materials",
       icon: <Package className="h-6 w-6 text-elec-yellow" />,
       link: "/electrician/materials",
-      badge: "Resources",
-      color: "from-purple-500/10 to-elec-yellow/10"
+      badge: "Resources"
     },
     {
       id: 4,
@@ -40,8 +37,7 @@ const TradeEssentials = () => {
       description: "Essential tools and equipment for electrical work",
       icon: <Wrench className="h-6 w-6 text-elec-yellow" />,
       link: "/electrician/tools",
-      badge: "Equipment",
-      color: "from-amber-500/10 to-elec-yellow/10"
+      badge: "Equipment"
     },
     {
       id: 5,
@@ -49,8 +45,7 @@ const TradeEssentials = () => {
       description: "Safety information and lessons from experience",
       icon: <Shield className="h-6 w-6 text-elec-yellow" />,
       link: "/electrician/safety-shares",
-      badge: "Safety",
-      color: "from-red-500/10 to-elec-yellow/10"
+      badge: "Safety"
     },
     {
       id: 6,
@@ -58,8 +53,7 @@ const TradeEssentials = () => {
       description: "Real-time pricing updates for materials and services",
       icon: <PoundSterling className="h-6 w-6 text-elec-yellow" />,
       link: "/electrician/live-pricing",
-      badge: "Pricing",
-      color: "from-emerald-500/10 to-elec-yellow/10"
+      badge: "Pricing"
     }
   ];
 
@@ -128,7 +122,7 @@ const TradeEssentials = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {essentialsCategories.map((category) => (
               <Link to={category.link} key={category.id} className="block group">
-                <Card className={`border-elec-yellow/20 bg-gradient-to-br ${category.color} hover:border-elec-yellow/50 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-elec-yellow/10 h-full backdrop-blur`}>
+                <Card className="border-elec-yellow/20 bg-elec-gray/50 hover:border-elec-yellow/50 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-elec-yellow/10 h-full backdrop-blur hover:bg-elec-gray/70">
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between mb-2">
                       <div className="p-2 bg-elec-yellow/20 rounded-lg group-hover:bg-elec-yellow/30 transition-colors">
