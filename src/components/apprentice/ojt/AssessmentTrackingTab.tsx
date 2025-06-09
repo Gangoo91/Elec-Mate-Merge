@@ -6,9 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Award, Plus, Calendar, Target, CheckCircle, Clock, AlertTriangle } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
+import { BookOpen, Clock, CheckCircle, AlertCircle, Calendar } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -18,7 +17,6 @@ const AssessmentTrackingTab = () => {
   const { user } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const [dialogOpen, setDialogOpen] = useState(false);
   
   const [assessment, setAssessment] = useState({
     assessment_type: "",
@@ -55,11 +53,7 @@ const AssessmentTrackingTab = () => {
         .from('assessment_tracking')
         .insert({
           user_id: user.id,
-          assessment_type: item.assessment_type,
-          unit_code: item.unit_code,
-          unit_title: item.unit_title,
-          due_date: item.due_date,
-          status: item.status
+          ...item
         });
       
       if (error) throw error;
@@ -74,7 +68,6 @@ const AssessmentTrackingTab = () => {
         due_date: "",
         status: "not_started"
       });
-      setDialogOpen(false);
       toast({
         title: "Assessment Added",
         description: "Assessment has been added to your tracking list."
@@ -84,10 +77,10 @@ const AssessmentTrackingTab = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!assessment.unit_code || !assessment.unit_title) {
+    if (!assessment.unit_code || !assessment.unit_title || !assessment.assessment_type) {
       toast({
         title: "Missing Information",
-        description: "Please fill in unit code and title.",
+        description: "Please fill in required fields.",
         variant: "destructive"
       });
       return;
@@ -95,53 +88,50 @@ const AssessmentTrackingTab = () => {
     addAssessmentMutation.mutate(assessment);
   };
 
-  const assessmentTypes = [
-    "Written Assignment",
-    "Practical Assessment",
-    "Oral Examination",
-    "Portfolio Review",
-    "Workplace Assessment",
-    "Project Submission"
-  ];
-
-  const statusOptions = [
-    { value: "not_started", label: "Not Started", color: "text-gray-500", icon: Clock },
-    { value: "in_progress", label: "In Progress", color: "text-blue-500", icon: Clock },
-    { value: "submitted", label: "Submitted", color: "text-green-500", icon: CheckCircle },
-    { value: "completed", label: "Completed", color: "text-green-600", icon: CheckCircle },
-    { value: "overdue", label: "Overdue", color: "text-red-500", icon: AlertTriangle }
-  ];
-
-  const getStatusInfo = (status: string) => {
-    return statusOptions.find(option => option.value === status) || statusOptions[0];
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return <CheckCircle className="h-4 w-4 text-green-500" />;
+      case 'in_progress':
+        return <Clock className="h-4 w-4 text-blue-500" />;
+      case 'overdue':
+        return <AlertCircle className="h-4 w-4 text-red-500" />;
+      default:
+        return <BookOpen className="h-4 w-4 text-gray-500" />;
+    }
   };
 
-  // Calculate progress statistics
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return 'text-green-500';
+      case 'in_progress':
+        return 'text-blue-500';
+      case 'overdue':
+        return 'text-red-500';
+      default:
+        return 'text-gray-500';
+    }
+  };
+
+  // Calculate progress
   const totalAssessments = assessments.length;
   const completedAssessments = assessments.filter(a => a.status === 'completed').length;
   const progressPercentage = totalAssessments > 0 ? (completedAssessments / totalAssessments) * 100 : 0;
 
-  // Upcoming assessments (next 30 days)
-  const upcomingAssessments = assessments.filter(a => {
-    if (!a.due_date || a.status === 'completed') return false;
-    const dueDate = new Date(a.due_date);
-    const thirtyDaysFromNow = new Date();
-    thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
-    return dueDate <= thirtyDaysFromNow;
-  });
-
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Assessments</CardTitle>
-            <Award className="h-4 w-4 text-muted-foreground" />
+            <BookOpen className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{totalAssessments}</div>
-            <p className="text-xs text-muted-foreground">
-              Tracked assessments
+            <Progress value={progressPercentage} className="mt-2" />
+            <p className="text-xs text-muted-foreground mt-1">
+              {completedAssessments} completed
             </p>
           </CardContent>
         </Card>
@@ -153,9 +143,23 @@ const AssessmentTrackingTab = () => {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{completedAssessments}</div>
-            <Progress value={progressPercentage} className="mt-2" />
-            <p className="text-xs text-muted-foreground mt-1">
-              {progressPercentage.toFixed(0)}% complete
+            <p className="text-xs text-muted-foreground">
+              Assessments passed
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">In Progress</CardTitle>
+            <Clock className="h-4 w-4 text-blue-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {assessments.filter(a => a.status === 'in_progress').length}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Currently working on
             </p>
           </CardContent>
         </Card>
@@ -166,34 +170,50 @@ const AssessmentTrackingTab = () => {
             <Calendar className="h-4 w-4 text-orange-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{upcomingAssessments.length}</div>
+            <div className="text-2xl font-bold">
+              {assessments.filter(a => {
+                if (!a.due_date) return false;
+                const dueDate = new Date(a.due_date);
+                const today = new Date();
+                const twoWeeks = new Date();
+                twoWeeks.setDate(today.getDate() + 14);
+                return dueDate >= today && dueDate <= twoWeeks && a.status !== 'completed';
+              }).length}
+            </div>
             <p className="text-xs text-muted-foreground">
-              Due within 30 days
+              Due within 2 weeks
             </p>
           </CardContent>
         </Card>
       </div>
 
-      <div className="flex justify-between items-center">
-        <div>
-          <h3 className="text-lg font-semibold">Assessment Tracking</h3>
-          <p className="text-muted-foreground">
-            Track your assessment deadlines, progress, and results
-          </p>
-        </div>
-        
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="gap-2">
-              <Plus className="h-4 w-4" />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <BookOpen className="h-5 w-5" />
               Add Assessment
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Add Assessment</DialogTitle>
-            </DialogHeader>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <Label htmlFor="assessment_type">Assessment Type</Label>
+                <Select value={assessment.assessment_type} onValueChange={(value) => setAssessment(prev => ({ ...prev, assessment_type: value }))}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select assessment type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="written_exam">Written Exam</SelectItem>
+                    <SelectItem value="practical_assessment">Practical Assessment</SelectItem>
+                    <SelectItem value="portfolio_review">Portfolio Review</SelectItem>
+                    <SelectItem value="professional_discussion">Professional Discussion</SelectItem>
+                    <SelectItem value="observation">Workplace Observation</SelectItem>
+                    <SelectItem value="end_point_assessment">End Point Assessment</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="unit_code">Unit Code</Label>
@@ -206,19 +226,13 @@ const AssessmentTrackingTab = () => {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="assessment_type">Assessment Type</Label>
-                  <Select value={assessment.assessment_type} onValueChange={(value) => setAssessment(prev => ({ ...prev, assessment_type: value }))}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {assessmentTypes.map((type) => (
-                        <SelectItem key={type} value={type}>
-                          {type}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Label htmlFor="due_date">Due Date</Label>
+                  <Input
+                    id="due_date"
+                    type="date"
+                    value={assessment.due_date}
+                    onChange={(e) => setAssessment(prev => ({ ...prev, due_date: e.target.value }))}
+                  />
                 </div>
               </div>
               
@@ -226,101 +240,65 @@ const AssessmentTrackingTab = () => {
                 <Label htmlFor="unit_title">Unit Title</Label>
                 <Input
                   id="unit_title"
-                  placeholder="e.g. Understanding Electrical Installation Work"
+                  placeholder="e.g. Understanding Health and Safety in Construction"
                   value={assessment.unit_title}
                   onChange={(e) => setAssessment(prev => ({ ...prev, unit_title: e.target.value }))}
                   required
                 />
               </div>
               
-              <div>
-                <Label htmlFor="due_date">Due Date</Label>
-                <Input
-                  id="due_date"
-                  type="date"
-                  value={assessment.due_date}
-                  onChange={(e) => setAssessment(prev => ({ ...prev, due_date: e.target.value }))}
-                />
-              </div>
-              
-              <div className="flex gap-2">
-                <Button type="submit" disabled={addAssessmentMutation.isPending} className="flex-1">
-                  {addAssessmentMutation.isPending ? "Adding..." : "Add Assessment"}
-                </Button>
-                <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          </DialogContent>
-        </Dialog>
-      </div>
-
-      <div className="space-y-4">
-        {assessments.length === 0 ? (
-          <Card>
-            <CardContent className="flex flex-col items-center justify-center py-8">
-              <Award className="h-12 w-12 text-muted-foreground mb-4" />
-              <h3 className="text-lg font-medium mb-2">No Assessments Tracked Yet</h3>
-              <p className="text-muted-foreground text-center mb-4">
-                Start tracking your assessments to stay organised and meet your deadlines
-              </p>
-              <Button onClick={() => setDialogOpen(true)} className="gap-2">
-                <Plus className="h-4 w-4" />
-                Add Your First Assessment
+              <Button type="submit" className="w-full" disabled={addAssessmentMutation.isPending}>
+                {addAssessmentMutation.isPending ? "Adding..." : "Add Assessment"}
               </Button>
-            </CardContent>
-          </Card>
-        ) : (
-          assessments.map((assessment) => {
-            const statusInfo = getStatusInfo(assessment.status);
-            const StatusIcon = statusInfo.icon;
-            const isOverdue = assessment.due_date && new Date(assessment.due_date) < new Date() && assessment.status !== 'completed';
-            
-            return (
-              <Card key={assessment.id} className={isOverdue ? "border-red-300" : ""}>
-                <CardHeader>
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <CardTitle className="text-lg">
-                        {assessment.unit_code}: {assessment.unit_title}
-                      </CardTitle>
-                      <p className="text-sm text-muted-foreground">{assessment.assessment_type}</p>
-                    </div>
-                    <div className={`flex items-center gap-1 ${statusInfo.color}`}>
-                      <StatusIcon className="h-4 w-4" />
-                      <span className="text-sm font-medium">{statusInfo.label}</span>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex justify-between items-center">
-                    {assessment.due_date && (
-                      <div className="text-sm">
-                        <span className="font-medium">Due: </span>
-                        <span className={isOverdue ? "text-red-500 font-medium" : ""}>
-                          {new Date(assessment.due_date).toLocaleDateString()}
+            </form>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Calendar className="h-5 w-5" />
+              Assessment Schedule
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4 max-h-96 overflow-y-auto">
+              {assessments.length === 0 ? (
+                <p className="text-muted-foreground text-center py-4">
+                  No assessments scheduled yet
+                </p>
+              ) : (
+                assessments.map((assessment) => (
+                  <div key={assessment.id} className="border rounded-lg p-3">
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium">{assessment.unit_code}</h4>
+                      <div className="flex items-center gap-1">
+                        {getStatusIcon(assessment.status)}
+                        <span className={`text-sm capitalize ${getStatusColor(assessment.status)}`}>
+                          {assessment.status.replace('_', ' ')}
                         </span>
                       </div>
+                    </div>
+                    <p className="text-sm font-medium mb-1">{assessment.unit_title}</p>
+                    <p className="text-sm text-muted-foreground mb-1">
+                      {assessment.assessment_type.replace('_', ' ')}
+                    </p>
+                    {assessment.due_date && (
+                      <p className="text-sm text-muted-foreground">
+                        Due: {new Date(assessment.due_date).toLocaleDateString()}
+                      </p>
                     )}
                     {assessment.grade && (
-                      <div className="text-sm">
-                        <span className="font-medium">Grade: </span>
-                        <span>{assessment.grade}</span>
-                      </div>
+                      <p className="text-sm font-medium text-green-600 mt-1">
+                        Grade: {assessment.grade}
+                      </p>
                     )}
                   </div>
-                  {assessment.feedback && (
-                    <div className="mt-2 text-sm text-muted-foreground">
-                      <span className="font-medium">Feedback: </span>
-                      {assessment.feedback}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            );
-          })
-        )}
+                ))
+              )}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

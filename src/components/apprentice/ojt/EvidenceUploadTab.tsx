@@ -6,8 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Upload, FileText, Plus, CheckCircle, Clock, AlertCircle } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Upload, FileText, CheckCircle, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -17,7 +16,6 @@ const EvidenceUploadTab = () => {
   const { user } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const [dialogOpen, setDialogOpen] = useState(false);
   
   const [evidenceItem, setEvidenceItem] = useState({
     title: "",
@@ -25,12 +23,12 @@ const EvidenceUploadTab = () => {
     evidence_type: "",
     learning_outcome: "",
     unit_reference: "",
-    date_achieved: new Date().toISOString().split('T')[0],
-    witness_name: ""
+    witness_name: "",
+    date_achieved: new Date().toISOString().split('T')[0]
   });
 
   // Fetch evidence uploads
-  const { data: evidenceUploads = [] } = useQuery({
+  const { data: evidenceItems = [] } = useQuery({
     queryKey: ['evidence-uploads', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
@@ -47,7 +45,7 @@ const EvidenceUploadTab = () => {
     enabled: !!user?.id
   });
 
-  // Add evidence upload mutation
+  // Add evidence mutation
   const addEvidenceMutation = useMutation({
     mutationFn: async (item: typeof evidenceItem) => {
       if (!user?.id) throw new Error('User not authenticated');
@@ -56,16 +54,9 @@ const EvidenceUploadTab = () => {
         .from('evidence_uploads')
         .insert({
           user_id: user.id,
-          title: item.title,
-          description: item.description,
-          evidence_type: item.evidence_type,
-          file_url: "placeholder-url", // This would be replaced with actual file upload
+          file_url: `placeholder-file-${Date.now()}`, // In real app, would upload file first
           file_name: `${item.title}.pdf`,
-          learning_outcome: item.learning_outcome,
-          unit_reference: item.unit_reference,
-          date_achieved: item.date_achieved,
-          witness_name: item.witness_name,
-          verification_status: 'pending'
+          ...item
         });
       
       if (error) throw error;
@@ -79,20 +70,12 @@ const EvidenceUploadTab = () => {
         evidence_type: "",
         learning_outcome: "",
         unit_reference: "",
-        date_achieved: new Date().toISOString().split('T')[0],
-        witness_name: ""
+        witness_name: "",
+        date_achieved: new Date().toISOString().split('T')[0]
       });
-      setDialogOpen(false);
       toast({
         title: "Evidence Added",
         description: "Your evidence has been uploaded successfully."
-      });
-    },
-    onError: (error) => {
-      toast({
-        title: "Error",
-        description: "Failed to add evidence. Please try again.",
-        variant: "destructive"
       });
     }
   });
@@ -110,114 +93,134 @@ const EvidenceUploadTab = () => {
     addEvidenceMutation.mutate(evidenceItem);
   };
 
-  const evidenceTypes = [
-    "Practical Work Evidence",
-    "Written Assessment",
-    "Project Documentation",
-    "Witness Statement",
-    "Photographic Evidence",
-    "Video Evidence",
-    "Certificate/Qualification",
-    "Professional Discussion"
-  ];
-
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'verified':
         return <CheckCircle className="h-4 w-4 text-green-500" />;
       case 'pending':
         return <Clock className="h-4 w-4 text-yellow-500" />;
-      case 'rejected':
-        return <AlertCircle className="h-4 w-4 text-red-500" />;
       default:
-        return <Clock className="h-4 w-4 text-gray-500" />;
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'verified':
-        return 'text-green-500';
-      case 'pending':
-        return 'text-yellow-500';
-      case 'rejected':
-        return 'text-red-500';
-      default:
-        return 'text-gray-500';
+        return <FileText className="h-4 w-4 text-gray-500" />;
     }
   };
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h3 className="text-lg font-semibold">Evidence Management</h3>
-          <p className="text-muted-foreground">
-            Upload and track evidence for your learning outcomes and assessments
-          </p>
-        </div>
-        
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="gap-2">
-              <Plus className="h-4 w-4" />
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Evidence</CardTitle>
+            <FileText className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{evidenceItems.length}</div>
+            <p className="text-xs text-muted-foreground">
+              Uploaded items
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Verified</CardTitle>
+            <CheckCircle className="h-4 w-4 text-green-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {evidenceItems.filter(item => item.verification_status === 'verified').length}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Approved evidence
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Pending</CardTitle>
+            <Clock className="h-4 w-4 text-yellow-500" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {evidenceItems.filter(item => item.verification_status === 'pending').length}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Awaiting review
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">This Month</CardTitle>
+            <Upload className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {evidenceItems.filter(item => {
+                const itemDate = new Date(item.created_at);
+                const monthAgo = new Date();
+                monthAgo.setMonth(monthAgo.getMonth() - 1);
+                return itemDate >= monthAgo;
+              }).length}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Recent uploads
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Upload className="h-5 w-5" />
               Upload Evidence
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl">
-            <DialogHeader>
-              <DialogTitle>Upload Evidence</DialogTitle>
-            </DialogHeader>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="title">Evidence Title</Label>
+                  <Label htmlFor="title">Title</Label>
                   <Input
                     id="title"
-                    placeholder="e.g. Lighting Circuit Installation"
+                    placeholder="e.g. Installation Certificate"
                     value={evidenceItem.title}
                     onChange={(e) => setEvidenceItem(prev => ({ ...prev, title: e.target.value }))}
                     required
                   />
                 </div>
                 <div>
-                  <Label htmlFor="evidence_type">Evidence Type</Label>
-                  <Select value={evidenceItem.evidence_type} onValueChange={(value) => setEvidenceItem(prev => ({ ...prev, evidence_type: value }))}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select evidence type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {evidenceTypes.map((type) => (
-                        <SelectItem key={type} value={type}>
-                          {type}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Label htmlFor="date">Date Achieved</Label>
+                  <Input
+                    id="date"
+                    type="date"
+                    value={evidenceItem.date_achieved}
+                    onChange={(e) => setEvidenceItem(prev => ({ ...prev, date_achieved: e.target.value }))}
+                    required
+                  />
                 </div>
               </div>
               
               <div>
-                <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
-                  placeholder="Describe the evidence and how it demonstrates your competency..."
-                  value={evidenceItem.description}
-                  onChange={(e) => setEvidenceItem(prev => ({ ...prev, description: e.target.value }))}
-                  rows={3}
-                />
+                <Label htmlFor="evidence_type">Evidence Type</Label>
+                <Select value={evidenceItem.evidence_type} onValueChange={(value) => setEvidenceItem(prev => ({ ...prev, evidence_type: value }))}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select evidence type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="certificate">Certificate</SelectItem>
+                    <SelectItem value="photo">Photograph</SelectItem>
+                    <SelectItem value="document">Document</SelectItem>
+                    <SelectItem value="report">Report</SelectItem>
+                    <SelectItem value="witness_statement">Witness Statement</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="learning_outcome">Learning Outcome</Label>
-                  <Input
-                    id="learning_outcome"
-                    placeholder="e.g. LO3: Install electrical systems"
-                    value={evidenceItem.learning_outcome}
-                    onChange={(e) => setEvidenceItem(prev => ({ ...prev, learning_outcome: e.target.value }))}
-                  />
-                </div>
                 <div>
                   <Label htmlFor="unit_reference">Unit Reference</Label>
                   <Input
@@ -227,24 +230,11 @@ const EvidenceUploadTab = () => {
                     onChange={(e) => setEvidenceItem(prev => ({ ...prev, unit_reference: e.target.value }))}
                   />
                 </div>
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="date_achieved">Date Achieved</Label>
-                  <Input
-                    id="date_achieved"
-                    type="date"
-                    value={evidenceItem.date_achieved}
-                    onChange={(e) => setEvidenceItem(prev => ({ ...prev, date_achieved: e.target.value }))}
-                    required
-                  />
-                </div>
                 <div>
                   <Label htmlFor="witness_name">Witness Name</Label>
                   <Input
                     id="witness_name"
-                    placeholder="Supervisor or mentor name"
+                    placeholder="e.g. Supervisor name"
                     value={evidenceItem.witness_name}
                     onChange={(e) => setEvidenceItem(prev => ({ ...prev, witness_name: e.target.value }))}
                   />
@@ -252,90 +242,71 @@ const EvidenceUploadTab = () => {
               </div>
               
               <div>
-                <Label htmlFor="file">Upload File</Label>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-                  <Upload className="h-8 w-8 mx-auto text-gray-400 mb-2" />
-                  <p className="text-sm text-gray-500">
-                    Click to upload or drag and drop
-                  </p>
-                  <p className="text-xs text-gray-400">
-                    PDF, DOC, JPG, PNG up to 10MB
-                  </p>
-                </div>
+                <Label htmlFor="learning_outcome">Learning Outcome</Label>
+                <Textarea
+                  id="learning_outcome"
+                  placeholder="Describe what learning outcome this evidence demonstrates..."
+                  value={evidenceItem.learning_outcome}
+                  onChange={(e) => setEvidenceItem(prev => ({ ...prev, learning_outcome: e.target.value }))}
+                  rows={2}
+                />
               </div>
               
-              <div className="flex gap-2">
-                <Button type="submit" disabled={addEvidenceMutation.isPending} className="flex-1">
-                  {addEvidenceMutation.isPending ? "Uploading..." : "Upload Evidence"}
-                </Button>
-                <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
-                  Cancel
-                </Button>
+              <div>
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  placeholder="Additional details about this evidence..."
+                  value={evidenceItem.description}
+                  onChange={(e) => setEvidenceItem(prev => ({ ...prev, description: e.target.value }))}
+                  rows={3}
+                />
               </div>
-            </form>
-          </DialogContent>
-        </Dialog>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {evidenceUploads.length === 0 ? (
-          <Card className="col-span-full">
-            <CardContent className="flex flex-col items-center justify-center py-8">
-              <FileText className="h-12 w-12 text-muted-foreground mb-4" />
-              <h3 className="text-lg font-medium mb-2">No Evidence Uploaded Yet</h3>
-              <p className="text-muted-foreground text-center mb-4">
-                Start uploading evidence to demonstrate your competencies and track your progress
-              </p>
-              <Button onClick={() => setDialogOpen(true)} className="gap-2">
-                <Upload className="h-4 w-4" />
-                Upload Your First Evidence
+              
+              <Button type="submit" className="w-full" disabled={addEvidenceMutation.isPending}>
+                {addEvidenceMutation.isPending ? "Adding..." : "Add Evidence"}
               </Button>
-            </CardContent>
-          </Card>
-        ) : (
-          evidenceUploads.map((item) => (
-            <Card key={item.id}>
-              <CardHeader>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <CardTitle className="text-lg">{item.title}</CardTitle>
-                    <p className="text-sm text-muted-foreground">{item.evidence_type}</p>
+            </form>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <FileText className="h-5 w-5" />
+              Recent Evidence
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4 max-h-96 overflow-y-auto">
+              {evidenceItems.length === 0 ? (
+                <p className="text-muted-foreground text-center py-4">
+                  No evidence uploaded yet
+                </p>
+              ) : (
+                evidenceItems.slice(0, 10).map((item) => (
+                  <div key={item.id} className="border rounded-lg p-3">
+                    <div className="flex justify-between items-start mb-2">
+                      <h4 className="font-medium">{item.title}</h4>
+                      <div className="flex items-center gap-1">
+                        {getStatusIcon(item.verification_status)}
+                        <span className="text-sm text-muted-foreground capitalize">
+                          {item.verification_status}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-1">
+                      {item.evidence_type} • {new Date(item.date_achieved).toLocaleDateString()}
+                    </p>
+                    {item.learning_outcome && (
+                      <p className="text-sm text-muted-foreground line-clamp-2">{item.learning_outcome}</p>
+                    )}
                   </div>
-                  <div className={`flex items-center gap-1 ${getStatusColor(item.verification_status)}`}>
-                    {getStatusIcon(item.verification_status)}
-                    <span className="text-xs font-medium capitalize">
-                      {item.verification_status}
-                    </span>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {item.description && (
-                  <p className="text-sm text-muted-foreground">{item.description}</p>
-                )}
-                
-                {item.learning_outcome && (
-                  <div>
-                    <span className="text-sm font-medium">Learning Outcome: </span>
-                    <span className="text-sm">{item.learning_outcome}</span>
-                  </div>
-                )}
-                
-                {item.unit_reference && (
-                  <div>
-                    <span className="text-sm font-medium">Unit: </span>
-                    <span className="text-sm">{item.unit_reference}</span>
-                  </div>
-                )}
-                
-                <div className="flex justify-between text-xs text-muted-foreground">
-                  <span>Achieved: {new Date(item.date_achieved).toLocaleDateString()}</span>
-                  {item.witness_name && <span>Witness: {item.witness_name}</span>}
-                </div>
-              </CardContent>
-            </Card>
-          ))
-        )}
+                ))
+              )}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
