@@ -88,7 +88,7 @@ const ComprehensiveTestingGuidesTab = () => {
                     </Badge>
                     <Badge className="bg-blue-500/20 text-blue-400">
                       <Clock className="h-3 w-3 mr-1" />
-                      {guide.estimatedTime}
+                      {guide.steps.length} steps
                     </Badge>
                   </div>
                 </div>
