@@ -9,6 +9,54 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      assessment_tracking: {
+        Row: {
+          assessment_type: string
+          attempts: number | null
+          completion_date: string | null
+          created_at: string
+          due_date: string | null
+          feedback: string | null
+          grade: string | null
+          id: string
+          status: string | null
+          unit_code: string
+          unit_title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          assessment_type: string
+          attempts?: number | null
+          completion_date?: string | null
+          created_at?: string
+          due_date?: string | null
+          feedback?: string | null
+          grade?: string | null
+          id?: string
+          status?: string | null
+          unit_code: string
+          unit_title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          assessment_type?: string
+          attempts?: number | null
+          completion_date?: string | null
+          created_at?: string
+          due_date?: string | null
+          feedback?: string | null
+          grade?: string | null
+          id?: string
+          status?: string | null
+          unit_code?: string
+          unit_title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       career_bookmarks: {
         Row: {
           career_path_id: string
@@ -111,6 +159,105 @@ export type Database = {
           last_updated?: string | null
           resource_id?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      compliance_tracking: {
+        Row: {
+          completed_hours: number | null
+          created_at: string
+          deadline: string | null
+          id: string
+          notes: string | null
+          requirement_name: string
+          requirement_type: string
+          status: string | null
+          target_hours: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_hours?: number | null
+          created_at?: string
+          deadline?: string | null
+          id?: string
+          notes?: string | null
+          requirement_name: string
+          requirement_type: string
+          status?: string | null
+          target_hours?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_hours?: number | null
+          created_at?: string
+          deadline?: string | null
+          id?: string
+          notes?: string | null
+          requirement_name?: string
+          requirement_type?: string
+          status?: string | null
+          target_hours?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      evidence_uploads: {
+        Row: {
+          created_at: string
+          date_achieved: string
+          description: string | null
+          evidence_type: string
+          file_name: string
+          file_size: number | null
+          file_url: string
+          id: string
+          learning_outcome: string | null
+          title: string
+          unit_reference: string | null
+          updated_at: string
+          user_id: string
+          verification_status: string | null
+          witness_name: string | null
+          witness_signature_url: string | null
+        }
+        Insert: {
+          created_at?: string
+          date_achieved: string
+          description?: string | null
+          evidence_type: string
+          file_name: string
+          file_size?: number | null
+          file_url: string
+          id?: string
+          learning_outcome?: string | null
+          title: string
+          unit_reference?: string | null
+          updated_at?: string
+          user_id: string
+          verification_status?: string | null
+          witness_name?: string | null
+          witness_signature_url?: string | null
+        }
+        Update: {
+          created_at?: string
+          date_achieved?: string
+          description?: string | null
+          evidence_type?: string
+          file_name?: string
+          file_size?: number | null
+          file_url?: string
+          id?: string
+          learning_outcome?: string | null
+          title?: string
+          unit_reference?: string | null
+          updated_at?: string
+          user_id?: string
+          verification_status?: string | null
+          witness_name?: string | null
+          witness_signature_url?: string | null
         }
         Relationships: []
       }
@@ -622,6 +769,54 @@ export type Database = {
           name?: string
           specialty?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      portfolio_items: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          file_type: string | null
+          file_url: string | null
+          grade: string | null
+          id: string
+          reflection_notes: string | null
+          skills_demonstrated: string[] | null
+          supervisor_feedback: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          grade?: string | null
+          id?: string
+          reflection_notes?: string | null
+          skills_demonstrated?: string[] | null
+          supervisor_feedback?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          file_type?: string | null
+          file_url?: string | null
+          grade?: string | null
+          id?: string
+          reflection_notes?: string | null
+          skills_demonstrated?: string[] | null
+          supervisor_feedback?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }

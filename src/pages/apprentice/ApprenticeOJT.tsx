@@ -1,89 +1,93 @@
-import { useState, useEffect } from "react";
-import { useToast } from "@/components/ui/use-toast";
-import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
-import OJTHeader from "@/components/apprentice/time-tracking/ojt/OJTHeader";
-import TrainingManagementCard from "@/components/apprentice/time-tracking/ojt/TrainingManagementCard";
-import TrainingGuideCard from "@/components/apprentice/time-tracking/ojt/TrainingGuideCard";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useTrackMilestones } from "@/hooks/useTrackMilestones";
-import { useLocation } from "react-router-dom";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Info } from "lucide-react";
-import TrackingStatusIndicator from "@/components/apprentice/time-tracking/ojt/TrackingStatusIndicator";
+
+import BackButton from "@/components/common/BackButton";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Clock, FileText, Target, Award, BarChart3, User } from "lucide-react";
+import TimeTrackingTab from "@/components/apprentice/ojt/TimeTrackingTab";
+import PortfolioBuildingTab from "@/components/apprentice/ojt/PortfolioBuildingTab";
+import EvidenceUploadTab from "@/components/apprentice/ojt/EvidenceUploadTab";
+import AssessmentTrackingTab from "@/components/apprentice/ojt/AssessmentTrackingTab";
+import ComplianceDashboardTab from "@/components/apprentice/ojt/ComplianceDashboardTab";
+import CareerPlanningTab from "@/components/apprentice/ojt/CareerPlanningTab";
 
 const ApprenticeOJT = () => {
-  const [weeklyHours, setWeeklyHours] = useState(8);
-  const [targetHours] = useState(40);
-  const [courseHours, setCourseHours] = useState(0);
-  const [activeTab, setActiveTab] = useState("auto"); // Default to auto-tracking
-  const { toast } = useToast();
-  const { totalTime } = useTimeEntries();
-  const isMobile = useIsMobile();
-  const location = useLocation();
-  
-  // Add milestone tracking
-  useTrackMilestones();
-
-  // Simulate loading course hours from various course pages
-  useEffect(() => {
-    // In a real implementation, this would come from Supabase
-    // For now, we'll check localStorage for any course time entries
-    let totalCourseTime = 0;
-    
-    // Loop through localStorage to find any course time entries
-    Object.keys(localStorage).forEach(key => {
-      if (key.startsWith('course_') && key.endsWith('_todayTime')) {
-        const timeValue = parseInt(localStorage.getItem(key) || '0');
-        totalCourseTime += timeValue;
-      }
-    });
-    
-    // Convert seconds to hours
-    setCourseHours(Math.round(totalCourseTime / 36) / 100); // rounded to 2 decimal places
-    
-    // Update weekly hours with course hours
-    setWeeklyHours(prev => {
-      const newTotal = 8 + (totalCourseTime / 3600);
-      return parseFloat(newTotal.toFixed(1));
-    });
-  }, [location.pathname]); // Re-run when location changes to capture new learning time
-
-  const handleDownloadReport = () => {
-    // The actual report download is now handled in OJTHeader component
-    // This function remains for backwards compatibility
-    toast({
-      title: "Report Generated",
-      description: "Your training report has been downloaded successfully."
-    });
-  };
-
   return (
-    <div className="space-y-6 pb-20 animate-fade-in">
-      {/* Only show header on desktop */}
-      {!isMobile && <OJTHeader handleDownloadReport={handleDownloadReport} />}
-      
-      {/* Add the training status indicator */}
-      <TrackingStatusIndicator />
-      
-      {/* Time tracking info banner */}
-      <Alert variant="default" className="bg-elec-gray/50 border-elec-yellow/30">
-        <Info className="h-4 w-4 text-elec-yellow" />
-        <AlertDescription className="text-sm">
-          Your training is now tracked in 30-minute sessions to simplify your records. All time is still captured even if you do shorter sessions.
-        </AlertDescription>
-      </Alert>
-      
-      {/* Clean layout for both mobile and desktop */}
-      <div className={isMobile ? "pb-24" : "space-y-6"}>
-        {/* Desktop only - Guide Card first */}
-        {!isMobile && <TrainingGuideCard />}
-        
-        {/* Training Management Card - Main Card for all layouts */}
-        <TrainingManagementCard 
-          initialActiveTab={activeTab}
-          className="border-elec-yellow/20"
-        />
+    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
+      <div className="flex flex-col items-center justify-center mb-6">
+        <h1 className="text-3xl font-bold tracking-tight mb-4">Off-the-Job Training Management</h1>
+        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+          Comprehensive tracking and management of your 20% off-the-job training requirements, portfolio building, and apprenticeship progression
+        </p>
+        <BackButton customUrl="/apprentice" label="Back to Apprentice Hub" />
       </div>
+
+      <Tabs defaultValue="time-tracking" className="w-full">
+        <TabsList className="grid w-full grid-cols-6">
+          <TabsTrigger value="time-tracking" className="flex items-center gap-2">
+            <Clock className="h-4 w-4" />
+            Time Tracking
+          </TabsTrigger>
+          <TabsTrigger value="portfolio" className="flex items-center gap-2">
+            <FileText className="h-4 w-4" />
+            Portfolio
+          </TabsTrigger>
+          <TabsTrigger value="evidence" className="flex items-center gap-2">
+            <Target className="h-4 w-4" />
+            Evidence
+          </TabsTrigger>
+          <TabsTrigger value="assessments" className="flex items-center gap-2">
+            <Award className="h-4 w-4" />
+            Assessments
+          </TabsTrigger>
+          <TabsTrigger value="compliance" className="flex items-center gap-2">
+            <BarChart3 className="h-4 w-4" />
+            Compliance
+          </TabsTrigger>
+          <TabsTrigger value="career" className="flex items-center gap-2">
+            <User className="h-4 w-4" />
+            Career Planning
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="time-tracking">
+          <TimeTrackingTab />
+        </TabsContent>
+
+        <TabsContent value="portfolio">
+          <PortfolioBuildingTab />
+        </TabsContent>
+
+        <TabsContent value="evidence">
+          <EvidenceUploadTab />
+        </TabsContent>
+
+        <TabsContent value="assessments">
+          <AssessmentTrackingTab />
+        </TabsContent>
+
+        <TabsContent value="compliance">
+          <ComplianceDashboardTab />
+        </TabsContent>
+
+        <TabsContent value="career">
+          <CareerPlanningTab />
+        </TabsContent>
+      </Tabs>
+
+      <Card className="border-green-500/50 bg-green-500/10">
+        <CardHeader>
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <Target className="h-5 w-5" />
+            Remember
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">
+            Your off-the-job training should constitute at least 20% of your working hours. Use this tool to track 
+            your progress, build your portfolio, and ensure you meet all apprenticeship requirements for successful completion.
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 };
