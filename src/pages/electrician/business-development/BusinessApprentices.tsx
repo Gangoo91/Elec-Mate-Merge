@@ -1,32 +1,136 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { GraduationCap, ArrowLeft } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { GraduationCap, ArrowLeft, Users, FileText, BookOpen, Phone, Calculator, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import RecruitmentTab from "@/components/electrician/business-development/apprentices/RecruitmentTab";
+import LegalRequirementsTab from "@/components/electrician/business-development/apprentices/LegalRequirementsTab";
+import TrainingDevelopmentTab from "@/components/electrician/business-development/apprentices/TrainingDevelopmentTab";
+import SupportResourcesTab from "@/components/electrician/business-development/apprentices/SupportResourcesTab";
+import AssessmentProgressTab from "@/components/electrician/business-development/apprentices/AssessmentProgressTab";
+import InteractiveToolsTab from "@/components/electrician/business-development/apprentices/InteractiveToolsTab";
 
 const BusinessApprentices = () => {
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex items-center gap-2">
         <Link to="/electrician/business-development">
           <Button variant="ghost" size="sm" className="gap-1">
             <ArrowLeft className="h-4 w-4" />
-            <span>Back</span>
+            <span>Back to Business Development</span>
           </Button>
         </Link>
-        <h1 className="text-2xl font-bold">Onboarding Apprentices</h1>
       </div>
-      
-      <Card className="border-elec-yellow/20">
+
+      <div className="flex flex-col items-center justify-center mb-6">
+        <h1 className="text-3xl font-bold tracking-tight mb-4">Apprentice Onboarding & Management</h1>
+        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+          Complete guide to recruiting, training, and supporting apprentices in your electrical contracting business
+        </p>
+      </div>
+
+      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-blue-500/10 mb-6">
         <CardHeader>
-          <div className="flex items-center gap-3">
-            <GraduationCap className="h-6 w-6 text-elec-yellow" />
-            <CardTitle>Apprentice Management</CardTitle>
-          </div>
-          <CardDescription>Best practices for recruiting, mentoring and developing apprentices</CardDescription>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <GraduationCap className="h-6 w-6" />
+            Why Apprentices Matter for Your Business
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <p>This section is under development. Check back soon for apprentice onboarding guidance.</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="text-center p-4 bg-elec-dark/50 rounded-lg">
+              <div className="text-2xl font-bold text-blue-400 mb-2">£3,000</div>
+              <div className="text-sm text-muted-foreground">Annual government incentive per apprentice</div>
+            </div>
+            <div className="text-center p-4 bg-elec-dark/50 rounded-lg">
+              <div className="text-2xl font-bold text-green-400 mb-2">85%</div>
+              <div className="text-sm text-muted-foreground">Retention rate for well-managed apprentices</div>
+            </div>
+            <div className="text-center p-4 bg-elec-dark/50 rounded-lg">
+              <div className="text-2xl font-bold text-purple-400 mb-2">4 Years</div>
+              <div className="text-sm text-muted-foreground">Time to develop a fully qualified electrician</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Tabs defaultValue="recruitment" className="w-full">
+        <TabsList className="grid w-full grid-cols-6 h-auto p-1">
+          <TabsTrigger value="recruitment" className="flex items-center gap-2 p-3">
+            <Users className="h-4 w-4" />
+            <span className="hidden sm:inline">Recruitment</span>
+          </TabsTrigger>
+          <TabsTrigger value="legal" className="flex items-center gap-2 p-3">
+            <FileText className="h-4 w-4" />
+            <span className="hidden sm:inline">Legal</span>
+          </TabsTrigger>
+          <TabsTrigger value="training" className="flex items-center gap-2 p-3">
+            <BookOpen className="h-4 w-4" />
+            <span className="hidden sm:inline">Training</span>
+          </TabsTrigger>
+          <TabsTrigger value="support" className="flex items-center gap-2 p-3">
+            <Phone className="h-4 w-4" />
+            <span className="hidden sm:inline">Support</span>
+          </TabsTrigger>
+          <TabsTrigger value="assessment" className="flex items-center gap-2 p-3">
+            <GraduationCap className="h-4 w-4" />
+            <span className="hidden sm:inline">Assessment</span>
+          </TabsTrigger>
+          <TabsTrigger value="tools" className="flex items-center gap-2 p-3">
+            <Calculator className="h-4 w-4" />
+            <span className="hidden sm:inline">Tools</span>
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="recruitment">
+          <RecruitmentTab />
+        </TabsContent>
+
+        <TabsContent value="legal">
+          <LegalRequirementsTab />
+        </TabsContent>
+
+        <TabsContent value="training">
+          <TrainingDevelopmentTab />
+        </TabsContent>
+
+        <TabsContent value="support">
+          <SupportResourcesTab />
+        </TabsContent>
+
+        <TabsContent value="assessment">
+          <AssessmentProgressTab />
+        </TabsContent>
+
+        <TabsContent value="tools">
+          <InteractiveToolsTab />
+        </TabsContent>
+      </Tabs>
+
+      <Card className="border-green-500/50 bg-green-500/10">
+        <CardHeader>
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <Heart className="h-5 w-5" />
+            Need Additional Support?
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground mb-4">
+            Managing apprentices successfully requires ongoing support and guidance. Don't hesitate to reach out 
+            for help with recruitment challenges, training issues, or legal compliance questions.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Button variant="outline" size="sm" className="border-elec-yellow/30">
+              Contact CITB for Support
+            </Button>
+            <Button variant="outline" size="sm" className="border-blue-500/30">
+              Find Local Training Providers
+            </Button>
+            <Button variant="outline" size="sm" className="border-green-500/30">
+              Access Government Resources
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>
