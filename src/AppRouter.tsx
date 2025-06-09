@@ -1,3 +1,4 @@
+
 import { Routes, Route, Navigate } from "react-router-dom";
 import LandingPage from "@/pages/LandingPage";
 import Index from "@/pages/Index";
@@ -75,7 +76,9 @@ const AppRouter = () => {
         
         {/* Apprentice Routes */}
         <Route path="apprentice/*" element={<ApprenticeRoutes />} />
-        <Route path="/apprentice/ojt" element={<EnhancedOJT />} />
+        
+        {/* Enhanced OJT Route */}
+        <Route path="apprentice/enhanced-ojt" element={<EnhancedOJT />} />
         
         {/* Catch-all route for 404 */}
         <Route path="*" element={<NotFound />} />
