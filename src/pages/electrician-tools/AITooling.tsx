@@ -1,10 +1,9 @@
 
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Brain, Image, FileText, Book, Zap, ArrowLeft, Lightbulb } from "lucide-react";
+import { Brain, Image, FileText, Book, Zap, Lightbulb } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import BackButton from "@/components/common/BackButton";
 import AIAssistant from "@/components/electrician-tools/ai-tools/AIAssistant";
 import VisualAnalysis from "@/components/electrician-tools/ai-tools/VisualAnalysis";
 import ReportWriter from "@/components/electrician-tools/ai-tools/ReportWriter";
@@ -21,11 +20,7 @@ const AITooling = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Advanced AI tools to enhance your electrical work efficiency and accuracy with UK standards compliance
         </p>
-        <Link to="/electrician-tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Electrician Tools
-          </Button>
-        </Link>
+        <BackButton customUrl="/electrician-tools" label="Back to Electrician Tools" />
       </div>
 
       <Tabs defaultValue="assistant" value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -78,9 +73,9 @@ const AITooling = () => {
         </TabsContent>
       </Tabs>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-green-500/50 bg-green-500/10">
         <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
+          <CardTitle className="text-green-300 flex items-center gap-2">
             <Lightbulb className="h-5 w-5" />
             AI Tools Best Practices
           </CardTitle>
