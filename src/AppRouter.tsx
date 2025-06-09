@@ -1,4 +1,3 @@
-
 import { Routes, Route, Navigate } from "react-router-dom";
 import LandingPage from "@/pages/LandingPage";
 import Index from "@/pages/Index";
@@ -28,6 +27,7 @@ import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
 import RightsAndPay from "@/pages/apprentice/RightsAndPay";
 import Chat from "@/pages/Chat";
 import NotificationsPage from "@/pages/NotificationsPage";
+import EnhancedOJT from '@/pages/apprentice/EnhancedOJT';
 
 const AppRouter = () => {
   return (
@@ -75,6 +75,7 @@ const AppRouter = () => {
         
         {/* Apprentice Routes */}
         <Route path="apprentice/*" element={<ApprenticeRoutes />} />
+        <Route path="/apprentice/ojt" element={<EnhancedOJT />} />
         
         {/* Catch-all route for 404 */}
         <Route path="*" element={<NotFound />} />
