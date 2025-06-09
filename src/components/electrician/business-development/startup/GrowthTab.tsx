@@ -2,199 +2,195 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { TrendingUp, Users, Star, Target, Megaphone, Award, ExternalLink } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { TrendingUp, Users, Target, Zap, Globe, MessageSquare, Award, CheckCircle, Download, Star } from "lucide-react";
 
 const GrowthTab = () => {
+  const growthStrategies = [
+    {
+      phase: "Foundation (0-6 months)",
+      focus: "Establish reputation and local presence",
+      strategies: [
+        "Complete first 50 jobs with excellence",
+        "Build Google My Business profile",
+        "Collect customer testimonials",
+        "Join local Facebook groups",
+        "Network with local tradespeople"
+      ],
+      targets: ["5-star Google rating", "20+ reviews", "Repeat customers"]
+    },
+    {
+      phase: "Growth (6-18 months)",
+      focus: "Scale operations and expand services",
+      strategies: [
+        "Develop specialisation areas",
+        "Implement referral program",
+        "Create professional website",
+        "Start social media marketing",
+        "Consider apprentice or subcontractor"
+      ],
+      targets: ["50+ jobs/month", "£8K+ monthly revenue", "Service diversification"]
+    },
+    {
+      phase: "Expansion (18+ months)",
+      focus: "Team building and market leadership",
+      strategies: [
+        "Hire qualified electricians",
+        "Expand service territory",
+        "Commercial contract bidding",
+        "Advanced certifications",
+        "Consider franchising opportunities"
+      ],
+      targets: ["Team of 3-5", "£15K+ monthly revenue", "Market recognition"]
+    }
+  ];
+
   const marketingChannels = [
     {
       channel: "Google My Business",
       cost: "Free",
+      effectiveness: 95,
       timeframe: "Immediate",
-      roi: "High",
-      effort: "Low",
-      description: "Essential for local search visibility and customer reviews"
+      description: "Essential for local visibility and credibility"
     },
     {
       channel: "Word of Mouth/Referrals",
-      cost: "Free",
+      cost: "Free-Low",
+      effectiveness: 90,
       timeframe: "3-6 months",
-      roi: "Very High",
-      effort: "Medium",
-      description: "Most cost-effective long-term customer acquisition"
+      description: "Most trusted and cost-effective marketing"
     },
     {
-      channel: "Local Facebook Groups",
+      channel: "Facebook Local Groups",
       cost: "Free",
-      timeframe: "1-2 weeks",
-      roi: "Medium",
-      effort: "Low",
-      description: "Build local community presence and credibility"
+      effectiveness: 75,
+      timeframe: "1-3 months",
+      description: "Great for community engagement"
     },
     {
-      channel: "Van Signage & Uniforms",
-      cost: "£500-£1,500",
-      timeframe: "1-2 weeks",
-      roi: "Medium",
-      effort: "Low",
-      description: "Mobile advertising and professional appearance"
+      channel: "Checkatrade/Rated People",
+      cost: "£30-100/month",
+      effectiveness: 70,
+      timeframe: "1-2 months",
+      description: "Lead generation platforms"
     },
     {
-      channel: "Builder Partnerships",
-      cost: "Time investment",
+      channel: "Local Newspaper Ads",
+      cost: "£50-200/month",
+      effectiveness: 45,
       timeframe: "2-4 months",
-      roi: "High",
-      effort: "High",
-      description: "Consistent work flow through trade relationships"
-    },
-    {
-      channel: "Google Ads",
-      cost: "£300-£800/month",
-      timeframe: "1-2 weeks",
-      roi: "Medium",
-      effort: "Medium",
-      description: "Paid search advertising for immediate visibility"
+      description: "Traditional but declining effectiveness"
     }
   ];
 
-  const growthMilestones = [
+  const specialisationAreas = [
     {
-      milestone: "First 100 Jobs",
-      timeframe: "Months 1-6",
-      revenue: "£15K-£30K",
-      focus: "Quality delivery, customer satisfaction, local reputation"
+      area: "Smart Home Technology",
+      growth_potential: "High",
+      investment: "Medium",
+      skills_needed: [
+        "Home automation systems",
+        "Smart lighting controls",
+        "Security system integration",
+        "Network installation"
+      ],
+      market_demand: "Growing rapidly",
+      premium: "30-50% higher rates"
     },
     {
-      milestone: "Consistent Monthly Income",
-      timeframe: "Months 6-12",
-      revenue: "£3K-£5K/month",
-      focus: "Systems optimization, repeat customers, referral network"
+      area: "Electric Vehicle Charging",
+      growth_potential: "Very High",
+      investment: "High",
+      skills_needed: [
+        "EV charger installation",
+        "Government grant schemes",
+        "Load balancing systems",
+        "Commercial charging points"
+      ],
+      market_demand: "Explosive growth",
+      premium: "40-60% higher rates"
     },
     {
-      milestone: "Business Expansion",
-      timeframe: "Year 2-3",
-      revenue: "£50K-£80K/year",
-      focus: "Subcontractors, specialization, commercial clients"
-    },
-    {
-      milestone: "Team Building",
-      timeframe: "Year 3-5",
-      revenue: "£100K+/year",
-      focus: "Apprentices, multiple crews, management systems"
+      area: "Solar PV & Battery Storage",
+      growth_potential: "High",
+      investment: "High",
+      skills_needed: [
+        "Solar panel installation",
+        "Battery storage systems",
+        "Grid tie systems",
+        "Energy monitoring"
+      ],
+      market_demand: "Strong and growing",
+      premium: "35-55% higher rates"
     }
   ];
 
-  const specializations = [
+  const teamBuilding = [
     {
-      area: "Renewable Energy",
-      demand: "Very High",
-      investment: "£2K-£5K",
-      qualifications: "Solar PV, EV charging courses",
-      potential: "£40K-£80K additional revenue"
+      role: "Apprentice Electrician",
+      timing: "6-12 months",
+      cost: "£12-18K/year",
+      benefits: ["Reduces workload", "Future skilled worker", "Government incentives"],
+      requirements: ["Training time investment", "Mentoring skills", "Patience"]
     },
     {
-      area: "Commercial/Industrial",
-      demand: "High",
-      investment: "£3K-£10K",
-      qualifications: "18th Edition, Inspection & Testing",
-      potential: "£20K-£50K additional revenue"
+      role: "Qualified Electrician",
+      timing: "12-18 months",
+      cost: "£25-35K/year",
+      benefits: ["Immediate productivity", "Handle complex work", "Cover more ground"],
+      requirements: ["Higher wages", "Insurance costs", "Management skills"]
     },
     {
-      area: "Smart Home Systems",
-      demand: "Growing",
-      investment: "£1K-£3K",
-      qualifications: "KNX, home automation training",
-      potential: "£15K-£30K additional revenue"
-    },
-    {
-      area: "Fire & Security",
-      demand: "Stable",
-      investment: "£2K-£6K",
-      qualifications: "FIA courses, security systems",
-      potential: "£25K-£45K additional revenue"
+      role: "Administrative Assistant",
+      timing: "18-24 months",
+      cost: "£15-25K/year",
+      benefits: ["Handle bookings", "Manage paperwork", "Customer service"],
+      requirements: ["Office space", "Equipment", "Training time"]
     }
   ];
 
-  const getRoiColor = (roi: string) => {
-    switch (roi) {
-      case 'Very High': return 'bg-green-600/20 text-green-300 border-green-500/30';
-      case 'High': return 'bg-green-500/20 text-green-400 border-green-500/30';
-      case 'Medium': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-      case 'Low': return 'bg-red-500/20 text-red-400 border-red-500/30';
-      default: return 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30';
-    }
+  const getEffectivenessColor = (effectiveness: number) => {
+    if (effectiveness >= 80) return "bg-green-500";
+    if (effectiveness >= 60) return "bg-amber-500";
+    return "bg-red-500";
   };
 
-  const getDemandColor = (demand: string) => {
-    switch (demand) {
-      case 'Very High': return 'bg-green-600/20 text-green-300';
-      case 'High': return 'bg-green-500/20 text-green-400';
-      case 'Growing': return 'bg-blue-500/20 text-blue-400';
-      case 'Stable': return 'bg-amber-500/20 text-amber-400';
+  const getGrowthColor = (potential: string) => {
+    switch (potential) {
+      case 'Very High': return 'bg-green-500/20 text-green-400';
+      case 'High': return 'bg-blue-500/20 text-blue-400';
+      case 'Medium': return 'bg-amber-500/20 text-amber-400';
       default: return 'bg-elec-yellow/20 text-elec-yellow';
     }
   };
 
   return (
     <div className="space-y-6">
-      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/5 to-blue-500/5">
+      <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/5 to-pink-500/5">
         <CardHeader>
-          <CardTitle className="text-green-400 flex items-center gap-2">
+          <CardTitle className="text-purple-400 flex items-center gap-2">
             <TrendingUp className="h-5 w-5" />
-            Business Growth Strategy Overview
+            Business Growth Roadmap
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
-              <div className="text-2xl font-bold text-blue-400">6</div>
-              <div className="text-sm text-muted-foreground">Marketing Channels</div>
-            </div>
             <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
-              <div className="text-2xl font-bold text-green-400">4</div>
-              <div className="text-sm text-muted-foreground">Growth Stages</div>
+              <div className="text-2xl font-bold text-green-400">Year 1</div>
+              <div className="text-sm text-muted-foreground">£50K Revenue</div>
+            </div>
+            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
+              <div className="text-2xl font-bold text-blue-400">Year 2</div>
+              <div className="text-sm text-muted-foreground">£100K Revenue</div>
             </div>
             <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
-              <div className="text-2xl font-bold text-purple-400">4</div>
-              <div className="text-sm text-muted-foreground">Specialization Areas</div>
+              <div className="text-2xl font-bold text-purple-400">Year 3</div>
+              <div className="text-sm text-muted-foreground">£200K Revenue</div>
             </div>
             <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/20">
-              <div className="text-2xl font-bold text-amber-400">3-5yr</div>
-              <div className="text-sm text-muted-foreground">Scale Timeline</div>
+              <div className="text-2xl font-bold text-amber-400">5-10</div>
+              <div className="text-sm text-muted-foreground">Team Members</div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
-            <Megaphone className="h-5 w-5 text-elec-yellow" />
-            Marketing & Customer Acquisition
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {marketingChannels.map((channel, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-semibold text-white">{channel.channel}</h4>
-                  <Badge className={getRoiColor(channel.roi)}>
-                    {channel.roi} ROI
-                  </Badge>
-                </div>
-                <p className="text-sm text-muted-foreground mb-3">{channel.description}</p>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div>
-                    <span className="text-muted-foreground">Cost:</span>
-                    <div className="text-green-400">{channel.cost}</div>
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground">Timeline:</span>
-                    <div className="text-blue-400">{channel.timeframe}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </CardContent>
       </Card>
@@ -203,58 +199,171 @@ const GrowthTab = () => {
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
             <Target className="h-5 w-5 text-elec-yellow" />
-            Growth Milestones & Targets
+            Growth Phase Strategy
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {growthMilestones.map((milestone, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-semibold text-white">{milestone.milestone}</h4>
-                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                    {milestone.revenue}
-                  </Badge>
-                </div>
-                <div className="flex items-center gap-4 mb-2">
-                  <span className="text-sm text-blue-400">📅 {milestone.timeframe}</span>
-                </div>
-                <p className="text-sm text-muted-foreground">{milestone.focus}</p>
+        <CardContent className="space-y-6">
+          {growthStrategies.map((phase, index) => (
+            <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="font-semibold text-elec-yellow">{phase.phase}</h4>
+                <Badge className="bg-blue-500/20 text-blue-400">{phase.focus}</Badge>
               </div>
-            ))}
-          </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h5 className="font-medium text-white mb-2">Key Strategies:</h5>
+                  <ul className="space-y-1">
+                    {phase.strategies.map((strategy, strategyIndex) => (
+                      <li key={strategyIndex} className="flex items-start gap-2 text-sm">
+                        <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
+                        {strategy}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div>
+                  <h5 className="font-medium text-white mb-2">Success Targets:</h5>
+                  <ul className="space-y-1">
+                    {phase.targets.map((target, targetIndex) => (
+                      <li key={targetIndex} className="flex items-start gap-2 text-sm">
+                        <Star className="h-3 w-3 text-amber-400 mt-1 flex-shrink-0" />
+                        {target}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          ))}
         </CardContent>
       </Card>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center gap-2">
+              <MessageSquare className="h-5 w-5 text-elec-yellow" />
+              Marketing Channels
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {marketingChannels.map((channel, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+                <div className="flex items-start justify-between mb-2">
+                  <h4 className="font-semibold text-white">{channel.channel}</h4>
+                  <Badge className="bg-green-500/20 text-green-400">{channel.cost}</Badge>
+                </div>
+                <p className="text-sm text-muted-foreground mb-3">{channel.description}</p>
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs">Effectiveness</span>
+                    <span className="text-xs font-medium">{channel.effectiveness}%</span>
+                  </div>
+                  <Progress 
+                    value={channel.effectiveness} 
+                    className="h-2"
+                  />
+                  <div className="text-xs text-blue-400">Time to see results: {channel.timeframe}</div>
+                </div>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center gap-2">
+              <Zap className="h-5 w-5 text-elec-yellow" />
+              Specialisation Opportunities
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {specialisationAreas.map((area, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+                <div className="flex items-start justify-between mb-2">
+                  <h4 className="font-semibold text-white">{area.area}</h4>
+                  <Badge className={getGrowthColor(area.growth_potential)}>
+                    {area.growth_potential}
+                  </Badge>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-2 text-xs mb-3">
+                  <div>
+                    <span className="text-muted-foreground">Investment: </span>
+                    <span className="text-amber-400">{area.investment}</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Premium: </span>
+                    <span className="text-green-400">{area.premium}</span>
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="text-xs text-blue-400">Market: {area.market_demand}</div>
+                  <div>
+                    <span className="text-xs font-medium text-white">Key Skills:</span>
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {area.skills_needed.map((skill, skillIndex) => (
+                        <Badge key={skillIndex} variant="outline" className="text-xs">
+                          {skill}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
 
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
-            <Award className="h-5 w-5 text-elec-yellow" />
-            Specialization Opportunities
+            <Users className="h-5 w-5 text-elec-yellow" />
+            Team Building Strategy
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {specializations.map((spec, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-semibold text-white">{spec.area}</h4>
-                  <Badge className={getDemandColor(spec.demand)}>
-                    {spec.demand}
-                  </Badge>
-                </div>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Investment:</span>
-                    <span className="text-amber-400">{spec.investment}</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {teamBuilding.map((member, index) => (
+              <div key={index} className="bg-elec-dark p-4 rounded-lg border border-elec-yellow/10">
+                <h4 className="font-semibold text-elec-yellow mb-2">{member.role}</h4>
+                <div className="space-y-3">
+                  <div>
+                    <div className="text-xs text-muted-foreground">Timing</div>
+                    <div className="text-sm text-blue-400">{member.timing}</div>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Training:</span>
-                    <span className="text-blue-400">{spec.qualifications}</span>
+                  <div>
+                    <div className="text-xs text-muted-foreground">Annual Cost</div>
+                    <div className="text-sm text-green-400">{member.cost}</div>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Potential:</span>
-                    <span className="text-green-400">{spec.potential}</span>
+                  
+                  <div>
+                    <div className="text-xs font-medium text-white mb-1">Benefits:</div>
+                    <ul className="space-y-1">
+                      {member.benefits.map((benefit, benefitIndex) => (
+                        <li key={benefitIndex} className="flex items-start gap-1 text-xs">
+                          <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                          {benefit}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <div className="text-xs font-medium text-white mb-1">Requirements:</div>
+                    <ul className="space-y-1">
+                      {member.requirements.map((req, reqIndex) => (
+                        <li key={reqIndex} className="flex items-start gap-1 text-xs">
+                          <Star className="h-3 w-3 text-amber-400 mt-0.5 flex-shrink-0" />
+                          {req}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -263,45 +372,64 @@ const GrowthTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-blue-500/30 bg-blue-500/10">
+      <Card className="border-green-500/30 bg-green-500/10">
         <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
-            <Star className="h-5 w-5" />
-            Scaling Success Strategies
+          <CardTitle className="text-green-400 flex items-center gap-2">
+            <Award className="h-5 w-5" />
+            Scaling Success Factors
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h4 className="font-semibold mb-3 text-blue-300">Customer Retention</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Implement customer loyalty programs</li>
-                <li>• Regular maintenance contracts and annual checks</li>
-                <li>• Excellent after-service support and warranties</li>
-                <li>• Professional follow-up and relationship building</li>
-                <li>• Collect and showcase customer testimonials</li>
+              <h4 className="font-semibold text-green-300 mb-3">Financial Management</h4>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  Reinvest 20-30% of profits into growth
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  Maintain strong cash flow management
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  Track key performance indicators (KPIs)
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  Regular financial reviews and planning
+                </li>
               </ul>
             </div>
+            
             <div>
-              <h4 className="font-semibold mb-3 text-blue-300">Business Development</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Network with local construction companies</li>
-                <li>• Join trade associations and networking groups</li>
-                <li>• Develop expertise in emerging technologies</li>
-                <li>• Consider franchise or partnership opportunities</li>
-                <li>• Plan for apprentice training and development</li>
+              <h4 className="font-semibold text-green-300 mb-3">Leadership Development</h4>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  Develop delegation and management skills
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  Create standard operating procedures
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  Build a strong company culture
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  Invest in continuous learning
+                </li>
               </ul>
             </div>
           </div>
           
-          <div className="mt-6 pt-4 border-t border-blue-500/20 flex gap-3">
-            <Button className="bg-blue-500 text-blue-900 hover:bg-blue-400">
-              <Users className="h-4 w-4 mr-2" />
-              Networking Resources
-            </Button>
-            <Button variant="outline" className="border-blue-500/30">
-              <ExternalLink className="h-4 w-4 mr-2" />
-              Growth Calculator
+          <div className="mt-6 pt-4 border-t border-green-500/20">
+            <Button className="bg-green-500 text-green-900 hover:bg-green-400">
+              <Download className="h-4 w-4 mr-2" />
+              Download Growth Strategy Template
             </Button>
           </div>
         </CardContent>

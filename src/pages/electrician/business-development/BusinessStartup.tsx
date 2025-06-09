@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,6 +9,8 @@ import LegalSetupTab from "@/components/electrician/business-development/startup
 import FinanceTab from "@/components/electrician/business-development/startup/FinanceTab";
 import OperationsTab from "@/components/electrician/business-development/startup/OperationsTab";
 import GrowthTab from "@/components/electrician/business-development/startup/GrowthTab";
+import BusinessCalculator from "@/components/electrician/business-development/startup/BusinessCalculator";
+import LegalRequirementsChecklist from "@/components/electrician/business-development/startup/LegalRequirementsChecklist";
 
 const BusinessStartup = () => {
   const [activeTab, setActiveTab] = useState("legal");
@@ -82,6 +83,12 @@ const BusinessStartup = () => {
               </div>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Interactive Tools Section */}
+        <div className="space-y-6">
+          <BusinessCalculator />
+          <LegalRequirementsChecklist />
         </div>
 
         {/* Main Content Tabs */}

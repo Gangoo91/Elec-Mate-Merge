@@ -2,75 +2,73 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { PoundSterling, TrendingUp, Calculator, CreditCard, Lightbulb, ExternalLink } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { PoundSterling, TrendingUp, Calculator, CreditCard, Building, AlertTriangle, CheckCircle, Download } from "lucide-react";
 
 const FinanceTab = () => {
   const startupCosts = [
     {
+      category: "Legal & Registration",
+      items: [
+        { name: "Company Registration", cost: "£12-50", required: true },
+        { name: "Public Liability Insurance", cost: "£200-500", required: true },
+        { name: "Professional Indemnity", cost: "£300-800", required: false },
+        { name: "Legal Documentation", cost: "£500-1500", required: true }
+      ]
+    },
+    {
       category: "Equipment & Tools",
       items: [
-        { name: "Multifunction Tester (MFT)", cost: "£800-£1,500" },
-        { name: "Basic Hand Tools", cost: "£300-£600" },
-        { name: "Power Tools", cost: "£400-£800" },
-        { name: "PPE & Safety Equipment", cost: "£200-£400" }
-      ],
-      total: "£1,700-£3,300"
+        { name: "Basic Tool Kit", cost: "£500-1500", required: true },
+        { name: "Test Equipment (MFT)", cost: "£1000-3000", required: true },
+        { name: "Van/Vehicle", cost: "£5000-15000", required: true },
+        { name: "Ladder & Access Equipment", cost: "£200-800", required: true }
+      ]
     },
     {
-      category: "Transport & Storage",
+      category: "Business Operations",
       items: [
-        { name: "Van Purchase/Lease", cost: "£15,000-£25,000" },
-        { name: "Van Racking System", cost: "£800-£1,500" },
-        { name: "Van Signage", cost: "£300-£800" },
-        { name: "Insurance & Tax", cost: "£2,000-£3,500/year" }
-      ],
-      total: "£18,100-£30,800"
-    },
-    {
-      category: "Professional Setup",
-      items: [
-        { name: "Scheme Membership (NICEIC/NAPIT)", cost: "£500-£800" },
-        { name: "Public Liability Insurance", cost: "£200-£500" },
-        { name: "Professional Indemnity", cost: "£300-£800" },
-        { name: "Accountancy Software", cost: "£200-£400/year" }
-      ],
-      total: "£1,200-£2,500"
+        { name: "Website & Branding", cost: "£500-2000", required: false },
+        { name: "Marketing Materials", cost: "£200-500", required: false },
+        { name: "Mobile Phone & Contract", cost: "£30-60/month", required: true },
+        { name: "Accounting Software", cost: "£20-50/month", required: true }
+      ]
     }
   ];
 
-  const monthlyExpenses = [
-    { category: "Vehicle", amount: "£400-£600", description: "Fuel, maintenance, insurance" },
-    { category: "Insurance", amount: "£100-£150", description: "All business insurances" },
-    { category: "Subscriptions", amount: "£50-£100", description: "Software, memberships" },
-    { category: "Marketing", amount: "£200-£500", description: "Website, advertising" },
-    { category: "Office/Admin", amount: "£100-£200", description: "Phone, internet, stationery" }
+  const fundingOptions = [
+    {
+      type: "Start Up Loans",
+      description: "Government-backed loans up to £25,000",
+      rate: "6% fixed",
+      term: "1-5 years",
+      pros: ["Low interest rate", "Government backing", "Mentoring support"],
+      cons: ["Personal guarantee required", "Strict eligibility criteria"]
+    },
+    {
+      type: "Business Bank Loan",
+      description: "Traditional bank financing",
+      rate: "4-12%",
+      term: "1-10 years",
+      pros: ["Flexible amounts", "Established process", "Relationship building"],
+      cons: ["Requires good credit", "Collateral often needed"]
+    },
+    {
+      type: "Asset Finance",
+      description: "Financing for equipment and vehicles",
+      rate: "3-8%",
+      term: "2-7 years",
+      pros: ["Equipment as security", "Preserve cash flow", "Tax benefits"],
+      cons: ["Limited to asset value", "Higher rates than secured loans"]
+    }
   ];
 
-  const pricingGuidelines = [
-    {
-      service: "Consumer Unit Change",
-      dayRate: "£250-£400",
-      materials: "£150-£300",
-      profit: "£100-£250"
-    },
-    {
-      service: "Full House Rewire (3-bed)",
-      dayRate: "£1,500-£2,500",
-      materials: "£800-£1,200",
-      profit: "£700-£1,300"
-    },
-    {
-      service: "Additional Socket/Light",
-      dayRate: "£80-£150",
-      materials: "£15-£40",
-      profit: "£65-£110"
-    },
-    {
-      service: "EICR Testing",
-      dayRate: "£200-£350",
-      materials: "£10-£30",
-      profit: "£190-£320"
-    }
+  const cashFlowProjection = [
+    { month: "Month 1", income: 2000, expenses: 4500, net: -2500 },
+    { month: "Month 2", income: 3500, expenses: 3200, net: 300 },
+    { month: "Month 3", income: 5000, expenses: 3500, net: 1500 },
+    { month: "Month 6", income: 8000, expenses: 4000, net: 4000 },
+    { month: "Month 12", income: 12000, expenses: 5000, net: 7000 }
   ];
 
   return (
@@ -84,53 +82,22 @@ const FinanceTab = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-red-500/10 rounded-lg p-4 border border-red-500/20">
-              <div className="text-2xl font-bold text-red-400">£25K-40K</div>
+            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
+              <div className="text-2xl font-bold text-blue-400">£3K-8K</div>
               <div className="text-sm text-muted-foreground">Initial Investment</div>
-            </div>
-            <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/20">
-              <div className="text-2xl font-bold text-amber-400">£850-1,550</div>
-              <div className="text-sm text-muted-foreground">Monthly Expenses</div>
             </div>
             <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
               <div className="text-2xl font-bold text-green-400">£2K-4K</div>
-              <div className="text-sm text-muted-foreground">Monthly Target</div>
+              <div className="text-sm text-muted-foreground">Monthly Expenses</div>
             </div>
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
-              <div className="text-2xl font-bold text-blue-400">6-12</div>
-              <div className="text-sm text-muted-foreground">Months Break-even</div>
+            <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
+              <div className="text-2xl font-bold text-purple-400">£35-65</div>
+              <div className="text-sm text-muted-foreground">Hourly Rate Target</div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center gap-2">
-            <CreditCard className="h-5 w-5 text-elec-yellow" />
-            Startup Investment Breakdown
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {startupCosts.map((category, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex justify-between items-center mb-4">
-                  <h4 className="font-semibold text-elec-yellow">{category.category}</h4>
-                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                    {category.total}
-                  </Badge>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {category.items.map((item, itemIndex) => (
-                    <div key={itemIndex} className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">{item.name}</span>
-                      <span className="text-white font-mono">{item.cost}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+            <div className="bg-amber-500/10 rounded-lg p-4 border border-amber-500/20">
+              <div className="text-2xl font-bold text-amber-400">6-12</div>
+              <div className="text-sm text-muted-foreground">Months to Profit</div>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -139,98 +106,191 @@ const FinanceTab = () => {
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-elec-yellow" />
-              Monthly Operating Costs
+              <Calculator className="h-5 w-5 text-elec-yellow" />
+              Startup Cost Breakdown
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {monthlyExpenses.map((expense, index) => (
-                <div key={index} className="flex justify-between items-center p-3 bg-elec-dark/50 rounded-lg">
-                  <div>
-                    <div className="font-medium text-white">{expense.category}</div>
-                    <div className="text-xs text-muted-foreground">{expense.description}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-bold text-elec-yellow">{expense.amount}</div>
-                    <div className="text-xs text-muted-foreground">per month</div>
-                  </div>
+          <CardContent className="space-y-6">
+            {startupCosts.map((category, index) => (
+              <div key={index}>
+                <h4 className="font-semibold text-elec-yellow mb-3">{category.category}</h4>
+                <div className="space-y-2">
+                  {category.items.map((item, itemIndex) => (
+                    <div key={itemIndex} className="flex justify-between items-center p-2 border border-elec-yellow/10 rounded">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm">{item.name}</span>
+                        <Badge className={item.required ? "bg-red-500/20 text-red-400" : "bg-green-500/20 text-green-400"}>
+                          {item.required ? "Required" : "Optional"}
+                        </Badge>
+                      </div>
+                      <span className="text-green-400 font-medium">{item.cost}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </CardContent>
         </Card>
 
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
             <CardTitle className="text-white flex items-center gap-2">
-              <Calculator className="h-5 w-5 text-elec-yellow" />
-              Pricing Guidelines
+              <CreditCard className="h-5 w-5 text-elec-yellow" />
+              Funding Options
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {pricingGuidelines.map((service, index) => (
-                <div key={index} className="border border-elec-yellow/20 rounded-lg p-3">
-                  <h5 className="font-medium text-white mb-2">{service.service}</h5>
-                  <div className="grid grid-cols-3 gap-2 text-xs">
-                    <div>
-                      <span className="text-muted-foreground">Total:</span>
-                      <div className="font-mono text-blue-400">{service.dayRate}</div>
+          <CardContent className="space-y-4">
+            {fundingOptions.map((option, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+                <div className="flex items-start justify-between mb-2">
+                  <h4 className="font-semibold text-white">{option.type}</h4>
+                  <Badge className="bg-blue-500/20 text-blue-400">{option.rate}</Badge>
+                </div>
+                <p className="text-sm text-muted-foreground mb-3">{option.description}</p>
+                <div className="text-xs text-blue-400 mb-2">Term: {option.term}</div>
+                
+                <div className="grid grid-cols-2 gap-3 mt-3">
+                  <div>
+                    <div className="text-xs font-medium text-green-400 mb-1">Pros:</div>
+                    <ul className="text-xs space-y-1">
+                      {option.pros.map((pro, i) => (
+                        <li key={i} className="flex items-center gap-1">
+                          <CheckCircle className="h-3 w-3 text-green-400" />
+                          {pro}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <div className="text-xs font-medium text-red-400 mb-1">Cons:</div>
+                    <ul className="text-xs space-y-1">
+                      {option.cons.map((con, i) => (
+                        <li key={i} className="flex items-center gap-1">
+                          <AlertTriangle className="h-3 w-3 text-red-400" />
+                          {con}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="text-white flex items-center gap-2">
+            <TrendingUp className="h-5 w-5 text-elec-yellow" />
+            Cash Flow Projection
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+              {cashFlowProjection.map((period, index) => (
+                <div key={index} className="bg-elec-dark p-4 rounded-lg border border-elec-yellow/10">
+                  <div className="text-sm font-medium text-elec-yellow mb-2">{period.month}</div>
+                  <div className="space-y-1 text-xs">
+                    <div className="flex justify-between">
+                      <span>Income:</span>
+                      <span className="text-green-400">£{period.income}</span>
                     </div>
-                    <div>
-                      <span className="text-muted-foreground">Materials:</span>
-                      <div className="font-mono text-amber-400">{service.materials}</div>
+                    <div className="flex justify-between">
+                      <span>Expenses:</span>
+                      <span className="text-red-400">£{period.expenses}</span>
                     </div>
-                    <div>
-                      <span className="text-muted-foreground">Profit:</span>
-                      <div className="font-mono text-green-400">{service.profit}</div>
+                    <div className="border-t border-elec-yellow/20 pt-1 flex justify-between font-medium">
+                      <span>Net:</span>
+                      <span className={period.net >= 0 ? "text-green-400" : "text-red-400"}>
+                        £{period.net}
+                      </span>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
-      </div>
+            
+            <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+              <h4 className="font-medium text-blue-400 mb-2">Break-even Analysis</h4>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div>
+                  <span className="text-muted-foreground">Fixed Costs/Month: </span>
+                  <span className="text-blue-400 font-medium">£2,500</span>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">Average Job Value: </span>
+                  <span className="text-blue-400 font-medium">£350</span>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">Jobs Needed/Month: </span>
+                  <span className="text-blue-400 font-medium">8-10</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-      <Card className="border-blue-500/30 bg-blue-500/10">
+      <Card className="border-green-500/30 bg-green-500/10">
         <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
-            <Lightbulb className="h-5 w-5" />
-            Financial Success Tips
+          <CardTitle className="text-green-400 flex items-center gap-2">
+            <Building className="h-5 w-5" />
+            Financial Management Tools
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h4 className="font-semibold mb-3 text-blue-300">Cash Flow Management</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Always take deposits for large jobs (30-50%)</li>
-                <li>• Set clear payment terms (14-30 days maximum)</li>
-                <li>• Keep 3-6 months expenses as emergency fund</li>
-                <li>• Invoice immediately upon job completion</li>
-              </ul>
+              <h4 className="font-semibold text-green-300 mb-3">Essential Software</h4>
+              <div className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Xero Accounting</span>
+                  <span className="text-xs text-green-400">£25/month</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">QuickBooks Self-Employed</span>
+                  <span className="text-xs text-green-400">£15/month</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">FreeAgent</span>
+                  <span className="text-xs text-green-400">£19/month</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm">Wave Accounting</span>
+                  <span className="text-xs text-green-400">Free</span>
+                </div>
+              </div>
             </div>
+            
             <div>
-              <h4 className="font-semibold mb-3 text-blue-300">Growth Strategies</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Focus on repeat customers and referrals</li>
-                <li>• Build relationships with builders and architects</li>
-                <li>• Consider specialising in high-value sectors</li>
-                <li>• Invest profits back into quality equipment</li>
+              <h4 className="font-semibold text-green-300 mb-3">Key Financial Metrics</h4>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  Track monthly profit margins (target: 20-30%)
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  Monitor cash flow weekly
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  Set aside 20-25% for tax
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  Maintain 3-6 months operating expenses
+                </li>
               </ul>
             </div>
           </div>
           
-          <div className="mt-6 pt-4 border-t border-blue-500/20 flex gap-3">
-            <Button className="bg-blue-500 text-blue-900 hover:bg-blue-400">
-              <Calculator className="h-4 w-4 mr-2" />
-              Business Calculator
-            </Button>
-            <Button variant="outline" className="border-blue-500/30">
-              <ExternalLink className="h-4 w-4 mr-2" />
-              Pricing Worksheet
+          <div className="mt-6 pt-4 border-t border-green-500/20">
+            <Button className="bg-green-500 text-green-900 hover:bg-green-400">
+              <Download className="h-4 w-4 mr-2" />
+              Download Financial Planning Template
             </Button>
           </div>
         </CardContent>
