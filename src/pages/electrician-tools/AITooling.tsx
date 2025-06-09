@@ -29,7 +29,7 @@ const AITooling = () => {
       </div>
 
       <Tabs defaultValue="assistant" value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid sm:grid-cols-3 lg:grid-cols-5 max-w-full overflow-x-auto">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="assistant" className="flex items-center gap-2">
             <Brain className="h-4 w-4" />
             <span className="hidden sm:inline">AI Assistant</span>
@@ -78,9 +78,9 @@ const AITooling = () => {
         </TabsContent>
       </Tabs>
 
-      <Card className="border-blue-500/50 bg-gradient-to-r from-blue-500/10 to-blue-500/5">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Lightbulb className="h-5 w-5" />
             AI Tools Best Practices
           </CardTitle>
