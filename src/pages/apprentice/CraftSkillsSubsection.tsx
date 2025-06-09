@@ -6,7 +6,7 @@ import { craftSkillsContent } from "@/data/craftSkills/index";
 import type { Subsection } from "@/data/healthAndSafety/types";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import BackButton from "@/components/common/BackButton";
+import BackButton from "@/components/apprentice/BackButton";
 
 const CraftSkillsSubsection = () => {
   const { courseSlug, unitSlug, sectionId, subsectionId } = useParams();
