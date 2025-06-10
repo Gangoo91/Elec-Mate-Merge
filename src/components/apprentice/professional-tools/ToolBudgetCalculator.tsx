@@ -4,76 +4,57 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calculator, PoundSterling } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Calculator, PoundSterling, TrendingUp } from "lucide-react";
 import { useState } from "react";
 
 const ToolBudgetCalculator = () => {
-  const [monthlyBudget, setMonthlyBudget] = useState<string>("100");
-  const [apprenticeLevel, setApprenticeLevel] = useState<string>("first-year");
-  const [workType, setWorkType] = useState<string>("domestic");
-  const [toolAllowance, setToolAllowance] = useState<string>("0");
-  const [results, setResults] = useState<any>(null);
+  const [monthlyBudget, setMonthlyBudget] = useState<string>("200");
+  const [timeframe, setTimeframe] = useState<string>("12");
+  const [priority, setPriority] = useState<string>("essential");
+  const [totalBudget, setTotalBudget] = useState<number>(0);
+  const [breakdown, setBreakdown] = useState<{[key: string]: number}>({});
 
-  const toolCategories = {
-    "first-year": {
-      handTools: 250,
-      powerTools: 300,
-      testEquipment: 400,
-      ppe: 150,
-      storage: 100
+  const toolCosts = {
+    essential: {
+      "Basic hand tools": 300,
+      "PPE & safety equipment": 150,
+      "Basic test equipment": 200,
+      "Tool storage": 100
     },
-    "second-year": {
-      handTools: 350,
-      powerTools: 500,
-      testEquipment: 600,
-      ppe: 200,
-      storage: 150
+    recommended: {
+      "Power tools": 500,
+      "Advanced test equipment": 800,
+      "Professional hand tools": 400,
+      "Vehicle storage": 300
     },
-    "qualified": {
-      handTools: 500,
-      powerTools: 800,
-      testEquipment: 1200,
-      ppe: 300,
-      storage: 300
+    advanced: {
+      "Specialist test equipment": 1200,
+      "Professional power tools": 800,
+      "Advanced PPE": 200,
+      "Complete toolkit": 600
     }
   };
 
-  const workTypeMultipliers = {
-    domestic: 1.0,
-    commercial: 1.2,
-    industrial: 1.4,
-    mixed: 1.1
-  };
-
   const calculateBudget = () => {
-    const monthly = parseFloat(monthlyBudget);
-    const allowance = parseFloat(toolAllowance);
-    const baseTools = toolCategories[apprenticeLevel as keyof typeof toolCategories];
-    const multiplier = workTypeMultipliers[workType as keyof typeof workTypeMultipliers];
-    
-    const totalNeeded = Object.values(baseTools).reduce((sum, cost) => sum + (cost * multiplier), 0);
-    const availablePerYear = (monthly * 12) + allowance;
-    const timeToComplete = Math.ceil(totalNeeded / availablePerYear);
-    
-    const priorityOrder = [
-      { category: "PPE & Safety", cost: baseTools.ppe * multiplier, priority: 1 },
-      { category: "Test Equipment", cost: baseTools.testEquipment * multiplier, priority: 2 },
-      { category: "Hand Tools", cost: baseTools.handTools * multiplier, priority: 3 },
-      { category: "Power Tools", cost: baseTools.powerTools * multiplier, priority: 4 },
-      { category: "Tool Storage", cost: baseTools.storage * multiplier, priority: 5 }
-    ];
+    const monthly = parseFloat(monthlyBudget) || 0;
+    const months = parseInt(timeframe) || 12;
+    const total = monthly * months;
+    setTotalBudget(total);
 
-    setResults({
-      totalNeeded: totalNeeded.toFixed(0),
-      yearlyBudget: availablePerYear.toFixed(0),
-      timeToComplete,
-      priorityOrder,
-      monthlyTarget: (totalNeeded / (timeToComplete * 12)).toFixed(0)
+    const selectedTools = toolCosts[priority as keyof typeof toolCosts];
+    const totalCost = Object.values(selectedTools).reduce((sum, cost) => sum + cost, 0);
+    
+    const budgetBreakdown: {[key: string]: number} = {};
+    Object.entries(selectedTools).forEach(([tool, cost]) => {
+      budgetBreakdown[tool] = (cost / totalCost) * total;
     });
+    
+    setBreakdown(budgetBreakdown);
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-elec-yellow/10">
       <CardHeader>
         <div className="flex items-center gap-2">
           <Calculator className="h-5 w-5 text-elec-yellow" />
@@ -81,98 +62,74 @@ const ToolBudgetCalculator = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <Label htmlFor="apprentice-level">Apprenticeship Level</Label>
-              <Select value={apprenticeLevel} onValueChange={setApprenticeLevel}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="first-year">First Year</SelectItem>
-                  <SelectItem value="second-year">Second Year+</SelectItem>
-                  <SelectItem value="qualified">Newly Qualified</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div>
-              <Label htmlFor="work-type">Primary Work Type</Label>
-              <Select value={workType} onValueChange={setWorkType}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="domestic">Domestic</SelectItem>
-                  <SelectItem value="commercial">Commercial</SelectItem>
-                  <SelectItem value="industrial">Industrial</SelectItem>
-                  <SelectItem value="mixed">Mixed</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div>
-              <Label htmlFor="monthly-budget">Monthly Tool Budget (£)</Label>
+              <Label htmlFor="monthly-budget">Monthly Budget (£)</Label>
               <Input
                 id="monthly-budget"
                 type="number"
                 value={monthlyBudget}
                 onChange={(e) => setMonthlyBudget(e.target.value)}
+                placeholder="200"
               />
             </div>
             
             <div>
-              <Label htmlFor="tool-allowance">Annual Tool Allowance (£)</Label>
-              <Input
-                id="tool-allowance"
-                type="number"
-                value={toolAllowance}
-                onChange={(e) => setToolAllowance(e.target.value)}
-              />
+              <Label htmlFor="timeframe">Timeframe (months)</Label>
+              <Select value={timeframe} onValueChange={setTimeframe}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="6">6 months</SelectItem>
+                  <SelectItem value="12">12 months</SelectItem>
+                  <SelectItem value="18">18 months</SelectItem>
+                  <SelectItem value="24">24 months</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             
-            <Button onClick={calculateBudget} className="w-full">
-              Calculate Budget Plan
-            </Button>
+            <div>
+              <Label htmlFor="priority">Priority Level</Label>
+              <Select value={priority} onValueChange={setPriority}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="essential">Essential Only</SelectItem>
+                  <SelectItem value="recommended">Recommended</SelectItem>
+                  <SelectItem value="advanced">Advanced</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           
-          {results && (
+          <Button onClick={calculateBudget} className="w-full">
+            Calculate Budget Plan
+          </Button>
+          
+          {totalBudget > 0 && (
             <div className="space-y-4">
-              <h4 className="font-semibold text-white mb-3">Your Budget Plan</h4>
-              
-              <div className="space-y-3">
-                <div className="flex justify-between items-center p-3 bg-elec-yellow/10 rounded-lg">
-                  <span className="text-sm text-muted-foreground">Total Tools Needed:</span>
-                  <span className="font-bold text-elec-yellow">£{results.totalNeeded}</span>
-                </div>
-                
-                <div className="flex justify-between items-center p-3 bg-blue-500/10 rounded-lg">
-                  <span className="text-sm text-muted-foreground">Annual Budget:</span>
-                  <span className="font-bold text-blue-400">£{results.yearlyBudget}</span>
-                </div>
-                
-                <div className="flex justify-between items-center p-3 bg-green-500/10 rounded-lg">
-                  <span className="text-sm text-muted-foreground">Time to Complete:</span>
-                  <span className="font-bold text-green-400">{results.timeToComplete} years</span>
-                </div>
-                
-                <div className="flex justify-between items-center p-3 bg-purple-500/10 rounded-lg">
-                  <span className="text-sm text-muted-foreground">Recommended Monthly:</span>
-                  <span className="font-bold text-purple-400">£{results.monthlyTarget}</span>
-                </div>
+              <div className="flex items-center justify-between text-lg font-semibold">
+                <span className="text-white">Total Budget:</span>
+                <span className="text-elec-yellow flex items-center gap-1">
+                  <PoundSterling className="h-4 w-4" />
+                  {totalBudget.toFixed(0)}
+                </span>
               </div>
               
-              <div className="mt-4">
-                <h5 className="font-medium text-white mb-2">Purchase Priority Order:</h5>
-                <div className="space-y-2">
-                  {results.priorityOrder.map((item: any, index: number) => (
-                    <div key={index} className="flex justify-between items-center text-sm">
-                      <span className="text-muted-foreground">{item.priority}. {item.category}</span>
-                      <span className="text-white">£{item.cost.toFixed(0)}</span>
+              <div className="space-y-3">
+                <h4 className="font-medium text-white">Recommended Allocation:</h4>
+                {Object.entries(breakdown).map(([tool, amount]) => (
+                  <div key={tool} className="space-y-2">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">{tool}</span>
+                      <span className="text-elec-yellow">£{amount.toFixed(0)}</span>
                     </div>
-                  ))}
-                </div>
+                    <Progress value={(amount / totalBudget) * 100} className="h-2" />
+                  </div>
+                ))}
               </div>
             </div>
           )}
