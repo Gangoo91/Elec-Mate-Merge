@@ -15,7 +15,7 @@ const OnJobSafetyCases = () => {
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">Interactive Safety Case Studies</h1>
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
-          Learn from real-world electrical safety scenarios through interactive case studies, assessments, and comprehensive safety knowledge
+          Learn from real-world electrical safety scenarios through interactive case studies, comprehensive assessments, and detailed safety knowledge modules
         </p>
         <BackButton customUrl="/apprentice/on-job-tools" label="Back to On-Job Tools" />
       </div>

@@ -3,57 +3,129 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Users, CheckSquare, Award, Clock, Target, TrendingUp } from "lucide-react";
+import { 
+  Users, 
+  Target, 
+  Clock, 
+  Award, 
+  CheckSquare, 
+  AlertTriangle,
+  BookOpen,
+  TrendingUp,
+  BarChart3,
+  FileText,
+  Play,
+  RefreshCw
+} from "lucide-react";
+import { useState } from "react";
 
 const AssessmentToolsTab = () => {
+  const [selectedAssessment, setSelectedAssessment] = useState<string | null>(null);
+  const [completedAssessments, setCompletedAssessments] = useState<Set<string>>(new Set());
+
   const assessmentTools = [
     {
-      title: "Safety Knowledge Quiz",
-      description: "Test your understanding of electrical safety regulations and procedures",
-      questions: 25,
-      duration: "20 mins",
-      difficulty: "Intermediate",
-      lastScore: 84,
-      attempts: 3,
-      category: "Knowledge"
-    },
-    {
-      title: "Risk Assessment Simulator",
-      description: "Practice identifying and evaluating electrical hazards in various scenarios",
-      questions: 15,
+      id: "safety-knowledge-quiz",
+      title: "Safety Knowledge Assessment",
+      description: "Comprehensive quiz covering all aspects of electrical safety knowledge",
+      type: "Quiz",
       duration: "30 mins",
+      questions: 50,
+      passingScore: 80,
+      difficulty: "Intermediate",
+      category: "Knowledge",
+      attempts: 3,
+      lastScore: 0,
+      bestScore: 0,
+      timeLimit: true,
+      certificate: true,
+      topics: ["PPE", "Isolation", "Regulations", "Emergency Response"]
+    },
+    {
+      id: "hazard-identification",
+      title: "Hazard Identification Challenge",
+      description: "Interactive scenarios to test your ability to identify electrical hazards",
+      type: "Interactive",
+      duration: "45 mins",
+      questions: 25,
+      passingScore: 75,
       difficulty: "Advanced",
-      lastScore: 76,
+      category: "Practical",
+      attempts: 5,
+      lastScore: 0,
+      bestScore: 0,
+      timeLimit: true,
+      certificate: true,
+      topics: ["Risk Assessment", "Hazard Types", "Control Measures", "Documentation"]
+    },
+    {
+      id: "emergency-response",
+      title: "Emergency Response Simulation",
+      description: "Practice emergency response procedures in realistic scenarios",
+      type: "Simulation",
+      duration: "20 mins",
+      questions: 15,
+      passingScore: 85,
+      difficulty: "Advanced",
+      category: "Emergency",
       attempts: 2,
-      category: "Practical"
+      lastScore: 0,
+      bestScore: 0,
+      timeLimit: false,
+      certificate: true,
+      topics: ["First Aid", "Emergency Procedures", "Incident Response", "Communication"]
     },
     {
-      title: "PPE Selection Test",
-      description: "Demonstrate competency in selecting appropriate personal protective equipment",
-      questions: 20,
-      duration: "15 mins",
-      difficulty: "Beginner",
-      lastScore: 92,
-      attempts: 4,
-      category: "Equipment"
-    },
-    {
-      title: "Emergency Response Assessment",
-      description: "Evaluate your knowledge of emergency procedures and incident response",
-      questions: 18,
+      id: "regulation-compliance",
+      title: "Regulation Compliance Check",
+      description: "Test your understanding of UK electrical safety regulations",
+      type: "Assessment",
       duration: "25 mins",
+      questions: 30,
+      passingScore: 80,
+      difficulty: "Intermediate",
+      category: "Regulations",
+      attempts: 4,
+      lastScore: 0,
+      bestScore: 0,
+      timeLimit: true,
+      certificate: false,
+      topics: ["EAWR 1989", "BS 7671", "CDM Regulations", "HASAWA 1974"]
+    },
+    {
+      id: "case-study-analysis",
+      title: "Case Study Analysis",
+      description: "Analyse real incident case studies and identify key learning points",
+      type: "Analysis",
+      duration: "60 mins",
+      questions: 10,
+      passingScore: 70,
       difficulty: "Advanced",
-      lastScore: null,
-      attempts: 0,
-      category: "Emergency"
+      category: "Analysis",
+      attempts: 1,
+      lastScore: 0,
+      bestScore: 0,
+      timeLimit: false,
+      certificate: true,
+      topics: ["Root Cause Analysis", "Prevention Strategies", "Lesson Learning", "Risk Management"]
+    },
+    {
+      id: "ppe-selection",
+      title: "PPE Selection Workshop",
+      description: "Interactive tool for selecting appropriate PPE for different electrical tasks",
+      type: "Workshop",
+      duration: "35 mins",
+      questions: 20,
+      passingScore: 85,
+      difficulty: "Intermediate",
+      category: "PPE",
+      attempts: 3,
+      lastScore: 0,
+      bestScore: 0,
+      timeLimit: false,
+      certificate: false,
+      topics: ["PPE Types", "Voltage Ratings", "Task Assessment", "Standards"]
     }
-  ];
-
-  const achievements = [
-    { name: "Safety Scholar", description: "Scored 90%+ on 5 assessments", earned: true },
-    { name: "Quick Learner", description: "Completed assessment in under 15 minutes", earned: true },
-    { name: "Perfect Score", description: "Achieved 100% on any assessment", earned: false },
-    { name: "Consistent Performer", description: "Scored 80%+ on 10 consecutive attempts", earned: false }
   ];
 
   const getDifficultyColor = (difficulty: string) => {
@@ -65,43 +137,59 @@ const AssessmentToolsTab = () => {
     }
   };
 
-  const getScoreColor = (score: number | null) => {
-    if (score === null) return "text-muted-foreground";
-    if (score >= 90) return "text-green-400";
-    if (score >= 70) return "text-yellow-400";
-    return "text-red-400";
+  const getTypeColor = (type: string) => {
+    switch (type) {
+      case "Quiz": return "text-blue-400";
+      case "Interactive": return "text-green-400";
+      case "Simulation": return "text-purple-400";
+      case "Assessment": return "text-orange-400";
+      case "Analysis": return "text-red-400";
+      case "Workshop": return "text-elec-yellow";
+      default: return "text-gray-400";
+    }
   };
+
+  const handleStartAssessment = (assessmentId: string) => {
+    setSelectedAssessment(assessmentId);
+    console.log(`Starting assessment: ${assessmentId}`);
+  };
+
+  const isAssessmentCompleted = (assessmentId: string) => completedAssessments.has(assessmentId);
+
+  const completedCount = assessmentTools.filter(tool => isAssessmentCompleted(tool.id)).length;
+  const averageScore = assessmentTools.reduce((acc, tool) => acc + tool.bestScore, 0) / assessmentTools.length;
+  const certificatesEarned = assessmentTools.filter(tool => tool.certificate && isAssessmentCompleted(tool.id)).length;
 
   return (
     <div className="space-y-6">
       <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Users className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Assessment & Evaluation Tools</CardTitle>
+            <Target className="h-6 w-6 text-elec-yellow" />
+            <CardTitle className="text-elec-yellow">Interactive Assessment Centre</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground mb-4">
-            Test your knowledge and skills with our comprehensive assessment tools. Track your progress 
-            and identify areas for improvement in electrical safety competency.
+            Test and validate your electrical safety knowledge through comprehensive assessments, 
+            interactive simulations, and practical workshops. Track your progress and earn certificates.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-elec-yellow mb-1">9</div>
+            <div className="text-center p-4 bg-elec-yellow/10 rounded-lg">
+              <div className="text-2xl font-bold text-elec-yellow">{assessmentTools.length}</div>
+              <div className="text-sm text-muted-foreground">Assessment Tools</div>
+            </div>
+            <div className="text-center p-4 bg-green-500/10 rounded-lg">
+              <div className="text-2xl font-bold text-green-400">{completedCount}</div>
               <div className="text-sm text-muted-foreground">Completed</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-400 mb-1">84%</div>
+            <div className="text-center p-4 bg-blue-500/10 rounded-lg">
+              <div className="text-2xl font-bold text-blue-400">{Math.round(averageScore)}%</div>
               <div className="text-sm text-muted-foreground">Average Score</div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-400 mb-1">2</div>
-              <div className="text-sm text-muted-foreground">Achievements</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-orange-400 mb-1">4</div>
-              <div className="text-sm text-muted-foreground">Available Tests</div>
+            <div className="text-center p-4 bg-purple-500/10 rounded-lg">
+              <div className="text-2xl font-bold text-purple-400">{certificatesEarned}</div>
+              <div className="text-sm text-muted-foreground">Certificates</div>
             </div>
           </div>
         </CardContent>
@@ -109,23 +197,39 @@ const AssessmentToolsTab = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {assessmentTools.map((tool, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+          <Card key={tool.id} className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors">
             <CardHeader>
               <div className="flex items-start justify-between">
                 <div className="flex-1">
-                  <CardTitle className="text-white text-lg mb-2">{tool.title}</CardTitle>
+                  <CardTitle className="text-white text-lg mb-2 flex items-center gap-2">
+                    {tool.title}
+                    {isAssessmentCompleted(tool.id) && (
+                      <CheckSquare className="h-5 w-5 text-green-400" />
+                    )}
+                  </CardTitle>
                   <div className="flex gap-2 mb-3">
                     <Badge className={getDifficultyColor(tool.difficulty)}>
                       {tool.difficulty}
                     </Badge>
-                    <Badge variant="outline" className="text-muted-foreground">
-                      {tool.category}
+                    <Badge variant="outline" className={getTypeColor(tool.type)}>
+                      {tool.type}
                     </Badge>
+                    <Badge variant="outline" className="text-muted-foreground">
+                      <Clock className="h-3 w-3 mr-1" />
+                      {tool.duration}
+                    </Badge>
+                    {tool.certificate && (
+                      <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+                        <Award className="h-3 w-3 mr-1" />
+                        Certificate
+                      </Badge>
+                    )}
                   </div>
                 </div>
-                {tool.lastScore && (
-                  <div className={`text-2xl font-bold ${getScoreColor(tool.lastScore)}`}>
-                    {tool.lastScore}%
+                {tool.bestScore > 0 && (
+                  <div className="text-right">
+                    <div className="text-elec-yellow font-semibold">{tool.bestScore}%</div>
+                    <div className="text-xs text-muted-foreground">Best Score</div>
                   </div>
                 )}
               </div>
@@ -135,39 +239,62 @@ const AssessmentToolsTab = () => {
                 {tool.description}
               </p>
               
-              <div className="space-y-3">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground flex items-center gap-2">
-                    <CheckSquare className="h-4 w-4" />
-                    {tool.questions} Questions
-                  </span>
-                  <span className="text-muted-foreground flex items-center gap-2">
-                    <Clock className="h-4 w-4" />
-                    {tool.duration}
-                  </span>
+              <div className="space-y-4">
+                <div className="grid grid-cols-3 gap-2 text-center">
+                  <div className="p-2 bg-elec-dark/40 rounded">
+                    <div className="text-blue-400 font-semibold">{tool.questions}</div>
+                    <div className="text-xs text-muted-foreground">Questions</div>
+                  </div>
+                  <div className="p-2 bg-elec-dark/40 rounded">
+                    <div className="text-green-400 font-semibold">{tool.passingScore}%</div>
+                    <div className="text-xs text-muted-foreground">Pass Score</div>
+                  </div>
+                  <div className="p-2 bg-elec-dark/40 rounded">
+                    <div className="text-orange-400 font-semibold">{tool.attempts}</div>
+                    <div className="text-xs text-muted-foreground">Attempts</div>
+                  </div>
                 </div>
-                
-                {tool.lastScore && (
+
+                {tool.bestScore > 0 && (
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-white">Best Score</span>
-                      <span className={`text-sm ${getScoreColor(tool.lastScore)}`}>
-                        {tool.lastScore}%
-                      </span>
+                      <span className="text-sm font-medium text-white">Progress</span>
+                      <span className="text-sm text-elec-yellow">{tool.bestScore}%</span>
                     </div>
-                    <Progress value={tool.lastScore} className="h-2" />
+                    <Progress value={tool.bestScore} className="h-2" />
                   </div>
                 )}
                 
-                <div className="text-sm text-muted-foreground">
-                  <strong>Attempts:</strong> {tool.attempts}
+                <div>
+                  <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-2">
+                    <BookOpen className="h-4 w-4 text-elec-yellow" />
+                    Topics Covered:
+                  </h4>
+                  <div className="grid grid-cols-2 gap-1">
+                    {tool.topics.map((topic, topicIndex) => (
+                      <div key={topicIndex} className="text-xs text-muted-foreground flex items-center gap-2">
+                        <CheckSquare className="h-3 w-3 text-green-400" />
+                        {topic}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
               
-              <Button className="w-full mt-4">
-                <Target className="mr-2 h-4 w-4" />
-                {tool.attempts === 0 ? "Start Assessment" : "Retake Assessment"}
-              </Button>
+              <div className="flex gap-2 mt-4">
+                <Button 
+                  className="flex-1" 
+                  onClick={() => handleStartAssessment(tool.id)}
+                >
+                  <Play className="mr-2 h-4 w-4" />
+                  {tool.bestScore > 0 ? "Retake Assessment" : "Start Assessment"}
+                </Button>
+                {tool.bestScore > 0 && (
+                  <Button variant="outline" size="sm">
+                    <BarChart3 className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
             </CardContent>
           </Card>
         ))}
@@ -176,65 +303,30 @@ const AssessmentToolsTab = () => {
       <Card className="border-green-500/20 bg-green-500/10">
         <CardHeader>
           <CardTitle className="text-green-300 flex items-center gap-2">
-            <Award className="h-5 w-5" />
-            Achievements & Progress
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {achievements.map((achievement, index) => (
-              <div 
-                key={index} 
-                className={`p-4 rounded-lg border ${
-                  achievement.earned 
-                    ? 'border-green-500/40 bg-green-500/10' 
-                    : 'border-gray-500/20 bg-gray-500/5'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <Award className={`h-6 w-6 ${
-                    achievement.earned ? 'text-green-400' : 'text-gray-400'
-                  }`} />
-                  <div>
-                    <h4 className={`font-semibold ${
-                      achievement.earned ? 'text-green-300' : 'text-gray-400'
-                    }`}>
-                      {achievement.name}
-                    </h4>
-                    <p className="text-sm text-muted-foreground">
-                      {achievement.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-blue-500/20 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
             <TrendingUp className="h-5 w-5" />
-            Performance Analytics
+            Assessment Performance & Progress
           </CardTitle>
         </CardHeader>
         <CardContent>
+          <p className="text-muted-foreground mb-4">
+            Track your assessment performance over time and identify areas for improvement. 
+            Regular assessment helps reinforce learning and ensures knowledge retention.
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-400 mb-2">84%</div>
-              <div className="text-sm text-muted-foreground">Overall Average</div>
-              <div className="text-xs text-blue-300 mt-1">+12% from last month</div>
+              <div className="text-3xl font-bold text-green-400 mb-2">{Math.round((completedCount / assessmentTools.length) * 100)}%</div>
+              <div className="text-sm text-muted-foreground">Completion Rate</div>
+              <Progress value={(completedCount / assessmentTools.length) * 100} className="mt-2" />
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-green-400 mb-2">92%</div>
-              <div className="text-sm text-muted-foreground">Best Performance</div>
-              <div className="text-xs text-green-300 mt-1">PPE Selection Test</div>
+              <div className="text-3xl font-bold text-blue-400 mb-2">{Math.round(averageScore)}%</div>
+              <div className="text-sm text-muted-foreground">Average Score</div>
+              <Progress value={averageScore} className="mt-2" />
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-400 mb-2">3.2</div>
-              <div className="text-sm text-muted-foreground">Avg Attempts</div>
-              <div className="text-xs text-yellow-300 mt-1">Before passing</div>
+              <div className="text-3xl font-bold text-purple-400 mb-2">{certificatesEarned}/{assessmentTools.filter(t => t.certificate).length}</div>
+              <div className="text-sm text-muted-foreground">Certificates Earned</div>
+              <Progress value={(certificatesEarned / assessmentTools.filter(t => t.certificate).length) * 100} className="mt-2" />
             </div>
           </div>
         </CardContent>
