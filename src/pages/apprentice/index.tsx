@@ -12,7 +12,6 @@ import {
   Award,
   Brain,
   GraduationCap,
-  Clock,
   Target,
   Briefcase,
   Shield,
@@ -70,29 +69,13 @@ const ApprenticeIndex = () => {
       icon: MessageSquare,
       href: "/apprentice/chat",
       color: "pink"
-    }
-  ];
-
-  const specialFeatures = [
-    {
-      title: "Advanced Help Box",
-      description: "AI-powered assistance and cutting-edge training tools",
-      icon: Brain,
-      href: "/apprentice/advanced-help",
-      gradient: "from-elec-yellow/20 to-orange-500/20",
-      border: "border-elec-yellow/30",
-      textColor: "text-elec-yellow",
-      badge: "AI Enhanced"
     },
     {
       title: "Off-The-Job Training",
       description: "Track your 20% training requirement and manage portfolio",
-      icon: Clock,
-      href: "/apprentice/enhanced-ojt",
-      gradient: "from-blue-500/20 to-cyan-500/20",
-      border: "border-blue-500/30",
-      textColor: "text-blue-400",
-      badge: "Track Progress"
+      icon: Users,
+      href: "/apprentice/ojt",
+      color: "blue"
     }
   ];
 
@@ -129,36 +112,30 @@ const ApprenticeIndex = () => {
         </p>
       </div>
 
-      {/* Special Features */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {specialFeatures.map((feature, index) => (
-          <Link key={index} to={feature.href}>
-            <Card className={`${feature.border} bg-gradient-to-br ${feature.gradient} hover:scale-105 transition-all duration-200 cursor-pointer`}>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <feature.icon className={`h-8 w-8 ${feature.textColor}`} />
-                    <div>
-                      <CardTitle className={feature.textColor}>{feature.title}</CardTitle>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        {feature.description}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {feature.badge && (
-                      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${feature.textColor} bg-current/10`}>
-                        {feature.badge}
-                      </span>
-                    )}
-                    <ArrowRight className={`h-5 w-5 ${feature.textColor}`} />
-                  </div>
+      {/* Advanced Help Box - Moved to the top */}
+      <Link to="/apprentice/advanced-help">
+        <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/20 to-orange-500/20 hover:scale-105 transition-all duration-200 cursor-pointer">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Brain className="h-8 w-8 text-elec-yellow" />
+                <div>
+                  <CardTitle className="text-elec-yellow">Advanced Help Box</CardTitle>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    AI-powered assistance and cutting-edge training tools
+                  </p>
                 </div>
-              </CardHeader>
-            </Card>
-          </Link>
-        ))}
-      </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="px-2 py-1 rounded-full text-xs font-semibold text-elec-yellow bg-current/10">
+                  AI Enhanced
+                </span>
+                <ArrowRight className="h-5 w-5 text-elec-yellow" />
+              </div>
+            </div>
+          </CardHeader>
+        </Card>
+      </Link>
 
       {/* Learning Progress Overview */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
