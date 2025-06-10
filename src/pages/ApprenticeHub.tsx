@@ -19,12 +19,12 @@ const ApprenticeHub = () => {
       link: "/apprentice/ojt"
     },
     {
-      id: 9,
-      title: "Enhanced OJT Management",
-      icon: Brain,
-      link: "/apprentice/enhanced-ojt",
+      id: 8,
+      title: "Advanced Help Box",
+      icon: Zap,
+      link: "/apprentice/advanced-help",
       featured: true,
-      description: "AI-powered training excellence"
+      description: "AI & AR powered support"
     },
     {
       id: 3,
@@ -55,14 +55,6 @@ const ApprenticeHub = () => {
       title: "Professional Development",
       icon: GraduationCap,
       link: "/apprentice/professional-development"
-    },
-    {
-      id: 8,
-      title: "Advanced Help Box",
-      icon: Zap,
-      link: "/apprentice/advanced-help",
-      featured: true,
-      description: "AI & AR powered support"
     }
   ];
 
