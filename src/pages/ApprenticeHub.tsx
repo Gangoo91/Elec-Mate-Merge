@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Book, Clock, Heart, Users, WrenchIcon, Bot, ArrowLeft, Calculator, FileText, Settings, GraduationCap, Zap } from "lucide-react";
+import { Book, Clock, Heart, Users, WrenchIcon, Bot, ArrowLeft, Calculator, FileText, Settings, GraduationCap, Zap, Brain } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
@@ -17,6 +17,14 @@ const ApprenticeHub = () => {
       title: "Off the Job Time Keeping",
       icon: Clock,
       link: "/apprentice/ojt"
+    },
+    {
+      id: 9,
+      title: "Enhanced OJT Management",
+      icon: Brain,
+      link: "/apprentice/enhanced-ojt",
+      featured: true,
+      description: "AI-powered training excellence"
     },
     {
       id: 3,
@@ -53,7 +61,8 @@ const ApprenticeHub = () => {
       title: "Advanced Help Box",
       icon: Zap,
       link: "/apprentice/advanced-help",
-      featured: true
+      featured: true,
+      description: "AI & AR powered support"
     }
   ];
 
@@ -82,7 +91,9 @@ const ApprenticeHub = () => {
                 {resource.featured && (
                   <div className="flex items-center gap-1 mt-2">
                     <Bot className="h-4 w-4 text-elec-yellow" />
-                    <span className="text-xs text-elec-yellow font-semibold">AI & AR Powered</span>
+                    <span className="text-xs text-elec-yellow font-semibold">
+                      {resource.description || "AI & AR Powered"}
+                    </span>
                   </div>
                 )}
               </CardHeader>

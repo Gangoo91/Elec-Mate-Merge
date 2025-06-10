@@ -2,108 +2,130 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, TrendingDown, Minus, Brain, Target, Zap, BarChart3 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { TrendingUp, TrendingDown, Target, Calendar, Brain, Zap, BarChart3, Users } from "lucide-react";
 
 const ProgressInsightsTab = () => {
   const progressMetrics = [
     {
-      metric: "Learning Velocity",
-      current: 87,
-      previous: 75,
+      category: "Technical Skills",
+      current: 78,
+      target: 85,
       trend: "up",
-      insight: "Significant improvement in knowledge absorption rate",
-      recommendation: "Maintain current study intensity"
+      weeklyChange: +5,
+      prediction: "On track to meet target by next month"
     },
     {
-      metric: "Skill Application",
-      current: 72,
-      previous: 78,
+      category: "Practical Experience", 
+      current: 82,
+      target: 80,
+      trend: "up",
+      weeklyChange: +3,
+      prediction: "Exceeding expectations, maintain current pace"
+    },
+    {
+      category: "Theory Knowledge",
+      current: 65,
+      target: 75,
       trend: "down",
-      insight: "Slight decrease in practical application confidence",
-      recommendation: "Increase hands-on practice sessions"
+      weeklyChange: -2,
+      prediction: "Needs focused study, recommend 5 hours/week"
     },
     {
-      metric: "Retention Rate",
-      current: 91,
-      previous: 89,
+      category: "Professional Skills",
+      current: 70,
+      target: 75,
       trend: "up",
-      insight: "Excellent knowledge retention and recall",
-      recommendation: "Continue current revision methods"
-    },
-    {
-      metric: "Problem Solving",
-      current: 83,
-      previous: 83,
-      trend: "stable",
-      insight: "Consistent analytical thinking development",
-      recommendation: "Introduce more complex scenarios"
+      weeklyChange: +2,
+      prediction: "Steady improvement, on track for target"
     }
   ];
 
   const weeklyInsights = [
     {
-      week: "This Week",
-      totalHours: 18.5,
-      efficiency: 94,
-      topicsFocused: ["BS 7671", "Cable Calculations", "RCD Testing"],
-      achievement: "Completed advanced circuit analysis module"
+      type: "achievement",
+      title: "Milestone Reached",
+      description: "Completed 75% of Year 2 requirements",
+      impact: "positive"
     },
     {
-      week: "Last Week",
-      totalHours: 16.2,
-      efficiency: 87,
-      topicsFocused: ["Installation Methods", "Safety Procedures"],
-      achievement: "Passed practical assessment simulation"
+      type: "concern",
+      title: "Study Pattern Alert",
+      description: "Theory study time decreased by 30% this week",
+      impact: "negative"
     },
     {
-      week: "Two Weeks Ago",
-      totalHours: 14.8,
-      efficiency: 82,
-      topicsFocused: ["Electrical Theory", "Ohm's Law Applications"],
-      achievement: "Mastered basic electrical calculations"
+      type: "recommendation",
+      title: "Learning Opportunity",
+      description: "New commercial project available for portfolio",
+      impact: "neutral"
+    },
+    {
+      type: "prediction",
+      title: "Assessment Readiness",
+      description: "EPA readiness increased to 73% based on current progress",
+      impact: "positive"
     }
   ];
 
-  const predictiveInsights = [
+  const benchmarkData = [
     {
-      title: "Completion Forecast",
-      prediction: "On track to complete 2.3 weeks early",
-      confidence: 89,
-      factors: ["Consistent study patterns", "High retention rates", "Accelerated learning velocity"]
+      metric: "OJT Hours Completed",
+      yourValue: 156,
+      cohortAverage: 142,
+      topPerformers: 180,
+      status: "above-average"
     },
     {
-      title: "Risk Assessment",
-      prediction: "Potential knowledge gap in commercial installations",
-      confidence: 76,
-      factors: ["Limited commercial exposure", "Domestic focus in portfolio", "Assessment requirements"]
+      metric: "Portfolio Completeness",
+      yourValue: 75,
+      cohortAverage: 68,
+      topPerformers: 85,
+      status: "above-average"
     },
     {
-      title: "Opportunity Analysis",
-      prediction: "Strong potential for safety officer specialisation",
-      confidence: 92,
-      factors: ["Exceptional safety scores", "Leadership indicators", "Industry demand"]
+      metric: "Assessment Scores",
+      yourValue: 78,
+      cohortAverage: 75,
+      topPerformers: 88,
+      status: "above-average"
+    },
+    {
+      metric: "Study Hours/Week",
+      yourValue: 8,
+      cohortAverage: 12,
+      topPerformers: 16,
+      status: "below-average"
     }
   ];
 
   const getTrendIcon = (trend: string) => {
-    switch (trend) {
-      case "up":
-        return <TrendingUp className="h-4 w-4 text-green-500" />;
-      case "down":
-        return <TrendingDown className="h-4 w-4 text-red-500" />;
-      default:
-        return <Minus className="h-4 w-4 text-blue-500" />;
-    }
+    return trend === "up" ? (
+      <TrendingUp className="h-4 w-4 text-green-500" />
+    ) : (
+      <TrendingDown className="h-4 w-4 text-red-500" />
+    );
   };
 
-  const getTrendColor = (trend: string) => {
-    switch (trend) {
-      case "up":
+  const getImpactColor = (impact: string) => {
+    switch (impact) {
+      case "positive":
         return "text-green-500";
-      case "down":
+      case "negative":
         return "text-red-500";
       default:
         return "text-blue-500";
+    }
+  };
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case "above-average":
+        return <Badge className="bg-green-600 text-white">Above Average</Badge>;
+      case "below-average":
+        return <Badge className="bg-orange-600 text-white">Below Average</Badge>;
+      default:
+        return <Badge className="bg-blue-600 text-white">Average</Badge>;
     }
   };
 
@@ -112,52 +134,52 @@ const ProgressInsightsTab = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">AI Insight Score</CardTitle>
-            <Brain className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Learning Velocity</CardTitle>
+            <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-purple-500">94</div>
+            <div className="text-2xl font-bold text-green-500">+15%</div>
             <p className="text-xs text-muted-foreground">
-              Pattern recognition
+              This month vs last
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Efficiency Trend</CardTitle>
-            <Zap className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-500">+12%</div>
-            <p className="text-xs text-muted-foreground">
-              Last 4 weeks
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Goal Alignment</CardTitle>
+            <CardTitle className="text-sm font-medium">Goal Achievement</CardTitle>
             <Target className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-500">89%</div>
+            <div className="text-2xl font-bold text-blue-500">8/12</div>
             <p className="text-xs text-muted-foreground">
-              On target
+              Monthly targets hit
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Learning Curve</CardTitle>
-            <BarChart3 className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Cohort Ranking</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-elec-yellow">Steep</div>
+            <div className="text-2xl font-bold text-purple-500">12th</div>
             <p className="text-xs text-muted-foreground">
-              Accelerating
+              Out of 45 apprentices
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Completion ETA</CardTitle>
+            <Calendar className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-elec-yellow">18m</div>
+            <p className="text-xs text-muted-foreground">
+              Predicted finish
             </p>
           </CardContent>
         </Card>
@@ -167,37 +189,30 @@ const ProgressInsightsTab = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5" />
-              Progress Metrics Analysis
+              <BarChart3 className="h-5 w-5" />
+              Progress Analytics
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-6">
               {progressMetrics.map((metric, index) => (
-                <div key={index} className="space-y-3">
+                <div key={index} className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="font-medium">{metric.metric}</span>
                     <div className="flex items-center gap-2">
+                      <span className="font-medium">{metric.category}</span>
                       {getTrendIcon(metric.trend)}
-                      <span className={`text-sm font-medium ${getTrendColor(metric.trend)}`}>
-                        {metric.current}%
+                      <span className={`text-sm ${metric.trend === "up" ? "text-green-500" : "text-red-500"}`}>
+                        {metric.weeklyChange > 0 ? "+" : ""}{metric.weeklyChange}%
                       </span>
                     </div>
+                    <span className="text-sm text-muted-foreground">
+                      {metric.current}% / {metric.target}%
+                    </span>
                   </div>
-                  
                   <Progress value={metric.current} className="h-2" />
-                  
-                  <div className="space-y-1">
-                    <p className="text-sm text-muted-foreground italic">
-                      {metric.insight}
-                    </p>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs text-muted-foreground">AI Recommendation:</span>
-                      <Badge variant="outline" className="text-xs">
-                        {metric.recommendation}
-                      </Badge>
-                    </div>
-                  </div>
+                  <p className="text-xs text-muted-foreground italic">
+                    AI Prediction: {metric.prediction}
+                  </p>
                 </div>
               ))}
             </div>
@@ -207,40 +222,21 @@ const ProgressInsightsTab = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <BarChart3 className="h-5 w-5" />
-              Weekly Performance Insights
+              <Brain className="h-5 w-5" />
+              Weekly AI Insights
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {weeklyInsights.map((week, index) => (
+              {weeklyInsights.map((insight, index) => (
                 <div key={index} className="border rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <h4 className="font-medium">{week.week}</h4>
-                    <div className="flex items-center gap-2">
-                      <Badge className="bg-blue-600 text-white">
-                        {week.totalHours}h
-                      </Badge>
-                      <Badge className="bg-green-600 text-white">
-                        {week.efficiency}% efficiency
-                      </Badge>
-                    </div>
+                  <div className="flex items-start justify-between mb-2">
+                    <h4 className="font-medium">{insight.title}</h4>
+                    <Badge variant="outline" className={getImpactColor(insight.impact)}>
+                      {insight.type}
+                    </Badge>
                   </div>
-                  
-                  <div className="space-y-2">
-                    <div>
-                      <span className="text-sm text-muted-foreground">Topics: </span>
-                      {week.topicsFocused.map((topic, topicIndex) => (
-                        <Badge key={topicIndex} variant="secondary" className="ml-1 text-xs">
-                          {topic}
-                        </Badge>
-                      ))}
-                    </div>
-                    <div className="text-sm">
-                      <span className="text-muted-foreground">Achievement: </span>
-                      <span className="text-green-500 font-medium">{week.achievement}</span>
-                    </div>
-                  </div>
+                  <p className="text-sm text-muted-foreground">{insight.description}</p>
                 </div>
               ))}
             </div>
@@ -251,39 +247,71 @@ const ProgressInsightsTab = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Brain className="h-5 w-5" />
-            AI Predictive Insights
+            <Users className="h-5 w-5" />
+            Cohort Benchmarking
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {predictiveInsights.map((insight, index) => (
-              <div key={index} className="border rounded-lg p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-medium">{insight.title}</h4>
-                  <Badge variant="outline">
-                    {insight.confidence}% confidence
-                  </Badge>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {benchmarkData.map((item, index) => (
+              <div key={index} className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="font-medium">{item.metric}</span>
+                  {getStatusBadge(item.status)}
                 </div>
                 
-                <p className="text-sm mb-3 font-medium text-blue-600">
-                  {insight.prediction}
-                </p>
-                
-                <div>
-                  <span className="text-xs text-muted-foreground">Key Factors:</span>
-                  <ul className="text-xs text-muted-foreground mt-1 space-y-1">
-                    {insight.factors.map((factor, factorIndex) => (
-                      <li key={factorIndex} className="flex items-start gap-1">
-                        <span className="text-elec-yellow">•</span>
-                        {factor}
-                      </li>
-                    ))}
-                  </ul>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>You: {item.yourValue}</span>
+                    <span>Cohort Avg: {item.cohortAverage}</span>
+                    <span>Top 10%: {item.topPerformers}</span>
+                  </div>
+                  
+                  <div className="relative">
+                    <div className="w-full bg-muted rounded-full h-2">
+                      <div 
+                        className="bg-blue-500 h-2 rounded-full relative"
+                        style={{ width: `${(item.yourValue / item.topPerformers) * 100}%` }}
+                      >
+                        <div className="absolute right-0 top-0 h-2 w-1 bg-blue-700 rounded-full"></div>
+                      </div>
+                    </div>
+                    <div 
+                      className="absolute top-0 h-2 w-1 bg-orange-500"
+                      style={{ left: `${(item.cohortAverage / item.topPerformers) * 100}%` }}
+                    ></div>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
+        </CardContent>
+      </Card>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Button className="h-12" variant="outline">
+          <Zap className="mr-2 h-4 w-4" />
+          Generate Progress Report
+        </Button>
+        <Button className="h-12" variant="outline">
+          <Calendar className="mr-2 h-4 w-4" />
+          Schedule Mentor Review
+        </Button>
+      </div>
+
+      <Card className="border-green-500/50 bg-green-500/10">
+        <CardHeader>
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <TrendingUp className="h-5 w-5" />
+            Intelligent Progress Monitoring
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">
+            Your AI-powered progress insights provide real-time analysis of your learning journey, 
+            benchmark your performance against peers, and predict future outcomes. Stay motivated 
+            with personalised recommendations and data-driven guidance for apprenticeship success.
+          </p>
         </CardContent>
       </Card>
     </div>

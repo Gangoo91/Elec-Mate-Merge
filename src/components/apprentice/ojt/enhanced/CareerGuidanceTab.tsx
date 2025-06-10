@@ -3,137 +3,152 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { User, Brain, TrendingUp, Target, Award, Network, MapPin, Briefcase } from "lucide-react";
+import { User, TrendingUp, Target, Star, MapPin, Calendar, BookOpen, Users } from "lucide-react";
 
 const CareerGuidanceTab = () => {
-  const careerInsights = [
-    {
-      title: "Career Trajectory Analysis",
-      insight: "Based on your learning patterns and performance, you're well-suited for technical specialisation roles",
-      confidence: 89,
-      recommendations: ["Consider advanced PLC programming", "Explore renewable energy systems", "Develop project management skills"]
-    },
-    {
-      title: "Market Alignment",
-      insight: "Your skills align strongly with current UK electrical industry demands, particularly in commercial sector",
-      confidence: 94,
-      recommendations: ["Focus on commercial installations", "Gain 18th Edition expertise", "Build testing & inspection credentials"]
-    },
-    {
-      title: "Progression Timeline",
-      insight: "You're progressing 23% faster than average, positioning you for early career advancement opportunities",
-      confidence: 87,
-      recommendations: ["Consider early JIB grading application", "Explore apprentice mentor roles", "Plan advanced qualifications"]
-    }
-  ];
-
   const careerPaths = [
     {
-      title: "Installation Specialist",
-      match: 92,
-      timeframe: "6-9 months",
-      earning: "£28,000 - £35,000",
-      growth: "High demand",
-      requirements: ["Level 3 completion", "Strong practical skills", "Safety certification"],
-      aiRecommended: true
-    },
-    {
-      title: "Testing & Inspection Engineer",
-      match: 87,
-      timeframe: "12-18 months",
-      earning: "£32,000 - £42,000",
-      growth: "Very high demand",
-      requirements: ["18th Edition", "2391 qualification", "Analytical mindset"],
-      aiRecommended: true
-    },
-    {
-      title: "Project Supervisor",
-      match: 78,
-      timeframe: "18-24 months",
-      earning: "£35,000 - £45,000",
-      growth: "Moderate demand",
-      requirements: ["Leadership experience", "Project management", "Team coordination"],
-      aiRecommended: false
-    },
-    {
-      title: "Renewable Energy Technician",
+      title: "Installation Electrician",
       match: 85,
-      timeframe: "12-15 months",
-      earning: "£30,000 - £38,000",
-      growth: "Rapidly growing",
-      requirements: ["Solar/wind specialisation", "Environmental awareness", "New technology adaptation"],
-      aiRecommended: true
+      description: "Domestic and commercial electrical installations",
+      skills: ["Domestic wiring", "Commercial systems", "Testing"],
+      growth: "High demand",
+      salary: "£28-35k"
+    },
+    {
+      title: "Maintenance Electrician", 
+      match: 78,
+      description: "Industrial and commercial maintenance",
+      skills: ["Fault finding", "Motor control", "PLCs"],
+      growth: "Stable demand",
+      salary: "£30-38k"
+    },
+    {
+      title: "Design Engineer",
+      match: 65,
+      description: "Electrical system design and planning",
+      skills: ["AutoCAD", "Calculations", "Regulations"],
+      growth: "Growing field",
+      salary: "£35-45k"
     }
   ];
 
-  const networkingOpportunities = [
+  const skillDevelopment = [
     {
-      type: "Industry Event",
-      title: "NICEIC Technical Seminar",
-      date: "15th April 2024",
-      location: "Birmingham",
-      relevance: 95,
-      description: "Latest regulations and testing procedures - perfect for your learning goals"
+      skill: "Advanced Testing",
+      current: 70,
+      target: 85,
+      importance: "Critical",
+      timeToTarget: "3 months",
+      recommendation: "Focus on complex installation testing"
     },
     {
-      type: "Professional Body",
-      title: "IET Young Professionals",
-      date: "Ongoing",
-      location: "Various",
-      relevance: 88,
-      description: "Networking group for emerging electrical engineers and technicians"
+      skill: "Customer Relations",
+      current: 75,
+      target: 90,
+      importance: "High",
+      timeToTarget: "6 months", 
+      recommendation: "Practice professional communication scenarios"
     },
+    {
+      skill: "Project Management",
+      current: 45,
+      target: 70,
+      importance: "Medium",
+      timeToTarget: "12 months",
+      recommendation: "Consider project management course"
+    },
+    {
+      skill: "Renewable Technologies",
+      current: 30,
+      target: 75,
+      importance: "Future-critical",
+      timeToTarget: "18 months",
+      recommendation: "Solar PV and EV charging specialisation"
+    }
+  ];
+
+  const opportunities = [
     {
       type: "Training Course",
-      title: "Advanced PLC Programming",
-      date: "2nd May 2024",
-      location: "Manchester",
-      relevance: 82,
-      description: "Industrial automation skills development - high market value"
-    }
-  ];
-
-  const skillGaps = [
-    {
-      skill: "Commercial Installation Experience",
-      currentLevel: 45,
-      targetLevel: 80,
+      title: "18th Edition Update",
+      provider: "City & Guilds",
+      duration: "5 days",
+      cost: "£450",
       priority: "High",
-      timeToClose: "6-8 weeks",
-      aiSuggestion: "Seek commercial placement or shadowing opportunities"
+      deadline: "Required by June 2024"
     },
     {
-      skill: "Advanced Testing Procedures",
-      currentLevel: 72,
-      targetLevel: 90,
+      type: "Networking Event",
+      title: "Regional NICEIC Meeting",
+      provider: "NICEIC",
+      duration: "1 day", 
+      cost: "Free",
       priority: "Medium",
-      timeToClose: "4-6 weeks",
-      aiSuggestion: "Practice with different MFT equipment and complex circuits"
+      deadline: "Monthly events"
     },
     {
-      skill: "Project Documentation",
-      currentLevel: 65,
-      targetLevel: 85,
+      type: "Certification",
+      title: "PAT Testing Qualification",
+      provider: "IET",
+      duration: "2 days",
+      cost: "£295",
       priority: "Medium",
-      timeToClose: "3-4 weeks",
-      aiSuggestion: "Focus on digital documentation tools and compliance frameworks"
+      deadline: "Recommended for portfolio"
     }
   ];
 
-  const getMatchBadge = (match: number) => {
-    if (match >= 90) return <Badge className="bg-green-600 text-white">Excellent Match</Badge>;
-    if (match >= 80) return <Badge className="bg-blue-600 text-white">Good Match</Badge>;
-    return <Badge className="bg-orange-600 text-white">Fair Match</Badge>;
+  const mentorInsights = [
+    {
+      mentor: "Sarah Johnson",
+      role: "Senior Electrician",
+      company: "ABC Electrical",
+      insight: "Focus on commercial experience - it opens more doors than domestic work alone",
+      rating: 5
+    },
+    {
+      mentor: "Mike Thompson", 
+      role: "Electrical Contractor",
+      company: "ThompsonElec Ltd",
+      insight: "Customer service skills are just as important as technical ability",
+      rating: 5
+    },
+    {
+      mentor: "Lisa Chen",
+      role: "Design Engineer", 
+      company: "PowerTech Solutions",
+      insight: "Learn CAD software early - it's becoming essential in modern electrical work",
+      rating: 4
+    }
+  ];
+
+  const getMatchColor = (match: number) => {
+    if (match >= 80) return "text-green-500";
+    if (match >= 60) return "text-blue-500";
+    return "text-orange-500";
   };
 
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
       case "High":
-        return <Badge className="bg-red-600 text-white">High</Badge>;
+        return <Badge className="bg-red-600 text-white">High Priority</Badge>;
       case "Medium":
-        return <Badge className="bg-orange-600 text-white">Medium</Badge>;
+        return <Badge className="bg-orange-600 text-white">Medium Priority</Badge>;
       default:
-        return <Badge className="bg-green-600 text-white">Low</Badge>;
+        return <Badge className="bg-green-600 text-white">Low Priority</Badge>;
+    }
+  };
+
+  const getImportanceBadge = (importance: string) => {
+    switch (importance) {
+      case "Critical":
+        return <Badge className="bg-red-600 text-white">Critical</Badge>;
+      case "High":
+        return <Badge className="bg-orange-600 text-white">High</Badge>;
+      case "Future-critical":
+        return <Badge className="bg-purple-600 text-white">Future-Critical</Badge>;
+      default:
+        return <Badge className="bg-blue-600 text-white">Medium</Badge>;
     }
   };
 
@@ -143,25 +158,25 @@ const CareerGuidanceTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Career Readiness</CardTitle>
-            <User className="h-4 w-4 text-muted-foreground" />
+            <Target className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-500">84%</div>
+            <div className="text-2xl font-bold text-green-500">82%</div>
             <p className="text-xs text-muted-foreground">
-              Industry ready
+              Job market ready
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Market Value</CardTitle>
+            <CardTitle className="text-sm font-medium">Skill Development</CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-500">£31k</div>
+            <div className="text-2xl font-bold text-blue-500">67%</div>
             <p className="text-xs text-muted-foreground">
-              Estimated starting
+              Target skills progress
             </p>
           </CardContent>
         </Card>
@@ -169,10 +184,10 @@ const CareerGuidanceTab = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Network Score</CardTitle>
-            <Network className="h-4 w-4 text-muted-foreground" />
+            <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-purple-500">67</div>
+            <div className="text-2xl font-bold text-purple-500">45</div>
             <p className="text-xs text-muted-foreground">
               Professional connections
             </p>
@@ -181,13 +196,13 @@ const CareerGuidanceTab = () => {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Career Paths</CardTitle>
-            <Target className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Opportunities</CardTitle>
+            <Star className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-elec-yellow">4</div>
+            <div className="text-2xl font-bold text-elec-yellow">8</div>
             <p className="text-xs text-muted-foreground">
-              AI recommended
+              Available now
             </p>
           </CardContent>
         </Card>
@@ -197,31 +212,39 @@ const CareerGuidanceTab = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Brain className="h-5 w-5" />
-              AI Career Insights
+              <MapPin className="h-5 w-5" />
+              AI Career Path Matching
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {careerInsights.map((insight, index) => (
+              {careerPaths.map((path, index) => (
                 <div key={index} className="border rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium">{insight.title}</h4>
-                    <Badge variant="outline">{insight.confidence}% confident</Badge>
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <h4 className="font-medium">{path.title}</h4>
+                      <p className="text-sm text-muted-foreground">{path.description}</p>
+                    </div>
+                    <span className={`text-lg font-bold ${getMatchColor(path.match)}`}>
+                      {path.match}%
+                    </span>
                   </div>
                   
-                  <p className="text-sm text-muted-foreground mb-3">{insight.insight}</p>
-                  
-                  <div>
-                    <span className="text-xs text-muted-foreground">AI Recommendations:</span>
-                    <ul className="text-xs text-muted-foreground mt-1 space-y-1">
-                      {insight.recommendations.map((rec, recIndex) => (
-                        <li key={recIndex} className="flex items-start gap-1">
-                          <span className="text-elec-yellow">•</span>
-                          {rec}
-                        </li>
+                  <div className="space-y-2">
+                    <Progress value={path.match} className="h-2" />
+                    
+                    <div className="flex flex-wrap gap-1">
+                      {path.skills.map((skill, skillIndex) => (
+                        <Badge key={skillIndex} variant="outline" className="text-xs">
+                          {skill}
+                        </Badge>
                       ))}
-                    </ul>
+                    </div>
+                    
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">{path.growth}</span>
+                      <span className="font-medium">{path.salary}</span>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -232,60 +255,32 @@ const CareerGuidanceTab = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Briefcase className="h-5 w-5" />
-              Personalised Career Paths
+              <TrendingUp className="h-5 w-5" />
+              Skill Development Plan
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              {careerPaths.map((path, index) => (
+            <div className="space-y-4">
+              {skillDevelopment.map((skill, index) => (
                 <div key={index} className="border rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium">{path.title}</h4>
-                    <div className="flex items-center gap-2">
-                      {getMatchBadge(path.match)}
-                      {path.aiRecommended && (
-                        <Badge className="bg-purple-600 text-white text-xs">
-                          <Brain className="h-3 w-3 mr-1" />
-                          AI Pick
-                        </Badge>
-                      )}
-                    </div>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-2 text-sm mb-3">
+                  <div className="flex items-start justify-between mb-2">
                     <div>
-                      <span className="text-muted-foreground">Timeframe:</span>
-                      <div className="font-medium">{path.timeframe}</div>
+                      <h4 className="font-medium">{skill.skill}</h4>
+                      <p className="text-sm text-muted-foreground">{skill.recommendation}</p>
                     </div>
-                    <div>
-                      <span className="text-muted-foreground">Salary:</span>
-                      <div className="font-medium text-green-500">{path.earning}</div>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Growth:</span>
-                      <div className="font-medium">{path.growth}</div>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Match:</span>
-                      <div className="font-medium text-blue-500">{path.match}%</div>
-                    </div>
+                    {getImportanceBadge(skill.importance)}
                   </div>
                   
                   <div className="space-y-2">
-                    <div className="text-xs text-muted-foreground">Requirements:</div>
-                    <div className="flex flex-wrap gap-1">
-                      {path.requirements.map((req, reqIndex) => (
-                        <Badge key={reqIndex} variant="secondary" className="text-xs">
-                          {req}
-                        </Badge>
-                      ))}
+                    <div className="flex justify-between text-sm">
+                      <span>Current: {skill.current}%</span>
+                      <span>Target: {skill.target}%</span>
                     </div>
+                    <Progress value={skill.current} className="h-2" />
+                    <p className="text-xs text-muted-foreground">
+                      Estimated time to target: {skill.timeToTarget}
+                    </p>
                   </div>
-                  
-                  <Button size="sm" className="w-full mt-3">
-                    Explore Path
-                  </Button>
                 </div>
               ))}
             </div>
@@ -297,35 +292,32 @@ const CareerGuidanceTab = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Target className="h-5 w-5" />
-              Skill Gap Analysis
+              <BookOpen className="h-5 w-5" />
+              Learning Opportunities
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {skillGaps.map((gap, index) => (
-                <div key={index} className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="font-medium">{gap.skill}</span>
-                    {getPriorityBadge(gap.priority)}
+              {opportunities.map((opp, index) => (
+                <div key={index} className="border rounded-lg p-4">
+                  <div className="flex items-start justify-between mb-2">
+                    <div>
+                      <h4 className="font-medium">{opp.title}</h4>
+                      <p className="text-sm text-muted-foreground">
+                        {opp.provider} • {opp.duration}
+                      </p>
+                    </div>
+                    {getPriorityBadge(opp.priority)}
                   </div>
                   
-                  <div className="space-y-1">
-                    <div className="flex justify-between text-sm">
-                      <span>Current: {gap.currentLevel}%</span>
-                      <span>Target: {gap.targetLevel}%</span>
+                  <div className="flex justify-between items-center">
+                    <div className="text-sm">
+                      <span className="font-medium">{opp.cost}</span>
+                      <p className="text-muted-foreground">{opp.deadline}</p>
                     </div>
-                    <Progress value={gap.currentLevel} className="h-2" />
-                  </div>
-                  
-                  <div className="text-sm">
-                    <div className="flex justify-between mb-1">
-                      <span className="text-muted-foreground">Time to close:</span>
-                      <span className="text-elec-yellow">{gap.timeToClose}</span>
-                    </div>
-                    <p className="text-muted-foreground italic text-xs">
-                      AI Suggestion: {gap.aiSuggestion}
-                    </p>
+                    <Button size="sm" variant="outline">
+                      Learn More
+                    </Button>
                   </div>
                 </div>
               ))}
@@ -336,49 +328,67 @@ const CareerGuidanceTab = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Network className="h-5 w-5" />
-              Networking Opportunities
+              <Users className="h-5 w-5" />
+              Mentor Insights
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              {networkingOpportunities.map((opportunity, index) => (
+            <div className="space-y-4">
+              {mentorInsights.map((mentor, index) => (
                 <div key={index} className="border rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <Award className="h-4 w-4 text-blue-500" />
-                      <h4 className="font-medium">{opportunity.title}</h4>
-                    </div>
-                    <Badge variant="outline">{opportunity.relevance}% relevant</Badge>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-2 text-sm mb-2">
+                  <div className="flex items-start justify-between mb-2">
                     <div>
-                      <span className="text-muted-foreground">Type:</span>
-                      <div className="font-medium">{opportunity.type}</div>
+                      <h4 className="font-medium">{mentor.mentor}</h4>
+                      <p className="text-sm text-muted-foreground">
+                        {mentor.role} at {mentor.company}
+                      </p>
                     </div>
-                    <div>
-                      <span className="text-muted-foreground">Date:</span>
-                      <div className="font-medium">{opportunity.date}</div>
+                    <div className="flex items-center gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star 
+                          key={i} 
+                          className={`h-3 w-3 ${i < mentor.rating ? 'text-yellow-500 fill-current' : 'text-gray-300'}`} 
+                        />
+                      ))}
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-1 mb-2 text-sm">
-                    <MapPin className="h-3 w-3 text-muted-foreground" />
-                    <span className="text-muted-foreground">{opportunity.location}</span>
-                  </div>
-                  
-                  <p className="text-sm text-muted-foreground mb-3">{opportunity.description}</p>
-                  
-                  <Button size="sm" variant="outline" className="w-full">
-                    Learn More
-                  </Button>
+                  <p className="text-sm text-muted-foreground italic">
+                    "{mentor.insight}"
+                  </p>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
       </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Button className="h-12" variant="outline">
+          <Calendar className="mr-2 h-4 w-4" />
+          Schedule Career Consultation
+        </Button>
+        <Button className="h-12" variant="outline">
+          <Target className="mr-2 h-4 w-4" />
+          Create Development Plan
+        </Button>
+      </div>
+
+      <Card className="border-blue-500/50 bg-blue-500/10">
+        <CardHeader>
+          <CardTitle className="text-blue-300 flex items-center gap-2">
+            <User className="h-5 w-5" />
+            Personalised Career Guidance
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">
+            Your AI-powered career guidance system analyses your skills, interests, and market trends 
+            to provide personalised career recommendations. Connect with industry mentors, discover 
+            learning opportunities, and build a strategic development plan for your electrical career.
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 };
