@@ -50,6 +50,7 @@ import Year3 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year3"
 import Year4 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year4";
 import TimeManagement from "@/pages/apprentice/toolbox/TimeManagement";
 import ApprenticeOJT from "@/pages/apprentice/ApprenticeOJT";
+import EnhancedOJT from "@/pages/apprentice/EnhancedOJT";
 import AdvancedHelp from "@/pages/apprentice/AdvancedHelp";
 
 const ApprenticeRoutes = () => (
