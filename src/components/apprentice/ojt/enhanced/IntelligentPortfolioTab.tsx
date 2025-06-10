@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Brain, FileText, Upload, MessageSquare, Lightbulb, CheckCircle, AlertCircle, Send } from "lucide-react";
+import { Brain, FileText, Upload, MessageSquare, Lightbulb, CheckCircle, AlertCircle, Send, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import ChatMessageRenderer from "./ChatMessageRenderer";
@@ -83,7 +83,7 @@ const IntelligentPortfolioTab = () => {
 
       const aiMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
-        content: data.response || "I'm here to help with your portfolio development!",
+        content: data.response || "I'm here to help with your portfolio development! ⚡",
         isUser: false,
         timestamp: new Date()
       };
@@ -95,7 +95,7 @@ const IntelligentPortfolioTab = () => {
       
       const errorMessage: ChatMessage = {
         id: (Date.now() + 1).toString(),
-        content: "I apologise, but I'm having trouble responding right now. Please try your question again in a moment.",
+        content: "I apologise, but I'm having trouble responding right now. Please try your question again in a moment. 🔧",
         isUser: false,
         timestamp: new Date()
       };
@@ -145,11 +145,12 @@ const IntelligentPortfolioTab = () => {
         ))}
       </div>
 
-      <Card className="border-elec-yellow/50">
+      <Card className="border-elec-yellow/50 bg-gradient-to-br from-elec-yellow/5 to-orange-500/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Brain className="h-5 w-5" />
             AI Portfolio Assistant
+            <Sparkles className="h-4 w-4 text-yellow-400" />
           </CardTitle>
           <p className="text-sm text-muted-foreground">
             Get personalised advice on portfolio development, documentation, and reflection writing
@@ -157,25 +158,32 @@ const IntelligentPortfolioTab = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="h-80 border rounded-lg p-4 overflow-y-auto bg-elec-gray/50 space-y-4">
+            <div className="h-96 border border-gray-600 rounded-xl p-4 overflow-y-auto bg-gradient-to-b from-gray-900 to-elec-gray/90 scrollbar-thin scrollbar-thumb-elec-yellow scrollbar-track-gray-800">
               {chatMessages.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center">
-                  <MessageSquare className="h-12 w-12 text-muted-foreground mb-4" />
-                  <p className="text-muted-foreground mb-4">
-                    Ask me anything about portfolio development, documentation, or apprenticeship guidance!
+                  <div className="bg-gradient-to-r from-elec-yellow to-orange-500 rounded-full p-4 mb-6">
+                    <MessageSquare className="h-8 w-8 text-black" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-white mb-2">
+                    Welcome to your AI Portfolio Assistant! ⚡
+                  </h3>
+                  <p className="text-muted-foreground mb-6 max-w-md">
+                    Ask me anything about portfolio development, documentation, or apprenticeship guidance. I'm here to help you succeed!
                   </p>
-                  <div className="space-y-2">
-                    <p className="text-sm text-muted-foreground">Try asking:</p>
-                    {quickQuestions.slice(0, 2).map((question, index) => (
-                      <Badge
-                        key={index}
-                        variant="outline"
-                        className="cursor-pointer hover:bg-elec-yellow/20 text-xs"
-                        onClick={() => setCurrentMessage(question)}
-                      >
-                        {question}
-                      </Badge>
-                    ))}
+                  <div className="space-y-3">
+                    <p className="text-sm text-muted-foreground">💡 Try asking:</p>
+                    <div className="flex flex-wrap gap-2 justify-center">
+                      {quickQuestions.slice(0, 2).map((question, index) => (
+                        <Badge
+                          key={index}
+                          variant="outline"
+                          className="cursor-pointer hover:bg-elec-yellow/20 hover:border-elec-yellow text-xs transition-all duration-200"
+                          onClick={() => setCurrentMessage(question)}
+                        >
+                          {question}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -189,10 +197,14 @@ const IntelligentPortfolioTab = () => {
                   ))}
                   {isLoading && (
                     <div className="flex justify-start mb-4">
-                      <div className="bg-elec-gray border border-gray-700 rounded-lg p-4 mr-4">
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-elec-yellow"></div>
-                          Thinking...
+                      <div className="bg-gradient-to-br from-elec-gray to-gray-800 border border-gray-600 rounded-xl p-4 mr-4 shadow-xl">
+                        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                          <div className="flex space-x-1">
+                            <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce"></div>
+                            <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                            <div className="w-2 h-2 bg-elec-yellow rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                          </div>
+                          <span>Thinking...</span>
                         </div>
                       </div>
                     </div>
@@ -201,36 +213,41 @@ const IntelligentPortfolioTab = () => {
               )}
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <Textarea
                 value={currentMessage}
                 onChange={(e) => setCurrentMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ask about portfolio development, documentation, or apprenticeship guidance..."
-                className="flex-1 min-h-[60px] resize-none"
+                className="flex-1 min-h-[80px] resize-none border-gray-600 bg-gray-800/50 focus:border-elec-yellow transition-colors"
                 disabled={isLoading}
               />
               <Button
                 onClick={handleSendMessage}
                 disabled={!currentMessage.trim() || isLoading}
-                className="px-4"
+                className="px-6 bg-gradient-to-r from-elec-yellow to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-black font-semibold transition-all duration-200"
               >
                 <Send className="h-4 w-4" />
               </Button>
             </div>
 
-            <div className="flex flex-wrap gap-2">
-              <p className="text-xs text-muted-foreground w-full mb-2">Quick questions:</p>
-              {quickQuestions.map((question, index) => (
-                <Badge
-                  key={index}
-                  variant="outline"
-                  className="cursor-pointer hover:bg-elec-yellow/20 text-xs"
-                  onClick={() => setCurrentMessage(question)}
-                >
-                  {question}
-                </Badge>
-              ))}
+            <div className="space-y-3">
+              <p className="text-xs text-muted-foreground flex items-center gap-1">
+                <Sparkles className="h-3 w-3" />
+                Quick questions to get started:
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {quickQuestions.map((question, index) => (
+                  <Badge
+                    key={index}
+                    variant="outline"
+                    className="cursor-pointer hover:bg-elec-yellow/20 hover:border-elec-yellow text-xs transition-all duration-200"
+                    onClick={() => setCurrentMessage(question)}
+                  >
+                    {question}
+                  </Badge>
+                ))}
+              </div>
             </div>
           </div>
         </CardContent>
