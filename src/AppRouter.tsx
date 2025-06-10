@@ -28,7 +28,6 @@ import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
 import RightsAndPay from "@/pages/apprentice/RightsAndPay";
 import Chat from "@/pages/Chat";
 import NotificationsPage from "@/pages/NotificationsPage";
-import EnhancedOJT from '@/pages/apprentice/EnhancedOJT';
 
 const AppRouter = () => {
   return (
@@ -76,9 +75,6 @@ const AppRouter = () => {
         
         {/* Apprentice Routes */}
         <Route path="apprentice/*" element={<ApprenticeRoutes />} />
-        
-        {/* Enhanced OJT Route */}
-        <Route path="apprentice/enhanced-ojt" element={<EnhancedOJT />} />
         
         {/* Catch-all route for 404 */}
         <Route path="*" element={<NotFound />} />
