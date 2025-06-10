@@ -1,77 +1,76 @@
 
-import { Button } from "@/components/ui/button";
+import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Wrench, HardHat, Zap, Hammer } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Wrench, CheckCircle, Store, Calculator, Heart } from "lucide-react";
+import EssentialToolsTab from "@/components/apprentice/professional-tools/EssentialToolsTab";
+import ToolSelectionTab from "@/components/apprentice/professional-tools/ToolSelectionTab";
+import SuppliersAndCostsTab from "@/components/apprentice/professional-tools/SuppliersAndCostsTab";
+import InteractiveToolsTab from "@/components/apprentice/professional-tools/InteractiveToolsTab";
 
 const ToolsGuide = () => {
-  const toolCategories = [
-    {
-      title: "Basic Hand Tools",
-      icon: Hammer,
-      description: "Essential hand tools every apprentice needs",
-      tools: ["Screwdrivers", "Pliers", "Wire strippers", "Side cutters", "Electrical tester"]
-    },
-    {
-      title: "Testing Equipment",
-      icon: Zap,
-      description: "Instruments for testing electrical installations",
-      tools: ["Multimeter", "Insulation tester", "RCD tester", "Loop impedance tester", "Voltage indicator"]
-    },
-    {
-      title: "Safety Equipment",
-      icon: HardHat,
-      description: "Personal protective equipment for electrical work",
-      tools: ["Safety boots", "Hard hat", "Safety glasses", "Insulated gloves", "High-vis vest"]
-    },
-    {
-      title: "Power Tools",
-      icon: Wrench,
-      description: "Electric tools for efficient installation work",
-      tools: ["Drill", "Angle grinder", "SDS drill", "Reciprocating saw", "Cable puller"]
-    }
-  ];
-
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Tools & Materials Guide</h1>
-          <p className="text-muted-foreground">Essential tools and equipment for electrical apprentices</p>
-        </div>
-        <Link to="/apprentice/toolbox" className="flex-shrink-0">
-          <Button variant="outline">
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Toolbox
-          </Button>
-        </Link>
+    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
+      <div className="flex flex-col items-center justify-center mb-6">
+        <h1 className="text-3xl font-bold tracking-tight mb-4">Professional Tool Guide</h1>
+        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+          Complete guidance for building your professional electrician toolkit - from essential tools to smart purchasing decisions
+        </p>
+        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {toolCategories.map((category, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 rounded-md bg-elec-yellow/10">
-                  <category.icon className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <CardTitle className="text-xl">{category.title}</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-elec-light/80">{category.description}</p>
-              <ul className="space-y-2">
-                {category.tools.map((tool, idx) => (
-                  <li key={idx} className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full"></span>
-                    <span className="text-sm">{tool}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      <Tabs defaultValue="essential" className="w-full">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="essential" className="flex items-center gap-2">
+            <Wrench className="h-4 w-4" />
+            Essential Tools
+          </TabsTrigger>
+          <TabsTrigger value="selection" className="flex items-center gap-2">
+            <CheckCircle className="h-4 w-4" />
+            Tool Selection
+          </TabsTrigger>
+          <TabsTrigger value="suppliers" className="flex items-center gap-2">
+            <Store className="h-4 w-4" />
+            Suppliers & Costs
+          </TabsTrigger>
+          <TabsTrigger value="interactive" className="flex items-center gap-2">
+            <Calculator className="h-4 w-4" />
+            Interactive Tools
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="essential">
+          <EssentialToolsTab />
+        </TabsContent>
+
+        <TabsContent value="selection">
+          <ToolSelectionTab />
+        </TabsContent>
+
+        <TabsContent value="suppliers">
+          <SuppliersAndCostsTab />
+        </TabsContent>
+
+        <TabsContent value="interactive">
+          <InteractiveToolsTab />
+        </TabsContent>
+      </Tabs>
+
+      <Card className="border-green-500/50 bg-green-500/10">
+        <CardHeader>
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <Heart className="h-5 w-5" />
+            Remember
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">
+            Building a professional toolkit is an investment in your career. Focus on quality over quantity, 
+            and build your collection gradually. A well-maintained set of quality tools will serve you throughout 
+            your entire electrical career.
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 };

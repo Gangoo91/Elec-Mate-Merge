@@ -1,209 +1,113 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CheckSquare, Download, FileText } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { CheckSquare, Download, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 const ToolChecklistGenerator = () => {
-  const [selectedLevel, setSelectedLevel] = useState<string>("first-year");
-  const [selectedWorkType, setSelectedWorkType] = useState<string>("domestic");
-  const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
+  const [projectType, setProjectType] = useState<string>("domestic");
+  const [projectName, setProjectName] = useState<string>("");
+  const [checklist, setChecklist] = useState<Array<{id: string, tool: string, checked: boolean, essential: boolean}>>([]);
 
-  const toolLists = {
-    "first-year": {
-      essential: [
-        "Insulation screwdrivers (set of 6)",
-        "Side cutters/pliers",
-        "Long nose pliers",
-        "Wire strippers",
-        "Adjustable spanner set",
-        "Digital multimeter",
-        "Non-contact voltage tester",
-        "Torch/headlamp",
-        "Cable knife",
-        "Electrical tape",
-        "Cable ties",
-        "Spirit level",
-        "Measuring tape",
-        "Safety glasses",
-        "Work gloves"
-      ],
-      recommended: [
-        "Cordless drill/driver",
-        "Junior hacksaw",
-        "Adjustable wrench",
-        "Socket set (metric)",
-        "Crimping tool",
-        "Cable detector",
-        "First aid kit",
-        "High-vis vest",
-        "Safety boots",
-        "Hard hat"
-      ]
-    },
-    "second-year": {
-      essential: [
-        "Complete screwdriver set",
-        "Professional pliers set",
-        "Wire strippers (automatic)",
-        "Spanner set (metric/imperial)",
-        "Digital multimeter (CAT III)",
-        "Voltage tester (proving unit)",
-        "Insulation resistance tester",
-        "Socket tester",
-        "SDS drill",
-        "Angle grinder",
-        "Reciprocating saw",
-        "Cable pulling system",
-        "Conduit bender set",
-        "Knockout set",
-        "Full PPE kit"
-      ],
-      recommended: [
-        "Clamp meter",
-        "PAT tester (basic)",
-        "Cable tracer",
-        "Laser level",
-        "Thermal imaging camera",
-        "Impact driver",
-        "Oscillating tool",
-        "Van racking system",
-        "Professional toolbox",
-        "Test lead set"
-      ]
-    },
-    "qualified": {
-      essential: [
-        "Professional tool kit (complete)",
-        "Multifunction tester (MFT)",
-        "Calibrated test equipment",
-        "RCD tester",
-        "Earth fault loop tester",
-        "Phase rotation tester",
-        "Professional power tools set",
-        "Specialized hand tools",
-        "Advanced PPE equipment",
-        "Professional test leads",
-        "Calibration certificates",
-        "Tool testing equipment"
-      ],
-      recommended: [
-        "Thermal imaging camera",
-        "Power quality analyzer",
-        "Cable fault locator",
-        "Professional van fit-out",
-        "Advanced safety equipment",
-        "Specialized testing tools",
-        "Professional documentation tools",
-        "Advanced measuring equipment"
-      ]
-    }
-  };
-
-  const workTypeAdditions = {
+  const toolSuggestions = {
+    domestic: [
+      { tool: "Voltage tester", essential: true },
+      { tool: "Screwdriver set", essential: true },
+      { tool: "Wire strippers", essential: true },
+      { tool: "Pliers set", essential: true },
+      { tool: "Multimeter", essential: true },
+      { tool: "Drill", essential: false },
+      { tool: "Cable detector", essential: false }
+    ],
     commercial: [
-      "Larger conduit benders",
-      "Cable pulling equipment",
-      "Commercial socket testers",
-      "Three-phase testing equipment"
+      { tool: "MFT (Multifunction tester)", essential: true },
+      { tool: "Insulation tester", essential: true },
+      { tool: "Cable puller", essential: true },
+      { tool: "SDS drill", essential: true },
+      { tool: "Angle grinder", essential: false },
+      { tool: "Conduit bender", essential: false }
     ],
     industrial: [
-      "Heavy-duty power tools",
-      "Industrial test equipment",
-      "Specialized safety gear",
-      "High-voltage rated tools",
-      "Torque wrenches",
-      "Bearing pullers"
-    ],
-    mixed: [
-      "Versatile tool selection",
-      "Portable equipment",
-      "Multi-purpose testers",
-      "Adaptable storage solutions"
+      { tool: "High voltage detector", essential: true },
+      { tool: "Torque wrench", essential: true },
+      { tool: "Cable fault locator", essential: true },
+      { tool: "Thermal imaging camera", essential: false },
+      { tool: "Oscilloscope", essential: false }
     ]
   };
 
-  const handleItemCheck = (item: string) => {
-    const newCheckedItems = new Set(checkedItems);
-    if (newCheckedItems.has(item)) {
-      newCheckedItems.delete(item);
-    } else {
-      newCheckedItems.add(item);
-    }
-    setCheckedItems(newCheckedItems);
+  const generateChecklist = () => {
+    const suggestions = toolSuggestions[projectType as keyof typeof toolSuggestions] || [];
+    const newChecklist = suggestions.map((item, index) => ({
+      id: `${Date.now()}-${index}`,
+      tool: item.tool,
+      checked: false,
+      essential: item.essential
+    }));
+    setChecklist(newChecklist);
   };
 
-  const exportChecklist = () => {
-    const selectedTools = toolLists[selectedLevel as keyof typeof toolLists];
-    const additionalTools = workTypeAdditions[selectedWorkType as keyof typeof workTypeAdditions] || [];
+  const addCustomTool = () => {
+    const newTool = {
+      id: `custom-${Date.now()}`,
+      tool: "Custom tool",
+      checked: false,
+      essential: false
+    };
+    setChecklist([...checklist, newTool]);
+  };
+
+  const updateTool = (id: string, field: string, value: any) => {
+    setChecklist(checklist.map(item => 
+      item.id === id ? { ...item, [field]: value } : item
+    ));
+  };
+
+  const removeTool = (id: string) => {
+    setChecklist(checklist.filter(item => item.id !== id));
+  };
+
+  const downloadChecklist = () => {
+    const content = `${projectName || 'Tool Checklist'}\n\nProject Type: ${projectType}\n\n` +
+      checklist.map(item => `${item.checked ? '✓' : '☐'} ${item.tool}${item.essential ? ' (Essential)' : ''}`).join('\n');
     
-    let checklist = `Professional Tool Checklist - ${selectedLevel} (${selectedWorkType})\n`;
-    checklist += `Generated on: ${new Date().toLocaleDateString()}\n\n`;
-    
-    checklist += "ESSENTIAL TOOLS:\n";
-    selectedTools.essential.forEach(tool => {
-      const checked = checkedItems.has(tool) ? "✓" : "☐";
-      checklist += `${checked} ${tool}\n`;
-    });
-    
-    checklist += "\nRECOMMENDED TOOLS:\n";
-    selectedTools.recommended.forEach(tool => {
-      const checked = checkedItems.has(tool) ? "✓" : "☐";
-      checklist += `${checked} ${tool}\n`;
-    });
-    
-    if (additionalTools.length > 0) {
-      checklist += `\n${selectedWorkType.toUpperCase()} SPECIFIC:\n`;
-      additionalTools.forEach(tool => {
-        const checked = checkedItems.has(tool) ? "✓" : "☐";
-        checklist += `${checked} ${tool}\n`;
-      });
-    }
-    
-    const blob = new Blob([checklist], { type: 'text/plain' });
+    const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `tool-checklist-${selectedLevel}-${selectedWorkType}.txt`;
-    document.body.appendChild(a);
+    a.download = `${projectName || 'tool-checklist'}.txt`;
     a.click();
-    document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
-
-  const selectedTools = toolLists[selectedLevel as keyof typeof toolLists];
-  const additionalTools = workTypeAdditions[selectedWorkType as keyof typeof workTypeAdditions] || [];
 
   return (
     <Card className="border-blue-500/20 bg-blue-500/10">
       <CardHeader>
         <div className="flex items-center gap-2">
           <CheckSquare className="h-5 w-5 text-blue-400" />
-          <CardTitle className="text-blue-400">Custom Tool Checklist Generator</CardTitle>
+          <CardTitle className="text-blue-400">Tool Checklist Generator</CardTitle>
         </div>
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-white mb-2">Apprenticeship Level</label>
-              <Select value={selectedLevel} onValueChange={setSelectedLevel}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="first-year">First Year</SelectItem>
-                  <SelectItem value="second-year">Second Year+</SelectItem>
-                  <SelectItem value="qualified">Newly Qualified</SelectItem>
-                </SelectContent>
-              </Select>
+              <Label htmlFor="project-name">Project Name</Label>
+              <Input
+                id="project-name"
+                value={projectName}
+                onChange={(e) => setProjectName(e.target.value)}
+                placeholder="e.g. Kitchen rewire, Office lighting"
+              />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-white mb-2">Work Type</label>
-              <Select value={selectedWorkType} onValueChange={setSelectedWorkType}>
+              <Label htmlFor="project-type">Project Type</Label>
+              <Select value={projectType} onValueChange={setProjectType}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -211,84 +115,58 @@ const ToolChecklistGenerator = () => {
                   <SelectItem value="domestic">Domestic</SelectItem>
                   <SelectItem value="commercial">Commercial</SelectItem>
                   <SelectItem value="industrial">Industrial</SelectItem>
-                  <SelectItem value="mixed">Mixed</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-semibold text-green-400 mb-3">Essential Tools</h4>
-              <div className="space-y-2 max-h-60 overflow-y-auto">
-                {selectedTools.essential.map((tool, index) => (
-                  <div key={index} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`essential-${index}`}
-                      checked={checkedItems.has(tool)}
-                      onCheckedChange={() => handleItemCheck(tool)}
-                    />
-                    <label htmlFor={`essential-${index}`} className="text-sm text-muted-foreground cursor-pointer">
-                      {tool}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-blue-400 mb-3">Recommended Tools</h4>
-              <div className="space-y-2 max-h-60 overflow-y-auto">
-                {selectedTools.recommended.map((tool, index) => (
-                  <div key={index} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`recommended-${index}`}
-                      checked={checkedItems.has(tool)}
-                      onCheckedChange={() => handleItemCheck(tool)}
-                    />
-                    <label htmlFor={`recommended-${index}`} className="text-sm text-muted-foreground cursor-pointer">
-                      {tool}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </div>
+          
+          <div className="flex gap-3">
+            <Button onClick={generateChecklist} className="flex-1">
+              Generate Checklist
+            </Button>
+            <Button onClick={addCustomTool} variant="outline" size="icon">
+              <Plus className="h-4 w-4" />
+            </Button>
           </div>
-
-          {additionalTools.length > 0 && (
-            <div>
-              <h4 className="font-semibold text-purple-400 mb-3">{selectedWorkType} Specific Tools</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                {additionalTools.map((tool, index) => (
-                  <div key={index} className="flex items-center space-x-2">
+          
+          {checklist.length > 0 && (
+            <div className="space-y-4">
+              <h4 className="font-medium text-white">Your Tool Checklist</h4>
+              <div className="space-y-2 max-h-60 overflow-y-auto">
+                {checklist.map((item) => (
+                  <div key={item.id} className="flex items-center gap-3 p-2 bg-blue-500/5 rounded-lg">
                     <Checkbox
-                      id={`additional-${index}`}
-                      checked={checkedItems.has(tool)}
-                      onCheckedChange={() => handleItemCheck(tool)}
+                      checked={item.checked}
+                      onCheckedChange={(checked) => updateTool(item.id, 'checked', checked)}
                     />
-                    <label htmlFor={`additional-${index}`} className="text-sm text-muted-foreground cursor-pointer">
-                      {tool}
-                    </label>
+                    <Input
+                      value={item.tool}
+                      onChange={(e) => updateTool(item.id, 'tool', e.target.value)}
+                      className="flex-1 text-sm"
+                    />
+                    {item.essential && (
+                      <span className="text-xs text-orange-400 bg-orange-500/20 px-2 py-1 rounded">
+                        Essential
+                      </span>
+                    )}
+                    <Button
+                      onClick={() => removeTool(item.id)}
+                      variant="ghost"
+                      size="sm"
+                      className="text-red-400 hover:text-red-300"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
                   </div>
                 ))}
               </div>
+              
+              <Button onClick={downloadChecklist} className="w-full" variant="outline">
+                <Download className="h-4 w-4 mr-2" />
+                Download Checklist
+              </Button>
             </div>
           )}
-
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Button onClick={exportChecklist} className="flex-1">
-              <Download className="mr-2 h-4 w-4" />
-              Export Checklist
-            </Button>
-            <Button variant="outline" className="flex-1">
-              <FileText className="mr-2 h-4 w-4" />
-              Print Version
-            </Button>
-          </div>
-
-          <div className="text-sm text-muted-foreground">
-            Progress: {checkedItems.size} / {selectedTools.essential.length + selectedTools.recommended.length + additionalTools.length} items selected
-          </div>
         </div>
       </CardContent>
     </Card>
