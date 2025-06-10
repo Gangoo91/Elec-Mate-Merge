@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Book, Clock, Heart, Users, WrenchIcon, Bot, ArrowLeft, Calculator, FileText, Settings, GraduationCap } from "lucide-react";
+import { Book, Clock, Heart, Users, WrenchIcon, Bot, ArrowLeft, Calculator, FileText, Settings, GraduationCap, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
@@ -47,6 +47,13 @@ const ApprenticeHub = () => {
       title: "Professional Development",
       icon: GraduationCap,
       link: "/apprentice/professional-development"
+    },
+    {
+      id: 8,
+      title: "Advanced Help Box",
+      icon: Zap,
+      link: "/apprentice/advanced-help",
+      featured: true
     }
   ];
 
@@ -66,10 +73,18 @@ const ApprenticeHub = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {apprenticeResources.map((resource) => (
           <Link to={resource.link} key={resource.id} className="focus:outline-none">
-            <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-colors cursor-pointer">
+            <Card className={`border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-colors cursor-pointer ${
+              resource.featured ? 'ring-2 ring-elec-yellow/50 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10' : ''
+            }`}>
               <CardHeader className="flex flex-col items-center justify-center text-center">
-                <resource.icon className="h-8 w-8 text-elec-yellow mb-2" />
+                <resource.icon className={`h-8 w-8 mb-2 ${resource.featured ? 'text-elec-yellow' : 'text-elec-yellow'}`} />
                 <CardTitle className="text-xl">{resource.title}</CardTitle>
+                {resource.featured && (
+                  <div className="flex items-center gap-1 mt-2">
+                    <Bot className="h-4 w-4 text-elec-yellow" />
+                    <span className="text-xs text-elec-yellow font-semibold">AI & AR Powered</span>
+                  </div>
+                )}
               </CardHeader>
               <CardContent>
                 {/* Removed descriptions for cleaner look */}
