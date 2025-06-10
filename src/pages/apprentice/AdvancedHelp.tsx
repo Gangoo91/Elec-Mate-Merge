@@ -3,12 +3,13 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Brain, BookOpen, User, Eye, Bot } from "lucide-react";
+import { ArrowLeft, Brain, BookOpen, User, Eye, Bot, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import AssessmentPrepTab from "@/components/apprentice/ojt/enhanced/AssessmentPrepTab";
 import CareerGuidanceTab from "@/components/apprentice/ojt/enhanced/CareerGuidanceTab";
 import SmartAnalyticsTab from "@/components/apprentice/ojt/enhanced/SmartAnalyticsTab";
 import ARTrainingTab from "@/components/apprentice/advanced-help/ARTrainingTab";
+import HelpBotTab from "@/components/apprentice/ojt/enhanced/HelpBotTab";
 
 const AdvancedHelp = () => {
   return (
@@ -46,8 +47,13 @@ const AdvancedHelp = () => {
           </p>
         </CardHeader>
         <CardContent>
-          <Tabs defaultValue="assessment" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-6">
+          <Tabs defaultValue="helpbot" className="w-full">
+            <TabsList className="grid w-full grid-cols-5 mb-6">
+              <TabsTrigger value="helpbot" className="flex items-center gap-2">
+                <HelpCircle className="h-4 w-4" />
+                <span className="hidden sm:inline">Help Bot</span>
+                <span className="sm:hidden">Help</span>
+              </TabsTrigger>
               <TabsTrigger value="assessment" className="flex items-center gap-2">
                 <BookOpen className="h-4 w-4" />
                 <span className="hidden sm:inline">Assessment Prep</span>
@@ -69,6 +75,10 @@ const AdvancedHelp = () => {
                 <span className="sm:hidden">AR</span>
               </TabsTrigger>
             </TabsList>
+
+            <TabsContent value="helpbot">
+              <HelpBotTab />
+            </TabsContent>
 
             <TabsContent value="assessment">
               <AssessmentPrepTab />
