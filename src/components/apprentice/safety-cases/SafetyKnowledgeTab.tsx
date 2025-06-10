@@ -1,454 +1,560 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
-  Brain, Search, BookOpen, Clock, Users, Award, 
-  PlayCircle, CheckCircle, Target, TrendingUp,
-  Shield, Zap, AlertTriangle, FileText
+  BookOpen, 
+  CheckCircle, 
+  Clock, 
+  Award, 
+  Target,
+  Brain,
+  Shield,
+  AlertTriangle,
+  Play,
+  Users,
+  FileText,
+  Lightbulb,
+  TrendingUp
 } from "lucide-react";
 
-const SafetyKnowledgeTab = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedModule, setSelectedModule] = useState<string | null>(null);
+interface SafetyTopicSection {
+  title: string;
+  content: {
+    subtitle: string;
+    text: string;
+    keyPoints?: string[];
+  }[];
+}
 
-  const safetyModules = [
+interface SafetyTopic {
+  id: string;
+  title: string;
+  description: string;
+  progress: number;
+  difficulty: string;
+  estimatedTime: string;
+  sections: SafetyTopicSection[];
+}
+
+interface KnowledgeModule {
+  id: string;
+  title: string;
+  description: string;
+  progress: number;
+  topics: string[];
+  difficulty: string;
+  duration: string;
+  modules: number;
+  assessments: number;
+  practicalExercises: number;
+  certificate: boolean;
+}
+
+const SafetyKnowledgeTab = () => {
+  const [selectedModule, setSelectedModule] = useState<string | null>(null);
+  const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+
+  const overallProgress = knowledgeModules.reduce((acc: number, module) => acc + module.progress, 0) / knowledgeModules.length;
+
+  const handleStartModule = (moduleId: string) => {
+    setSelectedModule(moduleId);
+    setSelectedTopic(null);
+  };
+
+  const handleSelectTopic = (topicId: string) => {
+    setSelectedTopic(topicId);
+  };
+
+  const getProgressColor = (progress: number) => {
+    if (progress < 30) return "bg-red-500";
+    if (progress < 70) return "bg-amber-500";
+    return "bg-green-500";
+  };
+
+  const getDifficultyColor = (difficulty: string) => {
+    switch (difficulty) {
+      case "Beginner": return "bg-green-500/10 text-green-400 border-green-500/30";
+      case "Intermediate": return "bg-amber-500/10 text-amber-400 border-amber-500/30";
+      case "Advanced": return "bg-red-500/10 text-red-400 border-red-500/30";
+      default: return "bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30";
+    }
+  };
+
+  // Mock data for knowledge modules
+  const knowledgeModules: KnowledgeModule[] = [
     {
-      id: "electrical-safety",
-      title: "Electrical Safety Fundamentals",
-      description: "Core principles of electrical safety including shock prevention, safe working practices, and emergency procedures",
-      progress: 85,
-      topics: ["Shock Prevention", "Safe Isolation", "PPE Requirements", "Emergency Response"],
-      difficulty: "Beginner",
-      duration: "45 minutes",
-      modules: 6,
-      assessments: 3,
-      practicalExercises: 8,
-      certificate: true
-    },
-    {
-      id: "hazard-identification",
-      title: "Hazard Identification & Risk Assessment",
-      description: "Learn to identify workplace hazards and conduct comprehensive risk assessments for electrical work",
-      progress: 72,
-      topics: ["Risk Matrix", "Hazard Types", "Control Measures", "Documentation"],
+      id: "electrical-hazards",
+      title: "Electrical Hazards & Risk Management",
+      description: "Comprehensive guide to identifying and managing electrical hazards in the workplace",
+      progress: 75,
+      topics: ["electrical-shock", "arc-flash", "electrical-burns"],
       difficulty: "Intermediate",
-      duration: "60 minutes",
-      modules: 8,
-      assessments: 4,
-      practicalExercises: 12,
+      duration: "2 hours",
+      modules: 4,
+      assessments: 2,
+      practicalExercises: 3,
       certificate: true
     },
     {
-      id: "ppe-selection",
-      title: "Personal Protective Equipment",
-      description: "Comprehensive guide to selecting, using, and maintaining electrical safety PPE",
-      progress: 90,
-      topics: ["Insulating Gloves", "Arc Flash Protection", "Eye Protection", "Footwear"],
-      difficulty: "Beginner",
-      duration: "35 minutes",
+      id: "isolation-procedures",
+      title: "Safe Isolation Procedures",
+      description: "Step-by-step procedures for safely isolating electrical systems",
+      progress: 60,
+      topics: ["isolation-steps", "proving-dead", "permit-to-work"],
+      difficulty: "Advanced",
+      duration: "3 hours",
       modules: 5,
-      assessments: 2,
-      practicalExercises: 6,
+      assessments: 3,
+      practicalExercises: 4,
+      certificate: true
+    },
+    {
+      id: "ppe-equipment",
+      title: "Personal Protective Equipment",
+      description: "Selection, use and maintenance of electrical PPE",
+      progress: 90,
+      topics: ["ppe-selection", "inspection-testing", "maintenance"],
+      difficulty: "Beginner",
+      duration: "1.5 hours",
+      modules: 3,
+      assessments: 1,
+      practicalExercises: 2,
       certificate: false
     },
     {
       id: "emergency-procedures",
       title: "Emergency Response Procedures",
-      description: "Critical emergency response procedures for electrical incidents and accidents",
-      progress: 65,
-      topics: ["Rescue Procedures", "First Aid", "Incident Reporting", "Evacuation"],
-      difficulty: "Advanced",
-      duration: "75 minutes",
-      modules: 10,
-      assessments: 5,
-      practicalExercises: 15,
+      description: "Response procedures for electrical emergencies and accidents",
+      progress: 45,
+      topics: ["emergency-response", "first-aid", "incident-reporting"],
+      difficulty: "Intermediate",
+      duration: "2.5 hours",
+      modules: 4,
+      assessments: 2,
+      practicalExercises: 3,
       certificate: true
     },
     {
       id: "regulations-compliance",
-      title: "UK Electrical Regulations",
-      description: "Understanding UK electrical safety regulations including BS 7671, CDM, and workplace safety laws",
-      progress: 55,
-      topics: ["BS 7671", "CDM Regulations", "HASAWA", "Inspection Requirements"],
+      title: "Regulations & Compliance",
+      description: "Understanding electrical safety regulations and compliance requirements",
+      progress: 30,
+      topics: ["bs7671-safety", "health-safety-law", "building-regulations"],
       difficulty: "Advanced",
-      duration: "90 minutes",
-      modules: 12,
-      assessments: 6,
-      practicalExercises: 10,
+      duration: "4 hours",
+      modules: 6,
+      assessments: 4,
+      practicalExercises: 2,
       certificate: true
     },
     {
-      id: "safe-isolation",
-      title: "Safe Isolation Procedures",
-      description: "Step-by-step safe isolation procedures for electrical systems and equipment",
+      id: "tool-equipment-safety",
+      title: "Tool & Equipment Safety",
+      description: "Safe use and maintenance of electrical tools and equipment",
+      progress: 85,
+      topics: ["tool-inspection", "equipment-maintenance", "safety-features"],
+      difficulty: "Beginner",
+      duration: "1 hour",
+      modules: 3,
+      assessments: 1,
+      practicalExercises: 4,
+      certificate: false
+    }
+  ];
+
+  // Mock data for safety topics
+  const safetyTopics: SafetyTopic[] = [
+    {
+      id: "electrical-shock",
+      title: "Electrical Shock Prevention",
+      description: "Understanding and preventing electrical shock incidents",
       progress: 80,
-      topics: ["Isolation Process", "Lock Out Tag Out", "Testing", "Verification"],
       difficulty: "Intermediate",
-      duration: "50 minutes",
-      modules: 7,
-      assessments: 3,
-      practicalExercises: 9,
-      certificate: true
+      estimatedTime: "45 mins",
+      sections: [
+        {
+          title: "Understanding Electrical Shock",
+          content: [
+            {
+              subtitle: "What is Electrical Shock?",
+              text: "Electrical shock occurs when the human body becomes part of an electrical circuit, allowing current to flow through it. The severity depends on current magnitude, path through the body, and duration of contact.",
+              keyPoints: [
+                "Current as low as 1mA can be felt",
+                "10-20mA can cause muscular control loss",
+                "50mA can cause cardiac arrest",
+                "Path through heart is most dangerous"
+              ]
+            },
+            {
+              subtitle: "Physiological Effects",
+              text: "The human body's response to electrical current varies with magnitude and frequency. Understanding these effects helps in prevention and emergency response.",
+              keyPoints: [
+                "Sensation threshold: 0.5-2mA",
+                "Let-go threshold: 5-10mA",
+                "Respiratory paralysis: 20-50mA",
+                "Ventricular fibrillation: 50-100mA"
+              ]
+            }
+          ]
+        },
+        {
+          title: "Prevention Strategies",
+          content: [
+            {
+              subtitle: "Primary Prevention",
+              text: "The most effective approach is eliminating exposure to live conductors through proper design, installation, and maintenance practices.",
+              keyPoints: [
+                "Proper earthing and bonding",
+                "RCD protection",
+                "Insulation and barriers",
+                "Safe working distances"
+              ]
+            },
+            {
+              subtitle: "Personal Protection",
+              text: "When working on or near electrical equipment, personal protective measures provide additional safety layers.",
+              keyPoints: [
+                "Insulated tools and equipment",
+                "Appropriate PPE selection",
+                "Voltage-rated gloves",
+                "Arc-rated clothing"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    // Add more topics as needed...
+    {
+      id: "arc-flash",
+      title: "Arc Flash Protection",
+      description: "Understanding and protecting against arc flash incidents",
+      progress: 65,
+      difficulty: "Advanced",
+      estimatedTime: "60 mins",
+      sections: [
+        {
+          title: "Arc Flash Fundamentals",
+          content: [
+            {
+              subtitle: "What is Arc Flash?",
+              text: "Arc flash is a type of electrical explosion that results from low-impedance connections to ground or another voltage phase in an electrical system.",
+              keyPoints: [
+                "Temperatures can reach 35,000°F",
+                "Massive pressure waves created",
+                "Intense light and radiation",
+                "Molten metal ejection"
+              ]
+            }
+          ]
+        }
+      ]
     }
   ];
 
-  const categories = [
-    { id: "all", label: "All Modules", count: safetyModules.length },
-    { id: "beginner", label: "Beginner", count: safetyModules.filter(m => m.difficulty === "Beginner").length },
-    { id: "intermediate", label: "Intermediate", count: safetyModules.filter(m => m.difficulty === "Intermediate").length },
-    { id: "advanced", label: "Advanced", count: safetyModules.filter(m => m.difficulty === "Advanced").length }
-  ];
+  if (selectedModule && selectedTopic) {
+    const module = knowledgeModules.find(m => m.id === selectedModule);
+    const topic = safetyTopics.find(t => t.id === selectedTopic);
 
-  const filteredModules = safetyModules.filter(module => {
-    const matchesSearch = module.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         module.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         module.topics.some(topic => topic.toLowerCase().includes(searchTerm.toLowerCase()));
-    
-    const matchesCategory = selectedCategory === "all" || 
-                           module.difficulty.toLowerCase() === selectedCategory;
-    
-    return matchesSearch && matchesCategory;
-  });
+    if (module && topic) {
+      return (
+        <div className="space-y-6">
+          <div className="flex items-center gap-4 mb-6">
+            <Button
+              variant="outline"
+              onClick={() => setSelectedTopic(null)}
+              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            >
+              ← Back to {module.title}
+            </Button>
+            <div>
+              <h2 className="text-2xl font-bold text-elec-yellow">{topic.title}</h2>
+              <p className="text-muted-foreground">{topic.description}</p>
+            </div>
+          </div>
 
-  const overallProgress = Math.round(
-    safetyModules.reduce((sum, module) => sum + module.progress, 0) / safetyModules.length
-  );
+          {/* Topic Content */}
+          <div className="grid gap-6">
+            {topic.sections.map((section, index) => (
+              <Card key={index} className="border-elec-yellow/20 bg-elec-gray/30">
+                <CardHeader>
+                  <CardTitle className="text-lg text-elec-yellow flex items-center gap-2">
+                    <FileText className="h-5 w-5" />
+                    {section.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {section.content.map((item, idx) => (
+                      <div key={idx} className="space-y-2">
+                        <h4 className="font-medium text-white">{item.subtitle}</h4>
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                          {item.text}
+                        </p>
+                        {item.keyPoints && (
+                          <ul className="space-y-1 mt-3">
+                            {item.keyPoints.map((point, pointIdx) => (
+                              <li key={pointIdx} className="flex items-start gap-2 text-sm">
+                                <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                                <span className="text-muted-foreground">{point}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
 
-  const completedModules = safetyModules.filter(module => module.progress >= 100).length;
-  const inProgressModules = safetyModules.filter(module => module.progress > 0 && module.progress < 100).length;
-
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case "Beginner": return "bg-green-500/10 text-green-400 border-green-500/30";
-      case "Intermediate": return "bg-yellow-500/10 text-yellow-400 border-yellow-500/30";
-      case "Advanced": return "bg-red-500/10 text-red-400 border-red-500/30";
-      default: return "bg-gray-500/10 text-gray-400 border-gray-500/30";
+            {/* Interactive Elements */}
+            <Card className="border-elec-yellow/20 bg-elec-gray/30">
+              <CardHeader>
+                <CardTitle className="text-lg text-elec-yellow flex items-center gap-2">
+                  <Brain className="h-5 w-5" />
+                  Knowledge Check
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <p className="text-sm text-muted-foreground">
+                    Test your understanding of {topic.title} concepts.
+                  </p>
+                  <div className="flex gap-3">
+                    <Button className="bg-elec-yellow text-elec-dark hover:bg-amber-400">
+                      <Play className="h-4 w-4 mr-2" />
+                      Start Quiz
+                    </Button>
+                    <Button variant="outline" className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10">
+                      <FileText className="h-4 w-4 mr-2" />
+                      Download Summary
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      );
     }
-  };
-
-  const getProgressColor = (progress: number) => {
-    if (progress >= 80) return "text-green-400";
-    if (progress >= 60) return "text-yellow-400";
-    return "text-red-400";
-  };
+  }
 
   if (selectedModule) {
-    const module = safetyModules.find(m => m.id === selectedModule);
-    if (!module) return null;
-
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <Button 
-            variant="outline" 
-            onClick={() => setSelectedModule(null)}
-            className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-          >
-            ← Back to Modules
-          </Button>
-          <Badge variant="outline" className={getDifficultyColor(module.difficulty)}>
-            {module.difficulty}
-          </Badge>
-        </div>
-
-        <Card className="border-elec-yellow/30 bg-elec-gray">
-          <CardHeader>
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <CardTitle className="text-xl mb-2">{module.title}</CardTitle>
-                <p className="text-muted-foreground mb-4">{module.description}</p>
-                
-                <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-                  <div className="flex items-center gap-1">
-                    <Clock className="h-4 w-4" />
-                    {module.duration}
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <BookOpen className="h-4 w-4" />
-                    {module.modules} modules
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Target className="h-4 w-4" />
-                    {module.assessments} assessments
-                  </div>
-                </div>
-              </div>
-              
-              <div className="text-right">
-                <div className="mb-2">
-                  <span className={`text-2xl font-bold ${getProgressColor(module.progress)}`}>
-                    {module.progress}%
-                  </span>
-                </div>
-                <Progress value={module.progress} className="w-32" />
-              </div>
+    const module = knowledgeModules.find(m => m.id === selectedModule);
+    if (module) {
+      return (
+        <div className="space-y-6">
+          <div className="flex items-center gap-4 mb-6">
+            <Button
+              variant="outline"
+              onClick={() => setSelectedModule(null)}
+              className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            >
+              ← Back to Overview
+            </Button>
+            <div>
+              <h2 className="text-2xl font-bold text-elec-yellow">{module.title}</h2>
+              <p className="text-muted-foreground">{module.description}</p>
             </div>
-          </CardHeader>
-          
-          <CardContent>
-            <div className="space-y-6">
-              <div>
-                <h4 className="font-medium mb-3 flex items-center gap-2">
-                  <Brain className="h-4 w-4 text-elec-yellow" />
-                  Learning Objectives
-                </h4>
-                <div className="grid gap-2">
-                  {module.topics.map((topic, index) => (
-                    <div key={index} className="flex items-center gap-2 p-2 bg-elec-dark/30 rounded">
-                      <CheckCircle className="h-4 w-4 text-green-400" />
-                      <span className="text-sm">{topic}</span>
+          </div>
+
+          {/* Module Progress */}
+          <Card className="border-elec-yellow/20 bg-elec-gray/30">
+            <CardHeader>
+              <CardTitle className="text-lg text-elec-yellow flex items-center gap-2">
+                <TrendingUp className="h-5 w-5" />
+                Progress Overview
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Module Completion</span>
+                  <span className="text-elec-yellow font-medium">{module.progress}%</span>
+                </div>
+                <Progress value={module.progress} className="h-2" />
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <p className="text-2xl font-bold text-elec-yellow">{module.modules}</p>
+                    <p className="text-xs text-muted-foreground">Modules</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-elec-yellow">{module.assessments}</p>
+                    <p className="text-xs text-muted-foreground">Assessments</p>
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-elec-yellow">{module.practicalExercises}</p>
+                    <p className="text-xs text-muted-foreground">Exercises</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Topics Grid */}
+          <div className="grid md:grid-cols-2 gap-4">
+            {safetyTopics
+              .filter(topic => module.topics.includes(topic.id))
+              .map((topic) => (
+                <Card 
+                  key={topic.id} 
+                  className="border-elec-yellow/20 bg-elec-gray/30 hover:bg-elec-gray/50 cursor-pointer transition-colors"
+                  onClick={() => handleSelectTopic(topic.id)}
+                >
+                  <CardHeader className="pb-3">
+                    <div className="flex items-start justify-between">
+                      <CardTitle className="text-lg text-white">{topic.title}</CardTitle>
+                      <Badge variant="outline" className={getDifficultyColor(topic.difficulty)}>
+                        {topic.difficulty}
+                      </Badge>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 bg-elec-dark/30 rounded-lg text-center">
-                  <BookOpen className="h-6 w-6 text-blue-400 mx-auto mb-2" />
-                  <div className="text-lg font-semibold">{module.modules}</div>
-                  <div className="text-sm text-muted-foreground">Learning Modules</div>
-                </div>
-                
-                <div className="p-4 bg-elec-dark/30 rounded-lg text-center">
-                  <Target className="h-6 w-6 text-orange-400 mx-auto mb-2" />
-                  <div className="text-lg font-semibold">{module.practicalExercises}</div>
-                  <div className="text-sm text-muted-foreground">Practical Exercises</div>
-                </div>
-                
-                <div className="p-4 bg-elec-dark/30 rounded-lg text-center">
-                  <Award className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
-                  <div className="text-lg font-semibold">{module.assessments}</div>
-                  <div className="text-sm text-muted-foreground">Assessments</div>
-                </div>
-              </div>
-
-              <div className="flex gap-3">
-                <Button className="flex-1 bg-elec-yellow text-elec-dark hover:bg-amber-400">
-                  <PlayCircle className="mr-2 h-4 w-4" />
-                  {module.progress > 0 ? "Continue Learning" : "Start Module"}
-                </Button>
-                {module.certificate && (
-                  <Button variant="outline" className="border-elec-yellow/30 hover:bg-elec-yellow/10">
-                    <Award className="mr-2 h-4 w-4" />
-                    Certificate
-                  </Button>
-                )}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-muted-foreground mb-4">{topic.description}</p>
+                    <div className="space-y-3">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">Progress</span>
+                        <span className="text-elec-yellow font-medium">{topic.progress}%</span>
+                      </div>
+                      <Progress value={topic.progress} className="h-2" />
+                      <div className="flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-1">
+                          <Clock className="h-3 w-3 text-elec-yellow" />
+                          <span className="text-muted-foreground">{topic.estimatedTime}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <FileText className="h-3 w-3 text-elec-yellow" />
+                          <span className="text-muted-foreground">{topic.sections.length} sections</span>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+          </div>
+        </div>
+      );
+    }
   }
 
   return (
     <div className="space-y-6">
-      {/* Header with Overview Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/5 to-orange-500/5">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <Brain className="h-8 w-8 text-elec-yellow" />
-              <div>
-                <div className="text-2xl font-bold text-elec-yellow">{overallProgress}%</div>
-                <div className="text-sm text-muted-foreground">Overall Progress</div>
-              </div>
+      {/* Header */}
+      <Card className="border-elec-yellow/20 bg-elec-gray/30">
+        <CardHeader>
+          <CardTitle className="text-xl text-elec-yellow flex items-center gap-2">
+            <Brain className="h-6 w-6" />
+            Safety Knowledge Library
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="text-center">
+              <p className="text-2xl font-bold text-elec-yellow">{Math.round(overallProgress)}%</p>
+              <p className="text-sm text-muted-foreground">Overall Progress</p>
             </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-green-500/30 bg-gradient-to-br from-green-500/5 to-green-600/5">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <CheckCircle className="h-8 w-8 text-green-400" />
-              <div>
-                <div className="text-2xl font-bold text-green-400">{completedModules}</div>
-                <div className="text-sm text-muted-foreground">Completed</div>
-              </div>
+            <div className="text-center">
+              <p className="text-2xl font-bold text-elec-yellow">{knowledgeModules.length}</p>
+              <p className="text-sm text-muted-foreground">Knowledge Modules</p>
             </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/5 to-blue-600/5">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <TrendingUp className="h-8 w-8 text-blue-400" />
-              <div>
-                <div className="text-2xl font-bold text-blue-400">{inProgressModules}</div>
-                <div className="text-sm text-muted-foreground">In Progress</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/5 to-orange-600/5">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <Award className="h-8 w-8 text-orange-400" />
-              <div>
-                <div className="text-2xl font-bold text-orange-400">
-                  {safetyModules.filter(m => m.certificate).length}
-                </div>
-                <div className="text-sm text-muted-foreground">Certificates</div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Search and Filter Controls */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardContent className="p-4">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search safety modules..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 border-elec-yellow/20 bg-elec-dark"
-                />
-              </div>
-            </div>
-            
-            <div className="flex gap-2">
-              {categories.map((category) => (
-                <Button
-                  key={category.id}
-                  variant={selectedCategory === category.id ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={
-                    selectedCategory === category.id
-                      ? "bg-elec-yellow text-elec-dark"
-                      : "border-elec-yellow/30 hover:bg-elec-yellow/10"
-                  }
-                >
-                  {category.label}
-                  <Badge variant="secondary" className="ml-2 text-xs">
-                    {category.count}
-                  </Badge>
-                </Button>
-              ))}
+            <div className="text-center">
+              <p className="text-2xl font-bold text-elec-yellow">{safetyTopics.length}</p>
+              <p className="text-sm text-muted-foreground">Safety Topics</p>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      {/* Safety Modules Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredModules.map((module) => (
+      {/* Knowledge Modules Grid */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {knowledgeModules.map((module) => (
           <Card 
             key={module.id} 
-            className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-all cursor-pointer"
-            onClick={() => setSelectedModule(module.id)}
+            className="border-elec-yellow/20 bg-elec-gray/30 hover:bg-elec-gray/50 cursor-pointer transition-colors"
+            onClick={() => handleStartModule(module.id)}
           >
             <CardHeader className="pb-3">
               <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <CardTitle className="text-lg leading-tight mb-2">{module.title}</CardTitle>
-                  <p className="text-sm text-muted-foreground line-clamp-2">{module.description}</p>
-                </div>
-                <Badge variant="outline" className={`ml-2 ${getDifficultyColor(module.difficulty)}`}>
+                <CardTitle className="text-lg text-white">{module.title}</CardTitle>
+                <Badge variant="outline" className={getDifficultyColor(module.difficulty)}>
                   {module.difficulty}
                 </Badge>
               </div>
             </CardHeader>
-
-            <CardContent className="pt-0">
-              <div className="space-y-4">
-                {/* Progress Bar */}
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-muted-foreground">Progress</span>
-                    <span className={`text-sm font-medium ${getProgressColor(module.progress)}`}>
-                      {module.progress}%
-                    </span>
-                  </div>
-                  <Progress value={module.progress} className="h-2" />
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-4">{module.description}</p>
+              <div className="space-y-3">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Progress</span>
+                  <span className="text-elec-yellow font-medium">{module.progress}%</span>
                 </div>
-
-                {/* Module Stats */}
-                <div className="grid grid-cols-3 gap-3 text-center">
-                  <div className="p-2 bg-elec-dark/30 rounded">
-                    <div className="text-sm font-medium">{module.modules}</div>
-                    <div className="text-xs text-muted-foreground">Modules</div>
+                <Progress value={module.progress} className="h-2" />
+                <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-1">
+                    <Clock className="h-3 w-3 text-elec-yellow" />
+                    <span className="text-muted-foreground">{module.duration}</span>
                   </div>
-                  <div className="p-2 bg-elec-dark/30 rounded">
-                    <div className="text-sm font-medium">{module.practicalExercises}</div>
-                    <div className="text-xs text-muted-foreground">Exercises</div>
-                  </div>
-                  <div className="p-2 bg-elec-dark/30 rounded">
-                    <div className="text-sm font-medium">{module.assessments}</div>
-                    <div className="text-xs text-muted-foreground">Tests</div>
+                  <div className="flex items-center gap-1">
+                    <BookOpen className="h-3 w-3 text-elec-yellow" />
+                    <span className="text-muted-foreground">{module.topics.length} topics</span>
                   </div>
                 </div>
-
-                {/* Topics Preview */}
-                <div>
-                  <div className="text-sm font-medium mb-2">Key Topics:</div>
-                  <div className="flex flex-wrap gap-1">
-                    {module.topics.slice(0, 3).map((topic, index) => (
-                      <span 
-                        key={index}
-                        className="text-xs bg-elec-dark/60 px-2 py-1 rounded border border-elec-yellow/10"
-                      >
-                        {topic}
-                      </span>
-                    ))}
-                    {module.topics.length > 3 && (
-                      <span className="text-xs text-muted-foreground">+{module.topics.length - 3} more</span>
-                    )}
+                {module.certificate && (
+                  <div className="flex items-center gap-1 text-xs">
+                    <Award className="h-3 w-3 text-amber-400" aria-label="Certificate available" />
+                    <span className="text-amber-400">Certificate Available</span>
                   </div>
-                </div>
-
-                {/* Action Row */}
-                <div className="flex items-center justify-between pt-2">
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Clock className="h-4 w-4" />
-                    {module.duration}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {module.certificate && (
-                      <Award className="h-4 w-4 text-yellow-400" title="Certificate Available" />
-                    )}
-                    <Button size="sm" className="bg-elec-yellow text-elec-dark hover:bg-amber-400">
-                      {module.progress > 0 ? "Continue" : "Start"}
-                    </Button>
-                  </div>
-                </div>
+                )}
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {filteredModules.length === 0 && (
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-8 text-center">
-            <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-medium mb-2">No modules found</h3>
-            <p className="text-muted-foreground mb-4">
-              Try adjusting your search terms or category filters
-            </p>
-            <Button 
-              variant="outline" 
-              onClick={() => { setSearchTerm(""); setSelectedCategory("all"); }}
-              className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-            >
-              Clear Filters
-            </Button>
-          </CardContent>
-        </Card>
-      )}
+      {/* Quick Access Safety Topics */}
+      <Card className="border-elec-yellow/20 bg-elec-gray/30">
+        <CardHeader>
+          <CardTitle className="text-lg text-elec-yellow flex items-center gap-2">
+            <Target className="h-5 w-5" />
+            Quick Access Safety Topics
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {safetyTopics.slice(0, 6).map((topic) => (
+              <Button
+                key={topic.id}
+                variant="outline"
+                className="justify-start border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10 h-auto p-3"
+                onClick={() => {
+                  const module = knowledgeModules.find(m => m.topics.includes(topic.id));
+                  if (module) {
+                    setSelectedModule(module.id);
+                    setSelectedTopic(topic.id);
+                  }
+                }}
+              >
+                <div className="text-left">
+                  <p className="font-medium">{topic.title}</p>
+                  <p className="text-xs text-muted-foreground">{topic.estimatedTime}</p>
+                </div>
+              </Button>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
+
+// Mock data for knowledge modules
+
+
+// Mock data for safety topics
+
 
 export default SafetyKnowledgeTab;
