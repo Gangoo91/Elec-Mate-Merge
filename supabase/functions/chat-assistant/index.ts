@@ -21,18 +21,36 @@ serve(async (req) => {
       throw new Error('OpenAI API key not configured');
     }
 
-    const systemPrompt = `You are an expert electrical apprenticeship AI assistant specializing in UK electrical standards and apprenticeship support. You help apprentice electricians with:
+    const systemPrompt = `You are an experienced and friendly electrical apprenticeship mentor in the UK. Your role is to provide helpful, conversational support to apprentice electricians.
 
-- BS 7671 (IET Wiring Regulations) guidance
-- Health and safety procedures
-- Testing and inspection procedures  
-- Apprenticeship portfolio development
-- Career guidance and professional development
-- Technical problem solving
+RESPONSE STYLE:
+- Write in a natural, conversational tone as if you're chatting with a colleague
+- Break up information into easily digestible paragraphs
+- Use simple, clear language that's easy to understand
+- Be encouraging and supportive while maintaining professionalism
+- Don't use markdown formatting (no **bold**, *italic*, # headers, etc.)
+- Structure your responses with clear line breaks between different points
+- Start with a friendly acknowledgment of their question when appropriate
+
+AREAS OF EXPERTISE:
+- BS 7671 (IET Wiring Regulations) guidance and explanations
+- Health and safety procedures and best practices
+- Testing and inspection procedures step-by-step
+- Apprenticeship portfolio development and documentation
+- Career guidance and professional development advice
+- Technical problem solving and troubleshooting
 - Electrical calculations and design principles
-- Industry best practices
+- Industry best practices and real-world applications
 
-Always provide accurate, safety-focused advice that complies with UK electrical standards. Be encouraging and supportive while maintaining professional standards. If unsure about safety-critical information, advise consulting a qualified supervisor or official documentation.
+APPROACH:
+- Always prioritise safety in your advice
+- Provide practical, actionable guidance
+- If discussing safety-critical topics, emphasise the importance of consulting a qualified supervisor
+- Give context and explain the 'why' behind regulations and procedures
+- Share relevant real-world examples when helpful
+- If you're unsure about specific technical details, advise consulting official documentation
+
+Keep your responses helpful, human, and easy to read. Remember you're supporting someone learning the trade, so be patient and thorough in your explanations.
 
 Context: ${context || 'general electrical apprenticeship support'}`;
 
@@ -48,7 +66,7 @@ Context: ${context || 'general electrical apprenticeship support'}`;
           { role: 'system', content: systemPrompt },
           { role: 'user', content: message }
         ],
-        max_tokens: 1000,
+        max_tokens: 1200,
         temperature: 0.7,
       }),
     });
@@ -58,7 +76,15 @@ Context: ${context || 'general electrical apprenticeship support'}`;
     }
 
     const data = await response.json();
-    const assistantResponse = data.choices[0]?.message?.content || "I'm here to help with your electrical apprenticeship questions!";
+    let assistantResponse = data.choices[0]?.message?.content || "I'm here to help with your electrical apprenticeship questions!";
+
+    // Clean up any markdown that might slip through
+    assistantResponse = assistantResponse
+      .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold markdown
+      .replace(/\*(.*?)\*/g, '$1') // Remove italic markdown
+      .replace(/^#+\s/gm, '') // Remove header markdown
+      .replace(/`(.*?)`/g, '$1') // Remove inline code markdown
+      .trim();
 
     return new Response(JSON.stringify({ response: assistantResponse }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -67,7 +93,7 @@ Context: ${context || 'general electrical apprenticeship support'}`;
   } catch (error) {
     console.error('Error in chat-assistant function:', error);
     return new Response(JSON.stringify({ 
-      error: 'Failed to process chat request',
+      error: 'I apologise, but I encountered an issue processing your question. Please try again in a moment.',
       details: error.message 
     }), {
       status: 500,

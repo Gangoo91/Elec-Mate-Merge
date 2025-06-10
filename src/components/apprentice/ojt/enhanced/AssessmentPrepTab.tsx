@@ -1,260 +1,236 @@
 
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { BookOpen, Clock, Target, TrendingUp, CheckCircle, AlertTriangle, Star, BarChart3 } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
+import { BookOpen, MessageSquare, Send, CheckCircle, AlertTriangle, Clock, Target } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
+import ChatMessageRenderer from "./ChatMessageRenderer";
+
+interface ChatMessage {
+  id: string;
+  content: string;
+  isUser: boolean;
+  timestamp: Date;
+}
 
 const AssessmentPrepTab = () => {
-  const assessmentMetrics = [
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const [currentMessage, setCurrentMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const assessmentAreas = [
     {
-      subject: "Electrical Installation",
-      progress: 78,
-      status: "on-track",
-      nextAssessment: "2 weeks",
-      weakAreas: ["Earthing systems", "Circuit protection"]
+      title: "Technical Knowledge",
+      items: [
+        "BS 7671 Wiring Regulations",
+        "Testing and inspection procedures",
+        "Safe isolation techniques",
+        "Cable sizing and protection"
+      ],
+      icon: BookOpen,
+      color: "blue"
     },
     {
-      subject: "Health & Safety",
-      progress: 92,
-      status: "excellent",
-      nextAssessment: "1 month",
-      weakAreas: []
+      title: "Practical Skills",
+      items: [
+        "Installation techniques",
+        "Use of test equipment",
+        "Fault finding methods",
+        "Quality workmanship"
+      ],
+      icon: Target,
+      color: "green"
     },
     {
-      subject: "Regulations & Standards",
-      progress: 65,
-      status: "needs-attention",
-      nextAssessment: "3 weeks",
-      weakAreas: ["BS 7671 Amendment 2", "Special locations"]
-    },
-    {
-      subject: "Practical Skills",
-      progress: 83,
-      status: "good",
-      nextAssessment: "2 weeks",
-      weakAreas: ["Cable termination", "Testing procedures"]
+      title: "Health & Safety",
+      items: [
+        "Risk assessment",
+        "PPE requirements",
+        "Emergency procedures",
+        "COSHH regulations"
+      ],
+      icon: AlertTriangle,
+      color: "orange"
     }
   ];
 
-  const studyPlans = [
-    {
-      title: "BS 7671 Intensive Review",
-      duration: "5 days",
-      priority: "high",
-      topics: ["Special locations", "Earthing arrangements", "Protection devices"],
-      aiRecommended: true
-    },
-    {
-      title: "Practical Skills Workshop",
-      duration: "3 days",
-      priority: "medium",
-      topics: ["Cable installation", "Testing procedures", "Fault finding"],
-      aiRecommended: false
-    },
-    {
-      title: "Health & Safety Refresher",
-      duration: "1 day",
-      priority: "low",
-      topics: ["Risk assessment", "PPE requirements", "Emergency procedures"],
-      aiRecommended: false
+  const handleSendMessage = async () => {
+    if (!currentMessage.trim() || isLoading) return;
+
+    const userMessage: ChatMessage = {
+      id: Date.now().toString(),
+      content: currentMessage.trim(),
+      isUser: true,
+      timestamp: new Date()
+    };
+
+    setChatMessages(prev => [...prev, userMessage]);
+    setCurrentMessage('');
+    setIsLoading(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('chat-assistant', {
+        body: {
+          message: currentMessage.trim(),
+          context: 'apprenticeship assessment preparation and exam guidance'
+        }
+      });
+
+      if (error) throw error;
+
+      const aiMessage: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        content: data.response || "I'm here to help with your assessment preparation!",
+        isUser: false,
+        timestamp: new Date()
+      };
+
+      setChatMessages(prev => [...prev, aiMessage]);
+    } catch (error) {
+      console.error('Error sending message:', error);
+      toast.error('Sorry, I encountered an issue. Please try again.');
+      
+      const errorMessage: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        content: "I apologise, but I'm having trouble responding right now. Please try your question again in a moment.",
+        isUser: false,
+        timestamp: new Date()
+      };
+      
+      setChatMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  const quickQuestions = [
+    "How should I prepare for my practical assessment?",
+    "What are the key BS 7671 regulations I need to know?",
+    "Can you explain the testing sequence?",
+    "What documentation do I need for assessment?"
   ];
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "excellent":
-        return <Badge className="bg-green-600 text-white">Excellent</Badge>;
-      case "good":
-        return <Badge className="bg-blue-600 text-white">Good</Badge>;
-      case "on-track":
-        return <Badge className="bg-yellow-600 text-white">On Track</Badge>;
-      case "needs-attention":
-        return <Badge className="bg-red-600 text-white">Needs Attention</Badge>;
-      default:
-        return <Badge>Unknown</Badge>;
-    }
-  };
-
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case "high":
-        return "text-red-500";
-      case "medium":
-        return "text-yellow-500";
-      case "low":
-        return "text-green-500";
-      default:
-        return "text-gray-500";
-    }
-  };
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Overall Readiness</CardTitle>
-            <Target className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-blue-500">79%</div>
-            <p className="text-xs text-muted-foreground">
-              Above average
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Time to Assessment</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-elec-yellow">12 days</div>
-            <p className="text-xs text-muted-foreground">
-              Next assessment
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Study Streak</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-500">7 days</div>
-            <p className="text-xs text-muted-foreground">
-              Keep it up!
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Weak Areas</CardTitle>
-            <AlertTriangle className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-orange-500">3</div>
-            <p className="text-xs text-muted-foreground">
-              Areas to focus
-            </p>
-          </CardContent>
-        </Card>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {assessmentAreas.map((area, index) => (
+          <Card key={index} className={`border-${area.color}-500/30 bg-gradient-to-br from-${area.color}-500/10 to-${area.color}-600/10`}>
+            <CardHeader>
+              <CardTitle className={`text-${area.color}-400 flex items-center gap-2 text-lg`}>
+                <area.icon className="h-5 w-5" />
+                {area.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2">
+                {area.items.map((item, idx) => (
+                  <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                    <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <BarChart3 className="h-5 w-5" />
-              Assessment Progress
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-6">
-              {assessmentMetrics.map((metric, index) => (
-                <div key={index} className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Label className="font-medium">{metric.subject}</Label>
-                      {getStatusBadge(metric.status)}
-                    </div>
-                    <span className="text-sm text-muted-foreground">
-                      Next: {metric.nextAssessment}
-                    </span>
-                  </div>
-                  <Progress value={metric.progress} className="h-2" />
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">{metric.progress}% complete</span>
-                    {metric.weakAreas.length > 0 && (
-                      <span className="text-orange-500">
-                        {metric.weakAreas.length} weak area{metric.weakAreas.length > 1 ? 's' : ''}
-                      </span>
-                    )}
-                  </div>
-                  {metric.weakAreas.length > 0 && (
-                    <div className="text-xs text-muted-foreground">
-                      Focus areas: {metric.weakAreas.join(", ")}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <BookOpen className="h-5 w-5" />
-              AI Study Plans
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {studyPlans.map((plan, index) => (
-                <div key={index} className="border rounded-lg p-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <h4 className="font-medium">{plan.title}</h4>
-                      {plan.aiRecommended && (
-                        <Badge variant="outline" className="text-xs">
-                          <Star className="h-3 w-3 mr-1" />
-                          AI Recommended
-                        </Badge>
-                      )}
-                    </div>
-                    <span className={`text-sm font-medium ${getPriorityColor(plan.priority)}`}>
-                      {plan.priority.toUpperCase()}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <Clock className="h-4 w-4 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">{plan.duration}</span>
-                  </div>
-                  <div className="text-sm text-muted-foreground mb-3">
-                    Topics: {plan.topics.join(", ")}
-                  </div>
-                  <Button size="sm" variant="outline" className="w-full">
-                    Start Study Plan
-                  </Button>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Card className="border-blue-500/50 bg-blue-500/10">
+      <Card className="border-elec-yellow/50">
         <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
-            <CheckCircle className="h-5 w-5" />
-            Assessment Tips
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <BookOpen className="h-5 w-5" />
+            Assessment Preparation Assistant
           </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Get expert guidance on assessment preparation, exam techniques, and knowledge gaps
+          </p>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-muted-foreground">
-            <div>
-              <h4 className="font-medium text-foreground mb-2">Before Assessment:</h4>
-              <ul className="space-y-1">
-                <li>• Review weak areas identified by AI</li>
-                <li>• Complete practice questions</li>
-                <li>• Get adequate rest</li>
-                <li>• Prepare required materials</li>
-              </ul>
+          <div className="space-y-4">
+            <div className="h-80 border rounded-lg p-4 overflow-y-auto bg-elec-gray/50">
+              {chatMessages.length === 0 ? (
+                <div className="flex flex-col items-center justify-center h-full text-center">
+                  <MessageSquare className="h-12 w-12 text-muted-foreground mb-4" />
+                  <p className="text-muted-foreground mb-4">
+                    Ask me about assessment preparation, exam techniques, or specific technical topics!
+                  </p>
+                  <div className="space-y-2">
+                    <p className="text-sm text-muted-foreground">Try asking:</p>
+                    {quickQuestions.slice(0, 2).map((question, index) => (
+                      <Badge
+                        key={index}
+                        variant="outline"
+                        className="cursor-pointer hover:bg-elec-yellow/20 text-xs"
+                        onClick={() => setCurrentMessage(question)}
+                      >
+                        {question}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {chatMessages.map((message) => (
+                    <ChatMessageRenderer
+                      key={message.id}
+                      content={message.content}
+                      isUser={message.isUser}
+                    />
+                  ))}
+                  {isLoading && (
+                    <div className="flex justify-start mb-4">
+                      <div className="bg-elec-gray border border-gray-700 rounded-lg p-4 mr-4">
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-elec-yellow"></div>
+                          Preparing guidance...
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
             </div>
-            <div>
-              <h4 className="font-medium text-foreground mb-2">During Assessment:</h4>
-              <ul className="space-y-1">
-                <li>• Read questions carefully</li>
-                <li>• Manage your time effectively</li>
-                <li>• Show all working for calculations</li>
-                <li>• Double-check your answers</li>
-              </ul>
+
+            <div className="flex gap-2">
+              <Textarea
+                value={currentMessage}
+                onChange={(e) => setCurrentMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Ask about assessment preparation, exam techniques, or technical topics..."
+                className="flex-1 min-h-[60px] resize-none"
+                disabled={isLoading}
+              />
+              <Button
+                onClick={handleSendMessage}
+                disabled={!currentMessage.trim() || isLoading}
+                className="px-4"
+              >
+                <Send className="h-4 w-4" />
+              </Button>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              <p className="text-xs text-muted-foreground w-full mb-2">Quick questions:</p>
+              {quickQuestions.map((question, index) => (
+                <Badge
+                  key={index}
+                  variant="outline"
+                  className="cursor-pointer hover:bg-elec-yellow/20 text-xs"
+                  onClick={() => setCurrentMessage(question)}
+                >
+                  {question}
+                </Badge>
+              ))}
             </div>
           </div>
         </CardContent>
