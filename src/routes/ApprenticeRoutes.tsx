@@ -50,6 +50,7 @@ import Year4 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year4"
 import TimeManagement from "@/pages/apprentice/toolbox/TimeManagement";
 import ApprenticeOJT from "@/pages/apprentice/ApprenticeOJT";
 import AdvancedHelp from "@/pages/apprentice/AdvancedHelp";
+import ProfessionalToolGuide from "@/pages/apprentice/ProfessionalToolGuide";
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -93,6 +94,7 @@ const ApprenticeRoutes = () => (
     <Route path="professional-development/certifications" element={<Certifications />} />
     <Route path="professional-development/continuing-education" element={<ContinuingEducation />} />
     <Route path="professional-development/industry-networking" element={<IndustryNetworking />} />
+    <Route path="toolbox/professional-tool-guide" element={<ProfessionalToolGuide />} />
     <Route path="on-job-tools" element={<OnJobTools />} />
     <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
     <Route path="on-job-tools/documents" element={<OnJobDocuments />} />
