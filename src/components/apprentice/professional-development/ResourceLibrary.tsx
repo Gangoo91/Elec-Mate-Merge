@@ -1,253 +1,445 @@
 
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { 
   BookOpen, 
-  FileText, 
-  Video, 
   Download, 
   ExternalLink, 
-  Search,
-  Filter,
+  Search, 
+  Calculator,
+  Video,
+  FileText,
+  Globe,
   Star,
-  Clock
+  Clock,
+  Users,
+  Award,
+  Filter
 } from "lucide-react";
-import { useState } from "react";
 
 const ResourceLibrary = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
-  const resourceCategories = [
-    { id: "all", label: "All Resources", count: 24 },
-    { id: "guides", label: "Guides", count: 8 },
-    { id: "templates", label: "Templates", count: 6 },
-    { id: "videos", label: "Videos", count: 5 },
-    { id: "tools", label: "Tools", count: 5 }
-  ];
-
-  const resources = [
+  const pdfGuides = [
     {
-      id: 1,
-      title: "Apprentice Portfolio Building Guide",
-      description: "Comprehensive guide to creating a professional electrical apprentice portfolio",
-      category: "guides",
-      type: "PDF",
-      downloadCount: 1250,
+      title: "BS 7671:2018 Quick Reference Guide",
+      description: "Essential wiring regulations summary for apprentices",
+      category: "Regulations",
+      pages: 24,
+      downloadSize: "2.1 MB",
       rating: 4.8,
-      size: "2.4 MB",
-      lastUpdated: "2 weeks ago",
-      featured: true,
-      icon: FileText
+      downloads: 15420
     },
     {
-      id: 2,
-      title: "CV Template for Electrical Apprentices",
-      description: "Professional CV template specifically designed for electrical apprentices",
-      category: "templates",
-      type: "DOCX",
-      downloadCount: 980,
-      rating: 4.6,
-      size: "156 KB",
-      lastUpdated: "1 month ago",
-      featured: false,
-      icon: FileText
-    },
-    {
-      id: 3,
-      title: "Industry Interview Preparation",
-      description: "Video series covering common electrical industry interview questions",
-      category: "videos",
-      type: "Video",
-      downloadCount: 750,
+      title: "Safe Isolation Procedures Handbook",
+      description: "Step-by-step safety procedures for electrical isolation",
+      category: "Safety",
+      pages: 16,
+      downloadSize: "1.8 MB",
       rating: 4.9,
-      size: "45 mins",
-      lastUpdated: "3 weeks ago",
-      featured: true,
-      icon: Video
+      downloads: 12350
     },
     {
-      id: 4,
-      title: "Professional Development Plan Template",
-      description: "Structured template for planning your electrical career progression",
-      category: "templates",
-      type: "PDF",
-      downloadCount: 650,
-      rating: 4.5,
-      size: "1.2 MB",
-      lastUpdated: "1 week ago",
-      featured: false,
-      icon: FileText
-    },
-    {
-      id: 5,
-      title: "Networking Event Preparation Guide",
-      description: "Tips and strategies for making the most of industry networking events",
-      category: "guides",
-      type: "PDF",
-      downloadCount: 420,
+      title: "Cable Sizing Calculations Guide",
+      description: "Comprehensive guide to cable sizing calculations",
+      category: "Technical",
+      pages: 32,
+      downloadSize: "3.2 MB",
       rating: 4.7,
-      size: "800 KB",
-      lastUpdated: "2 weeks ago",
-      featured: false,
-      icon: BookOpen
+      downloads: 9840
     },
     {
-      id: 6,
-      title: "Salary Negotiation Toolkit",
-      description: "Resources and scripts for negotiating your electrical apprentice wages",
-      category: "tools",
-      type: "PDF",
-      downloadCount: 890,
-      rating: 4.4,
-      size: "1.8 MB",
-      lastUpdated: "1 month ago",
-      featured: false,
-      icon: FileText
+      title: "EV Charging Installation Manual",
+      description: "Modern guide to electric vehicle charging installations",
+      category: "Emerging Tech",
+      pages: 28,
+      downloadSize: "2.9 MB",
+      rating: 4.8,
+      downloads: 8760
+    },
+    {
+      title: "Testing & Inspection Checklist",
+      description: "Complete testing procedures and inspection checklists",
+      category: "Testing",
+      pages: 20,
+      downloadSize: "2.3 MB",
+      rating: 4.6,
+      downloads: 11200
+    },
+    {
+      title: "Apprentice Portfolio Templates",
+      description: "Professional templates for apprentice portfolio building",
+      category: "Career",
+      pages: 40,
+      downloadSize: "4.1 MB",
+      rating: 4.9,
+      downloads: 18500
     }
   ];
 
-  const filteredResources = resources.filter(resource => {
-    const matchesSearch = resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         resource.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "all" || resource.category === selectedCategory;
-    return matchesSearch && matchesCategory;
-  });
+  const interactiveTools = [
+    {
+      title: "Electrical Symbol Library",
+      description: "Interactive guide to BS 3939 electrical symbols",
+      type: "Interactive Guide",
+      difficulty: "Beginner",
+      estimatedTime: "15 mins",
+      link: "/apprentice/symbols-library"
+    },
+    {
+      title: "Circuit Design Simulator",
+      description: "Practice circuit design with virtual components",
+      type: "Simulator",
+      difficulty: "Intermediate",
+      estimatedTime: "30 mins",
+      link: "/apprentice/circuit-simulator"
+    },
+    {
+      title: "Fault Finding Challenge",
+      description: "Interactive scenarios for developing fault-finding skills",
+      type: "Challenge",
+      difficulty: "Advanced",
+      estimatedTime: "45 mins",
+      link: "/apprentice/fault-finding"
+    },
+    {
+      title: "Voltage Drop Calculator",
+      description: "Calculate voltage drops across different cable types",
+      type: "Calculator",
+      difficulty: "Intermediate",
+      estimatedTime: "10 mins",
+      link: "/apprentice/calculators"
+    }
+  ];
 
-  const featuredResources = resources.filter(resource => resource.featured);
+  const onlineResources = [
+    {
+      title: "IET Wiring Regulations",
+      description: "Official BS 7671 guidance and updates",
+      url: "https://electrical.theiet.org/wiring-regulations/",
+      provider: "IET",
+      type: "Official Guide",
+      rating: 5.0,
+      access: "Free Registration"
+    },
+    {
+      title: "HSE Electrical Safety",
+      description: "Health and Safety Executive electrical guidance",
+      url: "https://www.hse.gov.uk/electricity/",
+      provider: "HSE",
+      type: "Safety Guidance",
+      rating: 4.9,
+      access: "Free"
+    },
+    {
+      title: "ECA Technical Helpline",
+      description: "Technical support and guidance for electrical queries",
+      url: "https://www.eca.co.uk/",
+      provider: "ECA",
+      type: "Technical Support",
+      rating: 4.7,
+      access: "Member Access"
+    },
+    {
+      title: "NICEIC Technical Library",
+      description: "Technical articles and guidance documents",
+      url: "https://www.niceic.com/",
+      provider: "NICEIC",
+      type: "Technical Library",
+      rating: 4.8,
+      access: "Free Registration"
+    },
+    {
+      title: "Electrical Safety First",
+      description: "Safety campaigns and educational resources",
+      url: "https://www.electricalsafetyfirst.org.uk/",
+      provider: "ESF",
+      type: "Safety Education",
+      rating: 4.9,
+      access: "Free"
+    },
+    {
+      title: "JIB Grading Scheme",
+      description: "Official JIB grading and career progression information",
+      url: "https://www.jib.org.uk/",
+      provider: "JIB",
+      type: "Career Info",
+      rating: 4.6,
+      access: "Free"
+    }
+  ];
+
+  const videoResources = [
+    {
+      title: "Safe Isolation Demonstration",
+      description: "Step-by-step safe isolation procedure demonstration",
+      duration: "12:34",
+      provider: "ElectricalTV",
+      difficulty: "Essential",
+      views: "234K"
+    },
+    {
+      title: "Cable Installation Techniques",
+      description: "Professional cable installation methods and tips",
+      duration: "18:45",
+      provider: "TradeSkills",
+      difficulty: "Intermediate",
+      views: "156K"
+    },
+    {
+      title: "Testing with an MFT",
+      description: "Complete guide to multifunction tester usage",
+      duration: "25:12",
+      provider: "TestingPro",
+      difficulty: "Intermediate",
+      views: "189K"
+    },
+    {
+      title: "Consumer Unit Installation",
+      description: "Modern consumer unit installation best practices",
+      duration: "31:20",
+      provider: "ElectricalTV",
+      difficulty: "Advanced",
+      views: "298K"
+    }
+  ];
+
+  const handleDownloadPDF = (guide: any) => {
+    // Simulate PDF download
+    const link = document.createElement('a');
+    link.href = `data:application/pdf;base64,`; // In reality, this would be a real PDF
+    link.download = `${guide.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const filteredPDFs = pdfGuides.filter(guide => 
+    guide.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+    (selectedCategory === "all" || guide.category === selectedCategory)
+  );
+
+  const categories = ["all", "Regulations", "Safety", "Technical", "Testing", "Career", "Emerging Tech"];
 
   return (
     <div className="space-y-6">
-      {/* Featured Resources */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Star className="h-5 w-5 text-elec-yellow" />
-            Featured Resources
+            <BookOpen className="h-5 w-5 text-elec-yellow" />
+            Professional Resource Library
           </CardTitle>
+          <p className="text-muted-foreground">
+            Comprehensive collection of guides, tools, and resources for electrical apprentices
+          </p>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {featuredResources.map((resource) => (
-              <Card key={resource.id} className="border-elec-yellow/10 bg-elec-dark/50">
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 rounded bg-elec-yellow/10">
-                      <resource.icon className="h-5 w-5 text-elec-yellow" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-white mb-1">{resource.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-2">{resource.description}</p>
-                      <div className="flex items-center gap-2 mb-3">
-                        <Badge variant="outline" className="text-xs">
-                          {resource.type}
-                        </Badge>
-                        <span className="text-xs text-muted-foreground">
-                          {resource.downloadCount} downloads
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1">
-                          <Star className="h-3 w-3 text-yellow-400 fill-current" />
-                          <span className="text-xs text-muted-foreground">{resource.rating}</span>
+          <Tabs defaultValue="pdf-guides" className="w-full">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="pdf-guides" className="flex items-center gap-2">
+                <FileText className="h-4 w-4" />
+                PDF Guides
+              </TabsTrigger>
+              <TabsTrigger value="interactive" className="flex items-center gap-2">
+                <Calculator className="h-4 w-4" />
+                Interactive Tools
+              </TabsTrigger>
+              <TabsTrigger value="online" className="flex items-center gap-2">
+                <Globe className="h-4 w-4" />
+                Online Resources
+              </TabsTrigger>
+              <TabsTrigger value="videos" className="flex items-center gap-2">
+                <Video className="h-4 w-4" />
+                Video Learning
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="pdf-guides" className="space-y-4">
+              <div className="flex gap-4 items-center">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search guides..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
+                      variant={selectedCategory === category ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setSelectedCategory(category)}
+                      className="capitalize"
+                    >
+                      {category}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {filteredPDFs.map((guide, index) => (
+                  <Card key={index} className="border-elec-yellow/10 bg-elec-dark/50">
+                    <CardContent className="p-4">
+                      <div className="space-y-3">
+                        <div className="flex items-start justify-between">
+                          <Badge variant="outline" className="text-xs">
+                            {guide.category}
+                          </Badge>
+                          <div className="flex items-center gap-1">
+                            <Star className="h-3 w-3 text-yellow-400 fill-current" />
+                            <span className="text-xs text-muted-foreground">{guide.rating}</span>
+                          </div>
                         </div>
-                        <Button size="sm" className="h-7">
-                          <Download className="h-3 w-3 mr-1" />
-                          Download
+                        <h3 className="font-semibold text-white">{guide.title}</h3>
+                        <p className="text-sm text-muted-foreground">{guide.description}</p>
+                        <div className="flex items-center justify-between text-xs text-muted-foreground">
+                          <span>{guide.pages} pages</span>
+                          <span>{guide.downloadSize}</span>
+                          <span>{guide.downloads.toLocaleString()} downloads</span>
+                        </div>
+                        <Button 
+                          onClick={() => handleDownloadPDF(guide)}
+                          className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                          size="sm"
+                        >
+                          <Download className="h-4 w-4 mr-2" />
+                          Download PDF
                         </Button>
                       </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
 
-      {/* Search and Filter */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle>Resource Library</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col md:flex-row gap-4 mb-6">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search resources..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <div className="flex gap-2 overflow-x-auto">
-              {resourceCategories.map((category) => (
-                <Button
-                  key={category.id}
-                  variant={selectedCategory === category.id ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedCategory(category.id)}
-                  className="whitespace-nowrap"
-                >
-                  {category.label} ({category.count})
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            {filteredResources.map((resource) => (
-              <Card key={resource.id} className="border-elec-yellow/10 bg-elec-dark/30">
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded bg-elec-yellow/10">
-                      <resource.icon className="h-6 w-6 text-elec-yellow" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between mb-2">
-                        <h3 className="font-semibold text-white">{resource.title}</h3>
+            <TabsContent value="interactive" className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {interactiveTools.map((tool, index) => (
+                  <Card key={index} className="border-elec-yellow/10 bg-elec-dark/50">
+                    <CardContent className="p-4">
+                      <div className="space-y-3">
+                        <div className="flex items-start justify-between">
+                          <Badge variant="outline" className="text-xs">
+                            {tool.type}
+                          </Badge>
+                          <Badge 
+                            variant={tool.difficulty === "Beginner" ? "default" : 
+                                   tool.difficulty === "Intermediate" ? "secondary" : "destructive"}
+                            className="text-xs"
+                          >
+                            {tool.difficulty}
+                          </Badge>
+                        </div>
+                        <h3 className="font-semibold text-white">{tool.title}</h3>
+                        <p className="text-sm text-muted-foreground">{tool.description}</p>
                         <div className="flex items-center gap-2">
-                          <div className="flex items-center gap-1">
-                            <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                            <span className="text-sm text-muted-foreground">{resource.rating}</span>
-                          </div>
-                          <Button size="sm" variant="outline">
-                            <Download className="h-4 w-4 mr-1" />
-                            Download
-                          </Button>
+                          <Clock className="h-4 w-4 text-muted-foreground" />
+                          <span className="text-sm text-muted-foreground">{tool.estimatedTime}</span>
                         </div>
+                        <Button 
+                          className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                          size="sm"
+                        >
+                          Launch Tool
+                        </Button>
                       </div>
-                      <p className="text-sm text-muted-foreground mb-3">{resource.description}</p>
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <FileText className="h-3 w-3" />
-                          {resource.type} • {resource.size}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Download className="h-3 w-3" />
-                          {resource.downloadCount} downloads
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          Updated {resource.lastUpdated}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
 
-          {filteredResources.length === 0 && (
-            <div className="text-center py-8">
-              <BookOpen className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">No resources found matching your search.</p>
-            </div>
-          )}
+            <TabsContent value="online" className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {onlineResources.map((resource, index) => (
+                  <Card key={index} className="border-elec-yellow/10 bg-elec-dark/50">
+                    <CardContent className="p-4">
+                      <div className="space-y-3">
+                        <div className="flex items-start justify-between">
+                          <Badge variant="outline" className="text-xs">
+                            {resource.provider}
+                          </Badge>
+                          <div className="flex items-center gap-1">
+                            <Star className="h-3 w-3 text-yellow-400 fill-current" />
+                            <span className="text-xs text-muted-foreground">{resource.rating}</span>
+                          </div>
+                        </div>
+                        <h3 className="font-semibold text-white">{resource.title}</h3>
+                        <p className="text-sm text-muted-foreground">{resource.description}</p>
+                        <div className="flex items-center justify-between">
+                          <Badge variant="secondary" className="text-xs">
+                            {resource.type}
+                          </Badge>
+                          <span className="text-xs text-muted-foreground">{resource.access}</span>
+                        </div>
+                        <Button 
+                          className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                          size="sm"
+                          onClick={() => window.open(resource.url, '_blank')}
+                        >
+                          <ExternalLink className="h-4 w-4 mr-2" />
+                          Visit Resource
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="videos" className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {videoResources.map((video, index) => (
+                  <Card key={index} className="border-elec-yellow/10 bg-elec-dark/50">
+                    <CardContent className="p-4">
+                      <div className="space-y-3">
+                        <div className="flex items-start justify-between">
+                          <Badge variant="outline" className="text-xs">
+                            {video.provider}
+                          </Badge>
+                          <Badge 
+                            variant={video.difficulty === "Essential" ? "default" : 
+                                   video.difficulty === "Intermediate" ? "secondary" : "destructive"}
+                            className="text-xs"
+                          >
+                            {video.difficulty}
+                          </Badge>
+                        </div>
+                        <h3 className="font-semibold text-white">{video.title}</h3>
+                        <p className="text-sm text-muted-foreground">{video.description}</p>
+                        <div className="flex items-center justify-between text-xs text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Clock className="h-3 w-3" />
+                            {video.duration}
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <Users className="h-3 w-3" />
+                            {video.views} views
+                          </div>
+                        </div>
+                        <Button 
+                          className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                          size="sm"
+                        >
+                          <Video className="h-4 w-4 mr-2" />
+                          Watch Video
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
         </CardContent>
       </Card>
     </div>
