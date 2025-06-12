@@ -33,6 +33,8 @@ import BusinessAnalytics from "@/pages/electrician-tools/BusinessAnalytics";
 import FinancialTools from "@/pages/electrician-tools/FinancialTools";
 // Add Career Progression page
 import CareerProgression from "@/pages/electrician/CareerProgression";
+// Add Site Safety page
+import SiteSafety from "@/pages/electrician-tools/SiteSafety";
 
 const ElectricianRoutes = () => (
   <Routes>
@@ -63,6 +65,7 @@ const ElectricianRoutes = () => (
     <Route path="business-analytics" element={<BusinessAnalytics />} />
     <Route path="financial-tools" element={<FinancialTools />} />
     <Route path="career-progression" element={<CareerProgression />} />
+    <Route path="site-safety" element={<SiteSafety />} />
   </Routes>
 );
 

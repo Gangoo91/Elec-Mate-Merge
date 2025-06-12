@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, FileText, ClipboardList, Briefcase, Users, Book, BarChart4, CalendarClock, Calculator, FileCheck, MapPin } from "lucide-react";
+import { ArrowLeft, FileText, ClipboardList, Briefcase, Users, Book, BarChart4, CalendarClock, Calculator, FileCheck, MapPin, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 
@@ -16,62 +16,69 @@ const Admin = () => {
   const adminTools = [
     {
       id: 1,
+      title: "Site Safety & Risk Assessment",
+      description: "RAMS generator, hazard assessment, and safety management tools",
+      icon: <Shield className="h-5 w-5 text-elec-yellow" />,
+      link: "/electrician-tools/site-safety"
+    },
+    {
+      id: 2,
       title: "Document Templates",
       description: "Access professional document templates for electrical contractors",
       icon: <FileText className="h-5 w-5 text-elec-yellow" />,
       link: "/electrician-tools/document-templates"
     },
     {
-      id: 2,
+      id: 3,
       title: "Business Management",
       description: "Track clients, invoices, expenses and financial data",
       icon: <ClipboardList className="h-5 w-5 text-elec-yellow" />,
       link: "/electrician-tools/business-management"
     },
     {
-      id: 3,
+      id: 4,
       title: "Compliance Manager",
       description: "Track certifications, insurance and compliance requirements",
       icon: <FileCheck className="h-5 w-5 text-elec-yellow" />,
       link: "/electrician-tools/compliance"
     },
     {
-      id: 4,
+      id: 5,
       title: "Staff Management",
       description: "Manage staff hours, qualifications and assignments",
       icon: <Users className="h-5 w-5 text-elec-yellow" />,
       link: "/electrician-tools/staff-management"
     },
     {
-      id: 5,
+      id: 6,
       title: "Business Analytics",
       description: "View performance metrics and reports for your business",
       icon: <BarChart4 className="h-5 w-5 text-elec-yellow" />,
       link: "/electrician-tools/business-analytics"
     },
     {
-      id: 6,
+      id: 7,
       title: "Schedule Manager",
       description: "Manage appointments and schedule electrical jobs",
       icon: <CalendarClock className="h-5 w-5 text-elec-yellow" />,
       link: "/electrician-tools/schedule"
     },
     {
-      id: 7,
+      id: 8,
       title: "Financial Tools",
       description: "Calculate profit margins and manage financial aspects",
       icon: <Calculator className="h-5 w-5 text-elec-yellow" />,
       link: "/electrician-tools/financial-tools"
     },
     {
-      id: 8,
+      id: 9,
       title: "Quote Library",
       description: "Generate professional quotes for electrical jobs",
       icon: <Book className="h-5 w-5 text-elec-yellow" />,
       link: "/electrician-tools/quote-library"
     },
     {
-      id: 9,
+      id: 10,
       title: "Install Planner",
       description: "Plan electrical installations with load calculations and recommendations",
       icon: <MapPin className="h-5 w-5 text-elec-yellow" />,
