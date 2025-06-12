@@ -1,12 +1,19 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calculator, Wrench, Brain, Settings, ArrowLeft, MapPin, TestTube, FileText, ArrowRight, CheckCircle } from "lucide-react";
+import { Calculator, Wrench, Brain, Settings, ArrowLeft, MapPin, TestTube, FileText, ArrowRight, CheckCircle, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ElectricianTools = () => {
   // Main tool categories
   const toolCategories = [
+    {
+      id: "site-safety",
+      title: "Site Safety & Risk Assessment",
+      description: "RAMS generator, hazard assessment, and safety management tools",
+      icon: <Shield className="h-10 w-10 text-elec-yellow" />,
+      link: "/electrician-tools/site-safety"
+    },
     {
       id: "eicr-reports",
       title: "EICR Reports & Management",
