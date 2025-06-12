@@ -1,271 +1,339 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { MessageSquare, Phone, Mail, Users, AlertTriangle, CheckCircle } from "lucide-react";
+import { MessageSquare, Phone, Mail, Users, AlertTriangle, CheckCircle, Info, Clock } from "lucide-react";
 
 const CommunicationGuideTab = () => {
   const communicationScenarios = [
     {
-      situation: "Reporting a Safety Issue",
-      approach: "Stop work immediately. Alert supervisor verbally first, then document in writing. Use clear, factual language.",
-      example: "I've stopped work on the consumer unit installation because I've noticed exposed live cables that weren't isolated. Can you please come and assess the situation?",
-      priority: "Critical"
+      title: "Morning Site Briefings",
+      description: "Starting the day with clear communication",
+      dos: [
+        "Arrive 5-10 minutes early",
+        "Listen actively to instructions",
+        "Ask clarifying questions if needed",
+        "Confirm your understanding"
+      ],
+      donts: [
+        "Interrupt the supervisor",
+        "Check your phone during briefing",
+        "Make assumptions about tasks",
+        "Leave without confirming next steps"
+      ],
+      example: "Good morning. I understand I'm working on the kitchen ring main today. Should I start with the sockets or lighting circuit first? And who should I report to if I find any issues?"
     },
     {
-      situation: "Asking for Help",
-      approach: "Be specific about what you don't understand. Show what you've tried. Ask when convenient.",
-      example: "When you have a moment, could you help me with cable sizing for this ring circuit? I've calculated 2.5mm² but want to confirm with you.",
-      priority: "Important"
+      title: "Reporting Problems or Delays",
+      description: "How to communicate issues effectively",
+      dos: [
+        "Report problems immediately",
+        "Be specific about the issue",
+        "Suggest potential solutions",
+        "Document what you've tried"
+      ],
+      donts: [
+        "Hide problems hoping they'll resolve",
+        "Blame others for issues",
+        "Make excuses without solutions",
+        "Continue working unsafely"
+      ],
+      example: "I've hit a problem with the cable run behind the kitchen units - there's a gas pipe in the way that wasn't on the drawings. I've stopped work and marked the area. Could we discuss alternative routing options?"
     },
     {
-      situation: "Client Interaction",
-      approach: "Be polite, professional, and explain work clearly. Avoid technical jargon unless requested.",
-      example: "Good morning! I'm here to install your new consumer unit. This will take about 3-4 hours, and I'll need to turn off your electricity temporarily.",
-      priority: "Essential"
+      title: "Client Interactions",
+      description: "Professional communication with customers",
+      dos: [
+        "Introduce yourself and your role",
+        "Explain work in simple terms",
+        "Keep clients informed of progress",
+        "Be respectful of their property"
+      ],
+      donts: [
+        "Make promises about costs or timing",
+        "Criticise previous work",
+        "Use technical jargon excessively",
+        "Ignore client concerns"
+      ],
+      example: "Hello, I'm James, the apprentice electrician working with [Supervisor's name] today. We'll be installing your new consumer unit, which should take about 4 hours. You'll be without power for about 2 hours while we make the final connections. Is there anything specific you'd like us to be careful with?"
     }
   ];
 
   const communicationChannels = [
     {
-      channel: "Face-to-Face",
-      bestFor: ["Safety issues", "Complex explanations", "Team briefings"],
-      tips: ["Maintain eye contact", "Use clear body language", "Confirm understanding"]
+      method: "Face-to-Face",
+      icon: Users,
+      when: "Complex instructions, safety issues, learning new skills, problem-solving",
+      advantages: ["Immediate feedback", "Clear understanding", "Builds relationships", "Shows respect"],
+      tips: ["Make eye contact", "Use active listening", "Ask follow-up questions", "Confirm understanding"]
     },
     {
-      channel: "Radio/Walkie-Talkie",
-      bestFor: ["Site coordination", "Quick updates", "Emergency communication"],
-      tips: ["Keep messages brief", "Use proper call signs", "Wait for acknowledgment"]
+      method: "Radio/Phone",
+      icon: Phone,
+      when: "Quick updates, coordination between areas, urgent communications",
+      advantages: ["Immediate contact", "Efficient for simple messages", "Good for coordination"],
+      tips: ["Keep messages brief", "Speak clearly", "Use proper radio etiquette", "Confirm receipt"]
     },
     {
-      channel: "Written (Text/Email)",
-      bestFor: ["Documentation", "Follow-up instructions", "Non-urgent queries"],
-      tips: ["Be clear and concise", "Use proper spelling", "Include relevant details"]
+      method: "Written/Text",
+      icon: Mail,
+      when: "Non-urgent updates, sharing photos, material lists, handovers",
+      advantages: ["Permanent record", "Can include images", "No interruption", "Reference later"],
+      tips: ["Be clear and concise", "Include relevant details", "Use proper spelling", "Professional tone"]
     }
   ];
 
-  const industryLanguage = [
-    { term: "Isolate", meaning: "To disconnect electrical supply safely", usage: "Always isolate before starting work" },
-    { term: "Dead", meaning: "No electrical current present", usage: "Test the circuit is dead before proceeding" },
-    { term: "Live", meaning: "Electrical current is present", usage: "Never work on live circuits" },
-    { term: "RCD", meaning: "Residual Current Device - safety protection", usage: "Check the RCD is functioning correctly" },
-    { term: "CU", meaning: "Consumer Unit - main electrical panel", usage: "We need to upgrade the old CU" },
-    { term: "Ring Final", meaning: "Ring circuit for socket outlets", usage: "Testing the ring final circuit for continuity" }
+  const industryTerminology = [
+    {
+      category: "Common Abbreviations",
+      terms: [
+        { term: "CU", meaning: "Consumer Unit", usage: "We need to upgrade the CU to meet current regulations" },
+        { term: "RCD", meaning: "Residual Current Device", usage: "Test the RCD monthly by pressing the test button" },
+        { term: "RCBO", meaning: "Residual Current Breaker with Overload", usage: "Install an RCBO for each circuit" },
+        { term: "DB", meaning: "Distribution Board", usage: "Label all circuits clearly in the DB" },
+        { term: "SWA", meaning: "Steel Wire Armoured cable", usage: "We'll use SWA for the outdoor supply" }
+      ]
+    },
+    {
+      category: "Testing & Inspection",
+      terms: [
+        { term: "IR", meaning: "Insulation Resistance", usage: "The IR test results are within acceptable limits" },
+        { term: "EFLI", meaning: "Earth Fault Loop Impedance", usage: "Record the EFLI values for each circuit" },
+        { term: "R1+R2", meaning: "Live + Earth continuity", usage: "The R1+R2 readings confirm good continuity" },
+        { term: "PFC", meaning: "Prospective Fault Current", usage: "Check the PFC at the origin of the installation" },
+        { term: "Zs", meaning: "Earth Loop Impedance", usage: "Zs values must not exceed the maximum permitted" }
+      ]
+    },
+    {
+      category: "Site Language",
+      terms: [
+        { term: "First fix", meaning: "Initial electrical installation", usage: "Complete first fix before plasterboarding" },
+        { term: "Second fix", meaning: "Final electrical installation", usage: "Second fix includes fitting accessories and testing" },
+        { term: "Snagging", meaning: "Fixing minor defects", usage: "There's a snagging list to complete before handover" },
+        { term: "Making good", meaning: "Repairing after installation", usage: "Make good any damage to walls after cable installation" },
+        { term: "Pulling cables", meaning: "Installing cables", usage: "Start pulling cables for the ground floor circuits" }
+      ]
+    }
   ];
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case "Critical": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "Essential": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
-      case "Important": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+  const regionalConsiderations = [
+    {
+      region: "London & South East",
+      characteristics: ["Fast-paced work environment", "Multicultural teams", "High cost awareness"],
+      tips: ["Be direct but polite", "Respect diverse backgrounds", "Understand time pressures"]
+    },
+    {
+      region: "Northern England",
+      characteristics: ["Strong team culture", "Direct communication", "Traditional work practices"],
+      tips: ["Build good relationships", "Appreciate directness", "Show respect for experience"]
+    },
+    {
+      region: "Scotland",
+      characteristics: ["Safety-focused culture", "Proud trade traditions", "Strong apprenticeship values"],
+      tips: ["Embrace learning opportunities", "Respect safety protocols", "Value traditional skills"]
+    },
+    {
+      region: "Wales",
+      characteristics: ["Community-focused approach", "Bilingual considerations", "Strong work ethic"],
+      tips: ["Be part of the team", "Respect language differences", "Show commitment to quality"]
     }
-  };
+  ];
 
   return (
     <div className="space-y-6">
+      {/* Communication Scenarios */}
       <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
         <CardHeader>
           <div className="flex items-center gap-2">
             <MessageSquare className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Professional Communication Guide</CardTitle>
+            <CardTitle className="text-elec-yellow">Real-World Communication Scenarios</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
-            Master the art of professional communication in the electrical industry. From safety-critical conversations 
-            to client interactions, learn how to communicate effectively in every situation.
-          </p>
+          <div className="space-y-6">
+            {communicationScenarios.map((scenario, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-6">
+                <h3 className="text-xl font-semibold text-white mb-2">{scenario.title}</h3>
+                <p className="text-muted-foreground mb-4">{scenario.description}</p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+                    <h4 className="font-medium text-green-400 mb-3 flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4" />
+                      Do's
+                    </h4>
+                    <ul className="space-y-2">
+                      {scenario.dos.map((item, itemIndex) => (
+                        <li key={itemIndex} className="text-sm flex items-start gap-2">
+                          <div className="w-1 h-1 bg-green-400 rounded-full mt-2"></div>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+                    <h4 className="font-medium text-red-400 mb-3 flex items-center gap-2">
+                      <AlertTriangle className="h-4 w-4" />
+                      Don'ts
+                    </h4>
+                    <ul className="space-y-2">
+                      {scenario.donts.map((item, itemIndex) => (
+                        <li key={itemIndex} className="text-sm flex items-start gap-2">
+                          <div className="w-1 h-1 bg-red-400 rounded-full mt-2"></div>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                  <h4 className="font-medium text-blue-400 mb-2">Example Communication:</h4>
+                  <p className="text-sm italic text-blue-100">"{scenario.example}"</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </CardContent>
       </Card>
 
-      <Tabs defaultValue="scenarios" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="scenarios">Common Scenarios</TabsTrigger>
-          <TabsTrigger value="channels">Communication Channels</TabsTrigger>
-          <TabsTrigger value="language">Industry Language</TabsTrigger>
-          <TabsTrigger value="etiquette">Professional Etiquette</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="scenarios">
-          <div className="space-y-4">
-            {communicationScenarios.map((scenario, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-white text-lg">{scenario.situation}</CardTitle>
-                    <Badge className={getPriorityColor(scenario.priority)} variant="outline">
-                      {scenario.priority}
-                    </Badge>
+      {/* Communication Channels */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="text-white flex items-center gap-2">
+            <Phone className="h-5 w-5 text-elec-yellow" />
+            Communication Methods & Best Practices
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            {communicationChannels.map((channel, index) => {
+              const IconComponent = channel.icon;
+              return (
+                <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+                  <div className="flex items-center gap-3 mb-4">
+                    <IconComponent className="h-6 w-6 text-elec-yellow" />
+                    <h3 className="text-lg font-semibold text-white">{channel.method}</h3>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <h4 className="font-medium text-elec-yellow mb-2 flex items-center gap-2">
-                        <CheckCircle className="h-4 w-4" />
-                        Best Approach:
-                      </h4>
-                      <p className="text-sm text-muted-foreground">{scenario.approach}</p>
+                      <h4 className="text-sm font-medium text-elec-yellow mb-2">When to Use:</h4>
+                      <p className="text-sm text-muted-foreground">{channel.when}</p>
                     </div>
+                    
                     <div>
-                      <h4 className="font-medium text-green-400 mb-2">Example:</h4>
-                      <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                        <p className="text-sm text-green-200 italic">"{scenario.example}"</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
-
-        <TabsContent value="channels">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {communicationChannels.map((channel, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    {channel.channel === "Face-to-Face" && <Users className="h-5 w-5 text-elec-yellow" />}
-                    {channel.channel === "Radio/Walkie-Talkie" && <Phone className="h-5 w-5 text-elec-yellow" />}
-                    {channel.channel === "Written (Text/Email)" && <Mail className="h-5 w-5 text-elec-yellow" />}
-                    {channel.channel}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="font-medium text-elec-yellow mb-2">Best for:</h4>
+                      <h4 className="text-sm font-medium text-elec-yellow mb-2">Advantages:</h4>
                       <ul className="space-y-1">
-                        {channel.bestFor.map((use, idx) => (
-                          <li key={idx} className="text-sm text-muted-foreground flex items-center gap-2">
+                        {channel.advantages.map((advantage, advIndex) => (
+                          <li key={advIndex} className="text-sm text-muted-foreground flex items-center gap-2">
                             <CheckCircle className="h-3 w-3 text-green-400" />
-                            {use}
+                            {advantage}
                           </li>
                         ))}
                       </ul>
                     </div>
+                    
                     <div>
-                      <h4 className="font-medium text-blue-400 mb-2">Tips:</h4>
+                      <h4 className="text-sm font-medium text-elec-yellow mb-2">Tips:</h4>
                       <ul className="space-y-1">
-                        {channel.tips.map((tip, idx) => (
-                          <li key={idx} className="text-sm text-muted-foreground">• {tip}</li>
+                        {channel.tips.map((tip, tipIndex) => (
+                          <li key={tipIndex} className="text-sm text-muted-foreground flex items-center gap-2">
+                            <Info className="h-3 w-3 text-blue-400" />
+                            {tip}
+                          </li>
                         ))}
                       </ul>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+                </div>
+              );
+            })}
           </div>
-        </TabsContent>
+        </CardContent>
+      </Card>
 
-        <TabsContent value="language">
-          <div className="space-y-4">
-            <Card className="border-blue-500/20 bg-blue-500/10">
-              <CardHeader>
-                <CardTitle className="text-blue-300">Essential Electrical Industry Terms</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground mb-4">
-                  Understanding and using proper electrical terminology demonstrates professionalism and ensures clear communication.
-                </p>
-              </CardContent>
-            </Card>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {industryLanguage.map((item, index) => (
-                <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-                  <CardContent className="pt-4">
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40">
+      {/* Industry Terminology */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="text-white flex items-center gap-2">
+            <MessageSquare className="h-5 w-5 text-elec-yellow" />
+            Essential Industry Terminology
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            {industryTerminology.map((category, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-elec-yellow mb-4">{category.category}</h3>
+                <div className="space-y-4">
+                  {category.terms.map((item, termIndex) => (
+                    <div key={termIndex} className="border-l-2 border-elec-yellow/30 pl-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">
                           {item.term}
                         </Badge>
+                        <span className="text-sm font-medium text-white">{item.meaning}</span>
                       </div>
-                      <p className="text-sm text-white font-medium">{item.meaning}</p>
-                      <div className="bg-elec-dark/40 rounded-lg p-2">
-                        <p className="text-xs text-muted-foreground italic">Example: "{item.usage}"</p>
-                      </div>
+                      <p className="text-sm text-muted-foreground italic">"{item.usage}"</p>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
-        </TabsContent>
+        </CardContent>
+      </Card>
 
-        <TabsContent value="etiquette">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="border-green-500/20 bg-green-500/10">
-              <CardHeader>
-                <CardTitle className="text-green-300 flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5" />
-                  Do's - Professional Behaviour
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
-                    <span className="text-sm text-muted-foreground">Always greet colleagues and clients politely</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
-                    <span className="text-sm text-muted-foreground">Listen actively and ask clarifying questions</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
-                    <span className="text-sm text-muted-foreground">Respect site rules and hierarchy</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
-                    <span className="text-sm text-muted-foreground">Use "please" and "thank you" consistently</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5" />
-                    <span className="text-sm text-muted-foreground">Admit when you don't understand something</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="border-red-500/20 bg-red-500/10">
-              <CardHeader>
-                <CardTitle className="text-red-300 flex items-center gap-2">
-                  <AlertTriangle className="h-5 w-5" />
-                  Don'ts - Avoid These Behaviours
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3">
-                    <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5" />
-                    <span className="text-sm text-muted-foreground">Don't use inappropriate language or jokes</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5" />
-                    <span className="text-sm text-muted-foreground">Don't interrupt senior tradespeople</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5" />
-                    <span className="text-sm text-muted-foreground">Don't take criticism personally</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5" />
-                    <span className="text-sm text-muted-foreground">Don't gossip about colleagues or clients</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5" />
-                    <span className="text-sm text-muted-foreground">Don't use your phone excessively during work hours</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
+      {/* Regional Considerations */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="text-white flex items-center gap-2">
+            <Clock className="h-5 w-5 text-elec-yellow" />
+            Regional Communication Differences
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground mb-6">
+            The UK electrical industry has regional variations in communication styles and workplace culture. 
+            Understanding these differences will help you adapt and succeed wherever you work.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {regionalConsiderations.map((region, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+                <h3 className="text-lg font-semibold text-elec-yellow mb-3">{region.region}</h3>
+                
+                <div className="space-y-3">
+                  <div>
+                    <h4 className="text-sm font-medium text-white mb-2">Characteristics:</h4>
+                    <ul className="space-y-1">
+                      {region.characteristics.map((char, charIndex) => (
+                        <li key={charIndex} className="text-sm text-muted-foreground flex items-center gap-2">
+                          <div className="w-1 h-1 bg-elec-yellow rounded-full"></div>
+                          {char}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-sm font-medium text-white mb-2">Success Tips:</h4>
+                    <ul className="space-y-1">
+                      {region.tips.map((tip, tipIndex) => (
+                        <li key={tipIndex} className="text-sm text-muted-foreground flex items-center gap-2">
+                          <CheckCircle className="h-3 w-3 text-green-400" />
+                          {tip}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-        </TabsContent>
-      </Tabs>
+        </CardContent>
+      </Card>
     </div>
   );
 };

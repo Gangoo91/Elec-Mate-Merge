@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { MessageSquare, Users, Building, TrendingUp, Clock, CheckCircle } from "lucide-react";
+import { MessageSquare, Users, Building, TrendingUp, Clock, CheckCircle, AlertTriangle, Star, Target } from "lucide-react";
 
 const WorkplaceCultureOverviewTab = () => {
   const keyStats = [
@@ -19,6 +19,52 @@ const WorkplaceCultureOverviewTab = () => {
     { topic: "Regional Variations", progress: 45, category: "Useful" },
     { topic: "Client Interaction", progress: 70, category: "Essential" },
     { topic: "Team Collaboration", progress: 80, category: "Critical" }
+  ];
+
+  const workplaceChallenges = [
+    {
+      challenge: "Understanding Site Hierarchy",
+      description: "Learning who to report to and how to communicate up the chain",
+      tips: ["Always respect experience levels", "Ask questions through proper channels", "Show initiative without overstepping"]
+    },
+    {
+      challenge: "Technical Language Barriers",
+      description: "Mastering industry-specific terminology and abbreviations",
+      tips: ["Keep a glossary of terms", "Ask for clarification when unsure", "Practice using terms in context"]
+    },
+    {
+      challenge: "Regional Communication Differences",
+      description: "Adapting to local working styles and communication preferences",
+      tips: ["Observe local customs", "Be flexible in your approach", "Ask colleagues about local practices"]
+    },
+    {
+      challenge: "Client-Facing Situations",
+      description: "Representing your company professionally when dealing with customers",
+      tips: ["Always be polite and professional", "Know when to refer to supervisor", "Keep clients informed of progress"]
+    }
+  ];
+
+  const industryExpectations = [
+    {
+      area: "Punctuality & Reliability",
+      description: "Being on time and consistent in your work habits",
+      expectations: ["Arrive 10-15 minutes early", "Call ahead if running late", "Maintain consistent work quality", "Follow through on commitments"]
+    },
+    {
+      area: "Safety Communication",
+      description: "Speaking up about safety concerns and following protocols",
+      expectations: ["Report hazards immediately", "Use proper safety terminology", "Ask questions about unfamiliar procedures", "Never compromise on safety for speed"]
+    },
+    {
+      area: "Professional Appearance",
+      description: "Maintaining appropriate dress and presentation standards",
+      expectations: ["Clean, well-maintained PPE", "Company uniform worn correctly", "Personal hygiene standards", "Tools and equipment properly maintained"]
+    },
+    {
+      area: "Work Ethic & Attitude",
+      description: "Demonstrating commitment and positive approach to learning",
+      expectations: ["Show enthusiasm for learning", "Take initiative when appropriate", "Accept feedback positively", "Support team goals"]
+    }
   ];
 
   const getCategoryColor = (category: string) => {
@@ -52,6 +98,66 @@ const WorkplaceCultureOverviewTab = () => {
                 <div className="text-2xl font-bold text-elec-yellow mb-1">{stat.value}</div>
                 <div className="text-sm font-medium text-white mb-1">{stat.label}</div>
                 <div className="text-xs text-muted-foreground">{stat.description}</div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Common Workplace Challenges */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="text-white flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5 text-elec-yellow" />
+            Common Workplace Challenges for Apprentices
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {workplaceChallenges.map((item, index) => (
+              <div key={index} className="space-y-3 p-4 border border-elec-yellow/20 rounded-lg">
+                <h4 className="font-semibold text-elec-yellow">{item.challenge}</h4>
+                <p className="text-sm text-muted-foreground">{item.description}</p>
+                <div className="space-y-2">
+                  <h5 className="text-sm font-medium text-white">Tips for Success:</h5>
+                  {item.tips.map((tip, tipIndex) => (
+                    <div key={tipIndex} className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-muted-foreground">{tip}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Industry Expectations */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="text-white flex items-center gap-2">
+            <Star className="h-5 w-5 text-elec-yellow" />
+            Industry Expectations & Standards
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            {industryExpectations.map((area, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <Target className="h-5 w-5 text-elec-yellow" />
+                  <h4 className="font-semibold text-white">{area.area}</h4>
+                </div>
+                <p className="text-sm text-muted-foreground mb-4">{area.description}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  {area.expectations.map((expectation, expIndex) => (
+                    <div key={expIndex} className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                      <span className="text-sm">{expectation}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
