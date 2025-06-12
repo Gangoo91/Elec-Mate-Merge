@@ -2,62 +2,15 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Lightbulb, MessageSquare, Users, Target, CheckCircle, AlertTriangle, Info, HelpCircle } from "lucide-react";
+import { Lightbulb, MessageSquare, Users, Target, HelpCircle } from "lucide-react";
+import ScenarioBasedTool from "./ScenarioBasedTool";
+import CommunicationSimulator from "./CommunicationSimulator";
+import RelationshipActivities from "./RelationshipActivities";
+
+type ActiveTool = "scenarios" | "communication" | "relationships" | null;
 
 const InteractiveToolsTab = () => {
-  const [selectedScenario, setSelectedScenario] = useState<number | null>(null);
-
-  const interactiveTools = [
-    {
-      id: 1,
-      title: "Scenario-Based Decision Making",
-      icon: Target,
-      description: "Practice making decisions in realistic workplace scenarios",
-      scenarios: [
-        {
-          id: 1,
-          title: "Conflicting Instructions",
-          situation: "Your supervisor tells you to do one thing, but the site manager says something different.",
-          options: [
-            "Follow supervisor's instructions without question",
-            "Ask supervisor and site manager to clarify together",
-            "Follow site manager as they have higher authority",
-            "Do nothing until it's resolved"
-          ],
-          correctAnswer: 1,
-          explanation: "Always seek clarification when receiving conflicting instructions to avoid confusion and potential safety issues."
-        },
-        {
-          id: 2,
-          title: "Safety Concern Communication",
-          situation: "You notice a potential safety hazard but your supervisor seems busy and stressed.",
-          options: [
-            "Wait for a better time to mention it",
-            "Report it immediately regardless of supervisor's mood",
-            "Fix it yourself if possible",
-            "Mention it to a colleague first"
-          ],
-          correctAnswer: 1,
-          explanation: "Safety concerns should always be reported immediately, regardless of timing or supervisor's current state."
-        }
-      ]
-    },
-    {
-      id: 2,
-      title: "Communication Style Simulator",
-      icon: MessageSquare,
-      description: "Practice different communication approaches for various workplace situations",
-      content: "Interactive simulator for practising professional communication"
-    },
-    {
-      id: 3,
-      title: "Relationship Building Activities",
-      icon: Users,
-      description: "Activities and exercises to improve workplace relationships",
-      content: "Guided activities for building professional relationships"
-    }
-  ];
+  const [activeTool, setActiveTool] = useState<ActiveTool>(null);
 
   const communicationTips = [
     {
@@ -77,33 +30,47 @@ const InteractiveToolsTab = () => {
     }
   ];
 
-  const renderScenario = (scenario: any) => (
-    <div className="space-y-4">
-      <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-        <h4 className="font-medium text-blue-300 mb-2">Situation:</h4>
-        <p className="text-sm text-muted-foreground">{scenario.situation}</p>
-      </div>
-      
-      <div className="space-y-2">
-        <h4 className="font-medium text-white">What would you do?</h4>
-        {scenario.options.map((option: string, index: number) => (
-          <Button
-            key={index}
-            variant="outline"
-            className="w-full text-left h-auto p-3 justify-start"
-            onClick={() => {/* Handle option selection */}}
-          >
-            <span className="text-sm">{String.fromCharCode(65 + index)}. {option}</span>
+  if (activeTool === "scenarios") {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold text-elec-yellow">Scenario-Based Decision Making</h2>
+          <Button variant="outline" onClick={() => setActiveTool(null)}>
+            Back to Tools
           </Button>
-        ))}
+        </div>
+        <ScenarioBasedTool />
       </div>
-      
-      <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
-        <h4 className="font-medium text-green-300 mb-2">Best Practice:</h4>
-        <p className="text-sm text-muted-foreground">{scenario.explanation}</p>
+    );
+  }
+
+  if (activeTool === "communication") {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold text-elec-yellow">Communication Style Simulator</h2>
+          <Button variant="outline" onClick={() => setActiveTool(null)}>
+            Back to Tools
+          </Button>
+        </div>
+        <CommunicationSimulator />
       </div>
-    </div>
-  );
+    );
+  }
+
+  if (activeTool === "relationships") {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold text-elec-yellow">Relationship Building Activities</h2>
+          <Button variant="outline" onClick={() => setActiveTool(null)}>
+            Back to Tools
+          </Button>
+        </div>
+        <RelationshipActivities />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -124,53 +91,71 @@ const InteractiveToolsTab = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-4">
-          {interactiveTools.map((tool) => (
-            <Card key={tool.id} className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-full bg-elec-yellow/10">
-                    <tool.icon className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-white text-lg">{tool.title}</CardTitle>
-                    <p className="text-sm text-muted-foreground">{tool.description}</p>
-                  </div>
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-full bg-elec-yellow/10">
+                  <Target className="h-5 w-5 text-elec-yellow" />
                 </div>
-              </CardHeader>
-              <CardContent>
-                {tool.scenarios ? (
-                  <div className="space-y-4">
-                    {selectedScenario === tool.id ? (
-                      <div className="space-y-4">
-                        {tool.scenarios.map((scenario) => (
-                          <div key={scenario.id}>
-                            <h4 className="font-medium text-white mb-3">{scenario.title}</h4>
-                            {renderScenario(scenario)}
-                          </div>
-                        ))}
-                        <Button 
-                          variant="outline" 
-                          onClick={() => setSelectedScenario(null)}
-                          className="w-full"
-                        >
-                          Back to Tools
-                        </Button>
-                      </div>
-                    ) : (
-                      <Button 
-                        onClick={() => setSelectedScenario(tool.id)}
-                        className="w-full"
-                      >
-                        Start Practice
-                      </Button>
-                    )}
-                  </div>
-                ) : (
-                  <Button className="w-full">Start Activity</Button>
-                )}
-              </CardContent>
-            </Card>
-          ))}
+                <div>
+                  <CardTitle className="text-white text-lg">Scenario-Based Decision Making</CardTitle>
+                  <p className="text-sm text-muted-foreground">Practice making decisions in realistic workplace scenarios</p>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <Button 
+                onClick={() => setActiveTool("scenarios")}
+                className="w-full"
+              >
+                Start Practice
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-full bg-elec-yellow/10">
+                  <MessageSquare className="h-5 w-5 text-elec-yellow" />
+                </div>
+                <div>
+                  <CardTitle className="text-white text-lg">Communication Style Simulator</CardTitle>
+                  <p className="text-sm text-muted-foreground">Practice different communication approaches for various workplace situations</p>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <Button 
+                onClick={() => setActiveTool("communication")}
+                className="w-full"
+              >
+                Start Activity
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-full bg-elec-yellow/10">
+                  <Users className="h-5 w-5 text-elec-yellow" />
+                </div>
+                <div>
+                  <CardTitle className="text-white text-lg">Relationship Building Activities</CardTitle>
+                  <p className="text-sm text-muted-foreground">Activities and exercises to improve workplace relationships</p>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <Button 
+                onClick={() => setActiveTool("relationships")}
+                className="w-full"
+              >
+                Start Activity
+              </Button>
+            </CardContent>
+          </Card>
         </div>
 
         <Card className="border-green-500/20 bg-green-500/10">
