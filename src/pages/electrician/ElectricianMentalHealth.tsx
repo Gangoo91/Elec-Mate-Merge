@@ -1,85 +1,103 @@
 
-import MentalHealthHubLayout from "@/components/mental-health/MentalHealthHubLayout";
-import MentalHealthMate from "@/components/mental-health/MentalHealthMate";
-import LocalResourceFinder from "@/components/mental-health/crisis/LocalResourceFinder";
-import MoodTracker from "@/components/mental-health/interactive/MoodTracker";
-import SelfCareReminders from "@/components/mental-health/interactive/SelfCareReminders";
+import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Heart, BookOpen, Zap, Users, Shield } from "lucide-react";
+import ResourcesLibraryTab from "@/components/mental-health/tabs/ResourcesLibraryTab";
+import InteractiveToolsTab from "@/components/mental-health/tabs/InteractiveToolsTab";
+import SupportNetworkTab from "@/components/mental-health/tabs/SupportNetworkTab";
+import CrisisResourcesTab from "@/components/mental-health/tabs/CrisisResourcesTab";
+import MentalHealthMate from "@/components/mental-health/MentalHealthMate";
 
 const ElectricianMentalHealth = () => {
-  const resources = [
-    {
-      id: 1,
-      title: "Managing Workplace Stress",
-      description: "Techniques for handling stress on job sites and during training",
-      type: "Guide",
-      link: "/electrician/mental-health/stress-management"
-    },
-    {
-      id: 2,
-      title: "Electrician Support Network",
-      description: "Connect with fellow electrical professionals in a supportive environment",
-      type: "Community",
-      link: "/electrician/mental-health/support-network"
-    },
-    {
-      id: 3,
-      title: "Work-Life Balance",
-      description: "Strategies for maintaining balance during your electrical career",
-      type: "Workshop",
-      link: "/electrician/mental-health/work-life-balance"
-    },
-    {
-      id: 4,
-      title: "Crisis Resources",
-      description: "Immediate support options for urgent mental health concerns",
-      type: "Helpline",
-      link: "/electrician/mental-health/crisis-resources"
-    }
-  ];
-
   return (
-    <MentalHealthHubLayout>
-      {/* Interactive Features */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <MoodTracker />
-        <SelfCareReminders />
+    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
+      <div className="flex flex-col items-center justify-center mb-6">
+        <h1 className="text-3xl font-bold tracking-tight mb-4 flex items-center gap-3">
+          <Heart className="h-8 w-8 text-elec-yellow" />
+          Mental Health Hub
+        </h1>
+        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+          Your wellbeing matters. Find support, resources, and community here to help you thrive 
+          both professionally and personally throughout your electrical career.
+        </p>
+        <BackButton customUrl="/electrical-hub" label="Back to Hub" />
       </div>
 
-      {/* Local Resources Finder */}
-      <LocalResourceFinder />
-      
-      {/* Mental Health Mate */}
-      <MentalHealthMate />
+      {/* Emergency Banner */}
+      <Card className="border-red-500/40 bg-red-500/5 shadow-md">
+        <CardContent className="p-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <Shield className="h-8 w-8 text-red-500 flex-shrink-0" />
+            <div className="flex-1">
+              <h3 className="text-lg font-semibold text-red-500">Emergency Support</h3>
+              <p className="text-sm">
+                If you're in crisis, call <span className="font-bold">999</span> or contact Samaritans at{" "}
+                <a href="tel:116123" className="font-bold text-red-500 hover:underline">116 123</a> (free, 24/7)
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-      {/* Resource Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-        {resources.map((resource) => (
-          <Link 
-            to={resource.link} 
-            key={resource.id} 
-            className="block transition-all hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow focus-visible:ring-offset-2 rounded-lg"
-          >
-            <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:shadow-md hover:border-elec-yellow/30 transition-colors">
-              <CardHeader className="pb-2">
-                <div className="flex justify-between items-start">
-                  <CardTitle className="text-base sm:text-xl">{resource.title}</CardTitle>
-                  <span className="text-xs px-2 py-1 bg-elec-yellow/10 rounded-md text-elec-yellow">
-                    {resource.type}
-                  </span>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">{resource.description}</p>
-                <Button className="w-full text-sm" size="sm">Access Resource</Button>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
+      <Tabs defaultValue="resources" className="w-full">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="resources" className="flex items-center gap-2">
+            <BookOpen className="h-4 w-4" />
+            Resources
+          </TabsTrigger>
+          <TabsTrigger value="tools" className="flex items-center gap-2">
+            <Zap className="h-4 w-4" />
+            Tools
+          </TabsTrigger>
+          <TabsTrigger value="support" className="flex items-center gap-2">
+            <Users className="h-4 w-4" />
+            Support
+          </TabsTrigger>
+          <TabsTrigger value="crisis" className="flex items-center gap-2">
+            <Shield className="h-4 w-4" />
+            Crisis
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="resources">
+          <ResourcesLibraryTab />
+        </TabsContent>
+
+        <TabsContent value="tools">
+          <InteractiveToolsTab />
+        </TabsContent>
+
+        <TabsContent value="support">
+          <SupportNetworkTab />
+        </TabsContent>
+
+        <TabsContent value="crisis">
+          <CrisisResourcesTab />
+        </TabsContent>
+      </Tabs>
+
+      {/* Mental Health Mate - Always visible at bottom */}
+      <div id="mental-health-mates">
+        <MentalHealthMate />
       </div>
-    </MentalHealthHubLayout>
+
+      <Card className="border-green-500/50 bg-green-500/10">
+        <CardHeader>
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <Heart className="h-5 w-5" />
+            Remember
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">
+            Your mental health is just as important as your physical safety on site. Taking care of your 
+            wellbeing isn't weakness - it's essential for your success and longevity in the electrical industry. 
+            Don't hesitate to reach out for support when you need it.
+          </p>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
