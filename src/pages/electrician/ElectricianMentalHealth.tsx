@@ -40,6 +40,11 @@ const ElectricianMentalHealth = () => {
         </CardContent>
       </Card>
 
+      {/* Mental Health Mate - Now more prominent at the top */}
+      <div id="mental-health-mates">
+        <MentalHealthMate />
+      </div>
+
       <Tabs defaultValue="resources" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="resources" className="flex items-center gap-2">
@@ -76,11 +81,6 @@ const ElectricianMentalHealth = () => {
           <CrisisResourcesTab />
         </TabsContent>
       </Tabs>
-
-      {/* Mental Health Mate - Always visible at bottom */}
-      <div id="mental-health-mates">
-        <MentalHealthMate />
-      </div>
 
       <Card className="border-green-500/50 bg-green-500/10">
         <CardHeader>
