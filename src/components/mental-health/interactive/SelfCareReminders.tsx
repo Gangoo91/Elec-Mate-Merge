@@ -2,231 +2,234 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Bell, Check, Clock, Heart, Coffee, Moon, Dumbbell, Users } from "lucide-react";
+import { Bell, Plus, Check, X, Clock } from "lucide-react";
 import { toast } from "sonner";
 
-interface SelfCareActivity {
+interface SelfCareReminder {
   id: string;
   title: string;
-  description: string;
-  icon: React.ReactNode;
-  category: 'physical' | 'mental' | 'social' | 'rest';
-  completed: boolean;
-  timeOfDay?: 'morning' | 'afternoon' | 'evening';
+  time: string;
+  frequency: 'daily' | 'weekly' | 'custom';
+  isActive: boolean;
+  lastCompleted?: string;
 }
 
 const SelfCareReminders = () => {
-  const [activities, setActivities] = useState<SelfCareActivity[]>([
-    {
-      id: '1',
-      title: 'Take a 5-minute break',
-      description: 'Step away from work and breathe deeply',
-      icon: <Clock className="h-4 w-4" />,
-      category: 'mental',
-      completed: false,
-      timeOfDay: 'afternoon'
-    },
-    {
-      id: '2',
-      title: 'Drink water',
-      description: 'Stay hydrated throughout the day',
-      icon: <Coffee className="h-4 w-4" />,
-      category: 'physical',
-      completed: false
-    },
-    {
-      id: '3',
-      title: 'Connect with someone',
-      description: 'Send a message to a friend or colleague',
-      icon: <Users className="h-4 w-4" />,
-      category: 'social',
-      completed: false
-    },
-    {
-      id: '4',
-      title: 'Gentle stretching',
-      description: 'Stretch your neck and shoulders',
-      icon: <Dumbbell className="h-4 w-4" />,
-      category: 'physical',
-      completed: false
-    },
-    {
-      id: '5',
-      title: 'Wind down routine',
-      description: 'Prepare for restful sleep',
-      icon: <Moon className="h-4 w-4" />,
-      category: 'rest',
-      completed: false,
-      timeOfDay: 'evening'
-    }
-  ]);
+  const [reminders, setReminders] = useState<SelfCareReminder[]>([]);
+  const [newReminder, setNewReminder] = useState({ title: '', time: '', frequency: 'daily' as const });
+  const [showAddForm, setShowAddForm] = useState(false);
 
-  const [remindersEnabled, setRemindersEnabled] = useState(false);
-
+  // Load reminders from localStorage
   useEffect(() => {
-    const stored = localStorage.getItem('elec-mate-selfcare-activities');
+    const stored = localStorage.getItem('elec-mate-selfcare-reminders');
     if (stored) {
-      setActivities(JSON.parse(stored));
-    }
-    
-    const reminders = localStorage.getItem('elec-mate-selfcare-reminders');
-    if (reminders) {
-      setRemindersEnabled(JSON.parse(reminders));
+      setReminders(JSON.parse(stored));
+    } else {
+      // Set some default reminders
+      const defaultReminders: SelfCareReminder[] = [
+        {
+          id: '1',
+          title: 'Take a 5-minute break',
+          time: '10:00',
+          frequency: 'daily',
+          isActive: true
+        },
+        {
+          id: '2',
+          title: 'Check in with your mood',
+          time: '16:00',
+          frequency: 'daily',
+          isActive: true
+        },
+        {
+          id: '3',
+          title: 'Practice deep breathing',
+          time: '12:00',
+          frequency: 'daily',
+          isActive: false
+        }
+      ];
+      setReminders(defaultReminders);
+      localStorage.setItem('elec-mate-selfcare-reminders', JSON.stringify(defaultReminders));
     }
   }, []);
 
-  const toggleActivity = (id: string) => {
-    const updated = activities.map(activity => 
-      activity.id === id 
-        ? { ...activity, completed: !activity.completed }
-        : activity
-    );
-    
-    setActivities(updated);
-    localStorage.setItem('elec-mate-selfcare-activities', JSON.stringify(updated));
-    
-    const completedActivity = updated.find(a => a.id === id);
-    if (completedActivity?.completed) {
-      toast.success(`Well done! You completed: ${completedActivity.title}`, {
-        description: "Keep taking care of yourself"
-      });
+  // Save reminders when they change
+  useEffect(() => {
+    if (reminders.length > 0) {
+      localStorage.setItem('elec-mate-selfcare-reminders', JSON.stringify(reminders));
     }
+  }, [reminders]);
+
+  const addReminder = () => {
+    if (!newReminder.title || !newReminder.time) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    const reminder: SelfCareReminder = {
+      id: Date.now().toString(),
+      title: newReminder.title,
+      time: newReminder.time,
+      frequency: newReminder.frequency,
+      isActive: true
+    };
+
+    setReminders(prev => [...prev, reminder]);
+    setNewReminder({ title: '', time: '', frequency: 'daily' });
+    setShowAddForm(false);
+    toast.success("Reminder added successfully");
   };
 
-  const resetDaily = () => {
-    const reset = activities.map(activity => ({ ...activity, completed: false }));
-    setActivities(reset);
-    localStorage.setItem('elec-mate-selfcare-activities', JSON.stringify(reset));
-    toast.success("Daily activities reset", {
-      description: "Ready for a new day of self-care"
+  const toggleReminder = (id: string) => {
+    setReminders(prev => prev.map(reminder => 
+      reminder.id === id 
+        ? { ...reminder, isActive: !reminder.isActive }
+        : reminder
+    ));
+  };
+
+  const markCompleted = (id: string) => {
+    setReminders(prev => prev.map(reminder => 
+      reminder.id === id 
+        ? { ...reminder, lastCompleted: new Date().toISOString() }
+        : reminder
+    ));
+    toast.success("Well done! Self-care completed", {
+      description: "Keep taking care of yourself"
     });
   };
 
-  const toggleReminders = () => {
-    const newState = !remindersEnabled;
-    setRemindersEnabled(newState);
-    localStorage.setItem('elec-mate-selfcare-reminders', JSON.stringify(newState));
-    
-    if (newState) {
-      toast.success("Self-care reminders enabled");
-    } else {
-      toast.success("Self-care reminders disabled");
-    }
+  const deleteReminder = (id: string) => {
+    setReminders(prev => prev.filter(reminder => reminder.id !== id));
+    toast.success("Reminder removed");
   };
-
-  const getCategoryColor = (category: SelfCareActivity['category']) => {
-    switch (category) {
-      case 'physical': return 'bg-green-500/10 text-green-400 border-green-500/20';
-      case 'mental': return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
-      case 'social': return 'bg-purple-500/10 text-purple-400 border-purple-500/20';
-      case 'rest': return 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20';
-    }
-  };
-
-  const completedCount = activities.filter(a => a.completed).length;
-  const progressPercentage = (completedCount / activities.length) * 100;
 
   return (
     <Card className="border-green-500/20 bg-elec-gray">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 text-lg">
-            <Heart className="h-5 w-5 text-green-400" />
+            <Bell className="h-5 w-5 text-green-400" />
             Self-Care Reminders
           </CardTitle>
           <Button
-            variant="ghost"
             size="sm"
-            onClick={toggleReminders}
-            className="flex items-center gap-1"
+            onClick={() => setShowAddForm(true)}
+            className="bg-green-500 hover:bg-green-600"
           >
-            <Bell className={`h-4 w-4 ${remindersEnabled ? 'text-green-400' : 'text-muted-foreground'}`} />
-            <span className="text-xs">{remindersEnabled ? 'On' : 'Off'}</span>
+            <Plus className="h-4 w-4" />
           </Button>
-        </div>
-        
-        {/* Progress */}
-        <div className="space-y-2">
-          <div className="flex justify-between text-xs text-muted-foreground">
-            <span>Daily Progress</span>
-            <span>{completedCount}/{activities.length} completed</span>
-          </div>
-          <div className="w-full bg-elec-dark rounded-full h-2">
-            <div 
-              className="bg-green-500 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${progressPercentage}%` }}
-            />
-          </div>
         </div>
       </CardHeader>
-      
-      <CardContent className="space-y-3">
-        {/* Activities List */}
+      <CardContent className="space-y-4">
+        {showAddForm && (
+          <div className="border border-green-500/20 rounded-lg p-3 space-y-3">
+            <Input
+              placeholder="Reminder title"
+              value={newReminder.title}
+              onChange={(e) => setNewReminder(prev => ({ ...prev, title: e.target.value }))}
+            />
+            <div className="flex gap-2">
+              <Input
+                type="time"
+                value={newReminder.time}
+                onChange={(e) => setNewReminder(prev => ({ ...prev, time: e.target.value }))}
+                className="flex-1"
+              />
+                <select
+                value={newReminder.frequency}
+                onChange={(e) => setNewReminder(prev => ({ ...prev, frequency: e.target.value as any }))}
+                className="px-3 py-2 rounded border border-elec-yellow/20 bg-elec-dark text-white"
+              >
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="custom">Custom</option>
+              </select>
+            </div>
+            <div className="flex gap-2">
+              <Button onClick={addReminder} size="sm" className="bg-green-500 hover:bg-green-600">
+                Add Reminder
+              </Button>
+              <Button onClick={() => setShowAddForm(false)} size="sm" variant="outline">
+                Cancel
+              </Button>
+            </div>
+          </div>
+        )}
+
         <div className="space-y-2">
-          {activities.map((activity) => (
-            <div 
-              key={activity.id}
-              className={`p-3 border rounded-lg transition-all ${
-                activity.completed 
-                  ? 'border-green-500/30 bg-green-500/5' 
-                  : 'border-elec-yellow/20 hover:border-elec-yellow/40'
-              }`}
-            >
-              <div className="flex items-start justify-between">
-                <div className="flex items-start gap-3 flex-1">
-                  <button
-                    onClick={() => toggleActivity(activity.id)}
-                    className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
-                      activity.completed 
-                        ? 'border-green-500 bg-green-500' 
-                        : 'border-elec-yellow/30 hover:border-elec-yellow'
-                    }`}
-                  >
-                    {activity.completed && <Check className="h-3 w-3 text-white" />}
-                  </button>
-                  
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      {activity.icon}
-                      <h4 className={`text-sm font-medium ${activity.completed ? 'line-through text-muted-foreground' : ''}`}>
-                        {activity.title}
-                      </h4>
-                    </div>
-                    <p className="text-xs text-muted-foreground">{activity.description}</p>
+          {reminders.length === 0 ? (
+            <p className="text-sm text-muted-foreground text-center py-4">
+              No reminders set. Add one to get started!
+            </p>
+          ) : (
+            reminders.map((reminder) => (
+              <div
+                key={reminder.id}
+                className={`flex items-center justify-between p-3 rounded-lg border ${
+                  reminder.isActive 
+                    ? 'border-green-500/20 bg-green-500/5' 
+                    : 'border-gray-500/20 bg-gray-500/5'
+                }`}
+              >
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <h4 className={`text-sm font-medium ${reminder.isActive ? 'text-white' : 'text-gray-400'}`}>
+                      {reminder.title}
+                    </h4>
+                    <Badge variant="outline" className="text-xs">
+                      {reminder.frequency}
+                    </Badge>
+                  </div>
+                  <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
+                    <Clock className="h-3 w-3" />
+                    <span>{reminder.time}</span>
+                    {reminder.lastCompleted && (
+                      <span className="ml-2 text-green-400">
+                        ✓ Completed {new Date(reminder.lastCompleted).toLocaleDateString()}
+                      </span>
+                    )}
                   </div>
                 </div>
-                
-                <div className="flex flex-col items-end gap-1">
-                  <Badge className={getCategoryColor(activity.category)}>
-                    {activity.category}
-                  </Badge>
-                  {activity.timeOfDay && (
-                    <span className="text-xs text-muted-foreground">
-                      {activity.timeOfDay}
-                    </span>
-                  )}
+                <div className="flex items-center gap-1">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => markCompleted(reminder.id)}
+                    className="h-8 w-8 p-0 text-green-400 hover:text-green-300"
+                  >
+                    <Check className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => toggleReminder(reminder.id)}
+                    className={`h-8 w-8 p-0 ${reminder.isActive ? 'text-yellow-400' : 'text-gray-400'}`}
+                  >
+                    <Bell className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => deleteReminder(reminder.id)}
+                    className="h-8 w-8 p-0 text-red-400 hover:text-red-300"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-        
-        {/* Actions */}
-        <div className="flex gap-2 pt-2 border-t border-elec-yellow/20">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={resetDaily}
-            className="text-xs"
-          >
-            Reset Daily
-          </Button>
-          {completedCount === activities.length && (
-            <Badge className="bg-green-500 text-white">
-              All completed! 🎉
-            </Badge>
+            ))
           )}
+        </div>
+
+        <div className="border-t border-green-500/20 pt-3 mt-4">
+          <p className="text-xs text-muted-foreground">
+            {reminders.filter(r => r.isActive).length} active reminders • 
+            Self-care is essential for your wellbeing
+          </p>
         </div>
       </CardContent>
     </Card>
