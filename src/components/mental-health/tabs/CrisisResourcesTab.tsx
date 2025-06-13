@@ -2,182 +2,175 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Phone, Shield, Clock, MapPin, AlertTriangle, Heart, MessageCircle } from "lucide-react";
+import { Shield, Phone, MapPin, Heart, Clock, Users, AlertTriangle, ExternalLink } from "lucide-react";
 import LocalResourceFinder from "@/components/mental-health/crisis/LocalResourceFinder";
+import EmergencyBanner from "@/components/mental-health/crisis/EmergencyBanner";
 
 const CrisisResourcesTab = () => {
   const emergencyContacts = [
     {
       name: "Emergency Services",
       number: "999",
-      description: "For immediate life-threatening emergencies",
-      availability: "24/7",
-      type: "Emergency",
-      priority: "urgent"
+      description: "For life-threatening emergencies",
+      available: "24/7",
+      type: "emergency"
     },
     {
       name: "Samaritans",
       number: "116 123",
       description: "Free emotional support for anyone in distress",
-      availability: "24/7",
-      type: "Crisis Support",
-      priority: "urgent"
+      available: "24/7",
+      type: "crisis"
     },
     {
-      name: "Crisis Text Line",
-      number: "Text SHOUT to 85258",
-      description: "24/7 text support for crisis situations",
-      availability: "24/7",
-      type: "Text Support",
-      priority: "urgent"
+      name: "CALM (Campaign Against Living Miserably)",
+      number: "0800 58 58 58",
+      description: "Support for men experiencing mental health issues",
+      available: "5pm-midnight daily",
+      type: "support"
     },
     {
-      name: "Mental Health Helpline",
+      name: "Mind Infoline",
       number: "0300 123 3393",
-      description: "NHS mental health support and guidance",
-      availability: "24/7",
-      type: "NHS Support",
-      priority: "high"
+      description: "Information and signposting service",
+      available: "9am-6pm Mon-Fri",
+      type: "support"
+    },
+    {
+      name: "NHS 111",
+      number: "111",
+      description: "Non-emergency medical advice",
+      available: "24/7",
+      type: "medical"
+    },
+    {
+      name: "PAPYRUS Prevention of Young Suicide",
+      number: "0800 068 41 41",
+      description: "Support for young people under 35",
+      available: "9am-10pm Mon-Fri, 2pm-10pm weekends",
+      type: "youth"
     }
   ];
 
-  const crisisResources = [
+  const onlineSupport = [
     {
-      title: "Immediate Safety Plan",
-      description: "Step-by-step guide for crisis situations",
-      icon: <Shield className="h-5 w-5 text-green-400" />,
-      action: "Download Plan"
+      title: "Crisis Text Line",
+      description: "Text SHOUT to 85258 for free 24/7 crisis support",
+      url: "https://www.crisistextline.org.uk/",
+      type: "text"
     },
     {
-      title: "Local Crisis Teams",
-      description: "Mental health crisis teams in your area",
-      icon: <MapPin className="h-5 w-5 text-blue-400" />,
-      action: "Find Local Team"
+      title: "Mental Health Chat",
+      description: "Online chat support with trained volunteers",
+      url: "https://www.mentalhealthchat.org.uk/",
+      type: "chat"
     },
     {
-      title: "Hospital A&E Mental Health",
-      description: "When to go to A&E for mental health crisis",
-      icon: <AlertTriangle className="h-5 w-5 text-orange-400" />,
-      action: "Learn More"
+      title: "7 Cups",
+      description: "Free emotional support and counselling online",
+      url: "https://www.7cups.com/",
+      type: "chat"
     },
     {
-      title: "Crisis Apps & Tools",
-      description: "Mobile apps for crisis support and management",
-      icon: <Phone className="h-5 w-5 text-purple-400" />,
-      action: "View Apps"
+      title: "Big White Wall",
+      description: "Online mental health support community",
+      url: "https://www.togetherall.com/",
+      type: "community"
     }
   ];
 
-  const warningSignsChecklist = [
-    "Thoughts of suicide or self-harm",
-    "Feeling completely hopeless or trapped",
-    "Extreme mood changes or agitation",
-    "Withdrawing from family and friends",
-    "Increased use of alcohol or drugs",
-    "Giving away possessions",
-    "Talking about death or dying",
-    "Feeling like a burden to others"
-  ];
-
-  const selfCareInCrisis = [
-    "Remove access to means of self-harm",
-    "Stay with trusted friends or family",
-    "Contact your GP or mental health team",
-    "Use breathing exercises to manage panic",
-    "Remind yourself that feelings will pass",
-    "Keep emergency numbers easily accessible",
-    "Have a crisis plan ready and share it",
-    "Consider going to A&E if unsafe"
+  const selfHelpResources = [
+    {
+      title: "Mental Health First Aid Kit",
+      description: "Essential steps to take during a mental health crisis",
+      items: ["Remove immediate dangers", "Stay calm and listen", "Encourage professional help", "Follow up regularly"]
+    },
+    {
+      title: "Coping Strategies",
+      description: "Immediate techniques to manage overwhelming feelings",
+      items: ["Box breathing (4-4-4-4)", "5-4-3-2-1 grounding technique", "Cold water on face/wrists", "Progressive muscle relaxation"]
+    },
+    {
+      title: "Safety Planning",
+      description: "Create a personal safety plan for crisis situations",
+      items: ["Identify warning signs", "List coping strategies", "Emergency contacts", "Professional support details"]
+    }
   ];
 
   return (
     <div className="space-y-6">
-      {/* Emergency Banner */}
-      <Card className="border-red-500/40 bg-red-500/5 shadow-md">
-        <CardContent className="p-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-            <Shield className="h-8 w-8 text-red-500 flex-shrink-0" />
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold text-red-500">Emergency Support</h3>
-              <p className="text-sm">
-                If you're in immediate danger, call <span className="font-bold">999</span>. 
-                For crisis support, contact Samaritans at{" "}
-                <a href="tel:116123" className="font-bold text-red-500 hover:underline">116 123</a> (free, 24/7)
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <EmergencyBanner />
 
       <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <AlertTriangle className="h-6 w-6 text-red-500" />
-            <CardTitle className="text-red-500">Crisis Resources & Emergency Support</CardTitle>
+            <Shield className="h-6 w-6 text-elec-yellow" />
+            <CardTitle className="text-elec-yellow">Crisis Support & Resources</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground mb-4">
-            Immediate help and resources for mental health crises. These services are available 24/7 and provide 
-            professional support when you need it most. Don't hesitate to reach out - help is always available.
+            If you're experiencing a mental health crisis, you're not alone. Access immediate support, 
+            find local services, and get the help you need right now.
           </p>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <Phone className="h-6 w-6 text-red-500 mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">24/7 Helplines</div>
-              <div className="text-xs text-muted-foreground">Always available</div>
+              <div className="text-2xl font-bold text-red-400 mb-1">24/7</div>
+              <div className="text-sm text-muted-foreground">Crisis Support</div>
             </div>
             <div className="text-center">
-              <Clock className="h-6 w-6 text-blue-400 mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">Immediate</div>
-              <div className="text-xs text-muted-foreground">Response time</div>
+              <div className="text-2xl font-bold text-elec-yellow mb-1">Free</div>
+              <div className="text-sm text-muted-foreground">All Services</div>
             </div>
             <div className="text-center">
-              <Shield className="h-6 w-6 text-green-400 mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">Confidential</div>
-              <div className="text-xs text-muted-foreground">Private support</div>
+              <div className="text-2xl font-bold text-green-400 mb-1">Local</div>
+              <div className="text-sm text-muted-foreground">Support Available</div>
             </div>
             <div className="text-center">
-              <Heart className="h-6 w-6 text-purple-400 mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">Professional</div>
-              <div className="text-xs text-muted-foreground">Trained support</div>
+              <div className="text-2xl font-bold text-blue-400 mb-1">100%</div>
+              <div className="text-sm text-muted-foreground">Confidential</div>
             </div>
           </div>
         </CardContent>
       </Card>
 
+      {/* Local Resource Finder - Now prominently featured */}
+      <LocalResourceFinder />
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-red-500/20 bg-red-500/5">
+        <Card className="border-red-500/20 bg-elec-gray">
           <CardHeader>
-            <CardTitle className="text-red-500 flex items-center gap-2">
+            <CardTitle className="text-red-400 flex items-center gap-2">
               <Phone className="h-5 w-5" />
-              Emergency Contacts
+              Emergency Helplines
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {emergencyContacts.map((contact, index) => (
-                <div key={index} className="border border-red-500/20 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-2">
+                <div key={index} className="border border-red-500/20 rounded-lg p-3">
+                  <div className="flex items-start justify-between mb-2">
                     <h4 className="font-semibold text-white">{contact.name}</h4>
-                    <Badge className={
-                      contact.priority === 'urgent' 
-                        ? "bg-red-500 text-white" 
-                        : "bg-orange-500/20 text-orange-400 border-orange-500/40"
-                    }>
-                      {contact.priority === 'urgent' ? 'URGENT' : 'IMPORTANT'}
+                    <Badge 
+                      className={`${
+                        contact.type === 'emergency' ? 'bg-red-500/20 text-red-400 border-red-500/40' :
+                        contact.type === 'crisis' ? 'bg-orange-500/20 text-orange-400 border-orange-500/40' :
+                        'bg-blue-500/20 text-blue-400 border-blue-500/40'
+                      }`}
+                    >
+                      {contact.type}
                     </Badge>
                   </div>
-                  <div className="text-lg font-bold text-red-400 mb-2">
-                    <a href={`tel:${contact.number.replace(/\s/g, '')}`} className="hover:underline">
+                  <div className="text-2xl font-bold text-elec-yellow mb-2">
+                    <a href={`tel:${contact.number}`} className="hover:underline">
                       {contact.number}
                     </a>
                   </div>
                   <p className="text-sm text-muted-foreground mb-2">{contact.description}</p>
                   <div className="flex items-center gap-2 text-xs text-green-400">
                     <Clock className="h-3 w-3" />
-                    <span>{contact.availability}</span>
+                    <span>{contact.available}</span>
                   </div>
                 </div>
               ))}
@@ -185,24 +178,32 @@ const CrisisResourcesTab = () => {
           </CardContent>
         </Card>
 
-        <Card className="border-elec-yellow/20 bg-elec-gray">
+        <Card className="border-blue-500/20 bg-elec-gray">
           <CardHeader>
-            <CardTitle className="text-elec-yellow flex items-center gap-2">
-              <Shield className="h-5 w-5" />
-              Crisis Resources
+            <CardTitle className="text-blue-400 flex items-center gap-2">
+              <Users className="h-5 w-5" />
+              Online Crisis Support
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {crisisResources.map((resource, index) => (
-                <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                  <div className="flex items-center gap-3 mb-3">
-                    {resource.icon}
-                    <h4 className="font-semibold text-white">{resource.title}</h4>
+            <div className="space-y-3">
+              {onlineSupport.map((support, index) => (
+                <div key={index} className="border border-blue-500/20 rounded-lg p-3">
+                  <div className="flex items-start justify-between mb-2">
+                    <h4 className="font-semibold text-white">{support.title}</h4>
+                    <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/40">
+                      {support.type}
+                    </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-3">{resource.description}</p>
-                  <Button size="sm" variant="outline" className="w-full">
-                    {resource.action}
+                  <p className="text-sm text-muted-foreground mb-3">{support.description}</p>
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    className="w-full"
+                    onClick={() => window.open(support.url, '_blank')}
+                  >
+                    <ExternalLink className="h-3 w-3 mr-1" />
+                    Access Support
                   </Button>
                 </div>
               ))}
@@ -211,53 +212,92 @@ const CrisisResourcesTab = () => {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-orange-500/20 bg-orange-500/5">
-          <CardHeader>
-            <CardTitle className="text-orange-400 flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5" />
-              Warning Signs to Watch For
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground mb-4">
-              Recognise these warning signs in yourself or others that may indicate a mental health crisis:
-            </p>
-            <ul className="space-y-2">
-              {warningSignsChecklist.map((sign, index) => (
-                <li key={index} className="flex items-start gap-2 text-sm">
-                  <AlertTriangle className="h-3 w-3 text-orange-400 flex-shrink-0 mt-0.5" />
-                  <span>{sign}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+      <Card className="border-green-500/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="text-green-400 flex items-center gap-2">
+            <Heart className="h-5 w-5" />
+            Self-Help Crisis Resources
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {selfHelpResources.map((resource, index) => (
+              <div key={index} className="border border-green-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-white mb-2">{resource.title}</h4>
+                <p className="text-sm text-muted-foreground mb-3">{resource.description}</p>
+                <ul className="space-y-1">
+                  {resource.items.map((item, itemIndex) => (
+                    <li key={itemIndex} className="text-sm flex items-center gap-2">
+                      <div className="h-1 w-1 bg-green-400 rounded-full flex-shrink-0"></div>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-        <Card className="border-green-500/20 bg-green-500/5">
-          <CardHeader>
-            <CardTitle className="text-green-400 flex items-center gap-2">
-              <Heart className="h-5 w-5" />
-              Self-Care in Crisis
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground mb-4">
-              Immediate self-care steps to take during a mental health crisis:
-            </p>
-            <ul className="space-y-2">
-              {selfCareInCrisis.map((step, index) => (
-                <li key={index} className="flex items-start gap-2 text-sm">
-                  <Heart className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
-                  <span>{step}</span>
+      <Card className="border-purple-500/20 bg-purple-500/5">
+        <CardHeader>
+          <CardTitle className="text-purple-400">If You're Supporting Someone Else</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="font-semibold text-white mb-3">Do:</h4>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-start gap-2">
+                  <div className="h-1 w-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Listen without judgement</span>
                 </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
-
-      <LocalResourceFinder />
+                <li className="flex items-start gap-2">
+                  <div className="h-1 w-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Stay calm and reassuring</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="h-1 w-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Encourage professional help</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="h-1 w-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Remove any means of self-harm</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="h-1 w-1 bg-green-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Stay with them or ensure someone else can</span>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white mb-3">Don't:</h4>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-start gap-2">
+                  <div className="h-1 w-1 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Promise to keep secrets about safety</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="h-1 w-1 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Try to be their therapist</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="h-1 w-1 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Minimise their feelings</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="h-1 w-1 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Leave them alone if they're at risk</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="h-1 w-1 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <span>Argue with their thoughts or feelings</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
