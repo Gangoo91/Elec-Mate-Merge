@@ -1,9 +1,9 @@
 
 import React from 'react';
-import ScheduleOfTestResults from '../ScheduleOfTestResults';
+import CircuitSetupPage from '../schedule-of-results/CircuitSetupPage';
 
 const CircuitTestingTab = () => {
-  return <ScheduleOfTestResults />;
+  return <CircuitSetupPage />;
 };
 
 export default CircuitTestingTab;
