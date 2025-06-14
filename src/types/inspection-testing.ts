@@ -16,7 +16,7 @@ export interface TestStep {
   estimatedTime?: string;
   category: string;
   expectedResult?: string;
-  order?: number;
+  order?: number; // Changed from string to number
 }
 
 export interface TestResult {

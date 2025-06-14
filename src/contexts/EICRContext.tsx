@@ -1,5 +1,6 @@
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { EICRFault } from '@/types/eicr';
 
 export interface EICRData {
   installationDetails?: any;
@@ -19,12 +20,24 @@ export interface TestResult {
   isWithinLimits?: boolean;
 }
 
+export interface EICRSession {
+  eicr_report: any;
+  auto_populate: boolean;
+  current_circuit?: string;
+}
+
 interface EICRContextType {
   eicr: EICRData;
+  eicrSession: EICRSession;
   updateEICR: (data: Partial<EICRData>) => void;
   populateFromTestResult: (stepId: string, result: TestResult) => void;
   initializeEICR: (installationDetails: any, inspectorDetails: any) => void;
   resetEICR: () => void;
+  generateEICRReport: () => any;
+  setAutoPopulate: (value: boolean) => void;
+  addFault: (fault: EICRFault) => void;
+  updateFault: (id: string, fault: Partial<EICRFault>) => void;
+  removeFault: (id: string) => void;
 }
 
 const EICRContext = createContext<EICRContextType | undefined>(undefined);
@@ -46,6 +59,11 @@ export const EICRProvider: React.FC<EICRProviderProps> = ({ children }) => {
     circuits: [],
     testResults: [],
     observations: []
+  });
+
+  const [eicrSession, setEICRSession] = useState<EICRSession>({
+    eicr_report: {},
+    auto_populate: false
   });
 
   const updateEICR = (data: Partial<EICRData>) => {
@@ -80,14 +98,62 @@ export const EICRProvider: React.FC<EICRProviderProps> = ({ children }) => {
       testResults: [],
       observations: []
     });
+    setEICRSession({
+      eicr_report: {},
+      auto_populate: false
+    });
+  };
+
+  const generateEICRReport = () => {
+    return {
+      ...eicr,
+      generatedAt: new Date(),
+      session: eicrSession
+    };
+  };
+
+  const setAutoPopulate = (value: boolean) => {
+    setEICRSession(prev => ({
+      ...prev,
+      auto_populate: value
+    }));
+  };
+
+  const addFault = (fault: EICRFault) => {
+    setEICR(prev => ({
+      ...prev,
+      observations: [...(prev.observations || []), fault]
+    }));
+  };
+
+  const updateFault = (id: string, faultUpdate: Partial<EICRFault>) => {
+    setEICR(prev => ({
+      ...prev,
+      observations: (prev.observations || []).map(fault => 
+        fault.id === id ? { ...fault, ...faultUpdate } : fault
+      )
+    }));
+  };
+
+  const removeFault = (id: string) => {
+    setEICR(prev => ({
+      ...prev,
+      observations: (prev.observations || []).filter(fault => fault.id !== id)
+    }));
   };
 
   const value = {
     eicr,
+    eicrSession,
     updateEICR,
     populateFromTestResult,
     initializeEICR,
-    resetEICR
+    resetEICR,
+    generateEICRReport,
+    setAutoPopulate,
+    addFault,
+    updateFault,
+    removeFault
   };
 
   return (
