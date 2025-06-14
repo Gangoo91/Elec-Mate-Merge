@@ -5,7 +5,9 @@ export interface TestStep {
   description: string;
   instructions: string[];
   safetyWarnings?: string[];
+  safetyNotes?: string[];
   requiredEquipment?: string[];
+  tools?: string[];
   acceptableLimits?: {
     min?: number;
     max?: number;
@@ -13,6 +15,7 @@ export interface TestStep {
   };
   estimatedTime?: string;
   category: string;
+  expectedResult?: string;
 }
 
 export interface TestResult {
@@ -27,10 +30,47 @@ export interface TestResult {
 
 export interface TestSession {
   id: string;
+  flowId?: string;
   startTime: Date;
   endTime?: Date;
   steps: TestStep[];
   results: TestResult[];
   installationType: string;
   location: string;
+  currentStepIndex?: number;
+  status?: TestStatus;
+  isComprehensive?: boolean;
+  installationDetails?: any;
+  technician?: any;
+}
+
+export type TestStatus = 'pending' | 'in-progress' | 'completed' | 'failed' | 'skipped';
+
+export interface TestFlow {
+  id: string;
+  title: string;
+  description: string;
+  type: TestType;
+  steps: TestStep[];
+  estimatedDuration: string;
+  isComprehensive?: boolean;
+}
+
+export type TestType = 'eicr' | 'eic' | 'minor-works' | 'pat' | 'comprehensive';
+
+export interface ValidationResult {
+  isValid: boolean;
+  message: string;
+  severity: 'info' | 'warning' | 'error';
+  code?: string;
+}
+
+export interface ComprehensiveTestResults {
+  sessionId: string;
+  testType: TestType;
+  overallResult: 'pass' | 'fail' | 'incomplete';
+  results: TestResult[];
+  faults: any[];
+  recommendations: string[];
+  generatedAt: Date;
 }
