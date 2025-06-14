@@ -1,131 +1,77 @@
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, FileText, ClipboardList, Briefcase, Users, Book, BarChart4, CalendarClock, Calculator, FileCheck, MapPin, Shield } from "lucide-react";
-import { Link } from "react-router-dom";
-import { toast } from "@/hooks/use-toast";
+import BackButton from "@/components/common/BackButton";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Building2, FileText, BarChart4, Users, Heart } from "lucide-react";
+import BusinessManagementTab from "@/components/electrician-tools/admin/BusinessManagementTab";
+import DocumentationTab from "@/components/electrician-tools/admin/DocumentationTab";
+import AnalyticsTab from "@/components/electrician-tools/admin/AnalyticsTab";
+import StaffManagementTab from "@/components/electrician-tools/admin/StaffManagementTab";
 
 const Admin = () => {
-  const handleTool = (tool: string) => {
-    toast({
-      title: "Tool Selected",
-      description: `You've selected the ${tool} tool.`,
-    });
-  };
-
-  const adminTools = [
-    {
-      id: 1,
-      title: "Site Safety & Risk Assessment",
-      description: "RAMS generator, hazard assessment, and safety management tools",
-      icon: <Shield className="h-5 w-5 text-elec-yellow" />,
-      link: "/electrician-tools/site-safety"
-    },
-    {
-      id: 2,
-      title: "Document Templates",
-      description: "Access professional document templates for electrical contractors",
-      icon: <FileText className="h-5 w-5 text-elec-yellow" />,
-      link: "/electrician-tools/document-templates"
-    },
-    {
-      id: 3,
-      title: "Business Management",
-      description: "Track clients, invoices, expenses and financial data",
-      icon: <ClipboardList className="h-5 w-5 text-elec-yellow" />,
-      link: "/electrician-tools/business-management"
-    },
-    {
-      id: 4,
-      title: "Compliance Manager",
-      description: "Track certifications, insurance and compliance requirements",
-      icon: <FileCheck className="h-5 w-5 text-elec-yellow" />,
-      link: "/electrician-tools/compliance"
-    },
-    {
-      id: 5,
-      title: "Staff Management",
-      description: "Manage staff hours, qualifications and assignments",
-      icon: <Users className="h-5 w-5 text-elec-yellow" />,
-      link: "/electrician-tools/staff-management"
-    },
-    {
-      id: 6,
-      title: "Business Analytics",
-      description: "View performance metrics and reports for your business",
-      icon: <BarChart4 className="h-5 w-5 text-elec-yellow" />,
-      link: "/electrician-tools/business-analytics"
-    },
-    {
-      id: 7,
-      title: "Schedule Manager",
-      description: "Manage appointments and schedule electrical jobs",
-      icon: <CalendarClock className="h-5 w-5 text-elec-yellow" />,
-      link: "/electrician-tools/schedule"
-    },
-    {
-      id: 8,
-      title: "Financial Tools",
-      description: "Calculate profit margins and manage financial aspects",
-      icon: <Calculator className="h-5 w-5 text-elec-yellow" />,
-      link: "/electrician-tools/financial-tools"
-    },
-    {
-      id: 9,
-      title: "Quote Library",
-      description: "Generate professional quotes for electrical jobs",
-      icon: <Book className="h-5 w-5 text-elec-yellow" />,
-      link: "/electrician-tools/quote-library"
-    },
-    {
-      id: 10,
-      title: "Install Planner",
-      description: "Plan electrical installations with load calculations and recommendations",
-      icon: <MapPin className="h-5 w-5 text-elec-yellow" />,
-      link: "/electrician-tools/install-planner"
-    }
-  ];
-
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Admin Tools</h1>
-          <p className="text-muted-foreground">
-            Streamline your electrical business administration and documentation.
-          </p>
-        </div>
-        <Link to="/electrician-tools">
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Tools
-          </Button>
-        </Link>
+    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
+      <div className="flex flex-col items-center justify-center mb-6">
+        <h1 className="text-3xl font-bold tracking-tight mb-4">Business Administration Hub</h1>
+        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+          Streamline your electrical business operations with professional tools designed for the trade. 
+          Manage projects, staff, compliance, and finances all in one place.
+        </p>
+        <BackButton customUrl="/electrician-tools" label="Back to Electrical Workshop" />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {adminTools.map((tool) => (
-          <Link 
-            key={tool.id} 
-            to={tool.link} 
-            onClick={() => handleTool(tool.title)}
-            className="block"
-          >
-            <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-colors cursor-pointer">
-              <CardHeader className="pb-3">
-                <div className="flex items-center gap-2">
-                  {tool.icon}
-                  <CardTitle className="text-lg">{tool.title}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-elec-light/80">
-                  {tool.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
-      </div>
+      <Tabs defaultValue="business" className="w-full">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="business" className="flex items-center gap-2">
+            <Building2 className="h-4 w-4" />
+            Business
+          </TabsTrigger>
+          <TabsTrigger value="documentation" className="flex items-center gap-2">
+            <FileText className="h-4 w-4" />
+            Documentation
+          </TabsTrigger>
+          <TabsTrigger value="analytics" className="flex items-center gap-2">
+            <BarChart4 className="h-4 w-4" />
+            Analytics
+          </TabsTrigger>
+          <TabsTrigger value="staff" className="flex items-center gap-2">
+            <Users className="h-4 w-4" />
+            Staff
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="business">
+          <BusinessManagementTab />
+        </TabsContent>
+
+        <TabsContent value="documentation">
+          <DocumentationTab />
+        </TabsContent>
+
+        <TabsContent value="analytics">
+          <AnalyticsTab />
+        </TabsContent>
+
+        <TabsContent value="staff">
+          <StaffManagementTab />
+        </TabsContent>
+      </Tabs>
+
+      <Card className="border-green-500/50 bg-green-500/10">
+        <CardHeader>
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <Heart className="h-5 w-5" />
+            Built for Electricians
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">
+            Every tool in this hub is designed specifically for electrical contractors. From compliance tracking 
+            to client management, we understand the unique challenges of running an electrical business. 
+            Spend less time on paperwork and more time doing what you do best.
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 };
