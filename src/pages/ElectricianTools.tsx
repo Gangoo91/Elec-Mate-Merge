@@ -12,7 +12,9 @@ import {
   Zap,
   Settings,
   BookOpen,
-  TrendingUp
+  TrendingUp,
+  MapPin,
+  Shield
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -30,11 +32,11 @@ const ElectricianTools = () => {
       color: "bg-blue-500/10 border-blue-500/20"
     },
     {
-      id: "project-management",
-      title: "Project Management",
-      description: "Manage your electrical projects efficiently",
+      id: "business-administration",
+      title: "Business Administration",
+      description: "Complete business management hub for electrical contractors",
       icon: <Settings className="h-6 w-6" />,
-      path: "/electrician-tools/project-management",
+      path: "/electrician-tools/admin",
       color: "bg-green-500/10 border-green-500/20"
     },
     {
@@ -46,12 +48,20 @@ const ElectricianTools = () => {
       color: "bg-yellow-500/10 border-yellow-500/20"
     },
     {
-      id: "business-management",
-      title: "Business Management",
-      description: "Tools for running your electrical business",
-      icon: <TrendingUp className="h-6 w-6" />,
-      path: "/electrician-tools/business-management",
+      id: "install-planner",
+      title: "Install Planner",
+      description: "Plan electrical installations with load calculations",
+      icon: <MapPin className="h-6 w-6" />,
+      path: "/electrician-tools/install-planner",
       color: "bg-purple-500/10 border-purple-500/20"
+    },
+    {
+      id: "site-safety",
+      title: "Site Safety & RAMS",
+      description: "Risk assessments and safety management tools",
+      icon: <Shield className="h-6 w-6" />,
+      path: "/electrician-tools/site-safety",
+      color: "bg-red-500/10 border-red-500/20"
     },
     {
       id: "document-templates",
