@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ArrowLeft, ArrowRight, User } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { ArrowLeft, ArrowRight, User, FileCheck, Building, Award } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const EICRInspectorDetails = () => {
@@ -13,10 +14,16 @@ const EICRInspectorDetails = () => {
   const [formData, setFormData] = useState({
     name: '',
     qualification: '',
-    registration: '',
+    registrationBody: '',
+    registrationNumber: '',
+    organisationType: '',
     organisation: '',
     inspectionDate: '',
     nextDueDate: '',
+    additionalQualifications: '',
+    yearsExperience: '',
+    specialisations: '',
+    notes: ''
   });
 
   useEffect(() => {
@@ -32,7 +39,7 @@ const EICRInspectorDetails = () => {
   };
 
   const canProceed = () => {
-    return formData.name && formData.qualification && formData.inspectionDate;
+    return formData.name && formData.qualification && formData.registrationBody && formData.inspectionDate;
   };
 
   const handleNext = () => {
@@ -45,6 +52,56 @@ const EICRInspectorDetails = () => {
   const handleBack = () => {
     navigate('/electrician-tools/eicr/installation-details');
   };
+
+  const qualificationOptions = [
+    { value: 'city-guilds-2391-52', label: 'City & Guilds 2391-52 (Inspection & Testing)' },
+    { value: 'city-guilds-2394-2395', label: 'City & Guilds 2394/2395 (Design & Verification)' },
+    { value: 'city-guilds-2391-50', label: 'City & Guilds 2391-50 (Initial Verification)' },
+    { value: 'city-guilds-2391-51', label: 'City & Guilds 2391-51 (Periodic Inspection)' },
+    { value: 'eal-600-4338-4', label: 'EAL 600/4338/4 (Inspection & Testing)' },
+    { value: 'btec-level-4', label: 'BTEC Level 4 HNC/HND Electrical Engineering' },
+    { value: 'degree-electrical', label: 'Degree in Electrical Engineering' },
+    { value: 'iet-membership', label: 'IET Professional Membership' },
+    { value: 'nvq-level-4', label: 'NVQ Level 4 Installing Electrotechnical Systems' },
+    { value: 'apprenticeship-advanced', label: 'Advanced Apprenticeship in Electrical Installation' },
+    { value: 'other', label: 'Other (Please specify in notes)' }
+  ];
+
+  const registrationBodyOptions = [
+    { value: 'niceic', label: 'NICEIC' },
+    { value: 'napit', label: 'NAPIT' },
+    { value: 'stroma', label: 'STROMA Certification' },
+    { value: 'certsure', label: 'Certsure (ELECSA)' },
+    { value: 'nic-eic', label: 'NIC EIC' },
+    { value: 'bpec', label: 'BPEC' },
+    { value: 'jib', label: 'JIB (Joint Industry Board)' },
+    { value: 'iet', label: 'IET (Institution of Engineering and Technology)' },
+    { value: 'local-authority', label: 'Local Authority Building Control' },
+    { value: 'none', label: 'Not Registered' },
+    { value: 'other', label: 'Other' }
+  ];
+
+  const organisationTypeOptions = [
+    { value: 'sole-trader', label: 'Sole Trader' },
+    { value: 'limited-company', label: 'Limited Company' },
+    { value: 'partnership', label: 'Partnership' },
+    { value: 'contractor', label: 'Electrical Contractor' },
+    { value: 'consultant', label: 'Electrical Consultant' },
+    { value: 'local-authority', label: 'Local Authority' },
+    { value: 'housing-association', label: 'Housing Association' },
+    { value: 'maintenance-company', label: 'Maintenance Company' },
+    { value: 'testing-specialist', label: 'Testing Specialist' },
+    { value: 'other', label: 'Other' }
+  ];
+
+  const experienceOptions = [
+    { value: '0-2', label: '0-2 years' },
+    { value: '3-5', label: '3-5 years' },
+    { value: '6-10', label: '6-10 years' },
+    { value: '11-15', label: '11-15 years' },
+    { value: '16-20', label: '16-20 years' },
+    { value: '20+', label: '20+ years' }
+  ];
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -69,10 +126,13 @@ const EICRInspectorDetails = () => {
         </Link>
       </div>
 
-      {/* Main Form */}
+      {/* Inspector Information */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle>Inspector Information</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <User className="h-5 w-5 text-elec-yellow" />
+            Inspector Information
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -89,38 +149,131 @@ const EICRInspectorDetails = () => {
             </div>
 
             <div>
-              <Label htmlFor="qualification">Qualification *</Label>
+              <Label htmlFor="qualification">Primary Qualification *</Label>
               <Select
                 value={formData.qualification}
                 onValueChange={(value) => updateField('qualification', value)}
               >
                 <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50">
-                  <SelectValue placeholder="Select qualification" />
+                  <SelectValue placeholder="Select primary qualification" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="City & Guilds 2391-52">City & Guilds 2391-52</SelectItem>
-                  <SelectItem value="City & Guilds 2394/2395">City & Guilds 2394/2395</SelectItem>
-                  <SelectItem value="EAL 600/4338/4">EAL 600/4338/4</SelectItem>
-                  <SelectItem value="NICEIC Qualified">NICEIC Qualified</SelectItem>
-                  <SelectItem value="NAPIT Qualified">NAPIT Qualified</SelectItem>
-                  <SelectItem value="STROMA Qualified">STROMA Qualified</SelectItem>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20 max-h-60">
+                  {qualificationOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
 
             <div>
-              <Label htmlFor="registration">Registration Number</Label>
+              <Label htmlFor="additionalQualifications">Additional Qualifications</Label>
               <Input
-                id="registration"
-                value={formData.registration}
-                onChange={(e) => updateField('registration', e.target.value)}
-                placeholder="NICEIC/NAPIT/STROMA etc. number"
+                id="additionalQualifications"
+                value={formData.additionalQualifications}
+                onChange={(e) => updateField('additionalQualifications', e.target.value)}
+                placeholder="e.g., 18th Edition, PAT Testing"
                 className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50"
               />
             </div>
 
             <div>
-              <Label htmlFor="organisation">Organisation</Label>
+              <Label htmlFor="yearsExperience">Years of Experience</Label>
+              <Select
+                value={formData.yearsExperience}
+                onValueChange={(value) => updateField('yearsExperience', value)}
+              >
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50">
+                  <SelectValue placeholder="Select experience level" />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  {experienceOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Registration Details */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Award className="h-5 w-5 text-elec-yellow" />
+            Registration Details
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="registrationBody">Registration Body *</Label>
+              <Select
+                value={formData.registrationBody}
+                onValueChange={(value) => updateField('registrationBody', value)}
+              >
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50">
+                  <SelectValue placeholder="Select registration body" />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  {registrationBodyOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="registrationNumber">Registration Number</Label>
+              <Input
+                id="registrationNumber"
+                value={formData.registrationNumber}
+                onChange={(e) => updateField('registrationNumber', e.target.value)}
+                placeholder="Registration/membership number"
+                className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50"
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Organisation Details */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Building className="h-5 w-5 text-elec-yellow" />
+            Organisation Details
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="organisationType">Organisation Type</Label>
+              <Select
+                value={formData.organisationType}
+                onValueChange={(value) => updateField('organisationType', value)}
+              >
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50">
+                  <SelectValue placeholder="Select organisation type" />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  {organisationTypeOptions.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="organisation">Organisation/Company Name</Label>
               <Input
                 id="organisation"
                 value={formData.organisation}
@@ -130,6 +283,30 @@ const EICRInspectorDetails = () => {
               />
             </div>
 
+            <div>
+              <Label htmlFor="specialisations">Specialisations</Label>
+              <Input
+                id="specialisations"
+                value={formData.specialisations}
+                onChange={(e) => updateField('specialisations', e.target.value)}
+                placeholder="e.g., Domestic, Commercial, Industrial"
+                className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50"
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Inspection Details */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <FileCheck className="h-5 w-5 text-elec-yellow" />
+            Inspection Details
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="inspectionDate">Inspection Date *</Label>
               <Input
@@ -152,6 +329,17 @@ const EICRInspectorDetails = () => {
                 className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50"
               />
             </div>
+          </div>
+
+          <div>
+            <Label htmlFor="notes">Additional Notes</Label>
+            <Textarea
+              id="notes"
+              value={formData.notes}
+              onChange={(e) => updateField('notes', e.target.value)}
+              placeholder="Any additional information or special considerations..."
+              className="bg-elec-dark border-elec-yellow/20 focus:border-elec-yellow/50 min-h-[100px]"
+            />
           </div>
         </CardContent>
       </Card>
