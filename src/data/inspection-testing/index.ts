@@ -11,7 +11,7 @@ export {
   enhancedPolaritySteps
 } from './enhancedComprehensiveTestSteps';
 
-// New circuit testing exports
+// Circuit testing exports
 export { comprehensiveCircuitTestFlow } from './circuitTestFlow';
 export { 
   allCircuitTestSteps,
@@ -23,3 +23,10 @@ export {
   polarityTestSteps,
   functionalTestSteps
 } from './circuitTestingSteps';
+
+// EICR test flow exports
+export { 
+  eicrTestFlow, 
+  eicrVisualInspectionFlow, 
+  eicrTestingOnlyFlow 
+} from './eicrTestFlow';
