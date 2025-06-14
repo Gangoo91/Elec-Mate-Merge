@@ -7,7 +7,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 interface TestStepHeaderProps {
   title: string;
   status: 'pending' | 'in-progress' | 'completed' | 'failed' | 'skipped';
-  estimatedTime: number;
+  estimatedTime?: string;
   isSafeIsolationStep: boolean;
 }
 
@@ -34,10 +34,12 @@ const TestStepHeader = ({ title, status, estimatedTime, isSafeIsolationStep }: T
             {status}
           </Badge>
         </CardTitle>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Clock className="h-4 w-4" />
-          {estimatedTime}min
-        </div>
+        {estimatedTime && (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Clock className="h-4 w-4" />
+            {estimatedTime}
+          </div>
+        )}
       </div>
     </CardHeader>
   );
