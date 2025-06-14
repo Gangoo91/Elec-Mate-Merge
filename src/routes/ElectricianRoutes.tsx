@@ -35,8 +35,8 @@ import FinancialTools from "@/pages/electrician-tools/FinancialTools";
 import CareerProgression from "@/pages/electrician/CareerProgression";
 // Add Site Safety page
 import SiteSafety from "@/pages/electrician-tools/SiteSafety";
-// Add Testing Grid page
-import TestingGridPage from "@/components/inspection-testing/schedule-of-results/TestingGridPage";
+// Add Enhanced Testing Grid page
+import EnhancedTestingGrid from "@/components/inspection-testing/schedule-of-results/EnhancedTestingGrid";
 
 const ElectricianRoutes = () => (
   <Routes>
@@ -53,7 +53,7 @@ const ElectricianRoutes = () => (
     <Route path="project-management/project/:projectId" element={<ProjectDetails />} />
     <Route path="install-planner" element={<InstallPlanner />} />
     <Route path="inspection-testing" element={<InspectionTesting />} />
-    <Route path="inspection-testing/testing-grid" element={<TestingGridPage />} />
+    <Route path="inspection-testing/enhanced-testing-grid" element={<EnhancedTestingGrid />} />
     <Route path="eicr-reports" element={<EICRReports />} />
     {/* New EICR multi-page routes */}
     <Route path="eicr/installation-details" element={<EICRInstallationDetails />} />

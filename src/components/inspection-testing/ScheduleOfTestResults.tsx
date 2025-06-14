@@ -1,9 +1,9 @@
 
 import React from 'react';
-import CircuitSetupPage from './schedule-of-results/CircuitSetupPage';
+import EnhancedTestingGrid from './schedule-of-results/EnhancedTestingGrid';
 
 const ScheduleOfTestResults = () => {
-  return <CircuitSetupPage />;
+  return <EnhancedTestingGrid />;
 };
 
 export default ScheduleOfTestResults;
