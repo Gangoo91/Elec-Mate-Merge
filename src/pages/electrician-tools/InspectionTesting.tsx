@@ -1,13 +1,23 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, TestTube, FileText, Play } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import InspectionTestingWalkthrough from "@/components/inspection-testing/InspectionTestingWalkthrough";
 
 const InspectionTesting = () => {
+  const navigate = useNavigate();
+  
   console.log('InspectionTesting page rendered');
+  
+  const handleNavigateToEICR = () => {
+    navigate('/electrician-tools/eicr-reports');
+  };
+
+  const handleNavigateBack = () => {
+    navigate('/electrician-tools');
+  };
   
   return (
     <div className="space-y-6 animate-fade-in">
@@ -22,16 +32,12 @@ const InspectionTesting = () => {
           </p>
         </div>
         <div className="flex gap-2">
-          <Link to="/electrician-tools/eicr-reports">
-            <Button variant="outline" className="flex items-center gap-2">
-              <FileText className="h-4 w-4" /> EICR Reports
-            </Button>
-          </Link>
-          <Link to="/electrician-tools">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" /> Back to Tools
-            </Button>
-          </Link>
+          <Button variant="outline" className="flex items-center gap-2" onClick={handleNavigateToEICR}>
+            <FileText className="h-4 w-4" /> EICR Reports
+          </Button>
+          <Button variant="outline" className="flex items-center gap-2" onClick={handleNavigateBack}>
+            <ArrowLeft className="h-4 w-4" /> Back to Tools
+          </Button>
         </div>
       </div>
 
@@ -61,31 +67,32 @@ const InspectionTesting = () => {
           </CardContent>
         </Card>
 
-        <Link to="/electrician-tools/eicr-reports">
-          <Card className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all cursor-pointer">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <FileText className="h-5 w-5 text-elec-yellow" />
-                EICR Management
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground mb-4">
-                View, manage, and export your Electrical Installation Condition Reports.
-              </p>
-              <div className="space-y-2 text-sm">
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Total Reports:</span>
-                  <span className="font-medium">12</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">This Month:</span>
-                  <span className="font-medium">3</span>
-                </div>
+        <Card 
+          className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all cursor-pointer"
+          onClick={handleNavigateToEICR}
+        >
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <FileText className="h-5 w-5 text-elec-yellow" />
+              EICR Management
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground mb-4">
+              View, manage, and export your Electrical Installation Condition Reports.
+            </p>
+            <div className="space-y-2 text-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground">Total Reports:</span>
+                <span className="font-medium">12</span>
               </div>
-            </CardContent>
-          </Card>
-        </Link>
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground">This Month:</span>
+                <span className="font-medium">3</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Professional Standards Notice */}
