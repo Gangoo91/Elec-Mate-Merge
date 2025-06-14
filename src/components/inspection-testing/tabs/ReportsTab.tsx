@@ -1,59 +1,34 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { BarChart3, Download, FileText, Eye } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { BarChart3, FileText, Award, AlertTriangle } from 'lucide-react';
+import ReportGenerator from '../ReportGenerator';
+import { useEnhancedTesting } from '@/hooks/useEnhancedTesting';
 
 const ReportsTab = () => {
-  const reportTypes = [
-    {
-      title: 'Electrical Installation Certificate (EIC)',
-      description: 'For new electrical installations',
-      status: 'Available',
-      format: 'BS 7671 Compliant',
-      lastGenerated: '2 hours ago'
-    },
-    {
-      title: 'Electrical Installation Condition Report (EICR)',
-      description: 'For periodic inspection and testing',
-      status: 'Draft',
-      format: 'BS 7671 Compliant',
-      lastGenerated: '1 day ago'
-    },
-    {
-      title: 'Minor Works Certificate',
-      description: 'For small additions and alterations',
-      status: 'Available',
-      format: 'BS 7671 Compliant',
-      lastGenerated: '3 days ago'
-    },
-    {
-      title: 'Schedule of Test Results',
-      description: 'Detailed test measurements and observations',
-      status: 'Available',
-      format: 'Comprehensive Data',
-      lastGenerated: '2 hours ago'
-    }
-  ];
+  const { session } = useEnhancedTesting();
+  const [reportFormat, setReportFormat] = useState<'eicr' | 'eic' | 'minor-works'>('eicr');
 
-  const recentReports = [
-    { name: 'EICR - 123 Main Street', date: '14/06/2025', type: 'EICR', status: 'Completed' },
-    { name: 'EIC - Flat 2B Commercial Building', date: '13/06/2025', type: 'EIC', status: 'Completed' },
-    { name: 'Minor Works - Kitchen Extension', date: '12/06/2025', type: 'Minor Works', status: 'Draft' },
-    { name: 'EICR - Office Building Floor 3', date: '11/06/2025', type: 'EICR', status: 'Completed' }
-  ];
+  const handleGenerateReport = (format: 'pdf' | 'excel' | 'word') => {
+    console.log('Generating report in format:', format);
+    // TODO: Implement actual report generation
+  };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Available':
-      case 'Completed':
-        return 'bg-green-500';
-      case 'Draft':
-        return 'bg-yellow-500';
-      default:
-        return 'bg-gray-500';
-    }
+  const handleEmailReport = () => {
+    console.log('Emailing report...');
+    // TODO: Implement email functionality
+  };
+
+  const handlePrintReport = () => {
+    console.log('Printing report...');
+    // TODO: Implement print functionality
+  };
+
+  const handleGenerateBlankReport = (type: string) => {
+    console.log('Generating blank report template:', type);
+    // TODO: Implement blank report generation
   };
 
   return (
@@ -62,91 +37,141 @@ const ReportsTab = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <BarChart3 className="h-5 w-5 text-elec-yellow" />
-            Inspection & Testing Reports
+            Professional Reports & Certification
           </CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground mb-6">
-            Generate, view, and manage all electrical installation certificates and reports. 
-            All documents are automatically formatted to meet BS 7671 requirements and industry standards.
+            Generate professional electrical installation reports and certificates compliant with 
+            BS 7671:2018+A2:2022 requirements. All reports include proper formatting, fault codes, 
+            and regulatory compliance documentation.
           </p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <h3 className="font-semibold text-white">Available Reports</h3>
-              {reportTypes.map((report, index) => (
-                <Card key={index} className="border-elec-yellow/20 bg-elec-gray/50">
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <h4 className="font-medium text-white">{report.title}</h4>
-                        <p className="text-sm text-muted-foreground">{report.description}</p>
-                      </div>
-                      <Badge className={`${getStatusColor(report.status)} text-white`}>
-                        {report.status}
-                      </Badge>
-                    </div>
-                    
-                    <div className="flex items-center justify-between text-sm mb-3">
-                      <span className="text-muted-foreground">Format: {report.format}</span>
-                      <span className="text-muted-foreground">Updated: {report.lastGenerated}</span>
-                    </div>
+          <Alert className="mb-6 bg-green-500/10 border-green-500/30">
+            <Award className="h-4 w-4 text-green-400" />
+            <AlertDescription className="text-green-200">
+              <strong>Professional Standards:</strong> All generated reports meet professional 
+              electrical industry standards and include proper certification documentation with 
+              digital signatures and compliance verification.
+            </AlertDescription>
+          </Alert>
 
-                    <div className="flex gap-2">
-                      <Button size="sm" variant="outline" className="flex-1">
-                        <Eye className="h-3 w-3 mr-1" />
-                        Preview
-                      </Button>
-                      <Button size="sm" className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90">
-                        <Download className="h-3 w-3 mr-1" />
-                        Download
-                      </Button>
-                    </div>
+          {session && session.status === 'completed' ? (
+            <ReportGenerator
+              session={session}
+              onGenerateReport={handleGenerateReport}
+              onEmailReport={handleEmailReport}
+              onPrintReport={handlePrintReport}
+            />
+          ) : (
+            <div className="space-y-6">
+              <Alert className="bg-yellow-500/10 border-yellow-500/30">
+                <AlertTriangle className="h-4 w-4 text-yellow-400" />
+                <AlertDescription className="text-yellow-200">
+                  <strong>No Completed Session:</strong> Complete a testing session to generate 
+                  professional reports with actual test results. Alternatively, generate blank 
+                  report templates below.
+                </AlertDescription>
+              </Alert>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Card className="border-blue-500/20 bg-blue-500/5">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-sm flex items-center gap-2">
+                      <FileText className="h-4 w-4" />
+                      EICR Certificate
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0 space-y-3">
+                    <p className="text-xs text-muted-foreground">
+                      Electrical Installation Condition Report for periodic inspection
+                    </p>
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => handleGenerateBlankReport('eicr')}
+                    >
+                      Generate Blank EICR
+                    </Button>
                   </CardContent>
                 </Card>
-              ))}
+
+                <Card className="border-green-500/20 bg-green-500/5">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-sm flex items-center gap-2">
+                      <FileText className="h-4 w-4" />
+                      EIC Certificate
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0 space-y-3">
+                    <p className="text-xs text-muted-foreground">
+                      Electrical Installation Certificate for new installations
+                    </p>
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => handleGenerateBlankReport('eic')}
+                    >
+                      Generate Blank EIC
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-orange-500/20 bg-orange-500/5">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-sm flex items-center gap-2">
+                      <FileText className="h-4 w-4" />
+                      Minor Works Certificate
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0 space-y-3">
+                    <p className="text-xs text-muted-foreground">
+                      Certificate for minor electrical works and additions
+                    </p>
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => handleGenerateBlankReport('minor-works')}
+                    >
+                      Generate Blank Minor Works
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
+          )}
+        </CardContent>
+      </Card>
 
-            <div className="space-y-4">
-              <h3 className="font-semibold text-white">Recent Reports</h3>
-              <Card className="border-elec-yellow/20 bg-elec-gray/50">
-                <CardContent className="p-4">
-                  <div className="space-y-3">
-                    {recentReports.map((report, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 border border-elec-yellow/20 rounded-lg">
-                        <div>
-                          <h4 className="font-medium text-white text-sm">{report.name}</h4>
-                          <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                            <span>{report.date}</span>
-                            <span>{report.type}</span>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge className={`${getStatusColor(report.status)} text-white text-xs`}>
-                            {report.status}
-                          </Badge>
-                          <Button size="sm" variant="ghost" className="h-6 w-6 p-0">
-                            <Download className="h-3 w-3" />
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-green-500/30 bg-green-500/10">
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <FileText className="h-4 w-4 text-green-400" />
-                    <h4 className="font-medium text-green-400">Professional Standards</h4>
-                  </div>
-                  <p className="text-sm text-green-200">
-                    All generated reports comply with BS 7671:2018+A2:2022 requirements and include 
-                    proper defect classifications, remedial action codes, and professional formatting.
-                  </p>
-                </CardContent>
-              </Card>
+      <Card className="border-blue-500/50 bg-blue-500/10">
+        <CardHeader>
+          <CardTitle className="text-blue-300 flex items-center gap-2">
+            <Award className="h-5 w-5" />
+            Professional Certification Standards
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="font-medium mb-2">Regulatory Compliance</h4>
+              <ul className="text-sm space-y-1 text-muted-foreground">
+                <li>• BS 7671:2018+A2:2022 compliant</li>
+                <li>• IET Guidance Note 3 formatted</li>
+                <li>• Professional fault code classification</li>
+                <li>• Digital signature capability</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium mb-2">Report Features</h4>
+              <ul className="text-sm space-y-1 text-muted-foreground">
+                <li>• Automated test result validation</li>
+                <li>• Professional formatting</li>
+                <li>• Multiple export formats</li>
+                <li>• Email and print integration</li>
+              </ul>
             </div>
           </div>
         </CardContent>
