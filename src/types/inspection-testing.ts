@@ -54,9 +54,12 @@ export interface TestFlow {
   steps: TestStep[];
   estimatedDuration: string;
   isComprehensive?: boolean;
+  name?: string;
+  difficulty?: 'beginner' | 'intermediate' | 'advanced';
+  prerequisites?: string[];
 }
 
-export type TestType = 'eicr' | 'eic' | 'minor-works' | 'pat' | 'comprehensive';
+export type TestType = 'eicr' | 'eic' | 'minor-works' | 'pat' | 'comprehensive' | 'safe-isolation' | 'continuity' | 'insulation-resistance' | 'earth-fault-loop' | 'rcd-test' | 'all-tests';
 
 export interface ValidationResult {
   isValid: boolean;
@@ -73,4 +76,11 @@ export interface ComprehensiveTestResults {
   faults: any[];
   recommendations: string[];
   generatedAt: Date;
+  visualInspection?: TestResult[];
+  continuity?: TestResult[];
+  insulationResistance?: TestResult[];
+  polarity?: TestResult[];
+  earthFaultLoop?: TestResult[];
+  rcdTest?: TestResult[];
+  functionalTest?: TestResult[];
 }

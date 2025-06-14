@@ -1,226 +1,100 @@
 
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { CheckCircle, XCircle, AlertTriangle, FileText, Download, Shield } from 'lucide-react';
-import { TestFlow, TestSession } from '@/types/inspection-testing';
-import { BS7671Validator } from './BS7671Validator';
+import { Progress } from '@/components/ui/progress';
+import { TestFlow, TestResult } from '@/types/inspection-testing';
+import { CheckCircle, XCircle, Clock, AlertTriangle } from 'lucide-react';
 
 interface ConsolidatedTestSummaryProps {
   testFlow: TestFlow;
-  session: TestSession;
-  onGenerateReport: () => void;
-  onExportResults: () => void;
+  results: TestResult[];
+  onGenerateReport?: () => void;
 }
 
-const ConsolidatedTestSummary = ({ 
-  testFlow, 
-  session, 
-  onGenerateReport, 
-  onExportResults 
-}: ConsolidatedTestSummaryProps) => {
-  const completedSteps = session.results.filter(r => r.status === 'completed').length;
-  const failedSteps = session.results.filter(r => r.status === 'failed').length;
+const ConsolidatedTestSummary: React.FC<ConsolidatedTestSummaryProps> = ({
+  testFlow,
+  results,
+  onGenerateReport
+}) => {
   const totalSteps = testFlow.steps.length;
-  
-  const complianceReport = BS7671Validator.getComplianceReport(testFlow, session);
-  
+  const completedSteps = results.filter(r => r.status === 'completed').length;
+  const failedSteps = results.filter(r => r.status === 'failed').length;
+  const progress = (completedSteps / totalSteps) * 100;
+
   const getOverallStatus = () => {
-    if (failedSteps > 0 || !complianceReport.overallCompliance) return 'fail';
-    if (completedSteps === totalSteps) return 'pass';
-    return 'incomplete';
+    if (completedSteps === totalSteps) {
+      return failedSteps > 0 ? 'completed-with-failures' : 'completed-pass';
+    }
+    return 'in-progress';
   };
 
   const overallStatus = getOverallStatus();
 
   return (
-    <div className="space-y-6">
-      {/* Overall Status */}
-      <Card className={`border-2 ${
-        overallStatus === 'pass' ? 'border-green-500 bg-green-500/10' :
-        overallStatus === 'fail' ? 'border-red-500 bg-red-500/10' :
-        'border-yellow-500 bg-yellow-500/10'
-      }`}>
-        <CardHeader className="text-center">
-          <div className="flex justify-center mb-2">
-            {overallStatus === 'pass' ? (
-              <CheckCircle className="h-16 w-16 text-green-500" />
-            ) : overallStatus === 'fail' ? (
-              <XCircle className="h-16 w-16 text-red-500" />
-            ) : (
-              <AlertTriangle className="h-16 w-16 text-yellow-500" />
-            )}
+    <Card className="border-elec-yellow/30 bg-elec-gray">
+      <CardHeader>
+        <CardTitle className="flex items-center justify-between">
+          <span>{testFlow.title || testFlow.id} - Test Summary</span>
+          <Badge variant={overallStatus === 'completed-pass' ? 'default' : 'destructive'}>
+            {overallStatus === 'completed-pass' && <CheckCircle className="h-4 w-4 mr-1" />}
+            {overallStatus === 'completed-with-failures' && <XCircle className="h-4 w-4 mr-1" />}
+            {overallStatus === 'in-progress' && <Clock className="h-4 w-4 mr-1" />}
+            {overallStatus === 'completed-pass' ? 'PASS' : 
+             overallStatus === 'completed-with-failures' ? 'FAIL' : 'IN PROGRESS'}
+          </Badge>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div>
+          <div className="flex justify-between text-sm mb-2">
+            <span>Overall Progress</span>
+            <span>{completedSteps}/{totalSteps} steps completed</span>
           </div>
-          <CardTitle className="text-2xl">
-            {overallStatus === 'pass' ? 'Tests Passed' :
-             overallStatus === 'fail' ? 'Tests Failed' :
-             'Tests Incomplete'}
-          </CardTitle>
-          <p className="text-muted-foreground">
-            {testFlow.name} - {session.installationDetails.location}
-          </p>
-        </CardHeader>
-      </Card>
+          <Progress value={progress} className="h-3" />
+        </div>
 
-      {/* Test Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-green-400">{completedSteps}</div>
-            <div className="text-sm text-muted-foreground">Tests Passed</div>
-          </CardContent>
-        </Card>
-        
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-red-400">{failedSteps}</div>
-            <div className="text-sm text-muted-foreground">Tests Failed</div>
-          </CardContent>
-        </Card>
-        
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardContent className="p-6 text-center">
-            <div className="text-3xl font-bold text-blue-400">{totalSteps - completedSteps - failedSteps}</div>
-            <div className="text-sm text-muted-foreground">Pending</div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* BS 7671 Compliance */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Shield className="h-5 w-5 text-elec-yellow" />
-            BS 7671 Compliance Report
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {/* Critical Issues */}
-          {complianceReport.criticalIssues.length > 0 && (
-            <Alert className="bg-red-500/10 border-red-500/30">
-              <XCircle className="h-4 w-4 text-red-400" />
-              <AlertDescription>
-                <strong>Critical Issues Found:</strong>
-                <ul className="list-disc list-inside mt-2 space-y-1">
-                  {complianceReport.criticalIssues.map((issue, index) => (
-                    <li key={index} className="text-red-200">{issue}</li>
-                  ))}
-                </ul>
-              </AlertDescription>
-            </Alert>
-          )}
-
-          {/* Warnings */}
-          {complianceReport.warnings.length > 0 && (
-            <Alert className="bg-yellow-500/10 border-yellow-500/30">
-              <AlertTriangle className="h-4 w-4 text-yellow-400" />
-              <AlertDescription>
-                <strong>Warnings:</strong>
-                <ul className="list-disc list-inside mt-2 space-y-1">
-                  {complianceReport.warnings.map((warning, index) => (
-                    <li key={index} className="text-yellow-200">{warning}</li>
-                  ))}
-                </ul>
-              </AlertDescription>
-            </Alert>
-          )}
-
-          {/* Recommendations */}
-          <Alert className="bg-blue-500/10 border-blue-500/30">
-            <CheckCircle className="h-4 w-4 text-blue-400" />
-            <AlertDescription>
-              <strong>Recommendations:</strong>
-              <ul className="list-disc list-inside mt-2 space-y-1">
-                {complianceReport.recommendations.map((rec, index) => (
-                  <li key={index} className="text-blue-200">{rec}</li>
-                ))}
-              </ul>
-            </AlertDescription>
-          </Alert>
-        </CardContent>
-      </Card>
-
-      {/* Detailed Results */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle>Detailed Test Results</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {testFlow.steps.map((step, index) => {
-              const result = session.results.find(r => r.stepId === step.id);
-              const validation = result ? BS7671Validator.validateTestStep(step, result) : null;
-              
-              return (
-                <div key={step.id} className="flex items-center justify-between p-3 border border-elec-yellow/10 rounded-lg">
-                  <div className="flex-1">
-                    <div className="font-medium">{index + 1}. {step.title}</div>
-                    {result?.value && (
-                      <div className="text-sm text-muted-foreground">
-                        Result: {result.value} {result.unit}
-                      </div>
-                    )}
-                    {validation && validation.severity !== 'info' && (
-                      <div className={`text-xs mt-1 ${
-                        validation.severity === 'error' ? 'text-red-400' :
-                        validation.severity === 'warning' ? 'text-yellow-400' :
-                        'text-blue-400'
-                      }`}>
-                        {validation.message}
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {validation && (
-                      <div className="text-xs">
-                        {validation.severity === 'error' ? (
-                          <XCircle className="h-4 w-4 text-red-400" />
-                        ) : validation.severity === 'warning' ? (
-                          <AlertTriangle className="h-4 w-4 text-yellow-400" />
-                        ) : (
-                          <CheckCircle className="h-4 w-4 text-green-400" />
-                        )}
-                      </div>
-                    )}
-                    <Badge
-                      variant={result?.status === 'completed' ? 'default' : 'secondary'}
-                      className={
-                        result?.status === 'completed' ? 'bg-green-600' :
-                        result?.status === 'failed' ? 'bg-red-600' :
-                        result?.status === 'in-progress' ? 'bg-yellow-600' : ''
-                      }
-                    >
-                      {result?.status || 'pending'}
-                    </Badge>
-                  </div>
-                </div>
-              );
-            })}
+        <div className="grid grid-cols-3 gap-4">
+          <div className="text-center">
+            <div className="text-2xl font-bold text-green-400">{completedSteps}</div>
+            <div className="text-sm text-muted-foreground">Completed</div>
           </div>
-        </CardContent>
-      </Card>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-red-400">{failedSteps}</div>
+            <div className="text-sm text-muted-foreground">Failed</div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-gray-400">{totalSteps - completedSteps - failedSteps}</div>
+            <div className="text-sm text-muted-foreground">Remaining</div>
+          </div>
+        </div>
 
-      {/* Actions */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <Button
-          onClick={onGenerateReport}
-          className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-        >
-          <FileText className="h-4 w-4 mr-2" />
-          Generate BS 7671 Report
-        </Button>
-        
-        <Button
-          onClick={onExportResults}
-          variant="outline"
-          className="flex-1"
-        >
-          <Download className="h-4 w-4 mr-2" />
-          Export Test Data
-        </Button>
-      </div>
-    </div>
+        {failedSteps > 0 && (
+          <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <AlertTriangle className="h-4 w-4 text-red-400" />
+              <span className="font-medium text-red-400">Failed Tests Require Attention</span>
+            </div>
+            <div className="text-sm text-red-200">
+              {failedSteps} test{failedSteps > 1 ? 's' : ''} did not meet the required standards. 
+              Review and address these issues before proceeding.
+            </div>
+          </div>
+        )}
+
+        {overallStatus === 'completed-pass' && (
+          <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <CheckCircle className="h-4 w-4 text-green-400" />
+              <span className="font-medium text-green-400">All Tests Completed Successfully</span>
+            </div>
+            <div className="text-sm text-green-200">
+              The installation has passed all required tests and is compliant with BS 7671 regulations.
+            </div>
+          </div>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 

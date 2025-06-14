@@ -1,332 +1,156 @@
 
-import { useState } from 'react';
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { 
-  BarChart3, 
-  Download, 
-  Eye, 
-  FileText, 
-  Calendar,
-  CheckCircle,
-  AlertTriangle,
-  Printer,
-  Mail,
-  Share
-} from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-
-interface Report {
-  id: string;
-  type: 'EICR' | 'EIC' | 'Minor Works';
-  property: string;
-  client: string;
-  date: string;
-  status: 'draft' | 'completed' | 'issued';
-  result: 'satisfactory' | 'unsatisfactory' | 'pending';
-  circuits: number;
-  faults: number;
-}
+import { BarChart3, Download, FileText, Eye } from 'lucide-react';
 
 const ReportsTab = () => {
-  const [reports] = useState<Report[]>([
+  const reportTypes = [
     {
-      id: '1',
-      type: 'EICR',
-      property: '123 Main Street, London',
-      client: 'John Smith',
-      date: '2024-06-14',
-      status: 'completed',
-      result: 'satisfactory',
-      circuits: 8,
-      faults: 0
+      title: 'Electrical Installation Certificate (EIC)',
+      description: 'For new electrical installations',
+      status: 'Available',
+      format: 'BS 7671 Compliant',
+      lastGenerated: '2 hours ago'
     },
     {
-      id: '2',
-      type: 'EIC',
-      property: '456 Oak Avenue, Manchester',
-      client: 'Sarah Jones',
-      date: '2024-06-13',
-      status: 'draft',
-      result: 'pending',
-      circuits: 12,
-      faults: 2
+      title: 'Electrical Installation Condition Report (EICR)',
+      description: 'For periodic inspection and testing',
+      status: 'Draft',
+      format: 'BS 7671 Compliant',
+      lastGenerated: '1 day ago'
     },
     {
-      id: '3',
-      type: 'EICR',
-      property: '789 Elm Close, Birmingham',
-      client: 'Mike Wilson',
-      date: '2024-06-12',
-      status: 'issued',
-      result: 'unsatisfactory',
-      circuits: 6,
-      faults: 3
+      title: 'Minor Works Certificate',
+      description: 'For small additions and alterations',
+      status: 'Available',
+      format: 'BS 7671 Compliant',
+      lastGenerated: '3 days ago'
+    },
+    {
+      title: 'Schedule of Test Results',
+      description: 'Detailed test measurements and observations',
+      status: 'Available',
+      format: 'Comprehensive Data',
+      lastGenerated: '2 hours ago'
     }
-  ]);
+  ];
 
-  const [filter, setFilter] = useState<'all' | 'EICR' | 'EIC' | 'Minor Works'>('all');
+  const recentReports = [
+    { name: 'EICR - 123 Main Street', date: '14/06/2025', type: 'EICR', status: 'Completed' },
+    { name: 'EIC - Flat 2B Commercial Building', date: '13/06/2025', type: 'EIC', status: 'Completed' },
+    { name: 'Minor Works - Kitchen Extension', date: '12/06/2025', type: 'Minor Works', status: 'Draft' },
+    { name: 'EICR - Office Building Floor 3', date: '11/06/2025', type: 'EICR', status: 'Completed' }
+  ];
 
-  const filteredReports = filter === 'all' ? reports : reports.filter(r => r.type === filter);
-
-  const getStatusColor = (status: Report['status']) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
-      case 'draft': return 'bg-yellow-500/20 text-yellow-300';
-      case 'completed': return 'bg-blue-500/20 text-blue-300';
-      case 'issued': return 'bg-green-500/20 text-green-300';
-      default: return 'bg-gray-500/20 text-gray-300';
-    }
-  };
-
-  const getResultColor = (result: Report['result']) => {
-    switch (result) {
-      case 'satisfactory': return 'bg-green-500/20 text-green-300';
-      case 'unsatisfactory': return 'bg-red-500/20 text-red-300';
-      case 'pending': return 'bg-gray-500/20 text-gray-300';
-      default: return 'bg-gray-500/20 text-gray-300';
-    }
-  };
-
-  const getResultIcon = (result: Report['result']) => {
-    switch (result) {
-      case 'satisfactory': return <CheckCircle className="h-4 w-4" />;
-      case 'unsatisfactory': return <AlertTriangle className="h-4 w-4" />;
-      default: return <Calendar className="h-4 w-4" />;
+      case 'Available':
+      case 'Completed':
+        return 'bg-green-500';
+      case 'Draft':
+        return 'bg-yellow-500';
+      default:
+        return 'bg-gray-500';
     }
   };
 
   return (
     <div className="space-y-6">
-      {/* Reports Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <Card className="border-elec-yellow/30 bg-gradient-to-r from-elec-gray to-elec-gray/80">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg">
-              <BarChart3 className="h-5 w-5 text-elec-yellow" />
-              Total Reports
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-elec-yellow mb-2">{reports.length}</div>
-            <p className="text-sm text-muted-foreground">All time</p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-green-500/30 bg-green-500/10">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg text-green-300">
-              <CheckCircle className="h-5 w-5" />
-              Satisfactory
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-green-300 mb-2">
-              {reports.filter(r => r.result === 'satisfactory').length}
-            </div>
-            <p className="text-sm text-muted-foreground">Passed inspections</p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-red-500/30 bg-red-500/10">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg text-red-300">
-              <AlertTriangle className="h-5 w-5" />
-              Unsatisfactory
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-red-300 mb-2">
-              {reports.filter(r => r.result === 'unsatisfactory').length}
-            </div>
-            <p className="text-sm text-muted-foreground">Failed inspections</p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-blue-500/30 bg-blue-500/10">
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-lg text-blue-300">
-              <Calendar className="h-5 w-5" />
-              This Month
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-blue-300 mb-2">
-              {reports.filter(r => new Date(r.date).getMonth() === new Date().getMonth()).length}
-            </div>
-            <p className="text-sm text-muted-foreground">Recent reports</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Filter Buttons */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/30 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-white">Filter Reports</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex gap-2 flex-wrap">
-            {(['all', 'EICR', 'EIC', 'Minor Works'] as const).map((type) => (
-              <Button
-                key={type}
-                onClick={() => setFilter(type)}
-                variant={filter === type ? "default" : "outline"}
-                size="sm"
-                className={filter === type ? "bg-elec-yellow text-black" : ""}
-              >
-                {type === 'all' ? 'All Reports' : type}
-                <Badge variant="outline" className="ml-2">
-                  {type === 'all' ? reports.length : reports.filter(r => r.type === type).length}
-                </Badge>
-              </Button>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Reports List */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-white flex items-center justify-between">
-            Recent Reports
-            <Button size="sm" className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-              <Download className="h-4 w-4 mr-2" />
-              Export All
-            </Button>
+          <CardTitle className="flex items-center gap-2">
+            <BarChart3 className="h-5 w-5 text-elec-yellow" />
+            Inspection & Testing Reports
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {filteredReports.map((report) => (
-              <div 
-                key={report.id} 
-                className="p-4 border border-elec-yellow/20 rounded-lg hover:border-elec-yellow/40 transition-all"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow">
-                      {report.type}
-                    </Badge>
-                    <Badge className={getStatusColor(report.status)}>
-                      {report.status.charAt(0).toUpperCase() + report.status.slice(1)}
-                    </Badge>
-                    <Badge className={getResultColor(report.result)}>
-                      {getResultIcon(report.result)}
-                      <span className="ml-1 capitalize">{report.result}</span>
-                    </Badge>
-                  </div>
-                  <div className="text-sm text-muted-foreground">{report.date}</div>
-                </div>
+          <p className="text-muted-foreground mb-6">
+            Generate, view, and manage all electrical installation certificates and reports. 
+            All documents are automatically formatted to meet BS 7671 requirements and industry standards.
+          </p>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <h4 className="font-medium text-white mb-1">{report.property}</h4>
-                    <p className="text-sm text-muted-foreground">Client: {report.client}</p>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <div>
-                      <span className="text-muted-foreground">Circuits: </span>
-                      <span className="font-medium">{report.circuits}</span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <h3 className="font-semibold text-white">Available Reports</h3>
+              {reportTypes.map((report, index) => (
+                <Card key={index} className="border-elec-yellow/20 bg-elec-gray/50">
+                  <CardContent className="p-4">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h4 className="font-medium text-white">{report.title}</h4>
+                        <p className="text-sm text-muted-foreground">{report.description}</p>
+                      </div>
+                      <Badge className={`${getStatusColor(report.status)} text-white`}>
+                        {report.status}
+                      </Badge>
                     </div>
-                    <div>
-                      <span className="text-muted-foreground">Faults: </span>
-                      <span className={`font-medium ${report.faults > 0 ? 'text-red-400' : 'text-green-400'}`}>
-                        {report.faults}
-                      </span>
+                    
+                    <div className="flex items-center justify-between text-sm mb-3">
+                      <span className="text-muted-foreground">Format: {report.format}</span>
+                      <span className="text-muted-foreground">Updated: {report.lastGenerated}</span>
                     </div>
+
+                    <div className="flex gap-2">
+                      <Button size="sm" variant="outline" className="flex-1">
+                        <Eye className="h-3 w-3 mr-1" />
+                        Preview
+                      </Button>
+                      <Button size="sm" className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90">
+                        <Download className="h-3 w-3 mr-1" />
+                        Download
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="font-semibold text-white">Recent Reports</h3>
+              <Card className="border-elec-yellow/20 bg-elec-gray/50">
+                <CardContent className="p-4">
+                  <div className="space-y-3">
+                    {recentReports.map((report, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 border border-elec-yellow/20 rounded-lg">
+                        <div>
+                          <h4 className="font-medium text-white text-sm">{report.name}</h4>
+                          <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                            <span>{report.date}</span>
+                            <span>{report.type}</span>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Badge className={`${getStatusColor(report.status)} text-white text-xs`}>
+                            {report.status}
+                          </Badge>
+                          <Button size="sm" variant="ghost" className="h-6 w-6 p-0">
+                            <Download className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
+                </CardContent>
+              </Card>
 
-                <div className="flex items-center gap-2">
-                  <Button size="sm" variant="outline" className="flex items-center gap-1">
-                    <Eye className="h-3 w-3" />
-                    View
-                  </Button>
-                  <Button size="sm" variant="outline" className="flex items-center gap-1">
-                    <Download className="h-3 w-3" />
-                    PDF
-                  </Button>
-                  <Button size="sm" variant="outline" className="flex items-center gap-1">
-                    <Printer className="h-3 w-3" />
-                    Print
-                  </Button>
-                  <Button size="sm" variant="outline" className="flex items-center gap-1">
-                    <Mail className="h-3 w-3" />
-                    Email
-                  </Button>
-                  <Button size="sm" variant="outline" className="flex items-center gap-1">
-                    <Share className="h-3 w-3" />
-                    Share
-                  </Button>
-                </div>
-              </div>
-            ))}
-
-            {filteredReports.length === 0 && (
-              <div className="text-center py-8 text-muted-foreground">
-                <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>No reports found for the selected filter.</p>
-              </div>
-            )}
+              <Card className="border-green-500/30 bg-green-500/10">
+                <CardContent className="p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <FileText className="h-4 w-4 text-green-400" />
+                    <h4 className="font-medium text-green-400">Professional Standards</h4>
+                  </div>
+                  <p className="text-sm text-green-200">
+                    All generated reports comply with BS 7671:2018+A2:2022 requirements and include 
+                    proper defect classifications, remedial action codes, and professional formatting.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </CardContent>
       </Card>
-
-      {/* Quick Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="border-elec-yellow/30 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="text-elec-yellow">Report Templates</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <Button variant="outline" className="w-full justify-start">
-                <FileText className="h-4 w-4 mr-2" />
-                Blank EICR Template
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <FileText className="h-4 w-4 mr-2" />
-                Blank EIC Template
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <FileText className="h-4 w-4 mr-2" />
-                Minor Works Certificate
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-elec-yellow/30 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="text-elec-yellow">Export Options</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <Button variant="outline" className="w-full justify-start">
-                <Download className="h-4 w-4 mr-2" />
-                Export to Excel
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <Download className="h-4 w-4 mr-2" />
-                Bulk PDF Export
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                <Share className="h-4 w-4 mr-2" />
-                Email Summary Report
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Compliance Notice */}
-      <Alert className="bg-blue-500/10 border-blue-500/30">
-        <FileText className="h-4 w-4 text-blue-400" />
-        <AlertDescription className="text-blue-200">
-          <strong>Report Retention:</strong> All electrical certificates and test reports must be retained for future reference. 
-          Digital copies should be backed up regularly and made available to property owners.
-        </AlertDescription>
-      </Alert>
     </div>
   );
 };

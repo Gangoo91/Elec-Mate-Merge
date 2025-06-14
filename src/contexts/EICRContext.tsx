@@ -23,6 +23,7 @@ interface EICRContextType {
   eicr: EICRData;
   updateEICR: (data: Partial<EICRData>) => void;
   populateFromTestResult: (stepId: string, result: TestResult) => void;
+  initializeEICR: (installationDetails: any, inspectorDetails: any) => void;
   resetEICR: () => void;
 }
 
@@ -63,6 +64,16 @@ export const EICRProvider: React.FC<EICRProviderProps> = ({ children }) => {
     }));
   };
 
+  const initializeEICR = (installationDetails: any, inspectorDetails: any) => {
+    setEICR({
+      installationDetails,
+      inspectorDetails,
+      circuits: [],
+      testResults: [],
+      observations: []
+    });
+  };
+
   const resetEICR = () => {
     setEICR({
       circuits: [],
@@ -75,6 +86,7 @@ export const EICRProvider: React.FC<EICRProviderProps> = ({ children }) => {
     eicr,
     updateEICR,
     populateFromTestResult,
+    initializeEICR,
     resetEICR
   };
 

@@ -1,379 +1,128 @@
 
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
-import { AlertTriangle, User, Building, Play, FileText } from 'lucide-react';
-import { useState } from 'react';
 import { TestFlow } from '@/types/inspection-testing';
 import { useEICR } from '@/contexts/EICRContext';
 
 interface SessionSetupProps {
-  flow: TestFlow;
-  onStartSession: (installationDetails: any, technician: any, enableEicr?: boolean) => void;
-  mode: 'electrician' | 'apprentice';
+  testFlow: TestFlow;
+  onStartSession: (installationDetails: any, technician: any) => void;
 }
 
-const SessionSetup = ({ flow, onStartSession, mode }: SessionSetupProps) => {
+const SessionSetup: React.FC<SessionSetupProps> = ({
+  testFlow,
+  onStartSession
+}) => {
   const { initializeEICR } = useEICR();
-  const [enableEicrIntegration, setEnableEicrIntegration] = useState(false);
   const [installationDetails, setInstallationDetails] = useState({
-    address: '',
-    description: '',
-    estimatedAge: '',
-    earthingSystem: '',
-    supplyType: '',
-    mainSwitchRating: '',
-    accessLimitations: '',
-    specialRequirements: ''
+    location: '',
+    installationType: '',
+    description: ''
   });
-
-  const [technicianDetails, setTechnicianDetails] = useState({
+  const [technician, setTechnician] = useState({
     name: '',
-    qualification: '',
-    registrationNumber: '',
-    organisation: ''
+    qualifications: '',
+    company: ''
   });
 
   const handleStartSession = () => {
-    // Initialize EICR context if enabled
-    if (enableEicrIntegration) {
-      initializeEICR(installationDetails, technicianDetails);
-    }
-    
-    // Start the test session
-    onStartSession(installationDetails, technicianDetails, enableEicrIntegration);
-  };
-
-  const isFormValid = () => {
-    return installationDetails.address && 
-           installationDetails.description && 
-           technicianDetails.name && 
-           technicianDetails.qualification;
+    initializeEICR(installationDetails, technician);
+    onStartSession(installationDetails, technician);
   };
 
   return (
     <div className="space-y-6">
-      {/* Flow Summary */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle>Testing Session Setup</CardTitle>
+          <CardTitle>Session Setup - {testFlow.title}</CardTitle>
+          <p className="text-sm text-muted-foreground">
+            {testFlow.description}
+          </p>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex flex-wrap gap-2">
-            <Badge variant="outline">{flow.steps.length} test steps</Badge>
-            <Badge variant="outline">
-              ~{flow.steps.reduce((total, step) => total + step.estimatedTime, 0)} minutes
-            </Badge>
-            <Badge variant="outline">{flow.difficulty}</Badge>
-            {flow.isComprehensive && (
-              <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">
-                Complete EICR Suite
-              </Badge>
-            )}
-          </div>
-          
-          <div className="text-sm text-muted-foreground">
-            <p><strong>Standards:</strong> {flow.regulatoryStandards?.join(', ')}</p>
-          </div>
-
-          {mode === 'apprentice' && (
-            <div className="p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
-              <div className="flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 text-blue-400" />
-                <span className="font-medium text-blue-200">Learning Mode</span>
+        <CardContent className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-4">
+              <h3 className="font-medium">Installation Details</h3>
+              <div>
+                <Label htmlFor="location">Location</Label>
+                <Input
+                  id="location"
+                  value={installationDetails.location}
+                  onChange={(e) => setInstallationDetails(prev => ({ ...prev, location: e.target.value }))}
+                  placeholder="e.g., 123 Main Street, London"
+                />
               </div>
-              <p className="text-sm text-blue-300 mt-1">
-                This session includes detailed explanations and learning objectives for each test step.
-              </p>
+              <div>
+                <Label htmlFor="installationType">Installation Type</Label>
+                <Input
+                  id="installationType"
+                  value={installationDetails.installationType}
+                  onChange={(e) => setInstallationDetails(prev => ({ ...prev, installationType: e.target.value }))}
+                  placeholder="e.g., Domestic, Commercial"
+                />
+              </div>
+              <div>
+                <Label htmlFor="description">Description</Label>
+                <Input
+                  id="description"
+                  value={installationDetails.description}
+                  onChange={(e) => setInstallationDetails(prev => ({ ...prev, description: e.target.value }))}
+                  placeholder="Brief description of work"
+                />
+              </div>
             </div>
-          )}
-        </CardContent>
-      </Card>
 
-      {/* EICR Integration Option */}
-      <Card className="border-elec-yellow/30 bg-gradient-to-r from-elec-gray to-elec-gray/80">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5 text-elec-yellow" />
-            EICR Integration
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-start space-x-3">
-            <Checkbox 
-              id="eicr-integration"
-              checked={enableEicrIntegration}
-              onCheckedChange={(checked) => setEnableEicrIntegration(checked as boolean)}
-              className="mt-1"
-            />
-            <div className="flex-1">
-              <Label htmlFor="eicr-integration" className="text-base font-medium cursor-pointer">
-                Enable EICR Report Generation
-              </Label>
-              <p className="text-sm text-muted-foreground mt-1">
-                Automatically generate an Electrical Installation Condition Report with fault codes and classifications during testing.
-                Results will be available in the dedicated EICR dashboard.
-              </p>
-              {enableEicrIntegration && (
-                <div className="mt-3 p-3 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
-                  <div className="flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-elec-yellow" />
-                    <span className="font-medium text-elec-yellow">EICR Features Enabled</span>
-                  </div>
-                  <ul className="text-sm text-muted-foreground mt-2 space-y-1">
-                    <li>• Automatic C1, C2, C3, and FI fault classification</li>
-                    <li>• Live EICR dashboard during testing</li>
-                    <li>• Professional PDF report generation</li>
-                    <li>• BS 7671:2018+A2:2022 compliance</li>
-                  </ul>
-                </div>
-              )}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Installation Details */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Building className="h-5 w-5 text-elec-yellow" />
-            Installation Details
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="address">Installation Address *</Label>
-              <Textarea
-                id="address"
-                value={installationDetails.address}
-                onChange={(e) => setInstallationDetails({...installationDetails, address: e.target.value})}
-                placeholder="Full installation address including postcode..."
-                className="bg-elec-dark border-elec-yellow/20"
-                rows={3}
-                required
-              />
-            </div>
-            <div>
-              <Label htmlFor="description">Installation Description *</Label>
-              <Textarea
-                id="description"
-                value={installationDetails.description}
-                onChange={(e) => setInstallationDetails({...installationDetails, description: e.target.value})}
-                placeholder="Type and use of installation (e.g., domestic dwelling, office building)..."
-                className="bg-elec-dark border-elec-yellow/20"
-                rows={3}
-                required
-              />
+            <div className="space-y-4">
+              <h3 className="font-medium">Technician Details</h3>
+              <div>
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  value={technician.name}
+                  onChange={(e) => setTechnician(prev => ({ ...prev, name: e.target.value }))}
+                  placeholder="Your name"
+                />
+              </div>
+              <div>
+                <Label htmlFor="qualifications">Qualifications</Label>
+                <Input
+                  id="qualifications"
+                  value={technician.qualifications}
+                  onChange={(e) => setTechnician(prev => ({ ...prev, qualifications: e.target.value }))}
+                  placeholder="e.g., 18th Edition, 2391"
+                />
+              </div>
+              <div>
+                <Label htmlFor="company">Company</Label>
+                <Input
+                  id="company"
+                  value={technician.company}
+                  onChange={(e) => setTechnician(prev => ({ ...prev, company: e.target.value }))}
+                  placeholder="Company name"
+                />
+              </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <Label htmlFor="estimated-age">Estimated Age</Label>
-              <Input
-                id="estimated-age"
-                value={installationDetails.estimatedAge}
-                onChange={(e) => setInstallationDetails({...installationDetails, estimatedAge: e.target.value})}
-                placeholder="e.g., 15-20 years"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-            <div>
-              <Label htmlFor="earthing-system">Earthing System</Label>
-              <Select 
-                value={installationDetails.earthingSystem} 
-                onValueChange={(value) => setInstallationDetails({...installationDetails, earthingSystem: value})}
-              >
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select earthing type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="TN-S">TN-S (Separate earth)</SelectItem>
-                  <SelectItem value="TN-C-S">TN-C-S (PME)</SelectItem>
-                  <SelectItem value="TT">TT (Earth electrode)</SelectItem>
-                  <SelectItem value="IT">IT (Isolated)</SelectItem>
-                  <SelectItem value="unknown">Unknown/TBC</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="supply-type">Supply Type</Label>
-              <Select 
-                value={installationDetails.supplyType} 
-                onValueChange={(value) => setInstallationDetails({...installationDetails, supplyType: value})}
-              >
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select supply type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="single-phase">Single-phase (230V)</SelectItem>
-                  <SelectItem value="three-phase">Three-phase (400V)</SelectItem>
-                </SelectContent>
-              </Select>
+          <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+            <h4 className="font-medium mb-2">Test Overview</h4>
+            <div className="text-sm space-y-1">
+              <p>Steps: {testFlow.steps.length}</p>
+              <p>Estimated Duration: {testFlow.estimatedDuration}</p>
+              <p>Type: {testFlow.type.toUpperCase()}</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="main-switch">Main Switch Rating</Label>
-              <Input
-                id="main-switch"
-                value={installationDetails.mainSwitchRating}
-                onChange={(e) => setInstallationDetails({...installationDetails, mainSwitchRating: e.target.value})}
-                placeholder="e.g., 100A"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-            <div>
-              <Label htmlFor="limitations">Access Limitations</Label>
-              <Input
-                id="limitations"
-                value={installationDetails.accessLimitations}
-                onChange={(e) => setInstallationDetails({...installationDetails, accessLimitations: e.target.value})}
-                placeholder="Areas not accessible for inspection..."
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-          </div>
-
-          <div>
-            <Label htmlFor="special-requirements">Special Requirements</Label>
-            <Textarea
-              id="special-requirements"
-              value={installationDetails.specialRequirements}
-              onChange={(e) => setInstallationDetails({...installationDetails, specialRequirements: e.target.value})}
-              placeholder="Any special considerations, existing faults, or specific requirements..."
-              className="bg-elec-dark border-elec-yellow/20"
-              rows={2}
-            />
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Technician Details */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <User className="h-5 w-5 text-elec-yellow" />
-            Technician Details
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="technician-name">Name *</Label>
-              <Input
-                id="technician-name"
-                value={technicianDetails.name}
-                onChange={(e) => setTechnicianDetails({...technicianDetails, name: e.target.value})}
-                placeholder="Full name"
-                className="bg-elec-dark border-elec-yellow/20"
-                required
-              />
-            </div>
-            <div>
-              <Label htmlFor="qualification">Qualification *</Label>
-              <Select 
-                value={technicianDetails.qualification} 
-                onValueChange={(value) => setTechnicianDetails({...technicianDetails, qualification: value})}
-              >
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select qualification" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="City & Guilds 2391-52">City & Guilds 2391-52</SelectItem>
-                  <SelectItem value="City & Guilds 2394/2395">City & Guilds 2394/2395</SelectItem>
-                  <SelectItem value="EAL 600/4338/4">EAL 600/4338/4</SelectItem>
-                  <SelectItem value="NICEIC Qualified">NICEIC Qualified</SelectItem>
-                  <SelectItem value="NAPIT Qualified">NAPIT Qualified</SelectItem>
-                  <SelectItem value="STROMA Qualified">STROMA Qualified</SelectItem>
-                  <SelectItem value="Other">Other</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="registration">Registration Number</Label>
-              <Input
-                id="registration"
-                value={technicianDetails.registrationNumber}
-                onChange={(e) => setTechnicianDetails({...technicianDetails, registrationNumber: e.target.value})}
-                placeholder="NICEIC/NAPIT/STROMA etc. number"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-            <div>
-              <Label htmlFor="organisation">Organisation</Label>
-              <Input
-                id="organisation"
-                value={technicianDetails.organisation}
-                onChange={(e) => setTechnicianDetails({...technicianDetails, organisation: e.target.value})}
-                placeholder="Company or organisation name"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Prerequisites Check */}
-      {flow.prerequisites && flow.prerequisites.length > 0 && (
-        <Card className="border-orange-500/30 bg-orange-500/5">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-orange-400" />
-              Prerequisites Check
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-muted-foreground mb-3">
-              Please ensure the following requirements are met before starting:
-            </p>
-            <ul className="space-y-2">
-              {flow.prerequisites.map((prerequisite, index) => (
-                <li key={index} className="flex items-start gap-2 text-sm">
-                  <div className="h-2 w-2 rounded-full bg-orange-400 mt-2 flex-shrink-0" />
-                  <span>{prerequisite}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Start Session */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
-        <CardContent className="pt-6">
-          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-            <div>
-              <p className="font-medium">Ready to begin testing session?</p>
-              <p className="text-sm text-muted-foreground">
-                {isFormValid() 
-                  ? enableEicrIntegration 
-                    ? 'All required information provided. EICR report will be automatically generated.'
-                    : 'All required information provided. Testing session ready to start.'
-                  : 'Please complete all required fields marked with *'
-                }
-              </p>
-            </div>
-            <Button
-              onClick={handleStartSession}
-              disabled={!isFormValid()}
-              className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
-            >
-              <Play className="h-4 w-4" />
-              Start Testing Session
-            </Button>
-          </div>
+          <Button 
+            onClick={handleStartSession}
+            className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            disabled={!installationDetails.location || !technician.name}
+          >
+            Start Testing Session
+          </Button>
         </CardContent>
       </Card>
     </div>
