@@ -3,12 +3,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ArrowLeft, TestTube, FileText, Settings, BarChart3, Zap } from "lucide-react";
+import { ArrowLeft, TestTube, FileText, Settings, BarChart3, Zap, Wrench } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import EICRProcessTab from "@/components/inspection-testing/tabs/EICRProcessTab";
 import EICProcessTab from "@/components/inspection-testing/tabs/EICProcessTab";
 import CircuitTestingTab from "@/components/inspection-testing/tabs/CircuitTestingTab";
 import ReportsTab from "@/components/inspection-testing/tabs/ReportsTab";
+import MinorWorksTab from "@/components/inspection-testing/tabs/MinorWorksTab";
 
 const InspectionTesting = () => {
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ const InspectionTesting = () => {
 
       {/* Main Tabs Interface */}
       <Tabs defaultValue="eicr" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="eicr" className="flex items-center gap-2">
             <FileText className="h-4 w-4" />
             EICR Process
@@ -59,6 +60,10 @@ const InspectionTesting = () => {
           <TabsTrigger value="testing" className="flex items-center gap-2">
             <Settings className="h-4 w-4" />
             Circuit Testing
+          </TabsTrigger>
+          <TabsTrigger value="minor-works" className="flex items-center gap-2">
+            <Wrench className="h-4 w-4" />
+            Minor Works
           </TabsTrigger>
           <TabsTrigger value="reports" className="flex items-center gap-2">
             <BarChart3 className="h-4 w-4" />
@@ -76,6 +81,10 @@ const InspectionTesting = () => {
 
         <TabsContent value="testing">
           <CircuitTestingTab />
+        </TabsContent>
+
+        <TabsContent value="minor-works">
+          <MinorWorksTab />
         </TabsContent>
 
         <TabsContent value="reports">

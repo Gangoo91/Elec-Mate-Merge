@@ -3,18 +3,38 @@ import { CircuitTestStep } from '@/types/circuit-testing';
 
 export const safeIsolationSteps: CircuitTestStep[] = [
   {
-    id: 'isolation-planning',
-    title: 'Isolation Planning',
-    description: 'Plan the safe isolation procedure',
+    id: 'safe-isolation-planning',
+    title: 'Safe Isolation Planning',
+    description: 'Plan and prepare for safe isolation',
     instructions: [
       'Identify all supply sources',
       'Plan isolation sequence',
-      'Prepare isolation equipment'
+      'Prepare isolation equipment',
+      'Notify relevant personnel'
     ],
     category: 'safe-isolation',
     testType: 'procedural',
+    estimatedTime: '15 minutes',
     order: 1,
-    estimatedTime: '10 minutes'
+    safetyWarnings: [
+      'Ensure proper PPE is worn',
+      'Verify isolation equipment is functioning'
+    ]
+  },
+  {
+    id: 'supply-isolation',
+    title: 'Supply Isolation',
+    description: 'Isolate electrical supply safely',
+    instructions: [
+      'Switch off main supply',
+      'Lock off isolation points',
+      'Apply warning notices',
+      'Test isolation is effective'
+    ],
+    category: 'safe-isolation',
+    testType: 'procedural',
+    estimatedTime: '10 minutes',
+    order: 2
   }
 ];
 
@@ -24,40 +44,42 @@ export const continuityTestSteps: CircuitTestStep[] = [
     title: 'CPC Continuity Test',
     description: 'Test continuity of circuit protective conductors',
     instructions: [
-      'Connect test leads to CPC',
-      'Test to each outlet',
-      'Record resistance values'
+      'Connect test leads to CPC at distribution board',
+      'Test continuity to each outlet',
+      'Record resistance values',
+      'Verify readings are within limits'
     ],
     category: 'continuity',
     testType: 'measurement',
-    order: 2,
-    estimatedTime: '30 minutes',
+    estimatedTime: '45 minutes',
     acceptableLimits: {
       max: 1.67,
       unit: 'Ω'
-    }
+    },
+    order: 3
   }
 ];
 
 export const insulationTestSteps: CircuitTestStep[] = [
   {
     id: 'insulation-resistance',
-    title: 'Insulation Resistance Test',
+    title: 'Insulation Resistance Testing',
     description: 'Test insulation resistance between conductors',
     instructions: [
-      'Set tester to 500V DC',
-      'Test between live and neutral',
+      'Ensure all circuits are disconnected',
+      'Set MFT to 500V DC',
       'Test between live and earth',
+      'Test between neutral and earth',
       'Record all readings'
     ],
     category: 'insulation-resistance',
     testType: 'measurement',
-    order: 3,
-    estimatedTime: '45 minutes',
+    estimatedTime: '60 minutes',
     acceptableLimits: {
       min: 1,
       unit: 'MΩ'
-    }
+    },
+    order: 4
   }
 ];
 
@@ -65,60 +87,62 @@ export const earthFaultLoopSteps: CircuitTestStep[] = [
   {
     id: 'earth-fault-loop',
     title: 'Earth Fault Loop Impedance',
-    description: 'Measure Zs values at circuit outlets',
+    description: 'Measure earth fault loop impedance (Zs)',
     instructions: [
-      'Energise circuit safely',
-      'Test at distribution board',
-      'Test at furthest point',
-      'Record Zs values'
+      'Re-energise installation safely',
+      'Use appropriate Zs tester',
+      'Test at origin of installation',
+      'Test at furthest point of each circuit',
+      'Record all Zs values'
     ],
     category: 'earth-fault-loop',
     testType: 'measurement',
-    order: 4,
-    estimatedTime: '30 minutes',
+    estimatedTime: '45 minutes',
     acceptableLimits: {
       max: 1.44,
       unit: 'Ω'
-    }
+    },
+    order: 5
   }
 ];
 
 export const rcdTestSteps: CircuitTestStep[] = [
   {
     id: 'rcd-testing',
-    title: 'RCD Operation Test',
-    description: 'Test RCD operation and timing',
+    title: 'RCD Testing',
+    description: 'Test operation and timing of RCD devices',
     instructions: [
-      'Test at rated current',
-      'Test at 5x rated current',
+      'Test RCD operation at rated current',
+      'Test RCD operation at 5x rated current',
       'Record trip times',
-      'Test manual operation'
+      'Test manual operation button'
     ],
     category: 'rcd-test',
     testType: 'measurement',
-    order: 5,
-    estimatedTime: '15 minutes',
+    estimatedTime: '20 minutes',
     acceptableLimits: {
       max: 300,
       unit: 'ms'
-    }
+    },
+    order: 6
   }
 ];
 
 export const polarityTestSteps: CircuitTestStep[] = [
   {
-    id: 'polarity-check',
+    id: 'polarity-verification',
     title: 'Polarity Verification',
-    description: 'Verify correct polarity connections',
+    description: 'Verify correct polarity of all circuits',
     instructions: [
-      'Check polarity at DB',
-      'Test at each outlet',
-      'Verify switch connections'
+      'Check polarity at distribution board',
+      'Test polarity at each outlet',
+      'Verify switch connections',
+      'Check Edison screw lampholders'
     ],
     category: 'polarity',
-    testType: 'measurement',
-    order: 6,
-    estimatedTime: '20 minutes'
+    testType: 'visual',
+    estimatedTime: '30 minutes',
+    order: 7
   }
 ];
 
@@ -126,16 +150,17 @@ export const functionalTestSteps: CircuitTestStep[] = [
   {
     id: 'functional-testing',
     title: 'Functional Testing',
-    description: 'Test circuit operation and functionality',
+    description: 'Test proper operation of all circuits',
     instructions: [
-      'Test all outlets',
-      'Check switching operation',
-      'Verify correct operation'
+      'Test all lighting circuits',
+      'Test all socket outlets',
+      'Check operation of switches',
+      'Verify emergency lighting'
     ],
     category: 'functional-test',
     testType: 'procedural',
-    order: 7,
-    estimatedTime: '25 minutes'
+    estimatedTime: '30 minutes',
+    order: 8
   }
 ];
 

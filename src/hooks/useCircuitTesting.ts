@@ -3,20 +3,39 @@ import { useState, useCallback } from 'react';
 import { CircuitTestSession, CircuitTestResult } from '@/types/circuit-testing';
 import { comprehensiveCircuitTestFlow } from '@/data/inspection-testing/circuitTestFlow';
 
-export const useCircuitTesting = () => {
+interface UseCircuitTestingReturn {
+  session: CircuitTestSession | null;
+  startSession: (installationDetails: any, technician: any) => void;
+  recordResult: (stepId: string, result: Omit<CircuitTestResult, 'stepId' | 'timestamp'>) => void;
+  nextStep: () => void;
+  previousStep: () => void;
+  completeSession: () => void;
+}
+
+export const useCircuitTesting = (): UseCircuitTestingReturn => {
   const [session, setSession] = useState<CircuitTestSession | null>(null);
 
   const startSession = useCallback((installationDetails: any, technician: any) => {
+    console.log('Starting circuit testing session...');
+    
     const newSession: CircuitTestSession = {
-      id: `circuit-test-${Date.now()}`,
+      id: `circuit-session-${Date.now()}`,
       flowId: comprehensiveCircuitTestFlow.id,
       startTime: new Date(),
       steps: comprehensiveCircuitTestFlow.steps,
       results: [],
       currentStepIndex: 0,
       status: 'in-progress',
-      installationDetails,
-      technician
+      installationDetails: {
+        location: installationDetails?.location || 'Not specified',
+        installationType: installationDetails?.type || 'Domestic',
+        description: installationDetails?.description || 'Circuit testing'
+      },
+      technician: {
+        name: technician?.name || 'Technician',
+        qualifications: technician?.qualifications || 'Qualified Electrician',
+        company: technician?.company || 'Electrical Company'
+      }
     };
 
     setSession(newSession);
@@ -24,7 +43,12 @@ export const useCircuitTesting = () => {
   }, []);
 
   const recordResult = useCallback((stepId: string, result: Omit<CircuitTestResult, 'stepId' | 'timestamp'>) => {
-    if (!session) return;
+    if (!session) {
+      console.warn('No active session to record result');
+      return;
+    }
+
+    console.log('Recording result for step:', stepId, result);
 
     const newResult: CircuitTestResult = {
       ...result,
@@ -49,19 +73,17 @@ export const useCircuitTesting = () => {
         results: updatedResults
       };
     });
-
-    console.log('Test result recorded:', newResult);
   }, [session]);
 
   const nextStep = useCallback(() => {
     if (!session) return;
 
     setSession(prev => {
-      if (!prev) return null;
+      if (!prev || prev.currentStepIndex >= prev.steps.length - 1) return prev;
       
       return {
         ...prev,
-        currentStepIndex: Math.min(prev.currentStepIndex + 1, prev.steps.length - 1)
+        currentStepIndex: prev.currentStepIndex + 1
       };
     });
   }, [session]);
@@ -70,11 +92,11 @@ export const useCircuitTesting = () => {
     if (!session) return;
 
     setSession(prev => {
-      if (!prev) return null;
+      if (!prev || prev.currentStepIndex <= 0) return prev;
       
       return {
         ...prev,
-        currentStepIndex: Math.max(prev.currentStepIndex - 1, 0)
+        currentStepIndex: prev.currentStepIndex - 1
       };
     });
   }, [session]);
@@ -82,6 +104,8 @@ export const useCircuitTesting = () => {
   const completeSession = useCallback(() => {
     if (!session) return;
 
+    console.log('Completing circuit testing session');
+    
     setSession(prev => {
       if (!prev) return null;
       
@@ -91,8 +115,6 @@ export const useCircuitTesting = () => {
         status: 'completed'
       };
     });
-
-    console.log('Circuit testing session completed');
   }, [session]);
 
   return {
