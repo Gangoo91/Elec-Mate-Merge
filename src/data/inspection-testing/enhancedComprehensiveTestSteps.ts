@@ -14,7 +14,7 @@ export const enhancedSafeIsolationSteps: TestStep[] = [
     ],
     category: 'safe-isolation',
     estimatedTime: '15 minutes',
-    order: 1,
+    order: '1',
     safetyWarnings: [
       'Ensure proper PPE is worn',
       'Verify isolation equipment is functioning'
@@ -32,7 +32,7 @@ export const enhancedSafeIsolationSteps: TestStep[] = [
     ],
     category: 'safe-isolation',
     estimatedTime: '10 minutes',
-    order: 2
+    order: '2'
   }
 ];
 
@@ -53,7 +53,7 @@ export const enhancedContinuitySteps: TestStep[] = [
       max: 1.67,
       unit: 'Ω'
     },
-    order: 3
+    order: '3'
   },
   {
     id: 'continuity-ring-enhanced',
@@ -68,7 +68,7 @@ export const enhancedContinuitySteps: TestStep[] = [
     ],
     category: 'continuity',
     estimatedTime: '35 minutes',
-    order: 4
+    order: '4'
   }
 ];
 
@@ -91,7 +91,7 @@ export const enhancedInsulationSteps: TestStep[] = [
       min: 1,
       unit: 'MΩ'
     },
-    order: 5
+    order: '5'
   }
 ];
 
@@ -114,7 +114,7 @@ export const enhancedZsTestingSteps: TestStep[] = [
       max: 1.44,
       unit: 'Ω'
     },
-    order: 6
+    order: '6'
   }
 ];
 
@@ -137,7 +137,7 @@ export const enhancedRCDTestingSteps: TestStep[] = [
       max: 300,
       unit: 'ms'
     },
-    order: 7
+    order: '7'
   }
 ];
 
@@ -156,7 +156,7 @@ export const enhancedPolaritySteps: TestStep[] = [
     ],
     category: 'polarity',
     estimatedTime: '35 minutes',
-    order: 8
+    order: '8'
   }
 ];
 

@@ -28,7 +28,7 @@ export const expandedTestFlows: TestFlow[] = [
         ],
         category: 'visual-inspection',
         estimatedTime: '45 minutes',
-        order: 1
+        order: '1'
       },
       {
         id: 'safe-isolation-comprehensive',
@@ -42,7 +42,7 @@ export const expandedTestFlows: TestFlow[] = [
         ],
         category: 'safe-isolation',
         estimatedTime: '20 minutes',
-        order: 2
+        order: '2'
       },
       {
         id: 'continuity-comprehensive',
@@ -56,7 +56,7 @@ export const expandedTestFlows: TestFlow[] = [
         ],
         category: 'continuity',
         estimatedTime: '60 minutes',
-        order: 3
+        order: '3'
       },
       {
         id: 'insulation-comprehensive',
@@ -70,7 +70,7 @@ export const expandedTestFlows: TestFlow[] = [
         ],
         category: 'insulation-resistance',
         estimatedTime: '45 minutes',
-        order: 4
+        order: '4'
       }
     ]
   },
@@ -98,7 +98,7 @@ export const expandedTestFlows: TestFlow[] = [
         ],
         category: 'verification',
         estimatedTime: '30 minutes',
-        order: 1
+        order: '1'
       }
     ]
   },
@@ -125,7 +125,7 @@ export const expandedTestFlows: TestFlow[] = [
         ],
         category: 'visual-inspection',
         estimatedTime: '15 minutes',
-        order: 1
+        order: '1'
       }
     ]
   }

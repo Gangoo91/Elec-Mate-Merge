@@ -14,7 +14,7 @@ export const comprehensiveTestSteps: TestStep[] = [
     ],
     category: 'visual-inspection',
     estimatedTime: '30 minutes',
-    order: 1
+    order: '1'
   },
   {
     id: 'safe-isolation-procedure',
@@ -32,7 +32,7 @@ export const comprehensiveTestSteps: TestStep[] = [
       'Ensure proper isolation before proceeding',
       'Use only calibrated test equipment'
     ],
-    order: 2
+    order: '2'
   },
   {
     id: 'continuity-cpc',
@@ -50,7 +50,7 @@ export const comprehensiveTestSteps: TestStep[] = [
       max: 1.67,
       unit: 'Ω'
     },
-    order: 3
+    order: '3'
   },
   {
     id: 'continuity-ring-final',
@@ -65,7 +65,7 @@ export const comprehensiveTestSteps: TestStep[] = [
     ],
     category: 'continuity',
     estimatedTime: '30 minutes',
-    order: 4
+    order: '4'
   },
   {
     id: 'insulation-resistance',
@@ -85,7 +85,7 @@ export const comprehensiveTestSteps: TestStep[] = [
       min: 1,
       unit: 'MΩ'
     },
-    order: 5
+    order: '5'
   },
   {
     id: 'polarity-testing',
@@ -99,7 +99,7 @@ export const comprehensiveTestSteps: TestStep[] = [
     ],
     category: 'polarity',
     estimatedTime: '30 minutes',
-    order: 6
+    order: '6'
   },
   {
     id: 'earth-fault-loop-impedance',
@@ -118,7 +118,7 @@ export const comprehensiveTestSteps: TestStep[] = [
       max: 1.44,
       unit: 'Ω'
     },
-    order: 7
+    order: '7'
   },
   {
     id: 'rcd-testing',
@@ -136,7 +136,7 @@ export const comprehensiveTestSteps: TestStep[] = [
       max: 300,
       unit: 'ms'
     },
-    order: 8
+    order: '8'
   },
   {
     id: 'functional-testing',
@@ -150,6 +150,6 @@ export const comprehensiveTestSteps: TestStep[] = [
     ],
     category: 'functional-test',
     estimatedTime: '30 minutes',
-    order: 9
+    order: '9'
   }
 ];
