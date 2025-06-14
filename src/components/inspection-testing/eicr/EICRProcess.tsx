@@ -3,16 +3,17 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { CheckCircle, FileText, Play, Clock, Users } from 'lucide-react';
+import { CheckCircle, FileText, ArrowLeft, Clock, Users, PlayCircle } from 'lucide-react';
 import EICRSetupForm from './EICRSetupForm';
 import TestStepDisplay from '../TestStepDisplay';
 import ReportGenerator from '../ReportGenerator';
 import { useTestFlowEngine } from '@/hooks/useTestFlowEngine';
 import { eicrTestFlow } from '@/data/inspection-testing/eicrTestFlow';
 
+type EICRStage = 'overview' | 'setup' | 'testing' | 'completed';
+
 const EICRProcess = () => {
-  const [showSetup, setShowSetup] = useState(true);
-  const [sessionCompleted, setSessionCompleted] = useState(false);
+  const [currentStage, setCurrentStage] = useState<EICRStage>('overview');
   
   const {
     session,
@@ -30,10 +31,14 @@ const EICRProcess = () => {
     completeSession
   } = useTestFlowEngine(eicrTestFlow);
 
+  const handleStartSetup = () => {
+    setCurrentStage('setup');
+  };
+
   const handleStartSession = (installationDetails: any, technician: any) => {
     console.log('Starting EICR session with:', { installationDetails, technician });
     startSession(installationDetails, technician);
-    setShowSetup(false);
+    setCurrentStage('testing');
   };
 
   const handleStepComplete = (result: any) => {
@@ -42,7 +47,7 @@ const EICRProcess = () => {
       
       if (isLastStep) {
         const completedSession = completeSession();
-        setSessionCompleted(true);
+        setCurrentStage('completed');
         console.log('EICR session completed:', completedSession);
       } else {
         nextStep();
@@ -65,51 +70,139 @@ const EICRProcess = () => {
     // Print logic would go here
   };
 
-  if (showSetup) {
+  const handleBackToOverview = () => {
+    setCurrentStage('overview');
+  };
+
+  const handleStartNewEICR = () => {
+    setCurrentStage('overview');
+  };
+
+  // Overview Stage
+  if (currentStage === 'overview') {
     return (
       <div className="space-y-6">
         <Card className="border-elec-yellow/30 bg-elec-gray">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <FileText className="h-5 w-5 text-elec-yellow" />
-              EICR Process Setup
+              EICR Complete Process
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-              <div className="text-center">
-                <div className="flex items-center justify-center w-12 h-12 bg-elec-yellow/20 rounded-lg mb-3 mx-auto">
-                  <Clock className="h-6 w-6 text-elec-yellow" />
+            <div className="space-y-6">
+              <p className="text-muted-foreground">
+                Complete Electrical Installation Condition Report following BS 7671:2018+A2:2022. 
+                This comprehensive process includes visual inspection, testing procedures, and 
+                professional report generation.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="text-center">
+                  <div className="flex items-center justify-center w-12 h-12 bg-elec-yellow/20 rounded-lg mb-3 mx-auto">
+                    <Clock className="h-6 w-6 text-elec-yellow" />
+                  </div>
+                  <h3 className="font-semibold mb-1">Duration</h3>
+                  <p className="text-sm text-muted-foreground">{eicrTestFlow.estimatedDuration}</p>
                 </div>
-                <h3 className="font-semibold mb-1">Duration</h3>
-                <p className="text-sm text-muted-foreground">{eicrTestFlow.estimatedDuration}</p>
+                
+                <div className="text-center">
+                  <div className="flex items-center justify-center w-12 h-12 bg-elec-yellow/20 rounded-lg mb-3 mx-auto">
+                    <CheckCircle className="h-6 w-6 text-elec-yellow" />
+                  </div>
+                  <h3 className="font-semibold mb-1">Total Steps</h3>
+                  <p className="text-sm text-muted-foreground">{eicrTestFlow.steps.length} procedures</p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="flex items-center justify-center w-12 h-12 bg-elec-yellow/20 rounded-lg mb-3 mx-auto">
+                    <Users className="h-6 w-6 text-elec-yellow" />
+                  </div>
+                  <h3 className="font-semibold mb-1">Difficulty</h3>
+                  <p className="text-sm text-muted-foreground capitalize">{eicrTestFlow.difficulty}</p>
+                </div>
               </div>
-              
-              <div className="text-center">
-                <div className="flex items-center justify-center w-12 h-12 bg-elec-yellow/20 rounded-lg mb-3 mx-auto">
-                  <CheckCircle className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <h3 className="font-semibold mb-1">Total Steps</h3>
-                <p className="text-sm text-muted-foreground">{eicrTestFlow.steps.length} procedures</p>
+
+              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                <h4 className="font-medium text-blue-400 mb-2">What's Included</h4>
+                <ul className="text-blue-300 text-sm space-y-1">
+                  <li>• Complete visual inspection procedures</li>
+                  <li>• All required testing sequences (continuity, insulation, Zs, RCD, polarity)</li>
+                  <li>• Automatic fault classification (C1, C2, C3, FI)</li>
+                  <li>• Professional EICR report generation</li>
+                  <li>• Compliance with BS 7671:2018+A2:2022</li>
+                </ul>
               </div>
-              
-              <div className="text-center">
-                <div className="flex items-center justify-center w-12 h-12 bg-elec-yellow/20 rounded-lg mb-3 mx-auto">
-                  <Users className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <h3 className="font-semibold mb-1">Difficulty</h3>
-                <p className="text-sm text-muted-foreground capitalize">{eicrTestFlow.difficulty}</p>
+
+              <div className="flex justify-center">
+                <Button 
+                  onClick={handleStartSetup}
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center gap-2"
+                  size="lg"
+                >
+                  <PlayCircle className="h-5 w-5" />
+                  Begin EICR Setup
+                </Button>
               </div>
             </div>
           </CardContent>
         </Card>
 
+        {/* Prerequisites and Safety */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card className="border-orange-500/30 bg-orange-500/10">
+            <CardHeader>
+              <CardTitle className="text-orange-400">Prerequisites</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="text-orange-300 text-sm space-y-2">
+                {eicrTestFlow.prerequisites?.map((req, index) => (
+                  <li key={index}>• {req}</li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="border-red-500/30 bg-red-500/10">
+            <CardHeader>
+              <CardTitle className="text-red-400">Safety Requirements</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="text-red-300 text-sm space-y-2">
+                {eicrTestFlow.safetyRequirements?.map((req, index) => (
+                  <li key={index}>• {req}</li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
+  // Setup Stage
+  if (currentStage === 'setup') {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Button 
+            onClick={handleBackToOverview}
+            variant="outline" 
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Overview
+          </Button>
+        </div>
+        
         <EICRSetupForm onStartSession={handleStartSession} />
       </div>
     );
   }
 
-  if (sessionCompleted && session) {
+  // Completed Stage
+  if (currentStage === 'completed' && session) {
     return (
       <div className="space-y-6">
         <Alert className="bg-green-500/10 border-green-500/30">
@@ -129,10 +222,7 @@ const EICRProcess = () => {
 
         <div className="flex justify-center">
           <Button 
-            onClick={() => {
-              setShowSetup(true);
-              setSessionCompleted(false);
-            }}
+            onClick={handleStartNewEICR}
             variant="outline"
           >
             Start New EICR
@@ -142,6 +232,7 @@ const EICRProcess = () => {
     );
   }
 
+  // Testing Stage
   if (!session || !currentStep) {
     return (
       <Alert className="bg-red-500/10 border-red-500/30">
