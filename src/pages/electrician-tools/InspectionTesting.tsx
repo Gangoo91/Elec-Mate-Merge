@@ -57,13 +57,13 @@ const InspectionTesting = () => {
             <Zap className="h-4 w-4" />
             EIC Process
           </TabsTrigger>
-          <TabsTrigger value="testing" className="flex items-center gap-2">
-            <Settings className="h-4 w-4" />
-            Circuit Testing
-          </TabsTrigger>
           <TabsTrigger value="minor-works" className="flex items-center gap-2">
             <Wrench className="h-4 w-4" />
             Minor Works
+          </TabsTrigger>
+          <TabsTrigger value="schedule-of-results" className="flex items-center gap-2">
+            <Settings className="h-4 w-4" />
+            Schedule of Results
           </TabsTrigger>
           <TabsTrigger value="reports" className="flex items-center gap-2">
             <BarChart3 className="h-4 w-4" />
@@ -79,12 +79,12 @@ const InspectionTesting = () => {
           <EICProcessTab />
         </TabsContent>
 
-        <TabsContent value="testing">
-          <CircuitTestingTab />
-        </TabsContent>
-
         <TabsContent value="minor-works">
           <MinorWorksTab />
+        </TabsContent>
+
+        <TabsContent value="schedule-of-results">
+          <CircuitTestingTab />
         </TabsContent>
 
         <TabsContent value="reports">
