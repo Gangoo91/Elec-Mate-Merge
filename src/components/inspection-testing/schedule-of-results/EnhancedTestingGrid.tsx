@@ -1,421 +1,528 @@
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Plus, Download, FileText, CheckCircle, XCircle, AlertTriangle } from 'lucide-react';
-import { BS7671Validator } from '../BS7671Validator';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { 
+  CheckCircle2, 
+  XCircle, 
+  AlertTriangle, 
+  Plus, 
+  Trash2,
+  FileText,
+  Download,
+  Settings
+} from 'lucide-react';
 
-interface CircuitResult {
+interface Circuit {
   id: string;
-  circuitNumber: string;
+  reference: string;
   description: string;
+  type: string;
+  rating: number;
   r1r2: number | null;
+  rn: number | null;
   insulation: number | null;
-  zs: number | null;
-  rcd: number | null;
+  polarity: 'PASS' | 'FAIL' | 'N/A' | null;
+  earthContinuity: number | null;
   pfc: number | null;
-  polarity: 'pass' | 'fail' | null;
-  r1r2Status: 'pass' | 'fail' | 'warning' | null;
-  insulationStatus: 'pass' | 'fail' | 'warning' | null;
-  zsStatus: 'pass' | 'fail' | 'warning' | null;
-  rcdStatus: 'pass' | 'fail' | 'warning' | null;
-  overallStatus: 'pass' | 'fail' | 'warning';
+  rcd: number | null;
+  functionalTesting: 'PASS' | 'FAIL' | 'N/A' | null;
+  overallResult: 'PASS' | 'FAIL' | 'INVESTIGATE' | null;
+}
+
+interface TestingSession {
+  installationAddress: string;
+  inspectionDate: string;
+  inspectorName: string;
+  circuits: Circuit[];
 }
 
 const EnhancedTestingGrid = () => {
-  const [circuits, setCircuits] = useState<CircuitResult[]>([
-    {
-      id: '1',
-      circuitNumber: 'C1',
-      description: 'Ring Final Circuit - Sockets',
-      r1r2: 0.04,
-      insulation: 150,
-      zs: 0.35,
-      rcd: 28,
-      pfc: 1200,
-      polarity: 'pass',
-      r1r2Status: 'pass',
-      insulationStatus: 'pass',
-      zsStatus: 'pass',
-      rcdStatus: 'pass',
-      overallStatus: 'pass'
-    },
-    {
-      id: '2',
-      circuitNumber: 'C2',
-      description: 'Lighting Circuit',
-      r1r2: 0.15,
-      insulation: 85,
-      zs: 0.95,
-      rcd: 32,
-      pfc: 950,
-      polarity: 'pass',
-      r1r2Status: 'warning',
-      insulationStatus: 'pass',
-      zsStatus: 'warning',
-      rcdStatus: 'pass',
-      overallStatus: 'warning'
-    },
-    {
-      id: '3',
-      circuitNumber: 'C3',
-      description: 'Cooker Circuit',
-      r1r2: 0.08,
-      insulation: 0.8,
-      zs: 0.22,
-      rcd: null,
-      pfc: 1500,
-      polarity: 'pass',
-      r1r2Status: 'pass',
-      insulationStatus: 'fail',
-      zsStatus: 'pass',
-      rcdStatus: null,
-      overallStatus: 'fail'
-    }
-  ]);
+  const [session, setSession] = useState<TestingSession>({
+    installationAddress: '',
+    inspectionDate: new Date().toISOString().split('T')[0],
+    inspectorName: '',
+    circuits: []
+  });
 
-  const validateTestResult = (type: string, value: number | null, polarity?: 'pass' | 'fail' | null) => {
-    if (value === null && type !== 'polarity') return null;
+  const [activeTab, setActiveTab] = useState('setup');
 
-    const mockTestResult = {
-      stepId: type,
-      value,
-      status: polarity === 'fail' ? 'failed' : 'completed' as const,
-      timestamp: new Date()
-    };
+  // Sample circuit types for quick addition
+  const circuitTypes = [
+    { type: 'Lighting', rating: 6, description: 'Downstairs Lights' },
+    { type: 'Power', rating: 32, description: 'Kitchen Ring' },
+    { type: 'Shower', rating: 45, description: 'Electric Shower' },
+    { type: 'Cooker', rating: 32, description: 'Electric Cooker' },
+    { type: 'Immersion', rating: 16, description: 'Immersion Heater' }
+  ];
 
-    switch (type) {
-      case 'r1r2':
-        return BS7671Validator.validateContinuityTest(mockTestResult);
-      case 'insulation':
-        return BS7671Validator.validateInsulationResistance(mockTestResult);
-      case 'zs':
-        return BS7671Validator.validateEarthFaultLoop(mockTestResult);
-      case 'rcd':
-        return BS7671Validator.validateRCDTest(mockTestResult);
-      case 'polarity':
-        return BS7671Validator.validatePolarity(mockTestResult);
-      default:
-        return { isValid: true, severity: 'info' as const, message: 'OK' };
-    }
-  };
-
-  const getStatusFromValidation = (validation: any) => {
-    if (!validation) return null;
-    if (!validation.isValid) return 'fail';
-    if (validation.severity === 'warning') return 'warning';
-    return 'pass';
-  };
-
-  const updateCircuitValue = (circuitId: string, field: string, value: any) => {
-    setCircuits(prev => prev.map(circuit => {
-      if (circuit.id !== circuitId) return circuit;
-
-      const updated = { ...circuit, [field]: value };
-
-      // Recalculate validation statuses
-      updated.r1r2Status = getStatusFromValidation(validateTestResult('r1r2', updated.r1r2));
-      updated.insulationStatus = getStatusFromValidation(validateTestResult('insulation', updated.insulation));
-      updated.zsStatus = getStatusFromValidation(validateTestResult('zs', updated.zs));
-      updated.rcdStatus = getStatusFromValidation(validateTestResult('rcd', updated.rcd));
-
-      // Calculate overall status
-      const statuses = [updated.r1r2Status, updated.insulationStatus, updated.zsStatus, updated.rcdStatus, updated.polarity]
-        .filter(status => status !== null);
-      
-      if (statuses.includes('fail')) {
-        updated.overallStatus = 'fail';
-      } else if (statuses.includes('warning')) {
-        updated.overallStatus = 'warning';
-      } else {
-        updated.overallStatus = 'pass';
-      }
-
-      return updated;
-    }));
-  };
-
-  const addNewCircuit = () => {
-    const newCircuit: CircuitResult = {
-      id: String(circuits.length + 1),
-      circuitNumber: `C${circuits.length + 1}`,
-      description: '',
+  const addCircuit = useCallback((templateType?: any) => {
+    const newCircuit: Circuit = {
+      id: `circuit-${Date.now()}`,
+      reference: `C${session.circuits.length + 1}`,
+      description: templateType?.description || '',
+      type: templateType?.type || '',
+      rating: templateType?.rating || 0,
       r1r2: null,
+      rn: null,
       insulation: null,
-      zs: null,
-      rcd: null,
-      pfc: null,
       polarity: null,
-      r1r2Status: null,
-      insulationStatus: null,
-      zsStatus: null,
-      rcdStatus: null,
-      overallStatus: 'warning'
+      earthContinuity: null,
+      pfc: null,
+      rcd: null,
+      functionalTesting: null,
+      overallResult: null
     };
-    setCircuits(prev => [...prev, newCircuit]);
-  };
 
-  const getStatusBadge = (status: 'pass' | 'fail' | 'warning' | null) => {
-    if (!status) return <Badge variant="outline">-</Badge>;
+    setSession(prev => ({
+      ...prev,
+      circuits: [...prev.circuits, newCircuit]
+    }));
+  }, [session.circuits.length]);
+
+  const removeCircuit = useCallback((circuitId: string) => {
+    setSession(prev => ({
+      ...prev,
+      circuits: prev.circuits.filter(c => c.id !== circuitId)
+    }));
+  }, []);
+
+  const updateCircuit = useCallback((circuitId: string, field: string, value: any) => {
+    setSession(prev => ({
+      ...prev,
+      circuits: prev.circuits.map(circuit => {
+        if (circuit.id === circuitId) {
+          const updated = { ...circuit, [field]: value };
+          
+          // Auto-calculate overall result based on test values
+          let overallResult: 'PASS' | 'FAIL' | 'INVESTIGATE' | null = null;
+          
+          // Check if we have enough data to determine result
+          const hasTestData = updated.r1r2 !== null || updated.insulation !== null || 
+                            updated.polarity !== null || updated.earthContinuity !== null;
+          
+          if (hasTestData) {
+            // BS 7671 compliance checks
+            let failureFound = false;
+            let investigationNeeded = false;
+
+            // R1+R2 check (should be less than 1.67 x Zs for most circuits)
+            if (updated.r1r2 !== null && updated.r1r2 > 2.0) {
+              failureFound = true;
+            }
+
+            // Insulation resistance check (minimum 1MΩ for most circuits)
+            if (updated.insulation !== null && updated.insulation < 1.0) {
+              failureFound = true;
+            }
+
+            // Polarity check
+            if (updated.polarity === 'FAIL') {
+              failureFound = true;
+            }
+
+            // Earth continuity check (should be low, typically less than R1+R2)
+            if (updated.earthContinuity !== null && updated.r1r2 !== null && 
+                updated.earthContinuity > updated.r1r2) {
+              investigationNeeded = true;
+            }
+
+            // PFC check (should be sufficient for protective device operation)
+            if (updated.pfc !== null && updated.pfc < 100) {
+              investigationNeeded = true;
+            }
+
+            // Functional testing
+            if (updated.functionalTesting === 'FAIL') {
+              failureFound = true;
+            }
+
+            if (failureFound) {
+              overallResult = 'FAIL';
+            } else if (investigationNeeded) {
+              overallResult = 'INVESTIGATE';
+            } else {
+              overallResult = 'PASS';
+            }
+          }
+
+          return { ...updated, overallResult };
+        }
+        return circuit;
+      })
+    }));
+  }, []);
+
+  const getResultBadge = (result: string | null) => {
+    if (!result) return null;
     
     const variants = {
-      pass: { variant: 'success' as const, icon: CheckCircle, text: 'Pass' },
-      fail: { variant: 'destructive' as const, icon: XCircle, text: 'Fail' },
-      warning: { variant: 'yellow' as const, icon: AlertTriangle, text: 'Warning' }
+      'PASS': 'bg-green-500/10 text-green-400 border-green-500/20',
+      'FAIL': 'bg-red-500/10 text-red-400 border-red-500/20',
+      'INVESTIGATE': 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
+      'N/A': 'bg-gray-500/10 text-gray-400 border-gray-500/20'
     };
 
-    const config = variants[status];
-    const Icon = config.icon;
-
     return (
-      <Badge variant={config.variant} className="flex items-center gap-1">
-        <Icon className="h-3 w-3" />
-        {config.text}
+      <Badge className={variants[result as keyof typeof variants] || variants['N/A']}>
+        {result}
       </Badge>
     );
   };
 
-  const exportResults = () => {
-    const csvContent = [
-      'Circuit,Description,R1+R2(Ω),Status,Insulation(MΩ),Status,Zs(Ω),Status,RCD(ms),Status,PFC(A),Polarity,Overall Status',
-      ...circuits.map(circuit => 
-        `${circuit.circuitNumber},"${circuit.description}",${circuit.r1r2 || ''},${circuit.r1r2Status || ''},${circuit.insulation || ''},${circuit.insulationStatus || ''},${circuit.zs || ''},${circuit.zsStatus || ''},${circuit.rcd || ''},${circuit.rcdStatus || ''},${circuit.pfc || ''},${circuit.polarity || ''},${circuit.overallStatus}`
-      )
-    ].join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'eicr-test-results.csv';
-    a.click();
-    URL.revokeObjectURL(url);
+  const getResultIcon = (result: string | null) => {
+    switch (result) {
+      case 'PASS':
+        return <CheckCircle2 className="h-4 w-4 text-green-400" />;
+      case 'FAIL':
+        return <XCircle className="h-4 w-4 text-red-400" />;
+      case 'INVESTIGATE':
+        return <AlertTriangle className="h-4 w-4 text-yellow-400" />;
+      default:
+        return null;
+    }
   };
 
-  const generateComplianceReport = () => {
-    const totalCircuits = circuits.length;
-    const passCount = circuits.filter(c => c.overallStatus === 'pass').length;
-    const failCount = circuits.filter(c => c.overallStatus === 'fail').length;
-    const warningCount = circuits.filter(c => c.overallStatus === 'warning').length;
-    const passRate = Math.round((passCount / totalCircuits) * 100);
-
-    return {
-      totalCircuits,
-      passCount,
-      failCount,
-      warningCount,
-      passRate,
-      overallCompliance: failCount === 0
-    };
+  const generateReport = () => {
+    const passCount = session.circuits.filter(c => c.overallResult === 'PASS').length;
+    const failCount = session.circuits.filter(c => c.overallResult === 'FAIL').length;
+    const investigateCount = session.circuits.filter(c => c.overallResult === 'INVESTIGATE').length;
+    
+    console.log('Test Results Summary:', {
+      total: session.circuits.length,
+      pass: passCount,
+      fail: failCount,
+      investigate: investigateCount
+    });
   };
 
-  const complianceStats = generateComplianceReport();
-
-  return (
+  // Setup Tab Content
+  const SetupTab = () => (
     <div className="space-y-6">
-      {/* Summary Statistics */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label className="block text-sm font-medium mb-2">Installation Address</label>
+          <Input
+            value={session.installationAddress}
+            onChange={(e) => setSession(prev => ({ ...prev, installationAddress: e.target.value }))}
+            placeholder="Enter property address"
+            className="bg-elec-gray/50 border-elec-yellow/20"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-2">Inspection Date</label>
+          <Input
+            type="date"
+            value={session.inspectionDate}
+            onChange={(e) => setSession(prev => ({ ...prev, inspectionDate: e.target.value }))}
+            className="bg-elec-gray/50 border-elec-yellow/20"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-2">Inspector Name</label>
+          <Input
+            value={session.inspectorName}
+            onChange={(e) => setSession(prev => ({ ...prev, inspectorName: e.target.value }))}
+            placeholder="Enter inspector name"
+            className="bg-elec-gray/50 border-elec-yellow/20"
+          />
+        </div>
+      </div>
+
+      <div>
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+          <Settings className="h-5 w-5 text-elec-yellow" />
+          Quick Circuit Templates
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+          {circuitTypes.map((template, index) => (
+            <Button
+              key={index}
+              onClick={() => addCircuit(template)}
+              variant="outline"
+              className="h-auto p-3 border-elec-yellow/20 hover:border-elec-yellow/40"
+            >
+              <div className="text-center">
+                <div className="font-medium">{template.type}</div>
+                <div className="text-xs text-muted-foreground">{template.rating}A</div>
+                <div className="text-xs text-muted-foreground">{template.description}</div>
+              </div>
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      {session.circuits.length > 0 && (
+        <div className="flex justify-end">
+          <Button 
+            onClick={() => setActiveTab('testing')}
+            className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+          >
+            Continue to Testing Grid
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+
+  // Testing Grid Tab Content
+  const TestingGridTab = () => (
+    <div className="space-y-6">
+      {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="border-green-500/50">
+        <Card className="border-elec-yellow/20 bg-elec-gray/30">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-green-500" />
-              <div>
-                <p className="text-sm text-muted-foreground">Pass</p>
-                <p className="text-2xl font-bold text-green-500">{complianceStats.passCount}</p>
-              </div>
-            </div>
+            <div className="text-2xl font-bold text-elec-yellow">{session.circuits.length}</div>
+            <div className="text-sm text-muted-foreground">Total Circuits</div>
           </CardContent>
         </Card>
-
-        <Card className="border-yellow-500/50">
+        <Card className="border-green-500/20 bg-green-500/5">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-yellow-500" />
-              <div>
-                <p className="text-sm text-muted-foreground">Warning</p>
-                <p className="text-2xl font-bold text-yellow-500">{complianceStats.warningCount}</p>
-              </div>
+            <div className="text-2xl font-bold text-green-400">
+              {session.circuits.filter(c => c.overallResult === 'PASS').length}
             </div>
+            <div className="text-sm text-muted-foreground">Passed</div>
           </CardContent>
         </Card>
-
-        <Card className="border-red-500/50">
+        <Card className="border-red-500/20 bg-red-500/5">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <XCircle className="h-5 w-5 text-red-500" />
-              <div>
-                <p className="text-sm text-muted-foreground">Fail</p>
-                <p className="text-2xl font-bold text-red-500">{complianceStats.failCount}</p>
-              </div>
+            <div className="text-2xl font-bold text-red-400">
+              {session.circuits.filter(c => c.overallResult === 'FAIL').length}
             </div>
+            <div className="text-sm text-muted-foreground">Failed</div>
           </CardContent>
         </Card>
-
-        <Card className="border-blue-500/50">
+        <Card className="border-yellow-500/20 bg-yellow-500/5">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <FileText className="h-5 w-5 text-blue-500" />
-              <div>
-                <p className="text-sm text-muted-foreground">Pass Rate</p>
-                <p className="text-2xl font-bold text-blue-500">{complianceStats.passRate}%</p>
-              </div>
+            <div className="text-2xl font-bold text-yellow-400">
+              {session.circuits.filter(c => c.overallResult === 'INVESTIGATE').length}
             </div>
+            <div className="text-sm text-muted-foreground">Investigate</div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Overall Compliance Status */}
-      <Alert className={complianceStats.overallCompliance ? "bg-green-500/10 border-green-500/30" : "bg-red-500/10 border-red-500/30"}>
-        {complianceStats.overallCompliance ? (
-          <CheckCircle className="h-4 w-4 text-green-400" />
-        ) : (
-          <XCircle className="h-4 w-4 text-red-400" />
-        )}
-        <AlertDescription className={complianceStats.overallCompliance ? "text-green-200" : "text-red-200"}>
-          <strong>Overall Compliance:</strong> {complianceStats.overallCompliance ? 'SATISFACTORY' : 'UNSATISFACTORY'} - 
-          {complianceStats.overallCompliance 
-            ? ' All circuits meet BS 7671 requirements' 
-            : ` ${complianceStats.failCount} circuit(s) require immediate attention`}
-        </AlertDescription>
-      </Alert>
-
       {/* Testing Grid */}
-      <Card>
+      <Card className="border-elec-yellow/20 bg-elec-gray/30">
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="h-5 w-5 text-elec-yellow" />
-              Enhanced Schedule of Test Results
-            </CardTitle>
+          <CardTitle className="flex items-center justify-between">
+            <span>Schedule of Test Results</span>
             <div className="flex gap-2">
-              <Button onClick={addNewCircuit} size="sm" className="flex items-center gap-2">
-                <Plus className="h-4 w-4" />
+              <Button onClick={() => addCircuit()} variant="outline" size="sm">
+                <Plus className="h-4 w-4 mr-2" />
                 Add Circuit
               </Button>
-              <Button onClick={exportResults} variant="outline" size="sm" className="flex items-center gap-2">
-                <Download className="h-4 w-4" />
-                Export CSV
+              <Button onClick={generateReport} variant="outline" size="sm">
+                <Download className="h-4 w-4 mr-2" />
+                Export Report
               </Button>
             </div>
-          </div>
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Circuit</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead>R1+R2 (Ω)</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Insulation (MΩ)</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Zs (Ω)</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>RCD (ms)</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>PFC (A)</TableHead>
-                  <TableHead>Polarity</TableHead>
-                  <TableHead>Overall</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {circuits.map((circuit) => (
-                  <TableRow key={circuit.id}>
-                    <TableCell className="font-medium">{circuit.circuitNumber}</TableCell>
-                    <TableCell>
-                      <Input
-                        value={circuit.description}
-                        onChange={(e) => updateCircuitValue(circuit.id, 'description', e.target.value)}
-                        placeholder="Circuit description"
-                        className="min-w-[200px]"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <Input
-                        type="number"
-                        step="0.01"
-                        value={circuit.r1r2 || ''}
-                        onChange={(e) => updateCircuitValue(circuit.id, 'r1r2', e.target.value ? parseFloat(e.target.value) : null)}
-                        className="w-20"
-                      />
-                    </TableCell>
-                    <TableCell>{getStatusBadge(circuit.r1r2Status)}</TableCell>
-                    <TableCell>
-                      <Input
-                        type="number"
-                        step="0.1"
-                        value={circuit.insulation || ''}
-                        onChange={(e) => updateCircuitValue(circuit.id, 'insulation', e.target.value ? parseFloat(e.target.value) : null)}
-                        className="w-20"
-                      />
-                    </TableCell>
-                    <TableCell>{getStatusBadge(circuit.insulationStatus)}</TableCell>
-                    <TableCell>
-                      <Input
-                        type="number"
-                        step="0.01"
-                        value={circuit.zs || ''}
-                        onChange={(e) => updateCircuitValue(circuit.id, 'zs', e.target.value ? parseFloat(e.target.value) : null)}
-                        className="w-20"
-                      />
-                    </TableCell>
-                    <TableCell>{getStatusBadge(circuit.zsStatus)}</TableCell>
-                    <TableCell>
-                      <Input
-                        type="number"
-                        value={circuit.rcd || ''}
-                        onChange={(e) => updateCircuitValue(circuit.id, 'rcd', e.target.value ? parseFloat(e.target.value) : null)}
-                        className="w-20"
-                      />
-                    </TableCell>
-                    <TableCell>{getStatusBadge(circuit.rcdStatus)}</TableCell>
-                    <TableCell>
-                      <Input
-                        type="number"
-                        value={circuit.pfc || ''}
-                        onChange={(e) => updateCircuitValue(circuit.id, 'pfc', e.target.value ? parseFloat(e.target.value) : null)}
-                        className="w-24"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      <select
-                        value={circuit.polarity || ''}
-                        onChange={(e) => updateCircuitValue(circuit.id, 'polarity', e.target.value || null)}
-                        className="border rounded px-2 py-1 bg-background"
-                      >
-                        <option value="">-</option>
-                        <option value="pass">Pass</option>
-                        <option value="fail">Fail</option>
-                      </select>
-                    </TableCell>
-                    <TableCell>{getStatusBadge(circuit.overallStatus)}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+          {session.circuits.length === 0 ? (
+            <div className="text-center py-8">
+              <FileText className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-lg font-medium mb-2">No Circuits Added</h3>
+              <p className="text-muted-foreground mb-4">
+                Add circuits from the setup tab or use the quick templates above.
+              </p>
+              <Button onClick={() => setActiveTab('setup')} variant="outline">
+                Go to Setup
+              </Button>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-elec-yellow/20">
+                    <th className="text-left p-2">Ref</th>
+                    <th className="text-left p-2">Description</th>
+                    <th className="text-left p-2">Type</th>
+                    <th className="text-left p-2">Rating (A)</th>
+                    <th className="text-left p-2">R1+R2 (Ω)</th>
+                    <th className="text-left p-2">Rn (Ω)</th>
+                    <th className="text-left p-2">IR (MΩ)</th>
+                    <th className="text-left p-2">Polarity</th>
+                    <th className="text-left p-2">Earth (Ω)</th>
+                    <th className="text-left p-2">PFC (A)</th>
+                    <th className="text-left p-2">RCD (ms)</th>
+                    <th className="text-left p-2">Function</th>
+                    <th className="text-left p-2">Result</th>
+                    <th className="text-left p-2"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {session.circuits.map((circuit) => (
+                    <tr key={circuit.id} className="border-b border-gray-700/50 hover:bg-elec-gray/20">
+                      <td className="p-2">
+                        <Input
+                          value={circuit.reference}
+                          onChange={(e) => updateCircuit(circuit.id, 'reference', e.target.value)}
+                          className="w-16 h-8 text-xs bg-transparent border-gray-600"
+                        />
+                      </td>
+                      <td className="p-2">
+                        <Input
+                          value={circuit.description}
+                          onChange={(e) => updateCircuit(circuit.id, 'description', e.target.value)}
+                          className="w-32 h-8 text-xs bg-transparent border-gray-600"
+                        />
+                      </td>
+                      <td className="p-2">
+                        <Input
+                          value={circuit.type}
+                          onChange={(e) => updateCircuit(circuit.id, 'type', e.target.value)}
+                          className="w-20 h-8 text-xs bg-transparent border-gray-600"
+                        />
+                      </td>
+                      <td className="p-2">
+                        <Input
+                          type="number"
+                          value={circuit.rating || ''}
+                          onChange={(e) => updateCircuit(circuit.id, 'rating', parseFloat(e.target.value) || 0)}
+                          className="w-16 h-8 text-xs bg-transparent border-gray-600"
+                        />
+                      </td>
+                      <td className="p-2">
+                        <Input
+                          type="number"
+                          step="0.01"
+                          value={circuit.r1r2 || ''}
+                          onChange={(e) => updateCircuit(circuit.id, 'r1r2', parseFloat(e.target.value) || null)}
+                          className="w-20 h-8 text-xs bg-transparent border-gray-600"
+                        />
+                      </td>
+                      <td className="p-2">
+                        <Input
+                          type="number"
+                          step="0.01"
+                          value={circuit.rn || ''}
+                          onChange={(e) => updateCircuit(circuit.id, 'rn', parseFloat(e.target.value) || null)}
+                          className="w-20 h-8 text-xs bg-transparent border-gray-600"
+                        />
+                      </td>
+                      <td className="p-2">
+                        <Input
+                          type="number"
+                          step="0.1"
+                          value={circuit.insulation || ''}
+                          onChange={(e) => updateCircuit(circuit.id, 'insulation', parseFloat(e.target.value) || null)}
+                          className="w-20 h-8 text-xs bg-transparent border-gray-600"
+                        />
+                      </td>
+                      <td className="p-2">
+                        <select
+                          value={circuit.polarity || ''}
+                          onChange={(e) => updateCircuit(circuit.id, 'polarity', e.target.value || null)}
+                          className="w-20 h-8 text-xs bg-elec-gray border border-gray-600 rounded"
+                        >
+                          <option value="">-</option>
+                          <option value="PASS">PASS</option>
+                          <option value="FAIL">FAIL</option>
+                          <option value="N/A">N/A</option>
+                        </select>
+                      </td>
+                      <td className="p-2">
+                        <Input
+                          type="number"
+                          step="0.01"
+                          value={circuit.earthContinuity || ''}
+                          onChange={(e) => updateCircuit(circuit.id, 'earthContinuity', parseFloat(e.target.value) || null)}
+                          className="w-20 h-8 text-xs bg-transparent border-gray-600"
+                        />
+                      </td>
+                      <td className="p-2">
+                        <Input
+                          type="number"
+                          value={circuit.pfc || ''}
+                          onChange={(e) => updateCircuit(circuit.id, 'pfc', parseFloat(e.target.value) || null)}
+                          className="w-20 h-8 text-xs bg-transparent border-gray-600"
+                        />
+                      </td>
+                      <td className="p-2">
+                        <Input
+                          type="number"
+                          value={circuit.rcd || ''}
+                          onChange={(e) => updateCircuit(circuit.id, 'rcd', parseFloat(e.target.value) || null)}
+                          className="w-20 h-8 text-xs bg-transparent border-gray-600"
+                        />
+                      </td>
+                      <td className="p-2">
+                        <select
+                          value={circuit.functionalTesting || ''}
+                          onChange={(e) => updateCircuit(circuit.id, 'functionalTesting', e.target.value || null)}
+                          className="w-20 h-8 text-xs bg-elec-gray border border-gray-600 rounded"
+                        >
+                          <option value="">-</option>
+                          <option value="PASS">PASS</option>
+                          <option value="FAIL">FAIL</option>
+                          <option value="N/A">N/A</option>
+                        </select>
+                      </td>
+                      <td className="p-2">
+                        <div className="flex items-center gap-1">
+                          {getResultIcon(circuit.overallResult)}
+                          {getResultBadge(circuit.overallResult)}
+                        </div>
+                      </td>
+                      <td className="p-2">
+                        <Button
+                          onClick={() => removeCircuit(circuit.id)}
+                          variant="outline"
+                          size="sm"
+                          className="h-6 w-6 p-0 border-red-500/20 hover:border-red-500/40"
+                        >
+                          <Trash2 className="h-3 w-3 text-red-400" />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </CardContent>
       </Card>
 
-      {/* BS 7671 Compliance Information */}
-      <Card className="border-blue-500/30">
-        <CardHeader>
-          <CardTitle className="text-blue-300">BS 7671 Compliance Guidelines</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-2 text-sm text-muted-foreground">
-          <p><strong>R1+R2:</strong> Continuity of protective conductors - Max 1.67Ω for most circuits</p>
-          <p><strong>Insulation:</strong> Minimum 1MΩ for circuits up to 500V, >2MΩ recommended</p>
-          <p><strong>Zs:</strong> Earth fault loop impedance - varies by protective device type and rating</p>
-          <p><strong>RCD:</strong> Residual current device - Max 300ms at 1x rating, 40ms at 5x rating</p>
-          <p><strong>PFC:</strong> Prospective fault current - Must not exceed circuit breaker capacity</p>
-          <p><strong>Polarity:</strong> Single pole devices must be connected to line conductor</p>
-        </CardContent>
-      </Card>
+      {/* Compliance Notes */}
+      <Alert className="bg-blue-500/10 border-blue-500/30">
+        <AlertTriangle className="h-4 w-4 text-blue-400" />
+        <AlertDescription className="text-blue-200">
+          <strong>BS 7671 Compliance Notes:</strong> Results are automatically evaluated against current regulations. 
+          IR values should be {'>='} 1MΩ, R1+R2 values should comply with Zs requirements, and PFC should be adequate for protective device operation.
+        </AlertDescription>
+      </Alert>
+    </div>
+  );
+
+  return (
+    <div className="max-w-7xl mx-auto space-y-6">
+      <div className="text-center mb-6">
+        <h1 className="text-2xl font-bold tracking-tight mb-2">Schedule of Test Results</h1>
+        <p className="text-muted-foreground">
+          Comprehensive electrical testing interface with BS 7671 compliance checking
+        </p>
+      </div>
+
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="setup">Setup & Circuits</TabsTrigger>
+          <TabsTrigger value="testing">Testing Grid</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="setup">
+          <SetupTab />
+        </TabsContent>
+
+        <TabsContent value="testing">
+          <TestingGridTab />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
