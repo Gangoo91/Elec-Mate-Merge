@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -32,14 +31,6 @@ const ElectricianTools = () => {
       color: "bg-blue-500/10 border-blue-500/20"
     },
     {
-      id: "business-administration",
-      title: "Business Administration",
-      description: "Complete business management hub for electrical contractors",
-      icon: <Settings className="h-6 w-6" />,
-      path: "/electrician-tools/admin",
-      color: "bg-green-500/10 border-green-500/20"
-    },
-    {
       id: "inspection-testing",
       title: "Inspection & Testing",
       description: "Testing procedures and compliance tools",
@@ -62,6 +53,14 @@ const ElectricianTools = () => {
       icon: <Shield className="h-6 w-6" />,
       path: "/electrician-tools/site-safety",
       color: "bg-red-500/10 border-red-500/20"
+    },
+    {
+      id: "business-administration",
+      title: "Business Administration",
+      description: "Complete business management hub for electrical contractors",
+      icon: <Settings className="h-6 w-6" />,
+      path: "/electrician-tools/admin",
+      color: "bg-green-500/10 border-green-500/20"
     },
     {
       id: "document-templates",
