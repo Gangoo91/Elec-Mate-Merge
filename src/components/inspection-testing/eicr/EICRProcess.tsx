@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { FileText, Wrench, ClipboardCheck, BarChart3, Settings, Play } from 'lucide-react';
 import EICRSetupWizard from './EICRSetupWizard';
-import { EnhancedTestingInterface } from '../EnhancedTestingInterface';
+import EnhancedTestingInterface from '../EnhancedTestingInterface';
 import { useTestFlowEngine } from '@/hooks/useTestFlowEngine';
 import { eicrTestFlow } from '@/data/inspection-testing/eicrTestFlow';
 
