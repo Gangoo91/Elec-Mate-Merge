@@ -16,6 +16,7 @@ export interface TestStep {
   estimatedTime?: string;
   category: string;
   expectedResult?: string;
+  order?: number;
 }
 
 export interface TestResult {
@@ -57,6 +58,8 @@ export interface TestFlow {
   name?: string;
   difficulty?: 'beginner' | 'intermediate' | 'advanced';
   prerequisites?: string[];
+  regulatoryStandards?: string[];
+  safetyRequirements?: string[];
 }
 
 export type TestType = 'eicr' | 'eic' | 'minor-works' | 'pat' | 'comprehensive' | 'safe-isolation' | 'continuity' | 'insulation-resistance' | 'earth-fault-loop' | 'rcd-test' | 'all-tests';

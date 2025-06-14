@@ -3,15 +3,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle, XCircle, AlertTriangle, FileText } from 'lucide-react';
-import { ComprehensiveTestResults, TestResult } from '@/types/inspection-testing';
+import type { ComprehensiveTestResults as ComprehensiveTestResultsType, TestResult } from '@/types/inspection-testing';
 
 interface ComprehensiveTestResultsProps {
-  results: ComprehensiveTestResults;
+  results: ComprehensiveTestResultsType;
 }
 
 const ComprehensiveTestResults = ({ results }: ComprehensiveTestResultsProps) => {
   // Sample data structure that matches the interface
-  const sampleResults: ComprehensiveTestResults = {
+  const sampleResults: ComprehensiveTestResultsType = {
     sessionId: results.sessionId || 'sample-session',
     testType: results.testType || 'comprehensive',
     overallResult: results.overallResult || 'incomplete',
@@ -28,9 +28,9 @@ const ComprehensiveTestResults = ({ results }: ComprehensiveTestResultsProps) =>
     functionalTest: results.functionalTest || []
   };
 
-  const getTestCategoryResults = (category: keyof ComprehensiveTestResults) => {
+  const getTestCategoryResults = (category: keyof ComprehensiveTestResultsType) => {
     const categoryResults = sampleResults[category];
-    if (!Array.isArray(categoryResults)) return [];
+    if (!Array.isArray(categoryResults)) return { passed: 0, failed: 0, total: 0, results: [] };
     
     const passed = categoryResults.filter((r: TestResult) => r.status === 'completed' && r.isWithinLimits).length;
     const failed = categoryResults.filter((r: TestResult) => r.status === 'failed' || !r.isWithinLimits).length;
@@ -82,10 +82,10 @@ const ComprehensiveTestResults = ({ results }: ComprehensiveTestResultsProps) =>
   };
 
   const categoryResults = Object.keys(sampleResults)
-    .filter(key => Array.isArray(sampleResults[key as keyof ComprehensiveTestResults]))
+    .filter(key => Array.isArray(sampleResults[key as keyof ComprehensiveTestResultsType]))
     .map(category => ({
       category,
-      ...getTestCategoryResults(category as keyof ComprehensiveTestResults)
+      ...getTestCategoryResults(category as keyof ComprehensiveTestResultsType)
     }));
 
   const overallStats = {
