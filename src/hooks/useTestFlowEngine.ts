@@ -77,7 +77,10 @@ export const useTestFlowEngine = (testFlow: TestFlow | null): TestFlowEngineHook
       results: [],
       startTime: new Date(),
       status: 'in-progress',
-      isComprehensive: testFlow.isComprehensive
+      isComprehensive: testFlow.isComprehensive,
+      steps: testFlow.steps,
+      installationType: installationDetails?.type || 'Domestic',
+      location: installationDetails?.address || 'Not specified'
     };
 
     setSession(newSession);

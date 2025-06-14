@@ -16,7 +16,7 @@ export interface TestStep {
   estimatedTime?: string;
   category: string;
   expectedResult?: string;
-  order?: number; // Changed from string to number
+  order?: string; // Keep as string to match existing data files
 }
 
 export interface TestResult {
@@ -62,7 +62,7 @@ export interface TestFlow {
   safetyRequirements?: string[];
 }
 
-export type TestType = 'eicr' | 'eic' | 'minor-works' | 'pat' | 'comprehensive' | 'safe-isolation' | 'continuity' | 'insulation-resistance' | 'earth-fault-loop' | 'rcd-test' | 'all-tests';
+export type TestType = 'eicr' | 'eic' | 'minor-works' | 'pat' | 'comprehensive' | 'safe-isolation' | 'continuity' | 'insulation-resistance' | 'earth-fault-loop' | 'rcd-test' | 'polarity' | 'all-tests';
 
 export interface ValidationResult {
   isValid: boolean;
