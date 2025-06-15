@@ -2,111 +2,169 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Users, Settings, BarChart3, MessageSquare, Star, Target } from "lucide-react";
+import { Shield, Users, Target, Calendar, FileText, CheckCircle, AlertTriangle, BookOpen } from "lucide-react";
 
 const ManagementTab = () => {
-  const managementPrinciples = [
+  const managementAreas = [
     {
-      principle: "Clear Communication",
-      description: "Regular team meetings, transparent goal setting, and open feedback channels",
+      area: "Performance Management",
+      icon: <Target className="h-5 w-5" />,
       practices: [
-        "Weekly team briefings on upcoming work",
-        "Monthly one-to-one performance discussions",
-        "Quarterly team building and development sessions",
-        "Annual performance reviews with goal setting"
+        "Set clear, measurable objectives and KPIs",
+        "Conduct regular performance reviews (quarterly/bi-annually)",
+        "Provide ongoing feedback and coaching",
+        "Document performance issues and improvements",
+        "Link performance to career development opportunities"
       ]
     },
     {
-      principle: "Performance Management",
-      description: "Setting expectations, monitoring progress, and providing constructive feedback",
+      area: "Team Communication",
+      icon: <Users className="h-5 w-5" />,
       practices: [
-        "SMART goals aligned with business objectives",
-        "Regular skills assessments and development planning",
-        "Customer feedback integration into performance reviews",
-        "Recognition of achievements and milestone celebrations"
+        "Hold regular team meetings and toolbox talks",
+        "Maintain open-door policy for concerns",
+        "Use digital communication tools effectively",
+        "Encourage feedback and suggestions",
+        "Share company updates and business progress"
       ]
     },
     {
-      principle: "Team Development",
-      description: "Investing in skills growth and creating advancement opportunities",
+      area: "Health & Safety Leadership",
+      icon: <Shield className="h-5 w-5" />,
       practices: [
-        "Individual development plans for each team member",
-        "Cross-training opportunities across different specialisms",
-        "Mentoring programs pairing senior and junior staff",
-        "Support for external training and qualifications"
+        "Lead by example in safety behaviours",
+        "Conduct regular safety inspections and audits",
+        "Investigate incidents thoroughly and transparently",
+        "Provide ongoing safety training and updates",
+        "Recognise and reward safe working practices"
+      ]
+    },
+    {
+      area: "Work Allocation & Planning",
+      icon: <Calendar className="h-5 w-5" />,
+      practices: [
+        "Match electricians' skills to appropriate tasks",
+        "Plan workloads to avoid burnout or underutilisation",
+        "Consider travel time and job complexity",
+        "Provide adequate resources and support",
+        "Monitor progress and adjust plans as needed"
       ]
     }
-  ];
-
-  const performanceMetrics = [
-    { metric: "Customer Satisfaction Score", target: "95%+", frequency: "Monthly" },
-    { metric: "First-Time Fix Rate", target: "85%+", frequency: "Weekly" },
-    { metric: "Safety Incident Rate", target: "0", frequency: "Monthly" },
-    { metric: "Training Hours Completed", target: "40 hrs/year", frequency: "Quarterly" },
-    { metric: "Revenue per Electrician", target: "£120k+", frequency: "Monthly" },
-    { metric: "Overtime Hours", target: "<10%", frequency: "Weekly" }
-  ];
-
-  const teamMeetingAgenda = [
-    "Safety updates and any incidents to review",
-    "Upcoming jobs and resource allocation",
-    "Customer feedback and service improvements", 
-    "Training opportunities and skills development",
-    "Equipment and tool requirements",
-    "Team achievements and recognition"
   ];
 
   const disciplinaryProcess = [
     {
       stage: "Informal Discussion",
-      description: "Address minor issues through conversation and guidance",
-      documentation: "Brief notes on discussion and agreed actions"
+      description: "Address minor issues through conversation and coaching",
+      actions: ["Document the discussion", "Set clear expectations", "Offer support and training"],
+      timeframe: "Immediate"
     },
     {
       stage: "Verbal Warning",
-      description: "Formal discussion with clear expectations and improvement timeline",
-      documentation: "Written record of warning and improvement plan"
+      description: "Formal verbal warning for continued or more serious issues",
+      actions: ["Formal meeting with notes", "Clear improvement timeline", "Follow-up review date"],
+      timeframe: "1-2 weeks"
     },
     {
       stage: "Written Warning",
-      description: "Serious concerns requiring formal documentation and monitoring",
-      documentation: "Official written warning with specific improvement requirements"
+      description: "Formal written warning if issues persist",
+      actions: ["Written documentation", "Performance improvement plan", "Regular monitoring"],
+      timeframe: "2-4 weeks"
     },
     {
-      stage: "Final Warning",
-      description: "Last opportunity to improve before considering dismissal",
-      documentation: "Final warning letter with clear consequences outlined"
+      stage: "Final Written Warning",
+      description: "Last formal warning before potential dismissal",
+      actions: ["Final warning letter", "Clear consequences stated", "Close monitoring period"],
+      timeframe: "4-12 weeks"
+    },
+    {
+      stage: "Dismissal",
+      description: "Termination of employment as last resort",
+      actions: ["Dismissal meeting", "Notice period or pay in lieu", "Final documentation"],
+      timeframe: "As per contract"
+    }
+  ];
+
+  const kpiMetrics = [
+    {
+      category: "Quality & Safety",
+      metrics: ["Safety incident rate", "Quality of work scores", "Customer satisfaction ratings", "Compliance with procedures"]
+    },
+    {
+      category: "Productivity",
+      metrics: ["Jobs completed per week", "Time to complete standard tasks", "Efficiency ratings", "Material waste reduction"]
+    },
+    {
+      category: "Professional Development",
+      metrics: ["Training hours completed", "Certifications achieved", "Skill assessments passed", "Knowledge sharing participation"]
+    },
+    {
+      category: "Team Contribution",
+      metrics: ["Attendance and punctuality", "Teamwork ratings", "Mentoring activities", "Process improvement suggestions"]
+    }
+  ];
+
+  const managementChallenges = [
+    {
+      challenge: "Remote Site Management",
+      solutions: [
+        "Use project management apps for real-time updates",
+        "Schedule regular check-ins via phone or video call",
+        "Implement GPS tracking for work vehicles (with consent)",
+        "Create clear reporting procedures for site issues",
+        "Provide emergency contact protocols"
+      ]
+    },
+    {
+      challenge: "Skills Gap Management",
+      solutions: [
+        "Conduct regular skills assessments",
+        "Create individual development plans",
+        "Pair experienced electricians with newer team members",
+        "Invest in targeted training programmes",
+        "Consider outsourcing specialised work when needed"
+      ]
+    },
+    {
+      challenge: "Workload Balancing",
+      solutions: [
+        "Use scheduling software to optimise job allocation",
+        "Monitor individual workloads and stress levels",
+        "Maintain a pool of trusted subcontractors",
+        "Cross-train team members for flexibility",
+        "Plan for seasonal variations in demand"
+      ]
     }
   ];
 
   return (
     <div className="space-y-6">
       <Alert className="border-blue-500/50 bg-blue-500/10">
-        <Users className="h-4 w-4 text-blue-400" />
+        <Shield className="h-4 w-4 text-blue-400" />
         <AlertDescription className="text-blue-200">
-          Effective management increases team productivity by 30% and reduces turnover by up to 50%.
+          Effective management of electricians requires balancing technical oversight, safety leadership, and people management skills.
         </AlertDescription>
       </Alert>
 
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Settings className="h-5 w-5" />
-            Core Management Principles
+            <BookOpen className="h-5 w-5" />
+            Core Management Areas
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
-            {managementPrinciples.map((item, index) => (
+          <div className="grid gap-6">
+            {managementAreas.map((area, index) => (
               <div key={index} className="border border-elec-yellow/10 rounded-lg p-4 space-y-3">
-                <div>
-                  <h4 className="font-medium text-white mb-1">{item.principle}</h4>
-                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                <div className="flex items-center gap-2">
+                  {area.icon}
+                  <h4 className="font-medium text-white">{area.area}</h4>
                 </div>
-                <ul className="space-y-1 ml-4">
-                  {item.practices.map((practice, practiceIndex) => (
-                    <li key={practiceIndex} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <Badge variant="outline" className="mt-1 h-1.5 w-1.5 rounded-full p-0 border-elec-yellow/50 bg-elec-yellow/20" />
+                <ul className="space-y-1 ml-6">
+                  {area.practices.map((practice, practiceIndex) => (
+                    <li key={practiceIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <Badge variant="outline" className="mt-0.5 h-2 w-2 rounded-full p-0 border-elec-yellow/50 bg-elec-yellow/20" />
                       {practice}
                     </li>
                   ))}
@@ -117,105 +175,116 @@ const ManagementTab = () => {
         </CardContent>
       </Card>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card className="border-green-500/50 bg-green-500/10">
-          <CardHeader>
-            <CardTitle className="text-green-300 flex items-center gap-2">
-              <BarChart3 className="h-5 w-5" />
-              Key Performance Metrics
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {performanceMetrics.map((metric, index) => (
-                <div key={index} className="flex items-center justify-between text-sm">
-                  <span className="text-green-100">{metric.metric}</span>
-                  <div className="flex gap-2">
-                    <Badge variant="outline" className="text-green-300 border-green-400/30">
-                      {metric.target}
-                    </Badge>
-                    <Badge variant="secondary" className="text-xs">
-                      {metric.frequency}
-                    </Badge>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-purple-500/50 bg-purple-500/10">
-          <CardHeader>
-            <CardTitle className="text-purple-300 flex items-center gap-2">
-              <MessageSquare className="h-5 w-5" />
-              Team Meeting Agenda
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-2">
-              {teamMeetingAgenda.map((item, index) => (
-                <li key={index} className="flex items-start gap-2 text-sm">
-                  <Badge variant="outline" className="mt-0.5 h-2 w-2 rounded-full p-0 border-purple-400/50 bg-purple-400/20" />
-                  <span className="text-purple-100">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Card className="border-orange-500/50 bg-orange-500/10">
+      <Card className="border-red-500/50 bg-red-500/10">
         <CardHeader>
-          <CardTitle className="text-orange-300 flex items-center gap-2">
-            <Target className="h-5 w-5" />
-            Progressive Disciplinary Process
+          <CardTitle className="text-red-300 flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5" />
+            Disciplinary Process Framework
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {disciplinaryProcess.map((stage, index) => (
-              <div key={index} className="border-l-2 border-orange-400/30 pl-4 space-y-2">
-                <div className="flex items-center gap-2">
-                  <Badge variant="outline" className="text-orange-300 border-orange-400/30">
-                    Stage {index + 1}
+              <div key={index} className="border border-red-500/20 rounded-lg p-4 space-y-2">
+                <div className="flex items-center justify-between">
+                  <h5 className="font-medium text-red-200">{stage.stage}</h5>
+                  <Badge variant="outline" className="text-red-300 border-red-400/30">
+                    {stage.timeframe}
                   </Badge>
-                  <h5 className="font-medium text-orange-200">{stage.stage}</h5>
                 </div>
-                <p className="text-sm text-orange-100">{stage.description}</p>
-                <p className="text-xs text-orange-200 italic">{stage.documentation}</p>
+                <p className="text-sm text-red-100">{stage.description}</p>
+                <div className="flex flex-wrap gap-1">
+                  {stage.actions.map((action, actionIndex) => (
+                    <Badge key={actionIndex} variant="secondary" className="text-xs text-red-100">
+                      {action}
+                    </Badge>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-green-500/50 bg-green-500/10">
         <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Star className="h-5 w-5" />
-            Management Best Practices
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <Target className="h-5 w-5" />
+            Key Performance Indicators (KPIs)
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-2 gap-4">
+            {kpiMetrics.map((category, index) => (
+              <div key={index} className="space-y-2">
+                <h5 className="font-medium text-green-200">{category.category}</h5>
+                <ul className="space-y-1">
+                  {category.metrics.map((metric, metricIndex) => (
+                    <li key={metricIndex} className="text-sm text-green-100 flex items-start gap-2">
+                      <Badge variant="outline" className="mt-0.5 h-1.5 w-1.5 rounded-full p-0 border-green-400/50 bg-green-400/20" />
+                      {metric}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-purple-500/50 bg-purple-500/10">
+        <CardHeader>
+          <CardTitle className="text-purple-300 flex items-center gap-2">
+            <CheckCircle className="h-5 w-5" />
+            Common Management Challenges & Solutions
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {managementChallenges.map((item, index) => (
+              <div key={index} className="border border-purple-500/20 rounded-lg p-4 space-y-3">
+                <h5 className="font-medium text-purple-200">{item.challenge}</h5>
+                <ul className="space-y-1">
+                  {item.solutions.map((solution, solutionIndex) => (
+                    <li key={solutionIndex} className="text-sm text-purple-100 flex items-start gap-2">
+                      <Badge variant="outline" className="mt-0.5 h-2 w-2 rounded-full p-0 border-purple-400/50 bg-purple-400/20" />
+                      {solution}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-orange-500/50 bg-orange-500/10">
+        <CardHeader>
+          <CardTitle className="text-orange-300 flex items-center gap-2">
+            <FileText className="h-5 w-5" />
+            Essential Management Documentation
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <h5 className="font-medium text-white mb-3">Daily Management</h5>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Start each day with a brief team check-in</li>
-                <li>• Monitor work progress and offer support</li>
-                <li>• Address issues promptly before they escalate</li>
-                <li>• Recognise good work and effort publicly</li>
-                <li>• End with a brief review of the day's achievements</li>
+              <h5 className="font-medium text-orange-200 mb-3">Personnel Records</h5>
+              <ul className="space-y-1 text-sm text-orange-100">
+                <li>• Employment contracts and job descriptions</li>
+                <li>• Performance review records</li>
+                <li>• Training certificates and qualifications</li>
+                <li>• Disciplinary actions and outcomes</li>
+                <li>• Absence and holiday records</li>
               </ul>
             </div>
             <div>
-              <h5 className="font-medium text-white mb-3">Weekly Focus Areas</h5>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Review performance metrics and targets</li>
-                <li>• Plan upcoming work and resource allocation</li>
-                <li>• Address any team concerns or suggestions</li>
-                <li>• Identify training or development needs</li>
-                <li>• Celebrate successes and learn from challenges</li>
+              <h5 className="font-medium text-orange-200 mb-3">Operational Records</h5>
+              <ul className="space-y-1 text-sm text-orange-100">
+                <li>• Work allocation and scheduling logs</li>
+                <li>• Quality control checklists</li>
+                <li>• Safety incident reports</li>
+                <li>• Customer feedback records</li>
+                <li>• Equipment and tool inventories</li>
               </ul>
             </div>
           </div>
