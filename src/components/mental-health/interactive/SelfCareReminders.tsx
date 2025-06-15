@@ -1,236 +1,220 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { Badge } from "@/components/ui/badge";
-import { Bell, Plus, Check, X, Clock } from "lucide-react";
-import { toast } from "sonner";
-
-interface SelfCareReminder {
-  id: string;
-  title: string;
-  time: string;
-  frequency: 'daily' | 'weekly' | 'custom';
-  isActive: boolean;
-  lastCompleted?: string;
-}
+import { Clock, Plus, Trash2, CheckCircle } from "lucide-react";
+import { useMentalHealth } from "@/contexts/MentalHealthContext";
 
 const SelfCareReminders = () => {
-  const [reminders, setReminders] = useState<SelfCareReminder[]>([]);
-  const [newReminder, setNewReminder] = useState({ title: '', time: '', frequency: 'daily' as const });
+  const { reminders, setReminders } = useMentalHealth();
   const [showAddForm, setShowAddForm] = useState(false);
+  const [newReminder, setNewReminder] = useState({
+    title: "",
+    time: "",
+    frequency: "daily" as const
+  });
 
-  // Load reminders from localStorage
-  useEffect(() => {
-    const stored = localStorage.getItem('elec-mate-selfcare-reminders');
-    if (stored) {
-      setReminders(JSON.parse(stored));
-    } else {
-      // Set some default reminders
-      const defaultReminders: SelfCareReminder[] = [
-        {
-          id: '1',
-          title: 'Take a 5-minute break',
-          time: '10:00',
-          frequency: 'daily',
-          isActive: true
-        },
-        {
-          id: '2',
-          title: 'Check in with your mood',
-          time: '16:00',
-          frequency: 'daily',
-          isActive: true
-        },
-        {
-          id: '3',
-          title: 'Practice deep breathing',
-          time: '12:00',
-          frequency: 'daily',
-          isActive: false
-        }
-      ];
-      setReminders(defaultReminders);
-      localStorage.setItem('elec-mate-selfcare-reminders', JSON.stringify(defaultReminders));
-    }
-  }, []);
-
-  // Save reminders when they change
-  useEffect(() => {
-    if (reminders.length > 0) {
-      localStorage.setItem('elec-mate-selfcare-reminders', JSON.stringify(reminders));
-    }
-  }, [reminders]);
+  const defaultReminders = [
+    { title: "Take a 5-minute break", time: "10:00", frequency: "daily" as const },
+    { title: "Practice deep breathing", time: "14:00", frequency: "daily" as const },
+    { title: "Check in with yourself", time: "18:00", frequency: "daily" as const },
+    { title: "Reflect on the week", time: "09:00", frequency: "weekly" as const }
+  ];
 
   const addReminder = () => {
-    if (!newReminder.title || !newReminder.time) {
-      toast.error("Please fill in all fields");
-      return;
+    if (newReminder.title.trim() && newReminder.time) {
+      const reminder = {
+        id: Date.now().toString(),
+        title: newReminder.title.trim(),
+        time: newReminder.time,
+        frequency: newReminder.frequency,
+        isActive: true
+      };
+      
+      setReminders(prev => [...prev, reminder]);
+      setNewReminder({ title: "", time: "", frequency: "daily" });
+      setShowAddForm(false);
     }
+  };
 
-    const reminder: SelfCareReminder = {
+  const addDefaultReminder = (defaultReminder: typeof defaultReminders[0]) => {
+    const reminder = {
       id: Date.now().toString(),
-      title: newReminder.title,
-      time: newReminder.time,
-      frequency: newReminder.frequency,
+      ...defaultReminder,
       isActive: true
     };
-
     setReminders(prev => [...prev, reminder]);
-    setNewReminder({ title: '', time: '', frequency: 'daily' });
-    setShowAddForm(false);
-    toast.success("Reminder added successfully");
   };
 
   const toggleReminder = (id: string) => {
-    setReminders(prev => prev.map(reminder => 
-      reminder.id === id 
-        ? { ...reminder, isActive: !reminder.isActive }
-        : reminder
-    ));
-  };
-
-  const markCompleted = (id: string) => {
-    setReminders(prev => prev.map(reminder => 
-      reminder.id === id 
-        ? { ...reminder, lastCompleted: new Date().toISOString() }
-        : reminder
-    ));
-    toast.success("Well done! Self-care completed", {
-      description: "Keep taking care of yourself"
-    });
+    setReminders(prev => 
+      prev.map(reminder => 
+        reminder.id === id 
+          ? { ...reminder, isActive: !reminder.isActive }
+          : reminder
+      )
+    );
   };
 
   const deleteReminder = (id: string) => {
     setReminders(prev => prev.filter(reminder => reminder.id !== id));
-    toast.success("Reminder removed");
+  };
+
+  const markCompleted = (id: string) => {
+    setReminders(prev => 
+      prev.map(reminder => 
+        reminder.id === id 
+          ? { ...reminder, lastCompleted: new Date().toISOString().split('T')[0] }
+          : reminder
+      )
+    );
+  };
+
+  const isCompletedToday = (reminder: any) => {
+    const today = new Date().toISOString().split('T')[0];
+    return reminder.lastCompleted === today;
   };
 
   return (
-    <Card className="border-green-500/20 bg-elec-gray">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            <Bell className="h-5 w-5 text-green-400" />
-            Self-Care Reminders
-          </CardTitle>
-          <Button
-            size="sm"
-            onClick={() => setShowAddForm(true)}
-            className="bg-green-500 hover:bg-green-600"
-          >
-            <Plus className="h-4 w-4" />
-          </Button>
-        </div>
+    <Card className="border-elec-yellow/20 bg-elec-gray">
+      <CardHeader>
+        <CardTitle className="text-elec-yellow flex items-center gap-2">
+          <Clock className="h-5 w-5" />
+          Self-Care Reminders
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {showAddForm && (
-          <div className="border border-green-500/20 rounded-lg p-3 space-y-3">
-            <Input
-              placeholder="Reminder title"
-              value={newReminder.title}
-              onChange={(e) => setNewReminder(prev => ({ ...prev, title: e.target.value }))}
-            />
-            <div className="flex gap-2">
-              <Input
-                type="time"
-                value={newReminder.time}
-                onChange={(e) => setNewReminder(prev => ({ ...prev, time: e.target.value }))}
-                className="flex-1"
-              />
-                <select
-                value={newReminder.frequency}
-                onChange={(e) => setNewReminder(prev => ({ ...prev, frequency: e.target.value as any }))}
-                className="px-3 py-2 rounded border border-elec-yellow/20 bg-elec-dark text-white"
-              >
-                <option value="daily">Daily</option>
-                <option value="weekly">Weekly</option>
-                <option value="custom">Custom</option>
-              </select>
-            </div>
-            <div className="flex gap-2">
-              <Button onClick={addReminder} size="sm" className="bg-green-500 hover:bg-green-600">
-                Add Reminder
-              </Button>
-              <Button onClick={() => setShowAddForm(false)} size="sm" variant="outline">
-                Cancel
-              </Button>
+        {reminders.length === 0 ? (
+          <div className="text-center py-6">
+            <Clock className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <p className="text-muted-foreground mb-4">No reminders set yet</p>
+            <div className="space-y-2">
+              <p className="text-sm text-muted-foreground">Try these suggestions:</p>
+              {defaultReminders.map((reminder, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => addDefaultReminder(reminder)}
+                  className="mr-2 mb-2"
+                >
+                  <Plus className="h-3 w-3 mr-1" />
+                  {reminder.title} ({reminder.time})
+                </Button>
+              ))}
             </div>
           </div>
-        )}
-
-        <div className="space-y-2">
-          {reminders.length === 0 ? (
-            <p className="text-sm text-muted-foreground text-center py-4">
-              No reminders set. Add one to get started!
-            </p>
-          ) : (
-            reminders.map((reminder) => (
-              <div
+        ) : (
+          <div className="space-y-3">
+            {reminders.map((reminder) => (
+              <div 
                 key={reminder.id}
                 className={`flex items-center justify-between p-3 rounded-lg border ${
-                  reminder.isActive 
-                    ? 'border-green-500/20 bg-green-500/5' 
-                    : 'border-gray-500/20 bg-gray-500/5'
+                  reminder.isActive ? 'border-elec-yellow/20 bg-elec-yellow/5' : 'border-gray-600 bg-gray-800/50'
                 }`}
               >
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <h4 className={`text-sm font-medium ${reminder.isActive ? 'text-white' : 'text-gray-400'}`}>
-                      {reminder.title}
-                    </h4>
-                    <Badge variant="outline" className="text-xs">
-                      {reminder.frequency}
-                    </Badge>
-                  </div>
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
-                    <Clock className="h-3 w-3" />
-                    <span>{reminder.time}</span>
-                    {reminder.lastCompleted && (
-                      <span className="ml-2 text-green-400">
-                        ✓ Completed {new Date(reminder.lastCompleted).toLocaleDateString()}
+                <div className="flex items-center gap-3">
+                  <Switch
+                    checked={reminder.isActive}
+                    onCheckedChange={() => toggleReminder(reminder.id)}
+                  />
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className={reminder.isActive ? 'text-white' : 'text-muted-foreground'}>
+                        {reminder.title}
                       </span>
-                    )}
+                      {isCompletedToday(reminder) && (
+                        <CheckCircle className="h-4 w-4 text-green-400" />
+                      )}
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <span>{reminder.time}</span>
+                      <Badge variant="outline" className="text-xs">
+                        {reminder.frequency}
+                      </Badge>
+                    </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-2">
+                  {reminder.isActive && !isCompletedToday(reminder) && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => markCompleted(reminder.id)}
+                      className="text-green-400 border-green-400/30 hover:bg-green-400/10"
+                    >
+                      <CheckCircle className="h-3 w-3" />
+                    </Button>
+                  )}
                   <Button
                     size="sm"
-                    variant="ghost"
-                    onClick={() => markCompleted(reminder.id)}
-                    className="h-8 w-8 p-0 text-green-400 hover:text-green-300"
-                  >
-                    <Check className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => toggleReminder(reminder.id)}
-                    className={`h-8 w-8 p-0 ${reminder.isActive ? 'text-yellow-400' : 'text-gray-400'}`}
-                  >
-                    <Bell className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
+                    variant="outline"
                     onClick={() => deleteReminder(reminder.id)}
-                    className="h-8 w-8 p-0 text-red-400 hover:text-red-300"
+                    className="text-red-400 border-red-400/30 hover:bg-red-400/10"
                   >
-                    <X className="h-4 w-4" />
+                    <Trash2 className="h-3 w-3" />
                   </Button>
                 </div>
               </div>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        )}
 
-        <div className="border-t border-green-500/20 pt-3 mt-4">
-          <p className="text-xs text-muted-foreground">
-            {reminders.filter(r => r.isActive).length} active reminders • 
-            Self-care is essential for your wellbeing
-          </p>
-        </div>
+        {showAddForm ? (
+          <div className="space-y-3 p-4 border border-elec-yellow/20 rounded-lg">
+            <div>
+              <Label className="text-sm">Reminder title</Label>
+              <Input
+                value={newReminder.title}
+                onChange={(e) => setNewReminder(prev => ({ ...prev, title: e.target.value }))}
+                placeholder="e.g., Take a walk"
+                className="mt-1"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label className="text-sm">Time</Label>
+                <Input
+                  type="time"
+                  value={newReminder.time}
+                  onChange={(e) => setNewReminder(prev => ({ ...prev, time: e.target.value }))}
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label className="text-sm">Frequency</Label>
+                <Select value={newReminder.frequency} onValueChange={(value: any) => setNewReminder(prev => ({ ...prev, frequency: value }))}>
+                  <SelectTrigger className="mt-1">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="daily">Daily</SelectItem>
+                    <SelectItem value="weekly">Weekly</SelectItem>
+                    <SelectItem value="custom">Custom</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Button onClick={addReminder} size="sm">Add Reminder</Button>
+              <Button onClick={() => setShowAddForm(false)} variant="outline" size="sm">Cancel</Button>
+            </div>
+          </div>
+        ) : (
+          <Button 
+            onClick={() => setShowAddForm(true)}
+            variant="outline"
+            className="w-full"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Add New Reminder
+          </Button>
+        )}
       </CardContent>
     </Card>
   );

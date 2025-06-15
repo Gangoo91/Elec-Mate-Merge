@@ -3,35 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Brain, Heart, Zap, Clock, Target, TrendingUp } from "lucide-react";
 import MoodTracker from "@/components/mental-health/interactive/MoodTracker";
 import SelfCareReminders from "@/components/mental-health/interactive/SelfCareReminders";
+import StressManagementTools from "@/components/mental-health/interactive/StressManagementTools";
 
 const InteractiveToolsTab = () => {
-  const toolCategories = [
-    {
-      title: "Mood & Wellness Tracking",
-      icon: <Heart className="h-6 w-6 text-red-400" />,
-      description: "Monitor your emotional wellbeing with daily check-ins and progress tracking",
-      tools: ["Daily Mood Tracker", "Wellness Dashboard", "Progress Analytics"]
-    },
-    {
-      title: "Stress Management",
-      icon: <Brain className="h-6 w-6 text-blue-400" />,
-      description: "Interactive tools to help identify, understand, and manage stress levels",
-      tools: ["Stress Assessment", "Coping Strategies", "Relaxation Exercises"]
-    },
-    {
-      title: "Self-Care Planning",
-      icon: <Clock className="h-6 w-6 text-green-400" />,
-      description: "Create personalised self-care routines and receive helpful reminders",
-      tools: ["Self-Care Planner", "Habit Tracker", "Reminder System"]
-    },
-    {
-      title: "Goal Setting",
-      icon: <Target className="h-6 w-6 text-purple-400" />,
-      description: "Set and track mental health goals with guided planning tools",
-      tools: ["Goal Setting Wizard", "Progress Tracker", "Achievement Badges"]
-    }
-  ];
-
   return (
     <div className="space-y-6">
       <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
@@ -77,29 +51,41 @@ const InteractiveToolsTab = () => {
         <SelfCareReminders />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {toolCategories.map((category, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                {category.icon}
-                <CardTitle className="text-lg">{category.title}</CardTitle>
+      <StressManagementTools />
+
+      <Card className="border-purple-500/50 bg-purple-500/10">
+        <CardHeader>
+          <CardTitle className="text-purple-300 flex items-center gap-2">
+            <Target className="h-5 w-5" />
+            Goal Setting & Progress Tracking
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <p className="text-sm text-muted-foreground">
+              Set personal mental health goals and track your progress over time. 
+              This feature helps you stay focused on your wellbeing journey.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="text-center p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
+                <Target className="h-6 w-6 text-purple-400 mx-auto mb-2" />
+                <div className="text-sm font-medium text-white">Set Goals</div>
+                <div className="text-xs text-muted-foreground">Define your targets</div>
               </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">{category.description}</p>
-              <div className="space-y-2">
-                {category.tools.map((tool, toolIndex) => (
-                  <div key={toolIndex} className="flex items-center gap-2 text-sm border border-elec-yellow/20 rounded p-2">
-                    <Zap className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-                    <span>{tool}</span>
-                  </div>
-                ))}
+              <div className="text-center p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
+                <TrendingUp className="h-6 w-6 text-purple-400 mx-auto mb-2" />
+                <div className="text-sm font-medium text-white">Track Progress</div>
+                <div className="text-xs text-muted-foreground">Monitor improvements</div>
               </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+              <div className="text-center p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
+                <Brain className="h-6 w-6 text-purple-400 mx-auto mb-2" />
+                <div className="text-sm font-medium text-white">Get Insights</div>
+                <div className="text-xs text-muted-foreground">Understand patterns</div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
