@@ -8,7 +8,9 @@ import {
   TrendingUp, 
   HandHelping, 
   Users, 
-  UserCheck
+  UserCheck,
+  Calculator,
+  CreditCard
 } from "lucide-react";
 
 const BusinessDevelopment = () => {
@@ -47,8 +49,21 @@ const BusinessDevelopment = () => {
       description: "Effective methods to attract and retain clients for your electrical services",
       icon: <HandHelping className="h-12 w-12 text-elec-yellow opacity-80" />,
       link: "/electrician/business-development/customers"
+    },
+    {
+      id: 6,
+      title: "Tax & Finances",
+      description: "Financial management, tax obligations, and accounting best practices for electrical contractors",
+      icon: <Calculator className="h-12 w-12 text-elec-yellow opacity-80" />,
+      link: "/electrician/business-development/tax-finances"
+    },
+    {
+      id: 7,
+      title: "Debt Recovery & Non-Payers",
+      description: "Strategies for managing late payments, debt recovery, and protecting your cash flow",
+      icon: <CreditCard className="h-12 w-12 text-elec-yellow opacity-80" />,
+      link: "/electrician/business-development/debt-recovery"
     }
-    // Team Management and Commercial Properties sections removed
   ];
 
   return (

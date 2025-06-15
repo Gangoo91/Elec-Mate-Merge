@@ -26,6 +26,8 @@ import BusinessStartup from "@/pages/electrician/business-development/BusinessSt
 import BusinessApprentices from "@/pages/electrician/business-development/BusinessApprentices";
 import BusinessElectricians from "@/pages/electrician/business-development/BusinessElectricians";
 import BusinessGrowth from "@/pages/electrician/business-development/BusinessGrowth";
+import TaxFinances from "@/pages/electrician/business-development/TaxFinances";
+import DebtRecovery from "@/pages/electrician/business-development/DebtRecovery";
 import ElectricianMentalHealth from "@/pages/electrician/ElectricianMentalHealth";
 import WorkLifeBalance from "@/pages/electrician/mental-health/WorkLifeBalance";
 import MentalHealthResources from "@/pages/electrician/mental-health/MentalHealthResources";
@@ -63,6 +65,8 @@ const ElectricianHubRoutes = () => (
     <Route path="business-development/growth" element={<BusinessGrowth />} />
     <Route path="business-development/customers" element={<BusinessCustomers />} />
     <Route path="business-development/templates" element={<BusinessTemplates />} />
+    <Route path="business-development/tax-finances" element={<TaxFinances />} />
+    <Route path="business-development/debt-recovery" element={<DebtRecovery />} />
   </Routes>
 );
 
