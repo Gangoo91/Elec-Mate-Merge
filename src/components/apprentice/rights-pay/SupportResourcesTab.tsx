@@ -1,261 +1,148 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Phone, Heart, DollarSign, Users, ExternalLink, Mail } from "lucide-react";
+import { Phone, Mail, Globe, MessageCircle, FileText, Users } from "lucide-react";
 
 const SupportResourcesTab = () => {
-  const supportChannels = [
+  const emergencyContacts = [
     {
-      channel: "ACAS (Advisory, Conciliation and Arbitration Service)",
-      contact: "0300 123 1100",
-      website: "acas.org.uk",
-      description: "Free advice on workplace rights and employment law",
-      availability: "Mon-Fri 8am-6pm"
+      name: "ACAS (Advisory, Conciliation and Arbitration Service)",
+      phone: "0300 123 1100",
+      description: "Free employment advice and support",
+      availability: "Monday to Friday, 8am to 6pm"
     },
     {
-      channel: "Apprenticeship Support Helpline",
-      contact: "0800 015 0400", 
-      website: "gov.uk/apprenticeships-guide",
-      description: "Help with apprenticeship-specific issues",
-      availability: "Mon-Fri 9am-5pm"
-    },
-    {
-      channel: "Citizens Advice",
-      contact: "Visit local offices",
-      website: "citizensadvice.org.uk",
-      description: "General advice on employment rights and benefits",
-      availability: "Varies by location"
-    },
-    {
-      channel: "Unite the Union",
-      contact: "0800 842 0069",
-      website: "unitetheunion.org",
-      description: "Trade union support for electrical workers",
-      availability: "24/7 for emergencies"
+      name: "Apprenticeship Support Helpline",
+      phone: "0800 015 0400",
+      description: "Government support for apprentices",
+      availability: "Monday to Friday, 8am to 10pm"
     }
   ];
 
-  const mentalHealthResources = [
+  const onlineResources = [
     {
-      service: "Samaritans",
-      contact: "116 123",
-      description: "Free confidential emotional support 24/7",
-      type: "Crisis Support"
+      name: "GOV.UK Apprenticeships",
+      url: "gov.uk/apprenticeships-guide",
+      description: "Official government guidance on apprentice rights"
     },
     {
-      service: "Andy's Man Club",
-      contact: "Local groups nationwide",
-      description: "Men's mental health support groups",
-      type: "Peer Support"
+      name: "ACAS Website",
+      url: "acas.org.uk",
+      description: "Employment rights and workplace issues"
     },
     {
-      service: "Mind",
-      contact: "0300 123 3393",
-      description: "Mental health information and support",
-      type: "Information & Support"
-    },
-    {
-      service: "Mates in Mind",
-      contact: "matesinmind.org",
-      description: "Construction industry mental health charity",
-      type: "Industry Specific"
+      name: "Citizens Advice",
+      url: "citizensadvice.org.uk",
+      description: "Free advice on work, benefits, and legal issues"
     }
   ];
 
-  const financialSupport = [
+  const tradeUnions = [
     {
-      support: "Apprenticeship Bursary",
-      amount: "Up to £1,000",
-      description: "For care leavers and those receiving benefits",
-      eligibility: "Specific criteria apply"
+      name: "Unite the Union",
+      description: "UK's largest trade union representing electrical workers",
+      benefits: ["Legal support", "Workplace representation", "Training opportunities"]
     },
     {
-      support: "Advanced Learner Loan",
-      amount: "Variable",
-      description: "For Level 3+ apprenticeships if over 24",
-      eligibility: "Age and course dependent"
-    },
-    {
-      support: "Travel Support",
-      amount: "Varies",
-      description: "Help with travel costs to training",
-      eligibility: "Low income households"
-    },
-    {
-      support: "Hardship Fund",
-      amount: "Case by case",
-      description: "Emergency financial assistance",
-      eligibility: "Training providers discretion"
-    }
-  ];
-
-  const careerGuidance = [
-    {
-      service: "National Careers Service",
-      description: "Free career guidance and advice",
-      contact: "0800 100 900"
-    },
-    {
-      service: "Construction Industry Training Board (CITB)",
-      description: "Industry-specific career pathways",
-      contact: "0344 994 4400"
-    },
-    {
-      service: "ECS (Electrotechnical Certification Scheme)",
-      description: "Qualification and certification guidance",
-      contact: "0333 207 4230"
-    },
-    {
-      service: "JIB (Joint Industry Board)",
-      description: "Electrical industry grading and progression",
-      contact: "020 7313 4800"
+      name: "GMB Union",
+      description: "General union with strong electrical sector representation",
+      benefits: ["24/7 legal helpline", "Career development", "Workplace protection"]
     }
   ];
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-red-500/50 bg-red-500/10">
         <CardHeader>
-          <div className="flex items-center gap-2">
-            <Phone className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Support When Things Go Wrong</CardTitle>
-          </div>
+          <CardTitle className="text-red-300 flex items-center gap-2">
+            <Phone className="h-5 w-5" />
+            Emergency Support
+          </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {supportChannels.map((support, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-2">
-                  <div>
-                    <h4 className="font-semibold text-white">{support.channel}</h4>
-                    <p className="text-sm text-muted-foreground">{support.description}</p>
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow w-fit">
-                      {support.contact}
-                    </Badge>
-                    <span className="text-xs text-muted-foreground">{support.availability}</span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-1 text-sm text-blue-400">
-                  <ExternalLink className="h-3 w-3" />
-                  {support.website}
-                </div>
+        <CardContent className="space-y-4">
+          {emergencyContacts.map((contact, index) => (
+            <div key={index} className="space-y-2">
+              <h4 className="font-medium text-white">{contact.name}</h4>
+              <div className="flex items-center gap-2">
+                <Badge variant="outline" className="text-red-300 border-red-400/30">
+                  {contact.phone}
+                </Badge>
+                <span className="text-sm text-muted-foreground">{contact.availability}</span>
               </div>
-            ))}
-          </div>
+              <p className="text-sm text-muted-foreground">{contact.description}</p>
+            </div>
+          ))}
         </CardContent>
       </Card>
 
-      <Tabs defaultValue="mental-health" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="mental-health">Mental Health</TabsTrigger>
-          <TabsTrigger value="financial">Financial</TabsTrigger>
-          <TabsTrigger value="career">Career Guidance</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="mental-health">
-          <Card className="border-purple-500/30 bg-purple-500/10">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Heart className="h-5 w-5 text-purple-400" />
-                <CardTitle className="text-purple-400">Mental Health Support</CardTitle>
+      <Card className="border-blue-500/50 bg-blue-500/10">
+        <CardHeader>
+          <CardTitle className="text-blue-300 flex items-center gap-2">
+            <Globe className="h-5 w-5" />
+            Online Resources
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {onlineResources.map((resource, index) => (
+            <div key={index} className="flex items-center justify-between">
+              <div>
+                <h4 className="font-medium text-white">{resource.name}</h4>
+                <p className="text-sm text-muted-foreground">{resource.description}</p>
               </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {mentalHealthResources.map((resource, index) => (
-                  <div key={index} className="border border-purple-500/20 rounded-lg p-4">
-                    <div className="flex items-start justify-between mb-2">
-                      <h4 className="font-semibold text-white">{resource.service}</h4>
-                      <Badge variant="outline" className="border-purple-400/40 text-purple-400 text-xs">
-                        {resource.type}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-muted-foreground mb-2">{resource.description}</p>
-                    <p className="text-sm text-purple-400 font-medium">{resource.contact}</p>
-                  </div>
+              <Button variant="outline" size="sm">
+                <Globe className="h-4 w-4 mr-1" />
+                Visit
+              </Button>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      <Card className="border-green-500/50 bg-green-500/10">
+        <CardHeader>
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <Users className="h-5 w-5" />
+            Trade Union Support
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {tradeUnions.map((union, index) => (
+            <div key={index} className="space-y-2">
+              <h4 className="font-medium text-white">{union.name}</h4>
+              <p className="text-sm text-muted-foreground">{union.description}</p>
+              <div className="flex flex-wrap gap-1">
+                {union.benefits.map((benefit, benefitIndex) => (
+                  <Badge key={benefitIndex} variant="outline" className="text-green-300 border-green-400/30">
+                    {benefit}
+                  </Badge>
                 ))}
               </div>
-              <div className="mt-4 p-4 bg-purple-500/20 rounded-lg border border-purple-500/30">
-                <p className="text-sm text-purple-400 font-medium mb-1">Remember:</p>
-                <p className="text-sm text-muted-foreground">
-                  Mental health struggles are common and nothing to be ashamed of. 
-                  Reaching out for help is a sign of strength, not weakness.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
 
-        <TabsContent value="financial">
-          <Card className="border-green-500/30 bg-green-500/10">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <DollarSign className="h-5 w-5 text-green-400" />
-                <CardTitle className="text-green-400">Financial Assistance</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {financialSupport.map((support, index) => (
-                  <div key={index} className="border border-green-500/20 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-semibold text-white">{support.support}</h4>
-                      <Badge className="bg-green-500/20 text-green-400 border-green-500/40">
-                        {support.amount}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-muted-foreground mb-1">{support.description}</p>
-                    <p className="text-xs text-green-400">{support.eligibility}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 p-4 bg-blue-500/20 rounded-lg border border-blue-500/30">
-                <p className="text-sm text-blue-400 font-medium mb-1">How to Apply:</p>
-                <p className="text-sm text-muted-foreground">
-                  Contact your training provider first - they can help you access most financial support schemes 
-                  and will know what's available in your area.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="career">
-          <Card className="border-blue-500/30 bg-blue-500/10">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Users className="h-5 w-5 text-blue-400" />
-                <CardTitle className="text-blue-400">Career Guidance Services</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {careerGuidance.map((service, index) => (
-                  <div key={index} className="border border-blue-500/20 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-semibold text-white">{service.service}</h4>
-                      <Badge variant="outline" className="border-blue-400/40 text-blue-400">
-                        {service.contact}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-muted-foreground">{service.description}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 p-4 bg-elec-yellow/10 rounded-lg border border-elec-yellow/30">
-                <p className="text-sm text-elec-yellow font-medium mb-1">Pro Tip:</p>
-                <p className="text-sm text-muted-foreground">
-                  Start thinking about your career progression early. The electrical industry offers many 
-                  specialisations and advancement opportunities - it's never too early to plan your path.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <MessageCircle className="h-5 w-5" />
+            Document Everything
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            <p className="text-muted-foreground">Keep records of any issues:</p>
+            <ul className="space-y-1 text-sm">
+              <li>• Date, time, and details of incidents</li>
+              <li>• Names of witnesses present</li>
+              <li>• Photos of unsafe conditions (if safe to do so)</li>
+              <li>• Copies of any written communications</li>
+              <li>• Medical records if injured</li>
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
