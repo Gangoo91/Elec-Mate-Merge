@@ -3,49 +3,89 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Calculator, TrendingUp, BarChart3, Target, PoundSterling } from "lucide-react";
+import { Calculator, TrendingUp, BarChart3, Target, PoundSterling, Users, MapPin, Lightbulb } from "lucide-react";
+import BusinessCostCalculator from "./BusinessCostCalculator";
+import BusinessPlanTemplate from "./BusinessPlanTemplate";
 
 const BusinessPlanningTab = () => {
   const planningSteps = [
     {
-      title: "Market Research",
-      description: "Analyse your local market and competition",
+      title: "Market Research & Analysis",
+      icon: <BarChart3 className="h-5 w-5" />,
+      description: "Understand your local market and competition",
       points: [
-        "Identify target customer segments",
-        "Research competitor pricing and services",
-        "Assess market demand and opportunities",
-        "Understand local regulations and requirements"
-      ]
+        "Identify target customer segments (domestic, commercial, industrial)",
+        "Research competitor pricing and service offerings",
+        "Assess market demand and seasonal variations",
+        "Understand local regulations and council requirements",
+        "Analyse population demographics and housing types",
+        "Identify gaps in the market you could fill"
+      ],
+      timeframe: "2-3 weeks"
     },
     {
-      title: "Business Model",
-      description: "Define your service offerings and pricing",
+      title: "Business Model Development",
+      icon: <Target className="h-5 w-5" />,
+      description: "Define your service offerings and pricing strategy",
       points: [
-        "Domestic, commercial, or industrial focus",
-        "Emergency callouts and maintenance",
-        "Installation and testing services",
-        "Renewable energy solutions"
-      ]
+        "Choose your specialisation (domestic, commercial, or mixed)",
+        "Decide on service types (installations, repairs, testing, emergency)",
+        "Develop pricing structures and profit margins",
+        "Plan for seasonal variations and cash flow",
+        "Consider value-added services (smart home, renewables)",
+        "Define your unique selling proposition"
+      ],
+      timeframe: "1-2 weeks"
     },
     {
-      title: "Financial Planning",
-      description: "Calculate startup costs and projected income",
+      title: "Financial Planning & Projections",
+      icon: <PoundSterling className="h-5 w-5" />,
+      description: "Calculate startup costs and project future income",
       points: [
-        "Initial equipment and tool costs",
-        "Vehicle and transport expenses",
-        "Insurance and certification fees",
-        "Working capital requirements"
-      ]
+        "Estimate initial equipment and tool investments",
+        "Calculate vehicle and transport requirements",
+        "Budget for insurance, certifications, and legal costs",
+        "Plan working capital for first 6 months",
+        "Project monthly revenue targets",
+        "Create break-even analysis and cash flow forecasts"
+      ],
+      timeframe: "1 week"
+    },
+    {
+      title: "Location & Territory Planning",
+      icon: <MapPin className="h-5 w-5" />,
+      description: "Define your operating area and customer reach",
+      points: [
+        "Map your primary service area based on travel times",
+        "Identify high-opportunity neighbourhoods",
+        "Consider proximity to suppliers and trade counters",
+        "Plan for workshop or storage space requirements",
+        "Analyse local competition density",
+        "Evaluate potential for business growth in the area"
+      ],
+      timeframe: "1 week"
     }
   ];
 
-  const startupCosts = [
-    { item: "Professional Tools & Equipment", cost: "£2,000 - £5,000" },
-    { item: "Van & Vehicle Setup", cost: "£8,000 - £15,000" },
-    { item: "Insurance (Annual)", cost: "£800 - £2,500" },
-    { item: "Certifications & Registrations", cost: "£500 - £1,200" },
-    { item: "Marketing & Branding", cost: "£500 - £2,000" },
-    { item: "Working Capital", cost: "£5,000 - £10,000" }
+  const marketResearchTips = [
+    {
+      title: "Customer Demand Analysis",
+      tips: [
+        "Check local property development and renovation activity",
+        "Monitor planning applications for new builds",
+        "Research average household income in target areas",
+        "Identify areas with older housing requiring rewiring"
+      ]
+    },
+    {
+      title: "Competition Assessment",
+      tips: [
+        "Map existing electrical contractors in your area",
+        "Check their Google reviews and service offerings",
+        "Compare their pricing on common services",
+        "Identify what they're missing that you could provide"
+      ]
+    }
   ];
 
   return (
@@ -53,26 +93,56 @@ const BusinessPlanningTab = () => {
       <Alert className="border-blue-500/50 bg-blue-500/10">
         <Calculator className="h-4 w-4 text-blue-400" />
         <AlertDescription className="text-blue-200">
-          Proper planning is essential for business success. Use these guides to create a solid foundation.
+          Proper planning is the foundation of business success. Use these tools and guides to create a comprehensive business plan.
         </AlertDescription>
       </Alert>
+
+      <BusinessCostCalculator />
 
       <div className="grid gap-6">
         {planningSteps.map((step, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-elec-yellow">
-                <TrendingUp className="h-5 w-5" />
+                {step.icon}
                 {step.title}
+                <Badge variant="outline" className="ml-auto text-xs">
+                  {step.timeframe}
+                </Badge>
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground mb-4">{step.description}</p>
-              <ul className="space-y-2">
+              <div className="grid md:grid-cols-2 gap-2">
                 {step.points.map((point, pointIndex) => (
-                  <li key={pointIndex} className="flex items-start gap-2 text-muted-foreground">
+                  <div key={pointIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
                     <Badge variant="outline" className="mt-0.5 h-2 w-2 rounded-full p-0 border-elec-yellow/50 bg-elec-yellow/20" />
                     {point}
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <BusinessPlanTemplate />
+
+      <div className="grid md:grid-cols-2 gap-6">
+        {marketResearchTips.map((section, index) => (
+          <Card key={index} className="border-purple-500/50 bg-purple-500/10">
+            <CardHeader>
+              <CardTitle className="text-purple-300 flex items-center gap-2">
+                <Users className="h-5 w-5" />
+                {section.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2">
+                {section.tips.map((tip, tipIndex) => (
+                  <li key={tipIndex} className="flex items-start gap-2 text-sm text-purple-200">
+                    <Lightbulb className="h-3 w-3 mt-0.5 flex-shrink-0" />
+                    {tip}
                   </li>
                 ))}
               </ul>
@@ -84,23 +154,47 @@ const BusinessPlanningTab = () => {
       <Card className="border-green-500/50 bg-green-500/10">
         <CardHeader>
           <CardTitle className="text-green-300 flex items-center gap-2">
-            <PoundSterling className="h-5 w-5" />
-            Estimated Startup Costs
+            <TrendingUp className="h-5 w-5" />
+            Planning Checklist
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3">
-            {startupCosts.map((cost, index) => (
-              <div key={index} className="flex justify-between items-center p-3 bg-green-500/5 rounded-lg">
-                <span className="text-green-200">{cost.item}</span>
-                <Badge className="bg-green-500/20 text-green-300">{cost.cost}</Badge>
-              </div>
-            ))}
-            <div className="border-t border-green-500/20 pt-3 mt-4">
-              <div className="flex justify-between items-center font-semibold">
-                <span className="text-green-200">Total Estimated Range:</span>
-                <Badge className="bg-green-500/30 text-green-200">£16,800 - £35,700</Badge>
-              </div>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <h4 className="font-semibold text-green-200 mb-3">Essential Planning Tasks</h4>
+              <ul className="space-y-2 text-sm">
+                {[
+                  "Complete market research in target area",
+                  "Define service offerings and pricing",
+                  "Calculate startup and running costs",
+                  "Identify target customer segments",
+                  "Plan marketing and customer acquisition",
+                  "Set revenue and growth targets"
+                ].map((task, index) => (
+                  <li key={index} className="flex items-center gap-2 text-green-200">
+                    <div className="h-2 w-2 bg-green-400 rounded-full" />
+                    {task}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-green-200 mb-3">Success Metrics</h4>
+              <ul className="space-y-2 text-sm">
+                {[
+                  "Monthly revenue targets",
+                  "Customer acquisition goals",
+                  "Profit margin objectives",
+                  "Market share aspirations",
+                  "Service quality benchmarks",
+                  "Business growth milestones"
+                ].map((metric, index) => (
+                  <li key={index} className="flex items-center gap-2 text-green-200">
+                    <div className="h-2 w-2 bg-green-400 rounded-full" />
+                    {metric}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </CardContent>
