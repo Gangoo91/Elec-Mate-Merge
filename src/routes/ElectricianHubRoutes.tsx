@@ -3,6 +3,13 @@ import { Route, Routes } from "react-router-dom";
 import TradeEssentials from "@/pages/electrician/TradeEssentials";
 import SafetyShares from "@/pages/electrician/SafetyShares";
 import MajorProjects from "@/pages/electrician/safety-shares/MajorProjects";
+import SafetyAlerts from "@/pages/electrician/safety-shares/SafetyAlerts";
+import SafetyAlertsEnhanced from "@/pages/electrician/safety-shares/SafetyAlertsEnhanced";
+import IndustryNews from "@/pages/electrician/safety-shares/IndustryNews";
+import IndustryNewsEnhanced from "@/pages/electrician/safety-shares/IndustryNewsEnhanced";
+import SafetyResources from "@/pages/electrician/safety-shares/SafetyResources";
+import SafetyResourcesEnhanced from "@/pages/electrician/safety-shares/SafetyResourcesEnhanced";
+import LearningFromExperience from "@/pages/electrician/safety-shares/LearningFromExperience";
 import Chat from "@/pages/Chat";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
 import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
@@ -34,6 +41,13 @@ const ElectricianHubRoutes = () => (
     <Route path="tools" element={<ElectricalTools />} />
     <Route path="safety-shares" element={<SafetyShares />} />
     <Route path="safety-shares/projects" element={<MajorProjects />} />
+    <Route path="safety-shares/alerts" element={<SafetyAlerts />} />
+    <Route path="safety-shares/alerts-enhanced" element={<SafetyAlertsEnhanced />} />
+    <Route path="safety-shares/news" element={<IndustryNews />} />
+    <Route path="safety-shares/news-enhanced" element={<IndustryNewsEnhanced />} />
+    <Route path="safety-shares/resources" element={<SafetyResources />} />
+    <Route path="safety-shares/resources-enhanced" element={<SafetyResourcesEnhanced />} />
+    <Route path="safety-shares/lfe" element={<LearningFromExperience />} />
     <Route path="live-pricing" element={<LivePricing />} />
     <Route path="mental-health" element={<ElectricianMentalHealth />} />
     <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />

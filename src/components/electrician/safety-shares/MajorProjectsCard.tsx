@@ -1,331 +1,235 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Building2, MapPin, DollarSign, Calendar, Eye, RefreshCw, Bot, X } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { Badge } from "@/components/ui/badge";
+import { Building2, MapPin, Calendar, PoundSterling, Users, Clock, ExternalLink, Bookmark } from "lucide-react";
 
 interface MajorProject {
   id: string;
   title: string;
-  summary: string;
-  content: string;
-  awarded_to: string;
-  project_value: string;
+  description: string;
+  client: string;
   location: string;
-  status: string;
-  date_awarded: string;
-  view_count: number;
-  average_rating: number;
-}
-
-interface ScrapingLog {
-  id: string;
-  status: string;
-  projects_found: number;
-  projects_added: number;
-  created_at: string;
-  source_name: string;
+  value: string;
+  duration: string;
+  startDate: string;
+  status: "tendering" | "awarded" | "in-progress" | "completed";
+  sector: string;
+  contractorCount: number;
+  deadline?: string;
 }
 
 const MajorProjectsCard = () => {
-  const [projects, setProjects] = useState<MajorProject[]>([]);
-  const [selectedProject, setSelectedProject] = useState<MajorProject | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [scraping, setScraping] = useState(false);
-  const [lastScrapeLog, setLastScrapeLog] = useState<ScrapingLog | null>(null);
-  const [showScrapingInfo, setShowScrapingInfo] = useState(false);
-
-  useEffect(() => {
-    fetchProjects();
-    fetchLastScrapeLog();
-  }, []);
-
-  const fetchProjects = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('major_projects')
-        .select('*')
-        .eq('is_active', true)
-        .order('date_awarded', { ascending: false })
-        .limit(20);
-
-      if (error) throw error;
-      setProjects(data || []);
-    } catch (error) {
-      console.error('Error fetching major projects:', error);
-    } finally {
-      setLoading(false);
+  const [projects] = useState<MajorProject[]>([
+    {
+      id: "1",
+      title: "London Underground Station Modernisation",
+      description: "Complete electrical system upgrade for 15 underground stations including LED lighting, power distribution, and emergency systems.",
+      client: "Transport for London",
+      location: "London, UK",
+      value: "£45M",
+      duration: "18 months",
+      startDate: "2024-09-01",
+      status: "tendering",
+      sector: "Transport",
+      contractorCount: 12,
+      deadline: "2024-07-15"
+    },
+    {
+      id: "2",
+      title: "NHS Hospital Electrical Infrastructure",
+      description: "New electrical installation for major hospital expansion including critical care units, operating theatres, and backup power systems.",
+      client: "NHS Foundation Trust",
+      location: "Manchester, UK",
+      value: "£32M",
+      duration: "24 months",
+      startDate: "2024-08-15",
+      status: "tendering",
+      sector: "Healthcare",
+      contractorCount: 8,
+      deadline: "2024-06-30"
+    },
+    {
+      id: "3",
+      title: "Offshore Wind Farm Grid Connection",
+      description: "High voltage transmission infrastructure to connect 800MW offshore wind farm to the national grid.",
+      client: "SSE Renewables",
+      location: "East Anglia, UK",
+      value: "£180M",
+      duration: "36 months",
+      startDate: "2024-10-01",
+      status: "awarded",
+      sector: "Renewable Energy",
+      contractorCount: 25
+    },
+    {
+      id: "4",
+      title: "Smart City Infrastructure Project",
+      description: "Installation of smart lighting, EV charging points, and IoT infrastructure across the city centre.",
+      client: "Birmingham City Council",
+      location: "Birmingham, UK",
+      value: "£28M",
+      duration: "15 months",
+      startDate: "2024-07-01",
+      status: "in-progress",
+      sector: "Smart Infrastructure",
+      contractorCount: 15
+    },
+    {
+      id: "5",
+      title: "Data Centre Electrical Installation",
+      description: "Complete electrical infrastructure for new hyperscale data centre including UPS systems, backup generators, and cooling.",
+      client: "Amazon Web Services",
+      location: "Dublin, Ireland",
+      value: "£95M",
+      duration: "20 months",
+      startDate: "2024-06-01",
+      status: "in-progress",
+      sector: "Technology",
+      contractorCount: 18
     }
-  };
-
-  const fetchLastScrapeLog = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('scraping_logs')
-        .select(`
-          *,
-          scraping_sources!inner(name)
-        `)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
-
-      if (error && error.code !== 'PGRST116') {
-        console.error('Error fetching scrape log:', error);
-        return;
-      }
-
-      if (data) {
-        setLastScrapeLog({
-          ...data,
-          source_name: data.scraping_sources?.name || 'Unknown'
-        });
-      }
-    } catch (error) {
-      console.error('Error fetching last scrape log:', error);
-    }
-  };
-
-  const triggerScraping = async () => {
-    setScraping(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('scrape-major-projects');
-      
-      if (error) {
-        console.error('Error triggering scraping:', error);
-        return;
-      }
-
-      console.log('Scraping result:', data);
-      
-      // Refresh projects and scrape log after scraping
-      await fetchProjects();
-      await fetchLastScrapeLog();
-      
-    } catch (error) {
-      console.error('Error during scraping:', error);
-    } finally {
-      setScraping(false);
-    }
-  };
+  ]);
 
   const getStatusColor = (status: string) => {
-    switch (status.toLowerCase()) {
-      case 'awarded': return 'bg-green-500 text-white';
-      case 'in_progress': return 'bg-blue-500 text-white';
-      case 'completed': return 'bg-gray-500 text-white';
-      case 'open_tender': return 'bg-orange-500 text-white';
-      case 'cancelled': return 'bg-red-500 text-white';
-      default: return 'bg-gray-500 text-white';
+    switch (status) {
+      case "tendering": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
+      case "awarded": return "bg-green-500/20 text-green-400 border-green-500/30";
+      case "in-progress": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
+      case "completed": return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
     }
   };
 
-  const formatStatus = (status: string) => {
-    return status.replace('_', ' ').toUpperCase();
+  const getSectorColor = (sector: string) => {
+    switch (sector.toLowerCase()) {
+      case "transport": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
+      case "healthcare": return "bg-red-500/20 text-red-400 border-red-500/30";
+      case "renewable energy": return "bg-green-500/20 text-green-400 border-green-500/30";
+      case "smart infrastructure": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
+      case "technology": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
+      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+    }
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-GB');
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case "tendering": return "Open for Tender";
+      case "awarded": return "Contract Awarded";
+      case "in-progress": return "In Progress";
+      case "completed": return "Completed";
+      default: return status;
+    }
   };
-
-  if (loading) {
-    return (
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardContent className="p-6">
-          <div className="animate-pulse space-y-4">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="h-20 bg-elec-yellow/10 rounded"></div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  if (selectedProject) {
-    return (
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Building2 className="h-6 w-6 text-elec-yellow" />
-              <Badge className={`${getStatusColor(selectedProject.status)} font-medium`}>
-                {formatStatus(selectedProject.status)}
-              </Badge>
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setSelectedProject(null)}
-              className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10"
-            >
-              <X className="h-4 w-4 mr-2" />
-              Back to List
-            </Button>
-          </div>
-          <CardTitle className="text-xl text-white">{selectedProject.title}</CardTitle>
-          <div className="flex items-center gap-4 text-sm text-gray-400">
-            <div className="flex items-center gap-1">
-              <Calendar className="h-4 w-4" />
-              {formatDate(selectedProject.date_awarded)}
-            </div>
-            <div className="flex items-center gap-1">
-              <MapPin className="h-4 w-4" />
-              {selectedProject.location}
-            </div>
-            <div className="flex items-center gap-1">
-              <Eye className="h-4 w-4" />
-              {selectedProject.view_count} views
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-elec-dark/50 rounded-lg p-4">
-              <h4 className="font-medium text-elec-yellow mb-2">Awarded To</h4>
-              <p className="text-gray-300">{selectedProject.awarded_to}</p>
-            </div>
-            <div className="bg-elec-dark/50 rounded-lg p-4">
-              <h4 className="font-medium text-elec-yellow mb-2 flex items-center gap-2">
-                <DollarSign className="h-4 w-4" />
-                Project Value
-              </h4>
-              <p className="text-gray-300">{selectedProject.project_value}</p>
-            </div>
-          </div>
-
-          <div className="prose prose-invert max-w-none">
-            <h4 className="font-medium text-elec-yellow mb-3">Project Details</h4>
-            <p className="text-gray-300 whitespace-pre-wrap leading-relaxed">
-              {selectedProject.content}
-            </p>
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center">
-              <Building2 className="h-6 w-6 text-white" />
-            </div>
-            <div>
-              <CardTitle className="text-xl text-white">Major Projects</CardTitle>
-              <p className="text-gray-300 text-sm">
-                Latest electrical infrastructure projects and tenders
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            {lastScrapeLog && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowScrapingInfo(!showScrapingInfo)}
-                className="text-gray-400 hover:text-elec-yellow"
-              >
-                <Bot className="h-4 w-4 mr-1" />
-                Auto-updated
-              </Button>
-            )}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={triggerScraping}
-              disabled={scraping}
-              className="border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10"
-            >
-              <RefreshCw className={`h-4 w-4 mr-2 ${scraping ? 'animate-spin' : ''}`} />
-              {scraping ? 'Updating...' : 'Update Now'}
-            </Button>
-          </div>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-white">Major Projects</h2>
+          <p className="text-muted-foreground">Latest electrical infrastructure projects and contract opportunities</p>
         </div>
+        <Button className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+          <Building2 className="h-4 w-4 mr-2" />
+          Submit Project
+        </Button>
+      </div>
 
-        {showScrapingInfo && lastScrapeLog && (
-          <div className="mt-4 p-3 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
-            <div className="text-sm text-gray-300">
-              <div className="flex items-center gap-4 mb-2">
-                <span className="text-elec-yellow font-medium">Last Update:</span>
-                <span>{formatDate(lastScrapeLog.created_at)}</span>
-                <Badge 
-                  className={`${lastScrapeLog.status === 'success' ? 'bg-green-600' : 'bg-red-600'} text-white`}
-                >
-                  {lastScrapeLog.status}
-                </Badge>
-              </div>
-              <div className="grid grid-cols-2 gap-4 text-xs">
-                <span>Projects Found: {lastScrapeLog.projects_found}</span>
-                <span>Projects Added: {lastScrapeLog.projects_added}</span>
-              </div>
-              <p className="text-xs text-gray-400 mt-2">
-                Data automatically scraped from government tender sites
-              </p>
-            </div>
-          </div>
-        )}
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {projects.length === 0 ? (
-          <div className="text-center py-8 text-gray-400">
-            <Building2 className="h-12 w-12 mx-auto mb-4 opacity-50" />
-            <p>No major projects available at the moment.</p>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={triggerScraping}
-              disabled={scraping}
-              className="mt-4 border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10"
-            >
-              {scraping ? 'Loading...' : 'Load Projects'}
-            </Button>
-          </div>
-        ) : (
-          projects.map((project) => (
-            <div
-              key={project.id}
-              className="p-4 rounded-lg border border-elec-yellow/20 bg-elec-dark/50 hover:bg-elec-dark/70 cursor-pointer transition-all"
-              onClick={() => setSelectedProject(project)}
-            >
-              <div className="flex items-start justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <Badge className={`${getStatusColor(project.status)} text-xs font-medium`}>
-                    {formatStatus(project.status)}
-                  </Badge>
-                  <span className="text-xs text-gray-400">{project.project_value}</span>
-                </div>
-                <div className="flex items-center gap-1 text-xs text-gray-400">
-                  <Eye className="h-3 w-3" />
-                  {project.view_count}
-                </div>
-              </div>
-              
-              <h3 className="font-semibold text-white mb-2">{project.title}</h3>
-              <p className="text-sm text-gray-400 mb-3 line-clamp-2">{project.summary}</p>
-              
-              <div className="flex items-center justify-between text-xs text-gray-500">
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-1">
-                    <MapPin className="h-3 w-3" />
-                    {project.location}
+      <div className="grid gap-6">
+        {projects.map((project) => (
+          <Card key={project.id} className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader className="pb-3">
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Badge className={getStatusColor(project.status)}>
+                      {getStatusText(project.status)}
+                    </Badge>
+                    <Badge className={getSectorColor(project.sector)}>
+                      {project.sector}
+                    </Badge>
+                    {project.deadline && project.status === "tendering" && (
+                      <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
+                        Deadline: {new Date(project.deadline).toLocaleDateString()}
+                      </Badge>
+                    )}
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Building2 className="h-3 w-3" />
-                    {project.awarded_to}
+                  <CardTitle className="text-white text-lg mb-2">
+                    {project.title}
+                  </CardTitle>
+                  <p className="text-gray-300 text-sm mb-3">
+                    {project.description}
+                  </p>
+                  <div className="text-sm text-muted-foreground">
+                    <span className="font-medium">Client:</span> {project.client}
                   </div>
                 </div>
-                <span>{formatDate(project.date_awarded)}</span>
+                <Button size="sm" variant="ghost" className="ml-4">
+                  <Bookmark className="h-4 w-4" />
+                </Button>
               </div>
-            </div>
-          ))
-        )}
-      </CardContent>
-    </Card>
+            </CardHeader>
+
+            <CardContent className="pt-0">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 text-sm">
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <PoundSterling className="h-4 w-4 text-elec-yellow" />
+                  <div>
+                    <div className="text-white font-medium">{project.value}</div>
+                    <div>Contract Value</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Clock className="h-4 w-4 text-elec-yellow" />
+                  <div>
+                    <div className="text-white font-medium">{project.duration}</div>
+                    <div>Duration</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <MapPin className="h-4 w-4 text-elec-yellow" />
+                  <div>
+                    <div className="text-white font-medium">{project.location}</div>
+                    <div>Location</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 text-muted-foreground">
+                  <Users className="h-4 w-4 text-elec-yellow" />
+                  <div>
+                    <div className="text-white font-medium">{project.contractorCount}</div>
+                    <div>Contractors</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Calendar className="h-4 w-4" />
+                  <span>Start Date: {new Date(project.startDate).toLocaleDateString()}</span>
+                </div>
+                <div className="flex gap-2">
+                  {project.status === "tendering" && (
+                    <Button size="sm" className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+                      View Tender Details
+                    </Button>
+                  )}
+                  <Button size="sm" variant="outline" className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10">
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    View Project
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <div className="text-center pt-4">
+        <Button variant="outline" className="border-elec-yellow/30 text-white hover:bg-elec-yellow/10">
+          View All Projects
+        </Button>
+      </div>
+    </div>
   );
 };
 
