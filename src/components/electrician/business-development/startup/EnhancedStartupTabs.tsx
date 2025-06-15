@@ -3,14 +3,11 @@ import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calculator, Shield, Phone, Lightbulb, Heart, Calendar, AlertTriangle, Laptop } from "lucide-react";
+import { Calculator, Shield, Phone, Lightbulb, Heart } from "lucide-react";
 import BusinessPlanningTab from "./BusinessPlanningTab";
 import LegalComplianceTab from "./LegalComplianceTab";
 import SupportResourcesTab from "./SupportResourcesTab";
 import ToolsGuidanceTab from "./ToolsGuidanceTab";
-import FirstYearTimelineTab from "./FirstYearTimelineTab";
-import CommonPitfallsTab from "./CommonPitfallsTab";
-import TechnologyToolsTab from "./TechnologyToolsTab";
 
 const EnhancedStartupTabs = () => {
   return (
@@ -24,34 +21,22 @@ const EnhancedStartupTabs = () => {
       </div>
 
       <Tabs defaultValue="planning" className="w-full">
-        <TabsList className="grid w-full grid-cols-7 h-auto">
-          <TabsTrigger value="planning" className="flex flex-col items-center gap-1 py-3">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="planning" className="flex items-center gap-2">
             <Calculator className="h-4 w-4" />
-            <span className="text-xs">Planning</span>
+            Business Planning
           </TabsTrigger>
-          <TabsTrigger value="legal" className="flex flex-col items-center gap-1 py-3">
+          <TabsTrigger value="legal" className="flex items-center gap-2">
             <Shield className="h-4 w-4" />
-            <span className="text-xs">Legal</span>
+            Legal & Compliance
           </TabsTrigger>
-          <TabsTrigger value="support" className="flex flex-col items-center gap-1 py-3">
+          <TabsTrigger value="support" className="flex items-center gap-2">
             <Phone className="h-4 w-4" />
-            <span className="text-xs">Support</span>
+            Support & Resources
           </TabsTrigger>
-          <TabsTrigger value="tools" className="flex flex-col items-center gap-1 py-3">
+          <TabsTrigger value="tools" className="flex items-center gap-2">
             <Lightbulb className="h-4 w-4" />
-            <span className="text-xs">Tools</span>
-          </TabsTrigger>
-          <TabsTrigger value="timeline" className="flex flex-col items-center gap-1 py-3">
-            <Calendar className="h-4 w-4" />
-            <span className="text-xs">Timeline</span>
-          </TabsTrigger>
-          <TabsTrigger value="pitfalls" className="flex flex-col items-center gap-1 py-3">
-            <AlertTriangle className="h-4 w-4" />
-            <span className="text-xs">Pitfalls</span>
-          </TabsTrigger>
-          <TabsTrigger value="technology" className="flex flex-col items-center gap-1 py-3">
-            <Laptop className="h-4 w-4" />
-            <span className="text-xs">Tech</span>
+            Tools & Operations
           </TabsTrigger>
         </TabsList>
 
@@ -69,18 +54,6 @@ const EnhancedStartupTabs = () => {
 
         <TabsContent value="tools">
           <ToolsGuidanceTab />
-        </TabsContent>
-
-        <TabsContent value="timeline">
-          <FirstYearTimelineTab />
-        </TabsContent>
-
-        <TabsContent value="pitfalls">
-          <CommonPitfallsTab />
-        </TabsContent>
-
-        <TabsContent value="technology">
-          <TechnologyToolsTab />
         </TabsContent>
       </Tabs>
 
