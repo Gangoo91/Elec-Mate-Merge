@@ -1,8 +1,8 @@
 
-import StartupTabs from "@/components/electrician/business-development/startup/StartupTabs";
+import EnhancedStartupTabs from "@/components/electrician/business-development/startup/EnhancedStartupTabs";
 
 const BusinessStartup = () => {
-  return <StartupTabs />;
+  return <EnhancedStartupTabs />;
 };
 
 export default BusinessStartup;
