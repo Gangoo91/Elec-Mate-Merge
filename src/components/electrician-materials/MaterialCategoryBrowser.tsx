@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Cable, Zap, Shield, Package, Building, TrendingUp, Star, ArrowRight } from "lucide-react";
+import { Cable, Zap, Shield, Package, Building, TrendingUp, Star, ArrowRight, Users, Award } from "lucide-react";
 
 const MaterialCategoryBrowser = () => {
   const categories = [
@@ -16,9 +16,9 @@ const MaterialCategoryBrowser = () => {
       trending: true,
       topBrands: ["Prysmian", "Nexans", "Excel", "Doncaster"],
       popularItems: [
-        { name: "2.5mm² Twin & Earth 100m", price: "£89.99", rating: 4.8 },
-        { name: "6mm² SWA Cable 50m", price: "£156.50", rating: 4.7 },
-        { name: "Cat6 Data Cable 305m", price: "£45.99", rating: 4.6 }
+        { name: "2.5mm² Twin & Earth 100m", price: "£89.99", rating: 4.8, sales: 156 },
+        { name: "6mm² SWA Cable 50m", price: "£156.50", rating: 4.7, sales: 89 },
+        { name: "Cat6 Data Cable 305m", price: "£45.99", rating: 4.6, sales: 203 }
       ]
     },
     {
@@ -31,14 +31,14 @@ const MaterialCategoryBrowser = () => {
       trending: false,
       topBrands: ["Schneider", "Hager", "Wylex", "MK Electric"],
       popularItems: [
-        { name: "Schneider 18-way CU", price: "£234.99", rating: 4.9 },
-        { name: "32A Type B MCB", price: "£12.50", rating: 4.8 },
-        { name: "63A 30mA RCD", price: "£45.99", rating: 4.7 }
+        { name: "Schneider 18-way CU", price: "£234.99", rating: 4.9, sales: 78 },
+        { name: "32A Type B MCB", price: "£12.50", rating: 4.8, sales: 345 },
+        { name: "63A 30mA RCD", price: "£45.99", rating: 4.7, sales: 189 }
       ]
     },
     {
       id: "protection",
-      title: "Protection Equipment",
+      title: "Protection Equipment", 
       icon: Shield,
       description: "Earth rods, surge protectors and safety devices",
       productCount: 95,
@@ -46,9 +46,9 @@ const MaterialCategoryBrowser = () => {
       trending: true,
       topBrands: ["Furse", "Dehn", "Phoenix", "ABB"],
       popularItems: [
-        { name: "1.2m Copper Earth Rod", price: "£28.99", rating: 4.6 },
-        { name: "Type 2 Surge Protector", price: "£89.50", rating: 4.8 },
-        { name: "Earth Rod Clamp", price: "£15.99", rating: 4.5 }
+        { name: "1.2m Copper Earth Rod", price: "£28.99", rating: 4.6, sales: 134 },
+        { name: "Type 2 Surge Protector", price: "£89.50", rating: 4.8, sales: 67 },
+        { name: "Earth Rod Clamp", price: "£15.99", rating: 4.5, sales: 178 }
       ]
     },
     {
@@ -61,9 +61,9 @@ const MaterialCategoryBrowser = () => {
       trending: false,
       topBrands: ["Wiska", "Gewiss", "Marshall Tufflex", "Adaptaflex"],
       popularItems: [
-        { name: "IP65 Junction Box 100x100", price: "£8.99", rating: 4.7 },
-        { name: "20mm Cable Gland Pack", price: "£12.50", rating: 4.6 },
-        { name: "Oval Conduit 20mm 3m", price: "£4.99", rating: 4.4 }
+        { name: "IP65 Junction Box 100x100", price: "£8.99", rating: 4.7, sales: 289 },
+        { name: "20mm Cable Gland Pack", price: "£12.50", rating: 4.6, sales: 156 },
+        { name: "Oval Conduit 20mm 3m", price: "£4.99", rating: 4.4, sales: 456 }
       ]
     },
     {
@@ -76,9 +76,9 @@ const MaterialCategoryBrowser = () => {
       trending: true,
       topBrands: ["Ansell", "Kosnic", "Aurora", "JCC"],
       popularItems: [
-        { name: "Fire Rated Downlight 6W", price: "£18.99", rating: 4.8 },
-        { name: "LED Batten 5ft 22W", price: "£24.99", rating: 4.7 },
-        { name: "Emergency Exit Sign", price: "£35.50", rating: 4.5 }
+        { name: "Fire Rated Downlight 6W", price: "£18.99", rating: 4.8, sales: 234 },
+        { name: "LED Batten 5ft 22W", price: "£24.99", rating: 4.7, sales: 145 },
+        { name: "Emergency Exit Sign", price: "£35.50", rating: 4.5, sales: 98 }
       ]
     },
     {
@@ -91,19 +91,20 @@ const MaterialCategoryBrowser = () => {
       trending: false,
       topBrands: ["Fluke", "Megger", "Kewtech", "Socket & See"],
       popularItems: [
-        { name: "Socket Tester Pro", price: "£45.99", rating: 4.8 },
-        { name: "Voltage Indicator", price: "£28.50", rating: 4.6 },
-        { name: "Cable Detector", price: "£89.99", rating: 4.7 }
+        { name: "Socket Tester Pro", price: "£45.99", rating: 4.8, sales: 89 },
+        { name: "Voltage Indicator", price: "£28.50", rating: 4.6, sales: 167 },
+        { name: "Cable Detector", price: "£89.99", rating: 4.7, sales: 56 }
       ]
     }
   ];
 
   return (
-    <div className="space-y-6">
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl font-semibold text-white">Browse by Category</h2>
-        <p className="text-muted-foreground">
-          Explore our comprehensive range of electrical materials organised by category
+    <div className="space-y-8">
+      <div className="text-center space-y-3">
+        <h2 className="text-3xl font-bold text-white">Browse by Category</h2>
+        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          Explore our comprehensive range of electrical materials organised by category. 
+          Find everything you need for professional electrical installations.
         </p>
       </div>
 
@@ -113,7 +114,7 @@ const MaterialCategoryBrowser = () => {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-elec-yellow/20 rounded-lg">
+                  <div className="p-3 bg-elec-yellow/20 rounded-lg">
                     <category.icon className="h-6 w-6 text-elec-yellow" />
                   </div>
                   <div>
@@ -122,9 +123,9 @@ const MaterialCategoryBrowser = () => {
                   </div>
                 </div>
                 {category.trending && (
-                  <Badge className="bg-green-500/20 text-green-400">
+                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
                     <TrendingUp className="h-3 w-3 mr-1" />
-                    Trending
+                    Hot
                   </Badge>
                 )}
               </div>
@@ -139,15 +140,18 @@ const MaterialCategoryBrowser = () => {
               </div>
 
               <div>
-                <h4 className="text-sm font-medium text-white mb-2">Popular Brands:</h4>
+                <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-2">
+                  <Award className="h-4 w-4" />
+                  Top Brands:
+                </h4>
                 <div className="flex flex-wrap gap-1">
                   {category.topBrands.slice(0, 3).map((brand) => (
-                    <Badge key={brand} variant="outline" className="text-xs border-elec-yellow/30">
+                    <Badge key={brand} variant="outline" className="text-xs border-elec-yellow/30 text-white">
                       {brand}
                     </Badge>
                   ))}
                   {category.topBrands.length > 3 && (
-                    <Badge variant="outline" className="text-xs border-elec-yellow/30">
+                    <Badge variant="outline" className="text-xs border-elec-yellow/30 text-white">
                       +{category.topBrands.length - 3}
                     </Badge>
                   )}
@@ -155,15 +159,22 @@ const MaterialCategoryBrowser = () => {
               </div>
 
               <div>
-                <h4 className="text-sm font-medium text-white mb-2">Top Sellers:</h4>
+                <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-2">
+                  <Users className="h-4 w-4" />
+                  Best Sellers:
+                </h4>
                 <div className="space-y-2">
                   {category.popularItems.slice(0, 2).map((item, index) => (
-                    <div key={index} className="flex justify-between items-center text-xs">
+                    <div key={index} className="flex justify-between items-center text-xs bg-elec-dark/30 p-2 rounded">
                       <div className="flex-1 min-w-0">
                         <p className="text-white truncate">{item.name}</p>
-                        <div className="flex items-center gap-1">
-                          <Star className="h-3 w-3 text-amber-400 fill-current" />
-                          <span className="text-muted-foreground">{item.rating}</span>
+                        <div className="flex items-center gap-2 mt-1">
+                          <div className="flex items-center gap-1">
+                            <Star className="h-3 w-3 text-amber-400 fill-current" />
+                            <span className="text-muted-foreground">{item.rating}</span>
+                          </div>
+                          <span className="text-muted-foreground">•</span>
+                          <span className="text-muted-foreground">{item.sales} sold</span>
                         </div>
                       </div>
                       <span className="text-elec-yellow font-medium ml-2">{item.price}</span>
@@ -172,7 +183,7 @@ const MaterialCategoryBrowser = () => {
                 </div>
               </div>
 
-              <Button className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90">
+              <Button className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 transition-colors">
                 Browse {category.title}
                 <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
