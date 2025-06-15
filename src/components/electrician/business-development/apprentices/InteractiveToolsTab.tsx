@@ -1,413 +1,368 @@
 
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Calculator, Calendar, FileText, PoundSterling, TrendingUp, Users } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Calculator, FileText, Clock, PoundSterling, TrendingUp, Download, CheckCircle } from "lucide-react";
+import { useState } from "react";
 
 const InteractiveToolsTab = () => {
-  const [apprenticeCosts, setApprenticeCosts] = useState({
-    apprenticeWage: 6.40,
-    hoursPerWeek: 35,
-    weeksPerYear: 48,
-    trainingCosts: 2000,
-    equipmentCosts: 1500,
-    supervisorHours: 5
-  });
+  const [apprenticeAge, setApprenticeAge] = useState("");
+  const [businessSize, setBusinessSize] = useState("");
+  const [calculatedCosts, setCalculatedCosts] = useState(null);
 
-  const [timelineInputs, setTimelineInputs] = useState({
-    startDate: "",
-    apprenticeName: "",
-    trainingProvider: ""
-  });
+  const calculateApprenticeshipCosts = () => {
+    if (!apprenticeAge || !businessSize) return;
 
-  const calculateApprenticeROI = () => {
-    const annualWages = apprenticeCosts.apprenticeWage * apprenticeCosts.hoursPerWeek * apprenticeCosts.weeksPerYear;
-    const totalFirstYearCost = annualWages + apprenticeCosts.trainingCosts + apprenticeCosts.equipmentCosts;
-    const governmentIncentive = 3000; // For 16-18 year olds
-    const netFirstYearCost = totalFirstYearCost - governmentIncentive;
+    const baseWage = apprenticeAge === "16-18" ? 6.40 : apprenticeAge === "19-24" ? 8.60 : 10.42;
+    const annualSalary = baseWage * 40 * 52;
+    const employerNI = annualSalary * 0.138;
+    const pension = annualSalary * 0.03;
     
-    // Projected productivity and value after 18 months
-    const year2ProductiveHours = apprenticeCosts.hoursPerWeek * 48 * 0.7; // 70% productive
-    const averageChargeRate = 45;
-    const year2Revenue = year2ProductiveHours * averageChargeRate;
-    const year2Wages = 10.42 * apprenticeCosts.hoursPerWeek * 48; // Minimum wage after first year
-    const year2Profit = year2Revenue - year2Wages;
+    let incentive = 0;
+    if (apprenticeAge === "16-18") incentive = 3000;
+    else if (apprenticeAge === "19-24") incentive = 1500;
 
-    return {
-      firstYearCost: totalFirstYearCost,
-      governmentIncentive,
-      netFirstYearCost,
-      year2Revenue,
-      year2Profit,
-      breakEvenMonths: Math.ceil(netFirstYearCost / (year2Profit / 12))
-    };
+    const equipment = 1000;
+    const admin = 600;
+    const trainingFunding = apprenticeAge === "16-18" ? 0 : (businessSize === "small" ? 500 : 2000);
+
+    const totalCost = annualSalary + employerNI + pension + equipment + admin + trainingFunding - incentive;
+
+    setCalculatedCosts({
+      baseWage,
+      annualSalary,
+      employerNI,
+      pension,
+      incentive,
+      equipment,
+      admin,
+      trainingFunding,
+      totalCost
+    });
   };
 
-  const generateTimeline = () => {
-    if (!timelineInputs.startDate) return [];
+  const timeAllocationData = [
+    { week: 1, onJob: 32, offJob: 8, notes: "Initial orientation and safety training" },
+    { week: 2, onJob: 32, offJob: 8, notes: "Basic skills development" },
+    { week: 3, onJob: 32, offJob: 8, notes: "College theory and practical workshops" },
+    { week: 4, onJob: 32, offJob: 8, notes: "Workplace assessment and review" }
+  ];
 
-    const startDate = new Date(timelineInputs.startDate);
-    const timeline = [
-      {
-        month: 0,
-        title: "Pre-Arrival Setup",
-        tasks: [
-          "Complete apprenticeship agreement paperwork",
-          "Set up training provider contracts",
-          "Prepare workspace and safety equipment",
-          "Schedule induction training"
-        ]
-      },
-      {
-        month: 1,
-        title: "Induction & Safety",
-        tasks: [
-          "Health and safety induction",
-          "Company procedures training",
-          "Basic electrical theory",
-          "Tool familiarisation"
-        ]
-      },
-      {
-        month: 3,
-        title: "Foundation Skills",
-        tasks: [
-          "Cable installation techniques",
-          "Basic testing procedures",
-          "Customer interaction training",
-          "First assessment milestone"
-        ]
-      },
-      {
-        month: 6,
-        title: "Intermediate Development",
-        tasks: [
-          "Circuit design understanding",
-          "More complex installations",
-          "Independent task completion",
-          "Mid-year review"
-        ]
-      },
-      {
-        month: 12,
-        title: "Advanced Skills",
-        tasks: [
-          "Fault finding and diagnosis",
-          "Customer consultation skills",
-          "Project management basics",
-          "End-of-year assessment"
-        ]
-      },
-      {
-        month: 24,
-        title: "Competency & Independence",
-        tasks: [
-          "Independent job completion",
-          "Quality assurance responsibilities",
-          "Mentoring newer apprentices",
-          "Preparation for final EPA"
-        ]
-      }
-    ];
-
-    return timeline.map(milestone => ({
-      ...milestone,
-      date: new Date(startDate.getTime() + milestone.month * 30.44 * 24 * 60 * 60 * 1000)
-    }));
-  };
-
-  const complianceChecklist = [
+  const documentTemplates = [
     {
-      category: "Legal Documentation",
-      items: [
-        { task: "Apprenticeship agreement signed", required: true, completed: false },
-        { task: "Training provider contract", required: true, completed: false },
-        { task: "Individual learning plan created", required: true, completed: false },
-        { task: "Health and safety induction completed", required: true, completed: false }
-      ]
+      title: "Apprenticeship Agreement Template",
+      description: "Comprehensive agreement covering all legal requirements",
+      sections: ["Personal details", "Training provider", "Qualifications", "Terms and conditions"],
+      downloadSize: "2.1 MB"
     },
     {
-      category: "Training Requirements",
-      items: [
-        { task: "20% off-the-job training scheduled", required: true, completed: false },
-        { task: "Skills development plan agreed", required: true, completed: false },
-        { task: "Assessment schedule confirmed", required: true, completed: false },
-        { task: "End-point assessment organisation selected", required: true, completed: false }
-      ]
+      title: "Individual Learning Plan",
+      description: "Structured plan for apprentice development",
+      sections: ["Learning objectives", "Assessment milestones", "Support needs", "Progress tracking"],
+      downloadSize: "1.8 MB"
     },
     {
-      category: "Ongoing Compliance",
-      items: [
-        { task: "Monthly progress reviews", required: true, completed: false },
-        { task: "Training records maintained", required: true, completed: false },
-        { task: "Employer satisfaction surveys", required: false, completed: false },
-        { task: "Career guidance sessions", required: false, completed: false }
-      ]
+      title: "20% Off-Job Training Tracker",
+      description: "Excel template for tracking training time compliance",
+      sections: ["Weekly time log", "Activity categories", "Compliance dashboard", "Reporting tools"],
+      downloadSize: "1.2 MB"
+    },
+    {
+      title: "Skills Assessment Matrix",
+      description: "Competency tracking across all skill areas",
+      sections: ["Technical skills", "Health & safety", "Customer service", "Professional development"],
+      downloadSize: "950 KB"
+    },
+    {
+      title: "Progress Review Template",
+      description: "Structured review meetings with apprentice",
+      sections: ["Performance review", "Goal setting", "Support planning", "Career development"],
+      downloadSize: "800 KB"
     }
   ];
 
-  const roiData = calculateApprenticeROI();
-  const timeline = generateTimeline();
+  const quickAssessmentQuestions = [
+    "Do you have a written apprenticeship agreement in place?",
+    "Is 20% off-job training time clearly scheduled and tracked?",
+    "Does the apprentice have access to a qualified mentor?",
+    "Are regular progress reviews scheduled and documented?",
+    "Is health and safety training comprehensive and up-to-date?",
+    "Are government incentives and funding being maximised?",
+    "Is the apprentice enrolled with an approved training provider?",
+    "Are you compliant with apprentice minimum wage requirements?"
+  ];
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-blue-500/10">
+      <Alert className="border-blue-500/50 bg-blue-500/10">
+        <Calculator className="h-4 w-4 text-blue-400" />
+        <AlertDescription className="text-blue-200">
+          Use these interactive tools to plan, calculate costs, and manage your apprenticeship programme effectively.
+        </AlertDescription>
+      </Alert>
+
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Calculator className="h-6 w-6" />
-            Interactive Apprentice Management Tools
+            <Calculator className="h-5 w-5" />
+            Apprenticeship Cost Calculator
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">
-            Use these interactive tools to plan, calculate costs, and manage your apprentice programme effectively.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
-              <Calculator className="h-5 w-5 text-green-400 mb-2" />
-              <div className="text-sm text-muted-foreground">ROI Calculator</div>
-              <div className="text-xl font-bold text-green-400">Cost/Benefit</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="age-range">Apprentice Age Range</Label>
+                <Select value={apprenticeAge} onValueChange={setApprenticeAge}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select age range" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="16-18">16-18 years</SelectItem>
+                    <SelectItem value="19-24">19-24 years</SelectItem>
+                    <SelectItem value="25+">25+ years</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label htmlFor="business-size">Business Size</Label>
+                <Select value={businessSize} onValueChange={setBusinessSize}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select business size" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="small">Small (under 50 employees)</SelectItem>
+                    <SelectItem value="medium">Medium (50-250 employees)</SelectItem>
+                    <SelectItem value="large">Large (over 250 employees)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <Button onClick={calculateApprenticeshipCosts} className="w-full">
+                Calculate Costs
+              </Button>
             </div>
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
-              <Calendar className="h-5 w-5 text-blue-400 mb-2" />
-              <div className="text-sm text-muted-foreground">Timeline Planner</div>
-              <div className="text-xl font-bold text-blue-400">48 Months</div>
+
+            {calculatedCosts && (
+              <div className="space-y-3">
+                <h4 className="font-semibold text-white">Cost Breakdown (Year 1)</h4>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center p-2 bg-elec-dark/50 rounded">
+                    <span className="text-muted-foreground">Base Salary</span>
+                    <span className="text-white">£{calculatedCosts.annualSalary.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 bg-elec-dark/50 rounded">
+                    <span className="text-muted-foreground">Employer NI</span>
+                    <span className="text-white">£{calculatedCosts.employerNI.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 bg-elec-dark/50 rounded">
+                    <span className="text-muted-foreground">Pension</span>
+                    <span className="text-white">£{calculatedCosts.pension.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 bg-elec-dark/50 rounded">
+                    <span className="text-muted-foreground">Equipment</span>
+                    <span className="text-white">£{calculatedCosts.equipment.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 bg-green-500/20 rounded">
+                    <span className="text-green-300">Government Incentive</span>
+                    <span className="text-green-400">-£{calculatedCosts.incentive.toLocaleString()}</span>
+                  </div>
+                  <div className="flex justify-between items-center p-2 bg-elec-yellow/20 border border-elec-yellow/30 rounded">
+                    <span className="text-elec-yellow font-semibold">Total Cost</span>
+                    <span className="text-elec-yellow font-semibold">£{calculatedCosts.totalCost.toLocaleString()}</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-green-500/20 bg-green-500/10">
+        <CardHeader>
+          <CardTitle className="text-green-400 flex items-center gap-2">
+            <Clock className="h-5 w-5" />
+            20% Off-Job Training Planner
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="bg-green-500/20 border border-green-500/30 rounded-lg p-4">
+              <h4 className="font-semibold text-green-300 mb-2">Training Time Requirements</h4>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div>
+                  <span className="text-green-200">Weekly Hours:</span>
+                  <div className="text-white font-medium">8 hours minimum</div>
+                </div>
+                <div>
+                  <span className="text-green-200">Annual Hours:</span>
+                  <div className="text-white font-medium">416 hours minimum</div>
+                </div>
+                <div>
+                  <span className="text-green-200">Documentation:</span>
+                  <div className="text-white font-medium">Required by law</div>
+                </div>
+              </div>
             </div>
-            <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
-              <FileText className="h-5 w-5 text-purple-400 mb-2" />
-              <div className="text-sm text-muted-foreground">Compliance Tracker</div>
-              <div className="text-xl font-bold text-purple-400">Checklist</div>
+
+            <div className="space-y-3">
+              <h4 className="font-semibold text-white">Sample Weekly Schedule</h4>
+              {timeAllocationData.map((week, index) => (
+                <div key={index} className="border border-green-500/20 rounded-lg p-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-medium text-green-300">Week {week.week}</span>
+                    <div className="flex gap-4 text-sm">
+                      <span className="text-white">On-job: {week.onJob}h</span>
+                      <span className="text-green-400">Off-job: {week.offJob}h</span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-muted-foreground">{week.notes}</p>
+                </div>
+              ))}
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-green-500/20 bg-green-500/10">
-          <CardHeader>
-            <CardTitle className="text-green-400 flex items-center gap-2">
-              <PoundSterling className="h-5 w-5" />
-              Apprentice ROI Calculator
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="apprenticeWage">Hourly Wage (£)</Label>
-                  <Input
-                    id="apprenticeWage"
-                    type="number"
-                    step="0.01"
-                    value={apprenticeCosts.apprenticeWage}
-                    onChange={(e) => setApprenticeCosts(prev => ({
-                      ...prev,
-                      apprenticeWage: parseFloat(e.target.value) || 0
-                    }))}
-                    className="bg-elec-dark"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="hoursPerWeek">Hours/Week</Label>
-                  <Input
-                    id="hoursPerWeek"
-                    type="number"
-                    value={apprenticeCosts.hoursPerWeek}
-                    onChange={(e) => setApprenticeCosts(prev => ({
-                      ...prev,
-                      hoursPerWeek: parseInt(e.target.value) || 0
-                    }))}
-                    className="bg-elec-dark"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="trainingCosts">Training Costs (£)</Label>
-                  <Input
-                    id="trainingCosts"
-                    type="number"
-                    value={apprenticeCosts.trainingCosts}
-                    onChange={(e) => setApprenticeCosts(prev => ({
-                      ...prev,
-                      trainingCosts: parseInt(e.target.value) || 0
-                    }))}
-                    className="bg-elec-dark"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="equipmentCosts">Equipment Costs (£)</Label>
-                  <Input
-                    id="equipmentCosts"
-                    type="number"
-                    value={apprenticeCosts.equipmentCosts}
-                    onChange={(e) => setApprenticeCosts(prev => ({
-                      ...prev,
-                      equipmentCosts: parseInt(e.target.value) || 0
-                    }))}
-                    className="bg-elec-dark"
-                  />
-                </div>
-              </div>
-
-              <div className="bg-elec-dark/50 p-4 rounded-lg space-y-3">
-                <h4 className="font-semibold text-white">Financial Projection</h4>
-                <div className="grid grid-cols-1 gap-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">First Year Total Cost:</span>
-                    <span className="text-white">£{roiData.firstYearCost.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Government Incentive:</span>
-                    <span className="text-green-400">-£{roiData.governmentIncentive.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between font-semibold">
-                    <span className="text-muted-foreground">Net First Year Cost:</span>
-                    <span className="text-white">£{roiData.netFirstYearCost.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Year 2 Revenue Potential:</span>
-                    <span className="text-blue-400">£{roiData.year2Revenue.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Year 2 Profit:</span>
-                    <span className="text-green-400">£{roiData.year2Profit.toLocaleString()}</span>
-                  </div>
-                  <div className="flex justify-between font-semibold">
-                    <span className="text-muted-foreground">Break-even Timeline:</span>
-                    <span className="text-elec-yellow">{roiData.breakEvenMonths} months</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-blue-500/20 bg-blue-500/10">
-          <CardHeader>
-            <CardTitle className="text-blue-400 flex items-center gap-2">
-              <Calendar className="h-5 w-5" />
-              Training Timeline Planner
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="startDate">Apprentice Start Date</Label>
-                <Input
-                  id="startDate"
-                  type="date"
-                  value={timelineInputs.startDate}
-                  onChange={(e) => setTimelineInputs(prev => ({
-                    ...prev,
-                    startDate: e.target.value
-                  }))}
-                  className="bg-elec-dark"
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="apprenticeName">Apprentice Name</Label>
-                <Input
-                  id="apprenticeName"
-                  type="text"
-                  placeholder="Enter apprentice name"
-                  value={timelineInputs.apprenticeName}
-                  onChange={(e) => setTimelineInputs(prev => ({
-                    ...prev,
-                    apprenticeName: e.target.value
-                  }))}
-                  className="bg-elec-dark"
-                />
-              </div>
-
-              {timeline.length > 0 && (
-                <div className="bg-elec-dark/50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-white mb-3">Training Milestones</h4>
-                  <div className="space-y-3 max-h-60 overflow-y-auto">
-                    {timeline.map((milestone, index) => (
-                      <div key={index} className="border border-blue-500/20 rounded p-3">
-                        <div className="flex justify-between items-start mb-2">
-                          <h5 className="font-medium text-white text-sm">{milestone.title}</h5>
-                          <Badge className="bg-blue-500/20 text-blue-400 text-xs">
-                            Month {milestone.month}
-                          </Badge>
-                        </div>
-                        <div className="text-xs text-blue-300 mb-2">
-                          {milestone.date?.toLocaleDateString('en-GB', { 
-                            month: 'long', 
-                            year: 'numeric' 
-                          })}
-                        </div>
-                        <ul className="space-y-1">
-                          {milestone.tasks.map((task, taskIndex) => (
-                            <li key={taskIndex} className="text-xs text-muted-foreground flex items-start gap-1">
-                              <span className="text-blue-400">•</span>
-                              {task}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
       <Card className="border-purple-500/20 bg-purple-500/10">
         <CardHeader>
           <CardTitle className="text-purple-400 flex items-center gap-2">
             <FileText className="h-5 w-5" />
-            Compliance Tracking Checklist
+            Document Templates & Resources
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-6">
-            {complianceChecklist.map((category, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {documentTemplates.map((template, index) => (
               <div key={index} className="border border-purple-500/20 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-3">{category.category}</h4>
-                <div className="space-y-2">
-                  {category.items.map((item, itemIndex) => (
-                    <div key={itemIndex} className="flex items-center gap-3 p-2 bg-purple-500/5 rounded">
-                      <input 
-                        type="checkbox" 
-                        className="rounded border-purple-500"
-                        defaultChecked={item.completed}
-                      />
-                      <span className={`text-sm flex-1 ${item.required ? 'text-white' : 'text-muted-foreground'}`}>
-                        {item.task}
-                      </span>
-                      <Badge className={item.required ? 'bg-red-500/20 text-red-400' : 'bg-green-500/20 text-green-400'}>
-                        {item.required ? 'Required' : 'Optional'}
-                      </Badge>
-                    </div>
-                  ))}
+                <div className="flex justify-between items-start mb-3">
+                  <h4 className="font-semibold text-white">{template.title}</h4>
+                  <Badge className="bg-purple-500/20 text-purple-400 text-xs">
+                    {template.downloadSize}
+                  </Badge>
                 </div>
+                
+                <p className="text-sm text-muted-foreground mb-3">{template.description}</p>
+                
+                <div className="space-y-2 mb-3">
+                  <h5 className="text-sm font-medium text-purple-300">Includes:</h5>
+                  <div className="flex flex-wrap gap-1">
+                    {template.sections.map((section, sectionIndex) => (
+                      <Badge key={sectionIndex} variant="outline" className="text-purple-200 border-purple-400/30 text-xs">
+                        {section}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+                
+                <Button variant="outline" size="sm" className="w-full border-purple-500/30">
+                  <Download className="h-4 w-4 mr-2" />
+                  Download Template
+                </Button>
               </div>
             ))}
           </div>
+        </CardContent>
+      </Card>
 
-          <div className="mt-6 pt-4 border-t border-purple-500/20">
-            <div className="flex flex-wrap gap-3">
-              <Button variant="outline" className="border-purple-500/30">
-                <FileText className="h-4 w-4 mr-2" />
-                Export Checklist
-              </Button>
-              <Button variant="outline" className="border-blue-500/30">
-                <Calendar className="h-4 w-4 mr-2" />
-                Schedule Review
-              </Button>
-              <Button variant="outline" className="border-green-500/30">
-                <TrendingUp className="h-4 w-4 mr-2" />
-                Progress Report
-              </Button>
+      <Card className="border-amber-500/20 bg-amber-500/10">
+        <CardHeader>
+          <CardTitle className="text-amber-400 flex items-center gap-2">
+            <CheckCircle className="h-5 w-5" />
+            Compliance Quick Assessment
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            <p className="text-muted-foreground mb-4">
+              Use this checklist to ensure your apprenticeship programme meets all legal requirements:
+            </p>
+            
+            {quickAssessmentQuestions.map((question, index) => (
+              <div key={index} className="flex items-center gap-3 p-3 border border-amber-500/20 rounded-lg">
+                <input type="checkbox" className="rounded border-amber-500" />
+                <span className="text-amber-200 text-sm">{question}</span>
+              </div>
+            ))}
+
+            <div className="mt-4 p-3 bg-amber-500/20 border border-amber-500/40 rounded-lg">
+              <h5 className="font-medium text-amber-300 mb-2">Assessment Score</h5>
+              <p className="text-sm text-amber-200">
+                <strong>8/8:</strong> Excellent compliance - you're well-prepared<br />
+                <strong>6-7/8:</strong> Good progress - address remaining items<br />
+                <strong>4-5/8:</strong> Some gaps - seek additional support<br />
+                <strong>0-3/8:</strong> Significant issues - professional advice recommended
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <TrendingUp className="h-5 w-5" />
+            ROI Calculator & Business Benefits
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="font-semibold text-white mb-3">Investment vs Return</h4>
+              <div className="space-y-3">
+                <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+                  <h5 className="text-red-400 font-medium">4-Year Investment</h5>
+                  <div className="text-2xl font-bold text-red-300">£65,000</div>
+                  <p className="text-xs text-red-200">Total cost including salary progression</p>
+                </div>
+                
+                <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
+                  <h5 className="text-green-400 font-medium">Qualified Electrician Value</h5>
+                  <div className="text-2xl font-bold text-green-300">£180,000</div>
+                  <p className="text-xs text-green-200">5-year earning potential (£36k/year)</p>
+                </div>
+                
+                <div className="p-3 bg-elec-yellow/20 border border-elec-yellow/30 rounded-lg">
+                  <h5 className="text-elec-yellow font-medium">Net ROI</h5>
+                  <div className="text-2xl font-bold text-elec-yellow">277%</div>
+                  <p className="text-xs text-muted-foreground">Return on investment over 5 years</p>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold text-white mb-3">Additional Benefits</h4>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  <span className="text-muted-foreground">Reduced recruitment costs</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  <span className="text-muted-foreground">Higher employee loyalty</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  <span className="text-muted-foreground">Skills tailored to your business</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  <span className="text-muted-foreground">Fresh perspectives and ideas</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  <span className="text-muted-foreground">Enhanced reputation as training provider</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4 text-green-400" />
+                  <span className="text-muted-foreground">Potential for business growth</span>
+                </li>
+              </ul>
             </div>
           </div>
         </CardContent>
