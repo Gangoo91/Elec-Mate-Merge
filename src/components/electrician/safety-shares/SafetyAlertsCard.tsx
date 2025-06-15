@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { AlertTriangle, Clock, MapPin, ExternalLink, Bell } from "lucide-react";
+import { AlertTriangle, Clock, MapPin, ExternalLink, Bell, AlertCircle, Info } from "lucide-react";
 
 interface SafetyAlert {
   id: string;
@@ -72,11 +72,11 @@ const SafetyAlertsCard = () => {
 
   const getSeverityIcon = (severity: string) => {
     switch (severity) {
-      case "critical": return "🚨";
-      case "high": return "⚠️";
-      case "medium": return "📋";
-      case "low": return "ℹ️";
-      default: return "📢";
+      case "critical": return <AlertTriangle className="h-4 w-4" />;
+      case "high": return <AlertCircle className="h-4 w-4" />;
+      case "medium": return <Info className="h-4 w-4" />;
+      case "low": return <Info className="h-4 w-4" />;
+      default: return <Bell className="h-4 w-4" />;
     }
   };
 
@@ -100,7 +100,9 @@ const SafetyAlertsCard = () => {
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="text-lg">{getSeverityIcon(alert.severity)}</span>
+                    <div className={`p-1 rounded-full ${getSeverityColor(alert.severity)}`}>
+                      {getSeverityIcon(alert.severity)}
+                    </div>
                     <Badge className={getSeverityColor(alert.severity)}>
                       {alert.severity.toUpperCase()}
                     </Badge>
