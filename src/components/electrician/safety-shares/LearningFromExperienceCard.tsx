@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, Clock, Eye, AlertTriangle, X, CheckCircle } from "lucide-react";
+import { BookOpen, Clock, Eye, AlertTriangle, CheckCircle, Skull, Zap, Flame, Settings } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 
@@ -57,12 +57,12 @@ const LearningFromExperienceCard = () => {
 
   const getIncidentIcon = (type: string) => {
     switch (type.toLowerCase()) {
-      case 'fatal accident': return '💀';
-      case 'serious injury': return '🚨';
-      case 'near miss': return '⚠️';
-      case 'equipment failure': return '⚙️';
-      case 'fire': return '🔥';
-      default: return '📋';
+      case 'fatal accident': return <Skull className="h-4 w-4" />;
+      case 'serious injury': return <AlertTriangle className="h-4 w-4" />;
+      case 'near miss': return <AlertTriangle className="h-4 w-4" />;
+      case 'equipment failure': return <Settings className="h-4 w-4" />;
+      case 'fire': return <Flame className="h-4 w-4" />;
+      default: return <BookOpen className="h-4 w-4" />;
     }
   };
 
@@ -78,7 +78,7 @@ const LearningFromExperienceCard = () => {
         </CardContent>
       </Card>
     );
-  }
+  };
 
   if (selectedReport) {
     return (
@@ -86,7 +86,9 @@ const LearningFromExperienceCard = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="text-2xl">{getIncidentIcon(selectedReport.incident_type)}</span>
+              <div className={`p-2 rounded-full ${getIncidentTypeColor(selectedReport.incident_type)}`}>
+                {getIncidentIcon(selectedReport.incident_type)}
+              </div>
               <Badge className={`${getIncidentTypeColor(selectedReport.incident_type)} font-medium`}>
                 {selectedReport.incident_type.toUpperCase()}
               </Badge>
@@ -170,7 +172,9 @@ const LearningFromExperienceCard = () => {
             >
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <span className="text-lg">{getIncidentIcon(report.incident_type)}</span>
+                  <div className={`p-1 rounded-full ${getIncidentTypeColor(report.incident_type)}`}>
+                    {getIncidentIcon(report.incident_type)}
+                  </div>
                   <Badge className={`${getIncidentTypeColor(report.incident_type)} text-xs font-medium`}>
                     {report.incident_type.toUpperCase()}
                   </Badge>
