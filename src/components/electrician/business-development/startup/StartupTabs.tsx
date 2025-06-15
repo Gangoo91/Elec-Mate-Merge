@@ -1,8 +1,9 @@
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Rocket, Calculator, FileText, PoundSterling, TrendingUp, Settings, Target, Clock, Shield, Phone, Lightbulb, BarChart3 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calculator, FileText, PoundSterling, TrendingUp, Settings, Phone, Lightbulb, BarChart3, Rocket, Target, Clock, Shield, Heart } from "lucide-react";
 import BusinessCalculator from "./BusinessCalculator";
 import LegalSetupTab from "./LegalSetupTab";
 import FundingOptionsTab from "./FundingOptionsTab";
@@ -13,137 +14,101 @@ import ToolsTemplatesTab from "./ToolsTemplatesTab";
 import MarketIntelligenceTab from "./MarketIntelligenceTab";
 
 const StartupTabs = () => {
-  const successMetrics = [
-    { label: "Business Setup Time", value: "8-12 weeks", icon: Clock, color: "text-blue-400" },
-    { label: "Average Success Rate", value: "87%", icon: Target, color: "text-green-400" },
-    { label: "First Year Survival", value: "92%", icon: Shield, color: "text-purple-400" },
-    { label: "ROI Timeline", value: "18-24 months", icon: TrendingUp, color: "text-amber-400" }
-  ];
-
-  const keyBenefits = [
-    "Complete step-by-step guidance from setup to first customer",
-    "Interactive calculators for financial planning and pricing",
-    "Legal compliance checklists and document templates",
-    "Marketing strategies proven to work for electrical contractors",
-    "Ongoing support and resources for sustainable growth"
-  ];
-
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Rocket className="h-6 w-6" />
-            Complete Startup Guide for Electrical Contractors
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            <p className="text-muted-foreground">
-              Everything you need to start your electrical contracting business in the UK. From legal setup to your first customer, 
-              we'll guide you through each essential step with practical tools and expert advice.
-            </p>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {successMetrics.map((metric, index) => (
-                <div key={index} className="text-center p-4 bg-elec-dark/50 rounded-lg">
-                  <metric.icon className={`h-6 w-6 mx-auto mb-2 ${metric.color}`} />
-                  <div className={`text-xl font-bold ${metric.color}`}>{metric.value}</div>
-                  <div className="text-xs text-muted-foreground">{metric.label}</div>
-                </div>
-              ))}
-            </div>
+    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
+      <div className="flex flex-col items-center justify-center mb-6">
+        <h1 className="text-3xl font-bold tracking-tight mb-4">Starting an Electrical Business</h1>
+        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+          Your complete guide to establishing and growing a successful electrical contracting business in the UK. From legal setup to scaling your operations.
+        </p>
+        <BackButton customUrl="/electrician/business-development" label="Back to Business Development" />
+      </div>
 
-            <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
-              <h4 className="font-semibold text-green-400 mb-3">What You'll Get:</h4>
-              <ul className="space-y-2">
-                {keyBenefits.map((benefit, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <div className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
-                    {benefit}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              <Badge className="bg-elec-yellow/20 text-elec-yellow">Free Resources</Badge>
-              <Badge className="bg-blue-500/20 text-blue-400">Expert Guidance</Badge>
-              <Badge className="bg-green-500/20 text-green-400">Proven Methods</Badge>
-              <Badge className="bg-purple-500/20 text-purple-400">Interactive Tools</Badge>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Tabs defaultValue="calculator" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8 h-auto p-1">
-          <TabsTrigger value="calculator" className="flex items-center gap-2 p-3">
+      <Tabs defaultValue="calculator" className="w-full">
+        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8">
+          <TabsTrigger value="calculator" className="flex items-center gap-2">
             <Calculator className="h-4 w-4" />
-            <span className="hidden sm:inline">Calculator</span>
+            Calculator
           </TabsTrigger>
-          <TabsTrigger value="legal" className="flex items-center gap-2 p-3">
+          <TabsTrigger value="legal" className="flex items-center gap-2">
             <FileText className="h-4 w-4" />
-            <span className="hidden sm:inline">Legal</span>
+            Legal
           </TabsTrigger>
-          <TabsTrigger value="funding" className="flex items-center gap-2 p-3">
+          <TabsTrigger value="funding" className="flex items-center gap-2">
             <PoundSterling className="h-4 w-4" />
-            <span className="hidden sm:inline">Funding</span>
+            Funding
           </TabsTrigger>
-          <TabsTrigger value="marketing" className="flex items-center gap-2 p-3">
+          <TabsTrigger value="marketing" className="flex items-center gap-2">
             <TrendingUp className="h-4 w-4" />
-            <span className="hidden sm:inline">Marketing</span>
+            Marketing
           </TabsTrigger>
-          <TabsTrigger value="operations" className="flex items-center gap-2 p-3">
+          <TabsTrigger value="operations" className="flex items-center gap-2">
             <Settings className="h-4 w-4" />
-            <span className="hidden sm:inline">Operations</span>
+            Operations
           </TabsTrigger>
-          <TabsTrigger value="resources" className="flex items-center gap-2 p-3">
+          <TabsTrigger value="resources" className="flex items-center gap-2">
             <Phone className="h-4 w-4" />
-            <span className="hidden sm:inline">Support</span>
+            Support
           </TabsTrigger>
-          <TabsTrigger value="tools" className="flex items-center gap-2 p-3">
+          <TabsTrigger value="tools" className="flex items-center gap-2">
             <Lightbulb className="h-4 w-4" />
-            <span className="hidden sm:inline">Tools</span>
+            Tools
           </TabsTrigger>
-          <TabsTrigger value="market" className="flex items-center gap-2 p-3">
+          <TabsTrigger value="market" className="flex items-center gap-2">
             <BarChart3 className="h-4 w-4" />
-            <span className="hidden sm:inline">Market</span>
+            Market
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="calculator" className="space-y-6">
+        <TabsContent value="calculator">
           <BusinessCalculator />
         </TabsContent>
 
-        <TabsContent value="legal" className="space-y-6">
+        <TabsContent value="legal">
           <LegalSetupTab />
         </TabsContent>
 
-        <TabsContent value="funding" className="space-y-6">
+        <TabsContent value="funding">
           <FundingOptionsTab />
         </TabsContent>
 
-        <TabsContent value="marketing" className="space-y-6">
+        <TabsContent value="marketing">
           <MarketingStrategyTab />
         </TabsContent>
 
-        <TabsContent value="operations" className="space-y-6">
+        <TabsContent value="operations">
           <OperationalSetupTab />
         </TabsContent>
 
-        <TabsContent value="resources" className="space-y-6">
+        <TabsContent value="resources">
           <ResourcesSupportTab />
         </TabsContent>
 
-        <TabsContent value="tools" className="space-y-6">
+        <TabsContent value="tools">
           <ToolsTemplatesTab />
         </TabsContent>
 
-        <TabsContent value="market" className="space-y-6">
+        <TabsContent value="market">
           <MarketIntelligenceTab />
         </TabsContent>
       </Tabs>
+
+      <Card className="border-green-500/50 bg-green-500/10">
+        <CardHeader>
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <Heart className="h-5 w-5" />
+            Remember
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">
+            Starting a business is a significant step that requires careful planning and preparation. 
+            While the journey can be challenging, with the right guidance and resources, you can build 
+            a successful electrical contracting business. Take your time, seek advice when needed, 
+            and remember that every successful business started with a single step.
+          </p>
+        </CardContent>
+      </Card>
     </div>
   );
 };

@@ -2,139 +2,93 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Download, FileText, Calculator, Smartphone, Laptop, Wrench, CheckCircle } from "lucide-react";
+import { Download, FileText, Calculator, Users, PoundSterling, CheckCircle, ExternalLink } from "lucide-react";
 
 const ToolsTemplatesTab = () => {
-  const documentTemplates = [
+  const businessTemplates = [
     {
-      category: "Legal Documents",
-      icon: FileText,
-      templates: [
-        { name: "Terms & Conditions Template", description: "Customisable T&Cs for electrical work", price: "Free" },
-        { name: "Customer Contract Template", description: "Standard contract for electrical services", price: "Free" },
-        { name: "Health & Safety Policy", description: "Template policy for small electrical businesses", price: "Free" },
-        { name: "Risk Assessment Forms", description: "Site-specific risk assessment templates", price: "Free" }
-      ]
+      name: "Business Plan Template",
+      description: "Comprehensive template for electrical contractors",
+      type: "Document",
+      size: "2.5 MB",
+      downloads: 1250,
+      rating: 4.8
     },
     {
-      category: "Business Planning",
-      icon: Calculator,
-      templates: [
-        { name: "Business Plan Template", description: "Comprehensive business plan for electrical contractors", price: "Free" },
-        { name: "Financial Projections Spreadsheet", description: "3-year financial forecasting tool", price: "Free" },
-        { name: "Cash Flow Template", description: "Monthly cash flow planning spreadsheet", price: "Free" },
-        { name: "Pricing Calculator", description: "Job pricing and quoting tool", price: "Free" }
-      ]
+      name: "Quote & Invoice Templates",
+      description: "Professional quote and invoice formats",
+      type: "Spreadsheet",
+      size: "850 KB",
+      downloads: 2100,
+      rating: 4.9
     },
     {
-      category: "Marketing Materials",
-      icon: Smartphone,
-      templates: [
-        { name: "Business Card Templates", description: "Professional designs for electrical contractors", price: "Free" },
-        { name: "Flyer Templates", description: "Marketing flyers for local advertising", price: "Free" },
-        { name: "Website Template", description: "Basic website template for electricians", price: "Free" },
-        { name: "Social Media Kit", description: "Graphics and content for social media", price: "Free" }
-      ]
+      name: "Risk Assessment Forms",
+      description: "Health & safety documentation pack",
+      type: "Document Pack",
+      size: "1.8 MB",
+      downloads: 980,
+      rating: 4.7
+    },
+    {
+      name: "Customer Contract Template",
+      description: "Legally compliant service agreements",
+      type: "Document",
+      size: "1.2 MB",
+      downloads: 1450,
+      rating: 4.6
     }
   ];
 
   const digitalTools = [
     {
+      name: "Job Costing Calculator",
+      description: "Calculate accurate job costs and pricing",
+      features: ["Material costs", "Labour rates", "Profit margins", "Tax calculations"],
+      type: "Interactive Tool"
+    },
+    {
+      name: "Cash Flow Planner",
+      description: "Plan and track your business finances",
+      features: ["Monthly projections", "Expense tracking", "Revenue forecasting", "Break-even analysis"],
+      type: "Planning Tool"
+    },
+    {
+      name: "Customer Database",
+      description: "Manage client information and history",
+      features: ["Contact management", "Job history", "Payment tracking", "Follow-up reminders"],
+      type: "Management Tool"
+    }
+  ];
+
+  const softwareRecommendations = [
+    {
       name: "QuickBooks",
       category: "Accounting",
-      description: "Complete accounting solution for small businesses",
-      price: "£15-30/month",
-      features: ["Invoicing", "Expense tracking", "Tax preparation", "Payroll"]
+      price: "From £6/month",
+      features: ["Invoicing", "Expense tracking", "Tax preparation", "Financial reports"],
+      ukSpecific: true
+    },
+    {
+      name: "Sage Business Cloud",
+      category: "Accounting",
+      price: "From £10/month", 
+      features: ["VAT returns", "Payroll", "Bank reconciliation", "Mobile app"],
+      ukSpecific: true
     },
     {
       name: "Tradify",
       category: "Job Management",
-      description: "All-in-one job management for trades",
-      price: "£29-79/month",
-      features: ["Job scheduling", "Quoting", "Invoicing", "Customer management"]
+      price: "From £29/month",
+      features: ["Job scheduling", "Quote creation", "Material tracking", "Time tracking"],
+      ukSpecific: false
     },
     {
-      name: "MyBuilder Pro",
-      category: "Lead Generation",
-      description: "Professional profile and lead generation",
-      price: "£39/month",
-      features: ["Lead generation", "Professional profile", "Customer reviews", "Marketing tools"]
-    },
-    {
-      name: "Canva Pro",
-      category: "Design",
-      description: "Professional design tool for marketing materials",
-      price: "£10/month",
-      features: ["Logo design", "Marketing materials", "Social media graphics", "Brand kit"]
-    }
-  ];
-
-  const physicalTools = [
-    {
-      category: "Basic Hand Tools",
-      essential: true,
-      tools: [
-        "Wire strippers and crimpers",
-        "Screwdriver set (flathead and Phillips)",
-        "Pliers set (long nose, side cutters)",
-        "Electrical tape and cable ties",
-        "Torch and headlamp"
-      ]
-    },
-    {
-      category: "Testing Equipment",
-      essential: true,
-      tools: [
-        "Multifunction tester (MFT)",
-        "Voltage indicator",
-        "Socket tester",
-        "Insulation resistance tester",
-        "Earth fault loop impedance tester"
-      ]
-    },
-    {
-      category: "Power Tools",
-      essential: false,
-      tools: [
-        "Cordless drill/driver",
-        "SDS drill for masonry",
-        "Angle grinder",
-        "Reciprocating saw",
-        "Cable pulling system"
-      ]
-    }
-  ];
-
-  const checklists = [
-    {
-      title: "Pre-Launch Checklist",
-      items: [
-        "Business registration completed",
-        "Insurance policies in place",
-        "Bank account opened",
-        "Marketing materials prepared",
-        "First customers identified"
-      ]
-    },
-    {
-      title: "Daily Operations Checklist",
-      items: [
-        "Safety equipment checked",
-        "Vehicle inspection completed",
-        "Tools and materials loaded",
-        "Customer contact confirmed",
-        "Site risk assessment prepared"
-      ]
-    },
-    {
-      title: "Monthly Review Checklist",
-      items: [
-        "Financial records updated",
-        "Tax obligations reviewed",
-        "Insurance policies checked",
-        "Marketing performance analysed",
-        "Customer feedback collected"
-      ]
+      name: "ServiceM8",
+      category: "Field Service",
+      price: "From £25/month",
+      features: ["GPS tracking", "Photo reports", "Customer communication", "Invoice generation"],
+      ukSpecific: false
     }
   ];
 
@@ -144,132 +98,104 @@ const ToolsTemplatesTab = () => {
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <FileText className="h-5 w-5" />
-            Document Templates
+            Business Document Templates
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {documentTemplates.map((category, index) => (
-              <div key={index} className="space-y-3">
-                <h4 className="font-medium text-white flex items-center gap-2">
-                  <category.icon className="h-4 w-4 text-elec-yellow" />
-                  {category.category}
-                </h4>
-                <div className="grid gap-3">
-                  {category.templates.map((template, templateIndex) => (
-                    <div key={templateIndex} className="flex items-center justify-between p-3 border border-elec-yellow/20 rounded-lg">
-                      <div>
-                        <h5 className="font-medium text-white">{template.name}</h5>
-                        <p className="text-sm text-muted-foreground">{template.description}</p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Badge variant="outline" className="text-green-400 border-green-400/30">
-                          {template.price}
-                        </Badge>
-                        <Button variant="outline" size="sm">
-                          <Download className="h-4 w-4 mr-1" />
-                          Download
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
+        <CardContent className="space-y-4">
+          {businessTemplates.map((template, index) => (
+            <div key={index} className="flex items-center justify-between p-4 bg-elec-dark/30 rounded-lg">
+              <div className="flex-1">
+                <h4 className="font-medium text-white">{template.name}</h4>
+                <p className="text-sm text-muted-foreground">{template.description}</p>
+                <div className="flex items-center gap-2 mt-2">
+                  <Badge variant="outline" className="text-xs">{template.type}</Badge>
+                  <span className="text-xs text-muted-foreground">{template.size}</span>
+                  <span className="text-xs text-muted-foreground">★ {template.rating}</span>
+                  <span className="text-xs text-muted-foreground">{template.downloads} downloads</span>
                 </div>
               </div>
-            ))}
-          </div>
+              <Button size="sm" className="ml-4">
+                <Download className="h-4 w-4 mr-1" />
+                Download
+              </Button>
+            </div>
+          ))}
         </CardContent>
       </Card>
 
       <Card className="border-blue-500/50 bg-blue-500/10">
         <CardHeader>
           <CardTitle className="text-blue-300 flex items-center gap-2">
-            <Laptop className="h-5 w-5" />
-            Recommended Digital Tools
+            <Calculator className="h-5 w-5" />
+            Interactive Business Tools
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid gap-4">
-            {digitalTools.map((tool, index) => (
-              <div key={index} className="border border-blue-500/20 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-2">
-                  <div>
-                    <h4 className="font-medium text-white">{tool.name}</h4>
-                    <Badge variant="outline" className="text-blue-300 border-blue-400/30 mt-1">
-                      {tool.category}
-                    </Badge>
+        <CardContent className="space-y-4">
+          {digitalTools.map((tool, index) => (
+            <div key={index} className="p-4 bg-blue-500/5 rounded-lg border border-blue-500/20">
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <h4 className="font-medium text-white">{tool.name}</h4>
+                  <p className="text-sm text-muted-foreground mb-3">{tool.description}</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {tool.features.map((feature, featureIndex) => (
+                      <div key={featureIndex} className="flex items-center gap-1 text-xs text-blue-200">
+                        <CheckCircle className="h-3 w-3" />
+                        {feature}
+                      </div>
+                    ))}
                   </div>
-                  <div className="text-blue-300 font-medium">{tool.price}</div>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">{tool.description}</p>
-                <div className="flex flex-wrap gap-1">
-                  {tool.features.map((feature, featureIndex) => (
-                    <Badge key={featureIndex} variant="secondary" className="text-xs">
-                      {feature}
-                    </Badge>
-                  ))}
+                <div className="ml-4">
+                  <Badge className="bg-blue-500/20 text-blue-300">{tool.type}</Badge>
+                  <Button size="sm" className="ml-2">Launch</Button>
                 </div>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-green-500/50 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
-            <Wrench className="h-5 w-5" />
-            Essential Tools & Equipment
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {physicalTools.map((category, index) => (
-              <div key={index} className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <h4 className="font-medium text-white">{category.category}</h4>
-                  {category.essential && (
-                    <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
-                      Essential
-                    </Badge>
-                  )}
-                </div>
-                <ul className="space-y-1 ml-4">
-                  {category.tools.map((tool, toolIndex) => (
-                    <li key={toolIndex} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
-                      {tool}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </CardContent>
       </Card>
 
       <Card className="border-purple-500/50 bg-purple-500/10">
         <CardHeader>
           <CardTitle className="text-purple-300 flex items-center gap-2">
-            <CheckCircle className="h-5 w-5" />
-            Business Checklists
+            <PoundSterling className="h-5 w-5" />
+            Recommended Software Solutions
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid md:grid-cols-3 gap-4">
-            {checklists.map((checklist, index) => (
-              <div key={index} className="space-y-3">
-                <h4 className="font-medium text-white">{checklist.title}</h4>
-                <ul className="space-y-2">
-                  {checklist.items.map((item, itemIndex) => (
-                    <li key={itemIndex} className="flex items-start gap-2 text-sm">
-                      <CheckCircle className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-purple-100">{item}</span>
-                    </li>
-                  ))}
-                </ul>
+        <CardContent className="space-y-4">
+          {softwareRecommendations.map((software, index) => (
+            <div key={index} className="p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-2">
+                    <h4 className="font-medium text-white">{software.name}</h4>
+                    {software.ukSpecific && (
+                      <Badge variant="outline" className="text-xs text-purple-300 border-purple-400/30">
+                        UK Specific
+                      </Badge>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-4 mb-3">
+                    <Badge className="bg-purple-500/20 text-purple-300">{software.category}</Badge>
+                    <span className="text-sm font-medium text-purple-200">{software.price}</span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {software.features.map((feature, featureIndex) => (
+                      <div key={featureIndex} className="flex items-center gap-1 text-xs text-purple-200">
+                        <CheckCircle className="h-3 w-3" />
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <Button variant="outline" size="sm">
+                  <ExternalLink className="h-4 w-4 mr-1" />
+                  Learn More
+                </Button>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </CardContent>
       </Card>
     </div>
