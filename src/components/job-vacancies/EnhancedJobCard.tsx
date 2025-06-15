@@ -29,9 +29,10 @@ interface EnhancedJobCardProps {
   job: Job;
   selectedJob: string | null;
   handleApply: (jobId: string, url: string) => void;
+  isAIEnhanced?: boolean;
 }
 
-const EnhancedJobCard = ({ job, selectedJob, handleApply }: EnhancedJobCardProps) => {
+const EnhancedJobCard = ({ job, selectedJob, handleApply, isAIEnhanced = false }: EnhancedJobCardProps) => {
   const isSelected = selectedJob === job.id;
   
   return (
@@ -52,9 +53,16 @@ const EnhancedJobCard = ({ job, selectedJob, handleApply }: EnhancedJobCardProps
               <span className="text-sm">{job.company}</span>
             </div>
           </div>
-          <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 ml-2">
-            {job.source}
-          </Badge>
+          <div className="flex gap-2 ml-2">
+            <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+              {job.source}
+            </Badge>
+            {isAIEnhanced && (
+              <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
+                AI Enhanced
+              </Badge>
+            )}
+          </div>
         </div>
       </CardHeader>
       
