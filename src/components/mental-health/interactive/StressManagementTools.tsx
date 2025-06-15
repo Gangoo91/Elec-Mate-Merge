@@ -1,17 +1,20 @@
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Brain, Play, Pause, RotateCcw, Volume2 } from "lucide-react";
+import { Brain, Play, Pause, RotateCcw } from "lucide-react";
 
 const StressManagementTools = () => {
   const [activeExercise, setActiveExercise] = useState<string | null>(null);
-  const [timer, setTimer] = useState(0);
+  const [totalElapsed, setTotalElapsed] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [breathingPhase, setBreathingPhase] = useState<'inhale' | 'hold' | 'exhale' | 'pause'>('inhale');
-  const [breathingProgress, setBreathingProgress] = useState(0);
+  const [phaseTimeLeft, setPhaseTimeLeft] = useState(4);
+  const [cycleCount, setCycleCount] = useState(0);
+
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const exercises = [
     {
@@ -20,10 +23,10 @@ const StressManagementTools = () => {
       description: "4-4-4-4 breathing pattern for instant calm",
       duration: 240, // 4 minutes
       phases: [
-        { name: "inhale", duration: 4, instruction: "Breathe in slowly" },
-        { name: "hold", duration: 4, instruction: "Hold your breath" },
-        { name: "exhale", duration: 4, instruction: "Breathe out slowly" },
-        { name: "pause", duration: 4, instruction: "Pause briefly" }
+        { name: "inhale" as const, duration: 4, instruction: "Breathe in slowly" },
+        { name: "hold" as const, duration: 4, instruction: "Hold your breath" },
+        { name: "exhale" as const, duration: 4, instruction: "Breathe out slowly" },
+        { name: "pause" as const, duration: 4, instruction: "Pause briefly" }
       ]
     },
     {
@@ -32,8 +35,8 @@ const StressManagementTools = () => {
       description: "2-minute rapid stress relief technique",
       duration: 120,
       phases: [
-        { name: "inhale", duration: 3, instruction: "Deep breath in" },
-        { name: "exhale", duration: 6, instruction: "Slow breath out" }
+        { name: "inhale" as const, duration: 3, instruction: "Deep breath in" },
+        { name: "exhale" as const, duration: 6, instruction: "Slow breath out" }
       ]
     },
     {
@@ -42,59 +45,86 @@ const StressManagementTools = () => {
       description: "5-minute full body tension release",
       duration: 300,
       phases: [
-        { name: "tense", duration: 5, instruction: "Tense muscle group" },
-        { name: "release", duration: 10, instruction: "Release and relax" }
+        { name: "inhale" as const, duration: 5, instruction: "Tense muscle group" },
+        { name: "exhale" as const, duration: 10, instruction: "Release and relax" }
       ]
     }
   ];
 
+  const currentExercise = exercises.find(e => e.id === activeExercise);
+  const currentPhase = currentExercise?.phases.find(p => p.name === breathingPhase);
+
+  useEffect(() => {
+    if (isRunning && activeExercise) {
+      intervalRef.current = setInterval(() => {
+        setTotalElapsed(prev => {
+          const newTotal = prev + 1;
+          // Check if exercise is complete
+          if (currentExercise && newTotal >= currentExercise.duration) {
+            setIsRunning(false);
+            return newTotal;
+          }
+          return newTotal;
+        });
+
+        setPhaseTimeLeft(prev => {
+          const newTime = prev - 1;
+          if (newTime <= 0) {
+            // Move to next phase
+            if (currentExercise) {
+              const currentPhaseIndex = currentExercise.phases.findIndex(p => p.name === breathingPhase);
+              const nextPhaseIndex = (currentPhaseIndex + 1) % currentExercise.phases.length;
+              const nextPhase = currentExercise.phases[nextPhaseIndex];
+              
+              setBreathingPhase(nextPhase.name);
+              
+              // If we completed a full cycle (back to first phase)
+              if (nextPhaseIndex === 0) {
+                setCycleCount(prev => prev + 1);
+              }
+              
+              return nextPhase.duration;
+            }
+          }
+          return newTime;
+        });
+      }, 1000);
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isRunning, activeExercise, breathingPhase, currentExercise]);
+
   const startExercise = (exerciseId: string) => {
-    setActiveExercise(exerciseId);
-    setTimer(0);
-    setBreathingProgress(0);
-    setBreathingPhase('inhale');
-    setIsRunning(true);
-    
-    // Start the exercise timer
     const exercise = exercises.find(e => e.id === exerciseId);
-    if (exercise && exercise.id === 'box-breathing') {
-      startBreathingCycle(exercise);
+    if (exercise) {
+      setActiveExercise(exerciseId);
+      setTotalElapsed(0);
+      setBreathingPhase(exercise.phases[0].name);
+      setPhaseTimeLeft(exercise.phases[0].duration);
+      setCycleCount(0);
+      setIsRunning(true);
     }
   };
 
-  const startBreathingCycle = (exercise: any) => {
-    let currentPhaseIndex = 0;
-    let phaseTimer = 0;
-    
-    const interval = setInterval(() => {
-      if (!isRunning) {
-        clearInterval(interval);
-        return;
-      }
-
-      const currentPhase = exercise.phases[currentPhaseIndex];
-      phaseTimer++;
-      
-      setBreathingProgress((phaseTimer / currentPhase.duration) * 100);
-      setBreathingPhase(currentPhase.name);
-
-      if (phaseTimer >= currentPhase.duration) {
-        phaseTimer = 0;
-        currentPhaseIndex = (currentPhaseIndex + 1) % exercise.phases.length;
-        setBreathingProgress(0);
-      }
-      
-      setTimer(prev => prev + 1);
-    }, 1000);
-
-    return interval;
+  const togglePause = () => {
+    setIsRunning(!isRunning);
   };
 
   const stopExercise = () => {
     setIsRunning(false);
     setActiveExercise(null);
-    setTimer(0);
-    setBreathingProgress(0);
+    setTotalElapsed(0);
+    setPhaseTimeLeft(4);
+    setCycleCount(0);
   };
 
   const formatTime = (seconds: number) => {
@@ -103,11 +133,25 @@ const StressManagementTools = () => {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const getPhaseInstruction = () => {
-    if (!activeExercise) return "";
-    const exercise = exercises.find(e => e.id === activeExercise);
-    const phase = exercise?.phases.find(p => p.name === breathingPhase);
-    return phase?.instruction || "";
+  const getProgressPercentage = () => {
+    if (!currentExercise) return 0;
+    return (totalElapsed / currentExercise.duration) * 100;
+  };
+
+  const getPhaseProgress = () => {
+    if (!currentPhase) return 0;
+    return ((currentPhase.duration - phaseTimeLeft) / currentPhase.duration) * 100;
+  };
+
+  const getCircleScale = () => {
+    if (breathingPhase === 'inhale') return 1 + (getPhaseProgress() / 100) * 0.5;
+    if (breathingPhase === 'exhale') return 1.5 - (getPhaseProgress() / 100) * 0.5;
+    return breathingPhase === 'hold' ? 1.5 : 1;
+  };
+
+  const getRemainingTime = () => {
+    if (!currentExercise) return 0;
+    return currentExercise.duration - totalElapsed;
   };
 
   return (
@@ -147,49 +191,51 @@ const StressManagementTools = () => {
           <div className="text-center space-y-6">
             <div>
               <h3 className="text-lg font-medium text-white mb-2">
-                {exercises.find(e => e.id === activeExercise)?.name}
+                {currentExercise?.name}
               </h3>
               <div className="text-3xl font-bold text-blue-300 mb-1">
-                {formatTime(timer)}
+                {formatTime(getRemainingTime())}
               </div>
-              <div className="text-sm text-muted-foreground">
-                / {formatTime(exercises.find(e => e.id === activeExercise)?.duration || 0)}
+              <div className="text-sm text-muted-foreground mb-3">
+                Time remaining • Cycle {cycleCount + 1}
               </div>
+              <Progress value={getProgressPercentage()} className="h-2 mb-4" />
             </div>
 
             {activeExercise === 'box-breathing' && (
               <div className="space-y-4">
                 <div className="w-32 h-32 mx-auto relative">
-                  <div className={`w-full h-full rounded-full border-4 transition-all duration-1000 ${
-                    breathingPhase === 'inhale' ? 'border-green-400 scale-110' :
-                    breathingPhase === 'hold' ? 'border-yellow-400 scale-110' :
-                    breathingPhase === 'exhale' ? 'border-blue-400 scale-90' :
-                    'border-purple-400 scale-90'
-                  }`}>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-2xl">
-                        {breathingPhase === 'inhale' ? '↑' :
-                         breathingPhase === 'hold' ? '⊙' :
-                         breathingPhase === 'exhale' ? '↓' : '○'}
-                      </span>
+                  <div 
+                    className={`w-full h-full rounded-full border-4 transition-all duration-1000 ease-in-out flex items-center justify-center ${
+                      breathingPhase === 'inhale' ? 'border-green-400' :
+                      breathingPhase === 'hold' ? 'border-yellow-400' :
+                      breathingPhase === 'exhale' ? 'border-blue-400' :
+                      'border-purple-400'
+                    }`}
+                    style={{ transform: `scale(${getCircleScale()})` }}
+                  >
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-white">{phaseTimeLeft}</div>
+                      <div className="text-xs text-muted-foreground">seconds</div>
                     </div>
                   </div>
                 </div>
                 
                 <div>
                   <div className="text-lg font-medium text-white mb-2 capitalize">
-                    {getPhaseInstruction()}
+                    {currentPhase?.instruction}
                   </div>
-                  <Progress value={breathingProgress} className="h-2" />
+                  <Progress value={getPhaseProgress()} className="h-2" />
                 </div>
               </div>
             )}
 
             <div className="flex gap-2 justify-center">
               <Button
-                onClick={() => setIsRunning(!isRunning)}
+                onClick={togglePause}
                 variant="outline"
                 size="sm"
+                className="border-blue-500/20 hover:bg-blue-500/10"
               >
                 {isRunning ? <Pause className="h-3 w-3" /> : <Play className="h-3 w-3" />}
               </Button>
@@ -197,6 +243,7 @@ const StressManagementTools = () => {
                 onClick={stopExercise}
                 variant="outline"
                 size="sm"
+                className="border-blue-500/20 hover:bg-blue-500/10"
               >
                 <RotateCcw className="h-3 w-3" />
               </Button>
