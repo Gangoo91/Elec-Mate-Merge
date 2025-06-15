@@ -4,6 +4,7 @@ import { Brain, Heart, Zap, Clock, Target, TrendingUp } from "lucide-react";
 import MoodTracker from "@/components/mental-health/interactive/MoodTracker";
 import SelfCareReminders from "@/components/mental-health/interactive/SelfCareReminders";
 import StressManagementTools from "@/components/mental-health/interactive/StressManagementTools";
+import GoalSettingTracker from "@/components/mental-health/interactive/GoalSettingTracker";
 
 const InteractiveToolsTab = () => {
   return (
@@ -53,39 +54,7 @@ const InteractiveToolsTab = () => {
 
       <StressManagementTools />
 
-      <Card className="border-purple-500/50 bg-purple-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-300 flex items-center gap-2">
-            <Target className="h-5 w-5" />
-            Goal Setting & Progress Tracking
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <p className="text-sm text-muted-foreground">
-              Set personal mental health goals and track your progress over time. 
-              This feature helps you stay focused on your wellbeing journey.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
-                <Target className="h-6 w-6 text-purple-400 mx-auto mb-2" />
-                <div className="text-sm font-medium text-white">Set Goals</div>
-                <div className="text-xs text-muted-foreground">Define your targets</div>
-              </div>
-              <div className="text-center p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
-                <TrendingUp className="h-6 w-6 text-purple-400 mx-auto mb-2" />
-                <div className="text-sm font-medium text-white">Track Progress</div>
-                <div className="text-xs text-muted-foreground">Monitor improvements</div>
-              </div>
-              <div className="text-center p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
-                <Brain className="h-6 w-6 text-purple-400 mx-auto mb-2" />
-                <div className="text-sm font-medium text-white">Get Insights</div>
-                <div className="text-xs text-muted-foreground">Understand patterns</div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <GoalSettingTracker />
     </div>
   );
 };

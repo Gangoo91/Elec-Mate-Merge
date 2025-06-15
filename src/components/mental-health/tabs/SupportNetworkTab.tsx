@@ -1,220 +1,150 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Users, MessageSquare, Calendar, MapPin, Phone, Globe, Heart } from "lucide-react";
+import { Users, MessageCircle, Heart, Building, Phone, MapPin } from "lucide-react";
 
 const SupportNetworkTab = () => {
-  const supportGroups = [
+  const supportTypes = [
     {
-      name: "Trades Mental Health Collective",
-      type: "Peer Support",
-      location: "Online & UK-wide",
-      members: "1,200+",
-      meeting: "Weekly Wednesdays 7PM",
-      focus: "General mental health support for trade workers"
+      title: "Workplace Support",
+      icon: <Building className="h-5 w-5 text-blue-400" />,
+      description: "Employee assistance programmes and occupational health services",
+      contacts: [
+        { name: "HR Department", description: "Employee assistance and support policies" },
+        { name: "Occupational Health", description: "Work-related mental health support" },
+        { name: "Trade Union", description: "Member support and advocacy services" }
+      ]
     },
     {
-      name: "Electrical Workers Wellbeing",
-      type: "Industry Specific",
-      location: "Major UK Cities",
-      members: "450+",
-      meeting: "Bi-weekly Saturdays 2PM",
-      focus: "Mental health specifically for electrical professionals"
-    },
-    {
-      name: "Andy's Man Club",
-      type: "Men's Support",
-      location: "Nationwide",
-      members: "10,000+",
-      meeting: "Weekly Mondays 7PM",
-      focus: "Male suicide prevention and mental health support"
-    }
-  ];
-
-  const communityResources = [
-    {
-      title: "Mental Health Mate Network",
-      description: "Connect with trained volunteers for peer support",
-      icon: <MessageSquare className="h-5 w-5 text-blue-400" />,
-      action: "Find a Mate",
-      available: "24/7"
-    },
-    {
-      title: "Local Community Events",
-      description: "Mental health awareness events in your area",
-      icon: <Calendar className="h-5 w-5 text-green-400" />,
-      action: "View Events",
-      available: "Weekly"
-    },
-    {
-      title: "Professional Counselling",
-      description: "Access to qualified mental health professionals",
+      title: "Industry-Specific Support",
       icon: <Users className="h-5 w-5 text-purple-400" />,
-      action: "Book Session",
-      available: "On Demand"
+      description: "Mental health support tailored to electrical industry professionals",
+      contacts: [
+        { name: "Electrical Industries Charity", description: "Comprehensive support for electrical sector workers" },
+        { name: "Mates in Mind", description: "Construction industry mental health support" },
+        { name: "Industry Mentorship Programmes", description: "Connect with experienced professionals" }
+      ]
     },
     {
-      title: "Crisis Support Hotlines",
-      description: "Immediate support when you need it most",
-      icon: <Phone className="h-5 w-5 text-red-400" />,
-      action: "Get Help Now",
-      available: "24/7"
-    }
-  ];
-
-  const onlineForums = [
-    {
-      title: "Electrical Workers Mental Health Forum",
-      members: "2,300+",
-      posts: "Daily",
-      description: "Share experiences and support with fellow electricians"
+      title: "Professional Services",
+      icon: <Heart className="h-5 w-5 text-red-400" />,
+      description: "Qualified mental health professionals and counselling services",
+      contacts: [
+        { name: "NHS Mental Health Services", description: "Free healthcare mental health support" },
+        { name: "Private Counselling", description: "Professional therapy and counselling" },
+        { name: "Cognitive Behavioural Therapy", description: "Evidence-based psychological therapy" }
+      ]
     },
     {
-      title: "Trades Wellbeing Community",
-      members: "5,100+",
-      posts: "Hourly",
-      description: "Cross-trade mental health discussions and support"
-    },
-    {
-      title: "Mental Health Recovery Stories",
-      members: "1,800+",
-      posts: "Weekly",
-      description: "Inspiring stories of recovery and resilience"
+      title: "Peer Support Networks",
+      icon: <MessageCircle className="h-5 w-5 text-green-400" />,
+      description: "Connect with others who understand your experiences",
+      contacts: [
+        { name: "Andy's Man Club", description: "Free peer-to-peer support groups for men" },
+        { name: "Mental Health Support Groups", description: "Local community support meetings" },
+        { name: "Online Communities", description: "Digital peer support platforms" }
+      ]
     }
   ];
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+      <Card className="border-green-500/20 bg-gradient-to-r from-green-500/5 to-green-500/10">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Users className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Support Network & Community</CardTitle>
+            <Users className="h-6 w-6 text-green-400" />
+            <CardTitle className="text-green-300">Support Network & Community</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground mb-4">
-            You're not alone in your mental health journey. Connect with others who understand your challenges, 
-            share experiences, and build meaningful support relationships within the electrical community.
+            Building a strong support network is crucial for mental wellbeing. You don't have to face 
+            challenges alone - there are people, services, and communities ready to help.
           </p>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-elec-yellow mb-1">15,000+</div>
-              <div className="text-sm text-muted-foreground">Community Members</div>
+              <Building className="h-6 w-6 text-blue-400 mx-auto mb-2" />
+              <div className="text-sm font-medium text-white mb-1">Workplace</div>
+              <div className="text-xs text-muted-foreground">Professional support</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-400 mb-1">24/7</div>
-              <div className="text-sm text-muted-foreground">Peer Support</div>
+              <Users className="h-6 w-6 text-purple-400 mx-auto mb-2" />
+              <div className="text-sm font-medium text-white mb-1">Industry</div>
+              <div className="text-xs text-muted-foreground">Sector-specific help</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-400 mb-1">50+</div>
-              <div className="text-sm text-muted-foreground">Support Groups</div>
+              <Heart className="h-6 w-6 text-red-400 mx-auto mb-2" />
+              <div className="text-sm font-medium text-white mb-1">Professional</div>
+              <div className="text-xs text-muted-foreground">Qualified therapists</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-purple-400 mb-1">100%</div>
-              <div className="text-sm text-muted-foreground">Confidential</div>
+              <MessageCircle className="h-6 w-6 text-green-400 mx-auto mb-2" />
+              <div className="text-sm font-medium text-white mb-1">Peer Support</div>
+              <div className="text-xs text-muted-foreground">Community connections</div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <div className="space-y-6">
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="text-elec-yellow flex items-center gap-2">
-              <Users className="h-5 w-5" />
-              Support Groups
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              {supportGroups.map((group, index) => (
-                <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                  <div className="flex items-center justify-between mb-3">
-                    <h4 className="font-semibold text-white">{group.name}</h4>
-                    <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow">
-                      {group.type}
-                    </Badge>
-                  </div>
-                  <div className="space-y-2 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <MapPin className="h-3 w-3" />
-                      <span>{group.location}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Users className="h-3 w-3" />
-                      <span>{group.members} members</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-3 w-3" />
-                      <span>{group.meeting}</span>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {supportTypes.map((type, index) => (
+          <Card key={index} className="border-gray-600/30 bg-gray-800/30">
+            <CardHeader>
+              <CardTitle className="text-white flex items-center gap-2 text-lg">
+                {type.icon}
+                {type.title}
+              </CardTitle>
+              <p className="text-sm text-muted-foreground">{type.description}</p>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {type.contacts.map((contact, contactIndex) => (
+                  <div key={contactIndex} className="p-3 bg-gray-700/30 rounded-lg border border-gray-600/20">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="font-medium text-white text-sm">{contact.name}</h4>
+                        <p className="text-xs text-muted-foreground">{contact.description}</p>
+                      </div>
+                      <Button size="sm" variant="outline" className="text-xs">
+                        Learn More
+                      </Button>
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground mt-3 mb-4">{group.focus}</p>
-                  <Button className="w-full" size="sm">Join Group</Button>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="text-elec-yellow flex items-center gap-2">
-              <Heart className="h-5 w-5" />
-              Community Resources
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {communityResources.map((resource, index) => (
-                <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                  <div className="flex items-center gap-3 mb-3">
-                    {resource.icon}
-                    <h4 className="font-semibold text-white">{resource.title}</h4>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-3">{resource.description}</p>
-                  <div className="flex items-center justify-between">
-                    <Badge className="bg-green-500/20 text-green-400 border-green-500/40">
-                      {resource.available}
-                    </Badge>
-                    <Button size="sm" variant="outline">
-                      {resource.action}
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-elec-yellow/20 bg-elec-gray">
-          <CardHeader>
-            <CardTitle className="text-elec-yellow flex items-center gap-2">
-              <Globe className="h-5 w-5" />
-              Online Forums & Communities
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {onlineForums.map((forum, index) => (
-                <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                  <h4 className="font-semibold text-white mb-2">{forum.title}</h4>
-                  <div className="flex items-center gap-4 mb-3 text-sm text-muted-foreground">
-                    <span>{forum.members}</span>
-                    <span>•</span>
-                    <span>{forum.posts} posts</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-4">{forum.description}</p>
-                  <Button className="w-full" size="sm">Visit Forum</Button>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
+
+      <Card className="border-blue-500/20 bg-blue-500/5">
+        <CardHeader>
+          <CardTitle className="text-blue-300 flex items-center gap-2">
+            <MapPin className="h-5 w-5" />
+            Finding Local Support
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+              <Phone className="h-6 w-6 text-blue-400 mx-auto mb-2" />
+              <div className="text-sm font-medium text-white mb-1">NHS 111</div>
+              <div className="text-xs text-muted-foreground">Call 111 for mental health advice</div>
+            </div>
+            <div className="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+              <MapPin className="h-6 w-6 text-blue-400 mx-auto mb-2" />
+              <div className="text-sm font-medium text-white mb-1">Local Services</div>
+              <div className="text-xs text-muted-foreground">Find services in your area</div>
+            </div>
+            <div className="text-center p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
+              <Users className="h-6 w-6 text-blue-400 mx-auto mb-2" />
+              <div className="text-sm font-medium text-white mb-1">Support Groups</div>
+              <div className="text-xs text-muted-foreground">Connect with local communities</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
