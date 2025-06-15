@@ -1,5 +1,5 @@
 
-import { StartupTabs } from "@/components/electrician/business-development/startup/StartupTabs";
+import StartupTabs from "@/components/electrician/business-development/startup/StartupTabs";
 
 const BusinessStartup = () => {
   return <StartupTabs />;
