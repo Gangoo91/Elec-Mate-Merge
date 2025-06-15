@@ -2,298 +2,353 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { TrendingUp, Target, Users, Star, Phone, Globe, Calendar, ExternalLink } from "lucide-react";
+import { TrendingUp, Users, Smartphone, Globe, Star, Target, MessageCircle, Calendar, DollarSign } from "lucide-react";
 
 const MarketingStrategyTab = () => {
   const marketingChannels = [
     {
-      name: "Google My Business",
-      cost: "Free",
-      effort: "Low",
-      roi: "Very High",
-      timeframe: "Immediate",
-      description: "Essential for local visibility and customer reviews",
-      tactics: ["Complete profile setup", "Regular photo updates", "Respond to reviews", "Post updates"]
-    },
-    {
-      name: "Word of Mouth & Referrals",
-      cost: "Low",
-      effort: "Medium",
-      roi: "Very High",
-      timeframe: "2-6 months",
-      description: "Most powerful marketing for electrical contractors",
-      tactics: ["Exceptional service delivery", "Follow-up calls", "Referral incentives", "Customer testimonials"]
-    },
-    {
-      name: "Local Facebook Marketing",
-      cost: "£5-50/week",
-      effort: "Medium",
+      channel: "Local Online Presence",
+      cost: "£50-200/month",
       roi: "High",
+      timeframe: "2-4 weeks",
+      tactics: ["Google My Business optimisation", "Local SEO", "Customer reviews", "Social media profiles"],
+      description: "Essential foundation for local visibility and credibility"
+    },
+    {
+      channel: "Word of Mouth & Referrals",
+      cost: "£0-100/month",
+      roi: "Very High",
+      timeframe: "3-6 months",
+      tactics: ["Referral incentives", "Exceptional service", "Follow-up calls", "Customer testimonials"],
+      description: "Most powerful marketing for trades - builds naturally with good service"
+    },
+    {
+      channel: "Local Networking",
+      cost: "£100-300/month",
+      roi: "High", 
       timeframe: "1-3 months",
-      description: "Target local homeowners with electrical needs",
-      tactics: ["Local group participation", "Before/after photos", "Safety tips sharing", "Community engagement"]
+      tactics: ["Trade associations", "Local business groups", "Property developer relationships", "Supplier partnerships"],
+      description: "Build relationships with complementary businesses and potential clients"
     },
     {
-      name: "Leaflet Drops",
-      cost: "£200-500",
-      effort: "High",
+      channel: "Digital Advertising",
+      cost: "£200-800/month",
       roi: "Medium",
-      timeframe: "Immediate",
-      description: "Direct marketing to target neighbourhoods",
-      tactics: ["Professional design", "Special offers", "Service areas focus", "Seasonal timing"]
+      timeframe: "1-2 weeks",
+      tactics: ["Google Ads", "Facebook advertising", "Nextdoor app", "Local directory listings"],
+      description: "Quick results but requires ongoing investment and optimisation"
     }
   ];
 
-  const customerTypes = [
+  const brandingElements = [
     {
-      type: "Homeowners",
-      value: "£150-800 per job",
-      frequency: "Occasional",
-      acquisition: "Local advertising, referrals",
-      needs: ["Fault finding", "Socket/light installation", "Consumer unit upgrades", "Safety certificates"]
+      element: "Business Name & Logo",
+      importance: "Critical",
+      tips: ["Easy to remember and pronounce", "Reflects electrical services", "Available domain name", "Trademark check"],
+      cost: "£200-800"
     },
     {
-      type: "Landlords",
-      value: "£100-500 per property",
-      frequency: "Regular (annual)",
-      acquisition: "Letting agent partnerships",
-      needs: ["EICR certificates", "Emergency callouts", "Compliance work", "Maintenance contracts"]
+      element: "Vehicle Branding",
+      importance: "High",
+      tips: ["Clear contact details", "Professional appearance", "Services listed", "High-quality materials"],
+      cost: "£300-1200"
     },
     {
-      type: "Small Businesses",
-      value: "£300-2000 per job",
-      frequency: "Regular",
-      acquisition: "Business networks, LinkedIn",
-      needs: ["PAT testing", "Emergency lighting", "Commercial installations", "Maintenance contracts"]
+      element: "Uniforms & PPE",
+      importance: "Medium",
+      tips: ["Consistent colour scheme", "Company logo", "Professional appearance", "Safety compliance"],
+      cost: "£150-400"
     },
     {
-      type: "Property Developers",
-      value: "£1000-10000 per project",
-      frequency: "Project-based",
-      acquisition: "Industry networks, reputation",
-      needs: ["New build wiring", "Renovation work", "Compliance certificates", "Project partnership"]
+      element: "Business Cards & Materials",
+      importance: "Medium",
+      tips: ["High-quality printing", "Essential contact info", "Professional design", "QR code for website"],
+      cost: "£50-200"
     }
   ];
 
-  const digitalStrategy = [
+  const customerAcquisition = [
     {
-      platform: "Website",
-      priority: "Essential",
-      investment: "£500-2000",
-      benefits: ["Professional credibility", "Service information", "Contact capture", "Local SEO"]
+      strategy: "Local SEO Optimisation",
+      description: "Rank high in local search results for electrical services",
+      steps: [
+        "Claim Google My Business listing",
+        "Optimise website for local keywords",
+        "Build local citations and directories",
+        "Collect and respond to customer reviews"
+      ],
+      timeline: "2-6 months for results",
+      cost: "£100-300/month"
     },
     {
-      platform: "Google Ads",
-      priority: "High",
-      investment: "£300-1000/month",
-      benefits: ["Immediate visibility", "Emergency call capture", "Targeted keywords", "Measurable ROI"]
+      strategy: "Strategic Partnerships",
+      description: "Partner with complementary businesses for referrals",
+      steps: [
+        "Identify potential partners (plumbers, builders, estate agents)",
+        "Develop referral agreements",
+        "Create co-marketing opportunities",
+        "Maintain regular communication"
+      ],
+      timeline: "1-3 months to establish",
+      cost: "£50-150/month"
     },
     {
-      platform: "Social Media",
-      priority: "Medium",
-      investment: "Time + £50-200/month",
-      benefits: ["Community building", "Work showcasing", "Trust building", "Referral generation"]
-    },
-    {
-      platform: "Email Marketing",
-      priority: "Medium",
-      investment: "£20-100/month",
-      benefits: ["Customer retention", "Repeat business", "Seasonal campaigns", "Service reminders"]
+      strategy: "Content Marketing",
+      description: "Establish expertise through valuable content",
+      steps: [
+        "Create helpful electrical safety tips",
+        "Share project case studies",
+        "Produce how-to videos",
+        "Regular social media updates"
+      ],
+      timeline: "3-12 months for impact",
+      cost: "£100-400/month"
     }
   ];
 
-  const getROIColor = (roi: string) => {
+  const retentionStrategies = [
+    {
+      strategy: "Maintenance Contracts",
+      description: "Regular recurring revenue from ongoing maintenance",
+      benefits: ["Predictable income", "Customer retention", "Upselling opportunities"],
+      implementation: ["Annual electrical safety checks", "Emergency callout priority", "Discounted rates"]
+    },
+    {
+      strategy: "Customer Communication",
+      description: "Stay top-of-mind with regular, valuable communication",
+      benefits: ["Increased referrals", "Repeat business", "Brand loyalty"],
+      implementation: ["Seasonal safety reminders", "New service announcements", "Special offers for existing customers"]
+    },
+    {
+      strategy: "Exceptional Service",
+      description: "Exceed expectations to create loyal advocates",
+      benefits: ["Word-of-mouth marketing", "Premium pricing", "Reduced marketing costs"],
+      implementation: ["Follow-up calls after jobs", "Guarantee on all work", "Professional appearance and conduct"]
+    }
+  ];
+
+  const marketingBudget = [
+    {
+      category: "Website & Online Presence",
+      percentage: "30%",
+      monthly: "£150-300",
+      includes: ["Website hosting/maintenance", "Google Ads", "Social media management"]
+    },
+    {
+      category: "Networking & Events",
+      percentage: "25%",
+      monthly: "£125-250",
+      includes: ["Trade association memberships", "Networking events", "Business development"]
+    },
+    {
+      category: "Traditional Marketing",
+      percentage: "25%",
+      monthly: "£125-250",
+      includes: ["Vehicle maintenance/updates", "Print materials", "Local advertising"]
+    },
+    {
+      category: "Tools & Systems",
+      percentage: "20%",
+      monthly: "£100-200",
+      includes: ["CRM software", "Marketing tools", "Analytics platforms"]
+    }
+  ];
+
+  const getRoiColor = (roi: string) => {
     switch (roi) {
-      case 'Very High': return 'bg-green-500/20 text-green-400';
-      case 'High': return 'bg-blue-500/20 text-blue-400';
-      case 'Medium': return 'bg-amber-500/20 text-amber-400';
-      case 'Low': return 'bg-red-500/20 text-red-400';
-      default: return 'bg-elec-yellow/20 text-elec-yellow';
+      case 'Very High': return 'bg-green-500/20 text-green-400 border-green-500/30';
+      case 'High': return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+      case 'Medium': return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+      default: return 'bg-red-500/20 text-red-400 border-red-500/30';
     }
   };
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'Essential': return 'bg-red-500/20 text-red-400';
-      case 'High': return 'bg-amber-500/20 text-amber-400';
-      case 'Medium': return 'bg-blue-500/20 text-blue-400';
-      default: return 'bg-elec-yellow/20 text-elec-yellow';
+  const getImportanceColor = (importance: string) => {
+    switch (importance) {
+      case 'Critical': return 'bg-red-500/20 text-red-400 border-red-500/30';
+      case 'High': return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+      case 'Medium': return 'bg-green-500/20 text-green-400 border-green-500/30';
+      default: return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
     }
   };
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/5 to-blue-500/5">
+      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/5 to-purple-500/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <TrendingUp className="h-5 w-5" />
-            Marketing Strategy for Electrical Contractors
+            Marketing Strategy Overview
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
-              <Target className="h-5 w-5 text-green-400 mb-2" />
-              <div className="text-sm text-muted-foreground">First Customer Target</div>
-              <div className="text-xl font-bold text-green-400">4-8 weeks</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div className="text-center p-4 bg-elec-dark/50 rounded-lg">
+              <div className="text-2xl font-bold text-green-400">5-8%</div>
+              <div className="text-sm text-muted-foreground">Of revenue on marketing</div>
             </div>
-            <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20">
-              <Users className="h-5 w-5 text-blue-400 mb-2" />
-              <div className="text-sm text-muted-foreground">Monthly Customer Goal</div>
-              <div className="text-xl font-bold text-blue-400">15-25 jobs</div>
+            <div className="text-center p-4 bg-elec-dark/50 rounded-lg">
+              <div className="text-2xl font-bold text-blue-400">3:1</div>
+              <div className="text-sm text-muted-foreground">Minimum ROI target</div>
             </div>
-            <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
-              <Star className="h-5 w-5 text-purple-400 mb-2" />
-              <div className="text-sm text-muted-foreground">Marketing Budget</div>
-              <div className="text-xl font-bold text-purple-400">5-10% revenue</div>
+            <div className="text-center p-4 bg-elec-dark/50 rounded-lg">
+              <div className="text-2xl font-bold text-purple-400">70%</div>
+              <div className="text-sm text-muted-foreground">Comes from referrals</div>
             </div>
-          </div>
-
-          <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
-            <h4 className="font-semibold text-amber-400 mb-2">90-Day Marketing Launch Plan</h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-              <div>
-                <h5 className="font-medium text-white mb-2">Month 1: Foundation</h5>
-                <ul className="space-y-1 text-muted-foreground">
-                  <li>• Set up Google My Business</li>
-                  <li>• Create basic website</li>
-                  <li>• Design business cards/leaflets</li>
-                  <li>• Start social media accounts</li>
-                </ul>
-              </div>
-              <div>
-                <h5 className="font-medium text-white mb-2">Month 2: Outreach</h5>
-                <ul className="space-y-1 text-muted-foreground">
-                  <li>• Leaflet campaign launch</li>
-                  <li>• Network with local businesses</li>
-                  <li>• Start Google Ads</li>
-                  <li>• Request first reviews</li>
-                </ul>
-              </div>
-              <div>
-                <h5 className="font-medium text-white mb-2">Month 3: Optimise</h5>
-                <ul className="space-y-1 text-muted-foreground">
-                  <li>• Analyse what's working</li>
-                  <li>• Implement referral system</li>
-                  <li>• Expand successful channels</li>
-                  <li>• Build repeat customer base</li>
-                </ul>
-              </div>
+            <div className="text-center p-4 bg-elec-dark/50 rounded-lg">
+              <div className="text-2xl font-bold text-amber-400">12</div>
+              <div className="text-sm text-muted-foreground">Months to mature</div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <div className="space-y-6">
-        <h3 className="text-xl font-semibold text-white">Marketing Channels by Effectiveness</h3>
-        {marketingChannels.map((channel, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <div className="flex items-start justify-between">
+      <Card className="border-blue-500/50 bg-blue-500/10">
+        <CardHeader>
+          <CardTitle className="text-blue-300 flex items-center gap-2">
+            <Target className="h-5 w-5" />
+            Marketing Channels & ROI
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {marketingChannels.map((channel, index) => (
+              <div key={index} className="border border-blue-500/20 rounded-lg p-4">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <h4 className="font-medium text-white">{channel.channel}</h4>
+                    <p className="text-sm text-muted-foreground">{channel.description}</p>
+                  </div>
+                  <div className="text-right">
+                    <Badge className={getRoiColor(channel.roi)} className="mb-1">
+                      {channel.roi} ROI
+                    </Badge>
+                    <div className="text-blue-300 text-sm">{channel.cost}</div>
+                    <div className="text-xs text-muted-foreground">{channel.timeframe}</div>
+                  </div>
+                </div>
+                
                 <div>
-                  <CardTitle className="text-white text-lg">{channel.name}</CardTitle>
-                  <p className="text-sm text-muted-foreground">{channel.description}</p>
-                </div>
-                <Badge className={getROIColor(channel.roi)}>
-                  {channel.roi} ROI
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div className="bg-elec-dark/50 p-3 rounded">
-                    <div className="text-xs text-muted-foreground">Cost</div>
-                    <div className="font-semibold text-white">{channel.cost}</div>
-                  </div>
-                  <div className="bg-elec-dark/50 p-3 rounded">
-                    <div className="text-xs text-muted-foreground">Effort</div>
-                    <div className="font-semibold text-white">{channel.effort}</div>
-                  </div>
-                  <div className="bg-elec-dark/50 p-3 rounded">
-                    <div className="text-xs text-muted-foreground">ROI</div>
-                    <div className="font-semibold text-white">{channel.roi}</div>
-                  </div>
-                  <div className="bg-elec-dark/50 p-3 rounded">
-                    <div className="text-xs text-muted-foreground">Timeframe</div>
-                    <div className="font-semibold text-white">{channel.timeframe}</div>
-                  </div>
-                </div>
-
-                <div>
-                  <h5 className="font-medium text-white mb-2">Key Tactics:</h5>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                    {channel.tactics.map((tactic, tacticIndex) => (
-                      <div key={tacticIndex} className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full" />
-                        {tactic}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-blue-500/20 bg-blue-500/10">
-          <CardHeader>
-            <CardTitle className="text-blue-400 flex items-center gap-2">
-              <Users className="h-5 w-5" />
-              Target Customer Analysis
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {customerTypes.map((customer, index) => (
-                <div key={index} className="border border-blue-500/20 rounded-lg p-3">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-semibold text-white">{customer.type}</h4>
-                    <div className="text-right">
-                      <div className="text-sm font-medium text-blue-400">{customer.value}</div>
-                      <div className="text-xs text-muted-foreground">{customer.frequency}</div>
-                    </div>
-                  </div>
-                  <p className="text-xs text-blue-300 mb-2">{customer.acquisition}</p>
+                  <h5 className="text-blue-200 font-medium mb-1">Key Tactics:</h5>
                   <div className="flex flex-wrap gap-1">
-                    {customer.needs.map((need, needIndex) => (
-                      <Badge key={needIndex} className="bg-blue-500/20 text-blue-400 text-xs">
-                        {need}
+                    {channel.tactics.map((tactic, tacticIndex) => (
+                      <Badge key={tacticIndex} variant="secondary" className="text-xs">
+                        {tactic}
                       </Badge>
                     ))}
                   </div>
                 </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-purple-500/50 bg-purple-500/10">
+        <CardHeader>
+          <CardTitle className="text-purple-300 flex items-center gap-2">
+            <Star className="h-5 w-5" />
+            Brand Development
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {brandingElements.map((element, index) => (
+              <div key={index} className="border border-purple-500/20 rounded-lg p-4">
+                <div className="flex items-start justify-between mb-3">
+                  <h4 className="font-medium text-white">{element.element}</h4>
+                  <div className="text-right">
+                    <Badge className={getImportanceColor(element.importance)}>
+                      {element.importance}
+                    </Badge>
+                    <div className="text-purple-300 text-sm mt-1">{element.cost}</div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h5 className="text-purple-200 font-medium mb-1">Key Considerations:</h5>
+                  <ul className="space-y-1">
+                    {element.tips.map((tip, tipIndex) => (
+                      <li key={tipIndex} className="flex items-start gap-2 text-sm">
+                        <div className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-2 flex-shrink-0" />
+                        <span className="text-purple-100">{tip}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        <Card className="border-green-500/50 bg-green-500/10">
+          <CardHeader>
+            <CardTitle className="text-green-300 flex items-center gap-2">
+              <Users className="h-5 w-5" />
+              Customer Acquisition
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {customerAcquisition.map((strategy, index) => (
+                <div key={index} className="space-y-2">
+                  <h4 className="font-medium text-white">{strategy.strategy}</h4>
+                  <p className="text-sm text-muted-foreground">{strategy.description}</p>
+                  <div className="text-xs">
+                    <div className="text-green-200 mb-1">Timeline: {strategy.timeline}</div>
+                    <div className="text-green-300">Cost: {strategy.cost}</div>
+                  </div>
+                  <ul className="space-y-1">
+                    {strategy.steps.map((step, stepIndex) => (
+                      <li key={stepIndex} className="flex items-start gap-1 text-sm">
+                        <div className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                        <span className="text-green-100">{step}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ))}
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-green-500/20 bg-green-500/10">
+        <Card className="border-amber-500/50 bg-amber-500/10">
           <CardHeader>
-            <CardTitle className="text-green-400 flex items-center gap-2">
-              <Globe className="h-5 w-5" />
-              Digital Marketing Strategy
+            <CardTitle className="text-amber-300 flex items-center gap-2">
+              <MessageCircle className="h-5 w-5" />
+              Customer Retention
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {digitalStrategy.map((strategy, index) => (
-                <div key={index} className="border border-green-500/20 rounded-lg p-3">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-semibold text-white">{strategy.platform}</h4>
-                    <Badge className={getPriorityColor(strategy.priority)}>
-                      {strategy.priority}
-                    </Badge>
+              {retentionStrategies.map((strategy, index) => (
+                <div key={index} className="space-y-2">
+                  <h4 className="font-medium text-white">{strategy.strategy}</h4>
+                  <p className="text-sm text-muted-foreground">{strategy.description}</p>
+                  
+                  <div>
+                    <h5 className="text-amber-200 font-medium mb-1 text-sm">Benefits:</h5>
+                    <div className="flex flex-wrap gap-1 mb-2">
+                      {strategy.benefits.map((benefit, benefitIndex) => (
+                        <Badge key={benefitIndex} variant="outline" className="text-amber-300 border-amber-400/30 text-xs">
+                          {benefit}
+                        </Badge>
+                      ))}
+                    </div>
                   </div>
-                  <div className="text-sm text-green-400 mb-2">{strategy.investment}</div>
-                  <div className="flex flex-wrap gap-1">
-                    {strategy.benefits.map((benefit, benefitIndex) => (
-                      <span key={benefitIndex} className="text-xs text-muted-foreground bg-green-500/10 px-2 py-1 rounded">
-                        {benefit}
-                      </span>
-                    ))}
+
+                  <div>
+                    <h5 className="text-amber-200 font-medium mb-1 text-sm">Implementation:</h5>
+                    <ul className="space-y-1">
+                      {strategy.implementation.map((item, itemIndex) => (
+                        <li key={itemIndex} className="flex items-start gap-1 text-sm">
+                          <div className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0" />
+                          <span className="text-amber-100">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               ))}
@@ -302,51 +357,37 @@ const MarketingStrategyTab = () => {
         </Card>
       </div>
 
-      <Card className="border-amber-500/30 bg-amber-500/10">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-amber-400">Marketing Resources & Tools</CardTitle>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <DollarSign className="h-5 w-5" />
+            Marketing Budget Allocation
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Button variant="outline" className="h-auto p-4 flex-col gap-2 border-amber-500/30">
-              <Phone className="h-5 w-5 text-amber-400" />
-              <span className="font-medium">Google My Business Setup</span>
-              <span className="text-xs text-muted-foreground">Free local listing</span>
-            </Button>
-            <Button variant="outline" className="h-auto p-4 flex-col gap-2 border-blue-500/30">
-              <Globe className="h-5 w-5 text-blue-400" />
-              <span className="font-medium">Website Templates</span>
-              <span className="text-xs text-muted-foreground">Professional designs</span>
-            </Button>
-            <Button variant="outline" className="h-auto p-4 flex-col gap-2 border-green-500/30">
-              <Calendar className="h-5 w-5 text-green-400" />
-              <span className="font-medium">Social Media Planner</span>
-              <span className="text-xs text-muted-foreground">Content calendar</span>
-            </Button>
+          <div className="grid gap-4">
+            {marketingBudget.map((budget, index) => (
+              <div key={index} className="flex items-center justify-between p-3 border border-elec-yellow/20 rounded-lg">
+                <div>
+                  <h4 className="font-medium text-white">{budget.category}</h4>
+                  <p className="text-xs text-muted-foreground">{budget.includes.join(", ")}</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-elec-yellow font-medium">{budget.percentage}</div>
+                  <div className="text-sm text-muted-foreground">{budget.monthly}</div>
+                </div>
+              </div>
+            ))}
           </div>
-
-          <div className="mt-6 pt-4 border-t border-amber-500/20">
-            <h4 className="font-semibold text-amber-300 mb-3">Quick Start Checklist</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <h5 className="font-medium text-white mb-2">Week 1-2</h5>
-                <ul className="space-y-1 text-muted-foreground">
-                  <li>□ Register Google My Business</li>
-                  <li>□ Order business cards</li>
-                  <li>□ Set up social media accounts</li>
-                  <li>□ Create basic website</li>
-                </ul>
-              </div>
-              <div>
-                <h5 className="font-medium text-white mb-2">Week 3-4</h5>
-                <ul className="space-y-1 text-muted-foreground">
-                  <li>□ Design and print leaflets</li>
-                  <li>□ Start Google Ads campaign</li>
-                  <li>□ Join local business groups</li>
-                  <li>□ Ask friends for referrals</li>
-                </ul>
-              </div>
-            </div>
+          
+          <div className="mt-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg">
+            <h4 className="font-semibold text-green-400 mb-2">Budget Tips:</h4>
+            <ul className="space-y-1 text-sm text-green-200">
+              <li>• Start with 3-5% of revenue, increase as business grows</li>
+              <li>• Track ROI for each channel and adjust accordingly</li>
+              <li>• Focus on free/low-cost methods initially</li>
+              <li>• Invest more in channels that prove successful</li>
+            </ul>
           </div>
         </CardContent>
       </Card>

@@ -1,13 +1,16 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Rocket, Calculator, FileText, PoundSterling, TrendingUp, Settings, Target, Clock, Shield } from "lucide-react";
+import { Rocket, Calculator, FileText, PoundSterling, TrendingUp, Settings, Target, Clock, Shield, Phone, Lightbulb, BarChart3 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import BusinessCalculator from "./BusinessCalculator";
 import LegalSetupTab from "./LegalSetupTab";
 import FundingOptionsTab from "./FundingOptionsTab";
 import MarketingStrategyTab from "./MarketingStrategyTab";
 import OperationalSetupTab from "./OperationalSetupTab";
+import ResourcesSupportTab from "./ResourcesSupportTab";
+import ToolsTemplatesTab from "./ToolsTemplatesTab";
+import MarketIntelligenceTab from "./MarketIntelligenceTab";
 
 const StartupTabs = () => {
   const successMetrics = [
@@ -74,14 +77,14 @@ const StartupTabs = () => {
       </Card>
 
       <Tabs defaultValue="calculator" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-5 h-auto p-1">
+        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8 h-auto p-1">
           <TabsTrigger value="calculator" className="flex items-center gap-2 p-3">
             <Calculator className="h-4 w-4" />
             <span className="hidden sm:inline">Calculator</span>
           </TabsTrigger>
           <TabsTrigger value="legal" className="flex items-center gap-2 p-3">
             <FileText className="h-4 w-4" />
-            <span className="hidden sm:inline">Legal Setup</span>
+            <span className="hidden sm:inline">Legal</span>
           </TabsTrigger>
           <TabsTrigger value="funding" className="flex items-center gap-2 p-3">
             <PoundSterling className="h-4 w-4" />
@@ -94,6 +97,18 @@ const StartupTabs = () => {
           <TabsTrigger value="operations" className="flex items-center gap-2 p-3">
             <Settings className="h-4 w-4" />
             <span className="hidden sm:inline">Operations</span>
+          </TabsTrigger>
+          <TabsTrigger value="resources" className="flex items-center gap-2 p-3">
+            <Phone className="h-4 w-4" />
+            <span className="hidden sm:inline">Support</span>
+          </TabsTrigger>
+          <TabsTrigger value="tools" className="flex items-center gap-2 p-3">
+            <Lightbulb className="h-4 w-4" />
+            <span className="hidden sm:inline">Tools</span>
+          </TabsTrigger>
+          <TabsTrigger value="market" className="flex items-center gap-2 p-3">
+            <BarChart3 className="h-4 w-4" />
+            <span className="hidden sm:inline">Market</span>
           </TabsTrigger>
         </TabsList>
 
@@ -115,6 +130,18 @@ const StartupTabs = () => {
 
         <TabsContent value="operations" className="space-y-6">
           <OperationalSetupTab />
+        </TabsContent>
+
+        <TabsContent value="resources" className="space-y-6">
+          <ResourcesSupportTab />
+        </TabsContent>
+
+        <TabsContent value="tools" className="space-y-6">
+          <ToolsTemplatesTab />
+        </TabsContent>
+
+        <TabsContent value="market" className="space-y-6">
+          <MarketIntelligenceTab />
         </TabsContent>
       </Tabs>
     </div>
