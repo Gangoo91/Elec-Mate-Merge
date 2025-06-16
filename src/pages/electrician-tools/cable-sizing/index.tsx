@@ -1,375 +1,258 @@
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Cable, Sigma, History, BookOpen, Zap } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
-
-// Enhanced components
-import { useEnhancedCableSizing } from "@/components/apprentice/calculators/cable-sizing/useEnhancedCableSizing";
-import EnhancedCableSizingForm from "@/components/apprentice/calculators/cable-sizing/EnhancedCableSizingForm";
-import EnhancedCableSizingResult from "@/components/apprentice/calculators/cable-sizing/EnhancedCableSizingResult";
-
-// Legacy components
-import { useCableSizing } from "@/components/apprentice/calculators/cable-sizing/useCableSizing";
-import CableSizingForm from "@/components/apprentice/calculators/cable-sizing/CableSizingInputs";
-import CableSizingResult from "@/components/apprentice/calculators/cable-sizing/CableSizingResult";
-import CableSizingInfo from "@/components/apprentice/calculators/cable-sizing/CableSizingInfo";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Cable, ArrowLeft, Calculator, Zap } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const CableSizingCalculator = () => {
-  const { toast } = useToast();
-  const navigate = useNavigate();
-  
-  // Always call all hooks in the same order, regardless of state
-  const [calculatorMode, setCalculatorMode] = useState<'enhanced' | 'classic'>('enhanced');
-  
-  // Enhanced calculator - always initialize
-  const {
-    inputs: enhancedInputs,
-    result: enhancedResult,
-    history,
-    currentProject,
-    updateInput: updateEnhancedInput,
-    applyTemplate,
-    calculateEnhancedCableSize,
-    resetCalculator: resetEnhanced,
-    saveToHistory,
-    loadFromHistory,
-    setCurrentProject,
-    availableTemplates
-  } = useEnhancedCableSizing();
+  const [current, setCurrent] = useState("");
+  const [length, setLength] = useState("");
+  const [voltage, setVoltage] = useState("230");
+  const [installationMethod, setInstallationMethod] = useState("");
+  const [cableType, setCableType] = useState("");
+  const [result, setResult] = useState<any>(null);
 
-  // Legacy calculator - always initialize
-  const {
-    inputs: legacyInputs,
-    result: legacyResult,
-    updateInput: updateLegacyInput,
-    setInstallationType,
-    setCableType,
-    calculateCableSize: calculateLegacy,
-    resetCalculator: resetLegacy,
-  } = useCableSizing();
+  const calculateCableSize = () => {
+    const currentValue = parseFloat(current);
+    const lengthValue = parseFloat(length);
+    const voltageValue = parseFloat(voltage);
 
-  const handleEnhancedCalculate = () => {
-    calculateEnhancedCableSize();
-    
-    if (!enhancedInputs.current || !enhancedInputs.length) {
-      toast({
-        title: "Input Required",
-        description: "Please fill in all required fields to calculate cable size.",
-        variant: "destructive",
-      });
+    if (!currentValue || !lengthValue || !voltageValue) {
       return;
     }
 
-    if (enhancedResult.recommendedCable && Object.keys(enhancedResult.errors).length === 0) {
-      toast({
-        title: "Cable Size Calculated",
-        description: `Recommended ${enhancedResult.recommendedCable.cable.size} cable`,
-        variant: "default",
-      });
-    }
-  };
-
-  const handleLegacyCalculate = () => {
-    calculateLegacy();
+    // Basic cable sizing calculation
+    // This is a simplified version - in practice, you'd use proper tables
+    let recommendedSize = "1.5";
     
-    if (!legacyInputs.current || !legacyInputs.length) {
-      toast({
-        title: "Input Required",
-        description: "Please fill in all required fields to calculate cable size.",
-        variant: "destructive",
-      });
-    }
-  };
+    if (currentValue <= 10) recommendedSize = "1.5";
+    else if (currentValue <= 16) recommendedSize = "2.5";
+    else if (currentValue <= 20) recommendedSize = "4.0";
+    else if (currentValue <= 25) recommendedSize = "6.0";
+    else if (currentValue <= 32) recommendedSize = "10.0";
+    else if (currentValue <= 40) recommendedSize = "16.0";
+    else recommendedSize = "25.0";
 
-  const handleSaveToHistory = () => {
-    const projectName = currentProject || `Calculation ${new Date().toLocaleDateString()}`;
-    saveToHistory(projectName, "Enhanced cable sizing calculation");
-    toast({
-      title: "Saved to History",
-      description: "Calculation has been saved to your history.",
+    // Calculate voltage drop
+    const resistance = 18.1 / 1000; // Simplified resistance per meter for copper
+    const voltageDrop = (2 * currentValue * lengthValue * resistance) / 1000;
+    const voltageDropPercentage = (voltageDrop / voltageValue) * 100;
+
+    setResult({
+      recommendedSize,
+      voltageDrop: voltageDrop.toFixed(2),
+      voltageDropPercentage: voltageDropPercentage.toFixed(2),
+      current: currentValue,
+      length: lengthValue,
+      voltage: voltageValue
     });
-  };
-
-  const handleExportReport = () => {
-    // TODO: Implement PDF export functionality
-    toast({
-      title: "Export Feature",
-      description: "Report export feature coming soon!",
-    });
-  };
-
-  const handleBackNavigation = () => {
-    try {
-      navigate("/electrician-tools/calculations");
-    } catch (error) {
-      console.error("Navigation error:", error);
-      // Fallback: redirect using window location
-      window.location.href = "/electrician-tools/calculations";
-    }
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in pb-8 px-2 sm:px-4 lg:px-0">
-      {/* Header - Mobile Optimized */}
-      <div className="flex flex-col gap-4">
+    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Enhanced Cable Sizing Calculator</h1>
-          <p className="text-sm sm:text-base text-muted-foreground mt-1">
-            Advanced cable sizing with industry templates, compliance checking, and comprehensive analysis.
+          <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
+            <Cable className="h-8 w-8 text-elec-yellow" />
+            Cable Sizing Calculator
+          </h1>
+          <p className="text-muted-foreground mt-2">
+            Calculate appropriate cable sizes for electrical installations
           </p>
         </div>
-        
-        {/* Controls - Mobile Stack */}
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-          <div className="flex gap-2 flex-1">
-            <Button
-              variant={calculatorMode === 'enhanced' ? 'default' : 'outline'}
-              onClick={() => setCalculatorMode('enhanced')}
-              className={`flex-1 text-sm ${calculatorMode === 'enhanced' ? 'bg-elec-yellow text-black' : ''}`}
-              size="sm"
-            >
-              <Zap className="h-4 w-4 mr-1 sm:mr-2" />
-              Enhanced
-            </Button>
-            <Button
-              variant={calculatorMode === 'classic' ? 'default' : 'outline'}
-              onClick={() => setCalculatorMode('classic')}
-              className={`flex-1 text-sm ${calculatorMode === 'classic' ? 'bg-elec-yellow text-black' : ''}`}
-              size="sm"
-            >
-              <Cable className="h-4 w-4 mr-1 sm:mr-2" />
-              Classic
-            </Button>
-          </div>
-          
-          <Button 
-            variant="outline" 
-            className="w-full sm:w-auto text-sm" 
-            size="sm"
-            onClick={handleBackNavigation}
-          >
-            <ArrowLeft className="h-4 w-4 mr-1 sm:mr-2" /> Back to Calculations
+        <Link to="/electrician-tools/calculations">
+          <Button variant="outline" className="flex items-center gap-2">
+            <ArrowLeft className="h-4 w-4" /> Back to Calculations
           </Button>
-        </div>
+        </Link>
       </div>
 
-      {/* Enhanced Calculator Mode */}
-      {calculatorMode === 'enhanced' && (
-        <div className="space-y-4 sm:space-y-6">
-          {/* Feature Highlights - Mobile Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-            <Card className="border-elec-yellow/20 bg-elec-gray/30">
-              <CardContent className="p-3 sm:p-4 text-center">
-                <BookOpen className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow mx-auto mb-2" />
-                <div className="font-medium text-sm sm:text-base">Industry Templates</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Pre-configured settings for different sectors</div>
-              </CardContent>
-            </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray/30">
-              <CardContent className="p-3 sm:p-4 text-center">
-                <Sigma className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow mx-auto mb-2" />
-                <div className="font-medium text-sm sm:text-base">Advanced Calculations</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Environmental factors & future expansion</div>
-              </CardContent>
-            </Card>
-            <Card className="border-elec-yellow/20 bg-elec-gray/30">
-              <CardContent className="p-3 sm:p-4 text-center">
-                <History className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow mx-auto mb-2" />
-                <div className="font-medium text-sm sm:text-base">Project Management</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Save calculations & generate reports</div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <Tabs defaultValue="calculator" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="calculator" className="text-xs sm:text-sm">Calculator</TabsTrigger>
-              <TabsTrigger value="history" className="text-xs sm:text-sm">History ({history.length})</TabsTrigger>
-              <TabsTrigger value="templates" className="text-xs sm:text-sm">Templates ({availableTemplates.length})</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="calculator">
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center gap-2">
-                    <Cable className="h-4 w-5 sm:h-5 sm:w-5 text-elec-yellow" />
-                    <CardTitle className="text-base sm:text-xl">Enhanced Cable Sizing Assistant</CardTitle>
-                  </div>
-                  <CardDescription className="text-sm">
-                    Professional cable sizing with industry-specific templates and comprehensive analysis
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {/* Mobile: Stack vertically, Desktop: Side by side */}
-                  <div className="grid grid-cols-1 xl:grid-cols-5 gap-4 sm:gap-6">
-                    <div className="xl:col-span-2">
-                      <EnhancedCableSizingForm
-                        inputs={enhancedInputs}
-                        errors={enhancedResult.errors}
-                        updateInput={updateEnhancedInput}
-                        applyTemplate={applyTemplate}
-                        calculateCableSize={handleEnhancedCalculate}
-                        resetCalculator={resetEnhanced}
-                        currentProject={currentProject}
-                        setCurrentProject={setCurrentProject}
-                      />
-                    </div>
-                    
-                    <div className="xl:col-span-3">
-                      <div className="rounded-md bg-elec-dark p-3 sm:p-6 h-full min-h-[400px] xl:min-h-[600px]">
-                        <EnhancedCableSizingResult
-                          result={enhancedResult}
-                          onSaveToHistory={handleSaveToHistory}
-                          onExportReport={handleExportReport}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="history">
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="text-base sm:text-xl">Calculation History</CardTitle>
-                  <CardDescription className="text-sm">
-                    View and reload previous calculations
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {history.length === 0 ? (
-                    <div className="text-center py-6 sm:py-8">
-                      <History className="h-8 w-8 sm:h-12 sm:w-12 text-muted-foreground mx-auto mb-4" />
-                      <h3 className="text-base sm:text-lg font-medium mb-2">No calculations saved</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Complete a calculation and save it to view it here.
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="space-y-3">
-                      {history.slice(0, 10).map((entry) => (
-                        <Card key={entry.id} className="border-elec-yellow/20">
-                          <CardContent className="p-3 sm:p-4">
-                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
-                              <div className="min-w-0 flex-1">
-                                <h4 className="font-medium text-sm sm:text-base truncate">{entry.projectName}</h4>
-                                <p className="text-xs sm:text-sm text-muted-foreground">
-                                  {entry.timestamp.toLocaleDateString()} • 
-                                  {entry.result.recommendedCable?.cable.size || 'No result'}
-                                </p>
-                              </div>
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => loadFromHistory(entry.id)}
-                                className="w-full sm:w-auto text-xs sm:text-sm"
-                              >
-                                Load
-                              </Button>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="templates">
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="text-base sm:text-xl">Industry Templates</CardTitle>
-                  <CardDescription className="text-sm">
-                    Pre-configured settings for different industry sectors
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4">
-                    {availableTemplates.map((template) => (
-                      <Card key={template.id} className="border-elec-yellow/20">
-                        <CardHeader className="pb-3">
-                          <CardTitle className="text-base sm:text-lg">{template.name}</CardTitle>
-                          <CardDescription className="text-sm">{template.description}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="space-y-2">
-                            <div>
-                              <span className="text-xs sm:text-sm font-medium">Applications:</span>
-                              <div className="flex flex-wrap gap-1 mt-1">
-                                {template.typicalApplications.slice(0, 3).map((app, index) => (
-                                  <span key={index} className="text-xs bg-elec-yellow/20 px-2 py-1 rounded">
-                                    {app}
-                                  </span>
-                                ))}
-                              </div>
-                            </div>
-                            <Button
-                              size="sm"
-                              onClick={() => applyTemplate(template.id)}
-                              className="w-full mt-3 text-xs sm:text-sm"
-                              variant={enhancedInputs.template === template.id ? "default" : "outline"}
-                            >
-                              {enhancedInputs.template === template.id ? "Applied" : "Apply Template"}
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </div>
-      )}
-
-      {/* Classic Calculator Mode - Mobile Optimized */}
-      {calculatorMode === 'classic' && (
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Input Form */}
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
-            <div className="flex items-center gap-2">
-              <Cable className="h-4 w-5 sm:h-5 sm:w-5 text-elec-yellow" />
-              <CardTitle className="text-base sm:text-xl">Classic Cable Sizing Assistant</CardTitle>
-            </div>
-            <CardDescription className="text-sm">
-              Simple and efficient cable sizing calculations
-            </CardDescription>
+            <CardTitle className="text-elec-yellow flex items-center gap-2">
+              <Calculator className="h-5 w-5" />
+              Cable Parameters
+            </CardTitle>
           </CardHeader>
-          <CardContent>
-            {/* Mobile: Stack vertically, Desktop: Side by side */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-              <CableSizingForm
-                inputs={legacyInputs}
-                errors={legacyResult.errors}
-                updateInput={updateLegacyInput}
-                setInstallationType={setInstallationType}
-                setCableType={setCableType}
-                calculateCableSize={handleLegacyCalculate}
-                resetCalculator={resetLegacy}
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="current">Load Current (A)</Label>
+              <Input
+                id="current"
+                type="number"
+                placeholder="Enter current in amps"
+                value={current}
+                onChange={(e) => setCurrent(e.target.value)}
+                className="bg-elec-dark border-elec-yellow/20"
               />
-              
-              <div className="flex flex-col space-y-4">
-                <div className="rounded-md bg-elec-dark p-3 sm:p-6 flex-grow flex flex-col min-h-[300px]">
-                  <CableSizingResult
-                    recommendedCable={legacyResult.recommendedCable}
-                    alternativeCables={legacyResult.alternativeCables}
-                    errors={legacyResult.errors}
-                    inputs={legacyInputs}
-                  />
-                </div>
-                
-                <CableSizingInfo />
-              </div>
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="length">Cable Length (m)</Label>
+              <Input
+                id="length"
+                type="number"
+                placeholder="Enter length in metres"
+                value={length}
+                onChange={(e) => setLength(e.target.value)}
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="voltage">Supply Voltage (V)</Label>
+              <Select value={voltage} onValueChange={setVoltage}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="230">230V (Single Phase)</SelectItem>
+                  <SelectItem value="400">400V (Three Phase)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="installation">Installation Method</Label>
+              <Select value={installationMethod} onValueChange={setInstallationMethod}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectValue placeholder="Select installation method" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="clipped-direct">Clipped Direct</SelectItem>
+                  <SelectItem value="conduit">In Conduit</SelectItem>
+                  <SelectItem value="trunking">In Trunking</SelectItem>
+                  <SelectItem value="buried">Buried Direct</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="cable-type">Cable Type</Label>
+              <Select value={cableType} onValueChange={setCableType}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectValue placeholder="Select cable type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pvc-copper">PVC/Copper</SelectItem>
+                  <SelectItem value="xlpe-copper">XLPE/Copper</SelectItem>
+                  <SelectItem value="pvc-aluminium">PVC/Aluminium</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <Button
+              onClick={calculateCableSize}
+              className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              disabled={!current || !length}
+            >
+              Calculate Cable Size
+            </Button>
           </CardContent>
         </Card>
-      )}
+
+        {/* Results */}
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardHeader>
+            <CardTitle className="text-elec-yellow flex items-center gap-2">
+              <Zap className="h-5 w-5" />
+              Calculation Results
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {result ? (
+              <div className="space-y-4">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-elec-yellow mb-2">
+                    {result.recommendedSize}mm²
+                  </div>
+                  <p className="text-muted-foreground">Recommended Cable Size</p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center p-3 rounded-lg bg-elec-dark/50">
+                    <div className="text-lg font-semibold">{result.voltageDrop}V</div>
+                    <p className="text-sm text-muted-foreground">Voltage Drop</p>
+                  </div>
+                  <div className="text-center p-3 rounded-lg bg-elec-dark/50">
+                    <div className="text-lg font-semibold">{result.voltageDropPercentage}%</div>
+                    <p className="text-sm text-muted-foreground">Percentage Drop</p>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Load Current:</span>
+                    <span>{result.current}A</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Cable Length:</span>
+                    <span>{result.length}m</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Supply Voltage:</span>
+                    <span>{result.voltage}V</span>
+                  </div>
+                </div>
+
+                <div className="mt-4 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                  <p className="text-sm text-amber-400">
+                    <strong>Important:</strong> This is a simplified calculation. Always verify 
+                    with BS 7671 tables and consider derating factors, grouping, and ambient temperature.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center text-muted-foreground py-8">
+                <Cable className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <p>Enter cable parameters to calculate the recommended size</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Information Cards */}
+      <div className="grid md:grid-cols-2 gap-6">
+        <Card className="border-blue-500/20 bg-blue-500/5">
+          <CardHeader>
+            <CardTitle className="text-blue-400">Cable Sizing Factors</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Current carrying capacity</li>
+              <li>• Voltage drop limitations (3% for lighting, 5% for power)</li>
+              <li>• Installation method and environment</li>
+              <li>• Grouping and derating factors</li>
+              <li>• Ambient temperature conditions</li>
+              <li>• Short circuit protection</li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card className="border-green-500/20 bg-green-500/5">
+          <CardHeader>
+            <CardTitle className="text-green-400">BS 7671 Compliance</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li>• Follow Appendix 4 current carrying capacity tables</li>
+              <li>• Apply appropriate derating factors</li>
+              <li>• Consider voltage drop requirements</li>
+              <li>• Ensure adequate short circuit protection</li>
+              <li>• Verify earth fault loop impedance</li>
+              <li>• Document design calculations</li>
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

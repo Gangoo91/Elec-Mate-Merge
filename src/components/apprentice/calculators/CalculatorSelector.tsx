@@ -10,7 +10,6 @@ interface CalculatorSelectorProps {
 }
 
 const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSelectorProps) => {
-  // Define calculators based on the route - could be expanded to check if we're in electrician or apprentice route
   const calculators = [
     { value: "ohms-law", label: "Ohm's Law", icon: Zap },
     { value: "voltage-drop", label: "Voltage Drop", icon: Activity },
@@ -32,15 +31,12 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "solar-pv", label: "Solar PV", icon: Sun },
     { value: "battery-backup", label: "Battery Backup", icon: Battery },
     { value: "bs7671-zs-lookup", label: "BS7671 Zs Lookup", icon: Zap },
-    // Phase 1 new calculators
     { value: "r1r2", label: "R1+R2 Calculator", icon: Cable },
     { value: "pfc", label: "PFC Calculator", icon: Shield },
     { value: "rcd-discrimination", label: "RCD Discrimination", icon: Shield },
     { value: "cable-derating", label: "Cable Derating", icon: Cable },
   ];
 
-  // For mobile: Use dropdown
-  // For larger screens: Use tabs
   return (
     <div className="w-full space-y-4">
       {/* Mobile view: Dropdown */}

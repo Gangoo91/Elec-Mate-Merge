@@ -27,6 +27,7 @@ import R1R2Calculator from "@/components/apprentice/calculators/R1R2Calculator";
 import PFCCalculator from "@/components/apprentice/calculators/PFCCalculator";
 import RCDDiscriminationCalculator from "@/components/apprentice/calculators/RCDDiscriminationCalculator";
 import CableDeratingCalculator from "@/components/apprentice/calculators/CableDeratingCalculator";
+import LoadCalculator from "@/components/electrician-tools/LoadCalculator";
 import { Calculator, RotateCw } from "lucide-react";
 
 const OnJobCalculations = () => {
@@ -79,11 +80,7 @@ const OnJobCalculations = () => {
       case "cable-derating":
         return <CableDeratingCalculator />;
       case "load":
-        return <ComingSoonCalculator 
-          title="Load Calculator" 
-          icon={Calculator} 
-          description="Calculate total load requirements for installations." 
-        />;
+        return <LoadCalculator />;
       case "phase-rotation":
         return <ComingSoonCalculator 
           title="Phase Rotation" 

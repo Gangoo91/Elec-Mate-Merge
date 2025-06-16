@@ -19,7 +19,7 @@ const CalculatorCards = () => {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground mb-4">
-                Calculate proper cable sizes based on current, distance, and voltage drop.
+                Calculate proper cable sizes based on current, distance, and voltage drop requirements.
               </p>
               <Button variant="outline" className="w-full">Open Calculator</Button>
             </CardContent>
@@ -52,7 +52,7 @@ const CalculatorCards = () => {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground mb-4">
-              Calculate power factor from power readings or current and voltage.
+              Calculate power factor and related electrical parameters for efficient power usage.
             </p>
             <Button variant="outline" className="w-full" onClick={() => {
               document.getElementById('power-factor-calculator')?.scrollIntoView({ behavior: 'smooth' });
