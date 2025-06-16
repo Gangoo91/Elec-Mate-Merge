@@ -80,28 +80,28 @@ const BusinessStructureTab = () => {
     <div className="space-y-6">
       <Card className="border-blue-500/50 bg-blue-500/10">
         <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
+          <CardTitle className="text-blue-300 flex items-center gap-2 text-lg md:text-xl">
             <Building className="h-5 w-5" />
             Choosing Your Business Structure
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-muted-foreground mb-4 text-sm md:text-base leading-relaxed">
             Your choice of business structure affects your tax obligations, personal liability, and administrative requirements. 
             Consider your circumstances, risk tolerance, and growth plans when deciding.
           </p>
           <div className="grid gap-4">
-            <div className="flex items-center gap-2">
-              <Badge variant="outline" className="border-blue-500/30">Key Factor</Badge>
-              <span className="text-sm">Annual turnover and profit levels</span>
+            <div className="flex items-start md:items-center gap-2">
+              <Badge variant="outline" className="border-blue-500/30 shrink-0">Key Factor</Badge>
+              <span className="text-sm leading-relaxed">Annual turnover and profit levels</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Badge variant="outline" className="border-blue-500/30">Key Factor</Badge>
-              <span className="text-sm">Risk exposure and liability concerns</span>
+            <div className="flex items-start md:items-center gap-2">
+              <Badge variant="outline" className="border-blue-500/30 shrink-0">Key Factor</Badge>
+              <span className="text-sm leading-relaxed">Risk exposure and liability concerns</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Badge variant="outline" className="border-blue-500/30">Key Factor</Badge>
-              <span className="text-sm">Administrative capacity and preferences</span>
+            <div className="flex items-start md:items-center gap-2">
+              <Badge variant="outline" className="border-blue-500/30 shrink-0">Key Factor</Badge>
+              <span className="text-sm leading-relaxed">Administrative capacity and preferences</span>
             </div>
           </div>
         </CardContent>
@@ -111,13 +111,13 @@ const BusinessStructureTab = () => {
         {businessTypes.map((business, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-elec-yellow/10">
+              <div className="flex items-start md:items-center gap-3">
+                <div className="p-2 rounded-lg bg-elec-yellow/10 shrink-0">
                   {business.icon}
                 </div>
-                <div>
-                  <CardTitle className="text-xl text-elec-yellow">{business.type}</CardTitle>
-                  <p className="text-muted-foreground text-sm">{business.description}</p>
+                <div className="flex-1 min-w-0">
+                  <CardTitle className="text-lg md:text-xl text-elec-yellow leading-tight">{business.type}</CardTitle>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{business.description}</p>
                 </div>
               </div>
             </CardHeader>
@@ -127,9 +127,9 @@ const BusinessStructureTab = () => {
                   <h4 className="font-semibold text-green-400 mb-2">Advantages</h4>
                   <ul className="space-y-1">
                     {business.pros.map((pro, proIndex) => (
-                      <li key={proIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <span className="text-green-400 mt-1">•</span>
-                        {pro}
+                      <li key={proIndex} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
+                        <span className="text-green-400 mt-1 shrink-0">•</span>
+                        <span>{pro}</span>
                       </li>
                     ))}
                   </ul>
@@ -138,9 +138,9 @@ const BusinessStructureTab = () => {
                   <h4 className="font-semibold text-red-400 mb-2">Disadvantages</h4>
                   <ul className="space-y-1">
                     {business.cons.map((con, conIndex) => (
-                      <li key={conIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <span className="text-red-400 mt-1">•</span>
-                        {con}
+                      <li key={conIndex} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
+                        <span className="text-red-400 mt-1 shrink-0">•</span>
+                        <span>{con}</span>
                       </li>
                     ))}
                   </ul>
@@ -153,9 +153,9 @@ const BusinessStructureTab = () => {
                 </h4>
                 <ul className="space-y-1">
                   {business.taxImplications.map((tax, taxIndex) => (
-                    <li key={taxIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <span className="text-elec-yellow mt-1">•</span>
-                      {tax}
+                    <li key={taxIndex} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
+                      <span className="text-elec-yellow mt-1 shrink-0">•</span>
+                      <span>{tax}</span>
                     </li>
                   ))}
                 </ul>

@@ -110,13 +110,13 @@ const ExpenseManagementTab = () => {
     <div className="space-y-6">
       <Card className="border-green-500/50 bg-green-500/10">
         <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
+          <CardTitle className="text-green-300 flex items-center gap-2 text-lg md:text-xl">
             <Calculator className="h-5 w-5" />
             Maximising Your Business Deductions
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-sm md:text-base leading-relaxed">
             Proper expense management can significantly reduce your tax liability. Keep detailed records 
             and understand what qualifies as a legitimate business expense for electrical contractors.
           </p>
@@ -127,13 +127,13 @@ const ExpenseManagementTab = () => {
         {expenseCategories.map((category, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-elec-yellow/10">
+              <div className="flex items-start md:items-center gap-3">
+                <div className="p-2 rounded-lg bg-elec-yellow/10 shrink-0">
                   {category.icon}
                 </div>
-                <div>
-                  <CardTitle className="text-xl text-elec-yellow">{category.category}</CardTitle>
-                  <p className="text-muted-foreground text-sm">{category.description}</p>
+                <div className="flex-1 min-w-0">
+                  <CardTitle className="text-lg md:text-xl text-elec-yellow leading-tight">{category.category}</CardTitle>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{category.description}</p>
                 </div>
               </div>
             </CardHeader>
@@ -143,9 +143,9 @@ const ExpenseManagementTab = () => {
                   <h4 className="font-semibold text-white mb-2">Allowable Expenses</h4>
                   <ul className="space-y-1">
                     {category.allowableExpenses.map((expense, expenseIndex) => (
-                      <li key={expenseIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <span className="text-green-400 mt-1">•</span>
-                        {expense}
+                      <li key={expenseIndex} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
+                        <span className="text-green-400 mt-1 shrink-0">•</span>
+                        <span>{expense}</span>
                       </li>
                     ))}
                   </ul>
@@ -154,9 +154,9 @@ const ExpenseManagementTab = () => {
                   <h4 className="font-semibold text-white mb-2">Record Keeping</h4>
                   <ul className="space-y-1">
                     {category.recordKeeping.map((record, recordIndex) => (
-                      <li key={recordIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
-                        <span className="text-elec-yellow mt-1">•</span>
-                        {record}
+                      <li key={recordIndex} className="flex items-start gap-2 text-sm text-muted-foreground leading-relaxed">
+                        <span className="text-elec-yellow mt-1 shrink-0">•</span>
+                        <span>{record}</span>
                       </li>
                     ))}
                   </ul>
@@ -169,24 +169,24 @@ const ExpenseManagementTab = () => {
 
       <Card className="border-blue-500/50 bg-blue-500/10">
         <CardHeader>
-          <CardTitle className="text-blue-300">Essential Tax Management Tips</CardTitle>
+          <CardTitle className="text-blue-300 text-lg md:text-xl">Essential Tax Management Tips</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-2 gap-4">
             {taxTips.map((tip, index) => (
               <div key={index} className="space-y-2">
-                <div className="flex items-center gap-2">
+                <div className="flex items-start md:items-center gap-2">
                   <Badge 
                     variant="outline" 
-                    className={`border-blue-500/30 ${
+                    className={`border-blue-500/30 shrink-0 ${
                       tip.importance === 'Critical' ? 'text-red-400' : 'text-blue-400'
                     }`}
                   >
                     {tip.importance}
                   </Badge>
-                  <h4 className="font-semibold text-white">{tip.tip}</h4>
+                  <h4 className="font-semibold text-white leading-tight">{tip.tip}</h4>
                 </div>
-                <p className="text-sm text-muted-foreground">{tip.description}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{tip.description}</p>
               </div>
             ))}
           </div>
