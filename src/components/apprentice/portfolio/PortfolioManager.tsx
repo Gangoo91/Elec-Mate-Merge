@@ -17,7 +17,7 @@ import { usePortfolioData } from "@/hooks/portfolio/usePortfolioData";
 import PortfolioCategoriesOverview from "./PortfolioCategoriesOverview";
 import PortfolioEntriesList from "./PortfolioEntriesList";
 import PortfolioEntryForm from "./PortfolioEntryForm";
-import LearningModuleContent from "./LearningModuleContent";
+import PortfolioDocumentationContent from "./PortfolioDocumentationContent";
 import DigitalToolsIntegration from "./DigitalToolsIntegration";
 import IndustrySpecificSections from "./IndustrySpecificSections";
 
@@ -145,7 +145,7 @@ const PortfolioManager = () => {
         </TabsContent>
 
         <TabsContent value="documentation" className="mt-6">
-          <LearningModuleContent />
+          <PortfolioDocumentationContent />
         </TabsContent>
 
         <TabsContent value="tools" className="mt-6">
