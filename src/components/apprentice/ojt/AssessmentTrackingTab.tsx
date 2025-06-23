@@ -50,64 +50,64 @@ const AssessmentTrackingTab = () => {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case "scheduled":
-        return <Badge className="bg-blue-500/20 text-blue-400">Scheduled</Badge>;
+        return <Badge className="bg-blue-100 text-blue-800 border-blue-200">Scheduled</Badge>;
       case "pending":
-        return <Badge className="bg-yellow-500/20 text-yellow-400">Pending</Badge>;
+        return <Badge className="bg-amber-100 text-amber-800 border-amber-200">Pending</Badge>;
       default:
-        return <Badge className="bg-gray-500/20 text-gray-400">Unknown</Badge>;
+        return <Badge className="bg-slate-100 text-slate-800 border-slate-200">Unknown</Badge>;
     }
   };
 
   const getResultBadge = (result: string) => {
     return result === "Pass" 
-      ? <Badge className="bg-green-500/20 text-green-400">Pass</Badge>
-      : <Badge className="bg-red-500/20 text-red-400">Fail</Badge>;
+      ? <Badge className="bg-green-100 text-green-800 border-green-200">Pass</Badge>
+      : <Badge className="bg-red-100 text-red-800 border-red-200">Fail</Badge>;
   };
 
   return (
     <div className="space-y-6">
       {/* Assessment Overview */}
-      <Card className="bg-elec-gray">
+      <Card className="bg-slate-50 border-slate-200">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Award className="h-5 w-5 text-elec-yellow" />
+          <CardTitle className="flex items-center gap-2 text-slate-800">
+            <Award className="h-5 w-5 text-blue-600" />
             Assessment Overview
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
-              <div className="text-2xl font-bold">3</div>
-              <div className="text-sm text-muted-foreground">Upcoming</div>
+              <div className="text-2xl font-bold text-slate-800">3</div>
+              <div className="text-sm text-slate-600">Upcoming</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold">2</div>
-              <div className="text-sm text-muted-foreground">Completed</div>
+              <div className="text-2xl font-bold text-slate-800">2</div>
+              <div className="text-sm text-slate-600">Completed</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold">89%</div>
-              <div className="text-sm text-muted-foreground">Average Score</div>
+              <div className="text-2xl font-bold text-slate-800">89%</div>
+              <div className="text-sm text-slate-600">Average Score</div>
             </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Upcoming Assessments */}
-      <Card className="bg-elec-gray">
+      <Card className="bg-slate-50 border-slate-200">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calendar className="h-5 w-5 text-elec-yellow" />
+          <CardTitle className="flex items-center gap-2 text-slate-800">
+            <Calendar className="h-5 w-5 text-blue-600" />
             Upcoming Assessments
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {upcomingAssessments.map((assessment, index) => (
-              <div key={index} className="p-4 rounded-lg border border-elec-yellow/20">
+              <div key={index} className="p-4 rounded-lg border border-slate-300 bg-white">
                 <div className="flex justify-between items-start mb-3">
                   <div>
-                    <h4 className="font-medium">{assessment.title}</h4>
-                    <div className="flex items-center gap-4 mt-1 text-sm text-muted-foreground">
+                    <h4 className="font-medium text-slate-800">{assessment.title}</h4>
+                    <div className="flex items-center gap-4 mt-1 text-sm text-slate-600">
                       <span className="flex items-center gap-1">
                         <Calendar className="h-3 w-3" />
                         {assessment.date}
@@ -120,8 +120,8 @@ const AssessmentTrackingTab = () => {
                 
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Preparation Progress</span>
-                    <span>{assessment.preparation}%</span>
+                    <span className="text-slate-600">Preparation Progress</span>
+                    <span className="text-slate-700">{assessment.preparation}%</span>
                   </div>
                   <Progress value={assessment.preparation} className="h-2" />
                 </div>
@@ -143,29 +143,29 @@ const AssessmentTrackingTab = () => {
       </Card>
 
       {/* Completed Assessments */}
-      <Card className="bg-elec-gray">
+      <Card className="bg-slate-50 border-slate-200">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <CheckCircle className="h-5 w-5 text-elec-yellow" />
+          <CardTitle className="flex items-center gap-2 text-slate-800">
+            <CheckCircle className="h-5 w-5 text-blue-600" />
             Completed Assessments
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
             {completedAssessments.map((assessment, index) => (
-              <div key={index} className="p-4 rounded-lg border border-elec-yellow/20">
+              <div key={index} className="p-4 rounded-lg border border-slate-300 bg-white">
                 <div className="flex justify-between items-start mb-2">
                   <div>
-                    <h4 className="font-medium">{assessment.title}</h4>
-                    <div className="text-sm text-muted-foreground">{assessment.date}</div>
+                    <h4 className="font-medium text-slate-800">{assessment.title}</h4>
+                    <div className="text-sm text-slate-600">{assessment.date}</div>
                   </div>
                   <div className="flex items-center gap-2">
                     {getResultBadge(assessment.result)}
-                    <span className="text-sm font-medium">{assessment.score}</span>
+                    <span className="text-sm font-medium text-slate-700">{assessment.score}</span>
                   </div>
                 </div>
                 
-                <div className="text-sm text-muted-foreground">
+                <div className="text-sm text-slate-600">
                   <strong>Feedback:</strong> {assessment.feedback}
                 </div>
               </div>
@@ -175,15 +175,15 @@ const AssessmentTrackingTab = () => {
       </Card>
 
       {/* Assessment Resources */}
-      <Card className="bg-elec-gray">
+      <Card className="bg-slate-50 border-slate-200">
         <CardHeader>
-          <CardTitle>Assessment Resources</CardTitle>
+          <CardTitle className="text-slate-800">Assessment Resources</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-4 rounded-lg border border-elec-yellow/20">
-              <h4 className="font-medium mb-2">Study Materials</h4>
-              <p className="text-sm text-muted-foreground mb-3">
+            <div className="p-4 rounded-lg border border-slate-300 bg-white">
+              <h4 className="font-medium mb-2 text-slate-800">Study Materials</h4>
+              <p className="text-sm text-slate-600 mb-3">
                 Access revision guides, practice tests, and learning resources
               </p>
               <Button size="sm" variant="outline">
@@ -192,9 +192,9 @@ const AssessmentTrackingTab = () => {
               </Button>
             </div>
             
-            <div className="p-4 rounded-lg border border-elec-yellow/20">
-              <h4 className="font-medium mb-2">Assessment Preparation</h4>
-              <p className="text-sm text-muted-foreground mb-3">
+            <div className="p-4 rounded-lg border border-slate-300 bg-white">
+              <h4 className="font-medium mb-2 text-slate-800">Assessment Preparation</h4>
+              <p className="text-sm text-slate-600 mb-3">
                 Create study schedules and track your preparation progress
               </p>
               <Button size="sm" variant="outline">
