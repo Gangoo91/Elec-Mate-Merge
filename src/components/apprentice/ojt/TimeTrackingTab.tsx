@@ -1,12 +1,12 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Calendar, Clock, Target, TrendingUp, Award } from "lucide-react";
+import { Calendar, Clock, Target, TrendingUp, Award, Plus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import TimeEntryDialog from "@/components/apprentice/time-tracking/logbook/TimeEntryDialog";
 
 interface TimeEntry {
   id: string;
@@ -22,6 +22,7 @@ const TimeTrackingTab = () => {
   const [totalHours, setTotalHours] = useState(0);
   const [weeklyTarget] = useState(7.5); // 20% of 37.5 hour working week
   const [isLoading, setIsLoading] = useState(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -71,6 +72,69 @@ const TimeTrackingTab = () => {
       });
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleAddTimeEntry = async (duration: number, activity: string, notes: string) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast({
+          title: "Error",
+          description: "You must be logged in to add time entries",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('time_entries')
+        .insert({
+          user_id: user.id,
+          date: new Date().toISOString().split('T')[0],
+          duration: duration,
+          activity: activity,
+          notes: notes,
+          is_automatic: false
+        })
+        .select('*')
+        .single();
+
+      if (error) throw error;
+
+      // Add the new entry to the state
+      const newEntry: TimeEntry = {
+        id: data.id,
+        date: data.date,
+        duration: data.duration,
+        activity: data.activity,
+        notes: data.notes,
+        is_automatic: data.is_automatic
+      };
+
+      setTimeEntries(prev => [newEntry, ...prev]);
+
+      // Update weekly hours if the entry is from this week
+      const currentWeekStart = new Date();
+      currentWeekStart.setDate(currentWeekStart.getDate() - currentWeekStart.getDay());
+      if (new Date(newEntry.date) >= currentWeekStart) {
+        setTotalHours(prev => prev + (duration / 60));
+      }
+
+      setIsDialogOpen(false);
+      
+      toast({
+        title: "Success",
+        description: "Time entry added successfully",
+      });
+      
+    } catch (error) {
+      console.error('Error adding time entry:', error);
+      toast({
+        title: "Error",
+        description: "Failed to add time entry",
+        variant: "destructive"
+      });
     }
   };
 
@@ -139,10 +203,19 @@ const TimeTrackingTab = () => {
       {/* Recent Time Entries */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calendar className="h-5 w-5" />
-            Recent Training Sessions
-          </CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2">
+              <Calendar className="h-5 w-5" />
+              Recent Training Sessions
+            </CardTitle>
+            <Button 
+              onClick={() => setIsDialogOpen(true)}
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/80"
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Add Time Entry
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           {timeEntries.length === 0 ? (
@@ -216,6 +289,13 @@ const TimeTrackingTab = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Time Entry Dialog */}
+      <TimeEntryDialog
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        onSubmit={handleAddTimeEntry}
+      />
     </div>
   );
 };
