@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Clock, FileText, Target, Award, BarChart3, Bell } from "lucide-react";
 import TimeTrackingTab from "@/components/apprentice/ojt/TimeTrackingTab";
-import PortfolioManagementTab from "@/components/apprentice/ojt/PortfolioManagementTab";
+import PortfolioBuildingTab from "@/components/apprentice/ojt/PortfolioBuildingTab";
 import EvidenceUploadTab from "@/components/apprentice/ojt/EvidenceUploadTab";
 import AssessmentTrackingTab from "@/components/apprentice/ojt/AssessmentTrackingTab";
 import ComplianceDashboardTab from "@/components/apprentice/ojt/ComplianceDashboardTab";
@@ -55,7 +55,7 @@ const ApprenticeOJT = () => {
             </TabsContent>
 
             <TabsContent value="portfolio">
-              <PortfolioManagementTab />
+              <PortfolioBuildingTab />
             </TabsContent>
 
             <TabsContent value="evidence">

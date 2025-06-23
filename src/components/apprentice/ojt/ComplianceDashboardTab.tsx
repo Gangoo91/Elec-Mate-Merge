@@ -1,229 +1,291 @@
 
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { BarChart3, Target, Calendar, CheckCircle, AlertCircle, BookOpen, TrendingUp, Clock } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Target, Plus, TrendingUp, Calendar, CheckCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+import AddGoalDialog from "./AddGoalDialog";
+
+interface Goal {
+  id: string;
+  title: string;
+  description: string;
+  target_value: number;
+  current_value: number;
+  unit: string;
+  priority: 'low' | 'medium' | 'high';
+  category: string;
+  deadline: string;
+  status: string;
+}
 
 const ComplianceDashboardTab = () => {
-  const complianceGoals = [
-    {
-      title: "20% Off-the-Job Training",
-      current: 16.2,
-      target: 20,
-      unit: "%",
-      status: "warning"
-    },
-    {
-      title: "Monthly Training Hours",
-      current: 32,
-      target: 40,
-      unit: "hours",
-      status: "good"
-    },
-    {
-      title: "Portfolio Completion",
-      current: 73,
-      target: 100,
-      unit: "%",
-      status: "good"
-    },
-    {
-      title: "Assessment Readiness",
-      current: 8,
-      target: 10,
-      unit: "areas",
-      status: "warning"
-    }
-  ];
+  const [goals, setGoals] = useState<Goal[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const { toast } = useToast();
 
-  const milestones = [
-    {
-      title: "Year 1 Portfolio Review",
-      date: "2024-03-15",
-      status: "upcoming",
-      progress: 85
-    },
-    {
-      title: "Mid-Point Assessment",
-      date: "2024-06-20",
-      status: "upcoming",
-      progress: 45
-    },
-    {
-      title: "EPA Gateway Meeting",
-      date: "2024-12-10",
-      status: "future",
-      progress: 20
+  useEffect(() => {
+    fetchGoals();
+  }, []);
+
+  const fetchGoals = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from('ojt_goals')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('deadline', { ascending: true });
+
+      if (error) throw error;
+
+      const typedGoals: Goal[] = (data || []).map(goal => ({
+        ...goal,
+        priority: (goal.priority as 'low' | 'medium' | 'high') || 'medium'
+      }));
+
+      setGoals(typedGoals);
+    } catch (error) {
+      console.error('Error fetching goals:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load goals",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
     }
-  ];
+  };
+
+  const handleAddGoal = async (goalData: any) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { error } = await supabase
+        .from('ojt_goals')
+        .insert({
+          user_id: user.id,
+          title: goalData.title,
+          description: goalData.description,
+          target_value: goalData.targetValue,
+          unit: goalData.unit,
+          priority: goalData.priority,
+          category: goalData.category,
+          deadline: goalData.deadline,
+          current_value: 0,
+          status: 'in_progress'
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Goal added successfully"
+      });
+
+      setIsAddDialogOpen(false);
+      fetchGoals();
+    } catch (error) {
+      console.error('Error adding goal:', error);
+      toast({
+        title: "Error",
+        description: "Failed to add goal",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const updateGoalProgress = async (goalId: string, newValue: number) => {
+    try {
+      const { error } = await supabase
+        .from('ojt_goals')
+        .update({ 
+          current_value: newValue,
+          status: newValue >= goals.find(g => g.id === goalId)?.target_value ? 'completed' : 'in_progress'
+        })
+        .eq('id', goalId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Goal progress updated"
+      });
+
+      fetchGoals();
+    } catch (error) {
+      console.error('Error updating goal:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update goal progress",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'high': return 'bg-red-100 text-red-800 border-red-200';
+      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'low': return 'bg-green-100 text-green-800 border-green-200';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "good":
-        return "text-green-600 bg-green-100 border-green-200";
-      case "warning":
-        return "text-amber-600 bg-amber-100 border-amber-200";
-      case "critical":
-        return "text-red-600 bg-red-100 border-red-200";
-      default:
-        return "text-slate-600 bg-slate-100 border-slate-200";
+      case 'completed': return 'bg-green-100 text-green-800 border-green-200';
+      case 'in_progress': return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'overdue': return 'bg-red-100 text-red-800 border-red-200';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
 
-  const getMilestoneIcon = (status: string) => {
-    switch (status) {
-      case "completed":
-        return <CheckCircle className="h-4 w-4 text-green-600" />;
-      case "upcoming":
-        return <Clock className="h-4 w-4 text-amber-600" />;
-      default:
-        return <AlertCircle className="h-4 w-4 text-slate-600" />;
-    }
-  };
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div className="animate-pulse space-y-4">
+          {[1, 2, 3].map(i => (
+            <Card key={i}>
+              <CardContent className="p-6">
+                <div className="h-6 bg-gray-300 rounded mb-2"></div>
+                <div className="h-4 bg-gray-200 rounded"></div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  const completedGoals = goals.filter(g => g.status === 'completed').length;
+  const overallProgress = goals.length > 0 ? (completedGoals / goals.length) * 100 : 0;
 
   return (
     <div className="space-y-6">
-      {/* Compliance Overview */}
-      <Card className="bg-slate-50 border-slate-200">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-slate-800">
-            <BarChart3 className="h-5 w-5 text-blue-600" />
-            Compliance Overview
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {complianceGoals.map((goal, index) => (
-              <div key={index} className="p-4 rounded-lg border border-slate-300 bg-white">
-                <div className="flex justify-between items-start mb-2">
-                  <h4 className="font-medium text-sm text-slate-800">{goal.title}</h4>
-                  <Badge className={getStatusColor(goal.status)}>
-                    {goal.status === "good" ? "On Track" : "Needs Attention"}
-                  </Badge>
-                </div>
-                <div className="text-2xl font-bold text-slate-800 mb-1">
-                  {goal.current}{goal.unit}
-                </div>
-                <div className="text-xs text-slate-600 mb-2">
-                  Target: {goal.target}{goal.unit}
-                </div>
-                <Progress value={(goal.current / goal.target) * 100} className="h-2" />
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <div className="flex justify-between items-center">
+        <div>
+          <h3 className="text-lg font-semibold">Goals & Progress</h3>
+          <p className="text-muted-foreground">Track your learning objectives and compliance requirements</p>
+        </div>
+        <Button onClick={() => setIsAddDialogOpen(true)}>
+          <Plus className="h-4 w-4 mr-2" />
+          Add Goal
+        </Button>
+      </div>
 
-      {/* Key Milestones */}
-      <Card className="bg-slate-50 border-slate-200">
+      {/* Progress Overview */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Overall Progress</CardTitle>
+            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{overallProgress.toFixed(0)}%</div>
+            <Progress value={overallProgress} className="mt-2" />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Completed Goals</CardTitle>
+            <CheckCircle className="h-4 w-4 text-green-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-700">{completedGoals}</div>
+            <p className="text-xs text-muted-foreground">out of {goals.length} total</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Active Goals</CardTitle>
+            <Target className="h-4 w-4 text-blue-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-blue-700">
+              {goals.filter(g => g.status === 'in_progress').length}
+            </div>
+            <p className="text-xs text-muted-foreground">in progress</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Goals List */}
+      <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-slate-800">
-            <Target className="h-5 w-5 text-blue-600" />
-            Key Milestones
+          <CardTitle className="flex items-center gap-2">
+            <Target className="h-5 w-5" />
+            Your Goals
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {milestones.map((milestone, index) => (
-              <div key={index} className="p-4 rounded-lg border border-slate-300 bg-white">
-                <div className="flex justify-between items-start mb-3">
-                  <div>
-                    <h4 className="font-medium text-slate-800">{milestone.title}</h4>
-                    <div className="flex items-center gap-2 mt-1 text-sm text-slate-600">
-                      <Calendar className="h-3 w-3" />
-                      {milestone.date}
+          {goals.length === 0 ? (
+            <div className="text-center py-8">
+              <Target className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground">No goals set yet</p>
+              <p className="text-sm text-muted-foreground mt-2">
+                Set your first goal to start tracking your progress
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {goals.map((goal) => {
+                const progressPercentage = Math.min((goal.current_value / goal.target_value) * 100, 100);
+                
+                return (
+                  <div key={goal.id} className="p-4 border rounded-lg">
+                    <div className="flex justify-between items-start mb-3">
+                      <div className="flex-1">
+                        <h4 className="font-medium">{goal.title}</h4>
+                        <p className="text-sm text-muted-foreground mt-1">{goal.description}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Badge className={getPriorityColor(goal.priority)}>
+                          {goal.priority}
+                        </Badge>
+                        <Badge className={getStatusColor(goal.status)}>
+                          {goal.status.replace('_', ' ')}
+                        </Badge>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span>Progress: {goal.current_value} / {goal.target_value} {goal.unit}</span>
+                        <span>{progressPercentage.toFixed(0)}%</span>
+                      </div>
+                      <Progress value={progressPercentage} />
+                    </div>
+
+                    <div className="flex justify-between items-center mt-3">
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Calendar className="h-4 w-4" />
+                        Due: {new Date(goal.deadline).toLocaleDateString('en-GB')}
+                      </div>
+                      <Badge variant="outline">{goal.category}</Badge>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    {getMilestoneIcon(milestone.status)}
-                    <span className="text-sm font-medium text-slate-700">{milestone.progress}%</span>
-                  </div>
-                </div>
-                <Progress value={milestone.progress} className="h-2" />
-              </div>
-            ))}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </CardContent>
       </Card>
 
-      {/* Progress Analytics */}
-      <Card className="bg-slate-50 border-slate-200">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-slate-800">
-            <TrendingUp className="h-5 w-5 text-blue-600" />
-            Progress Analytics
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-slate-800">127</div>
-              <div className="text-sm text-slate-600">Training Hours Logged</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-slate-800">18.3%</div>
-              <div className="text-sm text-slate-600">Current OJT Ratio</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-slate-800">92%</div>
-              <div className="text-sm text-slate-600">Weekly Target Achievement</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Action Items */}
-      <Card className="bg-slate-50 border-slate-200">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-slate-800">
-            <CheckCircle className="h-5 w-5 text-blue-600" />
-            Action Items
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            <div className="flex items-center justify-between p-3 rounded-lg border border-amber-300 bg-amber-50">
-              <div className="flex items-center gap-3">
-                <AlertCircle className="h-4 w-4 text-amber-600" />
-                <div>
-                  <div className="font-medium text-sm text-slate-800">Increase off-the-job training hours</div>
-                  <div className="text-xs text-slate-600">You need 3.8% more to meet the 20% requirement</div>
-                </div>
-              </div>
-              <Button size="sm" variant="outline">
-                Plan Sessions
-              </Button>
-            </div>
-            
-            <div className="flex items-center justify-between p-3 rounded-lg border border-blue-300 bg-blue-50">
-              <div className="flex items-center gap-3">
-                <BookOpen className="h-4 w-4 text-blue-600" />
-                <div>
-                  <div className="font-medium text-sm text-slate-800">Complete portfolio sections</div>
-                  <div className="text-xs text-slate-600">14 evidence items remaining for completion</div>
-                </div>
-              </div>
-              <Button size="sm" variant="outline">
-                Upload Evidence
-              </Button>
-            </div>
-            
-            <div className="flex items-center justify-between p-3 rounded-lg border border-green-300 bg-green-50">
-              <div className="flex items-center gap-3">
-                <TrendingUp className="h-4 w-4 text-green-600" />
-                <div>
-                  <div className="font-medium text-sm text-slate-800">Prepare for upcoming assessment</div>
-                  <div className="text-xs text-slate-600">Technical Skills Assessment in 3 weeks</div>
-                </div>
-              </div>
-              <Button size="sm" variant="outline">
-                Study Plan
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <AddGoalDialog
+        open={isAddDialogOpen}
+        onOpenChange={setIsAddDialogOpen}
+        onAddGoal={handleAddGoal}
+      />
     </div>
   );
 };
