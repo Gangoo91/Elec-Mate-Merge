@@ -1,12 +1,21 @@
 
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Lightbulb, MessageSquare, Users, Zap, PlayCircle, CheckSquare } from "lucide-react";
+import { Lightbulb, MessageSquare, Users, Zap, PlayCircle, CheckSquare, ArrowLeft } from "lucide-react";
+import CommunicationSimulator from "./interactive-tools/CommunicationSimulator";
+import CulturalAwarenessQuiz from "./interactive-tools/CulturalAwarenessQuiz";
+import ProfessionalLanguageBuilder from "./interactive-tools/ProfessionalLanguageBuilder";
+
+type ActiveTool = 'communication-simulator' | 'cultural-quiz' | 'language-builder' | null;
 
 const InteractiveToolsTab = () => {
+  const [activeTool, setActiveTool] = useState<ActiveTool>(null);
+
   const interactiveTools = [
     {
+      id: 'communication-simulator' as const,
       title: "Communication Scenario Simulator",
       description: "Practice difficult workplace conversations in a safe environment",
       features: ["20+ real scenarios", "Multiple response options", "Expert feedback", "Progress tracking"],
@@ -16,6 +25,7 @@ const InteractiveToolsTab = () => {
       status: "Available"
     },
     {
+      id: 'cultural-quiz' as const,
       title: "Cultural Awareness Quiz",
       description: "Test your understanding of UK workplace culture and electrical industry norms",
       features: ["50 questions", "Instant scoring", "Detailed explanations", "Retake unlimited"],
@@ -34,6 +44,7 @@ const InteractiveToolsTab = () => {
       status: "Coming Soon"
     },
     {
+      id: 'language-builder' as const,
       title: "Professional Language Builder",
       description: "Build your electrical industry vocabulary and communication skills",
       features: ["500+ terms", "Audio pronunciation", "Context examples", "Daily challenges"],
@@ -84,6 +95,28 @@ const InteractiveToolsTab = () => {
     }
   };
 
+  const handleStartTool = (toolId: string) => {
+    setActiveTool(toolId as ActiveTool);
+  };
+
+  const handleBackToTools = () => {
+    setActiveTool(null);
+  };
+
+  // Render active tool
+  if (activeTool === 'communication-simulator') {
+    return <CommunicationSimulator onBack={handleBackToTools} />;
+  }
+
+  if (activeTool === 'cultural-quiz') {
+    return <CulturalAwarenessQuiz onBack={handleBackToTools} />;
+  }
+
+  if (activeTool === 'language-builder') {
+    return <ProfessionalLanguageBuilder onBack={handleBackToTools} />;
+  }
+
+  // Default tools overview
   return (
     <div className="space-y-6">
       <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
@@ -146,6 +179,7 @@ const InteractiveToolsTab = () => {
                     size="sm" 
                     disabled={tool.status === "Coming Soon"}
                     className="h-8"
+                    onClick={() => 'id' in tool && handleStartTool(tool.id)}
                   >
                     <PlayCircle className="mr-2 h-3 w-3" />
                     {tool.status === "Coming Soon" ? "Coming Soon" : "Start Tool"}
