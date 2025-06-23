@@ -2,13 +2,12 @@
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Clock, FileText, Target, Award, BarChart3, User } from "lucide-react";
+import { Clock, FileText, Target, Award, BarChart3 } from "lucide-react";
 import TimeTrackingTab from "@/components/apprentice/ojt/TimeTrackingTab";
 import PortfolioBuildingTab from "@/components/apprentice/ojt/PortfolioBuildingTab";
 import EvidenceUploadTab from "@/components/apprentice/ojt/EvidenceUploadTab";
 import AssessmentTrackingTab from "@/components/apprentice/ojt/AssessmentTrackingTab";
 import ComplianceDashboardTab from "@/components/apprentice/ojt/ComplianceDashboardTab";
-import CareerPlanningTab from "@/components/apprentice/ojt/CareerPlanningTab";
 
 const ApprenticeOJT = () => {
   console.log('ApprenticeOJT component rendering');
@@ -24,7 +23,7 @@ const ApprenticeOJT = () => {
       </div>
 
       <Tabs defaultValue="time-tracking" className="w-full">
-        <TabsList className="grid w-full grid-cols-6">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="time-tracking" className="flex items-center gap-2">
             <Clock className="h-4 w-4" />
             Time Tracking
@@ -43,11 +42,7 @@ const ApprenticeOJT = () => {
           </TabsTrigger>
           <TabsTrigger value="compliance" className="flex items-center gap-2">
             <BarChart3 className="h-4 w-4" />
-            Compliance
-          </TabsTrigger>
-          <TabsTrigger value="career" className="flex items-center gap-2">
-            <User className="h-4 w-4" />
-            Career Planning
+            Goals & Progress
           </TabsTrigger>
         </TabsList>
 
@@ -69,10 +64,6 @@ const ApprenticeOJT = () => {
 
         <TabsContent value="compliance">
           <ComplianceDashboardTab />
-        </TabsContent>
-
-        <TabsContent value="career">
-          <CareerPlanningTab />
         </TabsContent>
       </Tabs>
 

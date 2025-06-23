@@ -4,13 +4,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, AlertCircle, Calendar, BookOpen, Award } from "lucide-react";
+import { CheckCircle, Clock, AlertCircle, Calendar, BookOpen, Award, Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import AddAssessmentDialog from "./AddAssessmentDialog";
 
 const AssessmentTrackingTab = () => {
   const { toast } = useToast();
+  const [showAddDialog, setShowAddDialog] = useState(false);
   
-  const [assessments] = useState([
+  const [assessments, setAssessments] = useState([
     {
       id: 1,
       title: "Electrical Safety Knowledge",
@@ -49,6 +51,22 @@ const AssessmentTrackingTab = () => {
     }
   ]);
 
+  const handleAddAssessment = (newAssessment) => {
+    const assessment = {
+      id: assessments.length + 1,
+      ...newAssessment,
+      status: "pending",
+      score: null,
+      completedDate: null
+    };
+    setAssessments([...assessments, assessment]);
+    setShowAddDialog(false);
+    toast({
+      title: "Assessment Added",
+      description: "New assessment has been added to your tracking list.",
+    });
+  };
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "completed":
@@ -85,6 +103,14 @@ const AssessmentTrackingTab = () => {
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-semibold">Assessment Tracking</h2>
+        <Button onClick={() => setShowAddDialog(true)} className="flex items-center gap-2">
+          <Plus className="h-4 w-4" />
+          Add Assessment
+        </Button>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -206,6 +232,12 @@ const AssessmentTrackingTab = () => {
           </div>
         </CardContent>
       </Card>
+
+      <AddAssessmentDialog 
+        open={showAddDialog} 
+        onOpenChange={setShowAddDialog}
+        onAddAssessment={handleAddAssessment}
+      />
     </div>
   );
 };
