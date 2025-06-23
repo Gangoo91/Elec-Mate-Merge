@@ -89,7 +89,33 @@ const EssentialToolsTab = () => {
         </AlertDescription>
       </Alert>
 
-      {/* Tool Categories Overview */}
+      {/* Detailed Tool Category Tabs - Moved to Top */}
+      <Tabs defaultValue="hand-tools" className="w-full">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="hand-tools">Hand Tools</TabsTrigger>
+          <TabsTrigger value="power-tools">Power Tools</TabsTrigger>
+          <TabsTrigger value="test-equipment">Test Equipment</TabsTrigger>
+          <TabsTrigger value="ppe">PPE & Safety</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="hand-tools">
+          <HandToolsTab />
+        </TabsContent>
+
+        <TabsContent value="power-tools">
+          <PowerToolsTab />
+        </TabsContent>
+
+        <TabsContent value="test-equipment">
+          <TestEquipmentTab />
+        </TabsContent>
+
+        <TabsContent value="ppe">
+          <PPETab />
+        </TabsContent>
+      </Tabs>
+
+      {/* Tool Categories Overview - Now Below Detailed Tabs */}
       <div className="grid gap-6">
         {toolOverview.map((section, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
@@ -120,32 +146,6 @@ const EssentialToolsTab = () => {
           </Card>
         ))}
       </div>
-
-      {/* Detailed Tool Tabs */}
-      <Tabs defaultValue="hand-tools" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="hand-tools">Hand Tools</TabsTrigger>
-          <TabsTrigger value="power-tools">Power Tools</TabsTrigger>
-          <TabsTrigger value="test-equipment">Test Equipment</TabsTrigger>
-          <TabsTrigger value="ppe">PPE & Safety</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="hand-tools">
-          <HandToolsTab />
-        </TabsContent>
-
-        <TabsContent value="power-tools">
-          <PowerToolsTab />
-        </TabsContent>
-
-        <TabsContent value="test-equipment">
-          <TestEquipmentTab />
-        </TabsContent>
-
-        <TabsContent value="ppe">
-          <PPETab />
-        </TabsContent>
-      </Tabs>
 
       {/* Maintenance Schedule */}
       <Card className="border-green-500/20 bg-green-500/10">
