@@ -64,7 +64,7 @@ const DomesticInstallations = () => {
         enhancedCircuitComponent={<DomesticCircuitGuide />}
         enhancedTestingComponent={<DomesticTestingGuide />}
         enhancedReferenceComponent={<DomesticReferenceGuide />}
-        safetyNotice={{
+        bottomSafetyNotice={{
           title: "Critical Safety Requirements",
           points: [
             {
