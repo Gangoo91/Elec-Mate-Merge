@@ -4,9 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   BookOpen, 
   FileText, 
-  Target,
   CheckCircle,
-  Download,
   Users,
   Building,
   Award
@@ -16,8 +14,6 @@ import PortfolioIntroduction from "@/components/apprentice/portfolio/guide/Portf
 import PortfolioStepByStepGuide from "@/components/apprentice/portfolio/guide/PortfolioStepByStepGuide";
 import EvidenceCollectionGuide from "@/components/apprentice/portfolio/guide/EvidenceCollectionGuide";
 import IndustrySpecificGuidance from "@/components/apprentice/portfolio/guide/IndustrySpecificGuidance";
-import AssessmentPreparation from "@/components/apprentice/portfolio/guide/AssessmentPreparation";
-import TemplatesAndExamples from "@/components/apprentice/portfolio/guide/TemplatesAndExamples";
 
 const PortfolioBuilding = () => {
   return (
@@ -43,7 +39,7 @@ const PortfolioBuilding = () => {
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Learning Modules</p>
-                <p className="text-2xl font-bold text-blue-400">6</p>
+                <p className="text-2xl font-bold text-blue-400">4</p>
               </div>
             </div>
           </CardContent>
@@ -53,11 +49,11 @@ const PortfolioBuilding = () => {
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-green-500/10 rounded-lg">
-                <Target className="h-5 w-5 text-green-400" />
+                <CheckCircle className="h-5 w-5 text-green-400" />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Key Competencies</p>
-                <p className="text-2xl font-bold text-green-400">12</p>
+                <p className="text-2xl font-bold text-green-400">18</p>
               </div>
             </div>
           </CardContent>
@@ -70,8 +66,8 @@ const PortfolioBuilding = () => {
                 <FileText className="h-5 w-5 text-elec-yellow" />
               </div>
               <div>
-                <p className="text-sm text-muted-foreground">Templates</p>
-                <p className="text-2xl font-bold text-elec-yellow">15+</p>
+                <p className="text-sm text-muted-foreground">Evidence Types</p>
+                <p className="text-2xl font-bold text-elec-yellow">25+</p>
               </div>
             </div>
           </CardContent>
@@ -94,7 +90,7 @@ const PortfolioBuilding = () => {
 
       {/* Main Content Tabs */}
       <Tabs defaultValue="introduction" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6">
+        <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="introduction" className="flex items-center gap-2">
             <BookOpen className="h-4 w-4" />
             <span className="hidden sm:inline">Introduction</span>
@@ -110,14 +106,6 @@ const PortfolioBuilding = () => {
           <TabsTrigger value="industry" className="flex items-center gap-2">
             <Building className="h-4 w-4" />
             <span className="hidden sm:inline">Industry</span>
-          </TabsTrigger>
-          <TabsTrigger value="assessment" className="flex items-center gap-2">
-            <Target className="h-4 w-4" />
-            <span className="hidden sm:inline">Assessment</span>
-          </TabsTrigger>
-          <TabsTrigger value="templates" className="flex items-center gap-2">
-            <Download className="h-4 w-4" />
-            <span className="hidden sm:inline">Templates</span>
           </TabsTrigger>
         </TabsList>
 
@@ -135,14 +123,6 @@ const PortfolioBuilding = () => {
 
         <TabsContent value="industry">
           <IndustrySpecificGuidance />
-        </TabsContent>
-
-        <TabsContent value="assessment">
-          <AssessmentPreparation />
-        </TabsContent>
-
-        <TabsContent value="templates">
-          <TemplatesAndExamples />
         </TabsContent>
       </Tabs>
     </div>

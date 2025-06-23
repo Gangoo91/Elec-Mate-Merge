@@ -4,229 +4,264 @@ import { Badge } from "@/components/ui/badge";
 import { 
   Building, 
   Home, 
-  Factory, 
-  ShoppingBag,
+  Factory,
   Zap,
   Shield,
-  Wrench,
   FileText,
   Users,
-  Award
+  Award,
+  AlertTriangle,
+  CheckCircle,
+  Wrench,
+  Target
 } from "lucide-react";
 
 const IndustrySpecificGuidance = () => {
   const sectors = [
     {
-      sector: "Domestic Electrical",
+      name: "Domestic Electrical Work",
       icon: Home,
       color: "blue",
-      description: "Residential properties and home installations",
+      description: "Residential electrical installations, maintenance, and repairs",
       keyCompetencies: [
         "Consumer unit installations and upgrades",
         "Socket and lighting circuit installation",
-        "Electric shower and cooker circuits",
-        "Periodic inspection and testing",
-        "Fault finding in domestic systems"
+        "Electric shower and cooker installations",
+        "EICR testing and fault finding",
+        "Smart home technology integration",
+        "Solar PV system installation"
       ],
       evidenceOpportunities: [
         "Before/after photos of consumer unit upgrades",
-        "Testing certificates for new circuits",
-        "Customer satisfaction testimonials",
-        "Fault diagnosis and repair documentation",
-        "Compliance with Part P regulations"
+        "Test certificates from EICR inspections",
+        "Customer testimonials and feedback",
+        "Photos of neat cable routing and terminations",
+        "Documentation of fault-finding processes",
+        "Compliance certificates for notifiable work"
       ],
-      industryStandards: ["BS 7671", "Part P Building Regulations", "IET Code of Practice"]
+      industryStandards: [
+        "BS 7671 18th Edition compliance",
+        "Part P Building Regulations",
+        "Competent Person Scheme requirements",
+        "Consumer unit fire safety regulations",
+        "RCD protection requirements"
+      ]
     },
     {
-      sector: "Commercial Electrical",
+      name: "Commercial Electrical Work",
       icon: Building,
       color: "green",
-      description: "Office buildings, retail, and commercial premises",
+      description: "Office buildings, retail spaces, and commercial premises",
       keyCompetencies: [
         "Three-phase distribution systems",
-        "Emergency lighting systems",
-        "Fire alarm installations",
+        "Emergency lighting installations",
+        "Fire alarm system wiring",
         "Data and communication cabling",
-        "Motor control and automation"
+        "Motor control circuits",
+        "Energy management systems"
       ],
       evidenceOpportunities: [
-        "Large installation project documentation",
-        "Emergency lighting test certificates",
-        "Team working on complex projects",
-        "Health and safety risk assessments",
-        "Client liaison and communication"
+        "Complex distribution board installations",
+        "Emergency lighting test records",
+        "Fire alarm commissioning documentation",
+        "Photos of cable tray and trunking systems",
+        "Motor control panel wiring evidence",
+        "Energy efficiency project involvement"
       ],
-      industryStandards: ["BS 7671", "BS 5266 (Emergency Lighting)", "BS 5839 (Fire Alarms)"]
+      industryStandards: [
+        "BS 5266 Emergency lighting",
+        "BS 5839 Fire detection systems",
+        "BS 6701 Telecommunications installations",
+        "Energy efficiency regulations",
+        "Health and Safety at Work Act compliance"
+      ]
     },
     {
-      sector: "Industrial Electrical",
+      name: "Industrial Electrical Work",
       icon: Factory,
-      color: "purple",
-      description: "Manufacturing, processing, and heavy industry",
-      keyCompetencies: [
-        "High voltage systems and switchgear",
-        "Motor control and variable frequency drives",
-        "PLC and automation systems",
-        "Instrumentation and control",
-        "Hazardous area installations"
-      ],
-      evidenceOpportunities: [
-        "Complex motor installation projects",
-        "Control panel wiring and testing",
-        "Maintenance and fault finding logs",
-        "Safety permit documentation",
-        "Continuous improvement initiatives"
-      ],
-      industryStandards: ["BS 7671", "IEC 60079 (Explosive Atmospheres)", "BS EN 61439 (Switchgear)"]
-    },
-    {
-      sector: "Renewable Energy",
-      icon: Zap,
       color: "yellow",
-      description: "Solar, wind, and sustainable energy systems",
+      description: "Manufacturing facilities, heavy industry, and process control",
       keyCompetencies: [
-        "Solar PV system design and installation",
-        "Battery storage systems",
-        "Grid connection and G99 applications",
-        "Energy monitoring systems",
-        "Electric vehicle charging points"
+        "High voltage switching and protection",
+        "Motor control and variable speed drives",
+        "PLC and automation systems",
+        "Hazardous area installations",
+        "Instrumentation and control wiring",
+        "Power factor correction systems"
       ],
       evidenceOpportunities: [
-        "Solar installation from start to finish",
-        "MCS certification processes",
-        "Environmental impact assessments",
-        "Customer energy savings documentation",
-        "Government scheme compliance"
+        "HV switching procedure documentation",
+        "Motor installation and commissioning records",
+        "PLC programming and testing evidence",
+        "ATEX zone installation photos",
+        "Instrument calibration certificates",
+        "Power quality improvement projects"
       ],
-      industryStandards: ["MCS Standards", "G99 Grid Code", "BS EN 62446 (PV Systems)"]
+      industryStandards: [
+        "IEC 61508 Functional safety",
+        "ATEX regulations for hazardous areas",
+        "DSEAR (Dangerous Substances Regulations)",
+        "IEC 60204 Machine safety standards",
+        "IEEE standards for power systems"
+      ]
+    }
+  ];
+
+  const specialisations = [
+    {
+      title: "Renewable Energy Systems",
+      icon: Zap,
+      areas: [
+        "Solar PV installations and grid connection",
+        "Wind turbine electrical systems",
+        "Battery storage system integration",
+        "Heat pump electrical connections",
+        "EV charging point installations"
+      ]
     },
     {
-      sector: "Maintenance & Testing",
-      icon: Wrench,
-      color: "orange",
-      description: "Inspection, testing, and maintenance services",
-      keyCompetencies: [
-        "Periodic inspection and testing (EICR)",
-        "PAT testing and certification",
-        "Fault finding and diagnostics",
-        "Preventive maintenance programmes",
-        "Compliance and safety assessments"
-      ],
-      evidenceOpportunities: [
-        "Complete EICR inspection reports",
-        "Fault diagnosis case studies",
-        "Customer communication examples",
-        "Risk assessment documentation",
-        "Continuous professional development"
-      ],
-      industryStandards: ["BS 7671", "IET Code of Practice", "In-Service Inspection and Testing"]
+      title: "Building Management Systems",
+      icon: Target,
+      areas: [
+        "HVAC control system wiring",
+        "Lighting control and automation",
+        "Access control systems",
+        "CCTV and security system installation",
+        "Building energy management integration"
+      ]
     },
     {
-      sector: "Smart Technology",
-      icon: ShoppingBag,
-      color: "red",
-      description: "Home automation and intelligent building systems",
-      keyCompetencies: [
-        "Smart home system integration",
-        "Building management systems",
-        "Security and access control",
-        "Network and data infrastructure",
-        "IoT device installation and configuration"
-      ],
-      evidenceOpportunities: [
-        "Smart home installation projects",
-        "System commissioning documentation",
-        "Client training and handover",
-        "Integration testing reports",
-        "Future technology adaptation"
-      ],
-      industryStandards: ["KNX Standards", "BS EN 15232 (Building Automation)", "Cyber Security Guidelines"]
+      title: "Data & Communications",
+      icon: FileText,
+      areas: [
+        "Structured cabling systems",
+        "Fibre optic installations",
+        "Network infrastructure",
+        "Telecommunications systems",
+        "Audio-visual system integration"
+      ]
+    }
+  ];
+
+  const assessmentCriteria = [
+    {
+      area: "Technical Competency",
+      requirements: [
+        "Demonstrate safe working practices in all environments",
+        "Show understanding of relevant regulations and standards",
+        "Evidence of fault-finding and problem-solving skills",
+        "Ability to read and interpret technical drawings",
+        "Competent use of test equipment and tools"
+      ]
+    },
+    {
+      area: "Professional Development",
+      requirements: [
+        "Continuous learning and skills development",
+        "Effective communication with clients and colleagues",
+        "Understanding of business and commercial aspects",
+        "Commitment to quality and attention to detail",
+        "Environmental awareness and sustainability"
+      ]
+    },
+    {
+      area: "Industry Knowledge",
+      requirements: [
+        "Understanding of sector-specific regulations",
+        "Awareness of emerging technologies",
+        "Knowledge of industry best practices",
+        "Understanding of health and safety requirements",
+        "Commercial awareness and customer service"
+      ]
     }
   ];
 
   const getColorClasses = (color: string) => {
-    switch (color) {
-      case "blue": return "border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 text-blue-400";
-      case "green": return "border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10 text-green-400";
-      case "purple": return "border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10 text-purple-400";
-      case "yellow": return "border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10 text-elec-yellow";
-      case "orange": return "border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-red-500/10 text-orange-400";
-      case "red": return "border-red-500/30 bg-gradient-to-br from-red-500/10 to-pink-500/10 text-red-400";
-      default: return "border-gray-500/30 bg-gradient-to-br from-gray-500/10 to-slate-500/10 text-gray-400";
-    }
+    const colorMap = {
+      blue: "border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 text-blue-400",
+      green: "border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10 text-green-400",
+      yellow: "border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10 text-elec-yellow"
+    };
+    return colorMap[color as keyof typeof colorMap] || colorMap.blue;
   };
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10">
+      {/* Introduction */}
+      <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10">
         <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Building className="h-6 w-6" />
-            Industry-Specific Portfolio Guidance
-          </CardTitle>
+          <CardTitle className="text-purple-400">Industry-Specific Portfolio Guidance</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground">
-            Tailor your portfolio to your specific electrical sector. Each industry has unique requirements, 
-            standards, and evidence opportunities that you should highlight in your portfolio.
+          <p className="text-muted-foreground text-lg">
+            Understand the specific requirements, standards, and evidence expectations for different 
+            sectors of the electrical industry. Tailor your portfolio to match your career path and specialisation.
           </p>
         </CardContent>
       </Card>
 
-      {/* Sector Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Sector-Specific Guidance */}
+      <div className="space-y-6">
+        <h3 className="text-xl font-semibold text-white">Sector-Specific Requirements</h3>
+        
         {sectors.map((sector, index) => {
           const IconComponent = sector.icon;
+          const colorClasses = getColorClasses(sector.color);
+          
           return (
-            <Card key={index} className={getColorClasses(sector.color)}>
+            <Card key={index} className={colorClasses}>
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <IconComponent className="h-6 w-6" />
-                  {sector.sector}
-                </CardTitle>
-                <p className="text-sm text-muted-foreground">{sector.description}</p>
+                  <div>
+                    <CardTitle className="text-xl">{sector.name}</CardTitle>
+                    <p className="text-muted-foreground mt-1">{sector.description}</p>
+                  </div>
+                </div>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <h4 className="font-medium text-white mb-2 flex items-center gap-2">
-                    <Award className="h-4 w-4" />
-                    Key Competencies
-                  </h4>
-                  <ul className="space-y-1">
-                    {sector.keyCompetencies.map((competency, compIndex) => (
-                      <li key={compIndex} className="text-sm text-muted-foreground">
-                        • {competency}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-medium text-white mb-2 flex items-center gap-2">
-                    <FileText className="h-4 w-4" />
-                    Evidence Opportunities
-                  </h4>
-                  <ul className="space-y-1">
-                    {sector.evidenceOpportunities.map((opportunity, oppIndex) => (
-                      <li key={oppIndex} className="text-sm text-muted-foreground">
-                        • {opportunity}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="font-medium text-white mb-2 flex items-center gap-2">
-                    <Shield className="h-4 w-4" />
-                    Industry Standards
-                  </h4>
-                  <div className="flex flex-wrap gap-1">
-                    {sector.industryStandards.map((standard, stdIndex) => (
-                      <Badge key={stdIndex} variant="outline" className="text-xs">
-                        {standard}
-                      </Badge>
-                    ))}
+              <CardContent>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div>
+                    <h4 className="font-medium text-white mb-3 flex items-center gap-2">
+                      <Wrench className="h-4 w-4" />
+                      Key Competencies
+                    </h4>
+                    <ul className="space-y-2">
+                      {sector.keyCompetencies.map((competency, compIndex) => (
+                        <li key={compIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <CheckCircle className="h-3 w-3 mt-1 flex-shrink-0" />
+                          {competency}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-white mb-3 flex items-center gap-2">
+                      <FileText className="h-4 w-4" />
+                      Evidence Opportunities
+                    </h4>
+                    <ul className="space-y-2">
+                      {sector.evidenceOpportunities.map((opportunity, oppIndex) => (
+                        <li key={oppIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <Target className="h-3 w-3 mt-1 flex-shrink-0" />
+                          {opportunity}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-white mb-3 flex items-center gap-2">
+                      <Shield className="h-4 w-4" />
+                      Industry Standards
+                    </h4>
+                    <ul className="space-y-2">
+                      {sector.industryStandards.map((standard, stdIndex) => (
+                        <li key={stdIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <Award className="h-3 w-3 mt-1 flex-shrink-0" />
+                          {standard}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </CardContent>
@@ -235,95 +270,91 @@ const IndustrySpecificGuidance = () => {
         })}
       </div>
 
-      {/* Cross-Industry Skills */}
-      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-400">Cross-Industry Core Skills</CardTitle>
-          <p className="text-muted-foreground">
-            Essential competencies that apply across all electrical sectors
-          </p>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div>
-              <h4 className="font-medium text-white mb-3 flex items-center gap-2">
-                <Shield className="h-4 w-4 text-green-400" />
-                Health & Safety
-              </h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• Risk assessment and method statements</li>
-                <li>• Safe isolation procedures</li>
-                <li>• PPE selection and use</li>
-                <li>• Accident prevention and reporting</li>
-                <li>• Working at height safely</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium text-white mb-3 flex items-center gap-2">
-                <Wrench className="h-4 w-4 text-green-400" />
-                Technical Skills
-              </h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• Circuit design and calculations</li>
-                <li>• Installation methods and techniques</li>
-                <li>• Testing and inspection procedures</li>
-                <li>• Fault finding and diagnostics</li>
-                <li>• Use of test equipment</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium text-white mb-3 flex items-center gap-2">
-                <Users className="h-4 w-4 text-green-400" />
-                Professional Skills
-              </h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• Customer communication</li>
-                <li>• Team working and collaboration</li>
-                <li>• Problem-solving approaches</li>
-                <li>• Time management and planning</li>
-                <li>• Continuous learning and development</li>
-              </ul>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Specialisation Areas */}
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold text-white">Emerging Specialisation Areas</h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {specialisations.map((spec, index) => {
+            const IconComponent = spec.icon;
+            return (
+              <Card key={index} className="border-cyan-500/30 bg-gradient-to-br from-cyan-500/10 to-blue-500/10">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg flex items-center gap-2 text-cyan-400">
+                    <IconComponent className="h-5 w-5" />
+                    {spec.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {spec.areas.map((area, areaIndex) => (
+                      <li key={areaIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <div className="h-1.5 w-1.5 bg-cyan-400 rounded-full mt-2 flex-shrink-0" />
+                        {area}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
 
-      {/* Portfolio Mapping Guide */}
-      <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/10">
+      {/* Assessment Criteria */}
+      <div className="space-y-4">
+        <h3 className="text-xl font-semibold text-white">Universal Assessment Criteria</h3>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {assessmentCriteria.map((criteria, index) => (
+            <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg text-elec-yellow">{criteria.area}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
+                  {criteria.requirements.map((requirement, reqIndex) => (
+                    <li key={reqIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <CheckCircle className="h-3 w-3 mt-1 text-green-400 flex-shrink-0" />
+                      {requirement}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+
+      {/* Career Pathway Considerations */}
+      <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-red-500/10">
         <CardHeader>
-          <CardTitle className="text-blue-400">Portfolio Mapping Strategy</CardTitle>
+          <CardTitle className="text-orange-400 flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5" />
+            Career Pathway Considerations
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            <p className="text-muted-foreground">
-              Use this strategy to ensure your portfolio covers all required competencies for your specific sector:
-            </p>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-3">
-                <h4 className="font-medium text-white">Step 1: Identify Your Primary Sector</h4>
-                <p className="text-sm text-muted-foreground">
-                  Determine which sector(s) best describe your apprenticeship placement and focus your evidence collection accordingly.
-                </p>
-              </div>
-              <div className="space-y-3">
-                <h4 className="font-medium text-white">Step 2: Map Competencies</h4>
-                <p className="text-sm text-muted-foreground">
-                  Create a checklist of sector-specific competencies and track your evidence against each one.
-                </p>
-              </div>
-              <div className="space-y-3">
-                <h4 className="font-medium text-white">Step 3: Seek Diverse Evidence</h4>
-                <p className="text-sm text-muted-foreground">
-                  Look for opportunities to demonstrate skills across different contexts within your sector.
-                </p>
-              </div>
-              <div className="space-y-3">
-                <h4 className="font-medium text-white">Step 4: Document Standards</h4>
-                <p className="text-sm text-muted-foreground">
-                  Reference relevant industry standards and regulations in your evidence commentary.
-                </p>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="font-medium text-white mb-3">Portfolio Tailoring Tips</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>• Focus evidence collection on your target sector</li>
+                <li>• Seek placements in different types of electrical work</li>
+                <li>• Build relationships with professionals in your chosen field</li>
+                <li>• Attend sector-specific training and exhibitions</li>
+                <li>• Join relevant professional associations early</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium text-white mb-3">Future-Proofing Your Skills</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li>• Stay current with emerging technologies</li>
+                <li>• Develop digital and automation skills</li>
+                <li>• Understand environmental and sustainability requirements</li>
+                <li>• Build customer service and communication abilities</li>
+                <li>• Consider business and entrepreneurial skills</li>
+              </ul>
             </div>
           </div>
         </CardContent>

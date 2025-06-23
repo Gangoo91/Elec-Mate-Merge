@@ -1,152 +1,167 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { 
   CheckCircle, 
-  ArrowRight, 
   FileText, 
-  FolderOpen,
-  Calendar,
   Target,
+  Calendar,
   Users,
-  RefreshCw,
-  Download,
-  Upload
+  Upload,
+  Search,
+  BookOpen,
+  AlertTriangle,
+  Clock
 } from "lucide-react";
 
 const PortfolioStepByStepGuide = () => {
   const steps = [
     {
       number: 1,
-      title: "Initial Planning & Setup",
-      description: "Establish your portfolio structure and understand requirements",
-      timeframe: "Week 1-2",
-      status: "foundation",
+      title: "Setting Up Your Portfolio Structure",
+      duration: "Week 1",
+      icon: FileText,
+      description: "Create the foundation for your portfolio with proper organisation and filing systems",
       tasks: [
-        "Review your apprenticeship standards and learning outcomes",
-        "Create a folder structure (digital and physical)",
-        "Set up a portfolio tracking system",
-        "Identify key assessment criteria",
-        "Create an evidence collection timeline"
+        "Choose your portfolio format (digital, physical, or hybrid)",
+        "Set up folder structures for different evidence types",
+        "Create a master tracking spreadsheet or document",
+        "Establish naming conventions for files and documents",
+        "Set up cloud storage backup systems"
       ],
-      tips: "Start with a simple structure - you can always reorganise later as you progress."
+      tips: [
+        "Use consistent naming: Date_Type_Description (e.g., 2024-01-15_Practical_RingCircuitInstall)",
+        "Create separate folders for each unit or competency area",
+        "Always maintain backup copies of important evidence"
+      ]
     },
     {
       number: 2,
-      title: "Evidence Collection Strategy",
-      description: "Develop systematic approaches to gathering evidence",
-      timeframe: "Ongoing",
-      status: "active",
+      title: "Understanding Learning Outcomes & Competencies",
+      duration: "Week 2",
+      icon: Target,
+      description: "Map your apprenticeship requirements and understand what evidence you need to collect",
       tasks: [
-        "Photograph your work (before, during, after)",
-        "Collect witness testimonies from supervisors",
-        "Document problem-solving processes",
-        "Keep records of training attended",
-        "Save certificates and assessments"
+        "Review your apprenticeship standard and learning outcomes",
+        "Download assessment criteria from your training provider",
+        "Create a competency tracking matrix",
+        "Identify gaps in your current knowledge or experience",
+        "Plan which evidence you'll need for each outcome"
       ],
-      tips: "Make evidence collection a daily habit - set aside 10 minutes each day to document your work."
+      tips: [
+        "Cross-reference everything with your apprenticeship standard",
+        "Some evidence can cover multiple competencies",
+        "Keep a running list of what you still need to achieve"
+      ]
     },
     {
       number: 3,
-      title: "Reflection & Analysis",
-      description: "Add context and learning insights to your evidence",
-      timeframe: "Weekly",
-      status: "ongoing",
+      title: "Daily Evidence Collection",
+      duration: "Ongoing",
+      icon: Calendar,
+      description: "Develop habits for consistently collecting and documenting evidence throughout your apprenticeship",
       tasks: [
-        "Write reflective commentary for each piece of evidence",
-        "Explain how the work relates to learning outcomes",
-        "Identify skills demonstrated and knowledge applied",
-        "Describe challenges faced and how you overcame them",
-        "Link evidence to industry standards"
+        "Take photos of your work (with permission)",
+        "Write daily reflection notes about what you learned",
+        "Collect work orders, method statements, and certificates",
+        "Document conversations with supervisors and mentors",
+        "Record time spent on different activities"
       ],
-      tips: "Quality over quantity - a well-reflected piece of evidence is worth more than multiple unreflected items."
+      tips: [
+        "Set phone reminders to collect evidence daily",
+        "Always ask permission before photographing on site",
+        "Include context and learning points with every photo"
+      ]
     },
     {
       number: 4,
-      title: "Organisation & Cross-Referencing",
-      description: "Structure your portfolio for easy navigation and assessment",
-      timeframe: "Monthly",
-      status: "maintenance",
+      title: "Creating Quality Reflective Commentary",
+      duration: "Ongoing",
+      icon: BookOpen,
+      description: "Learn to write meaningful reflections that demonstrate your learning and development",
       tasks: [
-        "Create clear section dividers and contents pages",
-        "Cross-reference evidence against learning outcomes",
-        "Ensure evidence covers all required competencies",
-        "Remove duplicate or weak evidence",
-        "Update your progress tracking charts"
+        "Practice describing what you did, how you did it, and why",
+        "Explain what you learned from each experience",
+        "Identify areas for improvement and future development",
+        "Link experiences to theoretical knowledge",
+        "Demonstrate progression over time"
       ],
-      tips: "Think like an assessor - make it easy for them to find evidence for specific criteria."
+      tips: [
+        "Use the STAR method: Situation, Task, Action, Result",
+        "Be honest about challenges and how you overcame them",
+        "Show how you've applied feedback and improved"
+      ]
     },
     {
       number: 5,
-      title: "Supervisor Review & Feedback",
-      description: "Get professional input on your portfolio development",
-      timeframe: "Quarterly",
-      status: "collaborative",
+      title: "Organising & Cross-Referencing Evidence",
+      duration: "Monthly",
+      icon: Search,
+      description: "Systematically organise your evidence to make it easy to find and assess",
       tasks: [
-        "Schedule regular portfolio reviews with your supervisor",
-        "Request specific feedback on evidence quality",
-        "Identify gaps in your evidence collection",
-        "Discuss upcoming opportunities for evidence gathering",
-        "Get witness signatures and testimonies"
+        "Review and categorise all collected evidence",
+        "Create an evidence index or contents page",
+        "Cross-reference evidence against competency requirements",
+        "Identify and fill any gaps in your portfolio",
+        "Update your tracking systems"
       ],
-      tips: "Don't wait for formal reviews - ask for feedback regularly and build relationships with multiple supervisors."
+      tips: [
+        "Use a simple numbering system for easy reference",
+        "Create links between related pieces of evidence",
+        "Regular organisation saves time later"
+      ]
     },
     {
       number: 6,
-      title: "Final Preparation & Submission",
-      description: "Prepare your portfolio for formal assessment",
-      timeframe: "Final Month",
-      status: "completion",
+      title: "Preparing for Reviews & Assessments",
+      duration: "Before each review",
+      icon: Users,
+      description: "Get your portfolio ready for formal reviews and assessment meetings",
       tasks: [
-        "Complete final evidence gap analysis",
-        "Write a comprehensive portfolio introduction",
-        "Create detailed contents and index pages",
-        "Proofread all written work",
-        "Prepare digital and physical copies as required"
+        "Review assessment criteria one more time",
+        "Prepare a portfolio summary or overview",
+        "Practice presenting your evidence verbally",
+        "Prepare questions about areas you're unsure about",
+        "Ensure all evidence is properly labelled and accessible"
       ],
-      tips: "Leave plenty of time for final preparation - portfolios always take longer to complete than expected."
+      tips: [
+        "Know your portfolio inside and out",
+        "Be prepared to explain any piece of evidence",
+        "Bring specific examples to discuss"
+      ]
     }
   ];
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "foundation": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      case "active": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "ongoing": return "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30";
-      case "maintenance": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
-      case "collaborative": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
-      case "completion": return "bg-red-500/20 text-red-400 border-red-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+  const commonMistakes = [
+    {
+      mistake: "Leaving evidence collection until the last minute",
+      solution: "Start from day one and collect evidence daily"
+    },
+    {
+      mistake: "Not providing enough context with photos and documents",
+      solution: "Always include what, when, where, why, and what you learned"
+    },
+    {
+      mistake: "Focusing only on practical work and ignoring theory",
+      solution: "Include evidence of research, calculations, and theoretical understanding"
+    },
+    {
+      mistake: "Not seeking feedback regularly",
+      solution: "Schedule monthly reviews with your supervisor or mentor"
     }
-  };
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "foundation": return FolderOpen;
-      case "active": return Upload;
-      case "ongoing": return FileText;
-      case "maintenance": return RefreshCw;
-      case "collaborative": return Users;
-      case "completion": return CheckCircle;
-      default: return Target;
-    }
-  };
+  ];
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10">
+      {/* Introduction */}
+      <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/10">
         <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Target className="h-6 w-6" />
-            Six-Step Portfolio Development Process
-          </CardTitle>
+          <CardTitle className="text-blue-400">Step-by-Step Portfolio Building Process</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground">
-            Follow this proven six-step process to build a comprehensive and professional portfolio. 
-            Each step builds on the previous one, creating a systematic approach to evidence collection and documentation.
+            Follow this structured approach to build your portfolio systematically throughout your apprenticeship. 
+            Each step builds on the previous one, creating a comprehensive record of your learning journey.
           </p>
         </CardContent>
       </Card>
@@ -154,109 +169,88 @@ const PortfolioStepByStepGuide = () => {
       {/* Steps */}
       <div className="space-y-6">
         {steps.map((step, index) => {
-          const StatusIcon = getStatusIcon(step.status);
-          const isLast = index === steps.length - 1;
-          
+          const IconComponent = step.icon;
           return (
-            <div key={step.number} className="relative">
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center justify-center w-12 h-12 rounded-full bg-elec-yellow/10 border-2 border-elec-yellow/30">
-                        <span className="text-xl font-bold text-elec-yellow">{step.number}</span>
-                      </div>
-                      <div>
-                        <CardTitle className="text-xl text-white">{step.title}</CardTitle>
-                        <p className="text-muted-foreground mt-1">{step.description}</p>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-end gap-2">
-                      <Badge className={getStatusColor(step.status)} variant="outline">
-                        <StatusIcon className="h-3 w-3 mr-1" />
-                        {step.status}
+            <Card key={step.number} className="border-elec-yellow/20 bg-elec-gray">
+              <CardHeader>
+                <div className="flex items-start gap-4">
+                  <div className="flex items-center justify-center w-12 h-12 bg-elec-yellow/10 rounded-lg">
+                    <IconComponent className="h-6 w-6 text-elec-yellow" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <Badge variant="outline" className="text-elec-yellow border-elec-yellow/30">
+                        Step {step.number}
                       </Badge>
-                      <Badge variant="outline" className="text-muted-foreground">
-                        <Calendar className="h-3 w-3 mr-1" />
-                        {step.timeframe}
+                      <Badge variant="outline" className="text-blue-400 border-blue-400/30">
+                        <Clock className="h-3 w-3 mr-1" />
+                        {step.duration}
                       </Badge>
                     </div>
+                    <CardTitle className="text-xl text-white">{step.title}</CardTitle>
+                    <p className="text-muted-foreground mt-2">{step.description}</p>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="font-medium text-white mb-3">Key Tasks:</h4>
-                      <ul className="space-y-2">
-                        {step.tasks.map((task, taskIndex) => (
-                          <li key={taskIndex} className="flex items-start gap-2">
-                            <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm text-muted-foreground">{task}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div className="bg-blue-500/10 rounded-lg p-3 border border-blue-500/20">
-                      <p className="text-sm text-blue-300">
-                        <span className="font-medium">💡 Pro Tip: </span>
-                        {step.tips}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              
-              {/* Connector Arrow */}
-              {!isLast && (
-                <div className="flex justify-center py-4">
-                  <ArrowRight className="h-6 w-6 text-elec-yellow/60" />
                 </div>
-              )}
-            </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="font-medium text-white mb-3 flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-400" />
+                      Tasks to Complete
+                    </h4>
+                    <ul className="space-y-2">
+                      {step.tasks.map((task, taskIndex) => (
+                        <li key={taskIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <div className="h-1.5 w-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0" />
+                          {task}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-white mb-3 flex items-center gap-2">
+                      <Target className="h-4 w-4 text-blue-400" />
+                      Pro Tips
+                    </h4>
+                    <ul className="space-y-2">
+                      {step.tips.map((tip, tipIndex) => (
+                        <li key={tipIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <div className="h-1.5 w-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0" />
+                          {tip}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           );
         })}
       </div>
 
-      {/* Quick Reference Card */}
-      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10">
+      {/* Common Mistakes */}
+      <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-red-500/10">
         <CardHeader>
-          <CardTitle className="text-green-400">Quick Reference Checklist</CardTitle>
+          <CardTitle className="text-orange-400 flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5" />
+            Common Mistakes to Avoid
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <h4 className="font-medium text-white mb-2">Daily (5-10 minutes):</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• Take photos of your work</li>
-                <li>• Note any new skills learned</li>
-                <li>• Record problems solved</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium text-white mb-2">Weekly (30 minutes):</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• Write reflective commentary</li>
-                <li>• Organise collected evidence</li>
-                <li>• Update progress tracking</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium text-white mb-2">Monthly (1-2 hours):</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• Review and reorganise portfolio</li>
-                <li>• Check coverage of learning outcomes</li>
-                <li>• Plan next month's evidence goals</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium text-white mb-2">Quarterly (Half day):</h4>
-              <ul className="text-sm text-muted-foreground space-y-1">
-                <li>• Supervisor review meeting</li>
-                <li>• Gap analysis and planning</li>
-                <li>• Quality improvement review</li>
-              </ul>
-            </div>
+            {commonMistakes.map((item, index) => (
+              <div key={index} className="space-y-2">
+                <div className="flex items-start gap-2">
+                  <div className="h-2 w-2 bg-red-400 rounded-full mt-2 flex-shrink-0" />
+                  <p className="text-sm text-muted-foreground font-medium">{item.mistake}</p>
+                </div>
+                <div className="flex items-start gap-2 ml-4">
+                  <div className="h-2 w-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  <p className="text-sm text-muted-foreground">{item.solution}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
