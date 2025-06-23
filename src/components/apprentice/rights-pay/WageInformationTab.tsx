@@ -1,182 +1,195 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PoundSterling, MapPin, Building, Clock, Gift } from "lucide-react";
-import PayCalculator from "./PayCalculator";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { PoundSterling, TrendingUp, Calculator, Info, AlertTriangle } from "lucide-react";
 
 const WageInformationTab = () => {
-  const wageTiers = [
-    { level: "Apprentice Minimum Wage", rate: "£6.40", description: "First year or under 19", period: "per hour" },
-    { level: "Year 2+ Apprentice", rate: "£10.42+", description: "National minimum wage rates apply", period: "per hour" },
-    { level: "Level 3 Qualified", rate: "£12-15", description: "Typical hourly rate for qualified electricians", period: "per hour" },
-    { level: "Experienced Electrician", rate: "£15-25", description: "With several years experience", period: "per hour" }
+  const currentRates = {
+    apprenticeMinimum: 6.40,
+    nationalMinimumWage: 8.60,
+    nationalLivingWage: 11.44,
+    lastUpdated: "April 2024"
+  };
+
+  const ageBasedRates = [
+    { age: "Under 18", rate: 6.40, description: "Same as apprentice minimum wage" },
+    { age: "18-20", rate: 8.60, description: "Development rate for young workers" },
+    { age: "21-22", rate: 11.44, description: "National Living Wage rate" },
+    { age: "23+", rate: 11.44, description: "Full National Living Wage" }
   ];
 
   const regionalVariations = [
-    { region: "London", multiplier: "15-25% higher", avgWage: "£14-18" },
-    { region: "South East", multiplier: "10-15% higher", avgWage: "£13-16" },
-    { region: "Scotland", multiplier: "Standard rates", avgWage: "£11-14" },
-    { region: "North West", multiplier: "Standard rates", avgWage: "£10-13" },
-    { region: "Wales", multiplier: "5-10% lower", avgWage: "£9-12" },
-    { region: "Northern Ireland", multiplier: "5-10% lower", avgWage: "£9-12" }
+    { region: "London", averageWage: "£18,000 - £22,000", description: "Higher cost of living adjustments common" },
+    { region: "South East", averageWage: "£16,000 - £20,000", description: "Competitive market with good opportunities" },
+    { region: "Scotland", averageWage: "£15,000 - £18,000", description: "Strong electrical sector, especially renewables" },
+    { region: "North West", averageWage: "£14,000 - £17,000", description: "Industrial heritage with modern opportunities" },
+    { region: "Yorkshire", averageWage: "£14,000 - £17,000", description: "Growing manufacturing and construction sectors" },
+    { region: "Other regions", averageWage: "£13,000 - £16,000", description: "Varies by local economic conditions" }
   ];
 
-  const sectorRates = [
-    { sector: "Domestic", rate: "£10-14", description: "House wiring, consumer units" },
-    { sector: "Commercial", rate: "£12-18", description: "Offices, shops, restaurants" },
-    { sector: "Industrial", rate: "£14-22", description: "Factories, heavy machinery" },
-    { sector: "Renewable Energy", rate: "£15-25", description: "Solar, wind, EV charging" },
-    { sector: "Emergency/Call-out", rate: "£20-35", description: "Out-of-hours work" }
+  const progressionPath = [
+    { stage: "Year 1 Apprentice", wage: "£6.40/hour minimum", annual: "~£13,000", description: "Learning fundamentals" },
+    { stage: "Year 2-4 Apprentice", wage: "£11.44/hour minimum", annual: "~£18,000", description: "Developing skills" },
+    { stage: "Newly Qualified", wage: "£12-15/hour", annual: "£20,000-25,000", description: "Basic competency achieved" },
+    { stage: "Experienced (2-5 years)", wage: "£15-20/hour", annual: "£25,000-35,000", description: "Proven track record" },
+    { stage: "Senior/Specialist", wage: "£20-30/hour", annual: "£35,000-50,000+", description: "Leadership or specialisation" }
   ];
 
-  const benefits = [
-    "Company van and fuel allowance",
-    "Tool allowance (£200-500 annually)",
-    "Training and certification funding",
-    "Health and dental insurance",
-    "Pension contributions (3-6%)",
-    "Performance bonuses",
-    "Holiday pay (28 days minimum)"
+  const payFactors = [
+    {
+      factor: "Company Size",
+      impact: "Large contractors typically pay 10-20% more than small firms",
+      examples: "Major M&E contractors vs local electrical companies"
+    },
+    {
+      factor: "Sector Type",
+      impact: "Industrial and commercial work often pays more than domestic",
+      examples: "Power generation, data centres, hospitals vs house wiring"
+    },
+    {
+      factor: "Location",
+      impact: "London weighting can add £2,000-5,000 annually",
+      examples: "Central London vs rural areas significant difference"
+    },
+    {
+      factor: "Qualifications",
+      impact: "Additional certifications can increase pay by 15-25%",
+      examples: "18th Edition, Testing & Inspection, COMPEX, etc."
+    },
+    {
+      factor: "Overtime/Call-out",
+      impact: "Can add 20-40% to base salary in some roles",
+      examples: "Emergency response, weekend work, night shifts"
+    }
   ];
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+      <Alert className="border-green-500/50 bg-green-500/10">
+        <PoundSterling className="h-4 w-4 text-green-400" />
+        <AlertDescription className="text-green-200">
+          <strong>Current Minimum Wage Rates (April 2024):</strong> These are legal minimums - many employers pay above these rates.
+        </AlertDescription>
+      </Alert>
+
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <div className="flex items-center gap-2">
-            <PoundSterling className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">UK Wage Expectations (2024)</CardTitle>
-          </div>
+          <CardTitle className="flex items-center gap-2 text-elec-yellow">
+            <Calculator className="h-5 w-5" />
+            UK Minimum Wage Rates for Apprentices
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {wageTiers.map((tier, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 text-center">
-                <h4 className="font-semibold text-white mb-2">{tier.level}</h4>
-                <div className="text-2xl font-bold text-elec-yellow mb-1">{tier.rate}</div>
-                <div className="text-xs text-elec-yellow/70 mb-2">{tier.period}</div>
-                <p className="text-sm text-muted-foreground">{tier.description}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-3">
+              <div className="p-3 bg-elec-dark/50 rounded-lg border border-elec-yellow/30">
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">Apprentice Minimum Wage</span>
+                  <Badge className="bg-elec-yellow/20 text-elec-yellow">£{currentRates.apprenticeMinimum}/hour</Badge>
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  First year of apprenticeship or if under 19
+                </p>
+              </div>
+              
+              <div className="p-3 bg-elec-dark/50 rounded-lg border border-green-500/30">
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">After First Year (19+)</span>
+                  <Badge className="bg-green-500/20 text-green-400">£{currentRates.nationalLivingWage}/hour</Badge>
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  National Living Wage applies
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="font-medium text-white">Age-Based Minimum Rates:</h4>
+              {ageBasedRates.map((rate, index) => (
+                <div key={index} className="flex justify-between items-center text-sm">
+                  <span>{rate.age}</span>
+                  <span className="text-elec-yellow">£{rate.rate}/hour</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-blue-500/20 bg-blue-500/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-blue-400">
+            <TrendingUp className="h-5 w-5" />
+            Career Progression & Expected Wages
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {progressionPath.map((stage, index) => (
+              <div key={index} className="flex items-center justify-between p-3 bg-blue-500/5 rounded-lg border border-blue-500/20">
+                <div className="flex-1">
+                  <h4 className="font-medium text-blue-300">{stage.stage}</h4>
+                  <p className="text-xs text-blue-200 mt-1">{stage.description}</p>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm font-medium text-blue-300">{stage.wage}</div>
+                  <div className="text-xs text-blue-200">{stage.annual}</div>
+                </div>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      <Tabs defaultValue="regional" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="regional">Regional Rates</TabsTrigger>
-          <TabsTrigger value="sectors">By Sector</TabsTrigger>
-          <TabsTrigger value="overtime">Overtime</TabsTrigger>
-          <TabsTrigger value="benefits">Benefits</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="regional">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-elec-yellow" />
-                <CardTitle className="text-elec-yellow">Regional Pay Variations</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {regionalVariations.map((region, index) => (
-                  <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                    <h4 className="font-semibold text-white mb-2">{region.region}</h4>
-                    <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow mb-2">
-                      {region.multiplier}
-                    </Badge>
-                    <p className="text-sm text-muted-foreground">Average: {region.avgWage}/hour</p>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="sectors">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Building className="h-5 w-5 text-elec-yellow" />
-                <CardTitle className="text-elec-yellow">Sector-Specific Rates</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {sectorRates.map((sector, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 border border-elec-yellow/20 rounded-lg">
-                    <div>
-                      <h4 className="font-semibold text-white">{sector.sector}</h4>
-                      <p className="text-sm text-muted-foreground">{sector.description}</p>
-                    </div>
-                    <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40">
-                      {sector.rate}/hour
-                    </Badge>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="overtime">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-elec-yellow" />
-                <CardTitle className="text-elec-yellow">Overtime & Premium Rates</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="font-semibold text-white mb-3">Standard Overtime</h4>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• Weekday overtime: Time and a half (1.5x)</li>
-                    <li>• Saturday work: Time and a half (1.5x)</li>
-                    <li>• Sunday work: Double time (2x)</li>
-                    <li>• Bank holidays: Double time (2x)</li>
-                  </ul>
+      <Card className="border-purple-500/20 bg-purple-500/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-purple-400">
+            <Info className="h-5 w-5" />
+            Regional Wage Variations (Annual Apprentice Salaries)
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {regionalVariations.map((region, index) => (
+              <div key={index} className="p-3 bg-purple-500/5 rounded-lg border border-purple-500/20">
+                <div className="flex justify-between items-start mb-1">
+                  <h4 className="font-medium text-purple-300">{region.region}</h4>
+                  <Badge className="bg-purple-500/20 text-purple-300 text-xs">{region.averageWage}</Badge>
                 </div>
-                <div>
-                  <h4 className="font-semibold text-white mb-3">Emergency Call-outs</h4>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
-                    <li>• Minimum 4-hour charge</li>
-                    <li>• Weekend call-out: 2-3x normal rate</li>
-                    <li>• Night work (10pm-6am): 2x rate</li>
-                    <li>• Travel time usually included</li>
-                  </ul>
-                </div>
+                <p className="text-xs text-purple-200">{region.description}</p>
               </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-        <TabsContent value="benefits">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <div className="flex items-center gap-2">
-                <Gift className="h-5 w-5 text-elec-yellow" />
-                <CardTitle className="text-elec-yellow">Additional Benefits</CardTitle>
+      <Card className="border-orange-500/20 bg-orange-500/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-orange-400">
+            <AlertTriangle className="h-5 w-5" />
+            Factors Affecting Your Pay
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {payFactors.map((factor, index) => (
+              <div key={index} className="border border-orange-500/20 rounded-lg p-4">
+                <h4 className="font-medium text-orange-300 mb-2">{factor.factor}</h4>
+                <p className="text-sm text-orange-200 mb-1">{factor.impact}</p>
+                <p className="text-xs text-orange-100">{factor.examples}</p>
               </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {benefits.map((benefit, index) => (
-                  <div key={index} className="flex items-center gap-3 p-3 border border-elec-yellow/20 rounded-lg">
-                    <Gift className="h-4 w-4 text-green-400 flex-shrink-0" />
-                    <span className="text-sm text-muted-foreground">{benefit}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-      <PayCalculator />
+      <Alert className="border-yellow-500/50 bg-yellow-500/10">
+        <Info className="h-4 w-4 text-yellow-400" />
+        <AlertDescription className="text-yellow-200">
+          <strong>Important:</strong> Many electrical apprentices earn above minimum wage. Research typical rates in your area and don't be afraid to negotiate, especially if you have prior experience or additional qualifications.
+        </AlertDescription>
+      </Alert>
     </div>
   );
 };
