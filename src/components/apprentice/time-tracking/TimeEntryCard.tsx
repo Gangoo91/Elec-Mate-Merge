@@ -4,9 +4,11 @@ import { TimeEntry } from "@/types/time-tracking";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Activity, Plus } from "lucide-react";
+import { Activity, Plus, Zap } from "lucide-react";
 import { useTimeToPortfolio } from "@/hooks/portfolio/useTimeToPortfolio";
+import { useUniversalPortfolio } from "@/hooks/portfolio/useUniversalPortfolio";
 import TimeEntryToPortfolioDialog from "@/components/apprentice/portfolio/TimeEntryToPortfolioDialog";
+import UniversalPortfolioButton from "@/components/apprentice/portfolio/UniversalPortfolioButton";
 
 interface TimeEntryCardProps {
   entry: TimeEntry;
@@ -14,7 +16,8 @@ interface TimeEntryCardProps {
 
 const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
   const [showPortfolioDialog, setShowPortfolioDialog] = useState(false);
-  const { convertTimeEntryToPortfolio, isConverting, categories } = useTimeToPortfolio();
+  const { convertTimeEntryToPortfolio, quickConvertTimeEntry, isConverting, categories } = useTimeToPortfolio();
+  const { convertTimeEntryToUniversal } = useUniversalPortfolio();
 
   // Format date for display
   const formatDate = (dateString: string) => {
@@ -59,10 +62,21 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
       // Error handling is done in the hook
     }
   };
+
+  const handleQuickAdd = async () => {
+    try {
+      await quickConvertTimeEntry(entry);
+    } catch (error) {
+      // Error handling is done in the hook
+    }
+  };
   
   const badgeType = getBadgeType();
   const hours = Math.floor(entry.duration / 60);
   const minutes = entry.duration % 60;
+
+  // Convert to universal format for the button
+  const universalActivity = convertTimeEntryToUniversal(entry);
   
   return (
     <>
@@ -101,16 +115,29 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
             </div>
           )}
 
-          {/* Add to Portfolio Button */}
-          <div className="mt-3 flex justify-end">
+          {/* Portfolio Integration Buttons */}
+          <div className="mt-3 flex justify-between gap-2">
+            {/* Quick Add with Smart Features */}
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={handleQuickAdd}
+              disabled={isConverting}
+              className="gap-1 text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10 flex-1"
+            >
+              <Zap className="h-3 w-3" />
+              Quick Add
+            </Button>
+
+            {/* Custom Add */}
             <Button
               size="sm"
               variant="outline"
               onClick={() => setShowPortfolioDialog(true)}
-              className="gap-1 text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10"
+              className="gap-1 text-muted-foreground hover:text-foreground"
             >
               <Plus className="h-3 w-3" />
-              Add to Portfolio
+              Custom
             </Button>
           </div>
         </CardContent>

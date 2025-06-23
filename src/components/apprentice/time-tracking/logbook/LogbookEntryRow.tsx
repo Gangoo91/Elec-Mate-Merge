@@ -3,8 +3,9 @@ import { useState } from "react";
 import { TimeEntry } from "@/types/time-tracking";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Pencil, Save, Trash2, Plus } from "lucide-react";
+import { Pencil, Save, Trash2, Plus, Zap } from "lucide-react";
 import { useTimeToPortfolio } from "@/hooks/portfolio/useTimeToPortfolio";
+import { useUniversalPortfolio } from "@/hooks/portfolio/useUniversalPortfolio";
 import TimeEntryToPortfolioDialog from "@/components/apprentice/portfolio/TimeEntryToPortfolioDialog";
 
 interface LogbookEntryRowProps {
@@ -20,7 +21,8 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
   const [editedActivity, setEditedActivity] = useState<string>(entry.activity);
   const [editedNotes, setEditedNotes] = useState<string>(entry.notes);
   
-  const { convertTimeEntryToPortfolio, isConverting, categories } = useTimeToPortfolio();
+  const { convertTimeEntryToPortfolio, quickConvertTimeEntry, isConverting, categories } = useTimeToPortfolio();
+  const { convertTimeEntryToUniversal } = useUniversalPortfolio();
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -39,6 +41,14 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
     try {
       await convertTimeEntryToPortfolio(entry, portfolioData);
       setShowPortfolioDialog(false);
+    } catch (error) {
+      // Error handling is done in the hook
+    }
+  };
+
+  const handleQuickAdd = async () => {
+    try {
+      await quickConvertTimeEntry(entry);
     } catch (error) {
       // Error handling is done in the hook
     }
@@ -117,12 +127,26 @@ const LogbookEntryRow = ({ entry, onSave, onDelete }: LogbookEntryRowProps) => {
                     </Button>
                   </>
                 )}
+                
+                {/* Quick Add to Portfolio */}
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={handleQuickAdd}
+                  disabled={isConverting}
+                  className="text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10"
+                  title="Quick Add to Portfolio"
+                >
+                  <Zap className="h-4 w-4" />
+                </Button>
+                
+                {/* Custom Add to Portfolio */}
                 <Button
                   size="sm"
                   variant="ghost"
                   onClick={() => setShowPortfolioDialog(true)}
-                  className="text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10"
-                  title="Add to Portfolio"
+                  className="text-muted-foreground hover:text-foreground"
+                  title="Custom Add to Portfolio"
                 >
                   <Plus className="h-4 w-4" />
                 </Button>

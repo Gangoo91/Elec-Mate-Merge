@@ -4,10 +4,12 @@ import { useToast } from "@/hooks/use-toast";
 import { TimeEntry } from "@/types/time-tracking";
 import { PortfolioEntry, PortfolioCategory } from "@/types/portfolio";
 import { usePortfolioData } from "./usePortfolioData";
+import { useUniversalPortfolio } from "./useUniversalPortfolio";
 
 export const useTimeToPortfolio = () => {
   const { toast } = useToast();
   const { addEntry, categories } = usePortfolioData();
+  const { createUniversalPortfolioEntry, convertTimeEntryToUniversal } = useUniversalPortfolio();
   const [isConverting, setIsConverting] = useState(false);
 
   const convertTimeEntryToPortfolio = async (
@@ -33,7 +35,7 @@ export const useTimeToPortfolio = () => {
         throw new Error("Selected category not found");
       }
 
-      // Create portfolio entry from time entry
+      // Create portfolio entry from time entry using universal system
       const portfolioEntry: Omit<PortfolioEntry, 'id' | 'dateCreated'> = {
         title: portfolioData.title,
         description: portfolioData.description,
@@ -74,8 +76,36 @@ export const useTimeToPortfolio = () => {
     }
   };
 
+  // Quick convert using universal system with smart defaults
+  const quickConvertTimeEntry = async (timeEntry: TimeEntry) => {
+    setIsConverting(true);
+    
+    try {
+      const universalActivity = convertTimeEntryToUniversal(timeEntry);
+      const entryId = await createUniversalPortfolioEntry(universalActivity);
+      
+      toast({
+        title: "Quick Add Successful",
+        description: `"${timeEntry.activity}" has been automatically added to your portfolio with smart categorisation.`
+      });
+
+      return entryId;
+    } catch (error) {
+      console.error('Error quick converting time entry:', error);
+      toast({
+        title: "Error",
+        description: "Failed to add entry to portfolio. Please try again.",
+        variant: "destructive"
+      });
+      throw error;
+    } finally {
+      setIsConverting(false);
+    }
+  };
+
   return {
     convertTimeEntryToPortfolio,
+    quickConvertTimeEntry,
     isConverting,
     categories
   };
