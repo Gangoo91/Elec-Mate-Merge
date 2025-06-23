@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Target, Award, TrendingUp, Plus, CheckCircle } from "lucide-react";
+import { Target, TrendingUp, Clock, Award, CheckCircle, AlertTriangle, Plus } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import AddGoalDialog from "./AddGoalDialog";
@@ -12,22 +12,22 @@ import AddGoalDialog from "./AddGoalDialog";
 interface Goal {
   id: string;
   title: string;
-  description: string;
+  description?: string;
   target_value: number;
   current_value: number;
   unit: string;
-  priority: string;
+  priority: 'low' | 'medium' | 'high';
   category: string;
+  deadline?: string;
   status: string;
-  deadline: string;
-  electrical_competency?: string;
-  milestone_type?: string;
+  created_at: string;
+  updated_at: string;
 }
 
 const ComplianceDashboardTab = () => {
   const [goals, setGoals] = useState<Goal[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showAddDialog, setShowAddDialog] = useState(false);
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -43,9 +43,10 @@ const ComplianceDashboardTab = () => {
         .from('ojt_goals')
         .select('*')
         .eq('user_id', user.id)
-        .order('deadline', { ascending: true });
+        .order('created_at', { ascending: false });
 
       if (error) throw error;
+
       setGoals(data || []);
     } catch (error) {
       console.error('Error fetching goals:', error);
@@ -59,106 +60,31 @@ const ComplianceDashboardTab = () => {
     }
   };
 
-  const addGoal = async (goalData: any) => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-
-      const { error } = await supabase
-        .from('ojt_goals')
-        .insert([{
-          user_id: user.id,
-          title: goalData.title,
-          description: goalData.description,
-          target_value: goalData.targetValue,
-          current_value: 0,
-          unit: goalData.unit,
-          priority: goalData.priority,
-          category: goalData.category,
-          status: 'in_progress',
-          deadline: goalData.deadline,
-          electrical_competency: getElectricalCompetency(goalData.category),
-          milestone_type: getMilestoneType(goalData.category)
-        }]);
-
-      if (error) throw error;
-
-      toast({
-        title: "Success",
-        description: "Goal added successfully"
-      });
-
-      setShowAddDialog(false);
-      fetchGoals();
-    } catch (error) {
-      console.error('Error adding goal:', error);
-      toast({
-        title: "Error",
-        description: "Failed to add goal",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const getElectricalCompetency = (category: string) => {
-    switch (category) {
-      case 'training': return 'Installation';
-      case 'skill': return 'Testing & Inspection';
-      case 'assessment': return 'Theory Knowledge';
-      case 'portfolio': return 'Documentation';
-      default: return 'General';
-    }
-  };
-
-  const getMilestoneType = (category: string) => {
-    switch (category) {
-      case 'training': return 'unit_completion';
-      case 'skill': return 'practical_skill';
-      case 'assessment': return 'assessment';
-      case 'portfolio': return 'workplace_project';
-      default: return 'theory_knowledge';
-    }
-  };
-
-  const updateGoalProgress = async (goalId: string, newValue: number) => {
-    try {
-      const goal = goals.find(g => g.id === goalId);
-      if (!goal) return;
-
-      const { error } = await supabase
-        .from('ojt_goals')
-        .update({ 
-          current_value: newValue,
-          status: newValue >= goal.target_value ? 'completed' : 'in_progress'
-        })
-        .eq('id', goalId);
-
-      if (error) throw error;
-
-      fetchGoals();
-      toast({
-        title: "Progress Updated",
-        description: "Goal progress has been updated"
-      });
-    } catch (error) {
-      console.error('Error updating goal:', error);
+  const getStatusBadgeVariant = (status: string) => {
+    switch (status) {
+      case 'completed': return 'success';
+      case 'overdue': return 'destructive';
+      case 'in_progress': return 'yellow';
+      default: return 'secondary';
     }
   };
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high': return 'text-red-600 bg-red-100 border-red-200';
-      case 'medium': return 'text-yellow-600 bg-yellow-100 border-yellow-200';
-      case 'low': return 'text-green-600 bg-green-100 border-green-200';
-      default: return 'text-gray-600 bg-gray-100 border-gray-200';
+      case 'high': return 'text-red-600';
+      case 'medium': return 'text-yellow-600';
+      case 'low': return 'text-green-600';
+      default: return 'text-gray-600';
     }
   };
 
+  const calculateProgress = (current: number, target: number) => {
+    return Math.min((current / target) * 100, 100);
+  };
+
   const completedGoals = goals.filter(g => g.status === 'completed').length;
-  const inProgressGoals = goals.filter(g => g.status === 'in_progress').length;
-  const overallProgress = goals.length > 0 
-    ? (goals.reduce((sum, goal) => sum + (goal.current_value / goal.target_value * 100), 0) / goals.length)
-    : 0;
+  const totalGoals = goals.length;
+  const overallProgress = totalGoals > 0 ? (completedGoals / totalGoals) * 100 : 0;
 
   if (isLoading) {
     return (
@@ -181,143 +107,160 @@ const ComplianceDashboardTab = () => {
     <div className="space-y-6">
       {/* Goals Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/20 border-blue-500/20">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Goals</CardTitle>
+            <CardTitle className="text-sm font-medium">Active Goals</CardTitle>
             <Target className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-700">{goals.length}</div>
-            <p className="text-xs text-blue-600">
-              {inProgressGoals} in progress
+            <div className="text-2xl font-bold">{totalGoals}</div>
+            <p className="text-xs text-muted-foreground">
+              Learning objectives set
             </p>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-green-500/10 to-green-600/20 border-green-500/20">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Completed</CardTitle>
-            <Award className="h-4 w-4 text-green-600" />
+            <CardTitle className="text-sm font-medium">Overall Progress</CardTitle>
+            <TrendingUp className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-700">{completedGoals}</div>
-            <p className="text-xs text-green-600">
+            <div className="text-2xl font-bold text-green-700">{overallProgress.toFixed(0)}%</div>
+            <Progress value={overallProgress} className="mt-2" />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Completed</CardTitle>
+            <Award className="h-4 w-4 text-orange-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-orange-700">{completedGoals}</div>
+            <p className="text-xs text-muted-foreground">
               Goals achieved
             </p>
           </CardContent>
         </Card>
-
-        <Card className="bg-gradient-to-br from-purple-500/10 to-purple-600/20 border-purple-500/20">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Overall Progress</CardTitle>
-            <TrendingUp className="h-4 w-4 text-purple-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-purple-700">{overallProgress.toFixed(0)}%</div>
-            <Progress value={overallProgress} className="mt-2" />
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Add Goal Button */}
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Learning Goals & Milestones</h3>
-        <Button onClick={() => setShowAddDialog(true)} className="flex items-center gap-2">
-          <Plus className="h-4 w-4" />
-          Add Goal
-        </Button>
       </div>
 
       {/* Goals List */}
-      <div className="space-y-4">
-        {goals.length === 0 ? (
-          <Card>
-            <CardContent className="py-8 text-center">
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2">
+              <Target className="h-5 w-5" />
+              Learning Goals & Progress
+            </CardTitle>
+            <Button onClick={() => setIsAddDialogOpen(true)}>
+              <Plus className="h-4 w-4 mr-2" />
+              Add Goal
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {goals.length === 0 ? (
+            <div className="text-center py-8">
               <Target className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
               <p className="text-muted-foreground">No goals set yet</p>
-              <Button 
-                onClick={() => setShowAddDialog(true)} 
-                className="mt-4"
-                variant="outline"
-              >
-                Set Your First Goal
-              </Button>
-            </CardContent>
-          </Card>
-        ) : (
-          goals.map((goal) => {
-            const progress = (goal.current_value / goal.target_value) * 100;
-            const isCompleted = goal.status === 'completed';
-            
-            return (
-              <Card key={goal.id} className={`border-l-4 ${isCompleted ? 'border-l-green-500' : 'border-l-elec-yellow'}`}>
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 mb-2">
-                        <h4 className="font-semibold text-lg">{goal.title}</h4>
-                        <Badge className={getPriorityColor(goal.priority)}>
-                          {goal.priority}
-                        </Badge>
-                        {isCompleted && (
-                          <Badge className="bg-green-500/20 text-green-700 border-green-500/20">
-                            <CheckCircle className="h-3 w-3 mr-1" />
-                            Completed
+              <p className="text-sm text-muted-foreground mt-2">
+                Set learning goals to track your apprenticeship progress
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {goals.map((goal) => {
+                const progress = calculateProgress(goal.current_value, goal.target_value);
+                return (
+                  <div key={goal.id} className="p-4 border rounded-lg space-y-3">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h4 className="font-medium">{goal.title}</h4>
+                          <Badge variant={getStatusBadgeVariant(goal.status) as any}>
+                            {goal.status.replace('_', ' ')}
                           </Badge>
-                        )}
-                      </div>
-                      
-                      <p className="text-muted-foreground mb-4">{goal.description}</p>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm mb-4">
-                        <div>
-                          <span className="text-muted-foreground">Category:</span>
-                          <p className="font-medium capitalize">{goal.category}</p>
-                        </div>
-                        <div>
-                          <span className="text-muted-foreground">Deadline:</span>
-                          <p className="font-medium">{new Date(goal.deadline).toLocaleDateString('en-GB')}</p>
-                        </div>
-                        <div>
-                          <span className="text-muted-foreground">Competency:</span>
-                          <p className="font-medium">{goal.electrical_competency || 'General'}</p>
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-muted-foreground">Progress</span>
-                          <span className="text-sm font-medium">
-                            {goal.current_value} / {goal.target_value} {goal.unit}
+                          <span className={`text-xs ${getPriorityColor(goal.priority)}`}>
+                            {goal.priority} priority
                           </span>
                         </div>
-                        <Progress value={progress} className="h-3" />
-                        <div className="flex justify-between text-sm">
-                          <span className="text-muted-foreground">{progress.toFixed(1)}% complete</span>
-                          {!isCompleted && (
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => updateGoalProgress(goal.id, goal.current_value + 1)}
-                            >
-                              Mark Progress
-                            </Button>
+                        {goal.description && (
+                          <p className="text-sm text-muted-foreground mb-2">
+                            {goal.description}
+                          </p>
+                        )}
+                        <div className="flex items-center gap-4 text-sm">
+                          <span className="text-muted-foreground">
+                            Progress: {goal.current_value} / {goal.target_value} {goal.unit}
+                          </span>
+                          {goal.deadline && (
+                            <span className="text-muted-foreground">
+                              Due: {new Date(goal.deadline).toLocaleDateString('en-GB')}
+                            </span>
                           )}
                         </div>
                       </div>
+                      <div className="text-right">
+                        {goal.status === 'completed' ? (
+                          <CheckCircle className="h-5 w-5 text-green-600" />
+                        ) : goal.status === 'overdue' ? (
+                          <AlertTriangle className="h-5 w-5 text-red-600" />
+                        ) : (
+                          <Clock className="h-5 w-5 text-yellow-600" />
+                        )}
+                      </div>
+                    </div>
+                    <Progress value={progress} className="h-2" />
+                    <div className="text-right text-sm text-muted-foreground">
+                      {progress.toFixed(0)}% complete
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            );
-          })
-        )}
-      </div>
+                );
+              })}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Compliance Guidelines */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <Award className="h-5 w-5" />
+            Apprenticeship Compliance Requirements
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h4 className="font-medium mb-2">Key Learning Areas</h4>
+              <ul className="text-sm text-muted-foreground space-y-1">
+                <li>• Electrical theory and principles</li>
+                <li>• Health and safety practices</li>
+                <li>• Installation methods</li>
+                <li>• Testing and inspection</li>
+                <li>• Fault diagnosis</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium mb-2">Portfolio Requirements</h4>
+              <ul className="text-sm text-muted-foreground space-y-1">
+                <li>• Evidence of practical skills</li>
+                <li>• Reflection on learning</li>
+                <li>• Assessment outcomes</li>
+                <li>• Professional development</li>
+                <li>• Industry knowledge</li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <AddGoalDialog
-        open={showAddDialog}
-        onOpenChange={setShowAddDialog}
-        onAddGoal={addGoal}
+        isOpen={isAddDialogOpen}
+        onClose={() => setIsAddDialogOpen(false)}
+        onGoalAdded={fetchGoals}
       />
     </div>
   );

@@ -98,20 +98,20 @@ const TimeTrackingTab = () => {
     <div className="space-y-6">
       {/* Weekly Progress Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/20 border-blue-500/20">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">This Week's Hours</CardTitle>
             <Clock className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-blue-700">{totalHours.toFixed(1)}h</div>
-            <p className="text-xs text-blue-600">
+            <p className="text-xs text-muted-foreground">
               Target: {weeklyTarget}h per week
             </p>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-green-500/10 to-green-600/20 border-green-500/20">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Weekly Progress</CardTitle>
             <TrendingUp className="h-4 w-4 text-green-600" />
@@ -122,14 +122,14 @@ const TimeTrackingTab = () => {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-orange-500/10 to-orange-600/20 border-orange-500/20">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Remaining Hours</CardTitle>
             <Target className="h-4 w-4 text-orange-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-orange-700">{remainingHours.toFixed(1)}h</div>
-            <p className="text-xs text-orange-600">
+            <p className="text-xs text-muted-foreground">
               To reach weekly target
             </p>
           </CardContent>
@@ -185,7 +185,7 @@ const TimeTrackingTab = () => {
       </Card>
 
       {/* Training Guidelines */}
-      <Card className="border-elec-yellow/20 bg-elec-yellow/5">
+      <Card>
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Target className="h-5 w-5" />

@@ -100,10 +100,19 @@ const NotificationsPanel = () => {
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'high': return 'text-red-600 bg-red-100';
-      case 'medium': return 'text-yellow-600 bg-yellow-100';
-      case 'low': return 'text-green-600 bg-green-100';
-      default: return 'text-gray-600 bg-gray-100';
+      case 'high': return 'text-red-600';
+      case 'medium': return 'text-yellow-600';
+      case 'low': return 'text-green-600';
+      default: return 'text-gray-600';
+    }
+  };
+
+  const getPriorityBadgeVariant = (priority: string) => {
+    switch (priority) {
+      case 'high': return 'destructive';
+      case 'medium': return 'yellow';
+      case 'low': return 'success';
+      default: return 'secondary';
     }
   };
 
@@ -111,7 +120,7 @@ const NotificationsPanel = () => {
 
   if (isLoading) {
     return (
-      <Card className="bg-elec-gray/50">
+      <Card>
         <CardContent className="p-6">
           <div className="animate-pulse space-y-4">
             {[1, 2, 3].map((i) => (
@@ -130,7 +139,7 @@ const NotificationsPanel = () => {
   }
 
   return (
-    <Card className="bg-elec-gray/50">
+    <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Bell className="h-5 w-5 text-elec-yellow" />
@@ -155,8 +164,8 @@ const NotificationsPanel = () => {
                 key={notification.id} 
                 className={`p-4 border rounded-lg transition-colors ${
                   notification.is_read 
-                    ? 'border-elec-gray/40 bg-elec-gray/20' 
-                    : 'border-elec-yellow/40 bg-elec-yellow/5'
+                    ? 'border-gray-200 bg-gray-50' 
+                    : 'border-elec-yellow/40 bg-white'
                 }`}
               >
                 <div className="flex items-start gap-3">
@@ -168,7 +177,7 @@ const NotificationsPanel = () => {
                     <div className="flex justify-between items-start mb-1">
                       <h4 className="font-medium text-sm">{notification.title}</h4>
                       <div className="flex items-center gap-2">
-                        <Badge className={getPriorityColor(notification.priority)}>
+                        <Badge variant={getPriorityBadgeVariant(notification.priority) as any}>
                           {notification.priority}
                         </Badge>
                         <Button
