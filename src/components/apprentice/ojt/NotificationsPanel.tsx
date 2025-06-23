@@ -36,7 +36,14 @@ const NotificationsPanel = () => {
         .limit(10);
 
       if (error) throw error;
-      setNotifications(data || []);
+      
+      // Map the data to ensure type safety
+      const typedNotifications: Notification[] = (data || []).map(notification => ({
+        ...notification,
+        priority: (notification.priority as 'low' | 'medium' | 'high') || 'medium'
+      }));
+      
+      setNotifications(typedNotifications);
     } catch (error) {
       console.error('Error fetching notifications:', error);
     } finally {

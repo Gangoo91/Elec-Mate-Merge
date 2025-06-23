@@ -2,325 +2,309 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Clock, CheckCircle, AlertCircle, Clock4, BarChart3 } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { CalendarIcon, Clock, Plus, Trash2 } from "lucide-react";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
-import { TimeEntry } from "@/types/time-tracking";
-import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
-import TimeEntryForm from "../time-tracking/TimeEntryForm";
-import EntriesList from "../time-tracking/EntriesList";
 
-interface TimeEntryApproval {
+interface TimeEntry {
   id: string;
-  time_entry_id: string;
-  status: 'pending' | 'approved' | 'rejected';
-  tutor_comments?: string;
-  submitted_at: string;
-  reviewed_at?: string;
+  date: string;
+  duration: number;
+  activity: string;
+  notes: string;
+  created_at: string;
 }
 
 const TimeTrackingTab = () => {
-  const { entries, totalTime, addTimeEntry, isLoading } = useTimeEntries();
-  const [approvals, setApprovals] = useState<TimeEntryApproval[]>([]);
-  const [showEntryForm, setShowEntryForm] = useState(false);
+  const [entries, setEntries] = useState<TimeEntry[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
   const { toast } = useToast();
 
-  const fetchApprovals = async () => {
+  // Form state
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [duration, setDuration] = useState("");
+  const [activity, setActivity] = useState("");
+  const [notes, setNotes] = useState("");
+
+  const fetchTimeEntries = async () => {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
       const { data, error } = await supabase
-        .from('time_entry_approvals')
+        .from('time_entries')
         .select('*')
-        .order('submitted_at', { ascending: false });
+        .eq('user_id', user.id)
+        .order('date', { ascending: false })
+        .limit(20);
 
       if (error) throw error;
-      setApprovals(data || []);
+      setEntries(data || []);
     } catch (error) {
-      console.error('Error fetching approvals:', error);
+      console.error('Error fetching time entries:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load time entries",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchApprovals();
+    fetchTimeEntries();
   }, []);
 
-  const handleAddEntry = async (duration: number, activity: string, notes: string) => {
-    await addTimeEntry(duration, activity, notes);
-    setShowEntryForm(false);
-    toast({
-      title: "Entry Added",
-      description: "Your time entry has been recorded and is pending approval"
-    });
-  };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!duration || !activity) return;
 
-  const submitForApproval = async (entryId: string) => {
     try {
-      const { error } = await supabase
-        .from('time_entry_approvals')
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('User not authenticated');
+
+      const { data, error } = await supabase
+        .from('time_entries')
         .insert({
-          time_entry_id: entryId,
-          status: 'pending'
-        });
+          user_id: user.id,
+          date: selectedDate.toISOString().split('T')[0],
+          duration: parseInt(duration),
+          activity,
+          notes,
+          is_automatic: false
+        })
+        .select()
+        .single();
 
       if (error) throw error;
 
-      toast({
-        title: "Submitted for Approval",
-        description: "Your time entry has been submitted to your tutor for approval"
-      });
+      setEntries(prev => [data, ...prev]);
+      
+      // Reset form
+      setDuration("");
+      setActivity("");
+      setNotes("");
+      setShowForm(false);
 
-      fetchApprovals();
+      toast({
+        title: "Success",
+        description: "Time entry added successfully",
+      });
     } catch (error) {
-      console.error('Error submitting for approval:', error);
+      console.error('Error adding time entry:', error);
       toast({
         title: "Error",
-        description: "Failed to submit for approval",
-        variant: "destructive"
+        description: "Failed to add time entry",
+        variant: "destructive",
       });
     }
   };
 
-  // Calculate statistics
-  const totalMinutes = entries.reduce((sum, entry) => sum + entry.duration, 0);
-  const totalHours = Math.floor(totalMinutes / 60);
-  const remainingMinutes = totalMinutes % 60;
-  
-  const approvedEntries = entries.filter(entry => {
-    const approval = approvals.find(a => a.time_entry_id === entry.id);
-    return approval?.status === 'approved';
-  });
-  
-  const pendingEntries = entries.filter(entry => {
-    const approval = approvals.find(a => a.time_entry_id === entry.id);
-    return approval?.status === 'pending';
-  });
+  const handleDelete = async (entryId: string) => {
+    try {
+      const { error } = await supabase
+        .from('time_entries')
+        .delete()
+        .eq('id', entryId);
 
-  const approvedMinutes = approvedEntries.reduce((sum, entry) => sum + entry.duration, 0);
-  const approvedHours = Math.floor(approvedMinutes / 60);
+      if (error) throw error;
 
-  // Calculate weekly target (20% of 37.5 hours = 7.5 hours = 450 minutes)
-  const weeklyTargetMinutes = 450;
-  const weeklyProgress = Math.min((approvedMinutes / weeklyTargetMinutes) * 100, 100);
-
-  const getApprovalStatus = (entryId: string) => {
-    const approval = approvals.find(a => a.time_entry_id === entryId);
-    return approval?.status || 'not_submitted';
-  };
-
-  const getApprovalColor = (status: string) => {
-    switch (status) {
-      case 'approved': return 'text-green-600 bg-green-100';
-      case 'pending': return 'text-yellow-600 bg-yellow-100';
-      case 'rejected': return 'text-red-600 bg-red-100';
-      default: return 'text-gray-600 bg-gray-100';
+      setEntries(prev => prev.filter(entry => entry.id !== entryId));
+      
+      toast({
+        title: "Success",
+        description: "Time entry deleted successfully",
+      });
+    } catch (error) {
+      console.error('Error deleting time entry:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete time entry",
+        variant: "destructive",
+      });
     }
   };
+
+  const totalHours = entries.reduce((sum, entry) => sum + entry.duration, 0);
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div className="animate-pulse space-y-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-20 bg-gray-200 rounded"></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
-      {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="bg-elec-gray/50 border-elec-yellow/20">
-          <CardContent className="p-6">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-elec-yellow/20 rounded-lg">
-                <Clock className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Total Logged</p>
-                <p className="text-2xl font-bold">{totalHours}h {remainingMinutes}m</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Summary Card */}
+      <Card className="bg-elec-gray/50">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Clock className="h-5 w-5 text-elec-yellow" />
+            Training Hours Summary
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-2xl font-bold text-elec-yellow">
+            {Math.floor(totalHours / 60)}h {totalHours % 60}m
+          </div>
+          <p className="text-muted-foreground">Total logged this period</p>
+        </CardContent>
+      </Card>
 
-        <Card className="bg-elec-gray/50 border-green-500/20">
-          <CardContent className="p-6">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-500/20 rounded-lg">
-                <CheckCircle className="h-5 w-5 text-green-500" />
+      {/* Add Entry Button/Form */}
+      {!showForm ? (
+        <Button 
+          onClick={() => setShowForm(true)} 
+          className="w-full"
+        >
+          <Plus className="h-4 w-4 mr-2" />
+          Add Time Entry
+        </Button>
+      ) : (
+        <Card className="bg-elec-gray/50">
+          <CardHeader>
+            <CardTitle>Add Time Entry</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label>Date</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !selectedDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {selectedDate ? format(selectedDate, "PPP") : "Pick a date"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      mode="single"
+                      selected={selectedDate}
+                      onSelect={(date) => date && setSelectedDate(date)}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Approved</p>
-                <p className="text-2xl font-bold">{approvedHours}h</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
 
-        <Card className="bg-elec-gray/50 border-yellow-500/20">
-          <CardContent className="p-6">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-yellow-500/20 rounded-lg">
-                <Clock4 className="h-5 w-5 text-yellow-500" />
+              <div className="space-y-2">
+                <Label htmlFor="duration">Duration (minutes)</Label>
+                <Input
+                  id="duration"
+                  type="number"
+                  min="1"
+                  value={duration}
+                  onChange={(e) => setDuration(e.target.value)}
+                  placeholder="e.g., 60"
+                  required
+                />
               </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Pending</p>
-                <p className="text-2xl font-bold">{pendingEntries.length}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
 
-        <Card className="bg-elec-gray/50 border-blue-500/20">
-          <CardContent className="p-6">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-500/20 rounded-lg">
-                <BarChart3 className="h-5 w-5 text-blue-500" />
+              <div className="space-y-2">
+                <Label htmlFor="activity">Activity</Label>
+                <Input
+                  id="activity"
+                  value={activity}
+                  onChange={(e) => setActivity(e.target.value)}
+                  placeholder="e.g., Reading BS7671 regulations"
+                  required
+                />
               </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Weekly Progress</p>
-                <p className="text-2xl font-bold">{Math.round(weeklyProgress)}%</p>
+
+              <div className="space-y-2">
+                <Label htmlFor="notes">Notes (optional)</Label>
+                <Textarea
+                  id="notes"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  placeholder="Additional details about the training activity..."
+                  rows={3}
+                />
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
 
-      <Tabs defaultValue="entries" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="entries">Time Entries</TabsTrigger>
-          <TabsTrigger value="approvals">Approval Status</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="entries">
-          <Card className="bg-elec-gray/50">
-            <CardHeader>
-              <div className="flex justify-between items-center">
-                <CardTitle className="flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-elec-yellow" />
-                  Time Tracking
-                </CardTitle>
+              <div className="flex gap-2">
+                <Button type="submit" className="flex-1">
+                  Add Entry
+                </Button>
                 <Button 
-                  onClick={() => setShowEntryForm(!showEntryForm)}
-                  className="bg-elec-yellow text-black hover:bg-elec-yellow/80"
+                  type="button" 
+                  variant="outline" 
+                  onClick={() => setShowForm(false)}
                 >
-                  {showEntryForm ? 'Cancel' : 'Add Entry'}
+                  Cancel
                 </Button>
               </div>
-            </CardHeader>
-            <CardContent>
-              {showEntryForm && (
-                <div className="mb-6 p-4 border border-elec-yellow/20 rounded-lg bg-elec-yellow/5">
-                  <TimeEntryForm 
-                    onAddEntry={handleAddEntry}
-                    onCancel={() => setShowEntryForm(false)}
-                  />
-                </div>
-              )}
-              
-              <EntriesList entries={entries} isLoading={isLoading} />
-            </CardContent>
-          </Card>
-        </TabsContent>
+            </form>
+          </CardContent>
+        </Card>
+      )}
 
-        <TabsContent value="approvals">
+      {/* Entries List */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-medium">Recent Entries</h3>
+        {entries.length === 0 ? (
           <Card className="bg-elec-gray/50">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-elec-yellow" />
-                Approval Status
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {entries.map((entry) => {
-                  const approvalStatus = getApprovalStatus(entry.id);
-                  const approval = approvals.find(a => a.time_entry_id === entry.id);
-                  
-                  return (
-                    <div key={entry.id} className="p-4 border border-elec-gray/40 rounded-lg">
-                      <div className="flex justify-between items-start mb-2">
-                        <div>
-                          <h4 className="font-medium">{entry.activity}</h4>
-                          <p className="text-sm text-muted-foreground">
-                            {entry.duration} minutes • {entry.date}
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Badge className={getApprovalColor(approvalStatus)}>
-                            {approvalStatus.replace('_', ' ')}
-                          </Badge>
-                          {approvalStatus === 'not_submitted' && (
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => submitForApproval(entry.id)}
-                            >
-                              Submit for Approval
-                            </Button>
-                          )}
-                        </div>
-                      </div>
-                      
-                      {entry.notes && (
-                        <p className="text-sm text-muted-foreground mb-2">{entry.notes}</p>
-                      )}
-                      
-                      {approval?.tutor_comments && (
-                        <div className="mt-2 p-2 bg-blue-50 rounded border-l-4 border-blue-400">
-                          <p className="text-sm">
-                            <span className="font-medium">Tutor Feedback: </span>
-                            {approval.tutor_comments}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+            <CardContent className="p-6 text-center">
+              <p className="text-muted-foreground">No time entries yet</p>
+              <p className="text-sm text-muted-foreground mt-1">
+                Add your first training session to get started
+              </p>
             </CardContent>
           </Card>
-        </TabsContent>
-
-        <TabsContent value="analytics">
-          <Card className="bg-elec-gray/50">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BarChart3 className="h-5 w-5 text-elec-yellow" />
-                Analytics & Progress
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <h3 className="font-semibold">Weekly Progress Tracking</h3>
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Approved Hours This Week</span>
-                      <span>{approvedHours}h / 7.5h</span>
+        ) : (
+          entries.map((entry) => (
+            <Card key={entry.id} className="bg-elec-gray/50">
+              <CardContent className="p-4">
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="font-medium">{entry.activity}</span>
+                      <span className="text-sm text-muted-foreground">
+                        • {new Date(entry.date).toLocaleDateString()}
+                      </span>
                     </div>
-                    <div className="w-full bg-gray-200 rounded-full h-3">
-                      <div 
-                        className="bg-elec-yellow h-3 rounded-full transition-all duration-300"
-                        style={{ width: `${weeklyProgress}%` }}
-                      ></div>
+                    <div className="text-sm text-elec-yellow font-medium mb-1">
+                      {Math.floor(entry.duration / 60)}h {entry.duration % 60}m
                     </div>
-                    <p className="text-xs text-muted-foreground">
-                      You need 7.5 hours per week (20% of working time)
-                    </p>
+                    {entry.notes && (
+                      <p className="text-sm text-muted-foreground">{entry.notes}</p>
+                    )}
                   </div>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => handleDelete(entry.id)}
+                    className="text-red-500 hover:text-red-600"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
                 </div>
-
-                <div className="space-y-4">
-                  <h3 className="font-semibold">Activity Breakdown</h3>
-                  <div className="space-y-2">
-                    {/* Add activity breakdown here */}
-                    <div className="text-sm text-muted-foreground">
-                      Activity breakdown will be calculated based on your entries
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+              </CardContent>
+            </Card>
+          ))
+        )}
+      </div>
     </div>
   );
 };
