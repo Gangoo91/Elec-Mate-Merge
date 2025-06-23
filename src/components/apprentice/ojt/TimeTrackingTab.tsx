@@ -22,6 +22,17 @@ const TimeTrackingTab = () => {
     { date: "2024-01-12", activity: "Testing Equipment Training", duration: 2.0, type: "Practical" }
   ];
 
+  // Handler functions for WeeklyProgressCard
+  const handleAddTimeEntry = (duration: number, activity: string, notes: string) => {
+    console.log('Adding time entry:', { duration, activity, notes });
+    // TODO: Implement time entry logic
+  };
+
+  const handleUploadEvidence = () => {
+    console.log('Uploading evidence');
+    // TODO: Implement evidence upload logic
+  };
+
   return (
     <div className="space-y-6">
       {/* Header with Quick Stats */}
@@ -108,7 +119,14 @@ const TimeTrackingTab = () => {
         </div>
 
         {/* Weekly Progress */}
-        <WeeklyProgressCard />
+        <WeeklyProgressCard 
+          weeklyHours={weeklyStats.ojtHours}
+          targetHours={weeklyStats.target}
+          courseHours={5.5}
+          totalTime={{ hours: 186, minutes: 30 }}
+          addTimeEntry={handleAddTimeEntry}
+          handleUploadEvidence={handleUploadEvidence}
+        />
 
         {/* Tracking Status */}
         <TrackingStatusIndicator />
