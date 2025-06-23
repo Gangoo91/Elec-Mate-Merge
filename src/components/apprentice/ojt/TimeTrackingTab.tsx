@@ -1,313 +1,221 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Calendar, Clock, Target, TrendingUp, Award, Plus } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { Clock, Calendar, TrendingUp, FileDown } from "lucide-react";
+import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
+import EntriesList from "@/components/apprentice/time-tracking/EntriesList";
+import TimeEntryForm from "@/components/apprentice/time-tracking/TimeEntryForm";
 import { useToast } from "@/hooks/use-toast";
-import TimeEntryDialog from "@/components/apprentice/time-tracking/logbook/TimeEntryDialog";
-
-interface TimeEntry {
-  id: string;
-  date: string;
-  duration: number;
-  activity: string;
-  notes: string;
-  is_automatic: boolean;
-}
 
 const TimeTrackingTab = () => {
-  const [timeEntries, setTimeEntries] = useState<TimeEntry[]>([]);
-  const [totalHours, setTotalHours] = useState(0);
-  const [weeklyTarget] = useState(7.5); // 20% of 37.5 hour working week
-  const [isLoading, setIsLoading] = useState(true);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const { entries, totalTime, addTimeEntry, isLoading } = useTimeEntries();
+  const [isExporting, setIsExporting] = useState(false);
   const { toast } = useToast();
 
-  useEffect(() => {
-    fetchTimeEntries();
-  }, []);
+  // Calculate weekly progress (assuming 20% of 37.5 hours per week = 7.5 hours)
+  const weeklyTargetMinutes = 7.5 * 60; // 450 minutes
+  const currentWeekMinutes = entries
+    .filter(entry => {
+      const entryDate = new Date(entry.date);
+      const now = new Date();
+      const weekStart = new Date(now.setDate(now.getDate() - now.getDay()));
+      return entryDate >= weekStart;
+    })
+    .reduce((total, entry) => total + entry.duration, 0);
 
-  const fetchTimeEntries = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+  const weeklyProgress = Math.min((currentWeekMinutes / weeklyTargetMinutes) * 100, 100);
 
-      // Get current week's entries
-      const currentWeekStart = new Date();
-      currentWeekStart.setDate(currentWeekStart.getDate() - currentWeekStart.getDay());
-      const weekStartStr = currentWeekStart.toISOString().split('T')[0];
-
-      const { data, error } = await supabase
-        .from('time_entries')
-        .select('*')
-        .eq('user_id', user.id)
-        .gte('date', weekStartStr)
-        .order('date', { ascending: false });
-
-      if (error) throw error;
-
-      const entries: TimeEntry[] = (data || []).map(entry => ({
-        id: entry.id,
-        date: entry.date,
-        duration: entry.duration,
-        activity: entry.activity,
-        notes: entry.notes || '',
-        is_automatic: entry.is_automatic || false
-      }));
-
-      setTimeEntries(entries);
-
-      // Calculate total hours for the week
-      const totalMinutes = entries.reduce((sum, entry) => sum + entry.duration, 0);
-      setTotalHours(totalMinutes / 60);
-
-    } catch (error) {
-      console.error('Error fetching time entries:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load time entries",
-        variant: "destructive"
-      });
-    } finally {
-      setIsLoading(false);
+  // Calculate activity statistics
+  const activityStats = entries.reduce((stats, entry) => {
+    const activity = entry.activity;
+    if (!stats[activity]) {
+      stats[activity] = { count: 0, totalMinutes: 0 };
     }
-  };
+    stats[activity].count++;
+    stats[activity].totalMinutes += entry.duration;
+    return stats;
+  }, {} as Record<string, { count: number; totalMinutes: number }>);
 
-  const handleAddTimeEntry = async (duration: number, activity: string, notes: string) => {
+  const exportTimeEntries = async () => {
+    setIsExporting(true);
+    
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) {
-        toast({
-          title: "Error",
-          description: "You must be logged in to add time entries",
-          variant: "destructive"
-        });
-        return;
-      }
-
-      const { data, error } = await supabase
-        .from('time_entries')
-        .insert({
-          user_id: user.id,
-          date: new Date().toISOString().split('T')[0],
-          duration: duration,
-          activity: activity,
-          notes: notes,
-          is_automatic: false
-        })
-        .select('*')
-        .single();
-
-      if (error) throw error;
-
-      // Add the new entry to the state
-      const newEntry: TimeEntry = {
-        id: data.id,
-        date: data.date,
-        duration: data.duration,
-        activity: data.activity,
-        notes: data.notes,
-        is_automatic: data.is_automatic
+      // Prepare export data
+      const exportData = {
+        exportInfo: {
+          exportDate: new Date().toISOString(),
+          exportType: "time_tracking",
+          totalEntries: entries.length,
+          dateRange: {
+            earliest: entries.length > 0 ? entries.reduce((earliest, entry) => 
+              entry.date < earliest ? entry.date : earliest, entries[0].date) : null,
+            latest: entries.length > 0 ? entries.reduce((latest, entry) => 
+              entry.date > latest ? entry.date : latest, entries[0].date) : null
+          }
+        },
+        summary: {
+          totalHours: Math.floor(totalTime.hours + totalTime.minutes / 60),
+          totalMinutes: totalTime.hours * 60 + totalTime.minutes,
+          weeklyProgress: {
+            currentWeekMinutes,
+            targetMinutes: weeklyTargetMinutes,
+            progressPercentage: Math.round(weeklyProgress)
+          },
+          activityBreakdown: Object.entries(activityStats).map(([activity, stats]) => ({
+            activity,
+            count: stats.count,
+            totalMinutes: stats.totalMinutes,
+            totalHours: Math.round((stats.totalMinutes / 60) * 10) / 10,
+            percentage: Math.round((stats.totalMinutes / (totalTime.hours * 60 + totalTime.minutes)) * 100)
+          }))
+        },
+        timeEntries: entries.map(entry => ({
+          id: entry.id,
+          date: entry.date,
+          activity: entry.activity,
+          duration: entry.duration,
+          durationHours: Math.round((entry.duration / 60) * 10) / 10,
+          notes: entry.notes,
+          isAutomatic: entry.isAutomatic || false,
+          isQuiz: entry.isQuiz || false,
+          ...(entry.score && { score: entry.score }),
+          ...(entry.totalQuestions && { totalQuestions: entry.totalQuestions })
+        }))
       };
 
-      setTimeEntries(prev => [newEntry, ...prev]);
-
-      // Update weekly hours if the entry is from this week
-      const currentWeekStart = new Date();
-      currentWeekStart.setDate(currentWeekStart.getDate() - currentWeekStart.getDay());
-      if (new Date(newEntry.date) >= currentWeekStart) {
-        setTotalHours(prev => prev + (duration / 60));
-      }
-
-      setIsDialogOpen(false);
+      // Create and download the file
+      const dataStr = JSON.stringify(exportData, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
       
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `time-tracking-export-${new Date().toISOString().split('T')[0]}.json`;
+      
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      URL.revokeObjectURL(url);
+
       toast({
-        title: "Success",
-        description: "Time entry added successfully",
+        title: "Export Successful",
+        description: `Exported ${entries.length} time entries successfully.`,
       });
-      
     } catch (error) {
-      console.error('Error adding time entry:', error);
+      console.error('Export failed:', error);
       toast({
-        title: "Error",
-        description: "Failed to add time entry",
-        variant: "destructive"
+        title: "Export Failed",
+        description: "There was an error exporting your time entries. Please try again.",
+        variant: "destructive",
       });
+    } finally {
+      setIsExporting(false);
     }
   };
-
-  const weeklyProgress = Math.min((totalHours / weeklyTarget) * 100, 100);
-  const remainingHours = Math.max(weeklyTarget - totalHours, 0);
 
   if (isLoading) {
     return (
-      <Card>
-        <CardContent className="p-6">
-          <div className="animate-pulse space-y-4">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-20 bg-gray-300 rounded"></div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <div className="flex items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-elec-yellow"></div>
+      </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      {/* Weekly Progress Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
+      {/* Header with Export Button */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h2 className="text-2xl font-bold mb-2">Time Tracking</h2>
+          <p className="text-muted-foreground">
+            Track your off-the-job training hours and monitor progress towards your 20% requirement
+          </p>
+        </div>
+        <Button 
+          onClick={exportTimeEntries}
+          disabled={isExporting || entries.length === 0}
+          className="bg-green-600 hover:bg-green-700 text-white"
+        >
+          <FileDown className="h-4 w-4 mr-2" />
+          {isExporting ? 'Exporting...' : 'Export Time Entries'}
+        </Button>
+      </div>
+
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <Card className="border-blue-500/50 bg-blue-500/10">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">This Week</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-blue-300">
+              Total Time Tracked
+            </CardTitle>
+            <Clock className="h-4 w-4 text-blue-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{totalHours.toFixed(1)}h</div>
-            <p className="text-xs text-muted-foreground">
-              of {weeklyTarget}h target
+            <div className="text-2xl font-bold text-blue-100">
+              {totalTime.hours}h {totalTime.minutes}m
+            </div>
+            <p className="text-xs text-blue-300 mt-1">
+              {entries.length} entries recorded
             </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border-green-500/50 bg-green-500/10">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Progress</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-green-300">
+              This Week's Progress
+            </CardTitle>
+            <Calendar className="h-4 w-4 text-green-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{Math.round(weeklyProgress)}%</div>
-            <Progress value={weeklyProgress} className="mt-2" />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Remaining</CardTitle>
-            <Target className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{remainingHours.toFixed(1)}h</div>
-            <p className="text-xs text-muted-foreground">
-              to reach weekly target
+            <div className="text-2xl font-bold text-green-100">
+              {Math.round(weeklyProgress)}%
+            </div>
+            <p className="text-xs text-green-300 mt-1">
+              {Math.floor(currentWeekMinutes / 60)}h {currentWeekMinutes % 60}m / 7.5h target
             </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border-purple-500/50 bg-purple-500/10">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Status</CardTitle>
-            <Award className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-purple-300">
+              Activity Types
+            </CardTitle>
+            <TrendingUp className="h-4 w-4 text-purple-400" />
           </CardHeader>
           <CardContent>
-            <Badge 
-              variant={weeklyProgress >= 100 ? "default" : weeklyProgress >= 75 ? "secondary" : "outline"}
-              className="text-sm"
-            >
-              {weeklyProgress >= 100 ? "Target Met" : weeklyProgress >= 75 ? "On Track" : "Behind"}
-            </Badge>
+            <div className="text-2xl font-bold text-purple-100">
+              {Object.keys(activityStats).length}
+            </div>
+            <p className="text-xs text-purple-300 mt-1">
+              Different training activities
+            </p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Recent Time Entries */}
+      {/* Time Entry Form */}
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-2">
-              <Calendar className="h-5 w-5" />
-              Recent Training Sessions
-            </CardTitle>
-            <Button 
-              onClick={() => setIsDialogOpen(true)}
-              className="bg-elec-yellow text-black hover:bg-elec-yellow/80"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Time Entry
-            </Button>
-          </div>
+          <CardTitle className="text-elec-yellow">Add Time Entry</CardTitle>
         </CardHeader>
         <CardContent>
-          {timeEntries.length === 0 ? (
-            <div className="text-center py-6">
-              <Clock className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">No time entries for this week yet</p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {timeEntries.map((entry) => (
-                <div 
-                  key={entry.id}
-                  className="flex items-center justify-between p-4 border rounded-lg"
-                >
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-medium">{entry.activity}</h4>
-                      {entry.is_automatic && (
-                        <Badge variant="outline" className="text-xs">
-                          Auto
-                        </Badge>
-                      )}
-                    </div>
-                    <p className="text-sm text-muted-foreground">{entry.notes}</p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {new Date(entry.date).toLocaleDateString()}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-medium">
-                      {Math.floor(entry.duration / 60)}h {entry.duration % 60}m
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+          <TimeEntryForm onEntryAdded={addTimeEntry} />
         </CardContent>
       </Card>
 
-      {/* Weekly Summary */}
+      {/* Entries List */}
       <Card>
         <CardHeader>
-          <CardTitle>Weekly Summary</CardTitle>
+          <CardTitle className="text-elec-yellow">Recent Entries</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span>Total Hours Logged:</span>
-              <span className="font-medium">{totalHours.toFixed(1)}h</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span>Weekly Target:</span>
-              <span className="font-medium">{weeklyTarget}h</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span>Progress:</span>
-              <span className="font-medium">{Math.round(weeklyProgress)}%</span>
-            </div>
-            <Progress value={weeklyProgress} className="mt-2" />
-            {weeklyProgress >= 100 ? (
-              <p className="text-sm text-green-600">
-                🎉 Congratulations! You've met your weekly off-the-job training target.
-              </p>
-            ) : (
-              <p className="text-sm text-muted-foreground">
-                You need {remainingHours.toFixed(1)} more hours to reach your weekly target.
-              </p>
-            )}
-          </div>
+          <EntriesList entries={entries} />
         </CardContent>
       </Card>
-
-      {/* Time Entry Dialog */}
-      <TimeEntryDialog
-        isOpen={isDialogOpen}
-        onClose={() => setIsDialogOpen(false)}
-        onSubmit={handleAddTimeEntry}
-      />
     </div>
   );
 };
