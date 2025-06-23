@@ -772,6 +772,171 @@ export type Database = {
         }
         Relationships: []
       }
+      ojt_assessments: {
+        Row: {
+          created_at: string
+          due_date: string
+          feedback: string | null
+          grade: string | null
+          id: string
+          status: string | null
+          title: string
+          tutor_notes: string | null
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          due_date: string
+          feedback?: string | null
+          grade?: string | null
+          id?: string
+          status?: string | null
+          title: string
+          tutor_notes?: string | null
+          type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          due_date?: string
+          feedback?: string | null
+          grade?: string | null
+          id?: string
+          status?: string | null
+          title?: string
+          tutor_notes?: string | null
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ojt_goals: {
+        Row: {
+          category: string
+          created_at: string
+          current_value: number | null
+          deadline: string | null
+          description: string | null
+          id: string
+          priority: string
+          status: string | null
+          target_value: number
+          title: string
+          unit: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          current_value?: number | null
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          priority: string
+          status?: string | null
+          target_value: number
+          title: string
+          unit: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          current_value?: number | null
+          deadline?: string | null
+          description?: string | null
+          id?: string
+          priority?: string
+          status?: string | null
+          target_value?: number
+          title?: string
+          unit?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ojt_notifications: {
+        Row: {
+          created_at: string
+          data: Json | null
+          id: string
+          is_read: boolean | null
+          message: string
+          priority: string | null
+          scheduled_for: string | null
+          sent_at: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          data?: Json | null
+          id?: string
+          is_read?: boolean | null
+          message: string
+          priority?: string | null
+          scheduled_for?: string | null
+          sent_at?: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          data?: Json | null
+          id?: string
+          is_read?: boolean | null
+          message?: string
+          priority?: string | null
+          scheduled_for?: string | null
+          sent_at?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      ojt_reports: {
+        Row: {
+          data: Json
+          export_format: string | null
+          exported_at: string | null
+          generated_at: string
+          id: string
+          report_type: string
+          title: string
+          user_id: string
+        }
+        Insert: {
+          data: Json
+          export_format?: string | null
+          exported_at?: string | null
+          generated_at?: string
+          id?: string
+          report_type: string
+          title: string
+          user_id: string
+        }
+        Update: {
+          data?: Json
+          export_format?: string | null
+          exported_at?: string | null
+          generated_at?: string
+          id?: string
+          report_type?: string
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       portfolio_items: {
         Row: {
           category: string
@@ -1375,6 +1540,47 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      time_entry_approvals: {
+        Row: {
+          created_at: string
+          id: string
+          reviewed_at: string | null
+          status: string | null
+          submitted_at: string | null
+          time_entry_id: string
+          tutor_comments: string | null
+          tutor_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          reviewed_at?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          time_entry_id: string
+          tutor_comments?: string | null
+          tutor_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          reviewed_at?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          time_entry_id?: string
+          tutor_comments?: string | null
+          tutor_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "time_entry_approvals_time_entry_id_fkey"
+            columns: ["time_entry_id"]
+            isOneToOne: false
+            referencedRelation: "time_entries"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       uk_regions: {
         Row: {
