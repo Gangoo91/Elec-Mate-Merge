@@ -1,291 +1,290 @@
 
-import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Target, Plus, TrendingUp, Calendar, CheckCircle } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks/use-toast";
-import AddGoalDialog from "./AddGoalDialog";
-
-interface Goal {
-  id: string;
-  title: string;
-  description: string;
-  target_value: number;
-  current_value: number;
-  unit: string;
-  priority: 'low' | 'medium' | 'high';
-  category: string;
-  deadline: string;
-  status: string;
-}
+import { Badge } from "@/components/ui/badge";
+import { BarChart3, Target, TrendingUp, Calendar, CheckCircle, AlertTriangle, Clock } from "lucide-react";
 
 const ComplianceDashboardTab = () => {
-  const [goals, setGoals] = useState<Goal[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const { toast } = useToast();
-
-  useEffect(() => {
-    fetchGoals();
-  }, []);
-
-  const fetchGoals = async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-
-      const { data, error } = await supabase
-        .from('ojt_goals')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('deadline', { ascending: true });
-
-      if (error) throw error;
-
-      const typedGoals: Goal[] = (data || []).map(goal => ({
-        ...goal,
-        priority: (goal.priority as 'low' | 'medium' | 'high') || 'medium'
-      }));
-
-      setGoals(typedGoals);
-    } catch (error) {
-      console.error('Error fetching goals:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load goals",
-        variant: "destructive"
-      });
-    } finally {
-      setIsLoading(false);
+  const overallProgress = 68;
+  
+  const goals = [
+    {
+      title: "20% Off-the-Job Training Hours",
+      current: 156,
+      target: 200,
+      unit: "hours",
+      deadline: "2024-06-30",
+      status: "on-track"
+    },
+    {
+      title: "Portfolio Evidence Collection",
+      current: 49,
+      target: 63,
+      unit: "items",
+      deadline: "2024-05-15",
+      status: "on-track"
+    },
+    {
+      title: "Technical Skills Assessments",
+      current: 2,
+      target: 5,
+      unit: "assessments",
+      deadline: "2024-07-30",
+      status: "attention-needed"
+    },
+    {
+      title: "Professional Development",
+      current: 8,
+      target: 12,
+      unit: "activities",
+      deadline: "2024-08-15",
+      status: "on-track"
     }
-  };
+  ];
 
-  const handleAddGoal = async (goalData: any) => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-
-      const { error } = await supabase
-        .from('ojt_goals')
-        .insert({
-          user_id: user.id,
-          title: goalData.title,
-          description: goalData.description,
-          target_value: goalData.targetValue,
-          unit: goalData.unit,
-          priority: goalData.priority,
-          category: goalData.category,
-          deadline: goalData.deadline,
-          current_value: 0,
-          status: 'in_progress'
-        });
-
-      if (error) throw error;
-
-      toast({
-        title: "Success",
-        description: "Goal added successfully"
-      });
-
-      setIsAddDialogOpen(false);
-      fetchGoals();
-    } catch (error) {
-      console.error('Error adding goal:', error);
-      toast({
-        title: "Error",
-        description: "Failed to add goal",
-        variant: "destructive"
-      });
+  const milestones = [
+    {
+      title: "First Year Review",
+      date: "2024-03-01",
+      status: "completed",
+      description: "Annual progress review with assessor"
+    },
+    {
+      title: "Mid-Point Assessment",
+      date: "2024-06-15",
+      status: "upcoming",
+      description: "Comprehensive skills and knowledge assessment"
+    },
+    {
+      title: "Final EPA Preparation",
+      date: "2024-10-01",
+      status: "future",
+      description: "End-point assessment preparation phase"
+    },
+    {
+      title: "End-Point Assessment",
+      date: "2024-12-15",
+      status: "future",
+      description: "Final apprenticeship assessment"
     }
-  };
+  ];
 
-  const updateGoalProgress = async (goalId: string, newValue: number) => {
-    try {
-      const { error } = await supabase
-        .from('ojt_goals')
-        .update({ 
-          current_value: newValue,
-          status: newValue >= goals.find(g => g.id === goalId)?.target_value ? 'completed' : 'in_progress'
-        })
-        .eq('id', goalId);
-
-      if (error) throw error;
-
-      toast({
-        title: "Success",
-        description: "Goal progress updated"
-      });
-
-      fetchGoals();
-    } catch (error) {
-      console.error('Error updating goal:', error);
-      toast({
-        title: "Error",
-        description: "Failed to update goal progress",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'high': return 'bg-red-100 text-red-800 border-red-200';
-      case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'low': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
-    }
-  };
-
-  const getStatusColor = (status: string) => {
+  const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'completed': return 'bg-green-100 text-green-800 border-green-200';
-      case 'in_progress': return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'overdue': return 'bg-red-100 text-red-800 border-red-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case "on-track":
+        return <Badge className="bg-green-500/20 text-green-400">On Track</Badge>;
+      case "attention-needed":
+        return <Badge className="bg-yellow-500/20 text-yellow-400">Attention Needed</Badge>;
+      case "behind":
+        return <Badge className="bg-red-500/20 text-red-400">Behind Schedule</Badge>;
+      default:
+        return <Badge className="bg-gray-500/20 text-gray-400">Unknown</Badge>;
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="space-y-6">
-        <div className="animate-pulse space-y-4">
-          {[1, 2, 3].map(i => (
-            <Card key={i}>
-              <CardContent className="p-6">
-                <div className="h-6 bg-gray-300 rounded mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded"></div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  const completedGoals = goals.filter(g => g.status === 'completed').length;
-  const overallProgress = goals.length > 0 ? (completedGoals / goals.length) * 100 : 0;
+  const getMilestoneIcon = (status: string) => {
+    switch (status) {
+      case "completed":
+        return <CheckCircle className="h-4 w-4 text-green-400" />;
+      case "upcoming":
+        return <Clock className="h-4 w-4 text-yellow-400" />;
+      default:
+        return <Calendar className="h-4 w-4 text-gray-400" />;
+    }
+  };
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h3 className="text-lg font-semibold">Goals & Progress</h3>
-          <p className="text-muted-foreground">Track your learning objectives and compliance requirements</p>
-        </div>
-        <Button onClick={() => setIsAddDialogOpen(true)}>
-          <Plus className="h-4 w-4 mr-2" />
-          Add Goal
-        </Button>
-      </div>
-
-      {/* Progress Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Overall Progress</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{overallProgress.toFixed(0)}%</div>
-            <Progress value={overallProgress} className="mt-2" />
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Completed Goals</CardTitle>
-            <CheckCircle className="h-4 w-4 text-green-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-700">{completedGoals}</div>
-            <p className="text-xs text-muted-foreground">out of {goals.length} total</p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Goals</CardTitle>
-            <Target className="h-4 w-4 text-blue-600" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-blue-700">
-              {goals.filter(g => g.status === 'in_progress').length}
-            </div>
-            <p className="text-xs text-muted-foreground">in progress</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Goals List */}
-      <Card>
+      {/* Overall Progress */}
+      <Card className="bg-elec-gray">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Target className="h-5 w-5" />
-            Your Goals
+            <BarChart3 className="h-5 w-5 text-elec-yellow" />
+            Overall Apprenticeship Progress
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {goals.length === 0 ? (
-            <div className="text-center py-8">
-              <Target className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">No goals set yet</p>
-              <p className="text-sm text-muted-foreground mt-2">
-                Set your first goal to start tracking your progress
-              </p>
+          <div className="space-y-4">
+            <div className="text-center">
+              <div className="text-4xl font-bold">{overallProgress}%</div>
+              <div className="text-sm text-muted-foreground">Apprenticeship Completion</div>
+              <Progress value={overallProgress} className="mt-3 h-3" />
             </div>
-          ) : (
-            <div className="space-y-6">
-              {goals.map((goal) => {
-                const progressPercentage = Math.min((goal.current_value / goal.target_value) * 100, 100);
-                
-                return (
-                  <div key={goal.id} className="p-4 border rounded-lg">
-                    <div className="flex justify-between items-start mb-3">
-                      <div className="flex-1">
-                        <h4 className="font-medium">{goal.title}</h4>
-                        <p className="text-sm text-muted-foreground mt-1">{goal.description}</p>
-                      </div>
-                      <div className="flex gap-2">
-                        <Badge className={getPriorityColor(goal.priority)}>
-                          {goal.priority}
-                        </Badge>
-                        <Badge className={getStatusColor(goal.status)}>
-                          {goal.status.replace('_', ' ')}
-                        </Badge>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span>Progress: {goal.current_value} / {goal.target_value} {goal.unit}</span>
-                        <span>{progressPercentage.toFixed(0)}%</span>
-                      </div>
-                      <Progress value={progressPercentage} />
-                    </div>
-
-                    <div className="flex justify-between items-center mt-3">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Calendar className="h-4 w-4" />
-                        Due: {new Date(goal.deadline).toLocaleDateString('en-GB')}
-                      </div>
-                      <Badge variant="outline">{goal.category}</Badge>
-                    </div>
-                  </div>
-                );
-              })}
+            
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="text-center">
+                <div className="text-lg font-semibold">18</div>
+                <div className="text-muted-foreground">Months Remaining</div>
+              </div>
+              <div className="text-center">
+                <div className="text-lg font-semibold">4.2</div>
+                <div className="text-muted-foreground">Current Grade</div>
+              </div>
             </div>
-          )}
+          </div>
         </CardContent>
       </Card>
 
-      <AddGoalDialog
-        open={isAddDialogOpen}
-        onOpenChange={setIsAddDialogOpen}
-        onAddGoal={handleAddGoal}
-      />
+      {/* Goals & Targets */}
+      <Card className="bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Target className="h-5 w-5 text-elec-yellow" />
+            Goals & Targets
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {goals.map((goal, index) => (
+              <div key={index} className="p-4 rounded-lg border border-elec-yellow/20">
+                <div className="flex justify-between items-start mb-3">
+                  <div>
+                    <h4 className="font-medium">{goal.title}</h4>
+                    <div className="text-sm text-muted-foreground">
+                      Due: {goal.deadline}
+                    </div>
+                  </div>
+                  {getStatusBadge(goal.status)}
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span>Progress</span>
+                    <span>{goal.current} / {goal.target} {goal.unit}</span>
+                  </div>
+                  <Progress value={(goal.current / goal.target) * 100} className="h-2" />
+                </div>
+                
+                <div className="mt-2 text-xs text-muted-foreground">
+                  {goal.target - goal.current} {goal.unit} remaining
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Key Milestones */}
+      <Card className="bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Calendar className="h-5 w-5 text-elec-yellow" />
+            Key Milestones
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {milestones.map((milestone, index) => (
+              <div key={index} className="flex items-start gap-4 p-4 rounded-lg border border-elec-yellow/20">
+                {getMilestoneIcon(milestone.status)}
+                <div className="flex-1">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h4 className="font-medium">{milestone.title}</h4>
+                      <div className="text-sm text-muted-foreground">{milestone.date}</div>
+                    </div>
+                    <Badge 
+                      variant="outline" 
+                      className={
+                        milestone.status === "completed" 
+                          ? "border-green-400 text-green-400"
+                          : milestone.status === "upcoming"
+                          ? "border-yellow-400 text-yellow-400"
+                          : "border-gray-400 text-gray-400"
+                      }
+                    >
+                      {milestone.status === "completed" ? "Completed" : 
+                       milestone.status === "upcoming" ? "Upcoming" : "Future"}
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {milestone.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Progress Analytics */}
+      <Card className="bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <TrendingUp className="h-5 w-5 text-elec-yellow" />
+            Progress Analytics
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <h4 className="font-medium">Monthly Training Hours</h4>
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>January 2024</span>
+                  <span>32 hours</span>
+                </div>
+                <Progress value={80} className="h-2" />
+                <div className="flex justify-between text-sm">
+                  <span>December 2023</span>
+                  <span>28 hours</span>
+                </div>
+                <Progress value={70} className="h-2" />
+                <div className="flex justify-between text-sm">
+                  <span>November 2023</span>
+                  <span>36 hours</span>
+                </div>
+                <Progress value={90} className="h-2" />
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <h4 className="font-medium">Skills Development</h4>
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>Technical Skills</span>
+                  <span>85%</span>
+                </div>
+                <Progress value={85} className="h-2" />
+                <div className="flex justify-between text-sm">
+                  <span>Health & Safety</span>
+                  <span>92%</span>
+                </div>
+                <Progress value={92} className="h-2" />
+                <div className="flex justify-between text-sm">
+                  <span>Professional Skills</span>
+                  <span>78%</span>
+                </div>
+                <Progress value={78} className="h-2" />
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quick Actions */}
+      <Card className="bg-elec-gray">
+        <CardHeader>
+          <CardTitle>Quick Actions</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Button variant="outline" className="w-full">
+              <TrendingUp className="h-4 w-4 mr-2" />
+              View Analytics
+            </Button>
+            <Button variant="outline" className="w-full">
+              <Target className="h-4 w-4 mr-2" />
+              Set New Goal
+            </Button>
+            <Button variant="outline" className="w-full">
+              <Calendar className="h-4 w-4 mr-2" />
+              Schedule Review
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
