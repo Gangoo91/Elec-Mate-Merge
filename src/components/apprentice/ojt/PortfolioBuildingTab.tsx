@@ -1,8 +1,8 @@
 
-import PortfolioManager from "@/components/apprentice/portfolio/PortfolioManager";
+import PortfolioBuilding from "@/pages/apprentice/toolbox/PortfolioBuilding";
 
 const PortfolioBuildingTab = () => {
-  return <PortfolioManager />;
+  return <PortfolioBuilding />;
 };
 
 export default PortfolioBuildingTab;
