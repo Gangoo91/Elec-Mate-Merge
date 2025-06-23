@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,40 +8,143 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, FileText, Award, BookOpen } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const PortfolioBuildingTab = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [portfolioStats, setPortfolioStats] = useState({
+    totalItems: 0,
+    categoriesCount: 0,
+    gradedItems: 0
+  });
   
   const [portfolioEntry, setPortfolioEntry] = useState({
     title: "",
     description: "",
-    skills: "",
-    reflection: ""
+    category: "",
+    skills_demonstrated: "",
+    reflection_notes: "",
+    supervisor_feedback: "",
+    grade: ""
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const categories = [
+    "Installation Work",
+    "Testing & Inspection", 
+    "Health & Safety",
+    "Customer Service",
+    "Technical Learning",
+    "Problem Solving",
+    "Teamwork",
+    "Communication"
+  ];
+
+  const grades = ["Pass", "Merit", "Distinction", "Refer"];
+
+  useEffect(() => {
+    fetchPortfolioStats();
+  }, []);
+
+  const fetchPortfolioStats = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const { data, error } = await supabase
+        .from('portfolio_items')
+        .select('category, grade')
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+
+      const totalItems = data?.length || 0;
+      const categories = new Set(data?.map(item => item.category) || []);
+      const gradedItems = data?.filter(item => item.grade)?.length || 0;
+
+      setPortfolioStats({
+        totalItems,
+        categoriesCount: categories.size,
+        gradedItems
+      });
+    } catch (error) {
+      console.error('Error fetching portfolio stats:', error);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!portfolioEntry.title || !portfolioEntry.description) {
+    
+    if (!portfolioEntry.title || !portfolioEntry.description || !portfolioEntry.category) {
       toast({
         title: "Missing Information",
-        description: "Please fill in title and description.",
+        description: "Please fill in title, description, and category.",
         variant: "destructive"
       });
       return;
     }
-    
-    toast({
-      title: "Portfolio Entry Added",
-      description: "Your portfolio entry has been saved successfully."
-    });
-    
-    setPortfolioEntry({
-      title: "",
-      description: "",
-      skills: "",
-      reflection: ""
-    });
+
+    setIsSubmitting(true);
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        throw new Error("You must be logged in to save portfolio entries");
+      }
+
+      // Convert skills to array
+      const skillsArray = portfolioEntry.skills_demonstrated
+        .split(',')
+        .map(skill => skill.trim())
+        .filter(skill => skill.length > 0);
+
+      const { error } = await supabase
+        .from('portfolio_items')
+        .insert({
+          user_id: user.id,
+          title: portfolioEntry.title,
+          description: portfolioEntry.description,
+          category: portfolioEntry.category,
+          skills_demonstrated: skillsArray,
+          reflection_notes: portfolioEntry.reflection_notes,
+          supervisor_feedback: portfolioEntry.supervisor_feedback,
+          grade: portfolioEntry.grade || null
+        });
+
+      if (error) throw error;
+      
+      toast({
+        title: "Portfolio Entry Added",
+        description: "Your portfolio entry has been saved successfully."
+      });
+      
+      // Reset form
+      setPortfolioEntry({
+        title: "",
+        description: "",
+        category: "",
+        skills_demonstrated: "",
+        reflection_notes: "",
+        supervisor_feedback: "",
+        grade: ""
+      });
+
+      // Refresh stats
+      fetchPortfolioStats();
+      
+    } catch (error) {
+      console.error('Error saving portfolio entry:', error);
+      toast({
+        title: "Save Failed",
+        description: error instanceof Error ? error.message : "Failed to save portfolio entry",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const completionPercentage = Math.min((portfolioStats.totalItems / 20) * 100, 100);
 
   return (
     <div className="space-y-6">
@@ -52,7 +155,7 @@ const PortfolioBuildingTab = () => {
             <FileText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">15</div>
+            <div className="text-2xl font-bold">{portfolioStats.totalItems}</div>
             <p className="text-xs text-muted-foreground">
               Items in portfolio
             </p>
@@ -65,9 +168,9 @@ const PortfolioBuildingTab = () => {
             <Award className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">8</div>
+            <div className="text-2xl font-bold">{portfolioStats.categoriesCount}</div>
             <p className="text-xs text-muted-foreground">
-              Core competencies
+              Different categories
             </p>
           </CardContent>
         </Card>
@@ -78,9 +181,9 @@ const PortfolioBuildingTab = () => {
             <BookOpen className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">75%</div>
+            <div className="text-2xl font-bold">{Math.round(completionPercentage)}%</div>
             <p className="text-xs text-muted-foreground">
-              Portfolio complete
+              Portfolio progress
             </p>
           </CardContent>
         </Card>
@@ -97,7 +200,7 @@ const PortfolioBuildingTab = () => {
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <Label htmlFor="title">Entry Title</Label>
+                <Label htmlFor="title">Entry Title *</Label>
                 <Input
                   id="title"
                   placeholder="e.g. Consumer Unit Installation"
@@ -106,9 +209,28 @@ const PortfolioBuildingTab = () => {
                   required
                 />
               </div>
+
+              <div>
+                <Label htmlFor="category">Category *</Label>
+                <Select
+                  value={portfolioEntry.category}
+                  onValueChange={(value) => setPortfolioEntry(prev => ({ ...prev, category: value }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map(category => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
               
               <div>
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description">Description *</Label>
                 <Textarea
                   id="description"
                   placeholder="Describe what you did and what you learned..."
@@ -123,9 +245,9 @@ const PortfolioBuildingTab = () => {
                 <Label htmlFor="skills">Skills Demonstrated</Label>
                 <Input
                   id="skills"
-                  placeholder="e.g. Cable installation, Testing, Documentation"
-                  value={portfolioEntry.skills}
-                  onChange={(e) => setPortfolioEntry(prev => ({ ...prev, skills: e.target.value }))}
+                  placeholder="e.g. Cable installation, Testing, Documentation (comma-separated)"
+                  value={portfolioEntry.skills_demonstrated}
+                  onChange={(e) => setPortfolioEntry(prev => ({ ...prev, skills_demonstrated: e.target.value }))}
                 />
               </div>
               
@@ -134,14 +256,48 @@ const PortfolioBuildingTab = () => {
                 <Textarea
                   id="reflection"
                   placeholder="What challenges did you face? What would you do differently?"
-                  value={portfolioEntry.reflection}
-                  onChange={(e) => setPortfolioEntry(prev => ({ ...prev, reflection: e.target.value }))}
+                  value={portfolioEntry.reflection_notes}
+                  onChange={(e) => setPortfolioEntry(prev => ({ ...prev, reflection_notes: e.target.value }))}
                   rows={3}
                 />
               </div>
+
+              <div>
+                <Label htmlFor="feedback">Supervisor Feedback</Label>
+                <Textarea
+                  id="feedback"
+                  placeholder="Feedback from your supervisor or mentor..."
+                  value={portfolioEntry.supervisor_feedback}
+                  onChange={(e) => setPortfolioEntry(prev => ({ ...prev, supervisor_feedback: e.target.value }))}
+                  rows={2}
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="grade">Grade</Label>
+                <Select
+                  value={portfolioEntry.grade}
+                  onValueChange={(value) => setPortfolioEntry(prev => ({ ...prev, grade: value }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select grade (optional)" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {grades.map(grade => (
+                      <SelectItem key={grade} value={grade}>
+                        {grade}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
               
-              <Button type="submit" className="w-full">
-                Add to Portfolio
+              <Button 
+                type="submit" 
+                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/80"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Saving..." : "Add to Portfolio"}
               </Button>
             </form>
           </CardContent>
