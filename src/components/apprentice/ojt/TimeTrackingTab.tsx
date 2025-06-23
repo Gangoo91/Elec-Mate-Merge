@@ -2,37 +2,31 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon, Clock, Plus, Trash2 } from "lucide-react";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { Calendar, Clock, Target, TrendingUp, Award } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 interface TimeEntry {
   id: string;
   date: string;
   duration: number;
   activity: string;
-  notes: string;
-  created_at: string;
+  notes?: string;
+  is_automatic: boolean;
 }
 
 const TimeTrackingTab = () => {
-  const [entries, setEntries] = useState<TimeEntry[]>([]);
+  const [timeEntries, setTimeEntries] = useState<TimeEntry[]>([]);
+  const [totalHours, setTotalHours] = useState(0);
+  const [weeklyTarget] = useState(7.5); // 20% of 37.5 hour working week
   const [isLoading, setIsLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
   const { toast } = useToast();
 
-  // Form state
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [duration, setDuration] = useState("");
-  const [activity, setActivity] = useState("");
-  const [notes, setNotes] = useState("");
+  useEffect(() => {
+    fetchTimeEntries();
+  }, []);
 
   const fetchTimeEntries = async () => {
     try {
@@ -47,101 +41,53 @@ const TimeTrackingTab = () => {
         .limit(20);
 
       if (error) throw error;
-      setEntries(data || []);
+
+      const entries: TimeEntry[] = (data || []).map(entry => ({
+        id: entry.id,
+        date: entry.date,
+        duration: entry.duration,
+        activity: entry.activity,
+        notes: entry.notes,
+        is_automatic: entry.is_automatic
+      }));
+
+      setTimeEntries(entries);
+      
+      // Calculate total hours for current week
+      const currentWeekStart = new Date();
+      currentWeekStart.setDate(currentWeekStart.getDate() - currentWeekStart.getDay());
+      const weekEntries = entries.filter(entry => 
+        new Date(entry.date) >= currentWeekStart
+      );
+      const weeklyHours = weekEntries.reduce((sum, entry) => sum + (entry.duration / 60), 0);
+      setTotalHours(weeklyHours);
+      
     } catch (error) {
       console.error('Error fetching time entries:', error);
       toast({
         title: "Error",
         description: "Failed to load time entries",
-        variant: "destructive",
+        variant: "destructive"
       });
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchTimeEntries();
-  }, []);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!duration || !activity) return;
-
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('User not authenticated');
-
-      const { data, error } = await supabase
-        .from('time_entries')
-        .insert({
-          user_id: user.id,
-          date: selectedDate.toISOString().split('T')[0],
-          duration: parseInt(duration),
-          activity,
-          notes,
-          is_automatic: false
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
-
-      setEntries(prev => [data, ...prev]);
-      
-      // Reset form
-      setDuration("");
-      setActivity("");
-      setNotes("");
-      setShowForm(false);
-
-      toast({
-        title: "Success",
-        description: "Time entry added successfully",
-      });
-    } catch (error) {
-      console.error('Error adding time entry:', error);
-      toast({
-        title: "Error",
-        description: "Failed to add time entry",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleDelete = async (entryId: string) => {
-    try {
-      const { error } = await supabase
-        .from('time_entries')
-        .delete()
-        .eq('id', entryId);
-
-      if (error) throw error;
-
-      setEntries(prev => prev.filter(entry => entry.id !== entryId));
-      
-      toast({
-        title: "Success",
-        description: "Time entry deleted successfully",
-      });
-    } catch (error) {
-      console.error('Error deleting time entry:', error);
-      toast({
-        title: "Error",
-        description: "Failed to delete time entry",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const totalHours = entries.reduce((sum, entry) => sum + entry.duration, 0);
+  const weeklyProgress = Math.min((totalHours / weeklyTarget) * 100, 100);
+  const remainingHours = Math.max(weeklyTarget - totalHours, 0);
 
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div className="animate-pulse space-y-4">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="h-20 bg-gray-200 rounded"></div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[1, 2, 3].map(i => (
+            <Card key={i} className="animate-pulse">
+              <CardContent className="p-6">
+                <div className="h-8 bg-gray-300 rounded mb-2"></div>
+                <div className="h-6 bg-gray-200 rounded"></div>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>
@@ -150,161 +96,126 @@ const TimeTrackingTab = () => {
 
   return (
     <div className="space-y-6">
-      {/* Summary Card */}
-      <Card className="bg-elec-gray/50">
+      {/* Weekly Progress Overview */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/20 border-blue-500/20">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">This Week's Hours</CardTitle>
+            <Clock className="h-4 w-4 text-blue-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-blue-700">{totalHours.toFixed(1)}h</div>
+            <p className="text-xs text-blue-600">
+              Target: {weeklyTarget}h per week
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-green-500/10 to-green-600/20 border-green-500/20">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Weekly Progress</CardTitle>
+            <TrendingUp className="h-4 w-4 text-green-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-700">{weeklyProgress.toFixed(0)}%</div>
+            <Progress value={weeklyProgress} className="mt-2" />
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-orange-500/10 to-orange-600/20 border-orange-500/20">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Remaining Hours</CardTitle>
+            <Target className="h-4 w-4 text-orange-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-orange-700">{remainingHours.toFixed(1)}h</div>
+            <p className="text-xs text-orange-600">
+              To reach weekly target
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Recent Time Entries */}
+      <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Clock className="h-5 w-5 text-elec-yellow" />
-            Training Hours Summary
+            <Calendar className="h-5 w-5" />
+            Recent Training Sessions
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold text-elec-yellow">
-            {Math.floor(totalHours / 60)}h {totalHours % 60}m
-          </div>
-          <p className="text-muted-foreground">Total logged this period</p>
+          {timeEntries.length === 0 ? (
+            <div className="text-center py-8">
+              <Clock className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground">No time entries yet</p>
+              <p className="text-sm text-muted-foreground mt-2">
+                Start logging your off-the-job training hours to track your progress
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {timeEntries.map((entry) => (
+                <div key={entry.id} className="flex items-center justify-between p-4 border rounded-lg">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h4 className="font-medium">{entry.activity}</h4>
+                      {entry.is_automatic && (
+                        <Badge variant="secondary" className="text-xs">
+                          <Award className="h-3 w-3 mr-1" />
+                          Auto-tracked
+                        </Badge>
+                      )}
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      {new Date(entry.date).toLocaleDateString('en-GB')} • {(entry.duration / 60).toFixed(1)} hours
+                    </p>
+                    {entry.notes && (
+                      <p className="text-sm text-muted-foreground mt-1">{entry.notes}</p>
+                    )}
+                  </div>
+                  <div className="text-right">
+                    <div className="text-lg font-semibold">{entry.duration}m</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </CardContent>
       </Card>
 
-      {/* Add Entry Button/Form */}
-      {!showForm ? (
-        <Button 
-          onClick={() => setShowForm(true)} 
-          className="w-full"
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          Add Time Entry
-        </Button>
-      ) : (
-        <Card className="bg-elec-gray/50">
-          <CardHeader>
-            <CardTitle>Add Time Entry</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label>Date</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full justify-start text-left font-normal",
-                        !selectedDate && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {selectedDate ? format(selectedDate, "PPP") : "Pick a date"}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={selectedDate}
-                      onSelect={(date) => date && setSelectedDate(date)}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="duration">Duration (minutes)</Label>
-                <Input
-                  id="duration"
-                  type="number"
-                  min="1"
-                  value={duration}
-                  onChange={(e) => setDuration(e.target.value)}
-                  placeholder="e.g., 60"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="activity">Activity</Label>
-                <Input
-                  id="activity"
-                  value={activity}
-                  onChange={(e) => setActivity(e.target.value)}
-                  placeholder="e.g., Reading BS7671 regulations"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="notes">Notes (optional)</Label>
-                <Textarea
-                  id="notes"
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Additional details about the training activity..."
-                  rows={3}
-                />
-              </div>
-
-              <div className="flex gap-2">
-                <Button type="submit" className="flex-1">
-                  Add Entry
-                </Button>
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  onClick={() => setShowForm(false)}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Entries List */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-medium">Recent Entries</h3>
-        {entries.length === 0 ? (
-          <Card className="bg-elec-gray/50">
-            <CardContent className="p-6 text-center">
-              <p className="text-muted-foreground">No time entries yet</p>
-              <p className="text-sm text-muted-foreground mt-1">
-                Add your first training session to get started
-              </p>
-            </CardContent>
-          </Card>
-        ) : (
-          entries.map((entry) => (
-            <Card key={entry.id} className="bg-elec-gray/50">
-              <CardContent className="p-4">
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="font-medium">{entry.activity}</span>
-                      <span className="text-sm text-muted-foreground">
-                        • {new Date(entry.date).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <div className="text-sm text-elec-yellow font-medium mb-1">
-                      {Math.floor(entry.duration / 60)}h {entry.duration % 60}m
-                    </div>
-                    {entry.notes && (
-                      <p className="text-sm text-muted-foreground">{entry.notes}</p>
-                    )}
-                  </div>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => handleDelete(entry.id)}
-                    className="text-red-500 hover:text-red-600"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))
-        )}
-      </div>
+      {/* Training Guidelines */}
+      <Card className="border-elec-yellow/20 bg-elec-yellow/5">
+        <CardHeader>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <Target className="h-5 w-5" />
+            20% Off-the-Job Training Guidelines
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h4 className="font-medium mb-2">What Counts as Off-the-Job Training?</h4>
+              <ul className="text-sm text-muted-foreground space-y-1">
+                <li>• College/training provider sessions</li>
+                <li>• Online learning modules</li>
+                <li>• Mentoring and coaching</li>
+                <li>• Skills workshops</li>
+                <li>• Assessment preparation</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium mb-2">Weekly Target Breakdown</h4>
+              <ul className="text-sm text-muted-foreground space-y-1">
+                <li>• Full-time (37.5h): 7.5h per week</li>
+                <li>• Part-time (30h): 6h per week</li>
+                <li>• Document all training activities</li>
+                <li>• Include reflection notes</li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
