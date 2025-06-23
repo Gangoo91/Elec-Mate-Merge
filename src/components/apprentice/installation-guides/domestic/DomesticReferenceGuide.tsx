@@ -1,317 +1,414 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { 
-  Cable, 
-  Shield, 
   FileText, 
-  Search, 
+  Calculator, 
+  AlertTriangle, 
+  Clock, 
+  MapPin,
+  Shield,
   Wrench,
-  TestTube,
-  BookOpen
+  Building
 } from "lucide-react";
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
 
 const DomesticReferenceGuide = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const cableSpecifications = [
-    { 
-      cable: "1.0mm² T&E", 
-      applications: ["Lighting circuits", "Bells", "Alarms"], 
-      maxCurrent: "13A", 
-      protection: "6A MCB",
-      notes: "Not recommended for socket circuits"
+  const advancedScenarios = [
+    {
+      scenario: "Listed Building Rewire",
+      challenges: ["Historic fabric preservation", "Hidden cable routes", "Conservation approval"],
+      solutions: ["Surface-mounted trunking in appropriate areas", "Minimal intervention routes", "Period-appropriate accessories"],
+      regulations: ["Listed Building Consent", "Conservation Area guidelines", "BS 7671 compliance"]
     },
-    { 
-      cable: "1.5mm² T&E", 
-      applications: ["Lighting circuits", "Switched outlets"], 
-      maxCurrent: "16A", 
-      protection: "6A/10A MCB",
-      notes: "Standard lighting cable"
+    {
+      scenario: "Solar PV Integration",
+      challenges: ["DC isolation requirements", "Grid connection", "Generation metering"],
+      solutions: ["DC isolator positioning", "G98/G99 compliance", "Export limitation devices"],
+      regulations: ["G98/G99 Grid Codes", "MCS installation standards", "DNO notifications"]
     },
-    { 
-      cable: "2.5mm² T&E", 
-      applications: ["Ring final", "Radial circuits", "Immersion heater"], 
-      maxCurrent: "25A", 
-      protection: "20A/32A RCBO",
-      notes: "Most common socket cable"
-    },
-    { 
-      cable: "4mm² T&E", 
-      applications: ["Radial circuits", "Small cookers"], 
-      maxCurrent: "32A", 
-      protection: "25A/32A MCB",
-      notes: "Heavy duty radial circuits"
-    },
-    { 
-      cable: "6mm² T&E", 
-      applications: ["Cooker circuits", "Large appliances"], 
-      maxCurrent: "40A", 
-      protection: "32A MCB",
-      notes: "Standard cooker supply"
-    },
-    { 
-      cable: "10mm² T&E", 
-      applications: ["Electric showers", "High-power appliances"], 
-      maxCurrent: "55A", 
-      protection: "40A/45A RCBO",
-      notes: "Up to 9kW loads"
-    },
-    { 
-      cable: "16mm² T&E", 
-      applications: ["Very high power loads", "Sub-mains"], 
-      maxCurrent: "70A", 
-      protection: "50A/63A MCB",
-      notes: "Large installation feeds"
+    {
+      scenario: "Electric Vehicle Charging",
+      challenges: ["High current demand", "Load management", "Installation location"],
+      solutions: ["Dedicated circuit design", "Smart charging systems", "Earthing arrangements"],
+      regulations: ["IET Code of Practice", "Building Regulations Part S", "BS EN 61851"]
     }
   ];
 
-  const protectionDevices = [
-    { 
-      device: "6A MCB Type B", 
-      application: "Lighting circuits", 
-      tripCurve: "3-5 × In", 
-      notes: "Standard lighting protection"
+  const practicalTechniques = [
+    {
+      technique: "Cable Route Planning",
+      description: "Efficient planning minimises cable length and installation time",
+      tips: [
+        "Use shortest practical routes avoiding obstacles",
+        "Group circuits logically to reduce containment",
+        "Plan for future access and modifications",
+        "Consider thermal effects of grouped cables"
+      ]
     },
-    { 
-      device: "10A MCB Type B", 
-      application: "Heavy lighting circuits", 
-      tripCurve: "3-5 × In", 
-      notes: "Multiple fluorescent fittings"
+    {
+      technique: "Consumer Unit Positioning",
+      description: "Strategic placement improves safety and accessibility",
+      tips: [
+        "Height: 1.2m to 1.4m from floor level",
+        "Clear access space of 600mm minimum",
+        "Away from heat sources and moisture",
+        "Consider emergency access requirements"
+      ]
     },
-    { 
-      device: "16A MCB Type B", 
-      application: "Immersion heaters", 
-      tripCurve: "3-5 × In", 
-      notes: "3kW loads maximum"
-    },
-    { 
-      device: "20A MCB Type B", 
-      application: "Radial socket circuits", 
-      tripCurve: "3-5 × In", 
-      notes: "Maximum 50m² floor area"
-    },
-    { 
-      device: "32A MCB Type B", 
-      application: "Ring final circuits, cookers", 
-      tripCurve: "3-5 × In", 
-      notes: "Most common socket protection"
-    },
-    { 
-      device: "40A RCBO", 
-      application: "Electric showers", 
-      tripCurve: "3-5 × In + 30mA", 
-      notes: "Combined overcurrent and RCD"
+    {
+      technique: "Cable Management",
+      description: "Professional installation techniques for longevity",
+      tips: [
+        "Proper support intervals per cable type",
+        "Avoid sharp bends and mechanical stress",
+        "Use appropriate containment systems",
+        "Label circuits clearly at both ends"
+      ]
     }
   ];
 
-  const testingProcedures = [
+  const commonProblems = [
     {
-      test: "Continuity of CPC",
-      method: "R1 + R2 measurement",
-      equipment: "Low resistance ohmmeter",
-      standard: "BS 7671 Regulation 612.2.1",
-      acceptableLimits: "As per BS 7671 tables"
+      problem: "High Earth Fault Loop Impedance",
+      causes: ["Poor earth connections", "Long cable runs", "High supply impedance"],
+      solutions: ["Improve earth bonding", "Upgrade cable sizes", "Install RCD protection"],
+      prevention: "Regular testing and maintenance of earth systems"
     },
     {
-      test: "Ring Final Continuity",
-      method: "End-to-end and cross tests",
-      equipment: "Low resistance ohmmeter",
-      standard: "BS 7671 Regulation 612.2.2",
-      acceptableLimits: "Consistent readings around ring"
+      problem: "RCD Nuisance Tripping",
+      causes: ["High background leakage", "Moisture ingress", "Damaged appliances"],
+      solutions: ["Split RCD protection", "Identify leakage sources", "Use RCBO protection"],
+      prevention: "Regular insulation resistance testing"
     },
     {
-      test: "Insulation Resistance",
-      method: "500V DC between conductors",
-      equipment: "Insulation resistance tester",
-      standard: "BS 7671 Regulation 612.3",
-      acceptableLimits: "≥1MΩ for circuits ≤500V"
-    },
-    {
-      test: "Polarity",
-      method: "Continuity testing",
-      equipment: "Continuity tester",
-      standard: "BS 7671 Regulation 612.6",
-      acceptableLimits: "Correct polarity throughout"
-    },
-    {
-      test: "Earth Fault Loop",
-      method: "Zs measurement",
-      equipment: "Earth loop impedance tester",
-      standard: "BS 7671 Regulation 612.9",
-      acceptableLimits: "≤ maximum Zs values"
-    },
-    {
-      test: "RCD Operation",
-      method: "Ramp and time testing",
-      equipment: "RCD tester",
-      standard: "BS 7671 Regulation 612.13",
-      acceptableLimits: "Trip 0.5-1×IΔn, time ≤300ms"
+      problem: "Voltage Drop Issues",
+      causes: ["Undersized cables", "Long circuit runs", "High load currents"],
+      solutions: ["Increase cable size", "Reduce circuit length", "Split loads"],
+      prevention: "Proper design calculations during planning"
     }
   ];
 
-  const filteredCables = cableSpecifications.filter(cable => 
-    cable.cable.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    cable.applications.some(app => app.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+  const costEstimation = [
+    {
+      category: "Full House Rewire (3-bed)",
+      breakdown: [
+        { item: "Materials (cables, accessories)", cost: "£800-£1,200" },
+        { item: "Consumer unit upgrade", cost: "£400-£800" },
+        { item: "Labour (5-7 days)", cost: "£2,000-£3,500" },
+        { item: "Testing & certification", cost: "£200-£400" },
+        { item: "Building control notification", cost: "£150-£300" }
+      ],
+      total: "£3,550-£6,200",
+      factors: ["Property size", "Accessibility", "Special requirements", "Regional variations"]
+    },
+    {
+      category: "Kitchen Rewire",
+      breakdown: [
+        { item: "Circuit cables & accessories", cost: "£300-£500" },
+        { item: "Additional RCD protection", cost: "£100-£200" },
+        { item: "Labour (2-3 days)", cost: "£800-£1,500" },
+        { item: "Testing & certification", cost: "£150-£250" }
+      ],
+      total: "£1,350-£2,450",
+      factors: ["Number of circuits", "Appliance requirements", "Access complexity"]
+    }
+  ];
 
-  const filteredProtection = protectionDevices.filter(device => 
-    device.device.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    device.application.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const regionalConsiderations = [
+    {
+      region: "Scotland",
+      specifics: ["Building Standards compliance", "Different notification procedures"],
+      contacts: ["Local Building Standards department", "SELECT registered electricians"]
+    },
+    {
+      region: "Northern Ireland",
+      specifics: ["Building Regulations (NI)", "Different competent person schemes"],
+      contacts: ["Building Control NI", "NICEIC/NAPIT schemes"]
+    },
+    {
+      region: "Wales",
+      specifics: ["Welsh Building Regulations", "Bilingual documentation"],
+      contacts: ["Local Authority Building Control", "Welsh Government guidance"]
+    }
+  ];
 
   return (
     <div className="space-y-6">
-      {/* Search Bar */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
-        <CardContent className="p-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Search cables, protection devices, or testing procedures..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
+      {/* Advanced Installation Scenarios */}
+      <Card className="border-purple-500/30 bg-elec-gray">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Building className="h-6 w-6 text-purple-400" />
+            <CardTitle className="text-purple-300">Advanced Installation Scenarios</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {advancedScenarios.map((scenario, index) => (
+            <div key={index} className="bg-purple-500/10 p-4 rounded-lg border border-purple-500/20">
+              <h4 className="font-medium text-white mb-3">{scenario.scenario}</h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div>
+                  <h5 className="font-medium text-red-300 mb-2">Challenges</h5>
+                  <ul className="space-y-1">
+                    {scenario.challenges.map((challenge, idx) => (
+                      <li key={idx} className="text-muted-foreground text-xs">• {challenge}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="font-medium text-green-300 mb-2">Solutions</h5>
+                  <ul className="space-y-1">
+                    {scenario.solutions.map((solution, idx) => (
+                      <li key={idx} className="text-muted-foreground text-xs">• {solution}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="font-medium text-blue-300 mb-2">Regulations</h5>
+                  <ul className="space-y-1">
+                    {scenario.regulations.map((regulation, idx) => (
+                      <li key={idx} className="text-muted-foreground text-xs">• {regulation}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      {/* Practical Installation Techniques */}
+      <Card className="border-blue-500/30 bg-elec-gray">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Wrench className="h-6 w-6 text-blue-400" />
+            <CardTitle className="text-blue-300">Practical Installation Techniques</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {practicalTechniques.map((technique, index) => (
+            <div key={index} className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
+              <h4 className="font-medium text-white mb-2">{technique.technique}</h4>
+              <p className="text-sm text-muted-foreground mb-3">{technique.description}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {technique.tips.map((tip, idx) => (
+                  <div key={idx} className="flex items-start gap-2 text-xs text-blue-200">
+                    <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 flex-shrink-0"></span>
+                    {tip}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      {/* Common Problems & Solutions */}
+      <Card className="border-orange-500/30 bg-elec-gray">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-6 w-6 text-orange-400" />
+            <CardTitle className="text-orange-300">Common Problems & Solutions</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {commonProblems.map((problem, index) => (
+            <div key={index} className="bg-orange-500/10 p-4 rounded-lg border border-orange-500/20">
+              <h4 className="font-medium text-white mb-3">{problem.problem}</h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm mb-3">
+                <div>
+                  <h5 className="font-medium text-red-300 mb-2">Common Causes</h5>
+                  <ul className="space-y-1">
+                    {problem.causes.map((cause, idx) => (
+                      <li key={idx} className="text-muted-foreground text-xs">• {cause}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="font-medium text-green-300 mb-2">Solutions</h5>
+                  <ul className="space-y-1">
+                    {problem.solutions.map((solution, idx) => (
+                      <li key={idx} className="text-muted-foreground text-xs">• {solution}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="font-medium text-blue-300 mb-2">Prevention</h5>
+                  <p className="text-muted-foreground text-xs">{problem.prevention}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      {/* Cost Estimation & Project Management */}
+      <Card className="border-green-500/30 bg-elec-gray">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Calculator className="h-6 w-6 text-green-400" />
+            <CardTitle className="text-green-300">Cost Estimation & Project Management</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {costEstimation.map((estimate, index) => (
+            <div key={index} className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="font-medium text-white">{estimate.category}</h4>
+                <Badge variant="outline" className="border-green-400 text-green-300">
+                  Total: {estimate.total}
+                </Badge>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h5 className="font-medium text-green-200 mb-2">Cost Breakdown</h5>
+                  <div className="space-y-1">
+                    {estimate.breakdown.map((item, idx) => (
+                      <div key={idx} className="flex justify-between text-xs">
+                        <span className="text-muted-foreground">{item.item}</span>
+                        <span className="text-green-300">{item.cost}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h5 className="font-medium text-green-200 mb-2">Cost Factors</h5>
+                  <ul className="space-y-1">
+                    {estimate.factors.map((factor, idx) => (
+                      <li key={idx} className="text-muted-foreground text-xs">• {factor}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      {/* Regional Considerations */}
+      <Card className="border-yellow-500/30 bg-elec-gray">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <MapPin className="h-6 w-6 text-yellow-400" />
+            <CardTitle className="text-yellow-300">UK Regional Considerations</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {regionalConsiderations.map((region, index) => (
+            <div key={index} className="bg-yellow-500/10 p-4 rounded-lg border border-yellow-500/20">
+              <h4 className="font-medium text-white mb-3">{region.region}</h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <h5 className="font-medium text-yellow-200 mb-2">Regional Specifics</h5>
+                  <ul className="space-y-1">
+                    {region.specifics.map((specific, idx) => (
+                      <li key={idx} className="text-muted-foreground text-xs">• {specific}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="font-medium text-yellow-200 mb-2">Key Contacts</h5>
+                  <ul className="space-y-1">
+                    {region.contacts.map((contact, idx) => (
+                      <li key={idx} className="text-muted-foreground text-xs">• {contact}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      {/* Safety Deep Dive */}
+      <Card className="border-red-500/30 bg-elec-gray">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Shield className="h-6 w-6 text-red-400" />
+            <CardTitle className="text-red-300">Safety Deep Dive</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <Alert className="border-red-500/50 bg-red-500/10">
+            <AlertTriangle className="h-4 w-4 text-red-400" />
+            <AlertDescription className="text-red-200">
+              <strong>Critical Safety Points:</strong> These safety considerations can prevent serious injury or death. Never compromise on safety procedures.
+            </AlertDescription>
+          </Alert>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+              <h4 className="font-medium text-red-200 mb-3">Before Starting Work</h4>
+              <ul className="space-y-2 text-sm">
+                <li className="text-muted-foreground">• Identify and isolate all relevant circuits</li>
+                <li className="text-muted-foreground">• Use appropriate test equipment to prove dead</li>
+                <li className="text-muted-foreground">• Lock off isolation points and retain keys</li>
+                <li className="text-muted-foreground">• Post warning notices at isolation points</li>
+                <li className="text-muted-foreground">• Wear appropriate PPE throughout</li>
+              </ul>
+            </div>
+            
+            <div className="bg-red-500/10 p-4 rounded-lg border border-red-500/20">
+              <h4 className="font-medium text-red-200 mb-3">During Installation</h4>
+              <ul className="space-y-2 text-sm">
+                <li className="text-muted-foreground">• Maintain safe isolation throughout work</li>
+                <li className="text-muted-foreground">• Use proper lifting techniques for heavy items</li>
+                <li className="text-muted-foreground">• Ensure adequate lighting and ventilation</li>
+                <li className="text-muted-foreground">• Keep work areas clean and hazard-free</li>
+                <li className="text-muted-foreground">• Never work alone on high-risk activities</li>
+              </ul>
+            </div>
           </div>
         </CardContent>
       </Card>
 
-      <Tabs defaultValue="cables" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="cables" className="flex items-center gap-2">
-            <Cable className="h-4 w-4" />
-            Cables
-          </TabsTrigger>
-          <TabsTrigger value="protection" className="flex items-center gap-2">
-            <Shield className="h-4 w-4" />
-            Protection
-          </TabsTrigger>
-          <TabsTrigger value="testing" className="flex items-center gap-2">
-            <TestTube className="h-4 w-4" />
-            Testing
-          </TabsTrigger>
-        </TabsList>
-
-        {/* Cables Tab */}
-        <TabsContent value="cables" className="space-y-4">
-          <Card className="border-elec-yellow/30 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-elec-yellow flex items-center gap-2">
-                <Cable className="h-6 w-6" />
-                Cable Specifications
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {filteredCables.map((cable, index) => (
-                <div key={index} className="bg-elec-dark/40 p-4 rounded-lg border border-elec-yellow/20">
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 mb-3">
-                    <div className="flex-1">
-                      <h4 className="font-medium text-white text-base mb-2">{cable.cable}</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                        <div>
-                          <span className="text-elec-yellow font-medium">Applications:</span>
-                          <ul className="mt-1 space-y-1">
-                            {cable.applications.map((app, idx) => (
-                              <li key={idx} className="text-muted-foreground flex items-center gap-2">
-                                <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
-                                {app}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        <div>
-                          <p className="text-muted-foreground mb-1">
-                            <span className="text-green-300">Max Current:</span> {cable.maxCurrent}
-                          </p>
-                          <p className="text-muted-foreground mb-1">
-                            <span className="text-blue-300">Protection:</span> {cable.protection}
-                          </p>
-                          <p className="text-muted-foreground">
-                            <span className="text-orange-300">Notes:</span> {cable.notes}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+      {/* Project Timeline */}
+      <Card className="border-indigo-500/30 bg-elec-gray">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Clock className="h-6 w-6 text-indigo-400" />
+            <CardTitle className="text-indigo-300">Typical Project Timeline</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="bg-indigo-500/10 p-4 rounded-lg border border-indigo-500/20">
+              <h4 className="font-medium text-white mb-3">Full House Rewire (3-bedroom)</h4>
+              <div className="grid grid-cols-1 md:grid-cols-7 gap-2 text-sm">
+                <div className="text-center">
+                  <div className="font-medium text-indigo-200">Day 1</div>
+                  <div className="text-xs text-muted-foreground">Site setup & first fix start</div>
                 </div>
-              ))}
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Protection Tab */}
-        <TabsContent value="protection" className="space-y-4">
-          <Card className="border-blue-500/30 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-blue-300 flex items-center gap-2">
-                <Shield className="h-6 w-6" />
-                Protection Devices
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {filteredProtection.map((device, index) => (
-                <div key={index} className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-3">
-                    <h4 className="font-medium text-white">{device.device}</h4>
-                    <Badge variant="outline" className="border-blue-400 text-blue-300">
-                      {device.application}
-                    </Badge>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                    <p className="text-muted-foreground">
-                      <span className="text-blue-300">Trip Curve:</span> {device.tripCurve}
-                    </p>
-                    <p className="text-muted-foreground">
-                      <span className="text-green-300">Notes:</span> {device.notes}
-                    </p>
-                  </div>
+                <div className="text-center">
+                  <div className="font-medium text-indigo-200">Day 2-3</div>
+                  <div className="text-xs text-muted-foreground">First fix installation</div>
                 </div>
-              ))}
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Testing Tab */}
-        <TabsContent value="testing" className="space-y-4">
-          <Card className="border-green-500/30 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-green-300 flex items-center gap-2">
-                <TestTube className="h-6 w-6" />
-                Testing Procedures Reference
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {testingProcedures.map((test, index) => (
-                <div key={index} className="bg-green-500/10 p-4 rounded-lg border border-green-500/20">
-                  <h4 className="font-medium text-white mb-3">{test.test}</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                    <div>
-                      <p className="text-muted-foreground mb-2">
-                        <span className="text-green-300">Method:</span> {test.method}
-                      </p>
-                      <p className="text-muted-foreground">
-                        <span className="text-blue-300">Equipment:</span> {test.equipment}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground mb-2">
-                        <span className="text-purple-300">Standard:</span> {test.standard}
-                      </p>
-                      <p className="text-muted-foreground">
-                        <span className="text-orange-300">Limits:</span> {test.acceptableLimits}
-                      </p>
-                    </div>
-                  </div>
+                <div className="text-center">
+                  <div className="font-medium text-indigo-200">Day 4</div>
+                  <div className="text-xs text-muted-foreground">Consumer unit installation</div>
                 </div>
-              ))}
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+                <div className="text-center">
+                  <div className="font-medium text-indigo-200">Day 5</div>
+                  <div className="text-xs text-muted-foreground">Second fix installation</div>
+                </div>
+                <div className="text-center">
+                  <div className="font-medium text-indigo-200">Day 6</div>
+                  <div className="text-xs text-muted-foreground">Testing & commissioning</div>
+                </div>
+                <div className="text-center">
+                  <div className="font-medium text-indigo-200">Day 7</div>
+                  <div className="text-xs text-muted-foreground">Certification & handover</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

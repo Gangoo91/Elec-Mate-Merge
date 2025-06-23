@@ -1,18 +1,29 @@
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { 
-  BookOpen, 
-  Wrench, 
+  Home, 
+  ClipboardList, 
+  Zap, 
+  TestTube, 
   Shield, 
-  Zap,
-  Search,
-  ClipboardList,
-  TestTube
+  FileText, 
+  AlertTriangle,
+  BookOpen
 } from "lucide-react";
-import { useState } from "react";
-import { Input } from "@/components/ui/input";
+import { ReactNode } from "react";
+
+interface SafetyPoint {
+  title: string;
+  content: string;
+}
+
+interface SafetyNotice {
+  title: string;
+  points: SafetyPoint[];
+}
 
 interface CableType {
   application: string;
@@ -23,7 +34,7 @@ interface CableType {
 
 interface InstallationGuideTabsProps {
   title: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ElementType;
   description: string;
   commonTypes: string[];
   cableTypes: CableType[];
@@ -31,22 +42,15 @@ interface InstallationGuideTabsProps {
   planningContent: string;
   safetyContent: string;
   complianceContent: string;
-  additionalCards?: React.ReactNode;
-  enhancedOverviewComponent?: React.ReactNode;
-  enhancedPlanningComponent?: React.ReactNode;
-  enhancedCircuitComponent?: React.ReactNode;
-  enhancedTestingComponent?: React.ReactNode;
-  enhancedReferenceComponent?: React.ReactNode;
-  safetyNotice: {
-    title: string;
-    points: Array<{
-      title: string;
-      content: string;
-    }>;
-  };
+  enhancedOverviewComponent?: ReactNode;
+  enhancedPlanningComponent?: ReactNode;
+  enhancedCircuitComponent?: ReactNode;
+  enhancedTestingComponent?: ReactNode;
+  enhancedReferenceComponent?: ReactNode;
+  safetyNotice: SafetyNotice;
 }
 
-const InstallationGuideTabs = ({ 
+const InstallationGuideTabs = ({
   title,
   icon: Icon,
   description,
@@ -56,7 +60,6 @@ const InstallationGuideTabs = ({
   planningContent,
   safetyContent,
   complianceContent,
-  additionalCards,
   enhancedOverviewComponent,
   enhancedPlanningComponent,
   enhancedCircuitComponent,
@@ -64,48 +67,43 @@ const InstallationGuideTabs = ({
   enhancedReferenceComponent,
   safetyNotice
 }: InstallationGuideTabsProps) => {
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const filteredCableTypes = cableTypes.filter(cable => 
-    cable.application.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    cable.cable.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="text-center mb-8">
+      {/* Header Section */}
+      <div className="text-center space-y-4 mb-8">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <Icon className="h-8 w-8 text-elec-yellow" />
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-elec-yellow">
-            {title}
-          </h1>
+          <div className="p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+            <Icon className="h-8 w-8 text-elec-yellow" />
+          </div>
+          <h1 className="text-3xl font-bold text-white">{title}</h1>
         </div>
-        <p className="text-muted-foreground text-base md:text-lg max-w-3xl mx-auto">
+        <p className="text-muted-foreground max-w-4xl mx-auto leading-relaxed">
           {description}
         </p>
       </div>
 
-      {/* Search Bar */}
-      <Card className="border-elec-yellow/30 bg-elec-gray">
-        <CardContent className="p-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Search cables, applications, or protection..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
+      {/* Safety Notice */}
+      <Alert className="border-red-500/50 bg-red-500/10">
+        <AlertTriangle className="h-5 w-5 text-red-400" />
+        <AlertDescription>
+          <div className="space-y-3">
+            <h3 className="font-semibold text-red-300 text-lg">{safetyNotice.title}</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {safetyNotice.points.map((point, index) => (
+                <div key={index} className="bg-red-500/10 p-3 rounded border border-red-500/20">
+                  <h4 className="font-medium text-red-200 mb-1 text-sm">{point.title}</h4>
+                  <p className="text-red-100 text-xs">{point.content}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </CardContent>
-      </Card>
+        </AlertDescription>
+      </Alert>
 
-      {/* Tabs */}
       <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-full grid-cols-5 lg:grid-cols-5">
+        <TabsList className="grid w-full grid-cols-6">
           <TabsTrigger value="overview" className="flex items-center gap-2">
-            <BookOpen className="h-4 w-4" />
+            <Home className="h-4 w-4" />
             <span className="hidden sm:inline">Overview</span>
           </TabsTrigger>
           <TabsTrigger value="planning" className="flex items-center gap-2">
@@ -120,162 +118,149 @@ const InstallationGuideTabs = ({
             <TestTube className="h-4 w-4" />
             <span className="hidden sm:inline">Testing</span>
           </TabsTrigger>
-          <TabsTrigger value="reference" className="flex items-center gap-2">
+          <TabsTrigger value="safety" className="flex items-center gap-2">
             <Shield className="h-4 w-4" />
+            <span className="hidden sm:inline">Safety</span>
+          </TabsTrigger>
+          <TabsTrigger value="reference" className="flex items-center gap-2">
+            <BookOpen className="h-4 w-4" />
             <span className="hidden sm:inline">Reference</span>
           </TabsTrigger>
         </TabsList>
 
-        {/* Overview Tab */}
         <TabsContent value="overview" className="space-y-6">
           {enhancedOverviewComponent || (
-            <>
-              <Card className="border-elec-yellow/30 bg-elec-gray">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card className="border-elec-yellow/20 bg-elec-gray">
                 <CardHeader>
                   <CardTitle className="text-elec-yellow">Common Installation Types</CardTitle>
-                  <p className="text-muted-foreground">Typical work you'll encounter</p>
                 </CardHeader>
-                <CardContent className="p-4 md:p-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <CardContent>
+                  <ul className="space-y-2">
                     {commonTypes.map((type, index) => (
-                      <div key={index} className="bg-elec-dark/40 p-4 rounded-lg">
-                        <div className="flex items-center gap-2 text-white">
-                          <Zap className="h-4 w-4 text-elec-yellow" />
-                          {type}
-                        </div>
-                      </div>
+                      <li key={index} className="flex items-start gap-2 text-sm">
+                        <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                        {type}
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </CardContent>
               </Card>
 
-              {additionalCards}
-            </>
+              <Card className="border-elec-yellow/20 bg-elec-gray">
+                <CardHeader>
+                  <CardTitle className="text-elec-yellow">Key Standards & Regulations</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {keyStandards.map((standard, index) => (
+                      <li key={index} className="flex items-start gap-2 text-sm">
+                        <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0"></span>
+                        {standard}
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
           )}
+        </TabsContent>
 
-          {/* Safety Notice */}
-          <Card className="border-orange-500/50 bg-gradient-to-r from-orange-500/10 to-red-500/10">
+        <TabsContent value="planning">
+          {enhancedPlanningComponent || (
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardHeader>
+                <CardTitle className="text-elec-yellow">Planning Process</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">{planningContent}</p>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+
+        <TabsContent value="circuits">
+          {enhancedCircuitComponent || (
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardHeader>
+                <CardTitle className="text-elec-yellow">Cable Types & Protection</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-elec-yellow/20">
+                        <th className="text-left p-2 text-elec-yellow">Application</th>
+                        <th className="text-left p-2 text-elec-yellow">Cable</th>
+                        <th className="text-left p-2 text-elec-yellow">Protection</th>
+                        <th className="text-left p-2 text-elec-yellow">Notes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {cableTypes.map((cable, index) => (
+                        <tr key={index} className="border-b border-elec-yellow/10">
+                          <td className="p-2">{cable.application}</td>
+                          <td className="p-2">
+                            <Badge variant="outline" className="border-elec-yellow text-elec-yellow">
+                              {cable.cable}
+                            </Badge>
+                          </td>
+                          <td className="p-2">
+                            <Badge variant="outline" className="border-green-500 text-green-400">
+                              {cable.protection}
+                            </Badge>
+                          </td>
+                          <td className="p-2 text-xs text-muted-foreground">{cable.notes}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+
+        <TabsContent value="testing">
+          {enhancedTestingComponent || (
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardHeader>
+                <CardTitle className="text-elec-yellow">Testing & Certification</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">{complianceContent}</p>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+
+        <TabsContent value="safety">
+          <Card className="border-red-500/30 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="text-orange-300 flex items-center gap-2">
-                <Shield className="h-6 w-6" />
-                {safetyNotice.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-4 md:p-6">
-              <div className="space-y-3">
-                {safetyNotice.points.map((point, index) => (
-                  <p key={index} className="text-sm text-muted-foreground">
-                    <strong className="text-orange-300">{point.title}:</strong> {point.content}
-                  </p>
-                ))}
+              <div className="flex items-center gap-2">
+                <Shield className="h-6 w-6 text-red-400" />
+                <CardTitle className="text-red-300">Safety Procedures</CardTitle>
               </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground leading-relaxed">{safetyContent}</p>
             </CardContent>
           </Card>
         </TabsContent>
 
-        {/* Planning Tab */}
-        <TabsContent value="planning" className="space-y-6">
-          {enhancedPlanningComponent || (
-            <Card className="border-elec-yellow/30 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="text-elec-yellow">Planning Considerations</CardTitle>
-              </CardHeader>
-              <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground">
-                  {planningContent}
-                </p>
-              </CardContent>
-            </Card>
-          )}
-        </TabsContent>
-
-        {/* Circuits Tab */}
-        <TabsContent value="circuits" className="space-y-6">
-          {enhancedCircuitComponent || (
-            <Card className="border-elec-yellow/30 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="text-elec-yellow">Circuit Design</CardTitle>
-              </CardHeader>
-              <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground">
-                  Circuit design information and cable specifications.
-                </p>
-              </CardContent>
-            </Card>
-          )}
-        </TabsContent>
-
-        {/* Testing Tab */}
-        <TabsContent value="testing" className="space-y-6">
-          {enhancedTestingComponent || (
-            <Card className="border-elec-yellow/30 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="text-elec-yellow">Testing & Certification</CardTitle>
-              </CardHeader>
-              <CardContent className="p-4">
-                <p className="text-sm text-muted-foreground">
-                  {complianceContent}
-                </p>
-              </CardContent>
-            </Card>
-          )}
-        </TabsContent>
-
-        {/* Reference Tab */}
-        <TabsContent value="reference" className="space-y-6">
+        <TabsContent value="reference">
           {enhancedReferenceComponent || (
-            <>
-              <Card className="border-elec-yellow/30 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="text-elec-yellow">Cable Types & Protection</CardTitle>
-                  <p className="text-muted-foreground">Standard specifications and protection requirements</p>
-                </CardHeader>
-                <CardContent className="p-4 md:p-6">
-                  <div className="space-y-4">
-                    {filteredCableTypes.map((cable, index) => (
-                      <div key={index} className="bg-elec-dark/40 p-4 rounded-lg border border-elec-yellow/20">
-                        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
-                          <div className="flex-1">
-                            <h4 className="font-medium text-white text-base mb-1">{cable.application}</h4>
-                            <p className="text-sm text-muted-foreground">{cable.notes}</p>
-                          </div>
-                          <div className="flex flex-col sm:flex-row gap-2">
-                            <Badge variant="outline" className="border-elec-yellow text-elec-yellow">
-                              {cable.cable}
-                            </Badge>
-                            <Badge variant="outline" className="border-green-500 text-green-400">
-                              {cable.protection}
-                            </Badge>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  {filteredCableTypes.length === 0 && searchTerm && (
-                    <div className="text-center py-8 text-muted-foreground">
-                      No cables found matching "{searchTerm}"
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-
-              <Card className="border-elec-yellow/30 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="text-elec-yellow">Key Standards & Regulations</CardTitle>
-                  <p className="text-muted-foreground">Essential compliance requirements</p>
-                </CardHeader>
-                <CardContent className="p-4 md:p-6">
-                  <div className="space-y-3">
-                    {keyStandards.map((standard, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                        <Shield className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                        <span className="text-muted-foreground">{standard}</span>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </>
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <FileText className="h-6 w-6 text-elec-yellow" />
+                  <CardTitle className="text-elec-yellow">Reference Information</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground">Additional reference materials and resources will be available here.</p>
+              </CardContent>
+            </Card>
           )}
         </TabsContent>
       </Tabs>
