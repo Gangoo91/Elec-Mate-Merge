@@ -1,35 +1,24 @@
 
 import { useState } from "react";
-import { TimeEntry } from "@/types/time-tracking";
-import { PortfolioCategory } from "@/types/portfolio";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { TimeEntry } from "@/types/time-tracking";
+import { PortfolioCategory } from "@/types/portfolio";
 import { Badge } from "@/components/ui/badge";
-import { X, Plus } from "lucide-react";
-import { useUniversalPortfolio } from "@/hooks/portfolio/useUniversalPortfolio";
+import { X } from "lucide-react";
+import { UniversalActivityData } from "@/hooks/portfolio/useUniversalPortfolio";
 
 interface TimeEntryToPortfolioDialogProps {
   timeEntry: TimeEntry;
   categories: PortfolioCategory[];
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (portfolioData: any) => void;
-  isLoading?: boolean;
+  onSubmit: (data: any) => void;
+  isLoading: boolean;
 }
 
 const TimeEntryToPortfolioDialog = ({
@@ -38,110 +27,74 @@ const TimeEntryToPortfolioDialog = ({
   isOpen,
   onClose,
   onSubmit,
-  isLoading = false
+  isLoading
 }: TimeEntryToPortfolioDialogProps) => {
-  const { assignSmartCategory, generateSmartSkills } = useUniversalPortfolio();
-  
-  // Create universal activity data for smart suggestions
-  const universalActivity = {
-    title: timeEntry.activity,
-    description: timeEntry.notes || 'Off-the-job training activity',
-    activityType: timeEntry.isQuiz ? 'quiz' : 'time-entry' as const,
-    timeSpent: timeEntry.duration,
-    date: timeEntry.date
-  };
-
-  // Get smart suggestions
-  const suggestedCategory = assignSmartCategory(universalActivity);
-  const suggestedSkills = generateSmartSkills(universalActivity);
-
   const [formData, setFormData] = useState({
     title: timeEntry.activity,
-    description: timeEntry.notes || '',
-    categoryId: suggestedCategory.id,
-    skills: suggestedSkills,
-    reflection: `Completed ${timeEntry.activity} as part of my off-the-job training. This activity has contributed to my professional development and enhanced my understanding of electrical practices.`,
-    learningOutcomes: [
-      'Applied practical skills in real-world context',
-      'Enhanced technical competency'
-    ],
-    assessmentCriteria: [
-      'Demonstrated safe working practices',
-      'Applied appropriate techniques and methods'
-    ],
-    tags: [timeEntry.isQuiz ? 'quiz' : 'practical-work', 'off-the-job-training']
+    description: timeEntry.notes || "",
+    categoryId: "",
+    skills: [] as string[],
+    reflection: "",
+    learningOutcomes: [] as string[],
+    assessmentCriteria: [] as string[],
+    tags: [] as string[]
   });
 
   const [newSkill, setNewSkill] = useState("");
-  const [newLearningOutcome, setNewLearningOutcome] = useState("");
-  const [newAssessmentCriteria, setNewAssessmentCriteria] = useState("");
+  const [newOutcome, setNewOutcome] = useState("");
+  const [newCriterion, setNewCriterion] = useState("");
   const [newTag, setNewTag] = useState("");
 
-  const handleAddSkill = () => {
-    if (newSkill.trim() && !formData.skills.includes(newSkill.trim())) {
-      setFormData(prev => ({
-        ...prev,
-        skills: [...prev.skills, newSkill.trim()]
-      }));
-      setNewSkill("");
+  // Generate smart suggestions based on time entry
+  const generateSmartSuggestions = () => {
+    const activity = timeEntry.activity.toLowerCase();
+    const notes = timeEntry.notes?.toLowerCase() || "";
+    
+    // Smart title suggestion
+    const smartTitle = `${timeEntry.activity} - ${new Date(timeEntry.date).toLocaleDateString()}`;
+    
+    // Smart description based on activity type
+    let smartDescription = "";
+    if (timeEntry.isQuiz && timeEntry.score !== undefined) {
+      smartDescription = `Completed quiz with ${Math.round((timeEntry.score / (timeEntry.totalQuestions || 1)) * 100)}% score. ${timeEntry.notes || ""}`;
+    } else {
+      smartDescription = `Completed ${timeEntry.activity.toLowerCase()} activity lasting ${Math.floor(timeEntry.duration / 60)}h ${timeEntry.duration % 60}m. ${timeEntry.notes || ""}`;
     }
+
+    const activityData: UniversalActivityData = {
+      title: smartTitle,
+      description: smartDescription,
+      activityType: "time-entry" as const,
+      timeSpent: timeEntry.duration,
+      date: timeEntry.date
+    };
+
+    return activityData;
   };
 
-  const handleRemoveSkill = (skillToRemove: string) => {
+  const handleSmartFill = () => {
+    const suggestions = generateSmartSuggestions();
     setFormData(prev => ({
       ...prev,
-      skills: prev.skills.filter(skill => skill !== skillToRemove)
+      title: suggestions.title,
+      description: suggestions.description
     }));
   };
 
-  const handleAddLearningOutcome = () => {
-    if (newLearningOutcome.trim() && !formData.learningOutcomes.includes(newLearningOutcome.trim())) {
+  const addItem = (type: 'skills' | 'learningOutcomes' | 'assessmentCriteria' | 'tags', value: string, setter: (value: string) => void) => {
+    if (value.trim()) {
       setFormData(prev => ({
         ...prev,
-        learningOutcomes: [...prev.learningOutcomes, newLearningOutcome.trim()]
+        [type]: [...prev[type], value.trim()]
       }));
-      setNewLearningOutcome("");
+      setter("");
     }
   };
 
-  const handleRemoveLearningOutcome = (outcomeToRemove: string) => {
+  const removeItem = (type: 'skills' | 'learningOutcomes' | 'assessmentCriteria' | 'tags', index: number) => {
     setFormData(prev => ({
       ...prev,
-      learningOutcomes: prev.learningOutcomes.filter(outcome => outcome !== outcomeToRemove)
-    }));
-  };
-
-  const handleAddAssessmentCriteria = () => {
-    if (newAssessmentCriteria.trim() && !formData.assessmentCriteria.includes(newAssessmentCriteria.trim())) {
-      setFormData(prev => ({
-        ...prev,
-        assessmentCriteria: [...prev.assessmentCriteria, newAssessmentCriteria.trim()]
-      }));
-      setNewAssessmentCriteria("");
-    }
-  };
-
-  const handleRemoveAssessmentCriteria = (criteriaToRemove: string) => {
-    setFormData(prev => ({
-      ...prev,
-      assessmentCriteria: prev.assessmentCriteria.filter(criteria => criteria !== criteriaToRemove)
-    }));
-  };
-
-  const handleAddTag = () => {
-    if (newTag.trim() && !formData.tags.includes(newTag.trim())) {
-      setFormData(prev => ({
-        ...prev,
-        tags: [...prev.tags, newTag.trim()]
-      }));
-      setNewTag("");
-    }
-  };
-
-  const handleRemoveTag = (tagToRemove: string) => {
-    setFormData(prev => ({
-      ...prev,
-      tags: prev.tags.filter(tag => tag !== tagToRemove)
+      [type]: prev[type].filter((_, i) => i !== index)
     }));
   };
 
@@ -154,25 +107,28 @@ const TimeEntryToPortfolioDialog = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Add Time Entry to Portfolio</DialogTitle>
+          <DialogTitle>Add to Portfolio</DialogTitle>
+          <p className="text-sm text-muted-foreground">
+            Convert this time entry into a detailed portfolio entry
+          </p>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Smart suggestions notice */}
-          <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-3">
-            <p className="text-sm text-elec-yellow">
-              💡 Smart suggestions have been applied based on your activity content. You can modify these as needed.
-            </p>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Smart Fill Button */}
+          <div className="flex justify-end">
+            <Button type="button" variant="outline" size="sm" onClick={handleSmartFill}>
+              Smart Fill
+            </Button>
           </div>
 
           {/* Title */}
           <div className="space-y-2">
-            <Label htmlFor="title">Portfolio Entry Title</Label>
+            <Label htmlFor="title">Title</Label>
             <Input
               id="title"
               value={formData.title}
               onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-              className="bg-elec-gray"
+              placeholder="Enter portfolio entry title"
               required
             />
           </div>
@@ -184,8 +140,8 @@ const TimeEntryToPortfolioDialog = ({
               id="description"
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              className="bg-elec-gray min-h-[80px]"
-              placeholder="Describe what you did and what you learned..."
+              placeholder="Describe what you did and what you learned"
+              rows={3}
               required
             />
           </div>
@@ -193,23 +149,14 @@ const TimeEntryToPortfolioDialog = ({
           {/* Category */}
           <div className="space-y-2">
             <Label htmlFor="category">Category</Label>
-            <Select 
-              value={formData.categoryId} 
-              onValueChange={(value) => setFormData(prev => ({ ...prev, categoryId: value }))}
-            >
-              <SelectTrigger className="bg-elec-gray">
-                <SelectValue />
+            <Select value={formData.categoryId} onValueChange={(value) => setFormData(prev => ({ ...prev, categoryId: value }))}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a category" />
               </SelectTrigger>
               <SelectContent>
-                {categories.map((category) => (
+                {categories.map(category => (
                   <SelectItem key={category.id} value={category.id}>
-                    <div className="flex items-center gap-2">
-                      <div 
-                        className="w-3 h-3 rounded-full" 
-                        style={{ backgroundColor: category.color }}
-                      />
-                      {category.name}
-                    </div>
+                    {category.name}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -219,56 +166,22 @@ const TimeEntryToPortfolioDialog = ({
           {/* Skills */}
           <div className="space-y-2">
             <Label>Skills Demonstrated</Label>
-            <div className="flex flex-wrap gap-2 mb-2">
-              {formData.skills.map((skill) => (
-                <Badge key={skill} variant="secondary" className="flex items-center gap-1">
-                  {skill}
-                  <X 
-                    className="h-3 w-3 cursor-pointer hover:text-red-400" 
-                    onClick={() => handleRemoveSkill(skill)}
-                  />
-                </Badge>
-              ))}
-            </div>
             <div className="flex gap-2">
               <Input
                 value={newSkill}
                 onChange={(e) => setNewSkill(e.target.value)}
-                placeholder="Add a skill..."
-                className="bg-elec-gray"
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddSkill())}
+                placeholder="Add a skill"
+                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addItem('skills', newSkill, setNewSkill))}
               />
-              <Button type="button" onClick={handleAddSkill} size="sm">
-                <Plus className="h-4 w-4" />
-              </Button>
+              <Button type="button" onClick={() => addItem('skills', newSkill, setNewSkill)}>Add</Button>
             </div>
-          </div>
-
-          {/* Learning Outcomes */}
-          <div className="space-y-2">
-            <Label>Learning Outcomes</Label>
-            <div className="space-y-1 mb-2">
-              {formData.learningOutcomes.map((outcome, index) => (
-                <div key={index} className="flex items-center gap-2 text-sm">
-                  <span className="flex-1">{outcome}</span>
-                  <X 
-                    className="h-3 w-3 cursor-pointer hover:text-red-400" 
-                    onClick={() => handleRemoveLearningOutcome(outcome)}
-                  />
-                </div>
+            <div className="flex flex-wrap gap-2">
+              {formData.skills.map((skill, index) => (
+                <Badge key={index} variant="secondary" className="gap-1">
+                  {skill}
+                  <X className="h-3 w-3 cursor-pointer" onClick={() => removeItem('skills', index)} />
+                </Badge>
               ))}
-            </div>
-            <div className="flex gap-2">
-              <Input
-                value={newLearningOutcome}
-                onChange={(e) => setNewLearningOutcome(e.target.value)}
-                placeholder="Add learning outcome..."
-                className="bg-elec-gray"
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddLearningOutcome())}
-              />
-              <Button type="button" onClick={handleAddLearningOutcome} size="sm">
-                <Plus className="h-4 w-4" />
-              </Button>
             </div>
           </div>
 
@@ -279,19 +192,84 @@ const TimeEntryToPortfolioDialog = ({
               id="reflection"
               value={formData.reflection}
               onChange={(e) => setFormData(prev => ({ ...prev, reflection: e.target.value }))}
-              className="bg-elec-gray min-h-[100px]"
-              placeholder="Reflect on what you learned and how it applies to your role..."
-              required
+              placeholder="Reflect on what you learned and how you can improve"
+              rows={3}
             />
           </div>
 
+          {/* Learning Outcomes */}
+          <div className="space-y-2">
+            <Label>Learning Outcomes</Label>
+            <div className="flex gap-2">
+              <Input
+                value={newOutcome}
+                onChange={(e) => setNewOutcome(e.target.value)}
+                placeholder="Add a learning outcome"
+                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addItem('learningOutcomes', newOutcome, setNewOutcome))}
+              />
+              <Button type="button" onClick={() => addItem('learningOutcomes', newOutcome, setNewOutcome)}>Add</Button>
+            </div>
+            <div className="space-y-1">
+              {formData.learningOutcomes.map((outcome, index) => (
+                <div key={index} className="flex items-center justify-between p-2 bg-muted rounded text-sm">
+                  {outcome}
+                  <X className="h-3 w-3 cursor-pointer" onClick={() => removeItem('learningOutcomes', index)} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Assessment Criteria */}
+          <div className="space-y-2">
+            <Label>Assessment Criteria Met</Label>
+            <div className="flex gap-2">
+              <Input
+                value={newCriterion}
+                onChange={(e) => setNewCriterion(e.target.value)}
+                placeholder="Add assessment criteria"
+                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addItem('assessmentCriteria', newCriterion, setNewCriterion))}
+              />
+              <Button type="button" onClick={() => addItem('assessmentCriteria', newCriterion, setNewCriterion)}>Add</Button>
+            </div>
+            <div className="space-y-1">
+              {formData.assessmentCriteria.map((criterion, index) => (
+                <div key={index} className="flex items-center justify-between p-2 bg-muted rounded text-sm">
+                  {criterion}
+                  <X className="h-3 w-3 cursor-pointer" onClick={() => removeItem('assessmentCriteria', index)} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Tags */}
+          <div className="space-y-2">
+            <Label>Tags</Label>
+            <div className="flex gap-2">
+              <Input
+                value={newTag}
+                onChange={(e) => setNewTag(e.target.value)}
+                placeholder="Add a tag"
+                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addItem('tags', newTag, setNewTag))}
+              />
+              <Button type="button" onClick={() => addItem('tags', newTag, setNewTag)}>Add</Button>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {formData.tags.map((tag, index) => (
+                <Badge key={index} variant="outline" className="gap-1">
+                  #{tag}
+                  <X className="h-3 w-3 cursor-pointer" onClick={() => removeItem('tags', index)} />
+                </Badge>
+              ))}
+            </div>
+          </div>
+
           {/* Submit Buttons */}
-          <div className="flex gap-3 pt-4">
-            <Button type="button" variant="outline" onClick={onClose} className="flex-1">
+          <div className="flex gap-2 pt-4">
+            <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit" disabled={isLoading} className="flex-1">
-              {isLoading ? "Adding to Portfolio..." : "Add to Portfolio"}
+            <Button type="submit" disabled={isLoading || !formData.title || !formData.description}>
+              {isLoading ? "Adding..." : "Add to Portfolio"}
             </Button>
           </div>
         </form>

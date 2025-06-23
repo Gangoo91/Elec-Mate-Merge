@@ -12,8 +12,8 @@ import {
 
 interface UniversalPortfolioButtonProps {
   activityData: UniversalActivityData;
-  variant?: "default" | "outline" | "ghost" | "icon";
-  size?: "default" | "sm" | "lg" | "icon";
+  variant?: "default" | "outline" | "ghost";
+  size?: "default" | "sm" | "lg";
   showSmartLabel?: boolean;
   className?: string;
 }
@@ -53,14 +53,14 @@ const UniversalPortfolioButton = ({
       ) : (
         <>
           <Plus className="h-3 w-3" />
-          {size === "icon" ? "" : "Add to Portfolio"}
+          Add to Portfolio
           {showSmartLabel && <Sparkles className="h-3 w-3 text-elec-yellow" />}
         </>
       )}
     </Button>
   );
 
-  if (showSmartLabel && size !== "icon") {
+  if (showSmartLabel) {
     return (
       <TooltipProvider>
         <Tooltip>
