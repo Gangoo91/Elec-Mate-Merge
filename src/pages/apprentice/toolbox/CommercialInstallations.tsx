@@ -54,7 +54,7 @@ const CommercialInstallations = () => {
         enhancedPlanningComponent={<CommercialPlanningSection />}
         enhancedCircuitComponent={<CommercialCircuitGuide />}
         enhancedReferenceComponent={<CommercialReferenceGuide />}
-        safetyNotice={{
+        bottomSafetyNotice={{
           title: "Commercial Installation Requirements",
           points: [
             {

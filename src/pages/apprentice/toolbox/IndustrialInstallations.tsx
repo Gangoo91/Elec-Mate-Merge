@@ -57,7 +57,7 @@ const IndustrialInstallations = () => {
         enhancedCircuitComponent={<IndustrialCircuitGuide />}
         enhancedTestingComponent={<IndustrialTestingGuide />}
         enhancedReferenceComponent={<IndustrialReferenceGuide />}
-        safetyNotice={{
+        bottomSafetyNotice={{
           title: "Critical Industrial Safety Requirements",
           points: [
             {

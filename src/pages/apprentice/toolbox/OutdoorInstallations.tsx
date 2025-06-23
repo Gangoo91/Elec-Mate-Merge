@@ -57,7 +57,7 @@ const OutdoorInstallations = () => {
         enhancedCircuitComponent={<OutdoorCircuitGuide />}
         enhancedTestingComponent={<OutdoorTestingGuide />}
         enhancedReferenceComponent={<OutdoorReferenceGuide />}
-        safetyNotice={{
+        bottomSafetyNotice={{
           title: "Essential Outdoor Installation Safety",
           points: [
             {
