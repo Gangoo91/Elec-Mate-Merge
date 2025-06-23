@@ -9,12 +9,17 @@ import {
   BarChart3, 
   Download,
   Target,
-  BookOpen
+  BookOpen,
+  Wrench,
+  Building
 } from "lucide-react";
 import { usePortfolioData } from "@/hooks/portfolio/usePortfolioData";
 import PortfolioCategoriesOverview from "./PortfolioCategoriesOverview";
 import PortfolioEntriesList from "./PortfolioEntriesList";
 import PortfolioEntryForm from "./PortfolioEntryForm";
+import LearningModuleContent from "./LearningModuleContent";
+import DigitalToolsIntegration from "./DigitalToolsIntegration";
+import IndustrySpecificSections from "./IndustrySpecificSections";
 
 const PortfolioManager = () => {
   const { entries, categories, analytics, isLoading, addEntry, updateEntry, deleteEntry } = usePortfolioData();
@@ -104,7 +109,7 @@ const PortfolioManager = () => {
 
       {/* Main Content */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="overview" className="flex items-center gap-2">
             <BarChart3 className="h-4 w-4" />
             Overview
@@ -113,9 +118,17 @@ const PortfolioManager = () => {
             <FileText className="h-4 w-4" />
             Entries ({entries.length})
           </TabsTrigger>
-          <TabsTrigger value="export" className="flex items-center gap-2">
-            <Download className="h-4 w-4" />
-            Export
+          <TabsTrigger value="documentation" className="flex items-center gap-2">
+            <BookOpen className="h-4 w-4" />
+            Documentation
+          </TabsTrigger>
+          <TabsTrigger value="tools" className="flex items-center gap-2">
+            <Wrench className="h-4 w-4" />
+            Tools
+          </TabsTrigger>
+          <TabsTrigger value="industry" className="flex items-center gap-2">
+            <Building className="h-4 w-4" />
+            Industry
           </TabsTrigger>
         </TabsList>
 
@@ -131,33 +144,16 @@ const PortfolioManager = () => {
           />
         </TabsContent>
 
-        <TabsContent value="export" className="mt-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Export Portfolio</CardTitle>
-              <p className="text-muted-foreground">
-                Export your portfolio for submission to tutors, employers, or awarding bodies
-              </p>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Button variant="outline" className="h-20 flex-col gap-2">
-                  <Download className="h-6 w-6" />
-                  Export as PDF
-                  <span className="text-xs text-muted-foreground">Complete portfolio report</span>
-                </Button>
-                <Button variant="outline" className="h-20 flex-col gap-2">
-                  <FileText className="h-6 w-6" />
-                  Export as Word
-                  <span className="text-xs text-muted-foreground">Editable document format</span>
-                </Button>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Export functionality will generate a comprehensive report including all your portfolio entries, 
-                evidence files, and progress summaries formatted for professional submission.
-              </p>
-            </CardContent>
-          </Card>
+        <TabsContent value="documentation" className="mt-6">
+          <LearningModuleContent />
+        </TabsContent>
+
+        <TabsContent value="tools" className="mt-6">
+          <DigitalToolsIntegration />
+        </TabsContent>
+
+        <TabsContent value="industry" className="mt-6">
+          <IndustrySpecificSections />
         </TabsContent>
       </Tabs>
 
