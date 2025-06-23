@@ -2,16 +2,40 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Clock, Calendar, TrendingUp, FileDown } from "lucide-react";
+import { Clock, Calendar, TrendingUp, FileDown, Plus } from "lucide-react";
 import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
+import { useTimeEntriesFiltering } from "@/hooks/time-tracking/useTimeEntriesFiltering";
 import EntriesList from "@/components/apprentice/time-tracking/EntriesList";
 import TimeEntryForm from "@/components/apprentice/time-tracking/TimeEntryForm";
+import TimeEntriesFilter from "@/components/apprentice/time-tracking/TimeEntriesFilter";
+import TimeEntriesPagination from "@/components/apprentice/time-tracking/TimeEntriesPagination";
 import { useToast } from "@/hooks/use-toast";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 const TimeTrackingTab = () => {
   const { entries, totalTime, addTimeEntry, isLoading } = useTimeEntries();
   const [isExporting, setIsExporting] = useState(false);
+  const [showAddDialog, setShowAddDialog] = useState(false);
   const { toast } = useToast();
+
+  const {
+    paginatedEntries,
+    filteredEntries,
+    availableActivities,
+    searchQuery,
+    activityFilter,
+    dateRangeFilter,
+    typeFilter,
+    hasActiveFilters,
+    currentPage,
+    totalPages,
+    itemsPerPage,
+    totalItems,
+    handleFilterChange,
+    clearFilters,
+    handlePageChange,
+    handleItemsPerPageChange
+  } = useTimeEntriesFiltering(entries);
 
   // Calculate weekly progress (assuming 20% of 37.5 hours per week = 7.5 hours)
   const weeklyTargetMinutes = 7.5 * 60; // 450 minutes
@@ -84,7 +108,6 @@ const TimeTrackingTab = () => {
         }))
       };
 
-      // Create and download the file
       const dataStr = JSON.stringify(exportData, null, 2);
       const dataBlob = new Blob([dataStr], { type: 'application/json' });
       
@@ -115,6 +138,11 @@ const TimeTrackingTab = () => {
     }
   };
 
+  const handleAddEntry = (duration: number, activity: string, notes: string) => {
+    addTimeEntry(duration, activity, notes);
+    setShowAddDialog(false);
+  };
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -125,7 +153,7 @@ const TimeTrackingTab = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header with Export Button */}
+      {/* Header with Actions */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h2 className="text-2xl font-bold mb-2">Time Tracking</h2>
@@ -133,14 +161,31 @@ const TimeTrackingTab = () => {
             Track your off-the-job training hours and monitor progress towards your 20% requirement
           </p>
         </div>
-        <Button 
-          onClick={exportTimeEntries}
-          disabled={isExporting || entries.length === 0}
-          className="bg-green-600 hover:bg-green-700 text-white"
-        >
-          <FileDown className="h-4 w-4 mr-2" />
-          {isExporting ? 'Exporting...' : 'Export Time Entries'}
-        </Button>
+        <div className="flex gap-2">
+          <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
+            <DialogTrigger asChild>
+              <Button className="bg-elec-yellow hover:bg-elec-yellow/90 text-black">
+                <Plus className="h-4 w-4 mr-2" />
+                Add Entry
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Add Time Entry</DialogTitle>
+              </DialogHeader>
+              <TimeEntryForm onAddEntry={handleAddEntry} />
+            </DialogContent>
+          </Dialog>
+          
+          <Button 
+            onClick={exportTimeEntries}
+            disabled={isExporting || entries.length === 0}
+            className="bg-green-600 hover:bg-green-700 text-white"
+          >
+            <FileDown className="h-4 w-4 mr-2" />
+            {isExporting ? 'Exporting...' : 'Export'}
+          </Button>
+        </div>
       </div>
 
       {/* Summary Cards */}
@@ -182,38 +227,61 @@ const TimeTrackingTab = () => {
         <Card className="border-purple-500/50 bg-purple-500/10">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-purple-300">
-              Activity Types
+              {hasActiveFilters ? 'Filtered' : 'Activity Types'}
             </CardTitle>
             <TrendingUp className="h-4 w-4 text-purple-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-purple-100">
-              {Object.keys(activityStats).length}
+              {hasActiveFilters ? totalItems : Object.keys(activityStats).length}
             </div>
             <p className="text-xs text-purple-300 mt-1">
-              Different training activities
+              {hasActiveFilters ? 'entries match filters' : 'Different training activities'}
             </p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Time Entry Form */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-elec-yellow">Add Time Entry</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <TimeEntryForm onAddEntry={addTimeEntry} />
-        </CardContent>
-      </Card>
+      {/* Filters */}
+      <TimeEntriesFilter
+        onSearchChange={(value) => handleFilterChange("search", value)}
+        onActivityFilter={(value) => handleFilterChange("activity", value)}
+        onDateRangeFilter={(value) => handleFilterChange("dateRange", value)}
+        onTypeFilter={(value) => handleFilterChange("type", value)}
+        searchValue={searchQuery}
+        activityFilter={activityFilter}
+        dateRangeFilter={dateRangeFilter}
+        typeFilter={typeFilter}
+        availableActivities={availableActivities}
+        onClearFilters={clearFilters}
+        hasActiveFilters={hasActiveFilters}
+      />
 
       {/* Entries List */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-elec-yellow">Recent Entries</CardTitle>
+          <CardTitle className="text-elec-yellow">
+            Time Entries
+            {hasActiveFilters && (
+              <span className="text-sm font-normal text-muted-foreground ml-2">
+                ({totalItems} of {entries.length} entries)
+              </span>
+            )}
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <EntriesList entries={entries} />
+          <EntriesList entries={paginatedEntries} />
+          
+          {totalPages > 1 && (
+            <TimeEntriesPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              itemsPerPage={itemsPerPage}
+              totalItems={totalItems}
+              onPageChange={handlePageChange}
+              onItemsPerPageChange={handleItemsPerPageChange}
+            />
+          )}
         </CardContent>
       </Card>
     </div>
