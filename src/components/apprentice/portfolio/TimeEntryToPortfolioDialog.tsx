@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -6,35 +7,45 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Slider } from "@/components/ui/slider";
 import { X, Plus } from "lucide-react";
-import { PortfolioEntry, PortfolioCategory } from "@/types/portfolio";
+import { TimeEntry } from "@/types/time-tracking";
+import { PortfolioCategory } from "@/types/portfolio";
 
-interface PortfolioEntryFormProps {
+interface TimeEntryToPortfolioDialogProps {
+  timeEntry: TimeEntry;
   categories: PortfolioCategory[];
-  initialData?: PortfolioEntry;
-  onSubmit: (entryData: Omit<PortfolioEntry, 'id' | 'dateCreated'>) => void;
-  onCancel: () => void;
+  isOpen: boolean;
+  onClose: () => void;
+  onSubmit: (portfolioData: {
+    title: string;
+    description: string;
+    categoryId: string;
+    skills: string[];
+    reflection: string;
+    learningOutcomes: string[];
+    assessmentCriteria: string[];
+    tags: string[];
+  }) => void;
+  isLoading?: boolean;
 }
 
-const PortfolioEntryForm = ({ 
-  categories, 
-  initialData, 
-  onSubmit, 
-  onCancel 
-}: PortfolioEntryFormProps) => {
+const TimeEntryToPortfolioDialog = ({
+  timeEntry,
+  categories,
+  isOpen,
+  onClose,
+  onSubmit,
+  isLoading = false
+}: TimeEntryToPortfolioDialogProps) => {
   const [formData, setFormData] = useState({
-    title: initialData?.title || '',
-    description: initialData?.description || '',
-    categoryId: initialData?.category.id || '',
-    skills: initialData?.skills || [],
-    reflection: initialData?.reflection || '',
-    learningOutcomes: initialData?.learningOutcomes || [],
-    assessmentCriteria: initialData?.assessmentCriteria || [],
-    tags: initialData?.tags || [],
-    timeSpent: initialData?.timeSpent || 60,
-    selfAssessment: initialData?.selfAssessment || 3,
-    status: initialData?.status || 'draft' as const
+    title: timeEntry.activity || '',
+    description: timeEntry.notes || '',
+    categoryId: '',
+    skills: [] as string[],
+    reflection: '',
+    learningOutcomes: [] as string[],
+    assessmentCriteria: [] as string[],
+    tags: [] as string[]
   });
 
   const [newSkill, setNewSkill] = useState('');
@@ -61,47 +72,33 @@ const PortfolioEntryForm = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const selectedCategory = categories.find(cat => cat.id === formData.categoryId);
-    if (!selectedCategory || !formData.title.trim()) {
+    if (!formData.title.trim() || !formData.categoryId) {
       return;
     }
+    onSubmit(formData);
+  };
 
-    const entryData: Omit<PortfolioEntry, 'id' | 'dateCreated'> = {
-      title: formData.title,
-      description: formData.description,
-      category: selectedCategory,
-      skills: formData.skills,
-      reflection: formData.reflection,
-      dateCompleted: formData.status === 'completed' ? new Date().toISOString().split('T')[0] : undefined,
-      evidenceFiles: initialData?.evidenceFiles || [],
-      tags: formData.tags,
-      assessmentCriteria: formData.assessmentCriteria,
-      learningOutcomes: formData.learningOutcomes,
-      supervisorFeedback: initialData?.supervisorFeedback || '',
-      selfAssessment: formData.selfAssessment,
-      status: formData.status,
-      timeSpent: formData.timeSpent,
-      awardingBodyStandards: initialData?.awardingBodyStandards || []
-    };
-
-    onSubmit(entryData);
+  const formatDuration = (minutes: number) => {
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
   };
 
   return (
-    <Dialog open={true} onOpenChange={onCancel}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>
-            {initialData ? 'Edit Portfolio Entry' : 'Add Portfolio Entry'}
-          </DialogTitle>
+          <DialogTitle>Add to Portfolio</DialogTitle>
+          <p className="text-sm text-muted-foreground">
+            Convert your time entry "{timeEntry.activity}" ({formatDuration(timeEntry.duration)}) into a portfolio entry.
+          </p>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Basic Information */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-4">
             <div>
-              <Label htmlFor="title">Title *</Label>
+              <Label htmlFor="title">Portfolio Entry Title *</Label>
               <Input
                 id="title"
                 value={formData.title}
@@ -130,60 +127,28 @@ const PortfolioEntryForm = ({
                 </SelectContent>
               </Select>
             </div>
-          </div>
 
-          <div>
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              value={formData.description}
-              onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              placeholder="Describe your learning activity or experience"
-              rows={3}
-            />
-          </div>
-
-          {/* Time and Assessment */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label>Time Spent (minutes)</Label>
-              <Input
-                type="number"
-                value={formData.timeSpent}
-                onChange={(e) => setFormData(prev => ({ ...prev, timeSpent: parseInt(e.target.value) || 0 }))}
-                min={0}
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                value={formData.description}
+                onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                placeholder="Describe what you did during this training session"
+                rows={3}
               />
             </div>
 
             <div>
-              <Label>Self Assessment: {formData.selfAssessment}/5</Label>
-              <Slider
-                value={[formData.selfAssessment]}
-                onValueChange={(value) => setFormData(prev => ({ ...prev, selfAssessment: value[0] }))}
-                max={5}
-                min={1}
-                step={1}
-                className="mt-2"
+              <Label htmlFor="reflection">Reflection</Label>
+              <Textarea
+                id="reflection"
+                value={formData.reflection}
+                onChange={(e) => setFormData(prev => ({ ...prev, reflection: e.target.value }))}
+                placeholder="Reflect on what you learned and how you can apply it"
+                rows={3}
               />
             </div>
-          </div>
-
-          <div>
-            <Label htmlFor="status">Status</Label>
-            <Select 
-              value={formData.status} 
-              onValueChange={(value: any) => setFormData(prev => ({ ...prev, status: value }))}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="draft">Draft</SelectItem>
-                <SelectItem value="in-progress">In Progress</SelectItem>
-                <SelectItem value="completed">Completed</SelectItem>
-                <SelectItem value="reviewed">Reviewed</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
 
           {/* Skills */}
@@ -310,24 +275,13 @@ const PortfolioEntryForm = ({
             </div>
           </div>
 
-          <div>
-            <Label htmlFor="reflection">Reflection</Label>
-            <Textarea
-              id="reflection"
-              value={formData.reflection}
-              onChange={(e) => setFormData(prev => ({ ...prev, reflection: e.target.value }))}
-              placeholder="Reflect on what you learned and how you can apply it"
-              rows={4}
-            />
-          </div>
-
           {/* Actions */}
           <div className="flex gap-2 justify-end">
-            <Button type="button" variant="outline" onClick={onCancel}>
+            <Button type="button" variant="outline" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="submit" disabled={!formData.title.trim() || !formData.categoryId}>
-              {initialData ? 'Update Entry' : 'Add Entry'}
+            <Button type="submit" disabled={isLoading || !formData.title.trim() || !formData.categoryId}>
+              {isLoading ? "Adding..." : "Add to Portfolio"}
             </Button>
           </div>
         </form>
@@ -336,4 +290,4 @@ const PortfolioEntryForm = ({
   );
 };
 
-export default PortfolioEntryForm;
+export default TimeEntryToPortfolioDialog;

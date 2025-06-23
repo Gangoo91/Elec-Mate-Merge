@@ -1,14 +1,21 @@
 
+import { useState } from "react";
 import { TimeEntry } from "@/types/time-tracking";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Activity } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Activity, Plus } from "lucide-react";
+import { useTimeToPortfolio } from "@/hooks/portfolio/useTimeToPortfolio";
+import TimeEntryToPortfolioDialog from "@/components/apprentice/portfolio/TimeEntryToPortfolioDialog";
 
 interface TimeEntryCardProps {
   entry: TimeEntry;
 }
 
 const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
+  const [showPortfolioDialog, setShowPortfolioDialog] = useState(false);
+  const { convertTimeEntryToPortfolio, isConverting, categories } = useTimeToPortfolio();
+
   // Format date for display
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -43,48 +50,82 @@ const TimeEntryCard = ({ entry }: TimeEntryCardProps) => {
       };
     }
   };
+
+  const handleAddToPortfolio = async (portfolioData: any) => {
+    try {
+      await convertTimeEntryToPortfolio(entry, portfolioData);
+      setShowPortfolioDialog(false);
+    } catch (error) {
+      // Error handling is done in the hook
+    }
+  };
   
   const badgeType = getBadgeType();
   const hours = Math.floor(entry.duration / 60);
   const minutes = entry.duration % 60;
   
   return (
-    <Card className={entry.isAutomatic || entry.notes?.includes("verified") || entry.notes?.includes("activity verification") 
-      ? "bg-elec-gray/50 overflow-hidden border-elec-yellow/20"
-      : "bg-elec-gray/50 overflow-hidden"}>
-      <CardContent className="p-4">
-        <div className="flex justify-between items-start">
-          <div>
-            <div className="flex items-center gap-2">
-              <h4 className="font-medium">{entry.activity}</h4>
-              <Badge className={badgeType.color}>{badgeType.label}</Badge>
+    <>
+      <Card className={entry.isAutomatic || entry.notes?.includes("verified") || entry.notes?.includes("activity verification") 
+        ? "bg-elec-gray/50 overflow-hidden border-elec-yellow/20"
+        : "bg-elec-gray/50 overflow-hidden"}>
+        <CardContent className="p-4">
+          <div className="flex justify-between items-start">
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <h4 className="font-medium">{entry.activity}</h4>
+                <Badge className={badgeType.color}>{badgeType.label}</Badge>
+              </div>
+              
+              <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{entry.notes}</p>
             </div>
             
-            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{entry.notes}</p>
+            <div className="text-right">
+              <div className="text-lg font-semibold">
+                {hours > 0 ? `${hours}h ` : ""}{minutes}m
+              </div>
+              <div className="text-xs text-muted-foreground">{formatDate(entry.date)}</div>
+            </div>
           </div>
           
-          <div className="text-right">
-            <div className="text-lg font-semibold">
-              {hours > 0 ? `${hours}h ` : ""}{minutes}m
+          {entry.notes && entry.notes.includes("activity verification") && (
+            <div className="mt-2 flex items-center text-xs text-green-400">
+              <Activity className="h-3 w-3 mr-1" />
+              Activity verified
             </div>
-            <div className="text-xs text-muted-foreground">{formatDate(entry.date)}</div>
+          )}
+          
+          {entry.isQuiz && entry.score !== undefined && entry.totalQuestions !== undefined && (
+            <div className="mt-2 text-xs text-blue-400">
+              Score: {entry.score}/{entry.totalQuestions} ({Math.round((entry.score / entry.totalQuestions) * 100)}%)
+            </div>
+          )}
+
+          {/* Add to Portfolio Button */}
+          <div className="mt-3 flex justify-end">
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => setShowPortfolioDialog(true)}
+              className="gap-1 text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10"
+            >
+              <Plus className="h-3 w-3" />
+              Add to Portfolio
+            </Button>
           </div>
-        </div>
-        
-        {entry.notes && entry.notes.includes("activity verification") && (
-          <div className="mt-2 flex items-center text-xs text-green-400">
-            <Activity className="h-3 w-3 mr-1" />
-            Activity verified
-          </div>
-        )}
-        
-        {entry.isQuiz && entry.score !== undefined && entry.totalQuestions !== undefined && (
-          <div className="mt-2 text-xs text-blue-400">
-            Score: {entry.score}/{entry.totalQuestions} ({Math.round((entry.score / entry.totalQuestions) * 100)}%)
-          </div>
-        )}
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+
+      {/* Portfolio Dialog */}
+      <TimeEntryToPortfolioDialog
+        timeEntry={entry}
+        categories={categories}
+        isOpen={showPortfolioDialog}
+        onClose={() => setShowPortfolioDialog(false)}
+        onSubmit={handleAddToPortfolio}
+        isLoading={isConverting}
+      />
+    </>
   );
 };
 

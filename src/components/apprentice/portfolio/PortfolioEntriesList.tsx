@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,9 +11,10 @@ import {
   FileText,
   Star
 } from "lucide-react";
-import { PortfolioEntry } from "@/types/portfolio";
+import { PortfolioEntry, PortfolioCategory } from "@/types/portfolio";
 import PortfolioEntryForm from "./PortfolioEntryForm";
 import PortfolioEntryViewDialog from "./PortfolioEntryViewDialog";
+import { usePortfolioData } from "@/hooks/portfolio/usePortfolioData";
 
 interface PortfolioEntriesListProps {
   entries: PortfolioEntry[];
@@ -23,6 +23,7 @@ interface PortfolioEntriesListProps {
 }
 
 const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: PortfolioEntriesListProps) => {
+  const { categories } = usePortfolioData();
   const [editingEntry, setEditingEntry] = useState<PortfolioEntry | null>(null);
   const [viewingEntry, setViewingEntry] = useState<PortfolioEntry | null>(null);
 
@@ -175,7 +176,7 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
       {/* Edit Form Dialog */}
       {editingEntry && (
         <PortfolioEntryForm
-          categories={[]} // We'll need to pass this from parent
+          categories={categories}
           initialData={editingEntry}
           onSubmit={(updatedData) => {
             onUpdateEntry(editingEntry.id, updatedData);
