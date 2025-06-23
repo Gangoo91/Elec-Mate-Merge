@@ -1,130 +1,90 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CheckCircle, Star, AlertTriangle, TrendingUp, Info, Award, Target } from "lucide-react";
-import RecommendedBrands from "@/components/apprentice/tools-guide/RecommendedBrands";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CheckCircle, Star, Award, TrendingUp, AlertTriangle, Info, Target, Shield } from "lucide-react";
+import ToolSpecificationCard from "@/components/apprentice/tools-guide/ToolSpecificationCard";
 import ToolComparisonChart from "@/components/apprentice/tools-guide/ToolComparisonChart";
 import BudgetPlanningCalculator from "@/components/apprentice/tools-guide/BudgetPlanningCalculator";
 
 const ToolSelectionTab = () => {
-  const selectionCriteria = [
+  const qualityFactors = [
     {
-      category: "Quality Standards",
-      icon: <Star className="h-5 w-5" />,
-      items: [
-        "Look for tools with CE marking and relevant British Standards",
-        "Check warranty periods - quality tools typically offer 2-5 years",
-        "Read professional reviews and recommendations",
-        "Consider tools used by established electricians"
-      ]
+      factor: "Build Quality",
+      description: "Material grade, construction standards, finishing quality",
+      indicators: ["Solid metal construction", "Smooth operation", "Precision tolerances", "Durable coating"],
+      priority: "high"
     },
     {
-      category: "Budget Planning",
-      icon: <TrendingUp className="h-5 w-5" />,
-      items: [
-        "Prioritise safety-critical items (test equipment, PPE)",
-        "Buy quality hand tools first - they last decades",
-        "Consider second-hand power tools from reputable brands",
-        "Plan purchases over 12-18 months to spread costs"
-      ]
+      factor: "Safety Standards",
+      description: "Compliance with UK/EU safety regulations and certifications",
+      indicators: ["CE marking", "VDE certification", "GS38 compliance", "BS EN standards"],
+      priority: "critical"
     },
     {
-      category: "Common Mistakes",
-      icon: <AlertTriangle className="h-5 w-5" />,
-      items: [
-        "Don't buy cheap test equipment - it's a safety risk",
-        "Avoid complete tool sets - you'll rarely use everything",
-        "Don't prioritise appearance over functionality",
-        "Never compromise on PPE quality to save money"
-      ]
+      factor: "Brand Reputation",
+      description: "Manufacturer track record and industry standing",
+      indicators: ["Industry recognition", "Professional endorsements", "Long-term reliability", "Customer reviews"],
+      priority: "medium"
+    },
+    {
+      factor: "Warranty Coverage",
+      description: "Protection period and service availability",
+      indicators: ["Extended warranty", "Local service centres", "Parts availability", "Quick turnaround"],
+      priority: "medium"
     }
   ];
 
-  const buyingTips = [
-    { tip: "Start with apprentice tool lists from training providers", priority: "High" },
-    { tip: "Join electrician forums for real-world recommendations", priority: "Medium" },
-    { tip: "Visit trade shows for hands-on experience", priority: "Medium" },
-    { tip: "Consider tool financing options for expensive items", priority: "Low" },
-    { tip: "Build relationships with local tool suppliers", priority: "High" },
-    { tip: "Keep receipts and warranty information organised", priority: "High" }
+  const priceVsValueMatrix = [
+    { category: "Budget Tools", priceRange: "£20-50", value: "Basic functionality", bestFor: "Occasional use, learning" },
+    { category: "Mid-Range", priceRange: "£50-150", value: "Good reliability", bestFor: "Regular professional use" },
+    { category: "Premium", priceRange: "£150-300", value: "Superior quality", bestFor: "Daily professional use" },
+    { category: "Professional", priceRange: "£300+", value: "Maximum durability", bestFor: "Heavy-duty applications" }
   ];
 
-  const qualityAssessmentCriteria = [
+  const testEquipmentSpecs = [
     {
-      category: "Build Quality",
-      factors: [
-        "Materials used (steel grade, plastic quality)",
-        "Manufacturing tolerances and precision",
-        "Finish quality and corrosion resistance",
-        "Ergonomic design and comfort"
+      name: "2-Pole Voltage Indicator",
+      description: "Essential safety device for proving dead circuits before work",
+      specifications: {
+        voltage: "12V - 690V AC/DC",
+        standard: "GS38 compliant",
+        certification: "CE marked",
+        material: "Insulated to CAT III"
+      },
+      priceRange: "£25-80",
+      priority: "essential" as const,
+      pros: ["Compact and portable", "Audio and visual indication", "Self-testing capability", "Robust construction"],
+      cons: ["Requires proving unit", "Battery dependent", "Not suitable for all voltages"],
+      buyingTips: [
+        "Choose GS38 compliant models only",
+        "Ensure proving unit is included",
+        "Check battery life and replacement cost",
+        "Verify voltage range covers your work"
       ],
-      weight: "30%"
+      maintenanceNotes: "Test daily before use with proving unit. Replace batteries regularly and check leads for damage."
     },
     {
-      category: "Safety Standards",
-      factors: [
-        "CE marking and relevant standards compliance",
-        "VDE certification for electrical tools",
-        "Safety features and fail-safes",
-        "Regular testing and validation"
+      name: "Digital Multimeter",
+      description: "Versatile instrument for measuring voltage, current, and resistance",
+      specifications: {
+        voltage: "Up to 1000V AC/DC",
+        standard: "CAT III/IV rated",
+        certification: "CE marked",
+        capacity: "10A current measurement"
+      },
+      priceRange: "£80-300",
+      priority: "essential" as const,
+      pros: ["Multiple measurement functions", "High accuracy", "Data logging capability", "Auto-ranging"],
+      cons: ["More complex to use", "Higher cost", "Requires training"],
+      buyingTips: [
+        "Choose appropriate CAT rating for your work",
+        "Consider True RMS capability",
+        "Check probe quality and safety rating",
+        "Verify calibration certificate"
       ],
-      weight: "25%"
-    },
-    {
-      category: "Performance",
-      factors: [
-        "Accuracy and reliability",
-        "Speed and efficiency in operation",
-        "Consistency over time",
-        "Performance under various conditions"
-      ],
-      weight: "25%"
-    },
-    {
-      category: "Value & Support",
-      factors: [
-        "Price vs. features ratio",
-        "Warranty terms and coverage",
-        "Availability of spares and repairs",
-        "Brand reputation and support"
-      ],
-      weight: "20%"
-    }
-  ];
-
-  const drillComparisons = [
-    {
-      brand: "DeWalt",
-      model: "DCD791 18V XR",
-      price: "£120-150",
-      rating: 5,
-      warranty: "3 years",
-      features: ["Brushless motor", "15 torque settings", "LED worklight", "Compact design"],
-      pros: ["Excellent build quality", "Long battery life", "Powerful performance"],
-      cons: ["Premium price", "Heavy with battery"],
-      bestFor: "Professional daily use, demanding applications"
-    },
-    {
-      brand: "Makita",
-      model: "DHP484 18V LXT",
-      price: "£100-130",
-      rating: 5,
-      warranty: "3 years",
-      features: ["Brushless motor", "21 torque settings", "Variable speed", "Belt clip"],
-      pros: ["Reliable performance", "Good battery ecosystem", "Balanced weight"],
-      cons: ["Basic LED light", "Limited accessories included"],
-      bestFor: "Versatile applications, battery system compatibility"
-    },
-    {
-      brand: "Bosch",
-      model: "GSB 18V-55",
-      price: "£80-110",
-      rating: 4,
-      warranty: "2 years",
-      features: ["Electronic motor protection", "20 torque settings", "Keyless chuck", "Belt hook"],
-      pros: ["Good value for money", "Reliable German engineering", "Wide availability"],
-      cons: ["Brushed motor", "Shorter battery life"],
-      bestFor: "Budget-conscious professionals, occasional use"
+      maintenanceNotes: "Annual calibration required. Store in protective case and avoid moisture exposure."
     }
   ];
 
@@ -134,161 +94,145 @@ const ToolSelectionTab = () => {
       model: "117 Electrician's Multimeter",
       price: "£180-220",
       rating: 5,
-      warranty: "Lifetime",
-      features: ["Non-contact voltage detection", "Low impedance measurement", "AutoV/LoZ", "CAT III 600V"],
-      pros: ["Industry standard reliability", "Lifetime warranty", "Excellent accuracy"],
-      cons: ["High initial cost", "Basic display"],
-      bestFor: "Professional electrical testing, critical measurements"
+      warranty: "Lifetime limited",
+      features: ["True RMS", "Non-contact voltage detection", "AutoV/LoZ", "LED backlight"],
+      pros: ["Industry standard reliability", "Excellent build quality", "Comprehensive warranty"],
+      cons: ["Higher initial cost", "Basic current measurement"],
+      bestFor: "Professional electricians requiring maximum reliability and accuracy"
     },
     {
-      brand: "Klein Tools",
-      model: "MM600 HVAC Multimeter",
-      price: "£140-170",
+      brand: "Megger",
+      model: "AVO410 Digital Multimeter",
+      price: "£120-150",
+      rating: 4,
+      warranty: "3 years",
+      features: ["CAT IV 600V rated", "True RMS", "Data hold", "Auto power off"],
+      pros: ["Good value for money", "Robust construction", "UK brand support"],
+      cons: ["Limited advanced features", "Smaller display"],
+      bestFor: "Apprentices and professionals seeking reliable UK-made quality at reasonable cost"
+    },
+    {
+      brand: "Martindale",
+      model: "MM39 Digital Multimeter",
+      price: "£80-100",
       rating: 4,
       warranty: "2 years",
-      features: ["Temperature measurement", "Differential measurement", "Large display", "CAT IV 600V"],
-      pros: ["HVAC specific features", "Robust construction", "Good value"],
-      cons: ["Limited to HVAC applications", "Bulky design"],
-      bestFor: "HVAC and general electrical work"
-    },
-    {
-      brand: "Uni-T",
-      model: "UT139C Digital Multimeter",
-      price: "£45-65",
-      rating: 3,
-      warranty: "1 year",
-      features: ["True RMS", "Data hold", "Backlight", "CAT III 600V"],
-      pros: ["Very affordable", "Basic functionality covered", "Compact size"],
-      cons: ["Lower build quality", "Limited accuracy", "Short warranty"],
-      bestFor: "Training, backup instrument, budget builds"
+      features: ["CAT III 600V", "Basic measurements", "Continuity buzzer", "Compact design"],
+      pros: ["Budget-friendly", "Simple operation", "Lightweight"],
+      cons: ["Basic functionality", "No advanced features"],
+      bestFor: "Budget-conscious users needing basic measurement capabilities for domestic work"
     }
   ];
 
-  const commonMistakes = [
-    {
-      mistake: "Buying cheap test equipment",
-      consequence: "Safety risk and unreliable measurements",
-      solution: "Invest in quality test instruments - your safety depends on them",
-      severity: "Critical"
-    },
-    {
-      mistake: "Purchasing complete tool sets",
-      consequence: "Waste money on tools you'll rarely use",
-      solution: "Buy individual tools based on actual job requirements",
-      severity: "Medium"
-    },
-    {
-      mistake: "Ignoring brand ecosystem",
-      consequence: "Incompatible batteries and accessories",
-      solution: "Choose one power tool brand and stick with it",
-      severity: "Medium"
-    },
-    {
-      mistake: "Prioritising looks over function",
-      consequence: "Tools that don't perform when needed",
-      solution: "Focus on build quality and functionality first",
-      severity: "Low"
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case "critical": return "bg-red-500/20 text-red-400 border-red-500/30";
+      case "high": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
+      case "medium": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
+      default: return "bg-green-500/20 text-green-400 border-green-500/30";
     }
-  ];
+  };
 
   return (
     <div className="space-y-6">
       <Alert className="border-blue-500/50 bg-blue-500/10">
         <Info className="h-4 w-4 text-blue-400" />
         <AlertDescription className="text-blue-200">
-          Smart tool selection combines quality assessment, brand comparison, and strategic budget planning to build a professional toolkit that serves you throughout your career.
+          Quality tool selection is crucial for professional success. This guide covers assessment criteria, value analysis, and detailed specifications to help you make informed purchasing decisions.
         </AlertDescription>
       </Alert>
 
-      {/* Quality Assessment Framework */}
+      {/* Detailed Tool Selection Tabs - Moved to Top */}
+      <Tabs defaultValue="specifications" className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="specifications">Tool Specifications</TabsTrigger>
+          <TabsTrigger value="comparisons">Brand Comparisons</TabsTrigger>
+          <TabsTrigger value="budget-planning">Budget Planning</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="specifications">
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-elec-yellow mb-4">Detailed Tool Specifications</h3>
+            {testEquipmentSpecs.map((tool, index) => (
+              <ToolSpecificationCard key={index} tool={tool} />
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="comparisons">
+          <ToolComparisonChart 
+            title="Professional Multimeter Comparison"
+            tools={multimeterComparisons}
+            category="multimeter"
+          />
+        </TabsContent>
+
+        <TabsContent value="budget-planning">
+          <BudgetPlanningCalculator />
+        </TabsContent>
+      </Tabs>
+
+      {/* Quality Assessment Factors - Now Below Detailed Tabs */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-elec-yellow">
             <Target className="h-5 w-5" />
-            Quality Assessment Framework
+            Quality Assessment Factors
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {qualityAssessmentCriteria.map((criterion, index) => (
-              <div key={index} className="border border-elec-yellow/30 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-medium text-white">{criterion.category}</h4>
-                  <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow">
-                    {criterion.weight}
+          <div className="grid gap-4">
+            {qualityFactors.map((factor, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="font-medium text-white">{factor.factor}</h4>
+                  <Badge className={getPriorityColor(factor.priority)} variant="outline">
+                    {factor.priority} priority
                   </Badge>
                 </div>
-                <ul className="space-y-1">
-                  {criterion.factors.map((factor, idx) => (
-                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
-                      {factor}
-                    </li>
+                <p className="text-sm text-muted-foreground mb-3">{factor.description}</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {factor.indicators.map((indicator, idx) => (
+                    <div key={idx} className="flex items-center gap-2 text-sm">
+                      <CheckCircle className="h-3 w-3 text-green-400" />
+                      <span className="text-muted-foreground">{indicator}</span>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      {/* Tool Comparisons */}
-      <ToolComparisonChart
-        title="Cordless Drill Comparison"
-        tools={drillComparisons}
-        category="cordless drill"
-      />
-
-      <ToolComparisonChart
-        title="Digital Multimeter Comparison"
-        tools={multimeterComparisons}
-        category="digital multimeter"
-      />
-
-      {/* Budget Planning Calculator */}
-      <BudgetPlanningCalculator />
-
-      {/* Common Selection Mistakes */}
-      <Card className="border-red-500/20 bg-red-500/10">
+      {/* Price vs Value Matrix */}
+      <Card className="border-green-500/20 bg-green-500/10">
         <CardHeader>
-          <CardTitle className="text-red-300 flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5" />
-            Common Selection Mistakes to Avoid
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <TrendingUp className="h-5 w-5" />
+            Price vs Value Analysis
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {commonMistakes.map((mistake, index) => (
-              <div key={index} className="border border-red-500/30 rounded-lg p-4">
-                <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-medium text-white">{mistake.mistake}</h4>
-                  <Badge 
-                    variant="outline" 
-                    className={`${
-                      mistake.severity === 'Critical' ? 'border-red-500/40 text-red-400' :
-                      mistake.severity === 'Medium' ? 'border-orange-500/40 text-orange-400' :
-                      'border-yellow-500/40 text-yellow-400'
-                    }`}
-                  >
-                    {mistake.severity}
-                  </Badge>
-                </div>
-                <p className="text-sm text-red-200 mb-2">{mistake.consequence}</p>
-                <div className="bg-red-500/20 rounded p-2">
-                  <p className="text-sm text-red-100">{mistake.solution}</p>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {priceVsValueMatrix.map((item, index) => (
+              <div key={index} className="border border-green-500/30 rounded-lg p-4 text-center">
+                <h4 className="font-medium text-white mb-2">{item.category}</h4>
+                <div className="text-elec-yellow font-bold mb-2">{item.priceRange}</div>
+                <p className="text-sm text-muted-foreground mb-2">{item.value}</p>
+                <Badge variant="outline" className="border-green-500/40 text-green-400 text-xs">
+                  {item.bestFor}
+                </Badge>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
-
-      <RecommendedBrands />
 
       <Alert className="border-orange-500/50 bg-orange-500/10">
         <AlertTriangle className="h-4 w-4 text-orange-400" />
         <AlertDescription className="text-orange-200">
-          <strong>Remember:</strong> Quality tools are a long-term investment. Use the assessment framework above to evaluate any tool purchase. When in doubt, consult experienced colleagues or your training provider.
+          <strong>Quality Investment Principle:</strong> Buy the best quality you can afford for tools used daily. For occasional-use tools, mid-range options often provide the best value. Never compromise on safety-critical equipment.
         </AlertDescription>
       </Alert>
     </div>
