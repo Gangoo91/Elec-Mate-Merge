@@ -1,10 +1,10 @@
+
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Clock, FileText, Target, Award, BarChart3, Bell, Eye } from "lucide-react";
+import { Clock, FileText, Target, Award, BarChart3, Bell } from "lucide-react";
 import TimeTrackingTab from "@/components/apprentice/ojt/TimeTrackingTab";
-import PortfolioBuildingTab from "@/components/apprentice/ojt/PortfolioBuildingTab";
-import PortfolioViewerTab from "@/components/apprentice/ojt/PortfolioViewerTab";
+import PortfolioManagementTab from "@/components/apprentice/ojt/PortfolioManagementTab";
 import EvidenceUploadTab from "@/components/apprentice/ojt/EvidenceUploadTab";
 import AssessmentTrackingTab from "@/components/apprentice/ojt/AssessmentTrackingTab";
 import ComplianceDashboardTab from "@/components/apprentice/ojt/ComplianceDashboardTab";
@@ -27,7 +27,7 @@ const ApprenticeOJT = () => {
         {/* Main Content */}
         <div className="lg:col-span-3">
           <Tabs defaultValue="time-tracking" className="w-full">
-            <TabsList className="grid w-full grid-cols-6">
+            <TabsList className="grid w-full grid-cols-5">
               <TabsTrigger value="time-tracking" className="flex items-center gap-2">
                 <Clock className="h-4 w-4" />
                 Time Tracking
@@ -35,10 +35,6 @@ const ApprenticeOJT = () => {
               <TabsTrigger value="portfolio" className="flex items-center gap-2">
                 <FileText className="h-4 w-4" />
                 Portfolio
-              </TabsTrigger>
-              <TabsTrigger value="portfolio-viewer" className="flex items-center gap-2">
-                <Eye className="h-4 w-4" />
-                View Portfolio
               </TabsTrigger>
               <TabsTrigger value="evidence" className="flex items-center gap-2">
                 <Target className="h-4 w-4" />
@@ -59,11 +55,7 @@ const ApprenticeOJT = () => {
             </TabsContent>
 
             <TabsContent value="portfolio">
-              <PortfolioBuildingTab />
-            </TabsContent>
-
-            <TabsContent value="portfolio-viewer">
-              <PortfolioViewerTab />
+              <PortfolioManagementTab />
             </TabsContent>
 
             <TabsContent value="evidence">
