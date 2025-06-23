@@ -1,52 +1,93 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Wrench, Zap, Shield, Eye } from "lucide-react";
+import { Wrench, Zap, Shield, Eye, AlertTriangle, Info } from "lucide-react";
 import HandToolsTab from "@/components/apprentice/tools-guide/HandToolsTab";
 import PowerToolsTab from "@/components/apprentice/tools-guide/PowerToolsTab";
 import TestEquipmentTab from "@/components/apprentice/tools-guide/TestEquipmentTab";
 import PPETab from "@/components/apprentice/tools-guide/PPETab";
 
 const EssentialToolsTab = () => {
-  const toolCategories = [
-    { name: "Hand Tools", count: "15-20 essential items", priority: "High", cost: "£200-400" },
-    { name: "Power Tools", count: "5-8 key tools", priority: "Medium", cost: "£300-800" },
-    { name: "Test Equipment", count: "3-5 instruments", priority: "Critical", cost: "£400-1200" },
-    { name: "PPE & Safety", count: "Complete safety kit", priority: "Critical", cost: "£150-300" }
+  const toolOverview = [
+    {
+      category: "Hand Tools",
+      icon: <Wrench className="h-5 w-5" />,
+      items: [
+        "VDE insulated screwdrivers (essential sizes)",
+        "Combination pliers and side cutters",
+        "Wire strippers with crimping function",
+        "Adjustable wrench and spanners",
+        "Measuring tools and markers"
+      ]
+    },
+    {
+      category: "Power Tools",
+      icon: <Zap className="h-5 w-5" />,
+      items: [
+        "18V cordless drill system with batteries",
+        "LED inspection torch (rechargeable)",
+        "Angle grinder for cutting work",
+        "SDS drill for masonry work",
+        "Cable fishing and access tools"
+      ]
+    },
+    {
+      category: "Test Equipment",
+      icon: <Eye className="h-5 w-5" />,
+      items: [
+        "2-pole voltage indicator with proving unit",
+        "Multifunction installation tester",
+        "RCD tester for all types",
+        "Insulation resistance tester",
+        "Professional test lead sets"
+      ]
+    },
+    {
+      category: "PPE & Safety",
+      icon: <Shield className="h-5 w-5" />,
+      items: [
+        "Safety boots (S3 rated) and hard hat",
+        "Safety glasses and hi-vis clothing",
+        "Work gloves and insulating gloves",
+        "Ear defenders and dust masks",
+        "Arc flash protection (when required)"
+      ]
+    }
   ];
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Wrench className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Professional Tool Categories</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {toolCategories.map((category, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 text-center">
-                <h4 className="font-semibold text-white mb-2">{category.name}</h4>
-                <div className="text-sm text-elec-yellow mb-1">{category.count}</div>
-                <Badge 
-                  variant="outline" 
-                  className={`mb-2 ${
-                    category.priority === 'Critical' ? 'border-red-500/40 text-red-400' :
-                    category.priority === 'High' ? 'border-orange-500/40 text-orange-400' :
-                    'border-blue-500/40 text-blue-400'
-                  }`}
-                >
-                  {category.priority} Priority
-                </Badge>
-                <p className="text-xs text-muted-foreground">{category.cost}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
+        <Info className="h-4 w-4 text-elec-yellow" />
+        <AlertDescription className="text-elec-yellow/90">
+          Essential tools form the foundation of your professional toolkit. Invest in quality items that will serve you throughout your career.
+        </AlertDescription>
+      </Alert>
+
+      <div className="grid gap-6">
+        {toolOverview.map((section, index) => (
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-elec-yellow">
+                {section.icon}
+                {section.category}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2">
+                {section.items.map((item, itemIndex) => (
+                  <li key={itemIndex} className="flex items-start gap-2 text-muted-foreground">
+                    <Badge variant="outline" className="mt-0.5 h-2 w-2 rounded-full p-0 border-elec-yellow/50 bg-elec-yellow/20" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
 
       <Tabs defaultValue="hand-tools" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
@@ -72,6 +113,13 @@ const EssentialToolsTab = () => {
           <PPETab />
         </TabsContent>
       </Tabs>
+
+      <Alert className="border-orange-500/50 bg-orange-500/10">
+        <AlertTriangle className="h-4 w-4 text-orange-400" />
+        <AlertDescription className="text-orange-200">
+          <strong>Investment Timeline:</strong> Spread tool purchases over 12-18 months. Start with safety-critical items, then build your collection based on work requirements.
+        </AlertDescription>
+      </Alert>
     </div>
   );
 };

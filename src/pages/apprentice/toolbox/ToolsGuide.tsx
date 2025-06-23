@@ -1,14 +1,23 @@
 
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Wrench, CheckCircle, Store, Calculator, Heart } from "lucide-react";
+import { Wrench, CheckCircle, Store, Calculator, Heart, Shield, AlertTriangle } from "lucide-react";
 import EssentialToolsTab from "@/components/apprentice/professional-tools/EssentialToolsTab";
 import ToolSelectionTab from "@/components/apprentice/professional-tools/ToolSelectionTab";
 import SuppliersAndCostsTab from "@/components/apprentice/professional-tools/SuppliersAndCostsTab";
 import InteractiveToolsTab from "@/components/apprentice/professional-tools/InteractiveToolsTab";
 
 const ToolsGuide = () => {
+  const toolCategories = [
+    { name: "Hand Tools", count: "15-20 essential items", priority: "High", cost: "£200-400" },
+    { name: "Power Tools", count: "5-8 key tools", priority: "Medium", cost: "£300-800" },
+    { name: "Test Equipment", count: "3-5 instruments", priority: "Critical", cost: "£400-1200" },
+    { name: "PPE & Safety", count: "Complete safety kit", priority: "Critical", cost: "£150-300" }
+  ];
+
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
@@ -18,6 +27,43 @@ const ToolsGuide = () => {
         </p>
         <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
       </div>
+
+      <Alert className="border-blue-500/50 bg-blue-500/10">
+        <Shield className="h-4 w-4 text-blue-400" />
+        <AlertDescription className="text-blue-200">
+          Building a professional toolkit is an investment in your career. Focus on quality over quantity and build your collection gradually.
+        </AlertDescription>
+      </Alert>
+
+      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Wrench className="h-6 w-6 text-elec-yellow" />
+            <CardTitle className="text-elec-yellow">Professional Tool Categories</CardTitle>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {toolCategories.map((category, index) => (
+              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 text-center">
+                <h4 className="font-semibold text-white mb-2">{category.name}</h4>
+                <div className="text-sm text-elec-yellow mb-1">{category.count}</div>
+                <Badge 
+                  variant="outline" 
+                  className={`mb-2 ${
+                    category.priority === 'Critical' ? 'border-red-500/40 text-red-400' :
+                    category.priority === 'High' ? 'border-orange-500/40 text-orange-400' :
+                    'border-blue-500/40 text-blue-400'
+                  }`}
+                >
+                  {category.priority} Priority
+                </Badge>
+                <p className="text-xs text-muted-foreground">{category.cost}</p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
       <Tabs defaultValue="essential" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
@@ -55,6 +101,13 @@ const ToolsGuide = () => {
           <InteractiveToolsTab />
         </TabsContent>
       </Tabs>
+
+      <Alert className="border-orange-500/50 bg-orange-500/10">
+        <AlertTriangle className="h-4 w-4 text-orange-400" />
+        <AlertDescription className="text-orange-200">
+          <strong>Remember:</strong> Quality tools are a long-term investment. Never compromise on safety-critical equipment like test instruments and PPE.
+        </AlertDescription>
+      </Alert>
 
       <Card className="border-green-500/50 bg-green-500/10">
         <CardHeader>

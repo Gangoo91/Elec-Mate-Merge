@@ -1,15 +1,16 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Star, AlertTriangle, TrendingUp } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { CheckCircle, Star, AlertTriangle, TrendingUp, Info } from "lucide-react";
 import RecommendedBrands from "@/components/apprentice/tools-guide/RecommendedBrands";
 
 const ToolSelectionTab = () => {
   const selectionCriteria = [
     {
-      title: "Quality Standards",
-      icon: Star,
-      criteria: [
+      category: "Quality Standards",
+      icon: <Star className="h-5 w-5" />,
+      items: [
         "Look for tools with CE marking and relevant British Standards",
         "Check warranty periods - quality tools typically offer 2-5 years",
         "Read professional reviews and recommendations",
@@ -17,9 +18,9 @@ const ToolSelectionTab = () => {
       ]
     },
     {
-      title: "Budget Planning",
-      icon: TrendingUp,
-      criteria: [
+      category: "Budget Planning",
+      icon: <TrendingUp className="h-5 w-5" />,
+      items: [
         "Prioritise safety-critical items (test equipment, PPE)",
         "Buy quality hand tools first - they last decades",
         "Consider second-hand power tools from reputable brands",
@@ -27,9 +28,9 @@ const ToolSelectionTab = () => {
       ]
     },
     {
-      title: "Common Mistakes",
-      icon: AlertTriangle,
-      criteria: [
+      category: "Common Mistakes",
+      icon: <AlertTriangle className="h-5 w-5" />,
+      items: [
         "Don't buy cheap test equipment - it's a safety risk",
         "Avoid complete tool sets - you'll rarely use everything",
         "Don't prioritise appearance over functionality",
@@ -49,38 +50,39 @@ const ToolSelectionTab = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <CheckCircle className="h-5 w-5 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Tool Selection Criteria</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {selectionCriteria.map((section, index) => (
-              <div key={index} className="space-y-3">
-                <div className="flex items-center gap-2 mb-3">
-                  <section.icon className="h-5 w-5 text-elec-yellow" />
-                  <h4 className="font-semibold text-white">{section.title}</h4>
-                </div>
-                <ul className="space-y-2">
-                  {section.criteria.map((criterion, idx) => (
-                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                      {criterion}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <Alert className="border-blue-500/50 bg-blue-500/10">
+        <Info className="h-4 w-4 text-blue-400" />
+        <AlertDescription className="text-blue-200">
+          Smart tool selection saves money and ensures you have reliable equipment for your electrical career.
+        </AlertDescription>
+      </Alert>
 
-      <Card className="border-blue-500/20 bg-blue-500/10">
+      <div className="grid gap-6">
+        {selectionCriteria.map((section, index) => (
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-elec-yellow">
+                {section.icon}
+                {section.category}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2">
+                {section.items.map((item, itemIndex) => (
+                  <li key={itemIndex} className="flex items-start gap-2 text-muted-foreground">
+                    <Badge variant="outline" className="mt-0.5 h-2 w-2 rounded-full p-0 border-elec-yellow/50 bg-elec-yellow/20" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <Card className="border-green-500/20 bg-green-500/10">
         <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
+          <CardTitle className="text-green-300 flex items-center gap-2">
             <TrendingUp className="h-5 w-5" />
             Smart Buying Tips
           </CardTitle>
@@ -88,7 +90,7 @@ const ToolSelectionTab = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {buyingTips.map((item, index) => (
-              <div key={index} className="flex items-center justify-between p-3 border border-blue-500/20 rounded-lg">
+              <div key={index} className="flex items-center justify-between p-3 border border-green-500/20 rounded-lg">
                 <span className="text-sm text-muted-foreground">{item.tip}</span>
                 <Badge 
                   variant="outline" 
@@ -107,6 +109,13 @@ const ToolSelectionTab = () => {
       </Card>
 
       <RecommendedBrands />
+
+      <Alert className="border-orange-500/50 bg-orange-500/10">
+        <AlertTriangle className="h-4 w-4 text-orange-400" />
+        <AlertDescription className="text-orange-200">
+          <strong>Remember:</strong> Quality tools are a long-term investment. A well-chosen toolkit will serve you throughout your entire electrical career.
+        </AlertDescription>
+      </Alert>
     </div>
   );
 };
