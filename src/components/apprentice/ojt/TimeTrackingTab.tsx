@@ -203,7 +203,7 @@ const TimeTrackingTab = () => {
           <CardTitle className="text-elec-yellow">Add Time Entry</CardTitle>
         </CardHeader>
         <CardContent>
-          <TimeEntryForm onEntryAdded={addTimeEntry} />
+          <TimeEntryForm onAddEntry={addTimeEntry} />
         </CardContent>
       </Card>
 
