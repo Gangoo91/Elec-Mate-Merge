@@ -1,14 +1,12 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Wrench, Zap, Shield, Eye, AlertTriangle, Info, Download, BookOpen } from "lucide-react";
+import { Wrench, Zap, Shield, Eye, AlertTriangle, Info, BookOpen } from "lucide-react";
 import HandToolsTab from "@/components/apprentice/tools-guide/HandToolsTab";
 import PowerToolsTab from "@/components/apprentice/tools-guide/PowerToolsTab";
 import TestEquipmentTab from "@/components/apprentice/tools-guide/TestEquipmentTab";
 import PPETab from "@/components/apprentice/tools-guide/PPETab";
-import ToolSpecificationCard from "@/components/apprentice/tools-guide/ToolSpecificationCard";
 
 const EssentialToolsTab = () => {
   const toolOverview = [
@@ -67,17 +65,48 @@ const EssentialToolsTab = () => {
   ];
 
   const maintenanceSchedule = [
-    { item: "Hand Tools", frequency: "Monthly", task: "Clean, oil, check for damage" },
-    { item: "Power Tools", frequency: "Weekly", task: "Battery check, cleaning, inspection" },
-    { item: "Test Equipment", frequency: "Annual", task: "Professional calibration required" },
-    { item: "PPE", frequency: "Daily", task: "Visual inspection before use" }
+    { item: "Hand Tools", frequency: "Monthly", task: "Clean, oil, check for damage", cost: "£5-10/year" },
+    { item: "Power Tools", frequency: "Weekly", task: "Battery check, cleaning, inspection", cost: "£20-40/year" },
+    { item: "Test Equipment", frequency: "Annual", task: "Professional calibration required", cost: "£100-200/year" },
+    { item: "PPE", frequency: "Daily", task: "Visual inspection before use", cost: "£50-100/year replacement" }
   ];
 
   const certificationRequirements = [
-    { standard: "BS EN 60900", applies: "Hand tools for electrical work", requirement: "VDE certification mandatory" },
-    { standard: "GS38", applies: "Test leads and voltage indicators", requirement: "Safety specification compliance" },
-    { standard: "BS EN 397", applies: "Safety helmets", requirement: "Impact and electrical protection" },
-    { standard: "BS EN ISO 20345", applies: "Safety footwear", requirement: "S3 rating minimum" }
+    { standard: "BS EN 60900", applies: "Hand tools for electrical work", requirement: "VDE certification mandatory", penalty: "HSE prosecution risk" },
+    { standard: "GS38", applies: "Test leads and voltage indicators", requirement: "Safety specification compliance", penalty: "Invalid test results" },
+    { standard: "BS EN 397", applies: "Safety helmets", requirement: "Impact and electrical protection", penalty: "Site access denied" },
+    { standard: "BS EN ISO 20345", applies: "Safety footwear", requirement: "S3 rating minimum", penalty: "Insurance claims rejected" }
+  ];
+
+  const progressionMilestones = [
+    {
+      milestone: "Month 1-3: Foundation Kit",
+      cost: "£300-500",
+      items: ["Basic PPE", "Essential hand tools", "Simple continuity tester"],
+      competency: "Safe to work under close supervision",
+      nextStep: "Learn proper tool usage and maintenance"
+    },
+    {
+      milestone: "Month 4-8: Building Skills",
+      cost: "£400-700",
+      items: ["Cordless drill system", "Advanced hand tools", "Basic test equipment"],
+      competency: "Independent basic installations",
+      nextStep: "Develop testing and fault-finding skills"
+    },
+    {
+      milestone: "Month 9-18: Professional Level",
+      cost: "£800-1500",
+      items: ["Multifunction tester", "Specialist tools", "Advanced PPE"],
+      competency: "Testing and certification work",
+      nextStep: "Specialisation and advanced techniques"
+    },
+    {
+      milestone: "Year 2+: Specialist Equipment",
+      cost: "£500-1000",
+      items: ["Thermal imaging", "Advanced test equipment", "Specialist tools"],
+      competency: "Complex installations and fault diagnosis",
+      nextStep: "Mentoring and advanced qualifications"
+    }
   ];
 
   return (
@@ -89,7 +118,7 @@ const EssentialToolsTab = () => {
         </AlertDescription>
       </Alert>
 
-      {/* Detailed Tool Category Tabs - Moved to Top */}
+      {/* Detailed Tool Category Tabs */}
       <Tabs defaultValue="hand-tools" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="hand-tools">Hand Tools</TabsTrigger>
@@ -115,45 +144,61 @@ const EssentialToolsTab = () => {
         </TabsContent>
       </Tabs>
 
-      {/* Tool Categories Overview - Now Below Detailed Tabs */}
-      <div className="grid gap-6">
-        {toolOverview.map((section, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center gap-2 text-elec-yellow">
-                  {section.icon}
-                  {section.category}
-                </CardTitle>
-                <div className="text-right">
-                  <Badge variant="outline" className="border-green-500/40 text-green-400 mb-1">
-                    {section.investment}
+      {/* Apprentice Progression Timeline */}
+      <Card className="border-blue-500/20 bg-blue-500/10">
+        <CardHeader>
+          <CardTitle className="text-blue-300 flex items-center gap-2">
+            <BookOpen className="h-5 w-5" />
+            Apprentice Tool Progression Timeline
+          </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Strategic toolkit development aligned with your learning journey
+          </p>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {progressionMilestones.map((milestone, index) => (
+              <div key={index} className="border border-blue-500/30 rounded-lg p-4">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <h3 className="font-medium text-blue-200">{milestone.milestone}</h3>
+                    <p className="text-sm text-muted-foreground">{milestone.competency}</p>
+                  </div>
+                  <Badge variant="outline" className="border-blue-500/40 text-blue-400">
+                    {milestone.cost}
                   </Badge>
-                  <p className="text-xs text-muted-foreground">{section.timeframe}</p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                  <div>
+                    <h4 className="text-sm font-medium text-blue-300 mb-1">Key Items:</h4>
+                    <ul className="text-xs text-muted-foreground space-y-0.5">
+                      {milestone.items.map((item, idx) => (
+                        <li key={idx}>• {item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-medium text-blue-300 mb-1">Next Focus:</h4>
+                    <p className="text-xs text-muted-foreground">{milestone.nextStep}</p>
+                  </div>
                 </div>
               </div>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                {section.items.map((item, itemIndex) => (
-                  <li key={itemIndex} className="flex items-start gap-2 text-muted-foreground">
-                    <Badge variant="outline" className="mt-0.5 h-2 w-2 rounded-full p-0 border-elec-yellow/50 bg-elec-yellow/20" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-      {/* Maintenance Schedule */}
+      {/* Enhanced Maintenance Schedule */}
       <Card className="border-green-500/20 bg-green-500/10">
         <CardHeader>
           <CardTitle className="text-green-300 flex items-center gap-2">
             <BookOpen className="h-5 w-5" />
-            Tool Maintenance Schedule
+            Comprehensive Tool Maintenance Schedule
           </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Proper maintenance extends tool life and ensures safety compliance
+          </p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -165,32 +210,42 @@ const EssentialToolsTab = () => {
                     {item.frequency}
                   </Badge>
                 </div>
-                <p className="text-sm text-muted-foreground">{item.task}</p>
+                <p className="text-sm text-muted-foreground mb-2">{item.task}</p>
+                <div className="text-xs text-green-300">
+                  <span className="font-medium">Annual Cost:</span> {item.cost}
+                </div>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      {/* Certification Requirements */}
-      <Card className="border-blue-500/20 bg-blue-500/10">
+      {/* Enhanced Certification Requirements */}
+      <Card className="border-purple-500/20 bg-purple-500/10">
         <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
+          <CardTitle className="text-purple-300 flex items-center gap-2">
             <Shield className="h-5 w-5" />
-            UK Certification Requirements
+            UK Certification Requirements & Consequences
           </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Understanding compliance requirements and the risks of non-compliance
+          </p>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
             {certificationRequirements.map((cert, index) => (
-              <div key={index} className="border border-blue-500/30 rounded-lg p-3">
+              <div key={index} className="border border-purple-500/30 rounded-lg p-3">
                 <div className="flex items-center gap-2 mb-2">
-                  <Badge variant="outline" className="border-blue-500/40 text-blue-400">
+                  <Badge variant="outline" className="border-purple-500/40 text-purple-400">
                     {cert.standard}
                   </Badge>
-                  <span className="font-medium text-white">{cert.applies}</span>
+                  <span className="font-medium text-white text-sm">{cert.applies}</span>
                 </div>
-                <p className="text-sm text-blue-200">{cert.requirement}</p>
+                <p className="text-sm text-purple-200 mb-2">{cert.requirement}</p>
+                <div className="bg-red-500/10 border border-red-500/30 rounded p-2">
+                  <span className="text-xs font-medium text-red-300">Risk of Non-Compliance:</span>
+                  <p className="text-xs text-red-200">{cert.penalty}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -200,7 +255,7 @@ const EssentialToolsTab = () => {
       <Alert className="border-orange-500/50 bg-orange-500/10">
         <AlertTriangle className="h-4 w-4 text-orange-400" />
         <AlertDescription className="text-orange-200">
-          <strong>Investment Timeline:</strong> Total essential toolkit cost: £1050-2700. Spread purchases over 12-18 months. Start with safety-critical items and basic hand tools first.
+          <strong>Investment Strategy:</strong> Total essential toolkit cost: £1050-2700. Focus on quality over quantity, spread purchases strategically, and prioritise safety-critical items first. Your tools are an investment in your professional future.
         </AlertDescription>
       </Alert>
     </div>
