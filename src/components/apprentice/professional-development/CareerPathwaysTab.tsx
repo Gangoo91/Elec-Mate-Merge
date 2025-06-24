@@ -1,270 +1,331 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, GraduationCap, Target, Users, Briefcase, Clock, Zap, Building, Wrench, Shield, Cpu, Factory } from "lucide-react";
+import { 
+  TrendingUp, 
+  Clock, 
+  PoundSterling, 
+  GraduationCap,
+  Award,
+  Building,
+  Zap,
+  Wrench,
+  Shield,
+  Target
+} from "lucide-react";
 
 const CareerPathwaysTab = () => {
   const careerPaths = [
     {
-      title: "Qualified Electrician",
-      timeframe: "2-4 years",
-      requirements: ["Level 3 Diploma", "AM2 Assessment", "NVQ Level 3"],
-      description: "Complete your apprenticeship and become a fully qualified electrician",
-      salaryRange: "£25k - £35k",
-      icon: GraduationCap,
-      color: "text-blue-400"
+      title: "Domestic Electrician",
+      icon: <Building className="h-6 w-6 text-blue-400" />,
+      timeframe: "0-2 years post-qualification",
+      salaryRange: "£25,000 - £35,000",
+      description: "Residential electrical installations, maintenance, and repairs",
+      requirements: [
+        "Level 3 Electrical Installation qualification",
+        "AM2 practical assessment",
+        "18th Edition BS 7671",
+        "Part P Building Regulations"
+      ],
+      progression: "→ Commercial Work → Specialist Areas → Self-Employment",
+      color: "blue"
     },
     {
-      title: "Installation Electrician",
-      timeframe: "3-5 years",
-      requirements: ["18th Edition", "Testing & Inspection", "Installation experience"],
-      description: "Specialise in new electrical installations across domestic and commercial properties",
-      salaryRange: "£28k - £38k",
-      icon: Wrench,
-      color: "text-green-400"
+      title: "Commercial Electrician",
+      icon: <Building className="h-6 w-6 text-green-400" />,
+      timeframe: "2-5 years experience",
+      salaryRange: "£30,000 - £45,000",
+      description: "Office buildings, shops, and commercial installations",
+      requirements: [
+        "Domestic experience foundation",
+        "Commercial wiring methods",
+        "Fire alarm systems knowledge",
+        "Emergency lighting understanding"
+      ],
+      progression: "→ Industrial Work → Project Management → Contracting",
+      color: "green"
     },
     {
-      title: "Maintenance Electrician",
-      timeframe: "3-6 years",
-      requirements: ["Fault finding skills", "PLC knowledge", "Industrial experience"],
-      description: "Focus on maintaining and repairing electrical systems in industrial settings",
-      salaryRange: "£30k - £42k",
-      icon: Factory,
-      color: "text-orange-400"
+      title: "Industrial Electrician",
+      icon: <Wrench className="h-6 w-6 text-amber-400" />,
+      timeframe: "3-7 years experience",
+      salaryRange: "£35,000 - £55,000",
+      description: "Manufacturing plants, heavy machinery, and process control",
+      requirements: [
+        "Motor control systems",
+        "PLC programming basics",
+        "High voltage awareness",
+        "Instrumentation knowledge"
+      ],
+      progression: "→ Maintenance Engineering → Control Systems → Plant Management",
+      color: "amber"
     },
     {
-      title: "Testing & Inspection Engineer",
-      timeframe: "4-6 years",
-      requirements: ["2391 qualification", "BS7671 expertise", "EICR certification"],
-      description: "Specialise in electrical testing, inspection, and certification work",
-      salaryRange: "£32k - £45k",
-      icon: Shield,
-      color: "text-purple-400"
-    },
-    {
-      title: "Specialist Electrician",
-      timeframe: "3-6 years",
-      requirements: ["Additional certifications", "Specialist training", "Experience"],
-      description: "Specialise in areas like renewable energy, industrial systems, or smart homes",
-      salaryRange: "£35k - £45k",
-      icon: Target,
-      color: "text-green-400"
-    },
-    {
-      title: "Controls & Automation Technician",
-      timeframe: "4-7 years",
-      requirements: ["PLC programming", "SCADA systems", "Industrial controls"],
-      description: "Work with automated systems, PLCs, and industrial control equipment",
-      salaryRange: "£38k - £52k",
-      icon: Cpu,
-      color: "text-cyan-400"
-    },
-    {
-      title: "Electrical Supervisor",
-      timeframe: "5-8 years",
-      requirements: ["Leadership training", "Project management", "Advanced qualifications"],
-      description: "Lead teams and oversee electrical projects and installations",
-      salaryRange: "£40k - £55k",
-      icon: Users,
-      color: "text-purple-400"
+      title: "Renewable Energy Specialist",
+      icon: <Zap className="h-6 w-6 text-green-500" />,
+      timeframe: "2-4 years + specialisation",
+      salaryRange: "£35,000 - £50,000",
+      description: "Solar PV, wind, battery storage, and green technology",
+      requirements: [
+        "Solar PV installation certification",
+        "Battery storage systems",
+        "Heat pump electrical work",
+        "Grid connection knowledge"
+      ],
+      progression: "→ Energy Consultant → System Designer → Green Tech Business",
+      color: "emerald"
     },
     {
       title: "Electrical Designer",
-      timeframe: "4-7 years",
-      requirements: ["CAD software", "Design standards", "HNC/HND"],
-      description: "Design electrical systems using CAD software and engineering principles",
-      salaryRange: "£38k - £50k",
-      icon: Building,
-      color: "text-blue-400"
+      icon: <GraduationCap className="h-6 w-6 text-purple-400" />,
+      timeframe: "5+ years + education",
+      salaryRange: "£40,000 - £65,000",
+      description: "Electrical system design and engineering drawings",
+      requirements: [
+        "HNC/HND Electrical Engineering",
+        "CAD software proficiency",
+        "Design standards knowledge",
+        "Load calculation expertise"
+      ],
+      progression: "→ Senior Designer → Principal Engineer → Chartered Engineer",
+      color: "purple"
     },
     {
-      title: "Electrical Engineer",
-      timeframe: "4-7 years",
-      requirements: ["HNC/HND", "Degree (optional)", "Chartered status"],
-      description: "Design electrical systems and advance into engineering roles",
-      salaryRange: "£45k - £70k",
-      icon: Briefcase,
-      color: "text-orange-400"
-    },
-    {
-      title: "Project Manager",
-      timeframe: "7-10 years",
-      requirements: ["Project management qualification", "Leadership experience", "Technical knowledge"],
-      description: "Manage large electrical projects from conception to completion",
-      salaryRange: "£50k - £75k",
-      icon: Target,
-      color: "text-red-400"
-    },
-    {
-      title: "Electrical Contractor",
-      timeframe: "5+ years",
-      requirements: ["Business skills", "Insurance", "Established client base"],
-      description: "Run your own electrical contracting business",
-      salaryRange: "£40k - £100k+",
-      icon: Briefcase,
-      color: "text-yellow-400"
-    },
-    {
-      title: "Electrical Consultant",
-      timeframe: "8+ years",
-      requirements: ["Expert knowledge", "Professional qualifications", "Industry reputation"],
-      description: "Provide specialist electrical consultancy services",
-      salaryRange: "£60k - £120k+",
-      icon: GraduationCap,
-      color: "text-emerald-400"
+      title: "Inspection & Testing Specialist",
+      icon: <Shield className="h-6 w-6 text-red-400" />,
+      timeframe: "3-5 years + certification",
+      salaryRange: "£35,000 - £50,000",
+      description: "Electrical installation testing and certification",
+      requirements: [
+        "2391 Inspection & Testing",
+        "Extensive testing experience",
+        "Fault finding expertise",
+        "Regulatory knowledge"
+      ],
+      progression: "→ Lead Inspector → Training Provider → Compliance Manager",
+      color: "red"
     }
   ];
 
-  const specialisations = [
+  const progressionStages = [
     {
-      area: "Renewable Energy",
-      description: "Solar PV, wind, battery storage systems",
-      growth: "+45%",
-      demandLevel: "Very High"
+      stage: "Apprentice",
+      duration: "3-4 years",
+      focus: "Learning fundamentals, gaining experience, completing qualification",
+      salary: "£15,000 - £20,000"
     },
     {
-      area: "Electric Vehicle Infrastructure",
-      description: "EV charging points, high voltage systems",
-      growth: "+67%",
-      demandLevel: "Very High"
+      stage: "Newly Qualified",
+      duration: "0-2 years",
+      focus: "Building confidence, developing speed, learning business practices",
+      salary: "£25,000 - £30,000"
     },
     {
-      area: "Industrial Automation",
-      description: "PLCs, control systems, robotics",
-      growth: "+28%",
-      demandLevel: "High"
+      stage: "Experienced Electrician",
+      duration: "2-7 years",
+      focus: "Specialisation, leadership skills, advanced qualifications",
+      salary: "£30,000 - £45,000"
     },
     {
-      area: "Smart Buildings",
-      description: "IoT, building management systems",
-      growth: "+38%",
-      demandLevel: "High"
+      stage: "Senior/Specialist",
+      duration: "7+ years",
+      focus: "Expert knowledge, mentoring others, business development",
+      salary: "£40,000 - £65,000+"
+    }
+  ];
+
+  const factorsAffectingSalary = [
+    {
+      factor: "Location",
+      impact: "High",
+      description: "London and South East typically 20-30% higher than national average"
     },
     {
-      area: "Data Centres",
-      description: "Critical power systems, UPS, cooling",
-      growth: "+32%",
-      demandLevel: "High"
+      factor: "Specialisation",
+      impact: "High", 
+      description: "High voltage, renewable energy, and automation command premium rates"
     },
     {
-      area: "Marine & Offshore",
-      description: "Ships, oil rigs, offshore wind",
-      growth: "+25%",
-      demandLevel: "Medium-High"
+      factor: "Employment Type",
+      impact: "Medium",
+      description: "Self-employed often earn more but have additional responsibilities"
     },
     {
-      area: "Aerospace",
-      description: "Aircraft electrical systems",
-      growth: "+18%",
-      demandLevel: "Medium"
+      factor: "Industry Sector",
+      impact: "Medium",
+      description: "Oil & gas, nuclear, and aerospace typically pay more than domestic"
     },
     {
-      area: "Railway Systems",
-      description: "Train electrification, signalling",
-      growth: "+22%",
-      demandLevel: "Medium-High"
+      factor: "Qualifications",
+      impact: "Medium",
+      description: "Advanced certifications and degrees increase earning potential"
     }
   ];
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+      <div className="text-center space-y-4">
+        <h2 className="text-2xl font-semibold">UK Electrical Career Pathways</h2>
+        <p className="text-muted-foreground max-w-3xl mx-auto">
+          Explore the diverse career opportunities available in the UK electrical industry. 
+          Understanding these pathways helps you make informed decisions about your professional development.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {careerPaths.map((path, index) => (
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <div className="flex items-center gap-3 mb-2">
+                <div className={`p-2 rounded-lg bg-${path.color}-500/10`}>
+                  {path.icon}
+                </div>
+                <div className="flex-1">
+                  <CardTitle className="text-lg">{path.title}</CardTitle>
+                  <p className="text-sm text-muted-foreground">{path.description}</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="outline" className="text-xs">
+                  <Clock className="h-3 w-3 mr-1" />
+                  {path.timeframe}
+                </Badge>
+                <Badge variant="outline" className="text-xs">
+                  <PoundSterling className="h-3 w-3 mr-1" />
+                  {path.salaryRange}
+                </Badge>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <h4 className="font-medium text-white mb-2">Requirements</h4>
+                <ul className="space-y-1">
+                  {path.requirements.map((req, reqIndex) => (
+                    <li key={reqIndex} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <span className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
+                      {req}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-medium text-white mb-1">Career Progression</h4>
+                <p className="text-sm text-green-300">{path.progression}</p>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <TrendingUp className="h-5 w-5" />
-            Career Progression Paths
+          <CardTitle className="flex items-center gap-2">
+            <TrendingUp className="h-5 w-5 text-elec-yellow" />
+            Career Progression Timeline
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {careerPaths.map((path, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="p-2 rounded-md bg-elec-yellow/10">
-                    <path.icon className={`h-5 w-5 ${path.color}`} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {progressionStages.map((stage, index) => (
+              <div key={index} className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/10">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-8 h-8 bg-elec-yellow/20 rounded-full flex items-center justify-center">
+                    <span className="text-elec-yellow font-bold text-sm">{index + 1}</span>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-white">{path.title}</h3>
-                    <div className="flex items-center gap-2 mt-1">
-                      <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow text-xs">
-                        <Clock className="h-3 w-3 mr-1" />
-                        {path.timeframe}
-                      </Badge>
-                      <Badge className="bg-green-500/20 text-green-400 border-green-500/40 text-xs">
-                        {path.salaryRange}
-                      </Badge>
-                    </div>
-                  </div>
+                  <h4 className="font-medium text-white">{stage.stage}</h4>
                 </div>
-                <p className="text-sm text-elec-light/80 mb-3">{path.description}</p>
-                <div>
-                  <h4 className="font-medium text-elec-yellow text-sm mb-2">Key Requirements:</h4>
-                  <ul className="space-y-1">
-                    {path.requirements.map((req, idx) => (
-                      <li key={idx} className="text-xs text-elec-light/80 flex items-center gap-2">
-                        <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
-                        {req}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <p className="text-xs text-muted-foreground mb-2">{stage.duration}</p>
+                <p className="text-sm text-slate-200 mb-3">{stage.focus}</p>
+                <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                  {stage.salary}
+                </Badge>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-green-500/30 bg-green-500/10">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-green-400 flex items-center gap-2">
-            <Target className="h-5 w-5" />
-            High-Growth Specialisations
+          <CardTitle className="flex items-center gap-2">
+            <PoundSterling className="h-5 w-5 text-elec-yellow" />
+            Factors Affecting Salary
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {specialisations.map((spec, index) => (
-              <div key={index} className="p-4 rounded-lg bg-green-500/5 border border-green-500/20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {factorsAffectingSalary.map((factor, index) => (
+              <div key={index} className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/10">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-semibold text-green-400">{spec.area}</h3>
-                  <Badge className="bg-green-500/20 text-green-400 border-green-500/40 text-xs">
-                    {spec.growth}
+                  <h4 className="font-medium text-white">{factor.factor}</h4>
+                  <Badge 
+                    className={`text-xs ${
+                      factor.impact === 'High' 
+                        ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                        : 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+                    }`}
+                  >
+                    {factor.impact} Impact
                   </Badge>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">{spec.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">Market Demand</span>
-                  <span className="text-sm font-medium text-green-400">{spec.demandLevel}</span>
-                </div>
+                <p className="text-sm text-muted-foreground">{factor.description}</p>
               </div>
             ))}
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-blue-500/30 bg-blue-500/10">
+      <Card className="border-elec-yellow/50 bg-gradient-to-r from-elec-yellow/10 to-blue-500/10">
         <CardHeader>
-          <CardTitle className="text-blue-400">Next Steps for Career Planning</CardTitle>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <Target className="h-5 w-5" />
+            Planning Your Career Path
+          </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 rounded-lg bg-blue-500/5 border border-blue-500/20">
-              <h3 className="font-semibold mb-2 text-blue-400">Self-Assessment</h3>
-              <p className="text-sm text-muted-foreground">
-                Identify your strengths, interests, and long-term career goals.
-              </p>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="font-semibold mb-3 text-elec-yellow">Key Considerations</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  Consider your interests and strengths when choosing specialisations
+                </li>
+                <li className="flex items-start gap-2">
+                  <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  Research local job markets and growth sectors in your area
+                </li>
+                <li className="flex items-start gap-2">
+                  <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  Plan qualifications and training well in advance
+                </li>
+                <li className="flex items-start gap-2">
+                  <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  Build a network of professional contacts early in your career
+                </li>
+              </ul>
             </div>
-            <div className="p-4 rounded-lg bg-blue-500/5 border border-blue-500/20">
-              <h3 className="font-semibold mb-2 text-blue-400">Skills Gap Analysis</h3>
-              <p className="text-sm text-muted-foreground">
-                Compare your current skills with your target role requirements.
-              </p>
-            </div>
-            <div className="p-4 rounded-lg bg-blue-500/5 border border-blue-500/20">
-              <h3 className="font-semibold mb-2 text-blue-400">Action Planning</h3>
-              <p className="text-sm text-muted-foreground">
-                Create a step-by-step plan to achieve your career objectives.
-              </p>
+            <div>
+              <h3 className="font-semibold mb-3 text-elec-yellow">Next Steps</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <Target className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Identify 2-3 career paths that interest you most
+                </li>
+                <li className="flex items-start gap-2">
+                  <Target className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Research the specific qualifications and experience needed
+                </li>
+                <li className="flex items-start gap-2">
+                  <Target className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Speak to professionals already working in those areas
+                </li>
+                <li className="flex items-start gap-2">
+                  <Target className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                  Create a 5-year development plan with clear milestones
+                </li>
+              </ul>
             </div>
           </div>
         </CardContent>

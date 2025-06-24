@@ -1,334 +1,412 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Award, Star, Clock, PoundSterling, CheckCircle, Zap, Shield, Cpu, Factory, Building } from "lucide-react";
+import { 
+  Award, 
+  Clock, 
+  PoundSterling, 
+  Building, 
+  Zap, 
+  Shield, 
+  CheckCircle,
+  AlertCircle,
+  Target
+} from "lucide-react";
 
 const CertificationsTab = () => {
-  const certifications = [
+  const coreCertifications = [
     {
-      title: "18th Edition IET Wiring Regulations (BS 7671)",
+      title: "18th Edition BS 7671",
       provider: "Multiple providers",
       duration: "3-5 days",
-      cost: "£300-500",
+      cost: "£400-600",
+      validity: "Valid until 19th Edition",
+      description: "Current wiring regulations - essential for all electrical work",
+      icon: <Award className="h-6 w-6 text-elec-yellow" />,
       priority: "Essential",
-      description: "Required for all electrical work. Must be renewed every 3-5 years.",
-      benefits: ["Legal requirement", "Industry standard", "Higher pay rates"],
-      renewalPeriod: "3-5 years",
-      category: "Core"
+      renewalRequired: true
+    },
+    {
+      title: "AM2 Practical Assessment",
+      provider: "EAL, City & Guilds",
+      duration: "1 day assessment",
+      cost: "£300-400",
+      validity: "Lifetime",
+      description: "Practical skills assessment for newly qualified electricians",
+      icon: <CheckCircle className="h-6 w-6 text-green-400" />,
+      priority: "Essential",
+      renewalRequired: false
     },
     {
       title: "Part P Building Regulations",
-      provider: "NICEIC, NAPIT, ELECSA",
+      provider: "Various training centres",
       duration: "1-2 days",
-      cost: "£200-400",
-      priority: "Essential",
-      description: "Required for domestic electrical work in England and Wales.",
-      benefits: ["Domestic work compliance", "Self-certification", "Customer confidence"],
-      renewalPeriod: "Annual assessment",
-      category: "Core"
+      cost: "£200-350",
+      validity: "Lifetime (knowledge)",
+      description: "Domestic electrical work compliance and notification requirements",
+      icon: <Building className="h-6 w-6 text-blue-400" />,
+      priority: "Essential for Domestic",
+      renewalRequired: false
     },
     {
       title: "2391 Inspection & Testing",
-      provider: "City & Guilds, EAL",
-      duration: "5 days",
+      provider: "Multiple providers",
+      duration: "5 days + assessment",
       cost: "£800-1200",
-      priority: "Essential",
-      description: "Essential for electrical inspection and testing work.",
-      benefits: ["EICR certification", "Higher earnings", "Career progression"],
-      renewalPeriod: "None (permanent)",
-      category: "Testing"
-    },
-    {
-      title: "2394 & 2395 Initial Verification",
-      provider: "City & Guilds, EAL",
-      duration: "3-4 days",
-      cost: "£600-900",
-      priority: "Recommended",
-      description: "Design and verification of electrical installations.",
-      benefits: ["Design capability", "Project leadership", "Enhanced credibility"],
-      renewalPeriod: "None (permanent)",
-      category: "Design"
-    },
-    {
-      title: "PAT Testing Certification",
-      provider: "City & Guilds, EAL",
-      duration: "1-2 days",
-      cost: "£150-300",
-      priority: "Recommended",
-      description: "Portable Appliance Testing for workplace electrical safety.",
-      benefits: ["Additional income stream", "Workplace safety", "Business opportunities"],
-      renewalPeriod: "3 years",
-      category: "Testing"
-    },
-    {
-      title: "Solar PV Installation (MCS)",
-      provider: "Solar Trade Association",
-      duration: "3-5 days",
-      cost: "£800-1200",
-      priority: "High Demand",
-      description: "Microgeneration Certification Scheme for solar installations.",
-      benefits: ["Growing market", "Higher earnings", "Green technology"],
-      renewalPeriod: "Annual",
-      category: "Renewable"
-    },
-    {
-      title: "Electric Vehicle Charging Points",
-      provider: "Various providers",
-      duration: "2-3 days",
-      cost: "£500-800",
-      priority: "High Demand",
-      description: "Installation and maintenance of EV charging infrastructure.",
-      benefits: ["Future-proof skill", "Government backing", "High demand"],
-      renewalPeriod: "3 years",
-      category: "EV"
-    },
-    {
-      title: "Emergency Lighting BS 5266",
-      provider: "ILP, SLL",
-      duration: "2-3 days",
-      cost: "£400-600",
-      priority: "Specialist",
-      description: "Design, installation, and testing of emergency lighting systems.",
-      benefits: ["Commercial opportunities", "Compliance requirement", "Specialist knowledge"],
-      renewalPeriod: "5 years",
-      category: "Specialist"
-    },
-    {
-      title: "Fire Alarm Systems BS 5839",
-      provider: "FIA, BAFE",
-      duration: "3-5 days",
-      cost: "£700-1000",
-      priority: "Specialist",
-      description: "Design, installation, and maintenance of fire alarm systems.",
-      benefits: ["Life safety systems", "High responsibility", "Premium rates"],
-      renewalPeriod: "3 years",
-      category: "Fire Safety"
-    },
-    {
-      title: "Intrinsically Safe Equipment",
-      provider: "COMPEX, City & Guilds",
-      duration: "5 days",
-      cost: "£1200-1800",
-      priority: "Specialist",
-      description: "Work in explosive atmospheres and hazardous areas.",
-      benefits: ["Oil & gas industry", "Chemical plants", "High pay rates"],
-      renewalPeriod: "3 years",
-      category: "Hazardous Areas"
-    },
-    {
-      title: "PLC Programming",
-      provider: "Siemens, Schneider, ABB",
-      duration: "5-10 days",
-      cost: "£1500-3000",
-      priority: "Specialist",
-      description: "Program and maintain industrial control systems.",
-      benefits: ["Automation sector", "High-tech skills", "Excellent pay"],
-      renewalPeriod: "Varies by manufacturer",
-      category: "Automation"
-    },
-    {
-      title: "Wind Turbine Maintenance",
-      provider: "GWO, Renewable UK",
-      duration: "5-7 days",
-      cost: "£2000-3500",
-      priority: "Specialist",
-      description: "Maintenance of wind turbine electrical systems.",
-      benefits: ["Renewable energy", "Offshore work", "Travel opportunities"],
-      renewalPeriod: "2 years",
-      category: "Renewable"
-    },
-    {
-      title: "Data Centre Power Systems",
-      provider: "Data Centre Institute",
-      duration: "3-5 days",
-      cost: "£1000-1500",
-      priority: "High Demand",
-      description: "Critical power systems for data centres.",
-      benefits: ["Growing sector", "Mission critical", "Premium rates"],
-      renewalPeriod: "3 years",
-      category: "Data Centres"
-    },
-    {
-      title: "NICEIC Approved Contractor",
-      provider: "NICEIC",
-      duration: "Assessment process",
-      cost: "£500-1500/year",
-      priority: "Business",
-      description: "Industry recognition for electrical contractors.",
-      benefits: ["Customer trust", "Insurance benefits", "Marketing advantage"],
-      renewalPeriod: "Annual",
-      category: "Business"
-    },
-    {
-      title: "IET Professional Registration",
-      provider: "Institution of Engineering and Technology",
-      duration: "Portfolio submission",
-      cost: "£200-400/year",
-      priority: "Career",
-      description: "Professional recognition for electrical engineers.",
-      benefits: ["Professional status", "Career progression", "Industry recognition"],
-      renewalPeriod: "Annual CPD",
-      category: "Professional"
+      validity: "5 years",
+      description: "Advanced testing and inspection of electrical installations",
+      icon: <Shield className="h-6 w-6 text-purple-400" />,
+      priority: "Career Advancement",
+      renewalRequired: true
     }
   ];
 
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case "Essential": return "bg-red-500/20 text-red-400 border-red-500/40";
-      case "High Demand": return "bg-green-500/20 text-green-400 border-green-500/40";
-      case "Recommended": return "bg-blue-500/20 text-blue-400 border-blue-500/40";
-      case "Specialist": return "bg-purple-500/20 text-purple-400 border-purple-500/40";
-      case "Business": return "bg-orange-500/20 text-orange-400 border-orange-500/40";
-      case "Career": return "bg-cyan-500/20 text-cyan-400 border-cyan-500/40";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/40";
+  const specialistCertifications = [
+    {
+      category: "Renewable Energy",
+      icon: <Zap className="h-6 w-6 text-green-500" />,
+      certifications: [
+        {
+          name: "Solar PV Installation",
+          provider: "MCS approved centres",
+          duration: "3-5 days",
+          cost: "£800-1200",
+          demand: "High"
+        },
+        {
+          name: "Battery Storage Systems",
+          provider: "Various providers",
+          duration: "2-3 days", 
+          cost: "£600-900",
+          demand: "Growing"
+        },
+        {
+          name: "Heat Pump Electrical",
+          provider: "MCS approved centres",
+          duration: "2-3 days",
+          cost: "£500-800",
+          demand: "Very High"
+        }
+      ]
+    },
+    {
+      category: "High Voltage",
+      icon: <AlertCircle className="h-6 w-6 text-red-400" />,
+      certifications: [
+        {
+          name: "HV Switching",
+          provider: "Specialist providers",
+          duration: "5 days",
+          cost: "£1500-2000",
+          demand: "Medium"
+        },
+        {
+          name: "HV Cable Jointing",
+          provider: "NPTC approved",
+          duration: "10-15 days",
+          cost: "£3000-5000",
+          demand: "High"
+        }
+      ]
+    },
+    {
+      category: "Industrial Systems",
+      icon: <Building className="h-6 w-6 text-amber-400" />,
+      certifications: [
+        {
+          name: "PLC Programming",
+          provider: "Siemens, Allen Bradley",
+          duration: "5-10 days",
+          cost: "£2000-4000",
+          demand: "High"
+        },
+        {
+          name: "Motor Control Systems",
+          provider: "Various providers",
+          duration: "3-5 days",
+          cost: "£800-1200",
+          demand: "Medium"
+        }
+      ]
     }
+  ];
+
+  const schemeProviders = [
+    {
+      name: "NICEIC",
+      type: "Competent Person Scheme",
+      specialities: ["Domestic", "Commercial", "Industrial"],
+      benefits: [
+        "Self-certification for notifiable work",
+        "Technical support helpline",
+        "Marketing support materials",
+        "Public liability insurance discounts"
+      ],
+      costs: "£500-800 annually"
+    },
+    {
+      name: "NAPIT",
+      type: "Competent Person Scheme", 
+      specialities: ["Electrical", "Gas", "Renewable"],
+      benefits: [
+        "Multi-trade registrations available",
+        "Competitive annual fees",
+        "Technical guidance and support",
+        "Business development resources"
+      ],
+      costs: "£400-700 annually"
+    },
+    {
+      name: "ELECSA",
+      type: "Competent Person Scheme",
+      specialities: ["Electrical Installation"],
+      benefits: [
+        "Straightforward registration process",
+        "Good customer support",
+        "Regular technical updates",
+        "Professional recognition"
+      ],
+      costs: "£450-650 annually"
+    }
+  ];
+
+  const getPriorityBadge = (priority: string) => {
+    const colorMap: Record<string, string> = {
+      "Essential": "bg-red-500/20 text-red-400 border-red-500/30",
+      "Essential for Domestic": "bg-blue-500/20 text-blue-400 border-blue-500/30",
+      "Career Advancement": "bg-purple-500/20 text-purple-400 border-purple-500/30"
+    };
+
+    return (
+      <Badge className={`${colorMap[priority]} text-xs`}>
+        {priority}
+      </Badge>
+    );
   };
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case "Core": return Shield;
-      case "Testing": return CheckCircle;
-      case "Renewable": return Zap;
-      case "EV": return Cpu;
-      case "Automation": return Factory;
-      case "Design": return Building;
-      default: return Award;
-    }
+  const getDemandBadge = (demand: string) => {
+    const colorMap: Record<string, string> = {
+      "Very High": "bg-green-500/20 text-green-400 border-green-500/30",
+      "High": "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30",
+      "Growing": "bg-blue-500/20 text-blue-400 border-blue-500/30",
+      "Medium": "bg-amber-500/20 text-amber-400 border-amber-500/30"
+    };
+
+    return (
+      <Badge className={`${colorMap[demand]} text-xs`}>
+        {demand} Demand
+      </Badge>
+    );
   };
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+      <div className="text-center space-y-4">
+        <h2 className="text-2xl font-semibold">Essential Certifications & Qualifications</h2>
+        <p className="text-muted-foreground max-w-3xl mx-auto">
+          Understanding the certification landscape helps you plan your professional development 
+          and meet industry requirements. Focus on core certifications first, then specialise based on your career goals.
+        </p>
+      </div>
+
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Award className="h-5 w-5" />
-            Professional Certifications & Qualifications
+          <CardTitle className="flex items-center gap-2">
+            <Award className="h-5 w-5 text-elec-yellow" />
+            Core Certifications
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {certifications.map((cert, index) => {
-              const CategoryIcon = getCategoryIcon(cert.category);
-              return (
-                <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <CategoryIcon className="h-4 w-4 text-elec-yellow" />
-                        <h3 className="font-semibold text-white">{cert.title}</h3>
-                        <Badge className={`text-xs ${getPriorityColor(cert.priority)}`}>
-                          {cert.priority}
-                        </Badge>
-                        <Badge variant="outline" className="border-elec-yellow/40 text-elec-yellow text-xs">
-                          {cert.category}
-                        </Badge>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-2">{cert.description}</p>
-                      <div className="flex items-center gap-4 text-sm text-elec-light/70">
-                        <span className="flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          {cert.duration}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <PoundSterling className="h-3 w-3" />
-                          {cert.cost}
-                        </span>
-                      </div>
-                    </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {coreCertifications.map((cert, index) => (
+              <div key={index} className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/10">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    {cert.icon}
+                    <h4 className="font-medium text-white">{cert.title}</h4>
                   </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <h4 className="font-medium text-elec-yellow text-sm mb-2">Key Benefits:</h4>
-                      <ul className="space-y-1">
-                        {cert.benefits.map((benefit, idx) => (
-                          <li key={idx} className="text-xs text-elec-light/80 flex items-center gap-2">
-                            <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                            {benefit}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-elec-yellow text-sm mb-2">Training Details:</h4>
-                      <div className="space-y-1 text-xs text-elec-light/80">
-                        <p><span className="text-elec-yellow">Provider:</span> {cert.provider}</p>
-                        <p><span className="text-elec-yellow">Renewal:</span> {cert.renewalPeriod}</p>
-                      </div>
-                    </div>
+                  {getPriorityBadge(cert.priority)}
+                </div>
+                
+                <p className="text-sm text-muted-foreground mb-3">{cert.description}</p>
+                
+                <div className="grid grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <span className="text-muted-foreground">Provider:</span>
+                    <p className="text-white">{cert.provider}</p>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Duration:</span>
+                    <p className="text-white">{cert.duration}</p>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Cost:</span>
+                    <p className="text-white">{cert.cost}</p>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Validity:</span>
+                    <p className="text-white">{cert.validity}</p>
                   </div>
                 </div>
-              );
-            })}
+                
+                {cert.renewalRequired && (
+                  <div className="mt-3 flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-amber-400" />
+                    <span className="text-xs text-amber-300">Renewal required</span>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="border-blue-500/30 bg-blue-500/10">
-          <CardHeader>
-            <CardTitle className="text-blue-400 flex items-center gap-2">
-              <Star className="h-5 w-5" />
-              Certification Strategy
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div>
-                <h4 className="font-semibold text-blue-400 text-sm mb-1">Priority Order:</h4>
-                <ol className="text-sm text-muted-foreground space-y-1">
-                  <li>1. Complete essential certifications first</li>
-                  <li>2. Focus on high-demand specialist areas</li>
-                  <li>3. Consider your career goals and interests</li>
-                  <li>4. Plan for renewal schedules</li>
-                  <li>5. Build expertise in emerging technologies</li>
-                </ol>
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Zap className="h-5 w-5 text-elec-yellow" />
+            Specialist Certifications
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            {specialistCertifications.map((category, index) => (
+              <div key={index}>
+                <div className="flex items-center gap-3 mb-4">
+                  {category.icon}
+                  <h3 className="text-lg font-semibold text-white">{category.category}</h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {category.certifications.map((cert, certIndex) => (
+                    <div key={certIndex} className="bg-elec-dark/30 p-3 rounded-lg border border-elec-yellow/5">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-medium text-white text-sm">{cert.name}</h4>
+                        {getDemandBadge(cert.demand)}
+                      </div>
+                      <div className="space-y-1 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Provider:</span>
+                          <span className="text-white">{cert.provider}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Duration:</span>
+                          <span className="text-white">{cert.duration}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Cost:</span>
+                          <span className="text-white">{cert.cost}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div>
-                <h4 className="font-semibold text-blue-400 text-sm mb-1">Career Pathways:</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Installation → Testing → Design</li>
-                  <li>• Maintenance → Automation → Controls</li>
-                  <li>• General → Renewable → Specialist</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-        <Card className="border-green-500/30 bg-green-500/10">
-          <CardHeader>
-            <CardTitle className="text-green-400 flex items-center gap-2">
-              <PoundSterling className="h-5 w-5" />
-              Investment Planning
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div>
-                <h4 className="font-semibold text-green-400 text-sm mb-1">Funding Options:</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Employer training budgets</li>
-                  <li>• Government skills vouchers</li>
-                  <li>• Professional development loans</li>
-                  <li>• Tax deductible as business expense</li>
-                  <li>• Industry body scholarships</li>
-                  <li>• Apprenticeship levy funding</li>
-                </ul>
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <CheckCircle className="h-5 w-5 text-elec-yellow" />
+            Competent Person Schemes
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {schemeProviders.map((provider, index) => (
+              <div key={index} className="bg-elec-dark/50 p-4 rounded-lg border border-elec-yellow/10">
+                <div className="mb-3">
+                  <h4 className="font-medium text-white mb-1">{provider.name}</h4>
+                  <p className="text-sm text-muted-foreground">{provider.type}</p>
+                  <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs mt-2">
+                    {provider.costs}
+                  </Badge>
+                </div>
+                
+                <div className="mb-3">
+                  <h5 className="text-sm font-medium text-white mb-1">Specialities</h5>
+                  <div className="flex flex-wrap gap-1">
+                    {provider.specialities.map((spec, specIndex) => (
+                      <Badge key={specIndex} variant="outline" className="text-xs">
+                        {spec}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <h5 className="text-sm font-medium text-white mb-2">Benefits</h5>
+                  <ul className="space-y-1">
+                    {provider.benefits.map((benefit, benefitIndex) => (
+                      <li key={benefitIndex} className="text-xs text-muted-foreground flex items-start gap-2">
+                        <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                        {benefit}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <div>
-                <h4 className="font-semibold text-green-400 text-sm mb-1">ROI Considerations:</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Salary increase potential</li>
-                  <li>• Job security improvement</li>
-                  <li>• Market demand growth</li>
-                  <li>• Long-term career value</li>
-                </ul>
-              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="border-elec-yellow/50 bg-gradient-to-r from-elec-yellow/10 to-purple-500/10">
+        <CardHeader>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <Target className="h-5 w-5" />
+            Certification Planning Strategy
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="font-semibold mb-3 text-elec-yellow">Priority Order</h3>
+              <ol className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="bg-elec-yellow text-elec-dark rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">1</span>
+                  Complete core Level 3 qualification and AM2 assessment
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="bg-elec-yellow text-elec-dark rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">2</span>
+                  Obtain 18th Edition certification (essential for current work)
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="bg-elec-yellow text-elec-dark rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">3</span>
+                  Register with competent person scheme if doing domestic work
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="bg-elec-yellow text-elec-dark rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">4</span>
+                  Add specialist certifications based on career direction
+                </li>
+              </ol>
             </div>
-          </CardContent>
-        </Card>
-      </div>
+            <div>
+              <h3 className="font-semibold mb-3 text-elec-yellow">Key Considerations</h3>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <PoundSterling className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  Budget for ongoing renewal costs and recertification
+                </li>
+                <li className="flex items-start gap-2">
+                  <Clock className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  Plan training around work commitments and course availability
+                </li>
+                <li className="flex items-start gap-2">
+                  <Target className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  Choose specialisations based on local market demand
+                </li>
+                <li className="flex items-start gap-2">
+                  <Award className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                  Verify training provider credentials and course recognition
+                </li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
