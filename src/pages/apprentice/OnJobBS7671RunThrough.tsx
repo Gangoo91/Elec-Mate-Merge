@@ -2,6 +2,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, Eye, Zap, FileText, Shield, Settings, Search, BookOpen, Wrench, AlertTriangle } from "lucide-react";
 import BackButton from "@/components/common/BackButton";
+import { Link } from "react-router-dom";
 
 const OnJobBS7671RunThrough = () => {
   const bs7671Sections = [
@@ -9,7 +10,8 @@ const OnJobBS7671RunThrough = () => {
       id: 1,
       title: "Overview",
       icon: CheckCircle,
-      description: "Why we test and compliance requirements"
+      description: "Why we test and compliance requirements",
+      link: "/apprentice/bs7671-inspection-testing/overview"
     },
     {
       id: 2,
@@ -79,20 +81,35 @@ const OnJobBS7671RunThrough = () => {
 
       {/* Clean Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {bs7671Sections.map((section) => (
-          <Card 
-            key={section.id} 
-            className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors cursor-pointer group"
-          >
-            <CardContent className="flex flex-col items-center justify-center text-center p-6 space-y-4">
-              <section.icon className="h-12 w-12 text-elec-yellow group-hover:scale-110 transition-transform" />
-              <div>
-                <h3 className="text-lg font-semibold text-white mb-2">{section.title}</h3>
-                <p className="text-sm text-muted-foreground">{section.description}</p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+        {bs7671Sections.map((section) => {
+          const CardComponent = section.link ? Link : 'div';
+          return (
+            <CardComponent 
+              key={section.id}
+              to={section.link || '#'}
+              className={`block ${section.link ? 'cursor-pointer' : 'cursor-default'}`}
+            >
+              <Card 
+                className={`border-elec-yellow/20 bg-elec-gray transition-colors group h-full ${
+                  section.link ? 'hover:bg-elec-gray/80 hover:border-elec-yellow/40' : 'hover:bg-elec-gray/80'
+                }`}
+              >
+                <CardContent className="flex flex-col items-center justify-center text-center p-6 space-y-4">
+                  <section.icon className={`h-12 w-12 text-elec-yellow transition-transform ${
+                    section.link ? 'group-hover:scale-110' : 'group-hover:scale-105'
+                  }`} />
+                  <div>
+                    <h3 className="text-lg font-semibold text-white mb-2">{section.title}</h3>
+                    <p className="text-sm text-muted-foreground">{section.description}</p>
+                    {section.link && (
+                      <p className="text-xs text-elec-yellow mt-2">Click to explore →</p>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </CardComponent>
+          );
+        })}
       </div>
 
       {/* Compliance Reminder Card */}

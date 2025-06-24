@@ -51,6 +51,7 @@ import TimeManagement from "@/pages/apprentice/toolbox/TimeManagement";
 import ApprenticeOJT from "@/pages/apprentice/ApprenticeOJT";
 import AdvancedHelp from "@/pages/apprentice/AdvancedHelp";
 import ProfessionalToolGuide from "@/pages/apprentice/ProfessionalToolGuide";
+import OverviewTesting from "@/pages/apprentice/OverviewTesting";
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -58,6 +59,7 @@ const ApprenticeRoutes = () => (
     <Route path="ojt" element={<ApprenticeOJT />} />
     <Route path="advanced-help" element={<AdvancedHelp />} />
     <Route path="bs7671-inspection-testing" element={<OnJobBS7671RunThrough />} />
+    <Route path="bs7671-inspection-testing/overview" element={<OverviewTesting />} />
     <Route path="mental-health" element={<ApprenticeMentalHealth />} />
     <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
     <Route path="mental-health/resources" element={<MentalHealthResources />} />
