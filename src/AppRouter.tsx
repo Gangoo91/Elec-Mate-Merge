@@ -1,86 +1,86 @@
 
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import Layout from './components/layout/Layout';
-import ProtectedRoute from './components/auth/ProtectedRoute';
-import Dashboard from './pages/Dashboard';
-import SignIn from './pages/auth/SignIn';
-import SignUp from './pages/auth/SignUp';
-import NotFound from './pages/NotFound';
-import ApprenticeOJT from './pages/apprentice/ApprenticeOJT';
-import MockExams from './pages/apprentice/MockExams';
-import MockExamDetails from './pages/apprentice/MockExamDetails';
-import ApprenticeHub from './pages/ApprenticeHub';
-import ApprenticeMentalHealth from './pages/apprentice/ApprenticeMentalHealth';
-import ApprenticeToolbox from './pages/apprentice/ApprenticeToolbox';
-import OnJobTools from './pages/apprentice/OnJobTools';
-import ProfessionalDevelopment from './pages/apprentice/ProfessionalDevelopment';
-import AdvancedHelp from './pages/apprentice/AdvancedHelp';
-import OnJobBS7671RunThrough from './pages/apprentice/OnJobBS7671RunThrough';
-import OverviewTesting from './pages/apprentice/bs7671/OverviewTesting';
+import { Routes, Route, Navigate } from "react-router-dom";
+import LandingPage from "@/pages/LandingPage";
+import Index from "@/pages/Index";
+import SignIn from "@/pages/auth/SignIn";
+import SignUp from "@/pages/auth/SignUp";
+import Layout from "@/components/layout/Layout";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import Dashboard from "@/pages/Dashboard";
+import Profile from "@/pages/Profile";
+import Settings from "@/pages/Settings";
+import Messenger from "@/pages/Messenger";
+import Subscriptions from "@/pages/Subscriptions";
+import PaymentSuccess from "@/pages/PaymentSuccess";
+import NotFound from "@/pages/NotFound";
+import VideoLessons from "@/pages/VideoLessons";
+import Leaderboards from "@/pages/Leaderboards";
+import ElectricianTools from "@/pages/ElectricianTools";
+import ElectricalHub from "@/pages/ElectricalHub";
+import Calculations from "@/pages/electrician-tools/Calculations";
+import Admin from "@/pages/electrician-tools/Admin";
+import ApprenticeRoutes from "@/routes/ApprenticeRoutes";
+import ElectricianHubRoutes from "@/routes/ElectricianHubRoutes";
+import ElectricianRoutes from "@/routes/ElectricianRoutes";
+import ApprenticeChat from "@/pages/apprentice/ApprenticeChat";
+import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
+import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
+import RightsAndPay from "@/pages/apprentice/RightsAndPay";
+import Chat from "@/pages/Chat";
+import NotificationsPage from "@/pages/NotificationsPage";
 
-function AppRouter() {
+const AppRouter = () => {
   return (
     <Routes>
-      <Route path="/login" element={<SignIn />} />
-      <Route path="/register" element={<SignUp />} />
-
-      <Route path="/" element={<Layout />}>
-        <Route
-          index
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/ojt"
-          element={
-            <ProtectedRoute>
-              <ApprenticeOJT />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/mock-tests"
-          element={
-            <ProtectedRoute>
-              <MockExams />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/mock-tests/:testId"
-          element={
-            <ProtectedRoute>
-              <MockExamDetails />
-            </ProtectedRoute>
-          }
-        />
-
-          {/* Apprentice Routes */}
-          <Route path="/apprentice" element={<ApprenticeHub />} />
-          <Route path="/apprentice/bs7671-inspection-testing" element={<OnJobBS7671RunThrough />} />
-          <Route path="/apprentice/bs7671-inspection-testing/overview" element={<OverviewTesting />} />
-          <Route path="/apprentice/mental-health" element={<ApprenticeMentalHealth />} />
-          <Route path="/apprentice/toolbox" element={<ApprenticeToolbox />} />
-          <Route path="/apprentice/on-job-tools" element={<OnJobTools />} />
-          <Route path="/apprentice/professional-development" element={<ProfessionalDevelopment />} />
-          <Route path="/apprentice/advanced-help" element={<AdvancedHelp />} />
-        <Route path="*" element={<NotFound />} />
+      {/* Public Routes */}
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/index" element={<Index />} />
+      <Route path="/auth/signin" element={<SignIn />} />
+      <Route path="/auth/signup" element={<SignUp />} />
+      
+      {/* Legacy/Direct Access Routes - Redirect to proper paths */}
+      <Route path="/rights-and-pay" element={<Navigate to="/apprentice/rights-and-pay" replace />} />
+      
+      {/* Main Protected Routes */}
+      <Route path="/" element={
+        <ProtectedRoute>
+          <Layout />
+        </ProtectedRoute>
+      }>
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="settings" element={<Settings />} />
+        <Route path="messages" element={<Messenger />} />
+        <Route path="notifications" element={<NotificationsPage />} />
+        <Route path="subscriptions" element={<Subscriptions />} />
+        <Route path="payment-success" element={<PaymentSuccess />} />
         
+        {/* Top level routes for shared features */}
+        <Route path="chat" element={<Chat />} />
+        <Route path="mental-health" element={<ApprenticeMentalHealth />} />
+        <Route path="mentor" element={<ApprenticeMentor />} />
+        
+        {/* Video Lessons and Leaderboards */}
+        <Route path="videos" element={<VideoLessons />} />
+        <Route path="leaderboards" element={<Leaderboards />} />
+        
+        {/* Electrician Tools Routes */}
+        <Route path="electrician-tools" element={<ElectricianTools />} />
+        <Route path="electrician-tools/*" element={<ElectricianRoutes />} />
+        
+        {/* Electrical Hub Routes */}
+        <Route path="electrical-hub" element={<ElectricalHub />} />
+        <Route path="electrical-hub/*" element={<ElectricianHubRoutes />} />
+        <Route path="electrician/*" element={<ElectricianHubRoutes />} />
+        
+        {/* Apprentice Routes */}
+        <Route path="apprentice/*" element={<ApprenticeRoutes />} />
+        
+        {/* Catch-all route for 404 */}
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
-}
+};
 
 export default AppRouter;
