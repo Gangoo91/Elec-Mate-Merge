@@ -1,17 +1,11 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Book, Clock, Heart, Users, WrenchIcon, Bot, ArrowLeft, Calculator, FileText, Settings, GraduationCap, Zap, Brain } from "lucide-react";
+import { Clock, Heart, WrenchIcon, Bot, ArrowLeft, Settings, GraduationCap, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const ApprenticeHub = () => {
   const apprenticeResources = [
-    {
-      id: 1,
-      title: "Study Centre",
-      icon: Book,
-      link: "/apprentice/study"
-    },
     {
       id: 2,
       title: "Off the Job Time Keeping",
@@ -31,12 +25,6 @@ const ApprenticeHub = () => {
       title: "Mental Health Hub",
       icon: Heart,
       link: "/apprentice/mental-health"
-    },
-    {
-      id: 4,
-      title: "Mentor Connect",
-      icon: Users,
-      link: "/apprentice/mentor"
     },
     {
       id: 5,
