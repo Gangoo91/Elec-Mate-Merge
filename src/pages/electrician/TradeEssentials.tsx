@@ -63,7 +63,6 @@ const TradeEssentials = () => {
         </Link>
       </div>
 
-      {/* Main Content */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {essentialsCategories.map((category) => (
           <Link to={category.link} key={category.id} className="focus:outline-none">
