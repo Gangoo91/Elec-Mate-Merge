@@ -2,46 +2,66 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Star, FileText, Download, Eye, Trash2 } from "lucide-react";
-import { documentTemplates } from "@/data/apprentice/documentTemplates";
-import DocumentCard from "./DocumentCard";
-import DocumentPreviewDialog from "./DocumentPreviewDialog";
+import { Star, FileText, Download, Eye, Trash2, Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import type { DocumentTemplate } from "./DocumentCard";
+
+interface PersonalDocument {
+  id: number;
+  name: string;
+  type: string;
+  size: string;
+  dateAdded: string;
+  category: string;
+}
 
 const FavouritesTab = () => {
-  const [favouriteIds, setFavouriteIds] = useState<number[]>([1, 3, 5]);
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [currentDocument, setCurrentDocument] = useState<DocumentTemplate | null>(null);
+  const [favouriteDocuments, setFavouriteDocuments] = useState<PersonalDocument[]>([
+    {
+      id: 1,
+      name: "Electrical Installation Certificate",
+      type: "PDF",
+      size: "2.4 MB",
+      dateAdded: "2024-01-15",
+      category: "Certificates"
+    },
+    {
+      id: 2,
+      name: "Risk Assessment Template",
+      type: "PDF",
+      size: "1.8 MB",
+      dateAdded: "2024-01-10",
+      category: "Safety"
+    },
+    {
+      id: 3,
+      name: "Site Inspection Form",
+      type: "PDF",
+      size: "1.2 MB",
+      dateAdded: "2024-01-08",
+      category: "Inspections"
+    }
+  ]);
+
   const { toast } = useToast();
 
-  const favouriteDocuments = documentTemplates.filter(doc => 
-    favouriteIds.includes(doc.id)
-  );
-
-  const handlePreview = (document: DocumentTemplate) => {
-    setCurrentDocument(document);
-    setPreviewOpen(true);
-  };
-
-  const handleDownload = (document: DocumentTemplate) => {
+  const handleDownload = (document: PersonalDocument) => {
     toast({
       title: "Download Started",
-      description: `${document.fileName} is downloading...`,
+      description: `${document.name} is downloading...`,
       variant: "default",
     });
     
     setTimeout(() => {
       toast({
         title: "Download Complete",
-        description: `${document.fileName} has been downloaded successfully.`,
+        description: `${document.name} has been downloaded successfully.`,
         variant: "default",
       });
     }, 1500);
   };
 
   const handleRemoveFavourite = (documentId: number) => {
-    setFavouriteIds(prev => prev.filter(id => id !== documentId));
+    setFavouriteDocuments(prev => prev.filter(doc => doc.id !== documentId));
     toast({
       title: "Removed from Favourites",
       description: "Document has been removed from your favourites.",
@@ -97,13 +117,13 @@ const FavouritesTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center p-3 border border-blue-500/20 rounded-lg">
               <div className="text-2xl font-bold text-blue-400">{favouriteDocuments.length}</div>
-              <div className="text-sm text-muted-foreground">Favourite Templates</div>
+              <div className="text-sm text-muted-foreground">Favourite Documents</div>
             </div>
             <div className="text-center p-3 border border-blue-500/20 rounded-lg">
               <div className="text-2xl font-bold text-blue-400">
-                {new Set(favouriteDocuments.map(d => d.type)).size}
+                {new Set(favouriteDocuments.map(d => d.category)).size}
               </div>
-              <div className="text-sm text-muted-foreground">Document Types</div>
+              <div className="text-sm text-muted-foreground">Document Categories</div>
             </div>
             <div className="text-center p-3 border border-blue-500/20 rounded-lg">
               <div className="text-2xl font-bold text-blue-400">24</div>
@@ -116,25 +136,49 @@ const FavouritesTab = () => {
       {/* Favourite Documents */}
       {favouriteDocuments.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {favouriteDocuments.map((template) => (
-            <div key={template.id} className="relative">
-              <DocumentCard 
-                document={template} 
-                onPreview={handlePreview} 
-                onDownload={handleDownload} 
-              />
-              <Button
-                size="sm"
-                variant="ghost"
-                className="absolute top-2 right-2 p-1 h-auto"
-                onClick={() => handleRemoveFavourite(template.id)}
-              >
-                <Trash2 className="h-4 w-4 text-red-400" />
-              </Button>
-              <div className="absolute top-2 left-2">
-                <Star className="h-4 w-4 fill-elec-yellow text-elec-yellow" />
-              </div>
-            </div>
+          {favouriteDocuments.map((document) => (
+            <Card key={document.id} className="border-elec-yellow/20 bg-elec-gray relative">
+              <CardHeader className="pb-3">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-2">
+                    <FileText className="h-5 w-5 text-elec-yellow" />
+                    <CardTitle className="text-sm text-white">{document.name}</CardTitle>
+                  </div>
+                  <div className="flex gap-1">
+                    <Star className="h-4 w-4 fill-elec-yellow text-elec-yellow" />
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="p-1 h-auto"
+                      onClick={() => handleRemoveFavourite(document.id)}
+                    >
+                      <Trash2 className="h-4 w-4 text-red-400" />
+                    </Button>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="text-xs text-muted-foreground">
+                  <p>Type: {document.type} • Size: {document.size}</p>
+                  <p>Added: {new Date(document.dateAdded).toLocaleDateString()}</p>
+                  <p>Category: {document.category}</p>
+                </div>
+                <div className="flex gap-2">
+                  <Button size="sm" variant="outline" className="flex-1">
+                    <Eye className="h-3 w-3 mr-1" />
+                    View
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    className="flex-1"
+                    onClick={() => handleDownload(document)}
+                  >
+                    <Download className="h-3 w-3 mr-1" />
+                    Download
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
       ) : (
@@ -144,20 +188,14 @@ const FavouritesTab = () => {
           </div>
           <h3 className="text-xl font-medium mb-2">No favourites yet</h3>
           <p className="text-muted-foreground mb-4">
-            Star your most-used templates for quick access
+            Star your most important documents for quick access
           </p>
           <Button variant="outline">
-            Browse Templates
+            <Upload className="h-4 w-4 mr-2" />
+            Upload Documents
           </Button>
         </div>
       )}
-
-      <DocumentPreviewDialog
-        open={previewOpen}
-        onOpenChange={setPreviewOpen}
-        document={currentDocument}
-        onDownload={handleDownload}
-      />
     </div>
   );
 };
