@@ -1,52 +1,32 @@
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, CheckCircle, FileText, ArrowLeft } from "lucide-react";
-import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import RunThroughStepsTab from "@/components/apprentice/bs7671/RunThroughStepsTab";
-import DocumentationTab from "@/components/apprentice/bs7671/DocumentationTab";
-import ResourcesTab from "@/components/apprentice/bs7671/ResourcesTab";
+import { CheckCircle } from "lucide-react";
+import BackButton from "@/components/common/BackButton";
+import OverviewSection from "@/components/apprentice/bs7671/OverviewSection";
+import InspectionSection from "@/components/apprentice/bs7671/InspectionSection";
+import TestingSection from "@/components/apprentice/bs7671/TestingSection";
+import DocumentationSection from "@/components/apprentice/bs7671/DocumentationSection";
 
 const OnJobBS7671RunThrough = () => {
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">BS7671 Inspection & Testing Run-Through</h1>
+        <h1 className="text-3xl font-bold tracking-tight mb-4">BS7671 Inspection & Testing</h1>
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
-          Complete step-by-step inspection and testing procedures, guides, and documentation requirements
+          Complete step-by-step inspection and testing procedures, guides, and documentation requirements for apprentices
         </p>
         <BackButton customUrl="/apprentice" label="Back to Apprentice Hub" />
       </div>
 
-      <Tabs defaultValue="steps" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="steps" className="flex items-center gap-2">
-            <CheckCircle className="h-4 w-4" />
-            Complete Testing Guide
-          </TabsTrigger>
-          <TabsTrigger value="documentation" className="flex items-center gap-2">
-            <FileText className="h-4 w-4" />
-            Documentation
-          </TabsTrigger>
-          <TabsTrigger value="resources" className="flex items-center gap-2">
-            <BookOpen className="h-4 w-4" />
-            Resources
-          </TabsTrigger>
-        </TabsList>
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <OverviewSection />
+        <InspectionSection />
+        <TestingSection />
+        <DocumentationSection />
+      </div>
 
-        <TabsContent value="steps">
-          <RunThroughStepsTab />
-        </TabsContent>
-
-        <TabsContent value="documentation">
-          <DocumentationTab />
-        </TabsContent>
-
-        <TabsContent value="resources">
-          <ResourcesTab />
-        </TabsContent>
-      </Tabs>
-
+      {/* Compliance Reminder Card */}
       <Card className="border-elec-yellow/50 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
@@ -58,7 +38,8 @@ const OnJobBS7671RunThrough = () => {
           <p className="text-muted-foreground">
             All electrical installation work must comply with BS 7671 (18th Edition) requirements. 
             Follow the correct testing sequence, document all results accurately, and ensure safety 
-            procedures are followed at all times.
+            procedures are followed at all times. As an apprentice, always work under supervision 
+            and never attempt testing procedures without proper training and competency.
           </p>
         </CardContent>
       </Card>
