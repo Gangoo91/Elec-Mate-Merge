@@ -12,42 +12,48 @@ const TradeEssentials = () => {
       title: "Chat",
       icon: <MessageSquare className="h-6 w-6 text-elec-yellow" />,
       link: "/electrician/chat",
-      badge: "Community"
+      badge: "Community",
+      description: "Connect with fellow electricians, share experiences, and get real-time advice from the community."
     },
     {
       id: 2,
       title: "Job Vacancies",
       icon: <Briefcase className="h-6 w-6 text-elec-yellow" />,
       link: "/electrician/job-vacancies",
-      badge: "Careers"
+      badge: "Careers",
+      description: "Discover electrical job opportunities across the UK with location-based search and salary insights."
     },
     {
       id: 3,
       title: "Materials",
       icon: <Package className="h-6 w-6 text-elec-yellow" />,
       link: "/electrician/materials",
-      badge: "Resources"
+      badge: "Resources",
+      description: "Find electrical materials, compare suppliers, and access product specifications and pricing."
     },
     {
       id: 4,
       title: "Tools",
       icon: <Wrench className="h-6 w-6 text-elec-yellow" />,
       link: "/electrician/tools",
-      badge: "Equipment"
+      badge: "Equipment",
+      description: "Professional tool guides, reviews, and recommendations to help you make informed purchasing decisions."
     },
     {
       id: 5,
       title: "Safety & Industry Updates",
       icon: <Shield className="h-6 w-6 text-elec-yellow" />,
       link: "/electrician/safety-shares",
-      badge: "Safety"
+      badge: "Safety",
+      description: "Stay updated with the latest safety alerts, industry news, and regulatory changes affecting electricians."
     },
     {
       id: 6,
       title: "Live Pricing",
       icon: <PoundSterling className="h-6 w-6 text-elec-yellow" />,
       link: "/electrician/live-pricing",
-      badge: "Pricing"
+      badge: "Pricing",
+      description: "Real-time scrap metal pricing, market alerts, and merchant finder to maximise your material returns."
     }
   ];
 
@@ -77,7 +83,9 @@ const TradeEssentials = () => {
                 </Badge>
               </CardHeader>
               <CardContent>
-                {/* Clean layout without descriptions */}
+                <p className="text-sm text-muted-foreground text-center">
+                  {category.description}
+                </p>
               </CardContent>
             </Card>
           </Link>
