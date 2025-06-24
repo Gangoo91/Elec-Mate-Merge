@@ -77,7 +77,7 @@ const TradeEssentials = () => {
                 </Badge>
               </CardHeader>
               <CardContent>
-                {/* Removed descriptions for cleaner look */}
+                {/* Clean layout without descriptions */}
               </CardContent>
             </Card>
           </Link>
