@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { BookOpen, MessageSquare, Send, CheckCircle, AlertTriangle, Clock, Target } from "lucide-react";
+import { BookOpen, MessageSquare, Send } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import ChatMessageRenderer from "./ChatMessageRenderer";
@@ -20,42 +20,6 @@ const AssessmentPrepTab = () => {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [currentMessage, setCurrentMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  const assessmentAreas = [
-    {
-      title: "Technical Knowledge",
-      items: [
-        "BS 7671 Wiring Regulations",
-        "Testing and inspection procedures",
-        "Safe isolation techniques",
-        "Cable sizing and protection"
-      ],
-      icon: BookOpen,
-      color: "blue"
-    },
-    {
-      title: "Practical Skills",
-      items: [
-        "Installation techniques",
-        "Use of test equipment",
-        "Fault finding methods",
-        "Quality workmanship"
-      ],
-      icon: Target,
-      color: "green"
-    },
-    {
-      title: "Health & Safety",
-      items: [
-        "Risk assessment",
-        "PPE requirements",
-        "Emergency procedures",
-        "COSHH regulations"
-      ],
-      icon: AlertTriangle,
-      color: "orange"
-    }
-  ];
 
   const handleSendMessage = async () => {
     if (!currentMessage.trim() || isLoading) return;
@@ -122,29 +86,6 @@ const AssessmentPrepTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {assessmentAreas.map((area, index) => (
-          <Card key={index} className={`border-${area.color}-500/30 bg-gradient-to-br from-${area.color}-500/10 to-${area.color}-600/10`}>
-            <CardHeader>
-              <CardTitle className={`text-${area.color}-400 flex items-center gap-2 text-lg`}>
-                <area.icon className="h-5 w-5" />
-                {area.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                {area.items.map((item, idx) => (
-                  <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <CheckCircle className="h-3 w-3 text-green-400 mt-1 flex-shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
       <Card className="border-elec-yellow/50">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
