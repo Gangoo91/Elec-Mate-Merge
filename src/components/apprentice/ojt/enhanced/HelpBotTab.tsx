@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Bot, MessageSquare, Send, HelpCircle, Lightbulb, AlertTriangle, FileText } from "lucide-react";
+import { Bot, MessageSquare, Send } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import ChatMessageRenderer from "./ChatMessageRenderer";
@@ -20,42 +20,6 @@ const HelpBotTab = () => {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [currentMessage, setCurrentMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  const helpCategories = [
-    {
-      title: "Technical Queries",
-      areas: [
-        "Electrical calculations",
-        "Testing procedures",
-        "BS 7671 regulations",
-        "Installation methods"
-      ],
-      icon: Lightbulb,
-      color: "blue"
-    },
-    {
-      title: "Safety Guidance",
-      areas: [
-        "Safe isolation procedures",
-        "PPE requirements",
-        "Risk assessments",
-        "Emergency procedures"
-      ],
-      icon: AlertTriangle,
-      color: "orange"
-    },
-    {
-      title: "Documentation Help",
-      areas: [
-        "Portfolio building",
-        "Assessment evidence",
-        "Report writing",
-        "Record keeping"
-      ],
-      icon: FileText,
-      color: "green"
-    }
-  ];
 
   const handleSendMessage = async () => {
     if (!currentMessage.trim() || isLoading) return;
@@ -122,29 +86,6 @@ const HelpBotTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {helpCategories.map((category, index) => (
-          <Card key={index} className={`border-${category.color}-500/30 bg-gradient-to-br from-${category.color}-500/10 to-${category.color}-600/10`}>
-            <CardHeader>
-              <CardTitle className={`text-${category.color}-400 flex items-center gap-2 text-lg`}>
-                <category.icon className="h-5 w-5" />
-                {category.title}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                {category.areas.map((area, idx) => (
-                  <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <HelpCircle className="h-3 w-3 text-elec-yellow mt-1 flex-shrink-0" />
-                    {area}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
       <Card className="border-elec-yellow/50">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
