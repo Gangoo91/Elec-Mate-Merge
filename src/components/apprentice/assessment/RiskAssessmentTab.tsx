@@ -1,250 +1,319 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, FileText, Calculator, Target } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import { 
+  AlertTriangle, 
+  Shield, 
+  FileText, 
+  CheckCircle, 
+  ArrowRight,
+  Clock,
+  Users,
+  Search
+} from "lucide-react";
 import HazardIdentificationMatrix from "./risk-assessment/HazardIdentificationMatrix";
 import RiskCalculationMatrix from "./risk-assessment/RiskCalculationMatrix";
 import ControlMeasuresGenerator from "./risk-assessment/ControlMeasuresGenerator";
 import RiskOutcomeGuidance from "./risk-assessment/RiskOutcomeGuidance";
 import RiskDocumentation from "./risk-assessment/RiskDocumentation";
 
-export interface RiskAssessment {
-  id: string;
+interface RiskAssessment {
   hazard: string;
   likelihood: number;
   severity: number;
   riskScore: number;
   riskLevel: string;
   controlMeasures: string[];
-  residualRisk: number;
-  status: 'pending' | 'in-progress' | 'completed';
-  assessor: string;
-  dateAssessed: string;
 }
 
 const RiskAssessmentTab = () => {
-  const [activeStep, setActiveStep] = useState(1);
-  const [assessments, setAssessments] = useState<RiskAssessment[]>([]);
-  const [currentAssessment, setCurrentAssessment] = useState<Partial<RiskAssessment>>({});
+  const [currentStep, setCurrentStep] = useState(1);
+  const [selectedHazards, setSelectedHazards] = useState<string[]>([]);
+  const [riskAssessments, setRiskAssessments] = useState<RiskAssessment[]>([]);
+  const [currentAssessment, setCurrentAssessment] = useState<RiskAssessment | null>(null);
 
   const steps = [
-    { id: 1, title: "Hazard Identification", icon: AlertTriangle },
-    { id: 2, title: "Risk Calculation", icon: Calculator },
-    { id: 3, title: "Control Measures", icon: Target },
-    { id: 4, title: "Documentation", icon: FileText }
+    { id: 1, title: "Identify", description: "Find hazards", icon: Search },
+    { id: 2, title: "Assess", description: "Calculate risk", icon: AlertTriangle },
+    { id: 3, title: "Control", description: "Add measures", icon: Shield },
+    { id: 4, title: "Review", description: "Check outcome", icon: CheckCircle },
+    { id: 5, title: "Document", description: "Record results", icon: FileText }
   ];
 
-  const calculateRiskLevel = (likelihood: number, severity: number): string => {
-    const score = likelihood * severity;
-    if (score >= 15) return "Very High";
-    if (score >= 10) return "High";
-    if (score >= 6) return "Medium";
-    if (score >= 3) return "Low";
-    return "Very Low";
-  };
-
-  const getRiskColor = (level: string): string => {
-    switch (level) {
-      case "Very High": return "bg-red-600";
-      case "High": return "bg-red-500";
-      case "Medium": return "bg-yellow-500";
-      case "Low": return "bg-green-500";
-      case "Very Low": return "bg-green-400";
-      default: return "bg-gray-500";
+  const handleHazardSelected = (hazard: string) => {
+    if (!selectedHazards.includes(hazard)) {
+      setSelectedHazards([...selectedHazards, hazard]);
     }
   };
 
-  const handleHazardSelected = (hazard: string) => {
-    setCurrentAssessment({ ...currentAssessment, hazard });
-    setActiveStep(2);
+  const handleRiskCalculated = (assessment: RiskAssessment) => {
+    setCurrentAssessment(assessment);
   };
 
-  const handleRiskCalculated = (likelihood: number, severity: number) => {
-    const riskScore = likelihood * severity;
-    const riskLevel = calculateRiskLevel(likelihood, severity);
-    setCurrentAssessment({
-      ...currentAssessment,
-      likelihood,
-      severity,
-      riskScore,
-      riskLevel
-    });
-    setActiveStep(3);
+  const handleControlMeasuresAdded = (controlMeasures: string[]) => {
+    if (currentAssessment) {
+      const updatedAssessment = {
+        ...currentAssessment,
+        controlMeasures
+      };
+      setRiskAssessments([...riskAssessments, updatedAssessment]);
+      setCurrentAssessment(null);
+      setCurrentStep(4);
+    }
   };
 
-  const handleControlMeasuresSelected = (measures: string[], residualRisk: number) => {
-    setCurrentAssessment({
-      ...currentAssessment,
-      controlMeasures: measures,
-      residualRisk
-    });
-    setActiveStep(4);
+  const handleNextStep = () => {
+    if (currentStep < steps.length) {
+      setCurrentStep(currentStep + 1);
+    }
   };
 
-  const handleAssessmentCompleted = (documentation: any) => {
-    const newAssessment: RiskAssessment = {
-      id: Date.now().toString(),
-      hazard: currentAssessment.hazard || '',
-      likelihood: currentAssessment.likelihood || 0,
-      severity: currentAssessment.severity || 0,
-      riskScore: currentAssessment.riskScore || 0,
-      riskLevel: currentAssessment.riskLevel || '',
-      controlMeasures: currentAssessment.controlMeasures || [],
-      residualRisk: currentAssessment.residualRisk || 0,
-      status: 'completed',
-      assessor: documentation.assessor,
-      dateAssessed: new Date().toISOString().split('T')[0]
-    };
+  const handlePreviousStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
 
-    setAssessments([...assessments, newAssessment]);
-    setCurrentAssessment({});
-    setActiveStep(1);
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 1:
+        return (
+          <HazardIdentificationMatrix onHazardSelected={handleHazardSelected} />
+        );
+      case 2:
+        return selectedHazards.length > 0 ? (
+          <RiskCalculationMatrix 
+            hazards={selectedHazards}
+            onRiskCalculated={handleRiskCalculated}
+          />
+        ) : (
+          <Card className="border-yellow-500/20 bg-yellow-500/10">
+            <CardContent className="p-6">
+              <p className="text-yellow-300">Please identify at least one hazard before proceeding to risk assessment.</p>
+            </CardContent>
+          </Card>
+        );
+      case 3:
+        return currentAssessment ? (
+          <ControlMeasuresGenerator 
+            riskAssessment={currentAssessment}
+            onControlMeasuresAdded={handleControlMeasuresAdded}
+          />
+        ) : (
+          <Card className="border-yellow-500/20 bg-yellow-500/10">
+            <CardContent className="p-6">
+              <p className="text-yellow-300">Please complete risk calculation before adding control measures.</p>
+            </CardContent>
+          </Card>
+        );
+      case 4:
+        return riskAssessments.length > 0 ? (
+          <div className="space-y-4">
+            {riskAssessments.map((assessment, index) => (
+              <RiskOutcomeGuidance 
+                key={index}
+                riskLevel={assessment.riskLevel}
+                riskScore={assessment.riskScore}
+              />
+            ))}
+          </div>
+        ) : (
+          <Card className="border-yellow-500/20 bg-yellow-500/10">
+            <CardContent className="p-6">
+              <p className="text-yellow-300">Complete the risk assessment process to view guidance.</p>
+            </CardContent>
+          </Card>
+        );
+      case 5:
+        return riskAssessments.length > 0 ? (
+          <RiskDocumentation riskAssessments={riskAssessments} />
+        ) : (
+          <Card className="border-yellow-500/20 bg-yellow-500/10">
+            <CardContent className="p-6">
+              <p className="text-yellow-300">Complete risk assessments to generate documentation.</p>
+            </CardContent>
+          </Card>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
     <div className="space-y-6">
-      {/* Progress Steps */}
+      {/* Risk Assessment Process Header */}
       <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-elec-yellow">Risk Assessment Process</CardTitle>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5" />
+            Risk Assessment Process
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-between">
-            {steps.map((step, index) => (
-              <div key={step.id} className="flex items-center">
-                <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${
-                  activeStep >= step.id 
-                    ? 'bg-elec-yellow border-elec-yellow text-elec-dark' 
-                    : 'border-gray-300 text-gray-400'
-                }`}>
-                  <step.icon className="h-5 w-5" />
-                </div>
-                <div className="ml-3">
-                  <p className={`text-sm font-medium ${
-                    activeStep >= step.id ? 'text-white' : 'text-gray-400'
-                  }`}>
-                    {step.title}
-                  </p>
-                </div>
-                {index < steps.length - 1 && (
-                  <div className={`w-12 h-0.5 mx-4 ${
-                    activeStep > step.id ? 'bg-elec-yellow' : 'bg-gray-300'
-                  }`} />
-                )}
+          <p className="text-muted-foreground mb-6">
+            Follow this systematic approach to identify, assess, and control workplace hazards. 
+            Each step builds upon the previous one to create comprehensive risk management.
+          </p>
+
+          {/* Progress Steps - Responsive Layout */}
+          <div className="mb-6">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-2">
+              {steps.map((step, index) => {
+                const StepIcon = step.icon;
+                const isActive = currentStep === step.id;
+                const isCompleted = currentStep > step.id;
+                const isAccessible = step.id <= Math.max(currentStep, 1);
+
+                return (
+                  <div key={step.id} className="flex items-center flex-1 min-w-0">
+                    {/* Step Item */}
+                    <div 
+                      className={`flex items-center gap-3 p-3 rounded-lg border transition-all cursor-pointer flex-1 min-w-0 ${
+                        isActive 
+                          ? 'border-elec-yellow bg-elec-yellow/10' 
+                          : isCompleted 
+                            ? 'border-green-500 bg-green-500/10' 
+                            : isAccessible
+                              ? 'border-gray-600 bg-gray-800/50 hover:border-gray-500'
+                              : 'border-gray-700 bg-gray-800/30 opacity-50'
+                      }`}
+                      onClick={() => isAccessible && setCurrentStep(step.id)}
+                    >
+                      {/* Icon */}
+                      <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                        isActive 
+                          ? 'bg-elec-yellow text-black' 
+                          : isCompleted 
+                            ? 'bg-green-500 text-white' 
+                            : 'bg-gray-600 text-gray-300'
+                      }`}>
+                        {isCompleted ? (
+                          <CheckCircle className="h-4 w-4" />
+                        ) : (
+                          <StepIcon className="h-4 w-4" />
+                        )}
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className={`font-medium text-sm ${
+                          isActive ? 'text-elec-yellow' : isCompleted ? 'text-green-300' : 'text-gray-300'
+                        }`}>
+                          {step.title}
+                        </div>
+                        <div className="text-xs text-muted-foreground truncate">
+                          {step.description}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Connector Arrow - Hidden on mobile, shown on large screens */}
+                    {index < steps.length - 1 && (
+                      <div className="hidden lg:flex items-center justify-center w-8 flex-shrink-0">
+                        <ArrowRight className={`h-4 w-4 ${
+                          currentStep > step.id ? 'text-green-500' : 'text-gray-600'
+                        }`} />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Progress Bar */}
+            <div className="mt-4">
+              <div className="flex justify-between text-xs text-muted-foreground mb-2">
+                <span>Progress</span>
+                <span>{Math.round((currentStep / steps.length) * 100)}% Complete</span>
               </div>
-            ))}
+              <Progress value={(currentStep / steps.length) * 100} className="h-2" />
+            </div>
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-between">
+            <Button 
+              variant="outline" 
+              onClick={handlePreviousStep}
+              disabled={currentStep === 1}
+              className="flex items-center gap-2"
+            >
+              <ArrowRight className="h-4 w-4 rotate-180" />
+              Previous
+            </Button>
+            <Button 
+              onClick={handleNextStep}
+              disabled={currentStep === steps.length}
+              className="flex items-center gap-2"
+            >
+              Next
+              <ArrowRight className="h-4 w-4" />
+            </Button>
           </div>
         </CardContent>
       </Card>
 
-      {/* Current Assessment Summary */}
-      {Object.keys(currentAssessment).length > 0 && (
+      {/* Selected Hazards Summary */}
+      {selectedHazards.length > 0 && (
         <Card className="border-blue-500/20 bg-blue-500/10">
           <CardHeader>
-            <CardTitle className="text-blue-300">Current Assessment</CardTitle>
+            <CardTitle className="text-blue-300 text-lg">Selected Hazards</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              {currentAssessment.hazard && (
-                <div>
-                  <p className="text-sm text-muted-foreground">Hazard</p>
-                  <p className="font-medium">{currentAssessment.hazard}</p>
-                </div>
-              )}
-              {currentAssessment.riskScore && (
-                <div>
-                  <p className="text-sm text-muted-foreground">Risk Score</p>
-                  <div className="flex items-center gap-2">
-                    <span className="font-medium">{currentAssessment.riskScore}</span>
-                    <Badge className={getRiskColor(currentAssessment.riskLevel || '')}>
-                      {currentAssessment.riskLevel}
-                    </Badge>
-                  </div>
-                </div>
-              )}
-              {currentAssessment.controlMeasures && (
-                <div>
-                  <p className="text-sm text-muted-foreground">Control Measures</p>
-                  <p className="font-medium">{currentAssessment.controlMeasures.length} selected</p>
-                </div>
-              )}
-              {currentAssessment.residualRisk && (
-                <div>
-                  <p className="text-sm text-muted-foreground">Residual Risk</p>
-                  <p className="font-medium">{currentAssessment.residualRisk}</p>
-                </div>
-              )}
+            <div className="flex flex-wrap gap-2">
+              {selectedHazards.map((hazard, index) => (
+                <Badge key={index} variant="outline" className="border-blue-500/50 text-blue-300">
+                  {hazard}
+                </Badge>
+              ))}
             </div>
           </CardContent>
         </Card>
       )}
 
       {/* Step Content */}
-      {activeStep === 1 && (
-        <HazardIdentificationMatrix onHazardSelected={handleHazardSelected} />
-      )}
+      {renderStepContent()}
 
-      {activeStep === 2 && currentAssessment.hazard && (
-        <RiskCalculationMatrix 
-          hazard={currentAssessment.hazard}
-          onRiskCalculated={handleRiskCalculated}
-        />
-      )}
-
-      {activeStep === 3 && currentAssessment.riskLevel && (
-        <div className="space-y-6">
-          <ControlMeasuresGenerator 
-            hazard={currentAssessment.hazard || ''}
-            riskLevel={currentAssessment.riskLevel}
-            onControlMeasuresSelected={handleControlMeasuresSelected}
-          />
-          <RiskOutcomeGuidance 
-            riskLevel={currentAssessment.riskLevel}
-            riskScore={currentAssessment.riskScore || 0}
-          />
-        </div>
-      )}
-
-      {activeStep === 4 && (
-        <RiskDocumentation 
-          assessment={currentAssessment}
-          onCompleted={handleAssessmentCompleted}
-        />
-      )}
-
-      {/* Completed Assessments */}
-      {assessments.length > 0 && (
-        <Card className="border-green-500/20 bg-green-500/10">
-          <CardHeader>
-            <CardTitle className="text-green-300">Completed Assessments</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {assessments.map((assessment) => (
-                <div key={assessment.id} className="flex items-center justify-between p-4 border border-green-500/20 rounded-lg">
-                  <div className="flex items-center gap-4">
-                    <Badge className={getRiskColor(assessment.riskLevel)}>
-                      {assessment.riskLevel}
-                    </Badge>
-                    <div>
-                      <p className="font-medium">{assessment.hazard}</p>
-                      <p className="text-sm text-muted-foreground">
-                        Score: {assessment.riskScore} | Residual: {assessment.residualRisk} | 
-                        Assessed by: {assessment.assessor}
-                      </p>
-                    </div>
-                  </div>
-                  <Button variant="outline" size="sm">
-                    View Details
-                  </Button>
-                </div>
-              ))}
+      {/* Risk Assessment Guidelines */}
+      <Card className="border-green-500/20 bg-green-500/10">
+        <CardHeader>
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <Shield className="h-5 w-5" />
+            Risk Assessment Guidelines
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div>
+              <h4 className="font-semibold mb-2 flex items-center gap-2">
+                <Clock className="h-4 w-4" />
+                When to Conduct
+              </h4>
+              <ul className="space-y-1 text-muted-foreground">
+                <li>• Before starting any electrical work</li>
+                <li>• When workplace conditions change</li>
+                <li>• After incidents or near misses</li>
+                <li>• During regular safety reviews</li>
+              </ul>
             </div>
-          </CardContent>
-        </Card>
-      )}
+            <div>
+              <h4 className="font-semibold mb-2 flex items-center gap-2">
+                <Users className="h-4 w-4" />
+                Who Should Be Involved
+              </h4>
+              <ul className="space-y-1 text-muted-foreground">
+                <li>• Site supervisor or competent person</li>
+                <li>• Workers performing the task</li>
+                <li>• Safety representatives</li>
+                <li>• Subject matter experts</li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
