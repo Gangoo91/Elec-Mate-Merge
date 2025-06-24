@@ -15,7 +15,7 @@ const OnJobBS7671RunThrough = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Complete step-by-step inspection and testing procedures, guides, and documentation requirements
         </p>
-        <BackButton customUrl="/apprentice/on-job-tools" label="Back to On-Job Tools" />
+        <BackButton customUrl="/apprentice" label="Back to Apprentice Hub" />
       </div>
 
       <Tabs defaultValue="steps" className="w-full">

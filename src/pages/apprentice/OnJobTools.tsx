@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import OnTheJobToolsBox from "@/components/apprentice/OnTheJobToolsBox";
-import { Calculator, Settings, HardHat, MessageSquare, HelpCircle, BookOpen, ClipboardList, CheckSquare } from "lucide-react";
+import { Calculator, Settings, HardHat, MessageSquare, HelpCircle, BookOpen, ClipboardList } from "lucide-react";
 
 const OnJobTools = () => {
   const onJobTools = [
@@ -37,27 +37,20 @@ const OnJobTools = () => {
     },
     {
       id: 5,
-      title: "BS7671 Inspection & Testing Run-Through",
-      icon: CheckSquare,
-      description: "Complete step-by-step inspection and testing process for apprentices",
-      link: "/apprentice/on-job-tools/bs7671-runthrough"
-    },
-    {
-      id: 6,
       title: "Ask a Supervisor",
       icon: HelpCircle,
       description: "Knowledge bank with FAQs from real-world site questions and expert answers",
       link: "/apprentice/on-job-tools/supervisor-knowledge"
     },
     {
-      id: 7,
+      id: 6,
       title: "Flashcards & Microlearning",
       icon: BookOpen,
       description: "Quick-fire revision flashcards for cable colors, regulations, EICR codes, and more",
       link: "/apprentice/on-job-tools/flashcards"
     },
     {
-      id: 8,
+      id: 7,
       title: "Incident Logging Tool",
       icon: ClipboardList,
       description: "Log near misses, unsafe practices, and faulty equipment with secure storage",

@@ -57,6 +57,7 @@ const ApprenticeRoutes = () => (
     <Route index element={<ApprenticeHub />} />
     <Route path="ojt" element={<ApprenticeOJT />} />
     <Route path="advanced-help" element={<AdvancedHelp />} />
+    <Route path="bs7671-inspection-testing" element={<OnJobBS7671RunThrough />} />
     <Route path="mental-health" element={<ApprenticeMentalHealth />} />
     <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
     <Route path="mental-health/resources" element={<MentalHealthResources />} />

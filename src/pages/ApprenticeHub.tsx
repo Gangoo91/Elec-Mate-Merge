@@ -1,17 +1,11 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock, Heart, WrenchIcon, Bot, ArrowLeft, Settings, GraduationCap, Zap } from "lucide-react";
+import { Clock, Heart, WrenchIcon, Bot, ArrowLeft, Settings, GraduationCap, Zap, CheckSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const ApprenticeHub = () => {
   const apprenticeResources = [
-    {
-      id: 2,
-      title: "Off the Job Time Keeping",
-      icon: Clock,
-      link: "/apprentice/ojt"
-    },
     {
       id: 8,
       title: "Advanced Help Box",
@@ -19,6 +13,20 @@ const ApprenticeHub = () => {
       link: "/apprentice/advanced-help",
       featured: true,
       description: "AI & AR powered support"
+    },
+    {
+      id: 9,
+      title: "BS7671 Inspection & Testing",
+      icon: CheckSquare,
+      link: "/apprentice/bs7671-inspection-testing",
+      featured: true,
+      description: "Complete step-by-step inspection and testing process"
+    },
+    {
+      id: 2,
+      title: "Off the Job Time Keeping",
+      icon: Clock,
+      link: "/apprentice/ojt"
     },
     {
       id: 3,
