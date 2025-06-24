@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import OnTheJobToolsBox from "@/components/apprentice/OnTheJobToolsBox";
-import { Calculator, FileText, Settings, HardHat, MessageSquare, HelpCircle, BookOpen, ClipboardList, CheckSquare } from "lucide-react";
+import { Calculator, Settings, HardHat, MessageSquare, HelpCircle, BookOpen, ClipboardList, CheckSquare } from "lucide-react";
 
 const OnJobTools = () => {
   const onJobTools = [
@@ -16,55 +16,48 @@ const OnJobTools = () => {
     },
     {
       id: 2,
-      title: "Documentation Templates",
-      icon: FileText,
-      description: "Forms, certificates, and reports for on-site documentation",
-      link: "/apprentice/on-job-tools/documents"
-    },
-    {
-      id: 3,
       title: "Site Assessment Tools",
       icon: Settings,
       description: "Checklists and guides for job site evaluations",
       link: "/apprentice/on-job-tools/assessment"
     },
     {
-      id: 4,
+      id: 3,
       title: "Interactive Safety Case Studies",
       icon: HardHat,
       description: "Learn from real-life safety scenarios with interactive decision making",
       link: "/apprentice/on-job-tools/safety-cases"
     },
     {
-      id: 5,
+      id: 4,
       title: "Workplace Language & Culture",
       icon: MessageSquare,
       description: "Navigate workplace communication, culture and relationships effectively",
       link: "/apprentice/on-job-tools/workplace-culture"
     },
     {
-      id: 6,
+      id: 5,
       title: "BS7671 Inspection & Testing Run-Through",
       icon: CheckSquare,
       description: "Complete step-by-step inspection and testing process for apprentices",
       link: "/apprentice/on-job-tools/bs7671-runthrough"
     },
     {
-      id: 7,
+      id: 6,
       title: "Ask a Supervisor",
       icon: HelpCircle,
       description: "Knowledge bank with FAQs from real-world site questions and expert answers",
       link: "/apprentice/on-job-tools/supervisor-knowledge"
     },
     {
-      id: 8,
+      id: 7,
       title: "Flashcards & Microlearning",
       icon: BookOpen,
       description: "Quick-fire revision flashcards for cable colors, regulations, EICR codes, and more",
       link: "/apprentice/on-job-tools/flashcards"
     },
     {
-      id: 9,
+      id: 8,
       title: "Incident Logging Tool",
       icon: ClipboardList,
       description: "Log near misses, unsafe practices, and faulty equipment with secure storage",

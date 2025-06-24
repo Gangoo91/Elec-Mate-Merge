@@ -1,3 +1,4 @@
+
 import { Route, Routes } from "react-router-dom";
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
@@ -10,7 +11,6 @@ import CrisisResources from "@/pages/apprentice/mental-health/CrisisResources";
 import SupportNetwork from "@/pages/apprentice/mental-health/SupportNetwork";
 import OnJobTools from "@/pages/apprentice/OnJobTools";
 import OnJobCalculations from "@/pages/apprentice/OnJobCalculations";
-import OnJobDocuments from "@/pages/apprentice/OnJobDocuments";
 import OnJobSafetyCases from "@/pages/apprentice/OnJobSafetyCases";
 import OnJobWorkplaceCulture from "@/pages/apprentice/OnJobWorkplaceCulture";
 import TestingProcedures from "@/pages/apprentice/TestingProcedures";
@@ -97,7 +97,6 @@ const ApprenticeRoutes = () => (
     <Route path="toolbox/professional-tool-guide" element={<ProfessionalToolGuide />} />
     <Route path="on-job-tools" element={<OnJobTools />} />
     <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
-    <Route path="on-job-tools/documents" element={<OnJobDocuments />} />
     <Route path="on-job-tools/assessment" element={<OnJobAssessment />} />
     <Route path="on-job-tools/safety-cases" element={<OnJobSafetyCases />} />
     <Route path="on-job-tools/workplace-culture" element={<OnJobWorkplaceCulture />} />
