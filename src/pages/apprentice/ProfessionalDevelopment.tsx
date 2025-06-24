@@ -2,15 +2,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
-  GraduationCap, 
   TrendingUp, 
   Users, 
   BookOpen, 
   Award, 
   Target,
-  BarChart3,
-  Library,
-  Lightbulb
+  BarChart3
 } from "lucide-react";
 import BackButton from "@/components/common/BackButton";
 import CareerPathwaysTab from "@/components/apprentice/professional-development/CareerPathwaysTab";
@@ -18,8 +15,6 @@ import CertificationsTab from "@/components/apprentice/professional-development/
 import ContinuingEducationTab from "@/components/apprentice/professional-development/ContinuingEducationTab";
 import IndustryNetworkingTab from "@/components/apprentice/professional-development/IndustryNetworkingTab";
 import ProfessionalDevelopmentDashboard from "@/components/apprentice/professional-development/ProfessionalDevelopmentDashboard";
-import ResourceLibrary from "@/components/apprentice/professional-development/ResourceLibrary";
-import IndustryInsights from "@/components/apprentice/professional-development/IndustryInsights";
 
 const ProfessionalDevelopment = () => {
   return (
@@ -33,7 +28,7 @@ const ProfessionalDevelopment = () => {
       </div>
 
       <Tabs defaultValue="dashboard" className="w-full">
-        <TabsList className="grid w-full grid-cols-6">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="dashboard" className="flex items-center gap-2">
             <BarChart3 className="h-4 w-4" />
             Dashboard
@@ -53,10 +48,6 @@ const ProfessionalDevelopment = () => {
           <TabsTrigger value="networking" className="flex items-center gap-2">
             <Users className="h-4 w-4" />
             Networking
-          </TabsTrigger>
-          <TabsTrigger value="resources" className="flex items-center gap-2">
-            <Library className="h-4 w-4" />
-            Resources
           </TabsTrigger>
         </TabsList>
 
@@ -78,13 +69,6 @@ const ProfessionalDevelopment = () => {
 
         <TabsContent value="networking">
           <IndustryNetworkingTab />
-        </TabsContent>
-
-        <TabsContent value="resources">
-          <div className="space-y-6">
-            <ResourceLibrary />
-            <IndustryInsights />
-          </div>
         </TabsContent>
       </Tabs>
 
