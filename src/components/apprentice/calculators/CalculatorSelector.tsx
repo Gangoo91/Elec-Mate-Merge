@@ -1,3 +1,4 @@
+
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -54,6 +55,9 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     
     // Renewable Energy
     { value: "solar-pv", label: "Solar PV", category: "Renewable Energy" },
+    { value: "battery-storage", label: "Battery Storage System", category: "Renewable Energy" },
+    { value: "heat-pump", label: "Heat Pump Load", category: "Renewable Energy" },
+    { value: "ev-charging", label: "EV Charging Station", category: "Renewable Energy" },
     
     // Tools & Components
     { value: "resistor-colour-code", label: "Resistor Colour Code", category: "Tools & Components" },

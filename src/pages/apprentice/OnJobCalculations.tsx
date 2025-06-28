@@ -42,6 +42,10 @@ import ACPowerCalculator from "@/components/apprentice/calculators/ACPowerCalcul
 import BasicACCircuitCalculator from "@/components/apprentice/calculators/BasicACCircuitCalculator";
 // Phase Rotation Calculator
 import PhaseRotationCalculator from "@/components/apprentice/calculators/PhaseRotationCalculator";
+// New Renewable Energy Calculators
+import BatteryStorageCalculator from "@/components/apprentice/calculators/BatteryStorageCalculator";
+import HeatPumpCalculator from "@/components/apprentice/calculators/HeatPumpCalculator";
+import EVChargingCalculator from "@/components/apprentice/calculators/EVChargingCalculator";
 
 const OnJobCalculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
@@ -128,6 +132,13 @@ const OnJobCalculations = () => {
         return <TransformerCalculator />;
       case "led-driver":
         return <LEDDriverCalculator />;
+      // New Renewable Energy Calculators
+      case "battery-storage":
+        return <BatteryStorageCalculator />;
+      case "heat-pump":
+        return <HeatPumpCalculator />;
+      case "ev-charging":
+        return <EVChargingCalculator />;
       default:
         return <OhmsLawCalculator />;
     }
