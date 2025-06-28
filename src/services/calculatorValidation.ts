@@ -1,321 +1,205 @@
 
-export interface ValidationResult {
-  isValid: boolean;
-  errors: string[];
-  warnings: string[];
-  recommendations: string[];
-  standardsCompliance: {
-    bs7671: boolean;
-    iet: boolean;
-    safety: boolean;
-    commercial: boolean;
-  };
-  professionalNotes: string[];
-  confidenceLevel: 'high' | 'medium' | 'low';
-}
-
-export interface ValidationRules {
-  minValues: { [key: string]: number };
-  maxValues: { [key: string]: number };
-  requiredFields: string[];
-  conditionalFields: { [key: string]: string[] };
-  standardLimits: { [key: string]: { min: number; max: number; standard: string } };
-}
-
-const validationRules: { [calculatorType: string]: ValidationRules } = {
-  'power-factor': {
-    minValues: { activePower: 0.1, apparentPower: 0.1, voltage: 1, current: 0.01 },
-    maxValues: { activePower: 1000000, apparentPower: 1000000, voltage: 1000, current: 10000 },
-    requiredFields: ['activePower'],
-    conditionalFields: {
-      power: ['activePower', 'apparentPower'],
-      currentVoltage: ['voltage', 'current', 'activePower']
-    },
-    standardLimits: {
-      powerFactor: { min: 0.1, max: 1.0, standard: 'BS 7671' },
-      voltage: { min: 110, max: 1000, standard: 'BS 7671' }
-    }
-  },
-  'three-phase-load': {
-    minValues: { power: 0.1, voltage: 1, current: 0.01 },
-    maxValues: { power: 10000000, voltage: 50000, current: 100000 },
-    requiredFields: ['power', 'voltage'],
-    conditionalFields: {},
-    standardLimits: {
-      voltage: { min: 380, max: 11000, standard: 'BS 7671' },
-      current: { min: 0.1, max: 5000, standard: 'IET' }
-    }
-  },
-  'motor-starting': {
-    minValues: { power: 0.1, voltage: 1, efficiency: 0.1 },
-    maxValues: { power: 50000, voltage: 50000, efficiency: 1.0 },
-    requiredFields: ['power', 'voltage'],
-    conditionalFields: {},
-    standardLimits: {
-      startingCurrent: { min: 1, max: 8, standard: 'BS 7671' },
-      efficiency: { min: 0.8, max: 0.98, standard: 'IET' }
-    }
-  }
-};
-
-export const validateCalculation = (
-  calculatorType: string,
-  inputs: any,
-  results: any
-): ValidationResult => {
-  const rules = validationRules[calculatorType];
-  if (!rules) {
-    return {
-      isValid: false,
-      errors: ['Unknown calculator type'],
-      warnings: [],
-      recommendations: [],
-      standardsCompliance: { bs7671: false, iet: false, safety: false, commercial: false },
-      professionalNotes: [],
-      confidenceLevel: 'low'
-    };
-  }
-
-  const errors: string[] = [];
-  const warnings: string[] = [];
-  const recommendations: string[] = [];
-  const professionalNotes: string[] = [];
-
-  // Check required fields
-  for (const field of rules.requiredFields) {
-    if (!inputs[field] || inputs[field] === '' || inputs[field] === '0') {
-      errors.push(`${field} is required`);
-    }
-  }
-
-  // Check min/max values
-  Object.entries(rules.minValues).forEach(([field, minValue]) => {
-    const value = parseFloat(inputs[field]);
-    if (value && value < minValue) {
-      errors.push(`${field} must be at least ${minValue}`);
-    }
-  });
-
-  Object.entries(rules.maxValues).forEach(([field, maxValue]) => {
-    const value = parseFloat(inputs[field]);
-    if (value && value > maxValue) {
-      warnings.push(`${field} value ${value} is unusually high (max recommended: ${maxValue})`);
-    }
-  });
-
-  // Check standard limits
-  Object.entries(rules.standardLimits).forEach(([field, limit]) => {
-    const value = results[field] || parseFloat(inputs[field]);
-    if (value) {
-      if (value < limit.min || value > limit.max) {
-        warnings.push(`${field} value ${value} is outside ${limit.standard} recommended range (${limit.min}-${limit.max})`);
-      }
-    }
-  });
-
-  // Standards compliance
-  const standardsCompliance = {
-    bs7671: errors.length === 0 && warnings.length <= 1,
-    iet: errors.length === 0,
-    safety: errors.length === 0 && Object.keys(inputs).some(key => inputs[key]),
-    commercial: errors.length === 0 && warnings.length === 0
-  };
-
-  // Professional recommendations
-  if (calculatorType === 'power-factor' && results.powerFactor && results.powerFactor < 0.85) {
-    recommendations.push('Consider power factor correction to improve efficiency');
-    professionalNotes.push('Low power factor increases energy costs and may require larger cables');
-  }
-
-  if (calculatorType === 'three-phase-load' && results.unbalance && results.unbalance > 5) {
-    warnings.push('Phase unbalance exceeds 5% - check load distribution');
-    professionalNotes.push('High phase unbalance can cause motor overheating and reduced efficiency');
-  }
-
-  const confidenceLevel: 'high' | 'medium' | 'low' = 
-    errors.length === 0 && warnings.length === 0 ? 'high' :
-    errors.length === 0 ? 'medium' : 'low';
-
-  return {
-    isValid: errors.length === 0,
-    errors,
-    warnings,
-    recommendations,
-    standardsCompliance,
-    professionalNotes,
-    confidenceLevel
-  };
-};
-
-// Create the CalculatorValidator class that other files expect
 export class CalculatorValidator {
-  static validateInputRange(value: number, type: string): ValidationResult {
-    const errors: string[] = [];
-    const warnings: string[] = [];
-    
-    switch (type) {
-      case 'current':
-        if (value < 0.01) errors.push('Current must be at least 0.01A');
-        if (value > 10000) warnings.push('Current value is unusually high (>10kA)');
-        break;
-      case 'voltage':
-        if (value < 1) errors.push('Voltage must be at least 1V');
-        if (value > 50000) warnings.push('Voltage value is unusually high (>50kV)');
-        break;
-      case 'power':
-        if (value < 0.1) errors.push('Power must be at least 0.1W');
-        if (value > 1000000) warnings.push('Power value is unusually high (>1MW)');
-        break;
+  // Input range validation
+  static validateInputRange(value: number, type: string) {
+    const ranges = {
+      current: { min: 0.1, max: 1000, unit: 'A' },
+      voltage: { min: 1, max: 1000, unit: 'V' },
+      power: { min: 0.01, max: 10000, unit: 'W' },
+      length: { min: 0.1, max: 10000, unit: 'm' },
+      resistance: { min: 0.001, max: 1000, unit: 'Ω' }
+    };
+
+    const range = ranges[type as keyof typeof ranges];
+    if (!range) {
+      return {
+        isValid: true,
+        errors: [],
+        warnings: [],
+        standardsCompliance: { bs7671: true, iet: true, safety: true }
+      };
+    }
+
+    const errors = [];
+    const warnings = [];
+
+    if (value < range.min) {
+      errors.push(`${type} value too low (minimum: ${range.min}${range.unit})`);
+    }
+    if (value > range.max) {
+      errors.push(`${type} value too high (maximum: ${range.max}${range.unit})`);
+    }
+
+    // Add warnings for edge cases
+    if (type === 'current' && value > 63) {
+      warnings.push('High current values may require special protection measures');
+    }
+    if (type === 'voltage' && value > 400) {
+      warnings.push('High voltage installations require additional safety measures');
     }
 
     return {
       isValid: errors.length === 0,
       errors,
       warnings,
-      recommendations: [],
       standardsCompliance: {
         bs7671: errors.length === 0,
-        iet: errors.length === 0,
-        safety: errors.length === 0,
-        commercial: errors.length === 0 && warnings.length === 0
-      },
-      professionalNotes: [],
-      confidenceLevel: errors.length === 0 ? (warnings.length === 0 ? 'high' : 'medium') : 'low'
+        iet: true,
+        safety: errors.length === 0 && warnings.length === 0
+      }
     };
   }
 
-  static validatePowerFactor(activePower: number, apparentPower: number, powerFactor: number): ValidationResult {
-    const errors: string[] = [];
-    const warnings: string[] = [];
-    const recommendations: string[] = [];
+  // Cable sizing validation
+  static validateCableSizing(current: number, cableSize: number, installationType: string, voltageDrop: number, length: number) {
+    const errors = [];
+    const warnings = [];
 
-    if (powerFactor < 0 || powerFactor > 1) {
-      errors.push('Power factor must be between 0 and 1');
+    // Current capacity check
+    const currentRatings = {
+      'Method A (enclosed in conduit)': { 1.0: 11, 1.5: 14.5, 2.5: 20, 4.0: 26, 6.0: 34 },
+      'Method B (on cable tray)': { 1.0: 13, 1.5: 17.5, 2.5: 24, 4.0: 32, 6.0: 41 },
+      'Method C (clipped direct)': { 1.0: 15, 1.5: 19.5, 2.5: 27, 4.0: 36, 6.0: 46 }
+    };
+
+    const ratings = currentRatings[installationType as keyof typeof currentRatings] || currentRatings['Method C (clipped direct)'];
+    const rating = ratings[cableSize as keyof typeof ratings];
+
+    if (rating && current > rating) {
+      errors.push(`Cable size ${cableSize}mm² insufficient for ${current}A (rating: ${rating}A)`);
     }
 
-    if (activePower > apparentPower) {
-      errors.push('Active power cannot exceed apparent power');
+    // Voltage drop check (3% for lighting, 5% for other circuits)
+    if (voltageDrop > 23) { // 5% of 230V
+      warnings.push('Voltage drop exceeds BS 7671 recommendations (5%)');
     }
 
-    if (powerFactor < 0.85) {
-      warnings.push('Power factor below 0.85 may incur utility penalties');
-      recommendations.push('Consider power factor correction equipment');
+    // Length considerations
+    if (length > 100) {
+      warnings.push('Long cable runs may require voltage drop calculations');
     }
 
     return {
       isValid: errors.length === 0,
       errors,
       warnings,
-      recommendations,
       standardsCompliance: {
-        bs7671: errors.length === 0 && powerFactor >= 0.85,
-        iet: errors.length === 0,
-        safety: errors.length === 0,
-        commercial: errors.length === 0 && powerFactor >= 0.85
-      },
-      professionalNotes: powerFactor < 0.85 ? ['Low power factor increases cable sizing requirements'] : [],
-      confidenceLevel: errors.length === 0 ? 'high' : 'low'
+        bs7671: errors.length === 0 && voltageDrop <= 23,
+        iet: true,
+        safety: errors.length === 0
+      }
     };
   }
 
-  static validateCableSizing(
-    current: number, 
-    cableSize: number, 
-    installationType: string, 
-    voltageDropPercent: number, 
-    length: number
-  ): ValidationResult {
-    const errors: string[] = [];
-    const warnings: string[] = [];
-    const recommendations: string[] = [];
+  // Ohm's Law validation
+  static validateOhmsLaw(voltage: number, current: number, resistance: number, power: number) {
+    const errors = [];
+    const warnings = [];
 
-    // Basic validation
-    if (current <= 0) errors.push('Current must be greater than 0');
-    if (cableSize <= 0) errors.push('Cable size must be greater than 0');
-    if (length <= 0) errors.push('Cable length must be greater than 0');
-
-    // Current density check (typical max 6 A/mm²)
-    const currentDensity = current / cableSize;
-    if (currentDensity > 6) {
-      warnings.push(`Current density ${currentDensity.toFixed(1)} A/mm² exceeds recommended maximum (6 A/mm²)`);
+    // Basic safety checks
+    if (voltage > 50 && current > 0.005) {
+      warnings.push('High voltage and current combination - ensure proper safety measures');
     }
 
-    // Voltage drop check
-    if (voltageDropPercent > 5) {
-      warnings.push(`Voltage drop ${voltageDropPercent.toFixed(1)}% exceeds BS 7671 limit (5%)`);
-      recommendations.push('Consider larger cable size to reduce voltage drop');
+    if (power > 3000) {
+      warnings.push('High power levels require appropriate cable sizing and protection');
+    }
+
+    // Calculation consistency check
+    const calculatedPower = voltage * current;
+    const powerDifference = Math.abs(power - calculatedPower) / power;
+    
+    if (powerDifference > 0.1) { // 10% tolerance
+      warnings.push('Power calculation may be inconsistent with V×I');
     }
 
     return {
       isValid: errors.length === 0,
       errors,
       warnings,
-      recommendations,
       standardsCompliance: {
-        bs7671: errors.length === 0 && voltageDropPercent <= 5 && currentDensity <= 6,
-        iet: errors.length === 0,
-        safety: errors.length === 0 && currentDensity <= 6,
-        commercial: errors.length === 0 && warnings.length === 0
-      },
-      professionalNotes: currentDensity > 4 ? ['High current density may cause cable heating'] : [],
-      confidenceLevel: errors.length === 0 ? (warnings.length === 0 ? 'high' : 'medium') : 'low'
+        bs7671: voltage <= 1000 && current <= 100,
+        iet: true,
+        safety: voltage <= 230 || (voltage <= 400 && current <= 32)
+      }
     };
   }
 
-  static generateCalculationReport(
-    calculationType: string,
-    inputs: any,
-    results: any,
-    validation: ValidationResult
-  ): string {
-    const timestamp = new Date().toLocaleString();
+  // PFC (Prospective Fault Current) validation
+  static validatePFC(pfc: number, voltage: number, impedance: number) {
+    const errors = [];
+    const warnings = [];
+
+    // PFC safety limits
+    if (pfc > 16000) {
+      errors.push('PFC exceeds typical MCB breaking capacity (16kA)');
+    }
+
+    if (pfc > 6000) {
+      warnings.push('High PFC - ensure MCB/RCBO breaking capacity is adequate');
+    }
+
+    if (pfc < 100) {
+      warnings.push('Very low PFC may indicate high circuit impedance');
+    }
+
+    // Impedance check
+    if (impedance > 1.5) {
+      warnings.push('High circuit impedance may affect fault protection');
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors,
+      warnings,
+      standardsCompliance: {
+        bs7671: pfc <= 16000 && impedance <= 1.64, // BS 7671 maximum Zs values
+        iet: true,
+        safety: pfc <= 10000 // Conservative safety limit
+      }
+    };
+  }
+
+  // Generate calculation report
+  static generateCalculationReport(calculationType: string, inputs: any, results: any, validation: any): string {
+    const timestamp = new Date().toISOString();
     
     let report = `ELECTRICAL CALCULATION REPORT\n`;
-    report += `================================\n\n`;
-    report += `Calculation Type: ${calculationType}\n`;
     report += `Generated: ${timestamp}\n`;
-    report += `Validation Status: ${validation.isValid ? 'VALID' : 'REQUIRES ATTENTION'}\n\n`;
+    report += `Calculation Type: ${calculationType}\n`;
+    report += `\n--- INPUT PARAMETERS ---\n`;
     
-    report += `INPUT PARAMETERS:\n`;
-    report += `-----------------\n`;
     Object.entries(inputs).forEach(([key, value]) => {
       report += `${key}: ${value}\n`;
     });
     
-    report += `\nCALCULATED RESULTS:\n`;
-    report += `------------------\n`;
+    report += `\n--- CALCULATED RESULTS ---\n`;
     Object.entries(results).forEach(([key, value]) => {
       report += `${key}: ${value}\n`;
     });
     
+    report += `\n--- VALIDATION STATUS ---\n`;
+    report += `Overall Status: ${validation.isValid ? 'PASS' : 'FAIL'}\n`;
+    report += `BS 7671 Compliant: ${validation.standardsCompliance.bs7671 ? 'YES' : 'NO'}\n`;
+    report += `Safety Compliant: ${validation.standardsCompliance.safety ? 'YES' : 'NO'}\n`;
+    
     if (validation.errors.length > 0) {
-      report += `\nERRORS:\n`;
-      report += `-------\n`;
-      validation.errors.forEach(error => report += `• ${error}\n`);
+      report += `\n--- ERRORS ---\n`;
+      validation.errors.forEach((error: string, index: number) => {
+        report += `${index + 1}. ${error}\n`;
+      });
     }
     
     if (validation.warnings.length > 0) {
-      report += `\nWARNINGS:\n`;
-      report += `---------\n`;
-      validation.warnings.forEach(warning => report += `• ${warning}\n`);
+      report += `\n--- WARNINGS ---\n`;
+      validation.warnings.forEach((warning: string, index: number) => {
+        report += `${index + 1}. ${warning}\n`;
+      });
     }
     
-    if (validation.recommendations.length > 0) {
-      report += `\nRECOMMENDATIONS:\n`;
-      report += `---------------\n`;
-      validation.recommendations.forEach(rec => report += `• ${rec}\n`);
-    }
-    
-    report += `\nSTANDARDS COMPLIANCE:\n`;
-    report += `--------------------\n`;
-    report += `BS 7671: ${validation.standardsCompliance.bs7671 ? 'COMPLIANT' : 'NON-COMPLIANT'}\n`;
-    report += `IET: ${validation.standardsCompliance.iet ? 'COMPLIANT' : 'NON-COMPLIANT'}\n`;
-    report += `Safety: ${validation.standardsCompliance.safety ? 'COMPLIANT' : 'NON-COMPLIANT'}\n`;
-    
-    report += `\nPROFESSIONAL NOTICE:\n`;
-    report += `-------------------\n`;
-    report += `This calculation has been generated by Elec-Mate and validated against UK electrical standards.\n`;
-    report += `Always verify critical calculations with a qualified electrician before implementation.\n`;
+    report += `\n--- DISCLAIMER ---\n`;
+    report += `This calculation is for guidance only. Professional verification recommended.\n`;
+    report += `Always consult BS 7671 and relevant standards for final design decisions.\n`;
     
     return report;
   }
