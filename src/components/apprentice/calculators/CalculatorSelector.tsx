@@ -1,3 +1,4 @@
+
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,14 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "basic-ac-circuit", label: "Basic AC Circuit", category: "Fundamental" },
     { value: "power-factor", label: "Power Factor", category: "Fundamental" },
     { value: "three-phase-power", label: "Three Phase Power", category: "Fundamental" },
+    
+    // Power & Wattage Calculations - NEW SECTION
+    { value: "basic-wattage", label: "Basic Wattage Calculator", category: "Power & Wattage" },
+    { value: "power-triangle", label: "Power Triangle Calculator", category: "Power & Wattage" },
+    { value: "single-phase-power", label: "Single Phase Power", category: "Power & Wattage" },
+    { value: "power-consumption", label: "Power Consumption & Cost", category: "Power & Wattage" },
+    { value: "appliance-power", label: "Appliance Power Calculator", category: "Power & Wattage" },
+    { value: "power-loss", label: "Power Loss (I²R) Calculator", category: "Power & Wattage" },
     
     // Design & Installation
     { value: "voltage-drop", label: "Voltage Drop", category: "Design & Installation" },
@@ -89,6 +98,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
   // Define category order for better organization
   const categoryOrder = [
     "Fundamental",
+    "Power & Wattage",
     "Design & Installation", 
     "Testing & Inspection",
     "Protection & Safety",
