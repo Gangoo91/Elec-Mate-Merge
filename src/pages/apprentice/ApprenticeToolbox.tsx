@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Wrench, MapPin, MessageCircle, FileText, PoundSterling, Users, Clock, BookOpen, AlertTriangle, CheckCircle, TrendingUp, Calendar } from "lucide-react";
+import { ArrowLeft, Wrench, MapPin, MessageCircle, FileText, PoundSterling, Users, Clock, BookOpen, AlertTriangle, CheckCircle, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import ActiveToolContent from "@/components/apprentice/toolbox/ActiveToolContent";
 
@@ -79,13 +79,6 @@ const ApprenticeToolbox = () => {
       icon: AlertTriangle,
       link: "/apprentice/toolbox/learning-from-mistakes",
       description: "How to handle errors professionally and turn them into learning opportunities"
-    },
-    {
-      id: "professional-development",
-      title: "Professional Development & Career Planning",
-      icon: TrendingUp,
-      link: "/apprentice/professional-development",
-      description: "Plan your career progression, explore specialisations, and develop professional skills"
     },
     {
       id: "time-management",
