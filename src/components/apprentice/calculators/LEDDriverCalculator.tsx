@@ -11,69 +11,55 @@ import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const LEDDriverCalculator = () => {
+  const [calculationType, setCalculationType] = useState<string>("driver-sizing");
   const [ledVoltage, setLedVoltage] = useState<string>("");
   const [ledCurrent, setLedCurrent] = useState<string>("");
   const [numLeds, setNumLeds] = useState<string>("1");
   const [connectionType, setConnectionType] = useState<string>("series");
   const [supplyVoltage, setSupplyVoltage] = useState<string>("12");
-  const [driverType, setDriverType] = useState<string>("constant-current");
+  const [efficiency, setEfficiency] = useState<string>("0.85");
   const [result, setResult] = useState<{
     totalVoltage: number;
     totalCurrent: number;
     totalPower: number;
-    resistorValue: number;
-    resistorPower: number;
-    driverVoltage: number;
+    driverPower: number;
     driverCurrent: number;
-    efficiency: number;
+    connectionConfig: string;
+    powerLoss: number;
   } | null>(null);
 
   const calculateLEDDriver = () => {
-    const Vled = parseFloat(ledVoltage);
-    const Iled = parseFloat(ledCurrent) / 1000; // Convert mA to A
-    const qty = parseInt(numLeds);
-    const Vsupply = parseFloat(supplyVoltage);
+    const vLed = parseFloat(ledVoltage);
+    const iLed = parseFloat(ledCurrent) / 1000; // Convert mA to A
+    const count = parseInt(numLeds);
+    const vSupply = parseFloat(supplyVoltage);
+    const eff = parseFloat(efficiency);
 
-    if (Vled > 0 && Iled > 0 && qty > 0 && Vsupply > 0) {
-      let totalVoltage: number;
-      let totalCurrent: number;
-      let resistorValue = 0;
-      let resistorPower = 0;
-
+    if (vLed > 0 && iLed > 0 && count > 0 && vSupply > 0 && eff > 0) {
+      let totalVoltage, totalCurrent, totalPower;
+      
       if (connectionType === "series") {
-        totalVoltage = Vled * qty;
-        totalCurrent = Iled;
-        
-        // Calculate current limiting resistor if needed
-        if (Vsupply > totalVoltage) {
-          resistorValue = (Vsupply - totalVoltage) / Iled;
-          resistorPower = (Vsupply - totalVoltage) * Iled;
-        }
+        totalVoltage = vLed * count;
+        totalCurrent = iLed;
+        totalPower = totalVoltage * totalCurrent;
       } else { // parallel
-        totalVoltage = Vled;
-        totalCurrent = Iled * qty;
-        
-        // Each LED needs its own resistor in parallel
-        if (Vsupply > totalVoltage) {
-          resistorValue = (Vsupply - totalVoltage) / Iled;
-          resistorPower = (Vsupply - totalVoltage) * Iled;
-        }
+        totalVoltage = vLed;
+        totalCurrent = iLed * count;
+        totalPower = totalVoltage * totalCurrent;
       }
 
-      const totalPower = totalVoltage * totalCurrent;
-      const driverVoltage = driverType === "constant-voltage" ? totalVoltage : Vsupply;
-      const driverCurrent = driverType === "constant-current" ? totalCurrent : totalCurrent;
-      const efficiency = (totalPower / (Vsupply * totalCurrent)) * 100;
+      const driverPower = totalPower / eff;
+      const driverCurrent = driverPower / vSupply;
+      const powerLoss = driverPower - totalPower;
 
       setResult({
         totalVoltage,
         totalCurrent: totalCurrent * 1000, // Convert back to mA for display
         totalPower,
-        resistorValue,
-        resistorPower,
-        driverVoltage,
-        driverCurrent: driverCurrent * 1000, // Convert to mA
-        efficiency
+        driverPower,
+        driverCurrent,
+        connectionConfig: connectionType,
+        powerLoss
       });
     }
   };
@@ -84,7 +70,8 @@ const LEDDriverCalculator = () => {
     setNumLeds("1");
     setConnectionType("series");
     setSupplyVoltage("12");
-    setDriverType("constant-current");
+    setEfficiency("0.85");
+    setCalculationType("driver-sizing");
     setResult(null);
   };
 
@@ -96,65 +83,60 @@ const LEDDriverCalculator = () => {
           <CardTitle>LED Driver Calculator</CardTitle>
         </div>
         <CardDescription>
-          Calculate LED driver requirements, current limiting resistors, and power consumption.
+          Calculate LED driver requirements for single LEDs or LED arrays in series/parallel configurations.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Input Section */}
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="led-voltage">LED Voltage (V)</Label>
-                <Input
-                  id="led-voltage"
-                  type="number"
-                  step="0.1"
-                  value={ledVoltage}
-                  onChange={(e) => setLedVoltage(e.target.value)}
-                  placeholder="e.g., 3.2"
-                  className="bg-elec-dark border-elec-yellow/20"
-                />
-              </div>
-              <div>
-                <Label htmlFor="led-current">LED Current (mA)</Label>
-                <Input
-                  id="led-current"
-                  type="number"
-                  value={ledCurrent}
-                  onChange={(e) => setLedCurrent(e.target.value)}
-                  placeholder="e.g., 20"
-                  className="bg-elec-dark border-elec-yellow/20"
-                />
-              </div>
+            <div>
+              <Label htmlFor="calculation-type">Calculation Type</Label>
+              <Select value={calculationType} onValueChange={setCalculationType}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <SelectItem value="driver-sizing">Driver Sizing</SelectItem>
+                  <SelectItem value="array-design">Array Design</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="num-leds">Number of LEDs</Label>
-                <Input
-                  id="num-leds"
-                  type="number"
-                  min="1"
-                  value={numLeds}
-                  onChange={(e) => setNumLeds(e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20"
-                />
-              </div>
-              <div>
-                <Label htmlFor="supply-voltage">Supply Voltage (V)</Label>
-                <Select value={supplyVoltage} onValueChange={setSupplyVoltage}>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                    <SelectItem value="5">5V</SelectItem>
-                    <SelectItem value="12">12V</SelectItem>
-                    <SelectItem value="24">24V</SelectItem>
-                    <SelectItem value="230">230V AC</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            <div>
+              <Label htmlFor="led-voltage">LED Forward Voltage (V)</Label>
+              <Input
+                id="led-voltage"
+                type="number"
+                step="0.1"
+                value={ledVoltage}
+                onChange={(e) => setLedVoltage(e.target.value)}
+                placeholder="e.g., 3.2"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="led-current">LED Forward Current (mA)</Label>
+              <Input
+                id="led-current"
+                type="number"
+                value={ledCurrent}
+                onChange={(e) => setLedCurrent(e.target.value)}
+                placeholder="e.g., 350"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="num-leds">Number of LEDs</Label>
+              <Input
+                id="num-leds"
+                type="number"
+                value={numLeds}
+                onChange={(e) => setNumLeds(e.target.value)}
+                placeholder="e.g., 10"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
             </div>
 
             <div>
@@ -164,23 +146,37 @@ const LEDDriverCalculator = () => {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="series">Series Connection</SelectItem>
-                  <SelectItem value="parallel">Parallel Connection</SelectItem>
+                  <SelectItem value="series">Series</SelectItem>
+                  <SelectItem value="parallel">Parallel</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div>
-              <Label htmlFor="driver-type">Driver Type</Label>
-              <Select value={driverType} onValueChange={setDriverType}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="constant-current">Constant Current</SelectItem>
-                  <SelectItem value="constant-voltage">Constant Voltage</SelectItem>
-                </SelectContent>
-              </Select>
+              <Label htmlFor="supply-voltage">Supply Voltage (V)</Label>
+              <Input
+                id="supply-voltage"
+                type="number"
+                value={supplyVoltage}
+                onChange={(e) => setSupplyVoltage(e.target.value)}
+                placeholder="e.g., 12"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="efficiency">Driver Efficiency</Label>
+              <Input
+                id="efficiency"
+                type="number"
+                step="0.01"
+                min="0"
+                max="1"
+                value={efficiency}
+                onChange={(e) => setEfficiency(e.target.value)}
+                placeholder="e.g., 0.85"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
             </div>
 
             <div className="flex gap-2">
@@ -194,15 +190,14 @@ const LEDDriverCalculator = () => {
             </div>
           </div>
 
-          {/* Result Section */}
           <div className="space-y-4">
-            <div className="rounded-md bg-elec-dark p-6 min-h-[300px]">
+            <div className="rounded-md bg-elec-dark p-6 min-h-[350px]">
               {result ? (
                 <div className="space-y-4">
                   <div className="text-center">
-                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">LED Driver Requirements</h3>
+                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">LED Driver Results</h3>
                     <Badge variant="secondary" className="mb-4">
-                      {connectionType === "series" ? "Series" : "Parallel"} Configuration
+                      {result.connectionConfig.toUpperCase()} Connection
                     </Badge>
                   </div>
                   
@@ -216,42 +211,39 @@ const LEDDriverCalculator = () => {
                       </div>
                       <div>
                         <span className="text-muted-foreground">Total Current:</span>
-                        <div className="font-mono text-elec-yellow">{result.totalCurrent.toFixed(1)} mA</div>
+                        <div className="font-mono text-elec-yellow">{result.totalCurrent.toFixed(0)} mA</div>
                       </div>
                     </div>
+                    
+                    <div>
+                      <span className="text-muted-foreground">LED Array Power:</span>
+                      <div className="font-mono text-elec-yellow">{result.totalPower.toFixed(2)} W</div>
+                    </div>
+                    
+                    <Separator />
                     
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <span className="text-muted-foreground">Total Power:</span>
-                        <div className="font-mono text-elec-yellow">{result.totalPower.toFixed(2)} W</div>
+                        <span className="text-muted-foreground">Driver Power:</span>
+                        <div className="font-mono text-elec-yellow">{result.driverPower.toFixed(2)} W</div>
                       </div>
                       <div>
                         <span className="text-muted-foreground">Driver Current:</span>
-                        <div className="font-mono text-elec-yellow">{result.driverCurrent.toFixed(1)} mA</div>
+                        <div className="font-mono text-elec-yellow">{result.driverCurrent.toFixed(2)} A</div>
                       </div>
                     </div>
                     
-                    {result.resistorValue > 0 && (
-                      <>
-                        <Separator />
-                        <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <span className="text-muted-foreground">Resistor Value:</span>
-                            <div className="font-mono text-elec-yellow">{result.resistorValue.toFixed(0)} Ω</div>
-                          </div>
-                          <div>
-                            <span className="text-muted-foreground">Resistor Power:</span>
-                            <div className="font-mono text-elec-yellow">{result.resistorPower.toFixed(2)} W</div>
-                          </div>
-                        </div>
-                      </>
-                    )}
+                    <div>
+                      <span className="text-muted-foreground">Power Loss:</span>
+                      <div className="font-mono text-elec-yellow">{result.powerLoss.toFixed(2)} W</div>
+                    </div>
                     
                     <Separator />
                     
                     <div className="text-xs text-muted-foreground">
-                      <div>Series: Vtotal = Vled × n, Itotal = Iled</div>
-                      <div>Parallel: Vtotal = Vled, Itotal = Iled × n</div>
+                      <div>Series: V_total = V_led × n</div>
+                      <div>Parallel: I_total = I_led × n</div>
+                      <div>Driver Power = LED Power ÷ Efficiency</div>
                     </div>
                   </div>
                 </div>
@@ -262,10 +254,10 @@ const LEDDriverCalculator = () => {
               )}
             </div>
 
-            <Alert className="border-green-500/20 bg-green-500/10">
-              <Info className="h-4 w-4 text-green-500" />
-              <AlertDescription className="text-green-200">
-                Always use appropriate heatsinking and consider LED thermal characteristics for optimal performance.
+            <Alert className="border-blue-500/20 bg-blue-500/10">
+              <Info className="h-4 w-4 text-blue-500" />
+              <AlertDescription className="text-blue-200">
+                Consider voltage headroom for constant current drivers. Series connection requires higher voltage.
               </AlertDescription>
             </Alert>
           </div>

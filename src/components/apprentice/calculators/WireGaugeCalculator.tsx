@@ -2,214 +2,254 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Cable, Info } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Zap, Info, Calculator, RotateCcw } from "lucide-react";
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-interface WireData {
-  awg: string;
-  swg: string;
-  diameter_mm: number;
-  diameter_inch: number;
-  area_mm2: number;
-  area_circ_mil: number;
-  resistance_ohm_km: number;
-  current_rating_a: number;
-}
-
-const wireGaugeData: WireData[] = [
-  { awg: "0000 (4/0)", swg: "7/0", diameter_mm: 11.68, diameter_inch: 0.460, area_mm2: 107.2, area_circ_mil: 211600, resistance_ohm_km: 0.161, current_rating_a: 195 },
-  { awg: "000 (3/0)", swg: "6/0", diameter_mm: 10.40, diameter_inch: 0.410, area_mm2: 85.0, area_circ_mil: 167800, resistance_ohm_km: 0.203, current_rating_a: 165 },
-  { awg: "00 (2/0)", swg: "5/0", diameter_mm: 9.27, diameter_inch: 0.365, area_mm2: 67.4, area_circ_mil: 133100, resistance_ohm_km: 0.256, current_rating_a: 145 },
-  { awg: "0 (1/0)", swg: "4/0", diameter_mm: 8.25, diameter_inch: 0.325, area_mm2: 53.5, area_circ_mil: 105500, resistance_ohm_km: 0.323, current_rating_a: 125 },
-  { awg: "1", swg: "3/0", diameter_mm: 7.35, diameter_inch: 0.289, area_mm2: 42.4, area_circ_mil: 83690, resistance_ohm_km: 0.407, current_rating_a: 110 },
-  { awg: "2", swg: "2/0", diameter_mm: 6.54, diameter_inch: 0.258, area_mm2: 33.6, area_circ_mil: 66360, resistance_ohm_km: 0.513, current_rating_a: 95 },
-  { awg: "4", swg: "0", diameter_mm: 5.19, diameter_inch: 0.204, area_mm2: 21.2, area_circ_mil: 41740, resistance_ohm_km: 0.815, current_rating_a: 70 },
-  { awg: "6", swg: "2", diameter_mm: 4.11, diameter_inch: 0.162, area_mm2: 13.3, area_circ_mil: 26240, resistance_ohm_km: 1.296, current_rating_a: 55 },
-  { awg: "8", swg: "4", diameter_mm: 3.26, diameter_inch: 0.128, area_mm2: 8.37, area_circ_mil: 16510, resistance_ohm_km: 2.061, current_rating_a: 40 },
-  { awg: "10", swg: "6", diameter_mm: 2.59, diameter_inch: 0.102, area_mm2: 5.26, area_circ_mil: 10380, resistance_ohm_km: 3.277, current_rating_a: 30 },
-  { awg: "12", swg: "8", diameter_mm: 2.05, diameter_inch: 0.081, area_mm2: 3.31, area_circ_mil: 6530, resistance_ohm_km: 5.211, current_rating_a: 20 },
-  { awg: "14", swg: "10", diameter_mm: 1.63, diameter_inch: 0.064, area_mm2: 2.08, area_circ_mil: 4107, resistance_ohm_km: 8.286, current_rating_a: 15 },
-  { awg: "16", swg: "12", diameter_mm: 1.29, diameter_inch: 0.051, area_mm2: 1.31, area_circ_mil: 2583, resistance_ohm_km: 13.17, current_rating_a: 10 },
-  { awg: "18", swg: "14", diameter_mm: 1.02, diameter_inch: 0.040, area_mm2: 0.823, area_circ_mil: 1624, resistance_ohm_km: 20.95, current_rating_a: 7 }
-];
-
 const WireGaugeCalculator = () => {
-  const [searchType, setSearchType] = useState<"awg" | "swg" | "diameter" | "current">("awg");
-  const [searchValue, setSearchValue] = useState<string>("");
-  const [results, setResults] = useState<WireData[]>([]);
+  const [conversionType, setConversionType] = useState<string>("awg-to-metric");
+  const [awgSize, setAwgSize] = useState<string>("");
+  const [metricSize, setMetricSize] = useState<string>("");
+  const [swgSize, setSwgSize] = useState<string>("");
+  const [result, setResult] = useState<{
+    awg?: string;
+    metric?: string;
+    swg?: string;
+    diameter?: number;
+    area?: number;
+    resistance?: number;
+    ampacity?: number;
+  } | null>(null);
 
-  const searchWire = () => {
-    if (!searchValue.trim()) {
-      setResults([]);
-      return;
-    }
+  // Wire gauge conversion tables
+  const awgToMetric = {
+    "30": { metric: "0.05", diameter: 0.254, area: 0.0507, resistance: 338.6, ampacity: 0.52 },
+    "28": { metric: "0.08", diameter: 0.321, area: 0.0804, resistance: 212.9, ampacity: 0.83 },
+    "26": { metric: "0.13", diameter: 0.404, area: 0.128, resistance: 133.9, ampacity: 1.3 },
+    "24": { metric: "0.2", diameter: 0.511, area: 0.205, resistance: 84.2, ampacity: 2.1 },
+    "22": { metric: "0.33", diameter: 0.644, area: 0.326, resistance: 52.9, ampacity: 3.3 },
+    "20": { metric: "0.5", diameter: 0.812, area: 0.518, resistance: 33.3, ampacity: 5.2 },
+    "18": { metric: "0.75", diameter: 1.024, area: 0.823, resistance: 20.9, ampacity: 8.3 },
+    "16": { metric: "1.3", diameter: 1.291, area: 1.31, resistance: 13.2, ampacity: 13 },
+    "14": { metric: "2.0", diameter: 1.628, area: 2.08, resistance: 8.29, ampacity: 20 },
+    "12": { metric: "2.5", diameter: 2.053, area: 3.31, resistance: 5.21, ampacity: 25 },
+    "10": { metric: "4.0", diameter: 2.588, area: 5.26, resistance: 3.28, ampacity: 35 },
+    "8": { metric: "6.0", diameter: 3.264, area: 8.37, resistance: 2.06, ampacity: 55 },
+    "6": { metric: "10", diameter: 4.115, area: 13.3, resistance: 1.30, ampacity: 75 },
+    "4": { metric: "16", diameter: 5.189, area: 21.2, resistance: 0.815, ampacity: 95 },
+    "2": { metric: "25", diameter: 6.544, area: 33.6, resistance: 0.513, ampacity: 130 },
+    "1": { metric: "35", diameter: 7.348, area: 42.4, resistance: 0.407, ampacity: 150 },
+    "1/0": { metric: "50", diameter: 8.251, area: 53.5, resistance: 0.323, ampacity: 170 },
+    "2/0": { metric: "70", diameter: 9.266, area: 67.4, resistance: 0.256, ampacity: 195 },
+    "3/0": { metric: "95", diameter: 10.405, area: 85.0, resistance: 0.203, ampacity: 225 },
+    "4/0": { metric: "120", diameter: 11.684, area: 107.2, resistance: 0.161, ampacity: 260 },
+  };
 
-    let filteredResults: WireData[] = [];
-
-    switch (searchType) {
-      case "awg":
-        filteredResults = wireGaugeData.filter(wire => 
-          wire.awg.toLowerCase().includes(searchValue.toLowerCase())
-        );
-        break;
-      case "swg":
-        filteredResults = wireGaugeData.filter(wire => 
-          wire.swg.toLowerCase().includes(searchValue.toLowerCase())
-        );
-        break;
-      case "diameter":
-        const diameterValue = parseFloat(searchValue);
-        if (!isNaN(diameterValue)) {
-          filteredResults = wireGaugeData.filter(wire => 
-            Math.abs(wire.diameter_mm - diameterValue) <= 0.5
-          );
+  const calculateWireGauge = () => {
+    if (conversionType === "awg-to-metric" && awgSize) {
+      const data = awgToMetric[awgSize as keyof typeof awgToMetric];
+      if (data) {
+        setResult({
+          awg: awgSize,
+          metric: data.metric,
+          diameter: data.diameter,
+          area: data.area,
+          resistance: data.resistance,
+          ampacity: data.ampacity
+        });
+      }
+    } else if (conversionType === "metric-to-awg" && metricSize) {
+      // Find closest AWG equivalent
+      const metric = parseFloat(metricSize);
+      let closestAwg = "";
+      let closestDiff = Infinity;
+      
+      Object.entries(awgToMetric).forEach(([awg, data]) => {
+        const diff = Math.abs(parseFloat(data.metric) - metric);
+        if (diff < closestDiff) {
+          closestDiff = diff;
+          closestAwg = awg;
         }
-        break;
-      case "current":
-        const currentValue = parseFloat(searchValue);
-        if (!isNaN(currentValue)) {
-          filteredResults = wireGaugeData.filter(wire => 
-            wire.current_rating_a >= currentValue
-          ).slice(0, 3); // Show top 3 suitable options
-        }
-        break;
+      });
+      
+      if (closestAwg) {
+        const data = awgToMetric[closestAwg as keyof typeof awgToMetric];
+        setResult({
+          awg: closestAwg,
+          metric: data.metric,
+          diameter: data.diameter,
+          area: data.area,
+          resistance: data.resistance,
+          ampacity: data.ampacity
+        });
+      }
     }
-
-    setResults(filteredResults);
   };
 
   const reset = () => {
-    setSearchValue("");
-    setResults([]);
+    setAwgSize("");
+    setMetricSize("");
+    setSwgSize("");
+    setConversionType("awg-to-metric");
+    setResult(null);
   };
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Cable className="h-5 w-5 text-elec-yellow" />
+          <Zap className="h-5 w-5 text-elec-yellow" />
           <CardTitle>Wire Gauge Calculator</CardTitle>
         </div>
         <CardDescription>
-          Convert between AWG, SWG, diameter, and find suitable wire sizes for your current requirements.
+          Convert between AWG, SWG, and metric wire sizes with electrical properties.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="space-y-6">
-          {/* Search Section */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
             <div>
-              <Label htmlFor="search-type">Search By</Label>
-              <Select value={searchType} onValueChange={(value: "awg" | "swg" | "diameter" | "current") => setSearchType(value)}>
+              <Label htmlFor="conversion-type">Conversion Type</Label>
+              <Select value={conversionType} onValueChange={setConversionType}>
                 <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="awg">AWG Size</SelectItem>
-                  <SelectItem value="swg">SWG Size</SelectItem>
-                  <SelectItem value="diameter">Diameter (mm)</SelectItem>
-                  <SelectItem value="current">Current Rating (A)</SelectItem>
+                  <SelectItem value="awg-to-metric">AWG to Metric</SelectItem>
+                  <SelectItem value="metric-to-awg">Metric to AWG</SelectItem>
+                  <SelectItem value="swg-conversion">SWG Conversion</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
-            <div>
-              <Label htmlFor="search-value">
-                {searchType === "awg" ? "AWG Size" : 
-                 searchType === "swg" ? "SWG Size" :
-                 searchType === "diameter" ? "Diameter (mm)" : "Current (A)"}
-              </Label>
-              <Input
-                id="search-value"
-                type={searchType === "diameter" || searchType === "current" ? "number" : "text"}
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-                placeholder={
-                  searchType === "awg" ? "e.g., 12" :
-                  searchType === "swg" ? "e.g., 8" :
-                  searchType === "diameter" ? "e.g., 2.05" : "e.g., 20"
-                }
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            {conversionType === "awg-to-metric" && (
+              <div>
+                <Label htmlFor="awg-size">AWG Size</Label>
+                <Select value={awgSize} onValueChange={setAwgSize}>
+                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                    <SelectValue placeholder="Select AWG size" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-dark border-elec-yellow/20 max-h-48">
+                    {Object.keys(awgToMetric).map((awg) => (
+                      <SelectItem key={awg} value={awg}>
+                        AWG {awg}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
 
-            <div className="flex items-end gap-2">
-              <Button onClick={searchWire} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
-                Search
+            {conversionType === "metric-to-awg" && (
+              <div>
+                <Label htmlFor="metric-size">Metric Size (mm²)</Label>
+                <Input
+                  id="metric-size"
+                  type="number"
+                  step="0.1"
+                  value={metricSize}
+                  onChange={(e) => setMetricSize(e.target.value)}
+                  placeholder="e.g., 2.5"
+                  className="bg-elec-dark border-elec-yellow/20"
+                />
+              </div>
+            )}
+
+            {conversionType === "swg-conversion" && (
+              <div>
+                <Label htmlFor="swg-size">SWG Size</Label>
+                <Input
+                  id="swg-size"
+                  type="number"
+                  value={swgSize}
+                  onChange={(e) => setSwgSize(e.target.value)}
+                  placeholder="e.g., 14"
+                  className="bg-elec-dark border-elec-yellow/20"
+                />
+              </div>
+            )}
+
+            <div className="flex gap-2">
+              <Button onClick={calculateWireGauge} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+                <Calculator className="h-4 w-4 mr-2" />
+                Convert
               </Button>
               <Button variant="outline" onClick={reset}>
-                Reset
+                <RotateCcw className="h-4 w-4" />
               </Button>
             </div>
           </div>
 
-          {/* Results Section */}
-          {results.length > 0 && (
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-elec-yellow">Wire Specifications</h3>
-              {results.map((wire, index) => (
-                <div key={index} className="rounded-md bg-elec-dark p-4 space-y-3">
-                  <div className="flex flex-wrap gap-2">
-                    <Badge variant="default">AWG {wire.awg}</Badge>
-                    <Badge variant="secondary">SWG {wire.swg}</Badge>
-                    <Badge variant="outline">{wire.current_rating_a}A Rating</Badge>
+          <div className="space-y-4">
+            <div className="rounded-md bg-elec-dark p-6 min-h-[300px]">
+              {result ? (
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Wire Gauge Conversion</h3>
+                    <div className="flex gap-2 justify-center mb-4">
+                      {result.awg && <Badge variant="secondary">AWG {result.awg}</Badge>}
+                      {result.metric && <Badge variant="secondary">{result.metric} mm²</Badge>}
+                    </div>
                   </div>
                   
                   <Separator />
                   
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                    <div>
-                      <span className="text-muted-foreground">Diameter:</span>
-                      <div className="font-mono text-elec-yellow">
-                        {wire.diameter_mm} mm<br />
-                        {wire.diameter_inch}" inches
+                  <div className="space-y-3 text-sm">
+                    {result.diameter && (
+                      <div>
+                        <span className="text-muted-foreground">Wire Diameter:</span>
+                        <div className="font-mono text-elec-yellow">{result.diameter.toFixed(3)} mm</div>
                       </div>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Area:</span>
-                      <div className="font-mono text-elec-yellow">
-                        {wire.area_mm2} mm²<br />
-                        {wire.area_circ_mil.toLocaleString()} CM
+                    )}
+                    
+                    {result.area && (
+                      <div>
+                        <span className="text-muted-foreground">Cross-sectional Area:</span>
+                        <div className="font-mono text-elec-yellow">{result.area.toFixed(2)} mm²</div>
                       </div>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Resistance:</span>
-                      <div className="font-mono text-elec-yellow">
-                        {wire.resistance_ohm_km} Ω/km
+                    )}
+                    
+                    {result.resistance && (
+                      <div>
+                        <span className="text-muted-foreground">Resistance (20°C):</span>
+                        <div className="font-mono text-elec-yellow">{result.resistance.toFixed(2)} mΩ/m</div>
                       </div>
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Max Current:</span>
-                      <div className="font-mono text-elec-yellow">
-                        {wire.current_rating_a} A
+                    )}
+                    
+                    {result.ampacity && (
+                      <div>
+                        <span className="text-muted-foreground">Current Capacity:</span>
+                        <div className="font-mono text-elec-yellow">{result.ampacity} A</div>
                       </div>
+                    )}
+                    
+                    <Separator />
+                    
+                    <div className="text-xs text-muted-foreground">
+                      <div>AWG: American Wire Gauge</div>
+                      <div>SWG: Standard Wire Gauge (Imperial)</div>
+                      <div>Ampacity for copper wire in free air</div>
                     </div>
                   </div>
                 </div>
-              ))}
+              ) : (
+                <div className="flex items-center justify-center h-full text-muted-foreground">
+                  Select wire gauge to see conversion and properties
+                </div>
+              )}
             </div>
-          )}
 
-          {searchValue && results.length === 0 && (
-            <Alert className="border-yellow-500/20 bg-yellow-500/10">
-              <Info className="h-4 w-4 text-yellow-500" />
-              <AlertDescription className="text-yellow-200">
-                No matching wire sizes found. Try adjusting your search criteria.
+            <Alert className="border-blue-500/20 bg-blue-500/10">
+              <Info className="h-4 w-4 text-blue-500" />
+              <AlertDescription className="text-blue-200">
+                Current capacity varies with installation method and ambient temperature. Consult local codes.
               </AlertDescription>
             </Alert>
-          )}
-
-          <Alert className="border-blue-500/20 bg-blue-500/10">
-            <Info className="h-4 w-4 text-blue-500" />
-            <AlertDescription className="text-blue-200">
-              Current ratings are for typical copper conductors at 60°C. Always consult BS 7671 for specific installation requirements.
-            </AlertDescription>
-          </Alert>
+          </div>
         </div>
       </CardContent>
     </Card>

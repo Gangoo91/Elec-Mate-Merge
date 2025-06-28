@@ -6,87 +6,90 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Cable, Info, Calculator, RotateCcw } from "lucide-react";
+import { Zap, Info, Calculator, RotateCcw } from "lucide-react";
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const CableCurrentCapacityCalculator = () => {
   const [cableSize, setCableSize] = useState<string>("");
-  const [installationMethod, setInstallationMethod] = useState<string>("method-c");
+  const [cableType, setCableType] = useState<string>("single-core-pvc");
+  const [installationMethod, setInstallationMethod] = useState<string>("clipped-direct");
   const [ambientTemp, setAmbientTemp] = useState<string>("30");
-  const [groupingFactor, setGroupingFactor] = useState<string>("1");
-  const [thermalInsulationFactor, setThermalInsulationFactor] = useState<string>("1");
+  const [groupingFactor, setGroupingFactor] = useState<string>("1.0");
   const [result, setResult] = useState<{
-    baseCurrentCapacity: number;
-    correctedCurrentCapacity: number;
-    tempCorrectionFactor: number;
-    overallCorrectionFactor: number;
-    voltageDropLimit: number;
+    referenceMethod: string;
+    baseCapacity: number;
+    correctionFactor: number;
+    finalCapacity: number;
+    voltageRating: string;
   } | null>(null);
 
-  // Simplified current carrying capacities for common cable sizes (BS 7671 Table 4D5A - Method C)
+  // Cable capacity data based on BS 7671
   const cableCapacities = {
-    "1": 13.5,
-    "1.5": 17.5,
-    "2.5": 24,
-    "4": 32,
-    "6": 41,
-    "10": 57,
-    "16": 76,
-    "25": 101,
-    "35": 125,
-    "50": 151,
-    "70": 192,
-    "95": 232,
-    "120": 269,
-    "150": 309,
+    "single-core-pvc": {
+      "1.0": { clipped: 15, enclosed: 13, buried: 18 },
+      "1.5": { clipped: 20, enclosed: 17, buried: 23 },
+      "2.5": { clipped: 27, enclosed: 23, buried: 31 },
+      "4.0": { clipped: 37, enclosed: 31, buried: 42 },
+      "6.0": { clipped: 47, enclosed: 39, buried: 54 },
+      "10.0": { clipped: 65, enclosed: 54, buried: 75 },
+      "16.0": { clipped: 87, enclosed: 73, buried: 101 },
+      "25.0": { clipped: 114, enclosed: 96, buried: 133 },
+      "35.0": { clipped: 141, enclosed: 119, buried: 164 },
+      "50.0": { clipped: 182, enclosed: 154, buried: 213 },
+    },
+    "twin-and-earth": {
+      "1.0": { clipped: 13, enclosed: 11, buried: 15 },
+      "1.5": { clipped: 17, enclosed: 14, buried: 19 },
+      "2.5": { clipped: 23, enclosed: 19, buried: 26 },
+      "4.0": { clipped: 31, enclosed: 26, buried: 35 },
+      "6.0": { clipped: 39, enclosed: 33, buried: 45 },
+      "10.0": { clipped: 54, enclosed: 45, buried: 62 },
+      "16.0": { clipped: 73, enclosed: 61, buried: 85 },
+    }
   };
 
-  const installationFactors = {
-    "method-a": 0.8,   // Enclosed in conduit in thermally insulating wall
-    "method-b": 0.85,  // In trunking
-    "method-c": 1.0,   // Clipped direct
-    "method-d": 0.95,  // In free air
-  };
-
-  const calculateCurrentCapacity = () => {
-    const baseCapacity = cableCapacities[cableSize as keyof typeof cableCapacities];
-    const installationFactor = installationFactors[installationMethod as keyof typeof installationFactors];
+  const calculateCapacity = () => {
+    const size = parseFloat(cableSize);
+    const ambient = parseFloat(ambientTemp);
     const grouping = parseFloat(groupingFactor);
-    const thermalInsulation = parseFloat(thermalInsulationFactor);
-    const ambientTemperature = parseFloat(ambientTemp);
 
-    if (baseCapacity && installationFactor && grouping > 0 && thermalInsulation > 0) {
-      // Temperature correction factor (simplified)
-      let tempCorrectionFactor = 1.0;
-      if (ambientTemperature > 30) {
-        tempCorrectionFactor = 1 - ((ambientTemperature - 30) * 0.015);
-      } else if (ambientTemperature < 30) {
-        tempCorrectionFactor = 1 + ((30 - ambientTemperature) * 0.01);
-      }
-
-      const overallCorrectionFactor = installationFactor * grouping * thermalInsulation * tempCorrectionFactor;
-      const correctedCurrentCapacity = baseCapacity * overallCorrectionFactor;
+    if (size > 0 && ambient > 0 && grouping > 0) {
+      const capacityData = cableCapacities[cableType as keyof typeof cableCapacities];
+      const sizeKey = size.toFixed(1);
       
-      // Voltage drop limit (simplified - 3% for lighting, 5% for other uses)
-      const voltageDropLimit = parseFloat(cableSize) * 4; // Simplified calculation
-
-      setResult({
-        baseCurrentCapacity: baseCapacity,
-        correctedCurrentCapacity,
-        tempCorrectionFactor,
-        overallCorrectionFactor,
-        voltageDropLimit
-      });
+      if (capacityData && capacityData[sizeKey as keyof typeof capacityData]) {
+        const installMethod = installationMethod.split('-')[0] as 'clipped' | 'enclosed' | 'buried';
+        const baseCapacity = capacityData[sizeKey as keyof typeof capacityData][installMethod] || 0;
+        
+        // Temperature correction factor (simplified)
+        let tempFactor = 1.0;
+        if (ambient > 30) {
+          tempFactor = 0.94 - ((ambient - 30) * 0.02);
+        } else if (ambient < 30) {
+          tempFactor = 1.0 + ((30 - ambient) * 0.01);
+        }
+        
+        const correctionFactor = tempFactor * grouping;
+        const finalCapacity = baseCapacity * correctionFactor;
+        
+        setResult({
+          referenceMethod: installationMethod.replace('-', ' ').toUpperCase(),
+          baseCapacity,
+          correctionFactor,
+          finalCapacity,
+          voltageRating: "600/1000V"
+        });
+      }
     }
   };
 
   const reset = () => {
     setCableSize("");
-    setInstallationMethod("method-c");
+    setCableType("single-core-pvc");
+    setInstallationMethod("clipped-direct");
     setAmbientTemp("30");
-    setGroupingFactor("1");
-    setThermalInsulationFactor("1");
+    setGroupingFactor("1.0");
     setResult(null);
   };
 
@@ -94,38 +97,39 @@ const CableCurrentCapacityCalculator = () => {
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Cable className="h-5 w-5 text-elec-yellow" />
+          <Zap className="h-5 w-5 text-elec-yellow" />
           <CardTitle>Cable Current Capacity Calculator</CardTitle>
         </div>
         <CardDescription>
-          Calculate cable current carrying capacity with correction factors per BS 7671.
+          Calculate current carrying capacity of cables based on BS 7671 installation methods.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Input Section */}
           <div className="space-y-4">
             <div>
-              <Label htmlFor="cable-size">Cable Size (mm²)</Label>
-              <Select value={cableSize} onValueChange={setCableSize}>
+              <Label htmlFor="cable-type">Cable Type</Label>
+              <Select value={cableType} onValueChange={setCableType}>
                 <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select cable size" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="1">1.0 mm²</SelectItem>
-                  <SelectItem value="1.5">1.5 mm²</SelectItem>
-                  <SelectItem value="2.5">2.5 mm²</SelectItem>
-                  <SelectItem value="4">4.0 mm²</SelectItem>
-                  <SelectItem value="6">6.0 mm²</SelectItem>
-                  <SelectItem value="10">10 mm²</SelectItem>
-                  <SelectItem value="16">16 mm²</SelectItem>
-                  <SelectItem value="25">25 mm²</SelectItem>
-                  <SelectItem value="35">35 mm²</SelectItem>
-                  <SelectItem value="50">50 mm²</SelectItem>
-                  <SelectItem value="70">70 mm²</SelectItem>
-                  <SelectItem value="95">95 mm²</SelectItem>
+                  <SelectItem value="single-core-pvc">Single Core PVC</SelectItem>
+                  <SelectItem value="twin-and-earth">Twin & Earth</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="cable-size">Cable Size (mm²)</Label>
+              <Input
+                id="cable-size"
+                type="number"
+                value={cableSize}
+                onChange={(e) => setCableSize(e.target.value)}
+                placeholder="e.g., 2.5"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
             </div>
 
             <div>
@@ -135,10 +139,9 @@ const CableCurrentCapacityCalculator = () => {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="method-a">Method A - Enclosed/Conduit</SelectItem>
-                  <SelectItem value="method-b">Method B - Trunking</SelectItem>
-                  <SelectItem value="method-c">Method C - Clipped Direct</SelectItem>
-                  <SelectItem value="method-d">Method D - Free Air</SelectItem>
+                  <SelectItem value="clipped-direct">Clipped Direct</SelectItem>
+                  <SelectItem value="enclosed-conduit">Enclosed in Conduit</SelectItem>
+                  <SelectItem value="buried-direct">Buried Direct</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -150,43 +153,26 @@ const CableCurrentCapacityCalculator = () => {
                 type="number"
                 value={ambientTemp}
                 onChange={(e) => setAmbientTemp(e.target.value)}
-                placeholder="30"
+                placeholder="e.g., 30"
                 className="bg-elec-dark border-elec-yellow/20"
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="grouping-factor">Grouping Factor</Label>
-                <Select value={groupingFactor} onValueChange={setGroupingFactor}>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                    <SelectItem value="1">1.0 (Single cable)</SelectItem>
-                    <SelectItem value="0.8">0.8 (2-3 cables)</SelectItem>
-                    <SelectItem value="0.7">0.7 (4-6 cables)</SelectItem>
-                    <SelectItem value="0.65">0.65 (7-12 cables)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="thermal-insulation">Thermal Insulation</Label>
-                <Select value={thermalInsulationFactor} onValueChange={setThermalInsulationFactor}>
-                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                    <SelectItem value="1">1.0 (No insulation)</SelectItem>
-                    <SelectItem value="0.88">0.88 (Surrounded by insulation)</SelectItem>
-                    <SelectItem value="0.77">0.77 (Totally surrounded)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            <div>
+              <Label htmlFor="grouping-factor">Grouping Factor</Label>
+              <Input
+                id="grouping-factor"
+                type="number"
+                step="0.1"
+                value={groupingFactor}
+                onChange={(e) => setGroupingFactor(e.target.value)}
+                placeholder="e.g., 0.8"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
             </div>
 
             <div className="flex gap-2">
-              <Button onClick={calculateCurrentCapacity} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+              <Button onClick={calculateCapacity} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
                 <Calculator className="h-4 w-4 mr-2" />
                 Calculate
               </Button>
@@ -196,48 +182,45 @@ const CableCurrentCapacityCalculator = () => {
             </div>
           </div>
 
-          {/* Result Section */}
           <div className="space-y-4">
             <div className="rounded-md bg-elec-dark p-6 min-h-[300px]">
               {result ? (
                 <div className="space-y-4">
                   <div className="text-center">
-                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Cable Capacity Analysis</h3>
+                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Current Capacity Results</h3>
                     <Badge variant="secondary" className="mb-4">
-                      {cableSize}mm² Cable
+                      {result.referenceMethod}
                     </Badge>
                   </div>
                   
                   <Separator />
                   
                   <div className="space-y-3 text-sm">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <span className="text-muted-foreground">Base Capacity:</span>
-                        <div className="font-mono text-elec-yellow">{result.baseCurrentCapacity} A</div>
-                      </div>
-                      <div>
-                        <span className="text-muted-foreground">Corrected Capacity:</span>
-                        <div className="font-mono text-elec-yellow">{result.correctedCurrentCapacity.toFixed(1)} A</div>
-                      </div>
+                    <div>
+                      <span className="text-muted-foreground">Base Capacity:</span>
+                      <div className="font-mono text-elec-yellow text-lg">{result.baseCapacity} A</div>
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <span className="text-muted-foreground">Temp. Correction:</span>
-                        <div className="font-mono text-elec-yellow">{result.tempCorrectionFactor.toFixed(3)}</div>
-                      </div>
-                      <div>
-                        <span className="text-muted-foreground">Overall Factor:</span>
-                        <div className="font-mono text-elec-yellow">{result.overallCorrectionFactor.toFixed(3)}</div>
-                      </div>
+                    <div>
+                      <span className="text-muted-foreground">Correction Factor:</span>
+                      <div className="font-mono text-elec-yellow">{result.correctionFactor.toFixed(3)}</div>
+                    </div>
+                    
+                    <div>
+                      <span className="text-muted-foreground">Final Capacity:</span>
+                      <div className="font-mono text-elec-yellow text-lg">{result.finalCapacity.toFixed(1)} A</div>
+                    </div>
+                    
+                    <div>
+                      <span className="text-muted-foreground">Voltage Rating:</span>
+                      <div className="font-mono text-elec-yellow">{result.voltageRating}</div>
                     </div>
                     
                     <Separator />
                     
                     <div className="text-xs text-muted-foreground">
-                      <div>Iz = It × Ca × Cg × Ci × Ct</div>
-                      <div>Where Ca=installation, Cg=grouping, Ci=insulation, Ct=temperature</div>
+                      <div>Final = Base × Temperature × Grouping</div>
+                      <div>Based on BS 7671 Table 4D5A</div>
                     </div>
                   </div>
                 </div>
@@ -248,10 +231,10 @@ const CableCurrentCapacityCalculator = () => {
               )}
             </div>
 
-            <Alert className="border-red-500/20 bg-red-500/10">
-              <Info className="h-4 w-4 text-red-500" />
-              <AlertDescription className="text-red-200">
-                Always verify calculations against current BS 7671 tables. This is a simplified calculator for guidance only.
+            <Alert className="border-blue-500/20 bg-blue-500/10">
+              <Info className="h-4 w-4 text-blue-500" />
+              <AlertDescription className="text-blue-200">
+                Current capacity calculations are based on BS 7671 standards. Always consult latest regulations.
               </AlertDescription>
             </Alert>
           </div>
