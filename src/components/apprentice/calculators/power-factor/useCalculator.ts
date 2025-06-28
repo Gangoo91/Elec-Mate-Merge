@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { CalculatorValidator, ValidationResult } from "@/services/calculatorValidation";
 
 export const useCalculator = () => {
   const [activePower, setActivePower] = useState<string>("");
@@ -8,34 +9,84 @@ export const useCalculator = () => {
   const [voltage, setVoltage] = useState<string>("");
   const [calculationMethod, setCalculationMethod] = useState<"power" | "currentVoltage">("power");
   const [powerFactor, setPowerFactor] = useState<string | null>(null);
+  const [validation, setValidation] = useState<ValidationResult | null>(null);
   const [errors, setErrors] = useState<{[key: string]: string}>({});
 
   const validateInputs = () => {
     const newErrors: {[key: string]: string} = {};
     
     if (calculationMethod === "power") {
-      if (!activePower) newErrors.activePower = "Active power is required";
-      else if (isNaN(parseFloat(activePower)) || parseFloat(activePower) <= 0) 
-        newErrors.activePower = "Please enter a valid positive number";
+      // Enhanced validation for power method
+      if (!activePower) {
+        newErrors.activePower = "Active power is required";
+      } else {
+        const activeValue = parseFloat(activePower);
+        if (isNaN(activeValue) || activeValue <= 0) {
+          newErrors.activePower = "Please enter a valid positive number";
+        } else if (activeValue > 1000000) { // 1MW limit for practical applications
+          newErrors.activePower = "Active power exceeds practical limit (1MW max)";
+        }
+      }
       
-      if (!apparentPower) newErrors.apparentPower = "Apparent power is required";
-      else if (isNaN(parseFloat(apparentPower)) || parseFloat(apparentPower) <= 0) 
-        newErrors.apparentPower = "Please enter a valid positive number";
+      if (!apparentPower) {
+        newErrors.apparentPower = "Apparent power is required";
+      } else {
+        const apparentValue = parseFloat(apparentPower);
+        if (isNaN(apparentValue) || apparentValue <= 0) {
+          newErrors.apparentPower = "Please enter a valid positive number";
+        } else if (apparentValue > 1000000) { // 1MVA limit
+          newErrors.apparentPower = "Apparent power exceeds practical limit (1MVA max)";
+        }
+      }
       
-      if (apparentPower && activePower && parseFloat(activePower) > parseFloat(apparentPower)) 
-        newErrors.activePower = "Active power cannot be greater than apparent power";
+      // Professional validation: Active power cannot exceed apparent power
+      if (apparentPower && activePower) {
+        const activeValue = parseFloat(activePower);
+        const apparentValue = parseFloat(apparentPower);
+        if (!isNaN(activeValue) && !isNaN(apparentValue) && activeValue > apparentValue) {
+          newErrors.activePower = "Active power cannot exceed apparent power (violates fundamental electrical principles)";
+        }
+      }
     } else {
-      if (!current) newErrors.current = "Current is required";
-      else if (isNaN(parseFloat(current)) || parseFloat(current) <= 0) 
-        newErrors.current = "Please enter a valid positive number";
+      // Enhanced validation for current/voltage method
+      if (!current) {
+        newErrors.current = "Current is required";
+      } else {
+        const currentValue = parseFloat(current);
+        if (isNaN(currentValue) || currentValue <= 0) {
+          newErrors.current = "Please enter a valid positive number";
+        } else {
+          // Professional range validation
+          const currentValidation = CalculatorValidator.validateInputRange(currentValue, 'current');
+          if (!currentValidation.isValid) {
+            newErrors.current = currentValidation.errors[0];
+          }
+        }
+      }
       
-      if (!voltage) newErrors.voltage = "Voltage is required";
-      else if (isNaN(parseFloat(voltage)) || parseFloat(voltage) <= 0) 
-        newErrors.voltage = "Please enter a valid positive number";
+      if (!voltage) {
+        newErrors.voltage = "Voltage is required";
+      } else {
+        const voltageValue = parseFloat(voltage);
+        if (isNaN(voltageValue) || voltageValue <= 0) {
+          newErrors.voltage = "Please enter a valid positive number";
+        } else {
+          // Professional range validation
+          const voltageValidation = CalculatorValidator.validateInputRange(voltageValue, 'voltage');
+          if (!voltageValidation.isValid) {
+            newErrors.voltage = voltageValidation.errors[0];
+          }
+        }
+      }
       
-      if (!activePower) newErrors.activePower = "Active power is required for this calculation";
-      else if (isNaN(parseFloat(activePower)) || parseFloat(activePower) <= 0) 
-        newErrors.activePower = "Please enter a valid positive number";
+      if (!activePower) {
+        newErrors.activePower = "Active power is required for this calculation method";
+      } else {
+        const activeValue = parseFloat(activePower);
+        if (isNaN(activeValue) || activeValue <= 0) {
+          newErrors.activePower = "Please enter a valid positive number";
+        }
+      }
     }
     
     setErrors(newErrors);
@@ -46,31 +97,56 @@ export const useCalculator = () => {
     if (!validateInputs()) return;
     
     let pf: number;
+    let activeValue: number;
+    let apparentValue: number;
     
     if (calculationMethod === "power") {
-      // Power Factor = Active Power / Apparent Power
-      const active = parseFloat(activePower);
-      const apparent = parseFloat(apparentPower);
-      pf = active / apparent;
+      // Professional calculation: Power Factor = Active Power / Apparent Power
+      activeValue = parseFloat(activePower);
+      apparentValue = parseFloat(apparentPower);
+      pf = activeValue / apparentValue;
     } else {
-      // Power Factor = Active Power / (Voltage × Current)
-      const active = parseFloat(activePower);
+      // Professional calculation: Power Factor = Active Power / (Voltage × Current)
+      activeValue = parseFloat(activePower);
       const volts = parseFloat(voltage);
       const amps = parseFloat(current);
-      const apparent = volts * amps;
+      apparentValue = volts * amps;
       
-      // Validate that active power doesn't exceed apparent power
-      if (active > apparent) {
-        setErrors({ activePower: "Active power cannot exceed apparent power (V × I)" });
+      // Enhanced validation: Active power cannot exceed apparent power
+      if (activeValue > apparentValue) {
+        setErrors({ 
+          activePower: `Active power (${activeValue}W) cannot exceed apparent power (${apparentValue.toFixed(1)}VA) - Check input values` 
+        });
         return;
       }
       
-      pf = active / apparent;
+      pf = activeValue / apparentValue;
     }
     
-    // Power factor is always between 0 and 1
+    // Professional bounds checking
     pf = Math.min(Math.max(pf, 0), 1);
-    setPowerFactor(pf.toFixed(3));
+    
+    // Enhanced validation using professional standards
+    const pfValidation = CalculatorValidator.validatePowerFactor(
+      activeValue,
+      apparentValue,
+      pf
+    );
+    
+    setValidation(pfValidation);
+    setPowerFactor(pf.toFixed(4)); // Professional precision to 4 decimal places
+    
+    // Clear any previous errors if calculation is successful
+    if (pfValidation.isValid) {
+      setErrors({});
+    } else {
+      // Set professional error messages
+      const validationErrors: {[key: string]: string} = {};
+      pfValidation.errors.forEach(error => {
+        validationErrors.general = error;
+      });
+      setErrors(validationErrors);
+    }
   };
 
   const clearError = (field: string) => {
@@ -87,6 +163,7 @@ export const useCalculator = () => {
     setCurrent("");
     setVoltage("");
     setPowerFactor(null);
+    setValidation(null);
     setErrors({});
   };
 
@@ -103,6 +180,7 @@ export const useCalculator = () => {
     setCalculationMethod,
     powerFactor,
     setPowerFactor,
+    validation,
     errors,
     setErrors,
     validateInputs,

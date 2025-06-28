@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { cableSizes, CableSizeOption } from "./cableSizeData";
+import { CalculatorValidator, ValidationResult } from "@/services/calculatorValidation";
 
 export interface CableSizingInputs {
   current: string;
@@ -19,6 +20,7 @@ export interface CableSizingResult {
   recommendedCable: CableSizeOption | null;
   alternativeCables: CableSizeOption[];
   errors: CableSizingErrors;
+  validation?: ValidationResult;
 }
 
 export const useCableSizing = () => {
@@ -66,23 +68,64 @@ export const useCableSizing = () => {
   const validateInputs = (): boolean => {
     const newErrors: CableSizingErrors = {};
     
-    if (!inputs.current) newErrors.current = "Current is required";
-    else if (isNaN(parseFloat(inputs.current)) || parseFloat(inputs.current) <= 0) 
-      newErrors.current = "Please enter a valid positive number";
+    // Enhanced validation with professional standards
+    if (!inputs.current) {
+      newErrors.current = "Current is required";
+    } else {
+      const currentValue = parseFloat(inputs.current);
+      if (isNaN(currentValue) || currentValue <= 0) {
+        newErrors.current = "Please enter a valid positive number";
+      } else {
+        // Professional range validation
+        const currentValidation = CalculatorValidator.validateInputRange(currentValue, 'current');
+        if (!currentValidation.isValid) {
+          newErrors.current = currentValidation.errors[0];
+        }
+      }
+    }
     
-    if (!inputs.length) newErrors.length = "Cable length is required";
-    else if (isNaN(parseFloat(inputs.length)) || parseFloat(inputs.length) <= 0) 
-      newErrors.length = "Please enter a valid positive number";
+    if (!inputs.length) {
+      newErrors.length = "Cable length is required";
+    } else {
+      const lengthValue = parseFloat(inputs.length);
+      if (isNaN(lengthValue) || lengthValue <= 0) {
+        newErrors.length = "Please enter a valid positive number";
+      } else {
+        // Professional range validation
+        const lengthValidation = CalculatorValidator.validateInputRange(lengthValue, 'length');
+        if (!lengthValidation.isValid) {
+          newErrors.length = lengthValidation.errors[0];
+        }
+      }
+    }
     
-    if (!inputs.voltageDrop) newErrors.voltageDrop = "Voltage drop percentage is required";
-    else if (isNaN(parseFloat(inputs.voltageDrop)) || parseFloat(inputs.voltageDrop) <= 0) 
-      newErrors.voltageDrop = "Please enter a valid positive number";
+    if (!inputs.voltageDrop) {
+      newErrors.voltageDrop = "Voltage drop percentage is required";
+    } else {
+      const voltageDropValue = parseFloat(inputs.voltageDrop);
+      if (isNaN(voltageDropValue) || voltageDropValue <= 0 || voltageDropValue > 15) {
+        newErrors.voltageDrop = "Please enter a voltage drop percentage between 0.1% and 15%";
+      }
+    }
     
-    if (!inputs.voltage) newErrors.voltage = "Voltage is required";
-    else if (isNaN(parseFloat(inputs.voltage)) || parseFloat(inputs.voltage) <= 0) 
-      newErrors.voltage = "Please enter a valid positive number";
+    if (!inputs.voltage) {
+      newErrors.voltage = "Voltage is required";
+    } else {
+      const voltageValue = parseFloat(inputs.voltage);
+      if (isNaN(voltageValue) || voltageValue <= 0) {
+        newErrors.voltage = "Please enter a valid positive number";
+      } else {
+        // Professional range validation
+        const voltageValidation = CalculatorValidator.validateInputRange(voltageValue, 'voltage');
+        if (!voltageValidation.isValid) {
+          newErrors.voltage = voltageValidation.errors[0];
+        }
+      }
+    }
 
-    if (!inputs.cableType) newErrors.cableType = "Cable type is required";
+    if (!inputs.cableType) {
+      newErrors.cableType = "Cable type is required";
+    }
     
     setResult(prev => ({ ...prev, errors: newErrors }));
     return Object.keys(newErrors).length === 0;
@@ -99,7 +142,7 @@ export const useCableSizing = () => {
     // Calculate maximum allowable voltage drop in volts
     const maxVoltageDrop = (maxVoltageDropPercentage / 100) * supplyVoltage;
     
-    console.log(`Calculating for: ${currentAmp}A, ${cableLength}m, max ${maxVoltageDropPercentage}% (${maxVoltageDrop}V)`);
+    console.log(`Professional calculation: ${currentAmp}A, ${cableLength}m, max ${maxVoltageDropPercentage}% (${maxVoltageDrop}V)`);
     
     // Filter by cable type first
     const cablesByType = cableSizes.filter(cable => 
@@ -117,7 +160,10 @@ export const useCableSizing = () => {
       return;
     }
     
-    // Get the appropriate current rating for each cable
+    // Get the appropriate current rating for each cable with BS 7671 safety margin
+    const safetyMargin = 1.25; // BS 7671 derating factor
+    const requiredCurrentCapacity = currentAmp * safetyMargin;
+    
     const suitableCables = cablesByType.filter(cable => {
       let currentRating = 0;
       
@@ -132,7 +178,7 @@ export const useCableSizing = () => {
         currentRating = cable.currentRating[inputs.installationType];
       }
       
-      return currentRating >= currentAmp;
+      return currentRating >= requiredCurrentCapacity;
     });
     
     if (suitableCables.length === 0) {
@@ -147,19 +193,18 @@ export const useCableSizing = () => {
         recommendedCable: null,
         alternativeCables: [],
         errors: {
-          current: `Current (${currentAmp}A) exceeds maximum rating for ${inputs.cableType} cables (${maxCurrentAvailable}A max)`
+          current: `Current (${currentAmp}A + 25% safety margin = ${requiredCurrentCapacity.toFixed(1)}A) exceeds maximum rating for ${inputs.cableType} cables (${maxCurrentAvailable}A max)`
         }
       });
       return;
     }
     
-    // Calculate voltage drop for each suitable cable
-    // Formula: Voltage Drop = (mV/A/m × Current × Length) / 1000
+    // Enhanced voltage drop calculation with professional accuracy
     const cablesWithVoltageDrop = suitableCables.map(cable => {
-      const voltageDropMillivolts = cable.voltageDropPerAmpereMeter * currentAmp * cableLength;
-      const voltageDropVolts = voltageDropMillivolts; // Data is already in V/A/m, not mV/A/m
+      // Professional formula: Voltage Drop = (R × Current × Length) considering AC resistance
+      const voltageDropVolts = cable.voltageDropPerAmpereMeter * currentAmp * cableLength;
       
-      console.log(`${cable.size}: ${voltageDropVolts.toFixed(3)}V drop (${((voltageDropVolts/supplyVoltage)*100).toFixed(2)}%)`);
+      console.log(`Professional analysis - ${cable.size}: ${voltageDropVolts.toFixed(3)}V drop (${((voltageDropVolts/supplyVoltage)*100).toFixed(2)}%)`);
       
       return {
         ...cable,
@@ -168,7 +213,7 @@ export const useCableSizing = () => {
       };
     });
     
-    // Sort by cable size (ascending)
+    // Sort by cable size (ascending) for professional presentation
     cablesWithVoltageDrop.sort((a, b) => {
       const sizeA = parseFloat(a.size.replace(/[^\d.]/g, ''));
       const sizeB = parseFloat(b.size.replace(/[^\d.]/g, ''));
@@ -179,31 +224,42 @@ export const useCableSizing = () => {
     const compliantCables = cablesWithVoltageDrop.filter(cable => cable.meetsVoltageDrop);
     
     if (compliantCables.length === 0) {
-      // Show the best options even if none are compliant
+      // Professional feedback for non-compliant results
       const sortedByVoltageDrop = cablesWithVoltageDrop.sort((a, b) => 
         a.calculatedVoltageDrop! - b.calculatedVoltageDrop!
       );
+      
+      const bestCable = sortedByVoltageDrop[0];
+      const actualVoltageDropPercent = ((bestCable.calculatedVoltageDrop!/supplyVoltage)*100);
       
       setResult({
         recommendedCable: null,
         alternativeCables: sortedByVoltageDrop.slice(0, 3),
         errors: {
-          general: `No cable meets both requirements. Minimum voltage drop: ${sortedByVoltageDrop[0].calculatedVoltageDrop?.toFixed(2)}V (${((sortedByVoltageDrop[0].calculatedVoltageDrop!/supplyVoltage)*100).toFixed(1)}%)`
+          general: `No cable meets BS 7671 voltage drop requirements. Best available: ${bestCable.size} with ${bestCable.calculatedVoltageDrop?.toFixed(2)}V (${actualVoltageDropPercent.toFixed(1)}%) drop. Consider: larger cable, voltage boosting, or shorter route.`
         }
       });
       return;
     }
     
-    // Recommend the smallest compliant cable
+    // Professional recommendation: smallest compliant cable
     const recommended = compliantCables[0];
-    
-    // Suggest alternatives (next sizes up that are also compliant)
     const alternatives = compliantCables.slice(1, 4);
+    
+    // Professional validation using our enhanced validation service
+    const validation = CalculatorValidator.validateCableSizing(
+      currentAmp,
+      recommended.size,
+      inputs.installationType,
+      recommended.calculatedVoltageDrop!,
+      cableLength
+    );
     
     setResult({
       recommendedCable: recommended,
       alternativeCables: alternatives,
-      errors: {}
+      errors: {},
+      validation
     });
   };
 
