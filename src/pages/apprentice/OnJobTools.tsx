@@ -3,17 +3,10 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import OnTheJobToolsBox from "@/components/apprentice/OnTheJobToolsBox";
-import { Calculator, Settings, HardHat, MessageSquare, HelpCircle, BookOpen, ClipboardList } from "lucide-react";
+import { Settings, HardHat, MessageSquare, HelpCircle, BookOpen, ClipboardList } from "lucide-react";
 
 const OnJobTools = () => {
   const onJobTools = [
-    {
-      id: 1,
-      title: "Electrical Calculations",
-      icon: Calculator,
-      description: "Cable sizing, load calculations, voltage drop, and more",
-      link: "/apprentice/on-job-tools/calculations"
-    },
     {
       id: 2,
       title: "Site Assessment Tools",
