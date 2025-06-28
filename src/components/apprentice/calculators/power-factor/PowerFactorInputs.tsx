@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import SmartInputSuggestions from "../smart-features/SmartInputSuggestions";
 
 interface PowerFactorInputsProps {
   calculationMethod: "power" | "currentVoltage";
@@ -75,6 +76,12 @@ const PowerFactorInputs = ({
             />
             {errors.activePower && <p className="text-xs text-destructive">{errors.activePower}</p>}
             <p className="text-xs text-muted-foreground">Real power consumed by the load</p>
+            <SmartInputSuggestions
+              fieldType="power"
+              currentValue={activePower}
+              onSuggestionSelect={setActivePower}
+              calculatorType="power-factor"
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="apparent-power">Apparent Power (kVA or VA)</Label>
@@ -91,6 +98,12 @@ const PowerFactorInputs = ({
             />
             {errors.apparentPower && <p className="text-xs text-destructive">{errors.apparentPower}</p>}
             <p className="text-xs text-muted-foreground">Total power supplied to the circuit</p>
+            <SmartInputSuggestions
+              fieldType="power"
+              currentValue={apparentPower}
+              onSuggestionSelect={setApparentPower}
+              calculatorType="power-factor"
+            />
           </div>
         </>
       ) : (
@@ -109,6 +122,12 @@ const PowerFactorInputs = ({
               }}
             />
             {errors.activePower && <p className="text-xs text-destructive">{errors.activePower}</p>}
+            <SmartInputSuggestions
+              fieldType="power"
+              currentValue={activePower}
+              onSuggestionSelect={setActivePower}
+              calculatorType="power-factor"
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="voltage">Voltage (V)</Label>
@@ -124,6 +143,12 @@ const PowerFactorInputs = ({
               }}
             />
             {errors.voltage && <p className="text-xs text-destructive">{errors.voltage}</p>}
+            <SmartInputSuggestions
+              fieldType="voltage"
+              currentValue={voltage}
+              onSuggestionSelect={setVoltage}
+              calculatorType="power-factor"
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="current">Current (A)</Label>
@@ -139,6 +164,12 @@ const PowerFactorInputs = ({
               }}
             />
             {errors.current && <p className="text-xs text-destructive">{errors.current}</p>}
+            <SmartInputSuggestions
+              fieldType="current"
+              currentValue={current}
+              onSuggestionSelect={setCurrent}
+              calculatorType="power-factor"
+            />
           </div>
         </>
       )}
