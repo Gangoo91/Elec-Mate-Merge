@@ -1,21 +1,9 @@
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { 
-  AlertTriangle, 
-  CheckCircle, 
-  Construction, 
-  Eye, 
-  FileText, 
-  ChevronDown,
-  Thermometer,
-  Zap,
-  Shield,
-  Wrench
-} from "lucide-react";
+import { AlertTriangle, CheckCircle, Info, Settings, Zap } from "lucide-react";
 import { RealWorldValidationResult } from "@/services/realWorldValidation";
 
 interface RealWorldValidationPanelProps {
@@ -23,172 +11,153 @@ interface RealWorldValidationPanelProps {
   calculationType: string;
 }
 
-const RealWorldValidationPanel: React.FC<RealWorldValidationPanelProps> = ({
-  validation,
-  calculationType
+const RealWorldValidationPanel: React.FC<RealWorldValidationPanelProps> = ({ 
+  validation, 
+  calculationType 
 }) => {
   const getRiskColor = (risk: string) => {
     switch (risk) {
-      case 'critical': return 'border-red-600 bg-red-900/20';
-      case 'high': return 'border-orange-500 bg-orange-900/20';
-      case 'medium': return 'border-yellow-500 bg-yellow-900/20';
-      default: return 'border-green-500 bg-green-900/20';
+      case 'critical': return 'bg-red-900/20 border-red-600';
+      case 'high': return 'bg-orange-900/20 border-orange-600';
+      case 'medium': return 'bg-yellow-900/20 border-yellow-600';
+      default: return 'bg-green-900/20 border-green-600';
     }
   };
 
   const getRiskIcon = (risk: string) => {
     switch (risk) {
-      case 'critical': return <AlertTriangle className="h-5 w-5 text-red-400 animate-pulse" />;
-      case 'high': return <AlertTriangle className="h-5 w-5 text-orange-400" />;
-      case 'medium': return <Eye className="h-5 w-5 text-yellow-400" />;
-      default: return <CheckCircle className="h-5 w-5 text-green-400" />;
+      case 'critical': return <Zap className="h-4 w-4 text-red-400" />;
+      case 'high': return <AlertTriangle className="h-4 w-4 text-orange-400" />;
+      case 'medium': return <Info className="h-4 w-4 text-yellow-400" />;
+      default: return <CheckCircle className="h-4 w-4 text-green-400" />;
     }
   };
 
-  const getConditionIcon = (conditionName: string) => {
-    if (conditionName.includes('Temperature')) return <Thermometer className="h-4 w-4" />;
-    if (conditionName.includes('Motor') || conditionName.includes('Harmonic')) return <Zap className="h-4 w-4" />;
-    if (conditionName.includes('Emergency') || conditionName.includes('Critical')) return <Shield className="h-4 w-4" />;
-    return <Construction className="h-4 w-4" />;
-  };
-
   return (
-    <Card className={`border-2 ${getRiskColor(validation.overallRisk)}`}>
+    <Card className={`${getRiskColor(validation.overallRisk)} border-2`}>
       <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2 text-lg">
-            {getRiskIcon(validation.overallRisk)}
-            Real-World Validation
-          </CardTitle>
+        <div className="flex items-center gap-2">
+          <Settings className="h-5 w-5 text-elec-yellow" />
+          <CardTitle>Real-World Validation Panel</CardTitle>
           <Badge 
-            variant={validation.overallRisk === 'critical' ? 'destructive' : 'outline'}
-            className="text-xs"
+            variant={validation.overallRisk === 'critical' ? 'destructive' : 'default'}
+            className="ml-auto"
           >
             {validation.overallRisk.toUpperCase()} RISK
           </Badge>
         </div>
+        <CardDescription>
+          Environmental and installation conditions for {calculationType}
+        </CardDescription>
       </CardHeader>
+      
       <CardContent className="space-y-4">
-        
-        {/* Risk Summary */}
-        <Alert className={getRiskColor(validation.overallRisk)}>
-          <AlertDescription>
-            <div className="font-medium mb-2">
-              {validation.overallRisk === 'critical' && '🚨 CRITICAL: Immediate attention required'}
-              {validation.overallRisk === 'high' && '⚠️ HIGH RISK: Additional precautions needed'}
-              {validation.overallRisk === 'medium' && '⚡ MEDIUM RISK: Enhanced monitoring recommended'}
-              {validation.overallRisk === 'low' && '✅ LOW RISK: Standard practices apply'}
-            </div>
-            {validation.conditions.length > 0 ? (
-              <p className="text-sm">
-                {validation.conditions.length} real-world condition(s) identified that may affect this {calculationType} calculation.
-              </p>
-            ) : (
-              <p className="text-sm">No significant real-world conditions identified. Standard design parameters apply.</p>
-            )}
-          </AlertDescription>
-        </Alert>
-
         {/* Identified Conditions */}
         {validation.conditions.length > 0 && (
-          <Collapsible>
-            <CollapsibleTrigger className="flex items-center gap-2 text-sm font-medium hover:text-elec-yellow transition-colors">
-              <Construction className="h-4 w-4" />
-              Identified Conditions ({validation.conditions.length})
-              <ChevronDown className="h-4 w-4" />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-2 mt-2">
+          <div>
+            <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
+              {getRiskIcon(validation.overallRisk)}
+              Identified Real-World Conditions ({validation.conditions.length})
+            </h4>
+            <div className="grid gap-2">
               {validation.conditions.map((condition, index) => (
-                <div key={index} className="border border-gray-600 rounded-lg p-3 bg-elec-dark/30">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      {getConditionIcon(condition.name)}
-                      <span className="font-medium text-sm">{condition.name}</span>
+                <Alert key={index} className="py-2">
+                  <AlertDescription>
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <strong>{condition.name}</strong>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {condition.description}
+                        </p>
+                      </div>
+                      <Badge 
+                        variant={condition.impact === 'critical' ? 'destructive' : 'outline'}
+                        className="text-xs"
+                      >
+                        {condition.impact}
+                      </Badge>
                     </div>
-                    <Badge 
-                      variant={condition.impact === 'critical' ? 'destructive' : 'outline'}
-                      className="text-xs"
-                    >
-                      {condition.impact}
-                    </Badge>
-                  </div>
-                  <p className="text-xs text-muted-foreground">{condition.description}</p>
-                  <p className="text-xs mt-1">
-                    Adjustment Factor: <span className="font-mono">{condition.adjustmentFactor}</span>
-                  </p>
-                </div>
+                  </AlertDescription>
+                </Alert>
               ))}
-            </CollapsibleContent>
-          </Collapsible>
+            </div>
+          </div>
         )}
 
         {/* Practical Recommendations */}
         {validation.practicalRecommendations.length > 0 && (
-          <Collapsible>
-            <CollapsibleTrigger className="flex items-center gap-2 text-sm font-medium hover:text-elec-yellow transition-colors">
-              <Wrench className="h-4 w-4" />
-              Practical Recommendations ({validation.practicalRecommendations.length})
-              <ChevronDown className="h-4 w-4" />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-1 mt-2">
+          <div>
+            <h4 className="font-medium text-sm mb-2">Practical Recommendations</h4>
+            <ul className="space-y-1 text-sm">
               {validation.practicalRecommendations.map((rec, index) => (
-                <div key={index} className="flex items-start gap-2 text-sm p-2 bg-blue-500/10 rounded border border-blue-500/20">
-                  <div className="w-1 h-1 rounded-full bg-blue-400 mt-2 flex-shrink-0" />
-                  <span className="text-blue-200">{rec}</span>
-                </div>
+                <li key={index} className="flex items-start gap-2">
+                  <span className="text-elec-yellow">•</span>
+                  <span>{rec}</span>
+                </li>
               ))}
-            </CollapsibleContent>
-          </Collapsible>
+            </ul>
+          </div>
         )}
 
         {/* Field Considerations */}
         {validation.fieldConsiderations.length > 0 && (
-          <Collapsible>
-            <CollapsibleTrigger className="flex items-center gap-2 text-sm font-medium hover:text-elec-yellow transition-colors">
-              <Eye className="h-4 w-4" />
-              Field Considerations ({validation.fieldConsiderations.length})
-              <ChevronDown className="h-4 w-4" />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-1 mt-2">
+          <div>
+            <h4 className="font-medium text-sm mb-2">Field Considerations</h4>
+            <ul className="space-y-1 text-sm text-muted-foreground">
               {validation.fieldConsiderations.map((consideration, index) => (
-                <div key={index} className="flex items-start gap-2 text-sm p-2 bg-amber-500/10 rounded border border-amber-500/20">
-                  <div className="w-1 h-1 rounded-full bg-amber-400 mt-2 flex-shrink-0" />
-                  <span className="text-amber-200">{consideration}</span>
-                </div>
+                <li key={index} className="flex items-start gap-2">
+                  <span className="text-blue-400">→</span>
+                  <span>{consideration}</span>
+                </li>
               ))}
-            </CollapsibleContent>
-          </Collapsible>
+            </ul>
+          </div>
         )}
 
         {/* Installation Notes */}
         {validation.installationNotes.length > 0 && (
-          <Collapsible>
-            <CollapsibleTrigger className="flex items-center gap-2 text-sm font-medium hover:text-elec-yellow transition-colors">
-              <FileText className="h-4 w-4" />
-              Installation Notes ({validation.installationNotes.length})
-              <ChevronDown className="h-4 w-4" />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="space-y-1 mt-2">
+          <div>
+            <h4 className="font-medium text-sm mb-2">Installation Notes</h4>
+            <ul className="space-y-1 text-sm text-muted-foreground">
               {validation.installationNotes.map((note, index) => (
-                <div key={index} className="flex items-start gap-2 text-sm p-2 bg-gray-500/10 rounded border border-gray-500/20">
-                  <div className="w-1 h-1 rounded-full bg-gray-400 mt-2 flex-shrink-0" />
-                  <span className="text-gray-300">{note}</span>
-                </div>
+                <li key={index} className="flex items-start gap-2">
+                  <span className="text-green-400">✓</span>
+                  <span>{note}</span>
+                </li>
               ))}
-            </CollapsibleContent>
-          </Collapsible>
+            </ul>
+          </div>
         )}
 
-        {/* Professional Disclaimer */}
-        <Alert className="border-slate-500/50 bg-slate-500/10">
-          <Shield className="h-4 w-4 text-slate-400" />
-          <AlertDescription className="text-xs text-slate-300">
-            <strong>Real-World Validation:</strong> These conditions represent common field scenarios that may affect your calculation. 
-            Always verify actual site conditions and consult with experienced engineers for complex installations.
+        {/* Risk Assessment Summary */}
+        <Alert className={getRiskColor(validation.overallRisk)}>
+          <AlertDescription>
+            <div className="flex items-center gap-2 mb-2">
+              {getRiskIcon(validation.overallRisk)}
+              <strong>Overall Risk Assessment: {validation.overallRisk.toUpperCase()}</strong>
+            </div>
             {validation.overallRisk === 'critical' && (
-              <div className="mt-2 text-red-300 font-medium">
-                ⚠️ Critical conditions detected - do not proceed without professional consultation.
-              </div>
+              <p className="text-sm text-red-300">
+                🚨 CRITICAL: Professional consultation required before installation. 
+                Additional safety measures and specialist expertise needed.
+              </p>
+            )}
+            {validation.overallRisk === 'high' && (
+              <p className="text-sm text-orange-300">
+                ⚠️ HIGH: Enhanced precautions required. Consider additional safety measures 
+                and monitoring during installation.
+              </p>
+            )}
+            {validation.overallRisk === 'medium' && (
+              <p className="text-sm text-yellow-300">
+                ℹ️ MEDIUM: Standard precautions apply with additional considerations 
+                for the identified conditions.
+              </p>
+            )}
+            {validation.overallRisk === 'low' && (
+              <p className="text-sm text-green-300">
+                ✅ LOW: Standard installation practices apply. Monitor conditions as needed.
+              </p>
             )}
           </AlertDescription>
         </Alert>

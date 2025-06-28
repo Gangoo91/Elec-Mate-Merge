@@ -7,16 +7,30 @@ export interface CableSizingInputs {
   length: string;
   installationType: string;
   cableType: string;
+  voltage: string;
+  voltageDrop: string;
   ambientTemp?: string;
   cableGrouping?: string;
   loadType?: string;
   diversityFactor?: string;
 }
 
+export interface CableSizingErrors {
+  current?: string;
+  length?: string;
+  voltage?: string;
+  voltageDrop?: string;
+  installationType?: string;
+  ambientTemp?: string;
+  diversityFactor?: string;
+  calculation?: string;
+  general?: string;
+}
+
 export interface CableSizingResult {
   recommendedCable: CableSizeOption | null;
   alternativeCables: CableSizeOption[];
-  errors: Record<string, string> | null;
+  errors: CableSizingErrors | null;
 }
 
 export const useCableSizing = () => {
@@ -25,6 +39,8 @@ export const useCableSizing = () => {
     length: '',
     installationType: '',
     cableType: 'pvc',
+    voltage: '230',
+    voltageDrop: '5',
     ambientTemp: '30',
     cableGrouping: '1',
     loadType: 'resistive',
@@ -49,8 +65,8 @@ export const useCableSizing = () => {
     setInputs(prev => ({ ...prev, cableType: type }));
   };
 
-  const validateInputs = (): Record<string, string> | null => {
-    const errors: Record<string, string> = {};
+  const validateInputs = (): CableSizingErrors | null => {
+    const errors: CableSizingErrors = {};
 
     if (!inputs.current || parseFloat(inputs.current) <= 0) {
       errors.current = 'Current must be greater than 0';
@@ -58,6 +74,14 @@ export const useCableSizing = () => {
 
     if (!inputs.length || parseFloat(inputs.length) <= 0) {
       errors.length = 'Length must be greater than 0';
+    }
+
+    if (!inputs.voltage || parseFloat(inputs.voltage) <= 0) {
+      errors.voltage = 'Voltage must be greater than 0';
+    }
+
+    if (!inputs.voltageDrop || parseFloat(inputs.voltageDrop) <= 0 || parseFloat(inputs.voltageDrop) > 10) {
+      errors.voltageDrop = 'Voltage drop must be between 0.1% and 10%';
     }
 
     if (!inputs.installationType) {
@@ -90,6 +114,8 @@ export const useCableSizing = () => {
 
     const current = parseFloat(inputs.current);
     const length = parseFloat(inputs.length);
+    const voltage = parseFloat(inputs.voltage);
+    const maxVoltageDropPercent = parseFloat(inputs.voltageDrop);
     const ambientTemp = parseFloat(inputs.ambientTemp || '30');
     const cableGrouping = parseInt(inputs.cableGrouping || '1');
     const diversityFactor = parseFloat(inputs.diversityFactor || '1.0');
@@ -116,10 +142,10 @@ export const useCableSizing = () => {
       
       // Calculate voltage drop
       const voltageDrop = (adjustedCurrent * length * cable.voltageDropPerAmpereMeter) / 1000;
-      const voltageDropPercentage = (voltageDrop / 230) * 100; // Assuming 230V supply
+      const voltageDropPercentage = (voltageDrop / voltage) * 100;
       
       cable.calculatedVoltageDrop = voltageDrop;
-      cable.meetsVoltageDrop = voltageDropPercentage <= 3; // 3% limit for lighting, 5% for other loads
+      cable.meetsVoltageDrop = voltageDropPercentage <= maxVoltageDropPercent;
       
       return rating >= requiredRating && cable.meetsVoltageDrop;
     });
@@ -153,6 +179,8 @@ export const useCableSizing = () => {
       length: '',
       installationType: '',
       cableType: 'pvc',
+      voltage: '230',
+      voltageDrop: '5',
       ambientTemp: '30',
       cableGrouping: '1',
       loadType: 'resistive',
