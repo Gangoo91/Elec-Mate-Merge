@@ -1,8 +1,10 @@
 
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Zap, Activity, PlugZap, Calculator, Variable, Gauge, Sigma, Wrench, Cable, RotateCw, Shield, TrendingUp, Clock, Sun, Battery } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Book } from "lucide-react";
+import { useState } from "react";
+import StandardsReference from "./StandardsReference";
 
 interface CalculatorSelectorProps {
   calculatorType: string;
@@ -10,69 +12,81 @@ interface CalculatorSelectorProps {
 }
 
 const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSelectorProps) => {
-  const calculators = [
-    { value: "ohms-law", label: "Ohm's Law", icon: Zap },
-    { value: "voltage-drop", label: "Voltage Drop", icon: Activity },
-    { value: "power-factor", label: "Power Factor", icon: PlugZap },
-    { value: "load", label: "Load Calculator", icon: Calculator },
-    { value: "cable-size", label: "Cable Sizing", icon: Cable },
-    { value: "lumen", label: "Lumen Calculator", icon: Variable },
-    { value: "instrumentation", label: "4-20mA Scale", icon: Gauge },
-    { value: "zs-values", label: "Zs Values", icon: Zap },
-    { value: "adiabatic", label: "Adiabatic Equation", icon: Sigma },
-    { value: "conduit-fill", label: "Conduit Fill", icon: Calculator },
-    { value: "resistor-colour-code", label: "Resistor Colour", icon: Sigma },
-    { value: "ring-circuit", label: "Ring Circuit", icon: RotateCw },
-    { value: "diversity-factor", label: "Diversity Factor", icon: Wrench },
-    { value: "phase-rotation", label: "Phase Rotation", icon: RotateCw },
-    { value: "earth-fault-loop", label: "Earth Fault Loop", icon: Shield },
-    { value: "maximum-demand", label: "Maximum Demand", icon: TrendingUp },
-    { value: "rcd-trip-time", label: "RCD Trip Time", icon: Clock },
-    { value: "solar-pv", label: "Solar PV", icon: Sun },
-    { value: "battery-backup", label: "Battery Backup", icon: Battery },
-    { value: "bs7671-zs-lookup", label: "BS7671 Zs Lookup", icon: Zap },
-    { value: "r1r2", label: "R1+R2 Calculator", icon: Cable },
-    { value: "pfc", label: "PFC Calculator", icon: Shield },
-    { value: "rcd-discrimination", label: "RCD Discrimination", icon: Shield },
-    { value: "cable-derating", label: "Cable Derating", icon: Cable },
+  const [showStandards, setShowStandards] = useState(false);
+
+  const calculatorOptions = [
+    { value: "ohms-law", label: "Ohm's Law", category: "Fundamental" },
+    { value: "voltage-drop", label: "Voltage Drop", category: "Design" },
+    { value: "power-factor", label: "Power Factor", category: "Power Quality" },
+    { value: "cable-size", label: "Cable Sizing", category: "Design" },
+    { value: "load", label: "Load Assessment", category: "Design" },
+    { value: "lumen", label: "Lighting (Lumens)", category: "Lighting" },
+    { value: "instrumentation", label: "Instrumentation", category: "Control" },
+    { value: "zs-values", label: "Maximum Zs Values", category: "Testing" },
+    { value: "bs7671-zs-lookup", label: "BS 7671 Zs Lookup", category: "Testing" },
+    { value: "adiabatic", label: "Adiabatic Equation", category: "Protection" },
+    { value: "conduit-fill", label: "Conduit Fill", category: "Installation" },
+    { value: "resistor-colour-code", label: "Resistor Colour Code", category: "Components" },
+    { value: "ring-circuit", label: "Ring Circuit", category: "Testing" },
+    { value: "diversity-factor", label: "Diversity Factor", category: "Design" },
+    { value: "earth-fault-loop", label: "Earth Fault Loop", category: "Testing" },
+    { value: "maximum-demand", label: "Maximum Demand", category: "Design" },
+    { value: "rcd-trip-time", label: "RCD Trip Time", category: "Protection" },
+    { value: "solar-pv", label: "Solar PV", category: "Renewable" },
+    { value: "battery-backup", label: "Battery Backup", category: "Power Systems" },
+    { value: "r1r2", label: "R1+R2 Calculation", category: "Testing" },
+    { value: "pfc", label: "Prospective Fault Current", category: "Protection" },
+    { value: "rcd-discrimination", label: "RCD Discrimination", category: "Protection" },
+    { value: "cable-derating", label: "Cable Derating", category: "Design" },
+    { value: "phase-rotation", label: "Phase Rotation", category: "Testing" },
   ];
 
+  // Group calculators by category
+  const groupedCalculators = calculatorOptions.reduce((acc, calc) => {
+    if (!acc[calc.category]) {
+      acc[calc.category] = [];
+    }
+    acc[calc.category].push(calc);
+    return acc;
+  }, {} as Record<string, typeof calculatorOptions>);
+
   return (
-    <div className="w-full space-y-4">
-      {/* Mobile view: Dropdown */}
-      <div className="md:hidden w-full">
-        <Label htmlFor="calculator-type" className="text-lg font-medium mb-2 block">Select Calculator</Label>
-        <Select value={calculatorType} onValueChange={setCalculatorType}>
-          <SelectTrigger className="bg-elec-dark border-elec-yellow/20 w-full">
-            <SelectValue placeholder="Select calculator type" />
-          </SelectTrigger>
-          <SelectContent className="bg-elec-dark border-elec-yellow/20">
-            {calculators.map((calc) => (
-              <SelectItem key={calc.value} value={calc.value}>
-                <div className="flex items-center">
-                  <calc.icon className="mr-2 h-4 w-4 text-elec-yellow" />
-                  <span>{calc.label}</span>
+    <div className="space-y-4">
+      <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
+        <div className="flex-1 w-full">
+          <Label htmlFor="calculator-select">Select Calculator</Label>
+          <Select value={calculatorType} onValueChange={setCalculatorType}>
+            <SelectTrigger id="calculator-select" className="bg-elec-dark border-elec-yellow/20">
+              <SelectValue placeholder="Choose a calculator" />
+            </SelectTrigger>
+            <SelectContent className="bg-elec-dark border-elec-yellow/20 max-h-96">
+              {Object.entries(groupedCalculators).map(([category, calcs]) => (
+                <div key={category}>
+                  <div className="px-2 py-1.5 text-xs font-semibold text-elec-yellow bg-elec-gray/50">
+                    {category}
+                  </div>
+                  {calcs.map((calc) => (
+                    <SelectItem key={calc.value} value={calc.value} className="pl-4">
+                      {calc.label}
+                    </SelectItem>
+                  ))}
                 </div>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        
+        <Button 
+          variant="outline" 
+          onClick={() => setShowStandards(!showStandards)}
+          className="flex items-center gap-2 border-blue-500/20 text-blue-400 hover:bg-blue-500/10"
+        >
+          <Book className="h-4 w-4" />
+          {showStandards ? 'Hide' : 'Show'} Standards
+        </Button>
       </div>
 
-      {/* Desktop view: Tabs */}
-      <div className="hidden md:block">
-        <Label className="text-lg font-medium mb-2 block">Select Calculator</Label>
-        <Tabs value={calculatorType} onValueChange={setCalculatorType} className="w-full">
-          <TabsList className="w-full overflow-x-auto flex-wrap h-auto gap-1 p-2">
-            {calculators.map((calc) => (
-              <TabsTrigger key={calc.value} value={calc.value} className="flex items-center gap-2 text-xs">
-                <calc.icon className="h-3 w-3" />
-                {calc.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
-      </div>
+      {showStandards && <StandardsReference />}
     </div>
   );
 };
