@@ -30,19 +30,19 @@ const CableSizingCalculator = () => {
   // Enhanced validation when results are available
   useEffect(() => {
     if (result.recommendedCable && !result.errors) {
-      // Convert string inputs to numbers for validation
-      const current = parseFloat(inputs.current) || 0;
-      const length = parseFloat(inputs.length) || 0;
-      const voltageDropPercent = parseFloat(inputs.voltageDrop) || 0;
-      const voltage = parseFloat(inputs.voltage) || 0;
+      // Perform comprehensive validation
+      const current = parseFloat(inputs.current);
+      const length = parseFloat(inputs.length);
+      const voltageDropPercent = parseFloat(inputs.voltageDrop);
+      const voltage = parseFloat(inputs.voltage);
       
       // Calculate actual voltage drop
       const actualVoltageDrop = result.recommendedCable.voltageDropPerAmpereMeter * current * length;
       
-      // Validate cable sizing - pass numbers instead of strings
+      // Validate cable sizing
       const cableSizingValidation = CalculatorValidator.validateCableSizing(
         current,
-        parseFloat(result.recommendedCable.size) || 0,
+        result.recommendedCable.size,
         inputs.installationType,
         actualVoltageDrop,
         length

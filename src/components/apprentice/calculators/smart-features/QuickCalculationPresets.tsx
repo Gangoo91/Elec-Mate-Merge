@@ -26,37 +26,6 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
 }) => {
   const getPresetsForCalculator = (type: string): PresetScenario[] => {
     switch (type) {
-      case 'three-phase-load':
-        return [
-          {
-            id: 'industrial-motor',
-            name: 'Industrial Motor 15kW',
-            description: '15kW three-phase induction motor',
-            category: 'industrial',
-            icon: <Factory className="h-4 w-4" />,
-            inputs: { power: '15', voltage: '400', powerFactor: '0.85', efficiency: '0.9' },
-            explanation: 'Typical 15kW industrial motor with standard efficiency'
-          },
-          {
-            id: 'hvac-system',
-            name: 'HVAC System 25kW',
-            description: 'Commercial HVAC compressor load',
-            category: 'commercial',
-            icon: <Building className="h-4 w-4" />,
-            inputs: { power: '25', voltage: '415', powerFactor: '0.82', efficiency: '0.88' },
-            explanation: 'Large commercial HVAC system with variable load'
-          },
-          {
-            id: 'pump-station',
-            name: 'Pump Station 7.5kW',
-            description: 'Water pump installation',
-            category: 'industrial',
-            icon: <Factory className="h-4 w-4" />,
-            inputs: { power: '7.5', voltage: '400', powerFactor: '0.87', efficiency: '0.91' },
-            explanation: 'Centrifugal pump with high efficiency motor'
-          }
-        ];
-        
       case 'ohms-law':
         return [
           {

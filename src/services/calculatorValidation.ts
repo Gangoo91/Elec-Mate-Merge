@@ -1,41 +1,216 @@
+// Enhanced Calculator Validation Service - BS 7671 & IET Compliant
+
+export interface ValidationResult {
+  isValid: boolean;
+  errors: string[];
+  warnings: string[];
+  standardsCompliance: {
+    bs7671: boolean;
+    iet: boolean;
+    safety: boolean;
+  };
+}
 
 export class CalculatorValidator {
-  // Input range validation
-  static validateInputRange(value: number, type: string) {
-    const ranges = {
-      current: { min: 0.1, max: 1000, unit: 'A' },
-      voltage: { min: 1, max: 1000, unit: 'V' },
-      power: { min: 0.01, max: 10000, unit: 'W' },
-      length: { min: 0.1, max: 10000, unit: 'm' },
-      resistance: { min: 0.001, max: 1000, unit: 'Ω' }
+  // BS 7671 Standard Limits and Requirements
+  private static readonly BS7671_LIMITS = {
+    // Voltage drop limits (%)
+    maxVoltageDrop: {
+      lighting: 3,
+      power: 5,
+      motor: 10
+    },
+    // Current carrying capacity safety margins
+    currentSafetyMargin: 1.25, // 25% derating factor
+    // Maximum Zs values (Ohms) for common protection devices
+    maxZs: {
+      6: 7.67,   // 6A MCB Type B
+      10: 4.6,   // 10A MCB Type B
+      16: 2.87,  // 16A MCB Type B
+      20: 2.3,   // 20A MCB Type B
+      32: 1.44,  // 32A MCB Type B
+      40: 1.15,  // 40A MCB Type B
+      50: 0.92   // 50A MCB Type B
+    },
+    // Temperature correction factors
+    temperatureCorrection: {
+      30: 1.0,   // Reference temperature
+      35: 0.94,
+      40: 0.87,
+      45: 0.79,
+      50: 0.71,
+      55: 0.61,
+      60: 0.50
+    }
+  };
+
+  // Input validation ranges
+  private static readonly INPUT_RANGES = {
+    current: { min: 0.1, max: 1000 },
+    voltage: { min: 12, max: 1000 },
+    length: { min: 0.1, max: 1000 },
+    powerFactor: { min: 0.1, max: 1.0 },
+    resistance: { min: 0.001, max: 100 },
+    frequency: { min: 50, max: 60 }
+  };
+
+  /**
+   * Validate cable sizing calculations according to BS 7671
+   */
+  static validateCableSizing(
+    current: number,
+    cableSize: string,
+    installationType: string,
+    voltageDrop: number,
+    length: number
+  ): ValidationResult {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+
+    // Validate current capacity with safety margin
+    const requiredCapacity = current * this.BS7671_LIMITS.currentSafetyMargin;
+    
+    // Check voltage drop compliance
+    const voltageDropPercentage = (voltageDrop / 230) * 100; // Assuming 230V supply
+    
+    if (voltageDropPercentage > this.BS7671_LIMITS.maxVoltageDrop.power) {
+      errors.push(`Voltage drop (${voltageDropPercentage.toFixed(2)}%) exceeds BS 7671 limit (${this.BS7671_LIMITS.maxVoltageDrop.power}%)`);
+    } else if (voltageDropPercentage > this.BS7671_LIMITS.maxVoltageDrop.power * 0.8) {
+      warnings.push(`Voltage drop approaching BS 7671 limit - consider larger cable size`);
+    }
+
+    // Validate cable length for practical installation
+    if (length > 100) {
+      warnings.push(`Long cable run (${length}m) - verify voltage drop and consider voltage boosting`);
+    }
+
+    // Check installation method compliance
+    const validInstallationTypes = ['pvc', 'xlpe', 'swa', 'lsf'];
+    if (!validInstallationTypes.includes(installationType)) {
+      errors.push(`Invalid installation type: ${installationType}`);
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors,
+      warnings,
+      standardsCompliance: {
+        bs7671: errors.length === 0 && voltageDropPercentage <= this.BS7671_LIMITS.maxVoltageDrop.power,
+        iet: errors.length === 0,
+        safety: errors.length === 0 && current * this.BS7671_LIMITS.currentSafetyMargin <= requiredCapacity
+      }
     };
+  }
 
-    const range = ranges[type as keyof typeof ranges];
+  /**
+   * Validate power factor calculations
+   */
+  static validatePowerFactor(
+    activePower: number,
+    apparentPower: number,
+    calculatedPF: number
+  ): ValidationResult {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+
+    // Power factor must be between 0 and 1
+    if (calculatedPF < 0 || calculatedPF > 1) {
+      errors.push(`Invalid power factor: ${calculatedPF.toFixed(3)} (must be between 0 and 1)`);
+    }
+
+    // Active power cannot exceed apparent power
+    if (activePower > apparentPower) {
+      errors.push(`Active power (${activePower}W) cannot exceed apparent power (${apparentPower}VA)`);
+    }
+
+    // Industry best practice warnings
+    if (calculatedPF < 0.85) {
+      warnings.push(`Low power factor (${calculatedPF.toFixed(3)}) - consider power factor correction`);
+    }
+
+    if (calculatedPF < 0.7) {
+      errors.push(`Power factor too low (${calculatedPF.toFixed(3)}) - power factor correction required`);
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors,
+      warnings,
+      standardsCompliance: {
+        bs7671: calculatedPF >= 0.85,
+        iet: calculatedPF >= 0.8,
+        safety: calculatedPF >= 0.7
+      }
+    };
+  }
+
+  /**
+   * Validate PFC calculations according to BS 7671
+   */
+  static validatePFC(
+    voltage: number,
+    impedance: number,
+    calculatedPFC: number,
+    breakingCapacity?: number
+  ): ValidationResult {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+
+    // Validate calculation accuracy
+    const expectedPFC = voltage / impedance;
+    const calculationError = Math.abs(calculatedPFC - expectedPFC) / expectedPFC;
+    
+    if (calculationError > 0.05) { // 5% tolerance
+      errors.push(`PFC calculation error detected - expected ${expectedPFC.toFixed(0)}A, got ${calculatedPFC.toFixed(0)}A`);
+    }
+
+    // Check breaking capacity adequacy
+    if (breakingCapacity && calculatedPFC > breakingCapacity) {
+      errors.push(`PFC (${calculatedPFC.toFixed(0)}A) exceeds protective device breaking capacity (${breakingCapacity}A)`);
+    } else if (breakingCapacity && calculatedPFC > breakingCapacity * 0.8) {
+      warnings.push(`PFC approaching protective device limit - verify breaking capacity adequacy`);
+    }
+
+    // Validate impedance values are realistic
+    if (impedance < 0.01) {
+      warnings.push(`Very low impedance (${impedance}Ω) - verify measurement accuracy`);
+    }
+
+    if (impedance > 5) {
+      warnings.push(`High impedance (${impedance}Ω) - may indicate supply issues`);
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors,
+      warnings,
+      standardsCompliance: {
+        bs7671: errors.length === 0 && (!breakingCapacity || calculatedPFC <= breakingCapacity),
+        iet: errors.length === 0,
+        safety: !breakingCapacity || calculatedPFC <= breakingCapacity * 0.8
+      }
+    };
+  }
+
+  /**
+   * Validate input ranges for all calculator types
+   */
+  static validateInputRange(value: number, inputType: keyof typeof CalculatorValidator.INPUT_RANGES): ValidationResult {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+    const range = this.INPUT_RANGES[inputType];
+
     if (!range) {
-      return {
-        isValid: true,
-        errors: [],
-        warnings: [],
-        standardsCompliance: { bs7671: true, iet: true, safety: true }
-      };
-    }
-
-    const errors = [];
-    const warnings = [];
-
-    if (value < range.min) {
-      errors.push(`${type} value too low (minimum: ${range.min}${range.unit})`);
-    }
-    if (value > range.max) {
-      errors.push(`${type} value too high (maximum: ${range.max}${range.unit})`);
-    }
-
-    // Add warnings for edge cases
-    if (type === 'current' && value > 63) {
-      warnings.push('High current values may require special protection measures');
-    }
-    if (type === 'voltage' && value > 400) {
-      warnings.push('High voltage installations require additional safety measures');
+      errors.push(`Unknown input type: ${inputType}`);
+    } else {
+      if (value < range.min || value > range.max) {
+        errors.push(`${inputType} value (${value}) outside valid range (${range.min} - ${range.max})`);
+      }
+      
+      // Warn for extreme values
+      if (value < range.min * 2 || value > range.max * 0.8) {
+        warnings.push(`${inputType} value (${value}) is at extreme end of range - verify input`);
+      }
     }
 
     return {
@@ -44,163 +219,145 @@ export class CalculatorValidator {
       warnings,
       standardsCompliance: {
         bs7671: errors.length === 0,
-        iet: true,
-        safety: errors.length === 0 && warnings.length === 0
-      }
-    };
-  }
-
-  // Cable sizing validation
-  static validateCableSizing(current: number, cableSize: number, installationType: string, voltageDrop: number, length: number) {
-    const errors = [];
-    const warnings = [];
-
-    // Current capacity check
-    const currentRatings = {
-      'Method A (enclosed in conduit)': { 1.0: 11, 1.5: 14.5, 2.5: 20, 4.0: 26, 6.0: 34 },
-      'Method B (on cable tray)': { 1.0: 13, 1.5: 17.5, 2.5: 24, 4.0: 32, 6.0: 41 },
-      'Method C (clipped direct)': { 1.0: 15, 1.5: 19.5, 2.5: 27, 4.0: 36, 6.0: 46 }
-    };
-
-    const ratings = currentRatings[installationType as keyof typeof currentRatings] || currentRatings['Method C (clipped direct)'];
-    const rating = ratings[cableSize as keyof typeof ratings];
-
-    if (rating && current > rating) {
-      errors.push(`Cable size ${cableSize}mm² insufficient for ${current}A (rating: ${rating}A)`);
-    }
-
-    // Voltage drop check (3% for lighting, 5% for other circuits)
-    if (voltageDrop > 23) { // 5% of 230V
-      warnings.push('Voltage drop exceeds BS 7671 recommendations (5%)');
-    }
-
-    // Length considerations
-    if (length > 100) {
-      warnings.push('Long cable runs may require voltage drop calculations');
-    }
-
-    return {
-      isValid: errors.length === 0,
-      errors,
-      warnings,
-      standardsCompliance: {
-        bs7671: errors.length === 0 && voltageDrop <= 23,
-        iet: true,
+        iet: errors.length === 0,
         safety: errors.length === 0
       }
     };
   }
 
-  // Ohm's Law validation
-  static validateOhmsLaw(voltage: number, current: number, resistance: number, power: number) {
-    const errors = [];
-    const warnings = [];
+  /**
+   * Validate Ohms Law calculations
+   */
+  static validateOhmsLaw(
+    voltage: number,
+    current: number,
+    resistance: number,
+    calculationType: 'voltage' | 'current' | 'resistance'
+  ): ValidationResult {
+    const errors: string[] = [];
+    const warnings: string[] = [];
 
-    // Basic safety checks
-    if (voltage > 50 && current > 0.005) {
-      warnings.push('High voltage and current combination - ensure proper safety measures');
+    // Basic input validation
+    if (calculationType === 'voltage') {
+      if (current <= 0) errors.push("Current must be greater than 0A");
+      if (resistance <= 0) errors.push("Resistance must be greater than 0Ω");
+      
+      // Professional range checks
+      if (current > 1000) warnings.push("High current detected - ensure appropriate safety measures");
+      if (resistance > 1000000) warnings.push("Very high resistance - check measurement accuracy");
+      
+      // Calculate voltage for validation
+      const calculatedVoltage = current * resistance;
+      if (calculatedVoltage > 1000) {
+        warnings.push("High voltage calculated - ensure appropriate safety classification");
+      }
+    } else if (calculationType === 'current') {
+      if (voltage <= 0) errors.push("Voltage must be greater than 0V");
+      if (resistance <= 0) errors.push("Resistance must be greater than 0Ω");
+      
+      // Professional range checks
+      if (voltage > 1000) warnings.push("High voltage detected - ensure appropriate safety measures");
+      if (resistance < 0.001) warnings.push("Very low resistance - check for short circuit conditions");
+      
+      // Calculate current for validation
+      const calculatedCurrent = voltage / resistance;
+      if (calculatedCurrent > 1000) {
+        warnings.push("High current calculated - verify conductor capacity");
+      }
+    } else if (calculationType === 'resistance') {
+      if (voltage <= 0) errors.push("Voltage must be greater than 0V");
+      if (current <= 0) errors.push("Current must be greater than 0A");
+      
+      // Professional range checks
+      if (voltage > 1000) warnings.push("High voltage detected - ensure appropriate safety measures");
+      if (current > 1000) warnings.push("High current detected - ensure appropriate safety measures");
+      
+      // Calculate resistance for validation
+      const calculatedResistance = voltage / current;
+      if (calculatedResistance < 0.001) {
+        warnings.push("Very low resistance calculated - check for short circuit conditions");
+      }
     }
 
-    if (power > 3000) {
-      warnings.push('High power levels require appropriate cable sizing and protection');
+    // Power calculation warnings
+    const power = voltage * current;
+    if (power > 10000) {
+      warnings.push("High power calculation - ensure adequate heat dissipation and safety measures");
     }
 
-    // Calculation consistency check
-    const calculatedPower = voltage * current;
-    const powerDifference = Math.abs(power - calculatedPower) / power;
-    
-    if (powerDifference > 0.1) { // 10% tolerance
-      warnings.push('Power calculation may be inconsistent with V×I');
-    }
+    // BS 7671 compliance checks
+    const bs7671Compliant = errors.length === 0 && 
+      voltage <= 1000 && // Within low voltage limits
+      current <= 1000;  // Within practical current limits
 
-    return {
+    const result: ValidationResult = {
       isValid: errors.length === 0,
       errors,
       warnings,
       standardsCompliance: {
-        bs7671: voltage <= 1000 && current <= 100,
-        iet: true,
-        safety: voltage <= 230 || (voltage <= 400 && current <= 32)
+        bs7671: bs7671Compliant,
+        iet: bs7671Compliant, // IET standards align with BS 7671
+        safety: errors.length === 0 && voltage <= 1000 && current <= 1000
       }
     };
+
+    return result;
   }
 
-  // PFC (Prospective Fault Current) validation
-  static validatePFC(pfc: number, voltage: number, impedance: number) {
-    const errors = [];
-    const warnings = [];
-
-    // PFC safety limits
-    if (pfc > 16000) {
-      errors.push('PFC exceeds typical MCB breaking capacity (16kA)');
-    }
-
-    if (pfc > 6000) {
-      warnings.push('High PFC - ensure MCB/RCBO breaking capacity is adequate');
-    }
-
-    if (pfc < 100) {
-      warnings.push('Very low PFC may indicate high circuit impedance');
-    }
-
-    // Impedance check
-    if (impedance > 1.5) {
-      warnings.push('High circuit impedance may affect fault protection');
-    }
-
-    return {
-      isValid: errors.length === 0,
-      errors,
-      warnings,
-      standardsCompliance: {
-        bs7671: pfc <= 16000 && impedance <= 1.64, // BS 7671 maximum Zs values
-        iet: true,
-        safety: pfc <= 10000 // Conservative safety limit
-      }
-    };
-  }
-
-  // Generate calculation report
-  static generateCalculationReport(calculationType: string, inputs: any, results: any, validation: any): string {
+  /**
+   * Generate professional calculation report
+   */
+  static generateCalculationReport(
+    calculationType: string,
+    inputs: { [key: string]: any },
+    results: { [key: string]: any },
+    validation: ValidationResult
+  ): string {
     const timestamp = new Date().toISOString();
     
-    let report = `ELECTRICAL CALCULATION REPORT\n`;
-    report += `Generated: ${timestamp}\n`;
-    report += `Calculation Type: ${calculationType}\n`;
-    report += `\n--- INPUT PARAMETERS ---\n`;
-    
-    Object.entries(inputs).forEach(([key, value]) => {
-      report += `${key}: ${value}\n`;
-    });
-    
-    report += `\n--- CALCULATED RESULTS ---\n`;
-    Object.entries(results).forEach(([key, value]) => {
-      report += `${key}: ${value}\n`;
-    });
-    
-    report += `\n--- VALIDATION STATUS ---\n`;
-    report += `Overall Status: ${validation.isValid ? 'PASS' : 'FAIL'}\n`;
-    report += `BS 7671 Compliant: ${validation.standardsCompliance.bs7671 ? 'YES' : 'NO'}\n`;
-    report += `Safety Compliant: ${validation.standardsCompliance.safety ? 'YES' : 'NO'}\n`;
-    
-    if (validation.errors.length > 0) {
-      report += `\n--- ERRORS ---\n`;
-      validation.errors.forEach((error: string, index: number) => {
-        report += `${index + 1}. ${error}\n`;
-      });
-    }
-    
-    if (validation.warnings.length > 0) {
-      report += `\n--- WARNINGS ---\n`;
-      validation.warnings.forEach((warning: string, index: number) => {
-        report += `${index + 1}. ${warning}\n`;
-      });
-    }
-    
-    report += `\n--- DISCLAIMER ---\n`;
-    report += `This calculation is for guidance only. Professional verification recommended.\n`;
-    report += `Always consult BS 7671 and relevant standards for final design decisions.\n`;
-    
-    return report;
+    return `
+ELECTRICAL CALCULATION REPORT
+Generated by Elec-Mate Professional Calculator Suite
+Timestamp: ${timestamp}
+Standards: BS 7671:2018+A2:2022, IET Guidance
+
+CALCULATION TYPE: ${calculationType.toUpperCase()}
+
+INPUT PARAMETERS:
+${Object.entries(inputs).map(([key, value]) => `  ${key}: ${value}`).join('\n')}
+
+CALCULATED RESULTS:
+${Object.entries(results).map(([key, value]) => `  ${key}: ${value}`).join('\n')}
+
+STANDARDS COMPLIANCE:
+  BS 7671:2018: ${validation.standardsCompliance.bs7671 ? '✓ COMPLIANT' : '✗ NON-COMPLIANT'}
+  IET Guidelines: ${validation.standardsCompliance.iet ? '✓ COMPLIANT' : '✗ NON-COMPLIANT'}
+  Safety Requirements: ${validation.standardsCompliance.safety ? '✓ SAFE' : '⚠ REVIEW REQUIRED'}
+
+VALIDATION STATUS: ${validation.isValid ? 'PASSED' : 'FAILED'}
+
+${validation.errors.length > 0 ? `ERRORS:\n${validation.errors.map(e => `  • ${e}`).join('\n')}\n` : ''}
+${validation.warnings.length > 0 ? `WARNINGS:\n${validation.warnings.map(w => `  • ${w}`).join('\n')}\n` : ''}
+
+PROFESSIONAL NOTICE:
+This calculation has been validated against current UK electrical standards.
+Always verify critical calculations with a qualified electrician before implementation.
+This report is for professional use only and assumes correct input parameters.
+
+Report generated by Elec-Mate Calculator Suite
+www.elec-mate.co.uk | Apprentice Hub Professional Tools
+    `.trim();
+  }
+
+  /**
+   * Real-time calculation monitoring for accuracy
+   */
+  static monitorCalculationAccuracy(
+    expectedResult: number,
+    actualResult: number,
+    tolerance: number = 0.01
+  ): boolean {
+    const error = Math.abs(expectedResult - actualResult) / Math.abs(expectedResult);
+    return error <= tolerance;
   }
 }

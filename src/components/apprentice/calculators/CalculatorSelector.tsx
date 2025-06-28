@@ -1,3 +1,4 @@
+
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -14,46 +15,9 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
   const [showStandards, setShowStandards] = useState(false);
 
   const calculatorOptions = [
-    // Fundamental Calculations
     { value: "ohms-law", label: "Ohm's Law", category: "Fundamental" },
-    { value: "power-factor", label: "Power Factor", category: "Fundamental" },
-    
-    // Power Systems (NEW - Phase 2)
-    { value: "three-phase-load", label: "Three Phase Load", category: "Power Systems" },
-    { value: "motor-starting", label: "Motor Starting Current", category: "Power Systems" },
-    { value: "transformer-sizing", label: "Transformer Sizing", category: "Power Systems" },
-    { value: "capacitor-sizing", label: "Capacitor Sizing", category: "Power Systems" },
-    { value: "harmonics-analysis", label: "Harmonics Analysis", category: "Power Systems" },
-    { value: "load-flow", label: "Load Flow Analysis", category: "Power Systems" },
-    
-    // Protection & Safety (NEW - Phase 3)
-    { value: "fault-current", label: "Fault Current Analysis", category: "Protection & Safety" },
-    { value: "arc-flash", label: "Arc Flash Analysis", category: "Protection & Safety" },
-    { value: "protection-coordination", label: "Protection Coordination", category: "Protection & Safety" },
-    { value: "grounding-systems", label: "Grounding Systems", category: "Protection & Safety" },
-    { value: "surge-protection", label: "Surge Protection", category: "Protection & Safety" },
-    { value: "safety-calculations", label: "Safety Calculations", category: "Protection & Safety" },
-    
-    // Installation Design (NEW - Phase 4)
-    { value: "cable-tray-sizing", label: "Cable Tray Sizing", category: "Installation Design" },
-    { value: "conduit-routing", label: "Conduit Routing", category: "Installation Design" },
-    { value: "panel-layout", label: "Panel Layout", category: "Installation Design" },
-    { value: "load-scheduling", label: "Load Scheduling", category: "Installation Design" },
-    { value: "emergency-lighting", label: "Emergency Lighting", category: "Installation Design" },
-    { value: "fire-alarm-design", label: "Fire Alarm Design", category: "Installation Design" },
-    
-    // Modern Systems (NEW - Phase 5)
-    { value: "ev-charging", label: "EV Charging", category: "Modern Systems" },
-    { value: "renewable-integration", label: "Renewable Integration", category: "Modern Systems" },
-    { value: "battery-storage", label: "Battery Storage", category: "Modern Systems" },
-    { value: "smart-grid", label: "Smart Grid", category: "Modern Systems" },
-    { value: "energy-management", label: "Energy Management", category: "Modern Systems" },
-    { value: "dc-systems", label: "DC Systems", category: "Modern Systems" },
-    { value: "power-quality", label: "Power Quality", category: "Modern Systems" },
-    { value: "efficiency-analysis", label: "Efficiency Analysis", category: "Modern Systems" },
-    
-    // Existing calculators
     { value: "voltage-drop", label: "Voltage Drop", category: "Design" },
+    { value: "power-factor", label: "Power Factor", category: "Power Quality" },
     { value: "cable-size", label: "Cable Sizing", category: "Design" },
     { value: "load", label: "Load Assessment", category: "Design" },
     { value: "lumen", label: "Lighting (Lumens)", category: "Lighting" },

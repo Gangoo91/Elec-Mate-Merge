@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
@@ -27,8 +28,7 @@ import PFCCalculator from "@/components/apprentice/calculators/PFCCalculator";
 import RCDDiscriminationCalculator from "@/components/apprentice/calculators/RCDDiscriminationCalculator";
 import CableDeratingCalculator from "@/components/apprentice/calculators/CableDeratingCalculator";
 import LoadCalculator from "@/components/electrician-tools/LoadCalculator";
-import { Calculator, RotateCw, Zap, AlertTriangle } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Calculator, RotateCw } from "lucide-react";
 
 const OnJobCalculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
@@ -51,9 +51,6 @@ const OnJobCalculations = () => {
         return <VoltageDropCalculator />;
       case "power-factor":
         return <PowerFactorCalculator />;
-      case "three-phase-load":
-        const { ThreePhaseLoadCalculator } = require("@/components/apprentice/calculators/three-phase/ThreePhaseLoadCalculator");
-        return <ThreePhaseLoadCalculator />;
       case "cable-size":
         return <CableSizingCalculator />;
       case "lumen":
@@ -100,37 +97,6 @@ const OnJobCalculations = () => {
           icon={RotateCw} 
           description="Determine correct phase sequence for 3-phase motor connections and installations." 
         />;
-      // New calculators - show coming soon for now
-      case "motor-starting":
-        return <ComingSoonCalculator 
-          title="Motor Starting Current" 
-          icon={Zap} 
-          description="Calculate starting current, inrush effects, and protection requirements for motor installations." 
-        />;
-      case "transformer-sizing":
-        return <ComingSoonCalculator 
-          title="Transformer Sizing" 
-          icon={Zap} 
-          description="Size transformers for load requirements, efficiency, and regulatory compliance." 
-        />;
-      case "fault-current":
-        return <ComingSoonCalculator 
-          title="Fault Current Analysis" 
-          icon={AlertTriangle} 
-          description="Calculate prospective fault currents and short-circuit analysis for protection design." 
-        />;
-      case "arc-flash":
-        return <ComingSoonCalculator 
-          title="Arc Flash Analysis" 
-          icon={AlertTriangle} 
-          description="Assess arc flash hazards and determine PPE requirements for electrical safety." 
-        />;
-      case "ev-charging":
-        return <ComingSoonCalculator 
-          title="EV Charging Calculator" 
-          icon={Zap} 
-          description="Design and size EV charging installations with load management and grid integration." 
-        />;
       default:
         return <OhmsLawCalculator />;
     }
@@ -142,10 +108,6 @@ const OnJobCalculations = () => {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">{pageTitle}</h1>
           <p className="text-muted-foreground">{pageDescription}</p>
-          <div className="mt-2 flex items-center gap-2">
-            <Badge variant="secondary" className="text-xs">50 Calculators Available</Badge>
-            <Badge variant="outline" className="text-xs">BS 7671 Compliant</Badge>
-          </div>
         </div>
         <Link to={backUrl}>
           <Button variant="outline" className="flex items-center gap-2">
