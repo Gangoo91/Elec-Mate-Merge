@@ -146,3 +146,177 @@ export const validateCalculation = (
     confidenceLevel
   };
 };
+
+// Create the CalculatorValidator class that other files expect
+export class CalculatorValidator {
+  static validateInputRange(value: number, type: string): ValidationResult {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+    
+    switch (type) {
+      case 'current':
+        if (value < 0.01) errors.push('Current must be at least 0.01A');
+        if (value > 10000) warnings.push('Current value is unusually high (>10kA)');
+        break;
+      case 'voltage':
+        if (value < 1) errors.push('Voltage must be at least 1V');
+        if (value > 50000) warnings.push('Voltage value is unusually high (>50kV)');
+        break;
+      case 'power':
+        if (value < 0.1) errors.push('Power must be at least 0.1W');
+        if (value > 1000000) warnings.push('Power value is unusually high (>1MW)');
+        break;
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors,
+      warnings,
+      recommendations: [],
+      standardsCompliance: {
+        bs7671: errors.length === 0,
+        iet: errors.length === 0,
+        safety: errors.length === 0,
+        commercial: errors.length === 0 && warnings.length === 0
+      },
+      professionalNotes: [],
+      confidenceLevel: errors.length === 0 ? (warnings.length === 0 ? 'high' : 'medium') : 'low'
+    };
+  }
+
+  static validatePowerFactor(activePower: number, apparentPower: number, powerFactor: number): ValidationResult {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+    const recommendations: string[] = [];
+
+    if (powerFactor < 0 || powerFactor > 1) {
+      errors.push('Power factor must be between 0 and 1');
+    }
+
+    if (activePower > apparentPower) {
+      errors.push('Active power cannot exceed apparent power');
+    }
+
+    if (powerFactor < 0.85) {
+      warnings.push('Power factor below 0.85 may incur utility penalties');
+      recommendations.push('Consider power factor correction equipment');
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors,
+      warnings,
+      recommendations,
+      standardsCompliance: {
+        bs7671: errors.length === 0 && powerFactor >= 0.85,
+        iet: errors.length === 0,
+        safety: errors.length === 0,
+        commercial: errors.length === 0 && powerFactor >= 0.85
+      },
+      professionalNotes: powerFactor < 0.85 ? ['Low power factor increases cable sizing requirements'] : [],
+      confidenceLevel: errors.length === 0 ? 'high' : 'low'
+    };
+  }
+
+  static validateCableSizing(
+    current: number, 
+    cableSize: number, 
+    installationType: string, 
+    voltageDropPercent: number, 
+    length: number
+  ): ValidationResult {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+    const recommendations: string[] = [];
+
+    // Basic validation
+    if (current <= 0) errors.push('Current must be greater than 0');
+    if (cableSize <= 0) errors.push('Cable size must be greater than 0');
+    if (length <= 0) errors.push('Cable length must be greater than 0');
+
+    // Current density check (typical max 6 A/mm²)
+    const currentDensity = current / cableSize;
+    if (currentDensity > 6) {
+      warnings.push(`Current density ${currentDensity.toFixed(1)} A/mm² exceeds recommended maximum (6 A/mm²)`);
+    }
+
+    // Voltage drop check
+    if (voltageDropPercent > 5) {
+      warnings.push(`Voltage drop ${voltageDropPercent.toFixed(1)}% exceeds BS 7671 limit (5%)`);
+      recommendations.push('Consider larger cable size to reduce voltage drop');
+    }
+
+    return {
+      isValid: errors.length === 0,
+      errors,
+      warnings,
+      recommendations,
+      standardsCompliance: {
+        bs7671: errors.length === 0 && voltageDropPercent <= 5 && currentDensity <= 6,
+        iet: errors.length === 0,
+        safety: errors.length === 0 && currentDensity <= 6,
+        commercial: errors.length === 0 && warnings.length === 0
+      },
+      professionalNotes: currentDensity > 4 ? ['High current density may cause cable heating'] : [],
+      confidenceLevel: errors.length === 0 ? (warnings.length === 0 ? 'high' : 'medium') : 'low'
+    };
+  }
+
+  static generateCalculationReport(
+    calculationType: string,
+    inputs: any,
+    results: any,
+    validation: ValidationResult
+  ): string {
+    const timestamp = new Date().toLocaleString();
+    
+    let report = `ELECTRICAL CALCULATION REPORT\n`;
+    report += `================================\n\n`;
+    report += `Calculation Type: ${calculationType}\n`;
+    report += `Generated: ${timestamp}\n`;
+    report += `Validation Status: ${validation.isValid ? 'VALID' : 'REQUIRES ATTENTION'}\n\n`;
+    
+    report += `INPUT PARAMETERS:\n`;
+    report += `-----------------\n`;
+    Object.entries(inputs).forEach(([key, value]) => {
+      report += `${key}: ${value}\n`;
+    });
+    
+    report += `\nCALCULATED RESULTS:\n`;
+    report += `------------------\n`;
+    Object.entries(results).forEach(([key, value]) => {
+      report += `${key}: ${value}\n`;
+    });
+    
+    if (validation.errors.length > 0) {
+      report += `\nERRORS:\n`;
+      report += `-------\n`;
+      validation.errors.forEach(error => report += `• ${error}\n`);
+    }
+    
+    if (validation.warnings.length > 0) {
+      report += `\nWARNINGS:\n`;
+      report += `---------\n`;
+      validation.warnings.forEach(warning => report += `• ${warning}\n`);
+    }
+    
+    if (validation.recommendations.length > 0) {
+      report += `\nRECOMMENDATIONS:\n`;
+      report += `---------------\n`;
+      validation.recommendations.forEach(rec => report += `• ${rec}\n`);
+    }
+    
+    report += `\nSTANDARDS COMPLIANCE:\n`;
+    report += `--------------------\n`;
+    report += `BS 7671: ${validation.standardsCompliance.bs7671 ? 'COMPLIANT' : 'NON-COMPLIANT'}\n`;
+    report += `IET: ${validation.standardsCompliance.iet ? 'COMPLIANT' : 'NON-COMPLIANT'}\n`;
+    report += `Safety: ${validation.standardsCompliance.safety ? 'COMPLIANT' : 'NON-COMPLIANT'}\n`;
+    
+    report += `\nPROFESSIONAL NOTICE:\n`;
+    report += `-------------------\n`;
+    report += `This calculation has been generated by Elec-Mate and validated against UK electrical standards.\n`;
+    report += `Always verify critical calculations with a qualified electrician before implementation.\n`;
+    
+    return report;
+  }
+}
