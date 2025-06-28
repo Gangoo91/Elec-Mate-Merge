@@ -1,4 +1,3 @@
-
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -38,6 +37,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "r1r2", label: "R1+R2 Calculation", category: "Testing & Inspection" },
     { value: "ring-circuit", label: "Ring Circuit", category: "Testing & Inspection" },
     { value: "earth-fault-loop", label: "Earth Fault Loop", category: "Testing & Inspection" },
+    { value: "phase-rotation", label: "Phase Rotation", category: "Testing & Inspection" },
     
     // Protection & Safety
     { value: "adiabatic", label: "Adiabatic Equation", category: "Protection & Safety" },
@@ -63,9 +63,6 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     // Utilities & Cost Analysis
     { value: "energy-cost", label: "Energy Cost Calculator", category: "Utilities & Cost Analysis" },
     { value: "unit-converter", label: "Unit Converter", category: "Utilities & Cost Analysis" },
-    
-    // Coming Soon
-    { value: "phase-rotation", label: "Phase Rotation", category: "Coming Soon" },
   ];
 
   // Group calculators by category
@@ -86,8 +83,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     "Lighting & Power Systems",
     "Renewable Energy",
     "Tools & Components",
-    "Utilities & Cost Analysis",
-    "Coming Soon"
+    "Utilities & Cost Analysis"
   ];
 
   return (

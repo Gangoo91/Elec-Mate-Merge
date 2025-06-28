@@ -22,7 +22,6 @@ import SolarPVCalculator from "@/components/apprentice/calculators/SolarPVCalcul
 import BatteryBackupCalculator from "@/components/apprentice/calculators/BatteryBackupCalculator";
 import BS7671ZsLookupCalculator from "@/components/apprentice/calculators/BS7671ZsLookupCalculator";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
-import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoonCalculator";
 import R1R2Calculator from "@/components/apprentice/calculators/R1R2Calculator";
 import PFCCalculator from "@/components/apprentice/calculators/PFCCalculator";
 import RCDDiscriminationCalculator from "@/components/apprentice/calculators/RCDDiscriminationCalculator";
@@ -41,7 +40,8 @@ import LEDDriverCalculator from "@/components/apprentice/calculators/LEDDriverCa
 // New Fundamental Calculators
 import ACPowerCalculator from "@/components/apprentice/calculators/ACPowerCalculator";
 import BasicACCircuitCalculator from "@/components/apprentice/calculators/BasicACCircuitCalculator";
-import { RotateCw } from "lucide-react";
+// Phase Rotation Calculator
+import PhaseRotationCalculator from "@/components/apprentice/calculators/PhaseRotationCalculator";
 
 const OnJobCalculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
@@ -109,11 +109,7 @@ const OnJobCalculations = () => {
       case "load":
         return <LoadCalculator />;
       case "phase-rotation":
-        return <ComingSoonCalculator 
-          title="Phase Rotation" 
-          icon={RotateCw} 
-          description="Determine correct phase sequence for 3-phase motor connections and installations." 
-        />;
+        return <PhaseRotationCalculator />;
       // Phase 1 New Calculators
       case "energy-cost":
         return <EnergyCostCalculator />;
