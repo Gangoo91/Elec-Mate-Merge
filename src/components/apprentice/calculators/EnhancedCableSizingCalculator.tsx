@@ -32,8 +32,9 @@ const EnhancedCableSizingCalculator = () => {
     if (result.recommendedCable && !result.errors) {
       const current = parseFloat(inputs.current);
       const length = parseFloat(inputs.length);
-      const ambientTemp = parseFloat(inputs.ambientTemp || '30');
-      const cableGrouping = parseInt(inputs.cableGrouping || '1');
+      // Safely access potentially undefined properties with defaults
+      const ambientTemp = parseFloat((inputs as any).ambientTemp || '30');
+      const cableGrouping = parseInt((inputs as any).cableGrouping || '1');
       
       // Perform comprehensive safety validation
       const safetyValidation = SafetyValidator.validateCableSizing(
@@ -53,8 +54,8 @@ const EnhancedCableSizingCalculator = () => {
         cableGrouping,
         installationType: inputs.installationType,
         cableType: inputs.cableType,
-        loadType: inputs.loadType || 'resistive',
-        diversityFactor: parseFloat(inputs.diversityFactor || '1.0')
+        loadType: (inputs as any).loadType || 'resistive',
+        diversityFactor: parseFloat((inputs as any).diversityFactor || '1.0')
       });
       
       setCalculationResults({
