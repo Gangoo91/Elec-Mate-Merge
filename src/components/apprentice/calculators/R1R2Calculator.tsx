@@ -1,108 +1,70 @@
 
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";  
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calculator, RotateCcw, Info, AlertTriangle } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Zap, Info, Calculator, RotateCcw } from "lucide-react";
+import { useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const R1R2Calculator = () => {
-  const [cableLength, setCableLength] = useState("");
-  const [lineConductorCSA, setLineConductorCSA] = useState("");
-  const [cpcConductorCSA, setCpcConductorCSA] = useState("");
-  const [conductorMaterial, setConductorMaterial] = useState("");
-  const [temperature, setTemperature] = useState("70");
+  const [cableLength, setCableLength] = useState<string>("");
+  const [liveConductorCsa, setLiveConductorCsa] = useState<string>("2.5");
+  const [cpcCsa, setCpcCsa] = useState<string>("1.5");
+  const [temperature, setTemperature] = useState<string>("70");
+  const [cableType, setCableType] = useState<string>("copper");
   const [result, setResult] = useState<{
     r1: number;
     r2: number;
     r1r2: number;
-    continuityLimit: number;
-    testAcceptable: boolean;
+    maxZs: number;
+    isCompliant: boolean;
   } | null>(null);
 
-  // Resistance values at 20°C (mΩ/m)
-  const copperResistance20C: { [key: string]: number } = {
-    "1.0": 18.1,
-    "1.5": 12.1,
-    "2.5": 7.41,
-    "4.0": 4.61,
-    "6.0": 3.08,
-    "10.0": 1.83,
-    "16.0": 1.15,
-    "25.0": 0.727,
-    "35.0": 0.524,
-    "50.0": 0.387,
-    "70.0": 0.268,
-    "95.0": 0.193,
-    "120.0": 0.153,
-    "150.0": 0.124,
-    "185.0": 0.0991,
-    "240.0": 0.0754,
-    "300.0": 0.0601
-  };
-
-  const aluminiumResistance20C: { [key: string]: number } = {
-    "16.0": 1.91,
-    "25.0": 1.20,
-    "35.0": 0.868,
-    "50.0": 0.641,
-    "70.0": 0.443,
-    "95.0": 0.320,
-    "120.0": 0.253,
-    "150.0": 0.206,
-    "185.0": 0.164,
-    "240.0": 0.125,
-    "300.0": 0.100
-  };
-
   const calculateR1R2 = () => {
-    if (!cableLength || !lineConductorCSA || !cpcConductorCSA || !conductorMaterial) {
-      return;
-    }
-
     const length = parseFloat(cableLength);
-    const resistanceData = conductorMaterial === "copper" ? copperResistance20C : aluminiumResistance20C;
-    
-    const r20Line = resistanceData[lineConductorCSA];
-    const r20CPC = resistanceData[cpcConductorCSA];
-    
-    if (!r20Line || !r20CPC) {
-      return;
+    const liveCsa = parseFloat(liveConductorCsa);
+    const cpcCsaVal = parseFloat(cpcCsa);
+
+    if (length > 0 && liveCsa > 0 && cpcCsaVal > 0) {
+      // Resistivity values at 20°C (mΩ·m)
+      const resistivity = cableType === "copper" ? 17.241 : 28.264; // Copper or Aluminium
+      
+      // Temperature correction factor
+      const tempCorrectionFactor = temperature === "70" ? 1.2 : 1.28;
+      
+      // Calculate resistances (mΩ/m)
+      const r1PerMeter = (resistivity / liveCsa) * tempCorrectionFactor;
+      const r2PerMeter = (resistivity / cpcCsaVal) * tempCorrectionFactor;
+      
+      // Total resistances for the cable run
+      const r1 = (r1PerMeter * length) / 1000; // Convert to Ω
+      const r2 = (r2PerMeter * length) / 1000; // Convert to Ω
+      const r1r2 = r1 + r2;
+      
+      // Maximum Zs for B32 MCB (common circuit breaker)
+      const maxZs = 1.44; // Ω for B32 at 70°C
+      const isCompliant = r1r2 <= maxZs;
+
+      setResult({
+        r1,
+        r2,
+        r1r2,
+        maxZs,
+        isCompliant
+      });
     }
-
-    // Temperature correction factor
-    const tempCorrection = conductorMaterial === "copper" 
-      ? (234.5 + parseInt(temperature)) / (234.5 + 20)
-      : (228 + parseInt(temperature)) / (228 + 20);
-
-    // Calculate R1 and R2 at operating temperature
-    const r1 = (r20Line * length * tempCorrection) / 1000; // Convert to Ω
-    const r2 = (r20CPC * length * tempCorrection) / 1000; // Convert to Ω
-    const r1r2 = r1 + r2;
-
-    // Continuity test limit (typically R1+R2 × 1.67 for temperature correction during testing)
-    const continuityLimit = r1r2 * 1.67;
-    
-    // Test is acceptable if measured value is within ±20% of calculated value
-    const testAcceptable = true; // This would be compared with actual test readings
-
-    setResult({
-      r1,
-      r2,
-      r1r2,
-      continuityLimit,
-      testAcceptable
-    });
   };
 
-  const resetCalculator = () => {
+  const reset = () => {
     setCableLength("");
-    setLineConductorCSA("");
-    setCpcConductorCSA("");
-    setConductorMaterial("");
+    setLiveConductorCsa("2.5");
+    setCpcCsa("1.5");
     setTemperature("70");
+    setCableType("copper");
     setResult(null);
   };
 
@@ -110,238 +72,164 @@ const R1R2Calculator = () => {
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Calculator className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>R1+R2 Calculator</CardTitle>
+          <Zap className="h-5 w-5 text-elec-yellow" />
+          <CardTitle>R1+R2 Calculation</CardTitle>
         </div>
-        <p className="text-sm text-muted-foreground">
-          Calculate R1+R2 values for continuity testing according to BS 7671
-        </p>
+        <CardDescription>
+          Calculate R1+R2 values for circuit protective conductor continuity testing.
+        </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
-        <Tabs defaultValue="calculator" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="calculator">Calculator</TabsTrigger>
-            <TabsTrigger value="guidance">Guidance</TabsTrigger>
-          </TabsList>
+      <CardContent>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Input Section */}
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="cable-length">Cable Length (m)</Label>
+              <Input
+                id="cable-length"
+                type="number"
+                value={cableLength}
+                onChange={(e) => setCableLength(e.target.value)}
+                placeholder="e.g., 25"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
 
-          <TabsContent value="calculator" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Input Section */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold">Circuit Parameters</h3>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="cable-length">Cable Length (m)</Label>
-                  <Input
-                    id="cable-length"
-                    type="number"
-                    value={cableLength}
-                    onChange={(e) => setCableLength(e.target.value)}
-                    placeholder="Enter cable length"
-                    className="bg-elec-dark border-elec-yellow/20"
-                  />
-                </div>
+            <div>
+              <Label htmlFor="live-csa">Live Conductor CSA (mm²)</Label>
+              <Select value={liveConductorCsa} onValueChange={setLiveConductorCsa}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <SelectItem value="1.0">1.0</SelectItem>
+                  <SelectItem value="1.5">1.5</SelectItem>
+                  <SelectItem value="2.5">2.5</SelectItem>
+                  <SelectItem value="4.0">4.0</SelectItem>
+                  <SelectItem value="6.0">6.0</SelectItem>
+                  <SelectItem value="10.0">10.0</SelectItem>
+                  <SelectItem value="16.0">16.0</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="conductor-material">Conductor Material</Label>
-                  <Select value={conductorMaterial} onValueChange={setConductorMaterial}>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                      <SelectValue placeholder="Select material" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="copper">Copper</SelectItem>
-                      <SelectItem value="aluminium">Aluminium</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+            <div>
+              <Label htmlFor="cpc-csa">CPC CSA (mm²)</Label>
+              <Select value={cpcCsa} onValueChange={setCpcCsa}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <SelectItem value="1.0">1.0</SelectItem>
+                  <SelectItem value="1.5">1.5</SelectItem>
+                  <SelectItem value="2.5">2.5</SelectItem>
+                  <SelectItem value="4.0">4.0</SelectItem>
+                  <SelectItem value="6.0">6.0</SelectItem>
+                  <SelectItem value="10.0">10.0</SelectItem>
+                  <SelectItem value="16.0">16.0</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="line-csa">Line Conductor CSA (mm²)</Label>
-                  <Select value={lineConductorCSA} onValueChange={setLineConductorCSA}>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                      <SelectValue placeholder="Select CSA" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1.0">1.0</SelectItem>
-                      <SelectItem value="1.5">1.5</SelectItem>
-                      <SelectItem value="2.5">2.5</SelectItem>
-                      <SelectItem value="4.0">4.0</SelectItem>
-                      <SelectItem value="6.0">6.0</SelectItem>
-                      <SelectItem value="10.0">10.0</SelectItem>
-                      <SelectItem value="16.0">16.0</SelectItem>
-                      <SelectItem value="25.0">25.0</SelectItem>
-                      <SelectItem value="35.0">35.0</SelectItem>
-                      <SelectItem value="50.0">50.0</SelectItem>
-                      <SelectItem value="70.0">70.0</SelectItem>
-                      <SelectItem value="95.0">95.0</SelectItem>
-                      <SelectItem value="120.0">120.0</SelectItem>
-                      <SelectItem value="150.0">150.0</SelectItem>
-                      <SelectItem value="185.0">185.0</SelectItem>
-                      <SelectItem value="240.0">240.0</SelectItem>
-                      <SelectItem value="300.0">300.0</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+            <div>
+              <Label htmlFor="cable-type">Cable Material</Label>
+              <Select value={cableType} onValueChange={setCableType}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <SelectItem value="copper">Copper</SelectItem>
+                  <SelectItem value="aluminium">Aluminium</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="cpc-csa">CPC Conductor CSA (mm²)</Label>
-                  <Select value={cpcConductorCSA} onValueChange={setCpcConductorCSA}>
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                      <SelectValue placeholder="Select CSA" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1.0">1.0</SelectItem>
-                      <SelectItem value="1.5">1.5</SelectItem>
-                      <SelectItem value="2.5">2.5</SelectItem>
-                      <SelectItem value="4.0">4.0</SelectItem>
-                      <SelectItem value="6.0">6.0</SelectItem>
-                      <SelectItem value="10.0">10.0</SelectItem>
-                      <SelectItem value="16.0">16.0</SelectItem>
-                      <SelectItem value="25.0">25.0</SelectItem>
-                      <SelectItem value="35.0">35.0</SelectItem>
-                      <SelectItem value="50.0">50.0</SelectItem>
-                      <SelectItem value="70.0">70.0</SelectItem>
-                      <SelectItem value="95.0">95.0</SelectItem>
-                      <SelectItem value="120.0">120.0</SelectItem>
-                      <SelectItem value="150.0">150.0</SelectItem>
-                      <SelectItem value="185.0">185.0</SelectItem>
-                      <SelectItem value="240.0">240.0</SelectItem>
-                      <SelectItem value="300.0">300.0</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+            <div>
+              <Label htmlFor="temperature">Operating Temperature (°C)</Label>
+              <Select value={temperature} onValueChange={setTemperature}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <SelectItem value="70">70°C (PVC)</SelectItem>
+                  <SelectItem value="90">90°C (XLPE)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="temperature">Operating Temperature (°C)</Label>
-                  <Input
-                    id="temperature"
-                    type="number"
-                    value={temperature}
-                    onChange={(e) => setTemperature(e.target.value)}
-                    className="bg-elec-dark border-elec-yellow/20"
-                  />
-                </div>
+            <div className="flex gap-2">
+              <Button onClick={calculateR1R2} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+                <Calculator className="h-4 w-4 mr-2" />
+                Calculate
+              </Button>
+              <Button variant="outline" onClick={reset}>
+                <RotateCcw className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
 
-                <div className="flex gap-2">
-                  <Button onClick={calculateR1R2} className="flex-1">
-                    Calculate R1+R2
-                  </Button>
-                  <Button onClick={resetCalculator} variant="outline">
-                    <RotateCcw className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-
-              {/* Result Section */}
-              <div className="space-y-4">
-                <h3 className="text-lg font-semibold">Results</h3>
-                
-                {result ? (
-                  <div className="space-y-4">
-                    <Card className="border-green-500/30 bg-green-500/5">
-                      <CardContent className="pt-4">
-                        <div className="space-y-3">
-                          <div className="flex justify-between">
-                            <span className="text-green-200">R1 (Line resistance):</span>
-                            <span className="font-mono text-green-300">{result.r1.toFixed(4)} Ω</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-green-200">R2 (CPC resistance):</span>
-                            <span className="font-mono text-green-300">{result.r2.toFixed(4)} Ω</span>
-                          </div>
-                          <div className="flex justify-between border-t border-green-500/20 pt-2">
-                            <span className="text-green-200 font-semibold">R1+R2 Total:</span>
-                            <span className="font-mono text-green-300 font-semibold">{result.r1r2.toFixed(4)} Ω</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-yellow-200">Test Limit (×1.67):</span>
-                            <span className="font-mono text-yellow-300">{result.continuityLimit.toFixed(4)} Ω</span>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-
-                    <Card className="border-blue-500/30 bg-blue-500/5">
-                      <CardContent className="pt-4">
-                        <div className="flex items-start gap-2">
-                          <Info className="h-4 w-4 text-blue-400 mt-0.5" />
-                          <div className="text-sm text-blue-200">
-                            <p className="font-medium mb-1">Testing Notes:</p>
-                            <ul className="space-y-1 text-blue-200/80">
-                              <li>• Test at ambient temperature (typically 20°C)</li>
-                              <li>• Measured value should be ≤ {result.continuityLimit.toFixed(4)} Ω</li>
-                              <li>• Calculated value assumes {temperature}°C operating temperature</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+          {/* Result Section */}
+          <div className="space-y-4">
+            <div className="rounded-md bg-elec-dark p-6 min-h-[300px]">
+              {result ? (
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">R1+R2 Results</h3>
+                    <Badge 
+                      variant={result.isCompliant ? "default" : "destructive"} 
+                      className="mb-4"
+                    >
+                      {result.isCompliant ? "Compliant" : "Non-Compliant"}
+                    </Badge>
                   </div>
-                ) : (
-                  <Card className="border-elec-yellow/20 bg-elec-yellow/5">
-                    <CardContent className="pt-4">
-                      <div className="text-center text-elec-yellow/80">
-                        <Calculator className="h-8 w-8 mx-auto mb-2" />
-                        <p>Enter circuit parameters to calculate R1+R2 values</p>
+                  
+                  <Separator />
+                  
+                  <div className="space-y-3 text-sm">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <span className="text-muted-foreground">R1 (Live):</span>
+                        <div className="font-mono text-elec-yellow">{result.r1.toFixed(4)} Ω</div>
                       </div>
-                    </CardContent>
-                  </Card>
-                )}
-              </div>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="guidance">
-            <div className="space-y-4">
-              <Card className="border-blue-500/30 bg-blue-500/5">
-                <CardHeader>
-                  <CardTitle className="text-blue-300">What is R1+R2?</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3 text-blue-200">
-                  <p>
-                    R1+R2 is the resistance of the line conductor (R1) plus the resistance of the 
-                    circuit protective conductor (R2, typically the earth wire).
-                  </p>
-                  <div className="bg-blue-500/10 border border-blue-500/20 rounded p-3">
-                    <h4 className="font-medium mb-2">Why is R1+R2 Important?</h4>
-                    <ul className="space-y-1 text-sm">
-                      <li>• Ensures adequate earth fault loop impedance</li>
-                      <li>• Verifies continuity of protective conductors</li>
-                      <li>• Required for initial verification and periodic inspection</li>
-                      <li>• Critical for calculating Zs values</li>
-                    </ul>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-amber-500/30 bg-amber-500/5">
-                <CardHeader>
-                  <CardTitle className="text-amber-300">Testing Procedure</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3 text-amber-200">
-                  <div className="space-y-3">
-                    <div className="bg-amber-500/10 border border-amber-500/20 rounded p-3">
-                      <h4 className="font-medium mb-2">Step 1: Preparation</h4>
-                      <ul className="space-y-1 text-sm">
-                        <li>• Isolate the circuit and prove dead</li>
-                        <li>• Remove or bridge any RCDs</li>
-                        <li>• Link line and CPC at the distribution board</li>
-                      </ul>
+                      <div>
+                        <span className="text-muted-foreground">R2 (CPC):</span>
+                        <div className="font-mono text-elec-yellow">{result.r2.toFixed(4)} Ω</div>
+                      </div>
                     </div>
-                    <div className="bg-amber-500/10 border border-amber-500/20 rounded p-3">
-                      <h4 className="font-medium mb-2">Step 2: Testing</h4>
-                      <ul className="space-y-1 text-sm">
-                        <li>• Test between line and CPC at the furthest point</li>
-                        <li>• Record the reading in ohms</li>
-                        <li>• Test should be performed at low voltage (4-24V DC)</li>
-                      </ul>
+                    
+                    <div>
+                      <span className="text-muted-foreground">R1+R2 Total:</span>
+                      <div className="font-mono text-elec-yellow text-lg">{result.r1r2.toFixed(4)} Ω</div>
+                    </div>
+                    
+                    <div>
+                      <span className="text-muted-foreground">Max Zs (B32):</span>
+                      <div className="font-mono text-elec-yellow">{result.maxZs} Ω</div>
+                    </div>
+                    
+                    <Separator />
+                    
+                    <div className="text-xs text-muted-foreground">
+                      <div>R = ρl/A (at operating temperature)</div>
+                      <div>CPC = Circuit Protective Conductor</div>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center h-full text-muted-foreground">
+                  Enter cable details to calculate R1+R2 values
+                </div>
+              )}
             </div>
-          </TabsContent>
-        </Tabs>
+
+            <Alert className="border-blue-500/20 bg-blue-500/10">
+              <Info className="h-4 w-4 text-blue-500" />
+              <AlertDescription className="text-blue-200">
+                Values shown are at operating temperature. For testing, measure at ambient temperature.
+              </AlertDescription>
+            </Alert>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

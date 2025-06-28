@@ -1,18 +1,20 @@
 
 import { Card, CardContent } from "@/components/ui/card";
-import { Wrench } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
 interface ComingSoonCalculatorProps {
-  calculatorName: string;
+  title: string;
+  description: string;
+  icon: LucideIcon;
 }
 
-const ComingSoonCalculator = ({ calculatorName }: ComingSoonCalculatorProps) => {
+const ComingSoonCalculator = ({ title, icon: Icon, description }: ComingSoonCalculatorProps) => {
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray min-h-[400px] flex items-center justify-center">
       <CardContent className="text-center p-6 w-full">
-        <Wrench className="h-12 w-12 text-elec-yellow mx-auto mb-4" />
-        <h3 className="text-xl font-medium mb-2">{calculatorName.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} Calculator</h3>
-        <p className="text-muted-foreground mb-4">Coming soon! This calculator is currently being developed.</p>
+        <Icon className="h-12 w-12 text-elec-yellow mx-auto mb-4" />
+        <h3 className="text-xl font-medium mb-2">{title} Calculator</h3>
+        <p className="text-muted-foreground mb-4">Coming soon! {description}</p>
       </CardContent>
     </Card>
   );
