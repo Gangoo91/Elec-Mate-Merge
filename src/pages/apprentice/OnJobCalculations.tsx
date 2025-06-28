@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
@@ -42,6 +41,15 @@ import LEDDriverCalculator from "@/components/apprentice/calculators/LEDDriverCa
 import ACPowerCalculator from "@/components/apprentice/calculators/ACPowerCalculator";
 import BasicACCircuitCalculator from "@/components/apprentice/calculators/BasicACCircuitCalculator";
 import { RotateCw } from "lucide-react";
+import PhaseRotationCalculator from "@/components/apprentice/calculators/PhaseRotationCalculator";
+import FaultCurrentCalculator from "@/components/apprentice/calculators/FaultCurrentCalculator";
+import DiscriminationCalculator from "@/components/apprentice/calculators/DiscriminationCalculator";
+import CableTemperatureDeratingCalculator from "@/components/apprentice/calculators/CableTemperatureDeratingCalculator";
+import HarmonicsCalculator from "@/components/apprentice/calculators/HarmonicsCalculator";
+import PowerQualityCalculator from "@/components/apprentice/calculators/PowerQualityCalculator";
+import EmergencyLightingCalculator from "@/components/apprentice/calculators/EmergencyLightingCalculator";
+import FireAlarmCalculator from "@/components/apprentice/calculators/FireAlarmCalculator";
+import EarthingSystemCalculator from "@/components/apprentice/calculators/EarthingSystemCalculator";
 
 const OnJobCalculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
@@ -109,29 +117,24 @@ const OnJobCalculations = () => {
       case "load":
         return <LoadCalculator />;
       case "phase-rotation":
-        return <ComingSoonCalculator 
-          title="Phase Rotation" 
-          icon={RotateCw} 
-          description="Determine correct phase sequence for 3-phase motor connections and installations." 
-        />;
-      // Phase 1 New Calculators
-      case "energy-cost":
-        return <EnergyCostCalculator />;
-      case "unit-converter":
-        return <UnitConverterCalculator />;
-      case "wire-gauge":
-        return <WireGaugeCalculator />;
+        return <PhaseRotationCalculator />;
       // Phase 2 New Calculators
-      case "three-phase-power":
-        return <ThreePhasePowerCalculator />;
-      case "motor-starting-current":
-        return <MotorStartingCurrentCalculator />;
-      case "cable-current-capacity":
-        return <CableCurrentCapacityCalculator />;
-      case "transformer-calculator":
-        return <TransformerCalculator />;
-      case "led-driver":
-        return <LEDDriverCalculator />;
+      case "fault-current":
+        return <FaultCurrentCalculator />;
+      case "discrimination":
+        return <DiscriminationCalculator />;
+      case "cable-temperature-derating":
+        return <CableTemperatureDeratingCalculator />;
+      case "harmonics":
+        return <HarmonicsCalculator />;
+      case "power-quality":
+        return <PowerQualityCalculator />;
+      case "emergency-lighting":
+        return <EmergencyLightingCalculator />;
+      case "fire-alarm":
+        return <FireAlarmCalculator />;
+      case "earthing-system":
+        return <EarthingSystemCalculator />;
       default:
         return <OhmsLawCalculator />;
     }

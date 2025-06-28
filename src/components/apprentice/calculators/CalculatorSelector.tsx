@@ -1,4 +1,3 @@
-
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
@@ -28,6 +27,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "load", label: "Load Assessment", category: "Design & Installation" },
     { value: "cable-current-capacity", label: "Cable Current Capacity", category: "Design & Installation" },
     { value: "cable-derating", label: "Cable Derating", category: "Design & Installation" },
+    { value: "cable-temperature-derating", label: "Cable Temperature Derating", category: "Design & Installation" },
     { value: "conduit-fill", label: "Conduit Fill", category: "Design & Installation" },
     { value: "diversity-factor", label: "Diversity Factor", category: "Design & Installation" },
     { value: "maximum-demand", label: "Maximum Demand", category: "Design & Installation" },
@@ -42,15 +42,26 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     // Protection & Safety
     { value: "adiabatic", label: "Adiabatic Equation", category: "Protection & Safety" },
     { value: "pfc", label: "Prospective Fault Current", category: "Protection & Safety" },
+    { value: "fault-current", label: "Fault Current Calculator", category: "Protection & Safety" },
+    { value: "discrimination", label: "Protection Discrimination", category: "Protection & Safety" },
     { value: "rcd-trip-time", label: "RCD Trip Time", category: "Protection & Safety" },
     { value: "rcd-discrimination", label: "RCD Discrimination", category: "Protection & Safety" },
+    { value: "earthing-system", label: "Earthing System", category: "Protection & Safety" },
     
     // Lighting & Power Systems
     { value: "lumen", label: "Lighting (Lumens)", category: "Lighting & Power Systems" },
     { value: "led-driver", label: "LED Driver Calculator", category: "Lighting & Power Systems" },
+    { value: "emergency-lighting", label: "Emergency Lighting", category: "Lighting & Power Systems" },
     { value: "motor-starting-current", label: "Motor Starting Current", category: "Lighting & Power Systems" },
     { value: "transformer-calculator", label: "Transformer Calculator", category: "Lighting & Power Systems" },
     { value: "battery-backup", label: "Battery Backup", category: "Lighting & Power Systems" },
+    
+    // Power Quality & Harmonics
+    { value: "harmonics", label: "Harmonics Calculator", category: "Power Quality & Harmonics" },
+    { value: "power-quality", label: "Power Quality Assessment", category: "Power Quality & Harmonics" },
+    
+    // Fire & Safety Systems
+    { value: "fire-alarm", label: "Fire Alarm Calculator", category: "Fire & Safety Systems" },
     
     // Renewable Energy
     { value: "solar-pv", label: "Solar PV", category: "Renewable Energy" },
@@ -59,13 +70,11 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "resistor-colour-code", label: "Resistor Colour Code", category: "Tools & Components" },
     { value: "wire-gauge", label: "Wire Gauge (AWG/SWG)", category: "Tools & Components" },
     { value: "instrumentation", label: "Instrumentation", category: "Tools & Components" },
+    { value: "phase-rotation", label: "Phase Rotation", category: "Tools & Components" },
     
     // Utilities & Cost Analysis
     { value: "energy-cost", label: "Energy Cost Calculator", category: "Utilities & Cost Analysis" },
     { value: "unit-converter", label: "Unit Converter", category: "Utilities & Cost Analysis" },
-    
-    // Coming Soon
-    { value: "phase-rotation", label: "Phase Rotation", category: "Coming Soon" },
   ];
 
   // Group calculators by category
@@ -83,11 +92,12 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     "Design & Installation", 
     "Testing & Inspection",
     "Protection & Safety",
+    "Power Quality & Harmonics",
     "Lighting & Power Systems",
+    "Fire & Safety Systems",
     "Renewable Energy",
     "Tools & Components",
-    "Utilities & Cost Analysis",
-    "Coming Soon"
+    "Utilities & Cost Analysis"
   ];
 
   return (
