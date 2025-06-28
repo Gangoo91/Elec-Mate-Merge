@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
 const ApprenticeHub = () => {
-  const apprenticeResources = [
+  // Main 2x2 grid - 4 most essential tools
+  const mainResources = [
     {
       id: 1,
       title: "Electrical Calculators",
@@ -20,6 +21,22 @@ const ApprenticeHub = () => {
       link: "/apprentice/advanced-help"
     },
     {
+      id: 3,
+      title: "Mental Health Hub",
+      icon: Heart,
+      link: "/apprentice/mental-health"
+    },
+    {
+      id: 6,
+      title: "On the Job Tools",
+      icon: Settings,
+      link: "/apprentice/on-job-tools"
+    }
+  ];
+
+  // Additional tools section
+  const additionalResources = [
+    {
       id: 9,
       title: "BS7671 Inspection & Testing",
       icon: CheckSquare,
@@ -32,22 +49,10 @@ const ApprenticeHub = () => {
       link: "/apprentice/ojt"
     },
     {
-      id: 3,
-      title: "Mental Health Hub",
-      icon: Heart,
-      link: "/apprentice/mental-health"
-    },
-    {
       id: 5,
       title: "Guidance Area",
       icon: WrenchIcon,
       link: "/apprentice/toolbox"
-    },
-    {
-      id: 6,
-      title: "On the Job Tools",
-      icon: Settings,
-      link: "/apprentice/on-job-tools"
     },
     {
       id: 7,
@@ -69,18 +74,35 @@ const ApprenticeHub = () => {
         </Link>
       </div>
 
-      {/* Main Content */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {apprenticeResources.map((resource) => (
+      {/* Main 2x2 Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {mainResources.map((resource) => (
           <Link to={resource.link} key={resource.id} className="focus:outline-none">
             <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-colors cursor-pointer">
-              <CardHeader className="flex flex-col items-center justify-center text-center">
-                <resource.icon className="h-8 w-8 mb-2 text-elec-yellow" />
+              <CardHeader className="flex flex-col items-center justify-center text-center py-8">
+                <resource.icon className="h-12 w-12 mb-4 text-elec-yellow" />
                 <CardTitle className="text-xl">{resource.title}</CardTitle>
               </CardHeader>
             </Card>
           </Link>
         ))}
+      </div>
+
+      {/* More Tools Section */}
+      <div className="space-y-4">
+        <h2 className="text-2xl font-semibold text-center">More Tools</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {additionalResources.map((resource) => (
+            <Link to={resource.link} key={resource.id} className="focus:outline-none">
+              <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-colors cursor-pointer">
+                <CardHeader className="flex flex-col items-center justify-center text-center py-6">
+                  <resource.icon className="h-8 w-8 mb-2 text-elec-yellow" />
+                  <CardTitle className="text-lg">{resource.title}</CardTitle>
+                </CardHeader>
+              </Card>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
