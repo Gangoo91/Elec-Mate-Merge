@@ -5,7 +5,7 @@ import { useCableSizing } from "./cable-sizing/useCableSizing";
 import CableSizingForm from "./cable-sizing/CableSizingInputs";
 import CableSizingResult from "./cable-sizing/CableSizingResult";
 import CableSizingInfo from "./cable-sizing/CableSizingInfo";
-import EnhancedValidationIndicator from "./EnhancedValidationIndicator";
+import ValidationIndicator from "./ValidationIndicator";
 import CalculationReport from "./CalculationReport";
 import { useToast } from "@/components/ui/use-toast";
 import { useEffect, useState } from "react";
@@ -178,8 +178,8 @@ const CableSizingCalculator = () => {
         </CardContent>
       </Card>
 
-      {/* Enhanced Validation Results */}
-      <EnhancedValidationIndicator validation={validation} calculationType="Cable Sizing" />
+      {/* Validation Results */}
+      <ValidationIndicator validation={validation} calculationType="Cable Sizing" />
 
       {/* Calculation Report */}
       {validation && Object.keys(calculationResults).length > 0 && (

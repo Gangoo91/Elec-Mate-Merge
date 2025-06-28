@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sigma } from "lucide-react";
 import { useCableSizing } from "./cable-sizing/useCableSizing";
@@ -6,16 +7,13 @@ import CableSizingResult from "./cable-sizing/CableSizingResult";
 import CableSizingInfo from "./cable-sizing/CableSizingInfo";
 import EnhancedValidationIndicator from "./EnhancedValidationIndicator";
 import CalculationReport from "./CalculationReport";
-import RealWorldValidationPanel from "./RealWorldValidationPanel";
 import { useToast } from "@/components/ui/use-toast";
 import { useEffect, useState } from "react";
 import { SafetyValidator, SafetyValidationResult } from "@/services/safetyValidation";
-import { RealWorldValidator, RealWorldValidationResult } from "@/services/realWorldValidation";
 
 const EnhancedCableSizingCalculator = () => {
   const { toast } = useToast();
   const [validation, setValidation] = useState<SafetyValidationResult | null>(null);
-  const [realWorldValidation, setRealWorldValidation] = useState<RealWorldValidationResult | null>(null);
   const [calculationInputs, setCalculationInputs] = useState<any>({});
   const [calculationResults, setCalculationResults] = useState<any>({});
   
@@ -29,7 +27,7 @@ const EnhancedCableSizingCalculator = () => {
     resetCalculator,
   } = useCableSizing();
 
-  // Enhanced validation with safety factors and real-world conditions
+  // Enhanced validation with safety factors
   useEffect(() => {
     if (result.recommendedCable && !result.errors) {
       const current = parseFloat(inputs.current);
@@ -47,19 +45,7 @@ const EnhancedCableSizingCalculator = () => {
         length
       );
 
-      // Perform real-world validation
-      const groupingFactor = cableGrouping > 1 ? 0.8 : 1.0;
-      const realWorldVal = RealWorldValidator.validateRealWorldConditions(
-        'cable-sizing',
-        ambientTemp,
-        groupingFactor,
-        inputs.loadType || 'resistive',
-        inputs.installationType
-      );
-
       setValidation(safetyValidation);
-      setRealWorldValidation(realWorldVal);
-      
       setCalculationInputs({
         current,
         length,
@@ -77,34 +63,26 @@ const EnhancedCableSizingCalculator = () => {
         deratedCurrentRating: result.recommendedCable.currentRating[inputs.installationType] * 
                              safetyValidation.safetyFactors.temperatureDerating * 
                              safetyValidation.safetyFactors.groupingFactor,
-        safetyMargin: safetyValidation.safetyFactors.safetyMargin,
-        realWorldRisk: realWorldVal.overallRisk,
-        conditionsCount: realWorldVal.conditions.length
+        safetyMargin: safetyValidation.safetyFactors.safetyMargin
       });
 
-      // Enhanced toast notifications with real-world considerations
-      if (safetyValidation.criticalAlerts.length > 0 || realWorldVal.overallRisk === 'critical') {
+      // Enhanced toast notifications
+      if (safetyValidation.criticalAlerts.length > 0) {
         toast({
-          title: "🚨 CRITICAL SAFETY ALERT",
-          description: "Critical safety issues and/or real-world conditions detected. Professional consultation required.",
+          title: "⚠️ CRITICAL SAFETY ALERT",
+          description: "Serious safety issues detected. Do not proceed with installation.",
           variant: "destructive",
         });
-      } else if (safetyValidation.warnings.length > 0 || realWorldVal.overallRisk === 'high') {
+      } else if (safetyValidation.warnings.length > 0) {
         toast({
-          title: "⚠️ Enhanced Calculation with Warnings",
-          description: `Safety warnings and ${realWorldVal.conditions.length} real-world conditions identified`,
-          variant: "default",
-        });
-      } else if (realWorldVal.overallRisk === 'medium') {
-        toast({
-          title: "✅ Cable Size Calculated with Real-World Factors",
-          description: `Recommended ${result.recommendedCable.size} with ${realWorldVal.conditions.length} conditions considered`,
+          title: "Cable Size Calculated with Warnings",
+          description: "Please review safety warnings below",
           variant: "default",
         });
       } else {
         toast({
-          title: "✅ Optimal Cable Size Calculated",
-          description: `Recommended ${result.recommendedCable.size} cable - optimal for standard conditions`,
+          title: "Cable Size Calculated Safely",
+          description: `Recommended ${result.recommendedCable.size} cable with safety margin ${safetyValidation.safetyFactors.safetyMargin.toFixed(2)}`,
           variant: "default",
         });
       }
@@ -127,7 +105,6 @@ const EnhancedCableSizingCalculator = () => {
           cdm: false
         }
       });
-      setRealWorldValidation(null);
     }
   }, [result, inputs, toast]);
 
@@ -146,7 +123,6 @@ const EnhancedCableSizingCalculator = () => {
   const handleReset = () => {
     resetCalculator();
     setValidation(null);
-    setRealWorldValidation(null);
     setCalculationInputs({});
     setCalculationResults({});
   };
@@ -194,18 +170,10 @@ const EnhancedCableSizingCalculator = () => {
       {/* Enhanced Safety Validation Results */}
       <EnhancedValidationIndicator validation={validation} calculationType="Cable Sizing" />
 
-      {/* Real-World Validation Panel - Phase 2 Enhancement */}
-      {realWorldValidation && (
-        <RealWorldValidationPanel 
-          validation={realWorldValidation} 
-          calculationType="cable sizing" 
-        />
-      )}
-
       {/* Detailed Calculation Report */}
       {validation && Object.keys(calculationResults).length > 0 && (
         <CalculationReport
-          calculationType="Enhanced Cable Sizing with Real-World Validation"
+          calculationType="Enhanced Cable Sizing"
           inputs={calculationInputs}
           results={calculationResults}
           validation={validation}

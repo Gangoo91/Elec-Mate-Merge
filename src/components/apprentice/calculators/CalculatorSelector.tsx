@@ -1,8 +1,7 @@
-
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Book } from "lucide-react";
+import { Book, Shield } from "lucide-react";
 import { useState } from "react";
 import StandardsReference from "./StandardsReference";
 
@@ -92,13 +91,15 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
 
   return (
     <div className="space-y-4">
-      {/* Safety Enhancement Notice - Removed shield icon */}
+      {/* Safety Enhancement Notice */}
       <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
         <div className="flex items-center gap-2 mb-2">
+          <Shield className="h-4 w-4 text-green-400" />
           <span className="text-green-300 font-medium text-sm">Safety Enhancement Active</span>
         </div>
         <p className="text-green-200 text-xs">
           Calculators now include real-world safety factors, environmental conditions, and comprehensive BS 7671 compliance validation.
+          Look for the <Shield className="h-3 w-3 inline text-green-400" /> symbol for enhanced calculators.
         </p>
       </div>
 
@@ -122,6 +123,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
                     {calcs.map((calc) => (
                       <SelectItem key={calc.value} value={calc.value} className="pl-4">
                         <div className="flex items-center gap-2">
+                          {calc.enhanced && <Shield className="h-3 w-3 text-green-400" />}
                           {calc.label}
                         </div>
                       </SelectItem>
