@@ -93,63 +93,102 @@ export const useCableSizing = () => {
     
     const currentAmp = parseFloat(inputs.current);
     const cableLength = parseFloat(inputs.length);
-    const maxVoltageDrop = (parseFloat(inputs.voltageDrop) / 100) * parseFloat(inputs.voltage);
+    const maxVoltageDropPercentage = parseFloat(inputs.voltageDrop);
+    const supplyVoltage = parseFloat(inputs.voltage);
+    
+    // Calculate maximum allowable voltage drop in volts
+    const maxVoltageDrop = (maxVoltageDropPercentage / 100) * supplyVoltage;
+    
+    console.log(`Calculating for: ${currentAmp}A, ${cableLength}m, max ${maxVoltageDropPercentage}% (${maxVoltageDrop}V)`);
     
     // Filter by cable type first
     const cablesByType = cableSizes.filter(cable => 
       cable.cableType === inputs.cableType
     );
     
-    // Then filter by current carrying capacity
-    const suitableCables = cablesByType.filter(cable => {
-      // For SWA, LSF, or other specialized cables, use their specific rating if available
-      if (inputs.cableType === 'swa' && cable.currentRating.swa) {
-        return cable.currentRating.swa >= currentAmp;
-      } else if (inputs.cableType === 'lsf' && cable.currentRating.lsf) {
-        return cable.currentRating.lsf >= currentAmp;
-      } else if (inputs.cableType === 'armored' && cable.currentRating.armored) {
-        return cable.currentRating.armored >= currentAmp;
-      } else {
-        // Default to the standard insulation type
-        return cable.currentRating[inputs.installationType] >= currentAmp;
-      }
-    });
-    
-    if (suitableCables.length === 0) {
+    if (cablesByType.length === 0) {
       setResult({
         recommendedCable: null,
         alternativeCables: [],
         errors: {
-          current: `Current exceeds maximum rating for available ${inputs.cableType} cables. Maximum current for ${inputs.installationType.toUpperCase()} insulation is ${
-            Math.max(...cablesByType.map(c => c.currentRating[inputs.installationType]))
-          }A`
+          cableType: `No cables found for type: ${inputs.cableType}`
         }
       });
       return;
     }
     
-    // Then check voltage drop for each suitable cable
+    // Get the appropriate current rating for each cable
+    const suitableCables = cablesByType.filter(cable => {
+      let currentRating = 0;
+      
+      // Choose the correct current rating based on cable type and insulation
+      if (inputs.cableType === 'swa' && cable.currentRating.swa) {
+        currentRating = cable.currentRating.swa;
+      } else if (inputs.cableType === 'lsf' && cable.currentRating.lsf) {
+        currentRating = cable.currentRating.lsf;
+      } else if (inputs.cableType === 'armored' && cable.currentRating.armored) {
+        currentRating = cable.currentRating.armored;
+      } else {
+        currentRating = cable.currentRating[inputs.installationType];
+      }
+      
+      return currentRating >= currentAmp;
+    });
+    
+    if (suitableCables.length === 0) {
+      const maxCurrentAvailable = Math.max(...cablesByType.map(c => {
+        if (inputs.cableType === 'swa' && c.currentRating.swa) return c.currentRating.swa;
+        if (inputs.cableType === 'lsf' && c.currentRating.lsf) return c.currentRating.lsf;
+        if (inputs.cableType === 'armored' && c.currentRating.armored) return c.currentRating.armored;
+        return c.currentRating[inputs.installationType];
+      }));
+      
+      setResult({
+        recommendedCable: null,
+        alternativeCables: [],
+        errors: {
+          current: `Current (${currentAmp}A) exceeds maximum rating for ${inputs.cableType} cables (${maxCurrentAvailable}A max)`
+        }
+      });
+      return;
+    }
+    
+    // Calculate voltage drop for each suitable cable
+    // Formula: Voltage Drop = (mV/A/m × Current × Length) / 1000
     const cablesWithVoltageDrop = suitableCables.map(cable => {
-      const vDrop = cable.voltageDropPerAmpereMeter * currentAmp * cableLength;
+      const voltageDropMillivolts = cable.voltageDropPerAmpereMeter * currentAmp * cableLength;
+      const voltageDropVolts = voltageDropMillivolts; // Data is already in V/A/m, not mV/A/m
+      
+      console.log(`${cable.size}: ${voltageDropVolts.toFixed(3)}V drop (${((voltageDropVolts/supplyVoltage)*100).toFixed(2)}%)`);
+      
       return {
         ...cable,
-        calculatedVoltageDrop: vDrop,
-        meetsVoltageDrop: vDrop <= maxVoltageDrop
+        calculatedVoltageDrop: voltageDropVolts,
+        meetsVoltageDrop: voltageDropVolts <= maxVoltageDrop
       };
+    });
+    
+    // Sort by cable size (ascending)
+    cablesWithVoltageDrop.sort((a, b) => {
+      const sizeA = parseFloat(a.size.replace(/[^\d.]/g, ''));
+      const sizeB = parseFloat(b.size.replace(/[^\d.]/g, ''));
+      return sizeA - sizeB;
     });
     
     // Filter cables that meet voltage drop criteria
     const compliantCables = cablesWithVoltageDrop.filter(cable => cable.meetsVoltageDrop);
     
     if (compliantCables.length === 0) {
-      // If no cables meet criteria, recommend parallel cables or higher voltage
+      // Show the best options even if none are compliant
+      const sortedByVoltageDrop = cablesWithVoltageDrop.sort((a, b) => 
+        a.calculatedVoltageDrop! - b.calculatedVoltageDrop!
+      );
+      
       setResult({
         recommendedCable: null,
-        alternativeCables: cablesWithVoltageDrop.sort((a, b) => 
-          a.calculatedVoltageDrop! - b.calculatedVoltageDrop!
-        ),
+        alternativeCables: sortedByVoltageDrop.slice(0, 3),
         errors: {
-          general: "No single cable meets both current capacity and voltage drop requirements. Consider parallel cables or a higher voltage system."
+          general: `No cable meets both requirements. Minimum voltage drop: ${sortedByVoltageDrop[0].calculatedVoltageDrop?.toFixed(2)}V (${((sortedByVoltageDrop[0].calculatedVoltageDrop!/supplyVoltage)*100).toFixed(1)}%)`
         }
       });
       return;
@@ -158,8 +197,8 @@ export const useCableSizing = () => {
     // Recommend the smallest compliant cable
     const recommended = compliantCables[0];
     
-    // Suggest alternatives (next size up)
-    const alternatives = compliantCables.slice(1, 3);
+    // Suggest alternatives (next sizes up that are also compliant)
+    const alternatives = compliantCables.slice(1, 4);
     
     setResult({
       recommendedCable: recommended,

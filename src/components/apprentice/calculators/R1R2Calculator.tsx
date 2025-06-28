@@ -16,18 +16,23 @@ const R1R2Calculator = () => {
   const [r1Value, setR1Value] = useState<number | null>(null);
   const [r2Value, setR2Value] = useState<number | null>(null);
 
-  // Simplified resistance values (mΩ/m at 20°C) for common cable sizes
+  // Accurate resistance values (mΩ/m at 20°C) based on BS 7671 Appendix 4
   const cableResistance = {
-    "1.5": { r1: 12.1, r2: 12.1 }, // 1.5mm² with same size CPC
-    "2.5": { r1: 7.41, r2: 7.41 }, // 2.5mm² with same size CPC
-    "4.0": { r1: 4.61, r2: 4.61 }, // 4.0mm² with same size CPC
-    "6.0": { r1: 3.08, r2: 3.08 }, // 6.0mm² with same size CPC
-    "10.0": { r1: 1.83, r2: 1.83 }, // 10.0mm² with same size CPC
-    "16.0": { r1: 1.15, r2: 1.91 }, // 16.0mm² with 10mm² CPC
+    "1.0": { r1: 18.1, r2: 18.1 }, // 1.0mm² T&E (same size CPC)
+    "1.5": { r1: 12.1, r2: 12.1 }, // 1.5mm² T&E (same size CPC)
+    "2.5": { r1: 7.41, r2: 7.41 }, // 2.5mm² T&E (same size CPC)
+    "4.0": { r1: 4.61, r2: 4.61 }, // 4.0mm² T&E (same size CPC)
+    "6.0": { r1: 3.08, r2: 3.08 }, // 6.0mm² T&E (same size CPC)
+    "10.0": { r1: 1.83, r2: 1.83 }, // 10.0mm² T&E (same size CPC)
+    "16.0": { r1: 1.15, r2: 1.83 }, // 16.0mm² with 10mm² CPC
     "25.0": { r1: 0.727, r2: 1.20 }, // 25.0mm² with 16mm² CPC
+    "35.0": { r1: 0.524, r2: 0.727 }, // 35.0mm² with 25mm² CPC
+    "50.0": { r1: 0.387, r2: 0.524 }, // 50.0mm² with 35mm² CPC
+    "70.0": { r1: 0.268, r2: 0.387 }, // 70.0mm² with 50mm² CPC
+    "95.0": { r1: 0.193, r2: 0.268 }, // 95.0mm² with 70mm² CPC
   };
 
-  // Temperature coefficient for copper (per °C)
+  // Temperature coefficient for copper (per °C) - BS standard
   const tempCoefficient = 0.004;
 
   const calculateR1R2 = () => {
@@ -39,13 +44,17 @@ const R1R2Calculator = () => {
     const resistance = cableResistance[cableSize as keyof typeof cableResistance];
     if (!resistance) return;
 
-    // Temperature correction factor
+    // Temperature correction factor: R_temp = R_20 × [1 + α(T - 20)]
     const tempFactor = 1 + (tempCoefficient * (temp - 20));
     
     // Calculate R1 and R2 at operating temperature
-    const r1 = (resistance.r1 * length * tempFactor) / 1000; // Convert to Ω
-    const r2 = (resistance.r2 * length * tempFactor) / 1000; // Convert to Ω
+    // Formula: R = ρ × L where ρ is resistance per meter and L is length
+    const r1 = (resistance.r1 * length * tempFactor) / 1000; // Convert mΩ to Ω
+    const r2 = (resistance.r2 * length * tempFactor) / 1000; // Convert mΩ to Ω
     const r1r2 = r1 + r2;
+
+    console.log(`R1+R2 Calculation: ${cableSize}mm², ${length}m, ${temp}°C`);
+    console.log(`R1: ${r1.toFixed(4)}Ω, R2: ${r2.toFixed(4)}Ω, Total: ${r1r2.toFixed(4)}Ω`);
 
     setR1Value(r1);
     setR2Value(r2);
@@ -95,6 +104,7 @@ const R1R2Calculator = () => {
                   <SelectValue placeholder="Select cable size" />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <SelectItem value="1.0">1.0mm²</SelectItem>
                   <SelectItem value="1.5">1.5mm²</SelectItem>
                   <SelectItem value="2.5">2.5mm²</SelectItem>
                   <SelectItem value="4.0">4.0mm²</SelectItem>
@@ -102,6 +112,10 @@ const R1R2Calculator = () => {
                   <SelectItem value="10.0">10.0mm²</SelectItem>
                   <SelectItem value="16.0">16.0mm²</SelectItem>
                   <SelectItem value="25.0">25.0mm²</SelectItem>
+                  <SelectItem value="35.0">35.0mm²</SelectItem>
+                  <SelectItem value="50.0">50.0mm²</SelectItem>
+                  <SelectItem value="70.0">70.0mm²</SelectItem>
+                  <SelectItem value="95.0">95.0mm²</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -169,7 +183,13 @@ const R1R2Calculator = () => {
 
                 <div className="bg-blue-500/10 border border-blue-500/30 rounded p-3">
                   <p className="text-xs text-blue-300">
-                    <strong>Note:</strong> This calculation assumes copper conductors and includes temperature correction for {temperature}°C operation.
+                    <strong>BS 7671 Values:</strong> Calculated using Appendix 4 resistance values with temperature correction factor of 0.004/°C for copper.
+                  </p>
+                </div>
+
+                <div className="bg-amber-500/10 border border-amber-500/30 rounded p-3">
+                  <p className="text-xs text-amber-300">
+                    <strong>Note:</strong> Values assume standard CPC sizing per BS 7671. Larger cables may have reduced CPC sizes as shown.
                   </p>
                 </div>
               </div>

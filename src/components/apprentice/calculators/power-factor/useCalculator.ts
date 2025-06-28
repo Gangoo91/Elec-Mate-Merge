@@ -33,7 +33,7 @@ export const useCalculator = () => {
       else if (isNaN(parseFloat(voltage)) || parseFloat(voltage) <= 0) 
         newErrors.voltage = "Please enter a valid positive number";
       
-      if (!activePower) newErrors.activePower = "Active power is required";
+      if (!activePower) newErrors.activePower = "Active power is required for this calculation";
       else if (isNaN(parseFloat(activePower)) || parseFloat(activePower) <= 0) 
         newErrors.activePower = "Please enter a valid positive number";
     }
@@ -48,19 +48,28 @@ export const useCalculator = () => {
     let pf: number;
     
     if (calculationMethod === "power") {
+      // Power Factor = Active Power / Apparent Power
       const active = parseFloat(activePower);
       const apparent = parseFloat(apparentPower);
       pf = active / apparent;
     } else {
+      // Power Factor = Active Power / (Voltage × Current)
       const active = parseFloat(activePower);
       const volts = parseFloat(voltage);
       const amps = parseFloat(current);
       const apparent = volts * amps;
+      
+      // Validate that active power doesn't exceed apparent power
+      if (active > apparent) {
+        setErrors({ activePower: "Active power cannot exceed apparent power (V × I)" });
+        return;
+      }
+      
       pf = active / apparent;
     }
     
-    // Power factor cannot be greater than 1 by definition
-    pf = Math.min(pf, 1);
+    // Power factor is always between 0 and 1
+    pf = Math.min(Math.max(pf, 0), 1);
     setPowerFactor(pf.toFixed(3));
   };
 

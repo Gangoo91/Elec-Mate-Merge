@@ -15,7 +15,7 @@ const PFCCalculator = () => {
   const [pfcAtLoad, setPfcAtLoad] = useState<number | null>(null);
   const [breakingCapacity, setBreakingCapacity] = useState("");
 
-  // Common MCB breaking capacities
+  // Common MCB breaking capacities (Amperes)
   const breakingCapacities = {
     "6000": "6kA (Type 1)",
     "10000": "10kA (Type 2)", 
@@ -30,15 +30,23 @@ const PFCCalculator = () => {
 
     if (isNaN(v) || isNaN(zeValue)) return;
 
-    // PFC at origin (source)
+    // Prospective Fault Current formula: PFC = U / Z
+    // Where U is the nominal voltage and Z is the impedance
+
+    // PFC at origin (supply point) - only considers Ze
     const pfcOrigin = v / zeValue;
     setPfcAtOrigin(pfcOrigin);
+    
+    console.log(`PFC at origin: ${v}V / ${zeValue}Ω = ${pfcOrigin.toFixed(0)}A`);
 
     // PFC at end of circuit (if R1+R2 provided)
     if (!isNaN(r1r2Value)) {
+      // Total circuit impedance = Ze + R1 + R2
       const totalImpedance = zeValue + r1r2Value;
       const pfcLoad = v / totalImpedance;
       setPfcAtLoad(pfcLoad);
+      
+      console.log(`PFC at load: ${v}V / ${totalImpedance}Ω = ${pfcLoad.toFixed(0)}A`);
     } else {
       setPfcAtLoad(null);
     }
@@ -102,7 +110,7 @@ const PFCCalculator = () => {
               <Input
                 id="r1r2"
                 type="number"
-                step="0.01"
+                step="0.001"
                 value={r1r2}
                 onChange={(e) => setR1R2(e.target.value)}
                 placeholder="e.g., 0.25"
@@ -173,13 +181,15 @@ const PFCCalculator = () => {
                 <div className="bg-blue-500/10 border border-blue-500/30 rounded p-3">
                   <p className="text-xs text-blue-300">
                     <strong>Formula:</strong> PFC = U / Z<br />
-                    Where U is voltage and Z is total impedance (Ze or Ze + R1+R2)
+                    At origin: PFC = U / Ze<br />
+                    At load: PFC = U / (Ze + R1 + R2)
                   </p>
                 </div>
 
                 <div className="bg-amber-500/10 border border-amber-500/30 rounded p-3">
                   <p className="text-xs text-amber-300">
-                    <strong>Note:</strong> Ensure protective device breaking capacity exceeds calculated PFC.
+                    <strong>Note:</strong> Ensure protective device breaking capacity exceeds calculated PFC. 
+                    Use the higher of the two PFC values when selecting protection.
                   </p>
                 </div>
               </div>
