@@ -5,110 +5,100 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calculator, RotateCcw, Car, Zap, Home } from "lucide-react";
+import { Calculator, Car, Zap, Clock, PoundSterling } from "lucide-react";
 
 const EVChargingCalculator = () => {
-  const [chargerType, setChargerType] = useState("");
-  const [numberOfChargers, setNumberOfChargers] = useState("");
-  const [batteryCapacity, setBatteryCapacity] = useState("");
-  const [dailyUsage, setDailyUsage] = useState("");
-  const [supplyType, setSupplyType] = useState("");
-  const [results, setResults] = useState<any>(null);
+  const [inputs, setInputs] = useState({
+    batteryCapacity: "",
+    chargerType: "7kw-ac",
+    currentCharge: "20",
+    targetCharge: "80",
+    electricityRate: "0.30",
+    diversityFactor: "1.0"
+  });
+
+  const [results, setResults] = useState<{
+    energyRequired: number;
+    chargingTime: number;
+    cost: number;
+    peakDemand: number;
+    circuitLoad: number;
+    recommendedCable: string;
+  } | null>(null);
 
   const calculateEVCharging = () => {
-    if (!chargerType || !numberOfChargers || !batteryCapacity || !dailyUsage || !supplyType) {
-      return;
-    }
+    const capacity = parseFloat(inputs.batteryCapacity);
+    const currentCharge = parseFloat(inputs.currentCharge);
+    const targetCharge = parseFloat(inputs.targetCharge);
+    const electricityRate = parseFloat(inputs.electricityRate);
+    const diversityFactor = parseFloat(inputs.diversityFactor);
 
-    const numChargers = parseInt(numberOfChargers);
-    const batteryKwh = parseFloat(batteryCapacity);
-    const dailyKm = parseFloat(dailyUsage);
+    if (!capacity || currentCharge >= targetCharge) return;
+
+    // Energy required calculation
+    const chargeNeeded = targetCharge - currentCharge;
+    const energyRequired = (capacity * chargeNeeded) / 100; // kWh
 
     // Charger specifications
     const chargerSpecs = {
-      "3kw-single": { power: 3.7, voltage: 230, phases: 1, current: 16, efficiency: 0.85, cost: 500 },
-      "7kw-single": { power: 7.4, voltage: 230, phases: 1, current: 32, efficiency: 0.90, cost: 800 },
-      "11kw-three": { power: 11, voltage: 400, phases: 3, current: 16, efficiency: 0.92, cost: 1200 },
-      "22kw-three": { power: 22, voltage: 400, phases: 3, current: 32, efficiency: 0.95, cost: 2000 }
+      '3kw-ac': { power: 3, voltage: 230, phases: 1, efficiency: 0.90 },
+      '7kw-ac': { power: 7, voltage: 230, phases: 1, efficiency: 0.92 },
+      '11kw-ac': { power: 11, voltage: 400, phases: 3, efficiency: 0.93 },
+      '22kw-ac': { power: 22, voltage: 400, phases: 3, efficiency: 0.93 },
+      '50kw-dc': { power: 50, voltage: 400, phases: 3, efficiency: 0.95 },
+      '150kw-dc': { power: 150, voltage: 400, phases: 3, efficiency: 0.95 }
     };
 
-    const specs = chargerSpecs[chargerType as keyof typeof chargerSpecs];
+    const charger = chargerSpecs[inputs.chargerType as keyof typeof chargerSpecs];
     
-    // Vehicle consumption (typical 3-4 miles per kWh)
-    const consumptionKwhPer100km = 18; // kWh per 100km
-    const dailyEnergyNeeded = (dailyKm * consumptionKwhPer100km) / 100;
-    
-    // Charging calculations
-    const totalChargerPower = specs.power * numChargers;
-    const chargingTime = batteryKwh / specs.power; // Hours for full charge
-    const dailyChargingTime = dailyEnergyNeeded / specs.power;
-    
-    // Supply requirements
-    const maxCurrent = specs.current * numChargers;
-    const diversityFactor = numChargers > 1 ? 0.8 : 1.0; // Diversity for multiple chargers
-    const designCurrent = maxCurrent * diversityFactor;
-    
-    // Cable sizing (simplified)
-    const cableSize = designCurrent <= 20 ? "2.5mm²" : 
-                     designCurrent <= 27 ? "4mm²" : 
-                     designCurrent <= 37 ? "6mm²" : 
-                     designCurrent <= 50 ? "10mm²" : "16mm²";
-    
-    // Protection
-    const mcbRating = Math.ceil(designCurrent / 5) * 5; // Round up to nearest 5A
-    const earthLeakageRating = mcbRating <= 32 ? "30mA" : "100mA";
-    
-    // Cost analysis
-    const equipmentCost = specs.cost * numChargers;
-    const installationCost = equipmentCost * 0.5; // 50% installation
-    const totalCost = equipmentCost + installationCost;
-    
-    // Running cost (assuming 30p/kWh domestic, 15p/kWh off-peak)
-    const annualEnergyConsumption = dailyEnergyNeeded * 365;
-    const annualCostStandard = annualEnergyConsumption * 0.30;
-    const annualCostOffPeak = annualEnergyConsumption * 0.15;
-    
-    // Supply upgrade requirements
-    const currentSupplyCapacity = supplyType === "single-60a" ? 60 : 
-                                 supplyType === "single-80a" ? 80 :
-                                 supplyType === "three-60a" ? 60 : 100;
-    
-    const supplyUpgradeNeeded = designCurrent > (currentSupplyCapacity * 0.8);
+    // Charging time calculation
+    const effectivePower = charger.power * charger.efficiency;
+    const chargingTime = energyRequired / effectivePower;
+
+    // Cost calculation
+    const cost = energyRequired * electricityRate;
+
+    // Electrical load calculations
+    const peakDemand = charger.power / charger.efficiency; // kW
+    const current = (peakDemand * 1000) / (charger.voltage * (charger.phases === 3 ? Math.sqrt(3) : 1));
+    const circuitLoad = current * diversityFactor;
+
+    // Cable recommendation based on current
+    let recommendedCable = "";
+    if (circuitLoad <= 16) recommendedCable = "2.5mm² T&E";
+    else if (circuitLoad <= 20) recommendedCable = "4mm² T&E";
+    else if (circuitLoad <= 25) recommendedCable = "6mm² T&E";
+    else if (circuitLoad <= 32) recommendedCable = "10mm² T&E";
+    else if (circuitLoad <= 40) recommendedCable = "16mm² SWA";
+    else recommendedCable = "25mm² SWA";
 
     setResults({
-      totalChargerPower: totalChargerPower.toFixed(1),
-      chargingTime: chargingTime.toFixed(1),
-      dailyChargingTime: dailyChargingTime.toFixed(1),
-      dailyEnergyNeeded: dailyEnergyNeeded.toFixed(1),
-      maxCurrent: maxCurrent.toFixed(1),
-      designCurrent: designCurrent.toFixed(1),
-      cableSize,
-      mcbRating,
-      earthLeakageRating,
-      equipmentCost: equipmentCost.toFixed(0),
-      totalCost: totalCost.toFixed(0),
-      annualEnergyConsumption: annualEnergyConsumption.toFixed(0),
-      annualCostStandard: annualCostStandard.toFixed(0),
-      annualCostOffPeak: annualCostOffPeak.toFixed(0),
-      supplyUpgradeNeeded,
-      chargerSpecs: specs
+      energyRequired,
+      chargingTime,
+      cost,
+      peakDemand,
+      circuitLoad,
+      recommendedCable
     });
   };
 
   const resetCalculator = () => {
-    setChargerType("");
-    setNumberOfChargers("");
-    setBatteryCapacity("");
-    setDailyUsage("");
-    setSupplyType("");
+    setInputs({
+      batteryCapacity: "",
+      chargerType: "7kw-ac",
+      currentCharge: "20",
+      targetCharge: "80",
+      electricityRate: "0.30",
+      diversityFactor: "1.0"
+    });
     setResults(null);
   };
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-yellow/5">
+      <Card className="border-elec-yellow/20 bg-elec-card">
         <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-elec-yellow">
             <Car className="h-5 w-5" />
             EV Charging Station Calculator
           </CardTitle>
@@ -116,83 +106,96 @@ const EVChargingCalculator = () => {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="charger-type">Charger Type</Label>
-              <Select value={chargerType} onValueChange={setChargerType}>
+              <Label htmlFor="batteryCapacity">Battery Capacity (kWh)</Label>
+              <Input
+                id="batteryCapacity"
+                type="number"
+                value={inputs.batteryCapacity}
+                onChange={(e) => setInputs({...inputs, batteryCapacity: e.target.value})}
+                placeholder="Vehicle battery capacity"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="chargerType">Charger Type</Label>
+              <Select value={inputs.chargerType} onValueChange={(value) => setInputs({...inputs, chargerType: value})}>
                 <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select charger type" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="3kw-single">3.7kW Single Phase (16A)</SelectItem>
-                  <SelectItem value="7kw-single">7.4kW Single Phase (32A)</SelectItem>
-                  <SelectItem value="11kw-three">11kW Three Phase (16A)</SelectItem>
-                  <SelectItem value="22kw-three">22kW Three Phase (32A)</SelectItem>
+                  <SelectItem value="3kw-ac">3kW AC (Slow)</SelectItem>
+                  <SelectItem value="7kw-ac">7kW AC (Standard)</SelectItem>
+                  <SelectItem value="11kw-ac">11kW AC (Fast)</SelectItem>
+                  <SelectItem value="22kw-ac">22kW AC (Fast)</SelectItem>
+                  <SelectItem value="50kw-dc">50kW DC (Rapid)</SelectItem>
+                  <SelectItem value="150kw-dc">150kW DC (Ultra-rapid)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div>
-              <Label htmlFor="number-chargers">Number of Charging Points</Label>
+              <Label htmlFor="currentCharge">Current Charge (%)</Label>
               <Input
-                id="number-chargers"
+                id="currentCharge"
                 type="number"
-                min="1"
-                max="10"
-                value={numberOfChargers}
-                onChange={(e) => setNumberOfChargers(e.target.value)}
-                placeholder="e.g., 1"
+                value={inputs.currentCharge}
+                onChange={(e) => setInputs({...inputs, currentCharge: e.target.value})}
+                placeholder="Current battery level"
+                className="bg-elec-dark border-elec-yellow/20"
+                min="0"
+                max="100"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="targetCharge">Target Charge (%)</Label>
+              <Input
+                id="targetCharge"
+                type="number"
+                value={inputs.targetCharge}
+                onChange={(e) => setInputs({...inputs, targetCharge: e.target.value})}
+                placeholder="Desired battery level"
+                className="bg-elec-dark border-elec-yellow/20"
+                min="0"
+                max="100"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="electricityRate">Electricity Rate (£/kWh)</Label>
+              <Input
+                id="electricityRate"
+                type="number"
+                step="0.01"
+                value={inputs.electricityRate}
+                onChange={(e) => setInputs({...inputs, electricityRate: e.target.value})}
+                placeholder="Cost per kWh"
                 className="bg-elec-dark border-elec-yellow/20"
               />
             </div>
 
             <div>
-              <Label htmlFor="battery-capacity">Vehicle Battery Capacity (kWh)</Label>
-              <Input
-                id="battery-capacity"
-                type="number"
-                step="1"
-                value={batteryCapacity}
-                onChange={(e) => setBatteryCapacity(e.target.value)}
-                placeholder="e.g., 64 (typical range: 40-100)"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="daily-usage">Daily Driving Distance (km)</Label>
-              <Input
-                id="daily-usage"
-                type="number"
-                step="1"
-                value={dailyUsage}
-                onChange={(e) => setDailyUsage(e.target.value)}
-                placeholder="e.g., 50"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-
-            <div className="md:col-span-2">
-              <Label htmlFor="supply-type">Existing Electrical Supply</Label>
-              <Select value={supplyType} onValueChange={setSupplyType}>
+              <Label htmlFor="diversityFactor">Diversity Factor</Label>
+              <Select value={inputs.diversityFactor} onValueChange={(value) => setInputs({...inputs, diversityFactor: value})}>
                 <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select supply type" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="single-60a">Single Phase 60A</SelectItem>
-                  <SelectItem value="single-80a">Single Phase 80A</SelectItem>
-                  <SelectItem value="three-60a">Three Phase 60A</SelectItem>
-                  <SelectItem value="three-100a">Three Phase 100A</SelectItem>
+                  <SelectItem value="1.0">1.0 (Single charger)</SelectItem>
+                  <SelectItem value="0.8">0.8 (Multiple chargers)</SelectItem>
+                  <SelectItem value="0.6">0.6 (Large installation)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
 
           <div className="flex gap-2">
-            <Button onClick={calculateEVCharging} className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80">
+            <Button onClick={calculateEVCharging} className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
               <Calculator className="h-4 w-4 mr-2" />
-              Calculate EV Charging Requirements
+              Calculate
             </Button>
             <Button onClick={resetCalculator} variant="outline" className="border-elec-yellow/20">
-              <RotateCcw className="h-4 w-4 mr-2" />
               Reset
             </Button>
           </div>
@@ -200,122 +203,81 @@ const EVChargingCalculator = () => {
       </Card>
 
       {results && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="border-green-500/30 bg-green-500/5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="text-green-300 flex items-center gap-2">
+              <CardTitle className="text-elec-light flex items-center gap-2">
                 <Zap className="h-5 w-5" />
-                Electrical Requirements
+                Charging Requirements
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-green-200">Total Charger Power:</span>
-                <span className="text-green-300 font-mono">{results.totalChargerPower} kW</span>
+                <span className="text-elec-light/80">Energy Required:</span>
+                <span className="text-elec-yellow font-semibold">{results.energyRequired.toFixed(1)} kWh</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-green-200">Maximum Current:</span>
-                <span className="text-green-300 font-mono">{results.maxCurrent} A</span>
+                <span className="text-elec-light/80">Charging Time:</span>
+                <span className="text-elec-yellow font-semibold">{results.chargingTime.toFixed(1)} hours</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-green-200">Design Current:</span>
-                <span className="text-green-300 font-mono">{results.designCurrent} A</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-green-200">Cable Size Required:</span>
-                <span className="text-green-300 font-mono">{results.cableSize}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-green-200">MCB Rating:</span>
-                <span className="text-green-300 font-mono">{results.mcbRating} A</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-green-200">RCD Rating:</span>
-                <span className="text-green-300 font-mono">{results.earthLeakageRating}</span>
+                <span className="text-elec-light/80">Charging Cost:</span>
+                <span className="text-elec-yellow font-semibold">£{results.cost.toFixed(2)}</span>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-blue-500/30 bg-blue-500/5">
+          <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="text-blue-300 flex items-center gap-2">
-                <Car className="h-5 w-5" />
-                Charging Analysis
+              <CardTitle className="text-elec-light flex items-center gap-2">
+                <Zap className="h-5 w-5" />
+                Electrical Installation
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-blue-200">Full Charge Time:</span>
-                <span className="text-blue-300 font-mono">{results.chargingTime} hours</span>
+                <span className="text-elec-light/80">Peak Demand:</span>
+                <span className="text-elec-yellow font-semibold">{results.peakDemand.toFixed(1)} kW</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-blue-200">Daily Charging Time:</span>
-                <span className="text-blue-300 font-mono">{results.dailyChargingTime} hours</span>
+                <span className="text-elec-light/80">Circuit Current:</span>
+                <span className="text-elec-yellow font-semibold">{results.circuitLoad.toFixed(1)} A</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-blue-200">Daily Energy Need:</span>
-                <span className="text-blue-300 font-mono">{results.dailyEnergyNeeded} kWh</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-blue-200">Annual Consumption:</span>
-                <span className="text-blue-300 font-mono">{results.annualEnergyConsumption} kWh</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-blue-200">Annual Cost (Standard):</span>
-                <span className="text-blue-300 font-mono">£{results.annualCostStandard}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-blue-200">Annual Cost (Off-Peak):</span>
-                <span className="text-blue-300 font-mono">£{results.annualCostOffPeak}</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-amber-500/30 bg-amber-500/5">
-            <CardHeader>
-              <CardTitle className="text-amber-300 flex items-center gap-2">
-                <Home className="h-5 w-5" />
-                Installation Costs
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-amber-200">Equipment Cost:</span>
-                <span className="text-amber-300 font-mono">£{results.equipmentCost}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-amber-200">Installation Cost:</span>
-                <span className="text-amber-300 font-mono">£{(results.totalCost - results.equipmentCost).toFixed(0)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-amber-200">Total Project Cost:</span>
-                <span className="text-amber-300 font-mono">£{results.totalCost}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-amber-200">Supply Upgrade Needed:</span>
-                <span className={`font-mono ${results.supplyUpgradeNeeded ? 'text-red-300' : 'text-green-300'}`}>
-                  {results.supplyUpgradeNeeded ? "Yes" : "No"}
-                </span>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-purple-500/30 bg-purple-500/5">
-            <CardHeader>
-              <CardTitle className="text-purple-300">Installation Notes</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2 text-sm text-purple-200">
-                <p>• All EV charging points require dedicated RCD protection</p>
-                <p>• Installation must comply with BS 7671 and IET Code of Practice</p>
-                <p>• Consider off-peak electricity tariffs for cost savings</p>
-                <p>• Supply upgrade costs not included in estimate</p>
-                <p>• Building regulations notification may be required</p>
+                <span className="text-elec-light/80">Recommended Cable:</span>
+                <span className="text-elec-yellow font-semibold">{results.recommendedCable}</span>
               </div>
             </CardContent>
           </Card>
         </div>
       )}
+
+      <Card className="border-blue-500/30 bg-blue-500/5">
+        <CardHeader>
+          <CardTitle className="text-blue-300">EV Charging Installation Guide</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-blue-200">
+          <div className="space-y-3">
+            <h4 className="font-semibold">Installation Requirements:</h4>
+            <ul className="space-y-1 text-sm">
+              <li>• Dedicated circuit with RCD protection (Type A or B)</li>
+              <li>• DC fault protection for AC charging points</li>
+              <li>• Earth electrode may be required for outdoor installations</li>
+              <li>• Consider load balancing for multiple charge points</li>
+            </ul>
+          </div>
+
+          <div className="space-y-3">
+            <h4 className="font-semibold">Regulations & Standards:</h4>
+            <ul className="space-y-1 text-sm">
+              <li>• BS EN 61851 series for EV charging equipment</li>
+              <li>• IET Code of Practice for EV charging installations</li>
+              <li>• Building Regulations Part P notification required</li>
+              <li>• DNO notification for installations over 3.68kW per phase</li>
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

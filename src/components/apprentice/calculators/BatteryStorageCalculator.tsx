@@ -5,74 +5,85 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calculator, RotateCcw, Battery, Zap, Home } from "lucide-react";
+import { Calculator, Battery, Zap, Clock, PoundSterling } from "lucide-react";
 
 const BatteryStorageCalculator = () => {
-  const [solarCapacity, setSolarCapacity] = useState("");
-  const [dailyConsumption, setDailyConsumption] = useState("");
-  const [peakDemand, setPeakDemand] = useState("");
-  const [backupHours, setBackupHours] = useState("");
-  const [batteryType, setBatteryType] = useState("");
-  const [results, setResults] = useState<any>(null);
+  const [inputs, setInputs] = useState({
+    dailyEnergyUsage: "",
+    backupHours: "",
+    systemVoltage: "12",
+    batteryType: "lithium",
+    depthOfDischarge: "80",
+    efficiency: "95"
+  });
+
+  const [results, setResults] = useState<{
+    batteryCapacityAh: number;
+    batteryCapacitykWh: number;
+    numberOfBatteries: number;
+    estimatedCost: number;
+    backupTime: number;
+  } | null>(null);
 
   const calculateBatteryStorage = () => {
-    if (!solarCapacity || !dailyConsumption || !peakDemand || !backupHours || !batteryType) {
-      return;
-    }
+    const dailyUsage = parseFloat(inputs.dailyEnergyUsage);
+    const backupHours = parseFloat(inputs.backupHours);
+    const voltage = parseFloat(inputs.systemVoltage);
+    const dod = parseFloat(inputs.depthOfDischarge) / 100;
+    const efficiency = parseFloat(inputs.efficiency) / 100;
 
-    const solarKw = parseFloat(solarCapacity);
-    const dailyKwh = parseFloat(dailyConsumption);
-    const peakKw = parseFloat(peakDemand);
-    const backupTime = parseFloat(backupHours);
+    if (!dailyUsage || !backupHours || !voltage) return;
 
-    // Battery sizing calculations
-    const usableBatteryCapacity = dailyKwh * 0.8; // 80% daily consumption coverage
-    const backupCapacity = peakKw * backupTime;
-    const recommendedCapacity = Math.max(usableBatteryCapacity, backupCapacity);
-
-    // Battery specifications based on type
-    const batterySpecs = {
-      "lithium-ion": { efficiency: 0.95, dod: 0.9, cycles: 6000, costPerKwh: 800 },
-      "lifepo4": { efficiency: 0.98, dod: 0.95, cycles: 10000, costPerKwh: 1000 },
-      "lead-acid": { efficiency: 0.85, dod: 0.5, cycles: 1500, costPerKwh: 300 }
-    };
-
-    const specs = batterySpecs[batteryType as keyof typeof batterySpecs];
-    const actualCapacity = recommendedCapacity / specs.dod;
-    const estimatedCost = actualCapacity * specs.costPerKwh;
-
-    // Self-consumption and savings
-    const dailySolarGeneration = solarKw * 4; // Average 4 hours peak sun
-    const excessSolar = Math.max(0, dailySolarGeneration - dailyKwh);
-    const storedEnergy = Math.min(excessSolar, recommendedCapacity);
-    const selfConsumption = ((dailyKwh - excessSolar + storedEnergy) / dailyKwh) * 100;
+    // Calculate energy needed for backup period
+    const energyNeeded = (dailyUsage / 24) * backupHours; // kWh
+    
+    // Account for depth of discharge and efficiency
+    const actualEnergyNeeded = energyNeeded / (dod * efficiency);
+    
+    // Convert to Ah
+    const batteryCapacityAh = (actualEnergyNeeded * 1000) / voltage;
+    
+    // Standard battery sizes (Ah)
+    const standardSizes = [100, 200, 300, 400, 500, 1000];
+    const selectedSize = standardSizes.find(size => size >= batteryCapacityAh) || standardSizes[standardSizes.length - 1];
+    
+    const numberOfBatteries = Math.ceil(batteryCapacityAh / selectedSize);
+    
+    // Cost estimation (£/kWh)
+    const costPerKwh = inputs.batteryType === "lithium" ? 800 : 400;
+    const estimatedCost = actualEnergyNeeded * costPerKwh;
+    
+    // Actual backup time with selected batteries
+    const actualCapacity = numberOfBatteries * selectedSize * voltage / 1000; // kWh
+    const usableCapacity = actualCapacity * dod * efficiency;
+    const backupTime = (usableCapacity / (dailyUsage / 24));
 
     setResults({
-      recommendedCapacity: recommendedCapacity.toFixed(1),
-      actualCapacity: actualCapacity.toFixed(1),
-      estimatedCost: estimatedCost.toFixed(0),
-      batterySpecs: specs,
-      selfConsumption: selfConsumption.toFixed(1),
-      storedEnergy: storedEnergy.toFixed(1),
-      backupTime: backupTime,
-      paybackPeriod: (estimatedCost / (storedEnergy * 365 * 0.25)).toFixed(1) // Assuming 25p/kWh savings
+      batteryCapacityAh: batteryCapacityAh,
+      batteryCapacitykWh: actualEnergyNeeded,
+      numberOfBatteries,
+      estimatedCost,
+      backupTime
     });
   };
 
   const resetCalculator = () => {
-    setSolarCapacity("");
-    setDailyConsumption("");
-    setPeakDemand("");
-    setBackupHours("");
-    setBatteryType("");
+    setInputs({
+      dailyEnergyUsage: "",
+      backupHours: "",
+      systemVoltage: "12",
+      batteryType: "lithium",
+      depthOfDischarge: "80",
+      efficiency: "95"
+    });
     setResults(null);
   };
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-yellow/5">
+      <Card className="border-elec-yellow/20 bg-elec-card">
         <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-elec-yellow">
             <Battery className="h-5 w-5" />
             Battery Storage System Calculator
           </CardTitle>
@@ -80,79 +91,89 @@ const BatteryStorageCalculator = () => {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="solar-capacity">Solar System Capacity (kW)</Label>
+              <Label htmlFor="dailyEnergyUsage">Daily Energy Usage (kWh)</Label>
               <Input
-                id="solar-capacity"
+                id="dailyEnergyUsage"
                 type="number"
-                step="0.1"
-                value={solarCapacity}
-                onChange={(e) => setSolarCapacity(e.target.value)}
-                placeholder="e.g., 5.0"
+                value={inputs.dailyEnergyUsage}
+                onChange={(e) => setInputs({...inputs, dailyEnergyUsage: e.target.value})}
+                placeholder="Enter daily kWh usage"
                 className="bg-elec-dark border-elec-yellow/20"
               />
             </div>
 
             <div>
-              <Label htmlFor="daily-consumption">Daily Energy Consumption (kWh)</Label>
+              <Label htmlFor="backupHours">Required Backup Time (hours)</Label>
               <Input
-                id="daily-consumption"
+                id="backupHours"
                 type="number"
-                step="0.1"
-                value={dailyConsumption}
-                onChange={(e) => setDailyConsumption(e.target.value)}
-                placeholder="e.g., 15.0"
+                value={inputs.backupHours}
+                onChange={(e) => setInputs({...inputs, backupHours: e.target.value})}
+                placeholder="Hours of backup needed"
                 className="bg-elec-dark border-elec-yellow/20"
               />
             </div>
 
             <div>
-              <Label htmlFor="peak-demand">Peak Demand (kW)</Label>
-              <Input
-                id="peak-demand"
-                type="number"
-                step="0.1"
-                value={peakDemand}
-                onChange={(e) => setPeakDemand(e.target.value)}
-                placeholder="e.g., 8.0"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="backup-hours">Required Backup Hours</Label>
-              <Input
-                id="backup-hours"
-                type="number"
-                step="0.5"
-                value={backupHours}
-                onChange={(e) => setBackupHours(e.target.value)}
-                placeholder="e.g., 4.0"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-
-            <div className="md:col-span-2">
-              <Label htmlFor="battery-type">Battery Technology</Label>
-              <Select value={batteryType} onValueChange={setBatteryType}>
+              <Label htmlFor="systemVoltage">System Voltage</Label>
+              <Select value={inputs.systemVoltage} onValueChange={(value) => setInputs({...inputs, systemVoltage: value})}>
                 <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select battery type" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="lithium-ion">Lithium-Ion (Standard)</SelectItem>
-                  <SelectItem value="lifepo4">LiFePO4 (Premium)</SelectItem>
-                  <SelectItem value="lead-acid">Lead-Acid (Budget)</SelectItem>
+                  <SelectItem value="12">12V</SelectItem>
+                  <SelectItem value="24">24V</SelectItem>
+                  <SelectItem value="48">48V</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="batteryType">Battery Type</Label>
+              <Select value={inputs.batteryType} onValueChange={(value) => setInputs({...inputs, batteryType: value})}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <SelectItem value="lithium">Lithium-ion</SelectItem>
+                  <SelectItem value="lead-acid">Lead Acid</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="depthOfDischarge">Depth of Discharge (%)</Label>
+              <Select value={inputs.depthOfDischarge} onValueChange={(value) => setInputs({...inputs, depthOfDischarge: value})}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <SelectItem value="50">50% (Lead Acid)</SelectItem>
+                  <SelectItem value="80">80% (Lithium)</SelectItem>
+                  <SelectItem value="90">90% (High-end Lithium)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="efficiency">System Efficiency (%)</Label>
+              <Input
+                id="efficiency"
+                type="number"
+                value={inputs.efficiency}
+                onChange={(e) => setInputs({...inputs, efficiency: e.target.value})}
+                placeholder="System efficiency"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
             </div>
           </div>
 
           <div className="flex gap-2">
-            <Button onClick={calculateBatteryStorage} className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80">
+            <Button onClick={calculateBatteryStorage} className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
               <Calculator className="h-4 w-4 mr-2" />
-              Calculate Battery System
+              Calculate
             </Button>
             <Button onClick={resetCalculator} variant="outline" className="border-elec-yellow/20">
-              <RotateCcw className="h-4 w-4 mr-2" />
               Reset
             </Button>
           </div>
@@ -160,87 +181,75 @@ const BatteryStorageCalculator = () => {
       </Card>
 
       {results && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="border-green-500/30 bg-green-500/5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="text-green-300 flex items-center gap-2">
+              <CardTitle className="text-elec-light flex items-center gap-2">
                 <Battery className="h-5 w-5" />
-                Battery Sizing Results
+                Battery Capacity Required
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-green-200">Recommended Usable Capacity:</span>
-                <span className="text-green-300 font-mono">{results.recommendedCapacity} kWh</span>
+                <span className="text-elec-light/80">Capacity (Ah):</span>
+                <span className="text-elec-yellow font-semibold">{results.batteryCapacityAh.toFixed(0)} Ah</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-green-200">Actual Battery Capacity:</span>
-                <span className="text-green-300 font-mono">{results.actualCapacity} kWh</span>
+                <span className="text-elec-light/80">Capacity (kWh):</span>
+                <span className="text-elec-yellow font-semibold">{results.batteryCapacitykWh.toFixed(1)} kWh</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-green-200">Backup Duration:</span>
-                <span className="text-green-300 font-mono">{results.backupTime} hours</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-green-200">Self-Consumption Rate:</span>
-                <span className="text-green-300 font-mono">{results.selfConsumption}%</span>
+                <span className="text-elec-light/80">Number of Batteries:</span>
+                <span className="text-elec-yellow font-semibold">{results.numberOfBatteries}</span>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-blue-500/30 bg-blue-500/5">
+          <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="text-blue-300 flex items-center gap-2">
-                <Zap className="h-5 w-5" />
-                Financial Analysis
+              <CardTitle className="text-elec-light flex items-center gap-2">
+                <PoundSterling className="h-5 w-5" />
+                Cost & Performance
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-blue-200">Estimated System Cost:</span>
-                <span className="text-blue-300 font-mono">£{results.estimatedCost}</span>
+                <span className="text-elec-light/80">Estimated Cost:</span>
+                <span className="text-elec-yellow font-semibold">£{results.estimatedCost.toLocaleString()}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-blue-200">Daily Stored Energy:</span>
-                <span className="text-blue-300 font-mono">{results.storedEnergy} kWh</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-blue-200">Estimated Payback:</span>
-                <span className="text-blue-300 font-mono">{results.paybackPeriod} years</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-blue-200">Battery Cycles:</span>
-                <span className="text-blue-300 font-mono">{results.batterySpecs.cycles.toLocaleString()}</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-amber-500/30 bg-amber-500/5 md:col-span-2">
-            <CardHeader>
-              <CardTitle className="text-amber-300 flex items-center gap-2">
-                <Home className="h-5 w-5" />
-                Battery Technology Comparison
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-amber-200">Efficiency</h4>
-                  <p className="text-amber-100">{(results.batterySpecs.efficiency * 100).toFixed(0)}% round-trip efficiency</p>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-amber-200">Depth of Discharge</h4>
-                  <p className="text-amber-100">{(results.batterySpecs.dod * 100).toFixed(0)}% usable capacity</p>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-amber-200">Lifespan</h4>
-                  <p className="text-amber-100">{results.batterySpecs.cycles.toLocaleString()} cycles (~{Math.round(results.batterySpecs.cycles / 365)} years)</p>
-                </div>
+                <span className="text-elec-light/80">Actual Backup Time:</span>
+                <span className="text-elec-yellow font-semibold">{results.backupTime.toFixed(1)} hours</span>
               </div>
             </CardContent>
           </Card>
         </div>
       )}
+
+      <Card className="border-blue-500/30 bg-blue-500/5">
+        <CardHeader>
+          <CardTitle className="text-blue-300">Battery Storage Considerations</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-blue-200">
+          <div className="space-y-3">
+            <h4 className="font-semibold">Battery Types:</h4>
+            <ul className="space-y-1 text-sm">
+              <li>• <strong>Lithium-ion:</strong> Higher efficiency, longer lifespan, 80-90% DoD</li>
+              <li>• <strong>Lead Acid:</strong> Lower cost, shorter lifespan, 50% DoD maximum</li>
+            </ul>
+          </div>
+
+          <div className="space-y-3">
+            <h4 className="font-semibold">Installation Tips:</h4>
+            <ul className="space-y-1 text-sm">
+              <li>• Consider temperature effects on capacity</li>
+              <li>• Include battery management system (BMS)</li>
+              <li>• Plan for ventilation and safety equipment</li>
+              <li>• Factor in inverter efficiency losses</li>
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

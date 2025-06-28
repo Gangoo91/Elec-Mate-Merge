@@ -5,92 +5,90 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calculator, RotateCcw, Thermometer, Zap, Home } from "lucide-react";
+import { Calculator, Thermometer, Zap, PoundSterling, Home } from "lucide-react";
 
 const HeatPumpCalculator = () => {
-  const [floorArea, setFloorArea] = useState("");
-  const [heatLoss, setHeatLoss] = useState("");
-  const [designTemp, setDesignTemp] = useState("");
-  const [heatPumpType, setHeatPumpType] = useState("");
-  const [currentHeating, setCurrentHeating] = useState("");
-  const [results, setResults] = useState<any>(null);
+  const [inputs, setInputs] = useState({
+    houseSize: "",
+    insulationLevel: "average",
+    heatPumpType: "air-source",
+    outdoorTemp: "-3",
+    indoorTemp: "20",
+    electricityRate: "0.30"
+  });
+
+  const [results, setResults] = useState<{
+    heatLoad: number;
+    cop: number;
+    electricalPower: number;
+    dailyCost: number;
+    annualCost: number;
+    carbonSavings: number;
+  } | null>(null);
 
   const calculateHeatPump = () => {
-    if (!floorArea || !heatLoss || !designTemp || !heatPumpType || !currentHeating) {
-      return;
-    }
+    const size = parseFloat(inputs.houseSize);
+    const outdoorTemp = parseFloat(inputs.outdoorTemp);
+    const indoorTemp = parseFloat(inputs.indoorTemp);
+    const electricityRate = parseFloat(inputs.electricityRate);
 
-    const area = parseFloat(floorArea);
-    const heatLossWm2 = parseFloat(heatLoss);
-    const designTempC = parseFloat(designTemp);
+    if (!size || !electricityRate) return;
+
+    // Heat loss calculation based on house size and insulation
+    const insulationFactor = {
+      'poor': 150,
+      'average': 100,
+      'good': 70,
+      'excellent': 50
+    };
+
+    const baseLoss = insulationFactor[inputs.insulationLevel as keyof typeof insulationFactor];
+    const tempDifference = indoorTemp - outdoorTemp;
+    const heatLoad = (size * baseLoss * tempDifference) / 1000; // kW
+
+    // COP calculation based on heat pump type and outdoor temperature
+    let baseCOP = inputs.heatPumpType === 'air-source' ? 3.5 : 4.5;
     
-    // Heat pump specifications
-    const heatPumpSpecs = {
-      "air-source": { cop: 3.5, minTemp: -15, efficiency: 0.85, costPerKw: 1500 },
-      "ground-source": { cop: 4.5, minTemp: -20, efficiency: 0.95, costPerKw: 2500 },
-      "water-source": { cop: 5.0, minTemp: -10, efficiency: 0.98, costPerKw: 3000 }
-    };
+    // COP decreases with lower outdoor temperatures
+    const tempDerating = Math.max(0.5, 1 - (5 - outdoorTemp) * 0.05);
+    const cop = baseCOP * tempDerating;
 
-    const currentSystemEfficiency = {
-      "gas-boiler": 0.85,
-      "oil-boiler": 0.80,
-      "electric-heating": 1.0,
-      "lpg-boiler": 0.82
-    };
+    const electricalPower = heatLoad / cop;
+    const dailyCost = electricalPower * 12 * electricityRate; // 12 hours heating per day
+    const annualCost = dailyCost * 200; // 200 heating days per year
 
-    const specs = heatPumpSpecs[heatPumpType as keyof typeof heatPumpSpecs];
-    const currentEff = currentSystemEfficiency[currentHeating as keyof typeof currentSystemEfficiency];
-
-    // Calculate heat demand
-    const maxHeatDemand = (area * heatLossWm2) / 1000; // kW
-    const adjustedCOP = specs.cop * (1 - Math.max(0, (Math.abs(designTempC) - 5) / 100)); // Temperature adjustment
-
-    // Sizing calculations
-    const recommendedCapacity = maxHeatDemand * 1.2; // 20% safety margin
-    const electricalLoad = recommendedCapacity / adjustedCOP;
-    const annualHeatDemand = maxHeatDemand * 2100; // Typical heating hours
-    const annualElectricity = annualHeatDemand / adjustedCOP;
-
-    // Cost analysis
-    const systemCost = recommendedCapacity * specs.costPerKw;
-    const installationCost = systemCost * 0.3; // 30% installation
-    const totalCost = systemCost + installationCost;
-
-    // Running cost comparison (assuming 30p/kWh electricity, 6p/kWh gas)
-    const heatPumpRunningCost = annualElectricity * 0.30;
-    const currentRunningCost = (annualHeatDemand / currentEff) * (currentHeating === 'electric-heating' ? 0.30 : 0.06);
-    const annualSavings = currentRunningCost - heatPumpRunningCost;
+    // Carbon savings vs gas boiler (kg CO2 per year)
+    const gasCO2 = heatLoad * 12 * 200 * 0.185; // kg CO2 from gas
+    const electricCO2 = electricalPower * 12 * 200 * 0.233; // kg CO2 from electricity
+    const carbonSavings = Math.max(0, gasCO2 - electricCO2);
 
     setResults({
-      maxHeatDemand: maxHeatDemand.toFixed(1),
-      recommendedCapacity: recommendedCapacity.toFixed(1),
-      electricalLoad: electricalLoad.toFixed(1),
-      adjustedCOP: adjustedCOP.toFixed(2),
-      annualElectricity: annualElectricity.toFixed(0),
-      systemCost: systemCost.toFixed(0),
-      totalCost: totalCost.toFixed(0),
-      heatPumpRunningCost: heatPumpRunningCost.toFixed(0),
-      currentRunningCost: currentRunningCost.toFixed(0),
-      annualSavings: annualSavings.toFixed(0),
-      paybackPeriod: annualSavings > 0 ? (totalCost / annualSavings).toFixed(1) : "N/A",
-      heatPumpSpecs: specs
+      heatLoad,
+      cop,
+      electricalPower,
+      dailyCost,
+      annualCost,
+      carbonSavings
     });
   };
 
   const resetCalculator = () => {
-    setFloorArea("");
-    setHeatLoss("");
-    setDesignTemp("");
-    setHeatPumpType("");
-    setCurrentHeating("");
+    setInputs({
+      houseSize: "",
+      insulationLevel: "average",
+      heatPumpType: "air-source",
+      outdoorTemp: "-3",
+      indoorTemp: "20",
+      electricityRate: "0.30"
+    });
     setResults(null);
   };
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-yellow/5">
+      <Card className="border-elec-yellow/20 bg-elec-card">
         <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-elec-yellow">
             <Thermometer className="h-5 w-5" />
             Heat Pump Load Calculator
           </CardTitle>
@@ -98,81 +96,89 @@ const HeatPumpCalculator = () => {
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="floor-area">Floor Area (m²)</Label>
+              <Label htmlFor="houseSize">House Size (m²)</Label>
               <Input
-                id="floor-area"
+                id="houseSize"
                 type="number"
-                step="1"
-                value={floorArea}
-                onChange={(e) => setFloorArea(e.target.value)}
-                placeholder="e.g., 150"
+                value={inputs.houseSize}
+                onChange={(e) => setInputs({...inputs, houseSize: e.target.value})}
+                placeholder="Floor area in square metres"
                 className="bg-elec-dark border-elec-yellow/20"
               />
             </div>
 
             <div>
-              <Label htmlFor="heat-loss">Heat Loss Rate (W/m²)</Label>
-              <Input
-                id="heat-loss"
-                type="number"
-                step="1"
-                value={heatLoss}
-                onChange={(e) => setHeatLoss(e.target.value)}
-                placeholder="e.g., 50 (well insulated: 30-50, average: 60-80)"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="design-temp">Design Temperature (°C)</Label>
-              <Input
-                id="design-temp"
-                type="number"
-                step="1"
-                value={designTemp}
-                onChange={(e) => setDesignTemp(e.target.value)}
-                placeholder="e.g., -3 (UK typical)"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="heat-pump-type">Heat Pump Type</Label>
-              <Select value={heatPumpType} onValueChange={setHeatPumpType}>
+              <Label htmlFor="insulationLevel">Insulation Level</Label>
+              <Select value={inputs.insulationLevel} onValueChange={(value) => setInputs({...inputs, insulationLevel: value})}>
                 <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select heat pump type" />
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <SelectItem value="poor">Poor (Pre-1920)</SelectItem>
+                  <SelectItem value="average">Average (1920-1990)</SelectItem>
+                  <SelectItem value="good">Good (Post-1990)</SelectItem>
+                  <SelectItem value="excellent">Excellent (Passivhaus)</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label htmlFor="heatPumpType">Heat Pump Type</Label>
+              <Select value={inputs.heatPumpType} onValueChange={(value) => setInputs({...inputs, heatPumpType: value})}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
                   <SelectItem value="air-source">Air Source Heat Pump</SelectItem>
                   <SelectItem value="ground-source">Ground Source Heat Pump</SelectItem>
-                  <SelectItem value="water-source">Water Source Heat Pump</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
-            <div className="md:col-span-2">
-              <Label htmlFor="current-heating">Current Heating System</Label>
-              <Select value={currentHeating} onValueChange={setCurrentHeating}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select current heating system" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="gas-boiler">Gas Boiler</SelectItem>
-                  <SelectItem value="oil-boiler">Oil Boiler</SelectItem>
-                  <SelectItem value="lpg-boiler">LPG Boiler</SelectItem>
-                  <SelectItem value="electric-heating">Electric Heating</SelectItem>
-                </SelectContent>
-              </Select>
+            <div>
+              <Label htmlFor="outdoorTemp">Design Outdoor Temp (°C)</Label>
+              <Input
+                id="outdoorTemp"
+                type="number"
+                value={inputs.outdoorTemp}
+                onChange={(e) => setInputs({...inputs, outdoorTemp: e.target.value})}
+                placeholder="Coldest expected temperature"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="indoorTemp">Indoor Target Temp (°C)</Label>
+              <Input
+                id="indoorTemp"
+                type="number"
+                value={inputs.indoorTemp}
+                onChange={(e) => setInputs({...inputs, indoorTemp: e.target.value})}
+                placeholder="Desired indoor temperature"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="electricityRate">Electricity Rate (£/kWh)</Label>
+              <Input
+                id="electricityRate"
+                type="number"
+                step="0.01"
+                value={inputs.electricityRate}
+                onChange={(e) => setInputs({...inputs, electricityRate: e.target.value})}
+                placeholder="Cost per kWh"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
             </div>
           </div>
 
           <div className="flex gap-2">
-            <Button onClick={calculateHeatPump} className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/80">
+            <Button onClick={calculateHeatPump} className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
               <Calculator className="h-4 w-4 mr-2" />
-              Calculate Heat Pump Load
+              Calculate
             </Button>
             <Button onClick={resetCalculator} variant="outline" className="border-elec-yellow/20">
-              <RotateCcw className="h-4 w-4 mr-2" />
               Reset
             </Button>
           </div>
@@ -180,105 +186,81 @@ const HeatPumpCalculator = () => {
       </Card>
 
       {results && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="border-green-500/30 bg-green-500/5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="text-green-300 flex items-center gap-2">
-                <Thermometer className="h-5 w-5" />
-                Heat Pump Sizing
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-green-200">Max Heat Demand:</span>
-                <span className="text-green-300 font-mono">{results.maxHeatDemand} kW</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-green-200">Recommended Capacity:</span>
-                <span className="text-green-300 font-mono">{results.recommendedCapacity} kW</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-green-200">Electrical Load:</span>
-                <span className="text-green-300 font-mono">{results.electricalLoad} kW</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-green-200">Seasonal COP:</span>
-                <span className="text-green-300 font-mono">{results.adjustedCOP}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-green-200">Annual Electricity:</span>
-                <span className="text-green-300 font-mono">{results.annualElectricity} kWh</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-blue-500/30 bg-blue-500/5">
-            <CardHeader>
-              <CardTitle className="text-blue-300 flex items-center gap-2">
+              <CardTitle className="text-elec-light flex items-center gap-2">
                 <Zap className="h-5 w-5" />
-                Cost Analysis
+                Heat Pump Performance
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <div className="flex justify-between">
-                <span className="text-blue-200">System Cost:</span>
-                <span className="text-blue-300 font-mono">£{results.systemCost}</span>
+                <span className="text-elec-light/80">Heat Load Required:</span>
+                <span className="text-elec-yellow font-semibold">{results.heatLoad.toFixed(1)} kW</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-blue-200">Total Installed Cost:</span>
-                <span className="text-blue-300 font-mono">£{results.totalCost}</span>
+                <span className="text-elec-light/80">Coefficient of Performance:</span>
+                <span className="text-elec-yellow font-semibold">{results.cop.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-blue-200">Annual Running Cost:</span>
-                <span className="text-blue-300 font-mono">£{results.heatPumpRunningCost}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-blue-200">Current System Cost:</span>
-                <span className="text-blue-300 font-mono">£{results.currentRunningCost}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-blue-200">Annual Savings:</span>
-                <span className={`font-mono ${parseFloat(results.annualSavings) > 0 ? 'text-green-300' : 'text-red-300'}`}>
-                  £{results.annualSavings}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-blue-200">Payback Period:</span>
-                <span className="text-blue-300 font-mono">{results.paybackPeriod} years</span>
+                <span className="text-elec-light/80">Electrical Power:</span>
+                <span className="text-elec-yellow font-semibold">{results.electricalPower.toFixed(1)} kW</span>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="border-amber-500/30 bg-amber-500/5 md:col-span-2">
+          <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="text-amber-300 flex items-center gap-2">
-                <Home className="h-5 w-5" />
-                Heat Pump Performance Notes
+              <CardTitle className="text-elec-light flex items-center gap-2">
+                <PoundSterling className="h-5 w-5" />
+                Running Costs
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-amber-200">Efficiency Factors</h4>
-                  <ul className="space-y-1 text-amber-100">
-                    <li>• COP varies with outdoor temperature</li>
-                    <li>• Lower flow temperatures improve efficiency</li>
-                    <li>• Proper insulation is critical</li>
-                  </ul>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-amber-200">Installation Considerations</h4>
-                  <ul className="space-y-1 text-amber-100">
-                    <li>• May require electrical supply upgrade</li>
-                    <li>• Consider radiator sizing requirements</li>
-                    <li>• Planning permission may be required</li>
-                  </ul>
-                </div>
+            <CardContent className="space-y-3">
+              <div className="flex justify-between">
+                <span className="text-elec-light/80">Daily Cost:</span>
+                <span className="text-elec-yellow font-semibold">£{results.dailyCost.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-elec-light/80">Annual Cost:</span>
+                <span className="text-elec-yellow font-semibold">£{results.annualCost.toFixed(0)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-elec-light/80">CO₂ Savings:</span>
+                <span className="text-elec-yellow font-semibold">{results.carbonSavings.toFixed(0)} kg/year</span>
               </div>
             </CardContent>
           </Card>
         </div>
       )}
+
+      <Card className="border-blue-500/30 bg-blue-500/5">
+        <CardHeader>
+          <CardTitle className="text-blue-300">Heat Pump Installation Notes</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-blue-200">
+          <div className="space-y-3">
+            <h4 className="font-semibold">Sizing Considerations:</h4>
+            <ul className="space-y-1 text-sm">
+              <li>• Size for 95% of heating demand to avoid oversizing</li>
+              <li>• Consider thermal mass and heat-up times</li>
+              <li>• Account for domestic hot water requirements</li>
+              <li>• Plan for defrost cycles in air source systems</li>
+            </ul>
+          </div>
+
+          <div className="space-y-3">
+            <h4 className="font-semibold">Electrical Requirements:</h4>
+            <ul className="space-y-1 text-sm">
+              <li>• Three-phase supply may be required for larger units</li>
+              <li>• Consider supply capacity and diversity</li>
+              <li>• Install appropriate protection and isolation</li>
+              <li>• Plan for backup heating if required</li>
+            </ul>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
