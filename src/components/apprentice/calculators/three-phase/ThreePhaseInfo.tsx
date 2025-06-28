@@ -33,8 +33,8 @@ const ThreePhaseInfo = () => {
           </h4>
           <ul className="space-y-1 text-blue-200">
             <li>• Current density ≤ 6 A/mm² (cables)</li>
-            <li>• Phase unbalance < 5% (motors)</li>
-            <li>• Power factor > 0.85 (commercial)</li>
+            <li>• Phase unbalance &lt; 5% (motors)</li>
+            <li>• Power factor &gt; 0.85 (commercial)</li>
             <li>• Voltage limits: +10% / -6%</li>
           </ul>
         </div>
