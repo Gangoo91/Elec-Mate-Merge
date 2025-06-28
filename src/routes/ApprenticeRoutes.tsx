@@ -1,3 +1,4 @@
+
 import { Route, Routes } from "react-router-dom";
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
@@ -23,6 +24,7 @@ import ProfessionalDevelopment from "@/pages/apprentice/ProfessionalDevelopment"
 import ApprenticeOJT from "@/pages/apprentice/ApprenticeOJT";
 import AdvancedHelp from "@/pages/apprentice/AdvancedHelp";
 import ProfessionalToolGuide from "@/pages/apprentice/ProfessionalToolGuide";
+import PortfolioBuilding from "@/pages/apprentice/toolbox/PortfolioBuilding";
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -40,34 +42,8 @@ const ApprenticeRoutes = () => (
     <Route path="mentor" element={<ApprenticeMentor />} />
     <Route path="rights-and-pay" element={<RightsAndPay />} />
     <Route path="toolbox" element={<ApprenticeToolbox />} />
-    <Route path="toolbox/tools-guide" element={<ToolsGuide />} />
-    <Route path="toolbox/tools-guide/hand-tools" element={<HandTools />} />
-    <Route path="toolbox/tools-guide/power-tools" element={<PowerTools />} />
-    <Route path="toolbox/tools-guide/test-equipment" element={<TestEquipment />} />
-    <Route path="toolbox/tools-guide/ppe-safety" element={<PPESafety />} />
-    <Route path="toolbox/electrical-installation-guides" element={<ElectricalInstallationGuides />} />
-    <Route path="toolbox/electrical-installation-guides/domestic" element={<DomesticInstallations />} />
-    <Route path="toolbox/electrical-installation-guides/commercial" element={<CommercialInstallations />} />
-    <Route path="toolbox/electrical-installation-guides/industrial" element={<IndustrialInstallations />} />
-    <Route path="toolbox/electrical-installation-guides/outdoor" element={<OutdoorInstallations />} />
-    <Route path="toolbox/apprenticeship-expectations" element={<ApprenticeshipExpectations />} />
-    <Route path="toolbox/apprenticeship-expectations/year-1" element={<Year1 />} />
-    <Route path="toolbox/apprenticeship-expectations/year-2" element={<Year2 />} />
-    <Route path="toolbox/apprenticeship-expectations/year-3" element={<Year3 />} />
-    <Route path="toolbox/apprenticeship-expectations/year-4" element={<Year4 />} />
-    <Route path="toolbox/off-job-training-guide" element={<OffJobTrainingGuide />} />
-    <Route path="toolbox/site-jargon" element={<SiteJargon />} />
     <Route path="toolbox/portfolio-building" element={<PortfolioBuilding />} />
-    <Route path="toolbox/communication-skills" element={<CommunicationSkills />} />
-    <Route path="toolbox/study-tips" element={<StudyTips />} />
-    <Route path="toolbox/learning-from-mistakes" element={<LearningFromMistakes />} />
-    <Route path="toolbox/safety-fundamentals" element={<SafetyFundamentals />} />
-    <Route path="toolbox/time-management" element={<TimeManagement />} />
     <Route path="professional-development" element={<ProfessionalDevelopment />} />
-    <Route path="professional-development/career-pathways" element={<CareerPathways />} />
-    <Route path="professional-development/certifications" element={<Certifications />} />
-    <Route path="professional-development/continuing-education" element={<ContinuingEducation />} />
-    <Route path="professional-development/industry-networking" element={<IndustryNetworking />} />
     <Route path="toolbox/professional-tool-guide" element={<ProfessionalToolGuide />} />
     <Route path="on-job-tools" element={<OnJobTools />} />
     <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />

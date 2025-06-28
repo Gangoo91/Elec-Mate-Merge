@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -156,20 +157,10 @@ const ApprenticeIndex = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {quickAccessItems.map((item, index) => (
             <Link key={index} to={item.href}>
-              <Card className={`border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors cursor-pointer h-full ${
-                item.featured ? 'ring-2 ring-elec-yellow/50 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10' : ''
-              }`}>
+              <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors cursor-pointer h-full">
                 <CardHeader className="flex flex-col items-center justify-center text-center">
                   <item.icon className="h-8 w-8 mb-2 text-elec-yellow" />
                   <CardTitle className="text-xl">{item.title}</CardTitle>
-                  {item.featured && (
-                    <div className="flex items-center gap-1 mt-2">
-                      <Zap className="h-4 w-4 text-elec-yellow" />
-                      <span className="text-xs text-elec-yellow font-semibold">
-                        {item.description}
-                      </span>
-                    </div>
-                  )}
                 </CardHeader>
               </Card>
             </Link>
