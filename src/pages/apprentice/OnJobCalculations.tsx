@@ -38,7 +38,10 @@ import MotorStartingCurrentCalculator from "@/components/apprentice/calculators/
 import CableCurrentCapacityCalculator from "@/components/apprentice/calculators/CableCurrentCapacityCalculator";
 import TransformerCalculator from "@/components/apprentice/calculators/TransformerCalculator";
 import LEDDriverCalculator from "@/components/apprentice/calculators/LEDDriverCalculator";
-import { Calculator, RotateCw } from "lucide-react";
+// New Fundamental Calculators
+import ACPowerCalculator from "@/components/apprentice/calculators/ACPowerCalculator";
+import BasicACCircuitCalculator from "@/components/apprentice/calculators/BasicACCircuitCalculator";
+import { RotateCw } from "lucide-react";
 
 const OnJobCalculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
@@ -57,6 +60,10 @@ const OnJobCalculations = () => {
     switch (calculatorType) {
       case "ohms-law":
         return <OhmsLawCalculator />;
+      case "ac-power":
+        return <ACPowerCalculator />;
+      case "basic-ac-circuit":
+        return <BasicACCircuitCalculator />;
       case "voltage-drop":
         return <VoltageDropCalculator />;
       case "power-factor":
