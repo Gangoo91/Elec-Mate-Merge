@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
 const ApprenticeHub = () => {
-  // Main 2x2 grid - 4 most essential tools
+  // Main 2x2 grid - 4 most essential tools (reordered by importance)
   const mainResources = [
     {
       id: 1,
@@ -15,10 +15,10 @@ const ApprenticeHub = () => {
       link: "/apprentice/calculators"
     },
     {
-      id: 8,
-      title: "Advanced Help Box",
-      icon: Zap,
-      link: "/apprentice/advanced-help"
+      id: 6,
+      title: "On the Job Tools",
+      icon: Settings,
+      link: "/apprentice/on-job-tools"
     },
     {
       id: 3,
@@ -27,20 +27,20 @@ const ApprenticeHub = () => {
       link: "/apprentice/mental-health"
     },
     {
-      id: 6,
-      title: "On the Job Tools",
-      icon: Settings,
-      link: "/apprentice/on-job-tools"
-    }
-  ];
-
-  // Additional tools section
-  const additionalResources = [
-    {
       id: 9,
       title: "BS7671 Inspection & Testing",
       icon: CheckSquare,
       link: "/apprentice/bs7671-inspection-testing"
+    }
+  ];
+
+  // Additional tools section (reordered by importance)
+  const additionalResources = [
+    {
+      id: 8,
+      title: "Advanced Help Box",
+      icon: Zap,
+      link: "/apprentice/advanced-help"
     },
     {
       id: 2,
@@ -79,9 +79,9 @@ const ApprenticeHub = () => {
         {mainResources.map((resource) => (
           <Link to={resource.link} key={resource.id} className="focus:outline-none">
             <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-colors cursor-pointer">
-              <CardHeader className="flex flex-col items-center justify-center text-center py-8">
-                <resource.icon className="h-12 w-12 mb-4 text-elec-yellow" />
-                <CardTitle className="text-xl">{resource.title}</CardTitle>
+              <CardHeader className="flex flex-col items-center justify-center text-center py-6">
+                <resource.icon className="h-8 w-8 mb-2 text-elec-yellow" />
+                <CardTitle className="text-lg">{resource.title}</CardTitle>
               </CardHeader>
             </Card>
           </Link>
