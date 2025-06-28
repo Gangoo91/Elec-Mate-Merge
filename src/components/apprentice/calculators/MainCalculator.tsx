@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, Calculator } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 // Lazy load all calculator components
 const BasicWattageCalculator = lazy(() => import("./BasicWattageCalculator"));
@@ -56,11 +56,7 @@ const MainCalculator = ({ calculatorType }: MainCalculatorProps) => {
         return <EmergencyLightingCalculator />;
       
       default:
-        return <ComingSoonCalculator 
-          title={calculatorType.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-          description="This calculator is coming soon to help with your electrical calculations."
-          icon={Calculator}
-        />;
+        return <ComingSoonCalculator calculatorName={calculatorType} />;
     }
   };
 
