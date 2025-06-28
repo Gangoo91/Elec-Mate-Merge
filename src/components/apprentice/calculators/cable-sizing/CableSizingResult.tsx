@@ -10,7 +10,7 @@ interface CableSizingResultProps {
   alternativeCables: CableSizeOption[];
   errors: {
     general?: string;
-  };
+  } | null;
   inputs: CableSizingInputs;
 }
 
@@ -22,7 +22,7 @@ const CableSizingResult = ({
 }: CableSizingResultProps) => {
   return (
     <div className="flex-grow flex flex-col">
-      {errors.general && (
+      {errors?.general && (
         <Alert className="mb-4 bg-amber-900/30 border-amber-500/50">
           <Info className="h-4 w-4 text-amber-500" />
           <AlertDescription className="text-amber-100">
