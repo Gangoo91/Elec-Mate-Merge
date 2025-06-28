@@ -1,96 +1,116 @@
 
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Cable, Calculator } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Thermometer, Info, Calculator, RotateCcw } from "lucide-react";
+import { useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const CableDeratingCalculator = () => {
-  const [ambientTemp, setAmbientTemp] = useState("30");
-  const [installationMethod, setInstallationMethod] = useState("");
-  const [numberOfCircuits, setNumberOfCircuits] = useState("1");
-  const [thermalInsulation, setThermalInsulation] = useState(false);
-  const [groupingFactor, setGroupingFactor] = useState("");
-  const [overallDerating, setOverallDerating] = useState<number | null>(null);
-  const [factors, setFactors] = useState<{
-    temperature: number;
-    grouping: number;
-    thermal: number;
+  const [baseCurrentRating, setBaseCurrentRating] = useState<string>("");
+  const [ambientTemp, setAmbientTemp] = useState<string>("30");
+  const [installationMethod, setInstallationMethod] = useState<string>("clipped");
+  const [groupingFactor, setGroupingFactor] = useState<string>("1.0");
+  const [thermalInsulation, setThermalInsulation] = useState<string>("none");
+  const [result, setResult] = useState<{
+    temperatureFactor: number;
+    groupingFactorVal: number;
+    thermalFactor: number;
+    overallFactor: number;
+    deratedCurrent: number;
   } | null>(null);
 
-  // Temperature derating factors (BS 7671 Table 4B1)
-  const temperatureFactors: { [key: string]: number } = {
-    "25": 1.03,
-    "30": 1.00,
-    "35": 0.94,
-    "40": 0.87,
-    "45": 0.79,
-    "50": 0.71,
-    "55": 0.61,
-    "60": 0.50
-  };
-
-  // Grouping factors based on number of circuits (BS 7671 Table 4C1)
-  const getGroupingFactor = (circuits: number, method: string): number => {
-    const groupingTable: { [key: string]: { [key: number]: number } } = {
-      "enclosed": {
-        1: 1.00, 2: 0.80, 3: 0.70, 4: 0.65, 5: 0.60, 6: 0.57, 
-        7: 0.54, 8: 0.52, 9: 0.50, 10: 0.48, 12: 0.45, 16: 0.41, 20: 0.38
-      },
-      "surface": {
-        1: 1.00, 2: 0.85, 3: 0.79, 4: 0.75, 5: 0.73, 6: 0.72,
-        7: 0.72, 8: 0.71, 9: 0.70, 10: 0.70, 12: 0.69, 16: 0.67, 20: 0.66
-      },
-      "spaced": {
-        1: 1.00, 2: 0.88, 3: 0.82, 4: 0.77, 5: 0.75, 6: 0.73,
-        7: 0.72, 8: 0.72, 9: 0.71, 10: 0.70, 12: 0.70, 16: 0.68, 20: 0.66
-      }
-    };
-
-    const table = groupingTable[method] || groupingTable["enclosed"];
-    return table[circuits] || table[20]; // Use 20+ value for higher numbers
-  };
-
   const calculateDerating = () => {
-    const tempFactor = temperatureFactors[ambientTemp] || 1.0;
-    const circuits = parseInt(numberOfCircuits);
-    const groupFactor = installationMethod ? getGroupingFactor(circuits, installationMethod) : 1.0;
-    const thermalFactor = thermalInsulation ? 0.5 : 1.0; // Significant derating for thermal insulation
+    const baseCurrent = parseFloat(baseCurrentRating);
+    const temp = parseFloat(ambientTemp);
+    const grouping = parseFloat(groupingFactor);
 
-    const overall = tempFactor * groupFactor * thermalFactor;
+    if (baseCurrent > 0) {
+      // Temperature derating factors for PVC cables
+      const getTemperatureFactor = (ambientTemp: number) => {
+        if (ambientTemp <= 25) return 1.03;
+        if (ambientTemp <= 30) return 1.0;
+        if (ambientTemp <= 35) return 0.94;
+        if (ambientTemp <= 40) return 0.87;
+        if (ambientTemp <= 45) return 0.79;
+        if (ambientTemp <= 50) return 0.71;
+        return 0.6; // > 50°C
+      };
 
-    setFactors({
-      temperature: tempFactor,
-      grouping: groupFactor,
-      thermal: thermalFactor
-    });
-    setOverallDerating(overall);
+      // Installation method factors
+      const installationFactors = {
+        "clipped": 1.0,
+        "enclosed": 0.8,
+        "ducting": 0.85,
+        "buried": 0.9,
+        "trunking": 0.75
+      };
+
+      // Thermal insulation factors
+      const thermalFactors = {
+        "none": 1.0,
+        "partial": 0.8,
+        "full": 0.6,
+        "touching": 0.5
+      };
+
+      const temperatureFactor = getTemperatureFactor(temp);
+      const installationFactor = installationFactors[installationMethod as keyof typeof installationFactors] || 1.0;
+      const thermalFactor = thermalFactors[thermalInsulation as keyof typeof thermalFactors] || 1.0;
+      
+      const overallFactor = temperatureFactor * grouping * installationFactor * thermalFactor;
+      const deratedCurrent = baseCurrent * overallFactor;
+
+      setResult({
+        temperatureFactor,
+        groupingFactorVal: grouping,
+        thermalFactor,
+        overallFactor,
+        deratedCurrent
+      });
+    }
   };
 
-  const resetCalculator = () => {
+  const reset = () => {
+    setBaseCurrentRating("");
     setAmbientTemp("30");
-    setInstallationMethod("");
-    setNumberOfCircuits("1");
-    setThermalInsulation(false);
-    setGroupingFactor("");
-    setOverallDerating(null);
-    setFactors(null);
+    setInstallationMethod("clipped");
+    setGroupingFactor("1.0");
+    setThermalInsulation("none");
+    setResult(null);
   };
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Cable className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>Cable Derating Factors Tool</CardTitle>
+          <Thermometer className="h-5 w-5 text-elec-yellow" />
+          <CardTitle>Cable Derating Calculator</CardTitle>
         </div>
+        <CardDescription>
+          Calculate cable current rating considering ambient temperature, grouping, and installation factors.
+        </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Input Section */}
           <div className="space-y-4">
+            <div>
+              <Label htmlFor="base-current">Base Current Rating (A)</Label>
+              <Input
+                id="base-current"
+                type="number"
+                value={baseCurrentRating}
+                onChange={(e) => setBaseCurrentRating(e.target.value)}
+                placeholder="e.g., 32"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+
             <div>
               <Label htmlFor="ambient-temp">Ambient Temperature (°C)</Label>
               <Select value={ambientTemp} onValueChange={setAmbientTemp}>
@@ -99,13 +119,11 @@ const CableDeratingCalculator = () => {
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
                   <SelectItem value="25">25°C</SelectItem>
-                  <SelectItem value="30">30°C (Reference)</SelectItem>
+                  <SelectItem value="30">30°C</SelectItem>
                   <SelectItem value="35">35°C</SelectItem>
                   <SelectItem value="40">40°C</SelectItem>
                   <SelectItem value="45">45°C</SelectItem>
                   <SelectItem value="50">50°C</SelectItem>
-                  <SelectItem value="55">55°C</SelectItem>
-                  <SelectItem value="60">60°C</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -114,104 +132,116 @@ const CableDeratingCalculator = () => {
               <Label htmlFor="installation-method">Installation Method</Label>
               <Select value={installationMethod} onValueChange={setInstallationMethod}>
                 <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select installation method" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="enclosed">Enclosed (Conduit/Trunking)</SelectItem>
-                  <SelectItem value="surface">Surface Mounted</SelectItem>
-                  <SelectItem value="spaced">Spaced Installation</SelectItem>
+                  <SelectItem value="clipped">Clipped Direct</SelectItem>
+                  <SelectItem value="enclosed">Enclosed in Conduit</SelectItem>
+                  <SelectItem value="ducting">In Ducting</SelectItem>
+                  <SelectItem value="buried">Direct Buried</SelectItem>
+                  <SelectItem value="trunking">In Trunking</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div>
-              <Label htmlFor="number-circuits">Number of Circuits</Label>
-              <Input
-                id="number-circuits"
-                type="number"
-                min="1"
-                max="20"
-                value={numberOfCircuits}
-                onChange={(e) => setNumberOfCircuits(e.target.value)}
-                className="bg-elec-dark border-elec-yellow/20"
-              />
+              <Label htmlFor="grouping-factor">Grouping Factor</Label>
+              <Select value={groupingFactor} onValueChange={setGroupingFactor}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <SelectItem value="1.0">1.0 (Single circuit)</SelectItem>
+                  <SelectItem value="0.8">0.8 (2-3 circuits)</SelectItem>
+                  <SelectItem value="0.7">0.7 (4-6 circuits)</SelectItem>
+                  <SelectItem value="0.6">0.6 (7-9 circuits)</SelectItem>
+                  <SelectItem value="0.5">0.5 (10+ circuits)</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
-            <div className="flex items-center space-x-2">
-              <Checkbox 
-                id="thermal-insulation"
-                checked={thermalInsulation}
-                onCheckedChange={(checked) => setThermalInsulation(checked as boolean)}
-              />
-              <Label htmlFor="thermal-insulation">
-                Cable in contact with thermal insulation
-              </Label>
+            <div>
+              <Label htmlFor="thermal-insulation">Thermal Insulation</Label>
+              <Select value={thermalInsulation} onValueChange={setThermalInsulation}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <SelectItem value="none">None</SelectItem>
+                  <SelectItem value="partial">Partial (< 0.5m)</SelectItem>
+                  <SelectItem value="full">Fully Surrounded</SelectItem>
+                  <SelectItem value="touching">Touching Insulation</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="flex gap-2">
-              <Button 
-                onClick={calculateDerating} 
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                disabled={!installationMethod}
-              >
-                <Calculator className="mr-2 h-4 w-4" />
-                Calculate Derating
+              <Button onClick={calculateDerating} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+                <Calculator className="h-4 w-4 mr-2" />
+                Calculate
               </Button>
-              <Button variant="outline" onClick={resetCalculator}>
-                Reset
+              <Button variant="outline" onClick={reset}>
+                <RotateCcw className="h-4 w-4" />
               </Button>
             </div>
           </div>
 
-          <div className="bg-elec-dark/50 rounded-lg p-4">
-            <h3 className="text-lg font-medium text-elec-yellow mb-4">Derating Analysis</h3>
-            {overallDerating !== null && factors ? (
-              <div className="space-y-3">
-                <div className="border-b border-elec-yellow/20 pb-3">
-                  <p className="text-sm text-muted-foreground">Overall Derating Factor:</p>
-                  <p className="text-3xl font-bold text-elec-yellow">{overallDerating.toFixed(3)}</p>
-                </div>
-
-                <div>
-                  <p className="text-sm text-muted-foreground">Temperature Factor (Ca):</p>
-                  <p className="text-xl font-bold text-white">{factors.temperature.toFixed(3)}</p>
-                  <p className="text-xs text-muted-foreground">At {ambientTemp}°C</p>
-                </div>
-
-                <div>
-                  <p className="text-sm text-muted-foreground">Grouping Factor (Cg):</p>
-                  <p className="text-xl font-bold text-white">{factors.grouping.toFixed(3)}</p>
-                  <p className="text-xs text-muted-foreground">{numberOfCircuits} circuits - {installationMethod}</p>
-                </div>
-
-                <div>
-                  <p className="text-sm text-muted-foreground">Thermal Insulation Factor (Ci):</p>
-                  <p className="text-xl font-bold text-white">{factors.thermal.toFixed(3)}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {thermalInsulation ? 'With thermal insulation' : 'No thermal insulation'}
-                  </p>
-                </div>
-
-                <div className="bg-blue-500/10 border border-blue-500/30 rounded p-3">
-                  <p className="text-xs text-blue-300">
-                    <strong>Formula:</strong> Overall Factor = Ca × Cg × Ci<br />
-                    New Current Rating = Tabulated Rating × Overall Factor
-                  </p>
-                </div>
-
-                {overallDerating < 0.8 && (
-                  <div className="bg-amber-500/10 border border-amber-500/30 rounded p-3">
-                    <p className="text-xs text-amber-300">
-                      <strong>Warning:</strong> Significant derating required. Consider cable size increase or installation method change.
-                    </p>
+          {/* Result Section */}
+          <div className="space-y-4">
+            <div className="rounded-md bg-elec-dark p-6 min-h-[350px]">
+              {result ? (
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Derating Results</h3>
+                    <Badge variant="secondary" className="mb-4">
+                      Overall Factor: {result.overallFactor.toFixed(3)}
+                    </Badge>
                   </div>
-                )}
-              </div>
-            ) : (
-              <p className="text-muted-foreground">
-                Configure installation conditions to calculate derating factors.
-              </p>
-            )}
+                  
+                  <Separator />
+                  
+                  <div className="space-y-3 text-sm">
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <span className="text-muted-foreground text-xs">Temperature:</span>
+                        <div className="font-mono text-elec-yellow">{result.temperatureFactor.toFixed(3)}</div>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground text-xs">Grouping:</span>
+                        <div className="font-mono text-elec-yellow">{result.groupingFactorVal.toFixed(1)}</div>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <span className="text-muted-foreground">Thermal Factor:</span>
+                      <div className="font-mono text-elec-yellow">{result.thermalFactor.toFixed(1)}</div>
+                    </div>
+                    
+                    <Separator />
+                    
+                    <div>
+                      <span className="text-muted-foreground">Derated Current Rating:</span>
+                      <div className="font-mono text-elec-yellow text-lg">{result.deratedCurrent.toFixed(1)} A</div>
+                    </div>
+                    
+                    <div className="text-xs text-muted-foreground mt-4">
+                      <div>Derated = Base × Temperature × Grouping × Installation × Thermal</div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center h-full text-muted-foreground">
+                  Enter cable details to calculate derating factors
+                </div>
+              )}
+            </div>
+
+            <Alert className="border-blue-500/20 bg-blue-500/10">
+              <Info className="h-4 w-4 text-blue-500" />
+              <AlertDescription className="text-blue-200">
+                All derating factors are cumulative. Use the derated value for circuit protection sizing.
+              </AlertDescription>
+            </Alert>
           </div>
         </div>
       </CardContent>

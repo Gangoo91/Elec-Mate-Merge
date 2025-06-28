@@ -1,213 +1,184 @@
 
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Calculator, Sigma } from "lucide-react";
+import { Shield, Info, Calculator, RotateCcw } from "lucide-react";
+import { useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const AdiabaticCalculator = () => {
-  const [faultCurrent, setFaultCurrent] = useState("");
-  const [disconnectionTime, setDisconnectionTime] = useState("");
-  const [conductorMaterial, setConductorMaterial] = useState("");
-  const [calculationType, setCalculationType] = useState("");
-  const [cableSize, setCableSize] = useState("");
-  const [result, setResult] = useState<number | null>(null);
-
-  // k values for different conductor materials (BS 7671 Table 54.2)
-  const kValues = {
-    copper_pvc: 115,      // Copper conductors with PVC insulation
-    copper_xlpe: 143,     // Copper conductors with XLPE insulation
-    aluminium_pvc: 76,    // Aluminium conductors with PVC insulation
-    aluminium_xlpe: 94    // Aluminium conductors with XLPE insulation
-  };
+  const [faultCurrent, setFaultCurrent] = useState<string>("");
+  const [disconnectionTime, setDisconnectionTime] = useState<string>("");
+  const [cableType, setCableType] = useState<string>("copper");
+  const [temperature, setTemperature] = useState<string>("70");
+  const [result, setResult] = useState<{
+    minimumCsa: number;
+    k: number;
+    isAdequate: boolean;
+    actualCsa?: number;
+  } | null>(null);
 
   const calculateAdiabatic = () => {
     const I = parseFloat(faultCurrent);
     const t = parseFloat(disconnectionTime);
-    const k = kValues[conductorMaterial as keyof typeof kValues];
-    const s = parseFloat(cableSize);
+    const temp = parseFloat(temperature);
 
-    if (!I || !t || !k) return;
+    if (I > 0 && t > 0) {
+      // K factors for different cable types and temperatures
+      const kFactors = {
+        copper: { 70: 115, 90: 143 },
+        aluminium: { 70: 76, 90: 94 }
+      };
 
-    if (calculationType === "minCsa") {
-      // Calculate minimum cross-sectional area: S = (I × √t) / k
-      const minCsa = (I * Math.sqrt(t)) / k;
-      setResult(Math.ceil(minCsa * 100) / 100); // Round up to 2 decimal places
-    } else if (calculationType === "maxTime" && s) {
-      // Calculate maximum disconnection time: t = (S × k / I)²
-      const maxTime = Math.pow((s * k) / I, 2);
-      setResult(Math.ceil(maxTime * 1000) / 1000); // Round up to 3 decimal places
-    } else if (calculationType === "maxCurrent" && s) {
-      // Calculate maximum fault current: I = (S × k) / √t
-      const maxCurrent = (s * k) / Math.sqrt(t);
-      setResult(Math.ceil(maxCurrent * 10) / 10); // Round up to 1 decimal place
+      const k = kFactors[cableType as keyof typeof kFactors][temp as keyof typeof kFactors.copper] || 115;
+      
+      // Adiabatic equation: S = I√t/k
+      const minimumCsa = (I * Math.sqrt(t)) / k;
+
+      setResult({
+        minimumCsa,
+        k,
+        isAdequate: true
+      });
     }
   };
 
-  const resetCalculator = () => {
+  const reset = () => {
     setFaultCurrent("");
     setDisconnectionTime("");
-    setConductorMaterial("");
-    setCalculationType("");
-    setCableSize("");
+    setCableType("copper");
+    setTemperature("70");
     setResult(null);
-  };
-
-  const getResultLabel = () => {
-    switch (calculationType) {
-      case "minCsa": return "Minimum CSA";
-      case "maxTime": return "Maximum Time";
-      case "maxCurrent": return "Maximum Current";
-      default: return "Result";
-    }
-  };
-
-  const getResultUnit = () => {
-    switch (calculationType) {
-      case "minCsa": return "mm²";
-      case "maxTime": return "seconds";
-      case "maxCurrent": return "A";
-      default: return "";
-    }
   };
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Sigma className="h-5 w-5 text-elec-yellow" />
+          <Shield className="h-5 w-5 text-elec-yellow" />
           <CardTitle>Adiabatic Equation Calculator</CardTitle>
         </div>
+        <CardDescription>
+          Calculate minimum cable cross-sectional area to withstand fault current using the adiabatic equation.
+        </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Input Section */}
           <div className="space-y-4">
             <div>
-              <Label htmlFor="calculation-type">What do you want to calculate?</Label>
-              <Select value={calculationType} onValueChange={setCalculationType}>
+              <Label htmlFor="fault-current">Prospective Fault Current (A)</Label>
+              <Input
+                id="fault-current"
+                type="number"
+                value={faultCurrent}
+                onChange={(e) => setFaultCurrent(e.target.value)}
+                placeholder="e.g., 1000"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="disconnection-time">Disconnection Time (s)</Label>
+              <Input
+                id="disconnection-time"
+                type="number"
+                step="0.01"
+                value={disconnectionTime}
+                onChange={(e) => setDisconnectionTime(e.target.value)}
+                placeholder="e.g., 0.4"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="cable-type">Cable Material</Label>
+              <Select value={cableType} onValueChange={setCableType}>
                 <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select calculation type" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="minCsa">Minimum Cross-Sectional Area</SelectItem>
-                  <SelectItem value="maxTime">Maximum Disconnection Time</SelectItem>
-                  <SelectItem value="maxCurrent">Maximum Fault Current</SelectItem>
+                  <SelectItem value="copper">Copper</SelectItem>
+                  <SelectItem value="aluminium">Aluminium</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div>
-              <Label htmlFor="conductor-material">Conductor Material & Insulation</Label>
-              <Select value={conductorMaterial} onValueChange={setConductorMaterial}>
+              <Label htmlFor="temperature">Maximum Operating Temperature (°C)</Label>
+              <Select value={temperature} onValueChange={setTemperature}>
                 <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select material" />
+                  <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="copper_pvc">Copper with PVC (k=115)</SelectItem>
-                  <SelectItem value="copper_xlpe">Copper with XLPE (k=143)</SelectItem>
-                  <SelectItem value="aluminium_pvc">Aluminium with PVC (k=76)</SelectItem>
-                  <SelectItem value="aluminium_xlpe">Aluminium with XLPE (k=94)</SelectItem>
+                  <SelectItem value="70">70°C (PVC)</SelectItem>
+                  <SelectItem value="90">90°C (XLPE)</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
-            {calculationType !== "maxCurrent" && (
-              <div>
-                <Label htmlFor="fault-current">Prospective Fault Current (A)</Label>
-                <Input
-                  id="fault-current"
-                  type="number"
-                  value={faultCurrent}
-                  onChange={(e) => setFaultCurrent(e.target.value)}
-                  placeholder="Enter fault current in amperes"
-                  className="bg-elec-dark border-elec-yellow/20"
-                />
-              </div>
-            )}
-
-            {calculationType !== "maxTime" && (
-              <div>
-                <Label htmlFor="disconnection-time">Disconnection Time (s)</Label>
-                <Input
-                  id="disconnection-time"
-                  type="number"
-                  step="0.001"
-                  value={disconnectionTime}
-                  onChange={(e) => setDisconnectionTime(e.target.value)}
-                  placeholder="Enter time in seconds"
-                  className="bg-elec-dark border-elec-yellow/20"
-                />
-              </div>
-            )}
-
-            {calculationType !== "minCsa" && (
-              <div>
-                <Label htmlFor="cable-size">Cable Cross-Sectional Area (mm²)</Label>
-                <Input
-                  id="cable-size"
-                  type="number"
-                  step="0.1"
-                  value={cableSize}
-                  onChange={(e) => setCableSize(e.target.value)}
-                  placeholder="Enter CSA in mm²"
-                  className="bg-elec-dark border-elec-yellow/20"
-                />
-              </div>
-            )}
-
             <div className="flex gap-2">
-              <Button 
-                onClick={calculateAdiabatic} 
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                disabled={!calculationType || !conductorMaterial}
-              >
-                <Calculator className="mr-2 h-4 w-4" />
+              <Button onClick={calculateAdiabatic} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+                <Calculator className="h-4 w-4 mr-2" />
                 Calculate
               </Button>
-              <Button variant="outline" onClick={resetCalculator}>
-                Reset
+              <Button variant="outline" onClick={reset}>
+                <RotateCcw className="h-4 w-4" />
               </Button>
             </div>
           </div>
 
-          <div className="bg-elec-dark/50 rounded-lg p-4">
-            <h3 className="text-lg font-medium text-elec-yellow mb-4">{getResultLabel()}</h3>
-            {result !== null ? (
-              <div className="space-y-2">
-                <div className="text-2xl font-bold text-white">
-                  {result} {getResultUnit()}
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Based on adiabatic equation: S = (I × √t) / k
-                </p>
-                {calculationType === "minCsa" && (
-                  <div className="bg-green-500/10 border border-green-500/30 rounded p-3 mt-4">
-                    <p className="text-xs text-green-300">
-                      <strong>Result:</strong> Cable must have minimum CSA of {result}mm² 
-                      to withstand the fault current safely.
-                    </p>
+          {/* Result Section */}
+          <div className="space-y-4">
+            <div className="rounded-md bg-elec-dark p-6 min-h-[200px]">
+              {result ? (
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Adiabatic Calculation</h3>
+                    <Badge variant="secondary" className="mb-4">
+                      {cableType.charAt(0).toUpperCase() + cableType.slice(1)} @ {temperature}°C
+                    </Badge>
                   </div>
-                )}
-              </div>
-            ) : (
-              <p className="text-muted-foreground">Enter values and select calculation type to see result</p>
-            )}
-          </div>
-        </div>
+                  
+                  <Separator />
+                  
+                  <div className="space-y-3 text-sm">
+                    <div>
+                      <span className="text-muted-foreground">Minimum CSA Required:</span>
+                      <div className="font-mono text-elec-yellow text-lg">{result.minimumCsa.toFixed(2)} mm²</div>
+                    </div>
+                    
+                    <div>
+                      <span className="text-muted-foreground">K Factor Used:</span>
+                      <div className="font-mono text-elec-yellow">{result.k}</div>
+                    </div>
+                    
+                    <Separator />
+                    
+                    <div className="text-xs text-muted-foreground">
+                      <div>Formula: S = I√t / k</div>
+                      <div>Where S = minimum CSA (mm²)</div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center h-full text-muted-foreground">
+                  Enter fault current and time to calculate minimum cable size
+                </div>
+              )}
+            </div>
 
-        <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-          <h4 className="text-sm font-medium text-blue-300 mb-2">Adiabatic Equation</h4>
-          <p className="text-xs text-muted-foreground mb-2">
-            <strong>S = (I × √t) / k</strong>
-          </p>
-          <ul className="text-xs text-muted-foreground space-y-1">
-            <li><strong>S</strong> = Minimum cross-sectional area (mm²)</li>
-            <li><strong>I</strong> = Prospective fault current (A)</li>
-            <li><strong>t</strong> = Disconnection time (s)</li>
-            <li><strong>k</strong> = Material constant from BS 7671 Table 54.2</li>
-          </ul>
+            <Alert className="border-blue-500/20 bg-blue-500/10">
+              <Info className="h-4 w-4 text-blue-500" />
+              <AlertDescription className="text-blue-200">
+                This calculation assumes adiabatic conditions (no heat loss during fault).
+              </AlertDescription>
+            </Alert>
+          </div>
         </div>
       </CardContent>
     </Card>

@@ -1,81 +1,79 @@
 
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Shield, Calculator } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-
-interface RCDDevice {
-  id: string;
-  name: string;
-  rating: string;
-  type: string;
-  tripTime1x: number;
-  tripTime5x: number;
-}
+import { Shield, Info, Calculator, RotateCcw } from "lucide-react";
+import { useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const RCDDiscriminationCalculator = () => {
-  const [upstreamRcd, setUpstreamRcd] = useState<RCDDevice | null>(null);
-  const [downstreamRcd, setDownstreamRcd] = useState<RCDDevice | null>(null);
-  const [faultCurrent, setFaultCurrent] = useState("");
-  const [discriminationResult, setDiscriminationResult] = useState<{
-    isDiscriminative: boolean;
-    upstreamTime: number;
-    downstreamTime: number;
-    timeDifference: number;
+  const [upstreamRating, setUpstreamRating] = useState<string>("100");
+  const [downstreamRating, setDownstreamRating] = useState<string>("30");
+  const [upstreamType, setUpstreamType] = useState<string>("standard");
+  const [downstreamType, setDownstreamType] = useState<string>("standard");
+  const [result, setResult] = useState<{
+    discriminationRatio: number;
+    hasDiscrimination: boolean;
+    upstreamTripTime: string;
+    downstreamTripTime: string;
+    recommendation: string;
   } | null>(null);
 
-  // Common RCD configurations
-  const rcdDevices = [
-    { id: "main-300", name: "Main RCD", rating: "300mA", type: "S-Type", tripTime1x: 300, tripTime5x: 150 },
-    { id: "main-100", name: "Main RCD", rating: "100mA", type: "Standard", tripTime1x: 300, tripTime5x: 40 },
-    { id: "circuit-30", name: "Circuit RCD", rating: "30mA", type: "Standard", tripTime1x: 300, tripTime5x: 40 },
-    { id: "rcbo-30", name: "RCBO", rating: "30mA", type: "Standard", tripTime1x: 300, tripTime5x: 40 },
-    { id: "socket-30", name: "Socket RCD", rating: "30mA", type: "Standard", tripTime1x: 300, tripTime5x: 40 },
-  ];
-
   const calculateDiscrimination = () => {
-    if (!upstreamRcd || !downstreamRcd || !faultCurrent) return;
+    const upstreamRatingVal = parseFloat(upstreamRating);
+    const downstreamRatingVal = parseFloat(downstreamRating);
 
-    const fault = parseFloat(faultCurrent);
-    if (isNaN(fault)) return;
-
-    // Determine which trip time to use based on fault current
-    const getTrippingTime = (rcd: RCDDevice, current: number) => {
-      const ratedCurrent = parseFloat(rcd.rating);
-      const ratio = current / ratedCurrent;
+    if (upstreamRatingVal > 0 && downstreamRatingVal > 0) {
+      const discriminationRatio = upstreamRatingVal / downstreamRatingVal;
       
-      if (ratio >= 5) {
-        return rcd.tripTime5x;
-      } else if (ratio >= 1) {
-        return rcd.tripTime1x;
+      // Trip times based on RCD type and rating
+      const getTripTime = (rating: number, type: string) => {
+        if (type === "s-type") return "0.13 - 0.5s";
+        if (rating <= 30) return "< 0.04s";
+        if (rating <= 100) return "< 0.04s";
+        return "< 0.2s";
+      };
+
+      const upstreamTripTime = getTripTime(upstreamRatingVal, upstreamType);
+      const downstreamTripTime = getTripTime(downstreamRatingVal, downstreamType);
+      
+      // Discrimination rules
+      let hasDiscrimination = false;
+      let recommendation = "";
+
+      if (upstreamType === "s-type" && downstreamType === "standard") {
+        hasDiscrimination = discriminationRatio >= 2;
+        recommendation = hasDiscrimination 
+          ? "Good discrimination with S-type upstream RCD"
+          : "Increase upstream RCD rating or use different RCD types";
+      } else if (discriminationRatio >= 3) {
+        hasDiscrimination = true;
+        recommendation = "Adequate discrimination with standard RCDs";
       } else {
-        return Infinity; // Won't trip
+        hasDiscrimination = false;
+        recommendation = "Consider S-type upstream RCD or increase rating ratio";
       }
-    };
 
-    const upstreamTime = getTrippingTime(upstreamRcd, fault);
-    const downstreamTime = getTrippingTime(downstreamRcd, fault);
-    
-    // For discrimination, upstream should be slower by at least 200ms
-    const timeDifference = upstreamTime - downstreamTime;
-    const isDiscriminative = timeDifference >= 200 && downstreamTime !== Infinity;
-
-    setDiscriminationResult({
-      isDiscriminative,
-      upstreamTime,
-      downstreamTime,
-      timeDifference
-    });
+      setResult({
+        discriminationRatio,
+        hasDiscrimination,
+        upstreamTripTime,
+        downstreamTripTime,
+        recommendation
+      });
+    }
   };
 
-  const resetCalculator = () => {
-    setUpstreamRcd(null);
-    setDownstreamRcd(null);
-    setFaultCurrent("");
-    setDiscriminationResult(null);
+  const reset = () => {
+    setUpstreamRating("100");
+    setDownstreamRating("30");
+    setUpstreamType("standard");
+    setDownstreamType("standard");
+    setResult(null);
   };
 
   return (
@@ -83,132 +81,144 @@ const RCDDiscriminationCalculator = () => {
       <CardHeader>
         <div className="flex items-center gap-2">
           <Shield className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>RCD Discrimination / Selectivity Tool</CardTitle>
+          <CardTitle>RCD Discrimination Calculator</CardTitle>
         </div>
+        <CardDescription>
+          Calculate RCD discrimination to ensure selective operation in cascade installations.
+        </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Input Section */}
           <div className="space-y-4">
-            <div>
-              <Label htmlFor="upstream-rcd">Upstream RCD (Supply Side)</Label>
-              <Select 
-                value={upstreamRcd?.id || ""} 
-                onValueChange={(value) => {
-                  const rcd = rcdDevices.find(r => r.id === value);
-                  setUpstreamRcd(rcd || null);
-                }}
-              >
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select upstream RCD" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  {rcdDevices.map((rcd) => (
-                    <SelectItem key={rcd.id} value={rcd.id}>
-                      {rcd.name} - {rcd.rating} ({rcd.type})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <div className="p-4 border border-elec-yellow/20 rounded-md bg-elec-dark">
+              <h4 className="font-semibold mb-3 text-elec-yellow">Upstream RCD (Main)</h4>
+              <div className="space-y-3">
+                <div>
+                  <Label htmlFor="upstream-rating">Rating (mA)</Label>
+                  <Select value={upstreamRating} onValueChange={setUpstreamRating}>
+                    <SelectTrigger className="bg-elec-gray border-elec-yellow/20">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                      <SelectItem value="100">100</SelectItem>
+                      <SelectItem value="300">300</SelectItem>
+                      <SelectItem value="500">500</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="upstream-type">Type</Label>
+                  <Select value={upstreamType} onValueChange={setUpstreamType}>
+                    <SelectTrigger className="bg-elec-gray border-elec-yellow/20">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                      <SelectItem value="standard">Standard (General)</SelectItem>
+                      <SelectItem value="s-type">S-Type (Selective)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
             </div>
 
-            <div>
-              <Label htmlFor="downstream-rcd">Downstream RCD (Load Side)</Label>
-              <Select 
-                value={downstreamRcd?.id || ""} 
-                onValueChange={(value) => {
-                  const rcd = rcdDevices.find(r => r.id === value);
-                  setDownstreamRcd(rcd || null);
-                }}
-              >
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select downstream RCD" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  {rcdDevices.map((rcd) => (
-                    <SelectItem key={rcd.id} value={rcd.id}>
-                      {rcd.name} - {rcd.rating} ({rcd.type})
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label htmlFor="fault-current">Earth Fault Current (mA)</Label>
-              <Input
-                id="fault-current"
-                type="number"
-                step="1"
-                value={faultCurrent}
-                onChange={(e) => setFaultCurrent(e.target.value)}
-                placeholder="e.g., 150"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
+            <div className="p-4 border border-elec-yellow/20 rounded-md bg-elec-dark">
+              <h4 className="font-semibold mb-3 text-elec-yellow">Downstream RCD (Circuit)</h4>
+              <div className="space-y-3">
+                <div>
+                  <Label htmlFor="downstream-rating">Rating (mA)</Label>
+                  <Select value={downstreamRating} onValueChange={setDownstreamRating}>
+                    <SelectTrigger className="bg-elec-gray border-elec-yellow/20">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                      <SelectItem value="10">10</SelectItem>
+                      <SelectItem value="30">30</SelectItem>
+                      <SelectItem value="100">100</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="downstream-type">Type</Label>
+                  <Select value={downstreamType} onValueChange={setDownstreamType}>
+                    <SelectTrigger className="bg-elec-gray border-elec-yellow/20">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                      <SelectItem value="standard">Standard (General)</SelectItem>
+                      <SelectItem value="s-type">S-Type (Selective)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
             </div>
 
             <div className="flex gap-2">
-              <Button 
-                onClick={calculateDiscrimination} 
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                disabled={!upstreamRcd || !downstreamRcd || !faultCurrent}
-              >
-                <Calculator className="mr-2 h-4 w-4" />
-                Check Discrimination
+              <Button onClick={calculateDiscrimination} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+                <Calculator className="h-4 w-4 mr-2" />
+                Calculate
               </Button>
-              <Button variant="outline" onClick={resetCalculator}>
-                Reset
+              <Button variant="outline" onClick={reset}>
+                <RotateCcw className="h-4 w-4" />
               </Button>
             </div>
           </div>
 
-          <div className="bg-elec-dark/50 rounded-lg p-4">
-            <h3 className="text-lg font-medium text-elec-yellow mb-4">Discrimination Analysis</h3>
-            {discriminationResult ? (
-              <div className="space-y-3">
-                <div className={`p-3 rounded ${discriminationResult.isDiscriminative ? 'bg-green-500/20 border border-green-500/30' : 'bg-red-500/20 border border-red-500/30'}`}>
-                  <p className={`font-medium ${discriminationResult.isDiscriminative ? 'text-green-300' : 'text-red-300'}`}>
-                    {discriminationResult.isDiscriminative ? '✓ DISCRIMINATIVE' : '✗ NON-DISCRIMINATIVE'}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-sm text-muted-foreground">Downstream RCD Trip Time:</p>
-                  <p className="text-xl font-bold text-white">
-                    {discriminationResult.downstreamTime === Infinity ? 'Won\'t Trip' : `${discriminationResult.downstreamTime}ms`}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-sm text-muted-foreground">Upstream RCD Trip Time:</p>
-                  <p className="text-xl font-bold text-white">
-                    {discriminationResult.upstreamTime === Infinity ? 'Won\'t Trip' : `${discriminationResult.upstreamTime}ms`}
-                  </p>
-                </div>
-
-                {discriminationResult.timeDifference !== Infinity && (
-                  <div>
-                    <p className="text-sm text-muted-foreground">Time Difference:</p>
-                    <p className="text-lg font-bold text-white">{discriminationResult.timeDifference}ms</p>
+          {/* Result Section */}
+          <div className="space-y-4">
+            <div className="rounded-md bg-elec-dark p-6 min-h-[300px]">
+              {result ? (
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Discrimination Analysis</h3>
+                    <Badge 
+                      variant={result.hasDiscrimination ? "default" : "destructive"} 
+                      className="mb-4"
+                    >
+                      {result.hasDiscrimination ? "Discriminates" : "No Discrimination"}
+                    </Badge>
                   </div>
-                )}
-
-                <div className="bg-blue-500/10 border border-blue-500/30 rounded p-3">
-                  <p className="text-xs text-blue-300">
-                    <strong>Discrimination Requirement:</strong> Upstream RCD must be at least 200ms slower than downstream RCD to ensure selectivity.
-                  </p>
+                  
+                  <Separator />
+                  
+                  <div className="space-y-3 text-sm">
+                    <div>
+                      <span className="text-muted-foreground">Rating Ratio:</span>
+                      <div className="font-mono text-elec-yellow">{result.discriminationRatio.toFixed(1)} : 1</div>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <span className="text-muted-foreground text-xs">Upstream Trip:</span>
+                        <div className="font-mono text-elec-yellow text-sm">{result.upstreamTripTime}</div>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground text-xs">Downstream Trip:</span>
+                        <div className="font-mono text-elec-yellow text-sm">{result.downstreamTripTime}</div>
+                      </div>
+                    </div>
+                    
+                    <Separator />
+                    
+                    <div>
+                      <span className="text-muted-foreground">Recommendation:</span>
+                      <div className="text-elec-yellow text-sm mt-1">{result.recommendation}</div>
+                    </div>
+                  </div>
                 </div>
-
-                <div className="bg-amber-500/10 border border-amber-500/30 rounded p-3">
-                  <p className="text-xs text-amber-300">
-                    <strong>Tip:</strong> Use S-Type (time delayed) RCDs upstream and standard RCDs downstream for better discrimination.
-                  </p>
+              ) : (
+                <div className="flex items-center justify-center h-full text-muted-foreground">
+                  Configure RCD settings to analyse discrimination
                 </div>
-              </div>
-            ) : (
-              <p className="text-muted-foreground">
-                Select RCD devices and enter fault current to analyze discrimination.
-              </p>
-            )}
+              )}
+            </div>
+
+            <Alert className="border-blue-500/20 bg-blue-500/10">
+              <Info className="h-4 w-4 text-blue-500" />
+              <AlertDescription className="text-blue-200">
+                For discrimination: Standard RCDs need 3:1 ratio, S-type upstream allows 2:1 ratio.
+              </AlertDescription>
+            </Alert>
           </div>
         </div>
       </CardContent>
