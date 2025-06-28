@@ -28,6 +28,10 @@ import PFCCalculator from "@/components/apprentice/calculators/PFCCalculator";
 import RCDDiscriminationCalculator from "@/components/apprentice/calculators/RCDDiscriminationCalculator";
 import CableDeratingCalculator from "@/components/apprentice/calculators/CableDeratingCalculator";
 import LoadCalculator from "@/components/electrician-tools/LoadCalculator";
+// Phase 1 New Calculators
+import EnergyCostCalculator from "@/components/apprentice/calculators/EnergyCostCalculator";
+import UnitConverterCalculator from "@/components/apprentice/calculators/UnitConverterCalculator";
+import WireGaugeCalculator from "@/components/apprentice/calculators/WireGaugeCalculator";
 import { Calculator, RotateCw } from "lucide-react";
 
 const OnJobCalculations = () => {
@@ -97,6 +101,13 @@ const OnJobCalculations = () => {
           icon={RotateCw} 
           description="Determine correct phase sequence for 3-phase motor connections and installations." 
         />;
+      // Phase 1 New Calculators
+      case "energy-cost":
+        return <EnergyCostCalculator />;
+      case "unit-converter":
+        return <UnitConverterCalculator />;
+      case "wire-gauge":
+        return <WireGaugeCalculator />;
       default:
         return <OhmsLawCalculator />;
     }

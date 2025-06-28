@@ -39,6 +39,10 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "rcd-discrimination", label: "RCD Discrimination", category: "Protection" },
     { value: "cable-derating", label: "Cable Derating", category: "Design" },
     { value: "phase-rotation", label: "Phase Rotation", category: "Testing" },
+    // Phase 1 New Calculators
+    { value: "energy-cost", label: "Energy Cost Calculator", category: "Cost Analysis" },
+    { value: "unit-converter", label: "Unit Converter", category: "Utilities" },
+    { value: "wire-gauge", label: "Wire Gauge (AWG/SWG)", category: "Components" },
   ];
 
   // Group calculators by category
