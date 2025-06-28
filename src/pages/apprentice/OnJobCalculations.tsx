@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import CableSizingCalculator from "@/components/apprentice/calculators/CableSizingCalculator";
 import OhmsLawCalculator from "@/components/electrician-tools/OhmsLawCalculator";
@@ -32,6 +32,16 @@ import { Calculator, RotateCw } from "lucide-react";
 
 const OnJobCalculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
+  const location = useLocation();
+  
+  // Determine context based on current path
+  const isFromApprenticeHub = location.pathname === "/apprentice/calculators";
+  const backUrl = isFromApprenticeHub ? "/apprentice" : "/apprentice/on-job-tools";
+  const backLabel = isFromApprenticeHub ? "Back to Apprentice Hub" : "Back to Tools";
+  const pageTitle = isFromApprenticeHub ? "Electrical Calculators" : "On-the-Job Calculations";
+  const pageDescription = isFromApprenticeHub 
+    ? "Professional electrical calculations for your studies and work"
+    : "Essential calculators for electrical installations and troubleshooting";
 
   const renderCalculator = () => {
     switch (calculatorType) {
@@ -96,14 +106,12 @@ const OnJobCalculations = () => {
     <div className="space-y-6 animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">On-the-Job Calculations</h1>
-          <p className="text-muted-foreground">
-            Essential calculators for electrical installations and troubleshooting
-          </p>
+          <h1 className="text-3xl font-bold tracking-tight">{pageTitle}</h1>
+          <p className="text-muted-foreground">{pageDescription}</p>
         </div>
-        <Link to="/apprentice/on-job-tools">
+        <Link to={backUrl}>
           <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> Back to Tools
+            <ArrowLeft className="h-4 w-4" /> {backLabel}
           </Button>
         </Link>
       </div>
