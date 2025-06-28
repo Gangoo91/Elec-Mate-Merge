@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -22,10 +22,14 @@ interface CalculationHistoryProps {
   onRestoreCalculation: (entry: CalculationEntry) => void;
 }
 
-const CalculationHistory: React.FC<CalculationHistoryProps> = ({
+interface CalculationHistoryRef {
+  saveCalculation: (inputs: any, results: any, isValid: boolean) => void;
+}
+
+const CalculationHistory = forwardRef<CalculationHistoryRef, CalculationHistoryProps>(({
   calculatorType,
   onRestoreCalculation
-}) => {
+}, ref) => {
   const [history, setHistory] = useState<CalculationEntry[]>([]);
   const [showAll, setShowAll] = useState(false);
 
@@ -64,6 +68,11 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
     );
   };
 
+  // Expose saveCalculation method through ref
+  useImperativeHandle(ref, () => ({
+    saveCalculation
+  }));
+
   const toggleBookmark = (id: string) => {
     const updatedHistory = history.map(entry =>
       entry.id === id ? { ...entry, isBookmarked: !entry.isBookmarked } : entry
@@ -82,11 +91,6 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
 
   const displayedHistory = showAll ? history : history.slice(0, 5);
   const bookmarkedHistory = history.filter(entry => entry.isBookmarked);
-
-  // Expose saveCalculation method
-  React.useImperativeHandle(React.createRef(), () => ({
-    saveCalculation
-  }));
 
   const formatInputsDisplay = (inputs: any) => {
     const keyMappings: { [key: string]: string } = {
@@ -190,7 +194,9 @@ const CalculationHistory: React.FC<CalculationHistoryProps> = ({
       </CardContent>
     </Card>
   );
-};
+});
+
+CalculationHistory.displayName = 'CalculationHistory';
 
 const HistoryEntry: React.FC<{
   entry: CalculationEntry;

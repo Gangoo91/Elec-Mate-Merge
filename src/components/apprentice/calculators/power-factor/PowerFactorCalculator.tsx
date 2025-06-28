@@ -7,12 +7,11 @@ import PowerFactorResult from "./PowerFactorResult";
 import PowerFactorInfo from "./PowerFactorInfo";
 import ValidationIndicator from "../ValidationIndicator";
 import CalculationReport from "../CalculationReport";
-import CalculationHistory from "../calculation-history/CalculationHistory";
-import QuickCalculationPresets from "../smart-features/QuickCalculationPresets";
+import CalculationHistory, { type CalculationEntry } from "../calculation-history/CalculationHistory";
+import QuickCalculationPresets, { type PresetScenario } from "../smart-features/QuickCalculationPresets";
 import SmartInputSuggestions from "../smart-features/SmartInputSuggestions";
 import { useToast } from "@/components/ui/use-toast";
 import { useEffect, useState, useRef } from "react";
-import type { CalculationEntry, PresetScenario } from "../smart-features/QuickCalculationPresets";
 
 const PowerFactorCalculator = () => {
   const { toast } = useToast();
