@@ -2,8 +2,7 @@
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-import CareerGuidanceTab from "@/components/apprentice/ojt/enhanced/CareerGuidanceTab";
-import SmartAnalyticsTab from "@/components/apprentice/ojt/enhanced/SmartAnalyticsTab";
+import DailyAITipsTab from "@/components/apprentice/ojt/enhanced/DailyAITipsTab";
 import HelpBotTab from "@/components/apprentice/ojt/enhanced/HelpBotTab";
 import MobileAdvancedHelpHeader from "@/components/apprentice/advanced-help/MobileAdvancedHelpHeader";
 import MobileTabsList from "@/components/apprentice/advanced-help/MobileTabsList";
@@ -37,41 +36,30 @@ const AdvancedHelp = () => {
           </CardContent>
         </Card>
 
-        {/* Career & Analytics Tools */}
+        {/* Daily AI Tips Section */}
         <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/5 to-blue-500/5">
           <CardContent className="p-4">
             <div className="mb-6">
-              <h2 className="text-xl font-semibold text-purple-400 mb-2">Professional Development Tools</h2>
+              <h2 className="text-xl font-semibold text-purple-400 mb-2">Daily Learning Booster</h2>
               <p className="text-sm text-muted-foreground">
-                Advanced tools to guide your career progression and track your learning journey with AI-powered insights.
+                Fresh daily tips and insights to accelerate your electrical knowledge and build good habits.
               </p>
             </div>
             
-            <Tabs defaultValue="career" className="w-full">
+            <Tabs defaultValue="tips" className="w-full">
               <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm py-2 -mx-4 px-4 mb-4">
                 <SecondaryTabsList />
               </div>
 
-              <TabsContent value="career" className="mt-0">
+              <TabsContent value="tips" className="mt-0">
                 <div className="mb-4">
-                  <h3 className="text-lg font-semibold mb-2">Career Guidance & Planning</h3>
+                  <h3 className="text-lg font-semibold mb-2">Daily AI Tips & Insights</h3>
                   <p className="text-sm text-muted-foreground mb-4">
-                    Get personalised advice on career progression, skill development, and industry opportunities 
-                    tailored to the UK electrical sector.
+                    Curated daily tips covering safety, practical skills, regulations, and career advice 
+                    specifically for electrical apprentices in the UK.
                   </p>
                 </div>
-                <CareerGuidanceTab />
-              </TabsContent>
-
-              <TabsContent value="analytics" className="mt-0">
-                <div className="mb-4">
-                  <h3 className="text-lg font-semibold mb-2">Smart Learning Analytics</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    AI-powered insights into your learning progress, strengths, and areas for improvement 
-                    with personalised recommendations for optimal development.
-                  </p>
-                </div>
-                <SmartAnalyticsTab />
+                <DailyAITipsTab />
               </TabsContent>
             </Tabs>
           </CardContent>
@@ -90,9 +78,9 @@ const AdvancedHelp = () => {
                 </p>
               </div>
               <div className="space-y-2">
-                <h4 className="font-medium text-purple-400">📈 Smart Analytics</h4>
+                <h4 className="font-medium text-purple-400">💡 Daily Tips</h4>
                 <p className="text-sm text-muted-foreground">
-                  Review your learning metrics regularly to identify knowledge gaps and track improvement areas.
+                  Check back daily for fresh insights and tips. Build a learning habit to accelerate your progress.
                 </p>
               </div>
             </div>
