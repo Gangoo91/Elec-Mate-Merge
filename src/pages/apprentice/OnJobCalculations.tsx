@@ -1,164 +1,36 @@
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+
 import { useState } from "react";
-import CableSizingCalculator from "@/components/apprentice/calculators/CableSizingCalculator";
-import OhmsLawCalculator from "@/components/electrician-tools/OhmsLawCalculator";
-import VoltageDropCalculator from "@/components/electrician-tools/VoltageDropCalculator";
-import { PowerFactorCalculator } from "@/components/electrician-tools/PowerFactorCalculator";
-import LumenCalculator from "@/components/apprentice/calculators/LumenCalculator";
-import InstrumentationCalculator from "@/components/apprentice/calculators/InstrumentationCalculator";
-import ZsValuesCalculator from "@/components/apprentice/calculators/ZsValuesCalculator";
-import AdiabaticCalculator from "@/components/apprentice/calculators/AdiabaticCalculator";
-import ConduitFillCalculator from "@/components/apprentice/calculators/ConduitFillCalculator";
-import ResistorColourCodeCalculator from "@/components/apprentice/calculators/ResistorColourCodeCalculator";
-import RingCircuitCalculator from "@/components/apprentice/calculators/RingCircuitCalculator";
-import DiversityFactorCalculator from "@/components/apprentice/calculators/DiversityFactorCalculator";
-import EarthFaultLoopCalculator from "@/components/apprentice/calculators/EarthFaultLoopCalculator";
-import MaximumDemandCalculator from "@/components/apprentice/calculators/MaximumDemandCalculator";
-import RCDTripTimeCalculator from "@/components/apprentice/calculators/RCDTripTimeCalculator";
-import SolarPVCalculator from "@/components/apprentice/calculators/SolarPVCalculator";
-import BatteryBackupCalculator from "@/components/apprentice/calculators/BatteryBackupCalculator";
-import BS7671ZsLookupCalculator from "@/components/apprentice/calculators/BS7671ZsLookupCalculator";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Calculator } from "lucide-react";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
-import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoonCalculator";
-import R1R2Calculator from "@/components/apprentice/calculators/R1R2Calculator";
-import PFCCalculator from "@/components/apprentice/calculators/PFCCalculator";
-import RCDDiscriminationCalculator from "@/components/apprentice/calculators/RCDDiscriminationCalculator";
-import CableDeratingCalculator from "@/components/apprentice/calculators/CableDeratingCalculator";
-import LoadCalculator from "@/components/electrician-tools/LoadCalculator";
-// Phase 1 New Calculators
-import EnergyCostCalculator from "@/components/apprentice/calculators/EnergyCostCalculator";
-import UnitConverterCalculator from "@/components/apprentice/calculators/UnitConverterCalculator";
-import WireGaugeCalculator from "@/components/apprentice/calculators/WireGaugeCalculator";
-// Phase 2 New Calculators
-import ThreePhasePowerCalculator from "@/components/apprentice/calculators/ThreePhasePowerCalculator";
-import MotorStartingCurrentCalculator from "@/components/apprentice/calculators/MotorStartingCurrentCalculator";
-import CableCurrentCapacityCalculator from "@/components/apprentice/calculators/CableCurrentCapacityCalculator";
-import TransformerCalculator from "@/components/apprentice/calculators/TransformerCalculator";
-import LEDDriverCalculator from "@/components/apprentice/calculators/LEDDriverCalculator";
-// New Fundamental Calculators
-import ACPowerCalculator from "@/components/apprentice/calculators/ACPowerCalculator";
-import BasicACCircuitCalculator from "@/components/apprentice/calculators/BasicACCircuitCalculator";
-import { RotateCw } from "lucide-react";
-import PhaseRotationCalculator from "@/components/apprentice/calculators/PhaseRotationCalculator";
-import FaultCurrentCalculator from "@/components/apprentice/calculators/FaultCurrentCalculator";
-import DiscriminationCalculator from "@/components/apprentice/calculators/DiscriminationCalculator";
-import CableTemperatureDeratingCalculator from "@/components/apprentice/calculators/CableTemperatureDeratingCalculator";
-import HarmonicsCalculator from "@/components/apprentice/calculators/HarmonicsCalculator";
-import PowerQualityCalculator from "@/components/apprentice/calculators/PowerQualityCalculator";
-import EmergencyLightingCalculator from "@/components/apprentice/calculators/EmergencyLightingCalculator";
-import FireAlarmCalculator from "@/components/apprentice/calculators/FireAlarmCalculator";
-import EarthingSystemCalculator from "@/components/apprentice/calculators/EarthingSystemCalculator";
+import MainCalculator from "@/components/apprentice/calculators/MainCalculator";
 
 const OnJobCalculations = () => {
-  const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
-  const location = useLocation();
-  
-  // Determine context based on current path
-  const isFromApprenticeHub = location.pathname === "/apprentice/calculators";
-  const backUrl = isFromApprenticeHub ? "/apprentice" : "/apprentice/on-job-tools";
-  const backLabel = isFromApprenticeHub ? "Back to Apprentice Hub" : "Back to Tools";
-  const pageTitle = isFromApprenticeHub ? "Electrical Calculators" : "On-the-Job Calculations";
-  const pageDescription = isFromApprenticeHub 
-    ? "Professional electrical calculations for your studies and work"
-    : "Essential calculators for electrical installations and troubleshooting";
-
-  const renderCalculator = () => {
-    switch (calculatorType) {
-      case "ohms-law":
-        return <OhmsLawCalculator />;
-      case "ac-power":
-        return <ACPowerCalculator />;
-      case "basic-ac-circuit":
-        return <BasicACCircuitCalculator />;
-      case "voltage-drop":
-        return <VoltageDropCalculator />;
-      case "power-factor":
-        return <PowerFactorCalculator />;
-      case "cable-size":
-        return <CableSizingCalculator />;
-      case "lumen":
-        return <LumenCalculator />;
-      case "instrumentation":
-        return <InstrumentationCalculator />;
-      case "zs-values":
-        return <ZsValuesCalculator />;
-      case "adiabatic":
-        return <AdiabaticCalculator />;
-      case "conduit-fill":
-        return <ConduitFillCalculator />;
-      case "resistor-colour-code":
-        return <ResistorColourCodeCalculator />;
-      case "ring-circuit":
-        return <RingCircuitCalculator />;
-      case "diversity-factor":
-        return <DiversityFactorCalculator />;
-      case "earth-fault-loop":
-        return <EarthFaultLoopCalculator />;
-      case "maximum-demand":
-        return <MaximumDemandCalculator />;
-      case "rcd-trip-time":
-        return <RCDTripTimeCalculator />;
-      case "solar-pv":
-        return <SolarPVCalculator />;
-      case "battery-backup":
-        return <BatteryBackupCalculator />;
-      case "bs7671-zs-lookup":
-        return <BS7671ZsLookupCalculator />;
-      case "r1r2":
-        return <R1R2Calculator />;
-      case "pfc":
-        return <PFCCalculator />;
-      case "rcd-discrimination":
-        return <RCDDiscriminationCalculator />;
-      case "cable-derating":
-        return <CableDeratingCalculator />;
-      case "load":
-        return <LoadCalculator />;
-      case "phase-rotation":
-        return <PhaseRotationCalculator />;
-      // Phase 2 New Calculators
-      case "fault-current":
-        return <FaultCurrentCalculator />;
-      case "discrimination":
-        return <DiscriminationCalculator />;
-      case "cable-temperature-derating":
-        return <CableTemperatureDeratingCalculator />;
-      case "harmonics":
-        return <HarmonicsCalculator />;
-      case "power-quality":
-        return <PowerQualityCalculator />;
-      case "emergency-lighting":
-        return <EmergencyLightingCalculator />;
-      case "fire-alarm":
-        return <FireAlarmCalculator />;
-      case "earthing-system":
-        return <EarthingSystemCalculator />;
-      default:
-        return <OhmsLawCalculator />;
-    }
-  };
+  const [calculatorType, setCalculatorType] = useState("");
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">{pageTitle}</h1>
-          <p className="text-muted-foreground">{pageDescription}</p>
-        </div>
-        <Link to={backUrl}>
-          <Button variant="outline" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" /> {backLabel}
-          </Button>
-        </Link>
-      </div>
+    <div className="container mx-auto p-4 space-y-6">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Calculator className="h-6 w-6 text-elec-yellow" />
+            <CardTitle>Electrical Calculators</CardTitle>
+          </div>
+          <p className="text-muted-foreground">
+            Essential electrical calculation tools for apprentices and professionals
+          </p>
+        </CardHeader>
+        <CardContent>
+          <CalculatorSelector 
+            calculatorType={calculatorType}
+            setCalculatorType={setCalculatorType}
+          />
+        </CardContent>
+      </Card>
 
-      {/* Calculator Selector */}
-      <CalculatorSelector calculatorType={calculatorType} setCalculatorType={setCalculatorType} />
-      
-      {/* Dynamic Calculator */}
-      {renderCalculator()}
+      {calculatorType && (
+        <MainCalculator calculatorType={calculatorType} />
+      )}
     </div>
   );
 };
