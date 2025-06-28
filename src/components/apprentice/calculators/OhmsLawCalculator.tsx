@@ -56,6 +56,13 @@ const OhmsLawCalculator = () => {
     });
   };
 
+  const clearInputs = () => {
+    setVoltage("");
+    setCurrent("");
+    setResistance("");
+    setResult(null);
+  };
+
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
@@ -75,21 +82,30 @@ const OhmsLawCalculator = () => {
               <div className="grid grid-cols-1 gap-2">
                 <Button
                   variant={calculationType === "find-voltage" ? "default" : "outline"}
-                  onClick={() => setCalculationType("find-voltage")}
+                  onClick={() => {
+                    setCalculationType("find-voltage");
+                    clearInputs();
+                  }}
                   className="text-left justify-start"
                 >
                   Find Voltage (V = I × R)
                 </Button>
                 <Button
                   variant={calculationType === "find-current" ? "default" : "outline"}
-                  onClick={() => setCalculationType("find-current")}
+                  onClick={() => {
+                    setCalculationType("find-current");
+                    clearInputs();
+                  }}
                   className="text-left justify-start"
                 >
                   Find Current (I = V ÷ R)
                 </Button>
                 <Button
                   variant={calculationType === "find-resistance" ? "default" : "outline"}
-                  onClick={() => setCalculationType("find-resistance")}
+                  onClick={() => {
+                    setCalculationType("find-resistance");
+                    clearInputs();
+                  }}
                   className="text-left justify-start"
                 >
                   Find Resistance (R = V ÷ I)
@@ -136,9 +152,14 @@ const OhmsLawCalculator = () => {
               </div>
             )}
 
-            <Button onClick={calculateOhmsLaw} className="w-full">
-              Calculate
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={calculateOhmsLaw} className="flex-1">
+                Calculate
+              </Button>
+              <Button onClick={clearInputs} variant="outline">
+                Clear
+              </Button>
+            </div>
           </div>
 
           <div className="space-y-4">
@@ -161,14 +182,35 @@ const OhmsLawCalculator = () => {
               </Card>
             ) : (
               <Card className="border-elec-yellow/20 bg-elec-yellow/5">
-                <CardContent className="pt-4">
+                <CardContent className="pt-6">
                   <div className="text-center text-elec-yellow/80">
                     <Zap className="h-8 w-8 mx-auto mb-2" />
                     <p>Enter values to calculate</p>
+                    <div className="mt-4 text-xs space-y-1">
+                      <p><strong>Ohm's Law:</strong> V = I × R</p>
+                      <p>Where V = Voltage, I = Current, R = Resistance</p>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
             )}
+
+            <Card className="border-blue-500/20 bg-blue-500/5">
+              <CardHeader>
+                <CardTitle className="text-blue-300 text-sm">Quick Reference</CardTitle>
+              </CardHeader>
+              <CardContent className="text-xs space-y-2">
+                <div><strong>V (Voltage):</strong> Measured in Volts (V)</div>
+                <div><strong>I (Current):</strong> Measured in Amperes (A)</div>
+                <div><strong>R (Resistance):</strong> Measured in Ohms (Ω)</div>
+                <div className="pt-2 border-t border-blue-500/20">
+                  <strong>Common UK Values:</strong>
+                  <div>• Domestic supply: 230V</div>
+                  <div>• 3-phase supply: 400V</div>
+                  <div>• Socket outlet: 13A max</div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </CardContent>

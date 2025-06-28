@@ -4,9 +4,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calculator } from "lucide-react";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
 import MainCalculator from "@/components/apprentice/calculators/MainCalculator";
+import CalculatorErrorBoundary from "@/components/apprentice/calculators/CalculatorErrorBoundary";
 
 const OnJobCalculations = () => {
   const [calculatorType, setCalculatorType] = useState("");
+
+  console.log("OnJobCalculations - Current calculator type:", calculatorType);
 
   return (
     <div className="container mx-auto p-4 space-y-6">
@@ -21,15 +24,19 @@ const OnJobCalculations = () => {
           </p>
         </CardHeader>
         <CardContent>
-          <CalculatorSelector 
-            calculatorType={calculatorType}
-            setCalculatorType={setCalculatorType}
-          />
+          <CalculatorErrorBoundary calculatorName="Calculator Selector">
+            <CalculatorSelector 
+              calculatorType={calculatorType}
+              setCalculatorType={setCalculatorType}
+            />
+          </CalculatorErrorBoundary>
         </CardContent>
       </Card>
 
       {calculatorType && (
-        <MainCalculator calculatorType={calculatorType} />
+        <CalculatorErrorBoundary calculatorName={calculatorType.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}>
+          <MainCalculator calculatorType={calculatorType} />
+        </CalculatorErrorBoundary>
       )}
     </div>
   );

@@ -34,6 +34,8 @@ interface MainCalculatorProps {
 }
 
 const MainCalculator = ({ calculatorType }: MainCalculatorProps) => {
+  console.log("MainCalculator rendering type:", calculatorType);
+
   const LoadingSpinner = () => (
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardContent className="flex items-center justify-center py-8">
@@ -43,131 +45,145 @@ const MainCalculator = ({ calculatorType }: MainCalculatorProps) => {
     </Card>
   );
 
+  const ErrorFallback = ({ calculatorName }: { calculatorName: string }) => (
+    <Card className="border-red-500/30 bg-red-500/5">
+      <CardContent className="flex items-center justify-center py-8">
+        <div className="text-center">
+          <div className="text-red-400 mb-2">Failed to load calculator</div>
+          <div className="text-sm text-muted-foreground">{calculatorName}</div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
   const renderCalculator = () => {
-    console.log("MainCalculator rendering type:", calculatorType);
-    
-    switch (calculatorType) {
-      // Fundamental Electrical Calculations
-      case "ohms-law":
-        return <OhmsLawCalculator />;
-      case "ac-power":
-        return <ComingSoonCalculator calculatorName="AC Power Calculator" />;
-      case "basic-ac-circuit":
-        return <ComingSoonCalculator calculatorName="Basic AC Circuit" />;
-      case "power-factor":
-        return <PowerFactorCalculator />;
-      case "three-phase-power":
-        return <ThreePhasePowerCalculator />;
-      
-      // Power & Wattage Calculators
-      case "basic-wattage":
-        return <BasicWattageCalculator />;
-      case "power-triangle":
-        return <PowerTriangleCalculator />;
-      case "single-phase-power":
-        return <SinglePhasePowerCalculator />;
-      case "power-consumption":
-        return <PowerConsumptionCalculator />;
-      case "appliance-power":
-        return <AppliancePowerCalculator />;
-      case "power-loss":
-        return <PowerLossCalculator />;
-      
-      // Design & Installation
-      case "voltage-drop":
-        return <ComingSoonCalculator calculatorName="Voltage Drop" />;
-      case "cable-size":
-        return <CableSizingCalculator />;
-      case "load":
-        return <ComingSoonCalculator calculatorName="Load Assessment" />;
-      case "cable-current-capacity":
-        return <ComingSoonCalculator calculatorName="Cable Current Capacity" />;
-      case "cable-derating":
-        return <ComingSoonCalculator calculatorName="Cable Derating" />;
-      case "cable-temperature-derating":
-        return <CableTemperatureDeratingCalculator />;
-      case "conduit-fill":
-        return <ConduitFillCalculator />;
-      case "diversity-factor":
-        return <DiversityFactorCalculator />;
-      case "maximum-demand":
-        return <ComingSoonCalculator calculatorName="Maximum Demand" />;
-      
-      // Testing & Inspection
-      case "zs-values":
-        return <ZsValuesCalculator />;
-      case "bs7671-zs-lookup":
-        return <ComingSoonCalculator calculatorName="BS 7671 Zs Lookup" />;
-      case "r1r2":
-        return <ComingSoonCalculator calculatorName="R1+R2 Calculation" />;
-      case "ring-circuit":
-        return <ComingSoonCalculator calculatorName="Ring Circuit" />;
-      case "earth-fault-loop":
-        return <ComingSoonCalculator calculatorName="Earth Fault Loop" />;
-      
-      // Protection & Safety
-      case "adiabatic":
-        return <AdiabaticCalculator />;
-      case "pfc":
-        return <ComingSoonCalculator calculatorName="Prospective Fault Current" />;
-      case "fault-current":
-        return <ComingSoonCalculator calculatorName="Fault Current Calculator" />;
-      case "discrimination":
-        return <ComingSoonCalculator calculatorName="Protection Discrimination" />;
-      case "rcd-trip-time":
-        return <RCDTripTimeCalculator />;
-      case "rcd-discrimination":
-        return <ComingSoonCalculator calculatorName="RCD Discrimination" />;
-      case "earthing-system":
-        return <EarthingSystemCalculator />;
-      
-      // Lighting & Power Systems
-      case "lumen":
-        return <LumenCalculator />;
-      case "led-driver":
-        return <ComingSoonCalculator calculatorName="LED Driver Calculator" />;
-      case "emergency-lighting":
-        return <EmergencyLightingCalculator />;
-      case "motor-starting-current":
-        return <ComingSoonCalculator calculatorName="Motor Starting Current" />;
-      case "transformer-calculator":
-        return <ComingSoonCalculator calculatorName="Transformer Calculator" />;
-      case "battery-backup":
-        return <ComingSoonCalculator calculatorName="Battery Backup" />;
-      
-      // Power Quality & Harmonics
-      case "harmonics":
-        return <ComingSoonCalculator calculatorName="Harmonics Calculator" />;
-      case "power-quality":
-        return <PowerQualityCalculator />;
-      
-      // Fire & Safety Systems
-      case "fire-alarm":
-        return <FireAlarmCalculator />;
-      
-      // Renewable Energy
-      case "solar-pv":
-        return <ComingSoonCalculator calculatorName="Solar PV" />;
-      
-      // Tools & Components
-      case "resistor-colour-code":
-        return <ComingSoonCalculator calculatorName="Resistor Colour Code" />;
-      case "wire-gauge":
-        return <ComingSoonCalculator calculatorName="Wire Gauge (AWG/SWG)" />;
-      case "instrumentation":
-        return <ComingSoonCalculator calculatorName="Instrumentation" />;
-      case "phase-rotation":
-        return <ComingSoonCalculator calculatorName="Phase Rotation" />;
-      
-      // Utilities & Cost Analysis
-      case "energy-cost":
-        return <EnergyCostCalculator />;
-      case "unit-converter":
-        return <UnitConverterCalculator />;
-      
-      default:
-        console.warn("Unknown calculator type:", calculatorType);
-        return <ComingSoonCalculator calculatorName={calculatorType} />;
+    try {
+      switch (calculatorType) {
+        // Fundamental Electrical Calculations
+        case "ohms-law":
+          return <OhmsLawCalculator />;
+        case "ac-power":
+          return <ComingSoonCalculator calculatorName="AC Power Calculator" />;
+        case "basic-ac-circuit":
+          return <ComingSoonCalculator calculatorName="Basic AC Circuit Calculator" />;
+        case "power-factor":
+          return <PowerFactorCalculator />;
+        case "three-phase-power":
+          return <ThreePhasePowerCalculator />;
+        
+        // Power & Wattage Calculators
+        case "basic-wattage":
+          return <BasicWattageCalculator />;
+        case "power-triangle":
+          return <PowerTriangleCalculator />;
+        case "single-phase-power":
+          return <SinglePhasePowerCalculator />;
+        case "power-consumption":
+          return <PowerConsumptionCalculator />;
+        case "appliance-power":
+          return <AppliancePowerCalculator />;
+        case "power-loss":
+          return <PowerLossCalculator />;
+        
+        // Design & Installation
+        case "voltage-drop":
+          return <ComingSoonCalculator calculatorName="Voltage Drop Calculator" />;
+        case "cable-size":
+          return <CableSizingCalculator />;
+        case "load":
+          return <ComingSoonCalculator calculatorName="Load Assessment Calculator" />;
+        case "cable-current-capacity":
+          return <ComingSoonCalculator calculatorName="Cable Current Capacity Calculator" />;
+        case "cable-derating":
+          return <ComingSoonCalculator calculatorName="Cable Derating Calculator" />;
+        case "cable-temperature-derating":
+          return <CableTemperatureDeratingCalculator />;
+        case "conduit-fill":
+          return <ConduitFillCalculator />;
+        case "diversity-factor":
+          return <DiversityFactorCalculator />;
+        case "maximum-demand":
+          return <ComingSoonCalculator calculatorName="Maximum Demand Calculator" />;
+        
+        // Testing & Inspection
+        case "zs-values":
+          return <ZsValuesCalculator />;
+        case "bs7671-zs-lookup":
+          return <ComingSoonCalculator calculatorName="BS 7671 Zs Lookup Calculator" />;
+        case "r1r2":
+          return <ComingSoonCalculator calculatorName="R1+R2 Calculation Calculator" />;
+        case "ring-circuit":
+          return <ComingSoonCalculator calculatorName="Ring Circuit Calculator" />;
+        case "earth-fault-loop":
+          return <ComingSoonCalculator calculatorName="Earth Fault Loop Calculator" />;
+        
+        // Protection & Safety
+        case "adiabatic":
+          return <AdiabaticCalculator />;
+        case "pfc":
+          return <ComingSoonCalculator calculatorName="Prospective Fault Current Calculator" />;
+        case "fault-current":
+          return <ComingSoonCalculator calculatorName="Fault Current Calculator" />;
+        case "discrimination":
+          return <ComingSoonCalculator calculatorName="Protection Discrimination Calculator" />;
+        case "rcd-trip-time":
+          return <RCDTripTimeCalculator />;
+        case "rcd-discrimination":
+          return <ComingSoonCalculator calculatorName="RCD Discrimination Calculator" />;
+        case "earthing-system":
+          return <EarthingSystemCalculator />;
+        
+        // Lighting & Power Systems
+        case "lumen":
+          return <LumenCalculator />;
+        case "led-driver":
+          return <ComingSoonCalculator calculatorName="LED Driver Calculator" />;
+        case "emergency-lighting":
+          return <EmergencyLightingCalculator />;
+        case "motor-starting-current":
+          return <ComingSoonCalculator calculatorName="Motor Starting Current Calculator" />;
+        case "transformer-calculator":
+          return <ComingSoonCalculator calculatorName="Transformer Calculator" />;
+        case "battery-backup":
+          return <ComingSoonCalculator calculatorName="Battery Backup Calculator" />;
+        
+        // Power Quality & Harmonics
+        case "harmonics":
+          return <ComingSoonCalculator calculatorName="Harmonics Calculator" />;
+        case "power-quality":
+          return <PowerQualityCalculator />;
+        
+        // Fire & Safety Systems
+        case "fire-alarm":
+          return <FireAlarmCalculator />;
+        
+        // Renewable Energy
+        case "solar-pv":
+          return <ComingSoonCalculator calculatorName="Solar PV Calculator" />;
+        
+        // Tools & Components
+        case "resistor-colour-code":
+          return <ComingSoonCalculator calculatorName="Resistor Colour Code Calculator" />;
+        case "wire-gauge":
+          return <ComingSoonCalculator calculatorName="Wire Gauge (AWG/SWG) Calculator" />;
+        case "instrumentation":
+          return <ComingSoonCalculator calculatorName="Instrumentation Calculator" />;
+        case "phase-rotation":
+          return <ComingSoonCalculator calculatorName="Phase Rotation Calculator" />;
+        
+        // Utilities & Cost Analysis
+        case "energy-cost":
+          return <EnergyCostCalculator />;
+        case "unit-converter":
+          return <UnitConverterCalculator />;
+        
+        default:
+          console.warn("Unknown calculator type:", calculatorType);
+          return <ComingSoonCalculator calculatorName={`${calculatorType.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} Calculator`} />;
+      }
+    } catch (error) {
+      console.error("Error rendering calculator:", error);
+      return <ErrorFallback calculatorName={calculatorType} />;
     }
   };
 
