@@ -1,8 +1,7 @@
-
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Book } from "lucide-react";
+import { Book, Shield } from "lucide-react";
 import { useState } from "react";
 import StandardsReference from "./StandardsReference";
 
@@ -16,57 +15,57 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
 
   const calculatorOptions = [
     // Fundamental Electrical Calculations - Most Important
-    { value: "ohms-law", label: "Ohm's Law", category: "Fundamental" },
-    { value: "ac-power", label: "AC Power Calculator", category: "Fundamental" },
-    { value: "basic-ac-circuit", label: "Basic AC Circuit", category: "Fundamental" },
-    { value: "power-factor", label: "Power Factor", category: "Fundamental" },
-    { value: "three-phase-power", label: "Three Phase Power", category: "Fundamental" },
+    { value: "ohms-law", label: "Ohm's Law", category: "Fundamental", enhanced: false },
+    { value: "ac-power", label: "AC Power Calculator", category: "Fundamental", enhanced: false },
+    { value: "basic-ac-circuit", label: "Basic AC Circuit", category: "Fundamental", enhanced: false },
+    { value: "power-factor", label: "Power Factor", category: "Fundamental", enhanced: false },
+    { value: "three-phase-power", label: "Three Phase Power", category: "Fundamental", enhanced: false },
     
-    // Design & Installation
-    { value: "voltage-drop", label: "Voltage Drop", category: "Design & Installation" },
-    { value: "cable-size", label: "Cable Sizing", category: "Design & Installation" },
-    { value: "load", label: "Load Assessment", category: "Design & Installation" },
-    { value: "cable-current-capacity", label: "Cable Current Capacity", category: "Design & Installation" },
-    { value: "cable-derating", label: "Cable Derating", category: "Design & Installation" },
-    { value: "conduit-fill", label: "Conduit Fill", category: "Design & Installation" },
-    { value: "diversity-factor", label: "Diversity Factor", category: "Design & Installation" },
-    { value: "maximum-demand", label: "Maximum Demand", category: "Design & Installation" },
+    // Design & Installation - Enhanced Safety
+    { value: "voltage-drop", label: "Voltage Drop", category: "Design & Installation", enhanced: false },
+    { value: "cable-size", label: "Cable Sizing", category: "Design & Installation", enhanced: true },
+    { value: "load", label: "Load Assessment", category: "Design & Installation", enhanced: false },
+    { value: "cable-current-capacity", label: "Cable Current Capacity", category: "Design & Installation", enhanced: false },
+    { value: "cable-derating", label: "Cable Derating", category: "Design & Installation", enhanced: false },
+    { value: "conduit-fill", label: "Conduit Fill", category: "Design & Installation", enhanced: false },
+    { value: "diversity-factor", label: "Diversity Factor", category: "Design & Installation", enhanced: false },
+    { value: "maximum-demand", label: "Maximum Demand", category: "Design & Installation", enhanced: false },
     
-    // Testing & Inspection
-    { value: "zs-values", label: "Maximum Zs Values", category: "Testing & Inspection" },
-    { value: "bs7671-zs-lookup", label: "BS 7671 Zs Lookup", category: "Testing & Inspection" },
-    { value: "r1r2", label: "R1+R2 Calculation", category: "Testing & Inspection" },
-    { value: "ring-circuit", label: "Ring Circuit", category: "Testing & Inspection" },
-    { value: "earth-fault-loop", label: "Earth Fault Loop", category: "Testing & Inspection" },
-    { value: "phase-rotation", label: "Phase Rotation", category: "Testing & Inspection" },
+    // Testing & Inspection - Enhanced Safety
+    { value: "zs-values", label: "Maximum Zs Values", category: "Testing & Inspection", enhanced: true },
+    { value: "bs7671-zs-lookup", label: "BS 7671 Zs Lookup", category: "Testing & Inspection", enhanced: false },
+    { value: "r1r2", label: "R1+R2 Calculation", category: "Testing & Inspection", enhanced: false },
+    { value: "ring-circuit", label: "Ring Circuit", category: "Testing & Inspection", enhanced: false },
+    { value: "earth-fault-loop", label: "Earth Fault Loop", category: "Testing & Inspection", enhanced: false },
+    { value: "phase-rotation", label: "Phase Rotation", category: "Testing & Inspection", enhanced: false },
     
     // Protection & Safety
-    { value: "adiabatic", label: "Adiabatic Equation", category: "Protection & Safety" },
-    { value: "pfc", label: "Prospective Fault Current", category: "Protection & Safety" },
-    { value: "rcd-trip-time", label: "RCD Trip Time", category: "Protection & Safety" },
-    { value: "rcd-discrimination", label: "RCD Discrimination", category: "Protection & Safety" },
+    { value: "adiabatic", label: "Adiabatic Equation", category: "Protection & Safety", enhanced: false },
+    { value: "pfc", label: "Prospective Fault Current", category: "Protection & Safety", enhanced: false },
+    { value: "rcd-trip-time", label: "RCD Trip Time", category: "Protection & Safety", enhanced: false },
+    { value: "rcd-discrimination", label: "RCD Discrimination", category: "Protection & Safety", enhanced: false },
     
     // Lighting & Power Systems
-    { value: "lumen", label: "Lighting (Lumens)", category: "Lighting & Power Systems" },
-    { value: "led-driver", label: "LED Driver Calculator", category: "Lighting & Power Systems" },
-    { value: "motor-starting-current", label: "Motor Starting Current", category: "Lighting & Power Systems" },
-    { value: "transformer-calculator", label: "Transformer Calculator", category: "Lighting & Power Systems" },
-    { value: "battery-backup", label: "Battery Backup", category: "Lighting & Power Systems" },
+    { value: "lumen", label: "Lighting (Lumens)", category: "Lighting & Power Systems", enhanced: false },
+    { value: "led-driver", label: "LED Driver Calculator", category: "Lighting & Power Systems", enhanced: false },
+    { value: "motor-starting-current", label: "Motor Starting Current", category: "Lighting & Power Systems", enhanced: false },
+    { value: "transformer-calculator", label: "Transformer Calculator", category: "Lighting & Power Systems", enhanced: false },
+    { value: "battery-backup", label: "Battery Backup", category: "Lighting & Power Systems", enhanced: false },
     
     // Renewable Energy
-    { value: "solar-pv", label: "Solar PV", category: "Renewable Energy" },
-    { value: "battery-storage", label: "Battery Storage System", category: "Renewable Energy" },
-    { value: "heat-pump", label: "Heat Pump Load", category: "Renewable Energy" },
-    { value: "ev-charging", label: "EV Charging Station", category: "Renewable Energy" },
+    { value: "solar-pv", label: "Solar PV", category: "Renewable Energy", enhanced: false },
+    { value: "battery-storage", label: "Battery Storage System", category: "Renewable Energy", enhanced: false },
+    { value: "heat-pump", label: "Heat Pump Load", category: "Renewable Energy", enhanced: false },
+    { value: "ev-charging", label: "EV Charging Station", category: "Renewable Energy", enhanced: false },
     
     // Tools & Components
-    { value: "resistor-colour-code", label: "Resistor Colour Code", category: "Tools & Components" },
-    { value: "wire-gauge", label: "Wire Gauge (AWG/SWG)", category: "Tools & Components" },
-    { value: "instrumentation", label: "Instrumentation", category: "Tools & Components" },
+    { value: "resistor-colour-code", label: "Resistor Colour Code", category: "Tools & Components", enhanced: false },
+    { value: "wire-gauge", label: "Wire Gauge (AWG/SWG)", category: "Tools & Components", enhanced: false },
+    { value: "instrumentation", label: "Instrumentation", category: "Tools & Components", enhanced: false },
     
     // Utilities & Cost Analysis
-    { value: "energy-cost", label: "Energy Cost Calculator", category: "Utilities & Cost Analysis" },
-    { value: "unit-converter", label: "Unit Converter", category: "Utilities & Cost Analysis" },
+    { value: "energy-cost", label: "Energy Cost Calculator", category: "Utilities & Cost Analysis", enhanced: false },
+    { value: "unit-converter", label: "Unit Converter", category: "Utilities & Cost Analysis", enhanced: false },
   ];
 
   // Group calculators by category
@@ -92,6 +91,18 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
 
   return (
     <div className="space-y-4">
+      {/* Safety Enhancement Notice */}
+      <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
+        <div className="flex items-center gap-2 mb-2">
+          <Shield className="h-4 w-4 text-green-400" />
+          <span className="text-green-300 font-medium text-sm">Safety Enhancement Active</span>
+        </div>
+        <p className="text-green-200 text-xs">
+          Calculators now include real-world safety factors, environmental conditions, and comprehensive BS 7671 compliance validation.
+          Look for the <Shield className="h-3 w-3 inline text-green-400" /> symbol for enhanced calculators.
+        </p>
+      </div>
+
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
         <div className="flex-1 w-full">
           <Label htmlFor="calculator-select">Select Calculator</Label>
@@ -111,7 +122,10 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
                     </div>
                     {calcs.map((calc) => (
                       <SelectItem key={calc.value} value={calc.value} className="pl-4">
-                        {calc.label}
+                        <div className="flex items-center gap-2">
+                          {calc.enhanced && <Shield className="h-3 w-3 text-green-400" />}
+                          {calc.label}
+                        </div>
                       </SelectItem>
                     ))}
                   </div>

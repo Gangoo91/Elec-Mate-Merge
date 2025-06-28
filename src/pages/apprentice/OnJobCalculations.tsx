@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
@@ -46,6 +45,7 @@ import PhaseRotationCalculator from "@/components/apprentice/calculators/PhaseRo
 import BatteryStorageCalculator from "@/components/apprentice/calculators/BatteryStorageCalculator";
 import HeatPumpCalculator from "@/components/apprentice/calculators/HeatPumpCalculator";
 import EVChargingCalculator from "@/components/apprentice/calculators/EVChargingCalculator";
+import EnhancedCableSizingCalculator from "@/components/apprentice/calculators/EnhancedCableSizingCalculator";
 
 const OnJobCalculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
@@ -73,7 +73,7 @@ const OnJobCalculations = () => {
       case "power-factor":
         return <PowerFactorCalculator />;
       case "cable-size":
-        return <CableSizingCalculator />;
+        return <EnhancedCableSizingCalculator />;
       case "lumen":
         return <LumenCalculator />;
       case "instrumentation":
