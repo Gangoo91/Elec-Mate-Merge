@@ -15,10 +15,10 @@ const ApprenticeHub = () => {
       link: "/apprentice/calculators"
     },
     {
-      id: 6,
-      title: "On the Job Tools",
-      icon: Settings,
-      link: "/apprentice/on-job-tools"
+      id: 2,
+      title: "Off the Job Time Keeping",
+      icon: Clock,
+      link: "/apprentice/ojt"
     },
     {
       id: 3,
@@ -28,7 +28,7 @@ const ApprenticeHub = () => {
     },
     {
       id: 9,
-      title: "BS7671 Inspection & Testing",
+      title: "Inspection and Testing",
       icon: CheckSquare,
       link: "/apprentice/bs7671-inspection-testing"
     }
@@ -43,10 +43,10 @@ const ApprenticeHub = () => {
       link: "/apprentice/advanced-help"
     },
     {
-      id: 2,
-      title: "Off the Job Time Keeping",
-      icon: Clock,
-      link: "/apprentice/ojt"
+      id: 6,
+      title: "On the Job Tools",
+      icon: Settings,
+      link: "/apprentice/on-job-tools"
     },
     {
       id: 5,
