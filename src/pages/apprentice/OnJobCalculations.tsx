@@ -32,6 +32,12 @@ import LoadCalculator from "@/components/electrician-tools/LoadCalculator";
 import EnergyCostCalculator from "@/components/apprentice/calculators/EnergyCostCalculator";
 import UnitConverterCalculator from "@/components/apprentice/calculators/UnitConverterCalculator";
 import WireGaugeCalculator from "@/components/apprentice/calculators/WireGaugeCalculator";
+// Phase 2 New Calculators
+import ThreePhasePowerCalculator from "@/components/apprentice/calculators/ThreePhasePowerCalculator";
+import MotorStartingCurrentCalculator from "@/components/apprentice/calculators/MotorStartingCurrentCalculator";
+import CableCurrentCapacityCalculator from "@/components/apprentice/calculators/CableCurrentCapacityCalculator";
+import TransformerCalculator from "@/components/apprentice/calculators/TransformerCalculator";
+import LEDDriverCalculator from "@/components/apprentice/calculators/LEDDriverCalculator";
 import { Calculator, RotateCw } from "lucide-react";
 
 const OnJobCalculations = () => {
@@ -108,6 +114,17 @@ const OnJobCalculations = () => {
         return <UnitConverterCalculator />;
       case "wire-gauge":
         return <WireGaugeCalculator />;
+      // Phase 2 New Calculators
+      case "three-phase-power":
+        return <ThreePhasePowerCalculator />;
+      case "motor-starting-current":
+        return <MotorStartingCurrentCalculator />;
+      case "cable-current-capacity":
+        return <CableCurrentCapacityCalculator />;
+      case "transformer-calculator":
+        return <TransformerCalculator />;
+      case "led-driver":
+        return <LEDDriverCalculator />;
       default:
         return <OhmsLawCalculator />;
     }

@@ -43,6 +43,12 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "energy-cost", label: "Energy Cost Calculator", category: "Cost Analysis" },
     { value: "unit-converter", label: "Unit Converter", category: "Utilities" },
     { value: "wire-gauge", label: "Wire Gauge (AWG/SWG)", category: "Components" },
+    // Phase 2 New Calculators
+    { value: "three-phase-power", label: "Three Phase Power", category: "Power Systems" },
+    { value: "motor-starting-current", label: "Motor Starting Current", category: "Motors" },
+    { value: "cable-current-capacity", label: "Cable Current Capacity", category: "Design" },
+    { value: "transformer-calculator", label: "Transformer Calculator", category: "Power Systems" },
+    { value: "led-driver", label: "LED Driver Calculator", category: "Lighting" },
   ];
 
   // Group calculators by category
