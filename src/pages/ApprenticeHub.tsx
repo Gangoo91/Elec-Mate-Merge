@@ -1,12 +1,18 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock, Heart, WrenchIcon, Settings, GraduationCap, Zap, CheckSquare } from "lucide-react";
+import { Clock, Heart, WrenchIcon, Settings, GraduationCap, Zap, CheckSquare, Calculator } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
 const ApprenticeHub = () => {
   const apprenticeResources = [
+    {
+      id: 1,
+      title: "Electrical Calculators",
+      icon: Calculator,
+      link: "/apprentice/calculators"
+    },
     {
       id: 8,
       title: "Advanced Help Box",

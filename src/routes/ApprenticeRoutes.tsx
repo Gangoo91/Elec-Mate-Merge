@@ -1,4 +1,3 @@
-
 import { Route, Routes } from "react-router-dom";
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
@@ -21,33 +20,6 @@ import OnJobFlashcards from "@/pages/apprentice/OnJobFlashcards";
 import OnJobIncidentLogging from "@/pages/apprentice/OnJobIncidentLogging";
 import ApprenticeToolbox from "@/pages/apprentice/ApprenticeToolbox";
 import ProfessionalDevelopment from "@/pages/apprentice/ProfessionalDevelopment";
-import CareerPathways from "@/pages/apprentice/professional-development/CareerPathways";
-import Certifications from "@/pages/apprentice/professional-development/Certifications";
-import ContinuingEducation from "@/pages/apprentice/professional-development/ContinuingEducation";
-import IndustryNetworking from "@/pages/apprentice/professional-development/IndustryNetworking";
-import ToolsGuide from "@/pages/apprentice/ToolsGuide";
-import ElectricalInstallationGuides from "@/pages/apprentice/toolbox/ElectricalInstallationGuides";
-import ApprenticeshipExpectations from "@/pages/apprentice/toolbox/ApprenticeshipExpectations";
-import OffJobTrainingGuide from "@/pages/apprentice/toolbox/OffJobTrainingGuide";
-import SiteJargon from "@/pages/apprentice/toolbox/SiteJargon";
-import PortfolioBuilding from "@/pages/apprentice/toolbox/PortfolioBuilding";
-import CommunicationSkills from "@/pages/apprentice/toolbox/CommunicationSkills";
-import StudyTips from "@/pages/apprentice/toolbox/StudyTips";
-import LearningFromMistakes from "@/pages/apprentice/toolbox/LearningFromMistakes";
-import SafetyFundamentals from "@/pages/apprentice/toolbox/SafetyFundamentals";
-import DomesticInstallations from "@/pages/apprentice/DomesticInstallations";
-import CommercialInstallations from "@/pages/apprentice/toolbox/CommercialInstallations";
-import IndustrialInstallations from "@/pages/apprentice/toolbox/IndustrialInstallations";
-import OutdoorInstallations from "@/pages/apprentice/toolbox/OutdoorInstallations";
-import HandTools from "@/pages/apprentice/toolbox/tools-guide/HandTools";
-import PowerTools from "@/pages/apprentice/toolbox/tools-guide/PowerTools";
-import TestEquipment from "@/pages/apprentice/toolbox/tools-guide/TestEquipment";
-import PPESafety from "@/pages/apprentice/toolbox/tools-guide/PPESafety";
-import Year1 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year1";
-import Year2 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year2";
-import Year3 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year3";
-import Year4 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year4";
-import TimeManagement from "@/pages/apprentice/toolbox/TimeManagement";
 import ApprenticeOJT from "@/pages/apprentice/ApprenticeOJT";
 import AdvancedHelp from "@/pages/apprentice/AdvancedHelp";
 import ProfessionalToolGuide from "@/pages/apprentice/ProfessionalToolGuide";
@@ -55,6 +27,7 @@ import ProfessionalToolGuide from "@/pages/apprentice/ProfessionalToolGuide";
 const ApprenticeRoutes = () => (
   <Routes>
     <Route index element={<ApprenticeHub />} />
+    <Route path="calculators" element={<OnJobCalculations />} />
     <Route path="ojt" element={<ApprenticeOJT />} />
     <Route path="advanced-help" element={<AdvancedHelp />} />
     <Route path="bs7671-inspection-testing" element={<OnJobBS7671RunThrough />} />

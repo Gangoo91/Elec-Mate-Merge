@@ -1,11 +1,9 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { 
   BookOpen, 
-  Calculator, 
   Wrench, 
   FileText, 
   Users, 
@@ -16,8 +14,7 @@ import {
   TrendingUp,
   MessageSquare,
   HelpCircle,
-  ArrowRight,
-  Zap
+  ArrowRight
 } from "lucide-react";
 import OJTRatioCard from "@/components/apprentice/OJTRatioCard";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -26,13 +23,6 @@ const ApprenticeIndex = () => {
   const isMobile = useIsMobile();
 
   const quickAccessItems = [
-    {
-      title: "Electrical Calculators",
-      icon: Calculator,
-      href: "/apprentice/calculators",
-      featured: true,
-      description: "Essential electrical calculations for on-site work"
-    },
     {
       title: "Learning Resources",
       icon: BookOpen,
