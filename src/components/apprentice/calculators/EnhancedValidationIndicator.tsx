@@ -2,7 +2,7 @@
 import React from 'react';
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, AlertTriangle, XCircle, Shield, Zap } from "lucide-react";
+import { CheckCircle, AlertTriangle, XCircle, Zap } from "lucide-react";
 import { SafetyValidationResult } from "@/services/safetyValidation";
 
 interface EnhancedValidationIndicatorProps {
@@ -148,7 +148,6 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
       {(validation.safetyFactors.temperatureDerating < 1.0 || 
         validation.safetyFactors.groupingFactor < 1.0) && (
         <Alert className="border-blue-500/50 bg-blue-500/10">
-          <Shield className="h-4 w-4 text-blue-500" />
           <AlertDescription>
             <div className="font-medium text-blue-300 mb-2">Applied Safety Factors:</div>
             <div className="grid grid-cols-2 gap-2 text-sm">
@@ -169,7 +168,6 @@ const EnhancedValidationIndicator: React.FC<EnhancedValidationIndicatorProps> = 
 
       {/* Professional Disclaimer */}
       <Alert className="border-slate-500/50 bg-slate-500/10">
-        <Shield className="h-4 w-4 text-slate-400" />
         <AlertDescription className="text-xs text-slate-300">
           <strong>Professional Notice:</strong> These calculations include safety factors and real-world conditions. 
           However, all electrical work must be designed, installed, and certified by qualified personnel. 
