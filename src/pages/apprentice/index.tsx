@@ -9,11 +9,9 @@ import {
   Wrench, 
   FileText, 
   Users, 
-  Award,
   Brain,
   GraduationCap,
   Target,
-  Briefcase,
   Shield,
   TrendingUp,
   MessageSquare,
@@ -29,53 +27,38 @@ const ApprenticeIndex = () => {
   const quickAccessItems = [
     {
       title: "Learning Resources",
-      description: "Access comprehensive study materials and interactive content",
       icon: BookOpen,
-      href: "/apprentice/learning",
-      color: "blue",
-      featured: true
+      href: "/apprentice/learning"
     },
     {
       title: "Electrical Calculators",
-      description: "Professional calculation tools for electrical work",
       icon: Calculator,
-      href: "/apprentice/calculators",
-      color: "green"
+      href: "/apprentice/calculators"
     },
     {
       title: "Professional Toolbox",
-      description: "Guidance for building your professional toolkit",
       icon: Wrench,
-      href: "/apprentice/toolbox",
-      color: "orange"
+      href: "/apprentice/toolbox"
     },
     {
       title: "Document Templates",
-      description: "Professional templates and documentation tools",
       icon: FileText,
-      href: "/apprentice/documents",
-      color: "purple"
+      href: "/apprentice/documents"
     },
     {
       title: "Career Development",
-      description: "Plan your electrical career progression",
       icon: TrendingUp,
-      href: "/apprentice/career",
-      color: "teal"
+      href: "/apprentice/career"
     },
     {
       title: "Community Chat",
-      description: "Connect with other apprentices and professionals",
       icon: MessageSquare,
-      href: "/apprentice/chat",
-      color: "pink"
+      href: "/apprentice/chat"
     },
     {
       title: "Off-The-Job Training",
-      description: "Track your 20% training requirement and manage portfolio",
       icon: Users,
-      href: "/apprentice/ojt",
-      color: "blue"
+      href: "/apprentice/ojt"
     }
   ];
 
@@ -180,17 +163,10 @@ const ApprenticeIndex = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {quickAccessItems.map((item, index) => (
             <Link key={index} to={item.href}>
-              <Card className="hover:shadow-lg transition-all duration-200 cursor-pointer group">
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <item.icon className={`h-6 w-6 text-${item.color}-500 group-hover:scale-110 transition-transform`} />
-                    <div>
-                      <CardTitle className="text-lg">{item.title}</CardTitle>
-                      <p className="text-sm text-muted-foreground">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
+              <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-colors cursor-pointer h-full">
+                <CardHeader className="flex flex-col items-center justify-center text-center">
+                  <item.icon className="h-8 w-8 mb-2 text-elec-yellow" />
+                  <CardTitle className="text-xl">{item.title}</CardTitle>
                 </CardHeader>
               </Card>
             </Link>
