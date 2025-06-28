@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calculator, Zap } from "lucide-react";
@@ -79,8 +80,8 @@ const OnJobCalculations = () => {
         </CardHeader>
         <CardContent>
           <CalculatorSelector 
-            selectedCalculator={selectedCalculator}
-            onCalculatorChange={setSelectedCalculator}
+            calculatorType={selectedCalculator}
+            setCalculatorType={setSelectedCalculator}
           />
         </CardContent>
       </Card>
