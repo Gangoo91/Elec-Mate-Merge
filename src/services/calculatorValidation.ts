@@ -1,4 +1,3 @@
-
 // Enhanced Calculator Validation Service - BS 7671 & IET Compliant
 
 export interface ValidationResult {
@@ -224,6 +223,85 @@ export class CalculatorValidator {
         safety: errors.length === 0
       }
     };
+  }
+
+  /**
+   * Validate Ohms Law calculations
+   */
+  static validateOhmsLaw(
+    voltage: number,
+    current: number,
+    resistance: number,
+    calculationType: 'voltage' | 'current' | 'resistance'
+  ): ValidationResult {
+    const errors: string[] = [];
+    const warnings: string[] = [];
+
+    // Basic input validation
+    if (calculationType === 'voltage') {
+      if (current <= 0) errors.push("Current must be greater than 0A");
+      if (resistance <= 0) errors.push("Resistance must be greater than 0Ω");
+      
+      // Professional range checks
+      if (current > 1000) warnings.push("High current detected - ensure appropriate safety measures");
+      if (resistance > 1000000) warnings.push("Very high resistance - check measurement accuracy");
+      
+      // Calculate voltage for validation
+      const calculatedVoltage = current * resistance;
+      if (calculatedVoltage > 1000) {
+        warnings.push("High voltage calculated - ensure appropriate safety classification");
+      }
+    } else if (calculationType === 'current') {
+      if (voltage <= 0) errors.push("Voltage must be greater than 0V");
+      if (resistance <= 0) errors.push("Resistance must be greater than 0Ω");
+      
+      // Professional range checks
+      if (voltage > 1000) warnings.push("High voltage detected - ensure appropriate safety measures");
+      if (resistance < 0.001) warnings.push("Very low resistance - check for short circuit conditions");
+      
+      // Calculate current for validation
+      const calculatedCurrent = voltage / resistance;
+      if (calculatedCurrent > 1000) {
+        warnings.push("High current calculated - verify conductor capacity");
+      }
+    } else if (calculationType === 'resistance') {
+      if (voltage <= 0) errors.push("Voltage must be greater than 0V");
+      if (current <= 0) errors.push("Current must be greater than 0A");
+      
+      // Professional range checks
+      if (voltage > 1000) warnings.push("High voltage detected - ensure appropriate safety measures");
+      if (current > 1000) warnings.push("High current detected - ensure appropriate safety measures");
+      
+      // Calculate resistance for validation
+      const calculatedResistance = voltage / current;
+      if (calculatedResistance < 0.001) {
+        warnings.push("Very low resistance calculated - check for short circuit conditions");
+      }
+    }
+
+    // Power calculation warnings
+    const power = voltage * current;
+    if (power > 10000) {
+      warnings.push("High power calculation - ensure adequate heat dissipation and safety measures");
+    }
+
+    // BS 7671 compliance checks
+    const bs7671Compliant = errors.length === 0 && 
+      voltage <= 1000 && // Within low voltage limits
+      current <= 1000;  // Within practical current limits
+
+    const result: ValidationResult = {
+      isValid: errors.length === 0,
+      errors,
+      warnings,
+      standardsCompliance: {
+        bs7671: bs7671Compliant,
+        iet: bs7671Compliant, // IET standards align with BS 7671
+        safety: errors.length === 0 && voltage <= 1000 && current <= 1000
+      }
+    };
+
+    return result;
   }
 
   /**
