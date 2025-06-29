@@ -36,6 +36,10 @@ import TimeManagement from "@/pages/apprentice/toolbox/TimeManagement";
 import ApprenticeshipExpectations from "@/pages/apprentice/toolbox/ApprenticeshipExpectations";
 import OffJobTrainingGuide from "@/pages/apprentice/toolbox/OffJobTrainingGuide";
 import SiteJargon from "@/pages/apprentice/toolbox/SiteJargon";
+import Year1 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year1";
+import Year2 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year2";
+import Year3 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year3";
+import Year4 from "@/pages/apprentice/toolbox/apprenticeship-expectations/Year4";
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -54,6 +58,10 @@ const ApprenticeRoutes = () => (
     <Route path="rights-and-pay" element={<RightsAndPay />} />
     <Route path="toolbox" element={<ApprenticeToolbox />} />
     <Route path="toolbox/apprenticeship-expectations" element={<ApprenticeshipExpectations />} />
+    <Route path="toolbox/apprenticeship-expectations/year-1" element={<Year1 />} />
+    <Route path="toolbox/apprenticeship-expectations/year-2" element={<Year2 />} />
+    <Route path="toolbox/apprenticeship-expectations/year-3" element={<Year3 />} />
+    <Route path="toolbox/apprenticeship-expectations/year-4" element={<Year4 />} />
     <Route path="toolbox/off-job-training-guide" element={<OffJobTrainingGuide />} />
     <Route path="toolbox/site-jargon" element={<SiteJargon />} />
     <Route path="toolbox/portfolio-building" element={<PortfolioBuilding />} />

@@ -1,331 +1,379 @@
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Users, CheckCircle, AlertTriangle, Target, TrendingUp, BookOpen, PoundSterling } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { Progress } from "@/components/ui/progress";
+import { 
+  Zap, 
+  FileText, 
+  Wrench, 
+  BookOpen, 
+  Calendar,
+  Target,
+  AlertTriangle,
+  CheckCircle,
+  TrendingUp
+} from "lucide-react";
+import BackButton from "@/components/common/BackButton";
 
 const Year2 = () => {
-  const isMobile = useIsMobile();
-
-  const learningOutcomes = [
-    "Work more independently on basic electrical tasks",
-    "Understand circuit design and cable selection principles",
-    "Use power tools safely and maintain them properly",
-    "Assist with installation planning and material ordering",
-    "Complete intermediate college coursework and prepare for 18th Edition"
-  ];
-
-  const skillsDeveloped = [
-    { skill: "Independent Working", level: "Developing", description: "Taking ownership of routine tasks with minimal supervision" },
-    { skill: "Circuit Knowledge", level: "Intermediate", description: "Understanding lighting, socket and basic control circuits" },
-    { skill: "Power Tool Mastery", level: "Competent", description: "Safe operation of drills, angle grinders, and specialised tools" },
-    { skill: "Installation Planning", level: "Basic", description: "Contributing to job planning and material requirements" }
-  ];
-
-  const salaryProgression = {
-    year2: "£18,000 - £22,000",
-    yearlyIncrease: "15-25%",
-    regional: {
-      london: "£20,000 - £25,000",
-      manchester: "£17,000 - £21,000",
-      birmingham: "£17,500 - £21,500"
+  const monthlyBreakdown = [
+    {
+      month: "Month 13-14",
+      title: "Regulations Introduction",
+      focus: "BS 7671 Wiring Regulations fundamentals",
+      activities: [
+        "Introduction to BS 7671",
+        "Regulation structure understanding",
+        "Design principles basics",
+        "Cable selection fundamentals"
+      ]
+    },
+    {
+      month: "Month 15-16",
+      title: "Installation Methods",
+      focus: "Practical installation techniques",
+      activities: [
+        "Different wiring systems",
+        "Cable routing and support",
+        "Containment systems",
+        "Protection methods"
+      ]
+    },
+    {
+      month: "Month 17-18",
+      title: "Testing & Inspection Basics",
+      focus: "Introduction to electrical testing",
+      activities: [
+        "Test equipment introduction",
+        "Continuity testing",
+        "Insulation resistance testing",
+        "Basic fault finding"
+      ]
+    },
+    {
+      month: "Month 19-20",
+      title: "Advanced Installations",
+      focus: "More complex installation work",
+      activities: [
+        "Three-phase installations",
+        "Motor control circuits",
+        "Distribution board work",
+        "Emergency lighting systems"
+      ]
+    },
+    {
+      month: "Month 21-22",
+      title: "Portfolio Development",
+      focus: "Evidence collection and documentation",
+      activities: [
+        "Work-based evidence gathering",
+        "Portfolio structuring",
+        "Photographic evidence",
+        "Competency demonstration"
+      ]
+    },
+    {
+      month: "Month 23-24",
+      title: "Year 2 Assessment",
+      focus: "Skills consolidation and assessment",
+      activities: [
+        "Practical skills assessment",
+        "Theory examination preparation",
+        "Portfolio submission",
+        "Year 3 preparation"
+      ]
     }
+  ];
+
+  const keyLearningAreas = [
+    {
+      title: "BS 7671 Wiring Regulations",
+      icon: BookOpen,
+      progress: 75,
+      topics: [
+        "Regulation structure and navigation",
+        "Design requirements and calculations",
+        "Cable selection and sizing",
+        "Protection and earthing",
+        "Special locations"
+      ]
+    },
+    {
+      title: "Installation Techniques",
+      icon: Wrench,
+      progress: 80,
+      topics: [
+        "Different wiring systems",
+        "Containment and support methods",
+        "Jointing and termination",
+        "Distribution board installation",
+        "Circuit protection devices"
+      ]
+    },
+    {
+      title: "Testing & Inspection",
+      icon: Zap,
+      progress: 65,
+      topics: [
+        "Test equipment usage",
+        "Continuity testing procedures",
+        "Insulation resistance testing",
+        "Earth fault loop impedance",
+        "RCD testing basics"
+      ]
+    },
+    {
+      title: "Documentation Skills",
+      icon: FileText,
+      progress: 70,
+      topics: [
+        "Installation certificates",
+        "Test result recording",
+        "Portfolio evidence collection",
+        "Work method statements",
+        "Risk assessment participation"
+      ]
+    }
+  ];
+
+  const salaryIncrease = {
+    previousYear: 16500,
+    currentYear: 20000,
+    increase: 3500,
+    percentage: 21.2
   };
 
-  const apprenticeStory = {
-    name: "Sarah M.",
-    location: "Leeds",
-    quote: "Year 2 was when things really clicked for me. I started feeling like a proper electrician rather than just someone who carried tools around. The 18th Edition course was challenging but my employer was brilliant at giving me time to study.",
-    achievement: "Completed first solo domestic socket installation"
-  };
-
-  const collegeExpectations = [
+  const developmentMilestones = [
     {
-      subject: "18th Edition Wiring Regulations",
-      hours: "120 hours",
-      assessment: "Online exam (66% pass rate)",
-      importance: "Essential for progression to Year 3"
+      milestone: "First BS 7671 Assessment",
+      description: "Successfully pass your first wiring regulations examination",
+      importance: "Foundation for all future electrical work",
+      tips: ["Use the regulations book regularly", "Practice regulation finding exercises", "Join study groups"]
     },
     {
-      subject: "Electrical Installation Work",
-      hours: "80 hours",
-      assessment: "Practical assessments",
-      importance: "Builds on Year 1 fundamentals"
+      milestone: "Practical Skills Assessment",
+      description: "Demonstrate competency in installation techniques",
+      importance: "Proves your hands-on capabilities",
+      tips: ["Practice installations regularly", "Focus on quality and safety", "Time management is crucial"]
     },
     {
-      subject: "Electrical Science",
-      hours: "60 hours", 
-      assessment: "Written assignments",
-      importance: "Understanding electrical principles"
-    }
-  ];
-
-  const employerExpectations = [
-    "Take initiative on familiar tasks without being asked",
-    "Mentor new Year 1 apprentices when appropriate",
-    "Contribute ideas during job planning meetings",
-    "Complete basic installations under supervision",
-    "Maintain accurate records of work completed"
-  ];
-
-  const commonChallenges = [
-    {
-      challenge: "18th Edition Complexity",
-      solution: "Create revision cards, join study groups, use online resources",
-      support: "Ask your training provider for extra support sessions"
+      milestone: "Portfolio Development",
+      description: "Build comprehensive evidence collection",
+      importance: "Required for apprenticeship completion",
+      tips: ["Collect evidence regularly", "Include photos and documentation", "Get supervisor signatures"]
     },
     {
-      challenge: "Increased Responsibility Pressure",
-      solution: "Communicate concerns early, ask for clarification when needed",
-      support: "Regular check-ins with supervisor about workload"
-    },
-    {
-      challenge: "Balancing Work and Study",
-      solution: "Create a study timetable, use commute time for revision",
-      support: "Negotiate study time with employer if struggling"
+      milestone: "Testing Equipment Competency",
+      description: "Safe and accurate use of electrical test equipment",
+      importance: "Essential for future electrical work",
+      tips: ["Understand each test purpose", "Practice with different equipment", "Learn to interpret results"]
     }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-gray to-elec-dark">
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-6 animate-fade-in max-w-7xl">
-        {/* Header */}
-        <div className="space-y-4">
-          <div className="flex justify-start">
-            <Link to="/apprentice/toolbox/apprenticeship-expectations">
-              <Button 
-                variant="outline" 
-                size={isMobile ? "sm" : "default"} 
-                className="bg-elec-gray/50 border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                {isMobile ? "Back" : "Back to Journey"}
-              </Button>
-            </Link>
+    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col items-center justify-center mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Year 2: Development Year</h1>
+        <p className="text-muted-foreground text-center max-w-2xl mb-4 text-sm sm:text-base">
+          Building on your foundations with wiring regulations, installation methods, and basic testing procedures
+        </p>
+        <BackButton customUrl="/apprentice/toolbox/apprenticeship-expectations" label="Back to Expectations" />
+      </div>
+
+      {/* Overview Card */}
+      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
+        <CardHeader>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <Target className="h-6 w-6" />
+            Year 2 Overview
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="text-center">
+              <h4 className="font-semibold text-elec-yellow">Duration</h4>
+              <p className="text-2xl font-bold">12 Months</p>
+              <p className="text-sm text-muted-foreground">Months 13-24</p>
+            </div>
+            <div className="text-center">
+              <h4 className="font-semibold text-green-400">Expected Salary</h4>
+              <p className="text-2xl font-bold">£18k-£22k</p>
+              <p className="text-sm text-muted-foreground">Per annum</p>
+            </div>
+            <div className="text-center">
+              <h4 className="font-semibold text-blue-400">Main Focus</h4>
+              <p className="text-lg font-semibold">Regulations</p>
+              <p className="text-sm text-muted-foreground">BS 7671 & Testing</p>
+            </div>
+            <div className="text-center">
+              <h4 className="font-semibold text-purple-400">Key Skill</h4>
+              <p className="text-lg font-semibold">Installation</p>
+              <p className="text-sm text-muted-foreground">Methods & Testing</p>
+            </div>
           </div>
-          
-          <div className="text-center space-y-3 px-2">
-            <div className="flex items-center justify-center gap-3 mb-2">
-              <div className="p-3 rounded-lg bg-green-500/20 border border-green-500/30">
-                <Users className="h-8 w-8 text-green-400" />
-              </div>
-              <div>
-                <h1 className={`font-bold tracking-tight text-elec-yellow leading-tight ${isMobile ? 'text-2xl' : 'text-4xl'}`}>
-                  Year 2: Development
-                </h1>
-                <p className="text-green-400 font-medium">Growing Your Skills and Confidence</p>
-              </div>
+        </CardContent>
+      </Card>
+
+      {/* Salary Progress */}
+      <Card className="border-green-500/30 bg-green-500/5">
+        <CardHeader>
+          <CardTitle className="text-green-400 flex items-center gap-2">
+            <TrendingUp className="h-5 w-5" />
+            Salary Progression
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <div>
+              <p className="text-sm text-muted-foreground">Year 1 Average</p>
+              <p className="text-2xl font-bold">£{salaryIncrease.previousYear.toLocaleString()}</p>
             </div>
-            <p className={`text-muted-foreground leading-relaxed max-w-3xl mx-auto ${isMobile ? 'text-sm px-1' : 'text-base'}`}>
-              Year 2 is about developing independence, building technical skills, and taking on increased responsibility 
-              while preparing for your 18th Edition qualification.
-            </p>
+            <div>
+              <p className="text-sm text-muted-foreground">Year 2 Average</p>
+              <p className="text-2xl font-bold text-green-400">£{salaryIncrease.currentYear.toLocaleString()}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Increase</p>
+              <p className="text-2xl font-bold text-green-400">+£{salaryIncrease.increase.toLocaleString()}</p>
+              <p className="text-sm text-green-400">({salaryIncrease.percentage}% increase)</p>
+            </div>
           </div>
-        </div>
+        </CardContent>
+      </Card>
 
-        {/* Salary Progression */}
-        <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10 backdrop-blur">
-          <CardHeader>
-            <CardTitle className="text-xl text-green-400 flex items-center gap-2">
-              <PoundSterling className="h-5 w-5" />
-              Year 2 Salary Expectations
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center p-4 bg-elec-gray/50 rounded-lg">
-                <h4 className="font-medium text-white mb-2">National Average</h4>
-                <p className="text-2xl font-bold text-green-400">{salaryProgression.year2}</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {salaryProgression.yearlyIncrease} increase from Year 1
-                </p>
-              </div>
-              <div className="text-center p-4 bg-elec-gray/50 rounded-lg">
-                <h4 className="font-medium text-white mb-2">London</h4>
-                <p className="text-xl font-bold text-green-400">{salaryProgression.regional.london}</p>
-                <p className="text-sm text-muted-foreground">Higher cost of living</p>
-              </div>
-              <div className="text-center p-4 bg-elec-gray/50 rounded-lg">
-                <h4 className="font-medium text-white mb-2">Manchester/Birmingham</h4>
-                <p className="text-xl font-bold text-green-400">{salaryProgression.regional.manchester}</p>
-                <p className="text-sm text-muted-foreground">Regional rates</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Apprentice Story */}
-        <Card className="border-elec-yellow/30 bg-gradient-to-r from-elec-yellow/5 to-orange-500/5">
-          <CardHeader>
-            <CardTitle className="text-elec-yellow">Year 2 Success Story</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <blockquote className="text-muted-foreground italic leading-relaxed border-l-4 border-elec-yellow pl-4">
-                "{apprenticeStory.quote}"
-              </blockquote>
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-medium text-white">{apprenticeStory.name}</p>
-                  <p className="text-sm text-muted-foreground">{apprenticeStory.location}</p>
-                </div>
-                <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                  {apprenticeStory.achievement}
-                </Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Learning Outcomes */}
-        <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-emerald-500/10 backdrop-blur">
-          <CardHeader>
-            <CardTitle className="text-xl text-green-400 flex items-center gap-2">
-              <Target className="h-5 w-5" />
-              Learning Outcomes
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 gap-3">
-              {learningOutcomes.map((outcome, index) => (
-                <div key={index} className="flex items-start gap-3 p-3 bg-elec-gray/50 rounded-lg border border-green-500/20">
-                  <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">{outcome}</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* College Expectations */}
-        <Card className="border-elec-yellow/20 bg-elec-gray/30 backdrop-blur">
-          <CardHeader>
-            <CardTitle className="text-xl text-elec-yellow flex items-center gap-2">
-              <BookOpen className="h-5 w-5" />
-              College & Training Requirements
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {collegeExpectations.map((subject, index) => (
-                <div key={index} className="p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/20">
-                  <h4 className="font-medium text-white mb-2">{subject.subject}</h4>
-                  <div className="space-y-2 text-sm">
-                    <p className="text-muted-foreground">Duration: {subject.hours}</p>
-                    <p className="text-muted-foreground">Assessment: {subject.assessment}</p>
-                    <p className="text-green-400 font-medium">{subject.importance}</p>
+      {/* Monthly Breakdown */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Calendar className="h-5 w-5 text-elec-yellow" />
+            Monthly Progress Breakdown
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {monthlyBreakdown.map((period, index) => (
+              <div key={index} className="border border-elec-yellow/10 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <div>
+                    <h4 className="font-semibold text-white">{period.title}</h4>
+                    <Badge variant="outline" className="text-xs">{period.month}</Badge>
                   </div>
+                  <div className="text-sm text-muted-foreground">{period.focus}</div>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                  {period.activities.map((activity, idx) => (
+                    <li key={idx} className="flex items-center gap-2">
+                      <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
+                      {activity}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-        {/* Skills Development & Employer Expectations */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <Card className="border-elec-yellow/20 bg-elec-gray/30 backdrop-blur">
+      {/* Key Learning Areas */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {keyLearningAreas.map((area, index) => (
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="text-lg text-elec-yellow flex items-center gap-2">
-                <TrendingUp className="h-5 w-5" />
-                Skills Development
+              <CardTitle className="flex items-center gap-2">
+                <area.icon className="h-5 w-5 text-elec-yellow" />
+                {area.title}
               </CardTitle>
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>Progress Expected</span>
+                  <span>{area.progress}%</span>
+                </div>
+                <Progress value={area.progress} className="h-2" />
+              </div>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                {skillsDeveloped.map((skill, index) => (
-                  <div key={index} className="p-3 bg-elec-gray/50 rounded-lg border border-elec-yellow/20">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-medium text-white text-sm">{skill.skill}</h4>
-                      <Badge variant="outline" className="border-green-500/30 text-green-400 text-xs">
-                        {skill.level}
-                      </Badge>
-                    </div>
-                    <p className="text-xs text-muted-foreground">{skill.description}</p>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-elec-yellow/20 bg-elec-gray/30 backdrop-blur">
-            <CardHeader>
-              <CardTitle className="text-lg text-elec-yellow flex items-center gap-2">
-                <Users className="h-5 w-5" />
-                Employer Expectations
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-3">
-                {employerExpectations.map((expectation, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <span className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-muted-foreground">{expectation}</span>
+              <ul className="space-y-2">
+                {area.topics.map((topic, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm">
+                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    <span>{topic}</span>
                   </li>
                 ))}
               </ul>
             </CardContent>
           </Card>
-        </div>
-
-        {/* Common Challenges */}
-        <Card className="border-orange-500/30 bg-orange-500/10">
-          <CardHeader>
-            <CardTitle className="text-orange-400 flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5" />
-              Common Year 2 Challenges & Solutions
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {commonChallenges.map((item, index) => (
-                <div key={index} className="p-4 bg-elec-gray/50 rounded-lg border border-orange-500/20">
-                  <h4 className="font-medium text-white mb-2">{item.challenge}</h4>
-                  <p className="text-sm text-muted-foreground mb-2">
-                    <strong className="text-green-400">Solution:</strong> {item.solution}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    <strong className="text-blue-400">Support Available:</strong> {item.support}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Success Tips */}
-        <Card className="border-green-500/30 bg-gradient-to-r from-green-500/10 to-emerald-500/10">
-          <CardHeader>
-            <CardTitle className="text-green-400 flex items-center gap-2">
-              <CheckCircle className="h-5 w-5" />
-              Success Tips for Year 2
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <h4 className="font-medium text-white mb-2">Technical Development</h4>
-                <ul className="space-y-1 text-muted-foreground">
-                  <li>• Master the 18th Edition regulations early</li>
-                  <li>• Practice circuit design at home</li>
-                  <li>• Build a personal tool collection</li>
-                  <li>• Learn from different tradespeople on site</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-medium text-white mb-2">Professional Growth</h4>
-                <ul className="space-y-1 text-muted-foreground">
-                  <li>• Take on leadership with Year 1 apprentices</li>
-                  <li>• Volunteer for challenging projects</li>
-                  <li>• Join electrical trade associations</li>
-                  <li>• Build relationships with suppliers</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        ))}
       </div>
+
+      {/* Development Milestones */}
+      <Card className="border-blue-500/30 bg-blue-500/5">
+        <CardHeader>
+          <CardTitle className="text-blue-400 flex items-center gap-2">
+            <Target className="h-5 w-5" />
+            Key Development Milestones
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            {developmentMilestones.map((milestone, index) => (
+              <div key={index} className="border border-blue-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-blue-400 mb-2">{milestone.milestone}</h4>
+                <p className="text-sm text-muted-foreground mb-2">{milestone.description}</p>
+                <p className="text-sm text-white mb-3"><strong>Why it matters:</strong> {milestone.importance}</p>
+                <div>
+                  <h5 className="font-medium text-white mb-2">Success Tips:</h5>
+                  <ul className="space-y-1">
+                    {milestone.tips.map((tip, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm">
+                        <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                        {tip}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Year 2 Challenges */}
+      <Card className="border-orange-500/30 bg-orange-500/5">
+        <CardHeader>
+          <CardTitle className="text-orange-400 flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5" />
+            Year 2 Common Challenges
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="space-y-3">
+              <h4 className="font-semibold text-orange-400">Regulation Complexity</h4>
+              <p className="text-sm text-muted-foreground">
+                BS 7671 can seem overwhelming with its size and technical language.
+              </p>
+              <ul className="text-sm space-y-1">
+                <li>• Start with the basics and build up</li>
+                <li>• Use regulation finding exercises</li>
+                <li>• Ask questions when confused</li>
+                <li>• Practice with real scenarios</li>
+              </ul>
+            </div>
+            <div className="space-y-3">
+              <h4 className="font-semibold text-orange-400">Increased Responsibility</h4>
+              <p className="text-sm text-muted-foreground">
+                More complex tasks and higher expectations from supervisors.
+              </p>
+              <ul className="text-sm space-y-1">
+                <li>• Communicate if you're unsure</li>
+                <li>• Double-check your work</li>
+                <li>• Learn from any mistakes</li>
+                <li>• Ask for feedback regularly</li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

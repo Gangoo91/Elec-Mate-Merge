@@ -1,244 +1,306 @@
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, BookOpen, CheckCircle, AlertTriangle, Users, Target } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { Progress } from "@/components/ui/progress";
+import { 
+  BookOpen, 
+  Wrench, 
+  Shield, 
+  Users, 
+  Calendar,
+  Target,
+  AlertTriangle,
+  CheckCircle
+} from "lucide-react";
+import BackButton from "@/components/common/BackButton";
 
 const Year1 = () => {
-  const isMobile = useIsMobile();
-
-  const learningOutcomes = [
-    "Understand basic electrical theory and principles",
-    "Recognise electrical hazards and safety procedures",
-    "Use basic hand tools correctly and safely",
-    "Follow instructions from qualified electricians",
-    "Complete basic college coursework in electrical fundamentals"
-  ];
-
-  const skillsDeveloped = [
-    { skill: "Safety Awareness", level: "Fundamental", description: "PPE usage, hazard recognition, safe working practices" },
-    { skill: "Tool Familiarity", level: "Basic", description: "Hand tools, measuring equipment, basic power tools" },
-    { skill: "Electrical Theory", level: "Foundation", description: "Ohm's law, basic circuits, voltage and current" },
-    { skill: "Communication", level: "Development", description: "Following instructions, asking questions effectively" }
-  ];
-
-  const expectations = [
+  const monthlyBreakdown = [
     {
-      category: "On Site",
-      items: [
-        "Arrive 15 minutes early every day",
-        "Carry materials and assist qualified electricians",
-        "Keep work areas clean and organised",
-        "Ask questions when uncertain about tasks",
-        "Observe and learn from experienced tradespeople"
+      month: "Month 1-2",
+      title: "Induction & Orientation",
+      focus: "Workplace safety and basic introduction",
+      activities: [
+        "Health & Safety induction",
+        "Company policies and procedures",
+        "Basic tool introduction",
+        "College enrolment process"
       ]
     },
     {
-      category: "College Work",
-      items: [
-        "Attend all college sessions punctually",
-        "Complete assignments on time",
-        "Study electrical theory fundamentals",
-        "Prepare for 18th Edition Wiring Regulations",
-        "Build a portfolio of learning evidence"
+      month: "Month 3-4",
+      title: "Foundation Learning",
+      focus: "Basic electrical principles",
+      activities: [
+        "Ohm's Law fundamentals",
+        "Basic circuit theory",
+        "Electrical symbols recognition",
+        "Simple calculations"
+      ]
+    },
+    {
+      month: "Month 5-6",
+      title: "Practical Introduction",
+      focus: "Hands-on experience begins",
+      activities: [
+        "Cable stripping and termination",
+        "Basic wiring techniques",
+        "Tool usage practice",
+        "Site observation"
+      ]
+    },
+    {
+      month: "Month 7-8",
+      title: "Skills Development",
+      focus: "Building practical competencies",
+      activities: [
+        "Conduit bending basics",
+        "Socket and switch installation",
+        "Trunking systems",
+        "Basic testing procedures"
+      ]
+    },
+    {
+      month: "Month 9-10",
+      title: "Knowledge Expansion",
+      focus: "Broadening understanding",
+      activities: [
+        "Three-phase systems introduction",
+        "Motor connections",
+        "Control circuits basics",
+        "First college assessments"
+      ]
+    },
+    {
+      month: "Month 11-12",
+      title: "Year 1 Consolidation",
+      focus: "Review and assessment preparation",
+      activities: [
+        "Portfolio development",
+        "Skills assessment preparation",
+        "Theory revision",
+        "Year 2 preparation"
       ]
     }
   ];
 
-  const milestones = [
-    { month: "Month 1-3", task: "Site induction and basic safety training", status: "critical" },
-    { month: "Month 4-6", task: "Basic tool usage and material handling", status: "important" },
-    { month: "Month 7-9", task: "Simple wiring tasks under supervision", status: "development" },
-    { month: "Month 10-12", task: "College assessments and portfolio building", status: "assessment" }
+  const keyLearningAreas = [
+    {
+      title: "Health & Safety",
+      icon: Shield,
+      progress: 85,
+      topics: [
+        "Construction (Design and Management) Regulations",
+        "Personal Protective Equipment (PPE)",
+        "Risk assessment principles",
+        "Emergency procedures",
+        "Safe working practices"
+      ]
+    },
+    {
+      title: "Basic Electrical Theory",
+      icon: BookOpen,
+      progress: 70,
+      topics: [
+        "Ohm's Law and power calculations",
+        "Series and parallel circuits",
+        "AC and DC fundamentals",
+        "Electrical symbols and diagrams",
+        "Units and measurements"
+      ]
+    },
+    {
+      title: "Practical Skills",
+      icon: Wrench,
+      progress: 60,
+      topics: [
+        "Cable preparation and termination",
+        "Basic wiring techniques",
+        "Tool usage and care",
+        "Socket and switch installation",
+        "Conduit and trunking systems"
+      ]
+    },
+    {
+      title: "Professional Development",
+      icon: Users,
+      progress: 75,
+      topics: [
+        "Communication skills",
+        "Teamwork and cooperation",
+        "Time management",
+        "Following instructions",
+        "Workplace behaviour"
+      ]
+    }
   ];
 
-  const getMilestoneColor = (status: string) => {
-    switch (status) {
-      case "critical": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "important": return "bg-orange-500/20 text-orange-400 border-orange-500/30";
-      case "development": return "bg-blue-500/20 text-blue-400 border-blue-500/30";
-      case "assessment": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+  const commonChallenges = [
+    {
+      challenge: "Information Overload",
+      description: "Feeling overwhelmed by the amount of new information",
+      solutions: [
+        "Take notes regularly and review daily",
+        "Ask questions when unclear",
+        "Break learning into manageable chunks",
+        "Use visual aids and diagrams"
+      ]
+    },
+    {
+      challenge: "Practical vs Theory Gap",
+      description: "Difficulty connecting college theory with workplace practice",
+      solutions: [
+        "Discuss college work with workplace mentor",
+        "Ask to see real examples of theoretical concepts",
+        "Keep a learning journal",
+        "Practice calculations with real scenarios"
+      ]
+    },
+    {
+      challenge: "Confidence Building",
+      description: "Feeling nervous about making mistakes or asking questions",
+      solutions: [
+        "Remember everyone was a beginner once",
+        "Ask questions - it shows you're engaged",
+        "Learn from mistakes rather than fear them",
+        "Celebrate small achievements"
+      ]
     }
-  };
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-gray to-elec-dark">
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-6 animate-fade-in max-w-7xl">
-        {/* Header */}
-        <div className="space-y-4">
-          <div className="flex justify-start">
-            <Link to="/apprentice/toolbox/apprenticeship-expectations">
-              <Button 
-                variant="outline" 
-                size={isMobile ? "sm" : "default"} 
-                className="bg-elec-gray/50 border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                {isMobile ? "Back" : "Back to Journey"}
-              </Button>
-            </Link>
-          </div>
-          
-          <div className="text-center space-y-3 px-2">
-            <div className="flex items-center justify-center gap-3 mb-2">
-              <div className="p-3 rounded-lg bg-blue-500/20 border border-blue-500/30">
-                <BookOpen className="h-8 w-8 text-blue-400" />
-              </div>
-              <div>
-                <h1 className={`font-bold tracking-tight text-elec-yellow leading-tight ${isMobile ? 'text-2xl' : 'text-4xl'}`}>
-                  Year 1: Foundation
-                </h1>
-                <p className="text-blue-400 font-medium">Building Your Electrical Career Foundation</p>
-              </div>
-            </div>
-            <p className={`text-muted-foreground leading-relaxed max-w-3xl mx-auto ${isMobile ? 'text-sm px-1' : 'text-base'}`}>
-              Your first year is about learning the fundamentals, developing safety awareness, and 
-              establishing good working habits that will serve you throughout your career.
-            </p>
-          </div>
-        </div>
+    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col items-center justify-center mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Year 1: Foundation Year</h1>
+        <p className="text-muted-foreground text-center max-w-2xl mb-4 text-sm sm:text-base">
+          Your first year focuses on building solid foundations in electrical theory, safety, and basic practical skills
+        </p>
+        <BackButton customUrl="/apprentice/toolbox/apprenticeship-expectations" label="Back to Expectations" />
+      </div>
 
-        {/* Learning Outcomes */}
-        <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 backdrop-blur">
-          <CardHeader>
-            <CardTitle className="text-xl text-blue-400 flex items-center gap-2">
-              <Target className="h-5 w-5" />
-              Learning Outcomes
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 gap-3">
-              {learningOutcomes.map((outcome, index) => (
-                <div key={index} className="flex items-start gap-3 p-3 bg-elec-gray/50 rounded-lg border border-blue-500/20">
-                  <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">{outcome}</span>
-                </div>
-              ))}
+      {/* Overview Card */}
+      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
+        <CardHeader>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <Target className="h-6 w-6" />
+            Year 1 Overview
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="text-center">
+              <h4 className="font-semibold text-elec-yellow">Duration</h4>
+              <p className="text-2xl font-bold">12 Months</p>
+              <p className="text-sm text-muted-foreground">Months 1-12</p>
             </div>
-          </CardContent>
-        </Card>
+            <div className="text-center">
+              <h4 className="font-semibold text-green-400">Expected Salary</h4>
+              <p className="text-2xl font-bold">£15k-£18k</p>
+              <p className="text-sm text-muted-foreground">Per annum</p>
+            </div>
+            <div className="text-center">
+              <h4 className="font-semibold text-blue-400">Main Focus</h4>
+              <p className="text-lg font-semibold">Foundations</p>
+              <p className="text-sm text-muted-foreground">Theory & Safety</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-        {/* Skills Development */}
-        <Card className="border-elec-yellow/20 bg-elec-gray/30 backdrop-blur">
-          <CardHeader>
-            <CardTitle className="text-xl text-elec-yellow">Skills Development Timeline</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {skillsDeveloped.map((skill, index) => (
-                <div key={index} className="p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/20">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium text-white">{skill.skill}</h4>
-                    <Badge variant="outline" className="border-blue-500/30 text-blue-400 text-xs">
-                      {skill.level}
-                    </Badge>
+      {/* Monthly Breakdown */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Calendar className="h-5 w-5 text-elec-yellow" />
+            Monthly Progress Breakdown
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {monthlyBreakdown.map((period, index) => (
+              <div key={index} className="border border-elec-yellow/10 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <div>
+                    <h4 className="font-semibold text-white">{period.title}</h4>
+                    <Badge variant="outline" className="text-xs">{period.month}</Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground">{skill.description}</p>
+                  <div className="text-sm text-muted-foreground">{period.focus}</div>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Expectations */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {expectations.map((section, index) => (
-            <Card key={index} className="border-elec-yellow/20 bg-elec-gray/30 backdrop-blur">
-              <CardHeader>
-                <CardTitle className="text-lg text-elec-yellow flex items-center gap-2">
-                  <Users className="h-5 w-5" />
-                  {section.category}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  {section.items.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <span className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
-                      <span className="text-sm text-muted-foreground">{item}</span>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                  {period.activities.map((activity, idx) => (
+                    <li key={idx} className="flex items-center gap-2">
+                      <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
+                      {activity}
                     </li>
                   ))}
                 </ul>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-        {/* Monthly Milestones */}
-        <Card className="border-elec-yellow/20 bg-elec-gray/30 backdrop-blur">
-          <CardHeader>
-            <CardTitle className="text-xl text-elec-yellow">Year 1 Milestones</CardTitle>
-            <p className="text-sm text-muted-foreground">Key achievements and focus areas throughout your first year</p>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {milestones.map((milestone, index) => (
-                <div key={index} className="p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/20">
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-medium text-white text-sm">{milestone.month}</h4>
-                    <Badge className={getMilestoneColor(milestone.status)}>
-                      {milestone.status}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground">{milestone.task}</p>
+      {/* Key Learning Areas */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {keyLearningAreas.map((area, index) => (
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <area.icon className="h-5 w-5 text-elec-yellow" />
+                {area.title}
+              </CardTitle>
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>Progress Expected</span>
+                  <span>{area.progress}%</span>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Success Tips */}
-        <Card className="border-green-500/30 bg-gradient-to-r from-green-500/10 to-emerald-500/10">
-          <CardHeader>
-            <CardTitle className="text-green-400 flex items-center gap-2">
-              <CheckCircle className="h-5 w-5" />
-              Success Tips for Year 1
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <h4 className="font-medium text-white mb-2">Mindset</h4>
-                <ul className="space-y-1 text-muted-foreground">
-                  <li>• Stay curious and ask questions</li>
-                  <li>• Accept that learning takes time</li>
-                  <li>• Focus on safety above all else</li>
-                  <li>• Build good work habits early</li>
-                </ul>
+                <Progress value={area.progress} className="h-2" />
               </div>
-              <div>
-                <h4 className="font-medium text-white mb-2">Practical</h4>
-                <ul className="space-y-1 text-muted-foreground">
-                  <li>• Invest in quality basic tools</li>
-                  <li>• Keep a learning diary</li>
-                  <li>• Network with other apprentices</li>
-                  <li>• Take college work seriously</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Warning Card */}
-        <Card className="border-orange-500/50 bg-orange-500/10">
-          <CardHeader>
-            <CardTitle className="text-orange-400 flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5" />
-              Common First Year Challenges
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              It's normal to feel overwhelmed in your first year. You're learning a new trade, adapting to site culture, 
-              and balancing work with college. Remember that every qualified electrician went through this phase. 
-              Focus on safety, ask questions, and be patient with your progress.
-            </p>
-          </CardContent>
-        </Card>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2">
+                {area.topics.map((topic, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm">
+                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    <span>{topic}</span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        ))}
       </div>
+
+      {/* Common Challenges */}
+      <Card className="border-orange-500/30 bg-orange-500/5">
+        <CardHeader>
+          <CardTitle className="text-orange-400 flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5" />
+            Common Year 1 Challenges & Solutions
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            {commonChallenges.map((item, index) => (
+              <div key={index} className="border border-orange-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-orange-400 mb-2">{item.challenge}</h4>
+                <p className="text-sm text-muted-foreground mb-3">{item.description}</p>
+                <div>
+                  <h5 className="font-medium text-white mb-2">Solutions:</h5>
+                  <ul className="space-y-1">
+                    {item.solutions.map((solution, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm">
+                        <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                        {solution}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

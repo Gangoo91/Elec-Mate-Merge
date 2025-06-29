@@ -1,378 +1,419 @@
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Calendar, CheckCircle, AlertTriangle, Target, TrendingUp, Users, PoundSterling, Award } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { Progress } from "@/components/ui/progress";
+import { 
+  Zap, 
+  Users, 
+  Wrench, 
+  BookOpen, 
+  Calendar,
+  Target,
+  AlertTriangle,
+  CheckCircle,
+  TrendingUp,
+  Award
+} from "lucide-react";
+import BackButton from "@/components/common/BackButton";
 
 const Year3 = () => {
-  const isMobile = useIsMobile();
-
-  const learningOutcomes = [
-    "Carry out testing and inspection procedures independently",
-    "Diagnose and rectify common electrical faults",
-    "Interact professionally with customers and clients",
-    "Plan and execute installations with minimal supervision",
-    "Complete advanced college modules and prepare for final assessments"
-  ];
-
-  const skillsDeveloped = [
-    { skill: "Testing & Inspection", level: "Competent", description: "PAT testing, EICR inspections, fault finding" },
-    { skill: "Customer Service", level: "Developing", description: "Professional communication, explaining work to clients" },
-    { skill: "Independent Working", level: "Advanced", description: "Planning jobs, managing time, quality control" },
-    { skill: "Fault Diagnosis", level: "Intermediate", description: "Systematic fault finding, using test equipment" }
-  ];
-
-  const salaryProgression = {
-    year3: "£24,000 - £28,000",
-    yearlyIncrease: "20-30%",
-    regional: {
-      london: "£27,000 - £32,000",
-      manchester: "£23,000 - £27,000",
-      birmingham: "£24,000 - £28,000"
-    }
-  };
-
-  const apprenticeStory = {
-    name: "James T.",
-    location: "Bristol",
-    quote: "Year 3 was when I really felt like a proper electrician. I was doing full rewires, dealing with customers directly, and even training the new apprentices. The testing course was tough but so worth it - now I can do EICR inspections.",
-    achievement: "Completed first independent domestic rewire project"
-  };
-
-  const careerPathways = [
+  const monthlyBreakdown = [
     {
-      path: "Domestic Electrician",
-      description: "Focus on residential work, rewires, consumer unit upgrades",
-      futureEarnings: "£30,000 - £45,000",
-      requirements: "Strong customer service, attention to detail"
+      month: "Month 25-26",
+      title: "Advanced Installation Work",
+      focus: "Complex electrical systems and installations",
+      activities: [
+        "Industrial installation principles",
+        "High-current systems",
+        "Advanced control systems",
+        "Specialist equipment installation"
+      ]
     },
     {
-      path: "Commercial Electrician", 
-      description: "Office buildings, shops, schools, larger installations",
-      futureEarnings: "£35,000 - £50,000",
-      requirements: "Understanding of 3-phase systems, fire alarms"
+      month: "Month 27-28",
+      title: "Fault Finding & Diagnostics",
+      focus: "Advanced troubleshooting techniques",
+      activities: [
+        "Systematic fault finding",
+        "Advanced test equipment usage",
+        "Circuit analysis techniques",
+        "Repair and maintenance procedures"
+      ]
     },
     {
-      path: "Industrial Electrician",
-      description: "Factories, manufacturing, heavy machinery maintenance",
-      futureEarnings: "£40,000 - £55,000",
-      requirements: "PLC knowledge, motor control, health & safety focus"
-    }
-  ];
-
-  const testingQualifications = [
-    {
-      course: "City & Guilds 2391-52",
-      description: "Initial Verification and Certification",
-      duration: "5 days",
-      cost: "£800 - £1,200",
-      importance: "Essential for independent testing work"
+      month: "Month 29-30",
+      title: "Commercial Systems",
+      focus: "Commercial and industrial electrical systems",
+      activities: [
+        "Three-phase distribution systems",
+        "Motor control and starters",
+        "Building management systems",
+        "Emergency and fire alarm systems"
+      ]
     },
     {
-      course: "City & Guilds 2377-22", 
-      description: "PAT Testing",
-      duration: "1 day",
-      cost: "£200 - £300",
-      importance: "Additional income stream"
+      month: "Month 31-32",
+      title: "Supervisory Experience",
+      focus: "Leadership and mentoring skills",
+      activities: [
+        "Mentoring junior apprentices",
+        "Work planning and coordination",
+        "Quality control and inspection",
+        "Health and safety leadership"
+      ]
+    },
+    {
+      month: "Month 33-34",
+      title: "EPA Preparation",
+      focus: "End Point Assessment preparation",
+      activities: [
+        "Portfolio completion and review",
+        "Mock practical assessments",
+        "Professional discussion preparation",
+        "Knowledge test revision"
+      ]
+    },
+    {
+      month: "Month 35-36",
+      title: "Year 3 Consolidation",
+      focus: "Skills consolidation and assessment",
+      activities: [
+        "Advanced skills demonstration",
+        "Professional competency review",
+        "Career planning discussions",
+        "Year 4 transition preparation"
+      ]
     }
   ];
 
-  const employerExpectations = [
-    "Complete installations independently with quality checks",
-    "Handle customer enquiries and explain work professionally", 
-    "Mentor and guide Year 1 and 2 apprentices effectively",
-    "Contribute to job costing and material ordering",
-    "Identify opportunities for additional work on sites"
+  const keyLearningAreas = [
+    {
+      title: "Advanced Installation Methods",
+      icon: Wrench,
+      progress: 85,
+      topics: [
+        "Industrial installation techniques",
+        "High-voltage systems (up to 1kV)",
+        "Specialist containment systems",
+        "Advanced jointing techniques",
+        "Complex distribution arrangements"
+      ]
+    },
+    {
+      title: "Fault Finding & Diagnostics",
+      icon: Zap,
+      progress: 80,
+      topics: [
+        "Systematic troubleshooting approaches",
+        "Advanced test equipment operation",
+        "Circuit analysis and diagnosis",
+        "Repair techniques and procedures",
+        "Preventive maintenance principles"
+      ]
+    },
+    {
+      title: "Commercial & Industrial Systems",
+      icon: BookOpen,
+      progress: 75,
+      topics: [
+        "Three-phase power distribution",
+        "Motor control systems",
+        "Building services integration",
+        "Emergency lighting systems",
+        "Fire alarm and security systems"
+      ]
+    },
+    {
+      title: "Leadership & Mentoring",
+      icon: Users,
+      progress: 70,
+      topics: [
+        "Supervising junior apprentices",
+        "Work planning and organisation",
+        "Communication and delegation",
+        "Quality assurance procedures",
+        "Health and safety leadership"
+      ]
+    }
   ];
 
-  const financialPlanning = {
-    toolInvestment: "£2,000 - £3,000",
-    vanCosts: "£150 - £300/month",
-    insurance: "£800 - £1,200/year",
-    tips: [
-      "Start building credit history for future van finance",
-      "Consider tool insurance policies",
-      "Save for qualification costs (£1,500 - £2,500 total)",
-      "Build emergency fund for potential future self-employment"
-    ]
-  };
+  const epaPreparation = [
+    {
+      component: "Practical Assessment",
+      duration: "6 hours",
+      description: "Demonstrate installation, testing, and fault-finding skills",
+      preparationTips: [
+        "Practice installations under time pressure",
+        "Master all testing procedures",
+        "Develop systematic fault-finding approach",
+        "Ensure all portfolio evidence is complete"
+      ]
+    },
+    {
+      component: "Professional Discussion",
+      duration: "1 hour",
+      description: "Discuss portfolio evidence and demonstrate knowledge",
+      preparationTips: [
+        "Know your portfolio evidence thoroughly",
+        "Practice explaining complex technical concepts",
+        "Prepare for regulation-based questions",
+        "Develop confidence in professional communication"
+      ]
+    },
+    {
+      component: "Knowledge Test",
+      duration: "90 minutes",
+      description: "Multiple choice test covering all apprenticeship content",
+      preparationTips: [
+        "Revise all theoretical knowledge systematically",
+        "Practice past papers and mock tests",
+        "Focus on weak areas identified in practice",
+        "Understand regulations and their applications"
+      ]
+    }
+  ];
+
+  const leadershipOpportunities = [
+    {
+      opportunity: "Mentor New Apprentices",
+      description: "Guide and support first-year apprentices in their learning journey",
+      benefits: ["Develops leadership skills", "Reinforces your own knowledge", "Builds confidence"],
+      responsibilities: ["Provide technical guidance", "Share experiences", "Support with challenges"]
+    },
+    {
+      opportunity: "Lead Small Projects",
+      description: "Take responsibility for planning and executing smaller electrical projects",
+      benefits: ["Project management experience", "Increased responsibility", "Problem-solving skills"],
+      responsibilities: ["Plan work activities", "Coordinate with team", "Ensure quality standards"]
+    },
+    {
+      opportunity: "Quality Assurance Role",
+      description: "Check and verify work completed by junior team members",
+      benefits: ["Attention to detail", "Technical knowledge application", "Quality awareness"],
+      responsibilities: ["Inspect completed work", "Identify issues", "Provide feedback"]
+    }
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-gray to-elec-dark">
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-6 animate-fade-in max-w-7xl">
-        {/* Header */}
-        <div className="space-y-4">
-          <div className="flex justify-start">
-            <Link to="/apprentice/toolbox/apprenticeship-expectations">
-              <Button 
-                variant="outline" 
-                size={isMobile ? "sm" : "default"} 
-                className="bg-elec-gray/50 border-elec-yellow/30 hover:bg-elec-yellow/10 text-white"
-              >
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                {isMobile ? "Back" : "Back to Journey"}
-              </Button>
-            </Link>
-          </div>
-          
-          <div className="text-center space-y-3 px-2">
-            <div className="flex items-center justify-center gap-3 mb-2">
-              <div className="p-3 rounded-lg bg-orange-500/20 border border-orange-500/30">
-                <Calendar className="h-8 w-8 text-orange-400" />
-              </div>
-              <div>
-                <h1 className={`font-bold tracking-tight text-elec-yellow leading-tight ${isMobile ? 'text-2xl' : 'text-4xl'}`}>
-                  Year 3: Competence
-                </h1>
-                <p className="text-orange-400 font-medium">Building Independence and Expertise</p>
-              </div>
-            </div>
-            <p className={`text-muted-foreground leading-relaxed max-w-3xl mx-auto ${isMobile ? 'text-sm px-1' : 'text-base'}`}>
-              Year 3 focuses on developing independence, customer interaction skills, and advanced technical competencies 
-              including testing and inspection procedures.
-            </p>
-          </div>
-        </div>
+    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col items-center justify-center mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Year 3: Progression Year</h1>
+        <p className="text-muted-foreground text-center max-w-2xl mb-4 text-sm sm:text-base">
+          Advanced installations, fault-finding, and preparing for your End Point Assessment
+        </p>
+        <BackButton customUrl="/apprentice/toolbox/apprenticeship-expectations" label="Back to Expectations" />
+      </div>
 
-        {/* Salary Progression */}
-        <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-amber-500/10 backdrop-blur">
-          <CardHeader>
-            <CardTitle className="text-xl text-orange-400 flex items-center gap-2">
-              <PoundSterling className="h-5 w-5" />
-              Year 3 Salary Expectations
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center p-4 bg-elec-gray/50 rounded-lg">
-                <h4 className="font-medium text-white mb-2">National Average</h4>
-                <p className="text-2xl font-bold text-orange-400">{salaryProgression.year3}</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {salaryProgression.yearlyIncrease} increase from Year 2
-                </p>
-              </div>
-              <div className="text-center p-4 bg-elec-gray/50 rounded-lg">
-                <h4 className="font-medium text-white mb-2">London</h4>
-                <p className="text-xl font-bold text-orange-400">{salaryProgression.regional.london}</p>
-                <p className="text-sm text-muted-foreground">Higher cost of living</p>
-              </div>
-              <div className="text-center p-4 bg-elec-gray/50 rounded-lg">
-                <h4 className="font-medium text-white mb-2">Manchester/Birmingham</h4>
-                <p className="text-xl font-bold text-orange-400">{salaryProgression.regional.manchester}</p>
-                <p className="text-sm text-muted-foreground">Regional rates</p>
-              </div>
+      {/* Overview Card */}
+      <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5">
+        <CardHeader>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <Target className="h-6 w-6" />
+            Year 3 Overview
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="text-center">
+              <h4 className="font-semibold text-elec-yellow">Duration</h4>
+              <p className="text-2xl font-bold">12 Months</p>
+              <p className="text-sm text-muted-foreground">Months 25-36</p>
             </div>
-          </CardContent>
-        </Card>
+            <div className="text-center">
+              <h4 className="font-semibold text-green-400">Expected Salary</h4>
+              <p className="text-2xl font-bold">£24k-£28k</p>
+              <p className="text-sm text-muted-foreground">Per annum</p>
+            </div>
+            <div className="text-center">
+              <h4 className="font-semibold text-blue-400">Main Focus</h4>
+              <p className="text-lg font-semibold">Advanced Skills</p>
+              <p className="text-sm text-muted-foreground">& EPA Prep</p>
+            </div>
+            <div className="text-center">
+              <h4 className="font-semibold text-purple-400">New Role</h4>
+              <p className="text-lg font-semibold">Mentoring</p>
+              <p className="text-sm text-muted-foreground">Junior Apprentices</p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-        {/* Career Pathways */}
-        <Card className="border-elec-yellow/20 bg-elec-gray/30 backdrop-blur">
-          <CardHeader>
-            <CardTitle className="text-xl text-elec-yellow">Future Career Pathways</CardTitle>
-            <p className="text-sm text-muted-foreground">Start thinking about your specialisation</p>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {careerPathways.map((pathway, index) => (
-                <div key={index} className="p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/20">
-                  <h4 className="font-medium text-white mb-2">{pathway.path}</h4>
-                  <p className="text-sm text-muted-foreground mb-3">{pathway.description}</p>
-                  <div className="space-y-2">
-                    <p className="text-sm">
-                      <span className="text-green-400 font-medium">Potential Earnings:</span> {pathway.futureEarnings}
-                    </p>
-                    <p className="text-sm">
-                      <span className="text-blue-400 font-medium">Key Requirements:</span> {pathway.requirements}
-                    </p>
-                  </div>
+      {/* EPA Preparation */}
+      <Card className="border-purple-500/30 bg-purple-500/5">
+        <CardHeader>
+          <CardTitle className="text-purple-400 flex items-center gap-2">
+            <Award className="h-5 w-5" />
+            End Point Assessment (EPA) Preparation
+          </CardTitle>
+          <p className="text-sm text-muted-foreground">Your EPA is the final assessment to complete your apprenticeship</p>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            {epaPreparation.map((component, index) => (
+              <div key={index} className="border border-purple-500/20 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="font-semibold text-purple-400">{component.component}</h4>
+                  <Badge variant="outline" className="text-xs">{component.duration}</Badge>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Apprentice Story */}
-        <Card className="border-elec-yellow/30 bg-gradient-to-r from-elec-yellow/5 to-orange-500/5">
-          <CardHeader>
-            <CardTitle className="text-elec-yellow">Year 3 Success Story</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <blockquote className="text-muted-foreground italic leading-relaxed border-l-4 border-elec-yellow pl-4">
-                "{apprenticeStory.quote}"
-              </blockquote>
-              <div className="flex items-center justify-between">
+                <p className="text-sm text-muted-foreground mb-3">{component.description}</p>
                 <div>
-                  <p className="font-medium text-white">{apprenticeStory.name}</p>
-                  <p className="text-sm text-muted-foreground">{apprenticeStory.location}</p>
-                </div>
-                <Badge className="bg-orange-500/20 text-orange-400 border-orange-500/30">
-                  {apprenticeStory.achievement}
-                </Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Testing Qualifications */}
-        <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-cyan-500/10">
-          <CardHeader>
-            <CardTitle className="text-blue-400 flex items-center gap-2">
-              <Award className="h-5 w-5" />
-              Testing & Inspection Qualifications
-            </CardTitle>
-            <p className="text-sm text-muted-foreground">Essential certifications for Year 3 and beyond</p>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {testingQualifications.map((qual, index) => (
-                <div key={index} className="p-4 bg-elec-gray/50 rounded-lg border border-blue-500/20">
-                  <h4 className="font-medium text-white mb-2">{qual.course}</h4>
-                  <p className="text-sm text-muted-foreground mb-3">{qual.description}</p>
-                  <div className="space-y-1 text-sm">
-                    <p><span className="text-blue-400">Duration:</span> {qual.duration}</p>
-                    <p><span className="text-green-400">Cost:</span> {qual.cost}</p>
-                    <p><span className="text-elec-yellow">Importance:</span> {qual.importance}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Learning Outcomes & Skills */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <Card className="border-orange-500/30 bg-gradient-to-br from-orange-500/10 to-amber-500/10 backdrop-blur">
-            <CardHeader>
-              <CardTitle className="text-xl text-orange-400 flex items-center gap-2">
-                <Target className="h-5 w-5" />
-                Learning Outcomes
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {learningOutcomes.map((outcome, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 bg-elec-gray/50 rounded-lg border border-orange-500/20">
-                    <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm text-muted-foreground">{outcome}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-elec-yellow/20 bg-elec-gray/30 backdrop-blur">
-            <CardHeader>
-              <CardTitle className="text-lg text-elec-yellow flex items-center gap-2">
-                <TrendingUp className="h-5 w-5" />
-                Skills Development
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {skillsDeveloped.map((skill, index) => (
-                  <div key={index} className="p-3 bg-elec-gray/50 rounded-lg border border-elec-yellow/20">
-                    <div className="flex items-center justify-between mb-2">
-                      <h4 className="font-medium text-white text-sm">{skill.skill}</h4>
-                      <Badge variant="outline" className="border-orange-500/30 text-orange-400 text-xs">
-                        {skill.level}
-                      </Badge>
-                    </div>
-                    <p className="text-xs text-muted-foreground">{skill.description}</p>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Financial Planning */}
-        <Card className="border-green-500/30 bg-gradient-to-r from-green-500/10 to-emerald-500/10">
-          <CardHeader>
-            <CardTitle className="text-green-400 flex items-center gap-2">
-              <PoundSterling className="h-5 w-5" />
-              Financial Planning for Year 3
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-medium text-white mb-3">Investment Requirements</h4>
-                <div className="space-y-2 text-sm">
-                  <p><span className="text-green-400">Professional Tools:</span> {financialPlanning.toolInvestment}</p>
-                  <p><span className="text-blue-400">Van Costs:</span> {financialPlanning.vanCosts}</p>
-                  <p><span className="text-orange-400">Insurance:</span> {financialPlanning.insurance}</p>
+                  <h5 className="font-medium text-white mb-2">Preparation Tips:</h5>
+                  <ul className="space-y-1">
+                    {component.preparationTips.map((tip, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm">
+                        <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                        {tip}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
-              <div>
-                <h4 className="font-medium text-white mb-3">Financial Tips</h4>
-                <ul className="space-y-1 text-sm text-muted-foreground">
-                  {financialPlanning.tips.map((tip, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <span className="text-green-400 mt-1">•</span>
-                      {tip}
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Monthly Breakdown */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Calendar className="h-5 w-5 text-elec-yellow" />
+            Monthly Progress Breakdown
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {monthlyBreakdown.map((period, index) => (
+              <div key={index} className="border border-elec-yellow/10 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <div>
+                    <h4 className="font-semibold text-white">{period.title}</h4>
+                    <Badge variant="outline" className="text-xs">{period.month}</Badge>
+                  </div>
+                  <div className="text-sm text-muted-foreground">{period.focus}</div>
+                </div>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                  {period.activities.map((activity, idx) => (
+                    <li key={idx} className="flex items-center gap-2">
+                      <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
+                      {activity}
                     </li>
                   ))}
                 </ul>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-        {/* Employer Expectations */}
-        <Card className="border-elec-yellow/20 bg-elec-gray/30 backdrop-blur">
-          <CardHeader>
-            <CardTitle className="text-elec-yellow flex items-center gap-2">
-              <Users className="h-5 w-5" />
-              Employer Expectations in Year 3
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-3">
-              {employerExpectations.map((expectation, index) => (
-                <li key={index} className="flex items-start gap-3 p-3 bg-elec-gray/50 rounded-lg">
-                  <span className="w-2 h-2 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></span>
-                  <span className="text-sm text-muted-foreground">{expectation}</span>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-
-        {/* Success Tips */}
-        <Card className="border-green-500/30 bg-gradient-to-r from-green-500/10 to-emerald-500/10">
-          <CardHeader>
-            <CardTitle className="text-green-400 flex items-center gap-2">
-              <CheckCircle className="h-5 w-5" />
-              Success Tips for Year 3
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-              <div>
-                <h4 className="font-medium text-white mb-2">Technical Excellence</h4>
-                <ul className="space-y-1 text-muted-foreground">
-                  <li>• Master testing procedures thoroughly</li>
-                  <li>• Develop systematic fault-finding approach</li>
-                  <li>• Practice customer communication skills</li>
-                  <li>• Stay updated with regulation changes</li>
-                </ul>
+      {/* Key Learning Areas */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {keyLearningAreas.map((area, index) => (
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <area.icon className="h-5 w-5 text-elec-yellow" />
+                {area.title}
+              </CardTitle>
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span>Progress Expected</span>
+                  <span>{area.progress}%</span>
+                </div>
+                <Progress value={area.progress} className="h-2" />
               </div>
-              <div>
-                <h4 className="font-medium text-white mb-2">Career Preparation</h4>
-                <ul className="space-y-1 text-muted-foreground">
-                  <li>• Research specialisation options</li>
-                  <li>• Build professional network</li>
-                  <li>• Consider additional qualifications</li>
-                  <li>• Plan for qualified electrician transition</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2">
+                {area.topics.map((topic, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm">
+                    <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                    <span>{topic}</span>
+                  </li>
+                ))}
+              </ul>
+            </CardContent>
+          </Card>
+        ))}
       </div>
+
+      {/* Leadership Opportunities */}
+      <Card className="border-blue-500/30 bg-blue-500/5">
+        <CardHeader>
+          <CardTitle className="text-blue-400 flex items-center gap-2">
+            <Users className="h-5 w-5" />
+            Leadership Opportunities
+          </CardTitle>
+          <p className="text-sm text-muted-foreground">Year 3 apprentices often take on mentoring and leadership roles</p>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            {leadershipOpportunities.map((opportunity, index) => (
+              <div key={index} className="border border-blue-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-blue-400 mb-2">{opportunity.opportunity}</h4>
+                <p className="text-sm text-muted-foreground mb-3">{opportunity.description}</p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h5 className="font-medium text-white mb-2">Benefits:</h5>
+                    <ul className="space-y-1">
+                      {opportunity.benefits.map((benefit, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm">
+                          <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+                          {benefit}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h5 className="font-medium text-white mb-2">Responsibilities:</h5>
+                    <ul className="space-y-1">
+                      {opportunity.responsibilities.map((responsibility, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm">
+                          <Target className="h-3 w-3 text-purple-400 mt-0.5 flex-shrink-0" />
+                          {responsibility}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Year 3 Challenges */}
+      <Card className="border-orange-500/30 bg-orange-500/5">
+        <CardHeader>
+          <CardTitle className="text-orange-400 flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5" />
+            Year 3 Challenges & Opportunities
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h4 className="font-semibold text-orange-400 mb-3">Common Challenges</h4>
+              <ul className="space-y-2 text-sm">
+                <li>• EPA preparation pressure and anxiety</li>
+                <li>• Balancing increased responsibilities</li>
+                <li>• Complex technical problem-solving</li>
+                <li>• Managing junior apprentice expectations</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-green-400 mb-3">Growth Opportunities</h4>
+              <ul className="space-y-2 text-sm">
+                <li>• Develop leadership and mentoring skills</li>
+                <li>• Gain project management experience</li>
+                <li>• Specialise in specific electrical areas</li>
+                <li>• Build professional network and reputation</li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
