@@ -1,242 +1,212 @@
 
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Calculator, Zap } from "lucide-react";
-import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Zap, Info, Calculator, RotateCcw } from "lucide-react";
+import { useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const OhmsLawCalculator = () => {
-  const [voltage, setVoltage] = useState("");
-  const [current, setCurrent] = useState("");
-  const [resistance, setResistance] = useState("");
-  const [power, setPower] = useState("");
-  const [calculationResult, setCalculationResult] = useState<string | null>(null);
-  const [errors, setErrors] = useState<{[key: string]: string}>({});
-  
-  const validateInputs = () => {
-    const newErrors: {[key: string]: string} = {};
-    let filledCount = 0;
-    
-    if (voltage && parseFloat(voltage) <= 0) newErrors.voltage = "Voltage must be greater than 0";
-    else if (voltage) filledCount++;
-    
-    if (current && parseFloat(current) <= 0) newErrors.current = "Current must be greater than 0";
-    else if (current) filledCount++;
-    
-    if (resistance && parseFloat(resistance) <= 0) newErrors.resistance = "Resistance must be greater than 0";
-    else if (resistance) filledCount++;
-    
-    if (power && parseFloat(power) <= 0) newErrors.power = "Power must be greater than 0";
-    else if (power) filledCount++;
-    
-    if (filledCount !== 2) {
-      newErrors.general = "Please enter exactly two values to calculate the others";
-    }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+  const [voltage, setVoltage] = useState<string>("");
+  const [current, setCurrent] = useState<string>("");
+  const [resistance, setResistance] = useState<string>("");
+  const [power, setPower] = useState<string>("");
+  const [result, setResult] = useState<{
+    voltage?: number;
+    current?: number;
+    resistance?: number;
+    power?: number;
+    calculation: string;
+  } | null>(null);
 
   const calculateOhmsLaw = () => {
-    if (!validateInputs()) return;
-    
-    // Basic Ohm's Law calculator
-    if (voltage && current && !resistance && !power) {
-      const calculatedResistance = parseFloat(voltage) / parseFloat(current);
-      setResistance(calculatedResistance.toFixed(2));
-      setPower((parseFloat(voltage) * parseFloat(current)).toFixed(2));
-      setCalculationResult(`Resistance: ${calculatedResistance.toFixed(2)} Ω, Power: ${(parseFloat(voltage) * parseFloat(current)).toFixed(2)} W`);
-    } 
-    else if (voltage && resistance && !current && !power) {
-      const calculatedCurrent = parseFloat(voltage) / parseFloat(resistance);
-      setCurrent(calculatedCurrent.toFixed(2));
-      setPower((parseFloat(voltage) * calculatedCurrent).toFixed(2));
-      setCalculationResult(`Current: ${calculatedCurrent.toFixed(2)} A, Power: ${(parseFloat(voltage) * calculatedCurrent).toFixed(2)} W`);
+    const V = parseFloat(voltage);
+    const I = parseFloat(current);
+    const R = parseFloat(resistance);
+    const P = parseFloat(power);
+
+    let calculation = "";
+    let calculatedResult: any = {};
+
+    // Determine what to calculate based on available inputs
+    if (!isNaN(V) && !isNaN(I)) {
+      // Calculate R and P
+      calculatedResult.resistance = V / I;
+      calculatedResult.power = V * I;
+      calculation = "R = V/I, P = V×I";
+    } else if (!isNaN(V) && !isNaN(R)) {
+      // Calculate I and P
+      calculatedResult.current = V / R;
+      calculatedResult.power = (V * V) / R;
+      calculation = "I = V/R, P = V²/R";
+    } else if (!isNaN(I) && !isNaN(R)) {
+      // Calculate V and P
+      calculatedResult.voltage = I * R;
+      calculatedResult.power = I * I * R;
+      calculation = "V = I×R, P = I²×R";
+    } else if (!isNaN(P) && !isNaN(V)) {
+      // Calculate I and R
+      calculatedResult.current = P / V;
+      calculatedResult.resistance = (V * V) / P;
+      calculation = "I = P/V, R = V²/P";
+    } else if (!isNaN(P) && !isNaN(I)) {
+      // Calculate V and R
+      calculatedResult.voltage = P / I;
+      calculatedResult.resistance = P / (I * I);
+      calculation = "V = P/I, R = P/I²";
     }
-    else if (current && resistance && !voltage && !power) {
-      const calculatedVoltage = parseFloat(current) * parseFloat(resistance);
-      setVoltage(calculatedVoltage.toFixed(2));
-      setPower((calculatedVoltage * parseFloat(current)).toFixed(2));
-      setCalculationResult(`Voltage: ${calculatedVoltage.toFixed(2)} V, Power: ${(calculatedVoltage * parseFloat(current)).toFixed(2)} W`);
-    }
-    else if (power && current && !voltage && !resistance) {
-      const calculatedVoltage = parseFloat(power) / parseFloat(current);
-      setVoltage(calculatedVoltage.toFixed(2));
-      setResistance((calculatedVoltage / parseFloat(current)).toFixed(2));
-      setCalculationResult(`Voltage: ${calculatedVoltage.toFixed(2)} V, Resistance: ${(calculatedVoltage / parseFloat(current)).toFixed(2)} Ω`);
-    }
-    else if (power && voltage && !current && !resistance) {
-      const calculatedCurrent = parseFloat(power) / parseFloat(voltage);
-      setCurrent(calculatedCurrent.toFixed(2));
-      setResistance((parseFloat(voltage) / calculatedCurrent).toFixed(2));
-      setCalculationResult(`Current: ${calculatedCurrent.toFixed(2)} A, Resistance: ${(parseFloat(voltage) / calculatedCurrent).toFixed(2)} Ω`);
-    }
-    else if (power && resistance && !voltage && !current) {
-      const calculatedCurrent = Math.sqrt(parseFloat(power) / parseFloat(resistance));
-      const calculatedVoltage = calculatedCurrent * parseFloat(resistance);
-      setCurrent(calculatedCurrent.toFixed(2));
-      setVoltage(calculatedVoltage.toFixed(2));
-      setCalculationResult(`Current: ${calculatedCurrent.toFixed(2)} A, Voltage: ${calculatedVoltage.toFixed(2)} V`);
+
+    if (Object.keys(calculatedResult).length > 0) {
+      setResult({
+        ...calculatedResult,
+        calculation
+      });
     }
   };
 
-  const resetCalculator = () => {
+  const reset = () => {
     setVoltage("");
     setCurrent("");
     setResistance("");
     setPower("");
-    setCalculationResult(null);
-    setErrors({});
-  };
-  
-  const clearError = (field: string) => {
-    if (errors[field]) {
-      const newErrors = {...errors};
-      delete newErrors[field];
-      setErrors(newErrors);
-    }
+    setResult(null);
   };
 
   return (
-    <>
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Calculator className="h-5 w-5 text-elec-yellow" />
-            <CardTitle>Ohm's Law Calculator</CardTitle>
+    <Card className="border-elec-yellow/20 bg-elec-gray">
+      <CardHeader>
+        <div className="flex items-center gap-2">
+          <Zap className="h-5 w-5 text-elec-yellow" />
+          <CardTitle>Ohm's Law Calculator</CardTitle>
+        </div>
+        <CardDescription>
+          Calculate voltage, current, resistance, or power using Ohm's Law. Enter any two values.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Input Section */}
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="voltage">Voltage (V)</Label>
+              <Input
+                id="voltage"
+                type="number"
+                value={voltage}
+                onChange={(e) => setVoltage(e.target.value)}
+                placeholder="e.g., 230"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="current">Current (A)</Label>
+              <Input
+                id="current"
+                type="number"
+                value={current}
+                onChange={(e) => setCurrent(e.target.value)}
+                placeholder="e.g., 10"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="resistance">Resistance (Ω)</Label>
+              <Input
+                id="resistance"
+                type="number"
+                value={resistance}
+                onChange={(e) => setResistance(e.target.value)}
+                placeholder="e.g., 23"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="power">Power (W)</Label>
+              <Input
+                id="power"
+                type="number"
+                value={power}
+                onChange={(e) => setPower(e.target.value)}
+                placeholder="e.g., 2300"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+
+            <div className="flex gap-2">
+              <Button onClick={calculateOhmsLaw} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+                <Calculator className="h-4 w-4 mr-2" />
+                Calculate
+              </Button>
+              <Button variant="outline" onClick={reset}>
+                <RotateCcw className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
-          <CardDescription>
-            Enter any two values to calculate the other two based on Ohm's Law (V = I × R and P = V × I).
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              {errors.general && (
-                <div className="p-3 bg-destructive/20 border border-destructive/40 rounded-md text-sm mb-3">
-                  {errors.general}
+
+          {/* Result Section */}
+          <div className="space-y-4">
+            <div className="rounded-md bg-elec-dark p-6 min-h-[200px]">
+              {result ? (
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Calculated Values</h3>
+                    <Badge variant="secondary" className="mb-4">
+                      {result.calculation}
+                    </Badge>
+                  </div>
+                  
+                  <Separator />
+                  
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    {result.voltage && (
+                      <div>
+                        <span className="text-muted-foreground">Voltage:</span>
+                        <div className="font-mono text-elec-yellow">{result.voltage.toFixed(2)} V</div>
+                      </div>
+                    )}
+                    {result.current && (
+                      <div>
+                        <span className="text-muted-foreground">Current:</span>
+                        <div className="font-mono text-elec-yellow">{result.current.toFixed(2)} A</div>
+                      </div>
+                    )}
+                    {result.resistance && (
+                      <div>
+                        <span className="text-muted-foreground">Resistance:</span>
+                        <div className="font-mono text-elec-yellow">{result.resistance.toFixed(2)} Ω</div>
+                      </div>
+                    )}
+                    {result.power && (
+                      <div>
+                        <span className="text-muted-foreground">Power:</span>
+                        <div className="font-mono text-elec-yellow">{result.power.toFixed(2)} W</div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center h-full text-muted-foreground">
+                  Enter any two values to calculate the others
                 </div>
               )}
-              <div className="space-y-2">
-                <Label htmlFor="voltage">Voltage (V)</Label>
-                <Input 
-                  id="voltage" 
-                  placeholder="Enter voltage" 
-                  type="number"
-                  value={voltage} 
-                  onChange={(e) => {
-                    setVoltage(e.target.value);
-                    clearError('voltage');
-                    clearError('general');
-                  }}
-                  className={`bg-elec-dark border-elec-yellow/20 ${errors.voltage ? "border-destructive" : ""}`}
-                />
-                {errors.voltage && <p className="text-xs text-destructive">{errors.voltage}</p>}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="current">Current (A)</Label>
-                <Input 
-                  id="current" 
-                  placeholder="Enter current" 
-                  type="number"
-                  value={current} 
-                  onChange={(e) => {
-                    setCurrent(e.target.value);
-                    clearError('current');
-                    clearError('general');
-                  }}
-                  className={`bg-elec-dark border-elec-yellow/20 ${errors.current ? "border-destructive" : ""}`}
-                />
-                {errors.current && <p className="text-xs text-destructive">{errors.current}</p>}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="resistance">Resistance (Ω)</Label>
-                <Input 
-                  id="resistance" 
-                  placeholder="Enter resistance" 
-                  type="number"
-                  value={resistance} 
-                  onChange={(e) => {
-                    setResistance(e.target.value);
-                    clearError('resistance');
-                    clearError('general');
-                  }}
-                  className={`bg-elec-dark border-elec-yellow/20 ${errors.resistance ? "border-destructive" : ""}`}
-                />
-                {errors.resistance && <p className="text-xs text-destructive">{errors.resistance}</p>}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="power">Power (W)</Label>
-                <Input 
-                  id="power" 
-                  placeholder="Enter power" 
-                  type="number"
-                  value={power} 
-                  onChange={(e) => {
-                    setPower(e.target.value);
-                    clearError('power');
-                    clearError('general');
-                  }}
-                  className={`bg-elec-dark border-elec-yellow/20 ${errors.power ? "border-destructive" : ""}`}
-                />
-                {errors.power && <p className="text-xs text-destructive">{errors.power}</p>}
-              </div>
             </div>
-            
-            <div className="flex flex-col space-y-4">
-              <div className="flex-grow rounded-md bg-elec-dark p-6 flex flex-col items-center justify-center text-center">
-                {calculationResult ? (
-                  <>
-                    <span className="text-elec-yellow text-xl mb-2">Result</span>
-                    <p className="text-lg">{calculationResult}</p>
-                  </>
-                ) : (
-                  <div className="text-muted-foreground">
-                    <Calculator className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                    <p>Enter any two values to calculate the others</p>
-                  </div>
-                )}
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <Button onClick={calculateOhmsLaw} className="w-full">Calculate</Button>
-                <Button variant="outline" onClick={resetCalculator} className="w-full">Reset</Button>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray mt-6">
-        <CardHeader>
-          <CardTitle className="text-lg">Ohm's Law Reference</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h3 className="font-medium mb-2">Formulas</h3>
-              <ul className="space-y-2 text-elec-light/80">
-                <li><span className="text-elec-yellow">V = I × R</span> (Voltage = Current × Resistance)</li>
-                <li><span className="text-elec-yellow">I = V ÷ R</span> (Current = Voltage ÷ Resistance)</li>
-                <li><span className="text-elec-yellow">R = V ÷ I</span> (Resistance = Voltage ÷ Current)</li>
-                <li><span className="text-elec-yellow">P = V × I</span> (Power = Voltage × Current)</li>
-                <li><span className="text-elec-yellow">P = I² × R</span> (Power = Current² × Resistance)</li>
-                <li><span className="text-elec-yellow">P = V² ÷ R</span> (Power = Voltage² ÷ Resistance)</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="font-medium mb-2">Units</h3>
-              <ul className="space-y-2 text-elec-light/80">
-                <li><span className="text-elec-yellow">Voltage (V)</span>: Volts (V)</li>
-                <li><span className="text-elec-yellow">Current (I)</span>: Amperes (A)</li>
-                <li><span className="text-elec-yellow">Resistance (R)</span>: Ohms (Ω)</li>
-                <li><span className="text-elec-yellow">Power (P)</span>: Watts (W)</li>
-              </ul>
-            </div>
+            <Alert className="border-blue-500/20 bg-blue-500/10">
+              <Info className="h-4 w-4 text-blue-500" />
+              <AlertDescription className="text-blue-200">
+                Ohm's Law: V = I×R, P = V×I. Enter any two known values to calculate the rest.
+              </AlertDescription>
+            </Alert>
           </div>
-        </CardContent>
-      </Card>
-    </>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

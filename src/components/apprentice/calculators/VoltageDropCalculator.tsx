@@ -1,75 +1,65 @@
 
-import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Activity, AlertTriangle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Activity, Info, Calculator, RotateCcw } from "lucide-react";
+import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const VoltageDropCalculator = () => {
-  const [cableLength, setCableLength] = useState<string>("");
+  const [current, setCurrent] = useState<string>("");
+  const [length, setLength] = useState<string>("");
   const [cableSize, setCableSize] = useState<string>("");
-  const [loadCurrent, setLoadCurrent] = useState<string>("");
-  const [voltageDrop, setVoltageDrop] = useState<string | null>(null);
-  const [percentage, setPercentage] = useState<string | null>(null);
   const [voltage, setVoltage] = useState<string>("230");
-  const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [result, setResult] = useState<{
+    voltageDrop: number;
+    percentageDrop: number;
+    acceptable: boolean;
+  } | null>(null);
 
-  const validateInputs = () => {
-    const newErrors: {[key: string]: string} = {};
-    
-    if (!voltage) newErrors.voltage = "Supply voltage is required";
-    else if (parseFloat(voltage) <= 0) newErrors.voltage = "Supply voltage must be greater than 0";
-    
-    if (!cableLength) newErrors.cableLength = "Cable length is required";
-    else if (parseFloat(cableLength) <= 0) newErrors.cableLength = "Cable length must be greater than 0";
-    
-    if (!cableSize) newErrors.cableSize = "Cable size is required";
-    
-    if (!loadCurrent) newErrors.loadCurrent = "Load current is required";
-    else if (parseFloat(loadCurrent) <= 0) newErrors.loadCurrent = "Load current must be greater than 0";
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  // Cable resistance values (mΩ/m for copper T&E at 70°C)
+  const cableResistance = {
+    "1.0": 19.5,
+    "1.5": 13.3,
+    "2.5": 7.98,
+    "4.0": 4.95,
+    "6.0": 3.30,
+    "10.0": 1.95,
+    "16.0": 1.21,
+    "25.0": 0.795,
+    "35.0": 0.565
   };
 
   const calculateVoltageDrop = () => {
-    if (!validateInputs()) return;
-    
-    const length = parseFloat(cableLength);
-    const current = parseFloat(loadCurrent);
-    const size = parseFloat(cableSize);
-    const v = parseFloat(voltage);
-    
-    // Simplified voltage drop calculation using the millivolt per amp meter method
-    let resistancePerMeter;
-    
-    switch(cableSize) {
-      case "1.5": resistancePerMeter = 0.012; break;
-      case "2.5": resistancePerMeter = 0.007; break;
-      case "4": resistancePerMeter = 0.0045; break;
-      case "6": resistancePerMeter = 0.003; break;
-      case "10": resistancePerMeter = 0.0018; break;
-      default: resistancePerMeter = 0.007; 
+    const I = parseFloat(current);
+    const L = parseFloat(length);
+    const V = parseFloat(voltage);
+    const R = cableResistance[cableSize as keyof typeof cableResistance];
+
+    if (I > 0 && L > 0 && R && V > 0) {
+      // Voltage drop = 2 × I × L × R / 1000 (factor of 2 for line and neutral)
+      const voltageDrop = (2 * I * L * R) / 1000;
+      const percentageDrop = (voltageDrop / V) * 100;
+      const acceptable = percentageDrop <= 3; // BS 7671 limit for lighting, 5% for other circuits
+
+      setResult({
+        voltageDrop,
+        percentageDrop,
+        acceptable
+      });
     }
-    
-    const drop = (length * current * resistancePerMeter * 2).toFixed(2); // *2 for go and return
-    const dropPercentage = ((parseFloat(drop) / v) * 100).toFixed(2);
-    
-    setVoltageDrop(drop);
-    setPercentage(dropPercentage);
   };
 
-  const resetCalculator = () => {
-    setCableLength("");
+  const reset = () => {
+    setCurrent("");
+    setLength("");
     setCableSize("");
-    setLoadCurrent("");
-    setVoltageDrop(null);
-    setPercentage(null);
     setVoltage("230");
-    setErrors({});
+    setResult(null);
   };
 
   return (
@@ -80,146 +70,128 @@ const VoltageDropCalculator = () => {
           <CardTitle>Voltage Drop Calculator</CardTitle>
         </div>
         <CardDescription>
-          Calculate voltage drop in electrical cables based on load and distance.
+          Calculate voltage drop across cable runs according to BS 7671 requirements.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Input Section */}
           <div className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="voltage">Supply Voltage (V)</Label>
-              <Input 
-                id="voltage" 
-                type="number" 
-                placeholder="Enter supply voltage" 
-                className={`bg-elec-dark border-elec-yellow/20 ${errors.voltage ? "border-destructive" : ""}`}
+            <div>
+              <Label htmlFor="voltage-supply">Supply Voltage (V)</Label>
+              <Input
+                id="voltage-supply"
+                type="number"
                 value={voltage}
-                onChange={(e) => {
-                  setVoltage(e.target.value);
-                  if (errors.voltage) {
-                    const newErrors = {...errors};
-                    delete newErrors.voltage;
-                    setErrors(newErrors);
-                  }
-                }}
+                onChange={(e) => setVoltage(e.target.value)}
+                placeholder="e.g., 230"
+                className="bg-elec-dark border-elec-yellow/20"
               />
-              {errors.voltage && <p className="text-xs text-destructive">{errors.voltage}</p>}
             </div>
-            <div className="space-y-2">
+
+            <div>
+              <Label htmlFor="current-load">Load Current (A)</Label>
+              <Input
+                id="current-load"
+                type="number"
+                value={current}
+                onChange={(e) => setCurrent(e.target.value)}
+                placeholder="e.g., 20"
+                className="bg-elec-dark border-elec-yellow/20"
+              />
+            </div>
+
+            <div>
               <Label htmlFor="cable-length">Cable Length (m)</Label>
-              <Input 
-                id="cable-length" 
-                type="number" 
-                placeholder="Enter cable length" 
-                className={`bg-elec-dark border-elec-yellow/20 ${errors.cableLength ? "border-destructive" : ""}`}
-                value={cableLength}
-                onChange={(e) => {
-                  setCableLength(e.target.value);
-                  if (errors.cableLength) {
-                    const newErrors = {...errors};
-                    delete newErrors.cableLength;
-                    setErrors(newErrors);
-                  }
-                }}
+              <Input
+                id="cable-length"
+                type="number"
+                value={length}
+                onChange={(e) => setLength(e.target.value)}
+                placeholder="e.g., 50"
+                className="bg-elec-dark border-elec-yellow/20"
               />
-              {errors.cableLength && <p className="text-xs text-destructive">{errors.cableLength}</p>}
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="cable-size">Cable Size</Label>
-              <Select 
-                value={cableSize} 
-                onValueChange={(value) => {
-                  setCableSize(value);
-                  if (errors.cableSize) {
-                    const newErrors = {...errors};
-                    delete newErrors.cableSize;
-                    setErrors(newErrors);
-                  }
-                }}
-              >
-                <SelectTrigger className={`bg-elec-dark border-elec-yellow/20 ${errors.cableSize ? "border-destructive" : ""}`}>
+
+            <div>
+              <Label htmlFor="cable-size-select">Cable Size (mm²)</Label>
+              <Select value={cableSize} onValueChange={setCableSize}>
+                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
                   <SelectValue placeholder="Select cable size" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1.5">1.5 mm²</SelectItem>
-                  <SelectItem value="2.5">2.5 mm²</SelectItem>
-                  <SelectItem value="4">4.0 mm²</SelectItem>
-                  <SelectItem value="6">6.0 mm²</SelectItem>
-                  <SelectItem value="10">10.0 mm²</SelectItem>
+                <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                  <SelectItem value="1.0">1.0mm²</SelectItem>
+                  <SelectItem value="1.5">1.5mm²</SelectItem>
+                  <SelectItem value="2.5">2.5mm²</SelectItem>
+                  <SelectItem value="4.0">4.0mm²</SelectItem>
+                  <SelectItem value="6.0">6.0mm²</SelectItem>
+                  <SelectItem value="10.0">10.0mm²</SelectItem>
+                  <SelectItem value="16.0">16.0mm²</SelectItem>
+                  <SelectItem value="25.0">25.0mm²</SelectItem>
+                  <SelectItem value="35.0">35.0mm²</SelectItem>
                 </SelectContent>
               </Select>
-              {errors.cableSize && <p className="text-xs text-destructive">{errors.cableSize}</p>}
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="load-current">Load Current (A)</Label>
-              <Input 
-                id="load-current" 
-                type="number" 
-                placeholder="Enter load current" 
-                className={`bg-elec-dark border-elec-yellow/20 ${errors.loadCurrent ? "border-destructive" : ""}`}
-                value={loadCurrent}
-                onChange={(e) => {
-                  setLoadCurrent(e.target.value);
-                  if (errors.loadCurrent) {
-                    const newErrors = {...errors};
-                    delete newErrors.loadCurrent;
-                    setErrors(newErrors);
-                  }
-                }}
-              />
-              {errors.loadCurrent && <p className="text-xs text-destructive">{errors.loadCurrent}</p>}
+
+            <div className="flex gap-2">
+              <Button onClick={calculateVoltageDrop} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+                <Calculator className="h-4 w-4 mr-2" />
+                Calculate
+              </Button>
+              <Button variant="outline" onClick={reset}>
+                <RotateCcw className="h-4 w-4" />
+              </Button>
             </div>
           </div>
-          
-          <div className="flex flex-col space-y-4">
-            <div className="flex-grow rounded-md bg-elec-dark p-6 flex flex-col items-center justify-center text-center">
-              {voltageDrop ? (
-                <>
-                  <span className="text-elec-yellow text-xl mb-4">Voltage Drop Results</span>
-                  <div className="grid grid-cols-2 gap-4 w-full">
-                    <div className="text-center">
-                      <div className="text-sm text-muted-foreground">Voltage Drop:</div>
-                      <div className="text-2xl font-bold text-elec-yellow">{voltageDrop} V</div>
+
+          {/* Result Section */}
+          <div className="space-y-4">
+            <div className="rounded-md bg-elec-dark p-6 min-h-[200px]">
+              {result ? (
+                <div className="space-y-4">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Voltage Drop Analysis</h3>
+                    <Badge 
+                      variant={result.acceptable ? "default" : "destructive"}
+                      className="mb-4"
+                    >
+                      {result.acceptable ? "✓ Acceptable" : "✗ Exceeds limits"}
+                    </Badge>
+                  </div>
+                  
+                  <Separator />
+                  
+                  <div className="space-y-3 text-sm">
+                    <div>
+                      <span className="text-muted-foreground">Voltage Drop:</span>
+                      <div className="font-mono text-elec-yellow text-lg">{result.voltageDrop.toFixed(2)} V</div>
                     </div>
-                    <div className="text-center">
-                      <div className="text-sm text-muted-foreground">Percentage:</div>
-                      <div className="text-2xl font-bold text-elec-yellow">{percentage}%</div>
+                    
+                    <div>
+                      <span className="text-muted-foreground">Percentage Drop:</span>
+                      <div className="font-mono text-elec-yellow text-lg">{result.percentageDrop.toFixed(2)}%</div>
+                    </div>
+                    
+                    <div>
+                      <span className="text-muted-foreground">Terminal Voltage:</span>
+                      <div className="font-mono text-elec-yellow">{(parseFloat(voltage) - result.voltageDrop).toFixed(2)} V</div>
                     </div>
                   </div>
-                </>
+                </div>
               ) : (
-                <div className="text-muted-foreground">
-                  <Activity className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                  <p>Enter values and calculate to see results</p>
+                <div className="flex items-center justify-center h-full text-muted-foreground">
+                  Enter all values to calculate voltage drop
                 </div>
               )}
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              <Button onClick={calculateVoltageDrop} className="w-full">Calculate</Button>
-              <Button variant="outline" onClick={resetCalculator} className="w-full">Reset</Button>
-            </div>
+
+            <Alert className="border-blue-500/20 bg-blue-500/10">
+              <Info className="h-4 w-4 text-blue-500" />
+              <AlertDescription className="text-blue-200">
+                BS 7671 limits: 3% for lighting circuits, 5% for other circuits from origin to furthest point.
+              </AlertDescription>
+            </Alert>
           </div>
-        </div>
-        
-        {voltageDrop && parseFloat(percentage!) > 2.5 && (
-          <Alert variant="destructive" className="mt-4 bg-destructive/20 border-destructive/40">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertDescription>
-              Warning: Voltage drop exceeds 2.5% which may be outside acceptable limits depending on your application.
-            </AlertDescription>
-          </Alert>
-        )}
-        
-        <div className="mt-2 p-4 bg-elec-dark/50 rounded-md">
-          <h3 className="font-medium mb-2">Voltage Drop Information</h3>
-          <p className="text-sm text-elec-light/80 mb-2">
-            Voltage drop is the reduction in voltage that occurs as current flows through a cable.
-          </p>
-          <ul className="space-y-2 text-sm text-elec-light/80">
-            <li><span className="text-elec-yellow">Standards:</span> Generally, voltage drop should not exceed 2.5% for power circuits.</li>
-            <li><span className="text-elec-yellow">Calculation:</span> Based on cable size, length and load current.</li>
-            <li><span className="text-elec-yellow">Solutions:</span> To reduce voltage drop, increase cable size or reduce cable length.</li>
-          </ul>
         </div>
       </CardContent>
     </Card>
