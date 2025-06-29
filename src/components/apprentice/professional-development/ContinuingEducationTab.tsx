@@ -1,273 +1,534 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Calculator, CheckCircle, MapPin, Clock, Users, Info, Star, AlertCircle, Lightbulb } from "lucide-react";
+import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import EducationPathways from "./education/EducationPathways";
-import FundingCalculator from "./education/FundingCalculator";
-import EligibilityChecker from "./education/EligibilityChecker";
-import ApplicationGuides from "./education/ApplicationGuides";
-import SuccessStories from "./education/SuccessStories";
-import RegionalInformation from "./education/RegionalInformation";
+import { Separator } from "@/components/ui/separator";
+import { 
+  BookOpen, 
+  Calculator, 
+  Info, 
+  TrendingUp, 
+  PoundSterling, 
+  Clock,
+  CheckCircle,
+  AlertCircle,
+  Lightbulb
+} from "lucide-react";
+import { toast } from "sonner";
+
+interface FundingResult {
+  eligibleForFunding: boolean;
+  fundingAmount: number;
+  personalContribution: number;
+  totalBenefit: number;
+  paybackPeriod: number;
+  annualROI: number;
+  fundingSource: string;
+  recommendations: string[];
+}
 
 const ContinuingEducationTab = () => {
+  const [courseType, setCourseType] = useState<string>("");
+  const [courseCost, setCourseCost] = useState<string>("");
+  const [currentIncome, setCurrentIncome] = useState<string>("");
+  const [employmentStatus, setEmploymentStatus] = useState<string>("");
+  const [studyMode, setStudyMode] = useState<string>("");
+  const [result, setResult] = useState<FundingResult | null>(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+  const [validationError, setValidationError] = useState<string>("");
+
+  const courseTypes = [
+    { value: "level-4-hnc", label: "Level 4 HNC Electrical Engineering", typical: 3500 },
+    { value: "level-5-hnd", label: "Level 5 HND Electrical Engineering", typical: 4500 },
+    { value: "solar-pv", label: "Solar PV Installation", typical: 800 },
+    { value: "ev-charging", label: "EV Charging Installation", typical: 600 },
+    { value: "heat-pump", label: "Heat Pump Installation", typical: 1200 },
+    { value: "smart-home", label: "Smart Home Technology", typical: 900 },
+    { value: "inspection-testing", label: "Inspection & Testing", typical: 1500 },
+    { value: "pat-testing", label: "PAT Testing", typical: 400 },
+    { value: "fire-alarm", label: "Fire Alarm Systems", typical: 1800 },
+    { value: "emergency-lighting", label: "Emergency Lighting", typical: 700 },
+    { value: "industrial-control", label: "Industrial Control Systems", typical: 2200 },
+    { value: "renewable-energy", label: "Renewable Energy Systems", typical: 1600 },
+    { value: "custom", label: "Other/Custom Course", typical: 0 }
+  ];
+
+  const validateInputs = () => {
+    if (!courseType) return "Please select a course type";
+    if (!courseCost || parseFloat(courseCost) <= 0) return "Please enter a valid course cost";
+    if (!currentIncome || parseFloat(currentIncome) <= 0) return "Please enter your current annual income";
+    if (!employmentStatus) return "Please select your employment status";
+    return "";
+  };
+
+  const calculateFunding = async () => {
+    const validation = validateInputs();
+    if (validation) {
+      setValidationError(validation);
+      return;
+    }
+
+    setValidationError("");
+    setIsCalculating(true);
+
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    try {
+      const cost = parseFloat(courseCost);
+      const income = parseFloat(currentIncome);
+      
+      let fundingAmount = 0;
+      let fundingSource = "";
+      let eligibleForFunding = false;
+      const recommendations: string[] = [];
+
+      // Enhanced funding calculation logic
+      if (employmentStatus === "employed") {
+        // Apprenticeship Levy or government funding
+        if (cost <= 1500) {
+          fundingAmount = cost * 0.8; // 80% funding for smaller courses
+          fundingSource = "Skills Development Fund";
+          eligibleForFunding = true;
+        } else if (cost <= 5000) {
+          fundingAmount = cost * 0.6; // 60% funding for larger courses
+          fundingSource = "Advanced Learner Loan";
+          eligibleForFunding = true;
+        } else {
+          fundingAmount = 3000; // Capped funding
+          fundingSource = "Advanced Learner Loan (Partial)";
+          eligibleForFunding = true;
+        }
+        
+        if (income < 25000) {
+          fundingAmount += cost * 0.1; // Additional 10% for low income
+          recommendations.push("You may qualify for additional hardship funding");
+        }
+      } else if (employmentStatus === "unemployed") {
+        // Higher funding for unemployed
+        fundingAmount = Math.min(cost * 0.9, 4000);
+        fundingSource = "Adult Education Budget";
+        eligibleForFunding = true;
+        recommendations.push("Contact your local job centre for additional support");
+      } else if (employmentStatus === "self-employed") {
+        // Self-employed funding options
+        if (cost <= 2000) {
+          fundingAmount = cost * 0.5;
+          fundingSource = "Self-Employment Support Fund";
+          eligibleForFunding = true;
+        } else {
+          fundingAmount = 1000;
+          fundingSource = "Tax Relief (estimated)";
+          eligibleForFunding = true;
+        }
+        recommendations.push("Course costs may be tax-deductible as business expenses");
+      }
+
+      const personalContribution = Math.max(0, cost - fundingAmount);
+      
+      // Calculate ROI based on course type and current income
+      let expectedSalaryIncrease = 0;
+      const selectedCourse = courseTypes.find(c => c.value === courseType);
+      
+      if (selectedCourse) {
+        switch (courseType) {
+          case "level-4-hnc":
+          case "level-5-hnd":
+            expectedSalaryIncrease = income * 0.15; // 15% increase
+            break;
+          case "solar-pv":
+          case "ev-charging":
+          case "heat-pump":
+            expectedSalaryIncrease = 5000; // Specialist skills premium
+            break;
+          case "inspection-testing":
+            expectedSalaryIncrease = 4000;
+            break;
+          default:
+            expectedSalaryIncrease = 2500;
+        }
+      }
+
+      const totalBenefit = expectedSalaryIncrease * 5; // 5-year benefit
+      const paybackPeriod = personalContribution > 0 ? personalContribution / expectedSalaryIncrease : 0;
+      const annualROI = personalContribution > 0 ? (expectedSalaryIncrease / personalContribution) * 100 : 0;
+
+      // Add recommendations based on calculations
+      if (paybackPeriod < 1) {
+        recommendations.push("Excellent ROI - course pays for itself within a year");
+      } else if (paybackPeriod < 2) {
+        recommendations.push("Good ROI - reasonable payback period");
+      }
+
+      if (annualROI > 100) {
+        recommendations.push("Outstanding return on investment");
+      }
+
+      setResult({
+        eligibleForFunding,
+        fundingAmount,
+        personalContribution,
+        totalBenefit,
+        paybackPeriod,
+        annualROI,
+        fundingSource,
+        recommendations
+      });
+
+      toast.success("Funding calculation completed successfully!");
+    } catch (error) {
+      toast.error("Error calculating funding. Please try again.");
+    } finally {
+      setIsCalculating(false);
+    }
+  };
+
+  const handleCourseTypeChange = (value: string) => {
+    setCourseType(value);
+    const selectedCourse = courseTypes.find(c => c.value === value);
+    if (selectedCourse && selectedCourse.typical > 0) {
+      setCourseCost(selectedCourse.typical.toString());
+    }
+  };
+
+  const resetCalculator = () => {
+    setCourseType("");
+    setCourseCost("");
+    setCurrentIncome("");
+    setEmploymentStatus("");
+    setStudyMode("");
+    setResult(null);
+    setValidationError("");
+  };
+
   return (
     <div className="space-y-6">
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold">Continuing Education & Further Learning</h2>
-        <p className="text-muted-foreground max-w-3xl mx-auto">
-          Advance your career with higher qualifications, specialist courses, and emerging technology training. 
-          Explore funding options, check your eligibility, and get step-by-step guidance for your educational journey.
-        </p>
+      {/* Education Options Overview */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-2">
+              <BookOpen className="h-5 w-5 text-elec-yellow" />
+              <CardTitle className="text-lg">Higher Education</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground mb-3">
+              HNC/HND qualifications for career advancement
+            </p>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span className="text-xs">Level 4 HNC</span>
+                <Badge variant="outline">£3,500</Badge>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-xs">Level 5 HND</span>
+                <Badge variant="outline">£4,500</Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-2">
+              <Lightbulb className="h-5 w-5 text-elec-yellow" />
+              <CardTitle className="text-lg">Renewable Energy</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground mb-3">
+              Future-focused green technology skills
+            </p>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span className="text-xs">Solar PV</span>
+                <Badge variant="outline">£800</Badge>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-xs">Heat Pumps</span>
+                <Badge variant="outline">£1,200</Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-elec-yellow/20 bg-elec-gray/50">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-elec-yellow" />
+              <CardTitle className="text-lg">Specialist Skills</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-muted-foreground mb-3">
+              High-demand specialist qualifications
+            </p>
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <span className="text-xs">EV Charging</span>
+                <Badge variant="outline">£600</Badge>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-xs">Smart Home</span>
+                <Badge variant="outline">£900</Badge>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Educational Tips Banner */}
-      <Alert className="border-elec-yellow/50 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5">
-        <Lightbulb className="h-4 w-4 text-elec-yellow" />
-        <AlertDescription>
-          <strong>Pro Tip:</strong> Many employers support continuing education through study leave and funding. 
-          Discuss your career aspirations with your supervisor to explore available opportunities.
-        </AlertDescription>
-      </Alert>
-
-      <Tabs defaultValue="pathways" className="w-full">
-        <TabsList className="grid w-full grid-cols-6">
-          <TabsTrigger value="pathways" className="flex items-center gap-2">
-            <BookOpen className="h-4 w-4" />
-            Pathways
-          </TabsTrigger>
-          <TabsTrigger value="funding" className="flex items-center gap-2">
-            <Calculator className="h-4 w-4" />
-            Funding
-          </TabsTrigger>
-          <TabsTrigger value="eligibility" className="flex items-center gap-2">
-            <CheckCircle className="h-4 w-4" />
-            Eligibility
-          </TabsTrigger>
-          <TabsTrigger value="guides" className="flex items-center gap-2">
-            <Clock className="h-4 w-4" />
-            Guides
-          </TabsTrigger>
-          <TabsTrigger value="stories" className="flex items-center gap-2">
-            <Users className="h-4 w-4" />
-            Stories
-          </TabsTrigger>
-          <TabsTrigger value="regional" className="flex items-center gap-2">
-            <MapPin className="h-4 w-4" />
-            Regional
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="pathways" className="space-y-6">
-          <Alert className="border-blue-500/20 bg-blue-500/10">
-            <Info className="h-4 w-4 text-blue-500" />
-            <AlertDescription className="text-blue-200">
-              Choose pathways that align with your career goals and current skill level. Consider both traditional academic routes and industry-specific certifications.
-            </AlertDescription>
-          </Alert>
-          <EducationPathways />
-          
-          {/* Enhanced Content for Pathways */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Star className="h-5 w-5 text-elec-yellow" />
-                Popular Education Pathways
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Badge variant="secondary">Most Popular</Badge>
-                  <h4 className="font-semibold">Higher National Certificate (HNC)</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Level 4 qualification ideal for career progression. Can be completed part-time while working.
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <Badge variant="secondary">Fast Track</Badge>
-                  <h4 className="font-semibold">Specialist Certifications</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Short courses in renewable energy, smart home technology, and EV charging installation.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="funding" className="space-y-6">
-          <Alert className="border-green-500/20 bg-green-500/10">
-            <Calculator className="h-4 w-4 text-green-500" />
-            <AlertDescription className="text-green-200">
-              Use our funding calculator below to estimate costs and explore available financial support options for your chosen course.
-            </AlertDescription>
-          </Alert>
-          <FundingCalculator />
-          
-          {/* Enhanced Funding Information */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Common Funding Sources</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-elec-yellow">Employer Support</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Many employers offer study leave, course fees, and exam support for relevant qualifications.
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-elec-yellow">Student Finance</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Available for higher education courses. Part-time students may qualify for reduced support.
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-elec-yellow">Industry Schemes</h4>
-                  <p className="text-sm text-muted-foreground">
-                    CITB grants and other industry-specific funding for construction-related training.
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="eligibility" className="space-y-6">
-          <Alert className="border-orange-500/20 bg-orange-500/10">
-            <AlertCircle className="h-4 w-4 text-orange-500" />
-            <AlertDescription className="text-orange-200">
-              Check your eligibility carefully before applying. Some courses have specific entry requirements or work experience criteria.
-            </AlertDescription>
-          </Alert>
-          <EligibilityChecker />
-          
-          {/* Enhanced Eligibility Information */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Typical Entry Requirements</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-semibold mb-2">Higher National Certificate (HNC)</h4>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• Completed Level 3 apprenticeship or equivalent</li>
-                    <li>• Minimum 2 years relevant work experience</li>
-                    <li>• GCSE English and Maths (Grade C/4 or above)</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold mb-2">Specialist Short Courses</h4>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• Qualified electrician status (Level 3)</li>
-                    <li>• Current JIB or equivalent registration</li>
-                    <li>• Relevant work experience in the field</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="guides" className="space-y-6">
-          <Alert className="border-purple-500/20 bg-purple-500/10">
-            <Clock className="h-4 w-4 text-purple-500" />
-            <AlertDescription className="text-purple-200">
-              Follow our step-by-step guides to navigate the application process successfully. Start early to meet all deadlines.
-            </AlertDescription>
-          </Alert>
-          <ApplicationGuides />
-          
-          {/* Enhanced Application Timeline */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle>Application Timeline</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <Badge variant="outline">6 months before</Badge>
-                  <div>
-                    <h4 className="font-semibold">Research & Planning</h4>
-                    <p className="text-sm text-muted-foreground">Research courses, providers, and funding options</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Badge variant="outline">3 months before</Badge>
-                  <div>
-                    <h4 className="font-semibold">Applications Open</h4>
-                    <p className="text-sm text-muted-foreground">Submit applications and funding requests</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Badge variant="outline">1 month before</Badge>
-                  <div>
-                    <h4 className="font-semibold">Final Preparations</h4>
-                    <p className="text-sm text-muted-foreground">Arrange study leave and prepare materials</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="stories" className="space-y-6">
-          <Alert className="border-green-500/20 bg-green-500/10">
-            <Users className="h-4 w-4 text-green-500" />
-            <AlertDescription className="text-green-200">
-              Learn from others who have successfully advanced their careers through continuing education. Their experiences can guide your journey.
-            </AlertDescription>
-          </Alert>
-          <SuccessStories />
-        </TabsContent>
-
-        <TabsContent value="regional" className="space-y-6">
-          <Alert className="border-blue-500/20 bg-blue-500/10">
-            <MapPin className="h-4 w-4 text-blue-500" />
-            <AlertDescription className="text-blue-200">
-              Find local education providers and region-specific opportunities. Distance learning options are also available for flexibility.
-            </AlertDescription>
-          </Alert>
-          <RegionalInformation />
-        </TabsContent>
-      </Tabs>
-
-      <Card className="border-elec-yellow/50 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5">
+      {/* Enhanced Funding Calculator */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <BookOpen className="h-5 w-5" />
-            Your Education Journey Starts Here
+          <div className="flex items-center gap-2">
+            <Calculator className="h-5 w-5 text-elec-yellow" />
+            <CardTitle>Enhanced Funding Calculator</CardTitle>
+          </div>
+          <CardDescription>
+            Calculate your funding eligibility and return on investment for electrical courses
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Input Section */}
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="course-type">Course Type *</Label>
+                <Select value={courseType} onValueChange={handleCourseTypeChange}>
+                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                    <SelectValue placeholder="Select course type" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {courseTypes.map((course) => (
+                      <SelectItem key={course.value} value={course.value}>
+                        {course.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label htmlFor="course-cost">Course Cost (£) *</Label>
+                <Input
+                  id="course-cost"
+                  type="number"
+                  value={courseCost}
+                  onChange={(e) => setCourseCost(e.target.value)}
+                  placeholder="e.g., 1500"
+                  className="bg-elec-dark border-elec-yellow/20"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="current-income">Current Annual Income (£) *</Label>
+                <Input
+                  id="current-income"
+                  type="number"
+                  value={currentIncome}
+                  onChange={(e) => setCurrentIncome(e.target.value)}
+                  placeholder="e.g., 30000"
+                  className="bg-elec-dark border-elec-yellow/20"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="employment-status">Employment Status *</Label>
+                <Select value={employmentStatus} onValueChange={setEmploymentStatus}>
+                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                    <SelectValue placeholder="Select employment status" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                    <SelectItem value="employed">Employed</SelectItem>
+                    <SelectItem value="self-employed">Self-Employed</SelectItem>
+                    <SelectItem value="unemployed">Unemployed</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <Label htmlFor="study-mode">Preferred Study Mode</Label>
+                <Select value={studyMode} onValueChange={setStudyMode}>
+                  <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
+                    <SelectValue placeholder="Select study mode (optional)" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                    <SelectItem value="full-time">Full-time</SelectItem>
+                    <SelectItem value="part-time">Part-time</SelectItem>
+                    <SelectItem value="evening">Evening Classes</SelectItem>
+                    <SelectItem value="weekend">Weekend</SelectItem>
+                    <SelectItem value="online">Online</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {validationError && (
+                <Alert className="border-red-500/20 bg-red-500/10">
+                  <AlertCircle className="h-4 w-4 text-red-500" />
+                  <AlertDescription className="text-red-200">
+                    {validationError}
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              <div className="flex gap-2">
+                <Button 
+                  onClick={calculateFunding} 
+                  disabled={isCalculating}
+                  className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                >
+                  {isCalculating ? (
+                    <>
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-elec-dark mr-2"></div>
+                      Calculating...
+                    </>
+                  ) : (
+                    <>
+                      <Calculator className="h-4 w-4 mr-2" />
+                      Calculate Funding
+                    </>
+                  )}
+                </Button>
+                <Button variant="outline" onClick={resetCalculator}>
+                  Reset
+                </Button>
+              </div>
+            </div>
+
+            {/* Results Section */}
+            <div className="space-y-4">
+              <div className="rounded-md bg-elec-dark p-6 min-h-[400px]">
+                {result ? (
+                  <div className="space-y-4">
+                    <div className="text-center">
+                      <div className="flex items-center justify-center gap-2 mb-2">
+                        {result.eligibleForFunding ? (
+                          <CheckCircle className="h-6 w-6 text-green-500" />
+                        ) : (
+                          <AlertCircle className="h-6 w-6 text-yellow-500" />
+                        )}
+                        <h3 className="text-lg font-semibold text-elec-yellow">
+                          Funding Analysis
+                        </h3>
+                      </div>
+                      <Badge 
+                        variant={result.eligibleForFunding ? "default" : "secondary"}
+                        className="mb-4"
+                      >
+                        {result.eligibleForFunding ? "Funding Available" : "Limited Funding"}
+                      </Badge>
+                    </div>
+                    
+                    <Separator />
+                    
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <span className="text-muted-foreground">Funding Amount:</span>
+                        <div className="font-mono text-elec-yellow text-lg">
+                          £{result.fundingAmount.toFixed(0)}
+                        </div>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">Your Contribution:</span>
+                        <div className="font-mono text-elec-yellow text-lg">
+                          £{result.personalContribution.toFixed(0)}
+                        </div>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">Expected ROI:</span>
+                        <div className="font-mono text-elec-yellow">
+                          {result.annualROI.toFixed(0)}% annually
+                        </div>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">Payback Period:</span>
+                        <div className="font-mono text-elec-yellow">
+                          {result.paybackPeriod.toFixed(1)} years
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-4">
+                      <span className="text-muted-foreground text-sm">Funding Source:</span>
+                      <div className="text-elec-yellow font-medium">{result.fundingSource}</div>
+                    </div>
+
+                    {result.recommendations.length > 0 && (
+                      <div className="mt-4">
+                        <span className="text-muted-foreground text-sm">Recommendations:</span>
+                        <ul className="mt-2 space-y-1">
+                          {result.recommendations.map((rec, index) => (
+                            <li key={index} className="text-sm text-elec-light/80 flex items-start gap-2">
+                              <span className="text-elec-yellow mt-1">•</span>
+                              {rec}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center h-full text-muted-foreground">
+                    <div className="text-center">
+                      <Calculator className="h-12 w-12 mx-auto mb-4 text-elec-yellow/50" />
+                      <p>Complete the form to calculate your funding options</p>
+                      <p className="text-sm mt-2">Fields marked with * are required</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Educational Content */}
+      <Card className="border-elec-yellow/20 bg-elec-gray/50">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Info className="h-5 w-5 text-elec-yellow" />
+            Why Continuing Education Matters
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">
-            Professional development through education is one of the most effective ways to advance your electrical career. 
-            Use these tools to explore your options, understand funding opportunities, and create a clear pathway to your goals.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-4 w-4 text-green-500" />
-              <span>Interactive funding calculator</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <TrendingUp className="h-5 w-5 text-elec-yellow" />
+                <h3 className="font-semibold">Stay Current</h3>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Technology and regulations evolve rapidly. Continuing education ensures you remain 
+                competitive and compliant with the latest industry standards.
+              </p>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-4 w-4 text-green-500" />
-              <span>Comprehensive eligibility checker</span>
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <PoundSterling className="h-5 w-5 text-elec-yellow" />
+                <h3 className="font-semibold">Higher Earnings</h3>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Specialist skills command premium rates. Qualified electricians with additional 
+                certifications can earn 15-30% more than those without.
+              </p>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-4 w-4 text-green-500" />
-              <span>Step-by-step application guides</span>
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <Clock className="h-5 w-5 text-elec-yellow" />
+                <h3 className="font-semibold">Future-Proof Career</h3>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Green energy, smart technology, and EV infrastructure are the future. 
+                Investing in these skills now secures your long-term career prospects.
+              </p>
             </div>
           </div>
-          <Alert className="mt-4 border-elec-yellow/30">
-            <Info className="h-4 w-4" />
-            <AlertDescription>
-              Remember: Many employers support further education - don't hesitate to discuss your ambitions with your supervisor or HR department.
-            </AlertDescription>
-          </Alert>
         </CardContent>
       </Card>
     </div>
