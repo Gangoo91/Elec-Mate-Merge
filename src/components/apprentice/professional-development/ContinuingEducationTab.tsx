@@ -1,213 +1,202 @@
 
-import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 import { 
   BookOpen, 
+  Calculator, 
   Clock, 
-  MapPin, 
-  GraduationCap,
-  Calculator,
-  FileText
+  Users, 
+  Lightbulb,
+  Award,
+  TrendingUp,
+  ExternalLink
 } from "lucide-react";
-import MobileContinuingEducationTab from "./MobileContinuingEducationTab";
-import FundingCalculator from "./FundingCalculator";
-import FundingGuide from "./FundingGuide";
-
-const educationOptions = [
-  {
-    id: 1,
-    title: "HNC in Electrical Engineering",
-    institution: "UK Colleges",
-    description: "Higher National Certificate qualification providing advanced electrical theory and practice.",
-    level: "Level 4",
-    duration: "1-2 years (part-time options available)",
-    entryRequirements: "Level 3 qualification or relevant work experience",
-    progressionOptions: "HND, Foundation degree, or employment in technical roles",
-    keyTopics: ["Electrical principles", "Engineering mathematics", "Digital electronics", "Project management"],
-    locations: ["Birmingham", "Manchester", "London", "Glasgow", "Cardiff"],
-    estimatedCost: "£4,000 - £6,000"
-  },
-  {
-    id: 2,
-    title: "HND in Electrical Engineering",
-    institution: "UK Colleges",
-    description: "Higher National Diploma offering practical and theoretical knowledge in electrical engineering.",
-    level: "Level 5",
-    duration: "2 years (full-time), 3 years (part-time)",
-    entryRequirements: "Level 3 qualification or HNC",
-    progressionOptions: "Final year entry to bachelor's degree or technical management roles",
-    keyTopics: ["Power systems", "Electronic design", "Engineering mathematics", "Industrial applications"],
-    locations: ["Liverpool", "Newcastle", "Nottingham", "Plymouth", "Belfast"],
-    estimatedCost: "£6,000 - £9,000"
-  },
-  {
-    id: 3,
-    title: "Bachelor's Degree",
-    institution: "Universities",
-    description: "BEng or BSc in Electrical Engineering, Building Services, or Energy Management.",
-    level: "Level 6",
-    duration: "3-4 years (full-time), 5-6 years (part-time)",
-    entryRequirements: "A-Levels/BTEC Level 3 or HNC/HND",
-    progressionOptions: "Master's degree, graduate schemes, or professional engineering roles",
-    keyTopics: ["Advanced electrical systems", "Power engineering", "Control systems", "Professional practice"],
-    locations: ["London", "Manchester", "Edinburgh", "Bristol", "Sheffield"],
-    estimatedCost: "£9,250 per year (UK students)"
-  },
-  {
-    id: 4,
-    title: "Master's Degree",
-    institution: "Universities",
-    description: "MEng or MSc specialising in power systems, renewable energy, or building services.",
-    level: "Level 7",
-    duration: "1 year (full-time), 2-3 years (part-time)",
-    entryRequirements: "Bachelor's degree (2:1 or above) in related subject",
-    progressionOptions: "PhD, chartered engineer status, or senior technical positions",
-    keyTopics: ["Advanced power systems", "Renewable technology", "Research methods", "Energy efficiency"],
-    locations: ["London", "Cambridge", "Manchester", "Leeds", "Southampton"],
-    estimatedCost: "£8,000 - £15,000"
-  }
-];
+import AdvancedFundingCalculator from "./AdvancedFundingCalculator";
 
 const ContinuingEducationTab = () => {
+  const educationOptions = [
+    {
+      title: "HNC/HND in Electrical Engineering",
+      provider: "Colleges & Universities",
+      duration: "2-3 years part-time",
+      level: "Level 4-5",
+      icon: BookOpen,
+      description: "Higher level qualification for career advancement",
+      averageCost: "£3,000 - £6,000",
+      fundingAvailable: true
+    },
+    {
+      title: "Renewable Energy Courses",
+      provider: "Various providers",
+      duration: "1-5 days",
+      level: "Specialist",
+      icon: Lightbulb,
+      description: "Solar PV, heat pumps, and green energy systems",
+      averageCost: "£500 - £2,000",
+      fundingAvailable: true
+    },
+    {
+      title: "Smart Home Technology",
+      provider: "Industry providers",
+      duration: "2-3 days",
+      level: "Emerging",
+      icon: Users,
+      description: "Home automation and IoT electrical systems",
+      averageCost: "£800 - £1,500",
+      fundingAvailable: false
+    },
+    {
+      title: "Electric Vehicle Charging",
+      provider: "NICEIC, NAPIT",
+      duration: "1-2 days",
+      level: "Growing Market",
+      icon: Clock,
+      description: "EV charging point installation and maintenance",
+      averageCost: "£600 - £1,200",
+      fundingAvailable: true
+    }
+  ];
+
+  const benefits = [
+    {
+      title: "Stay Current",
+      description: "Technology and regulations are constantly evolving. Continuing education keeps you relevant.",
+      icon: TrendingUp
+    },
+    {
+      title: "Higher Earnings",
+      description: "Specialist skills command premium rates and open doors to better opportunities.",
+      icon: Award
+    },
+    {
+      title: "Future-Proof Career",
+      description: "Green energy and smart technology are the future of electrical work.",
+      icon: Lightbulb
+    }
+  ];
+
   return (
-    <div>
-      {/* Mobile View */}
-      <div className="block md:hidden">
-        <MobileContinuingEducationTab />
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="text-center space-y-2">
+        <h2 className="text-2xl font-bold">Continuing Education & Training</h2>
+        <p className="text-muted-foreground">
+          Advance your career with further education and specialist training courses
+        </p>
       </div>
 
-      {/* Desktop View */}
-      <div className="hidden md:block space-y-6">
-        <div className="space-y-4">
-          <h2 className="text-2xl font-semibold">Further Education & Funding</h2>
-          <p className="text-muted-foreground">
-            Comprehensive guide to advancing your academic qualifications and securing funding. 
-            Explore education options, calculate funding requirements, and access detailed funding guidance.
-          </p>
-        </div>
+      {/* Advanced Funding Calculator */}
+      <AdvancedFundingCalculator />
 
-        <Tabs defaultValue="education" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="education" className="flex items-center gap-2">
-              <BookOpen className="h-4 w-4" />
-              Education Options
-            </TabsTrigger>
-            <TabsTrigger value="calculator" className="flex items-center gap-2">
-              <Calculator className="h-4 w-4" />
-              Funding Calculator
-            </TabsTrigger>
-            <TabsTrigger value="guide" className="flex items-center gap-2">
-              <FileText className="h-4 w-4" />
-              Funding Guide
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="education" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {educationOptions.map((option) => (
-                <Card key={option.id} className="border-elec-yellow/20 bg-elec-gray h-full flex flex-col">
-                  <CardHeader className="pb-2">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <CardTitle className="text-xl">{option.title}</CardTitle>
-                        <p className="text-sm text-amber-400">{option.institution}</p>
-                      </div>
-                      <div className="text-sm bg-elec-dark/30 px-2 py-1 rounded-md inline-block">
-                        {option.level}
-                      </div>
+      {/* Education Options */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <BookOpen className="h-5 w-5 text-elec-yellow" />
+            Popular Education Pathways
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {educationOptions.map((option, index) => (
+              <div key={index} className="border border-elec-yellow/10 rounded-lg p-4 space-y-4">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-md bg-elec-yellow/10">
+                      <option.icon className="h-6 w-6 text-elec-yellow" />
                     </div>
-                  </CardHeader>
-                  <CardContent className="pt-2 flex-grow flex flex-col">
-                    <p className="text-sm mb-4">{option.description}</p>
-                    
-                    <div className="space-y-4 mt-auto">
-                      <div className="grid grid-cols-1 gap-2 text-sm">
-                        <div className="flex items-center gap-2 text-xs">
-                          <Clock className="h-4 w-4 text-elec-yellow" />
-                          <span><span className="text-elec-yellow/80">Duration:</span> {option.duration}</span>
-                        </div>
-                        
-                        <div className="text-xs">
-                          <p className="text-elec-yellow/80 mb-1">Entry Requirements:</p>
-                          <p>{option.entryRequirements}</p>
-                        </div>
-                        
-                        <div className="text-xs">
-                          <p className="text-elec-yellow/80 mb-1">Estimated Cost:</p>
-                          <p className="text-green-400">{option.estimatedCost}</p>
-                        </div>
-                        
-                        <div className="text-xs">
-                          <p className="text-elec-yellow/80 mb-1">Progression:</p>
-                          <p>{option.progressionOptions}</p>
-                        </div>
-                      </div>
-                      
-                      <div className="border-t border-elec-yellow/10 pt-3">
-                        <h4 className="text-xs text-elec-yellow mb-2">Key Topics:</h4>
-                        <div className="flex flex-wrap gap-1.5">
-                          {option.keyTopics.map((topic, idx) => (
-                            <span 
-                              key={idx}
-                              className="text-xs bg-elec-dark/60 px-2 py-0.5 rounded"
-                            >
-                              {topic}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <div className="border-t border-elec-yellow/10 pt-3">
-                        <div className="flex items-start gap-1.5">
-                          <MapPin className="h-3.5 w-3.5 text-elec-yellow mt-0.5" />
-                          <div>
-                            <h4 className="text-xs text-elec-yellow mb-1">Example Locations:</h4>
-                            <p className="text-xs">{option.locations.join(", ")}</p>
-                          </div>
-                        </div>
-                      </div>
+                    <div>
+                      <h3 className="font-semibold text-lg">{option.title}</h3>
+                      <p className="text-sm text-muted-foreground">{option.provider}</p>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="calculator">
-            <FundingCalculator />
-          </TabsContent>
-
-          <TabsContent value="guide">
-            <FundingGuide />
-          </TabsContent>
-        </Tabs>
-
-        <Card className="border-elec-yellow/20 bg-elec-gray/50 p-4">
-          <div className="flex gap-3 items-start">
-            <GraduationCap className="h-6 w-6 text-elec-yellow mt-1" />
-            <div>
-              <h3 className="font-medium text-lg mb-1">Why Invest in Further Education?</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                <div>
-                  <h4 className="text-amber-400 font-medium">Career Advancement</h4>
-                  <p className="text-xs mt-1">Higher qualifications open doors to technical management, design engineering, and senior positions with significantly higher earning potential.</p>
+                  </div>
+                  <Badge variant={option.fundingAvailable ? "default" : "secondary"}>
+                    {option.level}
+                  </Badge>
                 </div>
-                <div>
-                  <h4 className="text-amber-400 font-medium">Industry Recognition</h4>
-                  <p className="text-xs mt-1">Professional qualifications are highly valued by employers and can lead to chartership with institutions like the IET.</p>
+
+                <p className="text-sm text-elec-light/80">{option.description}</p>
+
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Duration:</span>
+                    <span>{option.duration}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Average Cost:</span>
+                    <span className="font-semibold">{option.averageCost}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Funding Available:</span>
+                    <Badge variant={option.fundingAvailable ? "default" : "secondary"} className="text-xs">
+                      {option.fundingAvailable ? "Yes" : "Limited"}
+                    </Badge>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-amber-400 font-medium">Future-Proof Skills</h4>
-                  <p className="text-xs mt-1">Advanced education in areas like renewable energy, smart systems, and IoT positions you at the forefront of industry innovation.</p>
-                </div>
+
+                <Button variant="outline" size="sm" className="w-full">
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  Find Courses
+                </Button>
               </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Benefits Section */}
+      <Card className="border-elec-yellow/20 bg-elec-gray">
+        <CardHeader>
+          <CardTitle>Why Continue Learning?</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {benefits.map((benefit, index) => (
+              <div key={index} className="text-center space-y-3">
+                <div className="mx-auto w-12 h-12 bg-elec-yellow/10 rounded-lg flex items-center justify-center">
+                  <benefit.icon className="h-6 w-6 text-elec-yellow" />
+                </div>
+                <h3 className="font-semibold text-elec-yellow">{benefit.title}</h3>
+                <p className="text-sm text-elec-light/80">{benefit.description}</p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quick Tips */}
+      <Card className="border-blue-500/20 bg-blue-500/5">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-blue-400">
+            <Calculator className="h-5 w-5" />
+            Funding Tips & Resources
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h4 className="font-semibold mb-2 text-blue-400">Before You Apply</h4>
+              <ul className="text-sm space-y-1 text-muted-foreground list-disc list-inside">
+                <li>Use our advanced calculator above to explore all funding options</li>
+                <li>Check with your employer about training budgets</li>
+                <li>Research regional and industry-specific grants</li>
+                <li>Compare course providers and costs</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-2 text-blue-400">Useful Resources</h4>
+              <ul className="text-sm space-y-1 text-muted-foreground list-disc list-inside">
+                <li>Student Finance England for Advanced Learner Loans</li>
+                <li>Local authority skills funding programmes</li>
+                <li>Industry training boards and levy funds</li>
+                <li>Charity and foundation educational grants</li>
+              </ul>
             </div>
           </div>
-        </Card>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
