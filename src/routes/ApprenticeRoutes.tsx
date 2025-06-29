@@ -24,6 +24,15 @@ import ApprenticeOJT from "@/pages/apprentice/ApprenticeOJT";
 import AdvancedHelp from "@/pages/apprentice/AdvancedHelp";
 import ProfessionalToolGuide from "@/pages/apprentice/ProfessionalToolGuide";
 import PortfolioBuilding from "@/pages/apprentice/toolbox/PortfolioBuilding";
+import ToolsGuide from "@/pages/apprentice/toolbox/ToolsGuide";
+import ElectricalInstallationGuides from "@/pages/apprentice/toolbox/ElectricalInstallationGuides";
+import CommercialInstallations from "@/pages/apprentice/toolbox/CommercialInstallations";
+import IndustrialInstallations from "@/pages/apprentice/toolbox/IndustrialInstallations";
+import OutdoorInstallations from "@/pages/apprentice/toolbox/OutdoorInstallations";
+import CommunicationSkills from "@/pages/apprentice/toolbox/CommunicationSkills";
+import StudyTips from "@/pages/apprentice/toolbox/StudyTips";
+import LearningFromMistakes from "@/pages/apprentice/toolbox/LearningFromMistakes";
+import TimeManagement from "@/pages/apprentice/toolbox/TimeManagement";
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -41,7 +50,16 @@ const ApprenticeRoutes = () => (
     <Route path="mentor" element={<ApprenticeMentor />} />
     <Route path="rights-and-pay" element={<RightsAndPay />} />
     <Route path="toolbox" element={<ApprenticeToolbox />} />
+    <Route path="toolbox/tools-guide" element={<ToolsGuide />} />
+    <Route path="toolbox/electrical-installation-guides" element={<ElectricalInstallationGuides />} />
+    <Route path="toolbox/electrical-installation-guides/commercial" element={<CommercialInstallations />} />
+    <Route path="toolbox/electrical-installation-guides/industrial" element={<IndustrialInstallations />} />
+    <Route path="toolbox/electrical-installation-guides/outdoor" element={<OutdoorInstallations />} />
     <Route path="toolbox/portfolio-building" element={<PortfolioBuilding />} />
+    <Route path="toolbox/communication-skills" element={<CommunicationSkills />} />
+    <Route path="toolbox/study-tips" element={<StudyTips />} />
+    <Route path="toolbox/learning-from-mistakes" element={<LearningFromMistakes />} />
+    <Route path="toolbox/time-management" element={<TimeManagement />} />
     <Route path="professional-development" element={<ProfessionalDevelopment />} />
     <Route path="toolbox/professional-tool-guide" element={<ProfessionalToolGuide />} />
     <Route path="on-job-tools" element={<OnJobTools />} />
