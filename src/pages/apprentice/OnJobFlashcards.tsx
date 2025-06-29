@@ -5,11 +5,13 @@ import { ArrowLeft, BookOpen, Brain, Target } from "lucide-react";
 import { Link } from "react-router-dom";
 import FlashcardSetCard from "@/components/apprentice/flashcards/FlashcardSetCard";
 import StudyModeSelector from "@/components/apprentice/flashcards/StudyModeSelector";
+import FlashcardStudySession from "@/components/apprentice/flashcards/FlashcardStudySession";
 import StudyTipsCard from "@/components/apprentice/flashcards/StudyTipsCard";
 
 const OnJobFlashcards = () => {
   const [selectedSet, setSelectedSet] = useState<string | null>(null);
   const [showModeSelector, setShowModeSelector] = useState(false);
+  const [studySession, setStudySession] = useState<{ setId: string; mode: string } | null>(null);
 
   const flashcardSets = [
     {
@@ -102,10 +104,10 @@ const OnJobFlashcards = () => {
   };
 
   const handleSelectMode = (mode: string) => {
-    console.log(`Starting ${selectedSet} in ${mode} mode`);
-    // This would navigate to the actual flashcard study interface
-    setShowModeSelector(false);
-    setSelectedSet(null);
+    if (selectedSet) {
+      setStudySession({ setId: selectedSet, mode });
+      setShowModeSelector(false);
+    }
   };
 
   const handleBackFromMode = () => {
@@ -113,6 +115,25 @@ const OnJobFlashcards = () => {
     setSelectedSet(null);
   };
 
+  const handleExitStudySession = () => {
+    setStudySession(null);
+    setSelectedSet(null);
+  };
+
+  // Show study session if active
+  if (studySession) {
+    return (
+      <div className="space-y-8 animate-fade-in">
+        <FlashcardStudySession 
+          setId={studySession.setId}
+          studyMode={studySession.mode}
+          onExit={handleExitStudySession}
+        />
+      </div>
+    );
+  }
+
+  // Show mode selector if set is selected
   if (showModeSelector) {
     return (
       <div className="space-y-8 animate-fade-in">
