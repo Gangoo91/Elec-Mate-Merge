@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import OnTheJobToolsBox from "@/components/apprentice/OnTheJobToolsBox";
-import { Settings, HardHat, MessageSquare, HelpCircle, BookOpen, ClipboardList } from "lucide-react";
+import { Settings, HardHat, MessageSquare, HelpCircle, BookOpen } from "lucide-react";
 
 const OnJobTools = () => {
   const onJobTools = [
@@ -41,13 +41,6 @@ const OnJobTools = () => {
       icon: BookOpen,
       description: "Quick-fire revision flashcards for cable colors, regulations, EICR codes, and more",
       link: "/apprentice/on-job-tools/flashcards"
-    },
-    {
-      id: 7,
-      title: "Incident Logging Tool",
-      icon: ClipboardList,
-      description: "Log near misses, unsafe practices, and faulty equipment with secure storage",
-      link: "/apprentice/on-job-tools/incident-logging"
     }
   ];
 

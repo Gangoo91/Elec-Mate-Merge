@@ -18,7 +18,6 @@ import OnJobAssessment from "@/pages/apprentice/OnJobAssessment";
 import OnJobBS7671RunThrough from "@/pages/apprentice/OnJobBS7671RunThrough";
 import OnJobSupervisorKnowledge from "@/pages/apprentice/OnJobSupervisorKnowledge";
 import OnJobFlashcards from "@/pages/apprentice/OnJobFlashcards";
-import OnJobIncidentLogging from "@/pages/apprentice/OnJobIncidentLogging";
 import ApprenticeToolbox from "@/pages/apprentice/ApprenticeToolbox";
 import ProfessionalDevelopment from "@/pages/apprentice/ProfessionalDevelopment";
 import ApprenticeOJT from "@/pages/apprentice/ApprenticeOJT";
@@ -54,7 +53,6 @@ const ApprenticeRoutes = () => (
     <Route path="on-job-tools/bs7671-runthrough" element={<OnJobBS7671RunThrough />} />
     <Route path="on-job-tools/supervisor-knowledge" element={<OnJobSupervisorKnowledge />} />
     <Route path="on-job-tools/flashcards" element={<OnJobFlashcards />} />
-    <Route path="on-job-tools/incident-logging" element={<OnJobIncidentLogging />} />
   </Routes>
 );
 
