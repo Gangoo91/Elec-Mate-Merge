@@ -1,348 +1,468 @@
 
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown, Search, Clock, AlertTriangle, BookOpen, Wrench, Users, Shield } from "lucide-react";
-import { useState } from "react";
+import { Search, ChevronDown, ChevronUp, HelpCircle, AlertTriangle, Zap, Wrench, BookOpen, Users, Clock, Shield } from "lucide-react";
 
 interface Question {
   id: string;
   question: string;
   answer: string;
-  category: string;
-  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  category: "safety" | "technical" | "communication" | "regulations" | "practical" | "workplace" | "emergency" | "tools";
   tags: string[];
+  priority: "high" | "medium" | "low";
 }
 
-const questionBank: Question[] = [
-  // Safety & Health Questions
+const questions: Question[] = [
+  // Safety Questions
   {
     id: "safety-001",
-    question: "What should I do if I find a piece of equipment that looks damaged?",
-    answer: "Stop work immediately and report it to your supervisor. Tag the equipment as 'DO NOT USE' if safe to do so. Never attempt to use damaged equipment as it could cause injury or electrocution. Document what you observed and when.",
-    category: "Safety & Health",
-    difficulty: "beginner",
-    tags: ["equipment", "damage", "reporting", "safety"]
+    question: "What should I do if I'm asked to work on a circuit that hasn't been properly isolated?",
+    answer: "Never work on a live circuit. Politely explain that you need to follow safe isolation procedures first. Use the proper isolation sequence: identify the circuit, isolate it, secure the isolation, test the circuit is dead with a voltage tester, and then test the voltage tester on a known live source. If your supervisor pressures you to skip safety procedures, escalate to your training provider or HSE.",
+    category: "safety",
+    tags: ["isolation", "live working", "safety procedures"],
+    priority: "high"
   },
   {
     id: "safety-002",
-    question: "I'm working alone on site - what safety precautions should I take?",
-    answer: "Ensure someone knows your location and expected finish time. Have a charged mobile phone with emergency contacts. Follow lone working procedures, carry out regular check-ins, and never work on live circuits alone. Consider if the task is suitable for lone working.",
-    category: "Safety & Health",
-    difficulty: "intermediate",
-    tags: ["lone working", "procedures", "emergency"]
+    question: "My supervisor doesn't wear PPE consistently. Should I still wear mine?",
+    answer: "Absolutely, always wear your required PPE regardless of what others do. You have a duty of care to yourself. If safety standards aren't being followed consistently on site, document this and report it to your training provider. Lead by example and don't compromise on safety.",
+    category: "safety",
+    tags: ["PPE", "safety culture", "personal responsibility"],
+    priority: "high"
   },
   {
     id: "safety-003",
-    question: "The client is pressuring me to skip the isolation procedure to save time. What do I do?",
-    answer: "Never compromise on safety procedures regardless of pressure. Explain the legal requirements and safety risks. Contact your supervisor immediately for support. Isolation procedures are non-negotiable and protect both you and others on site.",
-    category: "Safety & Health",
-    difficulty: "advanced",
-    tags: ["isolation", "pressure", "procedures", "legal"]
+    question: "What should I do if I witness an unsafe practice on site?",
+    answer: "First, ensure your own safety. If it's immediately dangerous, intervene if safe to do so. Document what you saw (date, time, people involved, what happened). Report it to your supervisor, and if they don't act, escalate to the site manager or your training provider. You have a legal duty to report unsafe practices.",
+    category: "safety",
+    tags: ["unsafe practices", "reporting", "whistleblowing"],
+    priority: "high"
   },
   {
     id: "safety-004",
-    question: "I've cut myself with a tool - it's not deep but it's bleeding. What's the procedure?",
-    answer: "Stop work immediately and tend to the wound. Clean it with clean water, apply pressure to stop bleeding, and cover with a clean dressing. Report the incident to your supervisor and complete an accident report form. Seek medical attention if concerned about the depth or cleanliness of the cut.",
-    category: "Safety & Health",
-    difficulty: "beginner",
-    tags: ["first aid", "accident", "reporting", "medical"]
+    question: "How do I know if the tools I'm given are safe to use?",
+    answer: "Always inspect tools before use. Check for damage to cables, plugs, casings, and guards. Ensure PAT testing is current (look for valid test labels). If in doubt, don't use it - ask for a replacement. Report any damaged tools immediately and take them out of service.",
+    category: "safety",
+    tags: ["tool safety", "PAT testing", "inspection"],
+    priority: "high"
+  },
+  {
+    id: "safety-005",
+    question: "What should I do if I make a mistake that could affect safety?",
+    answer: "Report it immediately to your supervisor - honesty is crucial for safety. Don't try to hide or fix it secretly. Explain what happened, what you've learned, and how you'll prevent it in future. Most supervisors appreciate honesty and will use it as a learning opportunity.",
+    category: "safety",
+    tags: ["mistakes", "honesty", "learning"],
+    priority: "high"
   },
 
   // Technical Questions
   {
-    id: "tech-001",
-    question: "I'm getting a reading that doesn't match what I expected on my multimeter. Should I continue?",
-    answer: "Stop and double-check your meter settings, probe connections, and test procedure. Verify your meter is working by testing on a known source. If readings are still unexpected, inform your supervisor before proceeding. Unexpected readings could indicate faults or safety issues.",
-    category: "Technical Skills",
-    difficulty: "intermediate",
-    tags: ["testing", "measurements", "troubleshooting", "equipment"]
+    id: "technical-001",
+    question: "I'm not sure about the cable size calculation my supervisor gave me. How should I approach this?",
+    answer: "Ask your supervisor to walk through the calculation with you. Bring your regulations book and show the sections you're referencing. Ask questions like 'Can you help me understand how you got this current rating?' or 'Which derating factors did you apply here?' This shows you're engaged and want to learn properly.",
+    category: "technical",
+    tags: ["calculations", "cable sizing", "learning"],
+    priority: "medium"
   },
   {
-    id: "tech-002",
-    question: "The circuit I'm working on keeps tripping the RCD. What could be causing this?",
-    answer: "This indicates an earth leakage fault. Stop work and investigate systematically - check for damaged cables, moisture ingress, or faulty appliances. Use insulation resistance testing to locate the fault. Don't keep resetting the RCD as it's protecting against a potentially dangerous fault.",
-    category: "Technical Skills",
-    difficulty: "advanced",
-    tags: ["RCD", "tripping", "earth leakage", "fault finding"]
+    id: "technical-002",
+    question: "What should I do if I'm asked to install something that doesn't seem to comply with BS 7671?",
+    answer: "Politely question it: 'I want to make sure I understand the regulations correctly. Can you help me see how this complies with BS 7671?' Show the relevant regulation. If still unsure, ask to check with another qualified person or your training provider before proceeding.",
+    category: "technical",
+    tags: ["BS 7671", "compliance", "regulations"],
+    priority: "high"
   },
   {
-    id: "tech-003",
-    question: "How do I know what size cable to use for this circuit?",
-    answer: "Consider the load current, installation method, ambient temperature, and voltage drop requirements. Use BS 7671 tables and our cable sizing calculator. Check with your supervisor if unsure - undersized cables can overheat and cause fires.",
-    category: "Technical Skills",
-    difficulty: "intermediate",
-    tags: ["cable sizing", "BS 7671", "calculations", "installation"]
+    id: "technical-003",
+    question: "How do I ask for help with testing procedures without seeming incompetent?",
+    answer: "Frame it as wanting to learn proper procedure: 'I want to make sure I'm doing this test correctly. Can you walk me through your process?' or 'I've done this before but want to make sure I'm following your site procedures.' Most supervisors appreciate apprentices who want to do things right.",
+    category: "technical",
+    tags: ["testing", "learning", "procedures"],
+    priority: "medium"
   },
   {
-    id: "tech-004",
-    question: "The customer wants an extra socket but there's no space in the consumer unit. What options do we have?",
-    answer: "Options include upgrading the consumer unit, using a sub-distribution board, or running a spur from an existing circuit if capacity allows. This requires load calculations and compliance checks. Discuss with your supervisor as it may affect the design and quotation.",
-    category: "Technical Skills",
-    difficulty: "advanced",
-    tags: ["consumer unit", "capacity", "design", "upgrade"]
+    id: "technical-004",
+    question: "What if I'm asked to work on a system I've never seen before?",
+    answer: "Be honest about your experience level: 'I haven't worked on this type of system before. Can you show me the basics and let me observe first?' Ask for relevant documentation or drawings. Take notes and ask questions throughout the process.",
+    category: "technical",
+    tags: ["new systems", "learning", "documentation"],
+    priority: "medium"
+  },
+  {
+    id: "technical-005",
+    question: "How do I know when I'm ready to work independently on a task?",
+    answer: "You should be able to explain the task, identify the hazards, know the safety procedures, understand the regulations involved, and have successfully completed similar tasks under supervision. Ask your supervisor: 'Do you think I'm ready to do this independently?' and discuss any concerns.",
+    category: "technical",
+    tags: ["independence", "competency", "supervision"],
+    priority: "medium"
   },
 
-  // Regulations & Standards
+  // Communication Questions
   {
-    id: "regs-001",
-    question: "Do I need to notify Building Control for this installation?",
-    answer: "Most electrical work requires notification unless it falls under minor works exemptions. Check Part P of Building Regulations and local authority requirements. When in doubt, notify. Your supervisor should confirm notification requirements before starting work.",
-    category: "Regulations & Standards",
-    difficulty: "intermediate",
-    tags: ["Part P", "Building Control", "notification", "regulations"]
+    id: "communication-001",
+    question: "How do I ask questions without annoying my supervisor?",
+    answer: "Time your questions appropriately - not when they're dealing with urgent issues. Group related questions together. Show you've tried to find the answer first: 'I checked the regs but want to confirm my understanding...' Always thank them for their time and follow up on what you learned.",
+    category: "communication",
+    tags: ["questioning", "timing", "respect"],
+    priority: "medium"
   },
   {
-    id: "regs-002",
-    question: "The existing installation doesn't meet current BS 7671 standards. Do we need to upgrade everything?",
-    answer: "Existing installations don't need full upgrading unless being rewired. However, any new work must comply with current standards, and you shouldn't make the installation less safe. Some upgrades may be required at the distribution board or main earthing. Discuss specific requirements with your supervisor.",
-    category: "Regulations & Standards",
-    difficulty: "advanced",
-    tags: ["BS 7671", "existing installation", "compliance", "upgrades"]
+    id: "communication-002",
+    question: "What should I do if my supervisor gives me conflicting instructions?",
+    answer: "Clarify politely: 'Yesterday you mentioned X, but today you're saying Y. Can you help me understand which approach you'd prefer?' If it's about safety or regulations, ask for clarification in writing or involve another qualified person.",
+    category: "communication",
+    tags: ["conflicting instructions", "clarification"],
+    priority: "medium"
   },
   {
-    id: "regs-003",
-    question: "What certificates do I need to complete for this job?",
-    answer: "Depends on the work type - Minor Electrical Installation Works Certificate for simple additions, or Electrical Installation Certificate for new circuits/consumer units. Your supervisor should specify which certificates are required and who will sign them off.",
-    category: "Regulations & Standards",
-    difficulty: "intermediate",
-    tags: ["certificates", "documentation", "compliance", "sign-off"]
+    id: "communication-003",
+    question: "How do I handle criticism from my supervisor?",
+    answer: "Listen without getting defensive. Ask clarifying questions: 'What specifically should I do differently?' Take notes and ask for examples of the correct way. Thank them for the feedback and follow up later to show you've implemented their suggestions.",
+    category: "communication",
+    tags: ["criticism", "feedback", "improvement"],
+    priority: "medium"
+  },
+  {
+    id: "communication-004",
+    question: "What if I disagree with my supervisor's approach to a task?",
+    answer: "Approach it as a learning opportunity: 'I was taught to do it this way. Can you explain the advantages of your method?' or 'Is there a specific reason we're doing it this way on this site?' Be open to learning different approaches while ensuring safety isn't compromised.",
+    category: "communication",
+    tags: ["disagreement", "different methods", "learning"],
+    priority: "medium"
+  },
+  {
+    id: "communication-005",
+    question: "How do I communicate with other trades on site?",
+    answer: "Be respectful and professional. Introduce yourself and your role. Coordinate work to avoid conflicts. Communicate any issues that affect their work early. Use clear, simple language and confirm understanding. Remember, you represent the electrical trade.",
+    category: "communication",
+    tags: ["other trades", "coordination", "professionalism"],
+    priority: "medium"
   },
 
-  // Tools & Equipment
+  // Workplace Questions
+  {
+    id: "workplace-001",
+    question: "What should I do if I'm being asked to do tasks outside my scope of work?",
+    answer: "Politely explain your limitations: 'I'm only qualified to work on X as an apprentice. I'd be happy to help with Y once I'm qualified.' If pressured, contact your training provider. Keep a record of such requests and your responses.",
+    category: "workplace",
+    tags: ["scope of work", "limitations", "training provider"],
+    priority: "high"
+  },
+  {
+    id: "workplace-002",
+    question: "How do I handle workplace banter that makes me uncomfortable?",
+    answer: "Set boundaries politely but firmly: 'I'm not comfortable with that kind of talk' or 'Let's keep it professional.' If it continues, document it and speak to your supervisor or training provider. You have the right to a respectful workplace.",
+    category: "workplace",
+    tags: ["banter", "harassment", "boundaries"],
+    priority: "high"
+  },
+  {
+    id: "workplace-003",
+    question: "What if I'm not getting enough learning opportunities?",
+    answer: "Discuss with your supervisor: 'I'm keen to learn more about X. Are there opportunities for me to get involved?' Suggest specific areas you want to develop. If this doesn't improve things, discuss with your training provider during your next review.",
+    category: "workplace",
+    tags: ["learning opportunities", "development", "training"],
+    priority: "medium"
+  },
+  {
+    id: "workplace-004",
+    question: "How do I handle being the only apprentice or youngest person on site?",
+    answer: "Focus on being professional, punctual, and eager to learn. Don't try to prove yourself by taking unnecessary risks. Build relationships gradually through competent work. Ask questions and show respect for experienced workers' knowledge.",
+    category: "workplace",
+    tags: ["isolation", "age", "relationships"],
+    priority: "medium"
+  },
+  {
+    id: "workplace-005",
+    question: "What should I do if I'm not being paid correctly or on time?",
+    answer: "Keep records of your hours worked and pay received. Check your contract for pay rates and payment terms. Raise it with your supervisor first, then your training provider if not resolved. You may need to contact ACAS if the issue persists.",
+    category: "workplace",
+    tags: ["pay", "contract", "ACAS"],
+    priority: "high"
+  },
+
+  // Emergency Questions
+  {
+    id: "emergency-001",
+    question: "What should I do if someone gets an electric shock?",
+    answer: "DO NOT touch them if they're still in contact with electricity. Turn off the power at the source if possible. If you can't, use a non-conductive item to separate them from the source. Call 999 immediately. Start CPR if trained and they're not breathing. Get the first aider and defibrillator if available.",
+    category: "emergency",
+    tags: ["electric shock", "first aid", "emergency"],
+    priority: "high"
+  },
+  {
+    id: "emergency-002",
+    question: "What should I do if I cause a fire with electrical equipment?",
+    answer: "Turn off the power if safe to do so. Raise the alarm immediately. Use a CO2 fire extinguisher for electrical fires - never use water. Evacuate the area if the fire is spreading. Call 999 and report to the site manager immediately.",
+    category: "emergency",
+    tags: ["fire", "electrical fire", "evacuation"],
+    priority: "high"
+  },
+  {
+    id: "emergency-003",
+    question: "What if I'm injured at work?",
+    answer: "Seek immediate medical attention if serious. Report the injury to your supervisor immediately. Ensure it's recorded in the accident book. Take photos if appropriate. Contact your training provider as soon as possible. Don't sign anything without understanding it fully.",
+    category: "emergency",
+    tags: ["injury", "accident book", "reporting"],
+    priority: "high"
+  },
+
+  // Tools and Equipment Questions
   {
     id: "tools-001",
-    question: "My drill battery has died and I don't have a spare. Can I borrow tools from another tradesperson on site?",
-    answer: "Only use tools you're trained and authorised to use. Check with your supervisor first - borrowed tools may not be PAT tested or suitable for electrical work. Company policy may prohibit using unauthorised tools for insurance and safety reasons.",
-    category: "Tools & Equipment",
-    difficulty: "beginner",
-    tags: ["tools", "borrowing", "policy", "training"]
+    question: "What should I do if I'm not provided with the right tools for the job?",
+    answer: "Never compromise on safety by using inappropriate tools. Explain to your supervisor: 'I need X tool to do this job safely. What's the best way to get it?' If told to 'make do', explain the safety risks and document the conversation.",
+    category: "tools",
+    tags: ["appropriate tools", "safety", "equipment"],
+    priority: "high"
   },
   {
     id: "tools-002",
-    question: "The cable I need isn't in the van. Can I use a different type that's similar?",
-    answer: "Never substitute cables without checking specifications match exactly - consider insulation type, temperature rating, and application suitability. Contact your supervisor or the office to arrange correct cable delivery. Using incorrect cable could compromise safety and compliance.",
-    category: "Tools & Equipment",
-    difficulty: "intermediate",
-    tags: ["materials", "substitution", "specifications", "compliance"]
+    question: "How do I know if my test equipment is working correctly?",
+    answer: "Check calibration certificates are current. Test your tester on a known live source before and after use. Look for any physical damage. If readings seem wrong, stop and get it checked. Never trust test results from faulty equipment.",
+    category: "tools",
+    tags: ["test equipment", "calibration", "proving"],
+    priority: "high"
   },
   {
     id: "tools-003",
-    question: "The customer has offered me tea/coffee and wants to chat. How do I handle this professionally?",
-    answer: "It's fine to be polite and accept refreshments, but maintain professional boundaries. Keep conversations brief and work-focused during working hours. If they want to discuss additional work, refer them to your supervisor for quotations.",
-    category: "Professional Conduct",
-    difficulty: "beginner",
-    tags: ["customer relations", "professionalism", "boundaries", "additional work"]
+    question: "What if I damage a tool or piece of equipment?",
+    answer: "Report it immediately to your supervisor. Don't try to hide it or continue using damaged equipment. Explain how it happened and what you've learned. Take responsibility and offer to replace it if it was due to misuse.",
+    category: "tools",
+    tags: ["damage", "responsibility", "honesty"],
+    priority: "medium"
   },
 
-  // Site Management
+  // Regulations and Standards
   {
-    id: "site-001",
-    question: "There are other trades working in the same area. How do we coordinate the work?",
-    answer: "Communicate with other trades about scheduling and safety requirements. Establish who works when and where to avoid conflicts. Some work may need to be sequential. Inform your supervisor if coordination issues arise that could affect your schedule.",
-    category: "Site Management",
-    difficulty: "intermediate",
-    tags: ["coordination", "other trades", "scheduling", "communication"]
+    id: "regulations-001",
+    question: "How do I stay current with regulation changes?",
+    answer: "Subscribe to IET updates, follow relevant industry publications, attend CPD events, and discuss changes with your supervisor and training provider. Keep your regulations book updated and make notes about amendments as you learn about them.",
+    category: "regulations",
+    tags: ["updates", "CPD", "IET"],
+    priority: "low"
   },
   {
-    id: "site-002",
-    question: "The client keeps asking for changes to the original plan. How should I handle this?",
-    answer: "Politely explain that changes need to be discussed with your supervisor and may affect cost and timeline. Don't agree to variations on the spot. Document what they're requesting and inform your supervisor promptly. Changes may require new risk assessments.",
-    category: "Site Management",
-    difficulty: "intermediate",
-    tags: ["variations", "changes", "client management", "documentation"]
-  },
-  {
-    id: "site-003",
-    question: "I've made a mistake that will affect the job completion time. When should I tell my supervisor?",
-    answer: "Immediately. The sooner issues are identified, the better they can be managed. Don't try to hide or fix significant mistakes alone. Your supervisor needs to know to manage client expectations, potentially reschedule resources, and ensure work quality.",
-    category: "Site Management",
-    difficulty: "beginner",
-    tags: ["mistakes", "communication", "honesty", "problem solving"]
+    id: "regulations-002",
+    question: "What if local building control has different requirements?",
+    answer: "Building regulations take precedence over BS 7671 where they conflict. Always check local requirements and discuss any conflicts with your supervisor. When in doubt, follow the more stringent requirement or contact building control directly.",
+    category: "regulations",
+    tags: ["building control", "local requirements", "conflicts"],
+    priority: "medium"
   },
 
-  // Learning & Development
+  // Practical Scenarios
   {
-    id: "learning-001",
-    question: "I don't understand how to do a particular test procedure. Should I attempt it anyway?",
-    answer: "Never attempt procedures you're not confident with, especially testing procedures which could affect safety. Ask for demonstration and explanation from your supervisor. It's better to admit knowledge gaps than make potentially dangerous mistakes.",
-    category: "Learning & Development",
-    difficulty: "beginner",
-    tags: ["testing", "training", "competence", "safety"]
+    id: "practical-001",
+    question: "What should I do if a job is taking much longer than expected?",
+    answer: "Communicate early with your supervisor. Explain what's causing the delay and ask for guidance: 'This is taking longer than expected because of X. Should I continue with this approach or is there a better way?' Don't struggle in silence.",
+    category: "practical",
+    tags: ["delays", "communication", "efficiency"],
+    priority: "medium"
   },
   {
-    id: "learning-002",
-    question: "I want to learn more about renewable energy installations. How can I get involved?",
-    answer: "Discuss your interests with your supervisor during reviews. They may arrange for you to observe or assist on renewable projects when appropriate. Consider additional courses or qualifications that align with company direction and your career goals.",
-    category: "Learning & Development",
-    difficulty: "intermediate",
-    tags: ["career development", "renewable energy", "training", "opportunities"]
+    id: "practical-002",
+    question: "How do I handle working in difficult conditions (cramped spaces, heights, etc.)?",
+    answer: "Assess the risks and discuss with your supervisor. Ensure you have appropriate training and equipment. Take regular breaks and stay hydrated. Speak up if you feel unsafe - your safety is more important than completing the task quickly.",
+    category: "practical",
+    tags: ["difficult conditions", "risk assessment", "safety"],
+    priority: "high"
   },
   {
-    id: "learning-003",
-    question: "I feel like I'm not progressing fast enough in my apprenticeship. What can I do?",
-    answer: "Schedule a review meeting with your supervisor to discuss your concerns and progress. They can identify specific areas for development and arrange additional training or experience. Progress varies between individuals - focus on steady improvement rather than comparing to others.",
-    category: "Learning & Development",
-    difficulty: "beginner",
-    tags: ["progress", "development", "feedback", "career"]
+    id: "practical-003",
+    question: "What if I discover existing work that doesn't meet current standards?",
+    answer: "Don't alter existing work without permission. Document what you've found and report it to your supervisor. They'll decide whether it needs upgrading or just noting. Take photos if appropriate and keep records.",
+    category: "practical",
+    tags: ["existing work", "standards", "documentation"],
+    priority: "medium"
   }
 ];
 
-const categories = [
-  { name: "Safety & Health", icon: Shield, color: "bg-red-500" },
-  { name: "Technical Skills", icon: Wrench, color: "bg-blue-500" },
-  { name: "Regulations & Standards", icon: BookOpen, color: "bg-green-500" },
-  { name: "Tools & Equipment", icon: Clock, color: "bg-yellow-500" },
-  { name: "Site Management", icon: Users, color: "bg-purple-500" },
-  { name: "Professional Conduct", icon: AlertTriangle, color: "bg-orange-500" },
-  { name: "Learning & Development", icon: BookOpen, color: "bg-indigo-500" }
-];
-
 const QuestionsTab = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [expandedQuestions, setExpandedQuestions] = useState<Set<string>>(new Set());
 
-  const filteredQuestions = questionBank.filter(question => {
-    const matchesSearch = question.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         question.answer.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         question.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    
-    const matchesCategory = !selectedCategory || question.category === selectedCategory;
-    const matchesDifficulty = !selectedDifficulty || question.difficulty === selectedDifficulty;
-    
-    return matchesSearch && matchesCategory && matchesDifficulty;
+  const categories = [
+    { value: "all", label: "All Questions", icon: HelpCircle },
+    { value: "safety", label: "Safety", icon: Shield },
+    { value: "technical", label: "Technical", icon: Zap },
+    { value: "communication", label: "Communication", icon: Users },
+    { value: "workplace", label: "Workplace", icon: Clock },
+    { value: "emergency", label: "Emergency", icon: AlertTriangle },
+    { value: "tools", label: "Tools & Equipment", icon: Wrench },
+    { value: "regulations", label: "Regulations", icon: BookOpen },
+    { value: "practical", label: "Practical", icon: Wrench }
+  ];
+
+  const filteredQuestions = questions.filter(q => {
+    const matchesSearch = q.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         q.answer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         q.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesCategory = selectedCategory === "all" || q.category === selectedCategory;
+    return matchesSearch && matchesCategory;
   });
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case 'beginner': return 'bg-green-100 text-green-800 border-green-200';
-      case 'intermediate': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'advanced': return 'bg-red-100 text-red-800 border-red-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+  const toggleQuestion = (questionId: string) => {
+    const newExpanded = new Set(expandedQuestions);
+    if (newExpanded.has(questionId)) {
+      newExpanded.delete(questionId);
+    } else {
+      newExpanded.add(questionId);
     }
+    setExpandedQuestions(newExpanded);
+  };
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case "high": return "bg-red-500/20 text-red-300 border-red-500/30";
+      case "medium": return "bg-yellow-500/20 text-yellow-300 border-yellow-500/30";
+      case "low": return "bg-green-500/20 text-green-300 border-green-500/30";
+      default: return "bg-gray-500/20 text-gray-300 border-gray-500/30";
+    }
+  };
+
+  const getCategoryIcon = (category: string) => {
+    const categoryData = categories.find(cat => cat.value === category);
+    return categoryData ? categoryData.icon : HelpCircle;
   };
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Search className="h-5 w-5 text-elec-yellow" />
-            Question Bank Search
-          </CardTitle>
-          <CardDescription>
-            Find answers to common questions apprentices ask their supervisors
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search questions, answers, or tags..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-elec-dark border-elec-yellow/20"
-            />
-          </div>
-          
-          <div className="flex flex-wrap gap-2">
-            <Badge
-              variant={selectedCategory === null ? "default" : "outline"}
-              className="cursor-pointer"
-              onClick={() => setSelectedCategory(null)}
-            >
-              All Categories
-            </Badge>
-            {categories.map((category) => (
-              <Badge
-                key={category.name}
-                variant={selectedCategory === category.name ? "default" : "outline"}
-                className="cursor-pointer"
-                onClick={() => setSelectedCategory(category.name === selectedCategory ? null : category.name)}
+      <div className="text-center space-y-2">
+        <h2 className="text-2xl font-bold text-elec-yellow">Question Bank</h2>
+        <p className="text-muted-foreground">
+          Common questions apprentices ask supervisors with professional guidance on how to approach each situation
+        </p>
+      </div>
+
+      {/* Search and Filter */}
+      <div className="space-y-4">
+        <div className="relative">
+          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search questions, answers, or tags..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {categories.map((category) => {
+            const Icon = category.icon;
+            return (
+              <Button
+                key={category.value}
+                variant={selectedCategory === category.value ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedCategory(category.value)}
+                className="flex items-center gap-2"
               >
-                {category.name}
-              </Badge>
-            ))}
-          </div>
-          
-          <div className="flex gap-2">
-            <Badge
-              variant={selectedDifficulty === null ? "default" : "outline"}
-              className="cursor-pointer"
-              onClick={() => setSelectedDifficulty(null)}
-            >
-              All Levels
-            </Badge>
-            {['beginner', 'intermediate', 'advanced'].map((level) => (
-              <Badge
-                key={level}
-                variant={selectedDifficulty === level ? "default" : "outline"}
-                className="cursor-pointer capitalize"
-                onClick={() => setSelectedDifficulty(level === selectedDifficulty ? null : level)}
-              >
-                {level}
-              </Badge>
-            ))}
+                <Icon className="h-4 w-4" />
+                {category.label}
+              </Button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Questions List */}
+      <div className="space-y-4">
+        {filteredQuestions.length === 0 ? (
+          <Card className="p-8 text-center">
+            <p className="text-muted-foreground">No questions found matching your search criteria.</p>
+          </Card>
+        ) : (
+          filteredQuestions.map((question) => {
+            const Icon = getCategoryIcon(question.category);
+            return (
+              <Card key={question.id} className="border-elec-yellow/20">
+                <Collapsible>
+                  <CollapsibleTrigger
+                    className="w-full"
+                    onClick={() => toggleQuestion(question.id)}
+                  >
+                    <CardHeader className="hover:bg-elec-gray/50 transition-colors">
+                      <div className="flex items-start gap-4 text-left">
+                        <Icon className="h-5 w-5 text-elec-yellow mt-1 flex-shrink-0" />
+                        <div className="flex-1 space-y-2">
+                          <div className="flex items-center justify-between">
+                            <CardTitle className="text-base font-medium">
+                              {question.question}
+                            </CardTitle>
+                            {expandedQuestions.has(question.id) ? (
+                              <ChevronUp className="h-4 w-4 text-muted-foreground" />
+                            ) : (
+                              <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <Badge variant="outline" className="capitalize">
+                              {question.category}
+                            </Badge>
+                            <Badge className={getPriorityColor(question.priority)}>
+                              {question.priority} priority
+                            </Badge>
+                            {question.tags.map((tag) => (
+                              <Badge key={tag} variant="secondary" className="text-xs">
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </CardHeader>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <CardContent className="pt-0">
+                      <div className="ml-9 p-4 bg-elec-dark/30 rounded-lg">
+                        <p className="text-sm leading-relaxed whitespace-pre-line">
+                          {question.answer}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </CollapsibleContent>
+                </Collapsible>
+              </Card>
+            );
+          })
+        )}
+      </div>
+
+      {/* Summary Stats */}
+      <Card className="bg-elec-gray/50 border-elec-yellow/20">
+        <CardContent className="p-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div>
+              <div className="text-2xl font-bold text-elec-yellow">{questions.length}</div>
+              <div className="text-sm text-muted-foreground">Total Questions</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-red-300">
+                {questions.filter(q => q.priority === "high").length}
+              </div>
+              <div className="text-sm text-muted-foreground">High Priority</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-elec-yellow">
+                {categories.length - 1}
+              </div>
+              <div className="text-sm text-muted-foreground">Categories</div>
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-blue-300">
+                {filteredQuestions.length}
+              </div>
+              <div className="text-sm text-muted-foreground">Filtered Results</div>
+            </div>
           </div>
         </CardContent>
       </Card>
-
-      <div className="space-y-4">
-        <p className="text-sm text-muted-foreground">
-          Showing {filteredQuestions.length} of {questionBank.length} questions
-        </p>
-        
-        {filteredQuestions.map((question) => (
-          <Collapsible key={question.id}>
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CollapsibleTrigger className="w-full">
-                <CardHeader className="text-left hover:bg-elec-gray/50 transition-colors">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <CardTitle className="text-lg mb-2">{question.question}</CardTitle>
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <Badge variant="outline" className={getDifficultyColor(question.difficulty)}>
-                          {question.difficulty}
-                        </Badge>
-                        <Badge variant="outline">
-                          {question.category}
-                        </Badge>
-                        {question.tags.slice(0, 3).map((tag) => (
-                          <Badge key={tag} variant="secondary" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                    <ChevronDown className="h-4 w-4 text-elec-yellow shrink-0 ml-2" />
-                  </div>
-                </CardHeader>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <CardContent className="pt-0">
-                  <div className="bg-elec-dark p-4 rounded-md border border-elec-yellow/10">
-                    <p className="text-elec-light leading-relaxed whitespace-pre-line">
-                      {question.answer}
-                    </p>
-                  </div>
-                </CardContent>
-              </CollapsibleContent>
-            </Card>
-          </Collapsible>
-        ))}
-        
-        {filteredQuestions.length === 0 && (
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardContent className="text-center py-8">
-              <Search className="h-8 w-8 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">No questions found matching your search criteria.</p>
-              <p className="text-sm text-muted-foreground mt-2">Try adjusting your search terms or filters.</p>
-            </CardContent>
-          </Card>
-        )}
-      </div>
     </div>
   );
 };
