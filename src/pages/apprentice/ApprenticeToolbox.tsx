@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Wrench, MapPin, MessageCircle, FileText, PoundSterling, Users, Clock, BookOpen, AlertTriangle, CheckCircle, Calendar } from "lucide-react";
+import { ArrowLeft, MessageCircle, FileText, PoundSterling, Users, Clock, BookOpen, AlertTriangle, CheckCircle, Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import ActiveToolContent from "@/components/apprentice/toolbox/ActiveToolContent";
 
@@ -10,20 +10,6 @@ const ApprenticeToolbox = () => {
   const [activeTool, setActiveTool] = useState<string | null>(null);
 
   const toolboxItems = [
-    {
-      id: "tools-guide",
-      title: "Tools & Materials Guide",
-      icon: Wrench,
-      link: "/apprentice/toolbox/tools-guide",
-      description: "Essential tools, materials, and equipment guides for electrical work"
-    },
-    {
-      id: "electrical-guides",
-      title: "Electrical Installation Guides",
-      icon: BookOpen,
-      link: "/apprentice/toolbox/electrical-installation-guides",
-      description: "Step-by-step guides for domestic, commercial, and industrial installations"
-    },
     {
       id: "apprenticeship-expectations",
       title: "Apprenticeship Expectations",

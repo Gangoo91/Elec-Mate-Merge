@@ -3,10 +3,17 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import OnTheJobToolsBox from "@/components/apprentice/OnTheJobToolsBox";
-import { Settings, HardHat, MessageSquare, HelpCircle, BookOpen } from "lucide-react";
+import { Settings, HardHat, MessageSquare, HelpCircle, BookOpen, Wrench } from "lucide-react";
 
 const OnJobTools = () => {
   const onJobTools = [
+    {
+      id: 1,
+      title: "Tools & Materials Guide",
+      icon: Wrench,
+      description: "Essential tools, materials, and equipment guides for electrical work",
+      link: "/apprentice/on-job-tools/tools-guide"
+    },
     {
       id: 2,
       title: "Site Assessment Tools",
@@ -41,6 +48,13 @@ const OnJobTools = () => {
       icon: BookOpen,
       description: "Quick-fire revision flashcards for cable colors, regulations, EICR codes, and more",
       link: "/apprentice/on-job-tools/flashcards"
+    },
+    {
+      id: 7,
+      title: "Electrical Installation Guides",
+      icon: BookOpen,
+      description: "Step-by-step guides for domestic, commercial, and industrial installations",
+      link: "/apprentice/on-job-tools/electrical-installation-guides"
     }
   ];
 

@@ -39,7 +39,7 @@ const OutdoorInstallations = () => {
   return (
     <div className="max-w-7xl mx-auto animate-fade-in p-4">
       <div className="mb-6">
-        <BackButton customUrl="/apprentice/toolbox/electrical-installation-guides" label="Back to Installation Guides" />
+        <BackButton customUrl="/apprentice/on-job-tools/electrical-installation-guides" label="Back to Installation Guides" />
       </div>
 
       <InstallationGuideTabs

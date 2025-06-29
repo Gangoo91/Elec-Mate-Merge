@@ -24,7 +24,7 @@ const ToolsGuide = () => {
         <p className="text-muted-foreground text-center max-w-2xl mb-4">
           Comprehensive guidance for building your professional electrician toolkit - from essential tools to smart purchasing decisions and quality assessment
         </p>
-        <BackButton customUrl="/apprentice/toolbox" label="Back to Guidance Area" />
+        <BackButton customUrl="/apprentice/on-job-tools" label="Back to On-Job Tools" />
       </div>
 
       <Alert className="border-blue-500/50 bg-blue-500/10">

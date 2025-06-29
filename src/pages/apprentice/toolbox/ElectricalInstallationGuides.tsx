@@ -11,28 +11,28 @@ const ElectricalInstallationGuides = () => {
       icon: Home,
       description: "Residential electrical work including lighting, sockets, and consumer units",
       features: ["Socket circuits", "Lighting circuits", "Cooker circuits", "Shower circuits"],
-      path: "/apprentice/toolbox/electrical-installation-guides/domestic"
+      path: "/apprentice/on-job-tools/electrical-installation-guides/domestic"
     },
     {
       title: "Commercial Installations",
       icon: Building,
       description: "Office buildings, shops, and small commercial premises",
       features: ["Distribution boards", "Emergency lighting", "Fire alarm systems", "Data cabling"],
-      path: "/apprentice/toolbox/electrical-installation-guides/commercial"
+      path: "/apprentice/on-job-tools/electrical-installation-guides/commercial"
     },
     {
       title: "Industrial Installations",
       icon: Factory,
       description: "Manufacturing facilities and heavy industrial environments",
       features: ["Motor control", "High voltage systems", "Control panels", "Industrial lighting"],
-      path: "/apprentice/toolbox/electrical-installation-guides/industrial"
+      path: "/apprentice/on-job-tools/electrical-installation-guides/industrial"
     },
     {
       title: "Outdoor Installations",
       icon: MapPin,
       description: "External electrical work and street lighting",
       features: ["Street lighting", "Car park lighting", "External sockets", "Underground cables"],
-      path: "/apprentice/toolbox/electrical-installation-guides/outdoor"
+      path: "/apprentice/on-job-tools/electrical-installation-guides/outdoor"
     }
   ];
 
@@ -43,10 +43,10 @@ const ElectricalInstallationGuides = () => {
           <h1 className="text-3xl font-bold tracking-tight">Electrical Installation Guides</h1>
           <p className="text-muted-foreground">Step-by-step guides for different types of electrical installations</p>
         </div>
-        <Link to="/apprentice/toolbox" className="flex-shrink-0">
+        <Link to="/apprentice/on-job-tools" className="flex-shrink-0">
           <Button variant="outline">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Toolbox
+            Back to On-Job Tools
           </Button>
         </Link>
       </div>

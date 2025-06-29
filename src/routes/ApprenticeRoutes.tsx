@@ -53,11 +53,6 @@ const ApprenticeRoutes = () => (
     <Route path="mentor" element={<ApprenticeMentor />} />
     <Route path="rights-and-pay" element={<RightsAndPay />} />
     <Route path="toolbox" element={<ApprenticeToolbox />} />
-    <Route path="toolbox/tools-guide" element={<ToolsGuide />} />
-    <Route path="toolbox/electrical-installation-guides" element={<ElectricalInstallationGuides />} />
-    <Route path="toolbox/electrical-installation-guides/commercial" element={<CommercialInstallations />} />
-    <Route path="toolbox/electrical-installation-guides/industrial" element={<IndustrialInstallations />} />
-    <Route path="toolbox/electrical-installation-guides/outdoor" element={<OutdoorInstallations />} />
     <Route path="toolbox/apprenticeship-expectations" element={<ApprenticeshipExpectations />} />
     <Route path="toolbox/off-job-training-guide" element={<OffJobTrainingGuide />} />
     <Route path="toolbox/site-jargon" element={<SiteJargon />} />
@@ -69,6 +64,11 @@ const ApprenticeRoutes = () => (
     <Route path="professional-development" element={<ProfessionalDevelopment />} />
     <Route path="toolbox/professional-tool-guide" element={<ProfessionalToolGuide />} />
     <Route path="on-job-tools" element={<OnJobTools />} />
+    <Route path="on-job-tools/tools-guide" element={<ToolsGuide />} />
+    <Route path="on-job-tools/electrical-installation-guides" element={<ElectricalInstallationGuides />} />
+    <Route path="on-job-tools/electrical-installation-guides/commercial" element={<CommercialInstallations />} />
+    <Route path="on-job-tools/electrical-installation-guides/industrial" element={<IndustrialInstallations />} />
+    <Route path="on-job-tools/electrical-installation-guides/outdoor" element={<OutdoorInstallations />} />
     <Route path="on-job-tools/calculations" element={<OnJobCalculations />} />
     <Route path="on-job-tools/assessment" element={<OnJobAssessment />} />
     <Route path="on-job-tools/safety-cases" element={<OnJobSafetyCases />} />
