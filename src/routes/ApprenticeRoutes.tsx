@@ -33,6 +33,9 @@ import CommunicationSkills from "@/pages/apprentice/toolbox/CommunicationSkills"
 import StudyTips from "@/pages/apprentice/toolbox/StudyTips";
 import LearningFromMistakes from "@/pages/apprentice/toolbox/LearningFromMistakes";
 import TimeManagement from "@/pages/apprentice/toolbox/TimeManagement";
+import ApprenticeshipExpectations from "@/pages/apprentice/toolbox/ApprenticeshipExpectations";
+import OffJobTrainingGuide from "@/pages/apprentice/toolbox/OffJobTrainingGuide";
+import SiteJargon from "@/pages/apprentice/toolbox/SiteJargon";
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -55,9 +58,9 @@ const ApprenticeRoutes = () => (
     <Route path="toolbox/electrical-installation-guides/commercial" element={<CommercialInstallations />} />
     <Route path="toolbox/electrical-installation-guides/industrial" element={<IndustrialInstallations />} />
     <Route path="toolbox/electrical-installation-guides/outdoor" element={<OutdoorInstallations />} />
-    <Route path="toolbox/apprenticeship-expectations" element={<div className="p-8"><h1 className="text-3xl font-bold mb-4">Apprenticeship Expectations</h1><p className="text-muted-foreground">What to expect during your electrical apprenticeship journey - coming soon!</p></div>} />
-    <Route path="toolbox/off-job-training-guide" element={<div className="p-8"><h1 className="text-3xl font-bold mb-4">Off-the-Job Training Guide</h1><p className="text-muted-foreground">Understanding your 20% off-the-job training requirements - coming soon!</p></div>} />
-    <Route path="toolbox/site-jargon" element={<div className="p-8"><h1 className="text-3xl font-bold mb-4">Site Jargon & Terminology</h1><p className="text-muted-foreground">Common electrical and construction terms you'll hear on site - coming soon!</p></div>} />
+    <Route path="toolbox/apprenticeship-expectations" element={<ApprenticeshipExpectations />} />
+    <Route path="toolbox/off-job-training-guide" element={<OffJobTrainingGuide />} />
+    <Route path="toolbox/site-jargon" element={<SiteJargon />} />
     <Route path="toolbox/portfolio-building" element={<PortfolioBuilding />} />
     <Route path="toolbox/communication-skills" element={<CommunicationSkills />} />
     <Route path="toolbox/study-tips" element={<StudyTips />} />
