@@ -1,314 +1,347 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { HelpCircle, Search, MessageSquare, Star, Clock, User, CheckCircle, AlertCircle, BookOpen, Lightbulb } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ChevronDown, Search, Clock, AlertTriangle, BookOpen, Wrench, Users, Shield } from "lucide-react";
 import { useState } from "react";
+
+interface Question {
+  id: string;
+  question: string;
+  answer: string;
+  category: string;
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  tags: string[];
+}
+
+const questionBank: Question[] = [
+  // Safety & Health Questions
+  {
+    id: "safety-001",
+    question: "What should I do if I find a piece of equipment that looks damaged?",
+    answer: "Stop work immediately and report it to your supervisor. Tag the equipment as 'DO NOT USE' if safe to do so. Never attempt to use damaged equipment as it could cause injury or electrocution. Document what you observed and when.",
+    category: "Safety & Health",
+    difficulty: "beginner",
+    tags: ["equipment", "damage", "reporting", "safety"]
+  },
+  {
+    id: "safety-002",
+    question: "I'm working alone on site - what safety precautions should I take?",
+    answer: "Ensure someone knows your location and expected finish time. Have a charged mobile phone with emergency contacts. Follow lone working procedures, carry out regular check-ins, and never work on live circuits alone. Consider if the task is suitable for lone working.",
+    category: "Safety & Health",
+    difficulty: "intermediate",
+    tags: ["lone working", "procedures", "emergency"]
+  },
+  {
+    id: "safety-003",
+    question: "The client is pressuring me to skip the isolation procedure to save time. What do I do?",
+    answer: "Never compromise on safety procedures regardless of pressure. Explain the legal requirements and safety risks. Contact your supervisor immediately for support. Isolation procedures are non-negotiable and protect both you and others on site.",
+    category: "Safety & Health",
+    difficulty: "advanced",
+    tags: ["isolation", "pressure", "procedures", "legal"]
+  },
+  {
+    id: "safety-004",
+    question: "I've cut myself with a tool - it's not deep but it's bleeding. What's the procedure?",
+    answer: "Stop work immediately and tend to the wound. Clean it with clean water, apply pressure to stop bleeding, and cover with a clean dressing. Report the incident to your supervisor and complete an accident report form. Seek medical attention if concerned about the depth or cleanliness of the cut.",
+    category: "Safety & Health",
+    difficulty: "beginner",
+    tags: ["first aid", "accident", "reporting", "medical"]
+  },
+
+  // Technical Questions
+  {
+    id: "tech-001",
+    question: "I'm getting a reading that doesn't match what I expected on my multimeter. Should I continue?",
+    answer: "Stop and double-check your meter settings, probe connections, and test procedure. Verify your meter is working by testing on a known source. If readings are still unexpected, inform your supervisor before proceeding. Unexpected readings could indicate faults or safety issues.",
+    category: "Technical Skills",
+    difficulty: "intermediate",
+    tags: ["testing", "measurements", "troubleshooting", "equipment"]
+  },
+  {
+    id: "tech-002",
+    question: "The circuit I'm working on keeps tripping the RCD. What could be causing this?",
+    answer: "This indicates an earth leakage fault. Stop work and investigate systematically - check for damaged cables, moisture ingress, or faulty appliances. Use insulation resistance testing to locate the fault. Don't keep resetting the RCD as it's protecting against a potentially dangerous fault.",
+    category: "Technical Skills",
+    difficulty: "advanced",
+    tags: ["RCD", "tripping", "earth leakage", "fault finding"]
+  },
+  {
+    id: "tech-003",
+    question: "How do I know what size cable to use for this circuit?",
+    answer: "Consider the load current, installation method, ambient temperature, and voltage drop requirements. Use BS 7671 tables and our cable sizing calculator. Check with your supervisor if unsure - undersized cables can overheat and cause fires.",
+    category: "Technical Skills",
+    difficulty: "intermediate",
+    tags: ["cable sizing", "BS 7671", "calculations", "installation"]
+  },
+  {
+    id: "tech-004",
+    question: "The customer wants an extra socket but there's no space in the consumer unit. What options do we have?",
+    answer: "Options include upgrading the consumer unit, using a sub-distribution board, or running a spur from an existing circuit if capacity allows. This requires load calculations and compliance checks. Discuss with your supervisor as it may affect the design and quotation.",
+    category: "Technical Skills",
+    difficulty: "advanced",
+    tags: ["consumer unit", "capacity", "design", "upgrade"]
+  },
+
+  // Regulations & Standards
+  {
+    id: "regs-001",
+    question: "Do I need to notify Building Control for this installation?",
+    answer: "Most electrical work requires notification unless it falls under minor works exemptions. Check Part P of Building Regulations and local authority requirements. When in doubt, notify. Your supervisor should confirm notification requirements before starting work.",
+    category: "Regulations & Standards",
+    difficulty: "intermediate",
+    tags: ["Part P", "Building Control", "notification", "regulations"]
+  },
+  {
+    id: "regs-002",
+    question: "The existing installation doesn't meet current BS 7671 standards. Do we need to upgrade everything?",
+    answer: "Existing installations don't need full upgrading unless being rewired. However, any new work must comply with current standards, and you shouldn't make the installation less safe. Some upgrades may be required at the distribution board or main earthing. Discuss specific requirements with your supervisor.",
+    category: "Regulations & Standards",
+    difficulty: "advanced",
+    tags: ["BS 7671", "existing installation", "compliance", "upgrades"]
+  },
+  {
+    id: "regs-003",
+    question: "What certificates do I need to complete for this job?",
+    answer: "Depends on the work type - Minor Electrical Installation Works Certificate for simple additions, or Electrical Installation Certificate for new circuits/consumer units. Your supervisor should specify which certificates are required and who will sign them off.",
+    category: "Regulations & Standards",
+    difficulty: "intermediate",
+    tags: ["certificates", "documentation", "compliance", "sign-off"]
+  },
+
+  // Tools & Equipment
+  {
+    id: "tools-001",
+    question: "My drill battery has died and I don't have a spare. Can I borrow tools from another tradesperson on site?",
+    answer: "Only use tools you're trained and authorised to use. Check with your supervisor first - borrowed tools may not be PAT tested or suitable for electrical work. Company policy may prohibit using unauthorised tools for insurance and safety reasons.",
+    category: "Tools & Equipment",
+    difficulty: "beginner",
+    tags: ["tools", "borrowing", "policy", "training"]
+  },
+  {
+    id: "tools-002",
+    question: "The cable I need isn't in the van. Can I use a different type that's similar?",
+    answer: "Never substitute cables without checking specifications match exactly - consider insulation type, temperature rating, and application suitability. Contact your supervisor or the office to arrange correct cable delivery. Using incorrect cable could compromise safety and compliance.",
+    category: "Tools & Equipment",
+    difficulty: "intermediate",
+    tags: ["materials", "substitution", "specifications", "compliance"]
+  },
+  {
+    id: "tools-003",
+    question: "The customer has offered me tea/coffee and wants to chat. How do I handle this professionally?",
+    answer: "It's fine to be polite and accept refreshments, but maintain professional boundaries. Keep conversations brief and work-focused during working hours. If they want to discuss additional work, refer them to your supervisor for quotations.",
+    category: "Professional Conduct",
+    difficulty: "beginner",
+    tags: ["customer relations", "professionalism", "boundaries", "additional work"]
+  },
+
+  // Site Management
+  {
+    id: "site-001",
+    question: "There are other trades working in the same area. How do we coordinate the work?",
+    answer: "Communicate with other trades about scheduling and safety requirements. Establish who works when and where to avoid conflicts. Some work may need to be sequential. Inform your supervisor if coordination issues arise that could affect your schedule.",
+    category: "Site Management",
+    difficulty: "intermediate",
+    tags: ["coordination", "other trades", "scheduling", "communication"]
+  },
+  {
+    id: "site-002",
+    question: "The client keeps asking for changes to the original plan. How should I handle this?",
+    answer: "Politely explain that changes need to be discussed with your supervisor and may affect cost and timeline. Don't agree to variations on the spot. Document what they're requesting and inform your supervisor promptly. Changes may require new risk assessments.",
+    category: "Site Management",
+    difficulty: "intermediate",
+    tags: ["variations", "changes", "client management", "documentation"]
+  },
+  {
+    id: "site-003",
+    question: "I've made a mistake that will affect the job completion time. When should I tell my supervisor?",
+    answer: "Immediately. The sooner issues are identified, the better they can be managed. Don't try to hide or fix significant mistakes alone. Your supervisor needs to know to manage client expectations, potentially reschedule resources, and ensure work quality.",
+    category: "Site Management",
+    difficulty: "beginner",
+    tags: ["mistakes", "communication", "honesty", "problem solving"]
+  },
+
+  // Learning & Development
+  {
+    id: "learning-001",
+    question: "I don't understand how to do a particular test procedure. Should I attempt it anyway?",
+    answer: "Never attempt procedures you're not confident with, especially testing procedures which could affect safety. Ask for demonstration and explanation from your supervisor. It's better to admit knowledge gaps than make potentially dangerous mistakes.",
+    category: "Learning & Development",
+    difficulty: "beginner",
+    tags: ["testing", "training", "competence", "safety"]
+  },
+  {
+    id: "learning-002",
+    question: "I want to learn more about renewable energy installations. How can I get involved?",
+    answer: "Discuss your interests with your supervisor during reviews. They may arrange for you to observe or assist on renewable projects when appropriate. Consider additional courses or qualifications that align with company direction and your career goals.",
+    category: "Learning & Development",
+    difficulty: "intermediate",
+    tags: ["career development", "renewable energy", "training", "opportunities"]
+  },
+  {
+    id: "learning-003",
+    question: "I feel like I'm not progressing fast enough in my apprenticeship. What can I do?",
+    answer: "Schedule a review meeting with your supervisor to discuss your concerns and progress. They can identify specific areas for development and arrange additional training or experience. Progress varies between individuals - focus on steady improvement rather than comparing to others.",
+    category: "Learning & Development",
+    difficulty: "beginner",
+    tags: ["progress", "development", "feedback", "career"]
+  }
+];
+
+const categories = [
+  { name: "Safety & Health", icon: Shield, color: "bg-red-500" },
+  { name: "Technical Skills", icon: Wrench, color: "bg-blue-500" },
+  { name: "Regulations & Standards", icon: BookOpen, color: "bg-green-500" },
+  { name: "Tools & Equipment", icon: Clock, color: "bg-yellow-500" },
+  { name: "Site Management", icon: Users, color: "bg-purple-500" },
+  { name: "Professional Conduct", icon: AlertTriangle, color: "bg-orange-500" },
+  { name: "Learning & Development", icon: BookOpen, color: "bg-indigo-500" }
+];
 
 const QuestionsTab = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
 
-  const questionCategories = [
-    {
-      category: "Technical & Testing",
-      icon: CheckCircle,
-      color: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-      questions: [
-        {
-          id: "t1",
-          question: "How do I fill out a schedule of test results correctly?",
-          difficulty: "Intermediate",
-          votes: 124,
-          answer: "When completing a schedule of test results, follow these essential steps:\n\n1. **Circuit Description**: Write clear, descriptive names (e.g., 'Ground Floor Ring Final - Kitchen & Utility')\n2. **Reference Method**: Note the cable installation method (e.g., Method C - clipped direct)\n3. **Protective Device**: Record type and rating (e.g., '32A Type B MCB')\n4. **Conductor CSA**: Note cable size (e.g., '2.5mm² + 1.5mm² CPC')\n5. **Test Results**: Record all values with units:\n   - Continuity (R1+R2): measured in ohms (Ω)\n   - Insulation Resistance: minimum 1MΩ at 500V DC\n   - Earth Fault Loop Impedance (Zs): maximum values per BS 7671\n   - Polarity: confirm correct connections\n   - RCD operation: trip times and currents\n\n**Critical Points:**\n- Use indelible ink (black or blue)\n- No correction fluid - cross out errors with single line\n- Sign and date each page\n- Include ambient temperature\n- Record test instrument serial numbers and calibration dates"
-        },
-        {
-          id: "t2",
-          question: "What does a failed insulation resistance test mean and what should I do?",
-          difficulty: "Intermediate",
-          votes: 98,
-          answer: "A failed IR test indicates potential insulation breakdown. Here's what to do:\n\n**Immediate Actions:**\n1. **Do NOT energise** the circuit\n2. Disconnect all equipment and accessories\n3. Re-test with everything disconnected\n4. If still failing, investigate cable route\n\n**Common Causes:**\n- Moisture ingress (check outdoor connections)\n- Physical damage to cables\n- Overheating causing insulation deterioration\n- Neutral-earth faults in equipment\n- Incorrect connections at accessories\n\n**Investigation Process:**\n1. Test each conductor individually to earth\n2. Test between line and neutral\n3. Check at distribution board end\n4. Use 'soak testing' - apply test voltage for 1 minute\n5. Check junction boxes and accessories\n\n**Minimum Values:**\n- Circuits ≤50V: 0.5MΩ\n- Circuits >50V: 1MΩ\n- SELV/PELV: 0.25MΩ\n\n**Documentation:**\n- Record fault description\n- Note remedial action taken\n- Re-test after repairs\n- Get supervisor to verify repairs before energising"
-        },
-        {
-          id: "t3",
-          question: "When should I use an RCD tester versus the test button?",
-          difficulty: "Beginner",
-          votes: 156,
-          answer: "Understanding when to use each testing method is crucial:\n\n**RCD Test Button:**\n- **When**: Monthly user checks, quick operational verification\n- **What it does**: Tests mechanical operation only\n- **Limitations**: Doesn't verify trip time or sensitivity\n- **Procedure**: Press and hold, RCD should trip immediately\n\n**RCD Tester (Electronic):**\n- **When**: Initial verification, periodic testing, fault finding\n- **Required for**: BS 7671 compliance testing\n- **Tests performed**:\n  - x½ rated current (should NOT trip within 2 seconds)\n  - x1 rated current (must trip within 300ms for 30mA)\n  - x5 rated current (must trip within 40ms)\n  - Contact voltage test\n\n**Testing Sequence:**\n1. Verify RCD rating (30mA, 100mA, etc.)\n2. Connect tester between line and earth\n3. Test at x½ - should not trip\n4. Test at x1 - record trip time\n5. Test at x5 - record trip time\n6. Test 180° phase angle if required\n7. Press test button to verify mechanical operation\n8. Reset RCD\n\n**Record Results:**\n- Trip times in milliseconds\n- Test currents used\n- Any anomalies or failures\n- Tester calibration details"
-        }
-      ]
-    },
-    {
-      category: "Safety & Procedures",
-      icon: AlertCircle,
-      color: "bg-red-500/20 text-red-400 border-red-500/30",
-      questions: [
-        {
-          id: "s1",
-          question: "What's the correct procedure for safe isolation?",
-          difficulty: "Essential",
-          votes: 203,
-          answer: "Safe isolation is the most critical safety procedure. Follow these steps religiously:\n\n**PROVE, DEAD, PROVE Method:**\n\n**1. PROVE (test your tester)**\n- Test voltage indicator on known live source\n- Verify it's working correctly\n- Check test leads for damage\n\n**2. ISOLATE**\n- Identify correct isolation point\n- Switch off and lock off (LOTO)\n- Remove fuses or switch off MCB\n- Apply safety lock and warning notice\n\n**3. DEAD (test the circuit)**\n- Test between all conductors\n- Test each conductor to earth\n- Test at multiple points if long cable runs\n- Confirm zero volts throughout\n\n**4. PROVE (test your tester again)**\n- Re-test on known live source\n- Ensures tester hasn't failed during testing\n\n**Additional Safety Measures:**\n- Use appropriate PPE\n- Barrier off work area\n- Inform all site personnel\n- Use 'Permit to Work' system if required\n- Keep isolation key with you\n- Never work alone on live equipment\n\n**Warning Signs:**\n- 'DANGER - MEN WORKING'\n- 'DO NOT SWITCH ON'\n- Include your name and contact details\n- Note date and time of isolation"
-        },
-        {
-          id: "s2",
-          question: "How do I report a near miss or safety concern?",
-          difficulty: "Essential",
-          votes: 187,
-          answer: "Reporting safety issues protects everyone on site. Here's the proper procedure:\n\n**Immediate Action:**\n1. **Stop work** if there's immediate danger\n2. **Secure the area** - barrier off if needed\n3. **Inform supervisor immediately** - call don't text\n4. **Take photos** if safe to do so\n\n**Formal Reporting Process:**\n1. **Complete incident report form** within 24 hours\n2. **Include all details**:\n   - Exact location and time\n   - What happened or could have happened\n   - People involved or at risk\n   - Immediate actions taken\n   - Suggested improvements\n\n**Near Miss Examples:**\n- Scaffold collapse or instability\n- Electrical equipment faults\n- Unsafe working practices observed\n- Equipment failures\n- Environmental hazards (flooding, structural damage)\n\n**Who to Report To:**\n- Immediate supervisor (first contact)\n- Site safety officer\n- Site manager for serious incidents\n- HSE if RIDDOR reportable\n\n**Follow-up Actions:**\n- Attend investigation meetings\n- Provide additional information if requested\n- Learn from incident analysis\n- Implement recommended changes\n\n**Remember**: Reporting near misses prevents actual accidents. You won't get in trouble for genuine safety concerns."
-        }
-      ]
-    },
-    {
-      category: "Career & Development",
-      icon: Star,
-      color: "bg-green-500/20 text-green-400 border-green-500/30",
-      questions: [
-        {
-          id: "c1",
-          question: "How do I progress from apprentice to qualified electrician?",
-          difficulty: "Career",
-          votes: 245,
-          answer: "Career progression requires dedication and meeting specific milestones:\n\n**Apprenticeship Requirements:**\n- Complete minimum 4 years training (Level 3)\n- Achieve 8,000+ hours on-the-job training\n- Pass all college assessments and end-point assessment\n- Maintain portfolio of evidence\n- Develop practical competencies\n\n**Qualification Pathway:**\n1. **Level 3 Diploma** - Core qualification\n2. **AM2 Assessment** - Practical competency test\n3. **18th Edition** - Wiring regulations knowledge\n4. **2391 Inspection & Testing** - Advanced testing qualification\n\n**JIB Grading:**\n- **Apprentice**: During training period\n- **Improved Apprentice**: After Level 2\n- **Electrician**: After Level 3 + AM2\n- **Approved Electrician**: With additional experience\n- **Technician**: With HNC/HND\n\n**Key Development Areas:**\n- Technical competency\n- Problem-solving skills\n- Customer service\n- Health & safety knowledge\n- Industry regulation updates\n- Specialist areas (solar, EV charging, smart homes)\n\n**Timeline:**\n- Years 1-2: Foundation skills, basic installation\n- Years 3-4: Advanced techniques, testing procedures\n- Post-qualification: Specialist training, management skills\n\n**Continuing Professional Development:**\n- Regular update courses\n- Manufacturer training\n- New technology familiarisation\n- Health & safety refreshers"
-        }
-      ]
-    }
-  ];
-
-  const popularQuestions = [
-    {
-      question: "How do I calculate cable sizes correctly?",
-      category: "Technical",
-      views: 1250,
-      recent: true
-    },
-    {
-      question: "What PPE is required for different electrical work?",
-      category: "Safety",
-      views: 980,
-      recent: false
-    },
-    {
-      question: "How to read electrical drawings and schematics?",
-      category: "Technical",
-      views: 850,
-      recent: true
-    },
-    {
-      question: "When can I work unsupervised?",
-      category: "Career",
-      views: 720,
-      recent: false
-    }
-  ];
+  const filteredQuestions = questionBank.filter(question => {
+    const matchesSearch = question.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         question.answer.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         question.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+    
+    const matchesCategory = !selectedCategory || question.category === selectedCategory;
+    const matchesDifficulty = !selectedDifficulty || question.difficulty === selectedDifficulty;
+    
+    return matchesSearch && matchesCategory && matchesDifficulty;
+  });
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case "Essential": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "Intermediate": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-      case "Beginner": return "bg-green-500/20 text-green-400 border-green-500/30";
-      case "Career": return "bg-purple-500/20 text-purple-400 border-purple-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      case 'beginner': return 'bg-green-100 text-green-800 border-green-200';
+      case 'intermediate': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'advanced': return 'bg-red-100 text-red-800 border-red-200';
+      default: return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
 
-  const filteredCategories = questionCategories.map(category => ({
-    ...category,
-    questions: category.questions.filter(q =>
-      q.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      q.answer.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  })).filter(category => category.questions.length > 0);
-
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
-          <div className="flex items-center gap-2">
-            <HelpCircle className="h-6 w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow">Supervisor Knowledge Bank</CardTitle>
-          </div>
+          <CardTitle className="flex items-center gap-2">
+            <Search className="h-5 w-5 text-elec-yellow" />
+            Question Bank Search
+          </CardTitle>
+          <CardDescription>
+            Find answers to common questions apprentices ask their supervisors
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground mb-4">
-            Comprehensive collection of real-world questions and expert answers from experienced supervisors, 
-            qualified electricians, and industry professionals. Search through hundreds of practical scenarios.
-          </p>
-          
-          <div className="flex items-center gap-2 mb-4">
-            <Search className="h-4 w-4 text-muted-foreground" />
-            <Input 
-              placeholder="Search questions and answers..." 
+        <CardContent className="space-y-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search questions, answers, or tags..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="bg-background/50"
+              className="pl-10 bg-elec-dark border-elec-yellow/20"
             />
           </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-elec-yellow mb-1">250+</div>
-              <div className="text-sm text-muted-foreground">Questions</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-elec-yellow mb-1">45</div>
-              <div className="text-sm text-muted-foreground">Expert Contributors</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-elec-yellow mb-1">98%</div>
-              <div className="text-sm text-muted-foreground">Accuracy Rate</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-elec-yellow mb-1">24hr</div>
-              <div className="text-sm text-muted-foreground">Response Time</div>
-            </div>
+          
+          <div className="flex flex-wrap gap-2">
+            <Badge
+              variant={selectedCategory === null ? "default" : "outline"}
+              className="cursor-pointer"
+              onClick={() => setSelectedCategory(null)}
+            >
+              All Categories
+            </Badge>
+            {categories.map((category) => (
+              <Badge
+                key={category.name}
+                variant={selectedCategory === category.name ? "default" : "outline"}
+                className="cursor-pointer"
+                onClick={() => setSelectedCategory(category.name === selectedCategory ? null : category.name)}
+              >
+                {category.name}
+              </Badge>
+            ))}
+          </div>
+          
+          <div className="flex gap-2">
+            <Badge
+              variant={selectedDifficulty === null ? "default" : "outline"}
+              className="cursor-pointer"
+              onClick={() => setSelectedDifficulty(null)}
+            >
+              All Levels
+            </Badge>
+            {['beginner', 'intermediate', 'advanced'].map((level) => (
+              <Badge
+                key={level}
+                variant={selectedDifficulty === level ? "default" : "outline"}
+                className="cursor-pointer capitalize"
+                onClick={() => setSelectedDifficulty(level === selectedDifficulty ? null : level)}
+              >
+                {level}
+              </Badge>
+            ))}
           </div>
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <div className="space-y-6">
-            {filteredCategories.map((category, index) => (
-              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-full bg-elec-yellow/10">
-                      <category.icon className="h-5 w-5 text-elec-yellow" />
-                    </div>
-                    <CardTitle className="text-white">{category.category}</CardTitle>
-                    <Badge className={category.color} variant="outline">
-                      {category.questions.length} Questions
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <Accordion type="single" collapsible className="space-y-2">
-                    {category.questions.map((q) => (
-                      <AccordionItem key={q.id} value={q.id} className="border border-elec-yellow/20 rounded-lg">
-                        <AccordionTrigger className="px-4 hover:no-underline">
-                          <div className="flex items-center justify-between w-full">
-                            <span className="text-left text-sm font-medium">{q.question}</span>
-                            <div className="flex items-center gap-2 ml-4">
-                              <Badge className={getDifficultyColor(q.difficulty)} variant="outline">
-                                {q.difficulty}
-                              </Badge>
-                              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                                <Star className="h-3 w-3" />
-                                {q.votes}
-                              </div>
-                            </div>
-                          </div>
-                        </AccordionTrigger>
-                        <AccordionContent className="px-4 pb-4">
-                          <div className="bg-elec-dark/40 rounded-lg p-4 mt-2">
-                            <pre className="whitespace-pre-wrap text-sm text-muted-foreground font-sans">
-                              {q.answer}
-                            </pre>
-                          </div>
-                          <div className="flex items-center justify-between mt-3 pt-3 border-t border-elec-yellow/20">
-                            <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                              <span className="flex items-center gap-1">
-                                <User className="h-3 w-3" />
-                                Expert Verified
-                              </span>
-                              <span className="flex items-center gap-1">
-                                <Clock className="h-3 w-3" />
-                                Updated Recently
-                              </span>
-                            </div>
-                            <Button size="sm" variant="outline" className="h-7 text-xs">
-                              Helpful?
-                            </Button>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          <Card className="border-blue-500/20 bg-blue-500/10">
-            <CardHeader>
-              <CardTitle className="text-blue-300 flex items-center gap-2">
-                <Lightbulb className="h-5 w-5" />
-                Popular This Week
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {popularQuestions.map((q, index) => (
-                  <div key={index} className="border border-blue-500/30 rounded-lg p-3">
-                    <h4 className="font-medium text-white text-sm mb-2">{q.question}</h4>
-                    <div className="flex items-center justify-between text-xs">
-                      <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30" variant="outline">
-                        {q.category}
-                      </Badge>
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <span>{q.views} views</span>
-                        {q.recent && <Badge className="bg-green-500/20 text-green-400 border-green-500/30" variant="outline">New</Badge>}
+      <div className="space-y-4">
+        <p className="text-sm text-muted-foreground">
+          Showing {filteredQuestions.length} of {questionBank.length} questions
+        </p>
+        
+        {filteredQuestions.map((question) => (
+          <Collapsible key={question.id}>
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CollapsibleTrigger className="w-full">
+                <CardHeader className="text-left hover:bg-elec-gray/50 transition-colors">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <CardTitle className="text-lg mb-2">{question.question}</CardTitle>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <Badge variant="outline" className={getDifficultyColor(question.difficulty)}>
+                          {question.difficulty}
+                        </Badge>
+                        <Badge variant="outline">
+                          {question.category}
+                        </Badge>
+                        {question.tags.slice(0, 3).map((tag) => (
+                          <Badge key={tag} variant="secondary" className="text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
                       </div>
                     </div>
+                    <ChevronDown className="h-4 w-4 text-elec-yellow shrink-0 ml-2" />
                   </div>
-                ))}
-              </div>
+                </CardHeader>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <CardContent className="pt-0">
+                  <div className="bg-elec-dark p-4 rounded-md border border-elec-yellow/10">
+                    <p className="text-elec-light leading-relaxed whitespace-pre-line">
+                      {question.answer}
+                    </p>
+                  </div>
+                </CardContent>
+              </CollapsibleContent>
+            </Card>
+          </Collapsible>
+        ))}
+        
+        {filteredQuestions.length === 0 && (
+          <Card className="border-elec-yellow/20 bg-elec-gray">
+            <CardContent className="text-center py-8">
+              <Search className="h-8 w-8 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground">No questions found matching your search criteria.</p>
+              <p className="text-sm text-muted-foreground mt-2">Try adjusting your search terms or filters.</p>
             </CardContent>
           </Card>
-
-          <Card className="border-green-500/20 bg-green-500/10">
-            <CardHeader>
-              <CardTitle className="text-green-300 flex items-center gap-2">
-                <MessageSquare className="h-5 w-5" />
-                Ask Your Question
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-green-300 mb-4">
-                Can't find what you're looking for? Submit your question to our panel of verified supervisors.
-              </p>
-              <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
-                Submit New Question
-              </Button>
-              <p className="text-xs text-muted-foreground mt-2 text-center">
-                Average response time: 24 hours
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-orange-500/20 bg-orange-500/10">
-            <CardHeader>
-              <CardTitle className="text-orange-300 flex items-center gap-2">
-                <BookOpen className="h-5 w-5" />
-                Quick Reference
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-orange-300">Emergency Contact:</span>
-                  <span className="text-muted-foreground">999</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-orange-300">HSE Hotline:</span>
-                  <span className="text-muted-foreground">0300 003 1647</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-orange-300">BS 7671:</span>
-                  <span className="text-muted-foreground">18th Edition</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-orange-300">Standard Voltage:</span>
-                  <span className="text-muted-foreground">230V ±10%</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        )}
       </div>
     </div>
   );
