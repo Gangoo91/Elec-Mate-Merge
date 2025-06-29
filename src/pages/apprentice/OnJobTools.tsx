@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -16,45 +15,45 @@ const OnJobTools = () => {
     },
     {
       id: 2,
+      title: "Electrical Installation Guides",
+      icon: BookOpen,
+      description: "Step-by-step guides for domestic, commercial, and industrial installations",
+      link: "/apprentice/on-job-tools/electrical-installation-guides"
+    },
+    {
+      id: 3,
       title: "Site Assessment Tools",
       icon: Settings,
       description: "Checklists and guides for job site evaluations",
       link: "/apprentice/on-job-tools/assessment"
     },
     {
-      id: 3,
+      id: 4,
       title: "Interactive Safety Case Studies",
       icon: HardHat,
       description: "Learn from real-life safety scenarios with interactive decision making",
       link: "/apprentice/on-job-tools/safety-cases"
     },
     {
-      id: 4,
+      id: 5,
       title: "Workplace Language & Culture",
       icon: MessageSquare,
       description: "Navigate workplace communication, culture and relationships effectively",
       link: "/apprentice/on-job-tools/workplace-culture"
     },
     {
-      id: 5,
+      id: 6,
       title: "Ask a Supervisor",
       icon: HelpCircle,
       description: "Knowledge bank with FAQs from real-world site questions and expert answers",
       link: "/apprentice/on-job-tools/supervisor-knowledge"
     },
     {
-      id: 6,
+      id: 7,
       title: "Flashcards & Microlearning",
       icon: BookOpen,
       description: "Quick-fire revision flashcards for cable colors, regulations, EICR codes, and more",
       link: "/apprentice/on-job-tools/flashcards"
-    },
-    {
-      id: 7,
-      title: "Electrical Installation Guides",
-      icon: BookOpen,
-      description: "Step-by-step guides for domestic, commercial, and industrial installations",
-      link: "/apprentice/on-job-tools/electrical-installation-guides"
     }
   ];
 
