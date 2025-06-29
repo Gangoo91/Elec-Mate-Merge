@@ -23,7 +23,7 @@ const ApprenticeMentalHealth = () => {
             Your wellbeing matters. Find support, resources, and community here to help you thrive 
             both professionally and personally throughout your apprenticeship journey.
           </p>
-          <BackButton customUrl="/apprentice/hub" label="Back to Hub" />
+          <BackButton customUrl="/apprentice" label="Back to Hub" />
         </div>
 
         {/* Emergency Banner */}
