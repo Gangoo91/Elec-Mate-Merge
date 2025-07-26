@@ -6,9 +6,10 @@ import SafeLink from "@/components/common/SafeLink";
 
 interface SidebarNavLinkProps {
   item: NavItem;
+  onItemClick?: () => void;
 }
 
-const SidebarNavLink = ({ item }: SidebarNavLinkProps) => {
+const SidebarNavLink = ({ item, onItemClick }: SidebarNavLinkProps) => {
   try {
     const location = useLocation();
     const isActive = location.pathname === item.path || location.pathname.startsWith(`${item.path}/`);
@@ -19,6 +20,8 @@ const SidebarNavLink = ({ item }: SidebarNavLinkProps) => {
         to: item.path, 
         itemName: item.name 
       });
+      // Call the onItemClick prop if provided (for closing mobile sidebar)
+      onItemClick?.();
     };
     
     return (

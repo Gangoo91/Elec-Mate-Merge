@@ -8,13 +8,15 @@ interface SidebarNavSectionProps {
   items: NavItem[];
   userRole: string;
   className?: string;
+  onItemClick?: () => void;
 }
 
 const SidebarNavSection = ({ 
   title, 
   items, 
   userRole,
-  className 
+  className,
+  onItemClick 
 }: SidebarNavSectionProps) => {
   // Filter items based on user role
   const filteredItems = items.filter((item) => 
@@ -35,7 +37,7 @@ const SidebarNavSection = ({
       )}
       <div className={cn("space-y-1", title ? "" : "mt-6")}>
         {filteredItems.map((item) => (
-          <SidebarNavLink key={item.path} item={item} />
+          <SidebarNavLink key={item.path} item={item} onItemClick={onItemClick} />
         ))}
       </div>
     </div>
