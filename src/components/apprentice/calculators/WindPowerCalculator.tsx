@@ -136,7 +136,6 @@ export function WindPowerCalculator() {
             onClick={calculateWindPower} 
             variant="elec"
             size="wide"
-            className="flex-1"
           >
             Calculate Wind Power
           </MobileButton>
