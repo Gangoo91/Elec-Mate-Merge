@@ -1,6 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { InstallPlanData } from "./types";
 import { 
   Home, Building, Factory, Zap, Lightbulb, Fan, Microwave, 
@@ -110,6 +111,17 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
 
   const categories = [...new Set(loadTypes.map(load => load.category))];
 
+  // Format options for dropdowns
+  const installationTypeOptions = installationTypes.map(type => ({
+    value: type.value,
+    label: type.label
+  }));
+
+  const loadTypeOptions = loadTypes.map(load => ({
+    value: load.value,
+    label: load.label
+  }));
+
   return (
     <div className="space-y-6">
       <div>
@@ -120,66 +132,21 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div>
-          <Label className="text-lg font-medium mb-4 block">Installation Environment</Label>
-          <div className="grid gap-3 max-h-96 overflow-y-auto">
-            {installationTypes.map((type) => (
-              <Card
-                key={type.value}
-                className={`cursor-pointer border-2 transition-all ${
-                  planData.installationType === type.value
-                    ? 'border-elec-yellow bg-elec-yellow/10'
-                    : 'border-elec-yellow/20 hover:border-elec-yellow/40'
-                }`}
-                onClick={() => updatePlanData({ installationType: type.value })}
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3">
-                    <type.icon className="h-6 w-6 text-elec-yellow" />
-                    <div>
-                      <h3 className="font-medium">{type.label}</h3>
-                      <p className="text-sm text-muted-foreground">{type.description}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
+        <MobileSelectWrapper
+          label="Installation Environment"
+          placeholder="Select installation environment"
+          value={planData.installationType || ""}
+          onValueChange={(value) => updatePlanData({ installationType: value })}
+          options={installationTypeOptions}
+        />
 
-        <div>
-          <Label className="text-lg font-medium mb-4 block">Load Type & Specialisation</Label>
-          <div className="space-y-4 max-h-96 overflow-y-auto">
-            {categories.map((category) => (
-              <div key={category}>
-                <h4 className="text-sm font-medium text-elec-yellow mb-2">{category} Loads</h4>
-                <div className="grid gap-2 mb-4">
-                  {loadTypes.filter(load => load.category === category).map((load) => (
-                    <Card
-                      key={load.value}
-                      className={`cursor-pointer border transition-all ${
-                        planData.loadType === load.value
-                          ? 'border-elec-yellow bg-elec-yellow/10'
-                          : 'border-elec-yellow/20 hover:border-elec-yellow/40'
-                      }`}
-                      onClick={() => updatePlanData({ loadType: load.value })}
-                    >
-                      <CardContent className="p-3">
-                        <div className="flex items-center gap-2">
-                          <load.icon className="h-4 w-4 text-elec-yellow" />
-                          <div>
-                            <h3 className="font-medium text-sm">{load.label}</h3>
-                            <p className="text-xs text-muted-foreground">{load.description}</p>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <MobileSelectWrapper
+          label="Load Type & Specialisation"
+          placeholder="Select load type"
+          value={planData.loadType || ""}
+          onValueChange={(value) => updatePlanData({ loadType: value })}
+          options={loadTypeOptions}
+        />
       </div>
 
       {planData.installationType && planData.loadType && (
