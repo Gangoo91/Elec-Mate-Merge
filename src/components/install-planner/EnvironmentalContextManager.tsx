@@ -172,7 +172,6 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold text-elec-light">Default Ambient Temperature (°C)</span>
                   <RequiredFieldTooltip content="Set the expected ambient temperature for the installation. This affects cable current carrying capacity and derating factors. Typical values: 20-30°C for indoor installations." />
-                  <span className="text-red-400 text-sm">*</span>
                 </div>
                 <MobileInputWrapper
                   type="number"
@@ -191,7 +190,6 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold text-elec-light">Default Environmental Conditions</span>
                   <RequiredFieldTooltip content="Select the primary environmental conditions for the installation. This determines IP ratings, cable protection requirements, and installation methods according to BS 7671." />
-                  <span className="text-red-400 text-sm">*</span>
                 </div>
                 <MobileSelectWrapper
                   value={environmentalSettings.environmentalConditions}
@@ -211,7 +209,6 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold text-elec-light">Earthing System</span>
                   <RequiredFieldTooltip content="Select the earthing arrangement for the installation. This is CRITICAL for safety and determines fault protection methods. TN-C-S (PME) is most common in UK domestic installations." />
-                  <span className="text-red-400 text-sm">*</span>
                 </div>
                 <MobileSelectWrapper
                   value={environmentalSettings.earthingSystem}
@@ -251,7 +248,6 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold text-elec-light">Ze Value (Ω)</span>
                   <RequiredFieldTooltip content="External earth fault loop impedance measured at the origin of the installation. This value is critical for fault protection calculations and must be measured during testing." />
-                  <span className="text-red-400 text-sm">*</span>
                 </div>
                 <MobileInputWrapper
                   type="number"

@@ -218,16 +218,19 @@ const InstallPlanner = () => {
         break;
       case 5: // Environment step for single circuit mode
         if (planData.designMode === "single") {
-          console.log('Validating Environment step for single-circuit mode:', { 
-            protectiveDevice: planData.protectiveDevice, 
-            earthingSystem: planData.earthingSystem 
-          });
+          console.log('Validating Environment step for single-circuit mode:', planData.environmentalSettings);
           
-          if (!planData.protectiveDevice) {
-            missing.push("Protective Device");
-          }
-          if (!planData.earthingSystem) {
+          if (!planData.environmentalSettings?.earthingSystem) {
             missing.push("Earthing System");
+          }
+          if (!planData.environmentalSettings?.ambientTemperature) {
+            missing.push("Ambient Temperature");
+          }
+          if (!planData.environmentalSettings?.environmentalConditions) {
+            missing.push("Environmental Conditions");
+          }
+          if (!planData.environmentalSettings?.ze) {
+            missing.push("Ze Value");
           }
         }
         break;
@@ -262,7 +265,11 @@ const InstallPlanner = () => {
           return true; // Results step
         }
         // Environment step validation for single circuit  
-        return planData.protectiveDevice && planData.earthingSystem;
+        return planData.environmentalSettings && 
+               planData.environmentalSettings.earthingSystem &&
+               planData.environmentalSettings.ambientTemperature &&
+               planData.environmentalSettings.environmentalConditions &&
+               planData.environmentalSettings.ze;
       default:
         return true;
     }
