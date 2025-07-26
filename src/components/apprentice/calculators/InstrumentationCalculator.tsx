@@ -140,45 +140,54 @@ const InstrumentationCalculator = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Input Form */}
+        {/* Input Form - All at top */}
         <div className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Scale Range */}
+          <div className="grid grid-cols-2 gap-3">
             <MobileInput
-              label="Minimum Scale"
+              label="Min Scale"
               type="number"
               value={minScale}
               onChange={(e) => {
                 setMinScale(e.target.value);
                 clearError('minScale');
               }}
-              placeholder="e.g., 0"
+              placeholder="0"
               error={errors.minScale}
               clearError={() => clearError('minScale')}
             />
             <MobileInput
-              label="Maximum Scale"
+              label="Max Scale"
               type="number"
               value={maxScale}
               onChange={(e) => {
                 setMaxScale(e.target.value);
                 clearError('maxScale');
               }}
-              placeholder="e.g., 100"
+              placeholder="100"
               error={errors.maxScale}
               clearError={() => clearError('maxScale')}
             />
           </div>
 
+          {/* Units dropdown */}
+          <UnitDropdown 
+            value={unit} 
+            onChange={setUnit}
+          />
+
+          {/* Calculation type */}
           <MobileSelect value={calculationType} onValueChange={setCalculationType}>
-            <MobileSelectTrigger label="Calculation Type">
-              <MobileSelectValue placeholder="Select what to calculate" />
+            <MobileSelectTrigger label="What to Calculate">
+              <MobileSelectValue placeholder="Select calculation type" />
             </MobileSelectTrigger>
             <MobileSelectContent>
-              <MobileSelectItem value="calculate-current">Calculate Required Current (mA)</MobileSelectItem>
-              <MobileSelectItem value="calculate-trip">Calculate Trip Point Value</MobileSelectItem>
+              <MobileSelectItem value="calculate-current">mA Output (from input value)</MobileSelectItem>
+              <MobileSelectItem value="calculate-trip">Breaking Point (from mA input)</MobileSelectItem>
             </MobileSelectContent>
           </MobileSelect>
 
+          {/* Input value */}
           <MobileInput
             label={getInputLabel()}
             type="number"
@@ -188,34 +197,19 @@ const InstrumentationCalculator = () => {
               clearError('inputValue');
             }}
             placeholder={getInputPlaceholder()}
-            unit={calculationType === "calculate-trip" ? "mA" : undefined}
+            unit={calculationType === "calculate-trip" ? "mA" : unit}
             error={errors.inputValue}
             clearError={() => clearError('inputValue')}
           />
 
-          {calculationType === "calculate-current" && (
-            <UnitDropdown 
-              value={unit} 
-              onChange={setUnit}
-            />
-          )}
-
-          <div className="flex gap-3">
-            <MobileButton
-              variant="elec"
-              size="wide"
-              onClick={calculate}
-            >
-              Calculate
-            </MobileButton>
-            <MobileButton
-              variant="outline"
-              size="icon"
-              onClick={reset}
-            >
-              <RotateCcw className="h-4 w-4" />
-            </MobileButton>
-          </div>
+          {/* Calculate button */}
+          <MobileButton
+            variant="elec"
+            size="wide"
+            onClick={calculate}
+          >
+            Calculate
+          </MobileButton>
         </div>
 
         {/* Results */}
