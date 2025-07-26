@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, MapPin, ChevronRight, ChevronLeft, RotateCcw, Target, Home, Zap, Cable, Shield, BarChart3, CheckCircle } from "lucide-react";
+import { ArrowLeft, MapPin, ChevronRight, ChevronLeft, RotateCcw, Target, Home, Zap, Cable, Shield, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -232,11 +232,6 @@ const InstallPlanner = () => {
     }
   };
 
-  const getStepStatus = (stepId: number) => {
-    if (stepId < currentStep) return "completed";
-    if (stepId === currentStep) return "current";
-    return "upcoming";
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -319,63 +314,6 @@ const InstallPlanner = () => {
                         {planData.environmentalSettings.installationZones.length} Zones
                       </Badge>
                     )}
-                  </div>
-                </div>
-
-                {/* Step Indicators */}
-                <div className="space-y-3">
-                  {/* Step Indicators - Hidden on mobile, enhanced for tablet+ */}
-                  <div className="hidden md:flex justify-between text-xs">
-                    {steps.map((step) => {
-                      const status = getStepStatus(step.id);
-                      return (
-                        <div
-                          key={step.id}
-                          className={`flex flex-col items-center cursor-pointer transition-colors min-w-0 ${
-                            status === "completed" ? "text-green-400" :
-                            status === "current" ? "text-elec-yellow" :
-                            "text-muted-foreground"
-                          }`}
-                          onClick={() => {
-                            if (step.id <= currentStep) {
-                              setCurrentStep(step.id);
-                            }
-                          }}
-                        >
-                          <div className={`w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 flex items-center justify-center mb-2 ${
-                            status === "completed" ? "border-green-400 bg-green-400/20" :
-                            status === "current" ? "border-elec-yellow bg-elec-yellow/20" :
-                            "border-muted-foreground/30"
-                          }`}>
-                            {status === "completed" ? (
-                              <CheckCircle className="h-4 w-4 text-green-400" />
-                            ) : (
-                              <step.icon className="h-4 w-4" />
-                            )}
-                          </div>
-                          <span className="text-center max-w-16 lg:max-w-20 leading-tight truncate">{step.title}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {/* Mobile step indicator */}
-                  <div className="md:hidden flex justify-center">
-                    <div className="flex items-center gap-2">
-                      {steps.map((step) => {
-                        const status = getStepStatus(step.id);
-                        return (
-                          <div
-                            key={step.id}
-                            className={`w-2 h-2 rounded-full transition-colors ${
-                              status === "completed" ? "bg-green-400" :
-                              status === "current" ? "bg-elec-yellow" :
-                              "bg-muted-foreground/30"
-                            }`}
-                          />
-                        );
-                      })}
-                    </div>
                   </div>
                 </div>
               </div>
