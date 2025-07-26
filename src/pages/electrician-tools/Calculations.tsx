@@ -40,6 +40,14 @@ import SolarPVCalculator from "@/components/apprentice/calculators/SolarPVCalcul
 import BatteryStorageCalculator from "@/components/apprentice/calculators/BatteryStorageCalculator";
 import HeatPumpCalculator from "@/components/apprentice/calculators/HeatPumpCalculator";
 import EVChargingCalculator from "@/components/apprentice/calculators/EVChargingCalculator";
+// New Renewable Energy Calculators
+import SolarArrayCalculator from "@/components/apprentice/calculators/SolarArrayCalculator";
+import WindPowerCalculator from "@/components/apprentice/calculators/WindPowerCalculator";
+import GridTieInverterCalculator from "@/components/apprentice/calculators/GridTieInverterCalculator";
+import MicroHydroCalculator from "@/components/apprentice/calculators/MicroHydroCalculator";
+import OffGridSystemCalculator from "@/components/apprentice/calculators/OffGridSystemCalculator";
+import FeedInTariffCalculator from "@/components/apprentice/calculators/FeedInTariffCalculator";
+import DataCentreCalculator from "@/components/apprentice/calculators/DataCentreCalculator";
 import ResistorColourCodeCalculator from "@/components/apprentice/calculators/ResistorColourCodeCalculator";
 import WireGaugeCalculator from "@/components/apprentice/calculators/WireGaugeCalculator";
 import InstrumentationCalculator from "@/components/apprentice/calculators/InstrumentationCalculator";
@@ -126,8 +134,20 @@ const Calculations = () => {
       // Renewable Energy
       case "solar-pv":
         return <SolarPVCalculator />;
+      case "solar-array":
+        return <SolarArrayCalculator />;
       case "battery-storage":
         return <BatteryStorageCalculator />;
+      case "wind-power":
+        return <WindPowerCalculator />;
+      case "grid-tie-inverter":
+        return <GridTieInverterCalculator />;
+      case "micro-hydro":
+        return <MicroHydroCalculator />;
+      case "off-grid-system":
+        return <OffGridSystemCalculator />;
+      case "feed-in-tariff":
+        return <FeedInTariffCalculator />;
       case "heat-pump":
         return <HeatPumpCalculator />;
       case "ev-charging":
@@ -158,6 +178,10 @@ const Calculations = () => {
         return <SwimmingPoolCalculator />;
       case "selectivity":
         return <SelectivityCalculator />;
+      
+      // Specialized Applications
+      case "data-centre":
+        return <DataCentreCalculator />;
       
       default:
         return <OhmsLawCalculator />;
