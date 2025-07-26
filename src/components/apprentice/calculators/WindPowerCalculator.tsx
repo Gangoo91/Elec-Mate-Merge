@@ -131,11 +131,12 @@ export function WindPowerCalculator() {
           />
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <MobileButton 
             onClick={calculateWindPower} 
             variant="elec"
             size="wide"
+            className="sm:flex-1"
           >
             Calculate Wind Power
           </MobileButton>
@@ -143,6 +144,7 @@ export function WindPowerCalculator() {
             onClick={reset} 
             variant="outline" 
             size="default"
+            className="sm:w-auto"
           >
             Reset
           </MobileButton>
