@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { ChevronDown, X } from 'lucide-react';
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger } from '@/components/ui/mobile-select';
 import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 interface SelectOption {
@@ -61,72 +62,76 @@ export function MultiSelectDropdown({
       )}
       
       <div className="relative group">
-        <MobileSelect open={isOpen} onOpenChange={setIsOpen}>
-          <MobileSelectTrigger 
-            className={cn(
-              "h-auto min-h-14 bg-elec-card border-2 border-elec-gray/50 rounded-xl",
-              "hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200",
-              "group-hover:shadow-lg group-hover:shadow-elec-yellow/10",
-              "text-elec-light placeholder:text-elec-light/60 p-3",
-              error ? "border-destructive focus:border-destructive" : ""
-            )}
-            disabled={disabled}
-          >
-            <div className="flex flex-col items-start w-full">
-              {selectedItems.length > 0 ? (
-                <div className="flex flex-wrap gap-1 w-full">
-                  {selectedItems.map((item) => (
-                    <Badge 
-                      key={item.value} 
-                      variant="secondary" 
-                      className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs flex items-center gap-1"
-                    >
-                      {item.label}
-                      <X 
-                        className="h-3 w-3 cursor-pointer hover:text-elec-yellow/70" 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          removeBadge(item.value);
-                        }}
-                      />
-                    </Badge>
-                  ))}
-                </div>
-              ) : (
-                <span className="text-elec-light/60">{placeholder}</span>
+        <Popover open={isOpen} onOpenChange={setIsOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              role="combobox"
+              aria-expanded={isOpen}
+              className={cn(
+                "h-auto min-h-14 bg-elec-card border-2 border-elec-gray/50 rounded-xl",
+                "hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200",
+                "group-hover:shadow-lg group-hover:shadow-elec-yellow/10",
+                "text-elec-light placeholder:text-elec-light/60 p-3 justify-start",
+                "w-full text-left font-normal",
+                error ? "border-destructive focus:border-destructive" : ""
               )}
-              <ChevronDown className="h-4 w-4 shrink-0 opacity-50 ml-auto" />
-            </div>
-          </MobileSelectTrigger>
-          
-          <MobileSelectContent className="bg-elec-card border-elec-gray/50 shadow-xl max-h-64 overflow-y-auto">
-            <MobileSelectItem 
-              value="N/A"
-              className="text-elec-light hover:bg-elec-yellow/20 focus:bg-elec-yellow/20"
-              onSelect={() => handleItemSelect("N/A")}
+              disabled={disabled}
             >
-              N/A
-            </MobileSelectItem>
-            {options.map((option) => (
-              <MobileSelectItem 
-                key={option.value} 
-                value={option.value}
-                className={cn(
-                  "text-elec-light hover:bg-elec-yellow/20 focus:bg-elec-yellow/20",
-                  value.includes(option.value) ? "bg-elec-yellow/10" : ""
+              <div className="flex flex-col items-start w-full">
+                {selectedItems.length > 0 ? (
+                  <div className="flex flex-wrap gap-1 w-full">
+                    {selectedItems.map((item) => (
+                      <Badge 
+                        key={item.value} 
+                        variant="secondary" 
+                        className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs flex items-center gap-1"
+                      >
+                        <span className="text-xs">{item.label}</span>
+                        <X 
+                          className="h-3 w-3 cursor-pointer hover:text-elec-yellow/70" 
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeBadge(item.value);
+                          }}
+                        />
+                      </Badge>
+                    ))}
+                  </div>
+                ) : (
+                  <span className="text-elec-light/60 text-sm">{placeholder}</span>
                 )}
-                onSelect={() => handleItemSelect(option.value)}
+                <ChevronDown className="h-4 w-4 shrink-0 opacity-50 ml-auto" />
+              </div>
+            </Button>
+          </PopoverTrigger>
+          
+          <PopoverContent className="w-full p-0 bg-elec-card border-elec-gray/50 shadow-xl">
+            <div className="max-h-64 overflow-y-auto">
+              <div
+                className="p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer border-b border-elec-gray/20"
+                onClick={() => handleItemSelect("N/A")}
               >
-                <div className="flex items-center justify-between w-full">
-                  <span>{option.label}</span>
+                N/A
+              </div>
+              {options.map((option) => (
+                <div
+                  key={option.value}
+                  className={cn(
+                    "p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer flex items-center justify-between",
+                    value.includes(option.value) ? "bg-elec-yellow/10" : ""
+                  )}
+                  onClick={() => handleItemSelect(option.value)}
+                >
+                  <span className="text-sm">{option.label}</span>
                   {value.includes(option.value) && (
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                   )}
                 </div>
-              </MobileSelectItem>
-            ))}
-          </MobileSelectContent>
-        </MobileSelect>
+              ))}
+            </div>
+          </PopoverContent>
+        </Popover>
         
         {/* Subtle glow effect */}
         <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/5 to-elec-yellow/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />

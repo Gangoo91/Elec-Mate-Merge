@@ -165,13 +165,7 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
       {/* Global Settings Content */}
       {activeTab === "global" && (
         <Card className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-elec-light">
-              <Thermometer className="h-5 w-5 text-elec-yellow" />
-              Global Environmental Settings
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 pt-6">
             <div className="space-y-4">
               <MobileInputWrapper
                 label="Default Ambient Temperature (°C)"
@@ -198,10 +192,32 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
               <MobileSelectWrapper
                 label="Earthing System"
                 value={environmentalSettings.earthingSystem}
-                onValueChange={(value) => onUpdateEnvironmentalSettings({
-                  ...environmentalSettings,
-                  earthingSystem: value
-                })}
+                onValueChange={(value) => {
+                  // Auto-update Ze values based on earthing system
+                  let newZe = environmentalSettings.ze;
+                  switch (value) {
+                    case "TT":
+                      newZe = 0.80;
+                      break;
+                    case "TN-S":
+                      newZe = 0.35;
+                      break;
+                    case "TN-C-S":
+                      newZe = 0.35;
+                      break;
+                    case "IT":
+                      newZe = 1.0;
+                      break;
+                    default:
+                      newZe = 0.35;
+                  }
+                  
+                  onUpdateEnvironmentalSettings({
+                    ...environmentalSettings,
+                    earthingSystem: value,
+                    ze: newZe
+                  });
+                }}
                 options={earthingSystemOptions}
                 placeholder="Select earthing system..."
               />
