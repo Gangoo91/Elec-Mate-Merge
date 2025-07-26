@@ -275,11 +275,11 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
       {/* Installation Zones Content */}
       {activeTab === "zones" && (
         <div className="space-y-4">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col space-y-3 sm:flex-row sm:justify-between sm:items-center sm:space-y-0">
             <h3 className="text-lg font-semibold text-elec-light">Installation Zones</h3>
             <Button 
               onClick={addInstallationZone} 
-              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold"
+              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold w-full sm:w-auto"
             >
               <Plus className="h-4 w-4 mr-2" />
               Add Zone
@@ -289,8 +289,8 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
           <div className="space-y-4">
             {(environmentalSettings.installationZones || []).map((zone) => (
               <Card key={zone.id} className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
-                <CardHeader>
-                  <div className="flex justify-between items-center">
+                <CardHeader className="pb-4">
+                  <div className="flex flex-col space-y-3 sm:flex-row sm:justify-between sm:items-start sm:space-y-0">
                     <CardTitle className="flex items-center gap-2 text-elec-light">
                       <MapPin className="h-5 w-5 text-elec-yellow" />
                       Zone Configuration
@@ -299,13 +299,14 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                       variant="outline"
                       size="sm"
                       onClick={() => deleteZone(zone.id)}
-                      className="border-destructive/30 text-destructive hover:bg-destructive/10"
+                      className="border-destructive/30 text-destructive hover:bg-destructive/10 w-full sm:w-auto"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-4 w-4 mr-2 sm:mr-0" />
+                      <span className="sm:hidden">Delete Zone</span>
                     </Button>
                   </div>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 pt-0">
                   <MobileInputWrapper
                     label="Zone Name"
                     value={zone.name}
@@ -345,7 +346,7 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                         {zone.circuitIds.map((circuitId) => {
                           const circuit = circuits.find(c => c.id === circuitId);
                           return circuit ? (
-                            <Badge key={circuitId} variant="outline" className="border-elec-yellow/30 text-elec-yellow">
+                            <Badge key={circuitId} variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
                               {circuit.name}
                             </Badge>
                           ) : null;
@@ -356,6 +357,25 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                 </CardContent>
               </Card>
             ))}
+
+            {(environmentalSettings.installationZones || []).length === 0 && (
+              <Card className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
+                <CardContent className="text-center py-8">
+                  <MapPin className="h-12 w-12 text-elec-light/50 mx-auto mb-4" />
+                  <h4 className="text-lg font-medium mb-2 text-elec-light">No Installation Zones</h4>
+                  <p className="text-elec-light/70 mb-4">
+                    Create zones to group circuits with similar environmental conditions.
+                  </p>
+                  <Button 
+                    onClick={addInstallationZone} 
+                    className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold"
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Create First Zone
+                  </Button>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
       )}
