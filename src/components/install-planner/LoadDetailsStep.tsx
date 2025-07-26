@@ -1,10 +1,9 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { InstallPlanData } from "./types";
-import { Calculator, Info, AlertTriangle } from "lucide-react";
+import { Calculator, Info, AlertTriangle, Zap, Activity, Settings } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface LoadDetailsStepProps {
@@ -168,130 +167,157 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
   const specialConsiderations = getSpecialConsiderations();
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold mb-2">Load Details & Specifications</h2>
-        <p className="text-muted-foreground mb-6">
-          Specify the electrical load requirements for your {planData.loadType} circuit.
-        </p>
+    <div className="space-y-8">
+      {/* Load Input Section */}
+      <div className="space-y-8">
+        <MobileInputWrapper
+          label="Total Load"
+          placeholder="Enter load in watts"
+          value={planData.totalLoad || ""}
+          onChange={(value) => updatePlanData({ totalLoad: parseFloat(value) || 0 })}
+          type="number"
+          icon={<Zap className="h-5 w-5" />}
+          unit="W"
+          hint={`Typical for ${planData.loadType}: ${guidance.typical}`}
+        />
+
+        <MobileSelectWrapper
+          label="Supply Voltage"
+          placeholder="Select supply voltage"
+          value={planData.voltage?.toString() || ""}
+          onValueChange={(value) => updatePlanData({ voltage: parseInt(value) })}
+          options={[
+            ...(guidance.voltageOptions.includes("110") ? [{ value: "110", label: "110V (Site Supply)" }] : []),
+            ...(guidance.voltageOptions.includes("230") ? [{ value: "230", label: "230V (Single Phase)" }] : []),
+            ...(guidance.voltageOptions.includes("400") ? [{ value: "400", label: "400V (Three Phase)" }] : [])
+          ]}
+        />
+
+        <MobileSelectWrapper
+          label="System Type"
+          placeholder="Select system type"
+          value={planData.phases || ""}
+          onValueChange={(value: "single" | "three") => updatePlanData({ phases: value })}
+          options={[
+            ...(guidance.phaseOptions.includes("single") ? [{ value: "single", label: "Single Phase" }] : []),
+            ...(guidance.phaseOptions.includes("three") ? [{ value: "three", label: "Three Phase" }] : [])
+          ]}
+        />
+
+        <MobileInputWrapper
+          label="Power Factor"
+          placeholder="0.85"
+          value={planData.powerFactor || guidance.defaultPF}
+          onChange={(value) => updatePlanData({ powerFactor: parseFloat(value) || guidance.defaultPF })}
+          type="number"
+          step="0.01"
+          min="0.1"
+          max="1.0"
+          icon={<Activity className="h-5 w-5" />}
+          hint={`Suggested for ${planData.loadType}: ${guidance.defaultPF}`}
+        />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <div>
-            <Label htmlFor="totalLoad" className="text-base font-medium">Total Load (W)</Label>
-            <Input
-              id="totalLoad"
-              type="number"
-              value={planData.totalLoad || ""}
-              onChange={(e) => updatePlanData({ totalLoad: parseFloat(e.target.value) || 0 })}
-              placeholder="Enter load in watts"
-              className="bg-elec-dark border-elec-yellow/20 mt-2"
-            />
+      {/* Guidance Card */}
+      <Card className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-xl">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-blue-300 flex items-center gap-3">
+            <div className="p-2 bg-blue-500/20 rounded-lg">
+              <Info className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="text-lg">Load Guidance</div>
+              <div className="text-sm font-normal text-blue-200/80 capitalize">{planData.loadType?.replace('-', ' ')}</div>
+            </div>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 gap-4">
+            <div className="p-4 bg-blue-500/10 rounded-lg">
+              <p className="text-sm text-blue-200/90"><span className="font-semibold">Typical Load:</span> {guidance.typical}</p>
+            </div>
+            <div className="p-4 bg-blue-500/10 rounded-lg">
+              <p className="text-sm text-blue-200/90"><span className="font-semibold">Example:</span> {guidance.example}</p>
+            </div>
+            <div className="p-4 bg-blue-500/10 rounded-lg">
+              <p className="text-sm text-blue-200/90"><span className="font-semibold">Power Factor:</span> {guidance.defaultPF}</p>
+            </div>
           </div>
+        </CardContent>
+      </Card>
 
-          <div>
-            <Label htmlFor="voltage" className="text-base font-medium">Supply Voltage (V)</Label>
-            <Select value={planData.voltage.toString()} onValueChange={(value) => updatePlanData({ voltage: parseInt(value) })}>
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/20 mt-2">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                {guidance.voltageOptions.includes("110") && <SelectItem value="110">110V (Site Supply)</SelectItem>}
-                {guidance.voltageOptions.includes("230") && <SelectItem value="230">230V (Single Phase)</SelectItem>}
-                {guidance.voltageOptions.includes("400") && <SelectItem value="400">400V (Three Phase)</SelectItem>}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div>
-            <Label htmlFor="phases" className="text-base font-medium">System Type</Label>
-            <Select value={planData.phases} onValueChange={(value: "single" | "three") => updatePlanData({ phases: value })}>
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/20 mt-2">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                {guidance.phaseOptions.includes("single") && <SelectItem value="single">Single Phase</SelectItem>}
-                {guidance.phaseOptions.includes("three") && <SelectItem value="three">Three Phase</SelectItem>}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div>
-            <Label htmlFor="powerFactor" className="text-base font-medium">Power Factor</Label>
-            <Input
-              id="powerFactor"
-              type="number"
-              step="0.1"
-              min="0.1"
-              max="1.0"
-              value={planData.powerFactor || guidance.defaultPF}
-              onChange={(e) => updatePlanData({ powerFactor: parseFloat(e.target.value) || guidance.defaultPF })}
-              placeholder="0.85"
-              className="bg-elec-dark border-elec-yellow/20 mt-2"
-            />
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <Card className="bg-blue-500/10 border-blue-500/30">
-            <CardHeader>
-              <CardTitle className="text-blue-300 flex items-center gap-2">
-                <Info className="h-5 w-5" />
-                Load Guidance - {planData.loadType}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2 text-sm">
-                <p><strong>Typical Load:</strong> {guidance.typical}</p>
-                <p><strong>Example:</strong> {guidance.example}</p>
-                <p><strong>Suggested Power Factor:</strong> {guidance.defaultPF}</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {specialConsiderations.length > 0 && (
-            <Alert className="bg-amber-500/10 border-amber-500/30">
-              <AlertTriangle className="h-4 w-4 text-amber-300" />
-              <AlertDescription className="text-amber-200">
-                <strong>Special Considerations:</strong>
-                <ul className="mt-2 space-y-1">
-                  {specialConsiderations.map((consideration, index) => (
-                    <li key={index} className="text-sm">• {consideration}</li>
-                  ))}
-                </ul>
-              </AlertDescription>
-            </Alert>
-          )}
-
-          {planData.totalLoad > 0 && (
-            <Card className="bg-elec-yellow/10 border-elec-yellow/30">
-              <CardHeader>
-                <CardTitle className="text-elec-yellow flex items-center gap-2">
-                  <Calculator className="h-5 w-5" />
-                  Calculated Current
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold text-white">
-                  {calculateCurrent()}A
-                </div>
-                <p className="text-sm text-muted-foreground mt-1">
-                  Design current for {planData.phases} phase system
-                </p>
-              </CardContent>
-            </Card>
-          )}
-
-          <Alert className="bg-amber-500/10 border-amber-500/30">
-            <Info className="h-4 w-4 text-amber-300" />
+      {/* Special Considerations */}
+      {specialConsiderations.length > 0 && (
+        <Alert className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-xl">
+          <div className="flex items-start gap-3">
+            <div className="p-2 bg-amber-500/20 rounded-lg">
+              <AlertTriangle className="h-5 w-5 text-amber-300" />
+            </div>
             <AlertDescription className="text-amber-200">
-              Consider diversity factors and future expansion when determining total load. 
-              For motor loads, include starting current considerations.
+              <div className="font-semibold text-amber-100 mb-3">Special Considerations</div>
+              <div className="space-y-2">
+                {specialConsiderations.map((consideration, index) => (
+                  <div key={index} className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm">{consideration}</span>
+                  </div>
+                ))}
+              </div>
             </AlertDescription>
-          </Alert>
+          </div>
+        </Alert>
+      )}
+
+      {/* Calculated Current */}
+      {planData.totalLoad > 0 && planData.voltage && (
+        <Card className="bg-gradient-to-r from-elec-yellow/10 to-amber-500/10 border border-elec-yellow/30 rounded-xl">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-elec-yellow flex items-center gap-3">
+              <div className="p-2 bg-elec-yellow/20 rounded-lg">
+                <Calculator className="h-5 w-5 text-elec-yellow" />
+              </div>
+              <div>
+                <div className="text-lg">Calculated Current</div>
+                <div className="text-sm font-normal text-elec-yellow/80">Design current for {planData.phases} phase system</div>
+              </div>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold text-elec-yellow mb-2">
+              {calculateCurrent()}A
+            </div>
+            <p className="text-sm text-elec-light/70">
+              This is the design current that will be used for cable sizing and protective device selection.
+            </p>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* General Advice */}
+      <Alert className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30 rounded-xl">
+        <div className="flex items-start gap-3">
+          <div className="p-2 bg-green-500/20 rounded-lg">
+            <Info className="h-5 w-5 text-green-300" />
+          </div>
+          <AlertDescription className="text-green-200">
+            <div className="font-semibold text-green-100 mb-2">Design Considerations</div>
+            <div className="space-y-1 text-sm">
+              <div className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0"></span>
+                <span>Consider diversity factors and future expansion when determining total load</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0"></span>
+                <span>For motor loads, include starting current considerations</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0"></span>
+                <span>Verify manufacturer specifications for actual power consumption</span>
+              </div>
+            </div>
+          </AlertDescription>
         </div>
-      </div>
+      </Alert>
     </div>
   );
 };
