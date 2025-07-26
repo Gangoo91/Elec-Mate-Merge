@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Anchor } from "lucide-react";
 import { Link } from "react-router-dom";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
 import OhmsLawCalculator from "@/components/apprentice/calculators/OhmsLawCalculator";
@@ -174,14 +174,22 @@ const Calculations = () => {
         return <PowerQualityCalculator />;
       case "emergency-lighting":
         return <EmergencyLightingCalculator />;
-      case "swimming-pool":
-        return <SwimmingPoolCalculator />;
       case "selectivity":
         return <SelectivityCalculator />;
       
       // Specialized Applications
       case "data-centre":
         return <DataCentreCalculator />;
+      
+      // Specialist Locations
+      case "marine-electrical":
+        return <ComingSoonCalculator 
+          title="Marine Electrical"
+          description="This calculator will help with marine electrical installations and safety requirements."
+          icon={Anchor}
+        />;
+      case "swimming-pool":
+        return <SwimmingPoolCalculator />;
       
       default:
         return <OhmsLawCalculator />;

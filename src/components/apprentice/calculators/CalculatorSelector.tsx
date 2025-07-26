@@ -57,12 +57,27 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     { value: "solar-pv", label: "Solar PV", category: "Renewable Energy" },
     { value: "solar-array", label: "Solar Array Calculator", category: "Renewable Energy" },
     { value: "battery-storage", label: "Battery Storage System", category: "Renewable Energy" },
+    { value: "wind-power", label: "Wind Power Calculator", category: "Renewable Energy" },
+    { value: "grid-tie-inverter", label: "Grid-Tie Inverter", category: "Renewable Energy" },
+    { value: "micro-hydro", label: "Micro-Hydro Power", category: "Renewable Energy" },
+    { value: "off-grid-system", label: "Off-Grid System Calculator", category: "Renewable Energy" },
+    { value: "feed-in-tariff", label: "Feed-In Tariff Calculator", category: "Renewable Energy" },
     { value: "heat-pump", label: "Heat Pump Load", category: "Renewable Energy" },
     { value: "ev-charging", label: "EV Charging Station", category: "Renewable Energy" },
+    { value: "evse-load", label: "EVSE Load Calculator", category: "Renewable Energy" },
+    
+    // Advanced Safety & Analysis
+    { value: "arc-flash", label: "Arc Flash Analysis", category: "Advanced Safety & Analysis" },
+    { value: "power-quality", label: "Power Quality Analysis", category: "Advanced Safety & Analysis" },
+    { value: "selectivity", label: "Selectivity & Discrimination", category: "Advanced Safety & Analysis" },
+    { value: "emergency-lighting", label: "Emergency Lighting Design", category: "Advanced Safety & Analysis" },
     
     // Specialized Applications
     { value: "data-centre", label: "Data Centre Calculator", category: "Specialized Applications" },
-    { value: "marine-electrical", label: "Marine Electrical", category: "Specialized Applications" },
+    
+    // Specialist Locations
+    { value: "marine-electrical", label: "Marine Electrical", category: "Specialist Locations" },
+    { value: "swimming-pool", label: "Swimming Pool Electrical", category: "Specialist Locations" },
     
     // Tools & Components
     { value: "resistor-colour-code", label: "Resistor Colour Code", category: "Tools & Components" },
@@ -91,7 +106,9 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     "Protection & Safety",
     "Lighting & Power Systems",
     "Renewable Energy",
+    "Advanced Safety & Analysis",
     "Specialized Applications",
+    "Specialist Locations",
     "Tools & Components",
     "Utilities & Cost Analysis"
   ];
