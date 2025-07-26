@@ -1,164 +1,128 @@
-import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import { 
   Calculator, 
   FileText, 
   Wrench, 
-  Search,
   Zap,
   Settings,
   BookOpen,
-  TrendingUp,
   MapPin,
-  Shield
+  Shield,
+  ChevronLeft
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 const ElectricianTools = () => {
-  const navigate = useNavigate();
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const toolCategories = [
+  // Main 2x2 grid - 4 most essential tools
+  const mainTools = [
     {
-      id: "calculations",
+      id: 1,
       title: "Electrical Calculations",
-      description: "Essential calculations for electrical work",
-      icon: <Calculator className="h-6 w-6" />,
-      path: "/electrician-tools/calculations",
-      color: "bg-blue-500/10 border-blue-500/20"
+      icon: Calculator,
+      link: "/electrician-tools/calculations"
     },
     {
-      id: "inspection-testing",
+      id: 2,
       title: "Inspection & Testing",
-      description: "Testing procedures and compliance tools",
-      icon: <Zap className="h-6 w-6" />,
-      path: "/electrician-tools/inspection-testing",
-      color: "bg-yellow-500/10 border-yellow-500/20"
+      icon: Zap,
+      link: "/electrician-tools/inspection-testing"
     },
     {
-      id: "install-planner",
+      id: 3,
       title: "Install Planner",
-      description: "Plan electrical installations with load calculations",
-      icon: <MapPin className="h-6 w-6" />,
-      path: "/electrician-tools/install-planner",
-      color: "bg-purple-500/10 border-purple-500/20"
+      icon: MapPin,
+      link: "/electrician-tools/install-planner"
     },
     {
-      id: "site-safety",
+      id: 4,
       title: "Site Safety & RAMS",
-      description: "Risk assessments and safety management tools",
-      icon: <Shield className="h-6 w-6" />,
-      path: "/electrician-tools/site-safety",
-      color: "bg-red-500/10 border-red-500/20"
-    },
-    {
-      id: "business-administration",
-      title: "Business Administration",
-      description: "Complete business management hub for electrical contractors",
-      icon: <Settings className="h-6 w-6" />,
-      path: "/electrician-tools/admin",
-      color: "bg-green-500/10 border-green-500/20"
-    },
-    {
-      id: "document-templates",
-      title: "Document Templates",
-      description: "Professional templates and forms",
-      icon: <FileText className="h-6 w-6" />,
-      path: "/electrician-tools/document-templates",
-      color: "bg-orange-500/10 border-orange-500/20"
-    },
-    {
-      id: "ai-tooling",
-      title: "AI Assistant Tools",
-      description: "AI-powered tools for electrical work",
-      icon: <BookOpen className="h-6 w-6" />,
-      path: "/electrician-tools/ai-tooling",
-      color: "bg-pink-500/10 border-pink-500/20"
+      icon: Shield,
+      link: "/electrician-tools/site-safety"
     }
   ];
 
-  const filteredTools = toolCategories.filter(tool =>
-    tool.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    tool.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Additional tools in smaller grid
+  const additionalTools = [
+    {
+      id: 5,
+      title: "Business Admin",
+      icon: Settings,
+      link: "/electrician-tools/admin"
+    },
+    {
+      id: 6,
+      title: "Document Templates",
+      icon: FileText,
+      link: "/electrician-tools/document-templates"
+    },
+    {
+      id: 7,
+      title: "AI Assistant Tools",
+      icon: BookOpen,
+      link: "/electrician-tools/ai-tooling"
+    }
+  ];
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 animate-fade-in">
-      {/* Header */}
-      <div className="text-center space-y-4">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center justify-center gap-3">
-          <Wrench className="h-8 w-8 text-elec-yellow" />
-          Electrical Workshop
-        </h1>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          Professional tools and calculators for electrical work. Everything you need to work efficiently and safely.
-        </p>
-      </div>
-
-      {/* Search */}
-      <div className="max-w-md mx-auto">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search tools..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10 bg-elec-gray/50 border-elec-yellow/20"
-          />
-        </div>
-      </div>
-
-      {/* Tools Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredTools.map((tool) => (
-          <Card 
-            key={tool.id}
-            className={`cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg ${tool.color} bg-elec-gray/50`}
-            onClick={() => navigate(tool.path)}
-          >
-            <CardHeader className="text-center pb-3">
-              <div className="flex justify-center mb-3">
-                <div className="p-3 rounded-full bg-elec-yellow/10">
-                  {tool.icon}
-                </div>
-              </div>
-              <CardTitle className="text-lg">{tool.title}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground text-center mb-4">
-                {tool.description}
-              </p>
-              <Button 
-                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(tool.path);
-                }}
-              >
-                Open Tool
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* No Results */}
-      {filteredTools.length === 0 && (
-        <div className="text-center py-12">
-          <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-lg font-medium mb-2">No tools found</h3>
-          <p className="text-muted-foreground">
-            Try adjusting your search terms or browse all available tools.
+    <div className="space-y-6 md:space-y-8 animate-fade-in px-4 md:px-0">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4 md:mb-6">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-center sm:text-left flex items-center gap-3 justify-center sm:justify-start">
+            <Wrench className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
+            Electrical Workshop
+          </h1>
+          <p className="text-muted-foreground text-center sm:text-left">
+            Professional tools and calculators for electrical work
           </p>
         </div>
-      )}
+        <Link to="/electrician" className="flex-shrink-0 w-full sm:w-auto">
+          <Button variant="outline" className="w-full sm:w-auto">
+            <ChevronLeft className="mr-2 h-4 w-4" />
+            Back to Electrical Hub
+          </Button>
+        </Link>
+      </div>
 
-      {/* Quick Info */}
+      {/* Main 2x2 Grid - Essential Tools */}
+      <div className="space-y-4">
+        <h2 className="text-lg sm:text-xl font-semibold text-center">Essential Tools</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
+          {mainTools.map((tool) => (
+            <Link to={tool.link} key={tool.id} className="focus:outline-none hover-scale">
+              <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
+                <CardHeader className="flex flex-col items-center justify-center text-center py-6 md:py-8">
+                  <tool.icon className="h-10 w-10 sm:h-12 sm:w-12 mb-3 text-elec-yellow" />
+                  <CardTitle className="text-base sm:text-lg leading-tight">{tool.title}</CardTitle>
+                </CardHeader>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Additional Tools Section */}
+      <div className="space-y-4">
+        <h2 className="text-lg sm:text-xl font-semibold text-center">Additional Tools</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+          {additionalTools.map((tool) => (
+            <Link to={tool.link} key={tool.id} className="focus:outline-none hover-scale">
+              <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
+                <CardHeader className="flex flex-col items-center justify-center text-center py-4 md:py-6 px-2 md:px-6">
+                  <tool.icon className="h-6 w-6 sm:h-8 sm:w-8 mb-2 text-elec-yellow" />
+                  <CardTitle className="text-xs sm:text-sm md:text-base leading-tight text-center">
+                    {tool.title}
+                  </CardTitle>
+                </CardHeader>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Info Card */}
       <Card className="bg-elec-gray/30 border-elec-yellow/20">
-        <CardContent className="p-6">
+        <CardContent className="p-4 md:p-6">
           <div className="text-center">
             <h3 className="text-lg font-semibold mb-2">Professional Tools for Electricians</h3>
             <p className="text-sm text-muted-foreground">
