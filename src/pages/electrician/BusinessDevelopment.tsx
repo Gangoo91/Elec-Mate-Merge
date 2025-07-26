@@ -10,7 +10,9 @@ import {
   Users, 
   UserCheck,
   Calculator,
-  CreditCard
+  CreditCard,
+  ArrowLeft,
+  ChevronLeft
 } from "lucide-react";
 
 const BusinessDevelopment = () => {
@@ -67,18 +69,28 @@ const BusinessDevelopment = () => {
   ];
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Business Development</h1>
-        <p className="text-muted-foreground">
-          Resources and guidance to establish and grow your electrical contracting business
-        </p>
+    <div className="space-y-6 md:space-y-8 animate-fade-in px-4 md:px-0">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4 md:mb-6">
+        <div>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-center sm:text-left">
+            Business Development
+          </h1>
+          <p className="text-muted-foreground text-center sm:text-left">
+            Resources and guidance to establish and grow your electrical contracting business
+          </p>
+        </div>
+        <Link to="/electrician" className="flex-shrink-0 w-full sm:w-auto">
+          <Button variant="outline" className="w-full sm:w-auto">
+            <ChevronLeft className="mr-2 h-4 w-4" />
+            Back to Electrical Hub
+          </Button>
+        </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {businessSections.map((section) => (
-          <Link key={section.id} to={section.link} className="group">
-            <Card className="h-full border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all">
+          <Link key={section.id} to={section.link} className="group focus:outline-none hover-scale">
+            <Card className="h-full border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
               <CardHeader className="pb-2">
                 <CardTitle className="text-xl">{section.title}</CardTitle>
                 <CardDescription className="text-sm">
