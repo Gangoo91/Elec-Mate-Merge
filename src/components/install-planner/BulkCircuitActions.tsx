@@ -90,17 +90,17 @@ const BulkCircuitActions: React.FC<BulkCircuitActionsProps> = ({
         {/* Bulk Action Selector */}
         <div className="flex gap-2">
           <Select value={selectedAction} onValueChange={setSelectedAction}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
+            <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50">
               <SelectValue placeholder="Choose bulk action..." />
             </SelectTrigger>
-            <SelectContent className="bg-elec-dark border-elec-yellow/20">
+            <SelectContent className="bg-elec-dark border-elec-yellow/20 shadow-lg">
               <SelectItem value="enable-all">Enable All Circuits</SelectItem>
               <SelectItem value="disable-all">Disable All Circuits</SelectItem>
               <SelectItem value="duplicate-enabled">Duplicate Active Circuits</SelectItem>
               {disabledCount > 0 && (
                 <SelectItem value="remove-disabled">Remove Disabled Circuits</SelectItem>
               )}
-              <SelectItem value="standardize-installation">Standardize Installation Methods</SelectItem>
+              <SelectItem value="standardize-installation">Standardise Installation Methods</SelectItem>
             </SelectContent>
           </Select>
 

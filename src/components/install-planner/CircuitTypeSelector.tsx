@@ -70,7 +70,7 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {recommendedCircuits.map((circuit) => {
           const isAdded = existingTypes.includes(circuit.type);
           const Icon = circuit.icon;

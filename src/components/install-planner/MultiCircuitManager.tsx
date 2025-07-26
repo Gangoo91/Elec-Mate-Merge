@@ -87,7 +87,7 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4 bg-elec-dark border border-elec-yellow/20">
+        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 bg-elec-dark border border-elec-yellow/20">
           <TabsTrigger value="quick-actions" className="flex items-center gap-2">
             <Plus className="h-4 w-4" />
             Quick Add

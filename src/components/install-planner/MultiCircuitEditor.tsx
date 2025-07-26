@@ -154,13 +154,13 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                             value={circuit.voltage.toString()} 
                             onValueChange={(value) => updateCircuit(circuit.id, { voltage: Number(value) })}
                           >
-                            <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                              <SelectItem value="230">230V</SelectItem>
-                              <SelectItem value="400">400V</SelectItem>
-                            </SelectContent>
+                          <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="bg-elec-dark border-elec-yellow/20 shadow-lg">
+                            <SelectItem value="230">230V</SelectItem>
+                            <SelectItem value="400">400V</SelectItem>
+                          </SelectContent>
                           </Select>
                         </div>
 
@@ -170,13 +170,13 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                             value={circuit.phases} 
                             onValueChange={(value: "single" | "three") => updateCircuit(circuit.id, { phases: value })}
                           >
-                            <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                              <SelectItem value="single">Single</SelectItem>
-                              <SelectItem value="three">Three</SelectItem>
-                            </SelectContent>
+                          <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className="bg-elec-dark border-elec-yellow/20 shadow-lg">
+                            <SelectItem value="single">Single</SelectItem>
+                            <SelectItem value="three">Three</SelectItem>
+                          </SelectContent>
                           </Select>
                         </div>
                       </div>
@@ -224,10 +224,10 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                           value={circuit.installationMethod} 
                           onValueChange={(value) => updateCircuit(circuit.id, { installationMethod: value })}
                         >
-                          <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
+                          <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50">
                             <SelectValue />
                           </SelectTrigger>
-                          <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                          <SelectContent className="bg-elec-dark border-elec-yellow/20 shadow-lg">
                             <SelectItem value="clipped-direct">Clipped Direct</SelectItem>
                             <SelectItem value="trunking">Trunking</SelectItem>
                             <SelectItem value="conduit">Conduit</SelectItem>
@@ -244,10 +244,10 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                           value={circuit.cableType} 
                           onValueChange={(value) => updateCircuit(circuit.id, { cableType: value })}
                         >
-                          <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
+                          <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50">
                             <SelectValue />
                           </SelectTrigger>
-                          <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                          <SelectContent className="bg-elec-dark border-elec-yellow/20 shadow-lg">
                             <SelectItem value="t&e">T&E (Twin & Earth)</SelectItem>
                             <SelectItem value="swa">SWA (Steel Wire Armoured)</SelectItem>
                             <SelectItem value="xlpe">XLPE (Cross-linked Polyethylene)</SelectItem>
@@ -263,10 +263,10 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                           value={circuit.protectiveDevice} 
                           onValueChange={(value) => updateCircuit(circuit.id, { protectiveDevice: value })}
                         >
-                          <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
+                          <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50">
                             <SelectValue />
                           </SelectTrigger>
-                          <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                          <SelectContent className="bg-elec-dark border-elec-yellow/20 shadow-lg">
                             <SelectItem value="mcb">MCB</SelectItem>
                             <SelectItem value="rcbo">RCBO</SelectItem>
                             <SelectItem value="rcd">RCD + MCB</SelectItem>
