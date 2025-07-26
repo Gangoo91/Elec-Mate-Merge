@@ -51,19 +51,23 @@ export function MobileSelectWrapper({
               "hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200",
               "group-hover:shadow-lg group-hover:shadow-elec-yellow/10",
               "text-elec-light placeholder:text-elec-light/60",
+              "text-sm font-normal overflow-hidden",
               error ? "border-destructive focus:border-destructive" : ""
             )}
           >
-            <MobileSelectValue placeholder={placeholder} />
+            <MobileSelectValue 
+              placeholder={placeholder} 
+              className="text-sm font-normal text-elec-light truncate"
+            />
           </MobileSelectTrigger>
-          <MobileSelectContent className="bg-elec-card border-elec-gray/50 shadow-xl">
+          <MobileSelectContent className="bg-elec-card border-elec-gray/50 shadow-xl z-50">
             {options.map((option) => (
               <MobileSelectItem 
                 key={option.value} 
                 value={option.value}
-                className="text-elec-light hover:bg-elec-yellow/20 focus:bg-elec-yellow/20"
+                className="text-elec-light hover:bg-elec-yellow/20 focus:bg-elec-yellow/20 text-sm"
               >
-                {option.label}
+                <span className="text-sm truncate">{option.label}</span>
               </MobileSelectItem>
             ))}
           </MobileSelectContent>
