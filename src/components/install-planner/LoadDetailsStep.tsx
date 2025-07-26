@@ -295,22 +295,22 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
 
       {/* General Advice */}
       <Alert className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30 rounded-xl">
-        <div className="flex items-start gap-3">
-          <div className="p-2 bg-green-500/20 rounded-lg">
-            <Info className="h-5 w-5 text-green-300" />
+        <div className="flex flex-col items-center text-center space-y-4 p-2">
+          <div className="p-3 bg-green-500/20 rounded-lg">
+            <Info className="h-6 w-6 text-green-300" />
           </div>
-          <AlertDescription className="text-green-200">
-            <div className="font-semibold text-green-100 mb-2">Design Considerations</div>
-            <div className="space-y-1 text-sm">
-              <div className="flex items-start gap-2">
+          <AlertDescription className="text-green-200 w-full">
+            <div className="font-semibold text-green-100 mb-4 text-lg">Design Considerations</div>
+            <div className="space-y-3 text-sm max-w-md mx-auto">
+              <div className="flex items-start gap-2 text-left">
                 <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0"></span>
                 <span>Consider diversity factors and future expansion when determining total load</span>
               </div>
-              <div className="flex items-start gap-2">
+              <div className="flex items-start gap-2 text-left">
                 <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0"></span>
                 <span>For motor loads, include starting current considerations</span>
               </div>
-              <div className="flex items-start gap-2">
+              <div className="flex items-start gap-2 text-left">
                 <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0"></span>
                 <span>Verify manufacturer specifications for actual power consumption</span>
               </div>
