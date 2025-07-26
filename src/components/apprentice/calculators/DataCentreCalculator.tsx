@@ -157,12 +157,12 @@ const DataCentreCalculator = () => {
           />
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <MobileButton 
             onClick={calculateDataCentre} 
             variant="elec"
             size="wide"
-            className="flex-1"
+            className="sm:flex-1"
           >
             <Calculator className="w-4 h-4 mr-2" />
             Calculate Loads
@@ -171,6 +171,7 @@ const DataCentreCalculator = () => {
             onClick={reset} 
             variant="outline" 
             size="default"
+            className="sm:w-auto"
           >
             <RotateCcw className="w-4 h-4" />
           </MobileButton>

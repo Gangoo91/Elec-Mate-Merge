@@ -149,12 +149,12 @@ export function MicroHydroCalculator() {
           />
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <MobileButton 
             onClick={calculateMicroHydro} 
             variant="elec"
             size="wide"
-            className="flex-1"
+            className="sm:flex-1"
           >
             Calculate Micro-Hydro
           </MobileButton>
@@ -162,6 +162,7 @@ export function MicroHydroCalculator() {
             onClick={reset} 
             variant="outline" 
             size="default"
+            className="sm:w-auto"
           >
             Reset
           </MobileButton>

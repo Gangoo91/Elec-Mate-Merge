@@ -214,13 +214,13 @@ const SelectivityCalculator = () => {
               unit="A"
             />
 
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <MobileButton 
                 onClick={calculateSelectivity}
                 variant="elec"
                 size="wide"
                 disabled={!upstreamRating || !downstreamRating || !faultCurrent}
-                className="flex-1"
+                className="sm:flex-1"
               >
                 <Calculator className="h-4 w-4 mr-2" />
                 Calculate Selectivity
@@ -229,6 +229,7 @@ const SelectivityCalculator = () => {
                 onClick={reset} 
                 variant="outline" 
                 size="default"
+                className="sm:w-auto"
               >
                 <RotateCcw className="h-4 w-4" />
               </MobileButton>

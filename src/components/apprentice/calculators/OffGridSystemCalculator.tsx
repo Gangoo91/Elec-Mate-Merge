@@ -200,12 +200,12 @@ export function OffGridSystemCalculator() {
           />
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <MobileButton 
             onClick={calculateOffGrid} 
             variant="elec"
             size="wide"
-            className="flex-1"
+            className="sm:flex-1"
           >
             Design Off-Grid System
           </MobileButton>
@@ -213,6 +213,7 @@ export function OffGridSystemCalculator() {
             onClick={reset} 
             variant="outline" 
             size="default"
+            className="sm:w-auto"
           >
             Reset
           </MobileButton>

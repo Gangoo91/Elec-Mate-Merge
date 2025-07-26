@@ -162,12 +162,12 @@ export function GridTieInverterCalculator() {
           />
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <MobileButton 
             onClick={calculateGridTie} 
             variant="elec"
             size="wide"
-            className="flex-1"
+            className="sm:flex-1"
           >
             Calculate Grid-Tie System
           </MobileButton>
@@ -175,6 +175,7 @@ export function GridTieInverterCalculator() {
             onClick={reset} 
             variant="outline" 
             size="default"
+            className="sm:w-auto"
           >
             Reset
           </MobileButton>
