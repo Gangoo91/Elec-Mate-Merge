@@ -72,12 +72,7 @@ const AdminDashboard = () => {
         <p className="text-gray-400">Manage your application settings, users, and content.</p>
         
         <div className="flex flex-wrap gap-2">
-          <Button asChild variant="outline" size="sm" className="flex items-center gap-2">
-            <Link to="/admin/quote-library">
-              <FileText className="h-4 w-4" />
-              Quote Library
-            </Link>
-          </Button>
+          <p className="text-sm text-muted-foreground">Admin dashboard tools coming soon</p>
         </div>
       </div>
       

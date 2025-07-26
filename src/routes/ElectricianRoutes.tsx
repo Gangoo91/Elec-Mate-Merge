@@ -7,7 +7,7 @@ import Admin from "@/pages/electrician-tools/Admin";
 import BusinessManagement from "@/pages/electrician-tools/BusinessManagement";
 import ComplianceManager from "@/pages/electrician-tools/ComplianceManager";
 import Calculations from "@/pages/electrician-tools/Calculations";
-import QuoteLibrary from "@/pages/electrician-tools/QuoteLibrary";
+
 import ProjectManagement from "@/pages/electrician-tools/ProjectManagement";
 import ProjectDetails from "@/components/project-management/ProjectDetails";
 import CableSizingCalculator from "@/pages/electrician-tools/cable-sizing";
@@ -38,7 +38,7 @@ const ElectricianRoutes = () => (
     <Route path="compliance" element={<ComplianceManager />} />
     <Route path="calculations" element={<Calculations />} />
     <Route path="cable-sizing" element={<CableSizingCalculator />} />
-    <Route path="quote-library" element={<QuoteLibrary />} />
+    
     <Route path="document-templates" element={<DocumentTemplates />} />
     <Route path="project-management" element={<ProjectManagement />} />
     <Route path="project-management/project/:projectId" element={<ProjectDetails />} />

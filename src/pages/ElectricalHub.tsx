@@ -46,12 +46,6 @@ const ElectricalHub = () => {
       title: "Career Progression", 
       icon: GraduationCap,
       link: "/electrician/career-progression"
-    },
-    {
-      id: 7,
-      title: "Quote Library",
-      icon: FileText,
-      link: "/electrician-tools/quote-library"
     }
   ];
 

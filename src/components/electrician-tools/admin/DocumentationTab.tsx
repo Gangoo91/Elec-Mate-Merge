@@ -50,7 +50,6 @@ const DocumentationTab = () => {
   ];
 
   const quickActions = [
-    { action: "Generate Quote", description: "Create professional electrical quotes", link: "/electrician-tools/quote-library" },
     { action: "Download Certificates", description: "Access BS 7671 compliant certificates", link: "/electrician-tools/document-templates" },
     { action: "Create RAMS", description: "Generate risk assessment documents", link: "/electrician-tools/site-safety" },
     { action: "View All Templates", description: "Browse complete document library", link: "/electrician-tools/document-templates" }
