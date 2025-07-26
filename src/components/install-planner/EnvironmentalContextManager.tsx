@@ -2,13 +2,11 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Trash2, Plus, MapPin, Thermometer, Shield, AlertTriangle } from "lucide-react";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import { MultiSelectDropdown } from "@/components/ui/multi-select-dropdown";
 import { EnvironmentalSettings, InstallationZone, Circuit } from "./types";
 import { v4 as uuidv4 } from "uuid";
 
@@ -26,6 +24,7 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
   onUpdateCircuits
 }) => {
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<string>("global");
 
   const environmentalConditions = [
     "Indoor dry locations",
@@ -129,137 +128,120 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
     }
   };
 
+  const tabOptions = [
+    { value: "global", label: "Global Settings" },
+    { value: "zones", label: "Installation Zones" },
+    { value: "assignments", label: "Circuit Assignments" }
+  ];
+
+  const specialRequirementsOptions = specialRequirements.map(req => ({
+    value: req,
+    label: req
+  }));
+
+  const environmentalConditionsOptions = environmentalConditions.map(condition => ({
+    value: condition,
+    label: condition
+  }));
+
+  const earthingSystemOptions = [
+    { value: "TN-S", label: "TN-S" },
+    { value: "TN-C-S", label: "TN-C-S (PME)" },
+    { value: "TT", label: "TT" },
+    { value: "IT", label: "IT" }
+  ];
+
   return (
-    <div className="space-y-6">
-      <Tabs defaultValue="global" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 bg-elec-dark border border-elec-yellow/20">
-          <TabsTrigger value="global">Global Settings</TabsTrigger>
-          <TabsTrigger value="zones">Installation Zones</TabsTrigger>
-          <TabsTrigger value="assignments">Circuit Assignments</TabsTrigger>
-        </TabsList>
+    <div className="space-y-6 p-4">
+      {/* Mobile Tab Selector */}
+      <MobileSelectWrapper
+        label="Section"
+        value={activeTab}
+        onValueChange={setActiveTab}
+        options={tabOptions}
+        placeholder="Select section..."
+      />
 
-        <TabsContent value="global" className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-dark/50">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Thermometer className="h-5 w-5 text-elec-yellow" />
-                Global Environmental Settings
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="globalTemp">Default Ambient Temperature (°C)</Label>
-                  <Input
-                    id="globalTemp"
-                    type="number"
-                    value={environmentalSettings.ambientTemperature}
-                    onChange={(e) => onUpdateEnvironmentalSettings({
-                      ...environmentalSettings,
-                      ambientTemperature: Number(e.target.value)
-                    })}
-                    className="bg-elec-dark border-elec-yellow/20"
-                  />
-                  <p className={`text-sm mt-1 ${getTemperatureGuidance(environmentalSettings.ambientTemperature).color}`}>
-                    {getTemperatureGuidance(environmentalSettings.ambientTemperature).message}
-                  </p>
-                </div>
+      {/* Global Settings Content */}
+      {activeTab === "global" && (
+        <Card className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-elec-light">
+              <Thermometer className="h-5 w-5 text-elec-yellow" />
+              Global Environmental Settings
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="space-y-4">
+              <MobileInputWrapper
+                label="Default Ambient Temperature (°C)"
+                type="number"
+                value={environmentalSettings.ambientTemperature.toString()}
+                onChange={(value) => onUpdateEnvironmentalSettings({
+                  ...environmentalSettings,
+                  ambientTemperature: Number(value)
+                })}
+                hint={getTemperatureGuidance(environmentalSettings.ambientTemperature).message}
+              />
 
-                <div>
-                  <Label>Default Environmental Conditions</Label>
-                  <Select 
-                    value={environmentalSettings.environmentalConditions} 
-                    onValueChange={(value) => onUpdateEnvironmentalSettings({
-                      ...environmentalSettings,
-                      environmentalConditions: value
-                    })}
-                  >
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      {environmentalConditions.map((condition) => (
-                        <SelectItem key={condition} value={condition}>{condition}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+              <MobileSelectWrapper
+                label="Default Environmental Conditions"
+                value={environmentalSettings.environmentalConditions}
+                onValueChange={(value) => onUpdateEnvironmentalSettings({
+                  ...environmentalSettings,
+                  environmentalConditions: value
+                })}
+                options={environmentalConditionsOptions}
+                placeholder="Select environmental conditions..."
+              />
 
-                <div>
-                  <Label>Earthing System</Label>
-                  <Select 
-                    value={environmentalSettings.earthingSystem} 
-                    onValueChange={(value) => onUpdateEnvironmentalSettings({
-                      ...environmentalSettings,
-                      earthingSystem: value
-                    })}
-                  >
-                    <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                      <SelectItem value="TN-S">TN-S</SelectItem>
-                      <SelectItem value="TN-C-S">TN-C-S (PME)</SelectItem>
-                      <SelectItem value="TT">TT</SelectItem>
-                      <SelectItem value="IT">IT</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              <MobileSelectWrapper
+                label="Earthing System"
+                value={environmentalSettings.earthingSystem}
+                onValueChange={(value) => onUpdateEnvironmentalSettings({
+                  ...environmentalSettings,
+                  earthingSystem: value
+                })}
+                options={earthingSystemOptions}
+                placeholder="Select earthing system..."
+              />
 
-                <div>
-                  <Label htmlFor="zeValue">Ze Value (Ω)</Label>
-                  <Input
-                    id="zeValue"
-                    type="number"
-                    step="0.01"
-                    value={environmentalSettings.ze}
-                    onChange={(e) => onUpdateEnvironmentalSettings({
-                      ...environmentalSettings,
-                      ze: Number(e.target.value)
-                    })}
-                    className="bg-elec-dark border-elec-yellow/20"
-                  />
-                </div>
-              </div>
+              <MobileInputWrapper
+                label="Ze Value (Ω)"
+                type="number"
+                value={environmentalSettings.ze.toString()}
+                onChange={(value) => onUpdateEnvironmentalSettings({
+                  ...environmentalSettings,
+                  ze: Number(value)
+                })}
+                hint="External earth fault loop impedance"
+              />
 
-              <div>
-                <Label>Special Requirements</Label>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
-                  {specialRequirements.map((requirement) => (
-                    <div key={requirement} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id={requirement}
-                        checked={environmentalSettings.specialRequirements.includes(requirement)}
-                        onChange={(e) => {
-                          const current = environmentalSettings.specialRequirements;
-                          if (e.target.checked) {
-                            onUpdateEnvironmentalSettings({
-                              ...environmentalSettings,
-                              specialRequirements: [...current, requirement]
-                            });
-                          } else {
-                            onUpdateEnvironmentalSettings({
-                              ...environmentalSettings,
-                              specialRequirements: current.filter(req => req !== requirement)
-                            });
-                          }
-                        }}
-                        className="rounded border-elec-yellow/30"
-                      />
-                      <Label htmlFor={requirement} className="text-sm">{requirement}</Label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+              <MultiSelectDropdown
+                label="Special Requirements"
+                value={environmentalSettings.specialRequirements}
+                onValueChange={(value) => onUpdateEnvironmentalSettings({
+                  ...environmentalSettings,
+                  specialRequirements: value
+                })}
+                options={specialRequirementsOptions}
+                placeholder="Select special requirements..."
+                hint="Select all applicable special requirements for this installation"
+              />
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
-        <TabsContent value="zones" className="space-y-4">
+      {/* Installation Zones Content */}
+      {activeTab === "zones" && (
+        <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Installation Zones</h3>
-            <Button onClick={addInstallationZone} className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
+            <h3 className="text-lg font-semibold text-elec-light">Installation Zones</h3>
+            <Button 
+              onClick={addInstallationZone} 
+              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold"
+            >
               <Plus className="h-4 w-4 mr-2" />
               Add Zone
             </Button>
@@ -267,71 +249,61 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
 
           <div className="space-y-4">
             {(environmentalSettings.installationZones || []).map((zone) => (
-              <Card key={zone.id} className="border-elec-yellow/20 bg-elec-dark/50">
+              <Card key={zone.id} className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
                 <CardHeader>
                   <div className="flex justify-between items-center">
-                    <CardTitle className="flex items-center gap-2">
+                    <CardTitle className="flex items-center gap-2 text-elec-light">
                       <MapPin className="h-5 w-5 text-elec-yellow" />
-                      <Input
-                        value={zone.name}
-                        onChange={(e) => updateZone(zone.id, { name: e.target.value })}
-                        className="bg-elec-dark border-elec-yellow/20 font-semibold"
-                      />
+                      Zone Configuration
                     </CardTitle>
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => deleteZone(zone.id)}
-                      className="border-red-400/30 text-red-400 hover:bg-red-400/10"
+                      className="border-destructive/30 text-destructive hover:bg-destructive/10"
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div>
-                    <Label>Description</Label>
-                    <Textarea
-                      value={zone.description}
-                      onChange={(e) => updateZone(zone.id, { description: e.target.value })}
-                      className="bg-elec-dark border-elec-yellow/20"
-                      placeholder="Describe this installation zone..."
-                    />
-                  </div>
+                  <MobileInputWrapper
+                    label="Zone Name"
+                    value={zone.name}
+                    onChange={(value) => updateZone(zone.id, { name: value })}
+                    placeholder="Enter zone name..."
+                  />
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label>Ambient Temperature (°C)</Label>
-                      <Input
-                        type="number"
-                        value={zone.ambientTemperature}
-                        onChange={(e) => updateZone(zone.id, { ambientTemperature: Number(e.target.value) })}
-                        className="bg-elec-dark border-elec-yellow/20"
-                      />
-                    </div>
+                  <MobileInputWrapper
+                    label="Description"
+                    value={zone.description}
+                    onChange={(value) => updateZone(zone.id, { description: value })}
+                    placeholder="Describe this installation zone..."
+                  />
 
-                    <div>
-                      <Label>Environmental Conditions</Label>
-                      <Select 
-                        value={zone.environmentalConditions} 
-                        onValueChange={(value) => updateZone(zone.id, { environmentalConditions: value })}
-                      >
-                        <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                          {environmentalConditions.map((condition) => (
-                            <SelectItem key={condition} value={condition}>{condition}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
+                  <MobileInputWrapper
+                    label="Ambient Temperature (°C)"
+                    type="number"
+                    value={zone.ambientTemperature.toString()}
+                    onChange={(value) => updateZone(zone.id, { ambientTemperature: Number(value) })}
+                    hint={getTemperatureGuidance(zone.ambientTemperature).message}
+                  />
+
+                  <MobileSelectWrapper
+                    label="Environmental Conditions"
+                    value={zone.environmentalConditions}
+                    onValueChange={(value) => updateZone(zone.id, { environmentalConditions: value })}
+                    options={environmentalConditionsOptions}
+                    placeholder="Select environmental conditions..."
+                  />
 
                   {zone.circuitIds.length > 0 && (
-                    <div>
-                      <Label>Assigned Circuits</Label>
-                      <div className="flex flex-wrap gap-1 mt-1">
+                    <div className="space-y-2">
+                      <div className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                        <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                        Assigned Circuits
+                      </div>
+                      <div className="flex flex-wrap gap-2">
                         {zone.circuitIds.map((circuitId) => {
                           const circuit = circuits.find(c => c.id === circuitId);
                           return circuit ? (
@@ -347,62 +319,63 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
               </Card>
             ))}
           </div>
-        </TabsContent>
+        </div>
+      )}
 
-        <TabsContent value="assignments" className="space-y-4">
-          <h3 className="text-lg font-semibold">Circuit Zone Assignments</h3>
+      {/* Circuit Assignments Content */}
+      {activeTab === "assignments" && (
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-elec-light">Circuit Zone Assignments</h3>
 
           {circuits.length === 0 ? (
-            <Card className="border-elec-yellow/20 bg-elec-dark/50">
+            <Card className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
               <CardContent className="text-center py-8">
-                <Shield className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h4 className="text-lg font-medium mb-2">No Circuits Available</h4>
-                <p className="text-muted-foreground">
+                <Shield className="h-12 w-12 text-elec-light/50 mx-auto mb-4" />
+                <h4 className="text-lg font-medium mb-2 text-elec-light">No Circuits Available</h4>
+                <p className="text-elec-light/70">
                   Add circuits in the Circuit Design step to assign them to environmental zones.
                 </p>
               </CardContent>
             </Card>
           ) : (
             <div className="space-y-3">
-              {circuits.map((circuit) => (
-                <Card key={circuit.id} className="border-elec-yellow/20 bg-elec-dark/50">
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
+              {circuits.map((circuit) => {
+                const zoneOptions = [
+                  { value: "no-zone", label: "No specific zone" },
+                  ...(environmentalSettings.installationZones || []).map(zone => ({
+                    value: zone.id,
+                    label: zone.name
+                  }))
+                ];
+
+                return (
+                  <Card key={circuit.id} className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
+                    <CardContent className="p-4 space-y-4">
                       <div className="flex items-center gap-3">
                         <Shield className="h-5 w-5 text-elec-yellow" />
-                        <div>
-                          <h4 className="font-medium">{circuit.name}</h4>
-                          <p className="text-sm text-muted-foreground">
+                        <div className="flex-1">
+                          <h4 className="font-medium text-elec-light">{circuit.name}</h4>
+                          <p className="text-sm text-elec-light/70">
                             {circuit.totalLoad}W • {circuit.voltage}V • {circuit.cableLength}m
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Select
-                          value={circuit.installationZone || "no-zone"}
-                          onValueChange={(value) => assignCircuitToZone(circuit.id, value === "no-zone" ? null : value)}
-                        >
-                          <SelectTrigger className="bg-elec-dark border-elec-yellow/20 w-48">
-                            <SelectValue placeholder="Assign to zone" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-elec-dark border-elec-yellow/20 z-50">
-                            <SelectItem value="no-zone">No specific zone</SelectItem>
-                            {(environmentalSettings.installationZones || []).map((zone) => (
-                              <SelectItem key={zone.id} value={zone.id}>
-                                {zone.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                      
+                      <MobileSelectWrapper
+                        label="Zone Assignment"
+                        value={circuit.installationZone || "no-zone"}
+                        onValueChange={(value) => assignCircuitToZone(circuit.id, value === "no-zone" ? null : value)}
+                        options={zoneOptions}
+                        placeholder="Assign to zone..."
+                      />
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           )}
-        </TabsContent>
-      </Tabs>
+        </div>
+      )}
     </div>
   );
 };
