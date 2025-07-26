@@ -152,183 +152,159 @@ const VisualCircuitDesigner: React.FC<VisualCircuitDesignerProps> = ({
         </div>
       </CardHeader>
       <CardContent>
-        <div className="relative p-8 bg-elec-dark rounded-lg border border-elec-yellow/20 min-h-96">
+        {/* Mobile-friendly linear flow */}
+        <div className="flex flex-col space-y-6 p-4 bg-elec-dark rounded-lg border border-elec-yellow/20">
           
-          {/* Supply */}
-          <CircuitComponent
-            id="supply"
-            className="absolute top-4 left-8"
-            label={`Supply ${getSupplyVoltage()}`}
-          >
-            <div className="w-16 h-12 bg-elec-yellow/20 border-2 border-elec-yellow rounded flex items-center justify-center font-bold text-elec-yellow">
-              {getSupplyVoltage()}
-            </div>
-          </CircuitComponent>
-
-          {/* Main Distribution Board (for multi-circuit) */}
-          {isMultiCircuit && (
-            <CircuitComponent
-              id="distribution"
-              className="absolute top-4 left-32"
-              label="Distribution Board"
-            >
-              <div className="w-16 h-12 bg-gray-500/20 border-2 border-gray-400 rounded flex items-center justify-center">
-                <Power className="h-6 w-6 text-gray-400" />
-              </div>
-            </CircuitComponent>
-          )}
-
-          {/* Protective Device */}
-          <CircuitComponent
-            id="protection"
-            className={`absolute top-4 ${isMultiCircuit ? 'left-56' : 'left-32'}`}
-            label={`${recommendedCable?.ratedCurrent || 32}A ${currentCircuit.protectiveDevice.toUpperCase()}`}
-          >
-            <div className="w-12 h-12 bg-blue-500/20 border-2 border-blue-400 rounded flex items-center justify-center">
-              <Shield className="h-6 w-6 text-blue-400" />
-            </div>
-          </CircuitComponent>
-
-          {/* Cable Run */}
-          <div className={`absolute top-10 ${isMultiCircuit ? 'left-72 right-48' : 'left-48 right-48'}`}>
-            <CircuitComponent
-              id="cable"
-              label={`${recommendedCable?.size || "TBD"} ${currentCircuit.cableType.toUpperCase()} - ${currentCircuit.cableLength}m`}
-            >
-              <div className="flex items-center">
-                <Cable className="h-6 w-6 text-gray-400 mr-2" />
-                <div className="flex-1 h-1 bg-gradient-to-r from-gray-400 to-gray-600 relative">
-                  <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-elec-yellow/30 to-transparent"></div>
-                </div>
-                <Cable className="h-6 w-6 text-gray-400 ml-2" />
-              </div>
-            </CircuitComponent>
+          {/* Circuit Flow Title */}
+          <div className="text-center">
+            <h3 className="text-lg font-semibold text-elec-yellow mb-2">Circuit Flow</h3>
+            <p className="text-sm text-muted-foreground">Supply → Protection → Cable → Load</p>
           </div>
 
-          {/* Installation Method Indicator */}
-          <CircuitComponent
-            id="installation"
-            className="absolute top-20 left-1/2 transform -translate-x-1/2"
-            label={currentCircuit.installationMethod.replace('-', ' ').toUpperCase()}
-          >
-            <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-              {currentCircuit.installationMethod.replace('-', ' ')}
-            </Badge>
-          </CircuitComponent>
-
-          {/* Load */}
-          <CircuitComponent
-            id="load"
-            className="absolute top-4 right-8"
-            label={`${currentCircuit.totalLoad}W ${currentCircuit.loadType.toUpperCase()}`}
-          >
-            <div className="w-16 h-12 bg-green-500/20 border-2 border-green-400 rounded flex items-center justify-center text-2xl">
-              {getLoadIcon(currentCircuit.loadType)}
+          {/* Linear Circuit Flow */}
+          <div className="flex flex-col space-y-4">
+            
+            {/* Supply */}
+            <div className="flex items-center justify-between p-4 bg-elec-yellow/10 rounded-lg border border-elec-yellow/30">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-elec-yellow/20 border-2 border-elec-yellow rounded-lg flex items-center justify-center">
+                  <Power className="h-6 w-6 text-elec-yellow" />
+                </div>
+                <div>
+                  <p className="font-medium text-elec-yellow">Supply</p>
+                  <p className="text-sm text-muted-foreground">{getSupplyVoltage()}</p>
+                </div>
+              </div>
+              <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
+                ORIGIN
+              </Badge>
             </div>
-          </CircuitComponent>
 
-          {/* Multi-circuit system overview */}
+            {/* Connection Line */}
+            <div className="flex justify-center">
+              <div className="w-1 h-6 bg-gradient-to-b from-elec-yellow to-blue-400"></div>
+            </div>
+
+            {/* Protection */}
+            <div className="flex items-center justify-between p-4 bg-blue-500/10 rounded-lg border border-blue-400/30">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-blue-500/20 border-2 border-blue-400 rounded-lg flex items-center justify-center">
+                  <Shield className="h-6 w-6 text-blue-400" />
+                </div>
+                <div>
+                  <p className="font-medium text-blue-400">Protection</p>
+                  <p className="text-sm text-muted-foreground">{recommendedCable?.ratedCurrent || 32}A {currentCircuit.protectiveDevice.toUpperCase()}</p>
+                </div>
+              </div>
+              <Badge variant="outline" className="border-blue-400/30 text-blue-400">
+                MCB/RCBO
+              </Badge>
+            </div>
+
+            {/* Connection Line */}
+            <div className="flex justify-center">
+              <div className="w-1 h-6 bg-gradient-to-b from-blue-400 to-gray-400"></div>
+            </div>
+
+            {/* Cable */}
+            <div className="flex items-center justify-between p-4 bg-gray-500/10 rounded-lg border border-gray-400/30">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gray-500/20 border-2 border-gray-400 rounded-lg flex items-center justify-center">
+                  <Cable className="h-6 w-6 text-gray-400" />
+                </div>
+                <div>
+                  <p className="font-medium text-gray-300">Cable</p>
+                  <p className="text-sm text-muted-foreground">{recommendedCable?.size || "TBD"} {currentCircuit.cableType.toUpperCase()}</p>
+                  <p className="text-xs text-muted-foreground">{currentCircuit.cableLength}m · {currentCircuit.installationMethod.replace('-', ' ')}</p>
+                </div>
+              </div>
+              <Badge variant="outline" className="border-gray-400/30 text-gray-400">
+                CONDUCTOR
+              </Badge>
+            </div>
+
+            {/* Connection Line */}
+            <div className="flex justify-center">
+              <div className="w-1 h-6 bg-gradient-to-b from-gray-400 to-green-400"></div>
+            </div>
+
+            {/* Load */}
+            <div className="flex items-center justify-between p-4 bg-green-500/10 rounded-lg border border-green-400/30">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-green-500/20 border-2 border-green-400 rounded-lg flex items-center justify-center text-2xl">
+                  {getLoadIcon(currentCircuit.loadType)}
+                </div>
+                <div>
+                  <p className="font-medium text-green-400">Load</p>
+                  <p className="text-sm text-muted-foreground">{currentCircuit.totalLoad}W {currentCircuit.loadType.toUpperCase()}</p>
+                </div>
+              </div>
+              <Badge variant="outline" className="border-green-400/30 text-green-400">
+                EQUIPMENT
+              </Badge>
+            </div>
+          </div>
+
+          {/* Circuit Calculations */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 p-4 bg-elec-dark/60 rounded-lg border border-elec-yellow/20">
+            <div className="text-center">
+              <p className="text-xs text-muted-foreground mb-1">Design Current</p>
+              <p className="text-lg font-bold text-elec-yellow">
+                {(currentCircuit.phases === "single" 
+                  ? currentCircuit.totalLoad / currentCircuit.voltage 
+                  : currentCircuit.totalLoad / (currentCircuit.voltage * Math.sqrt(3))
+                ).toFixed(1)}A
+              </p>
+            </div>
+            <div className="text-center">
+              <p className="text-xs text-muted-foreground mb-1">Cable Capacity</p>
+              <p className="text-lg font-bold text-green-400">
+                {recommendedCable?.ratedCurrent || "TBD"}A
+              </p>
+            </div>
+            <div className="text-center">
+              <p className="text-xs text-muted-foreground mb-1">Installation</p>
+              <p className="text-sm font-medium text-blue-400 capitalize">
+                {planData.installationType}
+              </p>
+            </div>
+            <div className="text-center">
+              <p className="text-xs text-muted-foreground mb-1">Environment</p>
+              <p className="text-sm font-medium text-amber-400">
+                {planData.ambientTemperature}°C
+              </p>
+            </div>
+          </div>
+          
+          {/* Multi-circuit system overview for multi-circuit mode */}
           {isMultiCircuit && (
-            <div className="absolute bottom-20 left-4 right-4 bg-elec-dark/60 border border-blue-400/20 rounded p-3">
-              <div className="flex items-center justify-between mb-2">
+            <div className="mt-6 p-4 bg-blue-500/10 rounded-lg border border-blue-400/20">
+              <div className="flex items-center justify-between mb-3">
                 <h4 className="text-sm font-medium text-blue-400">System Overview</h4>
                 <Badge variant="outline" className="border-blue-400/30 text-blue-400">
                   {activeCircuits.length} Circuits
                 </Badge>
               </div>
-              <div className="grid grid-cols-4 gap-2 text-xs">
-                <div className="text-center">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="text-center p-2 bg-blue-500/5 rounded">
                   <div className="text-blue-400 font-medium">{(getTotalSystemLoad() / 1000).toFixed(1)}kW</div>
-                  <div className="text-muted-foreground">Total Load</div>
+                  <div className="text-xs text-muted-foreground">Total Load</div>
                 </div>
-                <div className="text-center">
+                <div className="text-center p-2 bg-green-500/5 rounded">
                   <div className="text-green-400 font-medium">{activeCircuits.length}</div>
-                  <div className="text-muted-foreground">Active Circuits</div>
+                  <div className="text-xs text-muted-foreground">Active Circuits</div>
                 </div>
-                <div className="text-center">
+                <div className="text-center p-2 bg-amber-500/5 rounded">
                   <div className="text-amber-400 font-medium">{planData.voltage}V</div>
-                  <div className="text-muted-foreground">System Voltage</div>
+                  <div className="text-xs text-muted-foreground">System Voltage</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-purple-400 font-medium">{planData.earthingSystem}</div>
-                  <div className="text-muted-foreground">Earthing</div>
+                <div className="text-center p-2 bg-purple-500/5 rounded">
+                  <div className="text-purple-400 font-medium">{planData.environmentalSettings?.earthingSystem || planData.earthingSystem}</div>
+                  <div className="text-xs text-muted-foreground">Earthing</div>
                 </div>
               </div>
             </div>
           )}
-
-          {/* Circuit Information Panel */}
-          <div className="absolute bottom-4 left-4 right-4 bg-elec-dark/80 border border-elec-yellow/20 rounded p-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-              <div>
-                <div className="text-muted-foreground">Design Current</div>
-                <div className="font-bold text-elec-yellow">
-                  {(currentCircuit.phases === "single" 
-                    ? currentCircuit.totalLoad / currentCircuit.voltage 
-                    : currentCircuit.totalLoad / (currentCircuit.voltage * Math.sqrt(3))
-                  ).toFixed(1)}A
-                </div>
-              </div>
-              <div>
-                <div className="text-muted-foreground">Cable Capacity</div>
-                <div className="font-bold text-green-400">
-                  {recommendedCable?.ratedCurrent || "TBD"}A
-                </div>
-              </div>
-              <div>
-                <div className="text-muted-foreground">Installation</div>
-                <div className="font-bold text-blue-400">
-                  {planData.installationType}
-                </div>
-              </div>
-              <div>
-                <div className="text-muted-foreground">Environment</div>
-                <div className="font-bold text-amber-400">
-                  {planData.ambientTemperature}°C
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Connection Lines */}
-          <svg className="absolute inset-0 pointer-events-none" style={{ zIndex: -1 }}>
-            {/* Supply to Distribution/Protection */}
-            <line 
-              x1="100" y1="20" 
-              x2={isMultiCircuit ? "128" : "128"} y2="20" 
-              stroke="#F7DC6F" strokeWidth="2" 
-            />
-            {isMultiCircuit && (
-              <>
-                {/* Distribution to Protection */}
-                <line x1="172" y1="20" x2="224" y2="20" stroke="#F7DC6F" strokeWidth="2" />
-                {/* Protection to Cable start */}
-                <line x1="268" y1="20" x2="288" y2="20" stroke="#F7DC6F" strokeWidth="2" />
-              </>
-            )}
-            {!isMultiCircuit && (
-              <>
-                {/* Protection to Cable start */}
-                <line x1="172" y1="20" x2="192" y2="20" stroke="#F7DC6F" strokeWidth="2" />
-              </>
-            )}
-            {/* Cable end to Load */}
-            <line 
-              x1="calc(100% - 192px)" y1="20" 
-              x2="calc(100% - 100px)" y2="20" 
-              stroke="#F7DC6F" strokeWidth="2" 
-            />
-          </svg>
-
-          {/* Earth Symbol */}
-          <div className="absolute bottom-16 right-8">
-            <CircuitComponent
-              id="earth"
-              label="Earth"
-            >
-              <div className="text-green-400 text-lg">⏚</div>
-            </CircuitComponent>
-          </div>
         </div>
 
         {/* Component Details */}

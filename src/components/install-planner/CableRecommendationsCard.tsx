@@ -66,15 +66,17 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable }: CableRecom
             } ${index === 0 ? "ring-2 ring-elec-yellow/30" : ""}`}
             onClick={() => onSelectCable?.(cable)}
           >
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex items-center gap-3">
-                <div className="text-xl font-bold">{cable.size}</div>
-                {getSuitabilityIcon(cable.suitability)}
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 {index === 0 && (
-                  <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+                  <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 w-fit">
                     RECOMMENDED
                   </Badge>
                 )}
+                <div className="flex items-center gap-3">
+                  <div className="text-xl font-bold">{cable.size}</div>
+                  {getSuitabilityIcon(cable.suitability)}
+                </div>
               </div>
               <Badge variant={cable.suitability === "suitable" ? "default" : "destructive"}>
                 {cable.suitability.toUpperCase()}
@@ -93,7 +95,7 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable }: CableRecom
               <div>
                 <div className="text-muted-foreground">Cost</div>
                 <div className={`font-medium flex items-center gap-1 ${getCostColor(cable.cost || "medium")}`}>
-                  <DollarSign className="h-3 w-3" />
+                  <span className="text-xs">£</span>
                   {cable.cost?.toUpperCase() || "MEDIUM"}
                 </div>
               </div>

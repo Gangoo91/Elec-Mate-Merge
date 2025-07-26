@@ -1,6 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { InstallPlanData } from "./types";
 import { Download, Calculator, AlertTriangle, CheckCircle, XCircle, Lightbulb } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -117,17 +118,11 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-2xl font-bold mb-2">Professional Installation Plan</h2>
-          <p className="text-muted-foreground">
-            Comprehensive analysis with visual circuit design, multiple recommendations, and BS 7671 compliance verification.
-          </p>
-        </div>
-        <Button onClick={exportResults} variant="outline" className="flex items-center gap-2">
-          <Download className="h-4 w-4" />
-          Export Plan
-        </Button>
+      <div className="text-center md:text-left">
+        <h2 className="text-2xl font-bold mb-2">Professional Installation Plan</h2>
+        <p className="text-muted-foreground">
+          Comprehensive analysis with visual circuit design, multiple recommendations, and BS 7671 compliance verification.
+        </p>
       </div>
 
       {/* Visual Circuit Designer */}
@@ -136,16 +131,9 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
         recommendedCable={recommendedCable}
       />
 
-      {/* Main Results Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column - Cable Recommendations */}
-        <div className="lg:col-span-2">
-          <CableRecommendationsCard 
-            recommendations={[recommendedCable, ...alternativeCables]}
-          />
-        </div>
-
-        {/* Right Column - Design Summary */}
+      {/* Main Results Grid - Mobile-First Layout */}
+      <div className="space-y-6">
+        {/* Design Summary - Mobile First */}
         <div>
           <Card className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
@@ -155,44 +143,57 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 gap-3">
-                <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
-                  <p className="text-sm text-muted-foreground">Design Current</p>
-                  <p className="text-xl font-bold text-elec-yellow">{designCurrent.toFixed(2)}A</p>
+              {/* Key Metrics Grid - Mobile Responsive */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="col-span-2 md:col-span-1 p-4 bg-elec-dark/50 rounded border border-elec-yellow/20 text-center">
+                  <p className="text-xs text-muted-foreground mb-1">Design Current</p>
+                  <p className="text-2xl font-bold text-elec-yellow">{designCurrent.toFixed(2)}A</p>
                 </div>
                 
-                <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
-                  <p className="text-sm text-muted-foreground">Protective Device</p>
-                  <p className="font-medium">{recommendedCable.ratedCurrent}A {planData.protectiveDevice.toUpperCase()}</p>
+                <div className="col-span-2 md:col-span-1 p-4 bg-elec-dark/50 rounded border border-elec-yellow/20 text-center">
+                  <p className="text-xs text-muted-foreground mb-1">Cable Size</p>
+                  <p className="text-xl font-bold text-green-400">{recommendedCable.size}</p>
                 </div>
-                
-                <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
-                  <p className="text-sm text-muted-foreground">Zs Value</p>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xl font-bold">{zsValue.toFixed(3)}Ω</span>
+
+                <div className="col-span-1 p-4 bg-elec-dark/50 rounded border border-elec-yellow/20 text-center">
+                  <p className="text-xs text-muted-foreground mb-1">Voltage Drop</p>
+                  <p className="text-lg font-bold text-blue-400">{recommendedCable.voltageDropPercentage.toFixed(1)}%</p>
+                </div>
+
+                <div className="col-span-1 p-4 bg-elec-dark/50 rounded border border-elec-yellow/20 text-center">
+                  <p className="text-xs text-muted-foreground mb-1">Zs Value</p>
+                  <div className="flex items-center justify-center gap-1">
+                    <span className="text-lg font-bold">{zsValue.toFixed(2)}Ω</span>
                     {zsCompliance ? 
-                      <CheckCircle className="h-5 w-5 text-green-400" /> : 
-                      <XCircle className="h-5 w-5 text-red-400" />
+                      <CheckCircle className="h-4 w-4 text-green-400" /> : 
+                      <XCircle className="h-4 w-4 text-red-400" />
                     }
                   </div>
-                  <p className="text-xs text-muted-foreground">Max: {maxZs.toFixed(3)}Ω</p>
                 </div>
+              </div>
+
+              {/* Protective Device Selection */}
+              <div className="p-4 bg-elec-dark/50 rounded border border-elec-yellow/20">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-sm font-medium text-elec-light">Compatible Protective Devices</p>
+                  <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+                    RECOMMENDED
+                  </Badge>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between p-2 bg-elec-yellow/10 rounded border border-elec-yellow/30">
+                    <span className="font-medium">{recommendedCable.ratedCurrent}A {planData.protectiveDevice.toUpperCase()}</span>
+                    <Badge variant="outline" className="text-green-400 border-green-400/30">OPTIMAL</Badge>
+                  </div>
+                  <div className="flex items-center justify-between p-2 bg-elec-dark/30 rounded border border-gray-600">
+                    <span className="text-muted-foreground">{Math.max(recommendedCable.ratedCurrent - 10, 16)}A MCB</span>
+                    <Badge variant="outline" className="text-amber-400 border-amber-400/30">ALTERNATIVE</Badge>
+                  </div>
+                </div>
+              </div>
                 
-                <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
-                  <p className="text-sm text-muted-foreground">Voltage Drop</p>
-                  <p className="text-xl font-bold text-blue-400">
-                    {recommendedCable.voltageDropPercentage.toFixed(2)}%
-                  </p>
-                </div>
-
-                <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
-                  <p className="text-sm text-muted-foreground">Diversity Applied</p>
-                  <p className="font-medium">{(diversityFactor * 100).toFixed(0)}%</p>
-                  <p className="text-xs text-muted-foreground">
-                    Diversified: {(diversifiedLoad / 1000).toFixed(2)}kW
-                  </p>
-                </div>
-
+              {/* Additional Details */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
                   <p className="text-sm text-muted-foreground">Installation Method</p>
                   <p className="font-medium capitalize">{planData.installationMethod.replace('-', ' ')}</p>
@@ -201,9 +202,18 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
                 <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
                   <p className="text-sm text-muted-foreground">Environment</p>
                   <p className="font-medium">{planData.ambientTemperature}°C</p>
-                  <p className="text-xs text-muted-foreground">
-                    Grouping: {planData.groupingFactor}
-                  </p>
+                </div>
+
+                <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
+                  <p className="text-sm text-muted-foreground">Load After Diversity</p>
+                  <p className="font-medium">{(diversifiedLoad / 1000).toFixed(1)}kW</p>
+                  <p className="text-xs text-muted-foreground">({(diversityFactor * 100).toFixed(0)}% applied)</p>
+                </div>
+
+                <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
+                  <p className="text-sm text-muted-foreground">Expected Cost</p>
+                  <p className="font-medium text-green-400">£{(recommendedCable.size === "1.5mm²" ? 45 : recommendedCable.size === "2.5mm²" ? 65 : 85)}-{(recommendedCable.size === "1.5mm²" ? 85 : recommendedCable.size === "2.5mm²" ? 125 : 165)}</p>
+                  <p className="text-xs text-muted-foreground">Per 100m estimate</p>
                 </div>
               </div>
 
@@ -258,12 +268,17 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
             </CardContent>
           </Card>
         </div>
-      </div>
 
-      {/* Suggestions and Compliance */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <InstallationSuggestionsCard suggestions={suggestions} />
-        <ComplianceChecksCard checks={complianceChecks} />
+        {/* Cable Recommendations */}
+        <CableRecommendationsCard 
+          recommendations={[recommendedCable, ...alternativeCables]}
+        />
+
+        {/* Suggestions and Compliance - Stacked for Mobile */}
+        <div className="space-y-6">
+          <ComplianceChecksCard checks={complianceChecks} />
+          <InstallationSuggestionsCard suggestions={suggestions} />
+        </div>
       </div>
 
       {/* Professional Notice */}
