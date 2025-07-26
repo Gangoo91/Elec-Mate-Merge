@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, MapPin, ChevronRight, ChevronLeft, RotateCcw, Target, Home, Zap, Cable, Shield, BarChart3, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import InstallationTypeStep from "@/components/install-planner/InstallationTypeStep";
 import LoadDetailsStep from "@/components/install-planner/LoadDetailsStep";
@@ -139,8 +138,6 @@ const InstallPlanner = () => {
   const steps = planData.designMode === "multi" ? getMultiCircuitSteps() : getSingleCircuitSteps();
   const currentStepData = steps.find(step => step.id === currentStep);
   const CurrentStepComponent = currentStepData?.component;
-
-  const progress = (currentStep / steps.length) * 100;
 
   const handleNext = () => {
     if (currentStep < steps.length) {
@@ -306,12 +303,6 @@ const InstallPlanner = () => {
                   
                   {/* Badges - Better mobile wrapping */}
                   <div className="flex flex-wrap items-center gap-2">
-                    <Badge 
-                      variant="outline" 
-                      className="border-elec-yellow/30 text-elec-yellow text-xs whitespace-nowrap"
-                    >
-                      {Math.round(progress)}% Complete
-                    </Badge>
                     {planData.designMode && (
                       <Badge 
                         variant="outline" 
@@ -331,10 +322,8 @@ const InstallPlanner = () => {
                   </div>
                 </div>
 
-                {/* Progress Bar */}
+                {/* Step Indicators */}
                 <div className="space-y-3">
-                  <Progress value={progress} className="h-2 sm:h-2.5" />
-                  
                   {/* Step Indicators - Hidden on mobile, enhanced for tablet+ */}
                   <div className="hidden md:flex justify-between text-xs">
                     {steps.map((step) => {
