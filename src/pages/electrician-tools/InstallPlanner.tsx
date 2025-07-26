@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, MapPin, ChevronRight, ChevronLeft, RotateCcw } from "lucide-react";
+import { ArrowLeft, MapPin, ChevronRight, ChevronLeft, RotateCcw, Target, Home, Zap, Cable, Shield, BarChart3, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -59,42 +59,42 @@ const InstallPlanner = () => {
       title: "Design Mode", 
       subtitle: "Single or Multi-Circuit",
       component: DesignModeSelector,
-      icon: "🎯"
+      icon: Target
     },
     { 
       id: 2, 
       title: "Installation Type", 
       subtitle: "Environment & Load Type",
       component: InstallationTypeStep,
-      icon: "🏠"
+      icon: Home
     },
     { 
       id: 3, 
       title: "Load Details", 
       subtitle: "Power & Electrical Specs",
       component: LoadDetailsStep,
-      icon: "⚡"
+      icon: Zap
     },
     { 
       id: 4, 
       title: "Cable Run", 
       subtitle: "Installation Method & Route",
       component: CableRunStep,
-      icon: "🔌"
+      icon: Cable
     },
     { 
       id: 5, 
       title: "Environment", 
       subtitle: "Conditions & Protection",
       component: EnvironmentStep,
-      icon: "🛡️"
+      icon: Shield
     },
     { 
       id: 6, 
       title: "Results", 
       subtitle: "Recommendations & Compliance",
       component: ResultsStep,
-      icon: "📊"
+      icon: BarChart3
     }
   ];
 
@@ -104,35 +104,35 @@ const InstallPlanner = () => {
       title: "Design Mode", 
       subtitle: "Single or Multi-Circuit",
       component: DesignModeSelector,
-      icon: "🎯"
+      icon: Target
     },
     { 
       id: 2, 
       title: "Installation Type", 
       subtitle: "Environment & System Type",
       component: InstallationTypeStep,
-      icon: "🏠"
+      icon: Home
     },
     { 
       id: 3, 
       title: "Circuit Design", 
       subtitle: "Define Multiple Circuits",
       component: MultiCircuitManager,
-      icon: "⚡"
+      icon: Zap
     },
     { 
       id: 4, 
       title: "Environment", 
       subtitle: "Conditions & Protection",
       component: EnvironmentStep,
-      icon: "🛡️"
+      icon: Shield
     },
     { 
       id: 5, 
       title: "Results", 
       subtitle: "System Analysis & Compliance",
       component: MultiCircuitResults,
-      icon: "📊"
+      icon: BarChart3
     }
   ];
 
@@ -289,10 +289,12 @@ const InstallPlanner = () => {
             <CardHeader className="pb-3 px-4 sm:px-6">
               <div className="space-y-4">
                 {/* Current Step Info - Improved mobile layout */}
-                <div className="space-y-3 sm:space-y-0 sm:flex sm:justify-between sm:items-start">
-                  <div className="flex items-start gap-3">
-                    <div className="text-xl sm:text-2xl flex-shrink-0">{currentStepData?.icon}</div>
-                    <div className="min-w-0 flex-1">
+                  <div className="space-y-3 sm:space-y-0 sm:flex sm:justify-between sm:items-start">
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 bg-elec-yellow/20 rounded-lg flex-shrink-0">
+                        {currentStepData?.icon && <currentStepData.icon className="h-5 w-5 text-elec-yellow" />}
+                      </div>
+                      <div className="min-w-0 flex-1">
                       <CardTitle className="text-base sm:text-lg lg:text-xl leading-tight">
                         Step {currentStep} of {steps.length}: {currentStepData?.title}
                       </CardTitle>
@@ -351,12 +353,16 @@ const InstallPlanner = () => {
                             }
                           }}
                         >
-                          <div className={`w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 flex items-center justify-center mb-2 text-xs ${
+                          <div className={`w-7 h-7 lg:w-8 lg:h-8 rounded-full border-2 flex items-center justify-center mb-2 ${
                             status === "completed" ? "border-green-400 bg-green-400/20" :
                             status === "current" ? "border-elec-yellow bg-elec-yellow/20" :
                             "border-muted-foreground/30"
                           }`}>
-                            {status === "completed" ? "✓" : step.id}
+                            {status === "completed" ? (
+                              <CheckCircle className="h-4 w-4 text-green-400" />
+                            ) : (
+                              <step.icon className="h-4 w-4" />
+                            )}
                           </div>
                           <span className="text-center max-w-16 lg:max-w-20 leading-tight truncate">{step.title}</span>
                         </div>
