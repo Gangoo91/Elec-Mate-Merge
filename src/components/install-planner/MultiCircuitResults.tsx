@@ -87,7 +87,7 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
             <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
               <p className="text-sm text-muted-foreground">Total Circuits</p>
               <p className="text-2xl font-bold text-elec-yellow">{circuits.length}</p>
@@ -149,7 +149,7 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
               
               {bestRecommendation && (
                 <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-sm">
                     <div>
                       <p className="text-muted-foreground">Recommended Cable</p>
                       <p className="font-medium">{bestRecommendation.size} {bestRecommendation.type.toUpperCase()}</p>

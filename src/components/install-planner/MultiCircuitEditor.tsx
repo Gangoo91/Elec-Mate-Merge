@@ -117,7 +117,7 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
 
             {expandedCircuit === circuit.id && (
               <CardContent className="pt-0">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Basic Settings */}
                   <div className="space-y-4">
                     <h4 className="font-medium text-elec-yellow flex items-center gap-2">
@@ -147,7 +147,7 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                         />
                       </div>
 
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
                           <Label htmlFor={`voltage-${circuit.id}`}>Voltage (V)</Label>
                           <Select 
