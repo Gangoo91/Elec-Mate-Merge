@@ -48,6 +48,9 @@ import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoon
 import ArcFlashCalculator from "@/components/apprentice/calculators/ArcFlashCalculator";
 import EVSELoadCalculator from "@/components/apprentice/calculators/EVSELoadCalculator";
 import PowerQualityCalculator from "@/components/apprentice/calculators/PowerQualityCalculator";
+import EmergencyLightingCalculator from "@/components/apprentice/calculators/EmergencyLightingCalculator";
+import SwimmingPoolCalculator from "@/components/apprentice/calculators/SwimmingPoolCalculator";
+import SelectivityCalculator from "@/components/apprentice/calculators/SelectivityCalculator";
 
 const Calculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
@@ -149,6 +152,12 @@ const Calculations = () => {
         return <ArcFlashCalculator />;
       case "power-quality":
         return <PowerQualityCalculator />;
+      case "emergency-lighting":
+        return <EmergencyLightingCalculator />;
+      case "swimming-pool":
+        return <SwimmingPoolCalculator />;
+      case "selectivity":
+        return <SelectivityCalculator />;
       
       default:
         return <OhmsLawCalculator />;
