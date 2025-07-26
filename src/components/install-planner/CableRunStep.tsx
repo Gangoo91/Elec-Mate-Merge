@@ -1,11 +1,9 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { InstallPlanData } from "./types";
-import { Cable, Route, Info } from "lucide-react";
+import { Cable, Route, Info, Ruler, AlertTriangle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 interface CableRunStepProps {
   planData: InstallPlanData;
@@ -13,8 +11,6 @@ interface CableRunStepProps {
 }
 
 const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
-  const isMobile = useIsMobile();
-  
   const installationMethods = [
     { value: "clipped-direct", label: "Clipped Direct", description: "Cable clipped direct to surface" },
     { value: "conduit-surface", label: "Surface Conduit", description: "In conduit on surface" },
@@ -36,7 +32,7 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
 
   const getVoltageDropGuidance = () => {
     const maxVoltageDropPercentage = planData.loadType === "lighting" ? 3 : 5;
-    const maxVoltageDropVolts = (planData.voltage * maxVoltageDropPercentage) / 100;
+    const maxVoltageDropVolts = planData.voltage ? (planData.voltage * maxVoltageDropPercentage) / 100 : 0;
     
     return {
       percentage: maxVoltageDropPercentage,
@@ -46,147 +42,213 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
 
   const voltageDropGuidance = getVoltageDropGuidance();
 
+  // Smart stepping for cable length based on typical run lengths
+  const getCableLengthStep = () => {
+    const length = planData.cableLength || 0;
+    if (length < 10) return "0.5"; // 0.5m steps for short runs
+    if (length < 50) return "1"; // 1m steps for medium runs
+    return "5"; // 5m steps for long runs
+  };
+
+  const getCableLengthMin = () => "0.1"; // Minimum 10cm
+
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <h2 className="text-xl sm:text-2xl font-bold">Cable Run Details</h2>
-        <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-          Specify the cable route and installation method to determine appropriate cable sizing.
-        </p>
+    <div className="space-y-8">
+      {/* Cable Length Input */}
+      <div className="space-y-8">
+        <MobileInputWrapper
+          label="Cable Length"
+          placeholder={`Enter length (±${getCableLengthStep()}m steps)`}
+          value={planData.cableLength || ""}
+          onChange={(value) => updatePlanData({ cableLength: parseFloat(value) || 0 })}
+          type="number"
+          step={getCableLengthStep()}
+          min={getCableLengthMin()}
+          icon={<Ruler className="h-5 w-5" />}
+          unit="m"
+          hint="Measure the actual cable route distance, including vertical runs"
+        />
+
+        <MobileSelectWrapper
+          label="Installation Method"
+          placeholder="Select installation method"
+          value={planData.installationMethod || ""}
+          onValueChange={(value) => updatePlanData({ installationMethod: value })}
+          options={installationMethods.map(method => ({
+            value: method.value,
+            label: `${method.label} - ${method.description}`
+          }))}
+          hint="Choose the method that matches your cable route"
+        />
+
+        <MobileSelectWrapper
+          label="Cable Type"
+          placeholder="Select cable type"
+          value={planData.cableType || ""}
+          onValueChange={(value) => updatePlanData({ cableType: value })}
+          options={cableTypes.map(cable => ({
+            value: cable.value,
+            label: `${cable.label} - ${cable.description}`
+          }))}
+          hint="Choose cable type based on installation environment"
+        />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-        <div className="space-y-6">
-          {/* Cable Length Input - Enhanced mobile layout */}
-          <div className="space-y-3">
-            <Label htmlFor="cableLength" className="text-base font-medium">
-              Cable Length (m)
-            </Label>
-            <Input
-              id="cableLength"
-              type="number"
-              inputMode="decimal"
-              value={planData.cableLength || ""}
-              onChange={(e) => updatePlanData({ cableLength: parseFloat(e.target.value) || 0 })}
-              placeholder="Enter cable length in metres"
-              className="bg-elec-dark border-elec-yellow/20 h-11 sm:h-10 text-base sm:text-sm"
-            />
-            <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-              Measure the actual cable route distance, including any vertical runs
-            </p>
-          </div>
-
-          {/* Installation Method - Mobile optimized cards */}
-          <div className="space-y-4">
-            <Label className="text-base font-medium">Installation Method</Label>
-            <div className="grid gap-2 sm:gap-3">
-              {installationMethods.map((method) => (
-                <Card
-                  key={method.value}
-                  className={`cursor-pointer border transition-all touch-manipulation ${
-                    planData.installationMethod === method.value
-                      ? 'border-elec-yellow bg-elec-yellow/10 ring-1 ring-elec-yellow/20'
-                      : 'border-elec-yellow/20 hover:border-elec-yellow/40 active:border-elec-yellow/60'
-                  }`}
-                  onClick={() => updatePlanData({ installationMethod: method.value })}
-                >
-                  <CardContent className="p-3 sm:p-4">
-                    <div className="flex items-start gap-3">
-                      <Route className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                      <div className="min-w-0 flex-1">
-                        <h4 className="font-medium text-sm sm:text-base leading-tight">{method.label}</h4>
-                        <p className="text-xs sm:text-sm text-muted-foreground mt-1 leading-relaxed">
-                          {method.description}
-                        </p>
-                      </div>
-                      {planData.installationMethod === method.value && (
-                        <div className="w-2 h-2 rounded-full bg-elec-yellow flex-shrink-0 mt-2" />
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+      {/* Voltage Drop Guidance */}
+      <Card className="bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-xl">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-blue-300 flex items-center gap-3">
+            <div className="p-2 bg-blue-500/20 rounded-lg">
+              <Info className="h-5 w-5" />
+            </div>
+            <div>
+              <div className="text-lg">Voltage Drop Limits</div>
+              <div className="text-sm font-normal text-blue-200/80">BS 7671 Compliance Requirements</div>
+            </div>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 gap-4">
+            <div className="p-4 bg-blue-500/10 rounded-lg">
+              <p className="text-sm text-blue-200/90">
+                <span className="font-semibold">Maximum Voltage Drop:</span> {voltageDropGuidance.percentage}% ({voltageDropGuidance.volts}V) for {planData.loadType || 'this'} circuit type
+              </p>
+            </div>
+            <div className="p-4 bg-blue-500/10 rounded-lg">
+              <p className="text-sm text-blue-200/90">
+                <span className="font-semibold">Design Consideration:</span> Longer cable runs may require larger cable sizes to maintain compliance
+              </p>
             </div>
           </div>
-        </div>
+        </CardContent>
+      </Card>
 
-        <div className="space-y-6">
-          {/* Cable Type - Mobile optimized cards */}
-          <div className="space-y-4">
-            <Label className="text-base font-medium">Cable Type</Label>
-            <div className="grid gap-2 sm:gap-3">
-              {cableTypes.map((cable) => (
-                <Card
-                  key={cable.value}
-                  className={`cursor-pointer border transition-all touch-manipulation ${
-                    planData.cableType === cable.value
-                      ? 'border-elec-yellow bg-elec-yellow/10 ring-1 ring-elec-yellow/20'
-                      : 'border-elec-yellow/20 hover:border-elec-yellow/40 active:border-elec-yellow/60'
-                  }`}
-                  onClick={() => updatePlanData({ cableType: cable.value })}
-                >
-                  <CardContent className="p-3 sm:p-4">
-                    <div className="flex items-start gap-3">
-                      <Cable className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                      <div className="min-w-0 flex-1">
-                        <h4 className="font-medium text-sm sm:text-base leading-tight">{cable.label}</h4>
-                        <p className="text-xs sm:text-sm text-muted-foreground mt-1 leading-relaxed">
-                          {cable.description}
-                        </p>
-                      </div>
-                      {planData.cableType === cable.value && (
-                        <div className="w-2 h-2 rounded-full bg-elec-yellow flex-shrink-0 mt-2" />
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+      {/* Installation Method Guidance */}
+      {planData.installationMethod && (
+        <Card className="bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-xl">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-amber-300 flex items-center gap-3">
+              <div className="p-2 bg-amber-500/20 rounded-lg">
+                <Route className="h-5 w-5" />
+              </div>
+              <div>
+                <div className="text-lg">Installation Guidance</div>
+                <div className="text-sm font-normal text-amber-200/80 capitalize">{planData.installationMethod?.replace('-', ' ')}</div>
+              </div>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {planData.installationMethod === "clipped-direct" && (
+                <>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Cable clips every 300-400mm horizontally, 250mm vertically</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Maintain 50mm separation from other services</span>
+                  </div>
+                </>
+              )}
+              {planData.installationMethod === "conduit-surface" && (
+                <>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Conduit supports every 1m horizontally, 0.75m vertically</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Use appropriate conduit size for cable fill factor</span>
+                  </div>
+                </>
+              )}
+              {planData.installationMethod === "direct-buried" && (
+                <>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Minimum burial depth 450mm, 750mm under roads</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Warning tape 150mm above cable, marker posts required</span>
+                  </div>
+                </>
+              )}
+              {planData.installationMethod === "trunking" && (
+                <>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Trunking supports every 1.5m, use appropriate size for cable quantity</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Separate power and data cables in different compartments</span>
+                  </div>
+                </>
+              )}
             </div>
-          </div>
+          </CardContent>
+        </Card>
+      )}
 
-          {/* Voltage Drop Alert - Enhanced mobile layout */}
-          <Alert className="bg-blue-500/10 border-blue-500/30">
-            <Info className="h-4 w-4 sm:h-5 sm:w-5 text-blue-300 flex-shrink-0" />
-            <AlertDescription className="text-blue-200 text-sm sm:text-base leading-relaxed">
-              <strong>Voltage Drop Limits:</strong><br />
-              Maximum {voltageDropGuidance.percentage}% ({voltageDropGuidance.volts}V) for {planData.loadType} circuits.
-              Longer cable runs may require larger cable sizes.
+      {/* Cable Length Analysis */}
+      {planData.cableLength > 0 && (
+        <Alert className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 border border-green-500/30 rounded-xl">
+          <div className="flex items-start gap-3">
+            <div className="p-2 bg-green-500/20 rounded-lg">
+              <Info className="h-5 w-5 text-green-300" />
+            </div>
+            <AlertDescription className="text-green-200">
+              <div className="font-semibold text-green-100 mb-3">Cable Run Analysis</div>
+              <div className="space-y-2">
+                <div className="flex items-start gap-2">
+                  <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0"></span>
+                  <span className="text-sm">Cable length: {planData.cableLength}m</span>
+                </div>
+                {planData.cableLength > 50 && (
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Long run detected - voltage drop calculations critical</span>
+                  </div>
+                )}
+                {planData.cableLength > 100 && (
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-red-200">Very long run - consider intermediate switching or larger cable sizes</span>
+                  </div>
+                )}
+              </div>
             </AlertDescription>
-          </Alert>
+          </div>
+        </Alert>
+      )}
 
-          {/* Installation Notes - Enhanced mobile layout */}
-          {planData.cableLength > 0 && (
-            <Card className="bg-amber-500/10 border-amber-500/30">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-amber-300 text-sm sm:text-base flex items-center gap-2">
-                  <Info className="h-4 w-4" />
-                  Installation Notes
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <ul className="text-xs sm:text-sm text-amber-200 space-y-2 leading-relaxed">
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-400 flex-shrink-0">•</span>
-                    <span>Cable length: {planData.cableLength}m</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-400 flex-shrink-0">•</span>
-                    <span>Consider cable supports every 300-600mm for horizontal runs</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-400 flex-shrink-0">•</span>
-                    <span>Allow for thermal expansion on long runs</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-400 flex-shrink-0">•</span>
-                    <span>Ensure adequate protection against mechanical damage</span>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-          )}
+      {/* General Design Considerations */}
+      <Alert className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30 rounded-xl">
+        <div className="flex flex-col items-center text-center space-y-4 p-2">
+          <div className="p-3 bg-purple-500/20 rounded-lg">
+            <AlertTriangle className="h-6 w-6 text-purple-300" />
+          </div>
+          <AlertDescription className="text-purple-200 w-full">
+            <div className="font-semibold text-purple-100 mb-4 text-lg">BS 7671 Requirements</div>
+            <div className="space-y-3 text-sm max-w-md mx-auto">
+              <div className="flex items-start gap-2 text-left">
+                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-2 flex-shrink-0"></span>
+                <span>Cable selection must consider current-carrying capacity, voltage drop, and fault conditions</span>
+              </div>
+              <div className="flex items-start gap-2 text-left">
+                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-2 flex-shrink-0"></span>
+                <span>Installation method affects current rating - reference methods apply</span>
+              </div>
+              <div className="flex items-start gap-2 text-left">
+                <span className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-2 flex-shrink-0"></span>
+                <span>Ensure adequate mechanical protection and earthing arrangements</span>
+              </div>
+            </div>
+          </AlertDescription>
         </div>
-      </div>
+      </Alert>
     </div>
   );
 };
