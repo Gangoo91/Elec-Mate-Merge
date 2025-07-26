@@ -55,9 +55,14 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     
     // Renewable Energy
     { value: "solar-pv", label: "Solar PV", category: "Renewable Energy" },
+    { value: "solar-array", label: "Solar Array Calculator", category: "Renewable Energy" },
     { value: "battery-storage", label: "Battery Storage System", category: "Renewable Energy" },
     { value: "heat-pump", label: "Heat Pump Load", category: "Renewable Energy" },
     { value: "ev-charging", label: "EV Charging Station", category: "Renewable Energy" },
+    
+    // Specialized Applications
+    { value: "data-centre", label: "Data Centre Calculator", category: "Specialized Applications" },
+    { value: "marine-electrical", label: "Marine Electrical", category: "Specialized Applications" },
     
     // Tools & Components
     { value: "resistor-colour-code", label: "Resistor Colour Code", category: "Tools & Components" },
@@ -86,6 +91,7 @@ const CalculatorSelector = ({ calculatorType, setCalculatorType }: CalculatorSel
     "Protection & Safety",
     "Lighting & Power Systems",
     "Renewable Energy",
+    "Specialized Applications",
     "Tools & Components",
     "Utilities & Cost Analysis"
   ];
