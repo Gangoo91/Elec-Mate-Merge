@@ -18,14 +18,14 @@ interface CourseTabsProps {
 
 const CourseTabs = ({ recentCourses, popularCourses }: CourseTabsProps) => {
   return (
-    <Tabs defaultValue="recent" className="space-y-4">
-      <TabsList className="bg-elec-gray border border-elec-yellow/20">
-        <TabsTrigger value="recent">Recently Added</TabsTrigger>
-        <TabsTrigger value="popular">Most Popular</TabsTrigger>
+    <Tabs defaultValue="recent" className="space-y-3 md:space-y-4">
+      <TabsList className="bg-elec-gray border border-elec-yellow/20 w-full">
+        <TabsTrigger value="recent" className="flex-1 text-xs sm:text-sm">Recently Added</TabsTrigger>
+        <TabsTrigger value="popular" className="flex-1 text-xs sm:text-sm">Most Popular</TabsTrigger>
       </TabsList>
       
-      <TabsContent value="recent" className="space-y-4">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <TabsContent value="recent" className="space-y-3 md:space-y-4">
+        <div className="grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {recentCourses.map((course) => (
             <CourseCard
               key={course.id}
@@ -39,8 +39,8 @@ const CourseTabs = ({ recentCourses, popularCourses }: CourseTabsProps) => {
         </div>
       </TabsContent>
       
-      <TabsContent value="popular" className="space-y-4">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <TabsContent value="popular" className="space-y-3 md:space-y-4">
+        <div className="grid gap-3 md:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {popularCourses.map((course) => (
             <CourseCard
               key={course.id}

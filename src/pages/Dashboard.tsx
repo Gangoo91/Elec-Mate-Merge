@@ -28,21 +28,23 @@ const Dashboard = () => {
   const userName = profile?.full_name || profile?.username || userData.name;
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <Card className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-4 md:p-6">
-        <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center">
+    <div className="space-y-4 md:space-y-6 animate-fade-in px-4 md:px-0">
+      <Card className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-3 md:p-6">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start md:items-center">
           <div className="flex-1 w-full">
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">{greeting}, {userName}</h1>
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight leading-tight">
+              {greeting}, {userName}
+            </h1>
             <p className="text-muted-foreground mt-2 text-sm md:text-base">
               Welcome to ElecMate, your electrical career companion.
             </p>
             
-            <div className="grid grid-cols-2 gap-3 mt-4">
-              <div className="flex items-center gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3 mt-4">
+              <div className="flex items-center gap-2 min-w-0">
                 <Clock className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                 <span className="text-xs md:text-sm truncate">Last active: Today</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 min-w-0">
                 <BookOpen className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                 <span className="text-xs md:text-sm truncate">{userData.completedLessons} of {userData.totalLessons} lessons</span>
               </div>
@@ -50,7 +52,7 @@ const Dashboard = () => {
           </div>
           
           {!isMobile && (
-            <div className="w-24 h-24 md:w-32 md:h-32 lg:w-48 lg:h-48 flex-shrink-0 flex items-center justify-center">
+            <div className="w-20 h-20 md:w-32 md:h-32 lg:w-48 lg:h-48 flex-shrink-0 flex items-center justify-center">
               <img 
                 src="/placeholder.svg" 
                 alt="Dashboard illustration" 
