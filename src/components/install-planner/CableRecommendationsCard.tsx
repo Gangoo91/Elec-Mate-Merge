@@ -85,7 +85,7 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable }: CableRecom
               </div>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm mb-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm mb-3">
               <div>
                 <div className="text-muted-foreground">Capacity</div>
                 <div className="font-medium">{cable.currentCarryingCapacity}A</div>
@@ -98,7 +98,7 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable }: CableRecom
                 <div className="text-muted-foreground">Cost Category</div>
                 <div className={`font-medium flex items-center gap-1 ${getCostColor(cable.cost || "medium")}`}>
                   <PoundSterling className="h-3 w-3" />
-                  {cable.cost?.toUpperCase() || "MEDIUM"}
+                  <span className="truncate">{cable.cost?.toUpperCase() || "MEDIUM"}</span>
                 </div>
               </div>
               <div>
@@ -108,7 +108,7 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable }: CableRecom
                   cable.installationComplexity === "moderate" ? "text-amber-400" : "text-red-400"
                 }`}>
                   <Clock className="h-3 w-3" />
-                  {cable.installationComplexity?.toUpperCase() || "MODERATE"}
+                  <span className="truncate">{cable.installationComplexity?.toUpperCase() || "MODERATE"}</span>
                 </div>
               </div>
             </div>
