@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
+import { MobileSelectWrapper as MobileSelect } from "@/components/ui/mobile-select-wrapper";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Lightbulb, Calculator, RotateCcw, Clock, Battery, Info } from "lucide-react";
@@ -120,7 +120,7 @@ const EmergencyLightingCalculator = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Input Section */}
           <div className="space-y-4">
             <MobileInput
@@ -142,16 +142,13 @@ const EmergencyLightingCalculator = () => {
               unit="m"
             />
 
-            <MobileSelect value={occupancyType} onValueChange={setOccupancyType}>
-              <MobileSelectTrigger label="Occupancy Type">
-                <MobileSelectValue />
-              </MobileSelectTrigger>
-              <MobileSelectContent>
-                {Object.entries(occupancyTypes).map(([key, type]) => (
-                  <MobileSelectItem key={key} value={key}>{type.description}</MobileSelectItem>
-                ))}
-              </MobileSelectContent>
-            </MobileSelect>
+            <MobileSelect
+              label="Occupancy Type"
+              placeholder="Select occupancy type"
+              value={occupancyType}
+              onValueChange={setOccupancyType}
+              options={Object.entries(occupancyTypes).map(([key, type]) => ({ value: key, label: type.description }))}
+            />
 
             <MobileInput
               label="Number of Exit Routes"
@@ -162,39 +159,42 @@ const EmergencyLightingCalculator = () => {
               placeholder="e.g., 2"
             />
 
-            <MobileSelect value={emergencyDuration} onValueChange={setEmergencyDuration}>
-              <MobileSelectTrigger label="Emergency Duration">
-                <MobileSelectValue />
-              </MobileSelectTrigger>
-              <MobileSelectContent>
-                <MobileSelectItem value="1">1 Hour (Occupied premises)</MobileSelectItem>
-                <MobileSelectItem value="3">3 Hours (Unoccupied premises)</MobileSelectItem>
-                <MobileSelectItem value="24">24 Hours (High risk areas)</MobileSelectItem>
-              </MobileSelectContent>
-            </MobileSelect>
+            <MobileSelect
+              label="Emergency Duration"
+              placeholder="Select duration"
+              value={emergencyDuration}
+              onValueChange={setEmergencyDuration}
+              options={[
+                { value: "1", label: "1 Hour (Occupied premises)" },
+                { value: "3", label: "3 Hours (Unoccupied premises)" },
+                { value: "24", label: "24 Hours (High risk areas)" }
+              ]}
+            />
 
-            <MobileSelect value={fixtureType} onValueChange={setFixtureType}>
-              <MobileSelectTrigger label="Fixture Type">
-                <MobileSelectValue />
-              </MobileSelectTrigger>
-              <MobileSelectContent>
-                {Object.entries(fixtureTypes).map(([key, fixture]) => (
-                  <MobileSelectItem key={key} value={key}>{fixture.description}</MobileSelectItem>
-                ))}
-              </MobileSelectContent>
-            </MobileSelect>
+            <MobileSelect
+              label="Fixture Type"
+              placeholder="Select fixture type"
+              value={fixtureType}
+              onValueChange={setFixtureType}
+              options={Object.entries(fixtureTypes).map(([key, fixture]) => ({ value: key, label: fixture.description }))}
+            />
 
             <div className="flex gap-2">
               <MobileButton 
                 onClick={calculateEmergencyLighting}
                 variant="elec"
+                size="wide"
                 disabled={!floorArea}
-                icon={<Calculator className="h-4 w-4" />}
                 className="flex-1"
               >
+                <Calculator className="h-4 w-4 mr-2" />
                 Calculate Emergency Lighting
               </MobileButton>
-              <MobileButton variant="elec-outline" onClick={reset}>
+              <MobileButton 
+                onClick={reset} 
+                variant="outline" 
+                size="default"
+              >
                 <RotateCcw className="h-4 w-4" />
               </MobileButton>
             </div>

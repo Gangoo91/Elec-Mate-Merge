@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
+import { MobileSelectWrapper as MobileSelect } from "@/components/ui/mobile-select-wrapper";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Calculator, RotateCcw, Server } from "lucide-react";
 
@@ -116,18 +116,13 @@ const DataCentreCalculator = () => {
             placeholder="e.g., 500"
             unit="kW"
           />
-          <MobileSelect value={redundancy} onValueChange={setRedundancy}>
-            <MobileSelectTrigger label="Redundancy Level">
-              <MobileSelectValue />
-            </MobileSelectTrigger>
-            <MobileSelectContent>
-              {redundancyOptions.map((option) => (
-                <MobileSelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </MobileSelectItem>
-              ))}
-            </MobileSelectContent>
-          </MobileSelect>
+          <MobileSelect
+            label="Redundancy Level"
+            placeholder="Select redundancy level"
+            value={redundancy}
+            onValueChange={setRedundancy}
+            options={redundancyOptions}
+          />
           <MobileInput
             label="Cooling Ratio"
             type="number"
@@ -163,11 +158,20 @@ const DataCentreCalculator = () => {
         </div>
 
         <div className="flex gap-2">
-          <MobileButton onClick={calculateDataCentre} className="flex-1">
+          <MobileButton 
+            onClick={calculateDataCentre} 
+            variant="elec"
+            size="wide"
+            className="flex-1"
+          >
             <Calculator className="w-4 h-4 mr-2" />
             Calculate Loads
           </MobileButton>
-          <MobileButton onClick={reset} variant="outline">
+          <MobileButton 
+            onClick={reset} 
+            variant="outline" 
+            size="default"
+          >
             <RotateCcw className="w-4 h-4" />
           </MobileButton>
         </div>

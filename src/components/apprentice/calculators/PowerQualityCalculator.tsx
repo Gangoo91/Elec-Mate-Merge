@@ -128,7 +128,7 @@ const PowerQualityCalculator = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Input Section */}
           <div className="space-y-4">
             <h3 className="text-lg font-medium text-elec-yellow">Current Harmonics</h3>
@@ -218,13 +218,18 @@ const PowerQualityCalculator = () => {
               <MobileButton 
                 onClick={calculatePowerQuality}
                 variant="elec"
+                size="wide"
                 disabled={!fundamental}
-                icon={<Calculator className="h-4 w-4" />}
                 className="flex-1"
               >
+                <Calculator className="h-4 w-4 mr-2" />
                 Analyze Power Quality
               </MobileButton>
-              <MobileButton variant="elec-outline" onClick={reset}>
+              <MobileButton 
+                onClick={reset} 
+                variant="outline" 
+                size="default"
+              >
                 <RotateCcw className="h-4 w-4" />
               </MobileButton>
             </div>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
+import { MobileSelectWrapper as MobileSelect } from "@/components/ui/mobile-select-wrapper";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { AlertTriangle, Calculator, RotateCcw, Shield, Info } from "lucide-react";
@@ -104,7 +104,7 @@ const ArcFlashCalculator = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Input Section */}
           <div className="space-y-4">
             <MobileInput
@@ -144,21 +144,32 @@ const ArcFlashCalculator = () => {
               unit="mm"
             />
 
-            <MobileSelect value={enclosureType} onValueChange={setEnclosureType}>
-              <MobileSelectTrigger label="Enclosure Type">
-                <MobileSelectValue />
-              </MobileSelectTrigger>
-              <MobileSelectContent>
-                <MobileSelectItem value="open">Open Air</MobileSelectItem>
-                <MobileSelectItem value="enclosed">Box/Enclosure</MobileSelectItem>
-              </MobileSelectContent>
-            </MobileSelect>
+            <MobileSelect
+              label="Enclosure Type"
+              placeholder="Select enclosure type"
+              value={enclosureType}
+              onValueChange={setEnclosureType}
+              options={[
+                { value: "open", label: "Open Air" },
+                { value: "enclosed", label: "Box/Enclosure" }
+              ]}
+            />
 
             <div className="flex gap-2">
-              <MobileButton onClick={calculateArcFlash} className="flex-1" variant="elec" icon={<Calculator className="h-4 w-4" />}>
+              <MobileButton 
+                onClick={calculateArcFlash} 
+                variant="elec"
+                size="wide"
+                className="flex-1"
+              >
+                <Calculator className="h-4 w-4 mr-2" />
                 Calculate Arc Flash
               </MobileButton>
-              <MobileButton variant="elec-outline" onClick={reset}>
+              <MobileButton 
+                onClick={reset} 
+                variant="outline" 
+                size="default"
+              >
                 <RotateCcw className="h-4 w-4" />
               </MobileButton>
             </div>

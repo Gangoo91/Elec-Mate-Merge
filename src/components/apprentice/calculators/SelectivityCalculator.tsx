@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileButton } from "@/components/ui/mobile-button";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
+import { MobileSelectWrapper as MobileSelect } from "@/components/ui/mobile-select-wrapper";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Zap, Calculator, RotateCcw, ArrowDownUp, Target } from "lucide-react";
@@ -142,21 +142,18 @@ const SelectivityCalculator = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Input Section */}
           <div className="space-y-4">
             <h3 className="text-lg font-medium text-elec-yellow">Upstream Protection</h3>
             
-            <MobileSelect value={upstreamDevice} onValueChange={setUpstreamDevice}>
-              <MobileSelectTrigger label="Upstream Device Type">
-                <MobileSelectValue />
-              </MobileSelectTrigger>
-              <MobileSelectContent>
-                {Object.entries(deviceTypes).map(([key, type]) => (
-                  <MobileSelectItem key={key} value={key}>{type}</MobileSelectItem>
-                ))}
-              </MobileSelectContent>
-            </MobileSelect>
+            <MobileSelect
+              label="Upstream Device Type"
+              placeholder="Select upstream device"
+              value={upstreamDevice}
+              onValueChange={setUpstreamDevice}
+              options={Object.entries(deviceTypes).map(([key, type]) => ({ value: key, label: type }))}
+            />
 
             <MobileInput
               label="Upstream Rating (A)"
@@ -168,32 +165,26 @@ const SelectivityCalculator = () => {
             />
 
             {upstreamDevice === "mcb" && (
-              <MobileSelect value={upstreamCurve} onValueChange={setUpstreamCurve}>
-                <MobileSelectTrigger label="Upstream Curve">
-                  <MobileSelectValue />
-                </MobileSelectTrigger>
-                <MobileSelectContent>
-                  {Object.entries(mcbCurves).map(([key, curve]) => (
-                    <MobileSelectItem key={key} value={key}>{curve}</MobileSelectItem>
-                  ))}
-                </MobileSelectContent>
-              </MobileSelect>
+              <MobileSelect
+                label="Upstream Curve"
+                placeholder="Select curve type"
+                value={upstreamCurve}
+                onValueChange={setUpstreamCurve}
+                options={Object.entries(mcbCurves).map(([key, curve]) => ({ value: key, label: curve }))}
+              />
             )}
 
             <Separator />
 
             <h3 className="text-lg font-medium text-elec-yellow">Downstream Protection</h3>
 
-            <MobileSelect value={downstreamDevice} onValueChange={setDownstreamDevice}>
-              <MobileSelectTrigger label="Downstream Device Type">
-                <MobileSelectValue />
-              </MobileSelectTrigger>
-              <MobileSelectContent>
-                {Object.entries(deviceTypes).map(([key, type]) => (
-                  <MobileSelectItem key={key} value={key}>{type}</MobileSelectItem>
-                ))}
-              </MobileSelectContent>
-            </MobileSelect>
+            <MobileSelect
+              label="Downstream Device Type"
+              placeholder="Select downstream device"
+              value={downstreamDevice}
+              onValueChange={setDownstreamDevice}
+              options={Object.entries(deviceTypes).map(([key, type]) => ({ value: key, label: type }))}
+            />
 
             <MobileInput
               label="Downstream Rating (A)"
@@ -205,16 +196,13 @@ const SelectivityCalculator = () => {
             />
 
             {downstreamDevice === "mcb" && (
-              <MobileSelect value={downstreamCurve} onValueChange={setDownstreamCurve}>
-                <MobileSelectTrigger label="Downstream Curve">
-                  <MobileSelectValue />
-                </MobileSelectTrigger>
-                <MobileSelectContent>
-                  {Object.entries(mcbCurves).map(([key, curve]) => (
-                    <MobileSelectItem key={key} value={key}>{curve}</MobileSelectItem>
-                  ))}
-                </MobileSelectContent>
-              </MobileSelect>
+              <MobileSelect
+                label="Downstream Curve"
+                placeholder="Select curve type"
+                value={downstreamCurve}
+                onValueChange={setDownstreamCurve}
+                options={Object.entries(mcbCurves).map(([key, curve]) => ({ value: key, label: curve }))}
+              />
             )}
 
             <MobileInput
@@ -230,13 +218,18 @@ const SelectivityCalculator = () => {
               <MobileButton 
                 onClick={calculateSelectivity}
                 variant="elec"
+                size="wide"
                 disabled={!upstreamRating || !downstreamRating || !faultCurrent}
-                icon={<Calculator className="h-4 w-4" />}
                 className="flex-1"
               >
+                <Calculator className="h-4 w-4 mr-2" />
                 Calculate Selectivity
               </MobileButton>
-              <MobileButton variant="elec-outline" onClick={reset}>
+              <MobileButton 
+                onClick={reset} 
+                variant="outline" 
+                size="default"
+              >
                 <RotateCcw className="h-4 w-4" />
               </MobileButton>
             </div>
