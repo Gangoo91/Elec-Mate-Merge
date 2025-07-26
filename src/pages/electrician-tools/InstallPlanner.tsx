@@ -194,6 +194,48 @@ const InstallPlanner = () => {
     });
   };
 
+  const getValidationMessages = () => {
+    const missing: string[] = [];
+    
+    switch (currentStep) {
+      case 4: // Environment step
+        if (planData.designMode === "multi") {
+          console.log('Validating Environment step for multi-circuit mode:', planData.environmentalSettings);
+          
+          if (!planData.environmentalSettings?.earthingSystem) {
+            missing.push("Earthing System");
+          }
+          if (!planData.environmentalSettings?.ambientTemperature) {
+            missing.push("Ambient Temperature");
+          }
+          if (!planData.environmentalSettings?.environmentalConditions) {
+            missing.push("Environmental Conditions");
+          }
+          if (!planData.environmentalSettings?.ze) {
+            missing.push("Ze Value");
+          }
+        }
+        break;
+      case 5: // Environment step for single circuit mode
+        if (planData.designMode === "single") {
+          console.log('Validating Environment step for single-circuit mode:', { 
+            protectiveDevice: planData.protectiveDevice, 
+            earthingSystem: planData.earthingSystem 
+          });
+          
+          if (!planData.protectiveDevice) {
+            missing.push("Protective Device");
+          }
+          if (!planData.earthingSystem) {
+            missing.push("Earthing System");
+          }
+        }
+        break;
+    }
+    
+    return missing;
+  };
+
   const canProceed = () => {
     switch (currentStep) {
       case 1:
@@ -207,13 +249,19 @@ const InstallPlanner = () => {
         return planData.totalLoad > 0;
       case 4:
         if (planData.designMode === "multi") {
-          return planData.environmentalSettings && planData.environmentalSettings.earthingSystem;
+          // Environment step validation for multi-circuit
+          return planData.environmentalSettings && 
+                 planData.environmentalSettings.earthingSystem &&
+                 planData.environmentalSettings.ambientTemperature &&
+                 planData.environmentalSettings.environmentalConditions &&
+                 planData.environmentalSettings.ze;
         }
         return planData.cableLength > 0 && planData.installationMethod && planData.cableType;
       case 5:
         if (planData.designMode === "multi") {
           return true; // Results step
         }
+        // Environment step validation for single circuit  
         return planData.protectiveDevice && planData.earthingSystem;
       default:
         return true;
@@ -295,7 +343,11 @@ const InstallPlanner = () => {
               <div className={`text-xs px-3 py-1.5 rounded-full border ${
                 canProceed() ? 'text-green-400 bg-green-400/10 border-green-400/30' : 'text-amber-400 bg-amber-400/10 border-amber-400/30'
               }`}>
-                {canProceed() ? '✓ Ready to continue' : '⚠ Complete required fields'}
+                {canProceed() ? '✓ Ready to continue' : 
+                 (() => {
+                   const missing = getValidationMessages();
+                   return missing.length > 0 ? `⚠ Missing: ${missing.join(', ')}` : '⚠ Complete required fields';
+                 })()}
               </div>
             </div>
 

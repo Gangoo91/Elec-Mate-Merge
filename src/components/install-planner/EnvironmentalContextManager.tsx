@@ -7,6 +7,7 @@ import { Trash2, Plus, MapPin, Thermometer, Shield, AlertTriangle } from "lucide
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { MultiSelectDropdown } from "@/components/ui/multi-select-dropdown";
+import { RequiredFieldTooltip } from "@/components/ui/required-field-tooltip";
 import { EnvironmentalSettings, InstallationZone, Circuit } from "./types";
 import { v4 as uuidv4 } from "uuid";
 
@@ -167,70 +168,104 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
         <Card className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
           <CardContent className="space-y-6 pt-6">
             <div className="space-y-4">
-              <MobileInputWrapper
-                label="Default Ambient Temperature (°C)"
-                type="number"
-                value={environmentalSettings.ambientTemperature.toString()}
-                onChange={(value) => onUpdateEnvironmentalSettings({
-                  ...environmentalSettings,
-                  ambientTemperature: Number(value)
-                })}
-              />
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-semibold text-elec-light">Default Ambient Temperature (°C)</span>
+                  <RequiredFieldTooltip content="Set the expected ambient temperature for the installation. This affects cable current carrying capacity and derating factors. Typical values: 20-30°C for indoor installations." />
+                  <span className="text-red-400 text-sm">*</span>
+                </div>
+                <MobileInputWrapper
+                  type="number"
+                  value={environmentalSettings.ambientTemperature.toString()}
+                  onChange={(value) => {
+                    console.log('Temperature updated:', value);
+                    onUpdateEnvironmentalSettings({
+                      ...environmentalSettings,
+                      ambientTemperature: Number(value)
+                    });
+                  }}
+                />
+              </div>
 
-              <MobileSelectWrapper
-                label="Default Environmental Conditions"
-                value={environmentalSettings.environmentalConditions}
-                onValueChange={(value) => onUpdateEnvironmentalSettings({
-                  ...environmentalSettings,
-                  environmentalConditions: value
-                })}
-                options={environmentalConditionsOptions}
-                placeholder="Select environmental conditions..."
-              />
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-semibold text-elec-light">Default Environmental Conditions</span>
+                  <RequiredFieldTooltip content="Select the primary environmental conditions for the installation. This determines IP ratings, cable protection requirements, and installation methods according to BS 7671." />
+                  <span className="text-red-400 text-sm">*</span>
+                </div>
+                <MobileSelectWrapper
+                  value={environmentalSettings.environmentalConditions}
+                  onValueChange={(value) => {
+                    console.log('Environmental conditions updated:', value);
+                    onUpdateEnvironmentalSettings({
+                      ...environmentalSettings,
+                      environmentalConditions: value
+                    });
+                  }}
+                  options={environmentalConditionsOptions}
+                  placeholder="Select environmental conditions..."
+                />
+              </div>
 
-              <MobileSelectWrapper
-                label="Earthing System"
-                value={environmentalSettings.earthingSystem}
-                onValueChange={(value) => {
-                  // Auto-update Ze values based on earthing system
-                  let newZe = environmentalSettings.ze;
-                  switch (value) {
-                    case "TT":
-                      newZe = 0.80;
-                      break;
-                    case "TN-S":
-                      newZe = 0.35;
-                      break;
-                    case "TN-C-S":
-                      newZe = 0.35;
-                      break;
-                    case "IT":
-                      newZe = 1.0;
-                      break;
-                    default:
-                      newZe = 0.35;
-                  }
-                  
-                  onUpdateEnvironmentalSettings({
-                    ...environmentalSettings,
-                    earthingSystem: value,
-                    ze: newZe
-                  });
-                }}
-                options={earthingSystemOptions}
-                placeholder="Select earthing system..."
-              />
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-semibold text-elec-light">Earthing System</span>
+                  <RequiredFieldTooltip content="Select the earthing arrangement for the installation. This is CRITICAL for safety and determines fault protection methods. TN-C-S (PME) is most common in UK domestic installations." />
+                  <span className="text-red-400 text-sm">*</span>
+                </div>
+                <MobileSelectWrapper
+                  value={environmentalSettings.earthingSystem}
+                  onValueChange={(value) => {
+                    console.log('Earthing system updated:', value);
+                    // Auto-update Ze values based on earthing system
+                    let newZe = environmentalSettings.ze;
+                    switch (value) {
+                      case "TT":
+                        newZe = 0.80;
+                        break;
+                      case "TN-S":
+                        newZe = 0.35;
+                        break;
+                      case "TN-C-S":
+                        newZe = 0.35;
+                        break;
+                      case "IT":
+                        newZe = 1.0;
+                        break;
+                      default:
+                        newZe = 0.35;
+                    }
+                    
+                    onUpdateEnvironmentalSettings({
+                      ...environmentalSettings,
+                      earthingSystem: value,
+                      ze: newZe
+                    });
+                  }}
+                  options={earthingSystemOptions}
+                  placeholder="Select earthing system..."
+                />
+              </div>
 
-              <MobileInputWrapper
-                label="Ze Value (Ω)"
-                type="number"
-                value={environmentalSettings.ze.toString()}
-                onChange={(value) => onUpdateEnvironmentalSettings({
-                  ...environmentalSettings,
-                  ze: Number(value)
-                })}
-                hint="External earth fault loop impedance"
-              />
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-semibold text-elec-light">Ze Value (Ω)</span>
+                  <RequiredFieldTooltip content="External earth fault loop impedance measured at the origin of the installation. This value is critical for fault protection calculations and must be measured during testing." />
+                  <span className="text-red-400 text-sm">*</span>
+                </div>
+                <MobileInputWrapper
+                  type="number"
+                  value={environmentalSettings.ze.toString()}
+                  onChange={(value) => {
+                    console.log('Ze value updated:', value);
+                    onUpdateEnvironmentalSettings({
+                      ...environmentalSettings,
+                      ze: Number(value)
+                    });
+                  }}
+                  hint="External earth fault loop impedance"
+                />
+              </div>
 
               <div className="space-y-3">
                 <div className="text-sm font-semibold text-elec-light flex items-center gap-2">
