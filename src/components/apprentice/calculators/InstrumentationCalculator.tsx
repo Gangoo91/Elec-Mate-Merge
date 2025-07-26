@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Gauge, ArrowLeftRight, Zap, History, Download, RotateCcw, Info, Calculator } from "lucide-react";
+import { Gauge, ArrowLeftRight, Zap, History, Download, RotateCcw, Info } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/hooks/use-toast";
-import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
 import { MobileInput } from "@/components/ui/mobile-input";
-import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { MobileButton } from "@/components/ui/mobile-button";
 import { ResultCard } from "@/components/ui/result-card";
 
@@ -37,6 +36,7 @@ const PRESETS: Preset[] = [
 ];
 
 const InstrumentationCalculator = () => {
+  const [activeTab, setActiveTab] = useState("value-to-current");
   const [selectedPreset, setSelectedPreset] = useState<string>("");
   const [history, setHistory] = useState<CalculationHistory[]>([]);
   
@@ -156,24 +156,24 @@ const InstrumentationCalculator = () => {
       <CardHeader>
         <div className="flex items-center gap-2">
           <Gauge className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>4-20mA Instrumentation Calculator</CardTitle>
+          <CardTitle>Enhanced 4-20mA Instrumentation Calculator</CardTitle>
         </div>
         <CardDescription>
-          Professional instrumentation scaling with bidirectional calculations and presets.
+          Professional instrumentation scaling with bidirectional calculations, presets, and analysis tools.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Quick Presets */}
+        {/* Mobile-friendly Quick Presets */}
         <div className="space-y-3">
           <h4 className="text-sm font-medium">Quick Presets</h4>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
             {PRESETS.map((preset) => (
               <MobileButton
                 key={preset.name}
                 variant={selectedPreset === preset.name ? "elec" : "outline"}
                 size="sm"
                 onClick={() => applyPreset(preset.name)}
-                className="text-xs h-auto py-2 px-3"
+                className="text-xs h-auto py-2 px-2 text-center whitespace-normal leading-tight"
               >
                 {preset.name}
               </MobileButton>
@@ -181,20 +181,46 @@ const InstrumentationCalculator = () => {
           </div>
         </div>
 
-        {/* Mobile Accordion Layout */}
-        <MobileAccordion type="single" collapsible defaultValue="value-to-current">
-          <MobileAccordionItem value="value-to-current">
-            <MobileAccordionTrigger icon={<ArrowLeftRight className="h-4 w-4" />}>
-              Value → Current (4-20mA)
-            </MobileAccordionTrigger>
-            <MobileAccordionContent>
+        {/* Mobile-friendly Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 gap-1 h-auto p-1">
+            <TabsTrigger 
+              value="value-to-current" 
+              className="flex items-center gap-1 px-2 py-2 text-xs sm:text-sm whitespace-nowrap"
+            >
+              <ArrowLeftRight className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="hidden sm:inline">Value → Current</span>
+              <span className="sm:hidden">Value→mA</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="current-to-value" 
+              className="flex items-center gap-1 px-2 py-2 text-xs sm:text-sm whitespace-nowrap"
+            >
+              <ArrowLeftRight className="h-3 w-3 sm:h-4 sm:w-4 rotate-180" />
+              <span className="hidden sm:inline">Current → Value</span>
+              <span className="sm:hidden">mA→Value</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="history" 
+              className="flex items-center gap-1 px-2 py-2 text-xs sm:text-sm whitespace-nowrap"
+            >
+              <History className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span>History</span>
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="value-to-current" className="space-y-4 mt-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <MobileInput
                     label="Minimum Scale"
                     type="number"
                     value={minScale}
-                    onChange={(e) => setMinScale(e.target.value)}
+                    onChange={(e) => {
+                      setMinScale(e.target.value);
+                      clearError('minScale');
+                    }}
                     placeholder="e.g., 0"
                     error={errors.minScale}
                     clearError={() => clearError('minScale')}
@@ -203,7 +229,10 @@ const InstrumentationCalculator = () => {
                     label="Maximum Scale"
                     type="number"
                     value={maxScale}
-                    onChange={(e) => setMaxScale(e.target.value)}
+                    onChange={(e) => {
+                      setMaxScale(e.target.value);
+                      clearError('maxScale');
+                    }}
                     placeholder="e.g., 100"
                     error={errors.maxScale}
                     clearError={() => clearError('maxScale')}
@@ -214,7 +243,10 @@ const InstrumentationCalculator = () => {
                   label="Input Value"
                   type="number"
                   value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
+                  onChange={(e) => {
+                    setInputValue(e.target.value);
+                    clearError('inputValue');
+                  }}
                   placeholder="Enter measurement value"
                   error={errors.inputValue}
                   clearError={() => clearError('inputValue')}
@@ -232,7 +264,6 @@ const InstrumentationCalculator = () => {
                     variant="elec"
                     size="wide"
                     onClick={calculateValueToCurrent}
-                    icon={<Calculator className="h-4 w-4" />}
                   >
                     Calculate Current
                   </MobileButton>
@@ -244,7 +275,9 @@ const InstrumentationCalculator = () => {
                     <RotateCcw className="h-4 w-4" />
                   </MobileButton>
                 </div>
-
+              </div>
+              
+              <div className="space-y-4">
                 <ResultCard
                   title="Current Output"
                   value={currentResult}
@@ -254,18 +287,35 @@ const InstrumentationCalculator = () => {
                   icon={<Gauge className="h-6 w-6" />}
                   isEmpty={currentResult === null}
                   emptyMessage="Enter values to calculate current output"
-                />
-              </div>
-            </MobileAccordionContent>
-          </MobileAccordionItem>
+                >
+                  {currentResult !== null && trippingPoints && (
+                    <div className="mt-4 space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span>Low Trip (10%):</span>
+                        <Badge variant="outline">{trippingPoints.low.toFixed(2)} mA</Badge>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>High Trip (90%):</span>
+                        <Badge variant="outline">{trippingPoints.high.toFixed(2)} mA</Badge>
+                      </div>
+                    </div>
+                  )}
+                </ResultCard>
 
-          <MobileAccordionItem value="current-to-value">
-            <MobileAccordionTrigger icon={<ArrowLeftRight className="h-4 w-4 rotate-180" />}>
-              Current → Value (4-20mA)
-            </MobileAccordionTrigger>
-            <MobileAccordionContent>
+                {currentResult !== null && (
+                  <MobileButton variant="outline" size="wide">
+                    <Download className="h-4 w-4 mr-2" />
+                    Export Results
+                  </MobileButton>
+                )}
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="current-to-value" className="space-y-4 mt-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <MobileInput
                     label="Minimum Scale"
                     type="number"
@@ -304,7 +354,6 @@ const InstrumentationCalculator = () => {
                     variant="elec"
                     size="wide"
                     onClick={calculateCurrentToValue}
-                    icon={<Calculator className="h-4 w-4" />}
                   >
                     Calculate Value
                   </MobileButton>
@@ -316,7 +365,9 @@ const InstrumentationCalculator = () => {
                     <RotateCcw className="h-4 w-4" />
                   </MobileButton>
                 </div>
-
+              </div>
+              
+              <div className="space-y-4">
                 <ResultCard
                   title="Calculated Value"
                   value={valueResult}
@@ -328,28 +379,28 @@ const InstrumentationCalculator = () => {
                   emptyMessage="Enter current signal to calculate value"
                 />
               </div>
-            </MobileAccordionContent>
-          </MobileAccordionItem>
+            </div>
+          </TabsContent>
 
-          <MobileAccordionItem value="info">
-            <MobileAccordionTrigger>
-              4-20mA Information & Standards
-            </MobileAccordionTrigger>
-            <MobileAccordionContent>
-              <Alert className="border-blue-500/20 bg-blue-500/10">
-                <Info className="h-4 w-4 text-blue-500" />
-                <AlertDescription className="text-blue-200 space-y-2">
-                  <p><strong>4-20mA Current Loop:</strong></p>
-                  <p>• 4mA = 0% of scale (minimum value)</p>
-                  <p>• 20mA = 100% of scale (maximum value)</p>
-                  <p>• Formula: I = 4 + 16 × (Value - Min) / (Max - Min)</p>
-                  <p>• Industry standard for process control</p>
-                  <p>• Excellent noise immunity and long-distance capability</p>
-                </AlertDescription>
-              </Alert>
-            </MobileAccordionContent>
-          </MobileAccordionItem>
-        </MobileAccordion>
+          <TabsContent value="history" className="space-y-4 mt-6">
+            <div className="text-center py-8">
+              <History className="h-12 w-12 mx-auto mb-4 opacity-50" />
+              <p className="text-muted-foreground">Calculation history will appear here</p>
+            </div>
+          </TabsContent>
+        </Tabs>
+
+        {/* Information Panel */}
+        <Alert className="border-blue-500/20 bg-blue-500/10">
+          <Info className="h-4 w-4 text-blue-500" />
+          <AlertDescription className="text-blue-200 space-y-2">
+            <p><strong>4-20mA Current Loop:</strong></p>
+            <p>• 4mA = 0% of scale (minimum value)</p>
+            <p>• 20mA = 100% of scale (maximum value)</p>
+            <p>• Formula: I = 4 + 16 × (Value - Min) / (Max - Min)</p>
+            <p>• Industry standard for process control with excellent noise immunity</p>
+          </AlertDescription>
+        </Alert>
       </CardContent>
     </Card>
   );
