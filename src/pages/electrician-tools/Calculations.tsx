@@ -45,6 +45,9 @@ import WireGaugeCalculator from "@/components/apprentice/calculators/WireGaugeCa
 import InstrumentationCalculator from "@/components/apprentice/calculators/InstrumentationCalculator";
 import UnitConverterCalculator from "@/components/apprentice/calculators/UnitConverterCalculator";
 import ComingSoonCalculator from "@/components/apprentice/calculators/ComingSoonCalculator";
+import ArcFlashCalculator from "@/components/apprentice/calculators/ArcFlashCalculator";
+import EVSELoadCalculator from "@/components/apprentice/calculators/EVSELoadCalculator";
+import PowerQualityCalculator from "@/components/apprentice/calculators/PowerQualityCalculator";
 
 const Calculations = () => {
   const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
@@ -126,6 +129,8 @@ const Calculations = () => {
         return <HeatPumpCalculator />;
       case "ev-charging":
         return <EVChargingCalculator />;
+      case "evse-load":
+        return <EVSELoadCalculator />;
       
       // Tools & Components
       case "resistor-colour-code":
@@ -140,6 +145,10 @@ const Calculations = () => {
         return <EnergyCostCalculator />;
       case "unit-converter":
         return <UnitConverterCalculator />;
+      case "arc-flash":
+        return <ArcFlashCalculator />;
+      case "power-quality":
+        return <PowerQualityCalculator />;
       
       default:
         return <OhmsLawCalculator />;
