@@ -142,15 +142,15 @@ const EnhancedCableSizingCalculator = () => {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <EnhancedCableSizingInputs
-              inputs={inputs}
-              errors={result.errors}
-              updateInput={updateInput}
-              setInstallationType={setInstallationType}
-              setCableType={setCableType}
-              calculateCableSize={handleCalculate}
-              resetCalculator={handleReset}
-            />
+        <EnhancedCableSizingInputs
+          inputs={inputs}
+          errors={result.errors}
+          updateInput={updateInput}
+          setInstallationType={(type: string) => setInstallationType(type as any)}
+          setCableType={setCableType}
+          calculateCableSize={handleCalculate}
+          resetCalculator={handleReset}
+        />
             
             <div className="flex flex-col space-y-4">
               <div className="rounded-md bg-elec-dark p-6 flex-grow flex flex-col">

@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calculator, RefreshCw } from "lucide-react";
 
+import { CableSizingInputs, CableSizingErrors } from "./useCableSizing";
+
 interface EnhancedCableSizingInputsProps {
-  inputs: any;
-  errors: any;
-  updateInput: (field: string, value: string) => void;
+  inputs: CableSizingInputs;
+  errors: CableSizingErrors;
+  updateInput: (field: keyof CableSizingInputs, value: string) => void;
   setInstallationType: (type: string) => void;
   setCableType: (type: string) => void;
   calculateCableSize: () => void;
