@@ -162,26 +162,7 @@ const InstrumentationCalculator = () => {
           Professional instrumentation scaling with bidirectional calculations, presets, and analysis tools.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Mobile-friendly Quick Presets */}
-        <div className="space-y-3">
-          <h4 className="text-sm font-medium">Quick Presets</h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-            {PRESETS.map((preset) => (
-              <MobileButton
-                key={preset.name}
-                variant={selectedPreset === preset.name ? "elec" : "outline"}
-                size="sm"
-                onClick={() => applyPreset(preset.name)}
-                className="text-xs h-auto py-2 px-2 text-center whitespace-normal leading-tight"
-              >
-                {preset.name}
-              </MobileButton>
-            ))}
-          </div>
-        </div>
-
-        {/* Mobile-friendly Tabs */}
+      <CardContent className="space-y-6">{/* Mobile-friendly Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 gap-1 h-auto p-1">
             <TabsTrigger 
@@ -301,13 +282,6 @@ const InstrumentationCalculator = () => {
                     </div>
                   )}
                 </ResultCard>
-
-                {currentResult !== null && (
-                  <MobileButton variant="outline" size="wide">
-                    <Download className="h-4 w-4 mr-2" />
-                    Export Results
-                  </MobileButton>
-                )}
               </div>
             </div>
           </TabsContent>
