@@ -2,95 +2,107 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Wrench, LayoutGrid, Heart, Users, Brain, GraduationCap, FileText, Briefcase } from "lucide-react";
+import { Wrench, LayoutGrid, Heart, Brain, GraduationCap, FileText, Briefcase, ArrowLeft } from "lucide-react";
 
 const ElectricalHub = () => {
-  const hubCards = [
+  // Main 2x2 grid - 4 most essential tools for electricians
+  const mainResources = [
     {
       id: 1,
       title: "Trade Essentials",
-      description: "Essential tools, materials, safety updates and industry resources for daily work",
-      icon: <Wrench className="h-12 w-12 text-elec-yellow opacity-80" />,
+      icon: Wrench,
       link: "/electrician/trade-essentials"
     },
     {
       id: 2,
       title: "Electrical Workshop",
-      description: "A used daily toolkit for all electrical jobs",
-      icon: <LayoutGrid className="h-12 w-12 text-elec-yellow opacity-80" />,
+      icon: LayoutGrid,
       link: "/electrician-tools"
     },
     {
       id: 3,
       title: "Mental Health Hub",
-      description: "Resources and support for maintaining wellbeing during your career",
-      icon: <Heart className="h-12 w-12 text-elec-yellow opacity-80" />,
+      icon: Heart,
       link: "/electrician/mental-health"
     },
     {
       id: 4,
-      title: "Mentor Connect",
-      description: "Offer mentorship to apprentices seeking guidance in their electrical career",
-      icon: <Users className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/electrician/mentor-connect"
-    },
+      title: "Business Development",
+      icon: Briefcase,
+      link: "/electrician/business-development"
+    }
+  ];
+
+  // Additional tools in smaller grid
+  const additionalResources = [
     {
       id: 5,
       title: "AI Tooling",
-      description: "Leverage AI tools to enhance your learning and practical electrical skills",
-      icon: <Brain className="h-12 w-12 text-elec-yellow opacity-80" />,
+      icon: Brain,
       link: "/electrician-tools/ai-tooling"
     },
     {
       id: 6,
-      title: "Career Progression",
-      description: "Advanced career development resources for qualified electricians",
-      icon: <GraduationCap className="h-12 w-12 text-elec-yellow opacity-80" />,
+      title: "Career Progression", 
+      icon: GraduationCap,
       link: "/electrician/career-progression"
     },
     {
       id: 7,
       title: "Quote Library",
-      description: "Generate professional quotes for electrical jobs with AI assistance",
-      icon: <FileText className="h-12 w-12 text-elec-yellow opacity-80" />,
+      icon: FileText,
       link: "/electrician-tools/quote-library"
-    },
-    {
-      id: 8,
-      title: "Business Development",
-      description: "Tools and resources to grow your electrical business",
-      icon: <Briefcase className="h-12 w-12 text-elec-yellow opacity-80" />,
-      link: "/electrician/business-development"
     }
   ];
 
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Electrical Hub</h1>
-        <p className="text-muted-foreground">
-          Essential tools and resources for electrical professionals
-        </p>
+    <div className="space-y-6 md:space-y-8 animate-fade-in px-4 md:px-0">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4 md:mb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-center sm:text-left">
+          Electrical Hub
+        </h1>
+        <Link to="/dashboard" className="flex-shrink-0 w-full sm:w-auto">
+          <Button variant="outline" className="w-full sm:w-auto">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Dashboard
+          </Button>
+        </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {hubCards.map((card) => (
-          <Link key={card.id} to={card.link} className="group">
-            <Card className="h-full border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/50 transition-all">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xl">{card.title}</CardTitle>
-                <CardDescription className="text-sm">
-                  {card.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex items-center justify-center py-6">
-                <div className="transition-transform group-hover:scale-110">
-                  {card.icon}
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
+      {/* Main 2x2 Grid - Essential Tools */}
+      <div className="space-y-4">
+        <h2 className="text-lg sm:text-xl font-semibold text-center">Essential Tools</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 max-w-4xl mx-auto">
+          {mainResources.map((resource) => (
+            <Link to={resource.link} key={resource.id} className="focus:outline-none hover-scale">
+              <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
+                <CardHeader className="flex flex-col items-center justify-center text-center py-6 md:py-8">
+                  <resource.icon className="h-10 w-10 sm:h-12 sm:w-12 mb-3 text-elec-yellow" />
+                  <CardTitle className="text-base sm:text-lg leading-tight">{resource.title}</CardTitle>
+                </CardHeader>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Additional Tools Section */}
+      <div className="space-y-4">
+        <h2 className="text-lg sm:text-xl font-semibold text-center">Additional Tools</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+          {additionalResources.map((resource) => (
+            <Link to={resource.link} key={resource.id} className="focus:outline-none hover-scale">
+              <Card className="border-elec-yellow/20 bg-elec-gray h-full hover:bg-elec-gray/80 transition-all duration-200 cursor-pointer">
+                <CardHeader className="flex flex-col items-center justify-center text-center py-4 md:py-6 px-2 md:px-6">
+                  <resource.icon className="h-6 w-6 sm:h-8 sm:w-8 mb-2 text-elec-yellow" />
+                  <CardTitle className="text-xs sm:text-sm md:text-base leading-tight text-center">
+                    {resource.title}
+                  </CardTitle>
+                </CardHeader>
+              </Card>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
