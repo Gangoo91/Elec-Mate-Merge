@@ -290,8 +290,8 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
             {(environmentalSettings.installationZones || []).map((zone) => (
               <Card key={zone.id} className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
                 <CardHeader className="pb-4">
-                  <div className="flex flex-col space-y-3 sm:flex-row sm:justify-between sm:items-start sm:space-y-0">
-                    <CardTitle className="flex items-center gap-2 text-elec-light">
+                  <div className="flex flex-col space-y-3 sm:flex-row sm:justify-between sm:items-center sm:space-y-0">
+                    <CardTitle className="flex items-center justify-center gap-2 text-elec-light sm:justify-start">
                       <MapPin className="h-5 w-5 text-elec-yellow" />
                       Zone Configuration
                     </CardTitle>
