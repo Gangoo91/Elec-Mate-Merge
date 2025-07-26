@@ -122,9 +122,27 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
     label: load.label
   }));
 
+  // Installation purpose options
+  const installationPurposeOptions = [
+    { value: "new-installation", label: "New installation" },
+    { value: "circuit-addition", label: "Circuit addition/extension" },
+    { value: "system-upgrade", label: "System upgrade/replacement" },
+    { value: "emergency-repair", label: "Emergency repair" },
+    { value: "temporary-installation", label: "Temporary installation" },
+    { value: "compliance-upgrade", label: "Compliance upgrade" }
+  ];
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-6">
+        <MobileSelectWrapper
+          label="Installation Purpose"
+          placeholder="Select installation purpose"
+          value={planData.installationPurpose || ""}
+          onValueChange={(value) => updatePlanData({ installationPurpose: value })}
+          options={installationPurposeOptions}
+        />
+
         <MobileSelectWrapper
           label="Installation Environment"
           placeholder="Select installation environment"
@@ -142,7 +160,7 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
         />
       </div>
 
-      {planData.installationType && planData.loadType && (
+      {planData.installationPurpose && planData.installationType && planData.loadType && (
         <Card className="bg-green-500/10 border-green-500/30">
           <CardHeader>
             <CardTitle className="text-green-300 flex items-center gap-2">

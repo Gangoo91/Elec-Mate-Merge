@@ -2,6 +2,7 @@
 export interface InstallPlanData {
   // Installation Type
   installationType: string;
+  installationPurpose?: string;
   loadType: string;
   
   // Load Details
