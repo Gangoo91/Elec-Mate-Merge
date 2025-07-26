@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, AlertTriangle, XCircle, Cable, DollarSign, Clock } from "lucide-react";
+import { CheckCircle, AlertTriangle, XCircle, Cable, PoundSterling, Clock } from "lucide-react";
 import { CableRecommendation } from "./types";
 
 interface CableRecommendationsCardProps {
@@ -97,7 +97,7 @@ const CableRecommendationsCard = ({ recommendations, onSelectCable }: CableRecom
               <div>
                 <div className="text-muted-foreground">Cost Category</div>
                 <div className={`font-medium flex items-center gap-1 ${getCostColor(cable.cost || "medium")}`}>
-                  <DollarSign className="h-3 w-3" />
+                  <PoundSterling className="h-3 w-3" />
                   {cable.cost?.toUpperCase() || "MEDIUM"}
                 </div>
               </div>
