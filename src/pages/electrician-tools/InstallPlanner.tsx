@@ -1,10 +1,9 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, MapPin, ChevronRight, ChevronLeft, RotateCcw, Target, Home, Zap, Cable, Shield, BarChart3 } from "lucide-react";
+import { ArrowLeft, MapPin, ChevronRight, ChevronLeft, RotateCcw } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import InstallationTypeStep from "@/components/install-planner/InstallationTypeStep";
 import LoadDetailsStep from "@/components/install-planner/LoadDetailsStep";
 import CableRunStep from "@/components/install-planner/CableRunStep";
@@ -57,43 +56,37 @@ const InstallPlanner = () => {
       id: 1, 
       title: "Design Mode", 
       subtitle: "Single or Multi-Circuit",
-      component: DesignModeSelector,
-      icon: Target
+      component: DesignModeSelector
     },
     { 
       id: 2, 
       title: "Installation Type", 
       subtitle: "Environment & Load Type",
-      component: InstallationTypeStep,
-      icon: Home
+      component: InstallationTypeStep
     },
     { 
       id: 3, 
       title: "Load Details", 
       subtitle: "Power & Electrical Specs",
-      component: LoadDetailsStep,
-      icon: Zap
+      component: LoadDetailsStep
     },
     { 
       id: 4, 
       title: "Cable Run", 
       subtitle: "Installation Method & Route",
-      component: CableRunStep,
-      icon: Cable
+      component: CableRunStep
     },
     { 
       id: 5, 
       title: "Environment", 
       subtitle: "Conditions & Protection",
-      component: EnvironmentStep,
-      icon: Shield
+      component: EnvironmentStep
     },
     { 
       id: 6, 
       title: "Results", 
       subtitle: "Recommendations & Compliance",
-      component: ResultsStep,
-      icon: BarChart3
+      component: ResultsStep
     }
   ];
 
@@ -102,36 +95,31 @@ const InstallPlanner = () => {
       id: 1, 
       title: "Design Mode", 
       subtitle: "Single or Multi-Circuit",
-      component: DesignModeSelector,
-      icon: Target
+      component: DesignModeSelector
     },
     { 
       id: 2, 
       title: "Installation Type", 
       subtitle: "Environment & System Type",
-      component: InstallationTypeStep,
-      icon: Home
+      component: InstallationTypeStep
     },
     { 
       id: 3, 
       title: "Circuit Design", 
       subtitle: "Define Multiple Circuits",
-      component: MultiCircuitManager,
-      icon: Zap
+      component: MultiCircuitManager
     },
     { 
       id: 4, 
       title: "Environment", 
       subtitle: "Conditions & Protection",
-      component: EnvironmentStep,
-      icon: Shield
+      component: EnvironmentStep
     },
     { 
       id: 5, 
       title: "Results", 
       subtitle: "System Analysis & Compliance",
-      component: MultiCircuitResults,
-      icon: BarChart3
+      component: MultiCircuitResults
     }
   ];
 
@@ -275,50 +263,6 @@ const InstallPlanner = () => {
               </div>
             </div>
           </div>
-
-          {/* Enhanced Progress Section - Mobile optimized */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3 px-4 sm:px-6">
-              <div className="space-y-4">
-                {/* Current Step Info - Improved mobile layout */}
-                  <div className="space-y-3 sm:space-y-0 sm:flex sm:justify-between sm:items-start">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 bg-elec-yellow/20 rounded-lg flex-shrink-0">
-                        {currentStepData?.icon && <currentStepData.icon className="h-5 w-5 text-elec-yellow" />}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                      <CardTitle className="text-base sm:text-lg lg:text-xl leading-tight">
-                        Step {currentStep} of {steps.length}: {currentStepData?.title}
-                      </CardTitle>
-                      <p className="text-xs sm:text-sm text-muted-foreground mt-1 leading-relaxed">
-                        {currentStepData?.subtitle}
-                      </p>
-                    </div>
-                  </div>
-                  
-                  {/* Badges - Better mobile wrapping */}
-                  <div className="flex flex-wrap items-center gap-2">
-                    {planData.designMode && (
-                      <Badge 
-                        variant="outline" 
-                        className="border-blue-400/30 text-blue-400 text-xs whitespace-nowrap"
-                      >
-                        {planData.designMode === "multi" ? "Multi-Circuit" : "Single Circuit"}
-                      </Badge>
-                    )}
-                    {planData.environmentalSettings?.installationZones && planData.environmentalSettings.installationZones.length > 0 && (
-                      <Badge 
-                        variant="outline" 
-                        className="border-green-400/30 text-green-400 text-xs whitespace-nowrap"
-                      >
-                        {planData.environmentalSettings.installationZones.length} Zones
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </CardHeader>
-          </Card>
 
           {/* Step Content - Enhanced mobile padding */}
           <Card className="border-elec-yellow/20 bg-elec-gray">
