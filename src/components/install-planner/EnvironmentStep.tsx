@@ -52,12 +52,6 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
     // For single circuit mode, show simplified environmental controls
     return (
       <div className="space-y-6">
-        <div>
-          <h2 className="text-2xl font-bold mb-2">Environmental Conditions & Protection</h2>
-          <p className="text-muted-foreground mb-6">
-            Specify environmental conditions, protective devices, and earthing arrangements for your single circuit installation.
-          </p>
-        </div>
 
         <EnvironmentalContextManager
           environmentalSettings={environmentalSettings}
@@ -91,13 +85,6 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
   // Multi-circuit mode with full environmental management
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold mb-2">Environmental Conditions & Multi-Circuit Protection</h2>
-        <p className="text-muted-foreground mb-6">
-          Configure environmental settings that apply across your multi-circuit installation. 
-          You can set global defaults and create specific zones with different environmental conditions.
-        </p>
-      </div>
 
       <EnvironmentalContextManager
         environmentalSettings={environmentalSettings}
