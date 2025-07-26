@@ -1,7 +1,6 @@
 
 import { BookOpen, Clock, Trophy, Users } from "lucide-react";
 import OverviewCard from "@/components/dashboard/OverviewCard";
-import { useLeaderboardData } from "@/hooks/leaderboards/useLeaderboardData";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -17,7 +16,6 @@ interface DashboardOverviewProps {
 }
 
 const DashboardOverview = ({ user }: DashboardOverviewProps) => {
-  const { communityStats, currentUserRank } = useLeaderboardData();
   const { user: authUser } = useAuth();
   const [completedLessons, setCompletedLessons] = useState(user.completedLessons);
   const [activeUsers, setActiveUsers] = useState(0);
@@ -47,12 +45,10 @@ const DashboardOverview = ({ user }: DashboardOverviewProps) => {
     fetchCompletedLessons();
   }, [authUser]);
 
-  // Set active users count
+  // Set active users count (mock data for now)
   useEffect(() => {
-    if (communityStats?.active_users) {
-      setActiveUsers(communityStats.active_users);
-    }
-  }, [communityStats]);
+    setActiveUsers(127); // Static value since leaderboards removed
+  }, []);
 
   return (
     <div className="grid gap-2 sm:gap-3 md:gap-4 grid-cols-2 lg:grid-cols-4">
@@ -64,16 +60,16 @@ const DashboardOverview = ({ user }: DashboardOverviewProps) => {
         isMobile={isMobile}
       />
       <OverviewCard 
-        title="Active Streak" 
-        value={`${currentUserRank?.streak || 0} days`}
-        description={currentUserRank?.streak ? "Keep going!" : "Start learning"}
+        title="Time Spent" 
+        value="2.5 hrs"
+        description="This week"
         icon={<Clock className="h-4 w-4" />}
         isMobile={isMobile}
       />
       <OverviewCard 
-        title="Rank" 
-        value={currentUserRank ? "#" + (currentUserRank?.points > 0 ? "1-10" : "--") : "--"}
-        description="Complete lessons to rank"
+        title="Learning Goal" 
+        value="4/7 days"
+        description="Weekly target"
         icon={<Trophy className="h-4 w-4" />}
         isMobile={isMobile}
       />

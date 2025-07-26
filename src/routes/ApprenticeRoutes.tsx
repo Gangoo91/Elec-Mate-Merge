@@ -2,7 +2,7 @@
 import { Route, Routes } from "react-router-dom";
 import ApprenticeHub from "@/pages/ApprenticeHub";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
-import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
+
 import RightsAndPay from "@/pages/apprentice/RightsAndPay";
 import WorkLifeBalance from "@/pages/apprentice/mental-health/WorkLifeBalance";
 import MentalHealthResources from "@/pages/apprentice/mental-health/MentalHealthResources";
@@ -54,7 +54,7 @@ const ApprenticeRoutes = () => (
     <Route path="mental-health/stress-management" element={<StressManagement />} />
     <Route path="mental-health/crisis-resources" element={<CrisisResources />} />
     <Route path="mental-health/support-network" element={<SupportNetwork />} />
-    <Route path="mentor" element={<ApprenticeMentor />} />
+    
     <Route path="rights-and-pay" element={<RightsAndPay />} />
     <Route path="toolbox" element={<ApprenticeToolbox />} />
     <Route path="toolbox/apprenticeship-expectations" element={<ApprenticeshipExpectations />} />

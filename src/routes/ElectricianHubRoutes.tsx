@@ -10,9 +10,7 @@ import IndustryNewsEnhanced from "@/pages/electrician/safety-shares/IndustryNews
 import SafetyResources from "@/pages/electrician/safety-shares/SafetyResources";
 import SafetyResourcesEnhanced from "@/pages/electrician/safety-shares/SafetyResourcesEnhanced";
 import LearningFromExperience from "@/pages/electrician/safety-shares/LearningFromExperience";
-import Chat from "@/pages/Chat";
 import ApprenticeMentalHealth from "@/pages/apprentice/ApprenticeMentalHealth";
-import ApprenticeMentor from "@/pages/apprentice/ApprenticeMentor";
 import JobVacancies from "@/pages/electrician/JobVacancies";
 import ElectricalMaterials from "@/pages/electrician/ElectricalMaterials";
 import ElectricalTools from "@/pages/electrician/ElectricalTools";
@@ -37,7 +35,7 @@ const ElectricianHubRoutes = () => (
     {/* Default route - show Electrical Hub as the main page */}
     <Route index element={<ElectricalHub />} />
     <Route path="trade-essentials" element={<TradeEssentials />} />
-    <Route path="chat" element={<Chat />} />
+    
     <Route path="job-vacancies" element={<JobVacancies />} />
     <Route path="materials" element={<ElectricalMaterials />} />
     <Route path="tools" element={<ElectricalTools />} />
@@ -54,7 +52,7 @@ const ElectricianHubRoutes = () => (
     <Route path="mental-health" element={<ElectricianMentalHealth />} />
     <Route path="mental-health/work-life-balance" element={<WorkLifeBalance />} />
     <Route path="mental-health/resources" element={<MentalHealthResources />} />
-    <Route path="mentor-connect" element={<ApprenticeMentor />} />
+    
     <Route path="career-progression" element={<CareerProgression />} />
     
     {/* Business Development Routes */}

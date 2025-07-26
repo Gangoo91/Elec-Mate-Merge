@@ -3,13 +3,9 @@ import {
   Home, 
   GraduationCap, 
   Wrench, 
-  Video, 
-  Trophy, 
   CreditCard, 
   Settings,
-  MessageSquare,
-  Heart,
-  Users
+  Heart
 } from "lucide-react";
 
 export type NavItem = {
@@ -39,33 +35,9 @@ export const mainNavItems: NavItem[] = [
     roles: ["visitor", "electrician", "employer", "admin"],
   },
   {
-    name: "Chat Forum",
-    path: "/chat",
-    icon: <MessageSquare className="h-5 w-5" />,
-    roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
-  },
-  {
     name: "Mental Health Hub",
     path: "/mental-health",
     icon: <Heart className="h-5 w-5" />,
-    roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
-  },
-  {
-    name: "Mentor Connect",
-    path: "/mentor",
-    icon: <Users className="h-5 w-5" />,
-    roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
-  },
-  {
-    name: "Video Lessons",
-    path: "/videos",
-    icon: <Video className="h-5 w-5" />,
-    roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
-  },
-  {
-    name: "Leaderboards",
-    path: "/leaderboards",
-    icon: <Trophy className="h-5 w-5" />,
     roles: ["visitor", "apprentice", "electrician", "employer", "admin"],
   },
   {
