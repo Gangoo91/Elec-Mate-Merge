@@ -15,19 +15,54 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
     { value: "clipped-direct", label: "Clipped Direct", description: "Cable clipped direct to surface" },
     { value: "conduit-surface", label: "Surface Conduit", description: "In conduit on surface" },
     { value: "conduit-embedded", label: "Embedded Conduit", description: "In conduit in masonry" },
-    { value: "trunking", label: "Trunking", description: "In cable trunking system" },
-    { value: "ducting", label: "Ducting", description: "In cable ducting underground" },
+    { value: "conduit-underground", label: "Underground Conduit", description: "In conduit underground" },
+    { value: "trunking-metal", label: "Metal Trunking", description: "In metal cable trunking" },
+    { value: "trunking-plastic", label: "Plastic Trunking", description: "In plastic cable trunking" },
+    { value: "ducting", label: "Cable Ducting", description: "In cable ducting underground" },
     { value: "direct-buried", label: "Direct Buried", description: "Cable buried direct in ground" },
-    { value: "overhead", label: "Overhead", description: "Overhead line installation" }
+    { value: "overhead", label: "Overhead", description: "Overhead line installation" },
+    { value: "cable-tray", label: "Cable Tray", description: "On perforated cable tray" },
+    { value: "cable-ladder", label: "Cable Ladder", description: "On cable ladder system" },
+    { value: "basket-tray", label: "Basket Tray", description: "In wire mesh cable basket" },
+    { value: "floor-duct", label: "Floor Ducting", description: "In floor ducting system" },
+    { value: "ceiling-void", label: "Ceiling Void", description: "In ceiling void space" },
+    { value: "wall-chase", label: "Wall Chase", description: "In chased wall cavity" },
+    { value: "rising-main", label: "Rising Main", description: "Vertical rising main installation" }
   ];
 
   const cableTypes = [
-    { value: "pvc-pvc", label: "PVC/PVC", description: "70°C PVC insulated and sheathed" },
-    { value: "xlpe-pvc", label: "XLPE/PVC", description: "90°C XLPE insulated, PVC sheathed" },
-    { value: "xlpe-lsoh", label: "XLPE/LSOH", description: "90°C XLPE insulated, LSOH sheathed" },
-    { value: "swa", label: "SWA", description: "Steel wire armoured cable" },
-    { value: "mineral", label: "Mineral", description: "Mineral insulated cable" },
-    { value: "singles", label: "Singles", description: "Single core cables in conduit/trunking" }
+    // Standard Building Cables
+    { value: "pvc-pvc", label: "PVC/PVC (6181Y)", description: "70°C PVC insulated and sheathed" },
+    { value: "xlpe-pvc", label: "XLPE/PVC (6491X)", description: "90°C XLPE insulated, PVC sheathed" },
+    { value: "xlpe-lsoh", label: "XLPE/LSOH (6491B)", description: "90°C XLPE insulated, LSOH sheathed" },
+    
+    // Armoured Cables
+    { value: "swa-pvc", label: "SWA PVC (6944X)", description: "Steel wire armoured, PVC outer sheath" },
+    { value: "swa-lsoh", label: "SWA LSOH (6944B)", description: "Steel wire armoured, LSOH outer sheath" },
+    { value: "awa", label: "AWA", description: "Aluminium wire armoured cable" },
+    
+    // Fire Performance Cables
+    { value: "fplsoh", label: "FP LSOH", description: "Fire performance LSOH cable" },
+    { value: "fp200", label: "FP200", description: "Enhanced fire performance cable" },
+    { value: "mineral-pvc", label: "MICC PVC", description: "Mineral insulated, PVC sheathed" },
+    { value: "mineral-lsoh", label: "MICC LSOH", description: "Mineral insulated, LSOH sheathed" },
+    { value: "mineral-bare", label: "MICC Bare", description: "Mineral insulated, bare copper sheath" },
+    
+    // Single Core Cables
+    { value: "singles-pvc", label: "Singles PVC", description: "Single core PVC cables" },
+    { value: "singles-xlpe", label: "Singles XLPE", description: "Single core XLPE cables" },
+    { value: "singles-lsoh", label: "Singles LSOH", description: "Single core LSOH cables" },
+    
+    // Specialist Cables
+    { value: "data-cable", label: "Data Cable", description: "Cat 5e/6/6a network cable" },
+    { value: "coax", label: "Coaxial", description: "Coaxial cable for CCTV/satellite" },
+    { value: "alarm-cable", label: "Fire Alarm", description: "Fire alarm system cable" },
+    { value: "speaker-cable", label: "Speaker Cable", description: "Audio/PA system cable" },
+    { value: "control-cable", label: "Control Cable", description: "Multi-core control cable" },
+    
+    // High Voltage
+    { value: "11kv", label: "11kV XLPE", description: "11kV XLPE insulated cable" },
+    { value: "33kv", label: "33kV XLPE", description: "33kV XLPE insulated cable" }
   ];
 
   const getVoltageDropGuidance = () => {
@@ -76,9 +111,11 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
           onValueChange={(value) => updatePlanData({ installationMethod: value })}
           options={installationMethods.map(method => ({
             value: method.value,
-            label: `${method.label} - ${method.description}`
+            label: method.label
           }))}
-          hint="Choose the method that matches your cable route"
+          hint={planData.installationMethod ? 
+            installationMethods.find(m => m.value === planData.installationMethod)?.description || "Choose the method that matches your cable route" 
+            : "Choose the method that matches your cable route"}
         />
 
         <MobileSelectWrapper
@@ -88,9 +125,11 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
           onValueChange={(value) => updatePlanData({ cableType: value })}
           options={cableTypes.map(cable => ({
             value: cable.value,
-            label: `${cable.label} - ${cable.description}`
+            label: cable.label
           }))}
-          hint="Choose cable type based on installation environment"
+          hint={planData.cableType ? 
+            cableTypes.find(c => c.value === planData.cableType)?.description || "Choose cable type based on installation environment" 
+            : "Choose cable type based on installation environment"}
         />
       </div>
 
@@ -151,7 +190,7 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
                   </div>
                 </>
               )}
-              {planData.installationMethod === "conduit-surface" && (
+              {(planData.installationMethod === "conduit-surface" || planData.installationMethod === "conduit-embedded" || planData.installationMethod === "conduit-underground") && (
                 <>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
@@ -159,7 +198,7 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
-                    <span className="text-sm text-amber-200">Use appropriate conduit size for cable fill factor</span>
+                    <span className="text-sm text-amber-200">Use appropriate conduit size for cable fill factor (max 45%)</span>
                   </div>
                 </>
               )}
@@ -175,7 +214,7 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
                   </div>
                 </>
               )}
-              {planData.installationMethod === "trunking" && (
+              {(planData.installationMethod === "trunking-metal" || planData.installationMethod === "trunking-plastic") && (
                 <>
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
@@ -184,6 +223,42 @@ const CableRunStep = ({ planData, updatePlanData }: CableRunStepProps) => {
                   <div className="flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
                     <span className="text-sm text-amber-200">Separate power and data cables in different compartments</span>
+                  </div>
+                </>
+              )}
+              {(planData.installationMethod === "cable-tray" || planData.installationMethod === "cable-ladder" || planData.installationMethod === "basket-tray") && (
+                <>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Support intervals every 2m for cable trays, 3m for ladders</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Consider cable segregation and fire stopping requirements</span>
+                  </div>
+                </>
+              )}
+              {planData.installationMethod === "overhead" && (
+                <>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Minimum clearance heights: 5.2m roads, 5.8m HGV routes</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Weather protection and wind loading considerations</span>
+                  </div>
+                </>
+              )}
+              {(planData.installationMethod === "ceiling-void" || planData.installationMethod === "floor-duct") && (
+                <>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Fire stopping required at compartment boundaries</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></span>
+                    <span className="text-sm text-amber-200">Adequate ventilation and access for maintenance</span>
                   </div>
                 </>
               )}
