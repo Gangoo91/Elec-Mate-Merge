@@ -124,14 +124,7 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold mb-2">Installation Type & Specialisation</h2>
-        <p className="text-muted-foreground mb-6">
-          Select the installation environment and the specific type of electrical load you're planning to supply.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         <MobileSelectWrapper
           label="Installation Environment"
           placeholder="Select installation environment"
