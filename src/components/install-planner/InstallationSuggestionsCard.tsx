@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Lightbulb, TrendingUp, Shield, DollarSign, Wrench, CheckCircle } from "lucide-react";
+import { Lightbulb, TrendingUp, Shield, PoundSterling, Wrench, CheckCircle } from "lucide-react";
 import { InstallationSuggestion } from "./types";
 
 interface InstallationSuggestionsCardProps {
@@ -18,7 +18,7 @@ const InstallationSuggestionsCard = ({ suggestions }: InstallationSuggestionsCar
       case "protective-device":
         return <Shield className="h-4 w-4" />;
       case "cost-optimization":
-        return <DollarSign className="h-4 w-4" />;
+        return <PoundSterling className="h-4 w-4" />;
       case "safety":
         return <Shield className="h-4 w-4" />;
       default:

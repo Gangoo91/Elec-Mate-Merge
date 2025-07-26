@@ -144,13 +144,13 @@ const ResultsStep = ({ planData }: ResultsStepProps) => {
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Key Metrics Grid - Mobile Responsive */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <div className="col-span-2 md:col-span-1 p-4 bg-elec-dark/50 rounded border border-elec-yellow/20 text-center">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="col-span-1 sm:col-span-2 md:col-span-1 p-4 bg-elec-dark/50 rounded border border-elec-yellow/20 text-center">
                   <p className="text-xs text-muted-foreground mb-1">Design Current</p>
                   <p className="text-2xl font-bold text-elec-yellow">{designCurrent.toFixed(2)}A</p>
                 </div>
                 
-                <div className="col-span-2 md:col-span-1 p-4 bg-elec-dark/50 rounded border border-elec-yellow/20 text-center">
+                <div className="col-span-1 sm:col-span-2 md:col-span-1 p-4 bg-elec-dark/50 rounded border border-elec-yellow/20 text-center">
                   <p className="text-xs text-muted-foreground mb-1">Cable Size</p>
                   <p className="text-xl font-bold text-green-400">{recommendedCable.size}</p>
                 </div>
