@@ -1,13 +1,12 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Calculator, Info, RotateCcw } from "lucide-react";
+import { Calculator, Info, RotateCcw, BarChart4, Zap } from "lucide-react";
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { ResultCard } from "@/components/ui/result-card";
 
 const LoadCalculator = () => {
   const [lighting, setLighting] = useState<string>("");
@@ -52,133 +51,277 @@ const LoadCalculator = () => {
     <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
         <div className="flex items-center gap-2">
-          <Calculator className="h-5 w-5 text-elec-yellow" />
-          <CardTitle>Load Calculator</CardTitle>
+          <BarChart4 className="h-5 w-5 text-elec-yellow" />
+          <CardTitle>Load Assessment Calculator</CardTitle>
         </div>
         <CardDescription>
-          Calculate total electrical load with diversity factors for installations.
+          Calculate total electrical load with diversity factors for BS 7671 compliant installations.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Input Section */}
+      <CardContent className="space-y-6">
+        {/* Mobile-optimized accordion layout */}
+        <div className="block lg:hidden">
+          <MobileAccordion type="single" collapsible defaultValue="inputs">
+            <MobileAccordionItem value="inputs">
+              <MobileAccordionTrigger icon={<Calculator className="h-4 w-4" />}>
+                Load Inputs
+              </MobileAccordionTrigger>
+              <MobileAccordionContent>
+                <div className="space-y-4">
+                  <MobileInput
+                    label="Lighting Load"
+                    type="number"
+                    value={lighting}
+                    onChange={(e) => setLighting(e.target.value)}
+                    placeholder="e.g., 2000"
+                    unit="W"
+                    hint="No diversity factor applied to lighting"
+                  />
+
+                  <MobileInput
+                    label="Socket Outlets"
+                    type="number"
+                    value={sockets}
+                    onChange={(e) => setSockets(e.target.value)}
+                    placeholder="e.g., 5000"
+                    unit="W"
+                    hint="Standard diversity: 0.6 (60%)"
+                  />
+
+                  <MobileInput
+                    label="Heating Load"
+                    type="number"
+                    value={heating}
+                    onChange={(e) => setHeating(e.target.value)}
+                    placeholder="e.g., 8000"
+                    unit="W"
+                    hint="Standard diversity: 1.0 (100%)"
+                  />
+
+                  <MobileInput
+                    label="Motor Load"
+                    type="number"
+                    value={motors}
+                    onChange={(e) => setMotors(e.target.value)}
+                    placeholder="e.g., 1500"
+                    unit="W"
+                    hint="Full load rating"
+                  />
+
+                  <MobileInput
+                    label="Overall Diversity Factor"
+                    type="number"
+                    step="0.1"
+                    min="0.1"
+                    max="1"
+                    value={diversityFactor}
+                    onChange={(e) => setDiversityFactor(e.target.value)}
+                    placeholder="e.g., 0.8"
+                    hint="0.6-0.9 typical for mixed loads"
+                  />
+
+                  <div className="flex gap-3 pt-4">
+                    <MobileButton
+                      variant="elec"
+                      size="wide"
+                      onClick={calculateLoad}
+                      icon={<Calculator className="h-4 w-4" />}
+                    >
+                      Calculate Load
+                    </MobileButton>
+                    <MobileButton
+                      variant="outline"
+                      size="icon"
+                      onClick={reset}
+                    >
+                      <RotateCcw className="h-4 w-4" />
+                    </MobileButton>
+                  </div>
+                </div>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            <MobileAccordionItem value="results">
+              <MobileAccordionTrigger icon={<Zap className="h-4 w-4" />}>
+                Load Assessment Results
+              </MobileAccordionTrigger>
+              <MobileAccordionContent>
+                <div className="space-y-4">
+                  {result ? (
+                    <>
+                      <ResultCard
+                        title="Total Connected Load"
+                        value={result.totalLoad}
+                        unit="W"
+                        subtitle={`${(result.totalLoad / 1000).toFixed(1)} kW`}
+                        status="info"
+                        className="mb-3"
+                      />
+                      
+                      <ResultCard
+                        title="After Diversity"
+                        value={result.diversifiedLoad}
+                        unit="W"
+                        subtitle={`${(result.diversifiedLoad / 1000).toFixed(1)} kW`}
+                        status="warning"
+                        className="mb-3"
+                      />
+                      
+                      <ResultCard
+                        title="Recommended Supply"
+                        value={result.recommendedSupply}
+                        unit="W"
+                        subtitle={`${(result.recommendedSupply / 1000).toFixed(1)} kW (25% safety margin)`}
+                        status="success"
+                        icon={<BarChart4 className="h-6 w-6" />}
+                      />
+                    </>
+                  ) : (
+                    <ResultCard
+                      isEmpty={true}
+                      emptyMessage="Enter load values to calculate total demand"
+                      icon={<BarChart4 className="h-8 w-8" />}
+                    />
+                  )}
+                </div>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+
+            <MobileAccordionItem value="info">
+              <MobileAccordionTrigger>
+                BS 7671 Guidelines
+              </MobileAccordionTrigger>
+              <MobileAccordionContent>
+                <Alert className="border-blue-500/20 bg-blue-500/10">
+                  <Info className="h-4 w-4 text-blue-500" />
+                  <AlertDescription className="text-blue-200 space-y-2">
+                    <p><strong>Diversity Factors (BS 7671):</strong></p>
+                    <p>• Lighting: 1.0 (100%)</p>
+                    <p>• Socket outlets: 0.4-0.8 depending on type</p>
+                    <p>• Water heating: 1.0 (100%)</p>
+                    <p>• Space heating: 1.0 (100%)</p>
+                    <p>• Motors: 1.0 plus appropriate safety factors</p>
+                  </AlertDescription>
+                </Alert>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+          </MobileAccordion>
+        </div>
+
+        {/* Desktop layout */}
+        <div className="hidden lg:grid lg:grid-cols-2 gap-6">
           <div className="space-y-4">
-            <div>
-              <Label htmlFor="lighting">Lighting Load (W)</Label>
-              <Input
-                id="lighting"
-                type="number"
-                value={lighting}
-                onChange={(e) => setLighting(e.target.value)}
-                placeholder="e.g., 2000"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Lighting Load"
+              type="number"
+              value={lighting}
+              onChange={(e) => setLighting(e.target.value)}
+              placeholder="e.g., 2000"
+              unit="W"
+              hint="No diversity factor applied to lighting"
+            />
 
-            <div>
-              <Label htmlFor="sockets">Socket Outlets (W)</Label>
-              <Input
-                id="sockets"
-                type="number"
-                value={sockets}
-                onChange={(e) => setSockets(e.target.value)}
-                placeholder="e.g., 5000"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Socket Outlets"
+              type="number"
+              value={sockets}
+              onChange={(e) => setSockets(e.target.value)}
+              placeholder="e.g., 5000"
+              unit="W"
+              hint="Standard diversity: 0.6 (60%)"
+            />
 
-            <div>
-              <Label htmlFor="heating">Heating Load (W)</Label>
-              <Input
-                id="heating"
-                type="number"
-                value={heating}
-                onChange={(e) => setHeating(e.target.value)}
-                placeholder="e.g., 8000"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Heating Load"
+              type="number"
+              value={heating}
+              onChange={(e) => setHeating(e.target.value)}
+              placeholder="e.g., 8000"
+              unit="W"
+              hint="Standard diversity: 1.0 (100%)"
+            />
 
-            <div>
-              <Label htmlFor="motors">Motor Load (W)</Label>
-              <Input
-                id="motors"
-                type="number"
-                value={motors}
-                onChange={(e) => setMotors(e.target.value)}
-                placeholder="e.g., 1500"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Motor Load"
+              type="number"
+              value={motors}
+              onChange={(e) => setMotors(e.target.value)}
+              placeholder="e.g., 1500"
+              unit="W"
+              hint="Full load rating"
+            />
 
-            <div>
-              <Label htmlFor="diversity">Diversity Factor</Label>
-              <Input
-                id="diversity"
-                type="number"
-                step="0.1"
-                min="0.1"
-                max="1"
-                value={diversityFactor}
-                onChange={(e) => setDiversityFactor(e.target.value)}
-                placeholder="e.g., 0.8"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Overall Diversity Factor"
+              type="number"
+              step="0.1"
+              min="0.1"
+              max="1"
+              value={diversityFactor}
+              onChange={(e) => setDiversityFactor(e.target.value)}
+              placeholder="e.g., 0.8"
+              hint="0.6-0.9 typical for mixed loads"
+            />
 
-            <div className="flex gap-2">
-              <Button onClick={calculateLoad} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
-                <Calculator className="h-4 w-4 mr-2" />
-                Calculate
-              </Button>
-              <Button variant="outline" onClick={reset}>
+            <div className="flex gap-3">
+              <MobileButton
+                variant="elec"
+                size="wide"
+                onClick={calculateLoad}
+                icon={<Calculator className="h-4 w-4" />}
+              >
+                Calculate Load
+              </MobileButton>
+              <MobileButton
+                variant="outline"
+                size="icon"
+                onClick={reset}
+              >
                 <RotateCcw className="h-4 w-4" />
-              </Button>
+              </MobileButton>
             </div>
           </div>
 
-          {/* Result Section */}
           <div className="space-y-4">
-            <div className="rounded-md bg-elec-dark p-6 min-h-[200px]">
-              {result ? (
-                <div className="space-y-4">
-                  <div className="text-center">
-                    <h3 className="text-lg font-semibold text-elec-yellow mb-2">Load Assessment</h3>
-                    <Badge variant="secondary" className="mb-4">
-                      Diversity: {diversityFactor}
-                    </Badge>
-                  </div>
-                  
-                  <Separator />
-                  
-                  <div className="space-y-3 text-sm">
-                    <div>
-                      <span className="text-muted-foreground">Total Connected Load:</span>
-                      <div className="font-mono text-elec-yellow">{result.totalLoad.toFixed(0)} W</div>
-                    </div>
-                    
-                    <div>
-                      <span className="text-muted-foreground">After Diversity:</span>
-                      <div className="font-mono text-elec-yellow">{result.diversifiedLoad.toFixed(0)} W</div>
-                    </div>
-                    
-                    <div>
-                      <span className="text-muted-foreground">Recommended Supply:</span>
-                      <div className="font-mono text-elec-yellow text-lg">{result.recommendedSupply} W</div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex items-center justify-center h-full text-muted-foreground">
-                  Enter load values to calculate total demand
-                </div>
-              )}
-            </div>
+            {result ? (
+              <>
+                <ResultCard
+                  title="Total Connected Load"
+                  value={result.totalLoad}
+                  unit="W"
+                  subtitle={`${(result.totalLoad / 1000).toFixed(1)} kW`}
+                  status="info"
+                />
+                
+                <ResultCard
+                  title="After Diversity"
+                  value={result.diversifiedLoad}
+                  unit="W"
+                  subtitle={`${(result.diversifiedLoad / 1000).toFixed(1)} kW`}
+                  status="warning"
+                />
+                
+                <ResultCard
+                  title="Recommended Supply"
+                  value={result.recommendedSupply}
+                  unit="W"
+                  subtitle={`${(result.recommendedSupply / 1000).toFixed(1)} kW (25% safety margin)`}
+                  status="success"
+                  icon={<BarChart4 className="h-6 w-6" />}
+                />
+              </>
+            ) : (
+              <ResultCard
+                isEmpty={true}
+                emptyMessage="Enter load values to calculate total demand"
+                icon={<BarChart4 className="h-8 w-8" />}
+              />
+            )}
 
             <Alert className="border-blue-500/20 bg-blue-500/10">
               <Info className="h-4 w-4 text-blue-500" />
               <AlertDescription className="text-blue-200">
-                Diversity factors vary by application. Typical values: lighting 0.9, sockets 0.4-0.8, heating 1.0.
+                Calculations follow BS 7671 diversity factors and include 25% safety margin for supply sizing.
               </AlertDescription>
             </Alert>
           </div>
