@@ -175,7 +175,6 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                   ...environmentalSettings,
                   ambientTemperature: Number(value)
                 })}
-                hint={getTemperatureGuidance(environmentalSettings.ambientTemperature).message}
               />
 
               <MobileSelectWrapper
@@ -233,17 +232,41 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                 hint="External earth fault loop impedance"
               />
 
-              <MultiSelectDropdown
-                label="Special Requirements"
-                value={environmentalSettings.specialRequirements}
-                onValueChange={(value) => onUpdateEnvironmentalSettings({
-                  ...environmentalSettings,
-                  specialRequirements: value
-                })}
-                options={specialRequirementsOptions}
-                placeholder="Select special requirements..."
-                hint="Select all applicable special requirements for this installation"
-              />
+              <div className="space-y-3">
+                <div className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                  <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                  Special Requirements
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {specialRequirements.map((requirement) => (
+                    <div key={requirement} className="flex items-center space-x-3 p-3 rounded-lg bg-elec-card/30 border border-elec-gray/30">
+                      <input
+                        type="checkbox"
+                        id={requirement}
+                        checked={environmentalSettings.specialRequirements.includes(requirement)}
+                        onChange={(e) => {
+                          const current = environmentalSettings.specialRequirements;
+                          if (e.target.checked) {
+                            onUpdateEnvironmentalSettings({
+                              ...environmentalSettings,
+                              specialRequirements: [...current, requirement]
+                            });
+                          } else {
+                            onUpdateEnvironmentalSettings({
+                              ...environmentalSettings,
+                              specialRequirements: current.filter(req => req !== requirement)
+                            });
+                          }
+                        }}
+                        className="w-4 h-4 text-elec-yellow bg-elec-card border-elec-gray/50 rounded focus:ring-elec-yellow focus:ring-2"
+                      />
+                      <label htmlFor={requirement} className="text-sm text-elec-light cursor-pointer flex-1">
+                        {requirement}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -302,7 +325,6 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                     type="number"
                     value={zone.ambientTemperature.toString()}
                     onChange={(value) => updateZone(zone.id, { ambientTemperature: Number(value) })}
-                    hint={getTemperatureGuidance(zone.ambientTemperature).message}
                   />
 
                   <MobileSelectWrapper
