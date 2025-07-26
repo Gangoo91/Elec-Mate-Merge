@@ -187,20 +187,45 @@ const InstrumentationCalculator = () => {
             </MobileSelectContent>
           </MobileSelect>
 
-          {/* Input value */}
-          <MobileInput
-            label={getInputLabel()}
-            type="number"
-            value={inputValue}
-            onChange={(e) => {
-              setInputValue(e.target.value);
-              clearError('inputValue');
-            }}
-            placeholder={getInputPlaceholder()}
-            unit={calculationType === "calculate-trip" ? "mA" : unit}
-            error={errors.inputValue}
-            clearError={() => clearError('inputValue')}
-          />
+          {/* Measure value dropdown */}
+          <MobileSelect value={inputValue} onValueChange={setInputValue}>
+            <MobileSelectTrigger label={getInputLabel()}>
+              <MobileSelectValue placeholder={getInputPlaceholder()} />
+            </MobileSelectTrigger>
+            <MobileSelectContent>
+              {calculationType === "calculate-trip" ? (
+                // Common mA values for 4-20mA instrumentation
+                <>
+                  <MobileSelectItem value="4">4 mA (0%)</MobileSelectItem>
+                  <MobileSelectItem value="6">6 mA (12.5%)</MobileSelectItem>
+                  <MobileSelectItem value="8">8 mA (25%)</MobileSelectItem>
+                  <MobileSelectItem value="10">10 mA (37.5%)</MobileSelectItem>
+                  <MobileSelectItem value="12">12 mA (50%)</MobileSelectItem>
+                  <MobileSelectItem value="14">14 mA (62.5%)</MobileSelectItem>
+                  <MobileSelectItem value="16">16 mA (75%)</MobileSelectItem>
+                  <MobileSelectItem value="18">18 mA (87.5%)</MobileSelectItem>
+                  <MobileSelectItem value="20">20 mA (100%)</MobileSelectItem>
+                </>
+              ) : (
+                // Common percentage values and scale positions
+                <>
+                  <MobileSelectItem value="0">0% (Minimum)</MobileSelectItem>
+                  <MobileSelectItem value="25">25% (Quarter scale)</MobileSelectItem>
+                  <MobileSelectItem value="50">50% (Mid scale)</MobileSelectItem>
+                  <MobileSelectItem value="75">75% (Three quarter)</MobileSelectItem>
+                  <MobileSelectItem value="100">100% (Maximum)</MobileSelectItem>
+                  <MobileSelectItem value="10">10%</MobileSelectItem>
+                  <MobileSelectItem value="20">20%</MobileSelectItem>
+                  <MobileSelectItem value="30">30%</MobileSelectItem>
+                  <MobileSelectItem value="40">40%</MobileSelectItem>
+                  <MobileSelectItem value="60">60%</MobileSelectItem>
+                  <MobileSelectItem value="70">70%</MobileSelectItem>
+                  <MobileSelectItem value="80">80%</MobileSelectItem>
+                  <MobileSelectItem value="90">90%</MobileSelectItem>
+                </>
+              )}
+            </MobileSelectContent>
+          </MobileSelect>
 
           {/* Calculate button */}
           <MobileButton
