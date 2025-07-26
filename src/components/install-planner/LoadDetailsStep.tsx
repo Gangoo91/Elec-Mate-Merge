@@ -12,6 +12,41 @@ interface LoadDetailsStepProps {
 }
 
 const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => {
+  // Smart stepping based on load type
+  const getStepValue = (loadType: string) => {
+    // Small loads: 10W steps
+    if (['lighting', 'emergency', 'power'].includes(loadType)) {
+      return "10";
+    }
+    // Medium loads: 100W steps  
+    if (['cooker', 'heating', 'motor', 'hvac'].includes(loadType)) {
+      return "100";
+    }
+    // Large loads: 500W steps
+    if (['welding', 'furnace', 'crane', 'solar-pv', 'battery-storage'].includes(loadType)) {
+      return "500";
+    }
+    // Default: 50W steps
+    return "50";
+  };
+
+  // Minimum value based on load type
+  const getMinValue = (loadType: string) => {
+    if (['lighting', 'emergency'].includes(loadType)) {
+      return "10";
+    }
+    if (['power'].includes(loadType)) {
+      return "100";
+    }
+    if (['cooker', 'heating', 'motor'].includes(loadType)) {
+      return "500";
+    }
+    if (['hvac', 'welding', 'furnace', 'crane'].includes(loadType)) {
+      return "1000";
+    }
+    return "50";
+  };
+
   const getLoadGuidance = () => {
     const guidanceMap = {
       // Standard loads
@@ -172,10 +207,12 @@ const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => 
       <div className="space-y-8">
         <MobileInputWrapper
           label="Total Load"
-          placeholder="Enter load in watts"
+          placeholder={`Enter load (±${getStepValue(planData.loadType || "")}W steps)`}
           value={planData.totalLoad || ""}
           onChange={(value) => updatePlanData({ totalLoad: parseFloat(value) || 0 })}
           type="number"
+          step={getStepValue(planData.loadType || "")}
+          min={getMinValue(planData.loadType || "")}
           icon={<Zap className="h-5 w-5" />}
           unit="W"
           hint={`Typical for ${planData.loadType}: ${guidance.typical}`}
