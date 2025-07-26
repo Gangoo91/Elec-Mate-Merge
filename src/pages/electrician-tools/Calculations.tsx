@@ -1,7 +1,8 @@
 
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calculator, Zap, Activity, PlugZap, Cable } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, Calculator } from "lucide-react";
+import { Link } from "react-router-dom";
 import CalculatorSelector from "@/components/apprentice/calculators/CalculatorSelector";
 import OhmsLawCalculator from "@/components/apprentice/calculators/OhmsLawCalculator";
 import VoltageDropCalculator from "@/components/apprentice/calculators/VoltageDropCalculator";
@@ -16,7 +17,7 @@ import ConduitFillCalculator from "@/components/apprentice/calculators/ConduitFi
 import EnergyCostCalculator from "@/components/apprentice/calculators/EnergyCostCalculator";
 
 const Calculations = () => {
-  const [calculatorType, setCalculatorType] = useState<string>("");
+  const [calculatorType, setCalculatorType] = useState<string>("ohms-law");
 
   const renderCalculator = () => {
     switch (calculatorType) {
@@ -43,110 +44,31 @@ const Calculations = () => {
       case "energy-cost":
         return <EnergyCostCalculator />;
       default:
-        return null;
+        return <OhmsLawCalculator />;
     }
   };
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="text-center space-y-4">
-        <h1 className="text-3xl font-bold tracking-tight flex items-center justify-center gap-3">
-          <Calculator className="h-8 w-8 text-elec-yellow" />
-          Professional Electrical Calculations
-        </h1>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          Comprehensive electrical calculations for professional work. Industry-standard tools following BS 7671 and UK electrical regulations.
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Professional Electrical Calculations</h1>
+          <p className="text-muted-foreground">
+            Comprehensive electrical calculations for professional work. Industry-standard tools following BS 7671 and UK electrical regulations.
+          </p>
+        </div>
+        <Link to="/electrician-tools">
+          <Button variant="outline" className="flex items-center gap-2">
+            <ArrowLeft className="h-4 w-4" /> Back to Electrical Tools
+          </Button>
+        </Link>
       </div>
 
-      {/* Calculator Selection */}
-      <CalculatorSelector 
-        calculatorType={calculatorType} 
-        setCalculatorType={setCalculatorType} 
-      />
-
-      {/* Calculator Display */}
-      {calculatorType && (
-        <div className="space-y-6">
-          {renderCalculator()}
-        </div>
-      )}
-
-      {/* Quick Access Cards - Only show when no calculator selected */}
-      {!calculatorType && (
-        <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card 
-              className="cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg border-elec-yellow/20 bg-elec-gray/50"
-              onClick={() => setCalculatorType("ohms-law")}
-            >
-              <CardHeader className="text-center pb-3">
-                <div className="flex justify-center mb-3">
-                  <div className="p-3 rounded-full bg-elec-yellow/10">
-                    <Zap className="h-6 w-6 text-elec-yellow" />
-                  </div>
-                </div>
-                <CardTitle className="text-lg">Ohm's Law</CardTitle>
-              </CardHeader>
-            </Card>
-
-            <Card 
-              className="cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg border-elec-yellow/20 bg-elec-gray/50"
-              onClick={() => setCalculatorType("voltage-drop")}
-            >
-              <CardHeader className="text-center pb-3">
-                <div className="flex justify-center mb-3">
-                  <div className="p-3 rounded-full bg-elec-yellow/10">
-                    <Activity className="h-6 w-6 text-elec-yellow" />
-                  </div>
-                </div>
-                <CardTitle className="text-lg">Voltage Drop</CardTitle>
-              </CardHeader>
-            </Card>
-
-            <Card 
-              className="cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg border-elec-yellow/20 bg-elec-gray/50"
-              onClick={() => setCalculatorType("cable-size")}
-            >
-              <CardHeader className="text-center pb-3">
-                <div className="flex justify-center mb-3">
-                  <div className="p-3 rounded-full bg-elec-yellow/10">
-                    <Cable className="h-6 w-6 text-elec-yellow" />
-                  </div>
-                </div>
-                <CardTitle className="text-lg">Cable Sizing</CardTitle>
-              </CardHeader>
-            </Card>
-
-            <Card 
-              className="cursor-pointer transition-all duration-200 hover:scale-105 hover:shadow-lg border-elec-yellow/20 bg-elec-gray/50"
-              onClick={() => setCalculatorType("power-factor")}
-            >
-              <CardHeader className="text-center pb-3">
-                <div className="flex justify-center mb-3">
-                  <div className="p-3 rounded-full bg-elec-yellow/10">
-                    <PlugZap className="h-6 w-6 text-elec-yellow" />
-                  </div>
-                </div>
-                <CardTitle className="text-lg">Power Factor</CardTitle>
-              </CardHeader>
-            </Card>
-          </div>
-
-          {/* Professional Info */}
-          <Card className="bg-elec-gray/30 border-elec-yellow/20">
-            <CardContent className="p-6">
-              <div className="text-center">
-                <h3 className="text-lg font-semibold mb-2">Professional Electrical Calculations</h3>
-                <p className="text-sm text-muted-foreground">
-                  These calculators follow BS 7671:2018+A2:2022 and industry standards. All calculations include 
-                  validation, safety factors, and compliance checking for professional electrical work.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </>
-      )}
+      {/* Calculator Selector */}
+      <CalculatorSelector calculatorType={calculatorType} setCalculatorType={setCalculatorType} />
+      
+      {/* Dynamic Calculator */}
+      {renderCalculator()}
     </div>
   );
 };
