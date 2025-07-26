@@ -1,11 +1,10 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Zap, Info, Calculator, RotateCcw } from "lucide-react";
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -68,66 +67,52 @@ const ThreePhasePowerCalculator = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Input Section */}
           <div className="space-y-4">
-            <div>
-              <Label htmlFor="calculation-type">Calculation Type</Label>
-              <Select value={calculationType} onValueChange={setCalculationType}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="power">Power Calculation</SelectItem>
-                  <SelectItem value="sizing">Motor Sizing</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <MobileSelect value={calculationType} onValueChange={setCalculationType}>
+              <MobileSelectTrigger label="Calculation Type">
+                <MobileSelectValue />
+              </MobileSelectTrigger>
+              <MobileSelectContent>
+                <MobileSelectItem value="power">Power Calculation</MobileSelectItem>
+                <MobileSelectItem value="sizing">Motor Sizing</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
 
-            <div>
-              <Label htmlFor="voltage">Line Voltage (V)</Label>
-              <Input
-                id="voltage"
-                type="number"
-                value={voltage}
-                onChange={(e) => setVoltage(e.target.value)}
-                placeholder="e.g., 415"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Line Voltage (V)"
+              type="number"
+              value={voltage}
+              onChange={(e) => setVoltage(e.target.value)}
+              placeholder="e.g., 415"
+              unit="V"
+            />
 
-            <div>
-              <Label htmlFor="current">Line Current (A)</Label>
-              <Input
-                id="current"
-                type="number"
-                value={current}
-                onChange={(e) => setCurrent(e.target.value)}
-                placeholder="e.g., 25"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Line Current (A)"
+              type="number"
+              value={current}
+              onChange={(e) => setCurrent(e.target.value)}
+              placeholder="e.g., 25"
+              unit="A"
+            />
 
-            <div>
-              <Label htmlFor="power-factor">Power Factor</Label>
-              <Input
-                id="power-factor"
-                type="number"
-                step="0.01"
-                min="0"
-                max="1"
-                value={powerFactor}
-                onChange={(e) => setPowerFactor(e.target.value)}
-                placeholder="e.g., 0.85"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Power Factor"
+              type="number"
+              step="0.01"
+              min="0"
+              max="1"
+              value={powerFactor}
+              onChange={(e) => setPowerFactor(e.target.value)}
+              placeholder="e.g., 0.85"
+            />
 
             <div className="flex gap-2">
-              <Button onClick={calculateThreePhasePower} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
-                <Calculator className="h-4 w-4 mr-2" />
+              <MobileButton onClick={calculateThreePhasePower} className="flex-1" variant="elec" icon={<Calculator className="h-4 w-4" />}>
                 Calculate
-              </Button>
-              <Button variant="outline" onClick={reset}>
+              </MobileButton>
+              <MobileButton variant="elec-outline" onClick={reset}>
                 <RotateCcw className="h-4 w-4" />
-              </Button>
+              </MobileButton>
             </div>
           </div>
 

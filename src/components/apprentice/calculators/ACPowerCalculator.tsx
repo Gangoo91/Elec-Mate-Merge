@@ -1,9 +1,8 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Zap, RotateCcw, Info } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -117,96 +116,77 @@ const ACPowerCalculator = () => {
 
           <TabsContent value="voltage-current" className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="voltage">Voltage (V)</Label>
-                <Input
-                  id="voltage"
-                  type="number"
-                  placeholder="230"
-                  value={voltage}
-                  onChange={(e) => setVoltage(e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="current">Current (A)</Label>
-                <Input
-                  id="current"
-                  type="number"
-                  placeholder="10"
-                  value={current}
-                  onChange={(e) => setCurrent(e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="powerFactor">Power Factor (optional)</Label>
-                <Input
-                  id="powerFactor"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  max="1"
-                  placeholder="0.85"
-                  value={powerFactor}
-                  onChange={(e) => setPowerFactor(e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20"
-                />
-              </div>
+              <MobileInput
+                label="Voltage (V)"
+                type="number"
+                placeholder="230"
+                value={voltage}
+                onChange={(e) => setVoltage(e.target.value)}
+                unit="V"
+              />
+              <MobileInput
+                label="Current (A)"
+                type="number"
+                placeholder="10"
+                value={current}
+                onChange={(e) => setCurrent(e.target.value)}
+                unit="A"
+              />
+              <MobileInput
+                label="Power Factor (optional)"
+                type="number"
+                step="0.01"
+                min="0"
+                max="1"
+                placeholder="0.85"
+                value={powerFactor}
+                onChange={(e) => setPowerFactor(e.target.value)}
+              />
             </div>
             <div className="flex gap-2">
-              <Button onClick={calculatePower} className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+              <MobileButton onClick={calculatePower} variant="elec" className="flex-1">
                 Calculate Power
-              </Button>
-              <Button onClick={resetCalculator} variant="outline" size="icon">
+              </MobileButton>
+              <MobileButton onClick={resetCalculator} variant="elec-outline">
                 <RotateCcw className="h-4 w-4" />
-              </Button>
+              </MobileButton>
             </div>
           </TabsContent>
 
           <TabsContent value="power-components" className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="activePower">Active Power (W)</Label>
-                <Input
-                  id="activePower"
-                  type="number"
-                  placeholder="1000"
-                  value={activePower}
-                  onChange={(e) => setActivePower(e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="reactivePower">Reactive Power (VAr)</Label>
-                <Input
-                  id="reactivePower"
-                  type="number"
-                  placeholder="750"
-                  value={reactivePower}
-                  onChange={(e) => setReactivePower(e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="apparentPower">Apparent Power (VA)</Label>
-                <Input
-                  id="apparentPower"
-                  type="number"
-                  placeholder="1250"
-                  value={apparentPower}
-                  onChange={(e) => setApparentPower(e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/20"
-                />
-              </div>
+              <MobileInput
+                label="Active Power (W)"
+                type="number"
+                placeholder="1000"
+                value={activePower}
+                onChange={(e) => setActivePower(e.target.value)}
+                unit="W"
+              />
+              <MobileInput
+                label="Reactive Power (VAr)"
+                type="number"
+                placeholder="750"
+                value={reactivePower}
+                onChange={(e) => setReactivePower(e.target.value)}
+                unit="VAr"
+              />
+              <MobileInput
+                label="Apparent Power (VA)"
+                type="number"
+                placeholder="1250"
+                value={apparentPower}
+                onChange={(e) => setApparentPower(e.target.value)}
+                unit="VA"
+              />
             </div>
             <div className="flex gap-2">
-              <Button onClick={calculateFromPowers} className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
+              <MobileButton onClick={calculateFromPowers} variant="elec" className="flex-1">
                 Calculate from Powers
-              </Button>
-              <Button onClick={resetCalculator} variant="outline" size="icon">
+              </MobileButton>
+              <MobileButton onClick={resetCalculator} variant="elec-outline">
                 <RotateCcw className="h-4 w-4" />
-              </Button>
+              </MobileButton>
             </div>
           </TabsContent>
         </Tabs>

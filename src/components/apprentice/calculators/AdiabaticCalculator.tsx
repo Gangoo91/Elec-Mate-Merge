@@ -1,11 +1,10 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Shield, Info, Calculator, RotateCcw } from "lucide-react";
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -70,65 +69,52 @@ const AdiabaticCalculator = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Input Section */}
           <div className="space-y-4">
-            <div>
-              <Label htmlFor="fault-current">Prospective Fault Current (A)</Label>
-              <Input
-                id="fault-current"
-                type="number"
-                value={faultCurrent}
-                onChange={(e) => setFaultCurrent(e.target.value)}
-                placeholder="e.g., 1000"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Prospective Fault Current (A)"
+              type="number"
+              value={faultCurrent}
+              onChange={(e) => setFaultCurrent(e.target.value)}
+              placeholder="e.g., 1000"
+              unit="A"
+            />
 
-            <div>
-              <Label htmlFor="disconnection-time">Disconnection Time (s)</Label>
-              <Input
-                id="disconnection-time"
-                type="number"
-                step="0.01"
-                value={disconnectionTime}
-                onChange={(e) => setDisconnectionTime(e.target.value)}
-                placeholder="e.g., 0.4"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Disconnection Time (s)"
+              type="number"
+              step="0.01"
+              value={disconnectionTime}
+              onChange={(e) => setDisconnectionTime(e.target.value)}
+              placeholder="e.g., 0.4"
+              unit="s"
+            />
 
-            <div>
-              <Label htmlFor="cable-type">Cable Material</Label>
-              <Select value={cableType} onValueChange={setCableType}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="copper">Copper</SelectItem>
-                  <SelectItem value="aluminium">Aluminium</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <MobileSelect value={cableType} onValueChange={setCableType}>
+              <MobileSelectTrigger label="Cable Material">
+                <MobileSelectValue />
+              </MobileSelectTrigger>
+              <MobileSelectContent>
+                <MobileSelectItem value="copper">Copper</MobileSelectItem>
+                <MobileSelectItem value="aluminium">Aluminium</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
 
-            <div>
-              <Label htmlFor="temperature">Maximum Operating Temperature (°C)</Label>
-              <Select value={temperature} onValueChange={setTemperature}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="70">70°C (PVC)</SelectItem>
-                  <SelectItem value="90">90°C (XLPE)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <MobileSelect value={temperature} onValueChange={setTemperature}>
+              <MobileSelectTrigger label="Maximum Operating Temperature (°C)">
+                <MobileSelectValue />
+              </MobileSelectTrigger>
+              <MobileSelectContent>
+                <MobileSelectItem value="70">70°C (PVC)</MobileSelectItem>
+                <MobileSelectItem value="90">90°C (XLPE)</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
 
             <div className="flex gap-2">
-              <Button onClick={calculateAdiabatic} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
-                <Calculator className="h-4 w-4 mr-2" />
+              <MobileButton onClick={calculateAdiabatic} className="flex-1" variant="elec" icon={<Calculator className="h-4 w-4" />}>
                 Calculate
-              </Button>
-              <Button variant="outline" onClick={reset}>
+              </MobileButton>
+              <MobileButton variant="elec-outline" onClick={reset}>
                 <RotateCcw className="h-4 w-4" />
-              </Button>
+              </MobileButton>
             </div>
           </div>
 

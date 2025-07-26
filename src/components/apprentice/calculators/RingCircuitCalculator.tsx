@@ -1,10 +1,9 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Calculator, AlertTriangle, CheckCircle, Info } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import RingCircuitEducation from "./ring-circuit/RingCircuitEducation";
@@ -118,61 +117,49 @@ const RingCircuitCalculator = () => {
         </CardHeader>
         <CardContent className="space-y-6">
           {/* Cable Type Selection */}
-          <div className="space-y-2">
-            <Label htmlFor="cable-type">Cable Type</Label>
-            <Select value={cableType} onValueChange={setCableType}>
-              <SelectTrigger className="bg-elec-dark border-elec-yellow/30">
-                <SelectValue placeholder="Select cable type" />
-              </SelectTrigger>
-              <SelectContent className="bg-elec-dark border-elec-yellow/30 z-50">
-                <SelectItem value="2.5mm-twin">2.5mm² Twin & Earth</SelectItem>
-                <SelectItem value="4mm-twin">4.0mm² Twin & Earth</SelectItem>
-                <SelectItem value="6mm-twin">6.0mm² Twin & Earth</SelectItem>
-                <SelectItem value="10mm-twin">10.0mm² Twin & Earth</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <MobileSelect value={cableType} onValueChange={setCableType}>
+            <MobileSelectTrigger label="Cable Type">
+              <MobileSelectValue placeholder="Select cable type" />
+            </MobileSelectTrigger>
+            <MobileSelectContent>
+              <MobileSelectItem value="2.5mm-twin">2.5mm² Twin & Earth</MobileSelectItem>
+              <MobileSelectItem value="4mm-twin">4.0mm² Twin & Earth</MobileSelectItem>
+              <MobileSelectItem value="6mm-twin">6.0mm² Twin & Earth</MobileSelectItem>
+              <MobileSelectItem value="10mm-twin">10.0mm² Twin & Earth</MobileSelectItem>
+            </MobileSelectContent>
+          </MobileSelect>
 
           {/* End-to-End Readings */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-elec-yellow">End-to-End Readings (Ω)</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="end-to-end-live">Live Conductor</Label>
-                <Input
-                  id="end-to-end-live"
-                  type="number"
-                  step="0.01"
-                  placeholder="e.g. 1.20"
-                  value={readings.endToEndLive}
-                  onChange={(e) => handleInputChange("endToEndLive", e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/30"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="end-to-end-neutral">Neutral Conductor</Label>
-                <Input
-                  id="end-to-end-neutral"
-                  type="number"
-                  step="0.01"
-                  placeholder="e.g. 1.20"
-                  value={readings.endToEndNeutral}
-                  onChange={(e) => handleInputChange("endToEndNeutral", e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/30"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="end-to-end-cpc">CPC (Earth)</Label>
-                <Input
-                  id="end-to-end-cpc"
-                  type="number"
-                  step="0.01"
-                  placeholder="e.g. 1.92"
-                  value={readings.endToEndCpc}
-                  onChange={(e) => handleInputChange("endToEndCpc", e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/30"
-                />
-              </div>
+              <MobileInput
+                label="Live Conductor"
+                type="number"
+                step="0.01"
+                placeholder="e.g. 1.20"
+                value={readings.endToEndLive}
+                onChange={(e) => handleInputChange("endToEndLive", e.target.value)}
+                unit="Ω"
+              />
+              <MobileInput
+                label="Neutral Conductor"
+                type="number"
+                step="0.01"
+                placeholder="e.g. 1.20"
+                value={readings.endToEndNeutral}
+                onChange={(e) => handleInputChange("endToEndNeutral", e.target.value)}
+                unit="Ω"
+              />
+              <MobileInput
+                label="CPC (Earth)"
+                type="number"
+                step="0.01"
+                placeholder="e.g. 1.92"
+                value={readings.endToEndCpc}
+                onChange={(e) => handleInputChange("endToEndCpc", e.target.value)}
+                unit="Ω"
+              />
             </div>
           </div>
 
@@ -180,54 +167,44 @@ const RingCircuitCalculator = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-elec-yellow">Cross-Connected Readings (Ω)</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="live-to-neutral">Live to Neutral</Label>
-                <Input
-                  id="live-to-neutral"
-                  type="number"
-                  step="0.01"
-                  placeholder="e.g. 0.60"
-                  value={readings.liveToNeutral}
-                  onChange={(e) => handleInputChange("liveToNeutral", e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/30"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="live-to-cpc">Live to CPC</Label>
-                <Input
-                  id="live-to-cpc"
-                  type="number"
-                  step="0.01"
-                  placeholder="e.g. 1.56"
-                  value={readings.liveToCpc}
-                  onChange={(e) => handleInputChange("liveToCpc", e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/30"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="neutral-to-cpc">Neutral to CPC</Label>
-                <Input
-                  id="neutral-to-cpc"
-                  type="number"
-                  step="0.01"
-                  placeholder="e.g. 1.56"
-                  value={readings.neutralToCpc}
-                  onChange={(e) => handleInputChange("neutralToCpc", e.target.value)}
-                  className="bg-elec-dark border-elec-yellow/30"
-                />
-              </div>
+              <MobileInput
+                label="Live to Neutral"
+                type="number"
+                step="0.01"
+                placeholder="e.g. 0.60"
+                value={readings.liveToNeutral}
+                onChange={(e) => handleInputChange("liveToNeutral", e.target.value)}
+                unit="Ω"
+              />
+              <MobileInput
+                label="Live to CPC"
+                type="number"
+                step="0.01"
+                placeholder="e.g. 1.56"
+                value={readings.liveToCpc}
+                onChange={(e) => handleInputChange("liveToCpc", e.target.value)}
+                unit="Ω"
+              />
+              <MobileInput
+                label="Neutral to CPC"
+                type="number"
+                step="0.01"
+                placeholder="e.g. 1.56"
+                value={readings.neutralToCpc}
+                onChange={(e) => handleInputChange("neutralToCpc", e.target.value)}
+                unit="Ω"
+              />
             </div>
           </div>
 
           {/* Control Buttons */}
           <div className="flex flex-col sm:flex-row gap-2">
-            <Button onClick={calculateValues} className="flex-1">
-              <Calculator className="mr-2 h-4 w-4" />
+            <MobileButton onClick={calculateValues} className="flex-1" variant="elec" icon={<Calculator className="h-4 w-4" />}>
               Calculate Ring Circuit
-            </Button>
-            <Button onClick={resetCalculator} variant="outline" className="flex-1">
+            </MobileButton>
+            <MobileButton onClick={resetCalculator} variant="elec-outline" className="flex-1">
               Reset Calculator
-            </Button>
+            </MobileButton>
           </div>
 
           {/* Results */}

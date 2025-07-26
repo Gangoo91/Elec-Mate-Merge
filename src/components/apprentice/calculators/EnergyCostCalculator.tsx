@@ -1,8 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { PoundSterling, Info, Calculator, RotateCcw } from "lucide-react";
@@ -62,51 +61,41 @@ const EnergyCostCalculator = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Input Section */}
           <div className="space-y-4">
-            <div>
-              <Label htmlFor="power">Power Consumption (Watts)</Label>
-              <Input
-                id="power"
-                type="number"
-                value={power}
-                onChange={(e) => setPower(e.target.value)}
-                placeholder="e.g., 1500"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Power Consumption (Watts)"
+              type="number"
+              value={power}
+              onChange={(e) => setPower(e.target.value)}
+              placeholder="e.g., 1500"
+              unit="W"
+            />
 
-            <div>
-              <Label htmlFor="hours">Hours per Day</Label>
-              <Input
-                id="hours"
-                type="number"
-                value={hours}
-                onChange={(e) => setHours(e.target.value)}
-                placeholder="e.g., 8"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Hours per Day"
+              type="number"
+              value={hours}
+              onChange={(e) => setHours(e.target.value)}
+              placeholder="e.g., 8"
+              unit="hours"
+            />
 
-            <div>
-              <Label htmlFor="rate">Rate per kWh (£)</Label>
-              <Input
-                id="rate"
-                type="number"
-                step="0.01"
-                value={rate}
-                onChange={(e) => setRate(e.target.value)}
-                placeholder="e.g., 0.30"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Rate per kWh (£)"
+              type="number"
+              step="0.01"
+              value={rate}
+              onChange={(e) => setRate(e.target.value)}
+              placeholder="e.g., 0.30"
+              unit="£/kWh"
+            />
 
             <div className="flex gap-2">
-              <Button onClick={calculateCost} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
-                <Calculator className="h-4 w-4 mr-2" />
+              <MobileButton onClick={calculateCost} className="flex-1" variant="elec" icon={<Calculator className="h-4 w-4" />}>
                 Calculate
-              </Button>
-              <Button variant="outline" onClick={reset}>
+              </MobileButton>
+              <MobileButton variant="elec-outline" onClick={reset}>
                 <RotateCcw className="h-4 w-4" />
-              </Button>
+              </MobileButton>
             </div>
           </div>
 

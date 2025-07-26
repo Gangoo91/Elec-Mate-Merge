@@ -1,11 +1,10 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileButton } from "@/components/ui/mobile-button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Activity, Info, Calculator, RotateCcw } from "lucide-react";
 import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -77,70 +76,57 @@ const VoltageDropCalculator = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Input Section */}
           <div className="space-y-4">
-            <div>
-              <Label htmlFor="voltage-supply">Supply Voltage (V)</Label>
-              <Input
-                id="voltage-supply"
-                type="number"
-                value={voltage}
-                onChange={(e) => setVoltage(e.target.value)}
-                placeholder="e.g., 230"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Supply Voltage (V)"
+              type="number"
+              value={voltage}
+              onChange={(e) => setVoltage(e.target.value)}
+              placeholder="e.g., 230"
+              unit="V"
+            />
 
-            <div>
-              <Label htmlFor="current-load">Load Current (A)</Label>
-              <Input
-                id="current-load"
-                type="number"
-                value={current}
-                onChange={(e) => setCurrent(e.target.value)}
-                placeholder="e.g., 20"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Load Current (A)"
+              type="number"
+              value={current}
+              onChange={(e) => setCurrent(e.target.value)}
+              placeholder="e.g., 20"
+              unit="A"
+            />
 
-            <div>
-              <Label htmlFor="cable-length">Cable Length (m)</Label>
-              <Input
-                id="cable-length"
-                type="number"
-                value={length}
-                onChange={(e) => setLength(e.target.value)}
-                placeholder="e.g., 50"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Cable Length (m)"
+              type="number"
+              value={length}
+              onChange={(e) => setLength(e.target.value)}
+              placeholder="e.g., 50"
+              unit="m"
+            />
 
-            <div>
-              <Label htmlFor="cable-size-select">Cable Size (mm²)</Label>
-              <Select value={cableSize} onValueChange={setCableSize}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select cable size" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="1.0">1.0mm²</SelectItem>
-                  <SelectItem value="1.5">1.5mm²</SelectItem>
-                  <SelectItem value="2.5">2.5mm²</SelectItem>
-                  <SelectItem value="4.0">4.0mm²</SelectItem>
-                  <SelectItem value="6.0">6.0mm²</SelectItem>
-                  <SelectItem value="10.0">10.0mm²</SelectItem>
-                  <SelectItem value="16.0">16.0mm²</SelectItem>
-                  <SelectItem value="25.0">25.0mm²</SelectItem>
-                  <SelectItem value="35.0">35.0mm²</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <MobileSelect value={cableSize} onValueChange={setCableSize}>
+              <MobileSelectTrigger label="Cable Size (mm²)">
+                <MobileSelectValue placeholder="Select cable size" />
+              </MobileSelectTrigger>
+              <MobileSelectContent>
+                <MobileSelectItem value="1.0">1.0mm²</MobileSelectItem>
+                <MobileSelectItem value="1.5">1.5mm²</MobileSelectItem>
+                <MobileSelectItem value="2.5">2.5mm²</MobileSelectItem>
+                <MobileSelectItem value="4.0">4.0mm²</MobileSelectItem>
+                <MobileSelectItem value="6.0">6.0mm²</MobileSelectItem>
+                <MobileSelectItem value="10.0">10.0mm²</MobileSelectItem>
+                <MobileSelectItem value="16.0">16.0mm²</MobileSelectItem>
+                <MobileSelectItem value="25.0">25.0mm²</MobileSelectItem>
+                <MobileSelectItem value="35.0">35.0mm²</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
 
             <div className="flex gap-2">
-              <Button onClick={calculateVoltageDrop} className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90">
-                <Calculator className="h-4 w-4 mr-2" />
+              <MobileButton onClick={calculateVoltageDrop} className="flex-1" variant="elec" icon={<Calculator className="h-4 w-4" />}>
                 Calculate
-              </Button>
-              <Button variant="outline" onClick={reset}>
+              </MobileButton>
+              <MobileButton variant="elec-outline" onClick={reset}>
                 <RotateCcw className="h-4 w-4" />
-              </Button>
+              </MobileButton>
             </div>
           </div>
 

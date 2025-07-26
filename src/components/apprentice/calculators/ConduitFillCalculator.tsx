@@ -1,10 +1,9 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileInput } from "@/components/ui/mobile-input";
+import { MobileButton } from "@/components/ui/mobile-button";
+import { MobileSelect, MobileSelectContent, MobileSelectItem, MobileSelectTrigger, MobileSelectValue } from "@/components/ui/mobile-select";
 import { Calculator } from "lucide-react";
 
 const ConduitFillCalculator = () => {
@@ -85,71 +84,62 @@ const ConduitFillCalculator = () => {
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-4">
-            <div>
-              <Label htmlFor="conduit-size">Conduit Size (mm)</Label>
-              <Select value={conduitSize} onValueChange={setConduitSize}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select conduit size" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="16">16mm</SelectItem>
-                  <SelectItem value="20">20mm</SelectItem>
-                  <SelectItem value="25">25mm</SelectItem>
-                  <SelectItem value="32">32mm</SelectItem>
-                  <SelectItem value="40">40mm</SelectItem>
-                  <SelectItem value="50">50mm</SelectItem>
-                  <SelectItem value="63">63mm</SelectItem>
-                  <SelectItem value="75">75mm</SelectItem>
-                  <SelectItem value="100">100mm</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <MobileSelect value={conduitSize} onValueChange={setConduitSize}>
+              <MobileSelectTrigger label="Conduit Size (mm)">
+                <MobileSelectValue placeholder="Select conduit size" />
+              </MobileSelectTrigger>
+              <MobileSelectContent>
+                <MobileSelectItem value="16">16mm</MobileSelectItem>
+                <MobileSelectItem value="20">20mm</MobileSelectItem>
+                <MobileSelectItem value="25">25mm</MobileSelectItem>
+                <MobileSelectItem value="32">32mm</MobileSelectItem>
+                <MobileSelectItem value="40">40mm</MobileSelectItem>
+                <MobileSelectItem value="50">50mm</MobileSelectItem>
+                <MobileSelectItem value="63">63mm</MobileSelectItem>
+                <MobileSelectItem value="75">75mm</MobileSelectItem>
+                <MobileSelectItem value="100">100mm</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
 
-            <div>
-              <Label htmlFor="cable-size">Cable Size (mm²)</Label>
-              <Select value={cableSize} onValueChange={setCableSize}>
-                <SelectTrigger className="bg-elec-dark border-elec-yellow/20">
-                  <SelectValue placeholder="Select cable size" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-yellow/20">
-                  <SelectItem value="1.0">1.0mm²</SelectItem>
-                  <SelectItem value="1.5">1.5mm²</SelectItem>
-                  <SelectItem value="2.5">2.5mm²</SelectItem>
-                  <SelectItem value="4.0">4.0mm²</SelectItem>
-                  <SelectItem value="6.0">6.0mm²</SelectItem>
-                  <SelectItem value="10.0">10.0mm²</SelectItem>
-                  <SelectItem value="16.0">16.0mm²</SelectItem>
-                  <SelectItem value="25.0">25.0mm²</SelectItem>
-                  <SelectItem value="35.0">35.0mm²</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <MobileSelect value={cableSize} onValueChange={setCableSize}>
+              <MobileSelectTrigger label="Cable Size (mm²)">
+                <MobileSelectValue placeholder="Select cable size" />
+              </MobileSelectTrigger>
+              <MobileSelectContent>
+                <MobileSelectItem value="1.0">1.0mm²</MobileSelectItem>
+                <MobileSelectItem value="1.5">1.5mm²</MobileSelectItem>
+                <MobileSelectItem value="2.5">2.5mm²</MobileSelectItem>
+                <MobileSelectItem value="4.0">4.0mm²</MobileSelectItem>
+                <MobileSelectItem value="6.0">6.0mm²</MobileSelectItem>
+                <MobileSelectItem value="10.0">10.0mm²</MobileSelectItem>
+                <MobileSelectItem value="16.0">16.0mm²</MobileSelectItem>
+                <MobileSelectItem value="25.0">25.0mm²</MobileSelectItem>
+                <MobileSelectItem value="35.0">35.0mm²</MobileSelectItem>
+              </MobileSelectContent>
+            </MobileSelect>
 
-            <div>
-              <Label htmlFor="cable-quantity">Number of Cables</Label>
-              <Input
-                id="cable-quantity"
-                type="number"
-                min="1"
-                value={cableQuantity}
-                onChange={(e) => setCableQuantity(e.target.value)}
-                placeholder="Enter number of cables"
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
+            <MobileInput
+              label="Number of Cables"
+              type="number"
+              min="1"
+              value={cableQuantity}
+              onChange={(e) => setCableQuantity(e.target.value)}
+              placeholder="Enter number of cables"
+            />
 
             <div className="flex gap-2">
-              <Button 
+              <MobileButton 
                 onClick={calculateConduitFill} 
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                variant="elec"
                 disabled={!conduitSize || !cableSize || !cableQuantity}
+                icon={<Calculator className="h-4 w-4" />}
+                className="flex-1"
               >
-                <Calculator className="mr-2 h-4 w-4" />
                 Calculate
-              </Button>
-              <Button variant="outline" onClick={resetCalculator}>
+              </MobileButton>
+              <MobileButton variant="elec-outline" onClick={resetCalculator}>
                 Reset
-              </Button>
+              </MobileButton>
             </div>
           </div>
 
