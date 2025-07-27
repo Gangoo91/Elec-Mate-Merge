@@ -236,9 +236,6 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
                     <div className="flex items-center gap-2">
                       <Filter className="h-4 w-4 text-elec-yellow" />
                       <span className="font-medium">{categoryLabel}</span>
-                      <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
-                        {types.length}
-                      </Badge>
                     </div>
                     {isExpanded ? 
                       <ChevronDown className="h-4 w-4" /> : 
