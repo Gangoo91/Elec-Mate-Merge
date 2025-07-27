@@ -2,35 +2,28 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { ArrowLeft, BookOpen, Award, FileText, Lightbulb } from "lucide-react";
+import { ArrowLeft, BookOpen, Award, FileText, Lightbulb, Loader2 } from "lucide-react";
+import { useQualifications } from "@/hooks/qualification/useQualifications";
 
 const EALCourses = () => {
-  const courses = [
-    {
-      id: "level-2-diploma",
-      title: "EAL Level 2 Diploma in Electrical Installation",
-      icon: <BookOpen className="h-8 w-8 text-elec-yellow" />,
-      description: "Foundation qualification for electrical apprentices"
-    },
-    {
-      id: "level-3-advanced-diploma",
-      title: "EAL Level 3 Advanced Diploma in Electrical Installation",
-      icon: <Award className="h-8 w-8 text-elec-yellow" />,
-      description: "Advanced qualification for progressing electrical professionals"
-    },
-    {
-      id: "level-3-verification",
-      title: "EAL Level 3 Award in the Initial Verification and Certification of Electrical Installations",
-      icon: <FileText className="h-8 w-8 text-elec-yellow" />,
-      description: "Specialized qualification for testing and certification"
-    },
-    {
-      id: "level-3-bs7671",
-      title: "EAL Level 3 Award in the Requirements for Electrical Installations (BS 7671) – 18th Edition",
-      icon: <Lightbulb className="h-8 w-8 text-elec-yellow" />,
-      description: "Essential regulations qualification for all electrical professionals"
+  const { awardingBodies, loading, error } = useQualifications();
+  
+  // Get EAL courses from the awarding bodies data
+  const ealCourses = awardingBodies?.['EAL'] || [];
+  
+  // Icon mapping for different course types
+  const getIconForCourse = (title: string) => {
+    if (title.toLowerCase().includes('diploma')) {
+      return <BookOpen className="h-8 w-8 text-elec-yellow" />;
+    } else if (title.toLowerCase().includes('advanced')) {
+      return <Award className="h-8 w-8 text-elec-yellow" />;
+    } else if (title.toLowerCase().includes('verification') || title.toLowerCase().includes('certification')) {
+      return <FileText className="h-8 w-8 text-elec-yellow" />;
+    } else if (title.toLowerCase().includes('bs 7671') || title.toLowerCase().includes('18th edition')) {
+      return <Lightbulb className="h-8 w-8 text-elec-yellow" />;
     }
-  ];
+    return <BookOpen className="h-8 w-8 text-elec-yellow" />;
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8 animate-fade-in">
@@ -54,31 +47,49 @@ const EALCourses = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {courses.map((course) => (
-          <Link key={course.id} to={`/apprentice/study/eal/${course.id}`} className="block h-full group">
-            <Card className="h-full border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300">
-              <CardHeader className="flex flex-row items-center gap-4">
-                <div className="p-2 rounded-md bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors">
-                  {course.icon}
-                </div>
-                <CardTitle className="text-xl font-semibold">{course.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground mb-4">{course.description}</p>
-                <div className="flex justify-end">
-                  <Button 
-                    variant="outline" 
-                    className="border-elec-yellow/30 hover:bg-elec-yellow/10 text-sm"
-                  >
-                    View Course Content
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
-      </div>
+      {loading ? (
+        <div className="flex justify-center items-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+          <span className="ml-2 text-muted-foreground">Loading EAL courses...</span>
+        </div>
+      ) : error ? (
+        <div className="text-center py-12">
+          <p className="text-destructive mb-4">Error loading courses: {error}</p>
+          <Button variant="outline" onClick={() => window.location.reload()}>
+            Try Again
+          </Button>
+        </div>
+      ) : ealCourses.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">No EAL courses available at the moment.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {ealCourses.map((course) => (
+            <Link key={course.id} to={`/apprentice/study/eal/${course.id}`} className="block h-full group">
+              <Card className="h-full border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300">
+                <CardHeader className="flex flex-row items-center gap-4">
+                  <div className="p-2 rounded-md bg-elec-yellow/10 group-hover:bg-elec-yellow/20 transition-colors">
+                    {getIconForCourse(course.title)}
+                  </div>
+                  <CardTitle className="text-xl font-semibold">{course.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-4">{course.description || 'Professional electrical qualification'}</p>
+                  <div className="flex justify-end">
+                    <Button 
+                      variant="outline" 
+                      className="border-elec-yellow/30 hover:bg-elec-yellow/10 text-sm"
+                    >
+                      View Course Content
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

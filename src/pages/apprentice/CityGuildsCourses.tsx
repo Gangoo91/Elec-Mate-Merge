@@ -2,45 +2,16 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { ArrowLeft, BookOpen } from "lucide-react";
+import { ArrowLeft, BookOpen, Loader2 } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useQualifications } from "@/hooks/qualification/useQualifications";
 
 const CityGuildsCourses = () => {
   const isMobile = useIsMobile();
+  const { awardingBodies, loading, error } = useQualifications();
   
-  // City & Guilds electrical courses data
-  const courses = [
-    {
-      id: "level-2-electrical",
-      title: "Level 2 Electrical Installation",
-      description: "Foundation electrical skills and knowledge for installation work"
-    },
-    {
-      id: "level-3-electrical",
-      title: "Level 3 Electrical Installation",
-      description: "Advanced electrical installation techniques and principles"
-    },
-    {
-      id: "2391-inspection-testing",
-      title: "2391 Inspection & Testing",
-      description: "Initial verification and periodic inspection of electrical installations"
-    },
-    {
-      id: "moet",
-      title: "Maintenance Operability Electrical Testing (MOET)",
-      description: "Advanced competency in maintenance and operability of electrical systems"
-    },
-    {
-      id: "18th-edition",
-      title: "18th Edition Wiring Regulations",
-      description: "Latest BS7671 electrical regulations and requirements"
-    },
-    {
-      id: "2377-pat-testing",
-      title: "2377 PAT Testing",
-      description: "Portable appliance testing certification and procedures"
-    }
-  ];
+  // Get City & Guilds courses from the awarding bodies data
+  const cityGuildsCourses = awardingBodies?.['City & Guilds'] || [];
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8 animate-fade-in">
@@ -64,31 +35,49 @@ const CityGuildsCourses = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {courses.map((course, index) => (
-          <Link 
-            key={index}
-            to={`/apprentice/study/cityGuilds/${course.id}`}
-            className="block h-full transition-transform hover:scale-102 duration-200"
-          >
-            <Card 
-              className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full"
+      {loading ? (
+        <div className="flex justify-center items-center py-12">
+          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+          <span className="ml-2 text-muted-foreground">Loading City & Guilds courses...</span>
+        </div>
+      ) : error ? (
+        <div className="text-center py-12">
+          <p className="text-destructive mb-4">Error loading courses: {error}</p>
+          <Button variant="outline" onClick={() => window.location.reload()}>
+            Try Again
+          </Button>
+        </div>
+      ) : cityGuildsCourses.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">No City & Guilds courses available at the moment.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {cityGuildsCourses.map((course) => (
+            <Link 
+              key={course.id}
+              to={`/apprentice/study/cityGuilds/${course.id}`}
+              className="block h-full transition-transform hover:scale-102 duration-200"
             >
-              <CardContent className="flex flex-col h-full p-6">
-                <div className="flex flex-col items-center justify-center flex-grow">
-                  <BookOpen className="h-10 w-10 text-elec-yellow mb-4 opacity-80" />
-                  <h3 className="text-xl font-medium text-center mb-2">
-                    {course.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground text-center">
-                    {course.description}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
-      </div>
+              <Card 
+                className="border-elec-yellow/30 bg-gradient-to-b from-elec-gray to-elec-gray/80 hover:from-elec-gray/90 hover:to-elec-gray/70 transition-all duration-300 cursor-pointer shadow-lg shadow-black/20 h-full"
+              >
+                <CardContent className="flex flex-col h-full p-6">
+                  <div className="flex flex-col items-center justify-center flex-grow">
+                    <BookOpen className="h-10 w-10 text-elec-yellow mb-4 opacity-80" />
+                    <h3 className="text-xl font-medium text-center mb-2">
+                      {course.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground text-center">
+                      {course.description || 'Professional electrical qualification'}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
