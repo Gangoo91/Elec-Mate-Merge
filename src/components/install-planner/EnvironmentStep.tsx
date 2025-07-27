@@ -155,25 +155,25 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 gap-4 text-sm">
+          <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
-              <div className="text-center p-3 bg-elec-card/30 rounded-lg">
-                <span className="block text-muted-foreground text-xs mb-1">Global Temperature</span>
-                <p className="font-medium text-elec-yellow">{environmentalSettings.ambientTemperature}°C</p>
+              <div className="text-center p-4 bg-elec-card/30 rounded-lg">
+                <div className="text-xs text-muted-foreground mb-2">Global Temperature</div>
+                <div className="font-bold text-lg text-elec-yellow whitespace-nowrap">{environmentalSettings.ambientTemperature}°C</div>
               </div>
-              <div className="text-center p-3 bg-elec-card/30 rounded-lg">
-                <span className="block text-muted-foreground text-xs mb-1">Earthing System</span>
-                <p className="font-medium text-blue-400">{environmentalSettings.earthingSystem}</p>
+              <div className="text-center p-4 bg-elec-card/30 rounded-lg">
+                <div className="text-xs text-muted-foreground mb-2">Earthing System</div>
+                <div className="font-bold text-lg text-blue-400 whitespace-nowrap">{environmentalSettings.earthingSystem}</div>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <div className="text-center p-3 bg-elec-card/30 rounded-lg">
-                <span className="block text-muted-foreground text-xs mb-1">Installation Zones</span>
-                <p className="font-medium text-green-400">{environmentalSettings.installationZones?.length || 0}</p>
+              <div className="text-center p-4 bg-elec-card/30 rounded-lg">
+                <div className="text-xs text-muted-foreground mb-2">Installation Zones</div>
+                <div className="font-bold text-lg text-green-400">{environmentalSettings.installationZones?.length || 0}</div>
               </div>
-              <div className="text-center p-3 bg-elec-card/30 rounded-lg">
-                <span className="block text-muted-foreground text-xs mb-1">Active Circuits</span>
-                <p className="font-medium text-purple-400">{circuits.filter(c => c.enabled).length}</p>
+              <div className="text-center p-4 bg-elec-card/30 rounded-lg">
+                <div className="text-xs text-muted-foreground mb-2">Active Circuits</div>
+                <div className="font-bold text-lg text-purple-400">{circuits.filter(c => c.enabled).length}</div>
               </div>
             </div>
           </div>
