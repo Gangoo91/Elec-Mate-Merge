@@ -126,13 +126,13 @@ const IndustrySpecificSections = () => {
   ];
 
   const SectionCard = ({ section }: { section: any }) => (
-    <div className="p-4 bg-elec-gray/50 rounded-lg border border-elec-yellow/20">
-      <h4 className="font-medium text-white mb-3">{section.title}</h4>
-      <ul className="space-y-2">
+    <div className="p-3 bg-black/20 rounded-lg border border-elec-yellow/20">
+      <h4 className="font-medium text-white mb-2 text-sm">{section.title}</h4>
+      <ul className="space-y-1">
         {section.requirements.map((req: string, idx: number) => (
-          <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-            <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-            {req}
+          <li key={idx} className="text-xs text-muted-foreground flex items-start gap-2">
+            <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
+            <span className="line-clamp-2">{req}</span>
           </li>
         ))}
       </ul>
@@ -140,42 +140,40 @@ const IndustrySpecificSections = () => {
   );
 
   return (
-    <Card className="border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10">
-      <CardHeader>
-        <CardTitle className="text-elec-yellow">Industry-Specific Portfolio Sections</CardTitle>
-        <p className="text-sm text-muted-foreground">
+    <Card className="border-elec-yellow/30 bg-elec-gray">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-elec-yellow text-base sm:text-lg">Industry-Specific Portfolio Sections</CardTitle>
+        <p className="text-xs sm:text-sm text-muted-foreground">
           Tailor your portfolio content to match your specific area of electrical work
         </p>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pt-0">
         <Tabs defaultValue="domestic">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="domestic" className="flex items-center gap-1">
-              <Home className="h-4 w-4" />
-              <span className="hidden sm:inline">Domestic</span>
+          <TabsList className="grid w-full grid-cols-4 h-auto">
+            <TabsTrigger value="domestic" className="flex flex-col items-center gap-1 p-2 text-xs">
+              <Home className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span>Domestic</span>
             </TabsTrigger>
-            <TabsTrigger value="commercial" className="flex items-center gap-1">
-              <Building className="h-4 w-4" />
-              <span className="hidden sm:inline">Commercial</span>
+            <TabsTrigger value="commercial" className="flex flex-col items-center gap-1 p-2 text-xs">
+              <Building className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span>Commercial</span>
             </TabsTrigger>
-            <TabsTrigger value="industrial" className="flex items-center gap-1">
-              <Factory className="h-4 w-4" />
-              <span className="hidden sm:inline">Industrial</span>
+            <TabsTrigger value="industrial" className="flex flex-col items-center gap-1 p-2 text-xs">
+              <Factory className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span>Industrial</span>
             </TabsTrigger>
-            <TabsTrigger value="renewable" className="flex items-center gap-1">
-              <Zap className="h-4 w-4" />
-              <span className="hidden sm:inline">Renewable</span>
+            <TabsTrigger value="renewable" className="flex flex-col items-center gap-1 p-2 text-xs">
+              <Zap className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span>Renewable</span>
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="domestic" className="mt-4">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 mb-4">
-                <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                  Domestic Electrical Work
-                </Badge>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <TabsContent value="domestic" className="mt-3">
+            <div className="space-y-3">
+              <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                Domestic Electrical Work
+              </Badge>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
                 {domesticSections.map((section, index) => (
                   <SectionCard key={index} section={section} />
                 ))}
@@ -183,14 +181,12 @@ const IndustrySpecificSections = () => {
             </div>
           </TabsContent>
 
-          <TabsContent value="commercial" className="mt-4">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 mb-4">
-                <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
-                  Commercial Electrical Work
-                </Badge>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <TabsContent value="commercial" className="mt-3">
+            <div className="space-y-3">
+              <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
+                Commercial Electrical Work
+              </Badge>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
                 {commercialSections.map((section, index) => (
                   <SectionCard key={index} section={section} />
                 ))}
@@ -198,14 +194,12 @@ const IndustrySpecificSections = () => {
             </div>
           </TabsContent>
 
-          <TabsContent value="industrial" className="mt-4">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 mb-4">
-                <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
-                  Industrial Electrical Work
-                </Badge>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <TabsContent value="industrial" className="mt-3">
+            <div className="space-y-3">
+              <Badge className="bg-red-500/20 text-red-400 border-red-500/30 text-xs">
+                Industrial Electrical Work
+              </Badge>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
                 {industrialSections.map((section, index) => (
                   <SectionCard key={index} section={section} />
                 ))}
@@ -213,14 +207,12 @@ const IndustrySpecificSections = () => {
             </div>
           </TabsContent>
 
-          <TabsContent value="renewable" className="mt-4">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 mb-4">
-                <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30">
-                  Renewable Energy Systems
-                </Badge>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <TabsContent value="renewable" className="mt-3">
+            <div className="space-y-3">
+              <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30 text-xs">
+                Renewable Energy Systems
+              </Badge>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
                 {renewableSections.map((section, index) => (
                   <SectionCard key={index} section={section} />
                 ))}

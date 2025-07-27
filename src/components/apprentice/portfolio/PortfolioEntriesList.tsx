@@ -57,11 +57,11 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
 
   if (entries.length === 0) {
     return (
-      <Card className="border-dashed border-2 border-elec-yellow/20">
-        <CardContent className="flex flex-col items-center justify-center py-10">
-          <FileText className="h-12 w-12 text-elec-yellow/40 mb-4" />
-          <h3 className="text-xl font-medium mb-2">No portfolio entries found</h3>
-          <p className="text-muted-foreground text-center max-w-md">
+      <Card className="border-dashed border-2 border-elec-yellow/20 bg-elec-gray">
+        <CardContent className="flex flex-col items-center justify-center py-8">
+          <FileText className="h-10 w-10 sm:h-12 sm:w-12 text-elec-yellow/40 mb-4" />
+          <h3 className="text-lg sm:text-xl font-medium mb-2 text-center">No portfolio entries found</h3>
+          <p className="text-muted-foreground text-center text-sm max-w-md">
             Start building your portfolio by adding your first entry. Document your learning journey and professional development.
           </p>
         </CardContent>
@@ -70,56 +70,56 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {entries.map((entry) => (
         <Card key={entry.id} className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader className="pb-3">
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <CardTitle className="text-lg mb-2">{entry.title}</CardTitle>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+              <div className="flex-1 min-w-0">
+                <CardTitle className="text-base sm:text-lg mb-2 leading-tight">{entry.title}</CardTitle>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
                   <div className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" />
+                    <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
                     {formatDate(entry.dateCreated)}
                   </div>
                   <div className="flex items-center gap-1">
-                    <Clock className="h-4 w-4" />
+                    <Clock className="h-3 w-3 sm:h-4 sm:w-4" />
                     {Math.floor(entry.timeSpent / 60)}h {entry.timeSpent % 60}m
                   </div>
                   <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4" />
+                    <Star className="h-3 w-3 sm:h-4 sm:w-4" />
                     {entry.selfAssessment}/5
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Badge variant={getStatusColor(entry.status)}>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 flex-shrink-0">
+                <Badge variant={getStatusColor(entry.status)} className="text-xs">
                   {getStatusText(entry.status)}
                 </Badge>
-                <Badge variant="outline" style={{ backgroundColor: `${entry.category.color}20` }}>
+                <Badge variant="outline" style={{ backgroundColor: `${entry.category.color}20` }} className="text-xs">
                   {entry.category.name}
                 </Badge>
               </div>
             </div>
           </CardHeader>
           
-          <CardContent className="pt-0">
-            <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+          <CardContent className="pt-0 space-y-3">
+            <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">
               {entry.description}
             </p>
             
             {/* Skills */}
             {entry.skills.length > 0 && (
-              <div className="mb-4">
+              <div>
                 <div className="flex flex-wrap gap-1">
-                  {entry.skills.slice(0, 3).map(skill => (
+                  {entry.skills.slice(0, 2).map(skill => (
                     <Badge key={skill} variant="secondary" className="text-xs">
                       {skill}
                     </Badge>
                   ))}
-                  {entry.skills.length > 3 && (
+                  {entry.skills.length > 2 && (
                     <Badge variant="secondary" className="text-xs">
-                      +{entry.skills.length - 3} more
+                      +{entry.skills.length - 2} more
                     </Badge>
                   )}
                 </div>
@@ -128,31 +128,31 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
             
             {/* Evidence Files */}
             {entry.evidenceFiles.length > 0 && (
-              <div className="mb-4">
-                <p className="text-xs text-muted-foreground mb-1">
+              <div>
+                <p className="text-xs text-muted-foreground">
                   {entry.evidenceFiles.length} evidence file{entry.evidenceFiles.length !== 1 ? 's' : ''} attached
                 </p>
               </div>
             )}
             
             {/* Actions */}
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <Button 
                 size="sm" 
                 variant="outline"
                 onClick={() => setViewingEntry(entry)}
-                className="gap-1"
+                className="gap-1 flex-1 sm:flex-none"
               >
-                <Eye className="h-4 w-4" />
+                <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
                 View
               </Button>
               <Button 
                 size="sm" 
                 variant="outline"
                 onClick={() => setEditingEntry(entry)}
-                className="gap-1"
+                className="gap-1 flex-1 sm:flex-none"
               >
-                <Edit className="h-4 w-4" />
+                <Edit className="h-3 w-3 sm:h-4 sm:w-4" />
                 Edit
               </Button>
               <Button 
@@ -163,9 +163,9 @@ const PortfolioEntriesList = ({ entries, onUpdateEntry, onDeleteEntry }: Portfol
                     onDeleteEntry(entry.id);
                   }
                 }}
-                className="gap-1 text-red-400 hover:text-red-300"
+                className="gap-1 text-red-400 hover:text-red-300 flex-1 sm:flex-none"
               >
-                <Trash2 className="h-4 w-4" />
+                <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
                 Delete
               </Button>
             </div>

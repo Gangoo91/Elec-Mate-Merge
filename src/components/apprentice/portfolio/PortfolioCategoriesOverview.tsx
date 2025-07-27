@@ -34,15 +34,9 @@ const PortfolioCategoriesOverview = ({ categories, entries }: PortfolioCategorie
   };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-xl font-semibold mb-2">Portfolio Categories</h3>
-        <p className="text-muted-foreground">
-          Track your progress across different areas of your apprenticeship. Each category has specific requirements that need to be fulfilled.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="space-y-4">
+      {/* Portfolio Categories Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {categories.map(category => {
           const categoryEntries = entries.filter(entry => entry.category.id === category.id);
           const completedEntries = categoryEntries.filter(entry => entry.status === 'completed').length;
@@ -50,47 +44,47 @@ const PortfolioCategoriesOverview = ({ categories, entries }: PortfolioCategorie
           const colorClasses = getColorClasses(category.color);
 
           return (
-            <Card key={category.id} className={`${colorClasses.border} ${colorClasses.bg}`}>
-              <CardHeader className="pb-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
+            <Card key={category.id} className={`bg-elec-gray border-elec-yellow/20 ${colorClasses.border}`}>
+              <CardHeader className="pb-3">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
                     <div className={colorClasses.text}>
                       {getIcon(category.icon)}
                     </div>
-                    <CardTitle className="text-lg">{category.name}</CardTitle>
+                    <CardTitle className="text-base sm:text-lg truncate">{category.name}</CardTitle>
                   </div>
-                  <Badge variant={progress >= 100 ? "success" : "outline"}>
+                  <Badge variant={progress >= 100 ? "success" : "outline"} className="flex-shrink-0 text-xs">
                     {completedEntries}/{category.requiredEntries}
                   </Badge>
                 </div>
               </CardHeader>
               
-              <CardContent className="space-y-4">
-                <p className="text-sm text-muted-foreground">
+              <CardContent className="space-y-3 pt-0">
+                <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">
                   {category.description}
                 </p>
                 
                 <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-xs sm:text-sm">
                     <span>Progress</span>
-                    <span>{Math.round(progress)}%</span>
+                    <span className="font-medium">{Math.round(progress)}%</span>
                   </div>
-                  <Progress value={progress} className="h-2" />
+                  <Progress value={progress} className="h-1.5 sm:h-2" />
                 </div>
                 
-                <div className="pt-2 border-t border-current/10">
-                  <div className="grid grid-cols-3 gap-4 text-center">
+                <div className="pt-2 border-t border-elec-yellow/10">
+                  <div className="grid grid-cols-3 gap-2 text-center">
                     <div>
-                      <p className="text-lg font-semibold">{categoryEntries.length}</p>
+                      <p className="text-sm sm:text-lg font-semibold">{categoryEntries.length}</p>
                       <p className="text-xs text-muted-foreground">Total</p>
                     </div>
                     <div>
-                      <p className="text-lg font-semibold">{completedEntries}</p>
+                      <p className="text-sm sm:text-lg font-semibold">{completedEntries}</p>
                       <p className="text-xs text-muted-foreground">Complete</p>
                     </div>
                     <div>
-                      <p className="text-lg font-semibold">{categoryEntries.filter(e => e.status === 'in-progress').length}</p>
-                      <p className="text-xs text-muted-foreground">In Progress</p>
+                      <p className="text-sm sm:text-lg font-semibold">{categoryEntries.filter(e => e.status === 'in-progress').length}</p>
+                      <p className="text-xs text-muted-foreground">Progress</p>
                     </div>
                   </div>
                 </div>
@@ -101,34 +95,34 @@ const PortfolioCategoriesOverview = ({ categories, entries }: PortfolioCategorie
       </div>
 
       {/* Recent Activity */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent Portfolio Activity</CardTitle>
+      <Card className="bg-elec-gray border-elec-yellow/20">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg">Recent Activity</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-0">
           {entries.length === 0 ? (
-            <p className="text-muted-foreground text-center py-4">
+            <p className="text-muted-foreground text-center py-6 text-sm">
               No portfolio entries yet. Start by adding your first entry!
             </p>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-2">
               {entries
                 .sort((a, b) => new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime())
-                .slice(0, 5)
+                .slice(0, 3)
                 .map(entry => (
-                  <div key={entry.id} className="flex items-center justify-between p-3 border rounded-lg">
-                    <div className="flex items-center gap-3">
+                  <div key={entry.id} className="flex items-center justify-between p-3 bg-black/20 rounded-lg border border-elec-yellow/10">
+                    <div className="flex items-center gap-3 min-w-0">
                       <div className={getColorClasses(entry.category.color).text}>
                         {getIcon(entry.category.icon)}
                       </div>
-                      <div>
-                        <p className="font-medium">{entry.title}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {entry.category.name} • {new Date(entry.dateCreated).toLocaleDateString()}
+                      <div className="min-w-0">
+                        <p className="font-medium text-sm truncate">{entry.title}</p>
+                        <p className="text-xs text-muted-foreground">
+                          {entry.category.name} • {new Date(entry.dateCreated).toLocaleDateString('en-GB')}
                         </p>
                       </div>
                     </div>
-                    <Badge variant={entry.status === 'completed' ? 'success' : 'outline'}>
+                    <Badge variant={entry.status === 'completed' ? 'success' : 'outline'} className="flex-shrink-0 text-xs">
                       {entry.status}
                     </Badge>
                   </div>

@@ -73,77 +73,88 @@ const DigitalToolsIntegration = () => {
   };
 
   return (
-    <Card className="border-purple-500/30 bg-gradient-to-br from-purple-500/10 to-pink-500/10">
-      <CardHeader>
-        <CardTitle className="text-purple-400">Digital Portfolio Tools</CardTitle>
-        <p className="text-sm text-muted-foreground">
-          Modern tools to create, organise, and present your portfolio professionally
-        </p>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {tools.map((tool, index) => (
-            <div key={index} className="p-4 bg-elec-gray/50 rounded-lg border border-purple-500/20">
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-purple-500/20 rounded">
-                    {tool.icon}
+    <div className="space-y-4">
+      <Card className="border-purple-500/30 bg-elec-gray">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-purple-400 text-base sm:text-lg">Digital Portfolio Tools</CardTitle>
+          <p className="text-xs sm:text-sm text-muted-foreground">
+            Modern tools to create, organise, and present your portfolio professionally
+          </p>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {tools.map((tool, index) => (
+              <div key={index} className="p-3 bg-black/20 rounded-lg border border-purple-500/20">
+                <div className="flex items-start justify-between mb-2 gap-2">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="p-1.5 bg-purple-500/20 rounded flex-shrink-0">
+                      {tool.icon}
+                    </div>
+                    <div className="min-w-0">
+                      <h4 className="font-medium text-white text-sm truncate">{tool.name}</h4>
+                      <p className="text-xs text-muted-foreground">{tool.category}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-medium text-white">{tool.name}</h4>
-                    <p className="text-xs text-muted-foreground">{tool.category}</p>
-                  </div>
+                  <Badge className={`text-xs ${getCostColor(tool.cost)} flex-shrink-0`}>
+                    {tool.cost}
+                  </Badge>
                 </div>
-                <Badge className={`text-xs ${getCostColor(tool.cost)}`}>
-                  {tool.cost}
-                </Badge>
+                
+                <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{tool.description}</p>
+                
+                <div className="mb-2">
+                  <span className="text-xs font-medium text-purple-400">Features:</span>
+                  <ul className="mt-1 space-y-0.5">
+                    {tool.features.slice(0, 2).map((feature, idx) => (
+                      <li key={idx} className="text-xs text-muted-foreground flex items-start gap-1">
+                        <span className="text-purple-400 flex-shrink-0">•</span>
+                        <span className="line-clamp-1">{feature}</span>
+                      </li>
+                    ))}
+                    {tool.features.length > 2 && (
+                      <li className="text-xs text-muted-foreground text-purple-400">
+                        +{tool.features.length - 2} more features
+                      </li>
+                    )}
+                  </ul>
+                </div>
+                
+                <div className="flex items-center gap-2 mb-3">
+                  <Smartphone className="h-3 w-3 text-muted-foreground flex-shrink-0" />
+                  <span className="text-xs text-muted-foreground truncate">
+                    {tool.platform.join(", ")}
+                  </span>
+                </div>
+                
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full text-xs"
+                  onClick={() => handleLearnMore(tool.url)}
+                >
+                  <ExternalLink className="h-3 w-3 mr-1" />
+                  Learn More
+                </Button>
               </div>
-              
-              <p className="text-sm text-muted-foreground mb-3">{tool.description}</p>
-              
-              <div className="mb-3">
-                <span className="text-xs font-medium text-purple-400">Key Features:</span>
-                <ul className="mt-1 space-y-1">
-                  {tool.features.slice(0, 3).map((feature, idx) => (
-                    <li key={idx} className="text-xs text-muted-foreground flex items-start gap-1">
-                      <span className="text-purple-400">•</span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              <div className="flex items-center gap-2 mb-3">
-                <Smartphone className="h-3 w-3 text-muted-foreground" />
-                <span className="text-xs text-muted-foreground">
-                  {tool.platform.join(", ")}
-                </span>
-              </div>
-              
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="w-full"
-                onClick={() => handleLearnMore(tool.url)}
-              >
-                <ExternalLink className="h-3 w-3 mr-1" />
-                Learn More
-              </Button>
-            </div>
-          ))}
-        </div>
-        
-        <div className="mt-6 p-4 bg-blue-500/20 rounded-lg border border-blue-500/30">
-          <h5 className="font-medium text-blue-400 mb-2">Getting Started Tips</h5>
-          <ul className="text-sm text-muted-foreground space-y-1">
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+      
+      <Card className="border-blue-500/30 bg-elec-gray">
+        <CardHeader className="pb-3">
+          <CardTitle className="font-medium text-blue-400 text-sm">Getting Started Tips</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <ul className="text-xs sm:text-sm text-muted-foreground space-y-1">
             <li>• Start with free tools to understand your needs</li>
             <li>• Choose tools that work across your devices</li>
             <li>• Ensure cloud backup for all important files</li>
             <li>• Consider your training provider's preferred formats</li>
           </ul>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
