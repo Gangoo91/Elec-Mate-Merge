@@ -149,7 +149,7 @@ const IndustrySpecificSections = () => {
       </CardHeader>
       <CardContent className="pt-0">
         <Tabs defaultValue="domestic">
-          <TabsList className="grid w-full grid-cols-4 h-auto">
+          <TabsList className="grid w-full grid-cols-2 grid-rows-2 h-auto gap-1">
             <TabsTrigger value="domestic" className="flex flex-col items-center gap-1 p-2 text-xs">
               <Home className="h-3 w-3 sm:h-4 sm:w-4" />
               <span>Domestic</span>
