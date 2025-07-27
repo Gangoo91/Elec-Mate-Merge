@@ -1,14 +1,12 @@
-
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { X, Plus } from "lucide-react";
+import { Clock, Star, X } from "lucide-react";
 import { PortfolioEntry, PortfolioCategory } from "@/types/portfolio";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import { MultiSelectDropdown } from "@/components/ui/multi-select-dropdown";
 
 export interface PortfolioEntryFormProps {
   categories: PortfolioCategory[];
@@ -16,6 +14,76 @@ export interface PortfolioEntryFormProps {
   onSubmit: (data: Partial<PortfolioEntry>) => void;
   onCancel: () => void;
 }
+
+// Pre-defined options for dropdowns
+const SKILLS_OPTIONS = [
+  { value: "circuit-analysis", label: "Circuit Analysis" },
+  { value: "electrical-testing", label: "Electrical Testing" },
+  { value: "wiring-installation", label: "Wiring Installation" },
+  { value: "fault-finding", label: "Fault Finding" },
+  { value: "health-safety", label: "Health & Safety" },
+  { value: "conduit-installation", label: "Conduit Installation" },
+  { value: "panel-wiring", label: "Panel Wiring" },
+  { value: "motor-control", label: "Motor Control" },
+  { value: "plc-programming", label: "PLC Programming" },
+  { value: "cable-management", label: "Cable Management" },
+  { value: "earthing-bonding", label: "Earthing & Bonding" },
+  { value: "emergency-lighting", label: "Emergency Lighting" },
+  { value: "fire-alarm-systems", label: "Fire Alarm Systems" },
+  { value: "security-systems", label: "Security Systems" },
+  { value: "data-cabling", label: "Data Cabling" }
+];
+
+const TAGS_OPTIONS = [
+  { value: "practical", label: "Practical Work" },
+  { value: "theory", label: "Theory" },
+  { value: "workplace", label: "Workplace Learning" },
+  { value: "college", label: "College Project" },
+  { value: "assessment", label: "Assessment" },
+  { value: "teamwork", label: "Teamwork" },
+  { value: "problem-solving", label: "Problem Solving" },
+  { value: "documentation", label: "Documentation" },
+  { value: "presentation", label: "Presentation" },
+  { value: "research", label: "Research" },
+  { value: "innovation", label: "Innovation" },
+  { value: "leadership", label: "Leadership" }
+];
+
+const ASSESSMENT_CRITERIA_OPTIONS = [
+  { value: "ac1.1", label: "AC1.1 - Comply with health and safety requirements" },
+  { value: "ac1.2", label: "AC1.2 - Use appropriate tools and equipment safely" },
+  { value: "ac2.1", label: "AC2.1 - Select appropriate wiring systems" },
+  { value: "ac2.2", label: "AC2.2 - Install wiring systems correctly" },
+  { value: "ac3.1", label: "AC3.1 - Test electrical installations" },
+  { value: "ac3.2", label: "AC3.2 - Commission electrical systems" },
+  { value: "ac4.1", label: "AC4.1 - Identify electrical faults" },
+  { value: "ac4.2", label: "AC4.2 - Rectify electrical faults safely" },
+  { value: "ac5.1", label: "AC5.1 - Interpret technical documentation" },
+  { value: "ac5.2", label: "AC5.2 - Complete installation certificates" }
+];
+
+const LEARNING_OUTCOMES_OPTIONS = [
+  { value: "lo1", label: "LO1: Understand electrical safety principles" },
+  { value: "lo2", label: "LO2: Install electrical wiring systems" },
+  { value: "lo3", label: "LO3: Test and commission electrical installations" },
+  { value: "lo4", label: "LO4: Diagnose and repair electrical faults" },
+  { value: "lo5", label: "LO5: Apply industry standards and regulations" },
+  { value: "lo6", label: "LO6: Work effectively in electrical environments" },
+  { value: "lo7", label: "LO7: Communicate technical information effectively" }
+];
+
+const AWARDING_BODY_STANDARDS_OPTIONS = [
+  { value: "bs7671", label: "BS 7671:2018 - Wiring Regulations" },
+  { value: "bs5839", label: "BS 5839 - Fire Detection & Alarm Systems" },
+  { value: "bs6651", label: "BS 6651 - Lightning Protection" },
+  { value: "bs5266", label: "BS 5266 - Emergency Lighting" },
+  { value: "iet-guidance", label: "IET Guidance Notes" },
+  { value: "city-guilds-2365", label: "City & Guilds 2365" },
+  { value: "eal-electrical", label: "EAL Electrical Installation" },
+  { value: "btec-electrical", label: "BTEC Electrical Engineering" },
+  { value: "niceic-standards", label: "NICEIC Standards" },
+  { value: "napit-requirements", label: "NAPIT Requirements" }
+];
 
 const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: PortfolioEntryFormProps) => {
   const [formData, setFormData] = useState({
@@ -33,29 +101,6 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
     timeSpent: initialData?.timeSpent || 0,
     awardingBodyStandards: initialData?.awardingBodyStandards || []
   });
-
-  const [newSkill, setNewSkill] = useState("");
-  const [newTag, setNewTag] = useState("");
-  const [newCriteria, setNewCriteria] = useState("");
-  const [newOutcome, setNewOutcome] = useState("");
-  const [newStandard, setNewStandard] = useState("");
-
-  const handleAddItem = (field: string, value: string, setter: (value: string) => void) => {
-    if (value.trim()) {
-      setFormData(prev => ({
-        ...prev,
-        [field]: [...prev[field as keyof typeof prev] as string[], value.trim()]
-      }));
-      setter("");
-    }
-  };
-
-  const handleRemoveItem = (field: string, index: number) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: (prev[field as keyof typeof prev] as string[]).filter((_, i) => i !== index)
-    }));
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,265 +121,208 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
     onSubmit(submitData);
   };
 
+  const categoryOptions = categories.map(cat => ({
+    value: cat.id,
+    label: cat.name
+  }));
+
+  const statusOptions = [
+    { value: "draft", label: "Draft" },
+    { value: "in-progress", label: "In Progress" },
+    { value: "completed", label: "Completed" },
+    { value: "reviewed", label: "Reviewed" }
+  ];
+
+  const selfAssessmentOptions = [
+    { value: "1", label: "1 - Poor" },
+    { value: "2", label: "2 - Below Average" },
+    { value: "3", label: "3 - Average" },
+    { value: "4", label: "4 - Good" },
+    { value: "5", label: "5 - Excellent" }
+  ];
+
   return (
     <Dialog open={true} onOpenChange={onCancel}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>
+      <DialogContent className="max-w-lg max-h-[95vh] overflow-y-auto bg-elec-card border-elec-gray/40">
+        <DialogHeader className="pb-4">
+          <DialogTitle className="text-elec-light text-xl font-semibold">
             {initialData ? "Edit Portfolio Entry" : "Create New Portfolio Entry"}
           </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="title">Title *</Label>
-              <Input
-                id="title"
-                value={formData.title}
-                onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                placeholder="Enter portfolio entry title"
-                required
-              />
-            </div>
+          {/* Title */}
+          <MobileInputWrapper
+            label="Entry Title"
+            placeholder="e.g., Three-phase motor installation"
+            value={formData.title}
+            onChange={(value) => setFormData(prev => ({ ...prev, title: value }))}
+            hint="Give your portfolio entry a clear, descriptive title"
+          />
 
-            <div className="space-y-2">
-              <Label htmlFor="category">Category *</Label>
-              <Select value={formData.categoryId} onValueChange={(value) => setFormData(prev => ({ ...prev, categoryId: value }))}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((category) => (
-                    <SelectItem key={category.id} value={category.id}>
-                      {category.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
+          {/* Category */}
+          <MobileSelectWrapper
+            label="Category"
+            placeholder="Select category"
+            value={formData.categoryId}
+            onValueChange={(value) => setFormData(prev => ({ ...prev, categoryId: value }))}
+            options={categoryOptions}
+            hint="Choose the most relevant category for this work"
+          />
 
-          <div className="space-y-2">
-            <Label htmlFor="description">Description *</Label>
-            <Textarea
-              id="description"
+          {/* Description */}
+          <div className="space-y-3">
+            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+              Description
+            </label>
+            <textarea
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              placeholder="Describe what you did and what you learned"
-              rows={3}
+              placeholder="Describe what you did and what you learned..."
+              rows={4}
+              className="w-full h-32 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
               required
+            />
+            <p className="text-xs text-elec-light/70 flex items-center gap-1">
+              <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
+              Explain the task, your approach, and key activities
+            </p>
+          </div>
+
+          {/* Status and Time Spent */}
+          <div className="grid grid-cols-2 gap-4">
+            <MobileSelectWrapper
+              label="Status"
+              value={formData.status}
+              onValueChange={(value) => setFormData(prev => ({ ...prev, status: value as any }))}
+              options={statusOptions}
+            />
+            
+            <MobileInputWrapper
+              label="Time Spent"
+              type="number"
+              min="0"
+              value={formData.timeSpent.toString()}
+              onChange={(value) => setFormData(prev => ({ ...prev, timeSpent: parseInt(value) || 0 }))}
+              unit="mins"
+              icon={<Clock className="h-4 w-4" />}
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="reflection">Reflection *</Label>
-            <Textarea
-              id="reflection"
+          {/* Self Assessment */}
+          <MobileSelectWrapper
+            label="Self Assessment"
+            value={formData.selfAssessment.toString()}
+            onValueChange={(value) => setFormData(prev => ({ ...prev, selfAssessment: parseInt(value) }))}
+            options={selfAssessmentOptions}
+            hint="Rate your performance on this task"
+          />
+
+          {/* Skills */}
+          <MultiSelectDropdown
+            label="Skills Demonstrated"
+            placeholder="Select skills you used or developed"
+            value={formData.skills}
+            onValueChange={(value) => setFormData(prev => ({ ...prev, skills: value }))}
+            options={SKILLS_OPTIONS}
+            hint="Choose all relevant electrical skills"
+          />
+
+          {/* Tags */}
+          <MultiSelectDropdown
+            label="Tags"
+            placeholder="Add relevant tags"
+            value={formData.tags}
+            onValueChange={(value) => setFormData(prev => ({ ...prev, tags: value }))}
+            options={TAGS_OPTIONS}
+            hint="Help categorise your work"
+          />
+
+          {/* Assessment Criteria */}
+          <MultiSelectDropdown
+            label="Assessment Criteria Met"
+            placeholder="Select criteria you've addressed"
+            value={formData.assessmentCriteria}
+            onValueChange={(value) => setFormData(prev => ({ ...prev, assessmentCriteria: value }))}
+            options={ASSESSMENT_CRITERIA_OPTIONS}
+            hint="Which assessment criteria does this evidence?"
+          />
+
+          {/* Learning Outcomes */}
+          <MultiSelectDropdown
+            label="Learning Outcomes"
+            placeholder="Select learning outcomes achieved"
+            value={formData.learningOutcomes}
+            onValueChange={(value) => setFormData(prev => ({ ...prev, learningOutcomes: value }))}
+            options={LEARNING_OUTCOMES_OPTIONS}
+            hint="What learning outcomes does this demonstrate?"
+          />
+
+          {/* Awarding Body Standards */}
+          <MultiSelectDropdown
+            label="Standards & Regulations"
+            placeholder="Select relevant standards"
+            value={formData.awardingBodyStandards}
+            onValueChange={(value) => setFormData(prev => ({ ...prev, awardingBodyStandards: value }))}
+            options={AWARDING_BODY_STANDARDS_OPTIONS}
+            hint="Which standards or regulations apply?"
+          />
+
+          {/* Reflection */}
+          <div className="space-y-3">
+            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+              Reflection
+            </label>
+            <textarea
               value={formData.reflection}
               onChange={(e) => setFormData(prev => ({ ...prev, reflection: e.target.value }))}
-              placeholder="Reflect on your learning experience, challenges, and achievements"
-              rows={4}
+              placeholder="Reflect on your learning, challenges faced, and what you'd do differently..."
+              rows={5}
+              className="w-full h-40 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
               required
             />
+            <p className="text-xs text-elec-light/70 flex items-center gap-1">
+              <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
+              Critical thinking about your experience and learning
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="status">Status</Label>
-              <Select value={formData.status} onValueChange={(value) => setFormData(prev => ({ ...prev, status: value as any }))}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="draft">Draft</SelectItem>
-                  <SelectItem value="in-progress">In Progress</SelectItem>
-                  <SelectItem value="completed">Completed</SelectItem>
-                  <SelectItem value="reviewed">Reviewed</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="timeSpent">Time Spent (minutes)</Label>
-              <Input
-                id="timeSpent"
-                type="number"
-                min="0"
-                value={formData.timeSpent}
-                onChange={(e) => setFormData(prev => ({ ...prev, timeSpent: parseInt(e.target.value) || 0 }))}
-              />
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="selfAssessment">Self Assessment (1-5)</Label>
-            <Select value={formData.selfAssessment.toString()} onValueChange={(value) => setFormData(prev => ({ ...prev, selfAssessment: parseInt(value) }))}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">1 - Poor</SelectItem>
-                <SelectItem value="2">2 - Below Average</SelectItem>
-                <SelectItem value="3">3 - Average</SelectItem>
-                <SelectItem value="4">4 - Good</SelectItem>
-                <SelectItem value="5">5 - Excellent</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Skills Section */}
-          <div className="space-y-2">
-            <Label>Skills Demonstrated</Label>
-            <div className="flex gap-2">
-              <Input
-                value={newSkill}
-                onChange={(e) => setNewSkill(e.target.value)}
-                placeholder="Add a skill"
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddItem('skills', newSkill, setNewSkill))}
-              />
-              <Button type="button" onClick={() => handleAddItem('skills', newSkill, setNewSkill)}>
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
-            <div className="flex flex-wrap gap-1">
-              {formData.skills.map((skill, index) => (
-                <Badge key={index} variant="secondary" className="cursor-pointer">
-                  {skill}
-                  <X 
-                    className="h-3 w-3 ml-1" 
-                    onClick={() => handleRemoveItem('skills', index)}
-                  />
-                </Badge>
-              ))}
-            </div>
-          </div>
-
-          {/* Tags Section */}
-          <div className="space-y-2">
-            <Label>Tags</Label>
-            <div className="flex gap-2">
-              <Input
-                value={newTag}
-                onChange={(e) => setNewTag(e.target.value)}
-                placeholder="Add a tag"
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddItem('tags', newTag, setNewTag))}
-              />
-              <Button type="button" onClick={() => handleAddItem('tags', newTag, setNewTag)}>
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
-            <div className="flex flex-wrap gap-1">
-              {formData.tags.map((tag, index) => (
-                <Badge key={index} variant="outline" className="cursor-pointer">
-                  {tag}
-                  <X 
-                    className="h-3 w-3 ml-1" 
-                    onClick={() => handleRemoveItem('tags', index)}
-                  />
-                </Badge>
-              ))}
-            </div>
-          </div>
-
-          {/* Assessment Criteria Section */}
-          <div className="space-y-2">
-            <Label>Assessment Criteria Met</Label>
-            <div className="flex gap-2">
-              <Input
-                value={newCriteria}
-                onChange={(e) => setNewCriteria(e.target.value)}
-                placeholder="Add assessment criteria"
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddItem('assessmentCriteria', newCriteria, setNewCriteria))}
-              />
-              <Button type="button" onClick={() => handleAddItem('assessmentCriteria', newCriteria, setNewCriteria)}>
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
-            <div className="flex flex-wrap gap-1">
-              {formData.assessmentCriteria.map((criteria, index) => (
-                <Badge key={index} variant="secondary" className="cursor-pointer">
-                  {criteria}
-                  <X 
-                    className="h-3 w-3 ml-1" 
-                    onClick={() => handleRemoveItem('assessmentCriteria', index)}
-                  />
-                </Badge>
-              ))}
-            </div>
-          </div>
-
-          {/* Learning Outcomes Section */}
-          <div className="space-y-2">
-            <Label>Learning Outcomes</Label>
-            <div className="flex gap-2">
-              <Input
-                value={newOutcome}
-                onChange={(e) => setNewOutcome(e.target.value)}
-                placeholder="Add learning outcome"
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddItem('learningOutcomes', newOutcome, setNewOutcome))}
-              />
-              <Button type="button" onClick={() => handleAddItem('learningOutcomes', newOutcome, setNewOutcome)}>
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
-            <div className="flex flex-wrap gap-1">
-              {formData.learningOutcomes.map((outcome, index) => (
-                <Badge key={index} variant="secondary" className="cursor-pointer">
-                  {outcome}
-                  <X 
-                    className="h-3 w-3 ml-1" 
-                    onClick={() => handleRemoveItem('learningOutcomes', index)}
-                  />
-                </Badge>
-              ))}
-            </div>
-          </div>
-
-          {/* Awarding Body Standards Section */}
-          <div className="space-y-2">
-            <Label>Awarding Body Standards</Label>
-            <div className="flex gap-2">
-              <Input
-                value={newStandard}
-                onChange={(e) => setNewStandard(e.target.value)}
-                placeholder="Add awarding body standard"
-                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddItem('awardingBodyStandards', newStandard, setNewStandard))}
-              />
-              <Button type="button" onClick={() => handleAddItem('awardingBodyStandards', newStandard, setNewStandard)}>
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
-            <div className="flex flex-wrap gap-1">
-              {formData.awardingBodyStandards.map((standard, index) => (
-                <Badge key={index} variant="secondary" className="cursor-pointer">
-                  {standard}
-                  <X 
-                    className="h-3 w-3 ml-1" 
-                    onClick={() => handleRemoveItem('awardingBodyStandards', index)}
-                  />
-                </Badge>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="supervisorFeedback">Supervisor Feedback</Label>
-            <Textarea
-              id="supervisorFeedback"
+          {/* Supervisor Feedback */}
+          <div className="space-y-3">
+            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+              Supervisor Feedback
+            </label>
+            <textarea
               value={formData.supervisorFeedback}
               onChange={(e) => setFormData(prev => ({ ...prev, supervisorFeedback: e.target.value }))}
-              placeholder="Enter supervisor feedback (if available)"
+              placeholder="Enter any feedback from your supervisor or assessor..."
               rows={3}
+              className="w-full h-24 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
             />
+            <p className="text-xs text-elec-light/70 flex items-center gap-1">
+              <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
+              Optional: Add when feedback is available
+            </p>
           </div>
 
-          <div className="flex gap-2 justify-end">
-            <Button type="button" variant="outline" onClick={onCancel}>
-              Cancel
-            </Button>
-            <Button type="submit">
+          {/* Action Buttons */}
+          <div className="flex flex-col gap-3 pt-4 border-t border-elec-gray/20">
+            <Button 
+              type="submit" 
+              className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/80 font-semibold py-3 rounded-xl transition-all duration-200"
+            >
               {initialData ? "Update Entry" : "Create Entry"}
+            </Button>
+            <Button 
+              type="button" 
+              variant="ghost" 
+              onClick={onCancel}
+              className="w-full text-elec-light/70 hover:text-elec-light hover:bg-elec-gray/20 font-medium py-3 rounded-xl transition-all duration-200"
+            >
+              Cancel
             </Button>
           </div>
         </form>
