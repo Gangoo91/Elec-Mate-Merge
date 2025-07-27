@@ -1,8 +1,14 @@
 
-import SmartPortfolioManager from "@/components/apprentice/portfolio/SmartPortfolioManager";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import UltraFastPortfolioManager from "@/components/portfolio/UltraFastPortfolioManager";
+import { queryClient } from '@/lib/queryClient';
 
 const PortfolioBuildingTab = () => {
-  return <SmartPortfolioManager />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <UltraFastPortfolioManager />
+    </QueryClientProvider>
+  );
 };
 
 export default PortfolioBuildingTab;
