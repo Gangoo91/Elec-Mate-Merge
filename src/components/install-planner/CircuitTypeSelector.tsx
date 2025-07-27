@@ -76,7 +76,7 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
         t.includes("power") || t.includes("motor") || t.includes("welding") || t.includes("crane")
       ),
       lighting: availableTemplates.filter(t => t.includes("lighting")),
-      specialized: availableTemplates.filter(t => 
+      specialised: availableTemplates.filter(t => 
         t.includes("hvac") || t.includes("it-equipment") || t.includes("emergency") || 
         t.includes("medical") || t.includes("furnace") || t.includes("ev-charging") ||
         t.includes("cooker") || t.includes("shower") || t.includes("heating")
@@ -127,7 +127,7 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
     { value: "recommended", label: "Recommended" },
     { value: "power", label: "Power & Motors" },
     { value: "lighting", label: "Lighting" },
-    { value: "specialized", label: "Specialized" }
+    { value: "specialised", label: "Specialised" }
   ];
 
   const renderCircuitCard = (circuitType: string) => {
