@@ -1,20 +1,26 @@
 
 import { useState, useEffect } from "react";
-import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import TestingHeader from "@/components/apprentice/testing-procedures/TestingHeader";
-import TestingTabsList from "@/components/apprentice/testing-procedures/TestingTabsList";
 import TestingResources from "@/components/apprentice/testing-procedures/TestingResources";
 import R1R2TestingTab from "@/components/apprentice/testing-procedures/testing-tabs/R1R2Testing/R1R2TestingTab";
 import IRTestingTab from "@/components/apprentice/testing-procedures/testing-tabs/InsulationResistance/IRTestingTab";
 import ZsTestingTab from "@/components/apprentice/testing-procedures/testing-tabs/EarthFaultLoop/ZsTestingTab";
 import PolarityTestingTab from "@/components/apprentice/testing-procedures/testing-tabs/Polarity/PolarityTestingTab";
 import { Button } from "@/components/ui/button";
-import { BookmarkCheck, HelpCircle } from "lucide-react";
+import { BookmarkCheck, HelpCircle, Zap, Activity, GitBranch, Check } from "lucide-react";
 
 const TestingProcedures = () => {
   const [activeTab, setActiveTab] = useState("r1r2");
   const [lastVisited, setLastVisited] = useState<string | null>(null);
+
+  const testingOptions = [
+    { value: "r1r2", label: "R1+R2 Testing", icon: Zap },
+    { value: "ir", label: "IR Testing", icon: Activity },
+    { value: "zs", label: "Zs Testing", icon: GitBranch },
+    { value: "polarity", label: "Polarity", icon: Check }
+  ];
   
   // Track active tab for persistence
   useEffect(() => {
@@ -29,10 +35,25 @@ const TestingProcedures = () => {
     localStorage.setItem("lastTestingTab", value);
     
     // Show toast when switching tabs
-    toast.success(`Switched to ${getTabName(value)} tab`, {
+    toast.success(`Switched to ${getTabName(value)} procedure`, {
       description: "Your progress is automatically saved",
       duration: 2000,
     });
+  };
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "r1r2":
+        return <R1R2TestingTab />;
+      case "ir":
+        return <IRTestingTab />;
+      case "zs":
+        return <ZsTestingTab />;
+      case "polarity":
+        return <PolarityTestingTab />;
+      default:
+        return <R1R2TestingTab />;
+    }
   };
   
   const getTabName = (tabId: string) => {
@@ -68,40 +89,54 @@ const TestingProcedures = () => {
         </div>
       )}
       
-      <div className="relative">
-        <Tabs 
-          value={activeTab} 
-          onValueChange={handleTabChange} 
-          className="w-full"
-        >
-          <TestingTabsList />
+      <div className="w-full space-y-6">
+        <div className="flex justify-center relative">
+          <Select value={activeTab} onValueChange={handleTabChange}>
+            <SelectTrigger className="w-[280px] md:w-[320px]">
+              <SelectValue placeholder="Select testing procedure">
+                <div className="flex items-center gap-2">
+                  {(() => {
+                    const currentTab = testingOptions.find(tab => tab.value === activeTab);
+                    const IconComponent = currentTab?.icon;
+                    return (
+                      <>
+                        {IconComponent && <IconComponent className="h-4 w-4" />}
+                        {currentTab?.label}
+                      </>
+                    );
+                  })()}
+                </div>
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              {testingOptions.map((tab) => {
+                const IconComponent = tab.icon;
+                return (
+                  <SelectItem key={tab.value} value={tab.value}>
+                    <div className="flex items-center gap-2">
+                      <IconComponent className="h-4 w-4" />
+                      {tab.label}
+                    </div>
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
           
-          <TabsContent value="r1r2" className="animate-fade-in">
-            <R1R2TestingTab />
-          </TabsContent>
-          
-          <TabsContent value="ir" className="animate-fade-in">
-            <IRTestingTab />
-          </TabsContent>
-          
-          <TabsContent value="zs" className="animate-fade-in">
-            <ZsTestingTab />
-          </TabsContent>
-          
-          <TabsContent value="polarity" className="animate-fade-in">
-            <PolarityTestingTab />
-          </TabsContent>
-        </Tabs>
-        
-        <div className="absolute top-0 right-0">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="rounded-full h-8 w-8 p-0"
-            onClick={() => toast.info("Need help? Contact your supervisor or send us feedback.")}
-          >
-            <HelpCircle className="h-4 w-4" />
-          </Button>
+          <div className="absolute top-0 right-0">
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="rounded-full h-8 w-8 p-0"
+              onClick={() => toast.info("Need help? Contact your supervisor or send us feedback.")}
+            >
+              <HelpCircle className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        <div className="w-full animate-fade-in">
+          {renderTabContent()}
         </div>
       </div>
       
