@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
 import { Check, X, ChevronDown } from "lucide-react";
@@ -33,9 +33,6 @@ export const ScrollbarFreeMultiSelect: React.FC<ScrollbarFreeMultiSelectProps> =
   className,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [focusedIndex, setFocusedIndex] = useState(-1);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const handleItemSelect = (itemValue: string) => {
     if (itemValue === "N/A") {
@@ -61,49 +58,6 @@ export const ScrollbarFreeMultiSelect: React.FC<ScrollbarFreeMultiSelectProps> =
       .filter(Boolean);
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!isOpen) return;
-
-    const totalItems = options.length + 1; // +1 for "None selected" option
-    
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      setFocusedIndex(prev => prev < totalItems - 1 ? prev + 1 : 0);
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      setFocusedIndex(prev => prev > 0 ? prev - 1 : totalItems - 1);
-    } else if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      if (focusedIndex === 0) {
-        handleItemSelect("N/A");
-      } else if (focusedIndex > 0) {
-        const option = options[focusedIndex - 1];
-        if (option) handleItemSelect(option.value);
-      }
-    } else if (e.key === 'Escape') {
-      setIsOpen(false);
-      setFocusedIndex(-1);
-    }
-  };
-
-  useEffect(() => {
-    if (isOpen && focusedIndex >= 0) {
-      const focusedElement = itemRefs.current[focusedIndex];
-      if (focusedElement && scrollContainerRef.current) {
-        focusedElement.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'nearest' 
-        });
-      }
-    }
-  }, [focusedIndex, isOpen]);
-
-  useEffect(() => {
-    if (isOpen) {
-      setFocusedIndex(-1);
-    }
-  }, [isOpen]);
-
   return (
     <div className={cn("space-y-2", className)}>
       {label && (
@@ -118,7 +72,6 @@ export const ScrollbarFreeMultiSelect: React.FC<ScrollbarFreeMultiSelectProps> =
           <button
             type="button"
             disabled={disabled}
-            onKeyDown={handleKeyDown}
             className={cn(
               "flex h-auto min-h-[48px] w-full items-center justify-between rounded-xl border-2 border-elec-gray/50 bg-elec-card px-4 py-3 text-base font-medium ring-offset-background placeholder:text-elec-light/60 focus:border-elec-yellow focus:outline-none focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50 text-elec-light hover:border-elec-yellow/40 transition-all duration-200",
               error && "border-red-500",
@@ -156,18 +109,9 @@ export const ScrollbarFreeMultiSelect: React.FC<ScrollbarFreeMultiSelectProps> =
         </PopoverTrigger>
         
         <PopoverContent className="w-full p-0 bg-elec-card border-elec-gray/50 shadow-xl z-50">
-          <div 
-            ref={scrollContainerRef}
-            className="max-h-[200px] overflow-y-auto scrollbar-none"
-            onKeyDown={handleKeyDown}
-            tabIndex={-1}
-          >
+          <div className="max-h-[200px] overflow-y-auto scrollbar-none">
             <div
-              ref={el => itemRefs.current[0] = el}
-              className={cn(
-                "p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer border-b border-elec-gray/20 transition-colors",
-                focusedIndex === 0 && "bg-elec-yellow/20"
-              )}
+              className="p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer border-b border-elec-gray/20 transition-colors"
               onClick={() => handleItemSelect("N/A")}
             >
               <div className="flex items-center">
@@ -181,11 +125,7 @@ export const ScrollbarFreeMultiSelect: React.FC<ScrollbarFreeMultiSelectProps> =
             {options.map((option, index) => (
               <div
                 key={option.value}
-                ref={el => itemRefs.current[index + 1] = el}
-                className={cn(
-                  "p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer transition-colors",
-                  focusedIndex === index + 1 && "bg-elec-yellow/20"
-                )}
+                className="p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer transition-colors"
                 onClick={() => handleItemSelect(option.value)}
               >
                 <div className="flex items-start">
