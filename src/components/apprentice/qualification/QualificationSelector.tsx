@@ -113,22 +113,24 @@ const QualificationSelector = () => {
                       }`}
                       onClick={() => setSelectedQualification(qualification)}
                     >
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between">
-                          <div className="space-y-2">
-                            <div className="flex items-center gap-2">
-                              <h3 className="font-semibold">{qualification.title}</h3>
-                              <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow">{qualification.level}</Badge>
-                            </div>
-                            <p className="text-sm text-muted-foreground">
-                              {qualification.description}
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              Code: {qualification.code}
-                            </p>
-                          </div>
+                    <CardContent className="p-4">
+                      <div className="space-y-3">
+                        <div className="flex justify-end">
+                          <Badge variant="outline" className="border-elec-yellow bg-elec-yellow text-elec-dark font-semibold">
+                            {qualification.level}
+                          </Badge>
                         </div>
-                      </CardContent>
+                        <div className="space-y-2">
+                          <h3 className="font-semibold text-lg leading-tight">{qualification.title}</h3>
+                          <p className="text-sm text-muted-foreground">
+                            {qualification.description}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            Code: {qualification.code}
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
                     </Card>
                   ))}
                 </div>
