@@ -146,20 +146,12 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
 
       {/* Progress Indicator */}
       {canProceed && (
-        <Card className="bg-green-500/10 border-green-500/30">
-          <CardHeader>
-            <CardTitle className="text-green-300 flex items-center gap-2">
-              <Grid className="h-5 w-5" />
-              Multi-Circuit Design Ready
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-green-200">
-              You have configured {circuits.filter(c => c.enabled).length} active circuits with accurate BS 7671 defaults. 
-              Click Next to proceed with environmental settings and comprehensive analysis.
-            </p>
-          </CardContent>
-        </Card>
+        <div className="text-center py-4">
+          <div className="inline-flex items-center gap-2 text-green-400">
+            <Grid className="h-4 w-4" />
+            <span className="text-sm font-medium">Circuits Configured</span>
+          </div>
+        </div>
       )}
     </div>
   );
