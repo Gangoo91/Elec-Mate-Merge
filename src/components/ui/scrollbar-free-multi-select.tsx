@@ -104,7 +104,7 @@ export const ScrollbarFreeMultiSelect: React.FC<ScrollbarFreeMultiSelectProps> =
                 ))
               )}
             </div>
-            <ChevronDown className="h-5 w-5 text-elec-light/60 ml-2 flex-shrink-0" />
+            <ChevronDown className="h-6 w-6 text-elec-yellow ml-3 flex-shrink-0" />
           </button>
         </PopoverTrigger>
         
