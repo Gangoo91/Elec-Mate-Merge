@@ -38,7 +38,7 @@ const OJTRatioCard = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Clock className="h-5 w-5 text-elec-yellow" />
-              <span className="text-xl font-bold">Portfolio & OJT Progress</span>
+              <span className="text-xl font-bold">Portfolio & OJT Management</span>
             </div>
             <div className="text-sm text-muted-foreground">20% requirement</div>
           </div>
