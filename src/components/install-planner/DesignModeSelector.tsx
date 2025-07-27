@@ -103,27 +103,40 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
 
       {/* Contextual Information */}
       {currentMode && (
-        <Card className="border-elec-yellow/20 bg-elec-dark/30 max-w-2xl mx-auto">
+        <Card className="border-elec-yellow/20 bg-elec-gray max-w-2xl mx-auto">
           <CardContent className="p-4">
-            <div className="flex items-start gap-3">
-              <Info className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <div className="space-y-2">
+            <div className="text-center space-y-4">
+              <div className="flex items-center justify-center gap-2">
+                <Info className="h-5 w-5 text-elec-yellow" />
                 <h4 className="font-medium text-elec-yellow">
                   {currentMode === "single" ? "Single Circuit Design" : "Multi-Circuit Installation"}
                 </h4>
-                <div className="text-sm text-muted-foreground space-y-1">
-                  {currentMode === "single" ? (
-                    <>
-                      <p>Ideal for: Individual appliances, socket circuits, lighting circuits, or simple upgrades.</p>
-                      <p>Features: Fast cable sizing, protection calculations, and BS 7671 compliance checking.</p>
-                    </>
-                  ) : (
-                    <>
-                      <p>Ideal for: New builds, rewires, commercial installations, or complex multi-zone systems.</p>
-                      <p>Features: System-wide analysis, diversity calculations, supply sizing, and environmental zoning.</p>
-                    </>
-                  )}
-                </div>
+              </div>
+              
+              <div className="space-y-3 text-sm text-muted-foreground">
+                {currentMode === "single" ? (
+                  <>
+                    <div>
+                      <p className="font-medium text-elec-yellow mb-2">Ideal for:</p>
+                      <p>Individual appliances, socket circuits, lighting circuits, or simple upgrades.</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-elec-yellow mb-2">Features:</p>
+                      <p>Fast cable sizing, protection calculations, and BS 7671 compliance checking.</p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <p className="font-medium text-elec-yellow mb-2">Ideal for:</p>
+                      <p>New builds, rewires, commercial installations, or complex multi-zone systems.</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-elec-yellow mb-2">Features:</p>
+                      <p>System-wide analysis, diversity calculations, supply sizing, and environmental zoning.</p>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </CardContent>
