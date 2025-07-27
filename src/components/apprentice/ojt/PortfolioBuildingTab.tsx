@@ -1,8 +1,8 @@
 
-import PortfolioManager from "@/components/apprentice/portfolio/PortfolioManager";
+import SmartPortfolioManager from "@/components/apprentice/portfolio/SmartPortfolioManager";
 
 const PortfolioBuildingTab = () => {
-  return <PortfolioManager />;
+  return <SmartPortfolioManager />;
 };
 
 export default PortfolioBuildingTab;
