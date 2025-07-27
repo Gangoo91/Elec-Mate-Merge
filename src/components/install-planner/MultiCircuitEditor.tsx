@@ -55,25 +55,25 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
 
   const getLoadTypeIcon = (loadType: string) => {
     switch (loadType) {
-      case "lighting": return "LT";
-      case "power": return "PW";
-      case "cooker": return "CK";
-      case "shower": return "SH";
-      case "heating": return "HT";
-      case "ev-charging": return "EV";
-      case "motor-small": return "MS";
-      case "motor-large": return "ML";
-      case "motor": return "MT";
-      case "hvac": return "AC";
-      case "it-equipment": return "IT";
-      case "commercial-lighting": return "CL";
-      case "commercial-power": return "CP";
-      case "emergency": return "EM";
-      case "medical": return "MD";
-      case "welding": return "WD";
-      case "crane": return "CR";
-      case "furnace": return "FN";
-      default: return "GN";
+      case "lighting": return Zap;
+      case "power": return Cable;
+      case "cooker": return Zap;
+      case "shower": return Cable;
+      case "heating": return Zap;
+      case "ev-charging": return Cable;
+      case "motor-small": return Cable;
+      case "motor-large": return Cable;
+      case "motor": return Cable;
+      case "hvac": return Zap;
+      case "it-equipment": return Cable;
+      case "commercial-lighting": return Zap;
+      case "commercial-power": return Cable;
+      case "emergency": return Zap;
+      case "medical": return Cable;
+      case "welding": return Zap;
+      case "crane": return Cable;
+      case "furnace": return Zap;
+      default: return Cable;
     }
   };
 
@@ -99,18 +99,30 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
               className="cursor-pointer"
               onClick={() => toggleExpanded(circuit.id)}
             >
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+              <div className="flex flex-col gap-3">
                 <div className="flex items-center gap-3 min-w-0 flex-1">
                   <div className="h-10 w-10 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                    <div className="text-xs font-bold text-elec-yellow">{getLoadTypeIcon(circuit.loadType)}</div>
+                    {React.createElement(getLoadTypeIcon(circuit.loadType), { 
+                      className: "h-5 w-5 text-elec-yellow" 
+                    })}
                   </div>
                   <div className="min-w-0 flex-1">
                     <CardTitle className="text-base">
                       {circuit.name}
                     </CardTitle>
-                    <p className="text-sm text-muted-foreground">
-                      {circuit.totalLoad}W • {circuit.voltage}V • {circuit.cableLength}m
-                    </p>
+                    <div className="flex flex-col gap-1 mt-1 sm:flex-row sm:flex-wrap sm:gap-2">
+                      <div className="flex items-center gap-1">
+                        <span className="text-sm text-muted-foreground">{circuit.totalLoad}W</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span className="text-sm text-muted-foreground hidden sm:inline">•</span>
+                        <span className="text-sm text-muted-foreground">{circuit.voltage}V</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <span className="text-sm text-muted-foreground hidden sm:inline">•</span>
+                        <span className="text-sm text-muted-foreground">{circuit.cableLength}m</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="flex-shrink-0">

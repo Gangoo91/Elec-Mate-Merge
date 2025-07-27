@@ -120,23 +120,36 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
               isCompliant ? 'border-green-500/30 bg-green-500/5' : 'border-amber-500/30 bg-amber-500/5'
             }`}>
               <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="h-8 w-8 rounded bg-elec-yellow/20 flex items-center justify-center">
-                      <div className="text-xs font-bold text-elec-yellow">
-                        {analysis.circuit.loadType === "lighting" ? "LT" :
-                         analysis.circuit.loadType === "power" ? "PW" :
-                         analysis.circuit.loadType === "cooker" ? "CK" :
-                         analysis.circuit.loadType === "heating" ? "HT" : "GN"}
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="h-8 w-8 rounded bg-elec-yellow/20 flex items-center justify-center">
+                        {analysis.circuit.loadType === "lighting" ? 
+                          <Zap className="h-4 w-4 text-elec-yellow" /> :
+                         analysis.circuit.loadType === "power" ? 
+                          <Zap className="h-4 w-4 text-elec-yellow" /> :
+                         analysis.circuit.loadType === "cooker" ? 
+                          <Zap className="h-4 w-4 text-elec-yellow" /> :
+                         analysis.circuit.loadType === "heating" ? 
+                          <Zap className="h-4 w-4 text-elec-yellow" /> : 
+                          <Zap className="h-4 w-4 text-elec-yellow" />}
+                      </div>
+                      <div>
+                        <CardTitle className="text-base">{analysis.circuit.name}</CardTitle>
+                        <div className="flex flex-col gap-1 mt-1 sm:flex-row sm:flex-wrap sm:gap-2">
+                          <div className="flex items-center gap-1">
+                            <span className="text-sm text-muted-foreground">{analysis.circuit.totalLoad}W</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <span className="text-sm text-muted-foreground hidden sm:inline">•</span>
+                            <span className="text-sm text-muted-foreground">{analysis.circuit.voltage}V</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <span className="text-sm text-muted-foreground hidden sm:inline">•</span>
+                            <span className="text-sm text-muted-foreground">{analysis.circuit.cableLength}m</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div>
-                      <CardTitle className="text-base">{analysis.circuit.name}</CardTitle>
-                      <p className="text-sm text-muted-foreground">
-                        {analysis.circuit.totalLoad}W • {analysis.circuit.voltage}V • {analysis.circuit.cableLength}m
-                      </p>
-                    </div>
-                  </div>
                   <div className="flex items-center gap-2">
                     {isCompliant ? 
                       <CheckCircle className="h-5 w-5 text-green-400" /> : 

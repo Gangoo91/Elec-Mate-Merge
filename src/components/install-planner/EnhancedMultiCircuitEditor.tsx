@@ -67,25 +67,25 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
 
   const getLoadTypeIcon = (loadType: string) => {
     switch (loadType) {
-      case "lighting": return "LT";
-      case "power": return "PW";
-      case "cooker": return "CK";
-      case "shower": return "SH";
-      case "heating": return "HT";
-      case "ev-charging": return "EV";
-      case "motor-small": return "MS";
-      case "motor-large": return "ML";
-      case "motor": return "MT";
-      case "hvac": return "AC";
-      case "it-equipment": return "IT";
-      case "commercial-lighting": return "CL";
-      case "commercial-power": return "CP";
-      case "emergency": return "EM";
-      case "medical": return "MD";
-      case "welding": return "WD";
-      case "crane": return "CR";
-      case "furnace": return "FN";
-      default: return "GN";
+      case "lighting": return Zap;
+      case "power": return Cable;
+      case "cooker": return ChevronDown;
+      case "shower": return Filter;
+      case "heating": return Search;
+      case "ev-charging": return SortAsc;
+      case "motor-small": return Cable;
+      case "motor-large": return Cable;
+      case "motor": return Cable;
+      case "hvac": return Search;
+      case "it-equipment": return ChevronDown;
+      case "commercial-lighting": return Zap;
+      case "commercial-power": return Cable;
+      case "emergency": return Filter;
+      case "medical": return SortAsc;
+      case "welding": return Search;
+      case "crane": return Cable;
+      case "furnace": return ChevronDown;
+      default: return Cable;
     }
   };
 
@@ -184,10 +184,12 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
             >
               <CollapsibleTrigger asChild>
                 <CardHeader className="cursor-pointer hover:bg-black/20 transition-colors">
-                  <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <div className="flex flex-col gap-3">
                     <div className="flex items-center gap-3 min-w-0 flex-1">
                       <div className="h-10 w-10 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                        <div className="text-xs font-bold text-elec-yellow">{getLoadTypeIcon(circuit.loadType)}</div>
+                        {React.createElement(getLoadTypeIcon(circuit.loadType), { 
+                          className: "h-5 w-5 text-elec-yellow" 
+                        })}
                       </div>
                       <div className="min-w-0 flex-1">
                         <CardTitle className="text-base flex items-center gap-2">
@@ -197,18 +199,18 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
                             <ChevronRight className="h-4 w-4" />
                           }
                         </CardTitle>
-                        <div className="flex flex-wrap gap-2 mt-1">
-                          <span className="text-sm text-muted-foreground">
-                            {circuit.totalLoad}W
-                          </span>
-                          <span className="text-sm text-muted-foreground">•</span>
-                          <span className="text-sm text-muted-foreground">
-                            {circuit.voltage}V
-                          </span>
-                          <span className="text-sm text-muted-foreground">•</span>
-                          <span className="text-sm text-muted-foreground">
-                            {circuit.cableLength}m
-                          </span>
+                        <div className="flex flex-col gap-1 mt-1 sm:flex-row sm:flex-wrap sm:gap-2">
+                          <div className="flex items-center gap-1">
+                            <span className="text-sm text-muted-foreground">{circuit.totalLoad}W</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <span className="text-sm text-muted-foreground hidden sm:inline">•</span>
+                            <span className="text-sm text-muted-foreground">{circuit.voltage}V</span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <span className="text-sm text-muted-foreground hidden sm:inline">•</span>
+                            <span className="text-sm text-muted-foreground">{circuit.cableLength}m</span>
+                          </div>
                         </div>
                       </div>
                     </div>
