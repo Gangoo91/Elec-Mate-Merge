@@ -260,12 +260,11 @@ const PortfolioDocumentationContent = () => {
           return (
             <Card key={resource.id} className="border-gray-500/20 bg-elec-gray hover:border-gray-500/40 transition-colors">
               <CardHeader className="pb-3">
-                <div className="flex flex-col gap-3">
-                  {/* Header with icon and title */}
-                  <div className="flex items-start gap-2">
-                    <IconComponent className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <div className="flex-1 min-w-0">
-                      <CardTitle className="text-sm font-medium text-white leading-tight">
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-start gap-2 flex-1 min-w-0">
+                    <IconComponent className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
+                    <div className="min-w-0">
+                      <CardTitle className="text-sm font-medium text-white line-clamp-2">
                         {resource.title}
                       </CardTitle>
                       <p className="text-xs text-muted-foreground mt-1">
@@ -273,9 +272,7 @@ const PortfolioDocumentationContent = () => {
                       </p>
                     </div>
                   </div>
-                  
-                  {/* Badges */}
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-col gap-1 flex-shrink-0">
                     {resource.isNew && (
                       <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
                         New
@@ -287,52 +284,48 @@ const PortfolioDocumentationContent = () => {
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="pt-0 space-y-4">
-                {/* Description */}
-                <p className="text-muted-foreground text-xs leading-relaxed">
+              <CardContent className="pt-0">
+                <p className="text-muted-foreground text-xs mb-3 line-clamp-3">
                   {resource.description}
                 </p>
                 
-                {/* Time and size info */}
-                <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <Clock className="h-3 w-3 flex-shrink-0" />
+                <div className="flex items-center gap-2 mb-3 text-xs text-muted-foreground">
+                  <Clock className="h-3 w-3" />
                   <span>{resource.estimatedTime}</span>
                   <span>•</span>
                   <span>{resource.fileSize}</span>
                 </div>
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-1.5">
+                <div className="flex flex-wrap gap-1 mb-3">
                   {resource.tags.slice(0, 3).map((tag) => (
-                    <Badge key={tag} variant="outline" className="text-xs border-gray-500/30 px-2 py-0.5">
+                    <Badge key={tag} variant="outline" className="text-xs border-gray-500/30">
                       {tag}
                     </Badge>
                   ))}
                   {resource.tags.length > 3 && (
-                    <Badge variant="outline" className="text-xs border-gray-500/30 px-2 py-0.5">
+                    <Badge variant="outline" className="text-xs border-gray-500/30">
                       +{resource.tags.length - 3} more
                     </Badge>
                   )}
                 </div>
 
-                {/* Action buttons */}
-                <div className="flex flex-col sm:flex-row gap-2 pt-2">
+                <div className="flex gap-2">
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="border-elec-yellow/30 text-xs flex-1 h-8"
+                    className="border-elec-yellow/30 text-xs flex-1"
                     onClick={() => handleOpen(resource)}
                   >
-                    <ExternalLink className="h-3 w-3 mr-2" />
+                    <ExternalLink className="h-3 w-3 mr-1" />
                     View
                   </Button>
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="border-elec-yellow/30 text-xs flex-1 h-8"
+                    className="border-elec-yellow/30 text-xs flex-1"
                     onClick={() => handleDownload(resource)}
                   >
-                    <Download className="h-3 w-3 mr-2" />
+                    <Download className="h-3 w-3 mr-1" />
                     Download
                   </Button>
                 </div>
@@ -363,54 +356,24 @@ const PortfolioDocumentationContent = () => {
         </CardHeader>
         <CardContent className="pt-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="bg-black/20 rounded-lg p-4 border border-green-500/20 h-full">
-              <h4 className="font-medium text-white mb-3 text-sm">Documentation Tips</h4>
-              <ul className="text-xs sm:text-sm text-muted-foreground space-y-2">
-                <li className="flex items-start gap-2">
-                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
-                  Keep evidence current and relevant to BS 7671 18th Edition
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
-                  Include clear photos and technical diagrams
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
-                  Write detailed, reflective commentary
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
-                  Cross-reference with assessment criteria
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
-                  Document health and safety procedures
-                </li>
+            <div className="bg-black/20 rounded-lg p-3 border border-green-500/20">
+              <h4 className="font-medium text-white mb-2 text-sm">Documentation Tips</h4>
+              <ul className="text-xs sm:text-sm text-muted-foreground space-y-1">
+                <li>• Keep evidence current and relevant to BS 7671 18th Edition</li>
+                <li>• Include clear photos and technical diagrams</li>
+                <li>• Write detailed, reflective commentary</li>
+                <li>• Cross-reference with assessment criteria</li>
+                <li>• Document health and safety procedures</li>
               </ul>
             </div>
-            <div className="bg-black/20 rounded-lg p-4 border border-green-500/20 h-full">
-              <h4 className="font-medium text-white mb-3 text-sm">Organisation</h4>
-              <ul className="text-xs sm:text-sm text-muted-foreground space-y-2">
-                <li className="flex items-start gap-2">
-                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
-                  Use consistent file naming conventions
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
-                  Create logical folder structures by category
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
-                  Maintain regular backup copies
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
-                  Keep physical and digital evidence aligned
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
-                  Version control your portfolio updates
-                </li>
+            <div className="bg-black/20 rounded-lg p-3 border border-green-500/20">
+              <h4 className="font-medium text-white mb-2 text-sm">Organisation</h4>
+              <ul className="text-xs sm:text-sm text-muted-foreground space-y-1">
+                <li>• Use consistent file naming conventions</li>
+                <li>• Create logical folder structures by category</li>
+                <li>• Maintain regular backup copies</li>
+                <li>• Keep physical and digital evidence aligned</li>
+                <li>• Version control your portfolio updates</li>
               </ul>
             </div>
           </div>
