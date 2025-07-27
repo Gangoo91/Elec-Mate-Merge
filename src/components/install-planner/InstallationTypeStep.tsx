@@ -6,8 +6,9 @@ import { InstallPlanData } from "./types";
 import { 
   Home, Building, Factory, Zap, Lightbulb, Fan, Microwave, 
   Hospital, School, ShoppingCart, Warehouse, Truck, Ship,
-  Flame, Snowflake, Car, Cpu, Wind, Sun
+  Flame, Snowflake, Car, Cpu, Wind, Sun, AlertTriangle
 } from "lucide-react";
+import { getAvailableTemplatesForInstallationType, CIRCUIT_TEMPLATES } from "./CircuitDefaults";
 
 interface InstallationTypeStepProps {
   planData: InstallPlanData;
@@ -88,31 +89,60 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
     );
   }
 
-  // Original single-circuit mode with both installation type and load type
-  const loadTypes = [
-    // Standard loads
-    { value: "lighting", label: "Lighting Circuit", icon: Lightbulb, description: "General lighting, LED, fluorescent", category: "Standard" },
-    { value: "power", label: "Power Circuit", icon: Zap, description: "Socket outlets, general power", category: "Standard" },
-    { value: "heating", label: "Heating Circuit", icon: Fan, description: "Electric heating, underfloor heating", category: "Standard" },
-    { value: "cooker", label: "Cooker Circuit", icon: Microwave, description: "Electric cookers, ovens, hobs", category: "Standard" },
+  // Helper function to map template keys to load type options with icons and categories
+  const getLoadTypeFromTemplate = (templateKey: string) => {
+    const template = CIRCUIT_TEMPLATES[templateKey];
+    if (!template) return null;
     
-    // Specialised loads
-    { value: "motor", label: "Motor Loads", icon: Fan, description: "Motors, pumps, fans, compressors", category: "Motor" },
-    { value: "hvac", label: "HVAC Systems", icon: Snowflake, description: "Air conditioning, ventilation systems", category: "Motor" },
-    { value: "welding", label: "Welding Equipment", icon: Flame, description: "Arc welders, resistance welders", category: "Industrial" },
-    { value: "furnace", label: "Industrial Furnaces", icon: Flame, description: "Electric furnaces, kilns", category: "Industrial" },
-    { value: "crane", label: "Crane & Hoist", icon: Warehouse, description: "Overhead cranes, lifting equipment", category: "Industrial" },
+    // Map template keys to appropriate icons and categories
+    const getIconAndCategory = (key: string) => {
+      if (key.includes('lighting')) return { icon: Lightbulb, category: "Lighting" };
+      if (key.includes('power') || key.includes('socket')) return { icon: Zap, category: "Power" };
+      if (key.includes('heating') || key.includes('heat-pump')) return { icon: Fan, category: "Heating" };
+      if (key.includes('cooker') || key.includes('kitchen')) return { icon: Microwave, category: "Kitchen" };
+      if (key.includes('motor') || key.includes('pump') || key.includes('fan')) return { icon: Fan, category: "Motors" };
+      if (key.includes('hvac') || key.includes('cooling')) return { icon: Snowflake, category: "HVAC" };
+      if (key.includes('welding') || key.includes('furnace') || key.includes('arc')) return { icon: Flame, category: "Industrial" };
+      if (key.includes('crane') || key.includes('hoist')) return { icon: Warehouse, category: "Material Handling" };
+      if (key.includes('ev') || key.includes('charging')) return { icon: Car, category: "Transport" };
+      if (key.includes('emergency') || key.includes('fire')) return { icon: Zap, category: "Safety" };
+      if (key.includes('it') || key.includes('server') || key.includes('ups') || key.includes('data')) return { icon: Cpu, category: "IT & Data" };
+      if (key.includes('medical') || key.includes('hospital')) return { icon: Hospital, category: "Healthcare" };
+      if (key.includes('solar') || key.includes('renewable') || key.includes('battery')) return { icon: Sun, category: "Renewable" };
+      if (key.includes('grain') || key.includes('irrigation') || key.includes('livestock')) return { icon: Wind, category: "Agricultural" };
+      if (key.includes('education') || key.includes('classroom') || key.includes('lab')) return { icon: School, category: "Educational" };
+      if (key.includes('retail') || key.includes('pos') || key.includes('hospitality')) return { icon: ShoppingCart, category: "Commercial" };
+      
+      // Default fallback
+      return { icon: Zap, category: "Specialised" };
+    };
     
-    // Specialised installations
-    { value: "ev-charging", label: "EV Charging", icon: Car, description: "Electric vehicle charging points", category: "Transport" },
-    { value: "emergency", label: "Emergency Systems", icon: Zap, description: "Emergency lighting, fire alarms", category: "Safety" },
-    { value: "it-equipment", label: "IT Equipment", icon: Cpu, description: "Servers, networking, UPS", category: "Data" },
-    { value: "medical", label: "Medical Equipment", icon: Hospital, description: "Life support, medical devices", category: "Healthcare" },
-    { value: "solar-pv", label: "Solar PV Systems", icon: Sun, description: "Photovoltaic installations", category: "Renewable" },
-    { value: "battery-storage", label: "Battery Storage", icon: Zap, description: "Energy storage systems", category: "Renewable" }
-  ];
+    const { icon, category } = getIconAndCategory(templateKey);
+    
+    return {
+      value: templateKey,
+      label: template.name,
+      icon,
+      description: template.description,
+      category
+    };
+  };
 
-  const categories = [...new Set(loadTypes.map(load => load.category))];
+  // Get context-aware load types based on installation environment
+  const getAvailableLoadTypes = () => {
+    if (!planData.installationType) {
+      return []; // No load types available until installation type is selected
+    }
+    
+    const availableTemplates = getAvailableTemplatesForInstallationType(planData.installationType);
+    const loadTypes = availableTemplates
+      .map(getLoadTypeFromTemplate)
+      .filter(Boolean); // Remove any null entries
+    
+    return loadTypes;
+  };
+
+  const availableLoadTypes = getAvailableLoadTypes();
 
   // Format options for dropdowns
   const installationTypeOptions = installationTypes.map(type => ({
@@ -120,7 +150,7 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
     label: type.label
   }));
 
-  const loadTypeOptions = loadTypes.map(load => ({
+  const loadTypeOptions = availableLoadTypes.map(load => ({
     value: load.value,
     label: load.label
   }));
@@ -150,18 +180,44 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
           label="Installation Environment"
           placeholder="Select installation environment"
           value={planData.installationType || ""}
-          onValueChange={(value) => updatePlanData({ installationType: value })}
+          onValueChange={(value) => updatePlanData({ 
+            installationType: value, 
+            loadType: "" // Clear load type when installation type changes
+          })}
           options={installationTypeOptions}
         />
 
         <MobileSelectWrapper
           label="Load Type & Specialisation"
-          placeholder="Select load type"
+          placeholder={planData.installationType ? "Select load type" : "Select installation environment first"}
           value={planData.loadType || ""}
           onValueChange={(value) => updatePlanData({ loadType: value })}
           options={loadTypeOptions}
+          disabled={!planData.installationType || availableLoadTypes.length === 0}
+          hint={planData.installationType ? 
+            `Available load types for ${planData.installationType} installations` : 
+            "Choose installation environment to see relevant load types"
+          }
         />
       </div>
+
+      {/* Show message when no load types are available */}
+      {planData.installationType && availableLoadTypes.length === 0 && (
+        <Card className="bg-amber-500/10 border-amber-500/30">
+          <CardHeader>
+            <CardTitle className="text-amber-300 flex items-center gap-2">
+              <AlertTriangle className="h-5 w-5" />
+              No Load Types Available
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-amber-200">
+              No specific load types are defined for <strong>{planData.installationType}</strong> installations.
+              You may need to select a different installation environment or contact support.
+            </p>
+          </CardContent>
+        </Card>
+      )}
 
       {planData.installationPurpose && planData.installationType && planData.loadType && (
         <Card className="bg-green-500/10 border-green-500/30">

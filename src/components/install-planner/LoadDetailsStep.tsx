@@ -5,6 +5,7 @@ import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { InstallPlanData } from "./types";
 import { Calculator, Info, AlertTriangle, Zap, Activity, Settings } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { CIRCUIT_TEMPLATES } from "./CircuitDefaults";
 
 interface LoadDetailsStepProps {
   planData: InstallPlanData;
@@ -12,42 +13,64 @@ interface LoadDetailsStepProps {
 }
 
 const LoadDetailsStep = ({ planData, updatePlanData }: LoadDetailsStepProps) => {
-  // Smart stepping based on load type
+  // Smart stepping based on load type - enhanced for template compatibility
   const getStepValue = (loadType: string) => {
     // Small loads: 10W steps
-    if (['lighting', 'emergency', 'power'].includes(loadType)) {
+    if (['lighting', 'emergency', 'power', 'commercial-lighting', 'smart-lighting', 'classroom-power'].includes(loadType) || 
+        loadType.includes('lighting')) {
       return "10";
     }
     // Medium loads: 100W steps  
-    if (['cooker', 'heating', 'motor', 'hvac'].includes(loadType)) {
+    if (['cooker', 'heating', 'motor', 'hvac', 'kitchen-equipment', 'motor-small', 'heat-pump'].includes(loadType) ||
+        loadType.includes('heating') || loadType.includes('cooker') || loadType.includes('motor-small')) {
       return "100";
     }
     // Large loads: 500W steps
-    if (['welding', 'furnace', 'crane', 'solar-pv', 'battery-storage'].includes(loadType)) {
+    if (['welding', 'furnace', 'crane', 'solar-pv', 'battery-storage', 'motor-large', 'ups-system', 'backup-generator'].includes(loadType) ||
+        loadType.includes('welding') || loadType.includes('furnace') || loadType.includes('crane') || 
+        loadType.includes('motor-large') || loadType.includes('ups') || loadType.includes('generator')) {
       return "500";
     }
     // Default: 50W steps
     return "50";
   };
 
-  // Minimum value based on load type
+  // Minimum value based on load type - enhanced for template compatibility
   const getMinValue = (loadType: string) => {
-    if (['lighting', 'emergency'].includes(loadType)) {
+    if (['lighting', 'emergency', 'commercial-lighting', 'smart-lighting'].includes(loadType) || 
+        loadType.includes('lighting')) {
       return "10";
     }
-    if (['power'].includes(loadType)) {
+    if (['power', 'commercial-power', 'classroom-power'].includes(loadType) || 
+        loadType.includes('power')) {
       return "100";
     }
-    if (['cooker', 'heating', 'motor'].includes(loadType)) {
+    if (['cooker', 'heating', 'motor', 'kitchen-equipment', 'motor-small', 'heat-pump'].includes(loadType) ||
+        loadType.includes('heating') || loadType.includes('cooker') || loadType.includes('motor-small')) {
       return "500";
     }
-    if (['hvac', 'welding', 'furnace', 'crane'].includes(loadType)) {
+    if (['hvac', 'welding', 'furnace', 'crane', 'motor-large', 'ups-system'].includes(loadType) ||
+        loadType.includes('hvac') || loadType.includes('welding') || loadType.includes('furnace') || 
+        loadType.includes('crane') || loadType.includes('motor-large') || loadType.includes('ups')) {
       return "1000";
     }
     return "50";
   };
 
   const getLoadGuidance = () => {
+    // First check if we have a template for this load type
+    const template = CIRCUIT_TEMPLATES[planData.loadType || ""];
+    if (template) {
+      return {
+        typical: `${template.totalLoad}W (template default)`,
+        example: template.description,
+        defaultPF: template.powerFactor || 0.85,
+        voltageOptions: template.voltage === 230 ? ["230"] : template.voltage === 400 ? ["400"] : ["230", "400"],
+        phaseOptions: template.phases === "single" ? ["single"] : template.phases === "three" ? ["three"] : ["single", "three"]
+      };
+    }
+
+    // Fallback to legacy guidance map for backward compatibility
     const guidanceMap = {
       // Standard loads
       "lighting": {
