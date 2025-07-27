@@ -37,33 +37,27 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
       {/* Mode Selector - Toggle Style */}
       <Card className="border-elec-yellow/20 bg-elec-gray max-w-2xl mx-auto">
         <CardContent className="p-4 sm:p-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Card 
               className={`cursor-pointer border-2 transition-all active:scale-95 ${
                 currentMode === "single" 
-                  ? 'border-elec-yellow bg-elec-yellow/10 shadow-lg' 
-                  : 'border-elec-yellow/20 hover:border-elec-yellow/40 hover:bg-elec-yellow/5'
+                  ? 'border-elec-yellow bg-elec-gray shadow-lg' 
+                  : 'border-elec-yellow/20 hover:border-elec-yellow/40 bg-elec-gray'
               }`}
               onClick={() => selectMode("single")}
             >
-              <CardContent className="p-4 text-center space-y-3">
-                <div className={`p-3 rounded-full w-fit mx-auto ${
-                  currentMode === "single" ? 'bg-elec-yellow/20' : 'bg-elec-yellow/10'
-                }`}>
-                  <Cable className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-base flex items-center justify-center gap-2">
-                    Single Circuit
-                    {currentMode === "single" && <CheckCircle className="h-4 w-4 text-green-400" />}
-                  </h3>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Individual appliance or circuit
-                  </p>
-                </div>
-                <div className="flex flex-wrap justify-center gap-1">
-                  <Badge variant="outline" className="text-xs">Quick</Badge>
-                  <Badge variant="outline" className="text-xs">2-5 min</Badge>
+              <CardContent className="p-6 text-center space-y-4">
+                <Cable className="h-8 w-8 text-elec-yellow mx-auto" />
+                <div className="space-y-2">
+                  <div className="flex items-center justify-center gap-2">
+                    <h3 className="font-semibold text-lg text-elec-yellow">Single Circuit</h3>
+                    {currentMode === "single" && <CheckCircle className="h-5 w-5 text-green-400" />}
+                  </div>
+                  <p className="text-sm text-muted-foreground">Individual appliance or circuit</p>
+                  <div className="flex justify-center gap-2 pt-2">
+                    <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">Quick</span>
+                    <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">2-5 min</span>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -71,29 +65,23 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
             <Card 
               className={`cursor-pointer border-2 transition-all active:scale-95 ${
                 currentMode === "multi" 
-                  ? 'border-elec-yellow bg-elec-yellow/10 shadow-lg' 
-                  : 'border-elec-yellow/20 hover:border-elec-yellow/40 hover:bg-elec-yellow/5'
+                  ? 'border-elec-yellow bg-elec-gray shadow-lg' 
+                  : 'border-elec-yellow/20 hover:border-elec-yellow/40 bg-elec-gray'
               }`}
               onClick={() => selectMode("multi")}
             >
-              <CardContent className="p-4 text-center space-y-3">
-                <div className={`p-3 rounded-full w-fit mx-auto ${
-                  currentMode === "multi" ? 'bg-elec-yellow/20' : 'bg-elec-yellow/10'
-                }`}>
-                  <Zap className="h-6 w-6 text-elec-yellow" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-base flex items-center justify-center gap-2">
-                    Multi-Circuit
-                    {currentMode === "multi" && <CheckCircle className="h-4 w-4 text-green-400" />}
-                  </h3>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    Complete installation system
-                  </p>
-                </div>
-                <div className="flex flex-wrap justify-center gap-1">
-                  <Badge variant="outline" className="text-xs">Comprehensive</Badge>
-                  <Badge variant="outline" className="text-xs">10-30 min</Badge>
+              <CardContent className="p-6 text-center space-y-4">
+                <Zap className="h-8 w-8 text-elec-yellow mx-auto" />
+                <div className="space-y-2">
+                  <div className="flex items-center justify-center gap-2">
+                    <h3 className="font-semibold text-lg text-elec-yellow">Multi-Circuit</h3>
+                    {currentMode === "multi" && <CheckCircle className="h-5 w-5 text-green-400" />}
+                  </div>
+                  <p className="text-sm text-muted-foreground">Complete installation system</p>
+                  <div className="flex justify-center gap-2 pt-2">
+                    <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">Comprehensive</span>
+                    <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">10-30 min</span>
+                  </div>
                 </div>
               </CardContent>
             </Card>
