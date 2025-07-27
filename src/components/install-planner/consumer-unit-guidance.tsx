@@ -22,15 +22,17 @@ export const ConsumerUnitGuidance: React.FC<ConsumerUnitGuidanceProps> = ({
       <div className="space-y-4">
         <div className="space-y-3">
           <h4 className="font-medium text-elec-yellow">Requirements</h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="space-y-1">
-              <p className="text-xs text-muted-foreground">Minimum Ways</p>
-              <p className="font-medium text-elec-yellow">{totalCircuits + 2} ways</p>
-              <p className="text-xs text-muted-foreground">({totalCircuits} circuits + 2 spare)</p>
+          <div className="space-y-2">
+            <div className="flex justify-between items-center p-3 bg-muted/30 rounded">
+              <span className="text-sm text-muted-foreground">Minimum Ways</span>
+              <div className="text-right">
+                <span className="font-medium text-elec-yellow">{totalCircuits + 2} ways</span>
+                <p className="text-xs text-muted-foreground">({totalCircuits} circuits + 2 spare)</p>
+              </div>
             </div>
-            <div className="space-y-1">
-              <p className="text-xs text-muted-foreground">Main Switch Rating</p>
-              <p className="font-medium text-elec-yellow">{recommendedMainSwitch}A minimum</p>
+            <div className="flex justify-between items-center p-3 bg-muted/30 rounded">
+              <span className="text-sm text-muted-foreground">Main Switch Rating</span>
+              <span className="font-medium text-elec-yellow">{recommendedMainSwitch}A minimum</span>
             </div>
           </div>
         </div>

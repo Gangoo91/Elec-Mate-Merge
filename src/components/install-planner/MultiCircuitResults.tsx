@@ -104,13 +104,13 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
         </div>
       </div>
 
-      {/* Professional Notice */}
-      <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
-        <div className="flex gap-3">
-          <AlertTriangle className="h-5 w-5 text-amber-300 mt-0.5 flex-shrink-0" />
-          <div className="space-y-2">
-            <p className="font-medium text-amber-200">Professional Verification Required</p>
-            <p className="text-sm text-amber-200/80">
+      {/* Professional Notice - Mobile Optimised */}
+      <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mx-auto max-w-full">
+        <div className="flex flex-col sm:flex-row gap-3 items-start">
+          <AlertTriangle className="h-6 w-6 text-amber-300 flex-shrink-0 self-center sm:self-start sm:mt-0.5" />
+          <div className="space-y-2 text-center sm:text-left flex-1">
+            <p className="font-medium text-amber-200 text-lg sm:text-base">Professional Verification Required</p>
+            <p className="text-sm text-amber-200/80 leading-relaxed">
               This analysis provides guidance based on BS7671:2018+A2:2022. All calculations assume standard conditions. 
               Professional design verification, site-specific assessments, and comprehensive testing are required for all electrical installations.
             </p>
