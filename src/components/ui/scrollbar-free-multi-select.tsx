@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
-import { Check, X, ChevronDown } from "lucide-react";
+import { Check, X, ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SelectOption {
@@ -33,6 +33,37 @@ export const ScrollbarFreeMultiSelect: React.FC<ScrollbarFreeMultiSelectProps> =
   className,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollUp, setCanScrollUp] = useState(false);
+  const [canScrollDown, setCanScrollDown] = useState(false);
+
+  const checkScrollPosition = () => {
+    const element = scrollRef.current;
+    if (element) {
+      setCanScrollUp(element.scrollTop > 0);
+      setCanScrollDown(element.scrollTop < element.scrollHeight - element.clientHeight);
+    }
+  };
+
+  useEffect(() => {
+    checkScrollPosition();
+  }, [isOpen, options.length]);
+
+  const handleScroll = () => {
+    checkScrollPosition();
+  };
+
+  const scrollUp = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ top: -100, behavior: 'smooth' });
+    }
+  };
+
+  const scrollDown = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ top: 100, behavior: 'smooth' });
+    }
+  };
 
   const handleItemSelect = (itemValue: string) => {
     if (itemValue === "N/A") {
@@ -109,7 +140,22 @@ export const ScrollbarFreeMultiSelect: React.FC<ScrollbarFreeMultiSelectProps> =
         </PopoverTrigger>
         
         <PopoverContent className="w-full p-0 bg-elec-card border-elec-gray/50 shadow-xl z-50">
-          <div className="max-h-[200px] overflow-y-auto scrollbar-none">
+          {canScrollUp && (
+            <div className="flex justify-center py-1 border-b border-elec-gray/20 bg-elec-card">
+              <button
+                onClick={scrollUp}
+                className="flex items-center justify-center w-full py-1 hover:bg-elec-yellow/20 transition-colors"
+              >
+                <ChevronUp className="h-4 w-4 text-elec-yellow" />
+              </button>
+            </div>
+          )}
+          
+          <div 
+            ref={scrollRef}
+            className="max-h-[200px] overflow-y-auto scrollbar-none"
+            onScroll={handleScroll}
+          >
             <div
               className="p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer border-b border-elec-gray/20 transition-colors"
               onClick={() => handleItemSelect("N/A")}
@@ -137,6 +183,17 @@ export const ScrollbarFreeMultiSelect: React.FC<ScrollbarFreeMultiSelectProps> =
               </div>
             ))}
           </div>
+          
+          {canScrollDown && (
+            <div className="flex justify-center py-1 border-t border-elec-gray/20 bg-elec-card">
+              <button
+                onClick={scrollDown}
+                className="flex items-center justify-center w-full py-1 hover:bg-elec-yellow/20 transition-colors"
+              >
+                <ChevronDown className="h-4 w-4 text-elec-yellow" />
+              </button>
+            </div>
+          )}
         </PopoverContent>
       </Popover>
       

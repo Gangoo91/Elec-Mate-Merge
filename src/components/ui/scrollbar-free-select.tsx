@@ -57,12 +57,12 @@ const ScrollbarFreeSelectScrollUpButton = React.forwardRef<
   <SelectPrimitive.ScrollUpButton
     ref={ref}
     className={cn(
-      "flex cursor-default items-center justify-center py-1",
+      "flex cursor-pointer items-center justify-center py-2 border-b border-elec-gray/20 bg-elec-card hover:bg-elec-yellow/20 transition-colors",
       className
     )}
     {...props}
   >
-    <ChevronUp className="h-4 w-4" />
+    <ChevronUp className="h-4 w-4 text-elec-yellow" />
   </SelectPrimitive.ScrollUpButton>
 ));
 ScrollbarFreeSelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
@@ -74,12 +74,12 @@ const ScrollbarFreeSelectScrollDownButton = React.forwardRef<
   <SelectPrimitive.ScrollDownButton
     ref={ref}
     className={cn(
-      "flex cursor-default items-center justify-center py-1",
+      "flex cursor-pointer items-center justify-center py-2 border-t border-elec-gray/20 bg-elec-card hover:bg-elec-yellow/20 transition-colors",
       className
     )}
     {...props}
   >
-    <ChevronDown className="h-4 w-4" />
+    <ChevronDown className="h-4 w-4 text-elec-yellow" />
   </SelectPrimitive.ScrollDownButton>
 ));
 ScrollbarFreeSelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName;
