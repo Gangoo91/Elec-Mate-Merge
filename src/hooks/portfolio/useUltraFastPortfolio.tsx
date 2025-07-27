@@ -140,11 +140,34 @@ export const useUltraFastPortfolio = () => {
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
 
+  // Get user qualification selection to determine if portfolio should be shown
+  const { data: userSelection } = useQuery({
+    queryKey: ['user-qualification-selection', user?.id],
+    queryFn: async () => {
+      if (!user?.id) return null;
+      
+      const { data, error } = await supabase
+        .from('user_qualification_selections')
+        .select(`
+          *,
+          qualification:qualifications(*)
+        `)
+        .eq('user_id', user.id)
+        .eq('is_active', true)
+        .maybeSingle();
+
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!user?.id,
+    staleTime: 1000 * 60 * 1, // 1 minute cache
+  });
+
   // Phase 2: Parallel data loading with React Query
   const { data: portfolioData, isLoading, error } = useQuery({
-    queryKey: ['ultra-fast-portfolio', user?.id],
+    queryKey: ['ultra-fast-portfolio', user?.id, userSelection?.qualification_id],
     queryFn: () => loadAllPortfolioData(user!.id),
-    enabled: !!user?.id,
+    enabled: !!user?.id && !!userSelection,
     staleTime: 1000 * 60 * 2, // 2 minutes cache
     refetchOnWindowFocus: false,
   });
@@ -157,8 +180,38 @@ export const useUltraFastPortfolio = () => {
     }
   }, [portfolioData]);
 
+  // Clear cached data when no qualification is selected
+  useEffect(() => {
+    if (!userSelection) {
+      setInstantData({
+        entries: [],
+        categories: [],
+        analytics: null,
+        hasData: false
+      });
+      // Clear all cached data
+      Object.values(CACHE_KEYS).forEach(key => {
+        try {
+          sessionStorage.removeItem(key);
+        } catch (error) {
+          console.warn('Failed to clear cache:', error);
+        }
+      });
+    }
+  }, [userSelection]);
+
   // Phase 3: Memoized processing of portfolio data
   const processedData = useMemo(() => {
+    // If no qualification is selected, return empty state
+    if (!userSelection) {
+      return {
+        entries: [],
+        categories: [],
+        analytics: null,
+        hasQualificationSelected: false
+      };
+    }
+
     if (!portfolioData && !instantData.hasData) {
       return {
         entries: [],
@@ -244,9 +297,9 @@ export const useUltraFastPortfolio = () => {
       entries,
       categories,
       analytics,
-      hasQualificationSelected: data.qualifications.length > 0
+      hasQualificationSelected: !!userSelection
     };
-  }, [portfolioData, instantData]);
+  }, [portfolioData, instantData, userSelection]);
 
   // Phase 4: Optimistic mutations
   const addEntryMutation = useMutation({
@@ -392,16 +445,16 @@ export const useUltraFastPortfolio = () => {
   // Phase 5: Background refresh
   useEffect(() => {
     const interval = setInterval(() => {
-      if (user?.id) {
+      if (user?.id && userSelection) {
         queryClient.refetchQueries({ 
-          queryKey: ['ultra-fast-portfolio', user.id],
+          queryKey: ['ultra-fast-portfolio', user.id, userSelection.qualification_id],
           type: 'active'
         });
       }
     }, 30000); // Refresh every 30 seconds
 
     return () => clearInterval(interval);
-  }, [user?.id, queryClient]);
+  }, [user?.id, userSelection, queryClient]);
 
   return {
     entries: processedData.entries,
@@ -417,6 +470,9 @@ export const useUltraFastPortfolio = () => {
     isAddingEntry: addEntryMutation.isPending,
     isUpdatingEntry: updateEntryMutation.isPending,
     isDeletingEntry: deleteEntryMutation.isPending,
-    refresh: () => queryClient.invalidateQueries({ queryKey: ['ultra-fast-portfolio', user?.id] })
+    refresh: () => {
+      queryClient.invalidateQueries({ queryKey: ['ultra-fast-portfolio', user?.id, userSelection?.qualification_id] });
+      queryClient.invalidateQueries({ queryKey: ['user-qualification-selection', user?.id] });
+    }
   };
 };
