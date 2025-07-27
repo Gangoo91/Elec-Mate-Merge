@@ -12,12 +12,12 @@ export const useQualifications = () => {
 
   const loadQualifications = async () => {
     try {
-      // Get qualifications with their category counts to filter portfolio-only courses
+      // Get qualifications with their categories to filter portfolio-only courses
       const { data, error } = await supabase
         .from('qualifications')
         .select(`
           *,
-          qualification_categories(count)
+          qualification_categories(id)
         `)
         .order('awarding_body', { ascending: true });
 
