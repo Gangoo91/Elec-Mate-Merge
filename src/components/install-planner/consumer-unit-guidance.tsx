@@ -17,44 +17,44 @@ export const ConsumerUnitGuidance: React.FC<ConsumerUnitGuidanceProps> = ({
   const recommendations = getRecommendedConsumerUnit(totalCircuits, recommendedMainSwitch);
   
   const renderConsumerUnit = (unit: ConsumerUnitData, index: number) => (
-    <div key={index} className="bg-card/50 border border-elec-yellow/20 rounded-lg p-4 space-y-3">
-      {/* Header with availability badge */}
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex-1 min-w-0">
-          <h4 className="font-semibold text-elec-yellow text-sm truncate">{unit.brand} {unit.model}</h4>
+    <div key={index} className="py-4 border-b border-elec-yellow/10 last:border-b-0">
+      {/* Header row */}
+      <div className="flex items-center justify-between gap-3 mb-2">
+        <div className="flex-1">
+          <h4 className="font-medium text-elec-yellow text-sm">{unit.brand} {unit.model}</h4>
           <p className="text-xs text-muted-foreground">{unit.ways}-way • {unit.mainSwitchRating}A</p>
         </div>
         <Badge variant={
           unit.availability === "excellent" ? "success" : 
           unit.availability === "good" ? "outline" : 
           "yellow"
-        } className="text-xs shrink-0">
+        } className="text-xs">
           {unit.availability}
         </Badge>
       </div>
 
-      {/* Price and key features in compact row */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1">
-          <DollarSign className="h-3 w-3 text-elec-yellow" />
-          <span className="text-sm font-medium text-elec-yellow">£{unit.priceRange.min}-{unit.priceRange.max}</span>
-        </div>
-        <div className="text-xs text-muted-foreground">
-          {unit.features.slice(0, 2).join(" • ")}
-          {unit.features.length > 2 && ` +${unit.features.length - 2} more`}
-        </div>
+      {/* Price row */}
+      <div className="flex items-center gap-1 mb-2">
+        <DollarSign className="h-3 w-3 text-elec-yellow" />
+        <span className="text-sm font-medium text-elec-yellow">£{unit.priceRange.min}-{unit.priceRange.max}</span>
       </div>
 
-      {/* Suppliers as compact badges */}
+      {/* Features */}
+      <p className="text-xs text-muted-foreground mb-2">
+        {unit.features.slice(0, 3).join(" • ")}
+        {unit.features.length > 3 && ` +${unit.features.length - 3} more`}
+      </p>
+
+      {/* Suppliers */}
       <div className="flex flex-wrap gap-1">
         {unit.suppliers.slice(0, 3).map((supplier, idx) => (
-          <Badge key={idx} variant="outline" className="text-xs px-2 py-0.5 border-elec-yellow/30">
+          <Badge key={idx} variant="outline" className="text-xs px-1.5 py-0.5">
             {supplier}
           </Badge>
         ))}
         {unit.suppliers.length > 3 && (
-          <Badge variant="outline" className="text-xs px-2 py-0.5 border-elec-yellow/30">
-            +{unit.suppliers.length - 3} more
+          <Badge variant="outline" className="text-xs px-1.5 py-0.5">
+            +{unit.suppliers.length - 3}
           </Badge>
         )}
       </div>
