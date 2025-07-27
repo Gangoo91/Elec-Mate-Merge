@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import BackButton from "@/components/common/BackButton";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Clock, FileText, Target, Award, BarChart3 } from "lucide-react";
 import TimeTrackingTab from "@/components/apprentice/ojt/TimeTrackingTab";
 import PortfolioBuildingTab from "@/components/apprentice/ojt/PortfolioBuildingTab";
@@ -11,33 +11,15 @@ import ComplianceDashboardTab from "@/components/apprentice/ojt/ComplianceDashbo
 
 const ApprenticeOJT = () => {
   console.log('ApprenticeOJT component rendering');
-  const [activeTab, setActiveTab] = useState("time-tracking");
 
-  const tabOptions = [
-    { value: "time-tracking", label: "Time Tracking", icon: Clock },
-    { value: "portfolio", label: "Portfolio", icon: FileText },
-    { value: "evidence", label: "Evidence Assessment", icon: Target },
-    { value: "assessments", label: "Assessments", icon: Award },
-    { value: "compliance", label: "Goals & Progress", icon: BarChart3 }
+  const tabs = [
+    { value: "portfolio", label: "Portfolio", icon: FileText, content: <PortfolioBuildingTab /> },
+    { value: "time-tracking", label: "Time Tracking", icon: Clock, content: <TimeTrackingTab /> },
+    { value: "evidence", label: "Evidence Assessment", icon: Target, content: <EvidenceUploadTab /> },
+    { value: "assessments", label: "Assessments", icon: Award, content: <AssessmentTrackingTab /> },
+    { value: "compliance", label: "Goals & Progress", icon: BarChart3, content: <ComplianceDashboardTab /> }
   ];
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case "time-tracking":
-        return <TimeTrackingTab />;
-      case "portfolio":
-        return <PortfolioBuildingTab />;
-      case "evidence":
-        return <EvidenceUploadTab />;
-      case "assessments":
-        return <AssessmentTrackingTab />;
-      case "compliance":
-        return <ComplianceDashboardTab />;
-      default:
-        return <TimeTrackingTab />;
-    }
-  };
-  
   return (
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
@@ -49,43 +31,13 @@ const ApprenticeOJT = () => {
       </div>
 
       <div className="w-full space-y-6">
-        <div className="flex justify-center">
-          <Select value={activeTab} onValueChange={setActiveTab}>
-            <SelectTrigger className="w-[280px] md:w-[320px]">
-              <SelectValue placeholder="Select a section">
-                <div className="flex items-center gap-2">
-                  {(() => {
-                    const currentTab = tabOptions.find(tab => tab.value === activeTab);
-                    const IconComponent = currentTab?.icon;
-                    return (
-                      <>
-                        {IconComponent && <IconComponent className="h-4 w-4" />}
-                        {currentTab?.label}
-                      </>
-                    );
-                  })()}
-                </div>
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              {tabOptions.map((tab) => {
-                const IconComponent = tab.icon;
-                return (
-                  <SelectItem key={tab.value} value={tab.value}>
-                    <div className="flex items-center gap-2">
-                      <IconComponent className="h-4 w-4" />
-                      {tab.label}
-                    </div>
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="w-full">
-          {renderTabContent()}
-        </div>
+        <DropdownTabs
+          tabs={tabs}
+          defaultValue="portfolio"
+          placeholder="Select a training section"
+          className="mx-auto"
+          triggerClassName="w-full sm:w-[280px] md:w-[320px]"
+        />
       </div>
     </div>
   );
