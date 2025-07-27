@@ -356,24 +356,54 @@ const PortfolioDocumentationContent = () => {
         </CardHeader>
         <CardContent className="pt-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="bg-black/20 rounded-lg p-3 border border-green-500/20">
-              <h4 className="font-medium text-white mb-2 text-sm">Documentation Tips</h4>
-              <ul className="text-xs sm:text-sm text-muted-foreground space-y-1">
-                <li>• Keep evidence current and relevant to BS 7671 18th Edition</li>
-                <li>• Include clear photos and technical diagrams</li>
-                <li>• Write detailed, reflective commentary</li>
-                <li>• Cross-reference with assessment criteria</li>
-                <li>• Document health and safety procedures</li>
+            <div className="bg-black/20 rounded-lg p-4 border border-green-500/20 h-full">
+              <h4 className="font-medium text-white mb-3 text-sm">Documentation Tips</h4>
+              <ul className="text-xs sm:text-sm text-muted-foreground space-y-2">
+                <li className="flex items-start gap-2">
+                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  Keep evidence current and relevant to BS 7671 18th Edition
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  Include clear photos and technical diagrams
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  Write detailed, reflective commentary
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  Cross-reference with assessment criteria
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  Document health and safety procedures
+                </li>
               </ul>
             </div>
-            <div className="bg-black/20 rounded-lg p-3 border border-green-500/20">
-              <h4 className="font-medium text-white mb-2 text-sm">Organisation</h4>
-              <ul className="text-xs sm:text-sm text-muted-foreground space-y-1">
-                <li>• Use consistent file naming conventions</li>
-                <li>• Create logical folder structures by category</li>
-                <li>• Maintain regular backup copies</li>
-                <li>• Keep physical and digital evidence aligned</li>
-                <li>• Version control your portfolio updates</li>
+            <div className="bg-black/20 rounded-lg p-4 border border-green-500/20 h-full">
+              <h4 className="font-medium text-white mb-3 text-sm">Organisation</h4>
+              <ul className="text-xs sm:text-sm text-muted-foreground space-y-2">
+                <li className="flex items-start gap-2">
+                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  Use consistent file naming conventions
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  Create logical folder structures by category
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  Maintain regular backup copies
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  Keep physical and digital evidence aligned
+                </li>
+                <li className="flex items-start gap-2">
+                  <div className="h-1.5 w-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                  Version control your portfolio updates
+                </li>
               </ul>
             </div>
           </div>
