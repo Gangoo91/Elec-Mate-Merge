@@ -33,19 +33,19 @@ export const SystemSummaryCard: React.FC<SystemSummaryCardProps> = ({
         {/* Key Metrics - Clean List */}
         <div className="space-y-3">
           <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
-            <span className="text-sm text-muted-foreground w-24">Circuits</span>
+            <span className="text-sm text-muted-foreground">Circuits</span>
             <span className="text-lg font-bold text-elec-yellow">{circuits.length}</span>
           </div>
           <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
-            <span className="text-sm text-muted-foreground w-24">Total Load</span>
+            <span className="text-sm text-muted-foreground">Total Load</span>
             <span className="text-lg font-bold text-elec-yellow">{(totalSystemLoad / 1000).toFixed(1)}kW</span>
           </div>
           <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
-            <span className="text-sm text-muted-foreground w-24">Design</span>
+            <span className="text-sm text-muted-foreground">Design</span>
             <span className="text-lg font-bold text-elec-yellow">{totalDesignCurrent.toFixed(1)}A</span>
           </div>
           <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
-            <span className="text-sm text-muted-foreground w-24">Diversity</span>
+            <span className="text-sm text-muted-foreground">Diversity</span>
             <span className="text-lg font-bold text-elec-yellow">{(diversifiedLoad / 1000).toFixed(1)}kW</span>
           </div>
         </div>
@@ -53,16 +53,16 @@ export const SystemSummaryCard: React.FC<SystemSummaryCardProps> = ({
         {/* Installation Details - Clean List */}
         <div className="space-y-3">
           <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
-            <span className="text-sm text-muted-foreground w-24">Install</span>
-            <span className="text-sm font-medium text-elec-yellow">Multi-Circuit</span>
+            <span className="text-sm text-muted-foreground">Install</span>
+            <span className="text-lg font-bold text-elec-yellow">Multi-Circuit</span>
           </div>
           <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
-            <span className="text-sm text-muted-foreground w-24">Duration</span>
-            <span className="text-sm font-medium text-elec-yellow">{totalInstallDays} day{totalInstallDays > 1 ? 's' : ''}</span>
+            <span className="text-sm text-muted-foreground">Duration</span>
+            <span className="text-lg font-bold text-elec-yellow">{totalInstallDays} day{totalInstallDays > 1 ? 's' : ''}</span>
           </div>
           <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
-            <span className="text-sm text-muted-foreground w-24">Factor</span>
-            <span className="text-sm font-medium text-elec-yellow">{(diversityFactor * 100).toFixed(0)}%</span>
+            <span className="text-sm text-muted-foreground">Factor</span>
+            <span className="text-lg font-bold text-elec-yellow">{(diversityFactor * 100).toFixed(0)}%</span>
           </div>
         </div>
 
