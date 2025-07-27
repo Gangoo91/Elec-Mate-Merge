@@ -184,7 +184,7 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
             >
               <CollapsibleTrigger asChild>
                 <CardHeader className="cursor-pointer hover:bg-black/20 transition-colors">
-                  <div className="w-full">
+                  <div className="flex flex-col gap-4">
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
                         <CardTitle className="text-base flex items-center gap-2 mb-3">
@@ -214,7 +214,7 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
                         </div>
                       </div>
                     </div>
-                    <div className="flex-shrink-0">
+                    <div className="flex justify-end w-full">
                       <CircuitControls
                         circuit={circuit}
                         onToggleEnabled={(enabled) => updateCircuit(circuit.id, { enabled })}

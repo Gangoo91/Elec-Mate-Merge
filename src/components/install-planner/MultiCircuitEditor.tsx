@@ -99,33 +99,33 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
               className="cursor-pointer"
               onClick={() => toggleExpanded(circuit.id)}
             >
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center gap-3 min-w-0 flex-1">
-                  <div className="h-10 w-10 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                    {React.createElement(getLoadTypeIcon(circuit.loadType), { 
-                      className: "h-5 w-5 text-elec-yellow" 
-                    })}
-                  </div>
+              <div className="flex flex-col gap-4">
+                <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
-                    <CardTitle className="text-base">
+                    <CardTitle className="text-base mb-3">
                       {circuit.name}
                     </CardTitle>
-                    <div className="flex flex-col gap-1 mt-1 sm:flex-row sm:flex-wrap sm:gap-2">
-                      <div className="flex items-center gap-1">
-                        <span className="text-sm text-muted-foreground">{circuit.totalLoad}W</span>
+                    <div className="grid grid-cols-2 gap-2 text-sm">
+                      <div className="bg-elec-dark/50 rounded p-2 text-center">
+                        <div className="text-xs text-muted-foreground mb-1">Load</div>
+                        <div className="font-medium text-elec-yellow">{circuit.totalLoad}W</div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <span className="text-sm text-muted-foreground hidden sm:inline">•</span>
-                        <span className="text-sm text-muted-foreground">{circuit.voltage}V</span>
+                      <div className="bg-elec-dark/50 rounded p-2 text-center">
+                        <div className="text-xs text-muted-foreground mb-1">Voltage</div>
+                        <div className="font-medium text-blue-400">{circuit.voltage}V</div>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <span className="text-sm text-muted-foreground hidden sm:inline">•</span>
-                        <span className="text-sm text-muted-foreground">{circuit.cableLength}m</span>
+                      <div className="bg-elec-dark/50 rounded p-2 text-center">
+                        <div className="text-xs text-muted-foreground mb-1">Length</div>
+                        <div className="font-medium text-green-400">{circuit.cableLength}m</div>
+                      </div>
+                      <div className="bg-elec-dark/50 rounded p-2 text-center">
+                        <div className="text-xs text-muted-foreground mb-1">Type</div>
+                        <div className="font-medium text-purple-400 text-xs">{circuit.loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="flex-shrink-0">
+                <div className="flex justify-end w-full">
                   <CircuitControls
                     circuit={circuit}
                     onToggleEnabled={(enabled) => updateCircuit(circuit.id, { enabled })}
