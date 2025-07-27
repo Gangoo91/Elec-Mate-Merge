@@ -50,7 +50,7 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
         </div>
 
         {/* Circuit Specs Grid */}
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3">
           <div className="text-center p-3 border border-elec-yellow/20">
             <p className="text-xs text-muted-foreground mb-1">Load</p>
             <p className="font-bold text-elec-yellow">{circuit.totalLoad}W</p>
