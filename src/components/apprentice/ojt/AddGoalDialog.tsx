@@ -106,15 +106,15 @@ const AddGoalDialog = ({ open, onOpenChange, onAddGoal }: AddGoalDialogProps) =>
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md max-h-[95vh] overflow-y-auto">
-        <DialogHeader className="pb-4">
-          <DialogTitle className="text-xl font-semibold flex items-center gap-2">
-            <Target className="h-5 w-5 text-primary" />
+      <DialogContent className="max-w-md max-h-[95vh] overflow-y-auto bg-elec-gray border-elec-gray/40">
+        <DialogHeader className="pb-4 bg-elec-gray">
+          <DialogTitle className="text-elec-light text-xl font-semibold flex items-center gap-2">
+            <Target className="h-5 w-5 text-elec-yellow" />
             Add New Goal
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 bg-elec-gray">
           {/* Category Selection - First for smart suggestions */}
           <MobileSelect value={category} onValueChange={setCategory}>
             <MobileSelectTrigger label="Goal Category">
@@ -156,22 +156,25 @@ const AddGoalDialog = ({ open, onOpenChange, onAddGoal }: AddGoalDialogProps) =>
 
           {/* Smart Suggestions */}
           {showSuggestions && smartSuggestions && (
-            <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg space-y-3">
-              <div className="flex items-center gap-2 text-sm font-medium text-primary">
+            <div className="p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl space-y-3">
+              <div className="flex items-center gap-2 text-sm font-semibold text-elec-yellow">
                 <Lightbulb className="h-4 w-4" />
                 Smart Suggestions
               </div>
               
               {/* Title suggestions */}
               <div className="space-y-2">
-                <p className="text-xs text-muted-foreground">Popular {category} goals:</p>
+                <p className="text-xs text-elec-light/70 flex items-center gap-1">
+                  <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
+                  Popular {category} goals:
+                </p>
                 <div className="flex flex-wrap gap-2">
                   {smartSuggestions.examples.map((example, index) => (
                     <button
                       key={index}
                       type="button"
                       onClick={() => applySuggestion(example)}
-                      className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-md hover:bg-primary/20 transition-colors"
+                      className="text-xs px-3 py-2 bg-elec-yellow/20 text-elec-light rounded-lg hover:bg-elec-yellow/30 transition-all duration-200 font-medium"
                     >
                       {example}
                     </button>
@@ -181,14 +184,17 @@ const AddGoalDialog = ({ open, onOpenChange, onAddGoal }: AddGoalDialogProps) =>
 
               {/* Target suggestions */}
               <div className="space-y-2">
-                <p className="text-xs text-muted-foreground">Common targets:</p>
+                <p className="text-xs text-elec-light/70 flex items-center gap-1">
+                  <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
+                  Common targets:
+                </p>
                 <div className="flex flex-wrap gap-2">
                   {smartSuggestions.targets.map((target, index) => (
                     <button
                       key={index}
                       type="button"
                       onClick={() => applyTargetSuggestion(target)}
-                      className="text-xs px-2 py-1 bg-secondary/50 text-secondary-foreground rounded-md hover:bg-secondary/70 transition-colors"
+                      className="text-xs px-3 py-2 bg-elec-card border border-elec-gray/50 text-elec-light rounded-lg hover:border-elec-yellow/40 transition-all duration-200 font-medium"
                     >
                       {target} {smartSuggestions.units[0]}
                     </button>
@@ -210,16 +216,22 @@ const AddGoalDialog = ({ open, onOpenChange, onAddGoal }: AddGoalDialogProps) =>
 
           {/* Description */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">Description</label>
+            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+              Description
+            </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Describe what you want to achieve and how you'll measure success..."
               rows={3}
-              className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 resize-none"
+              className="w-full bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
               required
             />
-            <p className="text-xs text-muted-foreground">Explain your objective and success criteria</p>
+            <p className="text-xs text-elec-light/70 flex items-center gap-1">
+              <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
+              Explain your objective and success criteria
+            </p>
           </div>
 
           {/* Target Value and Unit */}
@@ -290,49 +302,55 @@ const AddGoalDialog = ({ open, onOpenChange, onAddGoal }: AddGoalDialogProps) =>
 
           {/* Deadline */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">Target Deadline</label>
+            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+              Target Deadline
+            </label>
             <Popover>
               <PopoverTrigger asChild>
-                <MobileButton
-                  variant="outline"
+                <button
+                  type="button"
                   className={cn(
-                    "w-full justify-start text-left font-normal",
-                    !deadline && "text-muted-foreground"
+                    "w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 text-base font-medium px-4 flex items-center gap-3 justify-start",
+                    !deadline && "text-elec-light/60"
                   )}
-                  icon={<CalendarIcon className="h-4 w-4" />}
                 >
+                  <CalendarIcon className="h-4 w-4" />
                   {deadline ? format(deadline, "PPP") : "Pick a deadline"}
-                </MobileButton>
+                </button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
+              <PopoverContent className="w-auto p-0 bg-elec-card border-elec-gray/50">
                 <Calendar
                   mode="single"
                   selected={deadline}
                   onSelect={setDeadline}
                   initialFocus
+                  className="bg-elec-card text-elec-light"
                 />
               </PopoverContent>
             </Popover>
-            <p className="text-xs text-muted-foreground">Set a realistic target completion date</p>
+            <p className="text-xs text-elec-light/70 flex items-center gap-1">
+              <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
+              Set a realistic target completion date
+            </p>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex flex-col gap-3 pt-4 border-t">
-            <MobileButton 
+          <div className="flex flex-col gap-3 pt-4 border-t border-elec-gray/20">
+            <button 
               type="submit" 
-              className="w-full"
-              icon={<Target className="h-4 w-4" />}
+              className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/80 font-semibold py-3 rounded-xl transition-all duration-200 flex items-center justify-center gap-2"
             >
+              <Target className="h-4 w-4" />
               Create Goal
-            </MobileButton>
-            <MobileButton 
+            </button>
+            <button 
               type="button" 
-              variant="outline" 
               onClick={() => onOpenChange(false)}
-              className="w-full"
+              className="w-full text-elec-light/70 hover:text-elec-light hover:bg-elec-gray/20 font-medium py-3 rounded-xl transition-all duration-200"
             >
               Cancel
-            </MobileButton>
+            </button>
           </div>
         </form>
       </DialogContent>
