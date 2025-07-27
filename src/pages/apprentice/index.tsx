@@ -50,7 +50,7 @@ const ApprenticeIndex = () => {
       href: "/apprentice/chat"
     },
     {
-      title: "Off-The-Job Training",
+      title: "Portfolio & OJT",
       icon: Users,
       href: "/apprentice/ojt"
     }
