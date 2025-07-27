@@ -1,10 +1,10 @@
 
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Search } from "lucide-react";
+import { Search, Zap, ToggleLeft, Shield, Lightbulb, Gauge, Settings } from "lucide-react";
 
 const ElectricalSymbols = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -118,38 +118,155 @@ const ElectricalSymbols = () => {
           ))}
         </div>
       ) : (
-        <Tabs defaultValue="basic" className="space-y-4">
-          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6">
-            <TabsTrigger value="basic">Basic</TabsTrigger>
-            <TabsTrigger value="power">Power</TabsTrigger>
-            <TabsTrigger value="switches">Switches</TabsTrigger>
-            <TabsTrigger value="protection">Protection</TabsTrigger>
-            <TabsTrigger value="loads">Loads</TabsTrigger>
-            <TabsTrigger value="measurement">Measurement</TabsTrigger>
-          </TabsList>
-
-          {Object.entries(symbolCategories).map(([category, symbols]) => (
-            <TabsContent key={category} value={category} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {symbols.map((symbol, index) => (
-                  <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-                    <CardHeader className="pb-2">
-                      <div className="flex items-center gap-3">
-                        <div className="text-2xl bg-elec-yellow/10 p-2 rounded min-w-[3rem] text-center">
-                          {symbol.symbol}
+        <DropdownTabs
+          placeholder="Select symbol category"
+          tabs={[
+            {
+              value: "basic",
+              label: "Basic",
+              icon: Settings,
+              content: (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {symbolCategories.basic.map((symbol, index) => (
+                    <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+                      <CardHeader className="pb-2">
+                        <div className="flex items-center gap-3">
+                          <div className="text-2xl bg-elec-yellow/10 p-2 rounded min-w-[3rem] text-center">
+                            {symbol.symbol}
+                          </div>
+                          <CardTitle className="text-lg">{symbol.name}</CardTitle>
                         </div>
-                        <CardTitle className="text-lg">{symbol.name}</CardTitle>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground">{symbol.description}</p>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-          ))}
-        </Tabs>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-muted-foreground">{symbol.description}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )
+            },
+            {
+              value: "power",
+              label: "Power",
+              icon: Zap,
+              content: (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {symbolCategories.power.map((symbol, index) => (
+                    <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+                      <CardHeader className="pb-2">
+                        <div className="flex items-center gap-3">
+                          <div className="text-2xl bg-elec-yellow/10 p-2 rounded min-w-[3rem] text-center">
+                            {symbol.symbol}
+                          </div>
+                          <CardTitle className="text-lg">{symbol.name}</CardTitle>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-muted-foreground">{symbol.description}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )
+            },
+            {
+              value: "switches",
+              label: "Switches",
+              icon: ToggleLeft,
+              content: (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {symbolCategories.switches.map((symbol, index) => (
+                    <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+                      <CardHeader className="pb-2">
+                        <div className="flex items-center gap-3">
+                          <div className="text-2xl bg-elec-yellow/10 p-2 rounded min-w-[3rem] text-center">
+                            {symbol.symbol}
+                          </div>
+                          <CardTitle className="text-lg">{symbol.name}</CardTitle>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-muted-foreground">{symbol.description}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )
+            },
+            {
+              value: "protection",
+              label: "Protection",
+              icon: Shield,
+              content: (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {symbolCategories.protection.map((symbol, index) => (
+                    <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+                      <CardHeader className="pb-2">
+                        <div className="flex items-center gap-3">
+                          <div className="text-2xl bg-elec-yellow/10 p-2 rounded min-w-[3rem] text-center">
+                            {symbol.symbol}
+                          </div>
+                          <CardTitle className="text-lg">{symbol.name}</CardTitle>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-muted-foreground">{symbol.description}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )
+            },
+            {
+              value: "loads",
+              label: "Loads",
+              icon: Lightbulb,
+              content: (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {symbolCategories.loads.map((symbol, index) => (
+                    <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+                      <CardHeader className="pb-2">
+                        <div className="flex items-center gap-3">
+                          <div className="text-2xl bg-elec-yellow/10 p-2 rounded min-w-[3rem] text-center">
+                            {symbol.symbol}
+                          </div>
+                          <CardTitle className="text-lg">{symbol.name}</CardTitle>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-muted-foreground">{symbol.description}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )
+            },
+            {
+              value: "measurement",
+              label: "Measurement",
+              icon: Gauge,
+              content: (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {symbolCategories.measurement.map((symbol, index) => (
+                    <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+                      <CardHeader className="pb-2">
+                        <div className="flex items-center gap-3">
+                          <div className="text-2xl bg-elec-yellow/10 p-2 rounded min-w-[3rem] text-center">
+                            {symbol.symbol}
+                          </div>
+                          <CardTitle className="text-lg">{symbol.name}</CardTitle>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-sm text-muted-foreground">{symbol.description}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )
+            }
+          ]}
+        />
       )}
 
       <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">

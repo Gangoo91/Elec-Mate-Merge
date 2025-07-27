@@ -3,8 +3,8 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MobileInput } from "@/components/ui/mobile-input";
 import { MobileButton } from "@/components/ui/mobile-button";
-import { Zap, RotateCcw, Info } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Zap, RotateCcw, Info, Calculator, Battery } from "lucide-react";
+import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 
 const ACPowerCalculator = () => {
   const [voltage, setVoltage] = useState("");
@@ -108,88 +108,99 @@ const ACPowerCalculator = () => {
         </p>
       </CardHeader>
       <CardContent className="space-y-6">
-        <Tabs defaultValue="voltage-current" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="voltage-current">From V & I</TabsTrigger>
-            <TabsTrigger value="power-components">From Power Components</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="voltage-current" className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <MobileInput
-                label="Voltage (V)"
-                type="number"
-                placeholder="230"
-                value={voltage}
-                onChange={(e) => setVoltage(e.target.value)}
-                unit="V"
-              />
-              <MobileInput
-                label="Current (A)"
-                type="number"
-                placeholder="10"
-                value={current}
-                onChange={(e) => setCurrent(e.target.value)}
-                unit="A"
-              />
-              <MobileInput
-                label="Power Factor (optional)"
-                type="number"
-                step="0.01"
-                min="0"
-                max="1"
-                placeholder="0.85"
-                value={powerFactor}
-                onChange={(e) => setPowerFactor(e.target.value)}
-              />
-            </div>
-            <div className="flex gap-2">
-              <MobileButton onClick={calculatePower} variant="elec" className="flex-1">
-                Calculate Power
-              </MobileButton>
-              <MobileButton onClick={resetCalculator} variant="elec-outline">
-                <RotateCcw className="h-4 w-4" />
-              </MobileButton>
-            </div>
-          </TabsContent>
-
-          <TabsContent value="power-components" className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <MobileInput
-                label="Active Power (W)"
-                type="number"
-                placeholder="1000"
-                value={activePower}
-                onChange={(e) => setActivePower(e.target.value)}
-                unit="W"
-              />
-              <MobileInput
-                label="Reactive Power (VAr)"
-                type="number"
-                placeholder="750"
-                value={reactivePower}
-                onChange={(e) => setReactivePower(e.target.value)}
-                unit="VAr"
-              />
-              <MobileInput
-                label="Apparent Power (VA)"
-                type="number"
-                placeholder="1250"
-                value={apparentPower}
-                onChange={(e) => setApparentPower(e.target.value)}
-                unit="VA"
-              />
-            </div>
-            <div className="flex gap-2">
-              <MobileButton onClick={calculateFromPowers} variant="elec" className="flex-1">
-                Calculate from Powers
-              </MobileButton>
-              <MobileButton onClick={resetCalculator} variant="elec-outline">
-                <RotateCcw className="h-4 w-4" />
-              </MobileButton>
-            </div>
-          </TabsContent>
-        </Tabs>
+        <DropdownTabs
+          placeholder="Select calculation method"
+          tabs={[
+            {
+              value: "voltage-current",
+              label: "From V & I",
+              icon: Calculator,
+              content: (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <MobileInput
+                      label="Voltage (V)"
+                      type="number"
+                      placeholder="230"
+                      value={voltage}
+                      onChange={(e) => setVoltage(e.target.value)}
+                      unit="V"
+                    />
+                    <MobileInput
+                      label="Current (A)"
+                      type="number"
+                      placeholder="10"
+                      value={current}
+                      onChange={(e) => setCurrent(e.target.value)}
+                      unit="A"
+                    />
+                    <MobileInput
+                      label="Power Factor (optional)"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      max="1"
+                      placeholder="0.85"
+                      value={powerFactor}
+                      onChange={(e) => setPowerFactor(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <MobileButton onClick={calculatePower} variant="elec" className="flex-1">
+                      Calculate Power
+                    </MobileButton>
+                    <MobileButton onClick={resetCalculator} variant="elec-outline">
+                      <RotateCcw className="h-4 w-4" />
+                    </MobileButton>
+                  </div>
+                </div>
+              )
+            },
+            {
+              value: "power-components",
+              label: "From Power Components",
+              icon: Battery,
+              content: (
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <MobileInput
+                      label="Active Power (W)"
+                      type="number"
+                      placeholder="1000"
+                      value={activePower}
+                      onChange={(e) => setActivePower(e.target.value)}
+                      unit="W"
+                    />
+                    <MobileInput
+                      label="Reactive Power (VAr)"
+                      type="number"
+                      placeholder="750"
+                      value={reactivePower}
+                      onChange={(e) => setReactivePower(e.target.value)}
+                      unit="VAr"
+                    />
+                    <MobileInput
+                      label="Apparent Power (VA)"
+                      type="number"
+                      placeholder="1250"
+                      value={apparentPower}
+                      onChange={(e) => setApparentPower(e.target.value)}
+                      unit="VA"
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <MobileButton onClick={calculateFromPowers} variant="elec" className="flex-1">
+                      Calculate from Powers
+                    </MobileButton>
+                    <MobileButton onClick={resetCalculator} variant="elec-outline">
+                      <RotateCcw className="h-4 w-4" />
+                    </MobileButton>
+                  </div>
+                </div>
+              )
+            }
+          ]}
+        />
 
         {results && (
           <Card className="border-green-500/30 bg-green-500/5">
