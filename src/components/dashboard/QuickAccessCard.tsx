@@ -22,9 +22,11 @@ const QuickAccessCard = ({ title, description, linkText, linkTo, icon }: QuickAc
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4 p-4 md:p-6 pt-0 text-center">
-        <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-          {description}
-        </p>
+        {description && (
+          <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+            {description}
+          </p>
+        )}
         <Button asChild size="default" className="w-full">
           <Link to={linkTo} className="flex items-center justify-center gap-2 text-sm md:text-base">
             {linkText}

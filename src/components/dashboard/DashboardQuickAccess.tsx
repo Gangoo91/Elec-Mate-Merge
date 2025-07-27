@@ -8,14 +8,14 @@ const DashboardQuickAccess = () => {
     <div className="grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-2">
       <QuickAccessCard
         title="Apprentice Hub"
-        description="Training resources and tools for apprentices"
+        description=""
         linkText="Access Hub"
         linkTo="/apprentice"
         icon={<GraduationCap className="h-4 w-4" />}
       />
       <QuickAccessCard
         title="Electrical Hub"
-        description="Professional calculators and project tools"
+        description=""
         linkText="View Hub"
         linkTo="/electrician"
         icon={<Wrench className="h-4 w-4" />}
