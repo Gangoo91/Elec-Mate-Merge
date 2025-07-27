@@ -31,53 +31,53 @@ export const SystemSummaryCard: React.FC<SystemSummaryCardProps> = ({
     >
       <div className="space-y-4">
         {/* Key Metrics Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-primary mb-1">{circuits.length}</div>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="text-center p-4 bg-elec-grey rounded-lg border border-elec-yellow/20">
+            <div className="text-2xl font-bold text-elec-yellow mb-1">{circuits.length}</div>
             <div className="text-xs text-muted-foreground">Circuits</div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-primary mb-1">{(totalSystemLoad / 1000).toFixed(1)}kW</div>
+          <div className="text-center p-4 bg-elec-grey rounded-lg border border-elec-yellow/20">
+            <div className="text-2xl font-bold text-elec-yellow mb-1">{(totalSystemLoad / 1000).toFixed(1)}kW</div>
             <div className="text-xs text-muted-foreground">Total Load</div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-primary mb-1">{totalDesignCurrent.toFixed(1)}A</div>
+          <div className="text-center p-4 bg-elec-grey rounded-lg border border-elec-yellow/20">
+            <div className="text-2xl font-bold text-elec-yellow mb-1">{totalDesignCurrent.toFixed(1)}A</div>
             <div className="text-xs text-muted-foreground">Design Current</div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-primary mb-1">{(diversifiedLoad / 1000).toFixed(1)}kW</div>
+          <div className="text-center p-4 bg-elec-grey rounded-lg border border-elec-yellow/20">
+            <div className="text-2xl font-bold text-elec-yellow mb-1">{(diversifiedLoad / 1000).toFixed(1)}kW</div>
             <div className="text-xs text-muted-foreground">After Diversity</div>
           </div>
         </div>
 
         {/* Installation Overview */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <div className="flex items-center gap-2 p-3 bg-background/50 rounded-lg">
-            <Building className="h-4 w-4 text-blue-500" />
+        <div className="space-y-3">
+          <div className="flex items-center gap-3 p-3 bg-elec-grey rounded-lg border border-elec-yellow/20">
+            <Building className="h-5 w-5 text-elec-yellow" />
             <div>
+              <p className="text-sm font-medium text-elec-yellow">Multi-Circuit System</p>
               <p className="text-xs text-muted-foreground">Installation Type</p>
-              <p className="font-medium">Multi-Circuit System</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 p-3 bg-background/50 rounded-lg">
-            <Clock className="h-4 w-4 text-green-500" />
+          <div className="flex items-center gap-3 p-3 bg-elec-grey rounded-lg border border-elec-yellow/20">
+            <Clock className="h-5 w-5 text-elec-yellow" />
             <div>
+              <p className="text-sm font-medium text-elec-yellow">{totalInstallDays} day{totalInstallDays > 1 ? 's' : ''}</p>
               <p className="text-xs text-muted-foreground">Estimated Duration</p>
-              <p className="font-medium">{totalInstallDays} day{totalInstallDays > 1 ? 's' : ''}</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 p-3 bg-background/50 rounded-lg">
-            <Zap className="h-4 w-4 text-amber-500" />
+          <div className="flex items-center gap-3 p-3 bg-elec-grey rounded-lg border border-elec-yellow/20">
+            <Zap className="h-5 w-5 text-elec-yellow" />
             <div>
+              <p className="text-sm font-medium text-elec-yellow">{(diversityFactor * 100).toFixed(0)}%</p>
               <p className="text-xs text-muted-foreground">Diversity Factor</p>
-              <p className="font-medium">{(diversityFactor * 100).toFixed(0)}%</p>
             </div>
           </div>
         </div>
 
         {/* Compliance Status */}
-        <div className="flex flex-wrap gap-2">
-          <Badge variant="outline" className="border-green-500/50 text-green-400">
+        <div className="flex flex-wrap gap-2 justify-center">
+          <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow">
             BS7671:2018+A2:2022
           </Badge>
           <Badge variant="outline" className="border-blue-500/50 text-blue-400">
