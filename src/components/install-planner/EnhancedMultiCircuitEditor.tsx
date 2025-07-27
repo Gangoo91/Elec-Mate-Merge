@@ -185,12 +185,7 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
               <CollapsibleTrigger asChild>
                 <CardHeader className="cursor-pointer hover:bg-black/20 transition-colors">
                   <div className="flex flex-col gap-3">
-                    <div className="flex items-center gap-3 min-w-0 flex-1">
-                      <div className="h-10 w-10 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                        {React.createElement(getLoadTypeIcon(circuit.loadType), { 
-                          className: "h-5 w-5 text-elec-yellow" 
-                        })}
-                      </div>
+                    <div className="flex items-start gap-3 min-w-0 flex-1">
                       <div className="min-w-0 flex-1">
                         <CardTitle className="text-base flex items-center gap-2">
                           {circuit.name}
@@ -199,17 +194,18 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
                             <ChevronRight className="h-4 w-4" />
                           }
                         </CardTitle>
-                        <div className="flex flex-col gap-1 mt-1 sm:flex-row sm:flex-wrap sm:gap-2">
-                          <div className="flex items-center gap-1">
-                            <span className="text-sm text-muted-foreground">{circuit.totalLoad}W</span>
+                        <div className="flex flex-col gap-1 mt-2">
+                          <div className="text-sm text-muted-foreground">
+                            Load: {circuit.totalLoad}W
                           </div>
-                          <div className="flex items-center gap-1">
-                            <span className="text-sm text-muted-foreground hidden sm:inline">•</span>
-                            <span className="text-sm text-muted-foreground">{circuit.voltage}V</span>
+                          <div className="text-sm text-muted-foreground">
+                            Voltage: {circuit.voltage}V
                           </div>
-                          <div className="flex items-center gap-1">
-                            <span className="text-sm text-muted-foreground hidden sm:inline">•</span>
-                            <span className="text-sm text-muted-foreground">{circuit.cableLength}m</span>
+                          <div className="text-sm text-muted-foreground">
+                            Cable Length: {circuit.cableLength}m
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            Type: {circuit.loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                           </div>
                         </div>
                       </div>

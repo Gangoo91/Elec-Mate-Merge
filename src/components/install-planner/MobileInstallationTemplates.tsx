@@ -428,20 +428,14 @@ const MobileInstallationTemplates: React.FC<MobileInstallationTemplatesProps> = 
                 
                 <CollapsibleContent className="space-y-2 mt-3">
                   {selectedTemplateData.circuits.map((circuit, index) => (
-                    <div key={index} className="flex items-center justify-between py-2 px-3 bg-black/20 rounded-md">
-                      <div className="flex items-center gap-2 min-w-0 flex-1">
-                        <div className="text-xs font-bold text-elec-yellow bg-elec-yellow/20 rounded px-1">
-                          {circuit.loadType === "lighting" ? "LT" : 
-                           circuit.loadType === "power" ? "PW" : 
-                           circuit.loadType === "cooker" ? "CK" : 
-                           circuit.loadType === "hvac" ? "AC" : 
-                           circuit.loadType === "it-equipment" ? "IT" : "GN"}
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="text-sm font-medium truncate">{circuit.name}</div>
-                          <div className="text-xs text-muted-foreground">
-                            {circuit.totalLoad}W • {circuit.voltage}V
-                          </div>
+                    <div key={index} className="py-3 px-3 bg-black/20 rounded-md">
+                      <div className="min-w-0 flex-1">
+                        <div className="text-sm font-medium mb-2">{circuit.name}</div>
+                        <div className="flex flex-col gap-1 text-xs text-muted-foreground">
+                          <div>Load: {circuit.totalLoad}W</div>
+                          <div>Voltage: {circuit.voltage}V</div>
+                          <div>Type: {circuit.loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
+                          <div>Cable: {circuit.cableType.toUpperCase()}</div>
                         </div>
                       </div>
                     </div>

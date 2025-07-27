@@ -149,23 +149,15 @@ const EnhancedCircuitTypeSelector: React.FC<EnhancedCircuitTypeSelectorProps> = 
       >
         <CardContent className="p-4">
           <div className="flex items-start justify-between gap-3">
-            <div className="flex items-start gap-3 min-w-0 flex-1">
-              <div className="h-10 w-10 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                <Icon className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <h4 className="font-medium text-sm leading-tight">{template.name}</h4>
-                <p className="text-xs text-muted-foreground mt-1 leading-tight">
-                  {template.description}
-                </p>
-                <div className="flex flex-wrap gap-1 mt-2">
-                  <Badge variant="outline" className="text-xs px-1 py-0">
-                    {template.totalLoad}W
-                  </Badge>
-                  <Badge variant="outline" className="text-xs px-1 py-0">
-                    {template.voltage}V
-                  </Badge>
-                </div>
+            <div className="min-w-0 flex-1">
+              <h4 className="font-medium text-sm leading-tight mb-2">{template.name}</h4>
+              <p className="text-xs text-muted-foreground mb-2 leading-tight">
+                {template.description}
+              </p>
+              <div className="flex flex-col gap-1 text-xs text-muted-foreground">
+                <div>Load: {template.totalLoad}W</div>
+                <div>Voltage: {template.voltage}V</div>
+                <div>Phase: {template.phases === 'single' ? 'Single Phase' : 'Three Phase'}</div>
               </div>
             </div>
             <div className="flex-shrink-0">

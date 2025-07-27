@@ -120,33 +120,21 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
               isCompliant ? 'border-green-500/30 bg-green-500/5' : 'border-amber-500/30 bg-amber-500/5'
             }`}>
               <CardHeader>
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="h-8 w-8 rounded bg-elec-yellow/20 flex items-center justify-center">
-                        {analysis.circuit.loadType === "lighting" ? 
-                          <Zap className="h-4 w-4 text-elec-yellow" /> :
-                         analysis.circuit.loadType === "power" ? 
-                          <Zap className="h-4 w-4 text-elec-yellow" /> :
-                         analysis.circuit.loadType === "cooker" ? 
-                          <Zap className="h-4 w-4 text-elec-yellow" /> :
-                         analysis.circuit.loadType === "heating" ? 
-                          <Zap className="h-4 w-4 text-elec-yellow" /> : 
-                          <Zap className="h-4 w-4 text-elec-yellow" />}
-                      </div>
-                      <div>
-                        <CardTitle className="text-base">{analysis.circuit.name}</CardTitle>
-                        <div className="flex flex-col gap-1 mt-1 sm:flex-row sm:flex-wrap sm:gap-2">
-                          <div className="flex items-center gap-1">
-                            <span className="text-sm text-muted-foreground">{analysis.circuit.totalLoad}W</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <span className="text-sm text-muted-foreground hidden sm:inline">•</span>
-                            <span className="text-sm text-muted-foreground">{analysis.circuit.voltage}V</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <span className="text-sm text-muted-foreground hidden sm:inline">•</span>
-                            <span className="text-sm text-muted-foreground">{analysis.circuit.cableLength}m</span>
-                          </div>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="flex-1">
+                      <CardTitle className="text-base">{analysis.circuit.name}</CardTitle>
+                      <div className="flex flex-col gap-1 mt-2">
+                        <div className="text-sm text-muted-foreground">
+                          Load: {analysis.circuit.totalLoad}W
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Voltage: {analysis.circuit.voltage}V
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Cable Length: {analysis.circuit.cableLength}m
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Type: {analysis.circuit.loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
                         </div>
                       </div>
                     </div>

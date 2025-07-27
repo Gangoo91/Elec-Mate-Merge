@@ -45,16 +45,8 @@ const VisualCircuitDesigner: React.FC<VisualCircuitDesignerProps> = ({
     ? (selectedCircuit ? activeCircuits.find(c => c.id === selectedCircuit) : activeCircuits[0])
     : singleCircuitData;
 
-  const getLoadIcon = (loadType: string) => {
-    switch (loadType) {
-      case "lighting": return "LT";
-      case "motor": return "MT";
-      case "heating": return "HT";
-      case "cooker": return "CK";
-      case "ev-charging": return "EV";
-      case "power": return "PW";
-      default: return "GN";
-    }
+  const getLoadTypeName = (loadType: string) => {
+    return loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase());
   };
 
   const getSupplyVoltage = () => {
@@ -232,11 +224,14 @@ const VisualCircuitDesigner: React.FC<VisualCircuitDesignerProps> = ({
             <div className="flex items-center justify-between p-4 bg-green-500/10 rounded-lg border border-green-400/30">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-green-500/20 border-2 border-green-400 rounded-lg flex items-center justify-center">
-                  <div className="text-xs font-bold text-green-400">{getLoadIcon(currentCircuit.loadType)}</div>
+                  <Zap className="h-6 w-6 text-green-400" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="font-medium text-green-400">Load</p>
-                  <p className="text-sm text-muted-foreground">{currentCircuit.totalLoad}W {currentCircuit.loadType.toUpperCase()}</p>
+                  <div className="flex flex-col gap-1 text-sm text-muted-foreground">
+                    <div>Power: {currentCircuit.totalLoad}W</div>
+                    <div>Type: {getLoadTypeName(currentCircuit.loadType)}</div>
+                  </div>
                 </div>
               </div>
               <Badge variant="outline" className="border-green-400/30 text-green-400">
