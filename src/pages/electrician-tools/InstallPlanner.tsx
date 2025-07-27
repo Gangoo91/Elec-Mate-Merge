@@ -323,66 +323,67 @@ const InstallPlanner = () => {
 
           {/* Step Content - Mobile-optimized */}
           <Card className="border-elec-yellow/20 bg-elec-gray shadow-lg">
-            <CardContent className="p-6 sm:p-8 lg:p-10 min-h-[500px] sm:min-h-[600px]">
+            <CardContent className="p-6 sm:p-8 lg:p-10 min-h-[400px] sm:min-h-[500px]">
               {CurrentStepComponent && (
-                <div className="w-full max-w-none">
+                <div className="w-full max-w-none space-y-6">
                   <CurrentStepComponent
                     planData={planData}
                     updatePlanData={updatePlanData}
                   />
+                  
+                  {/* Navigation moved inside content area */}
+                  <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:justify-between sm:items-center pt-6 border-t border-elec-yellow/10">
+                    <Button
+                      variant="outline"
+                      onClick={handlePrevious}
+                      disabled={currentStep === 1}
+                      className={`flex items-center justify-center gap-2 h-12 sm:h-11 text-base font-medium touch-manipulation ${
+                        currentStep === 1 ? 'opacity-50' : ''
+                      }`}
+                    >
+                      <ChevronLeft className="h-5 w-5" />
+                      Previous
+                    </Button>
+
+                    {/* Progress indicator - Enhanced for mobile */}
+                    <div className="flex items-center justify-center gap-2 order-first sm:order-none">
+                      <div className={`text-sm px-4 py-2 rounded-full border font-medium ${
+                        canProceed() ? 'text-green-400 bg-green-400/10 border-green-400/30' : 'text-amber-400 bg-amber-400/10 border-amber-400/30'
+                      }`}>
+                        {canProceed() ? '✓ Ready' : 
+                         (() => {
+                           const missing = getValidationMessages();
+                           return missing.length > 0 ? `⚠ Missing: ${missing.join(', ')}` : '⚠ Complete fields';
+                         })()}
+                      </div>
+                    </div>
+
+                    {currentStep < steps.length ? (
+                      <Button
+                        onClick={handleNext}
+                        disabled={!canProceed()}
+                        className={`bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center justify-center gap-2 h-12 sm:h-11 text-base font-medium touch-manipulation ${
+                          !canProceed() ? 'opacity-50 cursor-not-allowed' : ''
+                        }`}
+                      >
+                        Next
+                        <ChevronRight className="h-5 w-5" />
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={resetPlan}
+                        className="bg-green-600 hover:bg-green-700 text-white h-12 sm:h-11 text-base font-medium touch-manipulation"
+                      >
+                        <RotateCcw className="h-5 w-5 mr-2" />
+                        New Plan
+                      </Button>
+                    )}
+                  </div>
                 </div>
               )}
             </CardContent>
           </Card>
 
-          {/* Navigation Section - Mobile-first design */}
-          <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:justify-between sm:items-center bg-elec-card/50 rounded-xl p-4 sm:p-6 border border-elec-yellow/10">
-            <Button
-              variant="outline"
-              onClick={handlePrevious}
-              disabled={currentStep === 1}
-              className={`flex items-center justify-center gap-2 h-12 sm:h-11 text-base font-medium touch-manipulation ${
-                currentStep === 1 ? 'opacity-50' : ''
-              }`}
-            >
-              <ChevronLeft className="h-5 w-5" />
-              Previous Step
-            </Button>
-
-            {/* Progress indicator - Enhanced for mobile */}
-            <div className="flex items-center justify-center gap-2 order-first sm:order-none">
-              <div className={`text-sm px-4 py-2 rounded-full border font-medium ${
-                canProceed() ? 'text-green-400 bg-green-400/10 border-green-400/30' : 'text-amber-400 bg-amber-400/10 border-amber-400/30'
-              }`}>
-                {canProceed() ? '✓ Ready to continue' : 
-                 (() => {
-                   const missing = getValidationMessages();
-                   return missing.length > 0 ? `⚠ Missing: ${missing.join(', ')}` : '⚠ Complete required fields';
-                 })()}
-              </div>
-            </div>
-
-            {currentStep < steps.length ? (
-              <Button
-                onClick={handleNext}
-                disabled={!canProceed()}
-                className={`bg-elec-yellow text-black hover:bg-elec-yellow/90 flex items-center justify-center gap-2 h-12 sm:h-11 text-base font-medium touch-manipulation ${
-                  !canProceed() ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
-              >
-                Next Step
-                <ChevronRight className="h-5 w-5" />
-              </Button>
-            ) : (
-              <Button
-                onClick={resetPlan}
-                className="bg-green-600 hover:bg-green-700 text-white h-12 sm:h-11 text-base font-medium touch-manipulation"
-              >
-                <RotateCcw className="h-5 w-5 mr-2" />
-                New Installation Plan
-              </Button>
-            )}
-          </div>
 
           {/* Mobile completion summary - Enhanced for touch */}
           {currentStep === steps.length && (
