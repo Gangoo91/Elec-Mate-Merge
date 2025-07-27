@@ -24,8 +24,30 @@ const SmartPortfolioManager = () => {
       <div className="space-y-6">
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
-            <CardTitle>Loading Portfolio...</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              <div className="animate-spin h-4 w-4 border-2 border-elec-yellow border-t-transparent rounded-full" />
+              Loading Your Portfolio
+            </CardTitle>
+            <CardDescription>
+              Preparing your qualification-specific portfolio interface...
+            </CardDescription>
           </CardHeader>
+          <CardContent className="p-4">
+            <div className="grid md:grid-cols-3 gap-4">
+              <div className="animate-pulse">
+                <div className="h-4 bg-elec-yellow/20 rounded mb-2" />
+                <div className="h-3 bg-elec-yellow/10 rounded" />
+              </div>
+              <div className="animate-pulse">
+                <div className="h-4 bg-elec-yellow/20 rounded mb-2" />
+                <div className="h-3 bg-elec-yellow/10 rounded" />
+              </div>
+              <div className="animate-pulse">
+                <div className="h-4 bg-elec-yellow/20 rounded mb-2" />
+                <div className="h-3 bg-elec-yellow/10 rounded" />
+              </div>
+            </div>
+          </CardContent>
         </Card>
       </div>
     );

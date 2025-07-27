@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
@@ -6,34 +6,31 @@ import { PortfolioEntry, PortfolioCategory, PortfolioAnalytics, PortfolioActivit
 
 export const usePortfolioDataWithQualifications = () => {
   const { toast } = useToast();
-  const { categories: qualificationCategories, userSelection, updateCompliance } = useQualifications();
+  const { categories: qualificationCategories, userSelection, updateCompliance, loading: qualLoading } = useQualifications();
   const [entries, setEntries] = useState<PortfolioEntry[]>([]);
   const [analytics, setAnalytics] = useState<PortfolioAnalytics | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Convert qualification categories to portfolio categories
-  const categories: PortfolioCategory[] = qualificationCategories.map(qc => ({
-    id: qc.id,
-    name: qc.name,
-    description: qc.description || '',
-    icon: qc.icon || 'folder',
-    color: qc.color || 'blue',
-    requiredEntries: qc.required_entries,
-    completedEntries: entries.filter(e => 
-      e.category.id === qc.id && e.status === 'completed'
-    ).length
-  }));
+  // Memoize categories to prevent infinite re-renders
+  const categories: PortfolioCategory[] = useMemo(() => 
+    qualificationCategories.map(qc => ({
+      id: qc.id,
+      name: qc.name,
+      description: qc.description || '',
+      icon: qc.icon || 'folder',
+      color: qc.color || 'blue',
+      requiredEntries: qc.required_entries,
+      completedEntries: entries.filter(e => 
+        e.category.id === qc.id && e.status === 'completed'
+      ).length
+    })), [qualificationCategories, entries]);
 
-  useEffect(() => {
-    loadEntries();
-  }, [userSelection]);
+  const loadEntries = useCallback(async () => {
+    if (!userSelection) {
+      setIsLoading(false);
+      return;
+    }
 
-  useEffect(() => {
-    updateAnalytics();
-    updateComplianceTracking();
-  }, [entries, categories]);
-
-  const loadEntries = async () => {
     setIsLoading(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
@@ -98,7 +95,79 @@ export const usePortfolioDataWithQualifications = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [userSelection, qualificationCategories, toast]);
+
+  // Memoize analytics calculation
+  const updateAnalytics = useCallback(() => {
+    const totalEntries = entries.length;
+    const completedEntries = entries.filter(e => e.status === 'completed').length;
+    const totalTimeSpent = entries.reduce((total, entry) => total + entry.timeSpent, 0);
+    const averageRating = entries.length > 0 
+      ? entries.reduce((total, entry) => total + entry.selfAssessment, 0) / entries.length 
+      : 0;
+
+    const categoriesProgress: { [key: string]: number } = {};
+    categories.forEach(category => {
+      const categoryEntries = entries.filter(e => e.category.id === category.id && e.status === 'completed');
+      categoriesProgress[category.id] = Math.min((categoryEntries.length / category.requiredEntries) * 100, 100);
+    });
+
+    const skillsDemo = [...new Set(entries.flatMap(entry => entry.skills))];
+
+    const recentActivity: PortfolioActivity[] = entries
+      .slice(-5)
+      .map(entry => ({
+        id: `activity_${entry.id}`,
+        type: 'created',
+        entryId: entry.id,
+        entryTitle: entry.title,
+        date: entry.dateCreated
+      }));
+
+    const newAnalytics: PortfolioAnalytics = {
+      totalEntries,
+      completedEntries,
+      totalTimeSpent,
+      averageRating,
+      categoriesProgress,
+      skillsDemo,
+      recentActivity
+    };
+
+    setAnalytics(newAnalytics);
+  }, [entries, categories]);
+
+  // Debounced compliance update
+  const updateComplianceTracking = useCallback(async () => {
+    if (!userSelection || categories.length === 0) return;
+
+    try {
+      for (const category of categories) {
+        const completedEntries = entries.filter(e => 
+          e.category.id === category.id && e.status === 'completed'
+        ).length;
+
+        await updateCompliance(category.id, completedEntries);
+      }
+    } catch (error) {
+      console.error('Error updating compliance:', error);
+    }
+  }, [userSelection, categories, entries, updateCompliance]);
+
+  // Load entries when qualification changes
+  useEffect(() => {
+    if (!qualLoading) {
+      loadEntries();
+    }
+  }, [qualLoading, loadEntries]);
+
+  // Update analytics and compliance when entries change
+  useEffect(() => {
+    if (entries.length >= 0 && categories.length > 0) {
+      updateAnalytics();
+      updateComplianceTracking();
+    }
+  }, [entries.length, categories.length, updateAnalytics, updateComplianceTracking]);
 
   const addEntry = async (entryData: Omit<PortfolioEntry, 'id' | 'dateCreated'>) => {
     try {
@@ -218,63 +287,11 @@ export const usePortfolioDataWithQualifications = () => {
     }
   };
 
-  const updateComplianceTracking = async () => {
-    if (!userSelection) return;
-
-    // Update compliance for each category
-    for (const category of categories) {
-      const completedEntries = entries.filter(e => 
-        e.category.id === category.id && e.status === 'completed'
-      ).length;
-
-      await updateCompliance(category.id, completedEntries);
-    }
-  };
-
-  const updateAnalytics = () => {
-    const totalEntries = entries.length;
-    const completedEntries = entries.filter(e => e.status === 'completed').length;
-    const totalTimeSpent = entries.reduce((total, entry) => total + entry.timeSpent, 0);
-    const averageRating = entries.length > 0 
-      ? entries.reduce((total, entry) => total + entry.selfAssessment, 0) / entries.length 
-      : 0;
-
-    const categoriesProgress: { [key: string]: number } = {};
-    categories.forEach(category => {
-      const categoryEntries = entries.filter(e => e.category.id === category.id && e.status === 'completed');
-      categoriesProgress[category.id] = Math.min((categoryEntries.length / category.requiredEntries) * 100, 100);
-    });
-
-    const skillsDemo = [...new Set(entries.flatMap(entry => entry.skills))];
-
-    const recentActivity: PortfolioActivity[] = entries
-      .slice(-5)
-      .map(entry => ({
-        id: `activity_${entry.id}`,
-        type: 'created',
-        entryId: entry.id,
-        entryTitle: entry.title,
-        date: entry.dateCreated
-      }));
-
-    const newAnalytics: PortfolioAnalytics = {
-      totalEntries,
-      completedEntries,
-      totalTimeSpent,
-      averageRating,
-      categoriesProgress,
-      skillsDemo,
-      recentActivity
-    };
-
-    setAnalytics(newAnalytics);
-  };
-
   return {
     entries,
     categories,
     analytics,
-    isLoading,
+    isLoading: isLoading || qualLoading,
     addEntry,
     updateEntry,
     deleteEntry,
