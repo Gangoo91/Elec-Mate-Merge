@@ -170,12 +170,9 @@ const ComplianceDashboardTab = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h3 className="text-lg font-semibold">Goals & Progress</h3>
-          <p className="text-muted-foreground">Track your learning objectives and compliance requirements</p>
-        </div>
-        <Button onClick={() => setIsAddDialogOpen(true)}>
+      <div className="space-y-3">
+        <h3 className="text-base font-semibold">Goals & Progress</h3>
+        <Button onClick={() => setIsAddDialogOpen(true)} className="w-full sm:w-auto">
           <Plus className="h-4 w-4 mr-2" />
           Add Goal
         </Button>
