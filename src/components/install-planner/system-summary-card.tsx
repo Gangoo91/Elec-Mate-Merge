@@ -54,7 +54,7 @@ export const SystemSummaryCard: React.FC<SystemSummaryCardProps> = ({
         <div className="space-y-3">
           <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
             <span className="text-sm text-muted-foreground">Install</span>
-            <span className="text-lg font-bold text-elec-yellow">Multi-Circuit</span>
+            <span className="text-lg font-bold text-elec-yellow text-right">Multi-Circuit</span>
           </div>
           <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
             <span className="text-sm text-muted-foreground">Duration</span>
