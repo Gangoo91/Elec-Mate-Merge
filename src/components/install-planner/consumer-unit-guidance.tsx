@@ -17,31 +17,31 @@ export const ConsumerUnitGuidance: React.FC<ConsumerUnitGuidanceProps> = ({
   const recommendations = getRecommendedConsumerUnit(totalCircuits, recommendedMainSwitch);
   
   const renderConsumerUnit = (unit: ConsumerUnitData, index: number) => (
-    <div key={index} className="bg-elec-grey rounded-lg p-4 border border-elec-yellow/20 space-y-4">
+    <div key={index} className="space-y-3 py-3 border-b border-elec-yellow/10 last:border-b-0">
       {/* Header */}
-      <div className="space-y-2">
-        <div className="flex items-start justify-between">
+      <div className="flex items-start justify-between">
+        <div>
           <h4 className="font-semibold text-elec-yellow">{unit.brand} {unit.model}</h4>
-          <Badge variant="outline" className={`${
-            unit.availability === "excellent" ? "border-green-500/50 text-green-400" :
-            unit.availability === "good" ? "border-blue-500/50 text-blue-400" :
-            "border-amber-500/50 text-amber-400"
-          }`}>
-            {unit.availability}
-          </Badge>
+          <p className="text-sm text-muted-foreground">{unit.ways}-way • {unit.mainSwitchRating}A main switch</p>
         </div>
-        <p className="text-sm text-muted-foreground">{unit.ways}-way • {unit.mainSwitchRating}A main switch</p>
+        <Badge variant="outline" className={`${
+          unit.availability === "excellent" ? "border-green-500/50 text-green-400" :
+          unit.availability === "good" ? "border-blue-500/50 text-blue-400" :
+          "border-amber-500/50 text-amber-400"
+        }`}>
+          {unit.availability}
+        </Badge>
       </div>
 
       {/* Price & Features */}
-      <div className="grid grid-cols-2 gap-3">
-        <div className="flex items-center gap-2 p-2 bg-elec-grey rounded border border-elec-yellow/10">
+      <div className="flex items-center gap-4 text-sm">
+        <div className="flex items-center gap-1">
           <DollarSign className="h-4 w-4 text-elec-yellow" />
-          <span className="text-sm font-medium text-elec-yellow">£{unit.priceRange.min}-{unit.priceRange.max}</span>
+          <span className="text-elec-yellow">£{unit.priceRange.min}-{unit.priceRange.max}</span>
         </div>
-        <div className="flex items-center gap-2 p-2 bg-elec-grey rounded border border-elec-yellow/10">
+        <div className="flex items-center gap-1">
           <Package className="h-4 w-4 text-elec-yellow" />
-          <span className="text-sm font-medium text-elec-yellow">{unit.features.length} features</span>
+          <span className="text-elec-yellow">{unit.features.length} features</span>
         </div>
       </div>
 
@@ -60,9 +60,9 @@ export const ConsumerUnitGuidance: React.FC<ConsumerUnitGuidanceProps> = ({
       {/* Required Components */}
       <div>
         <p className="text-sm font-medium text-elec-yellow mb-2">Required Components:</p>
-        <div className="grid grid-cols-1 gap-2">
+        <div className="space-y-1">
           {unit.requiredComponents.map((component, idx) => (
-            <div key={idx} className="flex items-center gap-2 p-2 bg-elec-grey rounded border border-elec-yellow/10">
+            <div key={idx} className="flex items-center gap-2">
               <CheckCircle className="h-3 w-3 text-green-500 flex-shrink-0" />
               <span className="text-sm text-muted-foreground">{component}</span>
             </div>
@@ -93,16 +93,16 @@ export const ConsumerUnitGuidance: React.FC<ConsumerUnitGuidanceProps> = ({
       className="w-full"
     >
       <div className="space-y-4">
-        <div className="bg-elec-grey rounded-lg p-4 border border-elec-yellow/20">
-          <h4 className="font-medium mb-3 text-elec-yellow">Requirements</h4>
+        <div className="space-y-3">
+          <h4 className="font-medium text-elec-yellow">Requirements</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="p-3 bg-elec-grey rounded border border-elec-yellow/10">
-              <p className="text-xs text-muted-foreground mb-1">Minimum Ways</p>
+            <div className="space-y-1">
+              <p className="text-xs text-muted-foreground">Minimum Ways</p>
               <p className="font-medium text-elec-yellow">{totalCircuits + 2} ways</p>
               <p className="text-xs text-muted-foreground">({totalCircuits} circuits + 2 spare)</p>
             </div>
-            <div className="p-3 bg-elec-grey rounded border border-elec-yellow/10">
-              <p className="text-xs text-muted-foreground mb-1">Main Switch Rating</p>
+            <div className="space-y-1">
+              <p className="text-xs text-muted-foreground">Main Switch Rating</p>
               <p className="font-medium text-elec-yellow">{recommendedMainSwitch}A minimum</p>
             </div>
           </div>
@@ -129,26 +129,26 @@ export const ConsumerUnitGuidance: React.FC<ConsumerUnitGuidanceProps> = ({
         </MobileAccordion>
 
         {/* Quick Buying Guide */}
-        <div className="bg-elec-grey rounded-lg p-4 border border-elec-yellow/20">
-          <p className="text-sm font-medium text-elec-yellow mb-3">Quick Buying Checklist:</p>
+        <div className="space-y-3">
+          <p className="text-sm font-medium text-elec-yellow">Quick Buying Checklist:</p>
           <div className="space-y-2">
-            <div className="flex items-center gap-2 p-2 bg-elec-grey rounded border border-elec-yellow/10">
+            <div className="flex items-center gap-2">
               <CheckCircle className="h-3 w-3 text-green-500 flex-shrink-0" />
               <span className="text-xs text-muted-foreground">Verify main switch rating meets calculated requirements</span>
             </div>
-            <div className="flex items-center gap-2 p-2 bg-elec-grey rounded border border-elec-yellow/10">
+            <div className="flex items-center gap-2">
               <CheckCircle className="h-3 w-3 text-green-500 flex-shrink-0" />
               <span className="text-xs text-muted-foreground">Ensure sufficient ways for current circuits plus future expansion</span>
             </div>
-            <div className="flex items-center gap-2 p-2 bg-elec-grey rounded border border-elec-yellow/10">
+            <div className="flex items-center gap-2">
               <CheckCircle className="h-3 w-3 text-green-500 flex-shrink-0" />
               <span className="text-xs text-muted-foreground">Check RCD/RCBO compatibility for your protection strategy</span>
             </div>
-            <div className="flex items-center gap-2 p-2 bg-elec-grey rounded border border-elec-yellow/10">
+            <div className="flex items-center gap-2">
               <CheckCircle className="h-3 w-3 text-green-500 flex-shrink-0" />
               <span className="text-xs text-muted-foreground">Confirm SPD (surge protection) compatibility if required</span>
             </div>
-            <div className="flex items-center gap-2 p-2 bg-elec-grey rounded border border-elec-yellow/10">
+            <div className="flex items-center gap-2">
               <CheckCircle className="h-3 w-3 text-green-500 flex-shrink-0" />
               <span className="text-xs text-muted-foreground">Verify earthing system compatibility (TN-S, TN-C-S, TT)</span>
             </div>
