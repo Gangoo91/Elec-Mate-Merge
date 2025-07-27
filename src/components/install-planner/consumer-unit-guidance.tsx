@@ -19,41 +19,45 @@ export const ConsumerUnitGuidance: React.FC<ConsumerUnitGuidanceProps> = ({
       status="info"
       className="w-full"
     >
-      <div className="space-y-4">
+      <div className="space-y-6">
         {/* Requirements */}
-        <div className="space-y-3">
-          <h4 className="font-medium text-primary">Requirements</h4>
-          <div className="space-y-2">
-            <div className="flex justify-between items-center p-3 bg-muted/30 rounded">
-              <span className="text-sm text-muted-foreground">Minimum Ways</span>
-              <span className="font-bold text-primary">{totalCircuits + 2} ways</span>
+        <div className="space-y-4">
+          <h4 className="font-medium text-primary text-center">Requirements</h4>
+          
+          <div className="text-center space-y-4">
+            <div>
+              <div className="text-muted-foreground text-sm mb-1">Minimum Ways</div>
+              <div className="text-primary font-bold text-2xl">{totalCircuits + 2}</div>
+              <div className="text-primary font-medium">ways</div>
             </div>
-            <div className="flex justify-between items-center p-3 bg-muted/30 rounded">
-              <span className="text-sm text-muted-foreground">Main Switch Rating</span>
-              <span className="font-bold text-primary">{recommendedMainSwitch}A minimum</span>
+            
+            <div>
+              <div className="text-muted-foreground text-sm mb-1">Main Switch Rating</div>
+              <div className="text-primary font-bold text-2xl">{recommendedMainSwitch}A</div>
+              <div className="text-primary font-medium">minimum</div>
             </div>
           </div>
         </div>
 
         {/* Buying Checklist */}
-        <div className="space-y-3">
-          <h4 className="font-medium text-primary">Buying Checklist</h4>
-          <div className="space-y-2">
-            <div className="flex items-start gap-2 p-2">
-              <CheckCircle className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
-              <span className="text-sm text-muted-foreground">Main switch rating meets requirements</span>
+        <div className="space-y-4">
+          <h4 className="font-medium text-primary text-center">Buying Checklist</h4>
+          <div className="space-y-3">
+            <div className="flex items-start gap-3 text-left">
+              <CheckCircle className="h-5 w-5 text-success flex-shrink-0 mt-0.5" />
+              <span className="text-sm text-muted-foreground leading-relaxed">Main switch rating meets requirements</span>
             </div>
-            <div className="flex items-start gap-2 p-2">
-              <CheckCircle className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
-              <span className="text-sm text-muted-foreground">Sufficient ways for circuits + spares</span>
+            <div className="flex items-start gap-3 text-left">
+              <CheckCircle className="h-5 w-5 text-success flex-shrink-0 mt-0.5" />
+              <span className="text-sm text-muted-foreground leading-relaxed">Sufficient ways for circuits + spares</span>
             </div>
-            <div className="flex items-start gap-2 p-2">
-              <CheckCircle className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
-              <span className="text-sm text-muted-foreground">RCD/RCBO compatibility checked</span>
+            <div className="flex items-start gap-3 text-left">
+              <CheckCircle className="h-5 w-5 text-success flex-shrink-0 mt-0.5" />
+              <span className="text-sm text-muted-foreground leading-relaxed">RCD/RCBO compatibility checked</span>
             </div>
-            <div className="flex items-start gap-2 p-2">
-              <CheckCircle className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
-              <span className="text-sm text-muted-foreground">Earthing system compatibility verified</span>
+            <div className="flex items-start gap-3 text-left">
+              <CheckCircle className="h-5 w-5 text-success flex-shrink-0 mt-0.5" />
+              <span className="text-sm text-muted-foreground leading-relaxed">Earthing system compatibility verified</span>
             </div>
           </div>
         </div>
