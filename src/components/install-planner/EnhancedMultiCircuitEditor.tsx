@@ -194,22 +194,22 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
                             <ChevronRight className="h-4 w-4" />
                           }
                         </CardTitle>
-                        <div className="grid grid-cols-2 gap-2 text-sm">
-                          <div className="bg-elec-dark/50 rounded p-2 text-center">
+                        <div className="flex flex-col gap-2 text-sm">
+                          <div className="bg-elec-gray rounded p-2 text-center border border-elec-yellow/20">
                             <div className="text-xs text-muted-foreground mb-1">Load</div>
                             <div className="font-medium text-elec-yellow">{circuit.totalLoad}W</div>
                           </div>
-                          <div className="bg-elec-dark/50 rounded p-2 text-center">
+                          <div className="bg-elec-gray rounded p-2 text-center border border-elec-yellow/20">
                             <div className="text-xs text-muted-foreground mb-1">Voltage</div>
-                            <div className="font-medium text-blue-400">{circuit.voltage}V</div>
+                            <div className="font-medium text-elec-yellow">{circuit.voltage}V</div>
                           </div>
-                          <div className="bg-elec-dark/50 rounded p-2 text-center">
+                          <div className="bg-elec-gray rounded p-2 text-center border border-elec-yellow/20">
                             <div className="text-xs text-muted-foreground mb-1">Length</div>
-                            <div className="font-medium text-green-400">{circuit.cableLength}m</div>
+                            <div className="font-medium text-elec-yellow">{circuit.cableLength}m</div>
                           </div>
-                          <div className="bg-elec-dark/50 rounded p-2 text-center">
+                          <div className="bg-elec-gray rounded p-2 text-center border border-elec-yellow/20">
                             <div className="text-xs text-muted-foreground mb-1">Type</div>
-                            <div className="font-medium text-purple-400 text-xs">{circuit.loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
+                            <div className="font-medium text-elec-yellow text-xs">{circuit.loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
                           </div>
                         </div>
                       </div>
