@@ -1,6 +1,7 @@
 
+import { useState } from "react";
 import BackButton from "@/components/common/BackButton";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Clock, FileText, Target, Award, BarChart3 } from "lucide-react";
 import TimeTrackingTab from "@/components/apprentice/ojt/TimeTrackingTab";
 import PortfolioBuildingTab from "@/components/apprentice/ojt/PortfolioBuildingTab";
@@ -10,6 +11,32 @@ import ComplianceDashboardTab from "@/components/apprentice/ojt/ComplianceDashbo
 
 const ApprenticeOJT = () => {
   console.log('ApprenticeOJT component rendering');
+  const [activeTab, setActiveTab] = useState("time-tracking");
+
+  const tabOptions = [
+    { value: "time-tracking", label: "Time Tracking", icon: Clock },
+    { value: "portfolio", label: "Portfolio", icon: FileText },
+    { value: "evidence", label: "Evidence Assessment", icon: Target },
+    { value: "assessments", label: "Assessments", icon: Award },
+    { value: "compliance", label: "Goals & Progress", icon: BarChart3 }
+  ];
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "time-tracking":
+        return <TimeTrackingTab />;
+      case "portfolio":
+        return <PortfolioBuildingTab />;
+      case "evidence":
+        return <EvidenceUploadTab />;
+      case "assessments":
+        return <AssessmentTrackingTab />;
+      case "compliance":
+        return <ComplianceDashboardTab />;
+      default:
+        return <TimeTrackingTab />;
+    }
+  };
   
   return (
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
@@ -21,50 +48,45 @@ const ApprenticeOJT = () => {
         <BackButton customUrl="/apprentice" label="Back to Apprentice Hub" />
       </div>
 
-      <Tabs defaultValue="time-tracking" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="time-tracking" className="flex items-center gap-2">
-            <Clock className="h-4 w-4" />
-            Time Tracking
-          </TabsTrigger>
-          <TabsTrigger value="portfolio" className="flex items-center gap-2">
-            <FileText className="h-4 w-4" />
-            Portfolio
-          </TabsTrigger>
-          <TabsTrigger value="evidence" className="flex items-center gap-2">
-            <Target className="h-4 w-4" />
-            Evidence
-          </TabsTrigger>
-          <TabsTrigger value="assessments" className="flex items-center gap-2">
-            <Award className="h-4 w-4" />
-            Assessments
-          </TabsTrigger>
-          <TabsTrigger value="compliance" className="flex items-center gap-2">
-            <BarChart3 className="h-4 w-4" />
-            Goals & Progress
-          </TabsTrigger>
-        </TabsList>
+      <div className="w-full space-y-6">
+        <div className="flex justify-center">
+          <Select value={activeTab} onValueChange={setActiveTab}>
+            <SelectTrigger className="w-[280px] md:w-[320px]">
+              <SelectValue placeholder="Select a section">
+                <div className="flex items-center gap-2">
+                  {(() => {
+                    const currentTab = tabOptions.find(tab => tab.value === activeTab);
+                    const IconComponent = currentTab?.icon;
+                    return (
+                      <>
+                        {IconComponent && <IconComponent className="h-4 w-4" />}
+                        {currentTab?.label}
+                      </>
+                    );
+                  })()}
+                </div>
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              {tabOptions.map((tab) => {
+                const IconComponent = tab.icon;
+                return (
+                  <SelectItem key={tab.value} value={tab.value}>
+                    <div className="flex items-center gap-2">
+                      <IconComponent className="h-4 w-4" />
+                      {tab.label}
+                    </div>
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
+        </div>
 
-        <TabsContent value="time-tracking">
-          <TimeTrackingTab />
-        </TabsContent>
-
-        <TabsContent value="portfolio">
-          <PortfolioBuildingTab />
-        </TabsContent>
-
-        <TabsContent value="evidence">
-          <EvidenceUploadTab />
-        </TabsContent>
-
-        <TabsContent value="assessments">
-          <AssessmentTrackingTab />
-        </TabsContent>
-
-        <TabsContent value="compliance">
-          <ComplianceDashboardTab />
-        </TabsContent>
-      </Tabs>
+        <div className="w-full">
+          {renderTabContent()}
+        </div>
+      </div>
     </div>
   );
 };
