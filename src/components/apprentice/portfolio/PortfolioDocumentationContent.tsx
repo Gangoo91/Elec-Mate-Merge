@@ -260,11 +260,12 @@ const PortfolioDocumentationContent = () => {
           return (
             <Card key={resource.id} className="border-gray-500/20 bg-elec-gray hover:border-gray-500/40 transition-colors">
               <CardHeader className="pb-3">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-start gap-2 flex-1 min-w-0">
-                    <IconComponent className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <div className="min-w-0">
-                      <CardTitle className="text-sm font-medium text-white line-clamp-2">
+                <div className="flex flex-col gap-3">
+                  {/* Header with icon and title */}
+                  <div className="flex items-start gap-2">
+                    <IconComponent className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <CardTitle className="text-sm font-medium text-white leading-tight">
                         {resource.title}
                       </CardTitle>
                       <p className="text-xs text-muted-foreground mt-1">
@@ -272,7 +273,9 @@ const PortfolioDocumentationContent = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="flex flex-col gap-1 flex-shrink-0">
+                  
+                  {/* Badges */}
+                  <div className="flex flex-wrap gap-2">
                     {resource.isNew && (
                       <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
                         New
@@ -284,48 +287,52 @@ const PortfolioDocumentationContent = () => {
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-muted-foreground text-xs mb-3 line-clamp-3">
+              <CardContent className="pt-0 space-y-4">
+                {/* Description */}
+                <p className="text-muted-foreground text-xs leading-relaxed">
                   {resource.description}
                 </p>
                 
-                <div className="flex items-center gap-2 mb-3 text-xs text-muted-foreground">
-                  <Clock className="h-3 w-3" />
+                {/* Time and size info */}
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <Clock className="h-3 w-3 flex-shrink-0" />
                   <span>{resource.estimatedTime}</span>
                   <span>•</span>
                   <span>{resource.fileSize}</span>
                 </div>
 
-                <div className="flex flex-wrap gap-1 mb-3">
+                {/* Tags */}
+                <div className="flex flex-wrap gap-1.5">
                   {resource.tags.slice(0, 3).map((tag) => (
-                    <Badge key={tag} variant="outline" className="text-xs border-gray-500/30">
+                    <Badge key={tag} variant="outline" className="text-xs border-gray-500/30 px-2 py-0.5">
                       {tag}
                     </Badge>
                   ))}
                   {resource.tags.length > 3 && (
-                    <Badge variant="outline" className="text-xs border-gray-500/30">
+                    <Badge variant="outline" className="text-xs border-gray-500/30 px-2 py-0.5">
                       +{resource.tags.length - 3} more
                     </Badge>
                   )}
                 </div>
 
-                <div className="flex gap-2">
+                {/* Action buttons */}
+                <div className="flex flex-col sm:flex-row gap-2 pt-2">
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="border-elec-yellow/30 text-xs flex-1"
+                    className="border-elec-yellow/30 text-xs flex-1 h-8"
                     onClick={() => handleOpen(resource)}
                   >
-                    <ExternalLink className="h-3 w-3 mr-1" />
+                    <ExternalLink className="h-3 w-3 mr-2" />
                     View
                   </Button>
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="border-elec-yellow/30 text-xs flex-1"
+                    className="border-elec-yellow/30 text-xs flex-1 h-8"
                     onClick={() => handleDownload(resource)}
                   >
-                    <Download className="h-3 w-3 mr-1" />
+                    <Download className="h-3 w-3 mr-2" />
                     Download
                   </Button>
                 </div>
