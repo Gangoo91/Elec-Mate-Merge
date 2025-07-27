@@ -298,24 +298,24 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
 
       {/* Installation Zones Content */}
       {activeTab === "zones" && (
-        <div className="space-y-4">
-          <div className="flex flex-col space-y-3 sm:flex-row sm:justify-between sm:items-center sm:space-y-0">
-            <h3 className="text-lg font-semibold text-elec-light">Installation Zones</h3>
+        <div className="space-y-6">
+          <div className="flex flex-col space-y-4">
+            <h3 className="text-xl font-semibold text-elec-light text-center">Installation Zones</h3>
             <Button 
               onClick={addInstallationZone} 
-              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold w-full sm:w-auto"
+              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold w-full py-3 text-base"
             >
-              <Plus className="h-4 w-4 mr-2" />
+              <Plus className="h-5 w-5 mr-2" />
               Add Zone
             </Button>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-6">
             {(environmentalSettings.installationZones || []).map((zone) => (
               <Card key={zone.id} className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
                 <CardHeader className="pb-4">
-                  <div className="flex flex-col space-y-3 sm:flex-row sm:justify-between sm:items-center sm:space-y-0">
-                    <CardTitle className="flex items-center justify-center gap-2 text-elec-light sm:justify-start">
+                  <div className="flex flex-col space-y-4">
+                    <CardTitle className="flex items-center justify-center gap-2 text-elec-light text-lg">
                       <MapPin className="h-5 w-5 text-elec-yellow" />
                       Zone Configuration
                     </CardTitle>
@@ -323,42 +323,50 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                       variant="outline"
                       size="sm"
                       onClick={() => deleteZone(zone.id)}
-                      className="border-destructive/30 text-destructive hover:bg-destructive/10 w-full sm:w-auto"
+                      className="border-destructive/30 text-destructive hover:bg-destructive/10 w-full py-2"
                     >
-                      <Trash2 className="h-4 w-4 mr-2 sm:mr-0" />
-                      <span className="sm:hidden">Delete Zone</span>
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      Delete Zone
                     </Button>
                   </div>
                 </CardHeader>
-                <CardContent className="space-y-4 pt-0">
-                  <MobileInputWrapper
-                    label="Zone Name"
-                    value={zone.name}
-                    onChange={(value) => updateZone(zone.id, { name: value })}
-                    placeholder="Enter zone name..."
-                  />
+                <CardContent className="space-y-5 pt-0">
+                  <div className="space-y-2">
+                    <span className="text-sm font-semibold text-elec-light">Zone Name</span>
+                    <MobileInputWrapper
+                      value={zone.name}
+                      onChange={(value) => updateZone(zone.id, { name: value })}
+                      placeholder="Enter zone name..."
+                    />
+                  </div>
 
-                  <MobileInputWrapper
-                    label="Description"
-                    value={zone.description}
-                    onChange={(value) => updateZone(zone.id, { description: value })}
-                    placeholder="Describe this installation zone..."
-                  />
+                  <div className="space-y-2">
+                    <span className="text-sm font-semibold text-elec-light">Description</span>
+                    <MobileInputWrapper
+                      value={zone.description}
+                      onChange={(value) => updateZone(zone.id, { description: value })}
+                      placeholder="Describe this installation zone..."
+                    />
+                  </div>
 
-                  <MobileInputWrapper
-                    label="Ambient Temperature (°C)"
-                    type="number"
-                    value={zone.ambientTemperature.toString()}
-                    onChange={(value) => updateZone(zone.id, { ambientTemperature: Number(value) })}
-                  />
+                  <div className="space-y-2">
+                    <span className="text-sm font-semibold text-elec-light">Ambient Temperature (°C)</span>
+                    <MobileInputWrapper
+                      type="number"
+                      value={zone.ambientTemperature.toString()}
+                      onChange={(value) => updateZone(zone.id, { ambientTemperature: Number(value) })}
+                    />
+                  </div>
 
-                  <MobileSelectWrapper
-                    label="Environmental Conditions"
-                    value={zone.environmentalConditions}
-                    onValueChange={(value) => updateZone(zone.id, { environmentalConditions: value })}
-                    options={environmentalConditionsOptions}
-                    placeholder="Select environmental conditions..."
-                  />
+                  <div className="space-y-2">
+                    <span className="text-sm font-semibold text-elec-light">Environmental Conditions</span>
+                    <MobileSelectWrapper
+                      value={zone.environmentalConditions}
+                      onValueChange={(value) => updateZone(zone.id, { environmentalConditions: value })}
+                      options={environmentalConditionsOptions}
+                      placeholder="Select environmental conditions..."
+                    />
+                  </div>
 
                   {zone.circuitIds.length > 0 && (
                     <div className="space-y-2">
@@ -387,12 +395,12 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                 <CardContent className="text-center py-8">
                   <MapPin className="h-12 w-12 text-elec-light/50 mx-auto mb-4" />
                   <h4 className="text-lg font-medium mb-2 text-elec-light">No Installation Zones</h4>
-                  <p className="text-elec-light/70 mb-4">
+                  <p className="text-elec-light/70 mb-6 px-4">
                     Create zones to group circuits with similar environmental conditions.
                   </p>
                   <Button 
                     onClick={addInstallationZone} 
-                    className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold"
+                    className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold w-full max-w-xs py-3"
                   >
                     <Plus className="h-4 w-4 mr-2" />
                     Create First Zone
