@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -166,138 +165,136 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
 
       {/* Global Settings Content */}
       {activeTab === "global" && (
-        <Card className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
-          <CardContent className="space-y-6 pt-4 px-4 pb-6">
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <span className="text-sm font-semibold text-elec-light">Default Ambient Temperature (°C)</span>
+        <div className="space-y-6 pt-4 px-2">
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <span className="text-sm font-semibold text-elec-light">Default Ambient Temperature (°C)</span>
+              <MobileInputWrapper
+                type="number"
+                value={environmentalSettings.ambientTemperature.toString()}
+                onChange={(value) => {
+                  console.log('Temperature updated:', value);
+                  onUpdateEnvironmentalSettings({
+                    ...environmentalSettings,
+                    ambientTemperature: Number(value)
+                  });
+                }}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <span className="text-sm font-semibold text-elec-light">Default Environmental Conditions</span>
+              <MobileSelectWrapper
+                value={environmentalSettings.environmentalConditions}
+                onValueChange={(value) => {
+                  console.log('Environmental conditions updated:', value);
+                  onUpdateEnvironmentalSettings({
+                    ...environmentalSettings,
+                    environmentalConditions: value
+                  });
+                }}
+                options={environmentalConditionsOptions}
+                placeholder="Select environmental conditions..."
+              />
+            </div>
+
+            <div className="space-y-2">
+              <span className="text-sm font-semibold text-elec-light">Earthing System</span>
+              <MobileSelectWrapper
+                value={environmentalSettings.earthingSystem}
+                onValueChange={(value) => {
+                  console.log('Earthing system updated:', value);
+                  // Auto-update Ze values based on earthing system
+                  let newZe = environmentalSettings.ze;
+                  switch (value) {
+                    case "TT":
+                      newZe = 0.80;
+                      break;
+                    case "TN-S":
+                      newZe = 0.35;
+                      break;
+                    case "TN-C-S":
+                      newZe = 0.35;
+                      break;
+                    case "IT":
+                      newZe = 1.0;
+                      break;
+                    default:
+                      newZe = 0.35;
+                  }
+                  
+                  onUpdateEnvironmentalSettings({
+                    ...environmentalSettings,
+                    earthingSystem: value,
+                    ze: newZe
+                  });
+                }}
+                options={earthingSystemOptions}
+                placeholder="Select earthing system..."
+              />
+            </div>
+
+            <div className="space-y-3">
+              <span className="text-sm font-semibold text-elec-light">Ze Value (Ω)</span>
+              
+              {/* Prominent Ze Value Display */}
+              <div className="bg-elec-dark/30 border border-elec-yellow/30 rounded-lg p-4 text-center">
+                <div className="text-xs text-muted-foreground mb-1">External earth fault loop impedance</div>
+                <div className="text-2xl font-bold text-elec-yellow mb-2">{environmentalSettings.ze}</div>
                 <MobileInputWrapper
                   type="number"
-                  value={environmentalSettings.ambientTemperature.toString()}
+                  value={environmentalSettings.ze.toString()}
                   onChange={(value) => {
-                    console.log('Temperature updated:', value);
+                    console.log('Ze value updated:', value);
                     onUpdateEnvironmentalSettings({
                       ...environmentalSettings,
-                      ambientTemperature: Number(value)
+                      ze: Number(value)
                     });
                   }}
+                  step="0.01"
                 />
-              </div>
-
-              <div className="space-y-2">
-                <span className="text-sm font-semibold text-elec-light">Default Environmental Conditions</span>
-                <MobileSelectWrapper
-                  value={environmentalSettings.environmentalConditions}
-                  onValueChange={(value) => {
-                    console.log('Environmental conditions updated:', value);
-                    onUpdateEnvironmentalSettings({
-                      ...environmentalSettings,
-                      environmentalConditions: value
-                    });
-                  }}
-                  options={environmentalConditionsOptions}
-                  placeholder="Select environmental conditions..."
-                />
-              </div>
-
-              <div className="space-y-2">
-                <span className="text-sm font-semibold text-elec-light">Earthing System</span>
-                <MobileSelectWrapper
-                  value={environmentalSettings.earthingSystem}
-                  onValueChange={(value) => {
-                    console.log('Earthing system updated:', value);
-                    // Auto-update Ze values based on earthing system
-                    let newZe = environmentalSettings.ze;
-                    switch (value) {
-                      case "TT":
-                        newZe = 0.80;
-                        break;
-                      case "TN-S":
-                        newZe = 0.35;
-                        break;
-                      case "TN-C-S":
-                        newZe = 0.35;
-                        break;
-                      case "IT":
-                        newZe = 1.0;
-                        break;
-                      default:
-                        newZe = 0.35;
-                    }
-                    
-                    onUpdateEnvironmentalSettings({
-                      ...environmentalSettings,
-                      earthingSystem: value,
-                      ze: newZe
-                    });
-                  }}
-                  options={earthingSystemOptions}
-                  placeholder="Select earthing system..."
-                />
-              </div>
-
-              <div className="space-y-3">
-                <span className="text-sm font-semibold text-elec-light">Ze Value (Ω)</span>
-                
-                {/* Prominent Ze Value Display */}
-                <div className="bg-elec-dark/30 border border-elec-yellow/30 rounded-lg p-4 text-center">
-                  <div className="text-xs text-muted-foreground mb-1">External earth fault loop impedance</div>
-                  <div className="text-2xl font-bold text-elec-yellow mb-2">{environmentalSettings.ze}</div>
-                  <MobileInputWrapper
-                    type="number"
-                    value={environmentalSettings.ze.toString()}
-                    onChange={(value) => {
-                      console.log('Ze value updated:', value);
-                      onUpdateEnvironmentalSettings({
-                        ...environmentalSettings,
-                        ze: Number(value)
-                      });
-                    }}
-                    step="0.01"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="text-sm font-semibold text-elec-light flex items-center gap-2">
-                  <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
-                  Special Requirements
-                </div>
-                <div className="space-y-3">
-                  {specialRequirements.map((requirement) => (
-                    <div key={requirement} className="flex items-start space-x-3 p-4 rounded-lg bg-elec-gray border border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
-                      <div className="flex items-center h-5">
-                        <input
-                          type="checkbox"
-                          id={requirement}
-                          checked={environmentalSettings.specialRequirements.includes(requirement)}
-                          onChange={(e) => {
-                            const current = environmentalSettings.specialRequirements;
-                            if (e.target.checked) {
-                              onUpdateEnvironmentalSettings({
-                                ...environmentalSettings,
-                                specialRequirements: [...current, requirement]
-                              });
-                            } else {
-                              onUpdateEnvironmentalSettings({
-                                ...environmentalSettings,
-                                specialRequirements: current.filter(req => req !== requirement)
-                              });
-                            }
-                          }}
-                          className="w-4 h-4 text-elec-yellow bg-elec-gray border border-elec-yellow/50 rounded focus:ring-2 focus:ring-elec-yellow focus:ring-offset-0 checked:bg-elec-yellow checked:border-elec-yellow"
-                        />
-                      </div>
-                      <label htmlFor={requirement} className="text-sm text-elec-light cursor-pointer flex-1 leading-relaxed">
-                        {requirement}
-                      </label>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
-          </CardContent>
-        </Card>
+
+            <div className="space-y-4">
+              <div className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                Special Requirements
+              </div>
+              <div className="space-y-3">
+                {specialRequirements.map((requirement) => (
+                  <div key={requirement} className="flex items-start space-x-3 p-4 rounded-lg bg-elec-gray border border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
+                    <div className="flex items-center h-5">
+                      <input
+                        type="checkbox"
+                        id={requirement}
+                        checked={environmentalSettings.specialRequirements.includes(requirement)}
+                        onChange={(e) => {
+                          const current = environmentalSettings.specialRequirements;
+                          if (e.target.checked) {
+                            onUpdateEnvironmentalSettings({
+                              ...environmentalSettings,
+                              specialRequirements: [...current, requirement]
+                            });
+                          } else {
+                            onUpdateEnvironmentalSettings({
+                              ...environmentalSettings,
+                              specialRequirements: current.filter(req => req !== requirement)
+                            });
+                          }
+                        }}
+                        className="w-4 h-4 text-elec-yellow bg-elec-gray border border-elec-yellow/50 rounded focus:ring-2 focus:ring-elec-yellow focus:ring-offset-0 checked:bg-elec-yellow checked:border-elec-yellow"
+                      />
+                    </div>
+                    <label htmlFor={requirement} className="text-sm text-elec-light cursor-pointer flex-1 leading-relaxed">
+                      {requirement}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Installation Zones Content */}
@@ -316,25 +313,24 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
 
           <div className="space-y-4">
             {(environmentalSettings.installationZones || []).map((zone) => (
-              <Card key={zone.id} className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
-                <CardHeader className="pb-3 px-4 pt-4">
-                  <div className="flex flex-col space-y-3">
-                    <CardTitle className="flex items-center justify-center gap-2 text-elec-light text-base font-medium">
-                      <MapPin className="h-4 w-4 text-elec-yellow" />
-                      Zone Configuration
-                    </CardTitle>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => deleteZone(zone.id)}
-                      className="border-destructive/30 text-destructive hover:bg-destructive/10 w-full py-2 h-9 text-sm"
-                    >
-                      <Trash2 className="h-4 w-4 mr-2" />
-                      Delete Zone
-                    </Button>
+              <div key={zone.id} className="border border-elec-yellow/20 rounded-lg p-4 space-y-4 bg-elec-card/30">
+                <div className="flex flex-col space-y-3">
+                  <div className="flex items-center justify-center gap-2 text-elec-light text-base font-medium">
+                    <MapPin className="h-4 w-4 text-elec-yellow" />
+                    Zone Configuration
                   </div>
-                </CardHeader>
-                <CardContent className="space-y-4 pt-0 px-4 pb-4">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => deleteZone(zone.id)}
+                    className="border-destructive/30 text-destructive hover:bg-destructive/10 w-full py-2 h-9 text-sm"
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Delete Zone
+                  </Button>
+                </div>
+                
+                <div className="space-y-4">
                   <div className="space-y-2">
                     <span className="text-sm font-medium text-elec-light">Zone Name</span>
                     <MobileInputWrapper
@@ -393,27 +389,25 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                       </div>
                     </div>
                   )}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             ))}
 
             {(environmentalSettings.installationZones || []).length === 0 && (
-              <Card className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
-                <CardContent className="text-center py-8">
-                  <MapPin className="h-12 w-12 text-elec-light/50 mx-auto mb-4" />
-                  <h4 className="text-lg font-medium mb-2 text-elec-light">No Installation Zones</h4>
-                  <p className="text-elec-light/70 mb-6 px-4">
-                    Create zones to group circuits with similar environmental conditions.
-                  </p>
-                  <Button 
-                    onClick={addInstallationZone} 
-                    className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold w-full max-w-xs py-3"
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Create First Zone
-                  </Button>
-                </CardContent>
-              </Card>
+              <div className="border border-elec-yellow/20 rounded-lg p-6 space-y-4 bg-elec-card/30 text-center">
+                <MapPin className="h-12 w-12 text-elec-light/50 mx-auto mb-4" />
+                <h4 className="text-lg font-medium mb-2 text-elec-light">No Installation Zones</h4>
+                <p className="text-elec-light/70 mb-6 px-4">
+                  Create zones to group circuits with similar environmental conditions.
+                </p>
+                <Button 
+                  onClick={addInstallationZone} 
+                  className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold w-full max-w-xs py-3"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Create First Zone
+                </Button>
+              </div>
             )}
           </div>
         </div>
@@ -425,15 +419,13 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
           <h3 className="text-lg font-semibold text-elec-light">Circuit Zone Assignments</h3>
 
           {circuits.length === 0 ? (
-            <Card className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
-              <CardContent className="text-center py-8">
-                <Shield className="h-12 w-12 text-elec-light/50 mx-auto mb-4" />
-                <h4 className="text-lg font-medium mb-2 text-elec-light">No Circuits Available</h4>
-                <p className="text-elec-light/70">
-                  Add circuits in the Circuit Design step to assign them to environmental zones.
-                </p>
-              </CardContent>
-            </Card>
+            <div className="border border-elec-yellow/20 rounded-lg p-6 space-y-4 bg-elec-card/30 text-center">
+              <Shield className="h-12 w-12 text-elec-light/50 mx-auto mb-4" />
+              <h4 className="text-lg font-medium mb-2 text-elec-light">No Circuits Available</h4>
+              <p className="text-elec-light/70">
+                Add circuits in the Circuit Design step to assign them to environmental zones.
+              </p>
+            </div>
           ) : (
             <div className="space-y-3">
               {circuits.map((circuit) => {
@@ -446,35 +438,33 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                 ];
 
                 return (
-                  <Card key={circuit.id} className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
-                    <CardContent className="p-4 space-y-4">
-                      <div className="text-center">
-                        <h4 className="font-medium text-elec-light mb-3">{circuit.name}</h4>
-                        <div className="grid grid-cols-3 gap-2 text-sm">
-                          <div className="bg-elec-dark/50 rounded p-2 text-center">
-                            <div className="text-xs text-muted-foreground mb-1">Load</div>
-                            <div className="font-medium text-elec-yellow">{circuit.totalLoad}W</div>
-                          </div>
-                          <div className="bg-elec-dark/50 rounded p-2 text-center">
-                            <div className="text-xs text-muted-foreground mb-1">Voltage</div>
-                            <div className="font-medium text-blue-400">{circuit.voltage}V</div>
-                          </div>
-                          <div className="bg-elec-dark/50 rounded p-2 text-center">
-                            <div className="text-xs text-muted-foreground mb-1">Length</div>
-                            <div className="font-medium text-green-400">{circuit.cableLength}m</div>
-                          </div>
+                  <div key={circuit.id} className="border border-elec-yellow/20 rounded-lg p-4 space-y-4 bg-elec-card/30">
+                    <div className="text-center">
+                      <h4 className="font-medium text-elec-light mb-3">{circuit.name}</h4>
+                      <div className="flex flex-col sm:grid sm:grid-cols-3 gap-2 text-sm">
+                        <div className="bg-elec-dark/50 rounded p-2 text-center">
+                          <div className="text-xs text-muted-foreground mb-1">Load</div>
+                          <div className="font-medium text-elec-yellow">{circuit.totalLoad}W</div>
+                        </div>
+                        <div className="bg-elec-dark/50 rounded p-2 text-center">
+                          <div className="text-xs text-muted-foreground mb-1">Voltage</div>
+                          <div className="font-medium text-blue-400">{circuit.voltage}V</div>
+                        </div>
+                        <div className="bg-elec-dark/50 rounded p-2 text-center">
+                          <div className="text-xs text-muted-foreground mb-1">Length</div>
+                          <div className="font-medium text-green-400">{circuit.cableLength}m</div>
                         </div>
                       </div>
-                      
-                      <MobileSelectWrapper
-                        label="Zone Assignment"
-                        value={circuit.installationZone || "no-zone"}
-                        onValueChange={(value) => assignCircuitToZone(circuit.id, value === "no-zone" ? null : value)}
-                        options={zoneOptions}
-                        placeholder="Assign to zone..."
-                      />
-                    </CardContent>
-                  </Card>
+                    </div>
+                    
+                    <MobileSelectWrapper
+                      label="Zone Assignment"
+                      value={circuit.installationZone || "no-zone"}
+                      onValueChange={(value) => assignCircuitToZone(circuit.id, value === "no-zone" ? null : value)}
+                      options={zoneOptions}
+                      placeholder="Assign to zone..."
+                    />
+                  </div>
                 );
               })}
             </div>
