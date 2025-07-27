@@ -64,8 +64,8 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
             <p className="font-bold text-elec-yellow">{circuit.cableLength}m</p>
           </div>
           <div className="text-center p-3 border border-elec-yellow/20">
-            <p className="text-xs text-muted-foreground mb-1">Current</p>
-            <p className="font-bold text-elec-yellow">{analysis.designCurrent.toFixed(1)}A</p>
+            <p className="text-xs text-muted-foreground mb-1">Type</p>
+            <p className="font-bold text-elec-yellow">{circuit.loadType}</p>
           </div>
         </div>
 
