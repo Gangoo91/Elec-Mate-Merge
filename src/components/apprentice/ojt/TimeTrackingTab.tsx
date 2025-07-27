@@ -201,16 +201,16 @@ const TimeTrackingTab = () => {
       </div>
 
       {/* Recent Time Entries */}
-      <Card>
+      <Card className="bg-elec-gray border-elec-yellow/20">
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <CardTitle className="flex items-center gap-2">
               <Calendar className="h-5 w-5" />
               Recent Training Sessions
             </CardTitle>
             <Button 
               onClick={() => setIsDialogOpen(true)}
-              className="bg-elec-yellow text-black hover:bg-elec-yellow/80"
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/80 w-full md:w-auto"
             >
               <Plus className="h-4 w-4 mr-2" />
               Add Time Entry
