@@ -203,6 +203,32 @@ export const useQualifications = () => {
     }
   };
 
+  const clearQualificationSelection = async () => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      // Deactivate all current selections
+      const { error } = await supabase
+        .from('user_qualification_selections')
+        .update({ is_active: false })
+        .eq('user_id', user.id)
+        .eq('is_active', true);
+
+      if (error) throw error;
+
+      // Clear local state
+      setUserSelection(null);
+      setCategories([]);
+      setCompliance([]);
+
+      return true;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to clear qualification selection');
+      return false;
+    }
+  };
+
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
@@ -233,6 +259,7 @@ export const useQualifications = () => {
     loading,
     error,
     selectQualification,
+    clearQualificationSelection,
     updateCompliance,
     refreshData: loadUserSelection
   };

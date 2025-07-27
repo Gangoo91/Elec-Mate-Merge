@@ -12,6 +12,7 @@ import QualificationCompliance from '@/components/apprentice/qualification/Quali
 import PortfolioEntryForm from '@/components/apprentice/portfolio/PortfolioEntryForm';
 import PortfolioEntriesList from '@/components/apprentice/portfolio/PortfolioEntriesList';
 import { useUltraFastPortfolio } from '@/hooks/portfolio/useUltraFastPortfolio';
+import { useQualifications } from '@/hooks/qualification/useQualifications';
 import { UltraFastLoadingState } from '@/components/portfolio/UltraFastLoadingState';
 
 // Memoized components for performance
@@ -87,6 +88,7 @@ const MemoizedCategoryCard = memo(({
 });
 
 const UltraFastPortfolioManager = () => {
+  const { clearQualificationSelection } = useQualifications();
   const { 
     entries, 
     categories, 
@@ -101,9 +103,15 @@ const UltraFastPortfolioManager = () => {
   } = useUltraFastPortfolio();
   
   const [showAddForm, setShowAddForm] = useState(false);
-  const [showChangeCourseDialog, setShowChangeCourseDialog] = useState(false);
-  const [showChangeCourseSelector, setShowChangeCourseSelector] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
+
+  const handleChangeCourse = async () => {
+    const success = await clearQualificationSelection();
+    if (success) {
+      // Refresh the portfolio data to reflect the cleared state
+      refresh();
+    }
+  };
 
   // Show ultra-fast loading only if we have no data and are loading
   if (isLoading) {
@@ -169,13 +177,13 @@ const UltraFastPortfolioManager = () => {
           {isAddingEntry ? 'Adding...' : 'Add Portfolio Entry'}
         </Button>
         <Button 
-          onClick={() => setShowChangeCourseDialog(true)}
+          onClick={handleChangeCourse}
           variant="outline"
           className="flex items-center gap-2 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
           size="lg"
         >
           <RefreshCw className="h-4 w-4" />
-          Change Course
+          Clear Course Selection
         </Button>
         <Button 
           onClick={refresh}
@@ -281,69 +289,6 @@ const UltraFastPortfolioManager = () => {
                 setShowAddForm(false);
               }}
               onCancel={() => setShowAddForm(false)}
-            />
-          </DialogContent>
-        </Dialog>
-      )}
-
-      {/* Change Course Warning Dialog */}
-      {showChangeCourseDialog && (
-        <Dialog open={showChangeCourseDialog} onOpenChange={setShowChangeCourseDialog}>
-          <DialogContent className="max-w-lg bg-elec-gray border-elec-yellow/20">
-            <DialogHeader>
-              <div className="flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-yellow-500" />
-                <DialogTitle>Change Course Warning</DialogTitle>
-              </div>
-              <DialogDescription className="text-muted-foreground">
-                Changing your course will have the following effects:
-              </DialogDescription>
-            </DialogHeader>
-            
-            <div className="space-y-4">
-              <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
-                <h4 className="font-semibold text-yellow-500 mb-2">Important Notice:</h4>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• Your compliance tracking will be reset for the new qualification</li>
-                  <li>• Portfolio entries will remain but may need reassignment to new categories</li>
-                  <li>• Progress analytics will be recalculated</li>
-                  <li>• You'll need to select a new qualification from the available options</li>
-                </ul>
-              </div>
-            </div>
-
-            <DialogFooter className="flex gap-3">
-              <Button 
-                variant="outline" 
-                onClick={() => setShowChangeCourseDialog(false)}
-                className="border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
-              >
-                Cancel
-              </Button>
-              <Button 
-                onClick={() => {
-                  setShowChangeCourseDialog(false);
-                  setShowChangeCourseSelector(true);
-                }}
-                className="bg-yellow-500 text-yellow-950 hover:bg-yellow-600"
-              >
-                Continue to Change Course
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-      )}
-
-      {/* Change Course Selector Dialog */}
-      {showChangeCourseSelector && (
-        <Dialog open={showChangeCourseSelector} onOpenChange={setShowChangeCourseSelector}>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-elec-gray border-elec-yellow/20">
-            <DialogHeader>
-              <DialogTitle>Change Your Course</DialogTitle>
-            </DialogHeader>
-            <QualificationChangeSelector
-              onComplete={() => setShowChangeCourseSelector(false)}
-              onCancel={() => setShowChangeCourseSelector(false)}
             />
           </DialogContent>
         </Dialog>
