@@ -713,6 +713,19 @@ export const CIRCUIT_TEMPLATES: Record<string, CircuitTemplate> = {
     typicalApplications: ["Jaw crushers", "Ball mills", "Processing equipment"]
   },
 
+  "mining-emergency": {
+    name: "Mining Emergency Systems",
+    totalLoad: 2500,
+    voltage: 230,
+    phases: "single",
+    cableLength: 300,
+    recommendedInstallationMethod: "conduit",
+    recommendedCableType: "mineral",
+    recommendedProtectiveDevice: "mcb",
+    description: "Emergency lighting and safety systems for mining",
+    typicalApplications: ["Emergency lighting", "Communication systems", "Safety alarms", "Escape route lighting"]
+  },
+
   // Hazardous Area circuits
   "zone1-lighting": {
     name: "Zone 1 Lighting",
@@ -1030,6 +1043,62 @@ export const CIRCUIT_TEMPLATES: Record<string, CircuitTemplate> = {
     typicalApplications: ["Exit signs", "Escape route lighting", "Anti-panic lighting"]
   },
 
+  // Enhanced Industrial Circuits
+  "compressed-air": {
+    name: "Compressed Air System",
+    totalLoad: 30000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 75,
+    powerFactor: 0.85,
+    recommendedInstallationMethod: "tray",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "mcb",
+    description: "Industrial compressed air generation",
+    typicalApplications: ["Air compressors", "Pneumatic tools", "Process air supply", "Instrument air"]
+  },
+
+  "waste-treatment": {
+    name: "Waste Treatment System",
+    totalLoad: 25000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 100,
+    powerFactor: 0.8,
+    recommendedInstallationMethod: "tray",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "mcb",
+    description: "Industrial waste treatment equipment",
+    typicalApplications: ["Waste pumps", "Treatment plants", "Filtration systems", "Sludge handling"]
+  },
+
+  "material-handling": {
+    name: "Material Handling System",
+    totalLoad: 20000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 120,
+    powerFactor: 0.85,
+    recommendedInstallationMethod: "tray",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "mcb",
+    description: "Automated material handling equipment",
+    typicalApplications: ["Robotic arms", "Automated conveyors", "Sorting systems", "Palletizers"]
+  },
+
+  "control-room-power": {
+    name: "Control Room Power",
+    totalLoad: 8000,
+    voltage: 230,
+    phases: "single",
+    cableLength: 50,
+    recommendedInstallationMethod: "tray",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "rcbo",
+    description: "Critical control room power supply",
+    typicalApplications: ["Control panels", "SCADA systems", "HMI displays", "Communication equipment"]
+  },
+
   "blast-furnace": {
     name: "Blast Furnace System",
     totalLoad: 2000000,
@@ -1229,6 +1298,74 @@ export const CIRCUIT_TEMPLATES: Record<string, CircuitTemplate> = {
     recommendedProtectiveDevice: "mcb",
     description: "Specialized surgical lighting",
     typicalApplications: ["Operating lights", "Examination lights", "Emergency lighting", "UV sterilization"]
+  },
+
+  // Enhanced Healthcare Circuits
+  "defibrillator-power": {
+    name: "Defibrillator Power Supply",
+    totalLoad: 3000,
+    voltage: 230,
+    phases: "single",
+    cableLength: 10,
+    recommendedInstallationMethod: "conduit",
+    recommendedCableType: "mineral",
+    recommendedProtectiveDevice: "rcbo",
+    description: "Critical defibrillator power supply",
+    typicalApplications: ["Defibrillators", "Cardiac monitors", "Emergency response equipment"]
+  },
+
+  "oxygen-therapy": {
+    name: "Oxygen Therapy Equipment",
+    totalLoad: 1500,
+    voltage: 230,
+    phases: "single",
+    cableLength: 15,
+    recommendedInstallationMethod: "conduit",
+    recommendedCableType: "mineral",
+    recommendedProtectiveDevice: "rcbo",
+    description: "Medical oxygen delivery systems",
+    typicalApplications: ["Oxygen concentrators", "Ventilators", "Respiratory equipment", "Gas monitoring"]
+  },
+
+  "surgical-equipment": {
+    name: "Surgical Equipment Power",
+    totalLoad: 5000,
+    voltage: 230,
+    phases: "single",
+    cableLength: 20,
+    recommendedInstallationMethod: "conduit",
+    recommendedCableType: "mineral",
+    recommendedProtectiveDevice: "rcbo",
+    description: "Critical surgical equipment power",
+    typicalApplications: ["Surgical robots", "Electrosurgery units", "Anaesthesia machines", "Surgical pumps"]
+  },
+
+  // Enhanced Agriculture Circuits
+  "agriculture-emergency": {
+    name: "Agricultural Emergency Lighting",
+    totalLoad: 1200,
+    voltage: 230,
+    phases: "single",
+    cableLength: 200,
+    recommendedInstallationMethod: "swa-direct",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "mcb",
+    description: "Emergency lighting for agricultural facilities",
+    typicalApplications: ["Barn emergency lighting", "Yard lighting", "Livestock area safety", "Equipment shed lighting"]
+  },
+
+  // Enhanced Marine/Offshore Circuits
+  "marine-emergency": {
+    name: "Marine Emergency Lighting",
+    totalLoad: 1500,
+    voltage: 230,
+    phases: "single",
+    cableLength: 150,
+    recommendedInstallationMethod: "marine-conduit",
+    recommendedCableType: "marine-cable",
+    recommendedProtectiveDevice: "marine-mcb",
+    description: "Emergency lighting for marine vessels and offshore platforms",
+    typicalApplications: ["Lifeboat stations", "Muster points", "Escape routes", "Navigation safety"]
   }
 };
 
@@ -1272,18 +1409,20 @@ export function getAvailableTemplatesForInstallationType(installationType: strin
       return ["lighting", "power", "power-radial", "cooker", "shower", "heating", "ev-charging", "smart-home", "renewable-solar", "solar-inverter", "battery-storage", "heat-pump", "smart-lighting", "home-automation"];
     case "commercial":
       return [
-        "commercial-lighting", "commercial-power", "hvac", "it-equipment", "emergency", 
-        "power", "smart-lighting", "process-control", "emergency-lighting",
+        "commercial-lighting", "commercial-power", "hvac", "it-equipment", "emergency", "emergency-lighting",
+        "power", "lighting", "smart-lighting", "process-control",
         "sound-system", "scoreboard", "security-systems", "access-control"
       ];
     case "industrial":
       return [
         // Basic Industrial
-        "motor-small", "motor-large", "welding", "crane", "hvac", "emergency",
+        "motor-small", "motor-large", "welding", "crane", "hvac", "emergency", "emergency-lighting",
         // Power Supply Options
-        "415v-supply", "110v-supply", "emergency-lighting", 
+        "415v-supply", "110v-supply", "lighting", "power",
         // Advanced Industrial
         "variable-speed-drive", "soft-starter", "process-control",
+        // Enhanced Industrial Systems
+        "compressed-air", "waste-treatment", "material-handling", "control-room-power",
         // Furnace Types
         "furnace", "induction-furnace", "arc-furnace", "blast-furnace", "heat-treatment-furnace",
         // Specialized Equipment
@@ -1295,46 +1434,57 @@ export function getAvailableTemplatesForInstallationType(installationType: strin
       return [
         "ups-system", "server-rack", "cooling-system", "backup-generator", 
         "modular-ups", "pdu-intelligent", "ups-battery-string",
-        "precision-cooling", "fire-suppression", "access-control"
+        "precision-cooling", "fire-suppression", "access-control", "emergency-lighting"
       ];
     case "education":
       return [
         "classroom-power", "lab-equipment", "sports-lighting", "commercial-lighting",
-        "emergency", "it-equipment", "emergency-lighting", "fume-cupboard",
-        "analytical-equipment", "interactive-boards", "av-systems"
+        "emergency", "emergency-lighting", "it-equipment", "fume-cupboard",
+        "analytical-equipment", "interactive-boards", "av-systems", "lighting", "power"
       ];
     case "hospitality":
       return [
         "kitchen-equipment", "guest-room", "laundry-equipment", "commercial-lighting",
         "hvac", "emergency", "emergency-lighting", "elevator-systems", 
-        "pool-equipment", "spa-systems"
+        "pool-equipment", "spa-systems", "lighting", "power"
       ];
     case "retail":
       return [
         "retail-lighting", "pos-systems", "cold-storage", "commercial-power",
         "hvac", "emergency", "emergency-lighting", "security-systems",
-        "digital-signage", "sound-system"
+        "digital-signage", "sound-system", "lighting", "power"
       ];
     case "agriculture":
-      return ["irrigation-pump", "grain-dryer", "livestock-equipment", "motor-small", "variable-speed-drive", "soft-starter"];
+      return [
+        "irrigation-pump", "grain-dryer", "livestock-equipment", "motor-small", 
+        "variable-speed-drive", "soft-starter", "emergency-lighting", "agriculture-emergency",
+        "lighting", "power", "process-control"
+      ];
     case "transportation":
-      return ["charging-station", "platform-lighting", "signal-systems", "emergency", "smart-lighting"];
+      return ["charging-station", "platform-lighting", "signal-systems", "emergency", "emergency-lighting", "smart-lighting"];
     case "sports-entertainment":
-      return ["floodlighting", "sound-system", "scoreboard", "commercial-power", "emergency", "smart-lighting"];
+      return ["floodlighting", "sound-system", "scoreboard", "commercial-power", "emergency", "emergency-lighting", "smart-lighting"];
     case "laboratory":
-      return ["fume-cupboard", "analytical-equipment", "clean-room", "emergency", "lighting", "process-control"];
+      return ["fume-cupboard", "analytical-equipment", "clean-room", "emergency", "emergency-lighting", "lighting", "power", "process-control"];
     case "marine-offshore":
-      return ["marine-power", "navigation-equipment", "winch-system", "emergency", "process-control"];
+      return [
+        "marine-power", "navigation-equipment", "winch-system", "emergency", "emergency-lighting", 
+        "marine-emergency", "lighting", "power", "process-control"
+      ];
     case "mining":
-      return ["conveyor-belt", "ventilation-fan", "crushing-equipment", "motor-large", "emergency", "variable-speed-drive"];
+      return [
+        "conveyor-belt", "ventilation-fan", "crushing-equipment", "motor-large", "emergency", 
+        "emergency-lighting", "mining-emergency", "variable-speed-drive", "lighting", "power"
+      ];
     case "healthcare":
       return [
         "medical", "operating-theatre", "mri-equipment", "isolation-transformer",
-        "emergency", "it-equipment", "emergency-lighting", "nurse-call-system",
-        "patient-monitoring", "surgical-lighting"
+        "emergency", "emergency-lighting", "it-equipment", "nurse-call-system",
+        "patient-monitoring", "surgical-lighting", "defibrillator-power", 
+        "oxygen-therapy", "surgical-equipment", "lighting", "power"
       ];
     case "hazardous-areas":
-      return ["zone1-lighting", "zone1-motor", "intrinsically-safe", "emergency", "process-control"];
+      return ["zone1-lighting", "zone1-motor", "intrinsically-safe", "emergency", "emergency-lighting", "process-control"];
     default:
       return ["lighting", "power"];
   }
