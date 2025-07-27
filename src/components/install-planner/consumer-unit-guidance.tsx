@@ -17,70 +17,46 @@ export const ConsumerUnitGuidance: React.FC<ConsumerUnitGuidanceProps> = ({
   const recommendations = getRecommendedConsumerUnit(totalCircuits, recommendedMainSwitch);
   
   const renderConsumerUnit = (unit: ConsumerUnitData, index: number) => (
-    <div key={index} className="space-y-3 py-3 border-b border-elec-yellow/10 last:border-b-0">
-      {/* Header */}
-      <div className="flex items-start justify-between">
-        <div>
-          <h4 className="font-semibold text-elec-yellow">{unit.brand} {unit.model}</h4>
-          <p className="text-sm text-muted-foreground">{unit.ways}-way • {unit.mainSwitchRating}A main switch</p>
+    <div key={index} className="bg-card/50 border border-elec-yellow/20 rounded-lg p-4 space-y-3">
+      {/* Header with availability badge */}
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex-1 min-w-0">
+          <h4 className="font-semibold text-elec-yellow text-sm truncate">{unit.brand} {unit.model}</h4>
+          <p className="text-xs text-muted-foreground">{unit.ways}-way • {unit.mainSwitchRating}A</p>
         </div>
-        <Badge variant="outline" className={`${
-          unit.availability === "excellent" ? "border-green-500/50 text-green-400" :
-          unit.availability === "good" ? "border-blue-500/50 text-blue-400" :
-          "border-amber-500/50 text-amber-400"
-        }`}>
+        <Badge variant={
+          unit.availability === "excellent" ? "success" : 
+          unit.availability === "good" ? "outline" : 
+          "yellow"
+        } className="text-xs shrink-0">
           {unit.availability}
         </Badge>
       </div>
 
-      {/* Price & Features */}
-      <div className="flex items-center gap-4 text-sm">
+      {/* Price and key features in compact row */}
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-1">
-          <DollarSign className="h-4 w-4 text-elec-yellow" />
-          <span className="text-elec-yellow">£{unit.priceRange.min}-{unit.priceRange.max}</span>
+          <DollarSign className="h-3 w-3 text-elec-yellow" />
+          <span className="text-sm font-medium text-elec-yellow">£{unit.priceRange.min}-{unit.priceRange.max}</span>
         </div>
-        <div className="flex items-center gap-1">
-          <Package className="h-4 w-4 text-elec-yellow" />
-          <span className="text-elec-yellow">{unit.features.length} features</span>
-        </div>
-      </div>
-
-      {/* Features */}
-      <div>
-        <p className="text-sm font-medium text-elec-yellow mb-2">Key Features:</p>
-        <div className="flex flex-wrap gap-1">
-          {unit.features.map((feature, idx) => (
-            <Badge key={idx} variant="secondary" className="text-xs">
-              {feature}
-            </Badge>
-          ))}
+        <div className="text-xs text-muted-foreground">
+          {unit.features.slice(0, 2).join(" • ")}
+          {unit.features.length > 2 && ` +${unit.features.length - 2} more`}
         </div>
       </div>
 
-      {/* Required Components */}
-      <div>
-        <p className="text-sm font-medium text-elec-yellow mb-2">Required Components:</p>
-        <div className="space-y-1">
-          {unit.requiredComponents.map((component, idx) => (
-            <div key={idx} className="flex items-center gap-2">
-              <CheckCircle className="h-3 w-3 text-green-500 flex-shrink-0" />
-              <span className="text-sm text-muted-foreground">{component}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Suppliers */}
-      <div>
-        <p className="text-sm font-medium text-elec-yellow mb-2">Available from:</p>
-        <div className="flex flex-wrap gap-2">
-          {unit.suppliers.map((supplier, idx) => (
-            <Badge key={idx} variant="outline" className="text-xs border-elec-yellow/30 text-muted-foreground">
-              <MapPin className="h-3 w-3 mr-1" />
-              {supplier}
-            </Badge>
-          ))}
-        </div>
+      {/* Suppliers as compact badges */}
+      <div className="flex flex-wrap gap-1">
+        {unit.suppliers.slice(0, 3).map((supplier, idx) => (
+          <Badge key={idx} variant="outline" className="text-xs px-2 py-0.5 border-elec-yellow/30">
+            {supplier}
+          </Badge>
+        ))}
+        {unit.suppliers.length > 3 && (
+          <Badge variant="outline" className="text-xs px-2 py-0.5 border-elec-yellow/30">
+            +{unit.suppliers.length - 3} more
+          </Badge>
+        )}
       </div>
     </div>
   );
