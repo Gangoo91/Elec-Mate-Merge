@@ -16,7 +16,7 @@ const ApprenticeHub = () => {
     },
     {
       id: 2,
-      title: "Off the Job Time Keeping",
+      title: "Portfolio & OJT Management",
       icon: Clock,
       link: "/apprentice/ojt"
     },
