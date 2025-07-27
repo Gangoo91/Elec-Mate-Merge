@@ -122,3 +122,18 @@
   }
 }
 
+/* Completely hide scrollbars for all dropdowns */
+@layer components {
+  .scrollbar-none {
+    /* Firefox */
+    scrollbar-width: none;
+    /* IE and Edge */
+    -ms-overflow-style: none;
+  }
+  
+  .scrollbar-none::-webkit-scrollbar {
+    /* Webkit browsers (Chrome, Safari, Edge) */
+    display: none;
+  }
+}
+

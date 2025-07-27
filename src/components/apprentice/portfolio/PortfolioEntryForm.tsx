@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Clock, Star, X } from "lucide-react";
+import { Clock } from "lucide-react";
 import { PortfolioEntry, PortfolioCategory } from "@/types/portfolio";
-import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
-import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
-import { MultiSelectDropdown } from "@/components/ui/multi-select-dropdown";
+import { 
+  ScrollbarFreeSelect,
+  ScrollbarFreeSelectContent,
+  ScrollbarFreeSelectItem,
+  ScrollbarFreeSelectTrigger,
+  ScrollbarFreeSelectValue,
+} from "@/components/ui/scrollbar-free-select";
+import { ScrollbarFreeMultiSelect } from "@/components/ui/scrollbar-free-multi-select";
 
 export interface PortfolioEntryFormProps {
   categories: PortfolioCategory[];
@@ -143,32 +147,53 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
 
   return (
     <Dialog open={true} onOpenChange={onCancel}>
-      <DialogContent className="max-w-md max-h-[95vh] overflow-y-auto bg-elec-card border-elec-gray/40">
-        <DialogHeader className="pb-4">
+      <DialogContent className="max-w-md max-h-[95vh] overflow-y-auto bg-elec-gray border-elec-gray/40">
+        <DialogHeader className="pb-4 bg-elec-gray">
           <DialogTitle className="text-elec-light text-xl font-semibold">
             {initialData ? "Edit Portfolio Entry" : "Create New Portfolio Entry"}
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 bg-elec-gray">
           {/* Title */}
-          <MobileInputWrapper
-            label="Entry Title"
-            placeholder="e.g., Three-phase motor installation"
-            value={formData.title}
-            onChange={(value) => setFormData(prev => ({ ...prev, title: value }))}
-            hint="Give your portfolio entry a clear, descriptive title"
-          />
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+              Entry Title
+            </label>
+            <input
+              type="text"
+              value={formData.title}
+              onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+              placeholder="e.g., Three-phase motor installation"
+              className="w-full h-12 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
+              required
+            />
+            <p className="text-xs text-elec-light/70 flex items-center gap-1">
+              <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
+              Give your portfolio entry a clear, descriptive title
+            </p>
+          </div>
 
           {/* Category */}
-          <MobileSelectWrapper
-            label="Category"
-            placeholder="Select category"
+          <ScrollbarFreeSelect
             value={formData.categoryId}
             onValueChange={(value) => setFormData(prev => ({ ...prev, categoryId: value }))}
-            options={categoryOptions}
-            hint="Choose the most relevant category for this work"
-          />
+          >
+            <ScrollbarFreeSelectTrigger 
+              label="Category"
+              hint="Choose the most relevant category for this work"
+            >
+              <ScrollbarFreeSelectValue placeholder="Select category" />
+            </ScrollbarFreeSelectTrigger>
+            <ScrollbarFreeSelectContent>
+              {categoryOptions.map((option) => (
+                <ScrollbarFreeSelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </ScrollbarFreeSelectItem>
+              ))}
+            </ScrollbarFreeSelectContent>
+          </ScrollbarFreeSelect>
 
           {/* Description */}
           <div className="space-y-3">
@@ -181,7 +206,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
               placeholder="Describe what you did and what you learned..."
               rows={4}
-              className="w-full h-32 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
+              className="w-full h-32 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
               required
             />
             <p className="text-xs text-elec-light/70 flex items-center gap-1">
@@ -192,35 +217,63 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
 
           {/* Status and Time Spent */}
           <div className="grid grid-cols-2 gap-4">
-            <MobileSelectWrapper
-              label="Status"
+            <ScrollbarFreeSelect
               value={formData.status}
               onValueChange={(value) => setFormData(prev => ({ ...prev, status: value as any }))}
-              options={statusOptions}
-            />
+            >
+              <ScrollbarFreeSelectTrigger label="Status">
+                <ScrollbarFreeSelectValue placeholder="Select status" />
+              </ScrollbarFreeSelectTrigger>
+              <ScrollbarFreeSelectContent>
+                {statusOptions.map((option) => (
+                  <ScrollbarFreeSelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </ScrollbarFreeSelectItem>
+                ))}
+              </ScrollbarFreeSelectContent>
+            </ScrollbarFreeSelect>
             
-            <MobileInputWrapper
-              label="Time Spent"
-              type="number"
-              min="0"
-              value={formData.timeSpent.toString()}
-              onChange={(value) => setFormData(prev => ({ ...prev, timeSpent: parseInt(value) || 0 }))}
-              unit="mins"
-              icon={<Clock className="h-4 w-4" />}
-            />
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                Time Spent
+              </label>
+              <div className="relative">
+                <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-elec-light/60" />
+                <input
+                  type="number"
+                  min="0"
+                  value={formData.timeSpent}
+                  onChange={(e) => setFormData(prev => ({ ...prev, timeSpent: parseInt(e.target.value) || 0 }))}
+                  className="w-full h-12 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 text-base font-medium pl-10 pr-16"
+                />
+                <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-elec-light/60">mins</span>
+              </div>
+            </div>
           </div>
 
           {/* Self Assessment */}
-          <MobileSelectWrapper
-            label="Self Assessment"
+          <ScrollbarFreeSelect
             value={formData.selfAssessment.toString()}
             onValueChange={(value) => setFormData(prev => ({ ...prev, selfAssessment: parseInt(value) }))}
-            options={selfAssessmentOptions}
-            hint="Rate your performance on this task"
-          />
+          >
+            <ScrollbarFreeSelectTrigger 
+              label="Self Assessment"
+              hint="Rate your performance on this task"
+            >
+              <ScrollbarFreeSelectValue placeholder="Rate your performance" />
+            </ScrollbarFreeSelectTrigger>
+            <ScrollbarFreeSelectContent>
+              {selfAssessmentOptions.map((option) => (
+                <ScrollbarFreeSelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </ScrollbarFreeSelectItem>
+              ))}
+            </ScrollbarFreeSelectContent>
+          </ScrollbarFreeSelect>
 
           {/* Skills */}
-          <MultiSelectDropdown
+          <ScrollbarFreeMultiSelect
             label="Skills Demonstrated"
             placeholder="Select skills you used or developed"
             value={formData.skills}
@@ -230,7 +283,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
           />
 
           {/* Tags */}
-          <MultiSelectDropdown
+          <ScrollbarFreeMultiSelect
             label="Tags"
             placeholder="Add relevant tags"
             value={formData.tags}
@@ -240,7 +293,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
           />
 
           {/* Assessment Criteria */}
-          <MultiSelectDropdown
+          <ScrollbarFreeMultiSelect
             label="Assessment Criteria Met"
             placeholder="Select criteria you've addressed"
             value={formData.assessmentCriteria}
@@ -250,7 +303,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
           />
 
           {/* Learning Outcomes */}
-          <MultiSelectDropdown
+          <ScrollbarFreeMultiSelect
             label="Learning Outcomes"
             placeholder="Select learning outcomes achieved"
             value={formData.learningOutcomes}
@@ -260,7 +313,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
           />
 
           {/* Awarding Body Standards */}
-          <MultiSelectDropdown
+          <ScrollbarFreeMultiSelect
             label="Standards & Regulations"
             placeholder="Select relevant standards"
             value={formData.awardingBodyStandards}
@@ -280,7 +333,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
               onChange={(e) => setFormData(prev => ({ ...prev, reflection: e.target.value }))}
               placeholder="Reflect on your learning, challenges faced, and what you'd do differently..."
               rows={5}
-              className="w-full h-40 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
+              className="w-full h-40 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
               required
             />
             <p className="text-xs text-elec-light/70 flex items-center gap-1">
@@ -300,7 +353,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
               onChange={(e) => setFormData(prev => ({ ...prev, supervisorFeedback: e.target.value }))}
               placeholder="Enter any feedback from your supervisor or assessor..."
               rows={3}
-              className="w-full h-24 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
+              className="w-full h-24 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
             />
             <p className="text-xs text-elec-light/70 flex items-center gap-1">
               <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
