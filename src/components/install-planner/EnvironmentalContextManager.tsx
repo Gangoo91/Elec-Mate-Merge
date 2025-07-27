@@ -263,30 +263,32 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                   <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
                   Special Requirements
                 </div>
-                <div className="grid grid-cols-1 gap-3">
+                <div className="space-y-3">
                   {specialRequirements.map((requirement) => (
-                    <div key={requirement} className="flex items-center space-x-3 p-4 rounded-lg bg-elec-card/30 border border-elec-gray/30 hover:border-elec-yellow/30 transition-colors">
-                      <input
-                        type="checkbox"
-                        id={requirement}
-                        checked={environmentalSettings.specialRequirements.includes(requirement)}
-                        onChange={(e) => {
-                          const current = environmentalSettings.specialRequirements;
-                          if (e.target.checked) {
-                            onUpdateEnvironmentalSettings({
-                              ...environmentalSettings,
-                              specialRequirements: [...current, requirement]
-                            });
-                          } else {
-                            onUpdateEnvironmentalSettings({
-                              ...environmentalSettings,
-                              specialRequirements: current.filter(req => req !== requirement)
-                            });
-                          }
-                        }}
-                        className="w-5 h-5 text-elec-yellow bg-transparent border-2 border-elec-gray/50 rounded focus:ring-elec-yellow focus:ring-2 checked:bg-elec-yellow checked:border-elec-yellow"
-                      />
-                      <label htmlFor={requirement} className="text-sm text-elec-light cursor-pointer flex-1 leading-tight">
+                    <div key={requirement} className="flex items-start space-x-3 p-4 rounded-lg bg-elec-gray border border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors">
+                      <div className="flex items-center h-5">
+                        <input
+                          type="checkbox"
+                          id={requirement}
+                          checked={environmentalSettings.specialRequirements.includes(requirement)}
+                          onChange={(e) => {
+                            const current = environmentalSettings.specialRequirements;
+                            if (e.target.checked) {
+                              onUpdateEnvironmentalSettings({
+                                ...environmentalSettings,
+                                specialRequirements: [...current, requirement]
+                              });
+                            } else {
+                              onUpdateEnvironmentalSettings({
+                                ...environmentalSettings,
+                                specialRequirements: current.filter(req => req !== requirement)
+                              });
+                            }
+                          }}
+                          className="w-4 h-4 text-elec-yellow bg-elec-gray border border-elec-yellow/50 rounded focus:ring-2 focus:ring-elec-yellow focus:ring-offset-0 checked:bg-elec-yellow checked:border-elec-yellow"
+                        />
+                      </div>
+                      <label htmlFor={requirement} className="text-sm text-elec-light cursor-pointer flex-1 leading-relaxed">
                         {requirement}
                       </label>
                     </div>
