@@ -52,10 +52,6 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
                 {currentMode === "single" && <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />}
               </div>
               <p className="text-xs sm:text-sm text-muted-foreground">Individual appliance or circuit</p>
-              <div className="flex justify-center gap-2 pt-1 sm:pt-2">
-                <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">Quick</span>
-                <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">2-5 min</span>
-              </div>
             </div>
           </CardContent>
         </Card>
@@ -76,10 +72,6 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
                 {currentMode === "multi" && <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />}
               </div>
               <p className="text-xs sm:text-sm text-muted-foreground">Complete installation system</p>
-              <div className="flex justify-center gap-2 pt-1 sm:pt-2">
-                <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">Comprehensive</span>
-                <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">10-30 min</span>
-              </div>
             </div>
           </CardContent>
         </Card>
