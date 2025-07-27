@@ -87,7 +87,7 @@ const MemoizedCategoryCard = memo(({
   );
 });
 
-const UltraFastPortfolioManager = () => {
+const PortfolioManager = () => {
   const { clearQualificationSelection } = useQualifications();
   const { 
     entries, 
@@ -113,7 +113,7 @@ const UltraFastPortfolioManager = () => {
     }
   };
 
-  // Show ultra-fast loading only if we have no data and are loading
+  // Show loading state if we have no data and are loading
   if (isLoading) {
     return <UltraFastLoadingState showSkeleton={true} message="Preparing your portfolio..." />;
   }
@@ -125,32 +125,32 @@ const UltraFastPortfolioManager = () => {
         
         <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardHeader>
-            <CardTitle>Ultra-Fast Portfolio System</CardTitle>
+            <CardTitle>Portfolio Management</CardTitle>
             <CardDescription>
-              Select your qualification above to unlock lightning-fast portfolio management with:
+              Select your qualification above to access your portfolio management system with:
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-3 gap-4">
               <div className="text-center space-y-2">
                 <Target className="h-8 w-8 mx-auto text-elec-yellow" />
-                <h3 className="font-semibold">Instant Loading</h3>
+                <h3 className="font-semibold">Quick Access</h3>
                 <p className="text-sm text-muted-foreground">
-                  Cached data for immediate access to your portfolio
+                  Efficient access to your portfolio data
                 </p>
               </div>
               <div className="text-center space-y-2">
                 <FileText className="h-8 w-8 mx-auto text-elec-yellow" />
-                <h3 className="font-semibold">Optimistic Updates</h3>
+                <h3 className="font-semibold">Easy Updates</h3>
                 <p className="text-sm text-muted-foreground">
-                  See changes instantly while they sync in the background
+                  Add and edit your portfolio entries seamlessly
                 </p>
               </div>
               <div className="text-center space-y-2">
                 <TrendingUp className="h-8 w-8 mx-auto text-elec-yellow" />
-                <h3 className="font-semibold">Real-time Analytics</h3>
+                <h3 className="font-semibold">Progress Tracking</h3>
                 <p className="text-sm text-muted-foreground">
-                  Live progress tracking with smart caching
+                  Monitor your portfolio completion progress
                 </p>
               </div>
             </div>
@@ -297,4 +297,4 @@ const UltraFastPortfolioManager = () => {
   );
 };
 
-export default memo(UltraFastPortfolioManager);
+export default memo(PortfolioManager);
