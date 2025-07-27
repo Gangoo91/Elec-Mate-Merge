@@ -115,12 +115,12 @@ const QualificationSelector = () => {
                     >
                     <CardContent className="p-4">
                       <div className="space-y-3">
-                        <div className="flex justify-end">
+                        <div className="flex justify-center">
                           <Badge variant="outline" className="border-elec-yellow bg-elec-yellow text-elec-dark font-semibold">
                             {qualification.level}
                           </Badge>
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-2 text-center">
                           <h3 className="font-semibold text-lg leading-tight">{qualification.title}</h3>
                           <p className="text-sm text-muted-foreground">
                             {qualification.description}
