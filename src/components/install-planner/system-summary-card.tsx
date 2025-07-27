@@ -29,54 +29,54 @@ export const SystemSummaryCard: React.FC<SystemSummaryCardProps> = ({
       status="info"
       className="w-full"
     >
-      <div className="space-y-4">
-        {/* Key Metrics Grid */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="text-center p-4 border border-elec-yellow/20">
-            <div className="text-2xl font-bold text-elec-yellow mb-1">{circuits.length}</div>
-            <div className="text-xs text-muted-foreground">Circuits</div>
+      <div className="space-y-6">
+        {/* Key Metrics - Clean List */}
+        <div className="space-y-3">
+          <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
+            <span className="text-sm text-muted-foreground">Circuits</span>
+            <span className="text-lg font-bold text-elec-yellow">{circuits.length}</span>
           </div>
-          <div className="text-center p-4 border border-elec-yellow/20">
-            <div className="text-2xl font-bold text-elec-yellow mb-1">{(totalSystemLoad / 1000).toFixed(1)}kW</div>
-            <div className="text-xs text-muted-foreground">Total Load</div>
+          <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
+            <span className="text-sm text-muted-foreground">Total Load</span>
+            <span className="text-lg font-bold text-elec-yellow">{(totalSystemLoad / 1000).toFixed(1)}kW</span>
           </div>
-          <div className="text-center p-4 border border-elec-yellow/20">
-            <div className="text-2xl font-bold text-elec-yellow mb-1">{totalDesignCurrent.toFixed(1)}A</div>
-            <div className="text-xs text-muted-foreground">Design Current</div>
+          <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
+            <span className="text-sm text-muted-foreground">Design Current</span>
+            <span className="text-lg font-bold text-elec-yellow">{totalDesignCurrent.toFixed(1)}A</span>
           </div>
-          <div className="text-center p-4 border border-elec-yellow/20">
-            <div className="text-2xl font-bold text-elec-yellow mb-1">{(diversifiedLoad / 1000).toFixed(1)}kW</div>
-            <div className="text-xs text-muted-foreground">After Diversity</div>
+          <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
+            <span className="text-sm text-muted-foreground">After Diversity</span>
+            <span className="text-lg font-bold text-elec-yellow">{(diversifiedLoad / 1000).toFixed(1)}kW</span>
           </div>
         </div>
 
-        {/* Installation Overview */}
+        {/* Installation Details - Clean List */}
         <div className="space-y-3">
-          <div className="flex items-center gap-3 p-3 border border-elec-yellow/20">
-            <Building className="h-5 w-5 text-elec-yellow" />
-            <div>
-              <p className="text-sm font-medium text-elec-yellow">Multi-Circuit System</p>
-              <p className="text-xs text-muted-foreground">Installation Type</p>
+          <div className="flex items-center justify-between py-2 border-b border-elec-yellow/20">
+            <div className="flex items-center gap-2">
+              <Building className="h-4 w-4 text-elec-yellow" />
+              <span className="text-sm text-muted-foreground">Installation Type</span>
             </div>
+            <span className="text-sm font-medium text-elec-yellow">Multi-Circuit System</span>
           </div>
-          <div className="flex items-center gap-3 p-3 border border-elec-yellow/20">
-            <Clock className="h-5 w-5 text-elec-yellow" />
-            <div>
-              <p className="text-sm font-medium text-elec-yellow">{totalInstallDays} day{totalInstallDays > 1 ? 's' : ''}</p>
-              <p className="text-xs text-muted-foreground">Estimated Duration</p>
+          <div className="flex items-center justify-between py-2 border-b border-elec-yellow/20">
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-elec-yellow" />
+              <span className="text-sm text-muted-foreground">Estimated Duration</span>
             </div>
+            <span className="text-sm font-medium text-elec-yellow">{totalInstallDays} day{totalInstallDays > 1 ? 's' : ''}</span>
           </div>
-          <div className="flex items-center gap-3 p-3 border border-elec-yellow/20">
-            <Zap className="h-5 w-5 text-elec-yellow" />
-            <div>
-              <p className="text-sm font-medium text-elec-yellow">{(diversityFactor * 100).toFixed(0)}%</p>
-              <p className="text-xs text-muted-foreground">Diversity Factor</p>
+          <div className="flex items-center justify-between py-2 border-b border-elec-yellow/20">
+            <div className="flex items-center gap-2">
+              <Zap className="h-4 w-4 text-elec-yellow" />
+              <span className="text-sm text-muted-foreground">Diversity Factor</span>
             </div>
+            <span className="text-sm font-medium text-elec-yellow">{(diversityFactor * 100).toFixed(0)}%</span>
           </div>
         </div>
 
         {/* Compliance Status */}
-        <div className="flex flex-wrap gap-2 justify-center">
+        <div className="flex flex-wrap gap-2 justify-center pt-4 border-t border-elec-yellow/20">
           <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow">
             BS7671:2018+A2:2022
           </Badge>
