@@ -52,25 +52,16 @@ export const SystemSummaryCard: React.FC<SystemSummaryCardProps> = ({
 
         {/* Installation Details - Clean List */}
         <div className="space-y-3">
-          <div className="flex items-center justify-between py-2 border-b border-elec-yellow/20">
-            <div className="flex items-center gap-2">
-              <Building className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm text-muted-foreground">Install Type</span>
-            </div>
+          <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
+            <span className="text-sm text-muted-foreground">Install Type</span>
             <span className="text-sm font-medium text-elec-yellow">Multi-Circuit</span>
           </div>
-          <div className="flex items-center justify-between py-2 border-b border-elec-yellow/20">
-            <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm text-muted-foreground">Est Duration</span>
-            </div>
+          <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
+            <span className="text-sm text-muted-foreground">Est Duration</span>
             <span className="text-sm font-medium text-elec-yellow">{totalInstallDays} day{totalInstallDays > 1 ? 's' : ''}</span>
           </div>
-          <div className="flex items-center justify-between py-2 border-b border-elec-yellow/20">
-            <div className="flex items-center gap-2">
-              <Zap className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm text-muted-foreground">Diversity</span>
-            </div>
+          <div className="flex justify-between items-center py-2 border-b border-elec-yellow/20">
+            <span className="text-sm text-muted-foreground">Diversity</span>
             <span className="text-sm font-medium text-elec-yellow">{(diversityFactor * 100).toFixed(0)}%</span>
           </div>
         </div>
