@@ -120,32 +120,38 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
               isCompliant ? 'border-green-500/30 bg-green-500/5' : 'border-amber-500/30 bg-amber-500/5'
             }`}>
               <CardHeader>
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                <div className="w-full">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                     <div className="flex-1">
-                      <CardTitle className="text-base">{analysis.circuit.name}</CardTitle>
-                      <div className="flex flex-col gap-1 mt-2">
-                        <div className="text-sm text-muted-foreground">
-                          Load: {analysis.circuit.totalLoad}W
+                      <CardTitle className="text-base mb-3">{analysis.circuit.name}</CardTitle>
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        <div className="bg-elec-dark/50 rounded p-2 text-center">
+                          <div className="text-xs text-muted-foreground mb-1">Load</div>
+                          <div className="font-medium text-elec-yellow">{analysis.circuit.totalLoad}W</div>
                         </div>
-                        <div className="text-sm text-muted-foreground">
-                          Voltage: {analysis.circuit.voltage}V
+                        <div className="bg-elec-dark/50 rounded p-2 text-center">
+                          <div className="text-xs text-muted-foreground mb-1">Voltage</div>
+                          <div className="font-medium text-blue-400">{analysis.circuit.voltage}V</div>
                         </div>
-                        <div className="text-sm text-muted-foreground">
-                          Cable Length: {analysis.circuit.cableLength}m
+                        <div className="bg-elec-dark/50 rounded p-2 text-center">
+                          <div className="text-xs text-muted-foreground mb-1">Length</div>
+                          <div className="font-medium text-green-400">{analysis.circuit.cableLength}m</div>
                         </div>
-                        <div className="text-sm text-muted-foreground">
-                          Type: {analysis.circuit.loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                        <div className="bg-elec-dark/50 rounded p-2 text-center">
+                          <div className="text-xs text-muted-foreground mb-1">Type</div>
+                          <div className="font-medium text-purple-400 text-xs">{analysis.circuit.loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
                         </div>
                       </div>
                     </div>
-                  <div className="flex items-center gap-2">
-                    {isCompliant ? 
-                      <CheckCircle className="h-5 w-5 text-green-400" /> : 
-                      <XCircle className="h-5 w-5 text-amber-400" />
-                    }
-                    <Badge variant={isCompliant ? "default" : "destructive"}>
-                      {isCompliant ? "Compliant" : "Needs Attention"}
-                    </Badge>
+                    <div className="flex items-center gap-2 sm:self-start">
+                      {isCompliant ? 
+                        <CheckCircle className="h-5 w-5 text-green-400" /> : 
+                        <XCircle className="h-5 w-5 text-amber-400" />
+                      }
+                      <Badge variant={isCompliant ? "default" : "destructive"}>
+                        {isCompliant ? "Compliant" : "Needs Attention"}
+                      </Badge>
+                    </div>
                   </div>
                 </div>
               </CardHeader>

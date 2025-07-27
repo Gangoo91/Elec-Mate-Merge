@@ -148,35 +148,46 @@ const EnhancedCircuitTypeSelector: React.FC<EnhancedCircuitTypeSelectorProps> = 
         onClick={() => !isAdded && onAddCircuit(circuitType)}
       >
         <CardContent className="p-4">
-          <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0 flex-1">
-              <h4 className="font-medium text-sm leading-tight mb-2">{template.name}</h4>
-              <p className="text-xs text-muted-foreground mb-2 leading-tight">
-                {template.description}
-              </p>
-              <div className="flex flex-col gap-1 text-xs text-muted-foreground">
-                <div>Load: {template.totalLoad}W</div>
-                <div>Voltage: {template.voltage}V</div>
-                <div>Phase: {template.phases === 'single' ? 'Single Phase' : 'Three Phase'}</div>
+          <div className="w-full">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0 flex-1">
+                <h4 className="font-medium text-sm leading-tight mb-3 text-center">{template.name}</h4>
+                <p className="text-xs text-muted-foreground mb-3 leading-tight text-center">
+                  {template.description}
+                </p>
+                <div className="grid grid-cols-3 gap-2 text-xs">
+                  <div className="bg-elec-dark/50 rounded p-2 text-center">
+                    <div className="text-muted-foreground mb-1">Load</div>
+                    <div className="font-medium text-elec-yellow">{template.totalLoad}W</div>
+                  </div>
+                  <div className="bg-elec-dark/50 rounded p-2 text-center">
+                    <div className="text-muted-foreground mb-1">Voltage</div>
+                    <div className="font-medium text-blue-400">{template.voltage}V</div>
+                  </div>
+                  <div className="bg-elec-dark/50 rounded p-2 text-center">
+                    <div className="text-muted-foreground mb-1">Phase</div>
+                    <div className="font-medium text-green-400">{template.phases === 'single' ? '1φ' : '3φ'}</div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="flex-shrink-0">
-              {isAdded ? (
-                <Badge variant="outline" className="border-green-400/30 text-green-400 text-xs">
-                  Added
-                </Badge>
-              ) : (
-                <Button
-                  size="sm"
-                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-8 w-8 p-0"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onAddCircuit(circuitType);
-                  }}
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
-              )}
+              <div className="flex-shrink-0">
+                {isAdded ? (
+                  <Badge variant="outline" className="border-green-400/30 text-green-400 text-xs">
+                    Added
+                  </Badge>
+                ) : (
+                  <Button
+                    size="sm"
+                    className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-8 w-8 p-0"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onAddCircuit(circuitType);
+                    }}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         </CardContent>

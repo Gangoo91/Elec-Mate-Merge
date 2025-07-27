@@ -428,14 +428,20 @@ const MobileInstallationTemplates: React.FC<MobileInstallationTemplatesProps> = 
                 
                 <CollapsibleContent className="space-y-2 mt-3">
                   {selectedTemplateData.circuits.map((circuit, index) => (
-                    <div key={index} className="py-3 px-3 bg-black/20 rounded-md">
-                      <div className="min-w-0 flex-1">
-                        <div className="text-sm font-medium mb-2">{circuit.name}</div>
-                        <div className="flex flex-col gap-1 text-xs text-muted-foreground">
-                          <div>Load: {circuit.totalLoad}W</div>
-                          <div>Voltage: {circuit.voltage}V</div>
-                          <div>Type: {circuit.loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
-                          <div>Cable: {circuit.cableType.toUpperCase()}</div>
+                    <div key={index} className="p-3 bg-black/20 rounded-md">
+                      <div className="text-sm font-medium mb-3 text-center">{circuit.name}</div>
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div className="bg-black/30 rounded p-2 text-center">
+                          <div className="text-muted-foreground mb-1">Load</div>
+                          <div className="font-medium text-elec-yellow">{circuit.totalLoad}W</div>
+                        </div>
+                        <div className="bg-black/30 rounded p-2 text-center">
+                          <div className="text-muted-foreground mb-1">Voltage</div>
+                          <div className="font-medium text-blue-400">{circuit.voltage}V</div>
+                        </div>
+                        <div className="bg-black/30 rounded p-2 text-center col-span-2">
+                          <div className="text-muted-foreground mb-1">Type</div>
+                          <div className="font-medium text-purple-400">{circuit.loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
                         </div>
                       </div>
                     </div>

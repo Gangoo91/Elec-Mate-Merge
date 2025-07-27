@@ -440,13 +440,21 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                 return (
                   <Card key={circuit.id} className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
                     <CardContent className="p-4 space-y-4">
-                      <div className="flex items-center gap-3">
-                        <Shield className="h-5 w-5 text-elec-yellow" />
-                        <div className="flex-1">
-                          <h4 className="font-medium text-elec-light">{circuit.name}</h4>
-                          <p className="text-sm text-elec-light/70">
-                            {circuit.totalLoad}W • {circuit.voltage}V • {circuit.cableLength}m
-                          </p>
+                      <div className="text-center">
+                        <h4 className="font-medium text-elec-light mb-3">{circuit.name}</h4>
+                        <div className="grid grid-cols-3 gap-2 text-sm">
+                          <div className="bg-elec-dark/50 rounded p-2 text-center">
+                            <div className="text-xs text-muted-foreground mb-1">Load</div>
+                            <div className="font-medium text-elec-yellow">{circuit.totalLoad}W</div>
+                          </div>
+                          <div className="bg-elec-dark/50 rounded p-2 text-center">
+                            <div className="text-xs text-muted-foreground mb-1">Voltage</div>
+                            <div className="font-medium text-blue-400">{circuit.voltage}V</div>
+                          </div>
+                          <div className="bg-elec-dark/50 rounded p-2 text-center">
+                            <div className="text-xs text-muted-foreground mb-1">Length</div>
+                            <div className="font-medium text-green-400">{circuit.cableLength}m</div>
+                          </div>
                         </div>
                       </div>
                       

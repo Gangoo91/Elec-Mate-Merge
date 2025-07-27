@@ -184,28 +184,32 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
             >
               <CollapsibleTrigger asChild>
                 <CardHeader className="cursor-pointer hover:bg-black/20 transition-colors">
-                  <div className="flex flex-col gap-3">
-                    <div className="flex items-start gap-3 min-w-0 flex-1">
+                  <div className="w-full">
+                    <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
-                        <CardTitle className="text-base flex items-center gap-2">
+                        <CardTitle className="text-base flex items-center gap-2 mb-3">
                           {circuit.name}
                           {expandedCircuit === circuit.id ? 
                             <ChevronDown className="h-4 w-4" /> : 
                             <ChevronRight className="h-4 w-4" />
                           }
                         </CardTitle>
-                        <div className="flex flex-col gap-1 mt-2">
-                          <div className="text-sm text-muted-foreground">
-                            Load: {circuit.totalLoad}W
+                        <div className="grid grid-cols-2 gap-2 text-sm">
+                          <div className="bg-elec-dark/50 rounded p-2 text-center">
+                            <div className="text-xs text-muted-foreground mb-1">Load</div>
+                            <div className="font-medium text-elec-yellow">{circuit.totalLoad}W</div>
                           </div>
-                          <div className="text-sm text-muted-foreground">
-                            Voltage: {circuit.voltage}V
+                          <div className="bg-elec-dark/50 rounded p-2 text-center">
+                            <div className="text-xs text-muted-foreground mb-1">Voltage</div>
+                            <div className="font-medium text-blue-400">{circuit.voltage}V</div>
                           </div>
-                          <div className="text-sm text-muted-foreground">
-                            Cable Length: {circuit.cableLength}m
+                          <div className="bg-elec-dark/50 rounded p-2 text-center">
+                            <div className="text-xs text-muted-foreground mb-1">Length</div>
+                            <div className="font-medium text-green-400">{circuit.cableLength}m</div>
                           </div>
-                          <div className="text-sm text-muted-foreground">
-                            Type: {circuit.loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                          <div className="bg-elec-dark/50 rounded p-2 text-center">
+                            <div className="text-xs text-muted-foreground mb-1">Type</div>
+                            <div className="font-medium text-purple-400 text-xs">{circuit.loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
                           </div>
                         </div>
                       </div>
