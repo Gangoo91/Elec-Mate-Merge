@@ -21,9 +21,6 @@ export const useQualifications = () => {
 
       if (error) throw error;
       setQualifications(data || []);
-      
-      // Load all categories for all qualifications
-      await loadAllQualificationCategories();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load qualifications');
     }
@@ -242,6 +239,7 @@ export const useQualifications = () => {
       setLoading(true);
       await Promise.all([
         loadQualifications(),
+        loadAllQualificationCategories(),
         loadUserSelection()
       ]);
       setLoading(false);
