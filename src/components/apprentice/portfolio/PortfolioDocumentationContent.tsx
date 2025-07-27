@@ -1,54 +1,80 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, FileText, Video, Download, ExternalLink } from "lucide-react";
+import { BookOpen, FileText, Video, Download, ExternalLink, Target, CheckCircle } from "lucide-react";
 
 const PortfolioDocumentationContent = () => {
 const cityGuildsResources = [
     {
-      title: "Level 3 Electrical Installation Portfolio Guide",
-      description: "Official City & Guilds portfolio guidance for Level 3 electrical installation apprentices",
+      title: "EPA Document Library",
+      description: "Access official End Point Assessment documents, portfolio requirements, and assessment criteria for electrical apprenticeships",
       type: "guide",
       icon: BookOpen,
-      url: "https://www.cityandguilds.com/qualifications-and-apprenticeships/electrical/electrical-installation/2365-level-3-electrical-installations"
+      url: "https://www.cityandguilds.com/qualifications-and-apprenticeships/apprenticeships/end-point-assessment/epa-document-library"
     },
     {
-      title: "Assessment Portfolio Templates",
-      description: "City & Guilds templates for recording practical assessments and workplace evidence",
+      title: "Apprenticeship Support Hub",
+      description: "Comprehensive support materials, templates, and guidance for apprentices and employers on portfolio building",
       type: "template",
       icon: FileText,
-      url: "https://www.cityandguilds.com/help/help-for-learners-and-apprentices/portfolio-guidance"
+      url: "https://www.cityandguilds.com/apprenticeships/apprenticeship-support-hub"
     },
     {
-      title: "SmartScreen Portfolio Resources",
-      description: "Access City & Guilds SmartScreen for portfolio templates and guidance materials",
+      title: "Electrotech Apprenticeship Qualification",
+      description: "Specific qualification requirements, assessment standards, and portfolio guidelines for electrical installation apprenticeships",
       type: "guide",
-      icon: FileText,
-      url: "https://www.smartscreen.co.uk/"
+      icon: BookOpen,
+      url: "https://www.cityandguilds.com/qualifications-and-apprenticeships/electrical/electrical-installation/electrical-installation-apprenticeship"
     }
   ];
 
   const ealResources = [
     {
-      title: "EAL Electrical Installation Portfolio Guidelines",
-      description: "Official EAL portfolio building guidance for electrical installation qualifications",
+      title: "Level 3 Electrotechnical Qualification",
+      description: "Comprehensive qualification handbook with assessment criteria, portfolio requirements, and evidence specifications for electrical installation",
       type: "guide",
       icon: BookOpen,
-      url: "https://www.eal.org.uk/qualifications/electrical-installation/"
+      url: "https://www.eal.org.uk/qualifications/electrical-installation/level-3-electrotechnical"
     },
     {
-      title: "EAL Portfolio Evidence Requirements",
-      description: "Detailed requirements for portfolio evidence collection and presentation",
-      type: "template",
-      icon: FileText,
-      url: "https://www.eal.org.uk/centres/centre-support/assessment-guidance/"
-    },
-    {
-      title: "EAL Online Portfolio System",
-      description: "Access EAL's online portfolio submission and tracking system",
+      title: "Level 3 Electrotechnical Experienced Worker",
+      description: "Portfolio guidance and assessment standards for experienced workers transitioning to formal qualifications",
       type: "guide",
-      icon: Video,
-      url: "https://www.eal.org.uk/learners/portfolio-system/"
+      icon: FileText,
+      url: "https://www.eal.org.uk/qualifications/electrical-installation/level-3-electrotechnical-experienced-worker"
+    }
+  ];
+
+  const assessorRequirements = [
+    {
+      category: "Evidence Quality",
+      icon: Target,
+      requirements: [
+        "Clear photographs showing work in progress and completion",
+        "Detailed technical drawings and circuit diagrams",
+        "Test results and certification documents",
+        "Risk assessments and method statements"
+      ]
+    },
+    {
+      category: "Competency Demonstration",
+      icon: CheckCircle,
+      requirements: [
+        "Progression from basic to complex tasks",
+        "Independent problem-solving examples",
+        "Application of relevant standards (BS 7671)",
+        "Health and safety compliance throughout"
+      ]
+    },
+    {
+      category: "Reflection & Learning",
+      icon: BookOpen,
+      requirements: [
+        "Critical analysis of work completed",
+        "Identification of skills developed",
+        "Learning from mistakes and improvements made",
+        "Professional development planning"
+      ]
     }
   ];
 
@@ -192,6 +218,42 @@ const cityGuildsResources = [
                     </div>
                   </CardContent>
                 </Card>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* What Assessors Look For */}
+      <Card className="border-orange-500/30 bg-elec-gray">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-orange-400 flex items-center gap-2 text-base sm:text-lg">
+            <Target className="h-4 w-4 sm:h-5 sm:w-5" />
+            What Assessors Look For
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <p className="text-muted-foreground text-xs sm:text-sm mb-4">
+            Understanding assessment criteria and evidence requirements is crucial for portfolio success. Here's what assessors specifically evaluate:
+          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {assessorRequirements.map((section, index) => {
+              const IconComponent = section.icon;
+              return (
+                <div key={index} className="bg-black/20 rounded-lg p-3 border border-orange-500/20">
+                  <h4 className="font-medium text-white mb-2 text-sm flex items-center gap-2">
+                    <IconComponent className="h-4 w-4 text-orange-400" />
+                    {section.category}
+                  </h4>
+                  <ul className="text-xs sm:text-sm text-muted-foreground space-y-1">
+                    {section.requirements.map((requirement, reqIndex) => (
+                      <li key={reqIndex} className="flex items-start gap-2">
+                        <div className="h-1.5 w-1.5 bg-orange-400 rounded-full mt-1.5 flex-shrink-0" />
+                        {requirement}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               );
             })}
           </div>
