@@ -166,7 +166,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
               value={formData.title}
               onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
               placeholder="e.g., Three-phase motor installation"
-              className="w-full h-12 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
+              className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
               required
             />
             <p className="text-xs text-elec-light/70 flex items-center gap-1">
@@ -206,7 +206,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
               placeholder="Describe what you did and what you learned..."
               rows={4}
-              className="w-full h-32 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
+              className="w-full h-32 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
               required
             />
             <p className="text-xs text-elec-light/70 flex items-center gap-1">
@@ -245,7 +245,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
                   min="0"
                   value={formData.timeSpent}
                   onChange={(e) => setFormData(prev => ({ ...prev, timeSpent: parseInt(e.target.value) || 0 }))}
-                  className="w-full h-12 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 text-base font-medium pl-10 pr-16"
+                  className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 text-base font-medium pl-10 pr-16"
                 />
                 <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-elec-light/60">mins</span>
               </div>
@@ -333,7 +333,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
               onChange={(e) => setFormData(prev => ({ ...prev, reflection: e.target.value }))}
               placeholder="Reflect on your learning, challenges faced, and what you'd do differently..."
               rows={5}
-              className="w-full h-40 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
+              className="w-full h-40 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
               required
             />
             <p className="text-xs text-elec-light/70 flex items-center gap-1">
@@ -353,7 +353,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
               onChange={(e) => setFormData(prev => ({ ...prev, supervisorFeedback: e.target.value }))}
               placeholder="Enter any feedback from your supervisor or assessor..."
               rows={3}
-              className="w-full h-24 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
+              className="w-full h-24 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
             />
             <p className="text-xs text-elec-light/70 flex items-center gap-1">
               <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>

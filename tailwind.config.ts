@@ -64,11 +64,11 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				// ElecMate brand colors
-				'elec-yellow': '#FFC900',
-				'elec-dark': '#121212',
-				'elec-gray': '#2A2A2A',
-				'elec-light': '#F5F5F5',
-				'elec-card': '#1a1a1a',
+				'elec-yellow': 'hsl(var(--elec-yellow))',
+				'elec-dark': 'hsl(var(--elec-dark))',
+				'elec-gray': 'hsl(var(--elec-gray))',
+				'elec-light': 'hsl(var(--elec-light))',
+				'elec-card': 'hsl(var(--elec-card))',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

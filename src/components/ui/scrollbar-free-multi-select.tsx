@@ -73,7 +73,7 @@ export const ScrollbarFreeMultiSelect: React.FC<ScrollbarFreeMultiSelectProps> =
             type="button"
             disabled={disabled}
             className={cn(
-              "flex h-auto min-h-[48px] w-full items-center justify-between rounded-xl border-2 border-elec-gray/50 bg-elec-gray px-4 py-3 text-base font-medium ring-offset-background placeholder:text-elec-light/60 focus:border-elec-yellow focus:outline-none focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50 text-elec-light hover:border-elec-yellow/40 transition-all duration-200",
+              "flex h-auto min-h-[48px] w-full items-center justify-between rounded-xl border-2 border-elec-gray/50 bg-elec-card px-4 py-3 text-base font-medium ring-offset-background placeholder:text-elec-light/60 focus:border-elec-yellow focus:outline-none focus:ring-0 disabled:cursor-not-allowed disabled:opacity-50 text-elec-light hover:border-elec-yellow/40 transition-all duration-200",
               error && "border-red-500",
               disabled && "opacity-50 cursor-not-allowed"
             )}
@@ -108,7 +108,7 @@ export const ScrollbarFreeMultiSelect: React.FC<ScrollbarFreeMultiSelectProps> =
           </button>
         </PopoverTrigger>
         
-        <PopoverContent className="w-full p-0 bg-elec-gray border-elec-gray/50 shadow-xl z-50">
+        <PopoverContent className="w-full p-0 bg-elec-card border-elec-gray/50 shadow-xl z-50">
           <div className="max-h-64 overflow-y-auto scrollbar-none">
             <div
               className="p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer border-b border-elec-gray/20 transition-colors"
