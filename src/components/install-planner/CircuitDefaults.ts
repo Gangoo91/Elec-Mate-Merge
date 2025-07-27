@@ -752,6 +752,241 @@ export const CIRCUIT_TEMPLATES: Record<string, CircuitTemplate> = {
     recommendedProtectiveDevice: "is-barrier",
     description: "Intrinsically safe instrumentation",
     typicalApplications: ["Gas detectors", "Level sensors", "Control instrumentation"]
+  },
+
+  // Phase 2: Enhanced Smart Home & Renewable Energy Templates
+  "solar-inverter": {
+    name: "Solar String Inverter",
+    totalLoad: 5000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 20,
+    powerFactor: 0.98,
+    recommendedInstallationMethod: "clipped-direct",
+    recommendedCableType: "solar-ac",
+    recommendedProtectiveDevice: "ac-isolator",
+    description: "Solar PV string inverter connection",
+    typicalApplications: ["String inverters", "Power optimizers", "Monitoring systems"]
+  },
+
+  "battery-storage": {
+    name: "Battery Energy Storage",
+    totalLoad: 8000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 15,
+    powerFactor: 0.95,
+    recommendedInstallationMethod: "clipped-direct",
+    recommendedCableType: "dc-cable",
+    recommendedProtectiveDevice: "dc-isolator",
+    description: "Home battery storage system",
+    typicalApplications: ["Lithium batteries", "Hybrid inverters", "Energy management"]
+  },
+
+  "heat-pump": {
+    name: "Air Source Heat Pump",
+    totalLoad: 6000,
+    voltage: 230,
+    phases: "single",
+    cableLength: 25,
+    powerFactor: 0.9,
+    recommendedInstallationMethod: "swa-direct",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "rcbo",
+    description: "Air source heat pump system",
+    typicalApplications: ["ASHP units", "Ground source pumps", "Heating controls"]
+  },
+
+  "smart-lighting": {
+    name: "Smart Lighting Control",
+    totalLoad: 800,
+    voltage: 230,
+    phases: "single",
+    cableLength: 40,
+    recommendedInstallationMethod: "clipped-direct",
+    recommendedCableType: "data-cable",
+    recommendedProtectiveDevice: "mcb",
+    description: "Intelligent lighting control system",
+    typicalApplications: ["Smart switches", "Occupancy sensors", "Daylight harvesting"]
+  },
+
+  "home-automation": {
+    name: "Home Automation Hub",
+    totalLoad: 200,
+    voltage: 230,
+    phases: "single",
+    cableLength: 30,
+    recommendedInstallationMethod: "clipped-direct",
+    recommendedCableType: "cat6",
+    recommendedProtectiveDevice: "mcb",
+    description: "Central home automation system",
+    typicalApplications: ["Smart hubs", "Voice assistants", "IoT devices"]
+  },
+
+  // Process Control & Automation
+  "process-control": {
+    name: "Process Control System",
+    totalLoad: 2000,
+    voltage: 24,
+    phases: "dc",
+    cableLength: 200,
+    recommendedInstallationMethod: "tray",
+    recommendedCableType: "instrumentation",
+    recommendedProtectiveDevice: "dc-breaker",
+    description: "Industrial process control",
+    typicalApplications: ["PLCs", "SCADA systems", "Field instruments"]
+  },
+
+  "variable-speed-drive": {
+    name: "Variable Speed Drive",
+    totalLoad: 18500,
+    voltage: 400,
+    phases: "three",
+    cableLength: 30,
+    powerFactor: 0.95,
+    recommendedInstallationMethod: "tray",
+    recommendedCableType: "vsd-cable",
+    recommendedProtectiveDevice: "mcb",
+    description: "Motor variable speed control",
+    typicalApplications: ["VSD panels", "Motor control", "Energy saving"]
+  },
+
+  "soft-starter": {
+    name: "Motor Soft Starter",
+    totalLoad: 11000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 25,
+    powerFactor: 0.9,
+    recommendedInstallationMethod: "tray",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "mcb",
+    description: "Motor soft start control",
+    typicalApplications: ["Pump control", "Fan control", "Reduced starting current"]
+  },
+
+  // Advanced Healthcare
+  "operating-theatre": {
+    name: "Operating Theatre Power",
+    totalLoad: 12000,
+    voltage: 230,
+    phases: "single",
+    cableLength: 15,
+    recommendedInstallationMethod: "conduit",
+    recommendedCableType: "mineral",
+    recommendedProtectiveDevice: "it-isolator",
+    description: "Critical operating theatre supply",
+    typicalApplications: ["Surgical equipment", "Anaesthetic machines", "Monitoring"]
+  },
+
+  "mri-equipment": {
+    name: "MRI Equipment",
+    totalLoad: 25000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 20,
+    powerFactor: 0.95,
+    recommendedInstallationMethod: "conduit",
+    recommendedCableType: "mineral",
+    recommendedProtectiveDevice: "it-isolator",
+    description: "Magnetic resonance imaging equipment",
+    typicalApplications: ["MRI scanners", "RF shielding", "Cryogenic systems"]
+  },
+
+  "isolation-transformer": {
+    name: "Medical Isolation Transformer",
+    totalLoad: 8000,
+    voltage: 230,
+    phases: "single",
+    cableLength: 10,
+    recommendedInstallationMethod: "conduit",
+    recommendedCableType: "mineral",
+    recommendedProtectiveDevice: "it-isolator",
+    description: "Medical isolation system",
+    typicalApplications: ["IT systems", "Patient safety", "Insulation monitoring"]
+  },
+
+  // Advanced Data Center
+  "modular-ups": {
+    name: "Modular UPS System",
+    totalLoad: 100000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 15,
+    powerFactor: 0.99,
+    recommendedInstallationMethod: "busbar",
+    recommendedCableType: "power-cable",
+    recommendedProtectiveDevice: "mcb",
+    description: "Scalable modular UPS",
+    typicalApplications: ["Tier 3/4 data centers", "Redundant power", "Hot-swappable modules"]
+  },
+
+  "pdu-intelligent": {
+    name: "Intelligent PDU",
+    totalLoad: 16000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 5,
+    recommendedInstallationMethod: "busbar",
+    recommendedCableType: "power-cable",
+    recommendedProtectiveDevice: "mcb",
+    description: "Intelligent power distribution unit",
+    typicalApplications: ["Rack PDUs", "Power monitoring", "Remote switching"]
+  },
+
+  "ups-battery-string": {
+    name: "UPS Battery String",
+    totalLoad: 0,
+    voltage: 240,
+    phases: "dc",
+    cableLength: 10,
+    recommendedInstallationMethod: "tray",
+    recommendedCableType: "battery-cable",
+    recommendedProtectiveDevice: "dc-fuse",
+    description: "UPS battery backup system",
+    typicalApplications: ["VRLA batteries", "Lithium-ion", "Battery monitoring"]
+  },
+
+  // Specialized Industrial
+  "induction-furnace": {
+    name: "Induction Furnace",
+    totalLoad: 500000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 30,
+    powerFactor: 0.95,
+    recommendedInstallationMethod: "busbar",
+    recommendedCableType: "water-cooled",
+    recommendedProtectiveDevice: "hv-breaker",
+    description: "High-power induction furnace",
+    typicalApplications: ["Steel melting", "Metal casting", "Heat treatment"]
+  },
+
+  "arc-furnace": {
+    name: "Electric Arc Furnace",
+    totalLoad: 1000000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 25,
+    powerFactor: 0.85,
+    recommendedInstallationMethod: "busbar",
+    recommendedCableType: "water-cooled",
+    recommendedProtectiveDevice: "hv-breaker",
+    description: "Electric arc furnace for steel production",
+    typicalApplications: ["Steel production", "Scrap melting", "Alloy production"]
+  },
+
+  "electroplating": {
+    name: "Electroplating System",
+    totalLoad: 50000,
+    voltage: 12,
+    phases: "dc",
+    cableLength: 20,
+    recommendedInstallationMethod: "tray",
+    recommendedCableType: "dc-cable",
+    recommendedProtectiveDevice: "dc-breaker",
+    description: "Industrial electroplating equipment",
+    typicalApplications: ["Metal finishing", "Anodizing", "Galvanizing"]
   }
 };
 
@@ -792,35 +1027,35 @@ export function createCircuitFromTemplate(templateKey: string, installationType:
 export function getAvailableTemplatesForInstallationType(installationType: string): string[] {
   switch (installationType) {
     case "domestic":
-      return ["lighting", "power", "power-radial", "cooker", "shower", "heating", "ev-charging", "smart-home", "renewable-solar"];
+      return ["lighting", "power", "power-radial", "cooker", "shower", "heating", "ev-charging", "smart-home", "renewable-solar", "solar-inverter", "battery-storage", "heat-pump", "smart-lighting", "home-automation"];
     case "commercial":
-      return ["commercial-lighting", "commercial-power", "hvac", "it-equipment", "emergency", "power"];
+      return ["commercial-lighting", "commercial-power", "hvac", "it-equipment", "emergency", "power", "smart-lighting", "process-control"];
     case "industrial":
-      return ["motor-small", "motor-large", "welding", "crane", "furnace", "hvac", "emergency"];
+      return ["motor-small", "motor-large", "welding", "crane", "furnace", "hvac", "emergency", "variable-speed-drive", "soft-starter", "process-control", "induction-furnace", "arc-furnace", "electroplating"];
     case "data-center":
-      return ["ups-system", "server-rack", "cooling-system", "backup-generator", "it-equipment", "emergency"];
+      return ["ups-system", "server-rack", "cooling-system", "backup-generator", "it-equipment", "emergency", "modular-ups", "pdu-intelligent", "ups-battery-string"];
     case "education":
-      return ["classroom-power", "lab-equipment", "sports-lighting", "commercial-lighting", "it-equipment"];
+      return ["classroom-power", "lab-equipment", "sports-lighting", "commercial-lighting", "it-equipment", "smart-lighting", "process-control"];
     case "hospitality":
-      return ["kitchen-equipment", "guest-room", "laundry-equipment", "commercial-lighting", "hvac"];
+      return ["kitchen-equipment", "guest-room", "laundry-equipment", "commercial-lighting", "hvac", "smart-lighting", "home-automation"];
     case "retail":
-      return ["retail-lighting", "pos-systems", "cold-storage", "commercial-power", "security-systems"];
+      return ["retail-lighting", "pos-systems", "cold-storage", "commercial-power", "smart-lighting"];
     case "agriculture":
-      return ["irrigation-pump", "grain-dryer", "livestock-equipment", "motor-small", "outdoor-lighting"];
+      return ["irrigation-pump", "grain-dryer", "livestock-equipment", "motor-small", "variable-speed-drive", "soft-starter"];
     case "transportation":
-      return ["charging-station", "platform-lighting", "signal-systems", "emergency", "communications"];
+      return ["charging-station", "platform-lighting", "signal-systems", "emergency", "smart-lighting"];
     case "sports-entertainment":
-      return ["floodlighting", "sound-system", "scoreboard", "commercial-power", "emergency"];
+      return ["floodlighting", "sound-system", "scoreboard", "commercial-power", "emergency", "smart-lighting"];
     case "laboratory":
-      return ["fume-cupboard", "analytical-equipment", "clean-room", "emergency", "lighting"];
+      return ["fume-cupboard", "analytical-equipment", "clean-room", "emergency", "lighting", "process-control"];
     case "marine-offshore":
-      return ["marine-power", "navigation-equipment", "winch-system", "emergency", "communications"];
+      return ["marine-power", "navigation-equipment", "winch-system", "emergency", "process-control"];
     case "mining":
-      return ["conveyor-belt", "ventilation-fan", "crushing-equipment", "motor-large", "emergency"];
+      return ["conveyor-belt", "ventilation-fan", "crushing-equipment", "motor-large", "emergency", "variable-speed-drive"];
     case "healthcare":
-      return ["medical", "emergency", "it-equipment", "hvac", "backup-generator"];
+      return ["medical", "emergency", "it-equipment", "hvac", "backup-generator", "operating-theatre", "mri-equipment", "isolation-transformer"];
     case "hazardous-areas":
-      return ["zone1-lighting", "zone1-motor", "intrinsically-safe", "emergency"];
+      return ["zone1-lighting", "zone1-motor", "intrinsically-safe", "emergency", "process-control"];
     default:
       return ["lighting", "power"];
   }
