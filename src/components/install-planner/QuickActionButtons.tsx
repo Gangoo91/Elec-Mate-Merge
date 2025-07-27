@@ -41,7 +41,8 @@ const QuickActionButtons: React.FC<QuickActionButtonsProps> = ({
           { value: "commercial-power", label: "Power", description: "Commercial power circuits" },
           { value: "hvac", label: "HVAC", description: "Air conditioning systems" },
           { value: "it-equipment", label: "IT Equipment", description: "Server and network power" },
-          { value: "emergency", label: "Emergency", description: "Emergency systems" }
+          { value: "emergency", label: "Emergency", description: "Emergency systems" },
+          { value: "emergency-lighting", label: "Emergency Lighting", description: "Emergency exit lighting" }
         ];
       case "industrial":
         return [
@@ -50,7 +51,9 @@ const QuickActionButtons: React.FC<QuickActionButtonsProps> = ({
           { value: "welding", label: "Welding", description: "Welding equipment" },
           { value: "crane", label: "Crane & Hoist", description: "Lifting equipment" },
           { value: "furnace", label: "Furnace", description: "Industrial furnaces" },
-          { value: "hvac", label: "HVAC", description: "Industrial HVAC" }
+          { value: "hvac", label: "HVAC", description: "Industrial HVAC" },
+          { value: "emergency-lighting", label: "Emergency Lighting", description: "Emergency exit lighting" },
+          { value: "compressed-air", label: "Compressed Air", description: "Air compressor systems" }
         ];
       case "data-center":
         return [
@@ -66,7 +69,8 @@ const QuickActionButtons: React.FC<QuickActionButtonsProps> = ({
           { value: "lab-equipment", label: "Laboratory", description: "Science laboratory equipment" },
           { value: "sports-lighting", label: "Sports Hall", description: "Sports facility lighting" },
           { value: "commercial-lighting", label: "General Lighting", description: "Educational lighting" },
-          { value: "it-equipment", label: "IT Systems", description: "Educational technology" }
+          { value: "it-equipment", label: "IT Systems", description: "Educational technology" },
+          { value: "emergency-lighting", label: "Emergency Lighting", description: "Emergency exit lighting" }
         ];
       case "hospitality":
         return [
@@ -88,7 +92,9 @@ const QuickActionButtons: React.FC<QuickActionButtonsProps> = ({
           { value: "irrigation-pump", label: "Irrigation", description: "Irrigation pump systems" },
           { value: "grain-dryer", label: "Grain Dryer", description: "Grain drying equipment" },
           { value: "livestock-equipment", label: "Livestock", description: "Livestock management equipment" },
-          { value: "motor-small", label: "Farm Motors", description: "Small agricultural motors" }
+          { value: "motor-small", label: "Farm Motors", description: "Small agricultural motors" },
+          { value: "emergency-lighting", label: "Emergency Lighting", description: "Emergency barn lighting" },
+          { value: "agriculture-emergency", label: "Agricultural Emergency", description: "Livestock area safety" }
         ];
       case "transportation":
         return [
@@ -116,21 +122,28 @@ const QuickActionButtons: React.FC<QuickActionButtonsProps> = ({
           { value: "marine-power", label: "Marine Power", description: "Marine vessel power systems" },
           { value: "navigation-equipment", label: "Navigation", description: "Marine navigation equipment" },
           { value: "winch-system", label: "Winch System", description: "Marine winch and lifting" },
-          { value: "emergency", label: "Emergency", description: "Marine safety systems" }
+          { value: "emergency", label: "Emergency", description: "Marine safety systems" },
+          { value: "emergency-lighting", label: "Emergency Lighting", description: "Marine emergency lighting" },
+          { value: "marine-emergency", label: "Marine Emergency", description: "Lifeboat stations, muster points" }
         ];
       case "mining":
         return [
           { value: "conveyor-belt", label: "Conveyor", description: "Mining conveyor systems" },
           { value: "ventilation-fan", label: "Ventilation", description: "Mine ventilation systems" },
           { value: "crushing-equipment", label: "Crushing", description: "Ore crushing equipment" },
-          { value: "motor-large", label: "Large Motors", description: "Large industrial motors" }
+          { value: "motor-large", label: "Large Motors", description: "Large industrial motors" },
+          { value: "emergency-lighting", label: "Emergency Lighting", description: "Mine emergency lighting" },
+          { value: "mining-emergency", label: "Mining Emergency", description: "Mine safety systems" }
         ];
       case "healthcare":
         return [
           { value: "medical", label: "Medical Equipment", description: "Critical medical equipment" },
           { value: "emergency", label: "Emergency", description: "Healthcare emergency systems" },
+          { value: "emergency-lighting", label: "Emergency Lighting", description: "Hospital emergency lighting" },
           { value: "it-equipment", label: "IT Systems", description: "Healthcare IT equipment" },
-          { value: "hvac", label: "HVAC", description: "Healthcare climate control" }
+          { value: "hvac", label: "HVAC", description: "Healthcare climate control" },
+          { value: "defibrillator-power", label: "Defibrillator Power", description: "Critical cardiac equipment" },
+          { value: "surgical-equipment", label: "Surgical Equipment", description: "Surgical robots, equipment" }
         ];
       case "hazardous-areas":
         return [

@@ -3,7 +3,7 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Lightbulb, Zap, Fan, Microwave, Car, Hospital, Cpu, Flame, Warehouse, Ship } from "lucide-react";
+import { Plus, Lightbulb, Zap, Fan, Microwave, Car, Hospital, Cpu, Flame, Warehouse, Ship, AlertTriangle } from "lucide-react";
 import { Circuit } from "./types";
 
 interface CircuitTypeSelectorProps {
@@ -39,6 +39,7 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
           { type: "hvac", label: "HVAC Systems", icon: Fan, description: "Air conditioning, ventilation systems" },
           { type: "it-equipment", label: "IT Equipment", icon: Cpu, description: "Servers, networking, UPS" },
           { type: "emergency", label: "Emergency Systems", icon: Zap, description: "Emergency lighting, fire alarms" },
+          { type: "emergency-lighting", label: "Emergency Lighting", icon: Lightbulb, description: "Emergency exit lighting" },
           { type: "commercial-lighting", label: "Commercial Lighting", icon: Lightbulb, description: "Office lighting, retail display" },
         ];
       case "industrial":
@@ -49,14 +50,23 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
           { type: "welding", label: "Welding Equipment", icon: Flame, description: "Arc welders, resistance welders" },
           { type: "crane", label: "Crane & Hoist", icon: Warehouse, description: "Overhead cranes, lifting equipment" },
           { type: "furnace", label: "Industrial Furnaces", icon: Flame, description: "Electric furnaces, kilns" },
+          { type: "emergency-lighting", label: "Emergency Lighting", icon: Lightbulb, description: "Emergency exit lighting" },
+          { type: "compressed-air", label: "Compressed Air", icon: Fan, description: "Air compressors, pneumatic systems" },
+          { type: "waste-treatment", label: "Waste Treatment", icon: Fan, description: "Treatment plants, filtration" },
+          { type: "material-handling", label: "Material Handling", icon: Warehouse, description: "Robotic systems, automation" },
+          { type: "control-room-power", label: "Control Room Power", icon: Cpu, description: "SCADA systems, control panels" },
         ];
       case "healthcare":
         return [
           ...baseCircuits,
           { type: "medical", label: "Medical Equipment", icon: Hospital, description: "Life support, medical devices" },
           { type: "emergency", label: "Emergency Systems", icon: Zap, description: "Emergency lighting, fire alarms" },
+          { type: "emergency-lighting", label: "Emergency Lighting", icon: Lightbulb, description: "Emergency exit lighting" },
           { type: "it-equipment", label: "IT Equipment", icon: Cpu, description: "Patient monitoring, data systems" },
           { type: "operating-theatre", label: "Operating Theatre", icon: Hospital, description: "Critical surgical equipment" },
+          { type: "defibrillator-power", label: "Defibrillator Power", icon: Hospital, description: "Critical cardiac equipment" },
+          { type: "oxygen-therapy", label: "Oxygen Therapy", icon: Hospital, description: "Medical oxygen systems" },
+          { type: "surgical-equipment", label: "Surgical Equipment", icon: Hospital, description: "Surgical robots, equipment" },
         ];
       case "data-center":
         return [
@@ -90,6 +100,8 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
           { type: "grain-dryer", label: "Grain Equipment", icon: Fan, description: "Dryers, conveyors, storage" },
           { type: "livestock-equipment", label: "Livestock Equipment", icon: Fan, description: "Milking, feeding, heating" },
           { type: "motor-small", label: "Agricultural Motors", icon: Fan, description: "Farm machinery, pumps" },
+          { type: "emergency-lighting", label: "Emergency Lighting", icon: Lightbulb, description: "Barn and yard emergency lighting" },
+          { type: "agriculture-emergency", label: "Agricultural Emergency", icon: Zap, description: "Livestock area safety lighting" },
         ];
       case "transportation":
         return [
@@ -106,6 +118,8 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
           { type: "navigation-equipment", label: "Navigation Equipment", icon: Cpu, description: "GPS, radar, communications" },
           { type: "winch-system", label: "Winch Systems", icon: Warehouse, description: "Anchor winches, cargo cranes" },
           { type: "emergency", label: "Emergency Systems", icon: Zap, description: "Safety systems, emergency power" },
+          { type: "emergency-lighting", label: "Emergency Lighting", icon: Lightbulb, description: "Emergency exit lighting" },
+          { type: "marine-emergency", label: "Marine Emergency", icon: Ship, description: "Lifeboat stations, muster points" },
         ];
       case "laboratory":
         return [
@@ -122,6 +136,8 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
           { type: "ventilation-fan", label: "Mine Ventilation", icon: Fan, description: "Air circulation, safety ventilation" },
           { type: "crushing-equipment", label: "Crushing Equipment", icon: Warehouse, description: "Ore processing, crushers" },
           { type: "motor-large", label: "Heavy Motors", icon: Fan, description: "Large industrial motors" },
+          { type: "emergency-lighting", label: "Emergency Lighting", icon: Lightbulb, description: "Emergency exit lighting" },
+          { type: "mining-emergency", label: "Mining Emergency", icon: AlertTriangle, description: "Mine safety systems, escape routes" },
         ];
       case "sports-entertainment":
         return [
