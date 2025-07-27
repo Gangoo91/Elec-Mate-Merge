@@ -97,8 +97,8 @@ export const usePortfolioDataWithQualifications = () => {
     }
   }, [userSelection, qualificationCategories, toast]);
 
-  // Memoize analytics calculation
-  const updateAnalytics = useCallback(() => {
+  // Calculate analytics directly when needed
+  const calculateAnalytics = useMemo(() => {
     const totalEntries = entries.length;
     const completedEntries = entries.filter(e => e.status === 'completed').length;
     const totalTimeSpent = entries.reduce((total, entry) => total + entry.timeSpent, 0);
@@ -124,7 +124,7 @@ export const usePortfolioDataWithQualifications = () => {
         date: entry.dateCreated
       }));
 
-    const newAnalytics: PortfolioAnalytics = {
+    return {
       totalEntries,
       completedEntries,
       totalTimeSpent,
@@ -133,11 +133,9 @@ export const usePortfolioDataWithQualifications = () => {
       skillsDemo,
       recentActivity
     };
-
-    setAnalytics(newAnalytics);
   }, [entries, categories]);
 
-  // Debounced compliance update
+  // Stable compliance update function
   const updateComplianceTracking = useCallback(async () => {
     if (!userSelection || categories.length === 0) return;
 
@@ -152,7 +150,7 @@ export const usePortfolioDataWithQualifications = () => {
     } catch (error) {
       console.error('Error updating compliance:', error);
     }
-  }, [userSelection, categories, entries, updateCompliance]);
+  }, [userSelection, updateCompliance]); // Removed entries and categories from deps
 
   // Load entries when qualification changes
   useEffect(() => {
@@ -161,13 +159,17 @@ export const usePortfolioDataWithQualifications = () => {
     }
   }, [qualLoading, loadEntries]);
 
-  // Update analytics and compliance when entries change
+  // Update analytics when data changes
+  useEffect(() => {
+    setAnalytics(calculateAnalytics);
+  }, [calculateAnalytics]);
+
+  // Update compliance when entries or categories change
   useEffect(() => {
     if (entries.length >= 0 && categories.length > 0) {
-      updateAnalytics();
       updateComplianceTracking();
     }
-  }, [entries.length, categories.length, updateAnalytics, updateComplianceTracking]);
+  }, [entries.length, categories.length, updateComplianceTracking]);
 
   const addEntry = async (entryData: Omit<PortfolioEntry, 'id' | 'dateCreated'>) => {
     try {
