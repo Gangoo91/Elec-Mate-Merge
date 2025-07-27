@@ -41,28 +41,28 @@ export const SupplyRequirementsCard: React.FC<SupplyRequirementsCardProps> = ({
     >
       <div className="space-y-4">
         {/* Current Requirements */}
-        <div className="bg-primary/10 rounded-lg p-4">
-          <h4 className="font-medium mb-3">Calculated Requirements</h4>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
-            <div className="text-center">
-              <p className="text-muted-foreground">Total Current</p>
-              <p className="text-xl font-bold text-primary">{totalDesignCurrent.toFixed(1)}A</p>
+        <div className="bg-elec-grey rounded-lg p-4 border border-elec-yellow/20">
+          <h4 className="font-medium mb-3 text-elec-yellow">Calculated Requirements</h4>
+          <div className="grid grid-cols-3 gap-3">
+            <div className="text-center p-3 bg-elec-grey rounded border border-elec-yellow/10">
+              <p className="text-xs text-muted-foreground mb-1">Total Current</p>
+              <p className="text-lg font-bold text-elec-yellow">{totalDesignCurrent.toFixed(1)}A</p>
             </div>
-            <div className="text-center">
-              <p className="text-muted-foreground">Diversity Factor</p>
-              <p className="text-xl font-bold text-primary">{(diversityFactor * 100).toFixed(0)}%</p>
+            <div className="text-center p-3 bg-elec-grey rounded border border-elec-yellow/10">
+              <p className="text-xs text-muted-foreground mb-1">Diversity</p>
+              <p className="text-lg font-bold text-elec-yellow">{(diversityFactor * 100).toFixed(0)}%</p>
             </div>
-            <div className="text-center">
-              <p className="text-muted-foreground">After Diversity</p>
-              <p className="text-xl font-bold text-primary">{diversifiedCurrent.toFixed(1)}A</p>
+            <div className="text-center p-3 bg-elec-grey rounded border border-elec-yellow/10">
+              <p className="text-xs text-muted-foreground mb-1">After Diversity</p>
+              <p className="text-lg font-bold text-elec-yellow">{diversifiedCurrent.toFixed(1)}A</p>
             </div>
           </div>
         </div>
 
         {/* Recommended Supply */}
-        <div className={`rounded-lg p-4 ${isUpgradeRequired ? 'bg-amber-500/10' : 'bg-green-500/10'}`}>
+        <div className="bg-elec-grey rounded-lg p-4 border border-elec-yellow/20">
           <div className="flex items-start justify-between mb-3">
-            <h4 className="font-medium">Recommended Supply</h4>
+            <h4 className="font-medium text-elec-yellow">Recommended Supply</h4>
             {isUpgradeRequired ? 
               <AlertTriangle className="h-5 w-5 text-amber-400" /> : 
               <CheckCircle className="h-5 w-5 text-green-400" />
@@ -70,68 +70,68 @@ export const SupplyRequirementsCard: React.FC<SupplyRequirementsCardProps> = ({
           </div>
           
           <div className="space-y-3">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-              <div>
-                <p className="text-muted-foreground">Supply Rating</p>
-                <p className="font-bold">{recommendedSupply.rating}A {recommendedSupply.type}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="p-3 bg-elec-grey rounded border border-elec-yellow/10">
+                <p className="text-xs text-muted-foreground mb-1">Supply Rating</p>
+                <p className="font-bold text-elec-yellow">{recommendedSupply.rating}A {recommendedSupply.type}</p>
               </div>
-              <div>
-                <p className="text-muted-foreground">Estimated Cost</p>
-                <p className="font-bold text-green-400">{recommendedSupply.cost}</p>
+              <div className="p-3 bg-elec-grey rounded border border-elec-yellow/10">
+                <p className="text-xs text-muted-foreground mb-1">Installation Cost</p>
+                <p className="font-bold text-elec-yellow">{recommendedSupply.cost}</p>
               </div>
             </div>
 
             {isUpgradeRequired && (
-              <div className="bg-amber-500/20 rounded p-3 text-sm">
+              <div className="bg-amber-500/10 border border-amber-500/30 rounded p-3">
                 <p className="font-medium text-amber-300 mb-1">Supply Upgrade Required</p>
-                <p className="text-amber-200">Contact your DNO (Distribution Network Operator) to arrange supply upgrade. Typical lead time: 6-12 weeks.</p>
+                <p className="text-sm text-amber-200">Professional assessment needed for supply upgrade. Contact qualified electrician for DNO liaison and installation quote.</p>
               </div>
             )}
           </div>
         </div>
 
         {/* Earthing & Protection */}
-        <div className="space-y-3">
-          <h4 className="font-medium">Earthing & Protection</h4>
+        <div className="bg-elec-grey rounded-lg p-4 border border-elec-yellow/20">
+          <h4 className="font-medium mb-3 text-elec-yellow">Earthing & Protection</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="bg-background/50 rounded-lg p-3">
-              <p className="text-sm text-muted-foreground">Earthing System</p>
-              <p className="font-medium">{earthingSystem}</p>
+            <div className="p-3 bg-elec-grey rounded border border-elec-yellow/10">
+              <p className="text-xs text-muted-foreground mb-1">Earthing System</p>
+              <p className="font-medium text-elec-yellow">{earthingSystem}</p>
               <p className="text-xs text-muted-foreground mt-1">Ze ≤ {ze}Ω</p>
             </div>
-            <div className="bg-background/50 rounded-lg p-3">
-              <p className="text-sm text-muted-foreground">Main Earthing</p>
-              <p className="font-medium">10mm² minimum</p>
+            <div className="p-3 bg-elec-grey rounded border border-elec-yellow/10">
+              <p className="text-xs text-muted-foreground mb-1">Main Earthing</p>
+              <p className="font-medium text-elec-yellow">10mm² minimum</p>
               <p className="text-xs text-muted-foreground mt-1">BS7671 Reg 544.1</p>
             </div>
           </div>
         </div>
 
-        {/* Cost Breakdown */}
-        <div className="bg-muted/50 rounded-lg p-3">
-          <div className="flex items-center gap-2 mb-2">
-            <DollarSign className="h-4 w-4 text-green-500" />
-            <p className="text-sm font-medium">Supply Connection Costs</p>
+        {/* Installation Costs */}
+        <div className="bg-elec-grey rounded-lg p-4 border border-elec-yellow/20">
+          <div className="flex items-center gap-2 mb-3">
+            <DollarSign className="h-4 w-4 text-elec-yellow" />
+            <p className="font-medium text-elec-yellow">Installation Costs</p>
           </div>
-          <div className="text-xs text-muted-foreground space-y-1">
-            <div className="flex justify-between">
-              <span>DNO connection charge:</span>
-              <span>£{isUpgradeRequired ? '2000-3500' : '500-800'}</span>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between items-center p-2 bg-elec-grey rounded border border-elec-yellow/10">
+              <span className="text-muted-foreground">Consumer unit upgrade:</span>
+              <span className="font-medium text-elec-yellow">£{isUpgradeRequired ? '800-1200' : '600-900'}</span>
             </div>
-            <div className="flex justify-between">
-              <span>Meter upgrade:</span>
-              <span>£{recommendedSupply.type === "Three phase" ? '400-600' : '200-350'}</span>
+            <div className="flex justify-between items-center p-2 bg-elec-grey rounded border border-elec-yellow/10">
+              <span className="text-muted-foreground">Electrical installation:</span>
+              <span className="font-medium text-elec-yellow">£{isUpgradeRequired ? '1200-1800' : '800-1200'}</span>
             </div>
-            <div className="flex justify-between">
-              <span>Electrical work:</span>
-              <span>£{isUpgradeRequired ? '1500-2500' : '800-1200'}</span>
+            <div className="flex justify-between items-center p-2 bg-elec-grey rounded border border-elec-yellow/10">
+              <span className="text-muted-foreground">Testing & certification:</span>
+              <span className="font-medium text-elec-yellow">£200-350</span>
             </div>
           </div>
         </div>
 
         {/* Compliance Badges */}
-        <div className="flex flex-wrap gap-2">
-          <Badge variant="outline" className="border-green-500/50 text-green-400">
+        <div className="flex flex-wrap gap-2 justify-center">
+          <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow">
             BS7671 Compliant
           </Badge>
           <Badge variant="outline" className="border-blue-500/50 text-blue-400">
@@ -139,7 +139,7 @@ export const SupplyRequirementsCard: React.FC<SupplyRequirementsCardProps> = ({
           </Badge>
           {isUpgradeRequired && (
             <Badge variant="outline" className="border-amber-500/50 text-amber-400">
-              DNO Approval Required
+              Professional Assessment Required
             </Badge>
           )}
         </div>
