@@ -1,16 +1,14 @@
 
 import React, { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Grid, Plus, Settings, Download } from "lucide-react";
+import { Grid } from "lucide-react";
 import { InstallPlanData, Circuit } from "./types";
 import CircuitTypeSelector from "./CircuitTypeSelector";
 import InstallationTemplates from "./InstallationTemplates";
 import MultiCircuitEditor from "./MultiCircuitEditor";
 import QuickActionButtons from "./QuickActionButtons";
 import BulkCircuitActions from "./BulkCircuitActions";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { createCircuitFromTemplate, getAvailableTemplatesForInstallationType } from "./CircuitDefaults";
 
 interface MultiCircuitManagerProps {
@@ -22,15 +20,22 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
   planData, 
   updatePlanData 
 }) => {
-  const [activeTab, setActiveTab] = useState("quick-actions");
+  const [activeView, setActiveView] = useState("quick-actions");
   const circuits = planData.circuits || [];
+
+  const viewOptions = [
+    { value: "quick-actions", label: "Quick Add Circuits" },
+    { value: "templates", label: "Use Installation Templates" },
+    { value: "advanced", label: "Advanced Circuit Selection" },
+    { value: "editor", label: "Configure Circuits" },
+  ];
 
   const addCircuitFromType = (circuitType: string) => {
     try {
       const newCircuit = createCircuitFromTemplate(circuitType, planData.installationType);
       const updatedCircuits = [...circuits, newCircuit];
       updatePlanData({ circuits: updatedCircuits });
-      setActiveTab("editor");
+      setActiveView("editor");
     } catch (error) {
       console.error("Failed to create circuit from template:", error);
       // Fallback to basic circuit creation
@@ -50,7 +55,7 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
       };
       const updatedCircuits = [...circuits, basicCircuit];
       updatePlanData({ circuits: updatedCircuits });
-      setActiveTab("editor");
+      setActiveView("editor");
     }
   };
 
@@ -63,7 +68,7 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
 
   const applyTemplate = (templateCircuits: Circuit[]) => {
     updatePlanData({ circuits: templateCircuits });
-    setActiveTab("editor");
+    setActiveView("editor");
   };
 
   const updateCircuits = (updatedCircuits: Circuit[]) => {
@@ -74,118 +79,70 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold mb-2">Multi-Circuit Installation Design</h2>
-          <p className="text-muted-foreground">
-            Design multiple circuits for your {planData.installationType} installation with BS 7671 compliance checking.
-          </p>
-        </div>
-        <Badge variant="outline" className="border-blue-400/30 text-blue-400">
-          {circuits.filter(c => c.enabled).length} Active Circuits
-        </Badge>
-      </div>
+      <MobileSelectWrapper
+        label="Circuit Design Action"
+        placeholder="Select an action"
+        value={activeView}
+        onValueChange={setActiveView}
+        options={viewOptions}
+      />
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 bg-elec-dark border border-elec-yellow/20">
-          <TabsTrigger value="quick-actions" className="flex items-center gap-2">
-            <Plus className="h-4 w-4" />
-            Quick Add
-          </TabsTrigger>
-          <TabsTrigger value="templates" className="flex items-center gap-2">
-            <Download className="h-4 w-4" />
-            Templates
-          </TabsTrigger>
-          <TabsTrigger value="advanced" className="flex items-center gap-2">
-            <Settings className="h-4 w-4" />
-            Advanced
-          </TabsTrigger>
-          <TabsTrigger value="editor" className="flex items-center gap-2" disabled={circuits.length === 0}>
-            <Grid className="h-4 w-4" />
-            Configure
-            {circuits.length > 0 && (
-              <Badge variant="secondary" className="ml-1 bg-elec-yellow/20 text-elec-yellow">
-                {circuits.length}
-              </Badge>
-            )}
-          </TabsTrigger>
-        </TabsList>
-
-        <div className="mt-6">
-          <TabsContent value="quick-actions">
-            <div className="space-y-6">
-              <QuickActionButtons
-                circuits={circuits}
-                onAddCircuit={addCircuitFromType}
-                onRemoveLastCircuit={removeLastCircuit}
-                onUseTemplate={() => setActiveTab("templates")}
-                installationType={planData.installationType}
-              />
-              
-              {circuits.length > 1 && (
-                <BulkCircuitActions
-                  circuits={circuits}
-                  onUpdateCircuits={updateCircuits}
-                  installationType={planData.installationType}
-                />
-              )}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="templates">
-            <InstallationTemplates 
-              installationType={planData.installationType}
-              onApplyTemplate={applyTemplate}
-            />
-          </TabsContent>
-
-          <TabsContent value="advanced">
-            <CircuitTypeSelector 
+      <div className="mt-6">
+        {activeView === "quick-actions" && (
+          <div className="space-y-6">
+            <QuickActionButtons
+              circuits={circuits}
               onAddCircuit={addCircuitFromType}
-              existingCircuits={circuits}
+              onRemoveLastCircuit={removeLastCircuit}
+              onUseTemplate={() => setActiveView("templates")}
               installationType={planData.installationType}
             />
-          </TabsContent>
-
-          <TabsContent value="editor">
-            {circuits.length > 0 ? (
-              <MultiCircuitEditor 
+            
+            {circuits.length > 1 && (
+              <BulkCircuitActions
                 circuits={circuits}
                 onUpdateCircuits={updateCircuits}
                 installationType={planData.installationType}
               />
-            ) : (
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardContent className="text-center py-12">
-                  <Grid className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold mb-2">No Circuits Added</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Start by using quick actions, templates, or adding individual circuits with accurate BS 7671 defaults.
-                  </p>
-                  <div className="flex gap-2 justify-center">
-                    <Button 
-                      variant="outline" 
-                      onClick={() => setActiveTab("quick-actions")}
-                      className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-                    >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Quick Add
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      onClick={() => setActiveTab("templates")}
-                      className="border-elec-yellow/30 hover:bg-elec-yellow/10"
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Use Template
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
             )}
-          </TabsContent>
-        </div>
-      </Tabs>
+          </div>
+        )}
+
+        {activeView === "templates" && (
+          <InstallationTemplates 
+            installationType={planData.installationType}
+            onApplyTemplate={applyTemplate}
+          />
+        )}
+
+        {activeView === "advanced" && (
+          <CircuitTypeSelector 
+            onAddCircuit={addCircuitFromType}
+            existingCircuits={circuits}
+            installationType={planData.installationType}
+          />
+        )}
+
+        {activeView === "editor" && (
+          circuits.length > 0 ? (
+            <MultiCircuitEditor 
+              circuits={circuits}
+              onUpdateCircuits={updateCircuits}
+              installationType={planData.installationType}
+            />
+          ) : (
+            <Card className="border-elec-yellow/20 bg-elec-gray">
+              <CardContent className="text-center py-12">
+                <Grid className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-lg font-semibold mb-2">No Circuits Added</h3>
+                <p className="text-muted-foreground mb-4">
+                  Start by adding circuits using the dropdown above.
+                </p>
+              </CardContent>
+            </Card>
+          )
+        )}
+      </div>
 
       {/* Progress Indicator */}
       {canProceed && (
