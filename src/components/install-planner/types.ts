@@ -8,7 +8,7 @@ export interface InstallPlanData {
   // Load Details
   totalLoad: number;
   voltage: number;
-  phases: "single" | "three";
+  phases: "single" | "three" | "dc";
   powerFactor?: number;
   
   // Cable Run
@@ -86,7 +86,7 @@ export interface Circuit {
   loadType: string;
   totalLoad: number;
   voltage: number;
-  phases: "single" | "three";
+  phases: "single" | "three" | "dc";
   powerFactor?: number;
   cableLength: number;
   installationMethod: string;

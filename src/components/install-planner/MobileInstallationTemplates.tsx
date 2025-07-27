@@ -263,6 +263,76 @@ const MobileInstallationTemplates: React.FC<MobileInstallationTemplatesProps> = 
             ]
           }
         ];
+      case "data-center":
+        return [
+          {
+            id: "small-data-center",
+            name: "Small Data Center",
+            description: "Basic data center installation with UPS and cooling",
+            installationType: "data-center",
+            circuits: [
+              {
+                name: "UPS System",
+                loadType: "ups-system",
+                totalLoad: 50000,
+                voltage: 400,
+                phases: "three",
+                cableLength: 20,
+                installationMethod: "tray",
+                cableType: "swa",
+                protectiveDevice: "mcb",
+                enabled: true
+              },
+              {
+                name: "Server Racks",
+                loadType: "server-rack",
+                totalLoad: 8000,
+                voltage: 230,
+                phases: "single",
+                cableLength: 15,
+                installationMethod: "tray",
+                cableType: "swa",
+                protectiveDevice: "rcbo",
+                enabled: true
+              }
+            ]
+          }
+        ];
+      case "healthcare":
+        return [
+          {
+            id: "medical-facility",
+            name: "Medical Facility",
+            description: "Healthcare facility with medical equipment and backup power",
+            installationType: "healthcare",
+            circuits: [
+              {
+                name: "Medical Equipment",
+                loadType: "medical",
+                totalLoad: 8000,
+                voltage: 230,
+                phases: "single",
+                cableLength: 20,
+                installationMethod: "conduit",
+                cableType: "mineral",
+                protectiveDevice: "rcbo",
+                enabled: true
+              },
+              {
+                name: "Emergency Systems",
+                loadType: "emergency",
+                totalLoad: 1500,
+                voltage: 230,
+                phases: "single",
+                cableLength: 80,
+                installationMethod: "conduit",
+                cableType: "mineral",
+                protectiveDevice: "mcb",
+                enabled: true
+              }
+            ]
+          }
+        ];
       default:
         return [];
     }
