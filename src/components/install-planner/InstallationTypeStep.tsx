@@ -21,13 +21,16 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
     { value: "commercial", label: "Commercial Installation", icon: Building, description: "Offices, shops, restaurants" },
     { value: "industrial", label: "Industrial Installation", icon: Factory, description: "Factories, warehouses, manufacturing" },
     { value: "healthcare", label: "Healthcare Facilities", icon: Hospital, description: "Hospitals, clinics, care homes" },
-    { value: "educational", label: "Educational Buildings", icon: School, description: "Schools, colleges, universities" },
+    { value: "education", label: "Educational Buildings", icon: School, description: "Schools, colleges, universities" },
     { value: "retail", label: "Retail & Hospitality", icon: ShoppingCart, description: "Shops, hotels, entertainment venues" },
-    { value: "data-centre", label: "Data Centres", icon: Cpu, description: "Server rooms, IT facilities" },
-    { value: "agricultural", label: "Agricultural", icon: Wind, description: "Farms, rural installations" },
-    { value: "marine", label: "Marine & Offshore", icon: Ship, description: "Ships, offshore platforms" },
-    { value: "transport", label: "Transport Infrastructure", icon: Truck, description: "Railways, airports, EV charging" },
-    { value: "renewable", label: "Renewable Energy", icon: Sun, description: "Solar, wind, battery storage" }
+    { value: "data-center", label: "Data Centres", icon: Cpu, description: "Server rooms, IT facilities" },
+    { value: "agriculture", label: "Agricultural", icon: Wind, description: "Farms, rural installations" },
+    { value: "marine-offshore", label: "Marine & Offshore", icon: Ship, description: "Ships, offshore platforms" },
+    { value: "transportation", label: "Transport Infrastructure", icon: Truck, description: "Railways, airports, EV charging" },
+    { value: "laboratory", label: "Laboratory Facilities", icon: AlertTriangle, description: "Research labs, clean rooms" },
+    { value: "mining", label: "Mining & Quarrying", icon: Warehouse, description: "Mining operations, quarries" },
+    { value: "sports-entertainment", label: "Sports & Entertainment", icon: Lightbulb, description: "Stadiums, venues, leisure facilities" },
+    { value: "hazardous-areas", label: "Hazardous Areas", icon: AlertTriangle, description: "Ex-proof, intrinsically safe areas" }
   ];
 
   // For multi-circuit mode, show installation purpose and environment selection
