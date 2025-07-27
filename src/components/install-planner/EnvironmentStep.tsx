@@ -149,32 +149,28 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
       {/* Installation Summary */}
       <Card className="bg-elec-yellow/5 border-elec-yellow/20">
         <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center justify-center gap-2 text-center text-base">
+          <CardTitle className="text-elec-yellow flex items-center justify-center gap-2 text-center">
             <Shield className="h-5 w-5" />
             Environmental Configuration Summary
           </CardTitle>
         </CardHeader>
-        <CardContent className="px-6">
-          <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-6">
-              <div className="text-center p-6 bg-elec-card/30 rounded-lg min-h-[100px] flex flex-col justify-center">
-                <div className="text-xs text-muted-foreground mb-3 leading-tight">Global Temperature</div>
-                <div className="font-bold text-xl text-elec-yellow">{environmentalSettings.ambientTemperature}°C</div>
-              </div>
-              <div className="text-center p-6 bg-elec-card/30 rounded-lg min-h-[100px] flex flex-col justify-center">
-                <div className="text-xs text-muted-foreground mb-3 leading-tight">Earthing System</div>
-                <div className="font-bold text-xl text-blue-400">{environmentalSettings.earthingSystem}</div>
-              </div>
+        <CardContent className="px-6 py-6">
+          <div className="grid grid-cols-2 gap-8 text-center">
+            <div className="space-y-2">
+              <div className="text-xs text-muted-foreground uppercase tracking-wide">Global Temperature</div>
+              <div className="text-2xl font-bold text-elec-yellow">{environmentalSettings.ambientTemperature}°C</div>
             </div>
-            <div className="grid grid-cols-2 gap-6">
-              <div className="text-center p-6 bg-elec-card/30 rounded-lg min-h-[100px] flex flex-col justify-center">
-                <div className="text-xs text-muted-foreground mb-3 leading-tight">Installation Zones</div>
-                <div className="font-bold text-xl text-green-400">{environmentalSettings.installationZones?.length || 0}</div>
-              </div>
-              <div className="text-center p-6 bg-elec-card/30 rounded-lg min-h-[100px] flex flex-col justify-center">
-                <div className="text-xs text-muted-foreground mb-3 leading-tight">Active Circuits</div>
-                <div className="font-bold text-xl text-purple-400">{circuits.filter(c => c.enabled).length}</div>
-              </div>
+            <div className="space-y-2">
+              <div className="text-xs text-muted-foreground uppercase tracking-wide">Earthing System</div>
+              <div className="text-2xl font-bold text-blue-400">{environmentalSettings.earthingSystem}</div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-xs text-muted-foreground uppercase tracking-wide">Installation Zones</div>
+              <div className="text-2xl font-bold text-green-400">{environmentalSettings.installationZones?.length || 0}</div>
+            </div>
+            <div className="space-y-2">
+              <div className="text-xs text-muted-foreground uppercase tracking-wide">Active Circuits</div>
+              <div className="text-2xl font-bold text-purple-400">{circuits.filter(c => c.enabled).length}</div>
             </div>
           </div>
         </CardContent>
