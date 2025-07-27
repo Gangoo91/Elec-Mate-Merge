@@ -1,10 +1,28 @@
-
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Lightbulb, Zap, Fan, Microwave, Car, Hospital, Cpu, Flame, Warehouse, Ship, AlertTriangle } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { 
+  Plus, 
+  Lightbulb, 
+  Zap, 
+  Fan, 
+  Microwave, 
+  Car, 
+  Hospital, 
+  Cpu, 
+  Flame, 
+  Warehouse,
+  Search,
+  ChevronDown,
+  ChevronRight,
+  Filter
+} from "lucide-react";
 import { Circuit } from "./types";
+import { CIRCUIT_TEMPLATES, getAvailableTemplatesForInstallationType } from "./CircuitDefaults";
 
 interface CircuitTypeSelectorProps {
   onAddCircuit: (circuitType: string) => void;
@@ -12,219 +30,241 @@ interface CircuitTypeSelectorProps {
   installationType: string;
 }
 
-const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({ 
+const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
   onAddCircuit, 
   existingCircuits,
   installationType 
 }) => {
-  const getRecommendedCircuits = (instType: string) => {
-    const baseCircuits = [
-      { type: "lighting", label: "Lighting Circuit", icon: Lightbulb, description: "General lighting, LED, fluorescent" },
-      { type: "power", label: "Power Circuit", icon: Zap, description: "Socket outlets, general power" },
-    ];
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterCategory, setFilterCategory] = useState("all");
+  const [expandedCategories, setExpandedCategories] = useState<string[]>(["recommended"]);
 
-    switch (instType) {
-      case "domestic":
-        return [
-          ...baseCircuits,
-          { type: "cooker", label: "Cooker Circuit", icon: Microwave, description: "Electric cookers, ovens, hobs" },
-          { type: "heating", label: "Heating Circuit", icon: Fan, description: "Electric heating, underfloor heating" },
-          { type: "ev-charging", label: "EV Charging", icon: Car, description: "Electric vehicle charging points" },
-          { type: "shower", label: "Electric Shower", icon: Fan, description: "Electric showers, instant water heaters" },
-          { type: "renewable-solar", label: "Solar PV", icon: Fan, description: "Solar panels, battery storage" },
-        ];
-      case "commercial":
-        return [
-          ...baseCircuits,
-          { type: "hvac", label: "HVAC Systems", icon: Fan, description: "Air conditioning, ventilation systems" },
-          { type: "it-equipment", label: "IT Equipment", icon: Cpu, description: "Servers, networking, UPS" },
-          { type: "emergency", label: "Emergency Systems", icon: Zap, description: "Emergency lighting, fire alarms" },
-          { type: "emergency-lighting", label: "Emergency Lighting", icon: Lightbulb, description: "Emergency exit lighting" },
-          { type: "commercial-lighting", label: "Commercial Lighting", icon: Lightbulb, description: "Office lighting, retail display" },
-        ];
-      case "industrial":
-        return [
-          ...baseCircuits,
-          { type: "motor-small", label: "Small Motor Loads", icon: Fan, description: "Pumps, fans, small machinery" },
-          { type: "motor-large", label: "Large Motor Loads", icon: Fan, description: "Large pumps, compressors" },
-          { type: "welding", label: "Welding Equipment", icon: Flame, description: "Arc welders, resistance welders" },
-          { type: "crane", label: "Crane & Hoist", icon: Warehouse, description: "Overhead cranes, lifting equipment" },
-          { type: "furnace", label: "Industrial Furnaces", icon: Flame, description: "Electric furnaces, kilns" },
-          { type: "emergency-lighting", label: "Emergency Lighting", icon: Lightbulb, description: "Emergency exit lighting" },
-          { type: "compressed-air", label: "Compressed Air", icon: Fan, description: "Air compressors, pneumatic systems" },
-          { type: "waste-treatment", label: "Waste Treatment", icon: Fan, description: "Treatment plants, filtration" },
-          { type: "material-handling", label: "Material Handling", icon: Warehouse, description: "Robotic systems, automation" },
-          { type: "control-room-power", label: "Control Room Power", icon: Cpu, description: "SCADA systems, control panels" },
-        ];
-      case "healthcare":
-        return [
-          ...baseCircuits,
-          { type: "medical", label: "Medical Equipment", icon: Hospital, description: "Life support, medical devices" },
-          { type: "emergency", label: "Emergency Systems", icon: Zap, description: "Emergency lighting, fire alarms" },
-          { type: "emergency-lighting", label: "Emergency Lighting", icon: Lightbulb, description: "Emergency exit lighting" },
-          { type: "it-equipment", label: "IT Equipment", icon: Cpu, description: "Patient monitoring, data systems" },
-          { type: "operating-theatre", label: "Operating Theatre", icon: Hospital, description: "Critical surgical equipment" },
-          { type: "defibrillator-power", label: "Defibrillator Power", icon: Hospital, description: "Critical cardiac equipment" },
-          { type: "oxygen-therapy", label: "Oxygen Therapy", icon: Hospital, description: "Medical oxygen systems" },
-          { type: "surgical-equipment", label: "Surgical Equipment", icon: Hospital, description: "Surgical robots, equipment" },
-        ];
-      case "data-center":
-        return [
-          ...baseCircuits,
-          { type: "ups-system", label: "UPS Systems", icon: Cpu, description: "Uninterruptible power supplies" },
-          { type: "server-rack", label: "Server Racks", icon: Cpu, description: "Server rack power distribution" },
-          { type: "cooling-system", label: "Cooling Systems", icon: Fan, description: "CRAC units, chilled water" },
-          { type: "backup-generator", label: "Backup Generator", icon: Zap, description: "Emergency backup power" },
-          { type: "pdu-intelligent", label: "Intelligent PDU", icon: Cpu, description: "Smart power distribution" },
-        ];
-      case "education":
-        return [
-          ...baseCircuits,
-          { type: "classroom-power", label: "Classroom Power", icon: Lightbulb, description: "Educational facility power" },
-          { type: "lab-equipment", label: "Laboratory Equipment", icon: Cpu, description: "Science lab equipment" },
-          { type: "sports-lighting", label: "Sports Lighting", icon: Lightbulb, description: "Sports hall lighting" },
-          { type: "it-equipment", label: "IT Equipment", icon: Cpu, description: "Computer labs, AV systems" },
-        ];
-      case "retail":
-        return [
-          ...baseCircuits,
-          { type: "retail-lighting", label: "Retail Lighting", icon: Lightbulb, description: "Display lighting, shop fronts" },
-          { type: "pos-systems", label: "POS Systems", icon: Cpu, description: "Point of sale, payment systems" },
-          { type: "cold-storage", label: "Refrigeration", icon: Fan, description: "Chillers, freezers, cold rooms" },
-          { type: "kitchen-equipment", label: "Kitchen Equipment", icon: Microwave, description: "Commercial kitchen appliances" },
-        ];
-      case "agriculture":
-        return [
-          ...baseCircuits,
-          { type: "irrigation-pump", label: "Irrigation Pumps", icon: Fan, description: "Water pumps, irrigation systems" },
-          { type: "grain-dryer", label: "Grain Equipment", icon: Fan, description: "Dryers, conveyors, storage" },
-          { type: "livestock-equipment", label: "Livestock Equipment", icon: Fan, description: "Milking, feeding, heating" },
-          { type: "motor-small", label: "Agricultural Motors", icon: Fan, description: "Farm machinery, pumps" },
-          { type: "emergency-lighting", label: "Emergency Lighting", icon: Lightbulb, description: "Barn and yard emergency lighting" },
-          { type: "agriculture-emergency", label: "Agricultural Emergency", icon: Zap, description: "Livestock area safety lighting" },
-        ];
-      case "transportation":
-        return [
-          ...baseCircuits,
-          { type: "charging-station", label: "EV Charging Stations", icon: Car, description: "Public EV charging points" },
-          { type: "platform-lighting", label: "Platform Lighting", icon: Lightbulb, description: "Railway, bus station lighting" },
-          { type: "signal-systems", label: "Signal Systems", icon: Zap, description: "Traffic lights, crossing signals" },
-          { type: "emergency", label: "Emergency Systems", icon: Zap, description: "Emergency lighting, alarms" },
-        ];
-      case "marine-offshore":
-        return [
-          ...baseCircuits,
-          { type: "marine-power", label: "Marine Power", icon: Ship, description: "Ship systems, offshore platforms" },
-          { type: "navigation-equipment", label: "Navigation Equipment", icon: Cpu, description: "GPS, radar, communications" },
-          { type: "winch-system", label: "Winch Systems", icon: Warehouse, description: "Anchor winches, cargo cranes" },
-          { type: "emergency", label: "Emergency Systems", icon: Zap, description: "Safety systems, emergency power" },
-          { type: "emergency-lighting", label: "Emergency Lighting", icon: Lightbulb, description: "Emergency exit lighting" },
-          { type: "marine-emergency", label: "Marine Emergency", icon: Ship, description: "Lifeboat stations, muster points" },
-        ];
-      case "laboratory":
-        return [
-          ...baseCircuits,
-          { type: "fume-cupboard", label: "Fume Cupboards", icon: Fan, description: "Laboratory extraction systems" },
-          { type: "analytical-equipment", label: "Analytical Equipment", icon: Cpu, description: "Precision instruments" },
-          { type: "clean-room", label: "Clean Room Systems", icon: Fan, description: "Environmental control, filtration" },
-          { type: "emergency", label: "Emergency Systems", icon: Zap, description: "Safety showers, emergency power" },
-        ];
-      case "mining":
-        return [
-          ...baseCircuits,
-          { type: "conveyor-belt", label: "Conveyor Systems", icon: Warehouse, description: "Material transport, ore handling" },
-          { type: "ventilation-fan", label: "Mine Ventilation", icon: Fan, description: "Air circulation, safety ventilation" },
-          { type: "crushing-equipment", label: "Crushing Equipment", icon: Warehouse, description: "Ore processing, crushers" },
-          { type: "motor-large", label: "Heavy Motors", icon: Fan, description: "Large industrial motors" },
-          { type: "emergency-lighting", label: "Emergency Lighting", icon: Lightbulb, description: "Emergency exit lighting" },
-          { type: "mining-emergency", label: "Mining Emergency", icon: AlertTriangle, description: "Mine safety systems, escape routes" },
-        ];
-      case "sports-entertainment":
-        return [
-          ...baseCircuits,
-          { type: "floodlighting", label: "Sports Floodlighting", icon: Lightbulb, description: "Stadium, court lighting" },
-          { type: "sound-system", label: "Audio/Visual", icon: Cpu, description: "PA systems, video screens" },
-          { type: "scoreboard", label: "Scoreboards", icon: Cpu, description: "Electronic displays, timing" },
-          { type: "emergency", label: "Emergency Systems", icon: Zap, description: "Emergency lighting, evacuation" },
-        ];
-      case "hazardous-areas":
-        return [
-          ...baseCircuits,
-          { type: "zone1-lighting", label: "Ex-proof Lighting", icon: Lightbulb, description: "Hazardous area lighting" },
-          { type: "zone1-motor", label: "Ex-proof Motors", icon: Fan, description: "Explosion-proof motors" },
-          { type: "intrinsically-safe", label: "Intrinsically Safe", icon: Zap, description: "IS instrumentation circuits" },
-          { type: "emergency", label: "Emergency Systems", icon: Zap, description: "Emergency evacuation systems" },
-        ];
-      default:
-        return baseCircuits;
+  const availableTemplates = getAvailableTemplatesForInstallationType(installationType);
+  const existingTypes = existingCircuits.map(c => c.loadType);
+
+  const getCircuitIcon = (type: string) => {
+    switch (type) {
+      case "lighting":
+      case "commercial-lighting":
+        return Lightbulb;
+      case "power":
+      case "power-radial":
+      case "commercial-power":
+        return Zap;
+      case "cooker": return Microwave;
+      case "shower": return Fan;
+      case "heating": return Flame;
+      case "ev-charging": return Car;
+      case "motor-small":
+      case "motor-large":
+      case "motor": return Fan;
+      case "hvac": return Fan;
+      case "it-equipment": return Cpu;
+      case "emergency": return Zap;
+      case "medical": return Hospital;
+      case "welding": return Flame;
+      case "crane": return Warehouse;
+      case "furnace": return Flame;
+      default: return Zap;
     }
   };
 
-  const recommendedCircuits = getRecommendedCircuits(installationType);
-  const existingTypes = existingCircuits.map(c => c.loadType);
+  const circuitCategories = useMemo(() => {
+    const categories: { [key: string]: string[] } = {
+      recommended: availableTemplates.slice(0, 6),
+      power: availableTemplates.filter(t => 
+        t.includes("power") || t.includes("motor") || t.includes("welding") || t.includes("crane")
+      ),
+      lighting: availableTemplates.filter(t => t.includes("lighting")),
+      specialized: availableTemplates.filter(t => 
+        t.includes("hvac") || t.includes("it-equipment") || t.includes("emergency") || 
+        t.includes("medical") || t.includes("furnace") || t.includes("ev-charging") ||
+        t.includes("cooker") || t.includes("shower") || t.includes("heating")
+      )
+    };
+
+    // Remove duplicates
+    Object.keys(categories).forEach(key => {
+      categories[key] = [...new Set(categories[key])];
+    });
+
+    return categories;
+  }, [availableTemplates]);
+
+  const filteredCircuits = useMemo(() => {
+    let circuits = availableTemplates;
+    
+    if (filterCategory !== "all") {
+      circuits = circuitCategories[filterCategory] || [];
+    }
+
+    if (searchTerm) {
+      circuits = circuits.filter(type => {
+        const template = CIRCUIT_TEMPLATES[type];
+        return template && (
+          template.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          template.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          template.typicalApplications.some(app => 
+            app.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+        );
+      });
+    }
+
+    return circuits;
+  }, [availableTemplates, filterCategory, searchTerm, circuitCategories]);
+
+  const toggleCategory = (category: string) => {
+    setExpandedCategories(prev => 
+      prev.includes(category) 
+        ? prev.filter(c => c !== category)
+        : [...prev, category]
+    );
+  };
+
+  const categoryOptions = [
+    { value: "all", label: "All Circuits" },
+    { value: "recommended", label: "Recommended" },
+    { value: "power", label: "Power & Motors" },
+    { value: "lighting", label: "Lighting" },
+    { value: "specialized", label: "Specialized" }
+  ];
+
+  const renderCircuitCard = (circuitType: string) => {
+    const template = CIRCUIT_TEMPLATES[circuitType];
+    if (!template) return null;
+
+    const isAdded = existingTypes.includes(circuitType);
+    const Icon = getCircuitIcon(circuitType);
+
+    return (
+      <Card
+        key={circuitType}
+        className={`cursor-pointer border-2 transition-all ${
+          isAdded
+            ? 'border-green-400 bg-green-400/10'
+            : 'border-elec-yellow/20 hover:border-elec-yellow/40'
+        }`}
+        onClick={() => !isAdded && onAddCircuit(circuitType)}
+      >
+        <CardContent className="p-4">
+          <div className="w-full">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0 flex-1">
+                <h4 className="font-medium text-sm leading-tight mb-3 text-center">{template.name}</h4>
+                <p className="text-xs text-muted-foreground mb-3 leading-tight text-center">
+                  {template.description}
+                </p>
+                <div className="grid grid-cols-3 gap-2 text-xs">
+                  <div className="bg-elec-dark/50 rounded p-2 text-center">
+                    <div className="text-muted-foreground mb-1">Load</div>
+                    <div className="font-medium text-elec-yellow">{template.totalLoad}W</div>
+                  </div>
+                  <div className="bg-elec-dark/50 rounded p-2 text-center">
+                    <div className="text-muted-foreground mb-1">Voltage</div>
+                    <div className="font-medium text-blue-400">{template.voltage}V</div>
+                  </div>
+                  <div className="bg-elec-dark/50 rounded p-2 text-center">
+                    <div className="text-muted-foreground mb-1">Phase</div>
+                    <div className="font-medium text-green-400">{template.phases === 'single' ? '1φ' : '3φ'}</div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex-shrink-0">
+                {isAdded ? (
+                  <Badge variant="outline" className="border-green-400/30 text-green-400 text-xs">
+                    Added
+                  </Badge>
+                ) : (
+                  <Button
+                    size="sm"
+                    className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-8 w-8 p-0"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onAddCircuit(circuitType);
+                    }}
+                  >
+                    <Plus className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  };
 
   return (
     <div className="space-y-6">
-      <div>
-        <h3 className="text-lg font-semibold mb-2">Add Circuit Types</h3>
-        <p className="text-muted-foreground">
-          Select the types of circuits typically found in {installationType} installations.
-        </p>
+      {/* Search and Filter */}
+      <div className="space-y-4">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search circuit types..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10 bg-elec-dark border-elec-yellow/30"
+          />
+        </div>
+
+        <MobileSelectWrapper
+          label="Filter by Category"
+          value={filterCategory}
+          onValueChange={setFilterCategory}
+          options={categoryOptions}
+        />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {recommendedCircuits.map((circuit) => {
-          const isAdded = existingTypes.includes(circuit.type);
-          const Icon = circuit.icon;
-          
-          return (
-            <Card
-              key={circuit.type}
-              className={`cursor-pointer border-2 transition-all ${
-                isAdded
-                  ? 'border-green-400 bg-green-400/10'
-                  : 'border-elec-yellow/20 hover:border-elec-yellow/40'
-              }`}
-              onClick={() => !isAdded && onAddCircuit(circuit.type)}
-            >
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Icon className="h-6 w-6 text-elec-yellow" />
-                    <div>
-                      <h4 className="font-medium">{circuit.label}</h4>
-                      <p className="text-sm text-muted-foreground">{circuit.description}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {isAdded ? (
-                      <Badge variant="outline" className="border-green-400/30 text-green-400">
-                        Added
+      {/* Circuit Categories */}
+      {filterCategory === "all" ? (
+        <div className="space-y-4">
+          {Object.entries(circuitCategories).map(([category, types]) => {
+            if (types.length === 0) return null;
+            
+            const isExpanded = expandedCategories.includes(category);
+            const categoryLabel = categoryOptions.find(opt => opt.value === category)?.label || category;
+
+            return (
+              <Collapsible key={category} open={isExpanded} onOpenChange={() => toggleCategory(category)}>
+                <CollapsibleTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="w-full justify-between p-4 h-auto border border-elec-yellow/20 hover:border-elec-yellow/40"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Filter className="h-4 w-4 text-elec-yellow" />
+                      <span className="font-medium">{categoryLabel}</span>
+                      <Badge variant="outline" className="border-elec-yellow/30 text-elec-yellow">
+                        {types.length}
                       </Badge>
-                    ) : (
-                      <Button
-                        size="sm"
-                        className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onAddCircuit(circuit.type);
-                        }}
-                      >
-                        <Plus className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+                    </div>
+                    {isExpanded ? 
+                      <ChevronDown className="h-4 w-4" /> : 
+                      <ChevronRight className="h-4 w-4" />
+                    }
+                  </Button>
+                </CollapsibleTrigger>
+                
+                <CollapsibleContent className="space-y-2 mt-2">
+                  {types.map(renderCircuitCard)}
+                </CollapsibleContent>
+              </Collapsible>
+            );
+          })}
+        </div>
+      ) : (
+        <div className="space-y-2">
+          {filteredCircuits.map(renderCircuitCard)}
+        </div>
+      )}
 
+      {/* Summary */}
       {existingCircuits.length > 0 && (
         <Card className="bg-green-500/10 border-green-500/30">
           <CardHeader>
-            <CardTitle className="text-green-300 flex items-center gap-2">
+            <CardTitle className="text-green-300 flex items-center gap-2 text-base">
               <Zap className="h-5 w-5" />
               Circuits Added ({existingCircuits.length})
             </CardTitle>

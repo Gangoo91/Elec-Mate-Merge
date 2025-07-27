@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Grid } from "lucide-react";
 import { InstallPlanData, Circuit } from "./types";
-import EnhancedCircuitTypeSelector from "./EnhancedCircuitTypeSelector";
+import CircuitTypeSelector from "./CircuitTypeSelector";
 import MobileInstallationTemplates from "./MobileInstallationTemplates";
 import EnhancedMultiCircuitEditor from "./EnhancedMultiCircuitEditor";
 import QuickActionButtons from "./QuickActionButtons";
@@ -116,7 +116,7 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
         )}
 
         {activeView === "advanced" && (
-          <EnhancedCircuitTypeSelector 
+          <CircuitTypeSelector 
             onAddCircuit={addCircuitFromType}
             existingCircuits={circuits}
             installationType={planData.installationType}

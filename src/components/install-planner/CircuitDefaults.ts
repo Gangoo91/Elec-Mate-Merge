@@ -1366,6 +1366,60 @@ export const CIRCUIT_TEMPLATES: Record<string, CircuitTemplate> = {
     recommendedProtectiveDevice: "marine-mcb",
     description: "Emergency lighting for marine vessels and offshore platforms",
     typicalApplications: ["Lifeboat stations", "Muster points", "Escape routes", "Navigation safety"]
+  },
+
+  // Additional Circuit Types for Enhanced Coverage
+  "building-management": {
+    name: "Building Management System",
+    totalLoad: 1000,
+    voltage: 230,
+    phases: "single",
+    cableLength: 80,
+    recommendedInstallationMethod: "trunking",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "mcb",
+    description: "Building automation and control systems",
+    typicalApplications: ["BMS controllers", "Sensors", "Actuators", "Integration systems"]
+  },
+
+  "cctv-systems": {
+    name: "CCTV Surveillance System",
+    totalLoad: 800,
+    voltage: 230,
+    phases: "single",
+    cableLength: 100,
+    recommendedInstallationMethod: "conduit",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "mcb",
+    description: "Video surveillance and security monitoring",
+    typicalApplications: ["IP cameras", "NVR systems", "PTZ cameras", "Monitoring stations"]
+  },
+
+  "telecommunications": {
+    name: "Telecommunications Equipment",
+    totalLoad: 2000,
+    voltage: 230,
+    phases: "single",
+    cableLength: 50,
+    recommendedInstallationMethod: "trunking",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "rcbo",
+    description: "Communication and data transmission equipment",
+    typicalApplications: ["PBX systems", "Network switches", "Fiber equipment", "Communication rooms"]
+  },
+
+  "waste-management": {
+    name: "Waste Management Systems",
+    totalLoad: 5000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 40,
+    powerFactor: 0.85,
+    recommendedInstallationMethod: "tray",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "mcb",
+    description: "Automated waste collection and processing",
+    typicalApplications: ["Compactors", "Shredders", "Conveyor systems", "Sorting equipment"]
   }
 };
 
@@ -1411,7 +1465,8 @@ export function getAvailableTemplatesForInstallationType(installationType: strin
       return [
         "commercial-lighting", "commercial-power", "hvac", "it-equipment", "emergency", "emergency-lighting",
         "power", "lighting", "smart-lighting", "process-control",
-        "sound-system", "scoreboard", "security-systems", "access-control"
+        "sound-system", "scoreboard", "security-systems", "access-control", "building-management",
+        "cctv-systems", "telecommunications", "elevator-systems", "av-systems"
       ];
     case "industrial":
       return [
@@ -1427,6 +1482,8 @@ export function getAvailableTemplatesForInstallationType(installationType: strin
         "furnace", "induction-furnace", "arc-furnace", "blast-furnace", "heat-treatment-furnace",
         // Specialized Equipment
         "electroplating", "conveyor-belt", "ventilation-fan", "crushing-equipment",
+        // Infrastructure
+        "building-management", "cctv-systems", "telecommunications", "waste-management",
         // Hazardous Areas
         "zone1-lighting", "zone1-motor", "intrinsically-safe"
       ];
@@ -1446,13 +1503,15 @@ export function getAvailableTemplatesForInstallationType(installationType: strin
       return [
         "kitchen-equipment", "guest-room", "laundry-equipment", "commercial-lighting",
         "hvac", "emergency", "emergency-lighting", "elevator-systems", 
-        "pool-equipment", "spa-systems", "lighting", "power"
+        "pool-equipment", "spa-systems", "lighting", "power", "building-management",
+        "cctv-systems", "telecommunications", "digital-signage", "av-systems"
       ];
     case "retail":
       return [
         "retail-lighting", "pos-systems", "cold-storage", "commercial-power",
         "hvac", "emergency", "emergency-lighting", "security-systems",
-        "digital-signage", "sound-system", "lighting", "power"
+        "digital-signage", "sound-system", "lighting", "power", "building-management",
+        "cctv-systems", "telecommunications", "waste-management"
       ];
     case "agriculture":
       return [
