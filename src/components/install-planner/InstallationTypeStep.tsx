@@ -76,15 +76,15 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
         />
 
         {planData.installationPurpose && planData.installationType && (
-          <Card className="bg-green-500/10 border-green-500/30">
-            <CardHeader>
-              <CardTitle className="text-green-300 flex items-center gap-2">
+          <Card className="bg-green-500/10 border-green-500/30 shadow-lg">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-green-300 flex items-center gap-2 text-lg">
                 <Zap className="h-5 w-5" />
                 Installation Details Complete
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <p className="text-green-200">
+            <CardContent className="pt-0">
+              <p className="text-green-200 text-base leading-relaxed">
                 You've configured a <strong>{planData.installationPurpose}</strong> for a{' '}
                 <strong>{planData.installationType}</strong> environment. 
                 Next, you'll design the individual circuits for this installation.

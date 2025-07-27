@@ -60,7 +60,7 @@ export function MobileSelectWrapper({
               className="text-sm font-normal text-elec-light truncate"
             />
           </MobileSelectTrigger>
-          <MobileSelectContent className="bg-elec-card border-elec-gray/50 shadow-xl z-50">
+          <MobileSelectContent className="bg-elec-card border-elec-gray/50 shadow-2xl z-[9999] max-w-[calc(100vw-2rem)]">
             {options.map((option) => (
               <MobileSelectItem 
                 key={option.value} 
