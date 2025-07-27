@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Power, PowerOff, Copy, Trash2, Settings } from "lucide-react";
 import { Circuit } from "./types";
 
@@ -89,20 +89,20 @@ const BulkCircuitActions: React.FC<BulkCircuitActionsProps> = ({
 
         {/* Bulk Action Selector */}
         <div className="flex gap-2">
-          <Select value={selectedAction} onValueChange={setSelectedAction}>
-            <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50">
-              <SelectValue placeholder="Choose bulk action..." />
-            </SelectTrigger>
-            <SelectContent className="bg-elec-dark border-elec-yellow/20 shadow-lg">
-              <SelectItem value="enable-all">Enable All Circuits</SelectItem>
-              <SelectItem value="disable-all">Disable All Circuits</SelectItem>
-              <SelectItem value="duplicate-enabled">Duplicate Active Circuits</SelectItem>
-              {disabledCount > 0 && (
-                <SelectItem value="remove-disabled">Remove Disabled Circuits</SelectItem>
-              )}
-              <SelectItem value="standardize-installation">Standardise Installation Methods</SelectItem>
-            </SelectContent>
-          </Select>
+          <div className="flex-1">
+            <MobileSelectWrapper
+              placeholder="Choose bulk action..."
+              value={selectedAction}
+              onValueChange={setSelectedAction}
+              options={[
+                { value: "enable-all", label: "Enable All Circuits" },
+                { value: "disable-all", label: "Disable All Circuits" },
+                { value: "duplicate-enabled", label: "Duplicate Active Circuits" },
+                ...(disabledCount > 0 ? [{ value: "remove-disabled", label: "Remove Disabled Circuits" }] : []),
+                { value: "standardize-installation", label: "Standardise Installation Methods" }
+              ]}
+            />
+          </div>
 
           <Button
             onClick={handleBulkAction}

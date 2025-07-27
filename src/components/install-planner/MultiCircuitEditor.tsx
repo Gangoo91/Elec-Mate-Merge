@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Zap, Cable } from "lucide-react";
@@ -149,35 +149,27 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                          <Label htmlFor={`voltage-${circuit.id}`}>Voltage (V)</Label>
-                          <Select 
-                            value={circuit.voltage.toString()} 
+                          <MobileSelectWrapper
+                            label="Voltage (V)"
+                            value={circuit.voltage.toString()}
                             onValueChange={(value) => updateCircuit(circuit.id, { voltage: Number(value) })}
-                          >
-                          <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-elec-dark border-elec-yellow/20 shadow-lg">
-                            <SelectItem value="230">230V</SelectItem>
-                            <SelectItem value="400">400V</SelectItem>
-                          </SelectContent>
-                          </Select>
+                            options={[
+                              { value: "230", label: "230V" },
+                              { value: "400", label: "400V" }
+                            ]}
+                          />
                         </div>
 
                         <div>
-                          <Label htmlFor={`phases-${circuit.id}`}>Phases</Label>
-                          <Select 
-                            value={circuit.phases} 
+                          <MobileSelectWrapper
+                            label="Phases"
+                            value={circuit.phases}
                             onValueChange={(value: "single" | "three") => updateCircuit(circuit.id, { phases: value })}
-                          >
-                          <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-elec-dark border-elec-yellow/20 shadow-lg">
-                            <SelectItem value="single">Single</SelectItem>
-                            <SelectItem value="three">Three</SelectItem>
-                          </SelectContent>
-                          </Select>
+                            options={[
+                              { value: "single", label: "Single" },
+                              { value: "three", label: "Three" }
+                            ]}
+                          />
                         </div>
                       </div>
 
@@ -219,59 +211,47 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                       </div>
 
                       <div>
-                        <Label htmlFor={`method-${circuit.id}`}>Installation Method</Label>
-                        <Select 
-                          value={circuit.installationMethod} 
+                        <MobileSelectWrapper
+                          label="Installation Method"
+                          value={circuit.installationMethod}
                           onValueChange={(value) => updateCircuit(circuit.id, { installationMethod: value })}
-                        >
-                          <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-elec-dark border-elec-yellow/20 shadow-lg">
-                            <SelectItem value="clipped-direct">Clipped Direct</SelectItem>
-                            <SelectItem value="trunking">Trunking</SelectItem>
-                            <SelectItem value="conduit">Conduit</SelectItem>
-                            <SelectItem value="tray">Cable Tray</SelectItem>
-                            <SelectItem value="buried-direct">Buried Direct</SelectItem>
-                            <SelectItem value="ducted">Ducted</SelectItem>
-                          </SelectContent>
-                        </Select>
+                          options={[
+                            { value: "clipped-direct", label: "Clipped Direct" },
+                            { value: "trunking", label: "Trunking" },
+                            { value: "conduit", label: "Conduit" },
+                            { value: "tray", label: "Cable Tray" },
+                            { value: "buried-direct", label: "Buried Direct" },
+                            { value: "ducted", label: "Ducted" }
+                          ]}
+                        />
                       </div>
 
                       <div>
-                        <Label htmlFor={`cable-type-${circuit.id}`}>Cable Type</Label>
-                        <Select 
-                          value={circuit.cableType} 
+                        <MobileSelectWrapper
+                          label="Cable Type"
+                          value={circuit.cableType}
                           onValueChange={(value) => updateCircuit(circuit.id, { cableType: value })}
-                        >
-                          <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-elec-dark border-elec-yellow/20 shadow-lg">
-                            <SelectItem value="t&e">T&E (Twin & Earth)</SelectItem>
-                            <SelectItem value="swa">SWA (Steel Wire Armoured)</SelectItem>
-                            <SelectItem value="xlpe">XLPE (Cross-linked Polyethylene)</SelectItem>
-                            <SelectItem value="pvc">PVC (Single Core)</SelectItem>
-                            <SelectItem value="mineral">Mineral Insulated</SelectItem>
-                          </SelectContent>
-                        </Select>
+                          options={[
+                            { value: "t&e", label: "T&E (Twin & Earth)" },
+                            { value: "swa", label: "SWA (Steel Wire Armoured)" },
+                            { value: "xlpe", label: "XLPE (Cross-linked Polyethylene)" },
+                            { value: "pvc", label: "PVC (Single Core)" },
+                            { value: "mineral", label: "Mineral Insulated" }
+                          ]}
+                        />
                       </div>
 
                       <div>
-                        <Label htmlFor={`protection-${circuit.id}`}>Protective Device</Label>
-                        <Select 
-                          value={circuit.protectiveDevice} 
+                        <MobileSelectWrapper
+                          label="Protective Device"
+                          value={circuit.protectiveDevice}
                           onValueChange={(value) => updateCircuit(circuit.id, { protectiveDevice: value })}
-                        >
-                          <SelectTrigger className="bg-elec-dark border-elec-yellow/30 focus:border-elec-yellow/50">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="bg-elec-dark border-elec-yellow/20 shadow-lg">
-                            <SelectItem value="mcb">MCB</SelectItem>
-                            <SelectItem value="rcbo">RCBO</SelectItem>
-                            <SelectItem value="rcd">RCD + MCB</SelectItem>
-                          </SelectContent>
-                        </Select>
+                          options={[
+                            { value: "mcb", label: "MCB" },
+                            { value: "rcbo", label: "RCBO" },
+                            { value: "rcd", label: "RCD + MCB" }
+                          ]}
+                        />
                       </div>
 
                       <div>
