@@ -49,14 +49,6 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
 
     return (
       <div className="space-y-8">
-        <div>
-          <h2 className="text-2xl font-bold mb-2">Installation Details</h2>
-          <p className="text-muted-foreground mb-6">
-            Define the purpose and environment for your multi-circuit installation. 
-            This affects safety requirements, compliance, and cable selection across all circuits.
-          </p>
-        </div>
-
         <MobileSelectWrapper
           label="Installation Purpose"
           placeholder="Select installation purpose"
