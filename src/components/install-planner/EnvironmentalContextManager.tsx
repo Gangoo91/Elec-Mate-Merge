@@ -152,15 +152,17 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
   ];
 
   return (
-    <div className="space-y-6 p-2 sm:p-4">
+    <div className="space-y-4 p-3 sm:p-4 max-w-full">
       {/* Mobile Tab Selector */}
-      <MobileSelectWrapper
-        label="Section"
-        value={activeTab}
-        onValueChange={setActiveTab}
-        options={tabOptions}
-        placeholder="Select section..."
-      />
+      <div className="w-full">
+        <MobileSelectWrapper
+          label="Section"
+          value={activeTab}
+          onValueChange={setActiveTab}
+          options={tabOptions}
+          placeholder="Select section..."
+        />
+      </div>
 
       {/* Global Settings Content */}
       {activeTab === "global" && (
@@ -298,41 +300,41 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
 
       {/* Installation Zones Content */}
       {activeTab === "zones" && (
-        <div className="space-y-6">
-          <div className="flex flex-col space-y-4">
-            <h3 className="text-xl font-semibold text-elec-light text-center">Installation Zones</h3>
+        <div className="space-y-4">
+          <div className="flex flex-col space-y-3">
+            <h3 className="text-lg font-medium text-elec-light text-center">Installation Zones</h3>
             <Button 
               onClick={addInstallationZone} 
-              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold w-full py-3 text-base"
+              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium w-full py-3 text-sm h-12"
             >
-              <Plus className="h-5 w-5 mr-2" />
+              <Plus className="h-4 w-4 mr-2" />
               Add Zone
             </Button>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             {(environmentalSettings.installationZones || []).map((zone) => (
               <Card key={zone.id} className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
-                <CardHeader className="pb-4">
-                  <div className="flex flex-col space-y-4">
-                    <CardTitle className="flex items-center justify-center gap-2 text-elec-light text-lg">
-                      <MapPin className="h-5 w-5 text-elec-yellow" />
+                <CardHeader className="pb-3 px-4 pt-4">
+                  <div className="flex flex-col space-y-3">
+                    <CardTitle className="flex items-center justify-center gap-2 text-elec-light text-base font-medium">
+                      <MapPin className="h-4 w-4 text-elec-yellow" />
                       Zone Configuration
                     </CardTitle>
                     <Button
                       variant="outline"
                       size="sm"
                       onClick={() => deleteZone(zone.id)}
-                      className="border-destructive/30 text-destructive hover:bg-destructive/10 w-full py-2"
+                      className="border-destructive/30 text-destructive hover:bg-destructive/10 w-full py-2 h-9 text-sm"
                     >
                       <Trash2 className="h-4 w-4 mr-2" />
                       Delete Zone
                     </Button>
                   </div>
                 </CardHeader>
-                <CardContent className="space-y-5 pt-0">
+                <CardContent className="space-y-4 pt-0 px-4 pb-4">
                   <div className="space-y-2">
-                    <span className="text-sm font-semibold text-elec-light">Zone Name</span>
+                    <span className="text-sm font-medium text-elec-light">Zone Name</span>
                     <MobileInputWrapper
                       value={zone.name}
                       onChange={(value) => updateZone(zone.id, { name: value })}
@@ -341,7 +343,7 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                   </div>
 
                   <div className="space-y-2">
-                    <span className="text-sm font-semibold text-elec-light">Description</span>
+                    <span className="text-sm font-medium text-elec-light">Description</span>
                     <MobileInputWrapper
                       value={zone.description}
                       onChange={(value) => updateZone(zone.id, { description: value })}
@@ -350,16 +352,19 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                   </div>
 
                   <div className="space-y-2">
-                    <span className="text-sm font-semibold text-elec-light">Ambient Temperature (°C)</span>
+                    <span className="text-sm font-medium text-elec-light">Ambient Temperature (°C)</span>
                     <MobileInputWrapper
                       type="number"
                       value={zone.ambientTemperature.toString()}
                       onChange={(value) => updateZone(zone.id, { ambientTemperature: Number(value) })}
                     />
+                    <div className={`text-xs ${getTemperatureGuidance(zone.ambientTemperature).color} mt-1`}>
+                      {getTemperatureGuidance(zone.ambientTemperature).message}
+                    </div>
                   </div>
 
                   <div className="space-y-2">
-                    <span className="text-sm font-semibold text-elec-light">Environmental Conditions</span>
+                    <span className="text-sm font-medium text-elec-light">Environmental Conditions</span>
                     <MobileSelectWrapper
                       value={zone.environmentalConditions}
                       onValueChange={(value) => updateZone(zone.id, { environmentalConditions: value })}
@@ -370,7 +375,7 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
 
                   {zone.circuitIds.length > 0 && (
                     <div className="space-y-2">
-                      <div className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                      <div className="text-sm font-medium text-elec-light flex items-center gap-2">
                         <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
                         Assigned Circuits
                       </div>
@@ -378,7 +383,7 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                         {zone.circuitIds.map((circuitId) => {
                           const circuit = circuits.find(c => c.id === circuitId);
                           return circuit ? (
-                            <Badge key={circuitId} variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs">
+                            <Badge key={circuitId} variant="outline" className="border-elec-yellow/30 text-elec-yellow text-xs px-2 py-1">
                               {circuit.name}
                             </Badge>
                           ) : null;
