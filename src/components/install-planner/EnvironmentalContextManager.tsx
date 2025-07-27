@@ -153,7 +153,7 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
   ];
 
   return (
-    <div className="space-y-6 p-4">
+    <div className="space-y-6 p-2 sm:p-4">
       {/* Mobile Tab Selector */}
       <MobileSelectWrapper
         label="Section"
@@ -166,7 +166,7 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
       {/* Global Settings Content */}
       {activeTab === "global" && (
         <Card className="border-elec-yellow/20 bg-elec-card/50 backdrop-blur-sm">
-          <CardContent className="space-y-6 pt-6">
+          <CardContent className="space-y-6 pt-4 px-4 pb-6">
             <div className="space-y-4">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -244,33 +244,39 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                 />
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold text-elec-light">Ze Value (Ω)</span>
                   <RequiredFieldTooltip content="External earth fault loop impedance measured at the origin of the installation. This value is critical for fault protection calculations and must be measured during testing." />
                 </div>
-                <MobileInputWrapper
-                  type="number"
-                  value={environmentalSettings.ze.toString()}
-                  onChange={(value) => {
-                    console.log('Ze value updated:', value);
-                    onUpdateEnvironmentalSettings({
-                      ...environmentalSettings,
-                      ze: Number(value)
-                    });
-                  }}
-                  hint="External earth fault loop impedance"
-                />
+                
+                {/* Prominent Ze Value Display */}
+                <div className="bg-elec-dark/30 border border-elec-yellow/30 rounded-lg p-4 text-center">
+                  <div className="text-xs text-muted-foreground mb-1">External earth fault loop impedance</div>
+                  <div className="text-2xl font-bold text-elec-yellow mb-2">{environmentalSettings.ze}</div>
+                  <MobileInputWrapper
+                    type="number"
+                    value={environmentalSettings.ze.toString()}
+                    onChange={(value) => {
+                      console.log('Ze value updated:', value);
+                      onUpdateEnvironmentalSettings({
+                        ...environmentalSettings,
+                        ze: Number(value)
+                      });
+                    }}
+                    step="0.01"
+                  />
+                </div>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <div className="text-sm font-semibold text-elec-light flex items-center gap-2">
                   <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
                   Special Requirements
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 gap-3">
                   {specialRequirements.map((requirement) => (
-                    <div key={requirement} className="flex items-center space-x-3 p-3 rounded-lg bg-elec-card/30 border border-elec-gray/30">
+                    <div key={requirement} className="flex items-center space-x-3 p-4 rounded-lg bg-elec-card/30 border border-elec-gray/30 hover:border-elec-yellow/30 transition-colors">
                       <input
                         type="checkbox"
                         id={requirement}
@@ -289,9 +295,9 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
                             });
                           }
                         }}
-                        className="w-4 h-4 text-elec-yellow bg-elec-card border-elec-gray/50 rounded focus:ring-elec-yellow focus:ring-2"
+                        className="w-5 h-5 text-elec-yellow bg-transparent border-2 border-elec-gray/50 rounded focus:ring-elec-yellow focus:ring-2 checked:bg-elec-yellow checked:border-elec-yellow"
                       />
-                      <label htmlFor={requirement} className="text-sm text-elec-light cursor-pointer flex-1">
+                      <label htmlFor={requirement} className="text-sm text-elec-light cursor-pointer flex-1 leading-tight">
                         {requirement}
                       </label>
                     </div>
