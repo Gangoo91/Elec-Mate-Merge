@@ -286,17 +286,6 @@ const InstallPlanner = () => {
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-center">
                 Professional Installation Planner
               </h1>
-              
-              <div className="max-w-2xl mx-auto space-y-3 text-sm text-muted-foreground">
-                <div>
-                  <p className="font-medium text-elec-yellow mb-2">Professional Tool:</p>
-                  <p>Design electrical installations with comprehensive analysis, visual circuit diagrams, and BS 7671 compliance.</p>
-                </div>
-                <div>
-                  <p className="font-medium text-elec-yellow mb-2">Features:</p>
-                  <p>Cable sizing, protection calculations, supply requirements, and installation guidance.</p>
-                </div>
-              </div>
             </div>
             
             {/* Action buttons - Mobile-first design */}
@@ -332,7 +321,7 @@ const InstallPlanner = () => {
                   />
                   
                   {/* Navigation moved inside content area */}
-                  <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:justify-between sm:items-center pt-6 border-t border-elec-yellow/10 gap-4">
+                  <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:justify-center sm:items-center pt-6 border-t border-elec-yellow/10 gap-3">
                     <Button
                       variant="outline"
                       onClick={handlePrevious}
@@ -346,7 +335,7 @@ const InstallPlanner = () => {
                     </Button>
 
                     {/* Progress indicator - Enhanced for mobile */}
-                    <div className="flex items-center justify-center gap-2 order-first sm:order-none px-2">
+                    <div className="flex items-center justify-center gap-2 order-first sm:order-none mb-2 sm:mb-0">
                       <div className={`text-sm px-4 py-2 rounded-full border font-medium ${
                         canProceed() ? 'text-green-400 bg-green-400/10 border-green-400/30' : 'text-amber-400 bg-amber-400/10 border-amber-400/30'
                       }`}>
