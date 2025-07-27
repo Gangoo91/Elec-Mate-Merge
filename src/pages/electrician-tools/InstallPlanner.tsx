@@ -332,7 +332,7 @@ const InstallPlanner = () => {
                   />
                   
                   {/* Navigation moved inside content area */}
-                  <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:justify-between sm:items-center pt-6 border-t border-elec-yellow/10">
+                  <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:justify-between sm:items-center pt-6 border-t border-elec-yellow/10 gap-4">
                     <Button
                       variant="outline"
                       onClick={handlePrevious}
@@ -346,7 +346,7 @@ const InstallPlanner = () => {
                     </Button>
 
                     {/* Progress indicator - Enhanced for mobile */}
-                    <div className="flex items-center justify-center gap-2 order-first sm:order-none">
+                    <div className="flex items-center justify-center gap-2 order-first sm:order-none px-2">
                       <div className={`text-sm px-4 py-2 rounded-full border font-medium ${
                         canProceed() ? 'text-green-400 bg-green-400/10 border-green-400/30' : 'text-amber-400 bg-amber-400/10 border-amber-400/30'
                       }`}>
