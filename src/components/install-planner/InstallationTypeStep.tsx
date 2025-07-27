@@ -31,8 +31,14 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
 
   // For multi-circuit mode, only show installation environment selection
   if (planData.designMode === "multi") {
+    // Format options for dropdown
+    const installationTypeOptions = installationTypes.map(type => ({
+      value: type.value,
+      label: type.label
+    }));
+
     return (
-      <div className="space-y-6">
+      <div className="space-y-8">
         <div>
           <h2 className="text-2xl font-bold mb-2">Installation Environment</h2>
           <p className="text-muted-foreground mb-6">
@@ -41,29 +47,14 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-          {installationTypes.map((type) => (
-            <Card
-              key={type.value}
-              className={`cursor-pointer border-2 transition-all hover:scale-105 ${
-                planData.installationType === type.value
-                  ? 'border-elec-yellow bg-elec-yellow/10'
-                  : 'border-elec-yellow/20 hover:border-elec-yellow/40'
-              }`}
-              onClick={() => updatePlanData({ installationType: type.value })}
-            >
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-3 text-base">
-                  <type.icon className="h-6 w-6 text-elec-yellow flex-shrink-0" />
-                  <div>
-                    <div>{type.label}</div>
-                    <p className="text-sm text-muted-foreground font-normal">{type.description}</p>
-                  </div>
-                </CardTitle>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
+        <MobileSelectWrapper
+          label="Installation Environment"
+          placeholder="Select installation environment"
+          value={planData.installationType || ""}
+          onValueChange={(value) => updatePlanData({ installationType: value })}
+          options={installationTypeOptions}
+          hint="Choose the environment type that matches your installation location"
+        />
 
         {planData.installationType && (
           <Card className="bg-green-500/10 border-green-500/30">
