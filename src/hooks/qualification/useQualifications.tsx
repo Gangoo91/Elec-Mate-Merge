@@ -12,13 +12,24 @@ export const useQualifications = () => {
 
   const loadQualifications = async () => {
     try {
+      // Get qualifications with their category counts to filter portfolio-only courses
       const { data, error } = await supabase
         .from('qualifications')
-        .select('*')
+        .select(`
+          *,
+          qualification_categories(count)
+        `)
         .order('awarding_body', { ascending: true });
 
       if (error) throw error;
-      setQualifications(data || []);
+      
+      // Filter to only show qualifications that have categories (require portfolios)
+      const portfolioQualifications = (data || []).filter(
+        qualification => qualification.qualification_categories && 
+        qualification.qualification_categories.length > 0
+      );
+      
+      setQualifications(portfolioQualifications);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load qualifications');
     }
