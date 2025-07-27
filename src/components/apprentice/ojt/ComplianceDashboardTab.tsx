@@ -180,47 +180,47 @@ const ComplianceDashboardTab = () => {
 
       {/* Progress Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
+        <Card className="bg-elec-gray border-elec-gray/40">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Overall Progress</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium text-elec-light">Overall Progress</CardTitle>
+            <TrendingUp className="h-4 w-4 text-elec-yellow" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{overallProgress.toFixed(0)}%</div>
-            <Progress value={overallProgress} className="mt-2" />
+            <div className="text-2xl font-bold text-elec-yellow">{overallProgress.toFixed(0)}%</div>
+            <Progress value={overallProgress} className="mt-2 bg-elec-card" />
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-elec-gray border-elec-gray/40">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Completed Goals</CardTitle>
-            <CheckCircle className="h-4 w-4 text-green-600" />
+            <CardTitle className="text-sm font-medium text-elec-light">Completed Goals</CardTitle>
+            <CheckCircle className="h-4 w-4 text-green-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-700">{completedGoals}</div>
-            <p className="text-xs text-muted-foreground">out of {goals.length} total</p>
+            <div className="text-2xl font-bold text-green-400">{completedGoals}</div>
+            <p className="text-xs text-elec-light/70">out of {goals.length} total</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-elec-gray border-elec-gray/40">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Goals</CardTitle>
-            <Target className="h-4 w-4 text-blue-600" />
+            <CardTitle className="text-sm font-medium text-elec-light">Active Goals</CardTitle>
+            <Target className="h-4 w-4 text-blue-400" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-700">
+            <div className="text-2xl font-bold text-blue-400">
               {goals.filter(g => g.status === 'in_progress').length}
             </div>
-            <p className="text-xs text-muted-foreground">in progress</p>
+            <p className="text-xs text-elec-light/70">in progress</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Goals List */}
-      <Card>
+      <Card className="bg-elec-gray border-elec-gray/40">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Target className="h-5 w-5" />
+          <CardTitle className="flex items-center gap-2 text-elec-light">
+            <Target className="h-5 w-5 text-elec-yellow" />
             Your Goals
           </CardTitle>
         </CardHeader>
@@ -239,41 +239,39 @@ const ComplianceDashboardTab = () => {
                 const progressPercentage = Math.min((goal.current_value / goal.target_value) * 100, 100);
                 
                 return (
-                  <div key={goal.id} className="p-4 border rounded-lg space-y-3">
-                    {/* Mobile-optimized badges - stacked at top */}
-                    <div className="flex flex-col sm:flex-row gap-2 sm:justify-end">
-                      <div className="flex gap-2 justify-start sm:justify-end">
-                        <Badge className={getPriorityColor(goal.priority)}>
-                          {goal.priority}
-                        </Badge>
-                        <Badge className={getStatusColor(goal.status)}>
-                          {goal.status.replace('_', ' ')}
-                        </Badge>
-                      </div>
+                  <div key={goal.id} className="p-4 bg-elec-gray border border-elec-gray/40 rounded-xl space-y-4">
+                    {/* Mobile-optimized badges - centered at top */}
+                    <div className="flex justify-center gap-2">
+                      <Badge className={getPriorityColor(goal.priority)}>
+                        {goal.priority}
+                      </Badge>
+                      <Badge className={getStatusColor(goal.status)}>
+                        {goal.status.replace('_', ' ')}
+                      </Badge>
                     </div>
 
                     {/* Title and description */}
-                    <div className="space-y-2">
-                      <h4 className="font-medium text-base leading-tight">{goal.title}</h4>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{goal.description}</p>
+                    <div className="space-y-2 text-center sm:text-left">
+                      <h4 className="font-semibold text-lg text-elec-light leading-tight">{goal.title}</h4>
+                      <p className="text-sm text-elec-light/70 leading-relaxed">{goal.description}</p>
                     </div>
 
                     {/* Progress section */}
                     <div className="space-y-3">
-                      <div className="flex justify-between text-sm">
+                      <div className="flex justify-between text-sm text-elec-light">
                         <span className="font-medium">Progress: {goal.current_value} / {goal.target_value} {goal.unit}</span>
-                        <span className="font-semibold text-primary">{progressPercentage.toFixed(0)}%</span>
+                        <span className="font-semibold text-elec-yellow">{progressPercentage.toFixed(0)}%</span>
                       </div>
-                      <Progress value={progressPercentage} className="h-2" />
+                      <Progress value={progressPercentage} className="h-2 bg-elec-card" />
                     </div>
 
                     {/* Footer with deadline and category */}
-                    <div className="flex flex-col sm:flex-row gap-2 sm:justify-between sm:items-center pt-2 border-t border-border/50">
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Calendar className="h-4 w-4" />
+                    <div className="flex flex-col sm:flex-row gap-2 sm:justify-between sm:items-center pt-3 border-t border-elec-gray/30">
+                      <div className="flex items-center justify-center sm:justify-start gap-2 text-sm text-elec-light/70">
+                        <Calendar className="h-4 w-4 text-elec-yellow" />
                         <span>Due: {new Date(goal.deadline).toLocaleDateString('en-GB')}</span>
                       </div>
-                      <Badge variant="outline" className="w-fit">{goal.category}</Badge>
+                      <Badge variant="outline" className="w-fit mx-auto sm:mx-0 border-elec-yellow/30 text-elec-yellow bg-elec-yellow/10">{goal.category}</Badge>
                     </div>
                   </div>
                 );
