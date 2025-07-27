@@ -162,7 +162,7 @@ const TimeTrackingTab = () => {
     <div className="space-y-6">
       {/* Weekly Progress Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
+        <Card className="bg-elec-gray border-elec-yellow/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">This Week's Hours</CardTitle>
             <Clock className="h-4 w-4 text-blue-600" />
@@ -175,7 +175,7 @@ const TimeTrackingTab = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-elec-gray border-elec-yellow/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Weekly Progress</CardTitle>
             <TrendingUp className="h-4 w-4 text-green-600" />
@@ -186,7 +186,7 @@ const TimeTrackingTab = () => {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-elec-gray border-elec-yellow/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Remaining Hours</CardTitle>
             <Target className="h-4 w-4 text-orange-600" />
@@ -229,26 +229,28 @@ const TimeTrackingTab = () => {
           ) : (
             <div className="space-y-4">
               {timeEntries.map((entry) => (
-                <div key={entry.id} className="flex items-center justify-between p-4 border rounded-lg">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-medium">{entry.activity}</h4>
-                      {entry.is_automatic && (
-                        <Badge variant="secondary" className="text-xs">
-                          <Award className="h-3 w-3 mr-1" />
-                          Auto-tracked
-                        </Badge>
+                <div key={entry.id} className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-4">
+                  <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                    <div className="flex-1">
+                      <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-2 mb-1">
+                        <h4 className="font-medium">{entry.activity}</h4>
+                        {entry.is_automatic && (
+                          <Badge variant="secondary" className="text-xs w-fit">
+                            <Award className="h-3 w-3 mr-1" />
+                            Auto-tracked
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        {new Date(entry.date).toLocaleDateString('en-GB')} • {(entry.duration / 60).toFixed(1)} hours
+                      </p>
+                      {entry.notes && (
+                        <p className="text-sm text-muted-foreground mt-1">{entry.notes}</p>
                       )}
                     </div>
-                    <p className="text-sm text-muted-foreground">
-                      {new Date(entry.date).toLocaleDateString('en-GB')} • {(entry.duration / 60).toFixed(1)} hours
-                    </p>
-                    {entry.notes && (
-                      <p className="text-sm text-muted-foreground mt-1">{entry.notes}</p>
-                    )}
-                  </div>
-                  <div className="text-right">
-                    <div className="text-lg font-semibold">{entry.duration}m</div>
+                    <div className="text-left md:text-right">
+                      <div className="text-lg font-semibold">{entry.duration}m</div>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -258,7 +260,7 @@ const TimeTrackingTab = () => {
       </Card>
 
       {/* Training Guidelines */}
-      <Card>
+      <Card className="bg-elec-gray border-elec-yellow/20">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Target className="h-5 w-5" />
@@ -266,7 +268,7 @@ const TimeTrackingTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-medium mb-2">What Counts as Off-the-Job Training?</h4>
               <ul className="text-sm text-muted-foreground space-y-1">
