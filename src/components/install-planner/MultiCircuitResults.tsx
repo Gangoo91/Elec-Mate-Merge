@@ -1,12 +1,14 @@
 
 import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Download, Calculator, AlertTriangle, CheckCircle, XCircle, Zap } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AlertTriangle } from "lucide-react";
 import { InstallPlanData } from "./types";
 import { EnhancedCableSelectionEngine } from "./EnhancedCableSelectionEngine";
+import { SystemSummaryCard } from "./system-summary-card";
+import { CircuitAnalysisCard } from "./circuit-analysis-card";
+import { SupplyRequirementsCard } from "./supply-requirements-card";
+import { ConsumerUnitGuidance } from "./consumer-unit-guidance";
+import { ResultCard } from "@/components/ui/result-card";
 
 interface MultiCircuitResultsProps {
   planData: InstallPlanData;
@@ -18,12 +20,13 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
   
   if (circuits.length === 0) {
     return (
-      <Alert className="bg-amber-500/10 border-amber-500/30">
-        <AlertTriangle className="h-4 w-4 text-amber-300" />
-        <AlertDescription className="text-amber-200">
-          No active circuits configured. Please add circuits before proceeding with analysis.
-        </AlertDescription>
-      </Alert>
+      <div className="space-y-4">
+        <ResultCard
+          isEmpty={true}
+          emptyMessage="No active circuits configured. Please add circuits to proceed with analysis."
+          icon={<AlertTriangle className="h-8 w-8" />}
+        />
+      </div>
     );
   }
 
@@ -35,206 +38,80 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
   const totalSystemLoad = circuits.reduce((sum, circuit) => sum + circuit.totalLoad, 0);
   const totalDesignCurrent = circuitAnalysis.reduce((sum, analysis) => sum + analysis.designCurrent, 0);
 
-  // Calculate diversity factor based on installation type and mix of loads
-  const diversityFactor = 0.8; // Simplified for this implementation
-  const diversifiedLoad = totalSystemLoad * diversityFactor;
-
-  const exportResults = () => {
-    const exportData = {
-      planData,
-      circuitAnalysis,
-      systemSummary: {
-        totalCircuits: circuits.length,
-        totalSystemLoad,
-        totalDesignCurrent,
-        diversityFactor,
-        diversifiedLoad
-      },
-      timestamp: new Date().toISOString(),
-      generatedBy: "Elec-Mate Multi-Circuit Planner v2.0"
-    };
+  // Enhanced diversity factor calculation based on load types and BS7671
+  const calculateDiversityFactor = () => {
+    const loadTypes = circuits.map(c => c.loadType);
+    const hasHeating = loadTypes.some(type => type.includes('heating'));
+    const hasLighting = loadTypes.some(type => type.includes('lighting'));
+    const hasSocket = loadTypes.some(type => type.includes('socket'));
     
-    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `elec-mate-multi-circuit-plan-${Date.now()}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+    if (hasHeating && hasLighting && hasSocket && circuits.length > 5) return 0.75;
+    if ((hasHeating || hasSocket) && circuits.length > 3) return 0.8;
+    return 0.85; // Conservative for smaller installations
   };
+
+  const diversityFactor = calculateDiversityFactor();
+  const diversifiedLoad = totalSystemLoad * diversityFactor;
+  const diversifiedCurrent = totalDesignCurrent * diversityFactor;
+
+  // Realistic UK main switch recommendations
+  const getRecommendedMainSwitch = (current: number) => {
+    if (current <= 63) return 63;
+    if (current <= 80) return 80;
+    if (current <= 100) return 100;
+    return 125;
+  };
+
+  const recommendedMainSwitch = getRecommendedMainSwitch(diversifiedCurrent);
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-2xl font-bold mb-2">Multi-Circuit System Analysis</h2>
-          <p className="text-muted-foreground">
-            Comprehensive analysis of {circuits.length} circuits with BS 7671 compliance checking and system diversity calculations.
-          </p>
-        </div>
-        <Button onClick={exportResults} variant="outline" className="flex items-center gap-2">
-          <Download className="h-4 w-4" />
-          Export Analysis
-        </Button>
-      </div>
+      {/* System Overview */}
+      <SystemSummaryCard
+        circuits={circuits}
+        totalSystemLoad={totalSystemLoad}
+        totalDesignCurrent={totalDesignCurrent}
+        diversityFactor={diversityFactor}
+        diversifiedLoad={diversifiedLoad}
+      />
 
-      {/* System Summary */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calculator className="h-5 w-5 text-elec-yellow" />
-            System Summary
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
-              <p className="text-sm text-muted-foreground">Total Circuits</p>
-              <p className="text-2xl font-bold text-elec-yellow">{circuits.length}</p>
-            </div>
-            <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
-              <p className="text-sm text-muted-foreground">System Load</p>
-              <p className="text-2xl font-bold text-blue-400">{(totalSystemLoad / 1000).toFixed(1)}kW</p>
-            </div>
-            <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
-              <p className="text-sm text-muted-foreground">Design Current</p>
-              <p className="text-2xl font-bold text-green-400">{totalDesignCurrent.toFixed(1)}A</p>
-            </div>
-            <div className="p-3 bg-elec-dark/50 rounded border border-elec-yellow/20">
-              <p className="text-sm text-muted-foreground">After Diversity</p>
-              <p className="text-2xl font-bold text-purple-400">{(diversifiedLoad / 1000).toFixed(1)}kW</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Supply Requirements */}
+      <SupplyRequirementsCard
+        totalDesignCurrent={totalDesignCurrent}
+        diversityFactor={diversityFactor}
+        diversifiedLoad={diversifiedLoad}
+        earthingSystem={planData.environmentalSettings?.earthingSystem}
+        ze={planData.environmentalSettings?.ze}
+      />
+
+      {/* Consumer Unit Guidance */}
+      <ConsumerUnitGuidance
+        totalCircuits={circuits.length}
+        recommendedMainSwitch={recommendedMainSwitch}
+      />
 
       {/* Individual Circuit Analysis */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Individual Circuit Analysis</h3>
-        {circuitAnalysis.map((analysis, index) => {
-          const bestRecommendation = analysis.recommendations[0];
-          const isCompliant = bestRecommendation?.suitability === "suitable";
-          
-          return (
-            <Card key={analysis.circuit.id} className={`border-2 ${
-              isCompliant ? 'border-green-500/30 bg-green-500/5' : 'border-amber-500/30 bg-amber-500/5'
-            }`}>
-              <CardHeader>
-                <div className="w-full">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                    <div className="flex-1">
-                      <CardTitle className="text-base mb-3">{analysis.circuit.name}</CardTitle>
-                      <div className="grid grid-cols-2 gap-2 text-sm">
-                        <div className="bg-elec-dark/50 rounded p-2 text-center">
-                          <div className="text-xs text-muted-foreground mb-1">Load</div>
-                          <div className="font-medium text-elec-yellow">{analysis.circuit.totalLoad}W</div>
-                        </div>
-                        <div className="bg-elec-dark/50 rounded p-2 text-center">
-                          <div className="text-xs text-muted-foreground mb-1">Voltage</div>
-                          <div className="font-medium text-blue-400">{analysis.circuit.voltage}V</div>
-                        </div>
-                        <div className="bg-elec-dark/50 rounded p-2 text-center">
-                          <div className="text-xs text-muted-foreground mb-1">Length</div>
-                          <div className="font-medium text-green-400">{analysis.circuit.cableLength}m</div>
-                        </div>
-                        <div className="bg-elec-dark/50 rounded p-2 text-center">
-                          <div className="text-xs text-muted-foreground mb-1">Type</div>
-                          <div className="font-medium text-purple-400 text-xs">{analysis.circuit.loadType.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 sm:self-start">
-                      {isCompliant ? 
-                        <CheckCircle className="h-5 w-5 text-green-400" /> : 
-                        <XCircle className="h-5 w-5 text-amber-400" />
-                      }
-                      <Badge variant={isCompliant ? "default" : "destructive"}>
-                        {isCompliant ? "Compliant" : "Needs Attention"}
-                      </Badge>
-                    </div>
-                  </div>
-                </div>
-              </CardHeader>
-              
-              {bestRecommendation && (
-                <CardContent>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                    <div>
-                      <p className="text-muted-foreground">Recommended Cable</p>
-                      <p className="font-medium">{bestRecommendation.size} {bestRecommendation.type.toUpperCase()}</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground">Design Current</p>
-                      <p className="font-medium">{analysis.designCurrent.toFixed(1)}A</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground">Cable Capacity</p>
-                      <p className="font-medium">{bestRecommendation.currentCarryingCapacity}A</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground">Voltage Drop</p>
-                      <p className="font-medium">{bestRecommendation.voltageDropPercentage.toFixed(2)}%</p>
-                    </div>
-                  </div>
-                  
-                  {bestRecommendation.notes.length > 0 && (
-                    <div className="mt-3 p-3 bg-elec-dark/50 rounded">
-                      <p className="text-sm font-medium mb-1">Analysis Notes:</p>
-                      <ul className="text-xs text-muted-foreground space-y-1">
-                        {bestRecommendation.notes.map((note, noteIndex) => (
-                          <li key={noteIndex}>• {note}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                </CardContent>
-              )}
-            </Card>
-          );
-        })}
+        <h3 className="text-lg font-semibold">Circuit Analysis</h3>
+        <div className="space-y-4">
+          {circuitAnalysis.map((analysis, index) => (
+            <CircuitAnalysisCard
+              key={analysis.circuit.id}
+              circuit={analysis.circuit}
+              analysis={analysis}
+              index={index}
+            />
+          ))}
+        </div>
       </div>
-
-      {/* System Recommendations */}
-      <Card className="border-blue-500/20 bg-blue-500/5">
-        <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
-            <Zap className="h-5 w-5" />
-            System Recommendations
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            <div className="p-3 bg-elec-dark/50 rounded">
-              <p className="font-medium text-blue-300 mb-1">Supply Requirements</p>
-              <p className="text-sm text-muted-foreground">
-                Recommended main supply: {Math.ceil(totalDesignCurrent * diversityFactor)}A three-phase supply
-              </p>
-            </div>
-            
-            <div className="p-3 bg-elec-dark/50 rounded">
-              <p className="font-medium text-blue-300 mb-1">Consumer Unit</p>
-              <p className="text-sm text-muted-foreground">
-                Minimum {circuits.length + 2} way consumer unit with {Math.ceil(totalDesignCurrent * diversityFactor)}A main switch
-              </p>
-            </div>
-            
-            <div className="p-3 bg-elec-dark/50 rounded">
-              <p className="font-medium text-blue-300 mb-1">Earthing</p>
-              <p className="text-sm text-muted-foreground">
-                {planData.environmentalSettings?.earthingSystem || "TN-S"} earthing system with Ze ≤ {planData.environmentalSettings?.ze || 0.35}Ω
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Professional Notice */}
       <Alert className="bg-amber-500/10 border-amber-500/30">
         <AlertTriangle className="h-4 w-4 text-amber-300" />
         <AlertDescription className="text-amber-200">
-          <strong>Professional Verification Required:</strong> This multi-circuit analysis provides guidance based on BS 7671:2018+A2:2022. 
-          All calculations assume standard conditions and simplified diversity factors. Professional design verification, 
-          site-specific assessments, and comprehensive testing are required for all electrical installations.
+          <strong>Professional Verification Required:</strong> This analysis provides guidance based on BS7671:2018+A2:2022. 
+          All calculations assume standard conditions. Professional design verification, site-specific assessments, 
+          and comprehensive testing are required for all electrical installations.
         </AlertDescription>
       </Alert>
     </div>
