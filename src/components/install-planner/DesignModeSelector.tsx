@@ -34,60 +34,56 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
         </p>
       </div>
 
-      {/* Mode Selector - Toggle Style */}
-      <Card className="border-elec-yellow/20 bg-elec-gray max-w-2xl mx-auto">
-        <CardContent className="p-4 sm:p-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Card 
-              className={`cursor-pointer border-2 transition-all active:scale-95 ${
-                currentMode === "single" 
-                  ? 'border-elec-yellow bg-elec-gray shadow-lg' 
-                  : 'border-elec-yellow/20 hover:border-elec-yellow/40 bg-elec-gray'
-              }`}
-              onClick={() => selectMode("single")}
-            >
-              <CardContent className="p-6 text-center space-y-4">
-                <Cable className="h-8 w-8 text-elec-yellow mx-auto" />
-                <div className="space-y-2">
-                  <div className="flex items-center justify-center gap-2">
-                    <h3 className="font-semibold text-lg text-elec-yellow">Single Circuit</h3>
-                    {currentMode === "single" && <CheckCircle className="h-5 w-5 text-green-400" />}
-                  </div>
-                  <p className="text-sm text-muted-foreground">Individual appliance or circuit</p>
-                  <div className="flex justify-center gap-2 pt-2">
-                    <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">Quick</span>
-                    <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">2-5 min</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+      {/* Mode Selector - Clean Toggle Style */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+        <Card 
+          className={`cursor-pointer border-2 transition-all active:scale-95 ${
+            currentMode === "single" 
+              ? 'border-elec-yellow bg-elec-gray shadow-lg' 
+              : 'border-elec-yellow/20 hover:border-elec-yellow/40 bg-elec-gray'
+          }`}
+          onClick={() => selectMode("single")}
+        >
+          <CardContent className="p-4 sm:p-6 text-center space-y-3 sm:space-y-4">
+            <Cable className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow mx-auto" />
+            <div className="space-y-2">
+              <div className="flex items-center justify-center gap-2">
+                <h3 className="font-semibold text-base sm:text-lg text-elec-yellow">Single Circuit</h3>
+                {currentMode === "single" && <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />}
+              </div>
+              <p className="text-xs sm:text-sm text-muted-foreground">Individual appliance or circuit</p>
+              <div className="flex justify-center gap-2 pt-1 sm:pt-2">
+                <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">Quick</span>
+                <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">2-5 min</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
-            <Card 
-              className={`cursor-pointer border-2 transition-all active:scale-95 ${
-                currentMode === "multi" 
-                  ? 'border-elec-yellow bg-elec-gray shadow-lg' 
-                  : 'border-elec-yellow/20 hover:border-elec-yellow/40 bg-elec-gray'
-              }`}
-              onClick={() => selectMode("multi")}
-            >
-              <CardContent className="p-6 text-center space-y-4">
-                <Zap className="h-8 w-8 text-elec-yellow mx-auto" />
-                <div className="space-y-2">
-                  <div className="flex items-center justify-center gap-2">
-                    <h3 className="font-semibold text-lg text-elec-yellow">Multi-Circuit</h3>
-                    {currentMode === "multi" && <CheckCircle className="h-5 w-5 text-green-400" />}
-                  </div>
-                  <p className="text-sm text-muted-foreground">Complete installation system</p>
-                  <div className="flex justify-center gap-2 pt-2">
-                    <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">Comprehensive</span>
-                    <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">10-30 min</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </CardContent>
-      </Card>
+        <Card 
+          className={`cursor-pointer border-2 transition-all active:scale-95 ${
+            currentMode === "multi" 
+              ? 'border-elec-yellow bg-elec-gray shadow-lg' 
+              : 'border-elec-yellow/20 hover:border-elec-yellow/40 bg-elec-gray'
+          }`}
+          onClick={() => selectMode("multi")}
+        >
+          <CardContent className="p-4 sm:p-6 text-center space-y-3 sm:space-y-4">
+            <Zap className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow mx-auto" />
+            <div className="space-y-2">
+              <div className="flex items-center justify-center gap-2">
+                <h3 className="font-semibold text-base sm:text-lg text-elec-yellow">Multi-Circuit</h3>
+                {currentMode === "multi" && <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />}
+              </div>
+              <p className="text-xs sm:text-sm text-muted-foreground">Complete installation system</p>
+              <div className="flex justify-center gap-2 pt-1 sm:pt-2">
+                <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">Comprehensive</span>
+                <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded">10-30 min</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Contextual Information */}
       {currentMode && (
