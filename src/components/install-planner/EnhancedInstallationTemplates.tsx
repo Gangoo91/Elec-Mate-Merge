@@ -481,6 +481,396 @@ const EnhancedInstallationTemplates: React.FC<EnhancedInstallationTemplatesProps
               installation: "90-120 days",
               testing: "21-30 days"
             }
+          },
+          {
+            id: "steel-processing-plant",
+            name: "Steel Processing Facility",
+            description: "Heavy industrial steel processing with furnaces and rolling equipment",
+            installationType: "industrial",
+            buildingType: "Steel Mill",
+            size: "extra-large",
+            complexity: "specialist",
+            totalLoad: 2500000,
+            diversityFactor: 0.9,
+            estimatedCost: "£400,000-£600,000",
+            complianceNotes: [
+              "High-voltage switchgear standards",
+              "Arc flash protection requirements",
+              "Heat-resistant installation methods",
+              "Emergency shutdown systems"
+            ],
+            circuits: [
+              {
+                name: "Electric Arc Furnace",
+                loadType: "arc-furnace",
+                totalLoad: 1000000,
+                voltage: 400,
+                phases: "three",
+                cableLength: 25,
+                installationMethod: "busbar",
+                cableType: "water-cooled",
+                protectiveDevice: "hv-breaker",
+                enabled: true
+              },
+              {
+                name: "Induction Heating",
+                loadType: "induction-furnace",
+                totalLoad: 500000,
+                voltage: 400,
+                phases: "three",
+                cableLength: 30,
+                installationMethod: "busbar",
+                cableType: "water-cooled",
+                protectiveDevice: "hv-breaker",
+                enabled: true
+              },
+              {
+                name: "Rolling Mill Motors",
+                loadType: "motor-large",
+                totalLoad: 150000,
+                voltage: 400,
+                phases: "three",
+                cableLength: 80,
+                installationMethod: "tray",
+                cableType: "swa",
+                protectiveDevice: "mcb",
+                enabled: true
+              },
+              {
+                name: "Emergency Lighting",
+                loadType: "emergency-lighting",
+                totalLoad: 2000,
+                voltage: 230,
+                phases: "single",
+                cableLength: 200,
+                installationMethod: "conduit",
+                cableType: "mineral",
+                protectiveDevice: "mcb",
+                enabled: true
+              }
+            ],
+            environmentalRequirements: {
+              ipRating: "IP54 (harsh industrial)",
+              temperatureRange: "-10°C to 60°C",
+              specialConditions: ["Extreme heat zones", "EMI shielding", "Arc flash protection"]
+            },
+            projectTimeline: {
+              design: "45-60 days",
+              installation: "120-180 days",
+              testing: "30-45 days"
+            }
+          },
+          {
+            id: "automotive-assembly",
+            name: "Automotive Assembly Line",
+            description: "Car manufacturing with automated assembly and paint systems",
+            installationType: "industrial",
+            buildingType: "Assembly Plant",
+            size: "large",
+            complexity: "advanced",
+            totalLoad: 800000,
+            diversityFactor: 0.85,
+            estimatedCost: "£150,000-£250,000",
+            complianceNotes: [
+              "Automotive industry standards",
+              "Paint booth explosion protection",
+              "Robotic safety systems",
+              "Clean air requirements"
+            ],
+            circuits: [
+              {
+                name: "Assembly Line Conveyors",
+                loadType: "conveyor-belt",
+                totalLoad: 60000,
+                voltage: 400,
+                phases: "three",
+                cableLength: 300,
+                installationMethod: "tray",
+                cableType: "swa",
+                protectiveDevice: "mcb",
+                enabled: true
+              },
+              {
+                name: "Paint Booth Systems",
+                loadType: "zone1-motor",
+                totalLoad: 25000,
+                voltage: 400,
+                phases: "three",
+                cableLength: 50,
+                installationMethod: "conduit",
+                cableType: "swa",
+                protectiveDevice: "ex-mcb",
+                enabled: true
+              },
+              {
+                name: "Robotic Welding Cells",
+                loadType: "welding",
+                totalLoad: 80000,
+                voltage: 400,
+                phases: "three",
+                cableLength: 100,
+                installationMethod: "tray",
+                cableType: "swa",
+                protectiveDevice: "mcb",
+                enabled: true
+              }
+            ],
+            environmentalRequirements: {
+              ipRating: "IP65 (wash areas), Zone 1 (paint booth)",
+              temperatureRange: "15°C to 35°C",
+              specialConditions: ["ATEX compliance", "Clean room standards", "Noise control"]
+            },
+            projectTimeline: {
+              design: "25-35 days",
+              installation: "60-90 days",
+              testing: "15-21 days"
+            }
+          }
+        ];
+
+      case "education":
+        return [
+          {
+            id: "secondary-school",
+            name: "Secondary School Complex",
+            description: "Complete secondary school with science labs, sports hall and IT facilities",
+            installationType: "education",
+            buildingType: "Secondary School",
+            size: "large",
+            complexity: "standard",
+            totalLoad: 180000,
+            diversityFactor: 0.75,
+            estimatedCost: "£35,000-£55,000",
+            complianceNotes: [
+              "BS 7671 18th Edition compliance",
+              "Building Regulations Part L (energy efficiency)",
+              "DfE BB100 electrical guidelines",
+              "Emergency lighting to BS EN 50172"
+            ],
+            circuits: [
+              {
+                name: "Classroom Power - Block A",
+                loadType: "classroom-power",
+                totalLoad: 12000,
+                voltage: 230,
+                phases: "single",
+                cableLength: 80,
+                installationMethod: "trunking",
+                cableType: "swa",
+                protectiveDevice: "rcbo",
+                enabled: true
+              },
+              {
+                name: "Science Laboratory Equipment",
+                loadType: "lab-equipment",
+                totalLoad: 18000,
+                voltage: 230,
+                phases: "single",
+                cableLength: 40,
+                installationMethod: "conduit",
+                cableType: "swa",
+                protectiveDevice: "rcbo",
+                enabled: true
+              },
+              {
+                name: "Sports Hall Lighting",
+                loadType: "sports-lighting",
+                totalLoad: 8000,
+                voltage: 230,
+                phases: "single",
+                cableLength: 60,
+                installationMethod: "tray",
+                cableType: "swa",
+                protectiveDevice: "mcb",
+                enabled: true
+              },
+              {
+                name: "IT Server Room",
+                loadType: "it-equipment",
+                totalLoad: 10000,
+                voltage: 230,
+                phases: "single",
+                cableLength: 25,
+                installationMethod: "trunking",
+                cableType: "swa",
+                protectiveDevice: "rcbo",
+                enabled: true
+              }
+            ],
+            environmentalRequirements: {
+              ipRating: "IP44 (wet areas), IP54 (workshops)",
+              temperatureRange: "15°C to 25°C",
+              specialConditions: ["Child safety", "Vandal resistance", "Easy maintenance"]
+            },
+            projectTimeline: {
+              design: "14-21 days",
+              installation: "35-50 days",
+              testing: "7-10 days"
+            }
+          }
+        ];
+
+      case "hospitality":
+        return [
+          {
+            id: "boutique-hotel",
+            name: "Boutique Hotel Complex",
+            description: "4-star hotel with restaurant, spa and conference facilities",
+            installationType: "hospitality",
+            buildingType: "Hotel",
+            size: "large",
+            complexity: "advanced",
+            totalLoad: 250000,
+            diversityFactor: 0.8,
+            estimatedCost: "£50,000-£80,000",
+            complianceNotes: [
+              "BS 7671 18th Edition compliance",
+              "Building Regulations Parts L and P",
+              "Hotel industry fire safety standards",
+              "Accessibility requirements"
+            ],
+            circuits: [
+              {
+                name: "Commercial Kitchen",
+                loadType: "kitchen-equipment",
+                totalLoad: 45000,
+                voltage: 400,
+                phases: "three",
+                cableLength: 35,
+                installationMethod: "trunking",
+                cableType: "swa",
+                protectiveDevice: "rcbo",
+                enabled: true
+              },
+              {
+                name: "Guest Rooms (20 rooms)",
+                loadType: "guest-room",
+                totalLoad: 40000,
+                voltage: 230,
+                phases: "single",
+                cableLength: 200,
+                installationMethod: "clipped-direct",
+                cableType: "t&e",
+                protectiveDevice: "rcbo",
+                enabled: true
+              },
+              {
+                name: "Laundry Equipment",
+                loadType: "laundry-equipment",
+                totalLoad: 24000,
+                voltage: 400,
+                phases: "three",
+                cableLength: 30,
+                installationMethod: "tray",
+                cableType: "swa",
+                protectiveDevice: "mcb",
+                enabled: true
+              },
+              {
+                name: "Spa Pool Equipment",
+                loadType: "pool-equipment",
+                totalLoad: 12000,
+                voltage: 400,
+                phases: "three",
+                cableLength: 25,
+                installationMethod: "swa-direct",
+                cableType: "swa",
+                protectiveDevice: "rcbo",
+                enabled: true
+              }
+            ],
+            environmentalRequirements: {
+              ipRating: "IP44 (wet areas), IP65 (pool areas)",
+              temperatureRange: "18°C to 28°C",
+              specialConditions: ["Guest safety", "Noise control", "Emergency systems"]
+            },
+            projectTimeline: {
+              design: "21-28 days",
+              installation: "50-70 days",
+              testing: "10-14 days"
+            }
+          }
+        ];
+
+      case "retail":
+        return [
+          {
+            id: "shopping-center",
+            name: "Shopping Centre Complex",
+            description: "Modern shopping centre with retail units, food court and entertainment",
+            installationType: "retail",
+            buildingType: "Shopping Centre",
+            size: "extra-large",
+            complexity: "advanced",
+            totalLoad: 800000,
+            diversityFactor: 0.85,
+            estimatedCost: "£120,000-£200,000",
+            complianceNotes: [
+              "BS 7671 18th Edition compliance",
+              "Building Regulations compliance",
+              "Fire safety and evacuation systems",
+              "Public safety requirements"
+            ],
+            circuits: [
+              {
+                name: "Retail Display Lighting",
+                loadType: "retail-lighting",
+                totalLoad: 80000,
+                voltage: 230,
+                phases: "single",
+                cableLength: 400,
+                installationMethod: "trunking",
+                cableType: "swa",
+                protectiveDevice: "mcb",
+                enabled: true
+              },
+              {
+                name: "Point of Sale Systems",
+                loadType: "pos-systems",
+                totalLoad: 15000,
+                voltage: 230,
+                phases: "single",
+                cableLength: 200,
+                installationMethod: "trunking",
+                cableType: "swa",
+                protectiveDevice: "rcbo",
+                enabled: true
+              },
+              {
+                name: "Cold Storage Systems",
+                loadType: "cold-storage",
+                totalLoad: 120000,
+                voltage: 400,
+                phases: "three",
+                cableLength: 100,
+                installationMethod: "tray",
+                cableType: "swa",
+                protectiveDevice: "mcb",
+                enabled: true
+              },
+              {
+                name: "Digital Signage",
+                loadType: "digital-signage",
+                totalLoad: 25000,
+                voltage: 230,
+                phases: "single",
+                cableLength: 300,
+                installationMethod: "trunking",
+                cableType: "swa",
+                protectiveDevice: "mcb",
+                enabled: true
+              }
+            ],
+            environmentalRequirements: {
+              ipRating: "IP44 (general areas), IP54 (back of house)",
+              temperatureRange: "18°C to 24°C",
+              specialConditions: ["Public access", "Security systems", "Emergency evacuation"]
+            },
+            projectTimeline: {
+              design: "30-45 days",
+              installation: "90-120 days",
+              testing: "15-21 days"
+            }
           }
         ];
 

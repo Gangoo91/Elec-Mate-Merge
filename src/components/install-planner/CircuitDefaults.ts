@@ -987,6 +987,248 @@ export const CIRCUIT_TEMPLATES: Record<string, CircuitTemplate> = {
     recommendedProtectiveDevice: "dc-breaker",
     description: "Industrial electroplating equipment",
     typicalApplications: ["Metal finishing", "Anodizing", "Galvanizing"]
+  },
+
+  // Additional Industrial Circuit Types
+  "415v-supply": {
+    name: "415V Three-Phase Supply",
+    totalLoad: 25000,
+    voltage: 415,
+    phases: "three",
+    cableLength: 50,
+    powerFactor: 0.9,
+    recommendedInstallationMethod: "tray",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "mcb",
+    description: "Standard 415V three-phase industrial supply",
+    typicalApplications: ["Motor circuits", "Industrial machinery", "Distribution boards"]
+  },
+
+  "110v-supply": {
+    name: "110V CTE Supply",
+    totalLoad: 3000,
+    voltage: 110,
+    phases: "single",
+    cableLength: 30,
+    recommendedInstallationMethod: "tray",
+    recommendedCableType: "arctic",
+    recommendedProtectiveDevice: "rcbo",
+    description: "110V centre-tapped earth supply for portable tools",
+    typicalApplications: ["Portable tools", "Site lighting", "Temporary supplies"]
+  },
+
+  "emergency-lighting": {
+    name: "Emergency Lighting System",
+    totalLoad: 800,
+    voltage: 230,
+    phases: "single",
+    cableLength: 100,
+    recommendedInstallationMethod: "conduit",
+    recommendedCableType: "mineral",
+    recommendedProtectiveDevice: "mcb",
+    description: "Emergency lighting system with battery backup",
+    typicalApplications: ["Exit signs", "Escape route lighting", "Anti-panic lighting"]
+  },
+
+  "blast-furnace": {
+    name: "Blast Furnace System",
+    totalLoad: 2000000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 40,
+    powerFactor: 0.9,
+    recommendedInstallationMethod: "busbar",
+    recommendedCableType: "water-cooled",
+    recommendedProtectiveDevice: "hv-breaker",
+    description: "Industrial blast furnace for iron production",
+    typicalApplications: ["Iron production", "Ore smelting", "Steel making"]
+  },
+
+  "heat-treatment-furnace": {
+    name: "Heat Treatment Furnace",
+    totalLoad: 150000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 35,
+    powerFactor: 0.95,
+    recommendedInstallationMethod: "tray",
+    recommendedCableType: "mineral",
+    recommendedProtectiveDevice: "mcb",
+    description: "Controlled atmosphere heat treatment furnace",
+    typicalApplications: ["Metal hardening", "Annealing", "Tempering"]
+  },
+
+  // Additional Circuit Types for Enhanced Templates
+  "security-systems": {
+    name: "Security Systems",
+    totalLoad: 1200,
+    voltage: 230,
+    phases: "single",
+    cableLength: 60,
+    recommendedInstallationMethod: "conduit",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "mcb",
+    description: "Security and access control systems",
+    typicalApplications: ["CCTV", "Access control", "Intruder alarms", "Perimeter detection"]
+  },
+
+  "access-control": {
+    name: "Access Control System",
+    totalLoad: 800,
+    voltage: 230,
+    phases: "single",
+    cableLength: 50,
+    recommendedInstallationMethod: "conduit",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "mcb",
+    description: "Electronic access control and door entry systems",
+    typicalApplications: ["Card readers", "Electric locks", "Turnstiles", "Barriers"]
+  },
+
+  "precision-cooling": {
+    name: "Precision Cooling System",
+    totalLoad: 35000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 30,
+    powerFactor: 0.85,
+    recommendedInstallationMethod: "tray",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "mcb",
+    description: "High-precision environmental cooling",
+    typicalApplications: ["Data center CRAC", "Server room cooling", "Precision air conditioning"]
+  },
+
+  "fire-suppression": {
+    name: "Fire Suppression System",
+    totalLoad: 2000,
+    voltage: 230,
+    phases: "single",
+    cableLength: 80,
+    recommendedInstallationMethod: "conduit",
+    recommendedCableType: "mineral",
+    recommendedProtectiveDevice: "mcb",
+    description: "Automated fire detection and suppression",
+    typicalApplications: ["Gas suppression", "Water mist", "Sprinkler pumps", "Detection systems"]
+  },
+
+  "interactive-boards": {
+    name: "Interactive Display Systems",
+    totalLoad: 1500,
+    voltage: 230,
+    phases: "single",
+    cableLength: 40,
+    recommendedInstallationMethod: "trunking",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "rcbo",
+    description: "Educational interactive display technology",
+    typicalApplications: ["Smart whiteboards", "Interactive projectors", "Touch displays"]
+  },
+
+  "av-systems": {
+    name: "Audio/Visual Systems",
+    totalLoad: 2500,
+    voltage: 230,
+    phases: "single",
+    cableLength: 60,
+    recommendedInstallationMethod: "trunking",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "rcbo",
+    description: "Professional audio/visual equipment",
+    typicalApplications: ["Projectors", "Audio amplifiers", "Video distribution", "Control systems"]
+  },
+
+  "elevator-systems": {
+    name: "Elevator Control Systems",
+    totalLoad: 15000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 40,
+    powerFactor: 0.8,
+    recommendedInstallationMethod: "tray",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "mcb",
+    description: "Elevator motor and control systems",
+    typicalApplications: ["Lift motors", "Control panels", "Safety systems", "Emergency power"]
+  },
+
+  "pool-equipment": {
+    name: "Swimming Pool Equipment",
+    totalLoad: 8000,
+    voltage: 400,
+    phases: "three",
+    cableLength: 30,
+    powerFactor: 0.85,
+    recommendedInstallationMethod: "swa-direct",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "rcbo",
+    description: "Swimming pool filtration and heating",
+    typicalApplications: ["Pool pumps", "Filtration systems", "Heating elements", "UV sterilizers"]
+  },
+
+  "spa-systems": {
+    name: "Spa Equipment",
+    totalLoad: 6000,
+    voltage: 230,
+    phases: "single",
+    cableLength: 25,
+    recommendedInstallationMethod: "swa-direct",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "rcbo",
+    description: "Spa and wellness equipment",
+    typicalApplications: ["Jacuzzi pumps", "Steam generators", "Sauna heaters", "Mood lighting"]
+  },
+
+  "digital-signage": {
+    name: "Digital Signage Systems",
+    totalLoad: 1800,
+    voltage: 230,
+    phases: "single",
+    cableLength: 50,
+    recommendedInstallationMethod: "trunking",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "mcb",
+    description: "Digital advertising and information displays",
+    typicalApplications: ["LED displays", "Digital billboards", "Menu boards", "Way-finding displays"]
+  },
+
+  "nurse-call-system": {
+    name: "Nurse Call System",
+    totalLoad: 500,
+    voltage: 230,
+    phases: "single",
+    cableLength: 100,
+    recommendedInstallationMethod: "conduit",
+    recommendedCableType: "swa",
+    recommendedProtectiveDevice: "mcb",
+    description: "Patient communication and alert system",
+    typicalApplications: ["Call points", "Corridor displays", "Staff pagers", "Integration systems"]
+  },
+
+  "patient-monitoring": {
+    name: "Patient Monitoring Equipment",
+    totalLoad: 3000,
+    voltage: 230,
+    phases: "single",
+    cableLength: 20,
+    recommendedInstallationMethod: "conduit",
+    recommendedCableType: "mineral",
+    recommendedProtectiveDevice: "rcbo",
+    description: "Critical patient monitoring systems",
+    typicalApplications: ["Vital signs monitors", "Telemetry", "Central monitoring", "Alarms"]
+  },
+
+  "surgical-lighting": {
+    name: "Surgical Lighting System",
+    totalLoad: 2000,
+    voltage: 230,
+    phases: "single",
+    cableLength: 15,
+    recommendedInstallationMethod: "conduit",
+    recommendedCableType: "mineral",
+    recommendedProtectiveDevice: "mcb",
+    description: "Specialized surgical lighting",
+    typicalApplications: ["Operating lights", "Examination lights", "Emergency lighting", "UV sterilization"]
   }
 };
 
@@ -1029,17 +1271,50 @@ export function getAvailableTemplatesForInstallationType(installationType: strin
     case "domestic":
       return ["lighting", "power", "power-radial", "cooker", "shower", "heating", "ev-charging", "smart-home", "renewable-solar", "solar-inverter", "battery-storage", "heat-pump", "smart-lighting", "home-automation"];
     case "commercial":
-      return ["commercial-lighting", "commercial-power", "hvac", "it-equipment", "emergency", "power", "smart-lighting", "process-control"];
+      return [
+        "commercial-lighting", "commercial-power", "hvac", "it-equipment", "emergency", 
+        "power", "smart-lighting", "process-control", "emergency-lighting",
+        "sound-system", "scoreboard", "security-systems", "access-control"
+      ];
     case "industrial":
-      return ["motor-small", "motor-large", "welding", "crane", "furnace", "hvac", "emergency", "variable-speed-drive", "soft-starter", "process-control", "induction-furnace", "arc-furnace", "electroplating"];
+      return [
+        // Basic Industrial
+        "motor-small", "motor-large", "welding", "crane", "hvac", "emergency",
+        // Power Supply Options
+        "415v-supply", "110v-supply", "emergency-lighting", 
+        // Advanced Industrial
+        "variable-speed-drive", "soft-starter", "process-control",
+        // Furnace Types
+        "furnace", "induction-furnace", "arc-furnace", "blast-furnace", "heat-treatment-furnace",
+        // Specialized Equipment
+        "electroplating", "conveyor-belt", "ventilation-fan", "crushing-equipment",
+        // Hazardous Areas
+        "zone1-lighting", "zone1-motor", "intrinsically-safe"
+      ];
     case "data-center":
-      return ["ups-system", "server-rack", "cooling-system", "backup-generator", "it-equipment", "emergency", "modular-ups", "pdu-intelligent", "ups-battery-string"];
+      return [
+        "ups-system", "server-rack", "cooling-system", "backup-generator", 
+        "modular-ups", "pdu-intelligent", "ups-battery-string",
+        "precision-cooling", "fire-suppression", "access-control"
+      ];
     case "education":
-      return ["classroom-power", "lab-equipment", "sports-lighting", "commercial-lighting", "it-equipment", "smart-lighting", "process-control"];
+      return [
+        "classroom-power", "lab-equipment", "sports-lighting", "commercial-lighting",
+        "emergency", "it-equipment", "emergency-lighting", "fume-cupboard",
+        "analytical-equipment", "interactive-boards", "av-systems"
+      ];
     case "hospitality":
-      return ["kitchen-equipment", "guest-room", "laundry-equipment", "commercial-lighting", "hvac", "smart-lighting", "home-automation"];
+      return [
+        "kitchen-equipment", "guest-room", "laundry-equipment", "commercial-lighting",
+        "hvac", "emergency", "emergency-lighting", "elevator-systems", 
+        "pool-equipment", "spa-systems"
+      ];
     case "retail":
-      return ["retail-lighting", "pos-systems", "cold-storage", "commercial-power", "smart-lighting"];
+      return [
+        "retail-lighting", "pos-systems", "cold-storage", "commercial-power",
+        "hvac", "emergency", "emergency-lighting", "security-systems",
+        "digital-signage", "sound-system"
+      ];
     case "agriculture":
       return ["irrigation-pump", "grain-dryer", "livestock-equipment", "motor-small", "variable-speed-drive", "soft-starter"];
     case "transportation":
@@ -1053,7 +1328,11 @@ export function getAvailableTemplatesForInstallationType(installationType: strin
     case "mining":
       return ["conveyor-belt", "ventilation-fan", "crushing-equipment", "motor-large", "emergency", "variable-speed-drive"];
     case "healthcare":
-      return ["medical", "emergency", "it-equipment", "hvac", "backup-generator", "operating-theatre", "mri-equipment", "isolation-transformer"];
+      return [
+        "medical", "operating-theatre", "mri-equipment", "isolation-transformer",
+        "emergency", "it-equipment", "emergency-lighting", "nurse-call-system",
+        "patient-monitoring", "surgical-lighting"
+      ];
     case "hazardous-areas":
       return ["zone1-lighting", "zone1-motor", "intrinsically-safe", "emergency", "process-control"];
     default:

@@ -154,23 +154,23 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
             Environmental Configuration Summary
           </CardTitle>
         </CardHeader>
-        <CardContent className="px-6 py-6">
-          <div className="grid grid-cols-2 gap-8 text-center">
-            <div className="space-y-2">
-              <div className="text-xs text-muted-foreground uppercase tracking-wide">Global Temp</div>
-              <div className="text-2xl font-bold text-elec-yellow">{environmentalSettings.ambientTemperature}°C</div>
+        <CardContent className="px-4 py-4">
+          <div className="grid grid-cols-2 gap-4 text-center">
+            <div className="space-y-1">
+              <div className="text-xs text-muted-foreground uppercase tracking-wide">Temp</div>
+              <div className="text-xl font-bold text-elec-yellow">{environmentalSettings.ambientTemperature}°C</div>
             </div>
-            <div className="space-y-2">
-              <div className="text-xs text-muted-foreground uppercase tracking-wide">Earthing System</div>
-              <div className="text-2xl font-bold text-blue-400">{environmentalSettings.earthingSystem}</div>
+            <div className="space-y-1">
+              <div className="text-xs text-muted-foreground uppercase tracking-wide">Earthing</div>
+              <div className="text-xl font-bold text-blue-400">{environmentalSettings.earthingSystem}</div>
             </div>
-            <div className="space-y-2">
-              <div className="text-xs text-muted-foreground uppercase tracking-wide">Install Zones</div>
-              <div className="text-2xl font-bold text-green-400">{environmentalSettings.installationZones?.length || 0}</div>
+            <div className="space-y-1">
+              <div className="text-xs text-muted-foreground uppercase tracking-wide">Zones</div>
+              <div className="text-xl font-bold text-green-400">{environmentalSettings.installationZones?.length || 0}</div>
             </div>
-            <div className="space-y-2">
-              <div className="text-xs text-muted-foreground uppercase tracking-wide">Active Circuits</div>
-              <div className="text-2xl font-bold text-purple-400">{circuits.filter(c => c.enabled).length}</div>
+            <div className="space-y-1">
+              <div className="text-xs text-muted-foreground uppercase tracking-wide">Circuits</div>
+              <div className="text-xl font-bold text-purple-400">{circuits.filter(c => c.enabled).length}</div>
             </div>
           </div>
         </CardContent>
