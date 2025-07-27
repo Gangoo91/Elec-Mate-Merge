@@ -7,7 +7,6 @@ import { Trash2, Plus, MapPin, Thermometer, Shield, AlertTriangle } from "lucide
 import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { MultiSelectDropdown } from "@/components/ui/multi-select-dropdown";
-import { RequiredFieldTooltip } from "@/components/ui/required-field-tooltip";
 import { EnvironmentalSettings, InstallationZone, Circuit } from "./types";
 import { v4 as uuidv4 } from "uuid";
 
@@ -169,10 +168,7 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
           <CardContent className="space-y-6 pt-4 px-4 pb-6">
             <div className="space-y-4">
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold text-elec-light">Default Ambient Temperature (°C)</span>
-                  <RequiredFieldTooltip content="Set the expected ambient temperature for the installation. This affects cable current carrying capacity and derating factors. Typical values: 20-30°C for indoor installations." />
-                </div>
+                <span className="text-sm font-semibold text-elec-light">Default Ambient Temperature (°C)</span>
                 <MobileInputWrapper
                   type="number"
                   value={environmentalSettings.ambientTemperature.toString()}
@@ -187,10 +183,7 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
               </div>
 
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold text-elec-light">Default Environmental Conditions</span>
-                  <RequiredFieldTooltip content="Select the primary environmental conditions for the installation. This determines IP ratings, cable protection requirements, and installation methods according to BS 7671." />
-                </div>
+                <span className="text-sm font-semibold text-elec-light">Default Environmental Conditions</span>
                 <MobileSelectWrapper
                   value={environmentalSettings.environmentalConditions}
                   onValueChange={(value) => {
@@ -206,10 +199,7 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
               </div>
 
               <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold text-elec-light">Earthing System</span>
-                  <RequiredFieldTooltip content="Select the earthing arrangement for the installation. This is CRITICAL for safety and determines fault protection methods. TN-C-S (PME) is most common in UK domestic installations." />
-                </div>
+                <span className="text-sm font-semibold text-elec-light">Earthing System</span>
                 <MobileSelectWrapper
                   value={environmentalSettings.earthingSystem}
                   onValueChange={(value) => {
@@ -245,10 +235,7 @@ const EnvironmentalContextManager: React.FC<EnvironmentalContextManagerProps> = 
               </div>
 
               <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold text-elec-light">Ze Value (Ω)</span>
-                  <RequiredFieldTooltip content="External earth fault loop impedance measured at the origin of the installation. This value is critical for fault protection calculations and must be measured during testing." />
-                </div>
+                <span className="text-sm font-semibold text-elec-light">Ze Value (Ω)</span>
                 
                 {/* Prominent Ze Value Display */}
                 <div className="bg-elec-dark/30 border border-elec-yellow/30 rounded-lg p-4 text-center">
