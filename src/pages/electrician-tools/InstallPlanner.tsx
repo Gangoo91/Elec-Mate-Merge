@@ -281,41 +281,62 @@ const InstallPlanner = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 max-w-6xl">
         <div className="space-y-6 sm:space-y-8 animate-fade-in">
           {/* Header Section - Optimized for mobile */}
-          <div className="space-y-6">
-            <div className="flex flex-col space-y-4">
-              <div className="flex-1 space-y-3">
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight flex items-start gap-3">
-                  <MapPin className="h-6 w-6 sm:h-7 sm:w-7 lg:h-8 lg:w-8 text-elec-yellow flex-shrink-0 mt-1" />
-                  <span className="leading-tight">Professional Installation Planner</span>
-                </h1>
-                <p className="text-muted-foreground text-base sm:text-lg leading-relaxed">
-                  {planData.designMode === "multi" 
-                    ? "Design multi-circuit electrical installations with comprehensive system analysis, environmental zones, and BS 7671 compliance."
-                    : "Design electrical installations with professional guidance, visual circuit diagrams, and BS 7671 compliance checking."
-                  }
-                </p>
-              </div>
+          <div className="text-center space-y-6">
+            <div className="space-y-4">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-center">
+                Professional Installation Planner
+              </h1>
               
-              {/* Action buttons - Mobile-first design */}
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <div className="max-w-2xl mx-auto space-y-3 text-sm text-muted-foreground">
+                {planData.designMode === "multi" ? (
+                  <>
+                    <div>
+                      <p className="font-medium text-elec-yellow mb-2">Ideal for:</p>
+                      <p>New builds, rewires, commercial installations, or complex multi-zone systems.</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-elec-yellow mb-2">Features:</p>
+                      <p>System-wide analysis, diversity calculations, supply sizing, and environmental zoning.</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-elec-yellow mb-2">Benefits:</p>
+                      <p>Optimised load balancing, consumer unit selection, and comprehensive compliance documentation.</p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div>
+                      <p className="font-medium text-elec-yellow mb-2">Ideal for:</p>
+                      <p>Individual appliances, socket circuits, lighting circuits, or simple upgrades.</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-elec-yellow mb-2">Features:</p>
+                      <p>Fast cable sizing, protection calculations, and BS 7671 compliance checking.</p>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+            
+            {/* Action buttons - Mobile-first design */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <Button 
+                variant="outline" 
+                onClick={resetPlan}
+                className="flex items-center justify-center gap-2 h-12 sm:h-10 text-base font-medium touch-manipulation"
+              >
+                <RotateCcw className="h-5 w-5" /> 
+                Reset Plan
+              </Button>
+              <Link to="/electrician-tools" className="w-full sm:w-auto">
                 <Button 
                   variant="outline" 
-                  onClick={resetPlan}
-                  className="flex items-center justify-center gap-2 h-12 sm:h-10 text-base font-medium touch-manipulation"
+                  className="flex items-center justify-center gap-2 w-full h-12 sm:h-10 text-base font-medium touch-manipulation"
                 >
-                  <RotateCcw className="h-5 w-5" /> 
-                  Reset Plan
+                  <ArrowLeft className="h-5 w-5" /> 
+                  Back to Tools
                 </Button>
-                <Link to="/electrician-tools" className="w-full sm:w-auto">
-                  <Button 
-                    variant="outline" 
-                    className="flex items-center justify-center gap-2 w-full h-12 sm:h-10 text-base font-medium touch-manipulation"
-                  >
-                    <ArrowLeft className="h-5 w-5" /> 
-                    Back to Tools
-                  </Button>
-                </Link>
-              </div>
+              </Link>
             </div>
           </div>
 
