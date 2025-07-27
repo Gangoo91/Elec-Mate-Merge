@@ -1,0 +1,8 @@
+-- Insert the 6 City & Guilds courses into the qualifications table
+INSERT INTO public.qualifications (awarding_body, level, title, code, description, requires_portfolio) VALUES
+('City & Guilds', 'Level 3', 'City & Guilds Level 3 NVQ Diploma in Installing Electrotechnical Systems and Equipment (Buildings, Structures and the Environment)', '2357', 'NVQ qualification for installing electrotechnical systems in buildings and structures', true),
+('City & Guilds', 'Level 3', 'City & Guilds Level 3 NVQ Diploma in Maintaining Electrotechnical Systems and Equipment (Buildings, Structures and the Environment)', '2356', 'NVQ qualification for maintaining electrotechnical systems in buildings and structures', true),
+('City & Guilds', 'Level 3', 'City & Guilds Level 3 Award in the Requirements for Electrical Installations (BS 7671: 2018)', '2382-18', 'Comprehensive qualification covering BS 7671 18th Edition wiring regulations', true),
+('City & Guilds', 'Level 3', 'City & Guilds Level 3 Certificate in Electrotechnical Technology', '2365', 'Certificate covering electrotechnical theory and practical applications', true),
+('City & Guilds', 'Level 2', 'City & Guilds Level 2 Technical Certificate in Electrical Installation', '8202-20', 'Technical certificate for electrical installation fundamentals', true),
+('City & Guilds', 'Level 3', 'City & Guilds Level 3 Diploma in Electrical Installation', '2365', 'Comprehensive diploma covering advanced electrical installation practices', true);
