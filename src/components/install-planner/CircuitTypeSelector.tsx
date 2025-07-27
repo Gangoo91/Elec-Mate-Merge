@@ -155,7 +155,7 @@ const CircuitTypeSelector: React.FC<CircuitTypeSelectorProps> = ({
                 <p className="text-xs text-muted-foreground mb-3 leading-tight text-center">
                   {template.description}
                 </p>
-                <div className="grid grid-cols-3 gap-2 text-xs">
+                <div className="flex flex-col sm:grid sm:grid-cols-3 gap-2 text-xs">
                   <div className="bg-elec-dark/50 rounded p-2 text-center">
                     <div className="text-muted-foreground mb-1">Load</div>
                     <div className="font-medium text-elec-yellow">{template.totalLoad}W</div>
