@@ -7,6 +7,11 @@ export type Json =
   | Json[]
 
 export type Database = {
+  // Allows to automatically instanciate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "12.2.3 (519615d)"
+  }
   public: {
     Tables: {
       assessment_tracking: {
@@ -939,6 +944,7 @@ export type Database = {
       }
       portfolio_items: {
         Row: {
+          assessment_criteria_met: string[] | null
           category: string
           created_at: string
           description: string | null
@@ -946,6 +952,8 @@ export type Database = {
           file_url: string | null
           grade: string | null
           id: string
+          learning_outcomes_met: string[] | null
+          qualification_category_id: string | null
           reflection_notes: string | null
           skills_demonstrated: string[] | null
           supervisor_feedback: string | null
@@ -954,6 +962,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          assessment_criteria_met?: string[] | null
           category: string
           created_at?: string
           description?: string | null
@@ -961,6 +970,8 @@ export type Database = {
           file_url?: string | null
           grade?: string | null
           id?: string
+          learning_outcomes_met?: string[] | null
+          qualification_category_id?: string | null
           reflection_notes?: string | null
           skills_demonstrated?: string[] | null
           supervisor_feedback?: string | null
@@ -969,6 +980,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          assessment_criteria_met?: string[] | null
           category?: string
           created_at?: string
           description?: string | null
@@ -976,6 +988,8 @@ export type Database = {
           file_url?: string | null
           grade?: string | null
           id?: string
+          learning_outcomes_met?: string[] | null
+          qualification_category_id?: string | null
           reflection_notes?: string | null
           skills_demonstrated?: string[] | null
           supervisor_feedback?: string | null
@@ -983,7 +997,15 @@ export type Database = {
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_items_qualification_category_id_fkey"
+            columns: ["qualification_category_id"]
+            isOneToOne: false
+            referencedRelation: "qualification_categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -1012,6 +1034,178 @@ export type Database = {
           subscribed?: boolean | null
           updated_at?: string | null
           username?: string | null
+        }
+        Relationships: []
+      }
+      qualification_categories: {
+        Row: {
+          assessment_criteria: string[] | null
+          color: string | null
+          created_at: string
+          description: string | null
+          icon: string | null
+          id: string
+          learning_outcomes: string[] | null
+          name: string
+          qualification_id: string
+          required_entries: number
+        }
+        Insert: {
+          assessment_criteria?: string[] | null
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          learning_outcomes?: string[] | null
+          name: string
+          qualification_id: string
+          required_entries?: number
+        }
+        Update: {
+          assessment_criteria?: string[] | null
+          color?: string | null
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          learning_outcomes?: string[] | null
+          name?: string
+          qualification_id?: string
+          required_entries?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "qualification_categories_qualification_id_fkey"
+            columns: ["qualification_id"]
+            isOneToOne: false
+            referencedRelation: "qualifications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      qualification_compliance: {
+        Row: {
+          category_id: string
+          completed_entries: number | null
+          compliance_percentage: number | null
+          created_at: string
+          id: string
+          last_updated: string | null
+          qualification_id: string
+          required_entries: number
+          user_id: string
+        }
+        Insert: {
+          category_id: string
+          completed_entries?: number | null
+          compliance_percentage?: number | null
+          created_at?: string
+          id?: string
+          last_updated?: string | null
+          qualification_id: string
+          required_entries: number
+          user_id: string
+        }
+        Update: {
+          category_id?: string
+          completed_entries?: number | null
+          compliance_percentage?: number | null
+          created_at?: string
+          id?: string
+          last_updated?: string | null
+          qualification_id?: string
+          required_entries?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "qualification_compliance_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "qualification_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "qualification_compliance_qualification_id_fkey"
+            columns: ["qualification_id"]
+            isOneToOne: false
+            referencedRelation: "qualifications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      qualification_templates: {
+        Row: {
+          created_at: string
+          description: string | null
+          evidence_requirements: string[] | null
+          id: string
+          qualification_category_id: string
+          skills: string[] | null
+          template_content: Json | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          evidence_requirements?: string[] | null
+          id?: string
+          qualification_category_id: string
+          skills?: string[] | null
+          template_content?: Json | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          evidence_requirements?: string[] | null
+          id?: string
+          qualification_category_id?: string
+          skills?: string[] | null
+          template_content?: Json | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "qualification_templates_qualification_category_id_fkey"
+            columns: ["qualification_category_id"]
+            isOneToOne: false
+            referencedRelation: "qualification_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      qualifications: {
+        Row: {
+          awarding_body: string
+          code: string
+          created_at: string
+          description: string | null
+          id: string
+          level: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          awarding_body: string
+          code: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          level: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          awarding_body?: string
+          code?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          level?: string
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -1651,6 +1845,44 @@ export type Database = {
         }
         Relationships: []
       }
+      user_qualification_selections: {
+        Row: {
+          id: string
+          is_active: boolean
+          progress_percentage: number | null
+          qualification_id: string
+          selected_at: string
+          target_completion_date: string | null
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          is_active?: boolean
+          progress_percentage?: number | null
+          qualification_id: string
+          selected_at?: string
+          target_completion_date?: string | null
+          user_id: string
+        }
+        Update: {
+          id?: string
+          is_active?: boolean
+          progress_percentage?: number | null
+          qualification_id?: string
+          selected_at?: string
+          target_completion_date?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_qualification_selections_qualification_id_fkey"
+            columns: ["qualification_id"]
+            isOneToOne: false
+            referencedRelation: "qualifications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -1697,21 +1929,25 @@ export type Database = {
   }
 }
 
-type DefaultSchema = Database[Extract<keyof Database, "public">]
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
 
 export type Tables<
   DefaultSchemaTableNameOrOptions extends
     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-        Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? (Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-      Database[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
       Row: infer R
     }
     ? R
@@ -1729,14 +1965,16 @@ export type Tables<
 export type TablesInsert<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Insert: infer I
     }
     ? I
@@ -1752,14 +1990,16 @@ export type TablesInsert<
 export type TablesUpdate<
   DefaultSchemaTableNameOrOptions extends
     | keyof DefaultSchema["Tables"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
     : never = never,
-> = DefaultSchemaTableNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
       Update: infer U
     }
     ? U
@@ -1775,14 +2015,16 @@ export type TablesUpdate<
 export type Enums<
   DefaultSchemaEnumNameOrOptions extends
     | keyof DefaultSchema["Enums"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
     : never = never,
-> = DefaultSchemaEnumNameOrOptions extends { schema: keyof Database }
-  ? Database[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
     ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
     : never
@@ -1790,14 +2032,16 @@ export type Enums<
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof DefaultSchema["CompositeTypes"]
-    | { schema: keyof Database },
+    | { schema: keyof DatabaseWithoutInternals },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof DatabaseWithoutInternals
   }
-    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never = never,
-> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
-  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
     ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
