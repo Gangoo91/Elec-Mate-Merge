@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { DropdownTabs } from '@/components/ui/dropdown-tabs';
 import { CalendarDays, GraduationCap, Award, BookOpen } from 'lucide-react';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
 import { Qualification } from '@/types/qualification';
@@ -50,7 +50,7 @@ const QualificationSelector = () => {
 
   if (userSelection) {
     return (
-      <Card>
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Award className="h-5 w-5" />
@@ -69,7 +69,7 @@ const QualificationSelector = () => {
                   {userSelection.qualification?.awarding_body} • {userSelection.qualification?.level}
                 </p>
               </div>
-              <Badge variant="secondary">
+              <Badge variant="secondary" className="border-elec-yellow/50 bg-elec-yellow/20 text-elec-yellow">
                 {userSelection.progress_percentage}% Complete
               </Badge>
             </div>
@@ -86,7 +86,7 @@ const QualificationSelector = () => {
   }
 
   return (
-    <Card>
+    <Card className="border-elec-yellow/20 bg-elec-gray">
       <CardHeader>
         <CardTitle>Select Your Qualification</CardTitle>
         <CardDescription>
@@ -94,69 +94,66 @@ const QualificationSelector = () => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue={Object.keys(awardingBodies)[0]} className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            {Object.keys(awardingBodies).map((body) => {
-              const Icon = awardingBodyIcons[body as keyof typeof awardingBodyIcons] || Award;
-              return (
-                <TabsTrigger key={body} value={body} className="flex items-center gap-2">
-                  <Icon className="h-4 w-4" />
-                  {body}
-                </TabsTrigger>
-              );
-            })}
-          </TabsList>
-
-          {Object.entries(awardingBodies).map(([body, qualifications]) => (
-            <TabsContent key={body} value={body} className="space-y-4">
-              <div className="grid gap-4">
-                {qualifications.map((qualification) => (
-                  <Card
-                    key={qualification.id}
-                    className={`cursor-pointer transition-all hover:shadow-md ${
-                      selectedQualification?.id === qualification.id ? 'ring-2 ring-primary' : ''
-                    }`}
-                    onClick={() => setSelectedQualification(qualification)}
-                  >
-                    <CardContent className="p-4">
-                      <div className="flex items-start justify-between">
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2">
-                            <h3 className="font-semibold">{qualification.title}</h3>
-                            <Badge variant="outline">{qualification.level}</Badge>
+        <DropdownTabs
+          placeholder="Select awarding body"
+          defaultValue={Object.keys(awardingBodies)[0]}
+          tabs={Object.entries(awardingBodies).map(([body, qualifications]) => {
+            const Icon = awardingBodyIcons[body as keyof typeof awardingBodyIcons] || Award;
+            return {
+              value: body,
+              label: body,
+              icon: Icon,
+              content: (
+                <div className="grid gap-4 mt-4">
+                  {qualifications.map((qualification) => (
+                    <Card
+                      key={qualification.id}
+                      className={`cursor-pointer transition-all hover:shadow-md border-elec-yellow/20 bg-elec-dark ${
+                        selectedQualification?.id === qualification.id ? 'ring-2 ring-elec-yellow' : ''
+                      }`}
+                      onClick={() => setSelectedQualification(qualification)}
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start justify-between">
+                          <div className="space-y-2">
+                            <div className="flex items-center gap-2">
+                              <h3 className="font-semibold">{qualification.title}</h3>
+                              <Badge variant="outline" className="border-elec-yellow/50 text-elec-yellow">{qualification.level}</Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground">
+                              {qualification.description}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              Code: {qualification.code}
+                            </p>
                           </div>
-                          <p className="text-sm text-muted-foreground">
-                            {qualification.description}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            Code: {qualification.code}
-                          </p>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-          ))}
-        </Tabs>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              )
+            };
+          })}
+        />
 
         {selectedQualification && (
-          <div className="mt-6 space-y-4 border-t pt-4">
+          <div className="mt-6 space-y-4 border-t border-elec-yellow/20 pt-4">
             <div className="space-y-2">
-              <Label htmlFor="target-date">Target Completion Date (Optional)</Label>
+              <Label htmlFor="target-date" className="text-sm font-medium">Target Completion Date (Optional)</Label>
               <Input
                 id="target-date"
                 type="date"
                 value={targetDate}
                 onChange={(e) => setTargetDate(e.target.value)}
                 min={new Date().toISOString().split('T')[0]}
+                className="bg-elec-dark border-elec-yellow/20"
               />
             </div>
             <Button 
               onClick={handleSelectQualification}
               disabled={isSelecting}
-              className="w-full"
+              className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
             >
               {isSelecting ? 'Selecting...' : 'Select This Qualification'}
             </Button>
