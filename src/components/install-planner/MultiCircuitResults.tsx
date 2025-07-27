@@ -122,11 +122,13 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="text-2xl">
-                      {analysis.circuit.loadType === "lighting" ? "💡" :
-                       analysis.circuit.loadType === "power" ? "🔌" :
-                       analysis.circuit.loadType === "cooker" ? "🍳" :
-                       analysis.circuit.loadType === "heating" ? "🔥" : "⚡"}
+                    <div className="h-8 w-8 rounded bg-elec-yellow/20 flex items-center justify-center">
+                      <div className="text-xs font-bold text-elec-yellow">
+                        {analysis.circuit.loadType === "lighting" ? "LT" :
+                         analysis.circuit.loadType === "power" ? "PW" :
+                         analysis.circuit.loadType === "cooker" ? "CK" :
+                         analysis.circuit.loadType === "heating" ? "HT" : "GN"}
+                      </div>
                     </div>
                     <div>
                       <CardTitle className="text-base">{analysis.circuit.name}</CardTitle>

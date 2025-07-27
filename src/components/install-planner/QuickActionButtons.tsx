@@ -26,123 +26,123 @@ const QuickActionButtons: React.FC<QuickActionButtonsProps> = ({
     switch (installationType) {
       case "domestic":
         return [
-          { value: "lighting", label: "Lighting", icon: "💡", description: "General lighting circuits" },
-          { value: "power", label: "Power", icon: "🔌", description: "Socket outlet circuits" },
-          { value: "cooker", label: "Cooker", icon: "🍳", description: "Electric cooker circuits" },
-          { value: "shower", label: "Shower", icon: "🚿", description: "Electric shower circuits" },
-          { value: "heating", label: "Heating", icon: "🔥", description: "Electric heating circuits" },
-          { value: "ev-charging", label: "EV Charging", icon: "🚗", description: "EV charging points" },
-          { value: "smart-home", label: "Smart Home", icon: "🏠", description: "Home automation systems" },
-          { value: "renewable-solar", label: "Solar PV", icon: "☀️", description: "Solar photovoltaic installation" }
+          { value: "lighting", label: "Lighting", description: "General lighting circuits" },
+          { value: "power", label: "Power", description: "Socket outlet circuits" },
+          { value: "cooker", label: "Cooker", description: "Electric cooker circuits" },
+          { value: "shower", label: "Shower", description: "Electric shower circuits" },
+          { value: "heating", label: "Heating", description: "Electric heating circuits" },
+          { value: "ev-charging", label: "EV Charging", description: "EV charging points" },
+          { value: "smart-home", label: "Smart Home", description: "Home automation systems" },
+          { value: "renewable-solar", label: "Solar PV", description: "Solar photovoltaic installation" }
         ];
       case "commercial":
         return [
-          { value: "commercial-lighting", label: "Lighting", icon: "💡", description: "Commercial lighting" },
-          { value: "commercial-power", label: "Power", icon: "🔌", description: "Commercial power circuits" },
-          { value: "hvac", label: "HVAC", icon: "❄️", description: "Air conditioning systems" },
-          { value: "it-equipment", label: "IT Equipment", icon: "💻", description: "Server and network power" },
-          { value: "emergency", label: "Emergency", icon: "🚨", description: "Emergency systems" }
+          { value: "commercial-lighting", label: "Lighting", description: "Commercial lighting" },
+          { value: "commercial-power", label: "Power", description: "Commercial power circuits" },
+          { value: "hvac", label: "HVAC", description: "Air conditioning systems" },
+          { value: "it-equipment", label: "IT Equipment", description: "Server and network power" },
+          { value: "emergency", label: "Emergency", description: "Emergency systems" }
         ];
       case "industrial":
         return [
-          { value: "motor-small", label: "Small Motor", icon: "⚙️", description: "Small industrial motors" },
-          { value: "motor-large", label: "Large Motor", icon: "⚙️", description: "Large industrial motors" },
-          { value: "welding", label: "Welding", icon: "🔥", description: "Welding equipment" },
-          { value: "crane", label: "Crane & Hoist", icon: "🏗️", description: "Lifting equipment" },
-          { value: "furnace", label: "Furnace", icon: "🔥", description: "Industrial furnaces" },
-          { value: "hvac", label: "HVAC", icon: "❄️", description: "Industrial HVAC" }
+          { value: "motor-small", label: "Small Motor", description: "Small industrial motors" },
+          { value: "motor-large", label: "Large Motor", description: "Large industrial motors" },
+          { value: "welding", label: "Welding", description: "Welding equipment" },
+          { value: "crane", label: "Crane & Hoist", description: "Lifting equipment" },
+          { value: "furnace", label: "Furnace", description: "Industrial furnaces" },
+          { value: "hvac", label: "HVAC", description: "Industrial HVAC" }
         ];
       case "data-center":
         return [
-          { value: "ups-system", label: "UPS System", icon: "⚡", description: "Uninterruptible power supply" },
-          { value: "server-rack", label: "Server Rack", icon: "🖥️", description: "Server rack power distribution" },
-          { value: "cooling-system", label: "Cooling", icon: "❄️", description: "Data center cooling systems" },
-          { value: "backup-generator", label: "Generator", icon: "🔋", description: "Emergency backup generator" },
-          { value: "it-equipment", label: "IT Equipment", icon: "💻", description: "Network and server equipment" }
+          { value: "ups-system", label: "UPS System", description: "Uninterruptible power supply" },
+          { value: "server-rack", label: "Server Rack", description: "Server rack power distribution" },
+          { value: "cooling-system", label: "Cooling", description: "Data center cooling systems" },
+          { value: "backup-generator", label: "Generator", description: "Emergency backup generator" },
+          { value: "it-equipment", label: "IT Equipment", description: "Network and server equipment" }
         ];
       case "education":
         return [
-          { value: "classroom-power", label: "Classroom", icon: "🎓", description: "Educational facility power" },
-          { value: "lab-equipment", label: "Laboratory", icon: "🔬", description: "Science laboratory equipment" },
-          { value: "sports-lighting", label: "Sports Hall", icon: "⚽", description: "Sports facility lighting" },
-          { value: "commercial-lighting", label: "General Lighting", icon: "💡", description: "Educational lighting" },
-          { value: "it-equipment", label: "IT Systems", icon: "💻", description: "Educational technology" }
+          { value: "classroom-power", label: "Classroom", description: "Educational facility power" },
+          { value: "lab-equipment", label: "Laboratory", description: "Science laboratory equipment" },
+          { value: "sports-lighting", label: "Sports Hall", description: "Sports facility lighting" },
+          { value: "commercial-lighting", label: "General Lighting", description: "Educational lighting" },
+          { value: "it-equipment", label: "IT Systems", description: "Educational technology" }
         ];
       case "hospitality":
         return [
-          { value: "kitchen-equipment", label: "Kitchen", icon: "👨‍🍳", description: "Commercial kitchen equipment" },
-          { value: "guest-room", label: "Guest Room", icon: "🛏️", description: "Hotel guest room power" },
-          { value: "laundry-equipment", label: "Laundry", icon: "🧺", description: "Commercial laundry equipment" },
-          { value: "commercial-lighting", label: "Lighting", icon: "💡", description: "Hospitality lighting" },
-          { value: "hvac", label: "HVAC", icon: "❄️", description: "Climate control systems" }
+          { value: "kitchen-equipment", label: "Kitchen", description: "Commercial kitchen equipment" },
+          { value: "guest-room", label: "Guest Room", description: "Hotel guest room power" },
+          { value: "laundry-equipment", label: "Laundry", description: "Commercial laundry equipment" },
+          { value: "commercial-lighting", label: "Lighting", description: "Hospitality lighting" },
+          { value: "hvac", label: "HVAC", description: "Climate control systems" }
         ];
       case "retail":
         return [
-          { value: "retail-lighting", label: "Display Lighting", icon: "💡", description: "Retail display lighting" },
-          { value: "pos-systems", label: "POS Systems", icon: "💳", description: "Point of sale systems" },
-          { value: "cold-storage", label: "Refrigeration", icon: "🧊", description: "Cold storage and refrigeration" },
-          { value: "commercial-power", label: "General Power", icon: "🔌", description: "General retail power" }
+          { value: "retail-lighting", label: "Display Lighting", description: "Retail display lighting" },
+          { value: "pos-systems", label: "POS Systems", description: "Point of sale systems" },
+          { value: "cold-storage", label: "Refrigeration", description: "Cold storage and refrigeration" },
+          { value: "commercial-power", label: "General Power", description: "General retail power" }
         ];
       case "agriculture":
         return [
-          { value: "irrigation-pump", label: "Irrigation", icon: "💧", description: "Irrigation pump systems" },
-          { value: "grain-dryer", label: "Grain Dryer", icon: "🌾", description: "Grain drying equipment" },
-          { value: "livestock-equipment", label: "Livestock", icon: "🐄", description: "Livestock management equipment" },
-          { value: "motor-small", label: "Farm Motors", icon: "⚙️", description: "Small agricultural motors" }
+          { value: "irrigation-pump", label: "Irrigation", description: "Irrigation pump systems" },
+          { value: "grain-dryer", label: "Grain Dryer", description: "Grain drying equipment" },
+          { value: "livestock-equipment", label: "Livestock", description: "Livestock management equipment" },
+          { value: "motor-small", label: "Farm Motors", description: "Small agricultural motors" }
         ];
       case "transportation":
         return [
-          { value: "charging-station", label: "EV Charging", icon: "🚗", description: "Public EV charging station" },
-          { value: "platform-lighting", label: "Platform Lighting", icon: "🚇", description: "Transport platform lighting" },
-          { value: "signal-systems", label: "Traffic Signals", icon: "🚦", description: "Traffic control systems" },
-          { value: "emergency", label: "Emergency", icon: "🚨", description: "Emergency systems" }
+          { value: "charging-station", label: "EV Charging", description: "Public EV charging station" },
+          { value: "platform-lighting", label: "Platform Lighting", description: "Transport platform lighting" },
+          { value: "signal-systems", label: "Traffic Signals", description: "Traffic control systems" },
+          { value: "emergency", label: "Emergency", description: "Emergency systems" }
         ];
       case "sports-entertainment":
         return [
-          { value: "floodlighting", label: "Floodlighting", icon: "💡", description: "Sports venue floodlighting" },
-          { value: "sound-system", label: "Audio/Visual", icon: "🔊", description: "Entertainment systems" },
-          { value: "scoreboard", label: "Scoreboard", icon: "📊", description: "Electronic scoreboards" },
-          { value: "commercial-power", label: "General Power", icon: "🔌", description: "General venue power" }
+          { value: "floodlighting", label: "Floodlighting", description: "Sports venue floodlighting" },
+          { value: "sound-system", label: "Audio/Visual", description: "Entertainment systems" },
+          { value: "scoreboard", label: "Scoreboard", description: "Electronic scoreboards" },
+          { value: "commercial-power", label: "General Power", description: "General venue power" }
         ];
       case "laboratory":
         return [
-          { value: "fume-cupboard", label: "Fume Cupboard", icon: "🧪", description: "Laboratory fume extraction" },
-          { value: "analytical-equipment", label: "Analytical", icon: "🔬", description: "Precision instruments" },
-          { value: "clean-room", label: "Clean Room", icon: "🏥", description: "Clean room systems" },
-          { value: "emergency", label: "Emergency", icon: "🚨", description: "Lab safety systems" }
+          { value: "fume-cupboard", label: "Fume Cupboard", description: "Laboratory fume extraction" },
+          { value: "analytical-equipment", label: "Analytical", description: "Precision instruments" },
+          { value: "clean-room", label: "Clean Room", description: "Clean room systems" },
+          { value: "emergency", label: "Emergency", description: "Lab safety systems" }
         ];
       case "marine-offshore":
         return [
-          { value: "marine-power", label: "Marine Power", icon: "⚓", description: "Marine vessel power systems" },
-          { value: "navigation-equipment", label: "Navigation", icon: "🧭", description: "Marine navigation equipment" },
-          { value: "winch-system", label: "Winch System", icon: "⚓", description: "Marine winch and lifting" },
-          { value: "emergency", label: "Emergency", icon: "🚨", description: "Marine safety systems" }
+          { value: "marine-power", label: "Marine Power", description: "Marine vessel power systems" },
+          { value: "navigation-equipment", label: "Navigation", description: "Marine navigation equipment" },
+          { value: "winch-system", label: "Winch System", description: "Marine winch and lifting" },
+          { value: "emergency", label: "Emergency", description: "Marine safety systems" }
         ];
       case "mining":
         return [
-          { value: "conveyor-belt", label: "Conveyor", icon: "🏗️", description: "Mining conveyor systems" },
-          { value: "ventilation-fan", label: "Ventilation", icon: "🌪️", description: "Mine ventilation systems" },
-          { value: "crushing-equipment", label: "Crushing", icon: "⚒️", description: "Ore crushing equipment" },
-          { value: "motor-large", label: "Large Motors", icon: "⚙️", description: "Large industrial motors" }
+          { value: "conveyor-belt", label: "Conveyor", description: "Mining conveyor systems" },
+          { value: "ventilation-fan", label: "Ventilation", description: "Mine ventilation systems" },
+          { value: "crushing-equipment", label: "Crushing", description: "Ore crushing equipment" },
+          { value: "motor-large", label: "Large Motors", description: "Large industrial motors" }
         ];
       case "healthcare":
         return [
-          { value: "medical", label: "Medical Equipment", icon: "🏥", description: "Critical medical equipment" },
-          { value: "emergency", label: "Emergency", icon: "🚨", description: "Healthcare emergency systems" },
-          { value: "it-equipment", label: "IT Systems", icon: "💻", description: "Healthcare IT equipment" },
-          { value: "hvac", label: "HVAC", icon: "❄️", description: "Healthcare climate control" }
+          { value: "medical", label: "Medical Equipment", description: "Critical medical equipment" },
+          { value: "emergency", label: "Emergency", description: "Healthcare emergency systems" },
+          { value: "it-equipment", label: "IT Systems", description: "Healthcare IT equipment" },
+          { value: "hvac", label: "HVAC", description: "Healthcare climate control" }
         ];
       case "hazardous-areas":
         return [
-          { value: "zone1-lighting", label: "Zone 1 Lighting", icon: "⚠️", description: "Hazardous area lighting" },
-          { value: "zone1-motor", label: "Zone 1 Motor", icon: "⚠️", description: "Hazardous area motors" },
-          { value: "intrinsically-safe", label: "IS Circuit", icon: "🔒", description: "Intrinsically safe circuits" },
-          { value: "emergency", label: "Emergency", icon: "🚨", description: "Hazardous area emergency" }
+          { value: "zone1-lighting", label: "Zone 1 Lighting", description: "Hazardous area lighting" },
+          { value: "zone1-motor", label: "Zone 1 Motor", description: "Hazardous area motors" },
+          { value: "intrinsically-safe", label: "IS Circuit", description: "Intrinsically safe circuits" },
+          { value: "emergency", label: "Emergency", description: "Hazardous area emergency" }
         ];
       default:
         return [
-          { value: "lighting", label: "Lighting", icon: "💡", description: "General lighting" },
-          { value: "power", label: "Power", icon: "🔌", description: "Power circuits" }
+          { value: "lighting", label: "Lighting", description: "General lighting" },
+          { value: "power", label: "Power", description: "Power circuits" }
         ];
     }
   };

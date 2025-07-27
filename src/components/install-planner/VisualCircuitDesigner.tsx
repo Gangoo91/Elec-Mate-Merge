@@ -47,13 +47,13 @@ const VisualCircuitDesigner: React.FC<VisualCircuitDesignerProps> = ({
 
   const getLoadIcon = (loadType: string) => {
     switch (loadType) {
-      case "lighting": return "💡";
-      case "motor": return "⚙️";
-      case "heating": return "🔥";
-      case "cooker": return "🍳";
-      case "ev-charging": return "🚗";
-      case "power": return "🔌";
-      default: return "⚡";
+      case "lighting": return "LT";
+      case "motor": return "MT";
+      case "heating": return "HT";
+      case "cooker": return "CK";
+      case "ev-charging": return "EV";
+      case "power": return "PW";
+      default: return "GN";
     }
   };
 
@@ -231,8 +231,8 @@ const VisualCircuitDesigner: React.FC<VisualCircuitDesignerProps> = ({
             {/* Load */}
             <div className="flex items-center justify-between p-4 bg-green-500/10 rounded-lg border border-green-400/30">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-green-500/20 border-2 border-green-400 rounded-lg flex items-center justify-center text-2xl">
-                  {getLoadIcon(currentCircuit.loadType)}
+                <div className="w-12 h-12 bg-green-500/20 border-2 border-green-400 rounded-lg flex items-center justify-center">
+                  <div className="text-xs font-bold text-green-400">{getLoadIcon(currentCircuit.loadType)}</div>
                 </div>
                 <div>
                   <p className="font-medium text-green-400">Load</p>
