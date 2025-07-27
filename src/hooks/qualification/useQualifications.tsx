@@ -21,8 +21,25 @@ export const useQualifications = () => {
 
       if (error) throw error;
       setQualifications(data || []);
+      
+      // Load all categories for all qualifications
+      await loadAllQualificationCategories();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load qualifications');
+    }
+  };
+
+  const loadAllQualificationCategories = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('qualification_categories')
+        .select('*')
+        .order('name', { ascending: true });
+
+      if (error) throw error;
+      setCategories(data || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load categories');
     }
   };
 

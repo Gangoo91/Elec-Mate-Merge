@@ -7,35 +7,34 @@ import { CalendarDays, GraduationCap, Award, BookOpen } from 'lucide-react';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
 import { Qualification } from '@/types/qualification';
 import { toast } from 'sonner';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import QualificationConfirmationDialog from './QualificationConfirmationDialog';
 
 const QualificationSelector = () => {
-  const { awardingBodies, loading, selectQualification, userSelection } = useQualifications();
+  const { awardingBodies, categories, loading, selectQualification, userSelection } = useQualifications();
   const [selectedQualification, setSelectedQualification] = useState<Qualification | null>(null);
-  const [targetDate, setTargetDate] = useState('');
-  const [isSelecting, setIsSelecting] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const awardingBodyIcons = {
     'EAL': Award,
     'City & Guilds': GraduationCap
   };
 
-  const handleSelectQualification = async () => {
+  const handleSelectQualification = (qualification: Qualification) => {
+    setSelectedQualification(qualification);
+    setShowConfirmDialog(true);
+  };
+
+  const handleConfirmSelection = async (targetDate?: string) => {
     if (!selectedQualification) return;
 
-    setIsSelecting(true);
-    try {
-      await selectQualification(selectedQualification.id, targetDate || undefined);
-      toast.success('Qualification selected successfully!');
-      setSelectedQualification(null);
-      setTargetDate('');
-    } catch (error) {
-      toast.error('Failed to select qualification');
-    } finally {
-      setIsSelecting(false);
-    }
+    await selectQualification(selectedQualification.id, targetDate);
+    toast.success('Qualification selected successfully! Your portfolio is now being set up.');
+    setSelectedQualification(null);
   };
+
+  const selectedQualificationCategories = selectedQualification 
+    ? categories.filter(cat => cat.qualification_id === selectedQualification.id)
+    : [];
 
   if (loading) {
     return (
@@ -110,7 +109,7 @@ const QualificationSelector = () => {
                       className={`cursor-pointer transition-all hover:shadow-md border-elec-yellow/20 bg-elec-dark ${
                         selectedQualification?.id === qualification.id ? 'ring-2 ring-elec-yellow' : ''
                       }`}
-                      onClick={() => setSelectedQualification(qualification)}
+                      onClick={() => handleSelectQualification(qualification)}
                     >
                     <CardContent className="p-4">
                       <div className="space-y-3">
@@ -138,28 +137,13 @@ const QualificationSelector = () => {
           })}
         />
 
-        {selectedQualification && (
-          <div className="mt-6 space-y-4 border-t border-elec-yellow/20 pt-4">
-            <div className="space-y-2">
-              <Label htmlFor="target-date" className="text-sm font-medium">Target Completion Date (Optional)</Label>
-              <Input
-                id="target-date"
-                type="date"
-                value={targetDate}
-                onChange={(e) => setTargetDate(e.target.value)}
-                min={new Date().toISOString().split('T')[0]}
-                className="bg-elec-dark border-elec-yellow/20"
-              />
-            </div>
-            <Button 
-              onClick={handleSelectQualification}
-              disabled={isSelecting}
-              className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-            >
-              {isSelecting ? 'Selecting...' : 'Select This Qualification'}
-            </Button>
-          </div>
-        )}
+        <QualificationConfirmationDialog
+          open={showConfirmDialog}
+          onOpenChange={setShowConfirmDialog}
+          qualification={selectedQualification}
+          categories={selectedQualificationCategories}
+          onConfirm={handleConfirmSelection}
+        />
       </CardContent>
     </Card>
   );
