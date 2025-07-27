@@ -239,13 +239,10 @@ const ComplianceDashboardTab = () => {
                 const progressPercentage = Math.min((goal.current_value / goal.target_value) * 100, 100);
                 
                 return (
-                  <div key={goal.id} className="p-4 border rounded-lg">
-                    <div className="flex justify-between items-start mb-3">
-                      <div className="flex-1">
-                        <h4 className="font-medium">{goal.title}</h4>
-                        <p className="text-sm text-muted-foreground mt-1">{goal.description}</p>
-                      </div>
-                      <div className="flex gap-2">
+                  <div key={goal.id} className="p-4 border rounded-lg space-y-3">
+                    {/* Mobile-optimized badges - stacked at top */}
+                    <div className="flex flex-col sm:flex-row gap-2 sm:justify-end">
+                      <div className="flex gap-2 justify-start sm:justify-end">
                         <Badge className={getPriorityColor(goal.priority)}>
                           {goal.priority}
                         </Badge>
@@ -255,20 +252,28 @@ const ComplianceDashboardTab = () => {
                       </div>
                     </div>
 
+                    {/* Title and description */}
                     <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span>Progress: {goal.current_value} / {goal.target_value} {goal.unit}</span>
-                        <span>{progressPercentage.toFixed(0)}%</span>
-                      </div>
-                      <Progress value={progressPercentage} />
+                      <h4 className="font-medium text-base leading-tight">{goal.title}</h4>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{goal.description}</p>
                     </div>
 
-                    <div className="flex justify-between items-center mt-3">
+                    {/* Progress section */}
+                    <div className="space-y-3">
+                      <div className="flex justify-between text-sm">
+                        <span className="font-medium">Progress: {goal.current_value} / {goal.target_value} {goal.unit}</span>
+                        <span className="font-semibold text-primary">{progressPercentage.toFixed(0)}%</span>
+                      </div>
+                      <Progress value={progressPercentage} className="h-2" />
+                    </div>
+
+                    {/* Footer with deadline and category */}
+                    <div className="flex flex-col sm:flex-row gap-2 sm:justify-between sm:items-center pt-2 border-t border-border/50">
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Calendar className="h-4 w-4" />
-                        Due: {new Date(goal.deadline).toLocaleDateString('en-GB')}
+                        <span>Due: {new Date(goal.deadline).toLocaleDateString('en-GB')}</span>
                       </div>
-                      <Badge variant="outline">{goal.category}</Badge>
+                      <Badge variant="outline" className="w-fit">{goal.category}</Badge>
                     </div>
                   </div>
                 );
