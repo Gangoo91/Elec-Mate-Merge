@@ -26,7 +26,7 @@ const CircuitControls: React.FC<CircuitControlsProps> = ({
   canDelete
 }) => {
   return (
-    <div className="flex justify-center">
+    <div className="w-full flex justify-center">
       {/* Control Grid - 2x2 layout */}
       <div className="grid grid-cols-2 gap-1 w-[68px]">
         <Button

@@ -214,7 +214,7 @@ const EnhancedMultiCircuitEditor: React.FC<EnhancedMultiCircuitEditorProps> = ({
                         </div>
                       </div>
                     </div>
-                    <div className="flex justify-end w-full">
+                    <div className="flex justify-center w-full">
                       <CircuitControls
                         circuit={circuit}
                         onToggleEnabled={(enabled) => updateCircuit(circuit.id, { enabled })}
