@@ -1184,6 +1184,7 @@ export type Database = {
           description: string | null
           id: string
           level: string
+          requires_portfolio: boolean | null
           title: string
           updated_at: string
         }
@@ -1194,6 +1195,7 @@ export type Database = {
           description?: string | null
           id?: string
           level: string
+          requires_portfolio?: boolean | null
           title: string
           updated_at?: string
         }
@@ -1204,6 +1206,7 @@ export type Database = {
           description?: string | null
           id?: string
           level?: string
+          requires_portfolio?: boolean | null
           title?: string
           updated_at?: string
         }
