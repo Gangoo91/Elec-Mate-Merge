@@ -17,8 +17,20 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
   index 
 }) => {
   const bestRecommendation = analysis.recommendations[0];
-  const isCompliant = bestRecommendation?.suitability === "suitable";
-  const cablePricing = getCablePricing(bestRecommendation?.size, bestRecommendation?.type);
+  
+  // Check if voltage drop > 3% and get next cable size if needed
+  let finalRecommendation = bestRecommendation;
+  if (bestRecommendation?.voltageDropPercentage > 3) {
+    const nextSizeUp = analysis.recommendations.find((rec: any) => 
+      rec.voltageDropPercentage <= 3 && rec.size !== bestRecommendation.size
+    );
+    if (nextSizeUp) {
+      finalRecommendation = nextSizeUp;
+    }
+  }
+  
+  const isCompliant = finalRecommendation?.suitability === "suitable";
+  const cablePricing = getCablePricing(finalRecommendation?.size, finalRecommendation?.type);
   
   const installationTime = {
     low: "2-4 hours",
@@ -43,8 +55,8 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
               <CheckCircle className="h-5 w-5 text-green-400" /> : 
               <AlertTriangle className="h-5 w-5 text-amber-400" />
             }
-            <Badge variant={isCompliant ? "default" : "destructive"}>
-              {isCompliant ? "BS7671 Compliant" : "Review Required"}
+            <Badge variant={isCompliant ? "success" : "destructive"} className="text-xs">
+              {isCompliant ? "Compliant" : "Review Required"}
             </Badge>
           </div>
         </div>
@@ -74,18 +86,18 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
           <div className="space-y-3">
           <div className="space-y-3 border-b border-elec-yellow/20 pb-4">
             <h4 className="font-medium text-elec-yellow">Recommended Cable</h4>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="space-y-3">
               <div className="p-3 border border-elec-yellow/20 text-center">
                 <p className="text-xs text-muted-foreground mb-1">Size & Type</p>
-                <p className="font-medium text-elec-yellow">{bestRecommendation.size} {bestRecommendation.type.toUpperCase()}</p>
+                <p className="font-medium text-elec-yellow">{finalRecommendation.size} {finalRecommendation.type.toUpperCase()}</p>
               </div>
               <div className="p-3 border border-elec-yellow/20 text-center">
                 <p className="text-xs text-muted-foreground mb-1">Capacity</p>
-                <p className="font-medium text-elec-yellow">{bestRecommendation.currentCarryingCapacity}A</p>
+                <p className="font-medium text-elec-yellow">{finalRecommendation.currentCarryingCapacity}A</p>
               </div>
               <div className="p-3 border border-elec-yellow/20 text-center">
                 <p className="text-xs text-muted-foreground mb-1">Voltage Drop</p>
-                <p className="font-medium text-elec-yellow">{bestRecommendation.voltageDropPercentage.toFixed(2)}%</p>
+                <p className="font-medium text-elec-yellow">{finalRecommendation.voltageDropPercentage.toFixed(2)}%</p>
               </div>
             </div>
           </div>
@@ -94,7 +106,7 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
           {cablePricing && (
             <div className="space-y-3 border-b border-elec-yellow/20 pb-4">
               <h4 className="font-medium text-elec-yellow">Cost & Time Estimates</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="space-y-3">{/* Changed from grid to stacked layout */}
                 <div className="flex items-center gap-3 p-3 border border-elec-yellow/20">
                   <DollarSign className="h-4 w-4 text-elec-yellow" />
                   <div>
