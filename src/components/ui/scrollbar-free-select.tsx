@@ -103,7 +103,7 @@ const ScrollbarFreeSelectContent = React.forwardRef<
       <ScrollbarFreeSelectScrollUpButton />
       <SelectPrimitive.Viewport
         className={cn(
-          "p-1 scrollbar-none",
+          "p-1 scrollbar-none max-h-[200px] overflow-y-auto",
           position === "popper" &&
             "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
         )}
@@ -135,7 +135,7 @@ const ScrollbarFreeSelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "relative flex w-full cursor-default select-none items-center rounded-lg py-3 pl-8 pr-2 text-sm outline-none focus:bg-elec-yellow/20 focus:text-elec-light data-[disabled]:pointer-events-none data-[disabled]:opacity-50 hover:bg-elec-yellow/10 transition-colors min-h-[48px]",
+      "relative flex w-full cursor-default select-none items-center rounded-lg py-3 pl-8 pr-2 text-sm outline-none focus:bg-elec-yellow/20 focus:text-elec-light data-[disabled]:pointer-events-none data-[disabled]:opacity-50 hover:bg-elec-yellow/10 transition-colors min-h-[48px] text-left",
       className
     )}
     {...props}
@@ -146,7 +146,9 @@ const ScrollbarFreeSelectItem = React.forwardRef<
       </SelectPrimitive.ItemIndicator>
     </span>
 
-    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+    <SelectPrimitive.ItemText className="flex-1 text-left leading-tight">
+      {children}
+    </SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
 ));
 ScrollbarFreeSelectItem.displayName = SelectPrimitive.Item.displayName;
