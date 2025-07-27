@@ -4,30 +4,51 @@ import { Button } from "@/components/ui/button";
 import { BookOpen, FileText, Video, Download, ExternalLink } from "lucide-react";
 
 const PortfolioDocumentationContent = () => {
-  const documentationSections = [
+const cityGuildsResources = [
     {
-      title: "Portfolio Building Guide",
-      description: "Complete guide to building an effective electrical apprenticeship portfolio",
+      title: "Level 3 Electrical Installation Portfolio Guide",
+      description: "Official City & Guilds portfolio guidance for Level 3 electrical installation apprentices",
       type: "guide",
-      icon: BookOpen
+      icon: BookOpen,
+      url: "https://www.cityandguilds.com/qualifications-and-apprenticeships/electrical/electrical-installation/2365-level-3-electrical-installations"
     },
     {
-      title: "Evidence Collection Templates",
-      description: "Templates and examples for collecting and presenting your work evidence",
+      title: "Assessment Portfolio Templates",
+      description: "City & Guilds templates for recording practical assessments and workplace evidence",
       type: "template",
-      icon: FileText
+      icon: FileText,
+      url: "https://www.cityandguilds.com/help/help-for-learners-and-apprentices/portfolio-guidance"
     },
     {
-      title: "Assessment Criteria",
-      description: "Understanding what assessors look for in your portfolio submissions",
+      title: "SmartScreen Portfolio Resources",
+      description: "Access City & Guilds SmartScreen for portfolio templates and guidance materials",
       type: "guide",
-      icon: FileText
+      icon: FileText,
+      url: "https://www.smartscreen.co.uk/"
+    }
+  ];
+
+  const ealResources = [
+    {
+      title: "EAL Electrical Installation Portfolio Guidelines",
+      description: "Official EAL portfolio building guidance for electrical installation qualifications",
+      type: "guide",
+      icon: BookOpen,
+      url: "https://www.eal.org.uk/qualifications/electrical-installation/"
     },
     {
-      title: "Video Tutorials",
-      description: "Step-by-step video guides for portfolio development",
-      type: "video",
-      icon: Video
+      title: "EAL Portfolio Evidence Requirements",
+      description: "Detailed requirements for portfolio evidence collection and presentation",
+      type: "template",
+      icon: FileText,
+      url: "https://www.eal.org.uk/centres/centre-support/assessment-guidance/"
+    },
+    {
+      title: "EAL Online Portfolio System",
+      description: "Access EAL's online portfolio submission and tracking system",
+      type: "guide",
+      icon: Video,
+      url: "https://www.eal.org.uk/learners/portfolio-system/"
     }
   ];
 
@@ -69,39 +90,113 @@ const PortfolioDocumentationContent = () => {
         </CardContent>
       </Card>
 
-      {/* Documentation Resources */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {documentationSections.map((section, index) => {
-          const IconComponent = section.icon;
-          return (
-            <Card key={index} className="border-elec-yellow/20 bg-elec-gray hover:border-elec-yellow/40 transition-colors">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm sm:text-base flex items-center gap-2">
-                  <IconComponent className="h-4 w-4 text-elec-yellow" />
-                  {section.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-muted-foreground text-xs sm:text-sm mb-3">
-                  {section.description}
-                </p>
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <Button variant="outline" size="sm" className="border-elec-yellow/30 text-xs">
-                    <ExternalLink className="h-3 w-3 mr-1" />
-                    View
-                  </Button>
-                  {section.type === "template" && (
-                    <Button variant="outline" size="sm" className="border-elec-yellow/30 text-xs">
-                      <Download className="h-3 w-3 mr-1" />
-                      Download
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-      </div>
+      {/* City & Guilds Resources */}
+      <Card className="border-blue-500/30 bg-elec-gray">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-blue-400 flex items-center gap-2 text-base sm:text-lg">
+            <BookOpen className="h-4 w-4 sm:h-5 sm:w-5" />
+            City & Guilds Resources
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <div className="grid grid-cols-1 gap-3">
+            {cityGuildsResources.map((resource, index) => {
+              const IconComponent = resource.icon;
+              return (
+                <Card key={index} className="border-elec-yellow/20 bg-black/10 hover:border-elec-yellow/40 transition-colors">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-sm sm:text-base flex items-center gap-2">
+                      <IconComponent className="h-4 w-4 text-elec-yellow" />
+                      {resource.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <p className="text-muted-foreground text-xs sm:text-sm mb-3">
+                      {resource.description}
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="border-elec-yellow/30 text-xs"
+                        onClick={() => window.open(resource.url, '_blank')}
+                      >
+                        <ExternalLink className="h-3 w-3 mr-1" />
+                        View Resource
+                      </Button>
+                      {resource.type === "template" && (
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="border-elec-yellow/30 text-xs"
+                          onClick={() => window.open(resource.url, '_blank')}
+                        >
+                          <Download className="h-3 w-3 mr-1" />
+                          Access Templates
+                        </Button>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* EAL Resources */}
+      <Card className="border-purple-500/30 bg-elec-gray">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-purple-400 flex items-center gap-2 text-base sm:text-lg">
+            <FileText className="h-4 w-4 sm:h-5 sm:w-5" />
+            EAL Resources
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <div className="grid grid-cols-1 gap-3">
+            {ealResources.map((resource, index) => {
+              const IconComponent = resource.icon;
+              return (
+                <Card key={index} className="border-elec-yellow/20 bg-black/10 hover:border-elec-yellow/40 transition-colors">
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-sm sm:text-base flex items-center gap-2">
+                      <IconComponent className="h-4 w-4 text-elec-yellow" />
+                      {resource.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <p className="text-muted-foreground text-xs sm:text-sm mb-3">
+                      {resource.description}
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="border-elec-yellow/30 text-xs"
+                        onClick={() => window.open(resource.url, '_blank')}
+                      >
+                        <ExternalLink className="h-3 w-3 mr-1" />
+                        View Resource
+                      </Button>
+                      {resource.type === "template" && (
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="border-elec-yellow/30 text-xs"
+                          onClick={() => window.open(resource.url, '_blank')}
+                        >
+                          <Download className="h-3 w-3 mr-1" />
+                          Access Templates
+                        </Button>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Best Practices Card */}
       <Card className="border-green-500/30 bg-elec-gray">
