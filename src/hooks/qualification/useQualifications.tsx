@@ -250,6 +250,15 @@ export const useQualifications = () => {
     return acc;
   }, {} as Record<string, Qualification[]>);
 
+  // Sort qualifications within each awarding body by level (Level 2 before Level 3)
+  Object.keys(awardingBodies).forEach(awardingBody => {
+    awardingBodies[awardingBody].sort((a, b) => {
+      const levelA = parseInt(a.level);
+      const levelB = parseInt(b.level);
+      return levelA - levelB;
+    });
+  });
+
   return {
     qualifications,
     categories,
