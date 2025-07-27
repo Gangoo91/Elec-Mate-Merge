@@ -18,8 +18,7 @@ const QualificationSelector = () => {
 
   const awardingBodyIcons = {
     'EAL': Award,
-    'City & Guilds': GraduationCap,
-    'MOET': BookOpen
+    'City & Guilds': GraduationCap
   };
 
   const handleSelectQualification = async () => {
