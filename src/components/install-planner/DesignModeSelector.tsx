@@ -106,12 +106,9 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
         <Card className="border-elec-yellow/20 bg-elec-gray max-w-2xl mx-auto">
           <CardContent className="p-4">
             <div className="text-center space-y-4">
-              <div className="flex items-center justify-center gap-2">
-                <Info className="h-5 w-5 text-elec-yellow" />
-                <h4 className="font-medium text-elec-yellow">
-                  {currentMode === "single" ? "Single Circuit Design" : "Multi-Circuit Installation"}
-                </h4>
-              </div>
+              <h4 className="font-medium text-elec-yellow">
+                {currentMode === "single" ? "Single Circuit Design" : "Multi-Circuit Installation"}
+              </h4>
               
               <div className="space-y-3 text-sm text-muted-foreground">
                 {currentMode === "single" ? (
@@ -134,6 +131,10 @@ const DesignModeSelector: React.FC<DesignModeSelectorProps> = ({
                     <div>
                       <p className="font-medium text-elec-yellow mb-2">Features:</p>
                       <p>System-wide analysis, diversity calculations, supply sizing, and environmental zoning.</p>
+                    </div>
+                    <div>
+                      <p className="font-medium text-elec-yellow mb-2">Benefits:</p>
+                      <p>Optimised load balancing, consumer unit selection, and comprehensive compliance documentation.</p>
                     </div>
                   </>
                 )}
