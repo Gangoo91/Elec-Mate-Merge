@@ -1,9 +1,10 @@
 import React from "react";
 import { ResultCard } from "@/components/ui/result-card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, AlertTriangle, DollarSign, Clock, Wrench } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CheckCircle, AlertTriangle, DollarSign, Clock, Wrench, ShoppingCart, Hammer } from "lucide-react";
 import { Circuit } from "./types";
-import { getCablePricing } from "./consumer-unit-database";
+import { getCablePricing, getRecommendedConsumerUnit } from "./consumer-unit-database";
 
 interface CircuitAnalysisCardProps {
   circuit: Circuit;
@@ -45,107 +46,171 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
     >
       <div className="space-y-4">
         {/* Circuit Header */}
-        <div className="flex items-start justify-between">
-          <div>
-            <h3 className="font-semibold text-lg">{circuit.name}</h3>
-            <p className="text-sm text-muted-foreground">Circuit {index + 1}</p>
+        <div className="space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <h3 className="font-semibold text-lg">{circuit.name}</h3>
+              <p className="text-sm text-muted-foreground">Circuit {index + 1}</p>
+            </div>
+            <div className="flex items-center gap-2 self-start sm:self-center">
+              {isCompliant ? 
+                <CheckCircle className="h-4 w-4 text-success" /> : 
+                <AlertTriangle className="h-4 w-4 text-warning" />
+              }
+              <Badge variant={isCompliant ? "success" : "destructive"} className="text-xs">
+                {isCompliant ? "Compliant" : "Review Required"}
+              </Badge>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            {isCompliant ? 
-              <CheckCircle className="h-5 w-5 text-green-400" /> : 
-              <AlertTriangle className="h-5 w-5 text-amber-400" />
-            }
-            <Badge variant={isCompliant ? "success" : "destructive"} className="text-xs">
-              {isCompliant ? "Compliant" : "Review Required"}
-            </Badge>
+
+          {/* Circuit Specs - Mobile First Grid */}
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            <div className="text-center p-2 bg-muted/30 rounded">
+              <p className="text-xs text-muted-foreground mb-1">Load</p>
+              <p className="font-bold text-primary">{circuit.totalLoad}W</p>
+            </div>
+            <div className="text-center p-2 bg-muted/30 rounded">
+              <p className="text-xs text-muted-foreground mb-1">Voltage</p>
+              <p className="font-bold text-primary">{circuit.voltage}V</p>
+            </div>
+            <div className="text-center p-2 bg-muted/30 rounded">
+              <p className="text-xs text-muted-foreground mb-1">Length</p>
+              <p className="font-bold text-primary">{circuit.cableLength}m</p>
+            </div>
+            <div className="text-center p-2 bg-muted/30 rounded">
+              <p className="text-xs text-muted-foreground mb-1">Type</p>
+              <p className="font-bold text-primary">{circuit.loadType}</p>
+            </div>
           </div>
         </div>
 
-        {/* Circuit Specs Grid */}
-        <div className="flex flex-col gap-3">
-          <div className="text-center p-3 border border-elec-yellow/20">
-            <p className="text-xs text-muted-foreground mb-1">Load</p>
-            <p className="font-bold text-elec-yellow">{circuit.totalLoad}W</p>
-          </div>
-          <div className="text-center p-3 border border-elec-yellow/20">
-            <p className="text-xs text-muted-foreground mb-1">Voltage</p>
-            <p className="font-bold text-elec-yellow">{circuit.voltage}V</p>
-          </div>
-          <div className="text-center p-3 border border-elec-yellow/20">
-            <p className="text-xs text-muted-foreground mb-1">Length</p>
-            <p className="font-bold text-elec-yellow">{circuit.cableLength}m</p>
-          </div>
-          <div className="text-center p-3 border border-elec-yellow/20">
-            <p className="text-xs text-muted-foreground mb-1">Type</p>
-            <p className="font-bold text-elec-yellow">{circuit.loadType}</p>
-          </div>
-        </div>
-
-        {/* Cable Recommendation */}
+        {/* Tabbed Interface for Materials and Tools */}
         {bestRecommendation && (
-          <div className="space-y-3">
-          <div className="space-y-3 border-b border-elec-yellow/20 pb-4">
-            <h4 className="font-medium text-elec-yellow">Recommended Cable</h4>
-            <div className="space-y-3">
-              <div className="p-3 border border-elec-yellow/20 text-center">
-                <p className="text-xs text-muted-foreground mb-1">Size & Type</p>
-                <p className="font-medium text-elec-yellow">{finalRecommendation.size} {finalRecommendation.type.toUpperCase()}</p>
-              </div>
-              <div className="p-3 border border-elec-yellow/20 text-center">
-                <p className="text-xs text-muted-foreground mb-1">Capacity</p>
-                <p className="font-medium text-elec-yellow">{finalRecommendation.currentCarryingCapacity}A</p>
-              </div>
-              <div className="p-3 border border-elec-yellow/20 text-center">
-                <p className="text-xs text-muted-foreground mb-1">Voltage Drop</p>
-                <p className="font-medium text-elec-yellow">{finalRecommendation.voltageDropPercentage.toFixed(2)}%</p>
-              </div>
-            </div>
-          </div>
+          <Tabs defaultValue="cable" className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="cable" className="text-xs">Cable</TabsTrigger>
+              <TabsTrigger value="materials" className="text-xs">
+                <ShoppingCart className="h-3 w-3 mr-1" />
+                Materials
+              </TabsTrigger>
+              <TabsTrigger value="tools" className="text-xs">
+                <Hammer className="h-3 w-3 mr-1" />
+                Tools
+              </TabsTrigger>
+            </TabsList>
 
-          {/* Cost Breakdown */}
-          {cablePricing && (
-            <div className="space-y-3 border-b border-elec-yellow/20 pb-4">
-              <h4 className="font-medium text-elec-yellow">Cost & Time Estimates</h4>
-              <div className="space-y-3">{/* Changed from grid to stacked layout */}
-                <div className="flex items-center gap-3 p-3 border border-elec-yellow/20">
-                  <DollarSign className="h-4 w-4 text-elec-yellow" />
-                  <div>
-                    <p className="text-xs text-muted-foreground">Cable Cost</p>
-                    <p className="font-medium text-elec-yellow">£{Math.round((circuit.cableLength / 100) * cablePricing.priceRange.min)}-{Math.round((circuit.cableLength / 100) * cablePricing.priceRange.max)}</p>
+            <TabsContent value="cable" className="space-y-4 mt-4">
+              {/* Cable Specification */}
+              <div className="space-y-3">
+                <h4 className="font-medium text-primary">Recommended Cable</h4>
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="text-center p-2 bg-muted/30 rounded">
+                    <p className="text-xs text-muted-foreground mb-1">Size & Type</p>
+                    <p className="font-medium text-primary text-sm">{finalRecommendation.size} {finalRecommendation.type.toUpperCase()}</p>
                   </div>
-                </div>
-                <div className="flex items-center gap-3 p-3 border border-elec-yellow/20">
-                  <Clock className="h-4 w-4 text-elec-yellow" />
-                  <div>
-                    <p className="text-xs text-muted-foreground">Install Time</p>
-                    <p className="font-medium text-elec-yellow">{installationTime[cablePricing.installationComplexity as keyof typeof installationTime]}</p>
+                  <div className="text-center p-2 bg-muted/30 rounded">
+                    <p className="text-xs text-muted-foreground mb-1">Capacity</p>
+                    <p className="font-medium text-primary text-sm">{finalRecommendation.currentCarryingCapacity}A</p>
                   </div>
-                </div>
-                <div className="flex items-center gap-3 p-3 border border-elec-yellow/20">
-                  <Wrench className="h-4 w-4 text-elec-yellow" />
-                  <div>
-                    <p className="text-xs text-muted-foreground">Complexity</p>
-                    <p className="font-medium text-elec-yellow capitalize">{cablePricing.installationComplexity}</p>
+                  <div className="text-center p-2 bg-muted/30 rounded">
+                    <p className="text-xs text-muted-foreground mb-1">Voltage Drop</p>
+                    <p className="font-medium text-primary text-sm">{finalRecommendation.voltageDropPercentage.toFixed(2)}%</p>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
 
-          {/* Analysis Notes */}
-          {bestRecommendation.notes.length > 0 && (
-            <div className="space-y-2">
-              <p className="text-sm font-medium text-elec-yellow">Analysis Notes:</p>
-              <div className="space-y-1">
-                {bestRecommendation.notes.map((note: string, noteIndex: number) => (
-                  <div key={noteIndex} className="p-2 border border-elec-yellow/20">
-                    <span className="text-xs text-muted-foreground">• {note}</span>
+              {/* Cost & Time */}
+              {cablePricing && (
+                <div className="space-y-3">
+                  <h4 className="font-medium text-primary">Cost & Time</h4>
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between p-2 bg-muted/30 rounded">
+                      <div className="flex items-center gap-2">
+                        <DollarSign className="h-4 w-4 text-primary" />
+                        <span className="text-sm">Cable Cost</span>
+                      </div>
+                      <span className="font-medium text-primary text-sm">£{Math.round((circuit.cableLength / 100) * cablePricing.priceRange.min)}-{Math.round((circuit.cableLength / 100) * cablePricing.priceRange.max)}</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 bg-muted/30 rounded">
+                      <div className="flex items-center gap-2">
+                        <Clock className="h-4 w-4 text-primary" />
+                        <span className="text-sm">Install Time</span>
+                      </div>
+                      <span className="font-medium text-primary text-sm">{installationTime[cablePricing.installationComplexity as keyof typeof installationTime]}</span>
+                    </div>
+                    <div className="flex items-center justify-between p-2 bg-muted/30 rounded">
+                      <div className="flex items-center gap-2">
+                        <Wrench className="h-4 w-4 text-primary" />
+                        <span className="text-sm">Complexity</span>
+                      </div>
+                      <span className="font-medium text-primary text-sm capitalize">{cablePricing.installationComplexity}</span>
+                    </div>
                   </div>
-                ))}
+                </div>
+              )}
+
+              {/* Analysis Notes */}
+              {bestRecommendation.notes.length > 0 && (
+                <div className="space-y-2">
+                  <h4 className="font-medium text-primary">Analysis Notes</h4>
+                  <div className="space-y-1">
+                    {bestRecommendation.notes.map((note: string, noteIndex: number) => (
+                      <div key={noteIndex} className="p-2 bg-muted/30 rounded">
+                        <span className="text-xs text-muted-foreground">• {note}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </TabsContent>
+
+            <TabsContent value="materials" className="space-y-4 mt-4">
+              <div className="space-y-3">
+                <h4 className="font-medium text-primary">Required Materials</h4>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between p-2 bg-muted/30 rounded">
+                    <span className="text-sm">{finalRecommendation.size} {finalRecommendation.type.toUpperCase()} Cable</span>
+                    <span className="text-xs text-muted-foreground">{circuit.cableLength}m</span>
+                  </div>
+                  <div className="flex items-center justify-between p-2 bg-muted/30 rounded">
+                    <span className="text-sm">Cable Glands</span>
+                    <span className="text-xs text-muted-foreground">2 units</span>
+                  </div>
+                  <div className="flex items-center justify-between p-2 bg-muted/30 rounded">
+                    <span className="text-sm">Earth Sleeving</span>
+                    <span className="text-xs text-muted-foreground">1m</span>
+                  </div>
+                  <div className="flex items-center justify-between p-2 bg-muted/30 rounded">
+                    <span className="text-sm">Cable Ties</span>
+                    <span className="text-xs text-muted-foreground">10 units</span>
+                  </div>
+                </div>
               </div>
-            </div>
-          )}
-          </div>
+            </TabsContent>
+
+            <TabsContent value="tools" className="space-y-4 mt-4">
+              <div className="space-y-3">
+                <h4 className="font-medium text-primary">Required Tools</h4>
+                <div className="space-y-2">
+                  <div className="p-2 bg-muted/30 rounded">
+                    <span className="text-sm">Cable stripping tools</span>
+                  </div>
+                  <div className="p-2 bg-muted/30 rounded">
+                    <span className="text-sm">Multimeter</span>
+                  </div>
+                  <div className="p-2 bg-muted/30 rounded">
+                    <span className="text-sm">Drill & bits</span>
+                  </div>
+                  <div className="p-2 bg-muted/30 rounded">
+                    <span className="text-sm">Spirit level</span>
+                  </div>
+                  <div className="p-2 bg-muted/30 rounded">
+                    <span className="text-sm">Insulation tester</span>
+                  </div>
+                </div>
+              </div>
+            </TabsContent>
+          </Tabs>
         )}
       </div>
     </ResultCard>
