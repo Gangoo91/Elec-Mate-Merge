@@ -430,11 +430,13 @@ const MobileInstallationTemplates: React.FC<MobileInstallationTemplatesProps> = 
                   {selectedTemplateData.circuits.map((circuit, index) => (
                     <div key={index} className="flex items-center justify-between py-2 px-3 bg-black/20 rounded-md">
                       <div className="flex items-center gap-2 min-w-0 flex-1">
-                        <div className="text-sm">{circuit.loadType === "lighting" ? "💡" : 
-                                                  circuit.loadType === "power" ? "🔌" : 
-                                                  circuit.loadType === "cooker" ? "🍳" : 
-                                                  circuit.loadType === "hvac" ? "❄️" : 
-                                                  circuit.loadType === "it-equipment" ? "💻" : "⚡"}</div>
+                        <div className="text-xs font-bold text-elec-yellow bg-elec-yellow/20 rounded px-1">
+                          {circuit.loadType === "lighting" ? "LT" : 
+                           circuit.loadType === "power" ? "PW" : 
+                           circuit.loadType === "cooker" ? "CK" : 
+                           circuit.loadType === "hvac" ? "AC" : 
+                           circuit.loadType === "it-equipment" ? "IT" : "GN"}
+                        </div>
                         <div className="min-w-0 flex-1">
                           <div className="text-sm font-medium truncate">{circuit.name}</div>
                           <div className="text-xs text-muted-foreground">

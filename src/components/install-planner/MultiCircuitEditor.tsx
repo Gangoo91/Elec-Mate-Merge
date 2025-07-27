@@ -55,25 +55,25 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
 
   const getLoadTypeIcon = (loadType: string) => {
     switch (loadType) {
-      case "lighting": return "💡";
-      case "power": return "🔌";
-      case "cooker": return "🍳";
-      case "shower": return "🚿";
-      case "heating": return "🔥";
-      case "ev-charging": return "🚗";
-      case "motor-small": return "⚙️";
-      case "motor-large": return "⚙️";
-      case "motor": return "⚙️";
-      case "hvac": return "❄️";
-      case "it-equipment": return "💻";
-      case "commercial-lighting": return "💡";
-      case "commercial-power": return "🔌";
-      case "emergency": return "🚨";
-      case "medical": return "🏥";
-      case "welding": return "🔥";
-      case "crane": return "🏗️";
-      case "furnace": return "🔥";
-      default: return "⚡";
+      case "lighting": return "LT";
+      case "power": return "PW";
+      case "cooker": return "CK";
+      case "shower": return "SH";
+      case "heating": return "HT";
+      case "ev-charging": return "EV";
+      case "motor-small": return "MS";
+      case "motor-large": return "ML";
+      case "motor": return "MT";
+      case "hvac": return "AC";
+      case "it-equipment": return "IT";
+      case "commercial-lighting": return "CL";
+      case "commercial-power": return "CP";
+      case "emergency": return "EM";
+      case "medical": return "MD";
+      case "welding": return "WD";
+      case "crane": return "CR";
+      case "furnace": return "FN";
+      default: return "GN";
     }
   };
 
@@ -102,7 +102,7 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <div className="flex items-center gap-3 min-w-0 flex-1">
                   <div className="h-10 w-10 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                    <div className="text-lg">{getLoadTypeIcon(circuit.loadType)}</div>
+                    <div className="text-xs font-bold text-elec-yellow">{getLoadTypeIcon(circuit.loadType)}</div>
                   </div>
                   <div className="min-w-0 flex-1">
                     <CardTitle className="text-base">
@@ -228,12 +228,18 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                           value={circuit.installationMethod}
                           onValueChange={(value) => updateCircuit(circuit.id, { installationMethod: value })}
                           options={[
-                            { value: "clipped-direct", label: "Clipped Direct" },
-                            { value: "trunking", label: "Trunking" },
-                            { value: "conduit", label: "Conduit" },
-                            { value: "tray", label: "Cable Tray" },
-                            { value: "buried-direct", label: "Buried Direct" },
-                            { value: "ducted", label: "Ducted" }
+                            { value: "clipped-direct", label: "Clipped Direct (BS7671: C)" },
+                            { value: "enclosed-conduit", label: "Enclosed in Conduit (BS7671: A1)" },
+                            { value: "trunking", label: "Trunking (BS7671: B1)" },
+                            { value: "conduit", label: "Surface Conduit (BS7671: A2)" },
+                            { value: "tray", label: "Cable Tray (BS7671: E)" },
+                            { value: "ladder", label: "Cable Ladder (BS7671: F)" },
+                            { value: "basket", label: "Cable Basket (BS7671: G)" },
+                            { value: "buried-direct", label: "Buried Direct (BS7671: D1)" },
+                            { value: "ducted", label: "Ducted Underground (BS7671: D2)" },
+                            { value: "touching-wall", label: "Touching Wall (BS7671: C)" },
+                            { value: "spaced-from-wall", label: "Spaced from Wall (BS7671: C)" },
+                            { value: "in-air", label: "Free Air (BS7671: E, F, G)" }
                           ]}
                         />
                       </div>
@@ -244,11 +250,17 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                           value={circuit.cableType}
                           onValueChange={(value) => updateCircuit(circuit.id, { cableType: value })}
                           options={[
-                            { value: "t&e", label: "T&E (Twin & Earth)" },
-                            { value: "swa", label: "SWA (Steel Wire Armoured)" },
-                            { value: "xlpe", label: "XLPE (Cross-linked Polyethylene)" },
-                            { value: "pvc", label: "PVC (Single Core)" },
-                            { value: "mineral", label: "Mineral Insulated" }
+                            { value: "t&e", label: "Twin & Earth (T&E) - BS7671 Table 4E4A" },
+                            { value: "swa", label: "Steel Wire Armoured (SWA) - BS7671 Table 4E1A" },
+                            { value: "xlpe", label: "XLPE Single Core - BS7671 Table 4E1A" },
+                            { value: "pvc-single", label: "PVC Single Core - BS7671 Table 4E2A" },
+                            { value: "pvc-multicore", label: "PVC Multicore - BS7671 Table 4E3A" },
+                            { value: "mineral", label: "Mineral Insulated - BS7671 Table 4J1A" },
+                            { value: "aluminium", label: "Aluminium Conductor - BS7671 Table 4E5A" },
+                            { value: "lsf", label: "Low Smoke & Fume (LSF)" },
+                            { value: "lszh", label: "Low Smoke Zero Halogen (LSZH)" },
+                            { value: "fire-resistant", label: "Fire Resistant Cable" },
+                            { value: "data-cable", label: "Data/Communications Cable" }
                           ]}
                         />
                       </div>
@@ -259,9 +271,18 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                           value={circuit.protectiveDevice}
                           onValueChange={(value) => updateCircuit(circuit.id, { protectiveDevice: value })}
                           options={[
-                            { value: "mcb", label: "MCB" },
-                            { value: "rcbo", label: "RCBO" },
-                            { value: "rcd", label: "RCD + MCB" }
+                            { value: "mcb-b", label: "MCB Type B (3-5 x In)" },
+                            { value: "mcb-c", label: "MCB Type C (5-10 x In)" },
+                            { value: "mcb-d", label: "MCB Type D (10-20 x In)" },
+                            { value: "rcbo-b", label: "RCBO Type B (30mA)" },
+                            { value: "rcbo-c", label: "RCBO Type C (30mA)" },
+                            { value: "rcbo-100ma", label: "RCBO 100mA (Fire Protection)" },
+                            { value: "rcd-30ma", label: "RCD 30mA + MCB" },
+                            { value: "rcd-100ma", label: "RCD 100mA + MCB" },
+                            { value: "afdd", label: "AFDD (Arc Fault Device)" },
+                            { value: "spd", label: "SPD (Surge Protection)" },
+                            { value: "fuse-bs88", label: "BS88 Fuse" },
+                            { value: "mccb", label: "MCCB (Moulded Case)" }
                           ]}
                         />
                       </div>
