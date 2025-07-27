@@ -157,7 +157,7 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
         <CardContent className="px-6 py-6">
           <div className="grid grid-cols-2 gap-8 text-center">
             <div className="space-y-2">
-              <div className="text-xs text-muted-foreground uppercase tracking-wide">Global Temperature</div>
+              <div className="text-xs text-muted-foreground uppercase tracking-wide">Global Temp</div>
               <div className="text-2xl font-bold text-elec-yellow">{environmentalSettings.ambientTemperature}°C</div>
             </div>
             <div className="space-y-2">
@@ -165,7 +165,7 @@ const EnvironmentStep = ({ planData, updatePlanData }: EnvironmentStepProps) => 
               <div className="text-2xl font-bold text-blue-400">{environmentalSettings.earthingSystem}</div>
             </div>
             <div className="space-y-2">
-              <div className="text-xs text-muted-foreground uppercase tracking-wide">Installation Zones</div>
+              <div className="text-xs text-muted-foreground uppercase tracking-wide">Install Zones</div>
               <div className="text-2xl font-bold text-green-400">{environmentalSettings.installationZones?.length || 0}</div>
             </div>
             <div className="space-y-2">
