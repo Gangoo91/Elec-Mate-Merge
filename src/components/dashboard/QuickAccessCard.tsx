@@ -15,18 +15,18 @@ interface QuickAccessCardProps {
 const QuickAccessCard = ({ title, description, linkText, linkTo, icon }: QuickAccessCardProps) => {
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/90 transition-colors h-full">
-      <CardHeader className="pb-2 p-3 md:p-6">
-        <CardTitle className="text-sm md:text-lg font-medium flex items-center gap-2">
+      <CardHeader className="pb-3 p-4 md:p-6 text-center">
+        <CardTitle className="text-base md:text-lg font-medium flex items-center justify-center gap-2">
           {icon}
           {title}
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-3 p-3 md:p-6 pt-0">
-        <p className="text-xs md:text-sm text-muted-foreground line-clamp-2">
+      <CardContent className="space-y-4 p-4 md:p-6 pt-0 text-center">
+        <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
           {description}
         </p>
-        <Button asChild size="sm" className="w-full">
-          <Link to={linkTo} className="flex items-center justify-center gap-1 text-xs md:text-sm">
+        <Button asChild size="default" className="w-full">
+          <Link to={linkTo} className="flex items-center justify-center gap-2 text-sm md:text-base">
             {linkText}
           </Link>
         </Button>
