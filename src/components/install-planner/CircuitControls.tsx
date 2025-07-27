@@ -26,21 +26,8 @@ const CircuitControls: React.FC<CircuitControlsProps> = ({
   canDelete
 }) => {
   return (
-    <div className="flex items-center justify-between gap-3 min-w-0">
-      {/* Circuit Status */}
-      <div className="flex items-center gap-2">
-        <Switch 
-          checked={circuit.enabled}
-          onCheckedChange={onToggleEnabled}
-        />
-        {!circuit.enabled && (
-          <Badge variant="outline" className="border-gray-600/30 text-gray-400 text-xs">
-            Disabled
-          </Badge>
-        )}
-      </div>
-
-      {/* Control Icons in compact 2x2 grid */}
+    <div className="flex justify-end">
+      {/* Control Grid - 2x2 layout */}
       <div className="grid grid-cols-2 gap-1 w-[68px]">
         <Button
           variant="ghost"
@@ -62,18 +49,26 @@ const CircuitControls: React.FC<CircuitControlsProps> = ({
           <Settings className="h-3 w-3" />
         </Button>
 
+        <div className="flex items-center justify-center">
+          <Switch 
+            checked={circuit.enabled}
+            onCheckedChange={onToggleEnabled}
+            className="scale-75"
+          />
+        </div>
+
         {canDelete ? (
           <Button
             variant="ghost"
             size="sm"
             onClick={onDelete}
-            className="h-8 w-8 p-0 hover:bg-red-400/10 text-red-400 col-span-2"
+            className="h-8 w-8 p-0 hover:bg-red-400/10 text-red-400"
             title="Delete circuit"
           >
             <Trash2 className="h-3 w-3" />
           </Button>
         ) : (
-          <div className="col-span-2" />
+          <div className="h-8 w-8" />
         )}
       </div>
     </div>
