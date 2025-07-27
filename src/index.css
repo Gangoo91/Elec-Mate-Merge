@@ -35,6 +35,12 @@
 
     --radius: 0.5rem;
 
+    /* Electrical theme colors */
+    --elec-dark: 0 0% 100%;
+    --elec-light: 222.2 84% 4.9%;
+    --elec-grey: 210 40% 96.1%;
+    --elec-yellow: 47 100% 50%;
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 47 100% 50%;
@@ -73,6 +79,12 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 47 100% 50%;
+    
+    /* Electrical theme colors */
+    --elec-dark: 240 5.9% 7%;
+    --elec-light: 210 40% 98%;
+    --elec-grey: 240 3.7% 15.9%;
+    --elec-yellow: 47 100% 50%;
     
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
