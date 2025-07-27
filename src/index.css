@@ -122,8 +122,14 @@
   }
 }
 
-/* Custom webkit scrollbar styling for electrical theme */
+/* Custom scrollbar styling - mobile-friendly approach */
 @layer components {
+  .custom-scrollbar {
+    /* For webkit browsers (desktop) */
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--elec-yellow) / 0.3) transparent;
+  }
+  
   .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
   }
@@ -139,5 +145,23 @@
   
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--elec-yellow) / 0.5);
+  }
+  
+  /* Mobile-friendly scrollable area with subtle indicators */
+  .mobile-scroll-container {
+    position: relative;
+  }
+  
+  .mobile-scroll-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: hsl(var(--elec-yellow) / 0.2);
+    border-radius: 1px;
+    z-index: 1;
+    pointer-events: none;
   }
 }
