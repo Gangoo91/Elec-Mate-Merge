@@ -48,7 +48,7 @@ const QualificationConfirmationDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl bg-elec-dark border-elec-yellow/20">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-elec-dark border-elec-yellow/20 mx-4 w-[calc(100vw-2rem)] sm:w-full">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl">
             <Award className="h-6 w-6 text-elec-yellow" />
