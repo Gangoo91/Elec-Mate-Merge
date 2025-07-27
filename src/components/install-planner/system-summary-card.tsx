@@ -32,19 +32,19 @@ export const SystemSummaryCard: React.FC<SystemSummaryCardProps> = ({
       <div className="space-y-4">
         {/* Key Metrics Grid */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="text-center p-4 bg-elec-grey rounded-lg border border-elec-yellow/20">
+          <div className="text-center p-4 border border-elec-yellow/20">
             <div className="text-2xl font-bold text-elec-yellow mb-1">{circuits.length}</div>
             <div className="text-xs text-muted-foreground">Circuits</div>
           </div>
-          <div className="text-center p-4 bg-elec-grey rounded-lg border border-elec-yellow/20">
+          <div className="text-center p-4 border border-elec-yellow/20">
             <div className="text-2xl font-bold text-elec-yellow mb-1">{(totalSystemLoad / 1000).toFixed(1)}kW</div>
             <div className="text-xs text-muted-foreground">Total Load</div>
           </div>
-          <div className="text-center p-4 bg-elec-grey rounded-lg border border-elec-yellow/20">
+          <div className="text-center p-4 border border-elec-yellow/20">
             <div className="text-2xl font-bold text-elec-yellow mb-1">{totalDesignCurrent.toFixed(1)}A</div>
             <div className="text-xs text-muted-foreground">Design Current</div>
           </div>
-          <div className="text-center p-4 bg-elec-grey rounded-lg border border-elec-yellow/20">
+          <div className="text-center p-4 border border-elec-yellow/20">
             <div className="text-2xl font-bold text-elec-yellow mb-1">{(diversifiedLoad / 1000).toFixed(1)}kW</div>
             <div className="text-xs text-muted-foreground">After Diversity</div>
           </div>
@@ -52,21 +52,21 @@ export const SystemSummaryCard: React.FC<SystemSummaryCardProps> = ({
 
         {/* Installation Overview */}
         <div className="space-y-3">
-          <div className="flex items-center gap-3 p-3 bg-elec-grey rounded-lg border border-elec-yellow/20">
+          <div className="flex items-center gap-3 p-3 border border-elec-yellow/20">
             <Building className="h-5 w-5 text-elec-yellow" />
             <div>
               <p className="text-sm font-medium text-elec-yellow">Multi-Circuit System</p>
               <p className="text-xs text-muted-foreground">Installation Type</p>
             </div>
           </div>
-          <div className="flex items-center gap-3 p-3 bg-elec-grey rounded-lg border border-elec-yellow/20">
+          <div className="flex items-center gap-3 p-3 border border-elec-yellow/20">
             <Clock className="h-5 w-5 text-elec-yellow" />
             <div>
               <p className="text-sm font-medium text-elec-yellow">{totalInstallDays} day{totalInstallDays > 1 ? 's' : ''}</p>
               <p className="text-xs text-muted-foreground">Estimated Duration</p>
             </div>
           </div>
-          <div className="flex items-center gap-3 p-3 bg-elec-grey rounded-lg border border-elec-yellow/20">
+          <div className="flex items-center gap-3 p-3 border border-elec-yellow/20">
             <Zap className="h-5 w-5 text-elec-yellow" />
             <div>
               <p className="text-sm font-medium text-elec-yellow">{(diversityFactor * 100).toFixed(0)}%</p>

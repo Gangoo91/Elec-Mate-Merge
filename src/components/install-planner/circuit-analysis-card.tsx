@@ -51,19 +51,19 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
 
         {/* Circuit Specs Grid */}
         <div className="grid grid-cols-2 gap-3">
-          <div className="bg-elec-grey rounded-lg p-3 text-center border border-elec-yellow/20">
+          <div className="text-center p-3 border border-elec-yellow/20">
             <p className="text-xs text-muted-foreground mb-1">Load</p>
             <p className="font-bold text-elec-yellow">{circuit.totalLoad}W</p>
           </div>
-          <div className="bg-elec-grey rounded-lg p-3 text-center border border-elec-yellow/20">
+          <div className="text-center p-3 border border-elec-yellow/20">
             <p className="text-xs text-muted-foreground mb-1">Voltage</p>
             <p className="font-bold text-elec-yellow">{circuit.voltage}V</p>
           </div>
-          <div className="bg-elec-grey rounded-lg p-3 text-center border border-elec-yellow/20">
+          <div className="text-center p-3 border border-elec-yellow/20">
             <p className="text-xs text-muted-foreground mb-1">Length</p>
             <p className="font-bold text-elec-yellow">{circuit.cableLength}m</p>
           </div>
-          <div className="bg-elec-grey rounded-lg p-3 text-center border border-elec-yellow/20">
+          <div className="text-center p-3 border border-elec-yellow/20">
             <p className="text-xs text-muted-foreground mb-1">Current</p>
             <p className="font-bold text-elec-yellow">{analysis.designCurrent.toFixed(1)}A</p>
           </div>
@@ -72,42 +72,44 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
         {/* Cable Recommendation */}
         {bestRecommendation && (
           <div className="space-y-3">
-            <div className="bg-elec-grey rounded-lg p-4 border border-elec-yellow/20">
-              <h4 className="font-medium mb-3 text-elec-yellow">Recommended Cable</h4>
-              <div className="grid grid-cols-3 gap-3">
-                <div className="p-3 bg-elec-grey rounded border border-elec-yellow/10 text-center">
-                  <p className="text-xs text-muted-foreground mb-1">Size & Type</p>
-                  <p className="font-medium text-elec-yellow">{bestRecommendation.size} {bestRecommendation.type.toUpperCase()}</p>
-                </div>
-                <div className="p-3 bg-elec-grey rounded border border-elec-yellow/10 text-center">
-                  <p className="text-xs text-muted-foreground mb-1">Capacity</p>
-                  <p className="font-medium text-elec-yellow">{bestRecommendation.currentCarryingCapacity}A</p>
-                </div>
-                <div className="p-3 bg-elec-grey rounded border border-elec-yellow/10 text-center">
-                  <p className="text-xs text-muted-foreground mb-1">Voltage Drop</p>
-                  <p className="font-medium text-elec-yellow">{bestRecommendation.voltageDropPercentage.toFixed(2)}%</p>
-                </div>
+          <div className="space-y-3 border-b border-elec-yellow/20 pb-4">
+            <h4 className="font-medium text-elec-yellow">Recommended Cable</h4>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="p-3 border border-elec-yellow/20 text-center">
+                <p className="text-xs text-muted-foreground mb-1">Size & Type</p>
+                <p className="font-medium text-elec-yellow">{bestRecommendation.size} {bestRecommendation.type.toUpperCase()}</p>
+              </div>
+              <div className="p-3 border border-elec-yellow/20 text-center">
+                <p className="text-xs text-muted-foreground mb-1">Capacity</p>
+                <p className="font-medium text-elec-yellow">{bestRecommendation.currentCarryingCapacity}A</p>
+              </div>
+              <div className="p-3 border border-elec-yellow/20 text-center">
+                <p className="text-xs text-muted-foreground mb-1">Voltage Drop</p>
+                <p className="font-medium text-elec-yellow">{bestRecommendation.voltageDropPercentage.toFixed(2)}%</p>
               </div>
             </div>
+          </div>
 
-            {/* Cost Breakdown */}
-            {cablePricing && (
+          {/* Cost Breakdown */}
+          {cablePricing && (
+            <div className="space-y-3 border-b border-elec-yellow/20 pb-4">
+              <h4 className="font-medium text-elec-yellow">Cost & Time Estimates</h4>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="flex items-center gap-3 p-3 bg-elec-grey rounded-lg border border-elec-yellow/20">
+                <div className="flex items-center gap-3 p-3 border border-elec-yellow/20">
                   <DollarSign className="h-4 w-4 text-elec-yellow" />
                   <div>
                     <p className="text-xs text-muted-foreground">Cable Cost</p>
                     <p className="font-medium text-elec-yellow">£{Math.round((circuit.cableLength / 100) * cablePricing.priceRange.min)}-{Math.round((circuit.cableLength / 100) * cablePricing.priceRange.max)}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-3 bg-elec-grey rounded-lg border border-elec-yellow/20">
+                <div className="flex items-center gap-3 p-3 border border-elec-yellow/20">
                   <Clock className="h-4 w-4 text-elec-yellow" />
                   <div>
                     <p className="text-xs text-muted-foreground">Install Time</p>
                     <p className="font-medium text-elec-yellow">{installationTime[cablePricing.installationComplexity as keyof typeof installationTime]}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-3 bg-elec-grey rounded-lg border border-elec-yellow/20">
+                <div className="flex items-center gap-3 p-3 border border-elec-yellow/20">
                   <Wrench className="h-4 w-4 text-elec-yellow" />
                   <div>
                     <p className="text-xs text-muted-foreground">Complexity</p>
@@ -115,21 +117,22 @@ export const CircuitAnalysisCard: React.FC<CircuitAnalysisCardProps> = ({
                   </div>
                 </div>
               </div>
-            )}
+            </div>
+          )}
 
-            {/* Analysis Notes */}
-            {bestRecommendation.notes.length > 0 && (
-              <div className="bg-elec-grey rounded-lg p-3 border border-elec-yellow/20">
-                <p className="text-sm font-medium text-elec-yellow mb-2">Analysis Notes:</p>
-                <div className="space-y-1">
-                  {bestRecommendation.notes.map((note: string, noteIndex: number) => (
-                    <div key={noteIndex} className="p-2 bg-elec-grey rounded border border-elec-yellow/10">
-                      <span className="text-xs text-muted-foreground">• {note}</span>
-                    </div>
-                  ))}
-                </div>
+          {/* Analysis Notes */}
+          {bestRecommendation.notes.length > 0 && (
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-elec-yellow">Analysis Notes:</p>
+              <div className="space-y-1">
+                {bestRecommendation.notes.map((note: string, noteIndex: number) => (
+                  <div key={noteIndex} className="p-2 border border-elec-yellow/20">
+                    <span className="text-xs text-muted-foreground">• {note}</span>
+                  </div>
+                ))}
               </div>
-            )}
+            </div>
+          )}
           </div>
         )}
       </div>
