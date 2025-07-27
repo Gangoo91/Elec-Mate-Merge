@@ -66,7 +66,6 @@ const MultiCircuitResults: React.FC<MultiCircuitResultsProps> = ({ planData }) =
 
   return (
     <div className="space-y-6">
-      {/* System Overview */}
       <SystemSummaryCard
         circuits={circuits}
         totalSystemLoad={totalSystemLoad}
