@@ -106,8 +106,8 @@ export function MultiSelectDropdown({
             </Button>
           </PopoverTrigger>
           
-          <PopoverContent className="w-full p-0 bg-elec-gray border-elec-gray/50 shadow-xl">
-            <div className="max-h-64 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-elec-yellow/30 hover:scrollbar-thumb-elec-yellow/50">
+          <PopoverContent className="w-full p-0 bg-elec-gray border-elec-gray/50 shadow-xl z-50">
+            <div className="max-h-64 overflow-y-auto custom-scrollbar">
               <div
                 className="p-3 text-sm text-elec-light hover:bg-elec-yellow/20 cursor-pointer border-b border-elec-gray/20"
                 onClick={() => handleItemSelect("N/A")}

@@ -143,7 +143,7 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
 
   return (
     <Dialog open={true} onOpenChange={onCancel}>
-      <DialogContent className="max-w-lg max-h-[95vh] overflow-y-auto bg-elec-card border-elec-gray/40">
+      <DialogContent className="max-w-md max-h-[95vh] overflow-y-auto bg-elec-card border-elec-gray/40">
         <DialogHeader className="pb-4">
           <DialogTitle className="text-elec-light text-xl font-semibold">
             {initialData ? "Edit Portfolio Entry" : "Create New Portfolio Entry"}
