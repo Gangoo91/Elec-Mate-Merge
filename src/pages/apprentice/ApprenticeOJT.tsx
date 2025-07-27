@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import React from "react";
 import BackButton from "@/components/common/BackButton";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Clock, FileText, Target, Award, BarChart3 } from "lucide-react";
@@ -13,11 +13,11 @@ const ApprenticeOJT = () => {
   console.log('ApprenticeOJT component rendering');
 
   const tabs = [
-    { value: "portfolio", label: "Portfolio", icon: FileText, content: <PortfolioBuildingTab /> },
-    { value: "time-tracking", label: "Time Tracking", icon: Clock, content: <TimeTrackingTab /> },
-    { value: "evidence", label: "Evidence Assessment", icon: Target, content: <EvidenceUploadTab /> },
-    { value: "assessments", label: "Assessments", icon: Award, content: <AssessmentTrackingTab /> },
-    { value: "compliance", label: "Goals & Progress", icon: BarChart3, content: <ComplianceDashboardTab /> }
+    { value: "portfolio", label: "Portfolio", icon: FileText, content: React.createElement(PortfolioBuildingTab) },
+    { value: "time-tracking", label: "Time Tracking", icon: Clock, content: React.createElement(TimeTrackingTab) },
+    { value: "evidence", label: "Evidence Assessment", icon: Target, content: React.createElement(EvidenceUploadTab) },
+    { value: "assessments", label: "Assessments", icon: Award, content: React.createElement(AssessmentTrackingTab) },
+    { value: "compliance", label: "Goals & Progress", icon: BarChart3, content: React.createElement(ComplianceDashboardTab) }
   ];
 
   return (
