@@ -10,7 +10,7 @@ import {
   ScrollbarFreeSelectTrigger,
   ScrollbarFreeSelectValue,
 } from "@/components/ui/scrollbar-free-select";
-import { ScrollbarFreeMultiSelect } from "@/components/ui/scrollbar-free-multi-select";
+import { SingleSelectWithAdd } from "@/components/ui/single-select-with-add";
 
 export interface PortfolioEntryFormProps {
   categories: PortfolioCategory[];
@@ -273,53 +273,53 @@ const PortfolioEntryForm = ({ categories, initialData, onSubmit, onCancel }: Por
           </ScrollbarFreeSelect>
 
           {/* Skills */}
-          <ScrollbarFreeMultiSelect
+          <SingleSelectWithAdd
             label="Skills Demonstrated"
-            placeholder="Select skills you used or developed"
+            placeholder="Select a skill"
             value={formData.skills}
             onValueChange={(value) => setFormData(prev => ({ ...prev, skills: value }))}
             options={SKILLS_OPTIONS}
-            hint="Choose all relevant electrical skills"
+            hint="Add electrical skills you used or developed"
           />
 
           {/* Tags */}
-          <ScrollbarFreeMultiSelect
+          <SingleSelectWithAdd
             label="Tags"
-            placeholder="Add relevant tags"
+            placeholder="Select a tag"
             value={formData.tags}
             onValueChange={(value) => setFormData(prev => ({ ...prev, tags: value }))}
             options={TAGS_OPTIONS}
-            hint="Help categorise your work"
+            hint="Add tags to help categorise your work"
           />
 
           {/* Assessment Criteria */}
-          <ScrollbarFreeMultiSelect
+          <SingleSelectWithAdd
             label="Assessment Criteria Met"
-            placeholder="Select criteria you've addressed"
+            placeholder="Select an assessment criteria"
             value={formData.assessmentCriteria}
             onValueChange={(value) => setFormData(prev => ({ ...prev, assessmentCriteria: value }))}
             options={ASSESSMENT_CRITERIA_OPTIONS}
-            hint="Which assessment criteria does this evidence?"
+            hint="Add criteria you've addressed with this evidence"
           />
 
           {/* Learning Outcomes */}
-          <ScrollbarFreeMultiSelect
+          <SingleSelectWithAdd
             label="Learning Outcomes"
-            placeholder="Select learning outcomes achieved"
+            placeholder="Select a learning outcome"
             value={formData.learningOutcomes}
             onValueChange={(value) => setFormData(prev => ({ ...prev, learningOutcomes: value }))}
             options={LEARNING_OUTCOMES_OPTIONS}
-            hint="What learning outcomes does this demonstrate?"
+            hint="Add learning outcomes this work demonstrates"
           />
 
           {/* Awarding Body Standards */}
-          <ScrollbarFreeMultiSelect
+          <SingleSelectWithAdd
             label="Standards & Regulations"
-            placeholder="Select relevant standards"
+            placeholder="Select a standard or regulation"
             value={formData.awardingBodyStandards}
             onValueChange={(value) => setFormData(prev => ({ ...prev, awardingBodyStandards: value }))}
             options={AWARDING_BODY_STANDARDS_OPTIONS}
-            hint="Which standards or regulations apply?"
+            hint="Add relevant standards or regulations that apply"
           />
 
           {/* Reflection */}
