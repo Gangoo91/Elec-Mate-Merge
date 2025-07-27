@@ -29,8 +29,18 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
     { value: "renewable", label: "Renewable Energy", icon: Sun, description: "Solar, wind, battery storage" }
   ];
 
-  // For multi-circuit mode, only show installation environment selection
+  // For multi-circuit mode, show installation purpose and environment selection
   if (planData.designMode === "multi") {
+    // Installation purpose options
+    const installationPurposeOptions = [
+      { value: "new-installation", label: "New installation" },
+      { value: "circuit-addition", label: "Circuit addition/extension" },
+      { value: "system-upgrade", label: "System upgrade/replacement" },
+      { value: "emergency-repair", label: "Emergency repair" },
+      { value: "temporary-installation", label: "Temporary installation" },
+      { value: "compliance-upgrade", label: "Compliance upgrade" }
+    ];
+
     // Format options for dropdown
     const installationTypeOptions = installationTypes.map(type => ({
       value: type.value,
@@ -40,12 +50,21 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
     return (
       <div className="space-y-8">
         <div>
-          <h2 className="text-2xl font-bold mb-2">Installation Environment</h2>
+          <h2 className="text-2xl font-bold mb-2">Installation Details</h2>
           <p className="text-muted-foreground mb-6">
-            Select the type of environment where this electrical installation will be located. 
-            This will determine appropriate circuit types, regulations, and safety requirements.
+            Define the purpose and environment for your multi-circuit installation. 
+            This affects safety requirements, compliance, and cable selection across all circuits.
           </p>
         </div>
+
+        <MobileSelectWrapper
+          label="Installation Purpose"
+          placeholder="Select installation purpose"
+          value={planData.installationPurpose || ""}
+          onValueChange={(value) => updatePlanData({ installationPurpose: value })}
+          options={installationPurposeOptions}
+          hint="Choose the type of electrical work being performed"
+        />
 
         <MobileSelectWrapper
           label="Installation Environment"
@@ -56,17 +75,18 @@ const InstallationTypeStep = ({ planData, updatePlanData }: InstallationTypeStep
           hint="Choose the environment type that matches your installation location"
         />
 
-        {planData.installationType && (
+        {planData.installationPurpose && planData.installationType && (
           <Card className="bg-green-500/10 border-green-500/30">
             <CardHeader>
               <CardTitle className="text-green-300 flex items-center gap-2">
                 <Zap className="h-5 w-5" />
-                Environment Selected
+                Installation Details Complete
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-green-200">
-                You've selected <strong>{planData.installationType}</strong> installation environment. 
+                You've configured a <strong>{planData.installationPurpose}</strong> for a{' '}
+                <strong>{planData.installationType}</strong> environment. 
                 Next, you'll design the individual circuits for this installation.
               </p>
             </CardContent>
