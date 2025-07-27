@@ -20,47 +20,40 @@ export const ConsumerUnitGuidance: React.FC<ConsumerUnitGuidanceProps> = ({
       className="w-full"
     >
       <div className="space-y-4">
+        {/* Requirements */}
         <div className="space-y-3">
-          <h4 className="font-medium text-elec-yellow">Requirements</h4>
+          <h4 className="font-medium text-primary">Requirements</h4>
           <div className="space-y-2">
             <div className="flex justify-between items-center p-3 bg-muted/30 rounded">
               <span className="text-sm text-muted-foreground">Minimum Ways</span>
-              <div className="text-right">
-                <span className="font-medium text-elec-yellow">{totalCircuits + 2} ways</span>
-                <p className="text-xs text-muted-foreground">({totalCircuits} circuits + 2 spare)</p>
-              </div>
+              <span className="font-bold text-primary">{totalCircuits + 2} ways</span>
             </div>
             <div className="flex justify-between items-center p-3 bg-muted/30 rounded">
               <span className="text-sm text-muted-foreground">Main Switch Rating</span>
-              <span className="font-medium text-elec-yellow">{recommendedMainSwitch}A minimum</span>
+              <span className="font-bold text-primary">{recommendedMainSwitch}A minimum</span>
             </div>
           </div>
         </div>
 
-
-        {/* Quick Buying Guide */}
+        {/* Buying Checklist */}
         <div className="space-y-3">
-          <p className="text-sm font-medium text-elec-yellow">Quick Buying Checklist:</p>
+          <h4 className="font-medium text-primary">Buying Checklist</h4>
           <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-3 w-3 text-green-500 flex-shrink-0" />
-              <span className="text-xs text-muted-foreground">Verify main switch rating meets calculated requirements</span>
+            <div className="flex items-start gap-2 p-2">
+              <CheckCircle className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
+              <span className="text-sm text-muted-foreground">Main switch rating meets requirements</span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-3 w-3 text-green-500 flex-shrink-0" />
-              <span className="text-xs text-muted-foreground">Ensure sufficient ways for current circuits plus future expansion</span>
+            <div className="flex items-start gap-2 p-2">
+              <CheckCircle className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
+              <span className="text-sm text-muted-foreground">Sufficient ways for circuits + spares</span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-3 w-3 text-green-500 flex-shrink-0" />
-              <span className="text-xs text-muted-foreground">Check RCD/RCBO compatibility for your protection strategy</span>
+            <div className="flex items-start gap-2 p-2">
+              <CheckCircle className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
+              <span className="text-sm text-muted-foreground">RCD/RCBO compatibility checked</span>
             </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-3 w-3 text-green-500 flex-shrink-0" />
-              <span className="text-xs text-muted-foreground">Confirm SPD (surge protection) compatibility if required</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-3 w-3 text-green-500 flex-shrink-0" />
-              <span className="text-xs text-muted-foreground">Verify earthing system compatibility (TN-S, TN-C-S, TT)</span>
+            <div className="flex items-start gap-2 p-2">
+              <CheckCircle className="h-4 w-4 text-success flex-shrink-0 mt-0.5" />
+              <span className="text-sm text-muted-foreground">Earthing system compatibility verified</span>
             </div>
           </div>
         </div>
