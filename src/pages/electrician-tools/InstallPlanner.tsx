@@ -288,33 +288,14 @@ const InstallPlanner = () => {
               </h1>
               
               <div className="max-w-2xl mx-auto space-y-3 text-sm text-muted-foreground">
-                {planData.designMode === "multi" ? (
-                  <>
-                    <div>
-                      <p className="font-medium text-elec-yellow mb-2">Ideal for:</p>
-                      <p>New builds, rewires, commercial installations, or complex multi-zone systems.</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-elec-yellow mb-2">Features:</p>
-                      <p>System-wide analysis, diversity calculations, supply sizing, and environmental zoning.</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-elec-yellow mb-2">Benefits:</p>
-                      <p>Optimised load balancing, consumer unit selection, and comprehensive compliance documentation.</p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div>
-                      <p className="font-medium text-elec-yellow mb-2">Ideal for:</p>
-                      <p>Individual appliances, socket circuits, lighting circuits, or simple upgrades.</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-elec-yellow mb-2">Features:</p>
-                      <p>Fast cable sizing, protection calculations, and BS 7671 compliance checking.</p>
-                    </div>
-                  </>
-                )}
+                <div>
+                  <p className="font-medium text-elec-yellow mb-2">Professional Tool:</p>
+                  <p>Design electrical installations with comprehensive analysis, visual circuit diagrams, and BS 7671 compliance.</p>
+                </div>
+                <div>
+                  <p className="font-medium text-elec-yellow mb-2">Features:</p>
+                  <p>Cable sizing, protection calculations, supply requirements, and installation guidance.</p>
+                </div>
               </div>
             </div>
             
