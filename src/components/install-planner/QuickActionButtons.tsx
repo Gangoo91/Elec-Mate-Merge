@@ -26,29 +26,34 @@ const QuickActionButtons: React.FC<QuickActionButtonsProps> = ({
     switch (installationType) {
       case "domestic":
         return [
-          { value: "lighting", label: "Lighting" },
-          { value: "power", label: "Power" },
-          { value: "cooker", label: "Cooker" },
-          { value: "heating", label: "Heating" }
+          { value: "lighting", label: "Lighting", icon: "💡", description: "General lighting circuits" },
+          { value: "power", label: "Power", icon: "🔌", description: "Socket outlet circuits" },
+          { value: "cooker", label: "Cooker", icon: "🍳", description: "Electric cooker circuits" },
+          { value: "shower", label: "Shower", icon: "🚿", description: "Electric shower circuits" },
+          { value: "heating", label: "Heating", icon: "🔥", description: "Electric heating circuits" },
+          { value: "ev-charging", label: "EV Charging", icon: "🚗", description: "EV charging points" }
         ];
       case "commercial":
         return [
-          { value: "lighting", label: "Lighting" },
-          { value: "power", label: "Power" },
-          { value: "hvac", label: "HVAC" },
-          { value: "it-equipment", label: "IT Equipment" }
+          { value: "commercial-lighting", label: "Lighting", icon: "💡", description: "Commercial lighting" },
+          { value: "commercial-power", label: "Power", icon: "🔌", description: "Commercial power circuits" },
+          { value: "hvac", label: "HVAC", icon: "❄️", description: "Air conditioning systems" },
+          { value: "it-equipment", label: "IT Equipment", icon: "💻", description: "Server and network power" },
+          { value: "emergency", label: "Emergency", icon: "🚨", description: "Emergency systems" }
         ];
       case "industrial":
         return [
-          { value: "motor", label: "Motor" },
-          { value: "power", label: "Power" },
-          { value: "heating", label: "Heating" },
-          { value: "hvac", label: "HVAC" }
+          { value: "motor-small", label: "Small Motor", icon: "⚙️", description: "Small industrial motors" },
+          { value: "motor-large", label: "Large Motor", icon: "⚙️", description: "Large industrial motors" },
+          { value: "welding", label: "Welding", icon: "🔥", description: "Welding equipment" },
+          { value: "crane", label: "Crane & Hoist", icon: "🏗️", description: "Lifting equipment" },
+          { value: "furnace", label: "Furnace", icon: "🔥", description: "Industrial furnaces" },
+          { value: "hvac", label: "HVAC", icon: "❄️", description: "Industrial HVAC" }
         ];
       default:
         return [
-          { value: "lighting", label: "Lighting" },
-          { value: "power", label: "Power" }
+          { value: "lighting", label: "Lighting", icon: "💡", description: "General lighting" },
+          { value: "power", label: "Power", icon: "🔌", description: "Power circuits" }
         ];
     }
   };
@@ -76,7 +81,7 @@ const QuickActionButtons: React.FC<QuickActionButtonsProps> = ({
         <Button 
           onClick={handleAddCircuit}
           disabled={!selectedCircuitType}
-          className="w-full"
+          className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
         >
           Add {selectedCircuitType ? quickOptions.find(opt => opt.value === selectedCircuitType)?.label : "Circuit"}
         </Button>

@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Grid } from "lucide-react";
 import { InstallPlanData, Circuit } from "./types";
-import CircuitTypeSelector from "./CircuitTypeSelector";
-import InstallationTemplates from "./InstallationTemplates";
-import MultiCircuitEditor from "./MultiCircuitEditor";
+import EnhancedCircuitTypeSelector from "./EnhancedCircuitTypeSelector";
+import MobileInstallationTemplates from "./MobileInstallationTemplates";
+import EnhancedMultiCircuitEditor from "./EnhancedMultiCircuitEditor";
 import QuickActionButtons from "./QuickActionButtons";
 import BulkCircuitActions from "./BulkCircuitActions";
 import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
@@ -109,14 +109,14 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
         )}
 
         {activeView === "templates" && (
-          <InstallationTemplates 
+          <MobileInstallationTemplates 
             installationType={planData.installationType}
             onApplyTemplate={applyTemplate}
           />
         )}
 
         {activeView === "advanced" && (
-          <CircuitTypeSelector 
+          <EnhancedCircuitTypeSelector 
             onAddCircuit={addCircuitFromType}
             existingCircuits={circuits}
             installationType={planData.installationType}
@@ -125,7 +125,7 @@ const MultiCircuitManager: React.FC<MultiCircuitManagerProps> = ({
 
         {activeView === "editor" && (
           circuits.length > 0 ? (
-            <MultiCircuitEditor 
+            <EnhancedMultiCircuitEditor 
               circuits={circuits}
               onUpdateCircuits={updateCircuits}
               installationType={planData.installationType}

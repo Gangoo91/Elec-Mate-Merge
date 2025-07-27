@@ -58,13 +58,21 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
       case "lighting": return "💡";
       case "power": return "🔌";
       case "cooker": return "🍳";
+      case "shower": return "🚿";
       case "heating": return "🔥";
       case "ev-charging": return "🚗";
+      case "motor-small": return "⚙️";
+      case "motor-large": return "⚙️";
       case "motor": return "⚙️";
       case "hvac": return "❄️";
       case "it-equipment": return "💻";
+      case "commercial-lighting": return "💡";
+      case "commercial-power": return "🔌";
       case "emergency": return "🚨";
       case "medical": return "🏥";
+      case "welding": return "🔥";
+      case "crane": return "🏗️";
+      case "furnace": return "🔥";
       default: return "⚡";
     }
   };
@@ -91,11 +99,13 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
               className="cursor-pointer"
               onClick={() => toggleExpanded(circuit.id)}
             >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="text-2xl">{getLoadTypeIcon(circuit.loadType)}</div>
-                  <div>
-                    <CardTitle className="text-base flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <div className="h-10 w-10 rounded bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                    <div className="text-lg">{getLoadTypeIcon(circuit.loadType)}</div>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <CardTitle className="text-base">
                       {circuit.name}
                     </CardTitle>
                     <p className="text-sm text-muted-foreground">
@@ -103,15 +113,17 @@ const MultiCircuitEditor: React.FC<MultiCircuitEditorProps> = ({
                     </p>
                   </div>
                 </div>
-                <CircuitControls
-                  circuit={circuit}
-                  onToggleEnabled={(enabled) => updateCircuit(circuit.id, { enabled })}
-                  onDuplicate={() => duplicateCircuit(circuit)}
-                  onDelete={() => deleteCircuit(circuit.id)}
-                  onToggleExpanded={() => toggleExpanded(circuit.id)}
-                  isExpanded={expandedCircuit === circuit.id}
-                  canDelete={circuits.length > 1}
-                />
+                <div className="flex-shrink-0">
+                  <CircuitControls
+                    circuit={circuit}
+                    onToggleEnabled={(enabled) => updateCircuit(circuit.id, { enabled })}
+                    onDuplicate={() => duplicateCircuit(circuit)}
+                    onDelete={() => deleteCircuit(circuit.id)}
+                    onToggleExpanded={() => toggleExpanded(circuit.id)}
+                    isExpanded={expandedCircuit === circuit.id}
+                    canDelete={circuits.length > 1}
+                  />
+                </div>
               </div>
             </CardHeader>
 
