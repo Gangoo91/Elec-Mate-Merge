@@ -40,7 +40,7 @@ const ToolsGuide = () => {
 
   return (
     <div className="w-full min-h-screen space-y-4 sm:space-y-6 animate-fade-in">
-      <div className="flex flex-col items-center justify-center text-center space-y-4 px-3 sm:px-6 py-4 sm:py-6">
+      <div className="flex flex-col items-center justify-center text-center space-y-4 px-4 sm:px-6 py-4 sm:py-6">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Professional Tool Guide</h1>
         <p className="text-muted-foreground text-sm sm:text-base max-w-2xl leading-relaxed">
           Comprehensive guidance for building your professional electrician toolkit - from essential tools to smart purchasing decisions and quality assessment
@@ -48,7 +48,7 @@ const ToolsGuide = () => {
         <BackButton customUrl="/apprentice/on-job-tools" label="Back to On-Job Tools" />
       </div>
 
-      <div className="px-3 sm:px-6">
+      <div className="px-4 sm:px-6">
         <Alert className="border-blue-500/50 bg-blue-500/10">
           <Shield className="h-4 w-4 text-blue-400" />
           <AlertDescription className="text-blue-200 text-sm leading-relaxed">
@@ -57,23 +57,23 @@ const ToolsGuide = () => {
         </Alert>
       </div>
 
-      <div className="w-full">
-        <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50 mx-2 sm:mx-6">
-          <CardHeader className="pb-4">
+      <div className="w-full px-2 sm:px-6">
+        <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
+          <CardHeader className="pb-4 px-4 sm:px-6">
             <div className="flex items-center gap-2 justify-center sm:justify-start">
               <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
               <CardTitle className="text-elec-yellow text-lg sm:text-xl text-center sm:text-left">Professional Tool Categories</CardTitle>
             </div>
           </CardHeader>
-          <CardContent className="p-3 sm:p-6">
+          <CardContent className="px-4 sm:px-6 pb-4 sm:pb-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {toolCategories.map((category, index) => (
-                <div key={index} className="border border-elec-yellow/20 rounded-lg p-3 sm:p-4 text-center">
-                  <h4 className="font-semibold text-white mb-2 text-sm sm:text-base">{category.name}</h4>
-                  <div className="text-xs sm:text-sm text-elec-yellow mb-2">{category.count}</div>
+                <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 text-center bg-elec-dark/30">
+                  <h4 className="font-semibold text-white mb-2 text-base">{category.name}</h4>
+                  <div className="text-sm text-elec-yellow mb-3">{category.count}</div>
                   <Badge 
                     variant="outline" 
-                    className={`mb-2 text-xs ${
+                    className={`mb-3 text-xs font-medium ${
                       category.priority === 'Critical' ? 'border-red-500/40 text-red-400' :
                       category.priority === 'High' ? 'border-orange-500/40 text-orange-400' :
                       'border-blue-500/40 text-blue-400'
@@ -81,7 +81,7 @@ const ToolsGuide = () => {
                   >
                     {category.priority} Priority
                   </Badge>
-                  <p className="text-xs text-muted-foreground">{category.cost}</p>
+                  <p className="text-sm font-medium text-elec-yellow">{category.cost}</p>
                 </div>
               ))}
             </div>
@@ -89,7 +89,7 @@ const ToolsGuide = () => {
         </Card>
       </div>
 
-      <div className="px-3 sm:px-6">
+      <div className="px-4 sm:px-6">
         <DropdownTabs
           tabs={dropdownTabs}
           defaultValue="essential"
@@ -98,7 +98,7 @@ const ToolsGuide = () => {
         />
       </div>
 
-      <div className="px-3 sm:px-6">
+      <div className="px-4 sm:px-6">
         <Alert className="border-orange-500/50 bg-orange-500/10">
           <AlertTriangle className="h-4 w-4 text-orange-400" />
           <AlertDescription className="text-orange-200 text-sm leading-relaxed">
@@ -107,7 +107,7 @@ const ToolsGuide = () => {
         </Alert>
       </div>
 
-      <div className="px-3 sm:px-6">
+      <div className="px-4 sm:px-6">
         <Card className="border-green-500/50 bg-green-500/10">
           <CardHeader className="pb-3">
             <CardTitle className="text-green-300 flex items-center gap-2 text-lg">
