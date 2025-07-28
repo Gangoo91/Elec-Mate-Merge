@@ -47,18 +47,18 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
+          <div>
+            <Label htmlFor="fullName" className="text-white">Full Name *</Label>
+            <Input
+              id="fullName"
+              value={cvData.personalInfo.fullName}
+              onChange={(e) => updatePersonalInfo('fullName', e.target.value)}
+              className="bg-elec-dark border-elec-yellow/20 text-white"
+              placeholder="Enter your full name"
+            />
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="fullName" className="text-white">Full Name *</Label>
-              <Input
-                id="fullName"
-                value={cvData.personalInfo.fullName}
-                onChange={(e) => updatePersonalInfo('fullName', e.target.value)}
-                className="bg-elec-dark border-elec-yellow/20 text-white"
-                placeholder="John Smith"
-              />
-            </div>
-            
             <div>
               <Label htmlFor="email" className="text-white">Email Address *</Label>
               <Input
@@ -67,7 +67,7 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
                 value={cvData.personalInfo.email}
                 onChange={(e) => updatePersonalInfo('email', e.target.value)}
                 className="bg-elec-dark border-elec-yellow/20 text-white"
-                placeholder="john.smith@email.com"
+                placeholder="your.email@example.com"
               />
             </div>
 
@@ -81,17 +81,6 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
                 placeholder="07700 123456"
               />
             </div>
-
-            <div>
-              <Label htmlFor="postcode" className="text-white">Postcode</Label>
-              <Input
-                id="postcode"
-                value={cvData.personalInfo.postcode}
-                onChange={(e) => updatePersonalInfo('postcode', e.target.value)}
-                className="bg-elec-dark border-elec-yellow/20 text-white"
-                placeholder="SW1A 1AA"
-              />
-            </div>
           </div>
 
           <div>
@@ -101,7 +90,18 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
               value={cvData.personalInfo.address}
               onChange={(e) => updatePersonalInfo('address', e.target.value)}
               className="bg-elec-dark border-elec-yellow/20 text-white"
-              placeholder="123 High Street, London"
+              placeholder="123 High Street, City"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="postcode" className="text-white">Postcode</Label>
+            <Input
+              id="postcode"
+              value={cvData.personalInfo.postcode}
+              onChange={(e) => updatePersonalInfo('postcode', e.target.value)}
+              className="bg-elec-dark border-elec-yellow/20 text-white"
+              placeholder="SW1A 1AA"
             />
           </div>
 

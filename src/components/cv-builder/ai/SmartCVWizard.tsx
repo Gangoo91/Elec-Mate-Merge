@@ -232,7 +232,7 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
       case 'profile':
         return (
           <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <div>
                 <Label htmlFor="fullName" className="text-white">Full Name *</Label>
                 <Input
@@ -243,33 +243,54 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
                     personalInfo: { ...prev.personalInfo, fullName: e.target.value }
                   }))}
                   className="bg-elec-dark border-elec-yellow/20 text-white"
+                  placeholder="Enter your full name"
                 />
               </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="email" className="text-white">Email *</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={wizardData.personalInfo.email}
+                    onChange={(e) => setWizardData(prev => ({
+                      ...prev,
+                      personalInfo: { ...prev.personalInfo, email: e.target.value }
+                    }))}
+                    className="bg-elec-dark border-elec-yellow/20 text-white"
+                    placeholder="your.email@example.com"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="phone" className="text-white">Phone</Label>
+                  <Input
+                    id="phone"
+                    value={wizardData.personalInfo.phone}
+                    onChange={(e) => setWizardData(prev => ({
+                      ...prev,
+                      personalInfo: { ...prev.personalInfo, phone: e.target.value }
+                    }))}
+                    className="bg-elec-dark border-elec-yellow/20 text-white"
+                    placeholder="07700 123456"
+                  />
+                </div>
+              </div>
+
               <div>
-                <Label htmlFor="email" className="text-white">Email *</Label>
+                <Label htmlFor="address" className="text-white">Address</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  value={wizardData.personalInfo.email}
+                  id="address"
+                  value={wizardData.personalInfo.address}
                   onChange={(e) => setWizardData(prev => ({
                     ...prev,
-                    personalInfo: { ...prev.personalInfo, email: e.target.value }
+                    personalInfo: { ...prev.personalInfo, address: e.target.value }
                   }))}
                   className="bg-elec-dark border-elec-yellow/20 text-white"
+                  placeholder="123 High Street, City"
                 />
               </div>
-              <div>
-                <Label htmlFor="phone" className="text-white">Phone</Label>
-                <Input
-                  id="phone"
-                  value={wizardData.personalInfo.phone}
-                  onChange={(e) => setWizardData(prev => ({
-                    ...prev,
-                    personalInfo: { ...prev.personalInfo, phone: e.target.value }
-                  }))}
-                  className="bg-elec-dark border-elec-yellow/20 text-white"
-                />
-              </div>
+              
               <div>
                 <Label htmlFor="postcode" className="text-white">Postcode</Label>
                 <Input
@@ -280,20 +301,9 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
                     personalInfo: { ...prev.personalInfo, postcode: e.target.value }
                   }))}
                   className="bg-elec-dark border-elec-yellow/20 text-white"
+                  placeholder="SW1A 1AA"
                 />
               </div>
-            </div>
-            <div>
-              <Label htmlFor="address" className="text-white">Address</Label>
-              <Input
-                id="address"
-                value={wizardData.personalInfo.address}
-                onChange={(e) => setWizardData(prev => ({
-                  ...prev,
-                  personalInfo: { ...prev.personalInfo, address: e.target.value }
-                }))}
-                className="bg-elec-dark border-elec-yellow/20 text-white"
-              />
             </div>
           </div>
         );
@@ -393,7 +403,8 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-dark max-w-4xl mx-auto">
+    <div className="max-h-full overflow-y-auto p-6">
+      <Card className="border-elec-yellow/20 bg-elec-dark max-w-4xl mx-auto">
       <CardHeader>
         <div className="flex items-center gap-3">
           <Wand2 className="h-6 w-6 text-elec-yellow" />
@@ -468,5 +479,6 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
         </div>
       </CardContent>
     </Card>
+    </div>
   );
 };
