@@ -67,22 +67,22 @@ const QualificationCompliance = () => {
             />
           </div>
           
-          {/* Stats grid */}
-          <div className="grid grid-cols-3 gap-6">
-            <div className="text-center">
-              <CheckCircle className="h-5 w-5 text-green-400 mx-auto mb-2" />
-              <div className="text-xl font-bold text-green-400">{completedCategories}</div>
-              <p className="text-xs text-elec-light/70">Completed</p>
+          {/* Stats grid - Mobile optimized */}
+          <div className="grid grid-cols-3 gap-4">
+            <div className="text-center space-y-2">
+              <CheckCircle className="h-5 w-5 text-green-400 mx-auto" />
+              <div className="text-2xl font-bold text-green-400">{completedCategories}</div>
+              <p className="text-xs text-elec-light/70 leading-tight">Completed</p>
             </div>
-            <div className="text-center">
-              <Clock className="h-5 w-5 text-orange-400 mx-auto mb-2" />
-              <div className="text-xl font-bold text-orange-400">{inProgressCategories}</div>
-              <p className="text-xs text-elec-light/70">In Progress</p>
+            <div className="text-center space-y-2">
+              <Clock className="h-5 w-5 text-orange-400 mx-auto" />
+              <div className="text-2xl font-bold text-orange-400">{inProgressCategories}</div>
+              <p className="text-xs text-elec-light/70 leading-tight">In Progress</p>
             </div>
-            <div className="text-center">
-              <AlertCircle className="h-5 w-5 text-red-400 mx-auto mb-2" />
-              <div className="text-xl font-bold text-red-400">{notStartedCategories}</div>
-              <p className="text-xs text-elec-light/70">Not Started</p>
+            <div className="text-center space-y-2">
+              <div className="h-5 w-5 bg-red-400/20 rounded-full mx-auto"></div>
+              <div className="text-2xl font-bold text-red-400">{notStartedCategories}</div>
+              <p className="text-xs text-elec-light/70 leading-tight">Not Started</p>
             </div>
           </div>
         </CardContent>
@@ -98,32 +98,28 @@ const QualificationCompliance = () => {
 
             const getStatusIcon = () => {
               if (complianceRecord.compliance_percentage >= 100) {
-                return <CheckCircle className="h-6 w-6 text-green-400" />;
+                return <CheckCircle className="h-5 w-5 text-green-400" />;
               } else if (complianceRecord.compliance_percentage > 0) {
-                return <Clock className="h-6 w-6 text-orange-400" />;
+                return <Clock className="h-5 w-5 text-orange-400" />;
               } else {
-                return <AlertCircle className="h-6 w-6 text-red-400" />;
+                return <div className="h-5 w-5 bg-red-400/20 rounded-full"></div>;
               }
-            };
-
-            const getStatusColor = () => {
-              if (complianceRecord.compliance_percentage >= 100) return "bg-green-400/20 text-green-400 border-green-400/50";
-              if (complianceRecord.compliance_percentage > 0) return "bg-orange-400/20 text-orange-400 border-orange-400/50";
-              return "bg-red-400/20 text-red-400 border-red-400/50";
             };
 
             return (
               <Card key={complianceRecord.id} className="border-elec-yellow/20 bg-elec-dark">
-                <CardContent className="p-4">
-                  {/* Simplified header with smaller percentage */}
+                <CardContent className="p-6">
+                  {/* Percentage at the top - centered */}
                   <div className="text-center mb-4">
                     <div className="text-2xl font-bold text-elec-yellow mb-3">
                       {complianceRecord.compliance_percentage}%
                     </div>
-                    <div className="flex items-center justify-center gap-2 mb-2">
-                      {getStatusIcon()}
-                      <h4 className="font-semibold text-elec-light">{category.name}</h4>
-                    </div>
+                  </div>
+                  
+                  {/* Status icon and title - centered */}
+                  <div className="flex items-center justify-center gap-2 mb-4">
+                    {getStatusIcon()}
+                    <h4 className="font-semibold text-lg text-elec-light text-center">{category.name}</h4>
                   </div>
                   
                   <p className="text-sm text-elec-light/70 mb-4 text-center leading-relaxed">
