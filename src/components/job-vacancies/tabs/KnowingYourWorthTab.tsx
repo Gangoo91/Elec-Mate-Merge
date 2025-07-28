@@ -292,17 +292,13 @@ const KnowingYourWorthTab = () => {
                 <p className="text-sm text-muted-foreground">AI-powered salary intelligence for electricians</p>
               </div>
             </div>
-            <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
-              <Brain className="h-3 w-3 mr-1" />
-              Smart Calculator
-            </Badge>
           </div>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
               <Calculator className="h-6 w-6 text-green-400 mx-auto mb-2" />
-              <div className="text-sm font-medium text-white mb-1">Smart Calculator</div>
+              <div className="text-sm font-medium text-white mb-1">Calculator</div>
               <div className="text-xs text-muted-foreground">AI-powered estimation</div>
             </div>
             <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
@@ -330,7 +326,7 @@ const KnowingYourWorthTab = () => {
           <div className="flex items-center justify-between">
             <CardTitle className="text-green-300 flex items-center gap-2">
               <Brain className="h-5 w-5" />
-              Smart Salary Calculator
+              Salary Calculator
             </CardTitle>
             <div className="flex items-center gap-2">
               <Gauge className="h-4 w-4 text-green-400" />
@@ -367,12 +363,65 @@ const KnowingYourWorthTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium text-white">Location</label>
-              <Input
-                placeholder="e.g. London, Manchester, Birmingham"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                className="bg-elec-dark border-green-500/20 focus:border-green-500/50"
-              />
+              <Select value={location} onValueChange={setLocation}>
+                <SelectTrigger className="bg-elec-dark border-green-500/20">
+                  <SelectValue placeholder="Select your location" />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-dark border-green-500/20 max-h-60 overflow-y-auto">
+                  <SelectItem value="london">London</SelectItem>
+                  <SelectItem value="cambridge">Cambridge</SelectItem>
+                  <SelectItem value="oxford">Oxford</SelectItem>
+                  <SelectItem value="bristol">Bristol</SelectItem>
+                  <SelectItem value="reading">Reading</SelectItem>
+                  <SelectItem value="manchester">Manchester</SelectItem>
+                  <SelectItem value="birmingham">Birmingham</SelectItem>
+                  <SelectItem value="leeds">Leeds</SelectItem>
+                  <SelectItem value="edinburgh">Edinburgh</SelectItem>
+                  <SelectItem value="glasgow">Glasgow</SelectItem>
+                  <SelectItem value="cardiff">Cardiff</SelectItem>
+                  <SelectItem value="newcastle">Newcastle</SelectItem>
+                  <SelectItem value="liverpool">Liverpool</SelectItem>
+                  <SelectItem value="nottingham">Nottingham</SelectItem>
+                  <SelectItem value="sheffield">Sheffield</SelectItem>
+                  <SelectItem value="coventry">Coventry</SelectItem>
+                  <SelectItem value="leicester">Leicester</SelectItem>
+                  <SelectItem value="sunderland">Sunderland</SelectItem>
+                  <SelectItem value="belfast">Belfast</SelectItem>
+                  <SelectItem value="derby">Derby</SelectItem>
+                  <SelectItem value="plymouth">Plymouth</SelectItem>
+                  <SelectItem value="wolverhampton">Wolverhampton</SelectItem>
+                  <SelectItem value="stoke-on-trent">Stoke-on-Trent</SelectItem>
+                  <SelectItem value="swansea">Swansea</SelectItem>
+                  <SelectItem value="southampton">Southampton</SelectItem>
+                  <SelectItem value="salford">Salford</SelectItem>
+                  <SelectItem value="aberdeen">Aberdeen</SelectItem>
+                  <SelectItem value="westminster">Westminster</SelectItem>
+                  <SelectItem value="dundee">Dundee</SelectItem>
+                  <SelectItem value="norwich">Norwich</SelectItem>
+                  <SelectItem value="luton">Luton</SelectItem>
+                  <SelectItem value="solihull">Solihull</SelectItem>
+                  <SelectItem value="islington">Islington</SelectItem>
+                  <SelectItem value="croydon">Croydon</SelectItem>
+                  <SelectItem value="crawley">Crawley</SelectItem>
+                  <SelectItem value="worthing">Worthing</SelectItem>
+                  <SelectItem value="gillingham">Gillingham</SelectItem>
+                  <SelectItem value="basildon">Basildon</SelectItem>
+                  <SelectItem value="almondsbury">Almondsbury</SelectItem>
+                  <SelectItem value="poole">Poole</SelectItem>
+                  <SelectItem value="bournemouth">Bournemouth</SelectItem>
+                  <SelectItem value="peterborough">Peterborough</SelectItem>
+                  <SelectItem value="southend-on-sea">Southend-on-Sea</SelectItem>
+                  <SelectItem value="middlesbrough">Middlesbrough</SelectItem>
+                  <SelectItem value="swindon">Swindon</SelectItem>
+                  <SelectItem value="huddersfield">Huddersfield</SelectItem>
+                  <SelectItem value="york">York</SelectItem>
+                  <SelectItem value="preston">Preston</SelectItem>
+                  <SelectItem value="stockport">Stockport</SelectItem>
+                  <SelectItem value="canterbury">Canterbury</SelectItem>
+                  <SelectItem value="chester">Chester</SelectItem>
+                  <SelectItem value="warrington">Warrington</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="space-y-2">
               <label className="text-sm font-medium text-white">Highest Qualification</label>
@@ -534,18 +583,18 @@ const KnowingYourWorthTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {marketTrends2025.map((trend, index) => (
               <div key={index} className="p-4 bg-cyan-500/10 rounded-lg border border-cyan-500/20 hover:border-cyan-500/40 transition-colors">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
+                <div className="flex flex-col items-center text-center md:items-start md:text-left mb-3">
+                  <div className="flex items-center gap-2 mb-2">
                     {trend.icon}
-                    <h4 className="font-medium text-white text-sm">{trend.trend}</h4>
+                    <Badge className={`text-xs ${
+                      trend.urgency === 'high' 
+                        ? 'bg-red-500/20 text-red-400 border-red-500/30' 
+                        : 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+                    }`}>
+                      {trend.urgency === 'high' ? 'Hot' : 'Rising'}
+                    </Badge>
                   </div>
-                  <Badge className={`text-xs ${
-                    trend.urgency === 'high' 
-                      ? 'bg-red-500/20 text-red-400 border-red-500/30' 
-                      : 'bg-amber-500/20 text-amber-400 border-amber-500/30'
-                  }`}>
-                    {trend.urgency === 'high' ? 'Hot' : 'Rising'}
-                  </Badge>
+                  <h4 className="font-medium text-white text-sm">{trend.trend}</h4>
                 </div>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-lg font-bold text-cyan-400">{trend.impact}</span>
@@ -661,11 +710,11 @@ const KnowingYourWorthTab = () => {
                         : skill.demand === "medium"
                         ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
                         : "bg-gray-500/20 text-gray-400 border-gray-500/30"
-                    }`}>
-                      {skill.demand === "very-high" ? "🔥 Very High" : 
-                       skill.demand === "high" ? "📈 High" : 
-                       skill.demand === "medium" ? "📊 Medium" : "Critical"}
-                    </Badge>
+                     }`}>
+                      {skill.demand === "very-high" ? "Very High" : 
+                       skill.demand === "high" ? "High" : 
+                       skill.demand === "medium" ? "Medium" : "Critical"}
+                     </Badge>
                   </div>
                 </div>
                 <p className="text-xs text-muted-foreground mb-2">{skill.description}</p>
