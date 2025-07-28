@@ -560,7 +560,11 @@ const KnowingYourWorthTab = () => {
             </div>
 
             <Button 
-              onClick={() => setShowDetailedBreakdown(!showDetailedBreakdown)}
+              onClick={() => {
+                console.log('Button clicked, current state:', showDetailedBreakdown);
+                setShowDetailedBreakdown(!showDetailedBreakdown);
+                console.log('State should now be:', !showDetailedBreakdown);
+              }}
               variant="outline"
               className="w-full border-green-500/20 hover:bg-green-500/10"
             >
@@ -762,15 +766,23 @@ const KnowingYourWorthTab = () => {
 
       {/* Detailed Breakdown */}
       {showDetailedBreakdown && (
-        <DetailedBreakdown
-          experience={experience}
-          location={location}
-          qualification={qualification}
-          specialisms={specialisms}
-          companySize={companySize}
-          contractType={contractType}
-          salaryCalculation={calculateSalary}
-        />
+        <Card className="border-blue-500/20 bg-blue-500/5 mt-6">
+          <CardHeader>
+            <CardTitle className="text-blue-300">Detailed Salary Breakdown</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-white">This is a test to see if the conditional rendering works.</p>
+            <DetailedBreakdown
+              experience={experience}
+              location={location}
+              qualification={qualification}
+              specialisms={specialisms}
+              companySize={companySize}
+              contractType={contractType}
+              salaryCalculation={calculateSalary}
+            />
+          </CardContent>
+        </Card>
       )}
     </div>
   );
