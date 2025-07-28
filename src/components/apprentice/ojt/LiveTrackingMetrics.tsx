@@ -2,6 +2,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { FileText, Target, Clock, AlertTriangle } from 'lucide-react';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 import { useComplianceTracking } from '@/hooks/time-tracking/useComplianceTracking';
+import { useUltraFastPortfolio } from '@/hooks/portfolio/useUltraFastPortfolio';
 
 const MetricCard = ({ 
   icon: Icon, 
@@ -33,10 +34,11 @@ const MetricCard = ({
 );
 
 const LiveTrackingMetrics = () => {
-  const { entries, totalTime, isLoading: timeLoading } = useTimeEntries();
-  const { getRemainingHours, isLoading: complianceLoading } = useComplianceTracking();
+  const { totalTime, isLoading: timeLoading } = useTimeEntries();
+  const { otjGoal, getRemainingHours, isLoading: complianceLoading } = useComplianceTracking();
+  const { entries, analytics, isLoading: portfolioLoading } = useUltraFastPortfolio();
 
-  if (timeLoading || complianceLoading) {
+  if (timeLoading || complianceLoading || portfolioLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
         {[...Array(4)].map((_, i) => (
@@ -53,32 +55,32 @@ const LiveTrackingMetrics = () => {
     );
   }
 
-  const completedEntries = entries.filter(entry => entry.duration > 0).length;
-  const totalTimeLogged = `${totalTime.hours}h ${totalTime.minutes}m`;
+  // Portfolio metrics
+  const totalPortfolioEntries = analytics?.totalEntries || 0;
+  const completedPortfolioEntries = analytics?.completedEntries || 0;
+  const portfolioProgress = totalPortfolioEntries > 0 ? Math.round((completedPortfolioEntries / totalPortfolioEntries) * 100) : 0;
+
+  // Compliance metrics
+  const currentHours = otjGoal?.current_hours || 0;
+  const targetHours = otjGoal?.target_hours || 800; // Default 20% of 4000 hours
   const remainingHours = getRemainingHours();
+  const complianceProgress = Math.round((currentHours / targetHours) * 100);
   
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
       <MetricCard
-        icon={FileText}
-        label="Total Entries"
-        value={entries.length}
-        color="text-elec-yellow"
-        subText="All time entries"
-      />
-      <MetricCard
         icon={Target}
-        label="Completed"
-        value={completedEntries}
-        color="text-green-400"
-        subText="With logged time"
+        label="Required Entries"
+        value={totalPortfolioEntries}
+        color="text-elec-yellow"
+        subText="Portfolio items needed"
       />
       <MetricCard
-        icon={Clock}
-        label="Time Logged"
-        value={totalTimeLogged}
-        color="text-purple-400"
-        subText="Total tracked time"
+        icon={FileText}
+        label="Portfolio Progress"
+        value={`${completedPortfolioEntries} (${portfolioProgress}%)`}
+        color="text-green-400"
+        subText="Completed portfolio items"
       />
       <MetricCard
         icon={AlertTriangle}
@@ -86,6 +88,13 @@ const LiveTrackingMetrics = () => {
         value={remainingHours > 0 ? `${remainingHours}h` : "Complete"}
         color={remainingHours > 0 ? "text-orange-400" : "text-green-400"}
         subText="For 20% OTJ requirement"
+      />
+      <MetricCard
+        icon={Clock}
+        label="Hours Progress"
+        value={`${Math.round(currentHours)}h (${complianceProgress}%)`}
+        color="text-purple-400"
+        subText="Completed learning hours"
       />
     </div>
   );
