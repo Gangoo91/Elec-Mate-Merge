@@ -46,18 +46,17 @@ const KnowingYourWorthTab = () => {
   const [skillsAssessment, setSkillsAssessment] = useState<Record<string, number>>({});
   const [showDetailedBreakdown, setShowDetailedBreakdown] = useState(false);
 
-  // Confidence calculation function (moved before useMemo)
-  const calculateConfidence = () => {
-    let confidence = 60; // Base confidence
-    if (location) confidence += 15;
-    if (qualification) confidence += 10;
-    if (specialisms.length > 0) confidence += 10;
-    if (companySize) confidence += 5;
-    return Math.min(confidence, 95);
-  };
-
   // Smart salary calculation algorithm
   const calculateSalary = useMemo(() => {
+    // Confidence calculation function
+    const calculateConfidence = () => {
+      let confidence = 60; // Base confidence
+      if (location) confidence += 15;
+      if (qualification) confidence += 10;
+      if (specialisms.length > 0) confidence += 10;
+      if (companySize) confidence += 5;
+      return Math.min(confidence, 95);
+    };
     let baseSalary = 22000; // 2025 apprentice minimum
     let maxSalary = 28000;
 
