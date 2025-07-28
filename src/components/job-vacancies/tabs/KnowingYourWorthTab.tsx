@@ -567,7 +567,7 @@ const KnowingYourWorthTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             {salaryRanges.map((range, index) => (
               <div key={index} className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-all hover:shadow-lg hover:shadow-blue-500/10">
                 <div className="flex items-center justify-between mb-3">
