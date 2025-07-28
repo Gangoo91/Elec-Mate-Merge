@@ -65,9 +65,9 @@ const GroupedPortfolioOverview: React.FC<GroupedPortfolioOverviewProps> = ({
 
   return (
     <div className="space-y-4">
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 place-items-center">
         {groups.map((group) => (
-          <Card key={group.id} className="hover:shadow-md transition-shadow">
+          <Card key={group.id} className="w-full max-w-sm hover:shadow-md transition-shadow">
             <CardHeader className="pb-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">

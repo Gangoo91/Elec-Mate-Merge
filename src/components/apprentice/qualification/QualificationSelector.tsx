@@ -60,14 +60,17 @@ const QualificationSelector = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+                <Badge variant="secondary" className="border-elec-yellow/50 bg-elec-yellow/20 text-elec-yellow mb-2 sm:hidden">
+                  {userSelection.progress_percentage}% Complete
+                </Badge>
                 <h3 className="font-semibold">{userSelection.qualification?.title}</h3>
                 <p className="text-sm text-muted-foreground">
                   {userSelection.qualification?.awarding_body} • {userSelection.qualification?.level}
                 </p>
               </div>
-              <Badge variant="secondary" className="border-elec-yellow/50 bg-elec-yellow/20 text-elec-yellow">
+              <Badge variant="secondary" className="border-elec-yellow/50 bg-elec-yellow/20 text-elec-yellow hidden sm:block">
                 {userSelection.progress_percentage}% Complete
               </Badge>
             </div>
@@ -111,24 +114,24 @@ const QualificationSelector = () => {
                       }`}
                       onClick={() => handleSelectQualification(qualification)}
                     >
-                    <CardContent className="p-4">
-                      <div className="space-y-3">
-                        <div className="flex justify-center">
-                          <Badge variant="outline" className="border-elec-yellow bg-elec-yellow text-elec-dark font-semibold">
-                            {qualification.level}
-                          </Badge>
-                        </div>
-                        <div className="space-y-2 text-center">
-                          <h3 className="font-semibold text-lg leading-tight">{qualification.title}</h3>
-                          <p className="text-sm text-muted-foreground">
-                            {qualification.description}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            Code: {qualification.code}
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
+                     <CardContent className="p-4">
+                       <div className="space-y-3">
+                         <div className="flex flex-col items-center gap-3 sm:gap-2">
+                           <Badge variant="outline" className="border-elec-yellow bg-elec-yellow text-elec-dark font-semibold">
+                             {qualification.level}
+                           </Badge>
+                           <h3 className="font-semibold text-lg leading-tight text-center">{qualification.title}</h3>
+                         </div>
+                         <div className="space-y-2 text-center">
+                           <p className="text-sm text-muted-foreground">
+                             {qualification.description}
+                           </p>
+                           <p className="text-xs text-muted-foreground">
+                             Code: {qualification.code}
+                           </p>
+                         </div>
+                       </div>
+                     </CardContent>
                     </Card>
                   ))}
                 </div>

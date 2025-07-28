@@ -94,10 +94,10 @@ const GroupedEntriesList: React.FC<GroupedEntriesListProps> = ({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Portfolio Entries</h2>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <h2 className="text-2xl font-bold text-center sm:text-left">Portfolio Entries</h2>
         <Tabs value={groupBy} onValueChange={(value) => setGroupBy(value as any)}>
-          <TabsList>
+          <TabsList className="grid w-full grid-cols-3 sm:w-auto">
             <TabsTrigger value="theme">By Theme</TabsTrigger>
             <TabsTrigger value="status">By Status</TabsTrigger>
             <TabsTrigger value="competency">By Level</TabsTrigger>
@@ -141,77 +141,79 @@ const GroupedEntriesList: React.FC<GroupedEntriesListProps> = ({
                       {group.entries.map((entry) => (
                         <Card key={entry.id} className="border-l-4 border-l-primary">
                           <CardContent className="p-4">
-                            <div className="flex items-start justify-between gap-4">
-                              <div className="flex-1 space-y-2">
-                                <div className="flex items-center gap-2">
-                                  <h4 className="font-semibold text-foreground">{entry.title}</h4>
-                                  <Badge 
-                                    variant="outline" 
-                                    className={getStatusColor(entry.status)}
-                                  >
-                                    {entry.status.replace('-', ' ')}
-                                  </Badge>
-                                </div>
+                             <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                               <div className="flex-1 space-y-2">
+                                 <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                                   <h4 className="font-semibold text-foreground text-center sm:text-left">{entry.title}</h4>
+                                   <Badge 
+                                     variant="outline" 
+                                     className={`${getStatusColor(entry.status)} self-center sm:self-auto`}
+                                   >
+                                     {entry.status.replace('-', ' ')}
+                                   </Badge>
+                                 </div>
 
-                                <p className="text-sm text-muted-foreground line-clamp-2">
-                                  {entry.description}
-                                </p>
+                                 <p className="text-sm text-muted-foreground line-clamp-2 text-center sm:text-left">
+                                   {entry.description}
+                                 </p>
 
-                                <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                                  <div className="flex items-center gap-1">
-                                    <Calendar className="h-3 w-3" />
-                                    {formatDate(entry.dateCreated)}
-                                  </div>
-                                  <div className="flex items-center gap-1">
-                                    <Clock className="h-3 w-3" />
-                                    {entry.timeSpent} mins
-                                  </div>
-                                  <div className="flex items-center gap-1">
-                                    {renderStars(entry.selfAssessment)}
-                                  </div>
-                                </div>
+                                 <div className="flex flex-wrap justify-center sm:justify-start items-center gap-2 sm:gap-4 text-xs text-muted-foreground">
+                                   <div className="flex items-center gap-1">
+                                     <Calendar className="h-3 w-3" />
+                                     {formatDate(entry.dateCreated)}
+                                   </div>
+                                   <div className="flex items-center gap-1">
+                                     <Clock className="h-3 w-3" />
+                                     {entry.timeSpent} mins
+                                   </div>
+                                   <div className="flex items-center gap-1">
+                                     {renderStars(entry.selfAssessment)}
+                                   </div>
+                                 </div>
 
-                                <div className="flex items-center gap-2">
-                                  <Badge variant="outline" className="text-xs">
-                                    {entry.category.name}
-                                  </Badge>
-                                  {entry.skills.slice(0, 2).map((skill) => (
-                                    <Badge key={skill} variant="secondary" className="text-xs">
-                                      {skill}
-                                    </Badge>
-                                  ))}
-                                  {entry.skills.length > 2 && (
-                                    <Badge variant="secondary" className="text-xs">
-                                      +{entry.skills.length - 2} more
-                                    </Badge>
-                                  )}
-                                </div>
+                                 <div className="flex flex-wrap justify-center sm:justify-start items-center gap-2">
+                                   <Badge variant="outline" className="text-xs">
+                                     {entry.category.name}
+                                   </Badge>
+                                   {entry.skills.slice(0, 2).map((skill) => (
+                                     <Badge key={skill} variant="secondary" className="text-xs">
+                                       {skill}
+                                     </Badge>
+                                   ))}
+                                   {entry.skills.length > 2 && (
+                                     <Badge variant="secondary" className="text-xs">
+                                       +{entry.skills.length - 2} more
+                                     </Badge>
+                                   )}
+                                 </div>
                               </div>
 
-                              <div className="flex gap-2">
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => onViewEntry(entry)}
-                                >
-                                  View
-                                </Button>
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => onEditEntry(entry)}
-                                >
-                                  Edit
-                                </Button>
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => onDeleteEntry(entry.id)}
-                                  className="text-red-600 hover:text-red-700"
-                                >
-                                  Delete
-                                </Button>
-                              </div>
+                               <div className="flex flex-wrap justify-center sm:justify-end gap-2 w-full sm:w-auto">
+                                 <Button
+                                   variant="outline"
+                                   size="sm"
+                                   onClick={() => onViewEntry(entry)}
+                                   className="flex-1 sm:flex-none"
+                                 >
+                                   View
+                                 </Button>
+                                 <Button
+                                   variant="outline"
+                                   size="sm"
+                                   onClick={() => onEditEntry(entry)}
+                                   className="flex-1 sm:flex-none"
+                                 >
+                                   Edit
+                                 </Button>
+                                 <Button
+                                   variant="outline"
+                                   size="sm"
+                                   onClick={() => onDeleteEntry(entry.id)}
+                                   className="text-red-600 hover:text-red-700 flex-1 sm:flex-none"
+                                 >
+                                   Delete
+                                 </Button>
+                               </div>
                             </div>
                           </CardContent>
                         </Card>
