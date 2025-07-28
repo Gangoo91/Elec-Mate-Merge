@@ -135,7 +135,7 @@ const BasicJobSearch = () => {
   return (
     <div className="space-y-6">
       {/* Search Form */}
-      <Card className="border-elec-yellow/20 bg-elec-dark">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-white">
             <Search className="h-5 w-5 text-elec-yellow" />
@@ -150,7 +150,7 @@ const BasicJobSearch = () => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                className="bg-elec-dark border-elec-yellow/20 text-white placeholder:text-gray-400"
+                className="bg-elec-gray border-elec-yellow/20 text-white placeholder:text-gray-400"
               />
             </div>
             
@@ -162,13 +162,13 @@ const BasicJobSearch = () => {
                   value={location}
                   onChange={(e) => handleLocationChange(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  className="pl-10 bg-elec-dark border-elec-yellow/20 text-white placeholder:text-gray-400"
+                  className="pl-10 bg-elec-gray border-elec-yellow/20 text-white placeholder:text-gray-400"
                 />
               </div>
               
               {/* Location Suggestions */}
               {showLocationSuggestions && (
-                <div className="absolute z-10 w-full mt-1 bg-elec-dark border border-elec-yellow/20 rounded-md shadow-lg">
+                <div className="absolute z-10 w-full mt-1 bg-elec-gray border border-elec-yellow/20 rounded-md shadow-lg">
                   {locationSuggestions.map((suggestion, index) => (
                     <button
                       key={index}
@@ -228,7 +228,7 @@ const BasicJobSearch = () => {
 
       {/* Empty State */}
       {!loading && jobs.length === 0 && query && (
-        <Card className="border-elec-yellow/20 bg-elec-dark">
+        <Card className="border-elec-yellow/20 bg-elec-gray">
           <CardContent className="text-center py-12">
             <AlertCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-semibold mb-2 text-white">No Jobs Found</h3>
