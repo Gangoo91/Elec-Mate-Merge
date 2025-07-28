@@ -69,18 +69,18 @@ const GroupedPortfolioOverview: React.FC<GroupedPortfolioOverviewProps> = ({
         {groups.map((group) => (
           <Card key={group.id} className="w-full max-w-sm hover:shadow-md transition-shadow">
             <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className={`text-${group.color}-600`}>
+              <div className="flex flex-col items-center gap-3">
+                <Badge variant={getCompetencyBadgeVariant(group.competencyLevel)}>
+                  {group.competencyLevel}
+                </Badge>
+                <div className="flex flex-col items-center gap-2 text-center">
+                  <div className="text-elec-yellow">
                     {getIcon(group.icon)}
                   </div>
                   <CardTitle className="text-lg">{group.name}</CardTitle>
                 </div>
-                <Badge variant={getCompetencyBadgeVariant(group.competencyLevel)}>
-                  {group.competencyLevel}
-                </Badge>
               </div>
-              <CardDescription className="text-sm">
+              <CardDescription className="text-sm text-center">
                 {group.description}
               </CardDescription>
             </CardHeader>
@@ -128,7 +128,7 @@ const GroupedPortfolioOverview: React.FC<GroupedPortfolioOverviewProps> = ({
                         className="flex items-center justify-between p-2 bg-muted rounded text-sm"
                       >
                         <div className="flex items-center gap-2">
-                          <Badge variant="outline" className={`text-${category.color}-600`}>
+                          <Badge variant="outline" className="text-elec-yellow border-elec-yellow/50">
                             {category.name}
                           </Badge>
                         </div>
