@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Plus, FileText, Target, TrendingUp, AlertTriangle, RefreshCw } from 'lucide-react';
+import { Plus, FileText, Target, TrendingUp, AlertTriangle, RefreshCw, Grid, List, BarChart3 } from 'lucide-react';
 import { DropdownTabs } from '@/components/ui/dropdown-tabs';
 import { PortfolioEntry } from '@/types/portfolio';
 import QualificationSelector from '@/components/apprentice/qualification/QualificationSelector';
@@ -11,6 +11,8 @@ import QualificationChangeSelector from '@/components/apprentice/qualification/Q
 import QualificationCompliance from '@/components/apprentice/qualification/QualificationCompliance';
 import PortfolioEntryForm from '@/components/apprentice/portfolio/PortfolioEntryForm';
 import PortfolioEntriesList from '@/components/apprentice/portfolio/PortfolioEntriesList';
+import GroupedPortfolioOverview from '@/components/portfolio/GroupedPortfolioOverview';
+import CompetencyLevelView from '@/components/portfolio/CompetencyLevelView';
 import { useUltraFastPortfolio } from '@/hooks/portfolio/useUltraFastPortfolio';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
 import { UltraFastLoadingState } from '@/components/portfolio/UltraFastLoadingState';
@@ -92,6 +94,7 @@ const PortfolioManager = () => {
   const { 
     entries, 
     categories, 
+    groups,
     analytics, 
     isLoading, 
     hasQualificationSelected,
@@ -99,6 +102,8 @@ const PortfolioManager = () => {
     updateEntry,
     deleteEntry,
     isAddingEntry,
+    getEntriesByGroup,
+    getCategoriesByCompetencyLevel,
     refresh
   } = useUltraFastPortfolio();
   
@@ -223,13 +228,47 @@ const PortfolioManager = () => {
       {/* Main Content Tabs */}
       <DropdownTabs
         placeholder="Select portfolio section"
-        defaultValue="overview"
+        defaultValue="grouped"
         onValueChange={setActiveTab}
         tabs={[
           {
-            value: "overview",
-            label: "Overview",
-            icon: Target,
+            value: "grouped",
+            label: "Grouped Overview",
+            icon: Grid,
+            content: (
+              <div className="space-y-6 mt-4">
+                <Suspense fallback={<UltraFastLoadingState showSkeleton={false} message="Loading grouped view..." />}>
+                  <GroupedPortfolioOverview 
+                    groups={groups}
+                    getEntriesByGroup={getEntriesByGroup}
+                  />
+                </Suspense>
+              </div>
+            )
+          },
+          {
+            value: "competency",
+            label: "Competency Levels",
+            icon: BarChart3,
+            content: (
+              <div className="space-y-6 mt-4">
+                <Suspense fallback={<UltraFastLoadingState showSkeleton={false} message="Loading competency view..." />}>
+                  <CompetencyLevelView 
+                    categories={categories}
+                    getEntriesByCompetencyLevel={(level) => {
+                      const levelCategories = getCategoriesByCompetencyLevel(level);
+                      const levelCategoryIds = levelCategories.map(cat => cat.id);
+                      return entries.filter(entry => levelCategoryIds.includes(entry.category.id));
+                    }}
+                  />
+                </Suspense>
+              </div>
+            )
+          },
+          {
+            value: "categories",
+            label: "Individual Categories",
+            icon: List,
             content: (
               <div className="space-y-6 mt-4">
                 <div className="grid gap-4">

@@ -2,7 +2,8 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { PortfolioEntry, PortfolioCategory, PortfolioAnalytics, PortfolioActivity } from '@/types/portfolio';
+import { PortfolioEntry, PortfolioCategory, PortfolioAnalytics, PortfolioActivity, PortfolioGroup } from '@/types/portfolio';
+import { createPortfolioGroups, getEntriesByGroup, getCategoriesByCompetencyLevel } from '@/utils/portfolioGrouping';
 
 // Cache keys
 const CACHE_KEYS = {
@@ -207,6 +208,7 @@ export const useUltraFastPortfolio = () => {
       return {
         entries: [],
         categories: [],
+        groups: [],
         analytics: null,
         hasQualificationSelected: false
       };
@@ -216,6 +218,7 @@ export const useUltraFastPortfolio = () => {
       return {
         entries: [],
         categories: [],
+        groups: [],
         analytics: null,
         hasQualificationSelected: false
       };
@@ -226,6 +229,7 @@ export const useUltraFastPortfolio = () => {
       return {
         entries: instantData.entries,
         categories: instantData.categories,
+        groups: [],
         analytics: instantData.analytics,
         hasQualificationSelected: instantData.hasData
       };
@@ -287,15 +291,20 @@ export const useUltraFastPortfolio = () => {
     // Calculate analytics
     const analytics = calculateAnalytics(entries, categories);
 
+    // Create portfolio groups using smart grouping logic
+    const groups = createPortfolioGroups(categories, entries);
+
     // Cache processed data
     setCachedData(`${CACHE_KEYS.portfolio}-entries`, entries);
     setCachedData(`${CACHE_KEYS.portfolio}-categories`, categories);
+    setCachedData(`${CACHE_KEYS.portfolio}-groups`, groups);
     setCachedData(`${CACHE_KEYS.portfolio}-analytics`, analytics);
     setCachedData(`${CACHE_KEYS.portfolio}-has-data`, true);
 
     return {
       entries,
       categories,
+      groups,
       analytics,
       hasQualificationSelected: !!userSelection
     };
@@ -459,6 +468,7 @@ export const useUltraFastPortfolio = () => {
   return {
     entries: processedData.entries,
     categories: processedData.categories,
+    groups: processedData.groups,
     analytics: processedData.analytics,
     isLoading: isLoading && !instantData.hasData, // Only show loading if no cached data
     error,
@@ -470,6 +480,9 @@ export const useUltraFastPortfolio = () => {
     isAddingEntry: addEntryMutation.isPending,
     isUpdatingEntry: updateEntryMutation.isPending,
     isDeletingEntry: deleteEntryMutation.isPending,
+    getEntriesByGroup: (groupId: string) => getEntriesByGroup(groupId, processedData.categories, processedData.entries),
+    getCategoriesByCompetencyLevel: (level: 'foundation' | 'intermediate' | 'advanced') => 
+      getCategoriesByCompetencyLevel(level, processedData.categories),
     refresh: () => {
       queryClient.invalidateQueries({ queryKey: ['ultra-fast-portfolio', user?.id, userSelection?.qualification_id] });
       queryClient.invalidateQueries({ queryKey: ['user-qualification-selection', user?.id] });
