@@ -5,7 +5,7 @@ import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Clock, FileText, Target, Award, BarChart3 } from "lucide-react";
 import TimeTrackingTab from "@/components/apprentice/ojt/TimeTrackingTab";
 import PortfolioBuildingTab from "@/components/apprentice/ojt/PortfolioBuildingTab";
-import EvidenceUploadTab from "@/components/apprentice/ojt/EvidenceUploadTab";
+import EvidenceAssessmentTab from "@/components/apprentice/ojt/EvidenceAssessmentTab";
 import AssessmentTrackingTab from "@/components/apprentice/ojt/AssessmentTrackingTab";
 import ComplianceDashboardTab from "@/components/apprentice/ojt/ComplianceDashboardTab";
 
@@ -15,7 +15,7 @@ const ApprenticeOJT = () => {
   const tabs = [
     { value: "portfolio", label: "Portfolio", icon: FileText, content: React.createElement(PortfolioBuildingTab) },
     { value: "time-tracking", label: "Time Tracking", icon: Clock, content: React.createElement(TimeTrackingTab) },
-    { value: "evidence", label: "Evidence Assessment", icon: Target, content: React.createElement(EvidenceUploadTab) },
+    { value: "evidence", label: "Evidence Assessment", icon: Target, content: React.createElement(EvidenceAssessmentTab) },
     { value: "assessments", label: "Assessments", icon: Award, content: React.createElement(AssessmentTrackingTab) },
     { value: "compliance", label: "Goals & Progress", icon: BarChart3, content: React.createElement(ComplianceDashboardTab) }
   ];

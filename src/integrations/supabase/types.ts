@@ -1779,6 +1779,72 @@ export type Database = {
           },
         ]
       }
+      training_evidence: {
+        Row: {
+          assessment_criteria: string[] | null
+          category: string | null
+          created_at: string
+          date_achieved: string
+          description: string | null
+          evidence_type: string
+          file_name: string | null
+          file_size: number | null
+          file_url: string | null
+          id: string
+          learning_outcomes: string[] | null
+          portfolio_linked: boolean | null
+          tags: string[] | null
+          time_spent: number | null
+          title: string
+          updated_at: string
+          user_id: string
+          verification_status: string | null
+          witness_name: string | null
+        }
+        Insert: {
+          assessment_criteria?: string[] | null
+          category?: string | null
+          created_at?: string
+          date_achieved?: string
+          description?: string | null
+          evidence_type: string
+          file_name?: string | null
+          file_size?: number | null
+          file_url?: string | null
+          id?: string
+          learning_outcomes?: string[] | null
+          portfolio_linked?: boolean | null
+          tags?: string[] | null
+          time_spent?: number | null
+          title: string
+          updated_at?: string
+          user_id: string
+          verification_status?: string | null
+          witness_name?: string | null
+        }
+        Update: {
+          assessment_criteria?: string[] | null
+          category?: string | null
+          created_at?: string
+          date_achieved?: string
+          description?: string | null
+          evidence_type?: string
+          file_name?: string | null
+          file_size?: number | null
+          file_url?: string | null
+          id?: string
+          learning_outcomes?: string[] | null
+          portfolio_linked?: boolean | null
+          tags?: string[] | null
+          time_spent?: number | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+          verification_status?: string | null
+          witness_name?: string | null
+        }
+        Relationships: []
+      }
       uk_regions: {
         Row: {
           county: string | null

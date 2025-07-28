@@ -69,6 +69,7 @@ export default {
 				'elec-gray': 'hsl(var(--elec-gray))',
 				'elec-light': 'hsl(var(--elec-light))',
 				'elec-card': 'hsl(var(--elec-card))',
+				'elec-slate': 'hsl(var(--elec-slate))',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
