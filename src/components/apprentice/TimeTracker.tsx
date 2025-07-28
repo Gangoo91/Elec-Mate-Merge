@@ -3,9 +3,12 @@ import { useState } from "react";
 import { useTimeEntries } from "@/hooks/time-tracking/useTimeEntries";
 import TimeEntryForm from "@/components/apprentice/time-tracking/TimeEntryForm";
 import EntriesList from "@/components/apprentice/time-tracking/EntriesList";
+import LiveTrackingPanel from "@/components/apprentice/time-tracking/LiveTrackingPanel";
+import ComplianceTracker from "@/components/apprentice/time-tracking/ComplianceTracker";
+import CollapsibleRecentSessions from "@/components/apprentice/time-tracking/CollapsibleRecentSessions";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, FolderPlus } from "lucide-react";
 import { 
   Dialog,
   DialogContent,
@@ -29,18 +32,30 @@ const TimeTracker = () => {
     setShowForm(false);
   };
 
+  const handleAddToPortfolio = (sessionId: string) => {
+    // This would navigate to portfolio creation with pre-filled session data
+    console.log('Add session to portfolio:', sessionId);
+    // Could implement navigation to portfolio with session data
+  };
+
   // Mobile specific layout
   if (isMobile) {
     return (
       <div className="space-y-4">
-        {/* Recent Entries title */}
-        <div className="mb-4">
-          <h2 className="text-2xl font-bold">Recent</h2>
-          <h3 className="text-xl mt-2">Recent Time Entries</h3>
-        </div>
+        {/* Live Tracking Panel */}
+        <LiveTrackingPanel />
         
-        {/* Entries List */}
-        <EntriesList entries={recentEntries} isLoading={isLoading} />
+        {/* Compliance Tracker */}
+        <ComplianceTracker />
+        
+        {/* Recent Sessions - Collapsible */}
+        <CollapsibleRecentSessions onAddToPortfolio={handleAddToPortfolio} />
+        
+        {/* Recent Entries - Traditional time entries */}
+        <div className="mb-4">
+          <h3 className="text-lg font-semibold text-elec-light mb-2">Manual Time Entries</h3>
+          <EntriesList entries={recentEntries} isLoading={isLoading} />
+        </div>
         
         {/* Fixed button at the bottom */}
         <Dialog>
@@ -66,16 +81,38 @@ const TimeTracker = () => {
   // Desktop layout
   return (
     <div className="space-y-6">
+      {/* Live Tracking Panel */}
+      <LiveTrackingPanel />
+      
+      {/* Compliance Tracker */}
+      <ComplianceTracker />
+      
+      {/* Recent Sessions - Collapsible */}
+      <CollapsibleRecentSessions onAddToPortfolio={handleAddToPortfolio} />
+      
       {!showForm ? (
         <div className="space-y-4">
-          <Button 
-            onClick={() => setShowForm(true)}
-            className="w-full"
-          >
-            <PlusCircle className="h-4 w-4 mr-2" />
-            Add New Entry
-          </Button>
-          <EntriesList entries={recentEntries} isLoading={isLoading} />
+          <div className="flex gap-2">
+            <Button 
+              onClick={() => setShowForm(true)}
+              className="flex-1"
+            >
+              <PlusCircle className="h-4 w-4 mr-2" />
+              Add Manual Entry
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={() => handleAddToPortfolio("manual")}
+              className="px-3"
+            >
+              <FolderPlus className="h-4 w-4" />
+            </Button>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold text-elec-light mb-3">Manual Time Entries</h3>
+            <EntriesList entries={recentEntries} isLoading={isLoading} />
+          </div>
         </div>
       ) : (
         <div className="space-y-4">

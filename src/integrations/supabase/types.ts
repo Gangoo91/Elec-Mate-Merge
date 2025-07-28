@@ -167,6 +167,51 @@ export type Database = {
         }
         Relationships: []
       }
+      compliance_goals: {
+        Row: {
+          compliance_percentage: number | null
+          created_at: string
+          current_entries: number | null
+          current_hours: number | null
+          deadline: string | null
+          goal_type: string
+          id: string
+          status: string | null
+          target_entries: number | null
+          target_hours: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          compliance_percentage?: number | null
+          created_at?: string
+          current_entries?: number | null
+          current_hours?: number | null
+          deadline?: string | null
+          goal_type: string
+          id?: string
+          status?: string | null
+          target_entries?: number | null
+          target_hours?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          compliance_percentage?: number | null
+          created_at?: string
+          current_entries?: number | null
+          current_hours?: number | null
+          deadline?: string | null
+          goal_type?: string
+          id?: string
+          status?: string | null
+          target_entries?: number | null
+          target_hours?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       compliance_tracking: {
         Row: {
           completed_hours: number | null
@@ -1708,32 +1753,47 @@ export type Database = {
       time_entries: {
         Row: {
           activity: string
+          compliance_category: string | null
           created_at: string | null
           date: string
           duration: number
+          evidence_urls: string[] | null
           id: string
           is_automatic: boolean | null
+          learning_outcomes: string[] | null
           notes: string | null
+          portfolio_item_id: string | null
+          session_id: string | null
           user_id: string
         }
         Insert: {
           activity: string
+          compliance_category?: string | null
           created_at?: string | null
           date: string
           duration: number
+          evidence_urls?: string[] | null
           id?: string
           is_automatic?: boolean | null
+          learning_outcomes?: string[] | null
           notes?: string | null
+          portfolio_item_id?: string | null
+          session_id?: string | null
           user_id: string
         }
         Update: {
           activity?: string
+          compliance_category?: string | null
           created_at?: string | null
           date?: string
           duration?: number
+          evidence_urls?: string[] | null
           id?: string
           is_automatic?: boolean | null
+          learning_outcomes?: string[] | null
           notes?: string | null
+          portfolio_item_id?: string | null
+          session_id?: string | null
           user_id?: string
         }
         Relationships: []
@@ -1778,6 +1838,54 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      time_tracking_sessions: {
+        Row: {
+          activity_type: string
+          course_slug: string | null
+          created_at: string
+          duration: number | null
+          end_time: string | null
+          id: string
+          is_active: boolean | null
+          location: string | null
+          notes: string | null
+          start_time: string
+          unit_code: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          activity_type: string
+          course_slug?: string | null
+          created_at?: string
+          duration?: number | null
+          end_time?: string | null
+          id?: string
+          is_active?: boolean | null
+          location?: string | null
+          notes?: string | null
+          start_time?: string
+          unit_code?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          activity_type?: string
+          course_slug?: string | null
+          created_at?: string
+          duration?: number | null
+          end_time?: string | null
+          id?: string
+          is_active?: boolean | null
+          location?: string | null
+          notes?: string | null
+          start_time?: string
+          unit_code?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       training_evidence: {
         Row: {
