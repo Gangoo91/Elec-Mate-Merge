@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Download, FileText, File, Globe } from "lucide-react";
 import { PortfolioEntry, ExportOptions } from "@/types/portfolio";
 import { useToast } from "@/hooks/use-toast";
+import { PortfolioExportService, ExportProgress } from "@/services/portfolioExportService";
 
 interface PortfolioExportDialogProps {
   entries: PortfolioEntry[];
@@ -24,37 +25,44 @@ const PortfolioExportDialog = ({ entries }: PortfolioExportDialogProps) => {
     categories: [],
   });
   const [isExporting, setIsExporting] = useState(false);
+  const [exportProgress, setExportProgress] = useState<ExportProgress | null>(null);
 
   const handleExport = async () => {
     setIsExporting(true);
+    setExportProgress(null);
     
-    // Mock export functionality - in a real app, this would generate actual files
     try {
-      // Simulate export delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      const exportService = new PortfolioExportService((progress) => {
+        setExportProgress(progress);
+      });
+
+      if (exportOptions.format === 'pdf') {
+        await exportService.exportToPDF(entries, exportOptions);
+      } else if (exportOptions.format === 'html') {
+        await exportService.exportToHTML(entries, exportOptions);
+      } else if (exportOptions.format === 'word') {
+        // For now, show a message that Word export is coming soon
+        toast({
+          title: "Word Export Coming Soon",
+          description: "Word document export is currently being developed. Please use PDF or HTML export for now.",
+          variant: "default"
+        });
+        return;
+      }
+
       const formatName = exportOptions.format.toUpperCase();
       const entryCount = exportOptions.categories.length === 0 
         ? entries.length 
         : entries.filter(entry => exportOptions.categories.includes(entry.category.id)).length;
       
-      // Mock download
-      const mockFilename = `portfolio-export-${new Date().toISOString().split('T')[0]}.${exportOptions.format}`;
-      
       toast({
         title: "Export Successful",
-        description: `Your portfolio has been exported as ${formatName} with ${entryCount} entries. Download will begin shortly.`,
-      });
-      
-      // In a real implementation, you'd trigger an actual download here
-      console.log('Mock export:', {
-        filename: mockFilename,
-        options: exportOptions,
-        entryCount
+        description: `Your portfolio has been exported as ${formatName} with ${entryCount} entries.`,
       });
       
       setOpen(false);
     } catch (error) {
+      console.error('Export error:', error);
       toast({
         title: "Export Failed",
         description: "There was an error exporting your portfolio. Please try again.",
@@ -62,6 +70,7 @@ const PortfolioExportDialog = ({ entries }: PortfolioExportDialogProps) => {
       });
     } finally {
       setIsExporting(false);
+      setExportProgress(null);
     }
   };
 
@@ -220,6 +229,22 @@ const PortfolioExportDialog = ({ entries }: PortfolioExportDialogProps) => {
             </div>
           </div>
 
+          {/* Progress Display */}
+          {exportProgress && (
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span>{exportProgress.step}</span>
+                <span>{exportProgress.progress}/{exportProgress.total}</span>
+              </div>
+              <div className="w-full bg-elec-gray rounded-full h-2">
+                <div 
+                  className="bg-elec-yellow h-2 rounded-full transition-all duration-300"
+                  style={{ width: `${(exportProgress.progress / exportProgress.total) * 100}%` }}
+                />
+              </div>
+            </div>
+          )}
+
           {/* Export Button */}
           <Button 
             onClick={handleExport} 
@@ -229,7 +254,7 @@ const PortfolioExportDialog = ({ entries }: PortfolioExportDialogProps) => {
             {isExporting ? (
               <>
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
-                Exporting...
+                {exportProgress ? exportProgress.step : 'Exporting...'}
               </>
             ) : (
               <>
