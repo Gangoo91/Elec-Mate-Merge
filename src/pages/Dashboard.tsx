@@ -42,15 +42,9 @@ const Dashboard = () => {
               Welcome to ElecMate, your electrical career companion.
             </p>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mt-4">
-              <div className="flex items-center justify-center md:justify-start gap-2 min-w-0">
-                <Clock className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                <span className="text-xs md:text-sm">Last active: Today</span>
-              </div>
-              <div className="flex items-center justify-center md:justify-start gap-2 min-w-0">
-                <BookOpen className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                <span className="text-xs md:text-sm">{userData.completedLessons} of {userData.totalLessons} lessons</span>
-              </div>
+            <div className="flex items-center justify-center md:justify-start gap-2 min-w-0 mt-4">
+              <Clock className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+              <span className="text-xs md:text-sm">Last active: Today</span>
             </div>
           </div>
           
