@@ -102,10 +102,11 @@ const BasicJobSearch = () => {
     setJobs([]);
 
     try {
-      const { data, error } = await supabase.functions.invoke('basic-job-search', {
+      const { data, error } = await supabase.functions.invoke('reed-job-listings', {
         body: {
-          query: searchQuery,
-          location: location.trim() || 'UK'
+          keywords: searchQuery,
+          location: location.trim() || undefined,
+          page: 1
         }
       });
 
