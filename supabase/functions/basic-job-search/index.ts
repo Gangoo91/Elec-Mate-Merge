@@ -3,7 +3,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { corsHeaders } from "../_shared/cors.ts";
 
-const reedApiKey = Deno.env.get('REEDJOB API');
+const reedApiKey = Deno.env.get('REED_API_KEY');
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -140,11 +140,20 @@ async function searchReedJobs(query: string, location: string) {
       source: 'Reed'
     }));
 
-    // Apply server-side location filtering if location is specific (not generic UK)
+    // Apply more flexible location filtering - be less restrictive to show more relevant jobs
     if (location && location.toLowerCase() !== 'united kingdom' && location.toLowerCase() !== 'uk') {
       console.log('📍 Applying server-side location filtering for:', location);
       const filteredJobs = filterJobsByLocation(jobs, location);
       console.log(`Server-side filtering: ${filteredJobs.length}/${jobs.length} jobs match location`);
+      
+      // If filtering results in very few jobs, return more jobs with a wider radius
+      if (filteredJobs.length < 5) {
+        console.log('🔍 Too few results, expanding search radius...');
+        const expandedJobs = filterJobsByLocationExpanded(jobs, location);
+        console.log(`Expanded filtering: ${expandedJobs.length}/${jobs.length} jobs in expanded area`);
+        return expandedJobs.slice(0, 20); // Still limit total results
+      }
+      
       return filteredJobs;
     }
     
@@ -215,5 +224,48 @@ function filterJobsByLocation(jobs: any[], searchLocation: string): any[] {
   });
 
   console.log(`📊 Location filtering result: ${filteredJobs.length}/${jobs.length} jobs match "${searchLocation}"`);
+  return filteredJobs;
+}
+
+function filterJobsByLocationExpanded(jobs: any[], searchLocation: string): any[] {
+  const normalizedSearch = searchLocation.toLowerCase().trim();
+  console.log(`🔍 Expanded location filtering for: "${normalizedSearch}"`);
+  
+  const expandedRegions: Record<string, string[]> = {
+    'cumbria': ['cumbria', 'lake district', 'carlisle', 'kendal', 'barrow', 'penrith', 'workington', 'whitehaven', 'cockermouth', 'keswick', 'windermere', 'ambleside', 'grasmere', 'lancaster', 'preston', 'blackpool', 'north west', 'northwest'],
+    'london': ['london', 'greater london', 'central london', 'south east', 'southeast', 'home counties'],
+    'manchester': ['manchester', 'greater manchester', 'trafford', 'salford', 'north west', 'northwest', 'lancashire'],
+    'birmingham': ['birmingham', 'west midlands', 'solihull', 'midlands', 'coventry'],
+    'leeds': ['leeds', 'west yorkshire', 'bradford', 'wakefield', 'yorkshire', 'north england'],
+    'glasgow': ['glasgow', 'greater glasgow', 'clyde', 'scotland', 'central scotland'],
+    'edinburgh': ['edinburgh', 'lothian', 'scotland', 'central scotland'],
+    'cardiff': ['cardiff', 'caerdydd', 'south wales', 'wales', 'welsh'],
+    'belfast': ['belfast', 'northern ireland', 'ni', 'ulster']
+  };
+  
+  const filteredJobs = jobs.filter(job => {
+    const jobLocation = (job.location || '').toLowerCase();
+    
+    // Check expanded regions
+    for (const [region, keywords] of Object.entries(expandedRegions)) {
+      if (keywords.includes(normalizedSearch) || normalizedSearch.includes(region)) {
+        const regionMatch = keywords.some(keyword => jobLocation.includes(keyword));
+        if (regionMatch) {
+          console.log(`✅ Expanded match: "${job.location}" matches expanded "${searchLocation}"`);
+          return true;
+        }
+      }
+    }
+    
+    // Fallback to any UK location if very specific search
+    if (jobLocation.includes('uk') || jobLocation.includes('united kingdom') || jobLocation.includes('england') || jobLocation.includes('scotland') || jobLocation.includes('wales')) {
+      console.log(`✅ UK fallback: "${job.location}" accepted for UK search`);
+      return true;
+    }
+    
+    return false;
+  });
+  
+  console.log(`📊 Expanded filtering result: ${filteredJobs.length}/${jobs.length} jobs in expanded area`);
   return filteredJobs;
 }
