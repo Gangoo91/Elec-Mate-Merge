@@ -84,11 +84,21 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
     'Electrician', 'Electrical Apprentice', 'Senior Electrician', 'Electrical Supervisor',
     'Electrical Engineer', 'Electrical Foreman', 'Electrical Inspector', 'Installation Electrician',
     'Maintenance Electrician', 'Industrial Electrician', 'Commercial Electrician', 'Domestic Electrician',
-    'Electrical Designer', 'Design Engineer', 'Electrical Commissioning Engineer', 'Commissioning Technician',
+    'Electrical Designer', 'Design Engineer', 'CAD Designer', 'Technical Designer', 'Schematic Designer',
+    'Electrical Commissioning Engineer', 'Commissioning Technician', 'Commissioning Manager', 'Systems Commissioning Engineer',
     'EV Charging Installer', 'EV Charging Engineer', 'Electric Vehicle Technician', 'EV Infrastructure Specialist',
-    'Solar Panel Installer', 'Renewable Energy Technician', 'Smart Home Installer', 'Fire Alarm Engineer',
-    'Security Systems Installer', 'CCTV Installer', 'Data Cabling Technician', 'Network Infrastructure Engineer',
-    'Electrical Testing & Inspection', 'PAT Testing Technician', 'Electrical Compliance Officer'
+    'EV Commissioning Engineer', 'Electric Vehicle Service Technician', 'EV Maintenance Technician',
+    'Solar Panel Installer', 'Renewable Energy Technician', 'Solar Installation Engineer', 'PV System Designer',
+    'Wind Turbine Technician', 'Battery Storage Technician', 'Energy Storage Engineer',
+    'Smart Home Installer', 'Home Automation Technician', 'Smart Building Engineer', 'IoT Systems Installer',
+    'Fire Alarm Engineer', 'Fire Safety Systems Technician', 'Emergency Lighting Engineer',
+    'Security Systems Installer', 'CCTV Installer', 'Access Control Engineer', 'Intruder Alarm Technician',
+    'Data Cabling Technician', 'Network Infrastructure Engineer', 'Fibre Optic Technician', 'Telecommunications Engineer',
+    'Electrical Testing & Inspection', 'PAT Testing Technician', 'Electrical Compliance Officer', 'EICR Inspector',
+    'Electrical Project Manager', 'Site Supervisor', 'Electrical Estimator', 'Electrical Sales Engineer',
+    'Control Panel Builder', 'PLC Programmer', 'SCADA Engineer', 'Automation Engineer',
+    'Motor Control Engineer', 'Drives & Controls Technician', 'Instrumentation Technician',
+    'Electrical Safety Officer', 'Electrical Trainer', 'Electrical Consultant'
   ];
 
   const experienceLevels = [
@@ -186,15 +196,38 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
 
   const electricalQualifications = [
     'Level 2 Diploma in Electrical Engineering', 'Level 3 Diploma in Electrical Engineering',
-    'City & Guilds 2365 Electrical Installation', 'City & Guilds 2391 Inspection & Testing',
-    'City & Guilds 2396 Design & Verification', 'City & Guilds 2394/2395 Initial Verification',
-    '18th Edition IET Wiring Regulations', '17th Edition IET Wiring Regulations',
-    'ECS Card', 'JIB Gold Card', 'NICEIC Approved', 'Part P Qualified',
-    'EV Charging Installation Qualification', 'Solar Panel Installation Certification',
-    'Fire Alarm Installation Certification', 'Emergency Lighting Certification',
-    'PAT Testing Certification', 'COMPEX Ex Certification', 'ATEX Certification',
-    'HNC Electrical Engineering', 'HND Electrical Engineering', 'BEng Electrical Engineering',
-    'First Aid Certification', 'CSCS Card', 'IPAF Certification', 'PASMA Certification'
+    'Level 4 HNC Electrical Engineering', 'Level 5 HND Electrical Engineering',
+    'City & Guilds 2365 Electrical Installation (Level 2)', 'City & Guilds 2365 Electrical Installation (Level 3)',
+    'City & Guilds 2391 Inspection & Testing', 'City & Guilds 2396 Design & Verification',
+    'City & Guilds 2394/2395 Initial Verification', 'City & Guilds 2382 18th Edition Wiring Regulations',
+    'City & Guilds 2381 17th Edition Wiring Regulations', 'City & Guilds 2392 Fundamental Inspection',
+    'City & Guilds 2393 Electrical Maintenance', 'City & Guilds 2377 PAT Testing',
+    'City & Guilds 2330 Electrotechnical Technology', 'City & Guilds 2357 Electrotechnical Technology (NVQ)',
+    '18th Edition IET Wiring Regulations (BS 7671:2018)', '17th Edition IET Wiring Regulations',
+    'AM2 Assessment (Electrical Installation Work)', 'AM2S Assessment (Electrical Maintenance)',
+    'ECS Card (Gold/Blue/Green)', 'JIB Gold Card', 'JIB Graded Card', 'SJIB Card',
+    'NICEIC Approved Contractor', 'NICEIC Domestic Installer', 'Part P Qualified', 'Competent Person Scheme',
+    'NAPIT Approved', 'ELECSA Approved', 'Stroma Approved', 'SELECT Approved',
+    'EV Charging Installation (City & Guilds 2919)', 'OLEV EV Charging Qualification',
+    'IET Code of Practice for EV Charging', 'EV Charging Point Installation & Maintenance',
+    'Solar Panel Installation (MCS Certification)', 'Solar PV Installation Training',
+    'Renewable Energy Installation', 'Battery Storage Installation',
+    'Fire Alarm Installation (BS 5839)', 'Fire Detection & Alarm Systems',
+    'Emergency Lighting (BS 5266)', 'Fire Safety Systems Maintenance',
+    'Security Systems Installation', 'CCTV Installation & Maintenance', 'Access Control Systems',
+    'Data Cabling Installation', 'Structured Cabling Systems', 'Fibre Optic Installation',
+    'Smart Home Installation', 'Home Automation Systems', 'KNX/EIB Systems',
+    'PAT Testing Certification', 'Portable Appliance Testing', 'In-Service Inspection',
+    'COMPEX Ex Certification', 'ATEX Certification', 'Hazardous Area Installation',
+    'Confined Space Training', 'Working at Height Certification', 'IPAF Certification',
+    'PASMA Certification', 'SSSTS Site Safety', 'SMSTS Site Management',
+    'CSCS Card (Various Categories)', 'CCNSG Safety Passport', 'ECITB Safety Passport',
+    'First Aid at Work', 'Emergency First Aid', 'CPR & AED Training',
+    'Manual Handling Training', 'Asbestos Awareness', 'COSHH Training',
+    'BEng Electrical Engineering', 'BEng Electronic Engineering', 'MEng Electrical Engineering',
+    'MSc Electrical Engineering', 'Electrical Engineering Degree', 'Electronic Engineering Degree',
+    'Apprenticeship in Electrical Engineering', 'Advanced Apprenticeship', 'Higher Apprenticeship',
+    'Degree Apprenticeship in Engineering', 'Electrical Installation Apprenticeship'
   ];
 
   const addWorkExperience = () => {
