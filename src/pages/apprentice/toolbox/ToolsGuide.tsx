@@ -39,9 +39,9 @@ const ToolsGuide = () => {
   ];
 
   return (
-    <div className="w-full min-h-screen space-y-4 sm:space-y-6 animate-fade-in">
+    <div className="w-full min-h-screen bg-elec-dark space-y-4 sm:space-y-6 animate-fade-in">
       <div className="flex flex-col items-center justify-center text-center space-y-4 px-4 sm:px-6 py-4 sm:py-6">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Professional Tool Guide</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Professional Tool Guide</h1>
         <p className="text-muted-foreground text-sm sm:text-base max-w-2xl leading-relaxed">
           Comprehensive guidance for building your professional electrician toolkit - from essential tools to smart purchasing decisions and quality assessment
         </p>
@@ -66,7 +66,7 @@ const ToolsGuide = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 sm:gap-4 sm:px-4">
           {toolCategories.map((category, index) => (
-            <div key={index} className="border-2 border-elec-yellow/30 bg-elec-dark/80 p-6 text-center hover:bg-elec-dark/90 transition-all duration-300">
+            <div key={index} className="border-2 border-elec-yellow/30 bg-elec-gray p-6 text-center hover:bg-elec-card transition-all duration-300">
               <h4 className="font-bold text-white mb-3 text-lg">{category.name}</h4>
               <div className="text-base text-elec-yellow mb-4 font-medium">{category.count}</div>
               <Badge 
