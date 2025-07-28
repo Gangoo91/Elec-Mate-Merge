@@ -180,38 +180,38 @@ const ComplianceDashboardTab = () => {
 
       {/* Progress Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="bg-elec-gray border-elec-gray/40">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-elec-light">Overall Progress</CardTitle>
-            <TrendingUp className="h-4 w-4 text-elec-yellow" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-elec-yellow">{overallProgress.toFixed(0)}%</div>
-            <Progress value={overallProgress} className="mt-2 bg-elec-card" />
-          </CardContent>
-        </Card>
-
-        <Card className="bg-elec-gray border-elec-gray/40">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-elec-light">Completed Goals</CardTitle>
-            <CheckCircle className="h-4 w-4 text-green-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-400">{completedGoals}</div>
-            <p className="text-xs text-elec-light/70">out of {goals.length} total</p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-elec-gray border-elec-gray/40">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-elec-light">Active Goals</CardTitle>
-            <Target className="h-4 w-4 text-blue-400" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-blue-400">
-              {goals.filter(g => g.status === 'in_progress').length}
+        <Card className="bg-elec-gray border-elec-yellow/20">
+          <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[120px]">
+            <TrendingUp className="h-6 w-6 text-elec-yellow mb-3" />
+            <div className="space-y-1">
+              <div className="text-3xl font-bold text-elec-yellow">{overallProgress.toFixed(0)}%</div>
+              <p className="text-xs text-elec-light/70 font-medium">Overall Progress</p>
+              <Progress value={overallProgress} className="mt-2 bg-elec-card h-2 w-20" />
             </div>
-            <p className="text-xs text-elec-light/70">in progress</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-elec-gray border-elec-yellow/20">
+          <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[120px]">
+            <CheckCircle className="h-6 w-6 text-green-400 mb-3" />
+            <div className="space-y-1">
+              <div className="text-3xl font-bold text-green-400">{completedGoals}</div>
+              <p className="text-xs text-elec-light/70 font-medium">Completed Goals</p>
+              <p className="text-xs text-elec-light/60">out of {goals.length} total</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-elec-gray border-elec-yellow/20">
+          <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[120px]">
+            <Target className="h-6 w-6 text-blue-400 mb-3" />
+            <div className="space-y-1">
+              <div className="text-3xl font-bold text-blue-400">
+                {goals.filter(g => g.status === 'in_progress').length}
+              </div>
+              <p className="text-xs text-elec-light/70 font-medium">Active Goals</p>
+              <p className="text-xs text-elec-light/60">in progress</p>
+            </div>
           </CardContent>
         </Card>
       </div>
