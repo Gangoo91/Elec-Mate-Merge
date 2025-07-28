@@ -327,8 +327,8 @@ const EvidenceAssessmentTab = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card className="border-elec-yellow/20 bg-elec-dark">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <FileText className="h-5 w-5 text-elec-yellow" />
+            <div className="flex flex-col items-center text-center space-y-2">
+              <FileText className="h-6 w-6 text-elec-yellow" />
               <div>
                 <p className="text-sm text-muted-foreground">Total Evidence</p>
                 <p className="text-2xl font-bold text-elec-yellow">{evidenceItems.length}</p>
@@ -338,8 +338,8 @@ const EvidenceAssessmentTab = () => {
         </Card>
         <Card className="border-elec-yellow/20 bg-elec-dark">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-green-400" />
+            <div className="flex flex-col items-center text-center space-y-2">
+              <CheckCircle className="h-6 w-6 text-green-400" />
               <div>
                 <p className="text-sm text-muted-foreground">Portfolio Linked</p>
                 <p className="text-2xl font-bold text-green-400">
@@ -351,8 +351,8 @@ const EvidenceAssessmentTab = () => {
         </Card>
         <Card className="border-elec-yellow/20 bg-elec-dark">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-purple-400" />
+            <div className="flex flex-col items-center text-center space-y-2">
+              <Clock className="h-6 w-6 text-purple-400" />
               <div>
                 <p className="text-sm text-muted-foreground">Total Hours</p>
                 <p className="text-2xl font-bold text-purple-400">
@@ -364,8 +364,8 @@ const EvidenceAssessmentTab = () => {
         </Card>
         <Card className="border-elec-yellow/20 bg-elec-dark">
           <CardContent className="p-4">
-            <div className="flex items-center gap-2">
-              <Tag className="h-5 w-5 text-blue-400" />
+            <div className="flex flex-col items-center text-center space-y-2">
+              <Tag className="h-6 w-6 text-blue-400" />
               <div>
                 <p className="text-sm text-muted-foreground">Unique Skills</p>
                 <p className="text-2xl font-bold text-blue-400">
