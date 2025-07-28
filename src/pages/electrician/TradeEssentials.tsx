@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { MessageSquare, Briefcase, Package, Wrench, Shield, PoundSterling, ChevronLeft, Briefcase as BriefcaseIcon } from "lucide-react";
+import { MessageSquare, Briefcase, Package, Wrench, Shield, PoundSterling, ChevronLeft } from "lucide-react";
 
 const TradeEssentials = () => {
   // Main essential services - 2x2 grid
@@ -54,7 +54,7 @@ const TradeEssentials = () => {
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-4 md:mb-6">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-center sm:text-left flex items-center gap-3 justify-center sm:justify-start">
-            <BriefcaseIcon className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
+            <Briefcase className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
             Trade Essentials
           </h1>
           <p className="text-muted-foreground text-center sm:text-left">
