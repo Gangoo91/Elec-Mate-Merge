@@ -39,50 +39,68 @@ const QualificationCompliance = () => {
   const notStartedCategories = compliance.filter(c => c.compliance_percentage === 0).length;
 
   return (
-    <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            Overall Progress
-            <Badge variant={overallProgress >= 100 ? "default" : "secondary"}>
-              {overallProgress}%
-            </Badge>
-          </CardTitle>
-          <CardDescription>
-            {userSelection.qualification?.title} • {userSelection.qualification?.awarding_body}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Progress value={overallProgress} className="w-full" />
-          
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="space-y-1">
-              <div className="flex items-center justify-center gap-1">
-                <CheckCircle className="h-4 w-4 text-green-600" />
-                <span className="font-semibold">{completedCategories}</span>
+    <div className="space-y-6 bg-elec-gray min-h-screen p-4">
+      {/* Main Progress Card - Mobile Optimized */}
+      <Card className="border-elec-yellow/20 bg-elec-dark overflow-hidden">
+        <div className="bg-gradient-to-r from-elec-yellow/20 to-purple-500/20 p-1">
+          <div className="bg-elec-dark rounded-sm">
+            <CardContent className="p-6 text-center">
+              {/* Percentage at the top */}
+              <div className="text-6xl font-bold text-elec-yellow mb-2">
+                {overallProgress}%
               </div>
-              <p className="text-xs text-muted-foreground">Completed</p>
-            </div>
-            <div className="space-y-1">
-              <div className="flex items-center justify-center gap-1">
-                <Clock className="h-4 w-4 text-yellow-600" />
-                <span className="font-semibold">{inProgressCategories}</span>
+              
+              {/* Title and description */}
+              <div className="space-y-2 mb-6">
+                <h2 className="text-xl font-bold text-elec-light">Overall Progress</h2>
+                <p className="text-sm text-elec-light/80 max-w-md mx-auto leading-relaxed">
+                  {userSelection.qualification?.title}
+                </p>
+                <p className="text-xs text-elec-light/60">
+                  {userSelection.qualification?.awarding_body}
+                </p>
               </div>
-              <p className="text-xs text-muted-foreground">In Progress</p>
-            </div>
-            <div className="space-y-1">
-              <div className="flex items-center justify-center gap-1">
-                <AlertCircle className="h-4 w-4 text-gray-400" />
-                <span className="font-semibold">{notStartedCategories}</span>
+              
+              {/* Progress bar */}
+              <div className="mb-6">
+                <Progress 
+                  value={overallProgress} 
+                  className="w-full h-3 bg-elec-card"
+                />
               </div>
-              <p className="text-xs text-muted-foreground">Not Started</p>
-            </div>
+              
+              {/* Stats grid */}
+              <div className="grid grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-center">
+                    <CheckCircle className="h-6 w-6 text-green-400" />
+                  </div>
+                  <div className="text-2xl font-bold text-green-400">{completedCategories}</div>
+                  <p className="text-xs text-elec-light/70">Completed</p>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-center">
+                    <Clock className="h-6 w-6 text-orange-400" />
+                  </div>
+                  <div className="text-2xl font-bold text-orange-400">{inProgressCategories}</div>
+                  <p className="text-xs text-elec-light/70">In Progress</p>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-center">
+                    <AlertCircle className="h-6 w-6 text-red-400" />
+                  </div>
+                  <div className="text-2xl font-bold text-red-400">{notStartedCategories}</div>
+                  <p className="text-xs text-elec-light/70">Not Started</p>
+                </div>
+              </div>
+            </CardContent>
           </div>
-        </CardContent>
+        </div>
       </Card>
 
+      {/* Category Progress Section */}
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Category Progress</h3>
+        <h3 className="text-lg font-semibold text-elec-light text-center">Category Progress</h3>
         <div className="grid gap-4">
           {compliance.map((complianceRecord) => {
             const category = categories.find(c => c.id === complianceRecord.category_id);
@@ -90,59 +108,72 @@ const QualificationCompliance = () => {
 
             const getStatusIcon = () => {
               if (complianceRecord.compliance_percentage >= 100) {
-                return <CheckCircle className="h-5 w-5 text-green-600" />;
+                return <CheckCircle className="h-6 w-6 text-green-400" />;
               } else if (complianceRecord.compliance_percentage > 0) {
-                return <Clock className="h-5 w-5 text-yellow-600" />;
+                return <Clock className="h-6 w-6 text-orange-400" />;
               } else {
-                return <AlertCircle className="h-5 w-5 text-gray-400" />;
+                return <AlertCircle className="h-6 w-6 text-red-400" />;
               }
             };
 
             const getStatusColor = () => {
-              if (complianceRecord.compliance_percentage >= 100) return "default";
-              if (complianceRecord.compliance_percentage > 0) return "secondary";
-              return "outline";
+              if (complianceRecord.compliance_percentage >= 100) return "bg-green-400/20 text-green-400 border-green-400/50";
+              if (complianceRecord.compliance_percentage > 0) return "bg-orange-400/20 text-orange-400 border-orange-400/50";
+              return "bg-red-400/20 text-red-400 border-red-400/50";
             };
 
             return (
-              <Card key={complianceRecord.id}>
+              <Card key={complianceRecord.id} className="border-elec-yellow/20 bg-elec-dark">
                 <CardContent className="p-4">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-2">
-                      {getStatusIcon()}
-                      <h4 className="font-medium">{category.name}</h4>
-                    </div>
-                    <Badge variant={getStatusColor()}>
+                  {/* Mobile-optimized header with percentage at top */}
+                  <div className="text-center mb-4">
+                    <div className="text-3xl font-bold text-elec-yellow mb-2">
                       {complianceRecord.compliance_percentage}%
+                    </div>
+                    <div className="flex items-center justify-center gap-2 mb-2">
+                      {getStatusIcon()}
+                      <h4 className="font-semibold text-elec-light">{category.name}</h4>
+                    </div>
+                    <Badge className={`${getStatusColor()} border`}>
+                      {complianceRecord.compliance_percentage >= 100 ? 'Complete' : 
+                       complianceRecord.compliance_percentage > 0 ? 'In Progress' : 'Not Started'}
                     </Badge>
                   </div>
                   
-                  <p className="text-sm text-muted-foreground mb-3">
+                  <p className="text-sm text-elec-light/70 mb-4 text-center leading-relaxed">
                     {category.description}
                   </p>
                   
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span>Portfolio Entries</span>
-                      <span>
+                  {/* Progress section */}
+                  <div className="space-y-3">
+                    <div className="flex justify-between text-sm text-elec-light">
+                      <span className="font-medium">Portfolio Entries</span>
+                      <span className="font-bold">
                         {complianceRecord.completed_entries} / {complianceRecord.required_entries}
                       </span>
                     </div>
                     <Progress 
                       value={(complianceRecord.completed_entries / complianceRecord.required_entries) * 100} 
-                      className="w-full" 
+                      className="w-full h-3 bg-elec-card"
                     />
                   </div>
 
+                  {/* Learning outcomes */}
                   {category.learning_outcomes && category.learning_outcomes.length > 0 && (
-                    <div className="mt-3">
-                      <p className="text-xs font-medium text-muted-foreground mb-1">Learning Outcomes:</p>
-                      <ul className="text-xs text-muted-foreground space-y-1">
+                    <div className="mt-4 pt-4 border-t border-elec-yellow/20">
+                      <p className="text-xs font-medium text-elec-light/70 mb-2 text-center">Learning Outcomes:</p>
+                      <ul className="text-xs text-elec-light/60 space-y-1">
                         {category.learning_outcomes.slice(0, 2).map((outcome, index) => (
-                          <li key={index}>• {outcome}</li>
+                          <li key={index} className="flex items-start gap-2">
+                            <span className="text-elec-yellow mt-1">•</span>
+                            <span>{outcome}</span>
+                          </li>
                         ))}
                         {category.learning_outcomes.length > 2 && (
-                          <li>• And {category.learning_outcomes.length - 2} more...</li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-elec-yellow mt-1">•</span>
+                            <span>And {category.learning_outcomes.length - 2} more...</span>
+                          </li>
                         )}
                       </ul>
                     </div>
