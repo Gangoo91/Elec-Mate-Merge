@@ -16,7 +16,7 @@ const ToolsGuide = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-gray to-elec-dark">
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-6 animate-fade-in max-w-6xl">
+      <div className="container mx-auto px-2 sm:px-6 py-4 sm:py-6 space-y-6 animate-fade-in max-w-7xl">
         {/* Header */}
         <div className="space-y-4">
           <div className="flex justify-start">
@@ -32,11 +32,11 @@ const ToolsGuide = () => {
             </Link>
           </div>
           
-          <div className="text-center space-y-3 px-2">
+          <div className="text-center space-y-3">
             <h1 className={`font-bold tracking-tight text-elec-yellow leading-tight ${isMobile ? 'text-2xl' : 'text-4xl'}`}>
               Professional Tool Guide
             </h1>
-            <p className={`text-muted-foreground leading-relaxed max-w-3xl mx-auto ${isMobile ? 'text-sm px-1' : 'text-base'}`}>
+            <p className={`text-muted-foreground leading-relaxed max-w-4xl mx-auto ${isMobile ? 'text-sm' : 'text-base'}`}>
               Comprehensive guidance for building your professional electrician toolkit in the UK. 
               From essential tools to smart purchasing decisions, quality assessment, and supplier recommendations.
             </p>

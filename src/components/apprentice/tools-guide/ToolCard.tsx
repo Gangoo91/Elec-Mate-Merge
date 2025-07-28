@@ -33,7 +33,7 @@ const ToolCard = ({ title, icon, description, items, apprenticeTip, ukConsiderat
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray h-full">
-      <CardHeader className="text-center">
+      <CardHeader className="text-center px-3 py-4">
         <div className="flex flex-col items-center gap-3 mb-2">
           {icon}
           <CardTitle className="text-elec-yellow text-lg">{title}</CardTitle>
@@ -41,10 +41,10 @@ const ToolCard = ({ title, icon, description, items, apprenticeTip, ukConsiderat
         <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
       </CardHeader>
       
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 px-3 pb-4">
         <div className="space-y-3">
           {items.map((item, index) => (
-            <div key={index} className="border border-elec-yellow/30 rounded-lg p-3">
+            <div key={index} className="border border-elec-yellow/30 rounded-lg p-4">
               <div className="flex justify-center mb-2">
                 <Badge className={getPriorityColor(item.priority)} variant="outline">
                   {item.priority}
