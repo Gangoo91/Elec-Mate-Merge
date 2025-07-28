@@ -1,14 +1,7 @@
 
 import React from "react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 
 interface JobPaginationProps {
   currentPage: number;
@@ -26,14 +19,17 @@ const JobPagination: React.FC<JobPaginationProps> = ({
   }
 
   return (
-    <Pagination className="mt-8">
-      <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious 
-            onClick={() => currentPage > 1 && paginate(currentPage - 1)}
-            className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"} 
-          />
-        </PaginationItem>
+    <nav className="mx-auto flex w-full justify-center mt-8">
+      <div className="flex flex-row items-center gap-1">
+        <Button
+          variant="ghost"
+          onClick={() => currentPage > 1 && paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="gap-1 pl-2.5"
+        >
+          <ChevronLeft className="h-4 w-4" />
+          <span>Previous</span>
+        </Button>
         
         {Array.from({ length: totalPages }).map((_, index) => {
           const pageNum = index + 1;
@@ -45,37 +41,46 @@ const JobPagination: React.FC<JobPaginationProps> = ({
             (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
           ) {
             return (
-              <PaginationItem key={pageNum}>
-                <PaginationLink 
-                  isActive={currentPage === pageNum}
-                  onClick={() => paginate(pageNum)}
-                >
-                  {pageNum}
-                </PaginationLink>
-              </PaginationItem>
+              <Button
+                key={pageNum}
+                variant={currentPage === pageNum ? "outline" : "ghost"}
+                size="icon"
+                onClick={() => paginate(pageNum)}
+                aria-current={currentPage === pageNum ? "page" : undefined}
+              >
+                {pageNum}
+              </Button>
             );
           }
           
           // Show ellipsis for gaps
           if (pageNum === currentPage - 2 || pageNum === currentPage + 2) {
             return (
-              <PaginationItem key={`ellipsis-${pageNum}`}>
-                <PaginationEllipsis />
-              </PaginationItem>
+              <span
+                key={`ellipsis-${pageNum}`}
+                aria-hidden
+                className="flex h-9 w-9 items-center justify-center"
+              >
+                <MoreHorizontal className="h-4 w-4" />
+                <span className="sr-only">More pages</span>
+              </span>
             );
           }
           
           return null;
         })}
         
-        <PaginationItem>
-          <PaginationNext 
-            onClick={() => currentPage < totalPages && paginate(currentPage + 1)}
-            className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"} 
-          />
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+        <Button
+          variant="ghost"
+          onClick={() => currentPage < totalPages && paginate(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="gap-1 pr-2.5"
+        >
+          <span>Next</span>
+          <ChevronRight className="h-4 w-4" />
+        </Button>
+      </div>
+    </nav>
   );
 };
 
