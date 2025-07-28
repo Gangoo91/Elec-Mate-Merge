@@ -36,6 +36,8 @@ export interface PortfolioCategory {
   color: string;
   requiredEntries: number;
   completedEntries: number;
+  groupTheme?: string;
+  competencyLevel?: 'foundation' | 'intermediate' | 'advanced';
 }
 
 export interface PortfolioAnalytics {
@@ -56,11 +58,31 @@ export interface PortfolioActivity {
   date: string;
 }
 
+export interface PortfolioGroup {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  color: string;
+  categories: PortfolioCategory[];
+  totalRequired: number;
+  totalCompleted: number;
+  progressPercentage: number;
+  competencyLevel: 'foundation' | 'intermediate' | 'advanced';
+}
+
+export interface GroupedPortfolioAnalytics extends PortfolioAnalytics {
+  groupsProgress: { [key: string]: number };
+  competencyLevelProgress: { [key: string]: number };
+  groupedActivity: { [key: string]: PortfolioActivity[] };
+}
+
 export interface ExportOptions {
   format: 'pdf' | 'word' | 'html';
   includeEvidence: boolean;
   includeReflections: boolean;
   categories: string[];
+  groups?: string[];
   dateRange?: {
     from: string;
     to: string;

@@ -20,15 +20,45 @@ import PortfolioEntryForm from "./PortfolioEntryForm";
 import PortfolioDocumentationContent from "./PortfolioDocumentationContent";
 import DigitalToolsIntegration from "./DigitalToolsIntegration";
 import IndustrySpecificSections from "./IndustrySpecificSections";
+import GroupedPortfolioOverview from "../../portfolio/GroupedPortfolioOverview";
+import CompetencyLevelView from "../../portfolio/CompetencyLevelView";
+import GroupedEntriesList from "../../portfolio/GroupedEntriesList";
+import { PortfolioEntry } from "@/types/portfolio";
 
 const PortfolioManager = () => {
-  const { entries, categories, analytics, isLoading, addEntry, updateEntry, deleteEntry } = usePortfolioData();
+  const { 
+    entries, 
+    categories, 
+    groups, 
+    analytics, 
+    isLoading, 
+    addEntry, 
+    updateEntry, 
+    deleteEntry,
+    getEntriesByGroup,
+    getEntriesByCompetencyLevel
+  } = usePortfolioData();
   const [showAddForm, setShowAddForm] = useState(false);
   const [activeTab, setActiveTab] = useState("overview");
+  const [viewingEntry, setViewingEntry] = useState<PortfolioEntry | null>(null);
+  const [editingEntry, setEditingEntry] = useState<PortfolioEntry | null>(null);
 
   const handleAddEntry = (entryData: any) => {
     addEntry(entryData);
     setShowAddForm(false);
+  };
+
+  const handleViewEntry = (entry: PortfolioEntry) => {
+    setViewingEntry(entry);
+  };
+
+  const handleEditEntry = (entry: PortfolioEntry) => {
+    setEditingEntry(entry);
+  };
+
+  const handleUpdateEntry = (entryId: string, updates: Partial<PortfolioEntry>) => {
+    updateEntry(entryId, updates);
+    setEditingEntry(null);
   };
 
   if (isLoading) {
@@ -109,13 +139,43 @@ const PortfolioManager = () => {
         tabs={[
           {
             value: "overview",
-            label: "Overview",
+            label: "Grouped Overview",
             icon: BarChart3,
-            content: <PortfolioCategoriesOverview categories={categories} entries={entries} />
+            content: (
+              <GroupedPortfolioOverview 
+                groups={groups}
+                getEntriesByGroup={getEntriesByGroup}
+              />
+            )
+          },
+          {
+            value: "competency",
+            label: "Competency Levels",
+            icon: Target,
+            content: (
+              <CompetencyLevelView 
+                categories={categories}
+                getEntriesByCompetencyLevel={getEntriesByCompetencyLevel}
+              />
+            )
           },
           {
             value: "entries",
-            label: `Entries (${entries.length})`,
+            label: `Grouped Entries (${entries.length})`,
+            icon: FileText,
+            content: (
+              <GroupedEntriesList 
+                groups={groups}
+                getEntriesByGroup={getEntriesByGroup}
+                onViewEntry={handleViewEntry}
+                onEditEntry={handleEditEntry}
+                onDeleteEntry={deleteEntry}
+              />
+            )
+          },
+          {
+            value: "classic-entries",
+            label: "Classic View",
             icon: FileText,
             content: (
               <PortfolioEntriesList 
