@@ -36,7 +36,7 @@ const MetricCard = ({
 const LiveTrackingMetrics = () => {
   const { totalTime, isLoading: timeLoading } = useTimeEntries();
   const { otjGoal, getRemainingHours, isLoading: complianceLoading } = useComplianceTracking();
-  const { entries, analytics, isLoading: portfolioLoading } = useUltraFastPortfolio();
+  const { entries, analytics, categories, isLoading: portfolioLoading } = useUltraFastPortfolio();
 
   if (timeLoading || complianceLoading || portfolioLoading) {
     return (
@@ -55,14 +55,14 @@ const LiveTrackingMetrics = () => {
     );
   }
 
-  // Portfolio metrics
-  const totalPortfolioEntries = analytics?.totalEntries || 0;
+  // Portfolio metrics - sum up all required entries from qualification categories
+  const totalRequiredEntries = categories.reduce((sum, category) => sum + (category.requiredEntries || 0), 0);
   const completedPortfolioEntries = analytics?.completedEntries || 0;
-  const portfolioProgress = totalPortfolioEntries > 0 ? Math.round((completedPortfolioEntries / totalPortfolioEntries) * 100) : 0;
+  const portfolioProgress = totalRequiredEntries > 0 ? Math.round((completedPortfolioEntries / totalRequiredEntries) * 100) : 0;
 
-  // Compliance metrics
+  // Compliance metrics - using 400h as standard 20% OTJ requirement
   const currentHours = otjGoal?.current_hours || 0;
-  const targetHours = otjGoal?.target_hours || 800; // Default 20% of 4000 hours
+  const targetHours = otjGoal?.target_hours || 400; // 20% of 2000-hour work year
   const remainingHours = getRemainingHours();
   const complianceProgress = Math.round((currentHours / targetHours) * 100);
   
@@ -71,9 +71,9 @@ const LiveTrackingMetrics = () => {
       <MetricCard
         icon={Target}
         label="Required Entries"
-        value={totalPortfolioEntries}
+        value={totalRequiredEntries}
         color="text-elec-yellow"
-        subText="Portfolio items needed"
+        subText="Total portfolio items needed"
       />
       <MetricCard
         icon={FileText}
@@ -94,7 +94,7 @@ const LiveTrackingMetrics = () => {
         label="Hours Progress"
         value={`${Math.round(currentHours)}h (${complianceProgress}%)`}
         color="text-purple-400"
-        subText="Completed learning hours"
+        subText={`Of ${targetHours}h annual target`}
       />
     </div>
   );
