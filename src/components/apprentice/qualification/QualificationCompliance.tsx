@@ -41,7 +41,7 @@ const QualificationCompliance = () => {
   return (
     <div className="space-y-6 bg-elec-gray min-h-screen p-4">
       {/* Main Progress Card - Simplified */}
-      <Card className="border-elec-yellow/20 bg-elec-dark">
+      <Card className="border-elec-yellow/20 bg-elec-gray">
         <CardContent className="p-6 text-center">
           {/* Smaller percentage at the top */}
           <div className="text-3xl font-bold text-elec-yellow mb-3">
@@ -107,7 +107,7 @@ const QualificationCompliance = () => {
             };
 
             return (
-              <Card key={complianceRecord.id} className="border-elec-yellow/20 bg-elec-dark">
+              <Card key={complianceRecord.id} className="border-elec-yellow/20 bg-elec-gray">
                 <CardContent className="p-6">
                   {/* Percentage at the top - centered */}
                   <div className="text-center mb-4">
