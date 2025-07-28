@@ -4,7 +4,7 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { corsHeaders } from "../_shared/cors.ts";
 
 // Get the Reed API key from environment variables
-const reedApiKey = Deno.env.get('REEDJOB API');
+const reedApiKey = Deno.env.get('REED_API_KEY');
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -18,7 +18,7 @@ serve(async (req) => {
     if (!reedApiKey) {
       console.error('Reed API key is not configured or not accessible');
       return new Response(
-        JSON.stringify({ error: "Reed API key is not configured. Please add the 'REEDJOB API' key to your Supabase secrets." }),
+        JSON.stringify({ error: "Reed API key is not configured. Please add the 'REED_API_KEY' to your Supabase secrets." }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }

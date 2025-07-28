@@ -18,6 +18,8 @@ import { toast } from "@/hooks/use-toast";
 import { formatDistanceToNow } from "date-fns";
 import { LocationService } from "@/services/locationService";
 import EnhancedJobCard from "./EnhancedJobCard";
+import { supabase } from "@/integrations/supabase/client";
+import SearchError from "./SearchError";
 
 interface Job {
   id: string;
@@ -37,6 +39,7 @@ const BasicJobSearch = () => {
   const [location, setLocation] = useState("Cumbria");
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [locationSuggestions, setLocationSuggestions] = useState<string[]>([]);
   const [showLocationSuggestions, setShowLocationSuggestions] = useState(false);
 
@@ -95,31 +98,24 @@ const BasicJobSearch = () => {
 
     console.log('🔍 Starting basic job search:', { query, location });
     setLoading(true);
+    setError(null);
     setJobs([]);
 
     try {
-      const response = await fetch('https://jtwygbeceundfgnkirof.supabase.co/functions/v1/basic-job-search', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8`
-        },
-        body: JSON.stringify({
+      const { data, error } = await supabase.functions.invoke('basic-job-search', {
+        body: {
           query: searchQuery,
           location: location.trim() || 'UK'
-        }),
+        }
       });
 
-      console.log('📡 API Response status:', response.status);
-
-      if (!response.ok) {
-        throw new Error(`Search failed: ${response.status}`);
+      if (error) {
+        throw new Error(error.message || 'Failed to fetch jobs');
       }
 
-      const data = await response.json();
       console.log('📊 Search results:', data);
 
-      if (data.error) {
+      if (data?.error) {
         throw new Error(data.error);
       }
 
@@ -148,9 +144,11 @@ const BasicJobSearch = () => {
 
     } catch (error) {
       console.error('❌ Search error:', error);
+      const errorMessage = error instanceof Error ? error.message : "Please try again";
+      setError(errorMessage);
       toast({
         title: "Search Failed",
-        description: error instanceof Error ? error.message : "Please try again",
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
@@ -240,6 +238,9 @@ const BasicJobSearch = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Error Display */}
+      {error && <SearchError error={error} onRetry={() => handleSearch()} />}
 
       {/* Results */}
       {jobs.length > 0 && (
