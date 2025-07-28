@@ -80,12 +80,6 @@ const CompetencyLevelView: React.FC<CompetencyLevelViewProps> = ({
                     <IconComponent className={`h-8 w-8 text-${level.color}-600`} />
                   </div>
                   <div className="space-y-1">
-                    <Badge 
-                      variant="secondary" 
-                      className={`text-xs px-3 py-1 bg-${level.color}-100 text-${level.color}-700 border-${level.color}-200`}
-                    >
-                      {level.level}
-                    </Badge>
                     <CardTitle className="text-xl font-bold text-elec-light">{level.name}</CardTitle>
                     <CardDescription className="text-sm text-elec-light/70 max-w-xs mx-auto leading-relaxed">
                       {level.description}
