@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Upload, Filter, Eye, Trash2, FileText, Image, Film, Plus, Clock, Tag, User, CheckCircle, Target, TrendingUp, ExternalLink } from "lucide-react";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Upload, Filter, Eye, Trash2, ExternalLink, FileText, Image, Film, Plus, Clock, Tag, User, CheckCircle } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useTrainingEvidenceDB, type TrainingEvidenceData } from "@/hooks/training-evidence/useTrainingEvidenceDB";
 import { format } from "date-fns";
 
@@ -132,106 +133,101 @@ const EvidenceAssessmentTab = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 bg-elec-gray min-h-screen p-4 sm:p-6">
       {/* Header Section */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
-          <h3 className="text-lg font-semibold">Evidence Assessment & Management</h3>
-          <p className="text-sm text-muted-foreground">
+      <div className="text-center space-y-4">
+        <div className="space-y-2">
+          <h2 className="text-2xl sm:text-3xl font-bold text-elec-light">Evidence Assessment & Management</h2>
+          <p className="text-elec-light/70 max-w-2xl mx-auto">
             Upload, manage, and assess your training evidence with smart categorisation
           </p>
         </div>
         
         <Dialog open={showUploadDialog} onOpenChange={setShowUploadDialog}>
           <DialogTrigger asChild>
-            <Button className="gap-2">
+            <Button 
+              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 gap-2" 
+              size="lg"
+            >
               <Upload className="h-4 w-4" />
               Upload Evidence
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl">
+          <DialogContent className="max-w-2xl bg-elec-gray border-elec-yellow/20">
             <DialogHeader>
-              <DialogTitle>Upload Training Evidence</DialogTitle>
+              <DialogTitle className="text-elec-light">Upload Training Evidence</DialogTitle>
             </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="title">Evidence Title *</Label>
-                  <Input
-                    id="title"
-                    value={formData.title}
-                    onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                    placeholder="Describe what this evidence shows"
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="evidence_type">Evidence Type *</Label>
-                  <Select value={formData.evidence_type} onValueChange={(value) => setFormData(prev => ({ ...prev, evidence_type: value }))}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select evidence type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {evidenceTypes.map((type) => (
-                        <SelectItem key={type} value={type}>{type}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <MobileInputWrapper
+                  label="Evidence Title"
+                  placeholder="Describe what this evidence shows"
+                  value={formData.title}
+                  onChange={(value) => setFormData(prev => ({ ...prev, title: value }))}
+                  icon={<FileText className="h-4 w-4" />}
+                />
+                <MobileSelectWrapper
+                  label="Evidence Type"
+                  placeholder="Select evidence type"
+                  value={formData.evidence_type}
+                  onValueChange={(value) => setFormData(prev => ({ ...prev, evidence_type: value }))}
+                  options={evidenceTypes.map(type => ({ value: type, label: type }))}
+                />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
+                <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                  <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                  Description
+                </Label>
                 <Textarea
-                  id="description"
                   value={formData.description}
                   onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
                   placeholder="Provide details about what was learned or achieved"
                   rows={3}
+                  className="bg-elec-card border-2 border-elec-gray/50 text-elec-light placeholder:text-elec-light/60"
                 />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="date_achieved">Date Achieved</Label>
-                  <Input
-                    id="date_achieved"
-                    type="date"
-                    value={formData.date_achieved}
-                    onChange={(e) => setFormData(prev => ({ ...prev, date_achieved: e.target.value }))}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="time_spent">Time Spent (minutes)</Label>
-                  <Input
-                    id="time_spent"
-                    type="number"
-                    value={formData.time_spent}
-                    onChange={(e) => setFormData(prev => ({ ...prev, time_spent: parseInt(e.target.value) || 0 }))}
-                    min="0"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="witness_name">Witness/Supervisor</Label>
-                  <Input
-                    id="witness_name"
-                    value={formData.witness_name}
-                    onChange={(e) => setFormData(prev => ({ ...prev, witness_name: e.target.value }))}
-                    placeholder="Optional"
-                  />
-                </div>
+                <MobileInputWrapper
+                  label="Date Achieved"
+                  type="date"
+                  value={formData.date_achieved}
+                  onChange={(value) => setFormData(prev => ({ ...prev, date_achieved: value }))}
+                />
+                <MobileInputWrapper
+                  label="Time Spent"
+                  type="number"
+                  value={formData.time_spent}
+                  onChange={(value) => setFormData(prev => ({ ...prev, time_spent: parseInt(value) || 0 }))}
+                  min="0"
+                  unit="mins"
+                  icon={<Clock className="h-4 w-4" />}
+                />
+                <MobileInputWrapper
+                  label="Witness/Supervisor"
+                  placeholder="Optional"
+                  value={formData.witness_name}
+                  onChange={(value) => setFormData(prev => ({ ...prev, witness_name: value }))}
+                  icon={<User className="h-4 w-4" />}
+                />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="file">Upload File</Label>
+                <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                  <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                  Upload File
+                </Label>
                 <Input
-                  id="file"
                   type="file"
                   onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
                   accept="image/*,video/*,.pdf,.doc,.docx,.txt"
+                  className="bg-elec-card border-2 border-elec-gray/50 text-elec-light file:bg-elec-yellow file:text-elec-dark file:border-0 file:rounded-md file:px-3 file:py-1"
                 />
                 {selectedFile && (
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-xs text-elec-light/70 flex items-center gap-1">
+                    <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
                     Selected: {selectedFile.name} ({Math.round(selectedFile.size / 1024)}KB)
                   </p>
                 )}
@@ -306,77 +302,97 @@ const EvidenceAssessmentTab = () => {
 
       {/* Filter and Search */}
       <div className="flex flex-col sm:flex-row gap-4">
-        <div className="flex-1">
-          <Input
-            placeholder="Search evidence by title, description, or tags..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="bg-elec-dark"
-          />
-        </div>
-        <Select value={selectedFilter} onValueChange={setSelectedFilter}>
-          <SelectTrigger className="w-full sm:w-48 bg-elec-dark">
-            <Filter className="h-4 w-4 mr-2" />
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Evidence</SelectItem>
-            <SelectItem value="workshop">Workshop</SelectItem>
-            <SelectItem value="site">Site Visit</SelectItem>
-            <SelectItem value="college">College</SelectItem>
-            <SelectItem value="online">Online</SelectItem>
-            <SelectItem value="assessment">Assessment</SelectItem>
-          </SelectContent>
-        </Select>
+        <MobileInputWrapper
+          placeholder="Search evidence by title, description, or tags..."
+          value={searchTerm}
+          onChange={setSearchTerm}
+          icon={<Filter className="h-4 w-4" />}
+        />
+        <MobileSelectWrapper
+          placeholder="Filter evidence"
+          value={selectedFilter}
+          onValueChange={setSelectedFilter}
+          options={[
+            { value: "all", label: "All Evidence" },
+            { value: "workshop", label: "Workshop" },
+            { value: "site", label: "Site Visit" },
+            { value: "college", label: "College" },
+            { value: "online", label: "Online" },
+            { value: "assessment", label: "Assessment" }
+          ]}
+        />
       </div>
 
       {/* Summary Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="bg-elec-dark border-elec-slate">
+        <Card className="border-elec-yellow/20 bg-elec-dark">
           <CardContent className="p-4">
-            <div className="text-2xl font-bold">{evidenceItems.length}</div>
-            <p className="text-sm text-muted-foreground">Total Evidence</p>
+            <div className="flex items-center gap-2">
+              <FileText className="h-5 w-5 text-elec-yellow" />
+              <div>
+                <p className="text-sm text-muted-foreground">Total Evidence</p>
+                <p className="text-2xl font-bold text-elec-yellow">{evidenceItems.length}</p>
+              </div>
+            </div>
           </CardContent>
         </Card>
-        <Card className="bg-elec-dark border-elec-slate">
+        <Card className="border-elec-yellow/20 bg-elec-dark">
           <CardContent className="p-4">
-            <div className="text-2xl font-bold">
-              {evidenceItems.filter(item => item.portfolio_linked).length}
+            <div className="flex items-center gap-2">
+              <CheckCircle className="h-5 w-5 text-green-400" />
+              <div>
+                <p className="text-sm text-muted-foreground">Portfolio Linked</p>
+                <p className="text-2xl font-bold text-green-400">
+                  {evidenceItems.filter(item => item.portfolio_linked).length}
+                </p>
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground">Portfolio Linked</p>
           </CardContent>
         </Card>
-        <Card className="bg-elec-dark border-elec-slate">
+        <Card className="border-elec-yellow/20 bg-elec-dark">
           <CardContent className="p-4">
-            <div className="text-2xl font-bold">
-              {Math.round(evidenceItems.reduce((sum, item) => sum + (item.time_spent || 0), 0) / 60)}h
+            <div className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-purple-400" />
+              <div>
+                <p className="text-sm text-muted-foreground">Total Hours</p>
+                <p className="text-2xl font-bold text-purple-400">
+                  {Math.round(evidenceItems.reduce((sum, item) => sum + (item.time_spent || 0), 0) / 60)}h
+                </p>
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground">Total Hours</p>
           </CardContent>
         </Card>
-        <Card className="bg-elec-dark border-elec-slate">
+        <Card className="border-elec-yellow/20 bg-elec-dark">
           <CardContent className="p-4">
-            <div className="text-2xl font-bold">
-              {new Set(evidenceItems.flatMap(item => item.tags || [])).size}
+            <div className="flex items-center gap-2">
+              <Tag className="h-5 w-5 text-blue-400" />
+              <div>
+                <p className="text-sm text-muted-foreground">Unique Skills</p>
+                <p className="text-2xl font-bold text-blue-400">
+                  {new Set(evidenceItems.flatMap(item => item.tags || [])).size}
+                </p>
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground">Unique Skills</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Evidence Grid */}
       {filteredEvidence.length === 0 ? (
-        <Card className="bg-elec-dark border-elec-slate">
+        <Card className="border-elec-yellow/20 bg-elec-dark">
           <CardContent className="p-8 text-center">
-            <Upload className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No Evidence Found</h3>
-            <p className="text-muted-foreground mb-4">
+            <Upload className="h-12 w-12 mx-auto text-elec-yellow/50 mb-4" />
+            <h3 className="text-lg font-semibold mb-2 text-elec-light">No Evidence Found</h3>
+            <p className="text-elec-light/70 mb-4">
               {searchTerm || selectedFilter !== "all" 
                 ? "Try adjusting your search or filter criteria"
                 : "Start building your evidence portfolio by uploading your first piece of evidence"
               }
             </p>
-            <Button onClick={() => setShowUploadDialog(true)}>
+            <Button 
+              onClick={() => setShowUploadDialog(true)}
+              className="bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+            >
               <Upload className="h-4 w-4 mr-2" />
               Upload First Evidence
             </Button>
@@ -385,7 +401,7 @@ const EvidenceAssessmentTab = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredEvidence.map((evidence) => (
-            <Card key={evidence.id} className="bg-elec-dark border-elec-slate hover:border-primary/50 transition-colors">
+            <Card key={evidence.id} className="border-elec-yellow/20 bg-elec-dark hover:border-elec-yellow/50 transition-colors">
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="space-y-1 flex-1">
