@@ -2,12 +2,12 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { MobileInputWrapper } from "@/components/ui/mobile-input-wrapper";
+import { MobileSelectWrapper } from "@/components/ui/mobile-select-wrapper";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Upload, FileText, Image, Video } from "lucide-react";
+import { Upload, FileText, Image, Video, Calendar, Clock, User, Tag } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Label } from "@/components/ui/label";
 
 const EvidenceUploadTab = () => {
   const { toast } = useToast();
@@ -50,153 +50,226 @@ const EvidenceUploadTab = () => {
     });
   };
 
+  const evidenceTypeOptions = [
+    { value: "photo", label: "Photo" },
+    { value: "video", label: "Video" },
+    { value: "document", label: "Document" },
+    { value: "certificate", label: "Certificate" },
+    { value: "assessment", label: "Assessment" }
+  ];
+
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Evidence</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">12</div>
-            <p className="text-xs text-muted-foreground">
-              Files uploaded
-            </p>
+    <div className="min-h-screen bg-elec-dark px-4 py-6">
+      {/* Stats Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <Card className="bg-elec-card border-elec-gray/50 hover:border-elec-yellow/30 transition-colors">
+          <CardContent className="p-6">
+            <div className="flex items-center space-x-2">
+              <FileText className="h-8 w-8 text-elec-yellow" />
+              <div>
+                <div className="text-2xl font-bold text-elec-light">12</div>
+                <p className="text-xs text-elec-light/70">Total Evidence</p>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Photos</CardTitle>
-            <Image className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">8</div>
-            <p className="text-xs text-muted-foreground">
-              Images uploaded
-            </p>
+        <Card className="bg-elec-card border-elec-gray/50 hover:border-elec-yellow/30 transition-colors">
+          <CardContent className="p-6">
+            <div className="flex items-center space-x-2">
+              <Image className="h-8 w-8 text-elec-yellow" />
+              <div>
+                <div className="text-2xl font-bold text-elec-light">8</div>
+                <p className="text-xs text-elec-light/70">Photos</p>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Videos</CardTitle>
-            <Video className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">3</div>
-            <p className="text-xs text-muted-foreground">
-              Videos uploaded
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Upload className="h-5 w-5" />
-              Upload Evidence
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
+        <Card className="bg-elec-card border-elec-gray/50 hover:border-elec-yellow/30 transition-colors">
+          <CardContent className="p-6">
+            <div className="flex items-center space-x-2">
+              <Video className="h-8 w-8 text-elec-yellow" />
               <div>
-                <Label htmlFor="title">Evidence Title</Label>
-                <Input
-                  id="title"
-                  placeholder="e.g. Socket Installation Photo"
-                  value={evidenceFile.title}
-                  onChange={(e) => setEvidenceFile(prev => ({ ...prev, title: e.target.value }))}
-                  required
-                />
+                <div className="text-2xl font-bold text-elec-light">3</div>
+                <p className="text-xs text-elec-light/70">Videos</p>
               </div>
-              
-              <div>
-                <Label htmlFor="type">Evidence Type</Label>
-                <Select value={evidenceFile.type} onValueChange={(value) => setEvidenceFile(prev => ({ ...prev, type: value }))}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select evidence type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="photo">Photo</SelectItem>
-                    <SelectItem value="video">Video</SelectItem>
-                    <SelectItem value="document">Document</SelectItem>
-                    <SelectItem value="certificate">Certificate</SelectItem>
-                    <SelectItem value="assessment">Assessment</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              <div>
-                <Label htmlFor="file">Upload File</Label>
-                <Input
-                  id="file"
-                  type="file"
-                  accept="image/*,video/*,.pdf,.doc,.docx"
-                  onChange={handleFileChange}
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="description">Description (optional)</Label>
-                <Textarea
-                  id="description"
-                  placeholder="Describe what this evidence shows..."
-                  value={evidenceFile.description}
-                  onChange={(e) => setEvidenceFile(prev => ({ ...prev, description: e.target.value }))}
-                  rows={3}
-                />
-              </div>
-              
-              <Button type="submit" className="w-full">
-                Upload Evidence
-              </Button>
-            </form>
+            </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Evidence Guidelines</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="border rounded-lg p-4">
-                <h4 className="font-medium mb-2">Photo Evidence</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Clear, well-lit images</li>
-                  <li>• Show work in progress and completion</li>
-                  <li>• Include safety measures</li>
-                  <li>• Maximum 10MB per file</li>
-                </ul>
-              </div>
-
-              <div className="border rounded-lg p-4">
-                <h4 className="font-medium mb-2">Video Evidence</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Maximum 2 minutes duration</li>
-                  <li>• Show techniques and procedures</li>
-                  <li>• Include clear narration if possible</li>
-                  <li>• MP4 format preferred</li>
-                </ul>
-              </div>
-
-              <div className="border rounded-lg p-4">
-                <h4 className="font-medium mb-2">Documents</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Test certificates</li>
-                  <li>• Risk assessments</li>
-                  <li>• Method statements</li>
-                  <li>• Training certificates</li>
-                </ul>
+        <Card className="bg-elec-card border-elec-gray/50 hover:border-elec-yellow/30 transition-colors">
+          <CardContent className="p-6">
+            <div className="flex items-center space-x-2">
+              <Clock className="h-8 w-8 text-elec-yellow" />
+              <div>
+                <div className="text-2xl font-bold text-elec-light">0h</div>
+                <p className="text-xs text-elec-light/70">Total Hours</p>
               </div>
             </div>
           </CardContent>
         </Card>
       </div>
+
+      {/* Upload Form */}
+      <Card className="bg-elec-card border-elec-gray/50 mb-8">
+        <CardHeader className="border-b border-elec-gray/30">
+          <CardTitle className="flex items-center gap-3 text-elec-light">
+            <div className="p-2 bg-elec-yellow/20 rounded-lg">
+              <Upload className="h-5 w-5 text-elec-yellow" />
+            </div>
+            Upload Evidence
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <MobileInputWrapper
+              label="Evidence Title"
+              placeholder="e.g. Socket Installation Photo"
+              value={evidenceFile.title}
+              onChange={(value) => setEvidenceFile(prev => ({ ...prev, title: value }))}
+              icon={<FileText className="h-5 w-5" />}
+            />
+            
+            <MobileSelectWrapper
+              label="Evidence Type"
+              placeholder="Select evidence type"
+              value={evidenceFile.type}
+              onValueChange={(value) => setEvidenceFile(prev => ({ ...prev, type: value }))}
+              options={evidenceTypeOptions}
+            />
+            
+            {/* File Upload */}
+            <div className="space-y-3">
+              <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                Upload File
+              </Label>
+              <div className="relative group">
+                <input
+                  type="file"
+                  accept="image/*,video/*,.pdf,.doc,.docx"
+                  onChange={handleFileChange}
+                  className="absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer"
+                />
+                <div className="h-14 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 transition-all duration-200 group-hover:shadow-lg group-hover:shadow-elec-yellow/10 flex items-center px-4">
+                  <Upload className="h-5 w-5 text-elec-yellow/70 mr-3" />
+                  <span className="text-sm text-elec-light/60">
+                    {evidenceFile.file ? evidenceFile.file.name : "Choose file - No file chosen"}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Description */}
+            <div className="space-y-3">
+              <Label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                Description (optional)
+              </Label>
+              <Textarea
+                placeholder="Provide details about what was learned or achieved"
+                value={evidenceFile.description}
+                onChange={(e) => setEvidenceFile(prev => ({ ...prev, description: e.target.value }))}
+                className="min-h-[100px] bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 resize-none"
+              />
+            </div>
+            
+            <Button 
+              type="submit" 
+              className="w-full h-14 bg-gradient-to-r from-elec-yellow to-elec-yellow/80 hover:from-elec-yellow/90 hover:to-elec-yellow/70 text-elec-dark font-semibold rounded-xl transition-all duration-200"
+            >
+              <Upload className="h-5 w-5 mr-2" />
+              Upload Evidence
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+
+      {/* Guidelines */}
+      <Card className="bg-elec-card border-elec-gray/50">
+        <CardHeader className="border-b border-elec-gray/30">
+          <CardTitle className="text-elec-light">Evidence Guidelines</CardTitle>
+        </CardHeader>
+        <CardContent className="p-6">
+          <div className="space-y-6">
+            <div className="border border-elec-gray/30 rounded-xl p-4 bg-elec-dark/30">
+              <h4 className="font-semibold mb-3 text-elec-light flex items-center gap-2">
+                <Image className="h-4 w-4 text-elec-yellow" />
+                Photo Evidence
+              </h4>
+              <ul className="text-sm text-elec-light/70 space-y-2">
+                <li className="flex items-center gap-2">
+                  <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
+                  Clear, well-lit images
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
+                  Show work in progress and completion
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
+                  Include safety measures
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
+                  Maximum 10MB per file
+                </li>
+              </ul>
+            </div>
+
+            <div className="border border-elec-gray/30 rounded-xl p-4 bg-elec-dark/30">
+              <h4 className="font-semibold mb-3 text-elec-light flex items-center gap-2">
+                <Video className="h-4 w-4 text-elec-yellow" />
+                Video Evidence
+              </h4>
+              <ul className="text-sm text-elec-light/70 space-y-2">
+                <li className="flex items-center gap-2">
+                  <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
+                  Maximum 2 minutes duration
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
+                  Show techniques and procedures
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
+                  Include clear narration if possible
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
+                  MP4 format preferred
+                </li>
+              </ul>
+            </div>
+
+            <div className="border border-elec-gray/30 rounded-xl p-4 bg-elec-dark/30">
+              <h4 className="font-semibold mb-3 text-elec-light flex items-center gap-2">
+                <FileText className="h-4 w-4 text-elec-yellow" />
+                Documents
+              </h4>
+              <ul className="text-sm text-elec-light/70 space-y-2">
+                <li className="flex items-center gap-2">
+                  <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
+                  Test certificates
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
+                  Risk assessments
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
+                  Method statements
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1 h-1 bg-elec-yellow rounded-full"></span>
+                  Training certificates
+                </li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
