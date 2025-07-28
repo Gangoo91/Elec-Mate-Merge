@@ -57,31 +57,31 @@ const ToolsGuide = () => {
         </Alert>
       </div>
 
-      <div className="w-full px-2 sm:px-6">
-        <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-          <CardHeader className="pb-4 px-4 sm:px-6">
+      <div className="w-full px-1 sm:px-6">
+        <Card className="border-elec-yellow/30 bg-gradient-to-r from-elec-gray to-elec-dark/80 shadow-lg">
+          <CardHeader className="pb-6 px-3 sm:px-6">
             <div className="flex items-center gap-2 justify-center sm:justify-start">
-              <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-              <CardTitle className="text-elec-yellow text-lg sm:text-xl text-center sm:text-left">Professional Tool Categories</CardTitle>
+              <Wrench className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
+              <CardTitle className="text-elec-yellow text-xl sm:text-2xl text-center sm:text-left font-bold">Professional Tool Categories</CardTitle>
             </div>
           </CardHeader>
-          <CardContent className="px-4 sm:px-6 pb-4 sm:pb-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <CardContent className="px-3 sm:px-6 pb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {toolCategories.map((category, index) => (
-                <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 text-center bg-elec-dark/30">
-                  <h4 className="font-semibold text-white mb-2 text-base">{category.name}</h4>
-                  <div className="text-sm text-elec-yellow mb-3">{category.count}</div>
+                <div key={index} className="border-2 border-elec-yellow/30 rounded-xl p-5 text-center bg-elec-dark/60 hover:bg-elec-dark/80 transition-all duration-300 shadow-md">
+                  <h4 className="font-bold text-white mb-3 text-lg">{category.name}</h4>
+                  <div className="text-base text-elec-yellow mb-4 font-medium">{category.count}</div>
                   <Badge 
                     variant="outline" 
-                    className={`mb-3 text-xs font-medium ${
-                      category.priority === 'Critical' ? 'border-red-500/40 text-red-400' :
-                      category.priority === 'High' ? 'border-orange-500/40 text-orange-400' :
-                      'border-blue-500/40 text-blue-400'
+                    className={`mb-4 text-sm font-bold px-3 py-1 ${
+                      category.priority === 'Critical' ? 'border-red-500/60 text-red-300 bg-red-500/10' :
+                      category.priority === 'High' ? 'border-orange-500/60 text-orange-300 bg-orange-500/10' :
+                      'border-blue-500/60 text-blue-300 bg-blue-500/10'
                     }`}
                   >
                     {category.priority} Priority
                   </Badge>
-                  <p className="text-sm font-medium text-elec-yellow">{category.cost}</p>
+                  <p className="text-base font-bold text-elec-yellow bg-elec-yellow/10 rounded-lg py-2 px-3">{category.cost}</p>
                 </div>
               ))}
             </div>
