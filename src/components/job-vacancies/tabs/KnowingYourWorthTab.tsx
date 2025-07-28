@@ -575,29 +575,30 @@ const KnowingYourWorthTab = () => {
                     {range.icon}
                     <h4 className="font-medium text-white text-sm">{range.level}</h4>
                   </div>
-                  <div className="flex gap-2">
-                    <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
-                      {range.yearRange}
-                    </Badge>
-                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-                      {range.growth}
-                    </Badge>
-                  </div>
+                  <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 text-xs">
+                    {range.yearRange}
+                  </Badge>
                 </div>
                 <div className="flex items-center justify-between mb-2">
                   <p className="text-lg font-bold text-elec-yellow">{range.salaryRange}</p>
                   <TrendingUp className="h-4 w-4 text-green-400" />
                 </div>
-                <p className="text-xs text-muted-foreground">{range.description}</p>
+                <p className="text-xs text-muted-foreground mb-3">{range.description}</p>
                 
                 {index === Math.floor(experience / 5) && (
-                  <div className="mt-2 p-2 bg-elec-yellow/10 rounded border border-elec-yellow/20">
+                  <div className="mb-3 p-2 bg-elec-yellow/10 rounded border border-elec-yellow/20">
                     <div className="flex items-center gap-1">
                       <Target className="h-3 w-3 text-elec-yellow" />
                       <span className="text-xs text-elec-yellow font-medium">Your Level</span>
                     </div>
                   </div>
                 )}
+                
+                <div className="flex justify-end">
+                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
+                    {range.growth}
+                  </Badge>
+                </div>
               </div>
             ))}
           </div>
