@@ -46,75 +46,96 @@ export const EnhancedPersonalInfoForm: React.FC<EnhancedPersonalInfoFormProps> =
             Personal Information
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div>
-            <Label htmlFor="fullName" className="text-white">Full Name *</Label>
-            <Input
-              id="fullName"
+        <CardContent className="space-y-6">
+          <div className="space-y-3">
+            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+              Full Name *
+            </label>
+            <input
+              type="text"
               value={cvData.personalInfo.fullName}
               onChange={(e) => updatePersonalInfo('fullName', e.target.value)}
-              className="bg-elec-dark border-elec-yellow/20 text-white"
+              className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
               placeholder="Enter your full name"
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="email" className="text-white">Email Address *</Label>
-              <Input
-                id="email"
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                Email Address *
+              </label>
+              <input
                 type="email"
                 value={cvData.personalInfo.email}
                 onChange={(e) => updatePersonalInfo('email', e.target.value)}
-                className="bg-elec-dark border-elec-yellow/20 text-white"
+                className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
                 placeholder="your.email@example.com"
               />
             </div>
 
-            <div>
-              <Label htmlFor="phone" className="text-white">Phone Number *</Label>
-              <Input
-                id="phone"
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                Phone Number *
+              </label>
+              <input
+                type="tel"
                 value={cvData.personalInfo.phone}
                 onChange={(e) => updatePersonalInfo('phone', e.target.value)}
-                className="bg-elec-dark border-elec-yellow/20 text-white"
+                className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
                 placeholder="07700 123456"
               />
             </div>
           </div>
 
-          <div>
-            <Label htmlFor="address" className="text-white">Address</Label>
-            <Input
-              id="address"
+          <div className="space-y-3">
+            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+              Address
+            </label>
+            <input
+              type="text"
               value={cvData.personalInfo.address}
               onChange={(e) => updatePersonalInfo('address', e.target.value)}
-              className="bg-elec-dark border-elec-yellow/20 text-white"
+              className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
               placeholder="123 High Street, City"
             />
           </div>
 
-          <div>
-            <Label htmlFor="postcode" className="text-white">Postcode</Label>
-            <Input
-              id="postcode"
+          <div className="space-y-3">
+            <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+              <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+              Postcode
+            </label>
+            <input
+              type="text"
               value={cvData.personalInfo.postcode}
               onChange={(e) => updatePersonalInfo('postcode', e.target.value)}
-              className="bg-elec-dark border-elec-yellow/20 text-white"
+              className="w-full h-12 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
               placeholder="SW1A 1AA"
             />
           </div>
 
           <div className="space-y-4">
-            <div>
-              <Label htmlFor="summary" className="text-white">Professional Summary</Label>
-              <Textarea
-                id="summary"
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                Professional Summary
+              </label>
+              <textarea
                 value={cvData.personalInfo.professionalSummary}
                 onChange={(e) => updatePersonalInfo('professionalSummary', e.target.value)}
-                className="bg-elec-dark border-elec-yellow/20 text-white min-h-24"
+                className="w-full h-32 bg-elec-card border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium p-4 resize-none"
                 placeholder="Brief description of your electrical experience and career goals..."
+                rows={4}
               />
+              <p className="text-xs text-elec-light/70 flex items-center gap-1">
+                <span className="w-1 h-1 bg-elec-yellow/60 rounded-full"></span>
+                Describe your electrical expertise and career objectives
+              </p>
             </div>
 
             <SmartContentAssistant
