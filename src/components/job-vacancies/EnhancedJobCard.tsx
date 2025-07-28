@@ -89,7 +89,29 @@ const EnhancedJobCard = ({ job, selectedJob, handleApply, isAIEnhanced = false }
         <div className="flex items-center gap-2 text-xs text-gray-400">
           <Calendar className="h-3 w-3" />
           <span>
-            Posted {formatDistanceToNow(new Date(job.posted_date), { addSuffix: true })}
+            Posted {(() => {
+              try {
+                // Handle different date formats from different sources
+                let date: Date;
+                if (job.posted_date.includes('/')) {
+                  // Handle DD/MM/YYYY format from Reed
+                  const [day, month, year] = job.posted_date.split('/');
+                  date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+                } else {
+                  // Handle ISO format or other standard formats
+                  date = new Date(job.posted_date);
+                }
+                
+                if (isNaN(date.getTime())) {
+                  return 'recently';
+                }
+                
+                return formatDistanceToNow(date, { addSuffix: true });
+              } catch (error) {
+                console.warn('Date parsing error:', error);
+                return 'recently';
+              }
+            })()}
           </span>
         </div>
 

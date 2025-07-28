@@ -65,6 +65,34 @@ const BasicJobSearch = () => {
       return;
     }
 
+    // Auto-expand common partial terms for better results
+    let searchQuery = query.trim();
+    if (searchQuery.length >= 2 && searchQuery.length < 8) {
+      const expansions: { [key: string]: string } = {
+        'elec': 'electrical',
+        'elect': 'electrical', 
+        'electr': 'electrical',
+        'electri': 'electrical',
+        'electric': 'electrical',
+        'spark': 'electrician',
+        'wire': 'electrical wiring',
+        'install': 'electrical installation',
+        'maint': 'electrical maintenance',
+        'test': 'electrical testing',
+        'design': 'electrical design',
+        'comm': 'electrical commissioning',
+        'ev': 'electric vehicle charging',
+        'solar': 'solar electrical',
+        'led': 'led lighting electrical'
+      };
+      
+      const lowerQuery = searchQuery.toLowerCase();
+      if (expansions[lowerQuery]) {
+        searchQuery = expansions[lowerQuery];
+        console.log(`🔍 Auto-expanded "${query}" to "${searchQuery}"`);
+      }
+    }
+
     console.log('🔍 Starting basic job search:', { query, location });
     setLoading(true);
     setJobs([]);
@@ -77,7 +105,7 @@ const BasicJobSearch = () => {
           'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0d3lnYmVjZXVuZGZnbmtpcm9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYyMTc2OTUsImV4cCI6MjA2MTc5MzY5NX0.NgMOzzNkreOiJ2_t_f90NJxIJTcpUninWPYnM7RkrY8`
         },
         body: JSON.stringify({
-          query: query.trim(),
+          query: searchQuery,
           location: location.trim() || 'UK'
         }),
       });
@@ -106,10 +134,17 @@ const BasicJobSearch = () => {
 
       setJobs(jobResults);
 
-      toast({
-        title: "Search Complete",
-        description: `Found ${jobResults.length} jobs`
-      });
+      if (jobResults.length === 0 && searchQuery !== query.trim()) {
+        toast({
+          title: "Search Auto-Expanded",
+          description: `Searched for "${searchQuery}" instead of "${query.trim()}" but no results found. Try different terms.`
+        });
+      } else {
+        toast({
+          title: "Search Complete", 
+          description: `Found ${jobResults.length} jobs${searchQuery !== query.trim() ? ` (searched for "${searchQuery}")` : ''}`
+        });
+      }
 
     } catch (error) {
       console.error('❌ Search error:', error);
@@ -146,7 +181,7 @@ const BasicJobSearch = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="md:col-span-1">
               <Input
-                placeholder="Job title, keywords..."
+                placeholder="e.g. electrician, maintenance, testing..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
@@ -239,12 +274,17 @@ const BasicJobSearch = () => {
               }
             </p>
             <div className="text-sm text-gray-400">
-              <p>Try:</p>
-              <ul className="list-disc list-inside mt-2 space-y-1">
-                <li>Different keywords or job titles</li>
-                <li>Expanding your search location</li>
-                <li>Using broader terms like "electrician" or "electrical"</li>
+              <p className="mb-2">Try:</p>
+              <ul className="list-disc list-inside space-y-1">
+                <li>Using broader terms like "electrician", "electrical", or "maintenance"</li>
+                <li>Expanding your search location or trying nearby areas</li>
+                <li>Checking spelling and trying alternative keywords</li>
+                <li>Using job-specific terms like "testing", "installation", or "commissioning"</li>
+                <li>Including qualifications like "18th edition" or "City & Guilds"</li>
               </ul>
+              <p className="mt-3 text-xs text-gray-500">
+                Popular searches: "electrician", "electrical engineer", "maintenance electrician", "electrical testing"
+              </p>
             </div>
           </CardContent>
         </Card>
