@@ -72,16 +72,22 @@ const CompetencyLevelView: React.FC<CompetencyLevelViewProps> = ({
           const IconComponent = level.icon;
 
           return (
-            <Card key={level.level} className="relative overflow-hidden">
+            <Card key={level.level} className="relative overflow-hidden border-elec-yellow/20 bg-elec-dark">
               <div className={`absolute top-0 left-0 w-full h-1 bg-${level.color}-500`} />
               <CardHeader className="pb-4">
-                <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-lg ${level.bgColor}`}>
-                    <IconComponent className={`h-6 w-6 text-${level.color}-600`} />
+                <div className="flex flex-col items-center text-center space-y-3">
+                  <div className={`p-3 rounded-xl ${level.bgColor} shadow-md`}>
+                    <IconComponent className={`h-8 w-8 text-${level.color}-600`} />
                   </div>
-                  <div>
-                    <CardTitle className="text-lg">{level.name}</CardTitle>
-                    <CardDescription className="text-sm">
+                  <div className="space-y-1">
+                    <Badge 
+                      variant="secondary" 
+                      className={`text-xs px-3 py-1 bg-${level.color}-100 text-${level.color}-700 border-${level.color}-200`}
+                    >
+                      {level.level}
+                    </Badge>
+                    <CardTitle className="text-xl font-bold text-elec-light">{level.name}</CardTitle>
+                    <CardDescription className="text-sm text-elec-light/70 max-w-xs mx-auto leading-relaxed">
                       {level.description}
                     </CardDescription>
                   </div>
@@ -89,41 +95,48 @@ const CompetencyLevelView: React.FC<CompetencyLevelViewProps> = ({
               </CardHeader>
 
               <CardContent className="space-y-4">
-                <div>
+                <div className="text-center">
                   <div className="flex justify-between text-sm mb-2">
-                    <span className="font-medium">Overall Progress</span>
-                    <span className="font-semibold">{stats.progress}%</span>
+                    <span className="font-medium text-elec-light">Overall Progress</span>
+                    <span className="font-bold text-elec-yellow">{stats.progress}%</span>
                   </div>
                   <Progress value={stats.progress} className="h-3" />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="space-y-1">
-                    <p className="text-muted-foreground">Categories</p>
-                    <p className="font-semibold text-lg">{stats.categories.length}</p>
-                  </div>
-                  <div className="space-y-1">
-                    <p className="text-muted-foreground">Completed</p>
-                    <p className="font-semibold text-lg">
-                      {stats.totalCompleted}/{stats.totalRequired}
-                    </p>
+                <div className="text-center">
+                  <p className="text-sm text-elec-light/70 mb-2">Categories Completed</p>
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-elec-light">{stats.totalCompleted}</p>
+                      <p className="text-xs text-elec-light/60">Completed</p>
+                    </div>
+                    <div className="text-elec-light/40">/</div>
+                    <div className="text-center">
+                      <p className="text-2xl font-bold text-elec-light">{stats.totalRequired}</p>
+                      <p className="text-xs text-elec-light/60">Required</p>
+                    </div>
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <p className="text-sm font-medium text-muted-foreground">Categories in this level:</p>
-                  <div className="flex flex-wrap gap-1">
-                    {stats.categories.map((category) => (
-                      <Badge key={category.id} variant="outline" className="text-xs">
+                  <p className="text-sm font-medium text-elec-light/70 text-center">Categories in this level:</p>
+                  <div className="flex flex-wrap gap-1 justify-center">
+                    {stats.categories.slice(0, 2).map((category) => (
+                      <Badge key={category.id} variant="outline" className="text-xs border-elec-yellow/30 text-elec-light/80">
                         {category.name}
                       </Badge>
                     ))}
+                    {stats.categories.length > 2 && (
+                      <Badge variant="outline" className="text-xs border-elec-yellow/30 text-elec-light/80">
+                        +{stats.categories.length - 2} more
+                      </Badge>
+                    )}
                   </div>
                 </div>
 
                 {stats.entries.length > 0 && (
-                  <div className="pt-2 border-t">
-                    <p className="text-xs text-muted-foreground">
+                  <div className="pt-2 border-t border-elec-yellow/20 text-center">
+                    <p className="text-xs text-elec-light/60">
                       Latest activity: {stats.entries.slice(-1)[0]?.title}
                     </p>
                   </div>
