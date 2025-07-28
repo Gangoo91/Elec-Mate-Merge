@@ -39,81 +39,91 @@ const ToolsGuide = () => {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto p-4 space-y-6 animate-fade-in">
-      <div className="flex flex-col items-center justify-center text-center space-y-4">
+    <div className="w-full min-h-screen space-y-4 sm:space-y-6 animate-fade-in">
+      <div className="flex flex-col items-center justify-center text-center space-y-4 px-3 sm:px-6 py-4 sm:py-6">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Professional Tool Guide</h1>
-        <p className="text-muted-foreground text-sm sm:text-base max-w-2xl px-4 leading-relaxed">
+        <p className="text-muted-foreground text-sm sm:text-base max-w-2xl leading-relaxed">
           Comprehensive guidance for building your professional electrician toolkit - from essential tools to smart purchasing decisions and quality assessment
         </p>
         <BackButton customUrl="/apprentice/on-job-tools" label="Back to On-Job Tools" />
       </div>
 
-      <Alert className="border-blue-500/50 bg-blue-500/10">
-        <Shield className="h-4 w-4 text-blue-400" />
-        <AlertDescription className="text-blue-200 text-sm leading-relaxed">
-          Building a professional toolkit is an investment in your career. This comprehensive guide provides everything you need for informed decision-making and strategic purchasing.
-        </AlertDescription>
-      </Alert>
+      <div className="px-3 sm:px-6">
+        <Alert className="border-blue-500/50 bg-blue-500/10">
+          <Shield className="h-4 w-4 text-blue-400" />
+          <AlertDescription className="text-blue-200 text-sm leading-relaxed">
+            Building a professional toolkit is an investment in your career. This comprehensive guide provides everything you need for informed decision-making and strategic purchasing.
+          </AlertDescription>
+        </Alert>
+      </div>
 
-      <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50">
-        <CardHeader className="pb-4">
-          <div className="flex items-center gap-2 justify-center sm:justify-start">
-            <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-            <CardTitle className="text-elec-yellow text-lg sm:text-xl text-center sm:text-left">Professional Tool Categories</CardTitle>
-          </div>
-        </CardHeader>
-        <CardContent className="p-4 sm:p-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {toolCategories.map((category, index) => (
-              <div key={index} className="border border-elec-yellow/20 rounded-lg p-4 text-center">
-                <h4 className="font-semibold text-white mb-2 text-sm sm:text-base">{category.name}</h4>
-                <div className="text-xs sm:text-sm text-elec-yellow mb-2">{category.count}</div>
-                <Badge 
-                  variant="outline" 
-                  className={`mb-2 text-xs ${
-                    category.priority === 'Critical' ? 'border-red-500/40 text-red-400' :
-                    category.priority === 'High' ? 'border-orange-500/40 text-orange-400' :
-                    'border-blue-500/40 text-blue-400'
-                  }`}
-                >
-                  {category.priority} Priority
-                </Badge>
-                <p className="text-xs text-muted-foreground">{category.cost}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+      <div className="w-full">
+        <Card className="border-elec-yellow/20 bg-gradient-to-r from-elec-gray to-elec-dark/50 mx-2 sm:mx-6">
+          <CardHeader className="pb-4">
+            <div className="flex items-center gap-2 justify-center sm:justify-start">
+              <Wrench className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
+              <CardTitle className="text-elec-yellow text-lg sm:text-xl text-center sm:text-left">Professional Tool Categories</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent className="p-3 sm:p-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+              {toolCategories.map((category, index) => (
+                <div key={index} className="border border-elec-yellow/20 rounded-lg p-3 sm:p-4 text-center">
+                  <h4 className="font-semibold text-white mb-2 text-sm sm:text-base">{category.name}</h4>
+                  <div className="text-xs sm:text-sm text-elec-yellow mb-2">{category.count}</div>
+                  <Badge 
+                    variant="outline" 
+                    className={`mb-2 text-xs ${
+                      category.priority === 'Critical' ? 'border-red-500/40 text-red-400' :
+                      category.priority === 'High' ? 'border-orange-500/40 text-orange-400' :
+                      'border-blue-500/40 text-blue-400'
+                    }`}
+                  >
+                    {category.priority} Priority
+                  </Badge>
+                  <p className="text-xs text-muted-foreground">{category.cost}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
-      <DropdownTabs
-        tabs={dropdownTabs}
-        defaultValue="essential"
-        placeholder="Select tool category"
-        triggerClassName="w-full max-w-sm"
-      />
+      <div className="px-3 sm:px-6">
+        <DropdownTabs
+          tabs={dropdownTabs}
+          defaultValue="essential"
+          placeholder="Select tool category"
+          triggerClassName="w-full"
+        />
+      </div>
 
-      <Alert className="border-orange-500/50 bg-orange-500/10">
-        <AlertTriangle className="h-4 w-4 text-orange-400" />
-        <AlertDescription className="text-orange-200 text-sm leading-relaxed">
-          <strong>Remember:</strong> Quality tools are a long-term investment. Never compromise on safety-critical equipment like test instruments and PPE. Plan strategically and invest wisely.
-        </AlertDescription>
-      </Alert>
+      <div className="px-3 sm:px-6">
+        <Alert className="border-orange-500/50 bg-orange-500/10">
+          <AlertTriangle className="h-4 w-4 text-orange-400" />
+          <AlertDescription className="text-orange-200 text-sm leading-relaxed">
+            <strong>Remember:</strong> Quality tools are a long-term investment. Never compromise on safety-critical equipment like test instruments and PPE. Plan strategically and invest wisely.
+          </AlertDescription>
+        </Alert>
+      </div>
 
-      <Card className="border-green-500/50 bg-green-500/10">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-green-300 flex items-center gap-2 text-lg">
-            <Heart className="h-5 w-5" />
-            Your Professional Journey
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground text-sm leading-relaxed">
-            Building a professional toolkit is a career-long investment in your success. Focus on quality over quantity, 
-            plan your purchases strategically, and maintain your tools properly. A well-chosen and maintained toolkit will serve you throughout 
-            your entire electrical career and contribute to your professional reputation.
-          </p>
-        </CardContent>
-      </Card>
+      <div className="px-3 sm:px-6">
+        <Card className="border-green-500/50 bg-green-500/10">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-green-300 flex items-center gap-2 text-lg">
+              <Heart className="h-5 w-5" />
+              Your Professional Journey
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground text-sm leading-relaxed">
+              Building a professional toolkit is a career-long investment in your success. Focus on quality over quantity, 
+              plan your purchases strategically, and maintain your tools properly. A well-chosen and maintained toolkit will serve you throughout 
+              your entire electrical career and contribute to your professional reputation.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
