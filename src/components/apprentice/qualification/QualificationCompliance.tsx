@@ -79,8 +79,7 @@ const QualificationCompliance = () => {
               <div className="text-2xl font-bold text-orange-400">{inProgressCategories}</div>
               <p className="text-xs text-elec-light/70 leading-tight">In Progress</p>
             </div>
-            <div className="text-center space-y-2">
-              <div className="h-5 w-5 bg-red-400/20 rounded-full mx-auto"></div>
+            <div className="text-center space-y-3">
               <div className="text-2xl font-bold text-red-400">{notStartedCategories}</div>
               <p className="text-xs text-elec-light/70 leading-tight">Not Started</p>
             </div>
@@ -102,7 +101,7 @@ const QualificationCompliance = () => {
               } else if (complianceRecord.compliance_percentage > 0) {
                 return <Clock className="h-5 w-5 text-orange-400" />;
               } else {
-                return <div className="h-5 w-5 bg-red-400/20 rounded-full"></div>;
+                return null; // No icon for not started
               }
             };
 
@@ -116,10 +115,14 @@ const QualificationCompliance = () => {
                     </div>
                   </div>
                   
-                  {/* Status icon and title - centered */}
-                  <div className="flex items-center justify-center gap-2 mb-4">
-                    {getStatusIcon()}
-                    <h4 className="font-semibold text-lg text-elec-light text-center">{category.name}</h4>
+                  {/* Title - centered with optional status icon */}
+                  <div className="text-center mb-4">
+                    {getStatusIcon() && (
+                      <div className="flex items-center justify-center mb-2">
+                        {getStatusIcon()}
+                      </div>
+                    )}
+                    <h4 className="font-semibold text-lg text-elec-light">{category.name}</h4>
                   </div>
                   
                   <p className="text-sm text-elec-light/70 mb-4 text-center leading-relaxed">
