@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Wand2, Loader2, Plus, Target, User, Briefcase } from "lucide-react";
+import { Wand2, Loader2, Plus, Target, User, Briefcase, GraduationCap } from "lucide-react";
 import { CVData } from "../types";
 import { AIService } from "./AIService";
 import { toast } from "@/hooks/use-toast";
@@ -38,6 +38,12 @@ const wizardSteps: WizardStep[] = [
     icon: <User className="h-5 w-5" />
   },
   {
+    id: 'qualifications',
+    title: 'Qualifications',
+    description: 'Your electrical qualifications and certifications',
+    icon: <GraduationCap className="h-5 w-5" />
+  },
+  {
     id: 'experience',
     title: 'Experience',
     description: 'Your electrical work history',
@@ -59,6 +65,11 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
       address: '',
       postcode: ''
     },
+    qualifications: [] as Array<{
+      qualification: string;
+      institution: string;
+      year: string;
+    }>,
     workHistory: [] as Array<{
       jobTitle: string;
       company: string;
@@ -72,7 +83,12 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
   const electricalRoles = [
     'Electrician', 'Electrical Apprentice', 'Senior Electrician', 'Electrical Supervisor',
     'Electrical Engineer', 'Electrical Foreman', 'Electrical Inspector', 'Installation Electrician',
-    'Maintenance Electrician', 'Industrial Electrician', 'Commercial Electrician', 'Domestic Electrician'
+    'Maintenance Electrician', 'Industrial Electrician', 'Commercial Electrician', 'Domestic Electrician',
+    'Electrical Designer', 'Design Engineer', 'Electrical Commissioning Engineer', 'Commissioning Technician',
+    'EV Charging Installer', 'EV Charging Engineer', 'Electric Vehicle Technician', 'EV Infrastructure Specialist',
+    'Solar Panel Installer', 'Renewable Energy Technician', 'Smart Home Installer', 'Fire Alarm Engineer',
+    'Security Systems Installer', 'CCTV Installer', 'Data Cabling Technician', 'Network Infrastructure Engineer',
+    'Electrical Testing & Inspection', 'PAT Testing Technician', 'Electrical Compliance Officer'
   ];
 
   const experienceLevels = [
@@ -129,13 +145,25 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
         })
       );
 
+      // Convert qualifications to education format
+      const education = wizardData.qualifications.map(qual => ({
+        id: Date.now().toString() + Math.random(),
+        qualification: qual.qualification,
+        institution: qual.institution || 'Not specified',
+        location: '',
+        startDate: '',
+        endDate: qual.year || '',
+        current: false,
+        grade: ''
+      }));
+
       const generatedCV: CVData = {
         personalInfo: {
           ...wizardData.personalInfo,
           professionalSummary
         },
         experience: enhancedExperience,
-        education: [],
+        education,
         skills,
         certifications: []
       };
@@ -156,6 +184,19 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
     }
   };
 
+  const electricalQualifications = [
+    'Level 2 Diploma in Electrical Engineering', 'Level 3 Diploma in Electrical Engineering',
+    'City & Guilds 2365 Electrical Installation', 'City & Guilds 2391 Inspection & Testing',
+    'City & Guilds 2396 Design & Verification', 'City & Guilds 2394/2395 Initial Verification',
+    '18th Edition IET Wiring Regulations', '17th Edition IET Wiring Regulations',
+    'ECS Card', 'JIB Gold Card', 'NICEIC Approved', 'Part P Qualified',
+    'EV Charging Installation Qualification', 'Solar Panel Installation Certification',
+    'Fire Alarm Installation Certification', 'Emergency Lighting Certification',
+    'PAT Testing Certification', 'COMPEX Ex Certification', 'ATEX Certification',
+    'HNC Electrical Engineering', 'HND Electrical Engineering', 'BEng Electrical Engineering',
+    'First Aid Certification', 'CSCS Card', 'IPAF Certification', 'PASMA Certification'
+  ];
+
   const addWorkExperience = () => {
     setWizardData(prev => ({
       ...prev,
@@ -173,6 +214,26 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
       ...prev,
       workHistory: prev.workHistory.map((job, i) => 
         i === index ? { ...job, [field]: value } : job
+      )
+    }));
+  };
+
+  const addQualification = () => {
+    setWizardData(prev => ({
+      ...prev,
+      qualifications: [...prev.qualifications, {
+        qualification: '',
+        institution: '',
+        year: ''
+      }]
+    }));
+  };
+
+  const updateQualification = (index: number, field: string, value: string) => {
+    setWizardData(prev => ({
+      ...prev,
+      qualifications: prev.qualifications.map((qual, i) => 
+        i === index ? { ...qual, [field]: value } : qual
       )
     }));
   };
@@ -345,6 +406,92 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
           </div>
         );
 
+      case 'qualifications':
+        return (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h4 className="text-lg font-semibold text-elec-light">Qualifications & Certifications</h4>
+              <Button
+                onClick={addQualification}
+                variant="outline"
+                size="sm"
+                className="border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Qualification
+              </Button>
+            </div>
+
+            {wizardData.qualifications.map((qual, index) => (
+              <div key={index} className="p-4 bg-elec-card border-2 border-elec-gray/50 rounded-xl">
+                <div className="space-y-4">
+                  <div className="space-y-3">
+                    <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                      <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                      Qualification *
+                    </label>
+                    <Select value={qual.qualification} onValueChange={(value) => 
+                      updateQualification(index, 'qualification', value)
+                    }>
+                      <SelectTrigger className="w-full h-12 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200">
+                        <SelectValue placeholder="Select qualification" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-elec-card border-elec-gray/40 max-h-60">
+                        {electricalQualifications.map(qualification => (
+                          <SelectItem key={qualification} value={qualification} className="text-elec-light hover:bg-elec-yellow/10">
+                            {qualification}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-3">
+                      <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                        <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                        Institution/Provider
+                      </label>
+                      <input
+                        type="text"
+                        value={qual.institution}
+                        onChange={(e) => updateQualification(index, 'institution', e.target.value)}
+                        className="w-full h-12 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
+                        placeholder="e.g. City & Guilds, Local College"
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <label className="text-sm font-semibold text-elec-light flex items-center gap-2">
+                        <span className="w-1 h-4 bg-elec-yellow rounded-full"></span>
+                        Year Completed
+                      </label>
+                      <input
+                        type="text"
+                        value={qual.year}
+                        onChange={(e) => updateQualification(index, 'year', e.target.value)}
+                        className="w-full h-12 bg-elec-gray border-2 border-elec-gray/50 rounded-xl text-elec-light hover:border-elec-yellow/40 focus:border-elec-yellow transition-all duration-200 placeholder:text-elec-light/60 text-base font-medium px-4"
+                        placeholder="e.g. 2024, In Progress"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {wizardData.qualifications.length === 0 && (
+              <div className="text-center py-8 bg-elec-card/50 rounded-xl border-2 border-dashed border-elec-yellow/20">
+                <p className="text-elec-light/60 mb-4">No qualifications added yet</p>
+                <Button
+                  onClick={addQualification}
+                  className="bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Your First Qualification
+                </Button>
+              </div>
+            )}
+          </div>
+        );
+
       case 'experience':
         return (
           <div className="space-y-6">
@@ -452,6 +599,8 @@ export const SmartCVWizard: React.FC<SmartCVWizardProps> = ({ onCVGenerated, onC
         return wizardData.targetRole && wizardData.experienceLevel;
       case 'profile':
         return wizardData.personalInfo.fullName && wizardData.personalInfo.email;
+      case 'qualifications':
+        return true; // Qualifications are optional
       case 'experience':
         return true; // Experience is optional
       default:

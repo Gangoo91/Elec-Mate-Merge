@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { FileText, Sparkles, Wand2 } from "lucide-react";
-import CVBuilder from "@/components/cv-builder/CVBuilder";
+import SimplifiedCVBuilder from "@/components/cv-builder/SimplifiedCVBuilder";
 
 const CVBuilderBox = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,8 +59,8 @@ const CVBuilderBox = () => {
                 </Button>
               </DialogTrigger>
               <DialogContent className="w-[95vw] max-w-4xl h-[90vh] max-h-[90vh] overflow-hidden p-0">
-                <div className="h-full overflow-y-auto">
-                  <CVBuilder />
+                <div className="h-full">
+                  <SimplifiedCVBuilder />
                 </div>
               </DialogContent>
             </Dialog>
