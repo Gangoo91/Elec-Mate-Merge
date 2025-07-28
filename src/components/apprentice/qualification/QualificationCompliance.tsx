@@ -40,62 +40,52 @@ const QualificationCompliance = () => {
 
   return (
     <div className="space-y-6 bg-elec-gray min-h-screen p-4">
-      {/* Main Progress Card - Mobile Optimized */}
-      <Card className="border-elec-yellow/20 bg-elec-dark overflow-hidden">
-        <div className="bg-gradient-to-r from-elec-yellow/20 to-purple-500/20 p-1">
-          <div className="bg-elec-dark rounded-sm">
-            <CardContent className="p-6 text-center">
-              {/* Percentage at the top */}
-              <div className="text-6xl font-bold text-elec-yellow mb-2">
-                {overallProgress}%
-              </div>
-              
-              {/* Title and description */}
-              <div className="space-y-2 mb-6">
-                <h2 className="text-xl font-bold text-elec-light">Overall Progress</h2>
-                <p className="text-sm text-elec-light/80 max-w-md mx-auto leading-relaxed">
-                  {userSelection.qualification?.title}
-                </p>
-                <p className="text-xs text-elec-light/60">
-                  {userSelection.qualification?.awarding_body}
-                </p>
-              </div>
-              
-              {/* Progress bar */}
-              <div className="mb-6">
-                <Progress 
-                  value={overallProgress} 
-                  className="w-full h-3 bg-elec-card"
-                />
-              </div>
-              
-              {/* Stats grid */}
-              <div className="grid grid-cols-3 gap-4">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-center">
-                    <CheckCircle className="h-6 w-6 text-green-400" />
-                  </div>
-                  <div className="text-2xl font-bold text-green-400">{completedCategories}</div>
-                  <p className="text-xs text-elec-light/70">Completed</p>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-center">
-                    <Clock className="h-6 w-6 text-orange-400" />
-                  </div>
-                  <div className="text-2xl font-bold text-orange-400">{inProgressCategories}</div>
-                  <p className="text-xs text-elec-light/70">In Progress</p>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-center">
-                    <AlertCircle className="h-6 w-6 text-red-400" />
-                  </div>
-                  <div className="text-2xl font-bold text-red-400">{notStartedCategories}</div>
-                  <p className="text-xs text-elec-light/70">Not Started</p>
-                </div>
-              </div>
-            </CardContent>
+      {/* Main Progress Card - Simplified */}
+      <Card className="border-elec-yellow/20 bg-elec-dark">
+        <CardContent className="p-6 text-center">
+          {/* Smaller percentage at the top */}
+          <div className="text-3xl font-bold text-elec-yellow mb-3">
+            {overallProgress}%
           </div>
-        </div>
+          
+          {/* Title and description */}
+          <div className="space-y-2 mb-6">
+            <h2 className="text-xl font-bold text-elec-light">Overall Progress</h2>
+            <p className="text-sm text-elec-light/70 max-w-md mx-auto leading-relaxed">
+              {userSelection.qualification?.title}
+            </p>
+            <p className="text-xs text-elec-light/60">
+              {userSelection.qualification?.awarding_body}
+            </p>
+          </div>
+          
+          {/* Progress bar */}
+          <div className="mb-6">
+            <Progress 
+              value={overallProgress} 
+              className="w-full h-2 bg-elec-card"
+            />
+          </div>
+          
+          {/* Stats grid */}
+          <div className="grid grid-cols-3 gap-6">
+            <div className="text-center">
+              <CheckCircle className="h-5 w-5 text-green-400 mx-auto mb-2" />
+              <div className="text-xl font-bold text-green-400">{completedCategories}</div>
+              <p className="text-xs text-elec-light/70">Completed</p>
+            </div>
+            <div className="text-center">
+              <Clock className="h-5 w-5 text-orange-400 mx-auto mb-2" />
+              <div className="text-xl font-bold text-orange-400">{inProgressCategories}</div>
+              <p className="text-xs text-elec-light/70">In Progress</p>
+            </div>
+            <div className="text-center">
+              <AlertCircle className="h-5 w-5 text-red-400 mx-auto mb-2" />
+              <div className="text-xl font-bold text-red-400">{notStartedCategories}</div>
+              <p className="text-xs text-elec-light/70">Not Started</p>
+            </div>
+          </div>
+        </CardContent>
       </Card>
 
       {/* Category Progress Section */}
@@ -125,19 +115,15 @@ const QualificationCompliance = () => {
             return (
               <Card key={complianceRecord.id} className="border-elec-yellow/20 bg-elec-dark">
                 <CardContent className="p-4">
-                  {/* Mobile-optimized header with percentage at top */}
+                  {/* Simplified header with smaller percentage */}
                   <div className="text-center mb-4">
-                    <div className="text-3xl font-bold text-elec-yellow mb-2">
+                    <div className="text-2xl font-bold text-elec-yellow mb-3">
                       {complianceRecord.compliance_percentage}%
                     </div>
                     <div className="flex items-center justify-center gap-2 mb-2">
                       {getStatusIcon()}
                       <h4 className="font-semibold text-elec-light">{category.name}</h4>
                     </div>
-                    <Badge className={`${getStatusColor()} border`}>
-                      {complianceRecord.compliance_percentage >= 100 ? 'Complete' : 
-                       complianceRecord.compliance_percentage > 0 ? 'In Progress' : 'Not Started'}
-                    </Badge>
                   </div>
                   
                   <p className="text-sm text-elec-light/70 mb-4 text-center leading-relaxed">
