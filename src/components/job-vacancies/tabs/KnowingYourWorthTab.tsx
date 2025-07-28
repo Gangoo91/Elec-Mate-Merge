@@ -575,11 +575,7 @@ const KnowingYourWorthTab = () => {
             </div>
 
             <Button 
-              onClick={() => {
-                console.log('Button clicked, current state:', showDetailedBreakdown);
-                setShowDetailedBreakdown(!showDetailedBreakdown);
-                console.log('State should now be:', !showDetailedBreakdown);
-              }}
+              onClick={() => setShowDetailedBreakdown(!showDetailedBreakdown)}
               variant="outline"
               className="w-full border-green-500/20 hover:bg-green-500/10"
             >
@@ -781,21 +777,141 @@ const KnowingYourWorthTab = () => {
 
       {/* Detailed Breakdown */}
       {showDetailedBreakdown && (
-        <Card className="border-blue-500/20 bg-blue-500/5 mt-6">
+        <Card className="border-green-500/20 bg-green-500/5 mt-6">
           <CardHeader>
-            <CardTitle className="text-blue-300">Detailed Salary Breakdown</CardTitle>
+            <CardTitle className="text-green-300 flex items-center gap-2">
+              <Calculator className="h-5 w-5" />
+              Detailed Salary Breakdown
+            </CardTitle>
           </CardHeader>
-          <CardContent>
-            <p className="text-white">This is a test to see if the conditional rendering works.</p>
-            <DetailedBreakdown
-              experience={experience}
-              location={location}
-              qualification={qualification}
-              specialisms={specialisms}
-              companySize={companySize}
-              contractType={contractType}
-              salaryCalculation={calculateSalary}
-            />
+          <CardContent className="space-y-6">
+            {/* Base Salary Information */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-4 bg-white/5 rounded-lg border border-white/10">
+                <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-2">
+                  <PoundSterling className="h-4 w-4 text-green-400" />
+                  Base Salary Range
+                </h4>
+                <div className="text-lg font-bold text-green-400">
+                  £{calculateSalary.min.toLocaleString()} - £{calculateSalary.max.toLocaleString()}
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Based on {experience} years experience
+                </p>
+              </div>
+              
+              <div className="p-4 bg-white/5 rounded-lg border border-white/10">
+                <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-2">
+                  <Gauge className="h-4 w-4 text-blue-400" />
+                  Confidence Level
+                </h4>
+                <div className="text-lg font-bold text-blue-400">
+                  {calculateSalary.confidence}%
+                </div>
+                <Progress value={calculateSalary.confidence} className="mt-2" />
+              </div>
+            </div>
+
+            {/* Breakdown Factors */}
+            <div className="space-y-4">
+              <h4 className="text-sm font-medium text-white flex items-center gap-2">
+                <Calculator className="h-4 w-4 text-elec-yellow" />
+                Salary Calculation Factors
+              </h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-3 bg-white/5 rounded border border-white/10">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-white">Experience Level</span>
+                    <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
+                      {experience} years
+                    </Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    {experience <= 1 ? "Apprentice level" :
+                     experience <= 3 ? "Qualified electrician" :
+                     experience <= 7 ? "Experienced electrician" :
+                     experience <= 12 ? "Senior electrician" : "Expert level"}
+                  </p>
+                </div>
+
+                <div className="p-3 bg-white/5 rounded border border-white/10">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-white">Location</span>
+                    <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30">
+                      {location || "Not specified"}
+                    </Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    {location ? "Location premium applied" : "Add location for better accuracy"}
+                  </p>
+                </div>
+
+                <div className="p-3 bg-white/5 rounded border border-white/10">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-white">Qualification</span>
+                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                      {qualification || "Not specified"}
+                    </Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    {qualification ? "Qualification bonus applied" : "Add qualification for premium"}
+                  </p>
+                </div>
+
+                <div className="p-3 bg-white/5 rounded border border-white/10">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-white">Specialisms</span>
+                    <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
+                      {specialisms.length} selected
+                    </Badge>
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    {specialisms.length > 0 ? 
+                      `Additional £${(specialisms.length * 5000).toLocaleString()} premium` : 
+                      "Add specialisms for higher rates"}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Market Context */}
+            <div className="p-4 bg-cyan-500/10 rounded-lg border border-cyan-500/20">
+              <h4 className="text-sm font-medium text-white mb-3 flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-cyan-400" />
+                2025 Market Context
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                <div className="text-muted-foreground">
+                  • EV charging installations driving 15-25% salary increases
+                </div>
+                <div className="text-muted-foreground">
+                  • Heat pump demand adding 10-20% premiums
+                </div>
+                <div className="text-muted-foreground">
+                  • Data centre expansion creating high-paid opportunities
+                </div>
+                <div className="text-muted-foreground">
+                  • Smart building integration requiring new skills
+                </div>
+              </div>
+            </div>
+
+            {/* Recommendations */}
+            <div className="p-4 bg-elec-yellow/10 rounded-lg border border-elec-yellow/20">
+              <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-2">
+                <Lightbulb className="h-4 w-4 text-elec-yellow" />
+                Recommendations to Increase Your Worth
+              </h4>
+              <div className="space-y-2 text-xs text-muted-foreground">
+                {!location && <div>• Specify your location for accurate regional rates</div>}
+                {!qualification && <div>• Add your highest qualification for bonus calculation</div>}
+                {specialisms.length === 0 && <div>• Select specialisms to unlock premium rates</div>}
+                {specialisms.length < 2 && <div>• Consider additional specialisms like EV charging or renewable energy</div>}
+                <div>• NICEIC/NAPIT approval can add £4-8k annually</div>
+                <div>• EV charging certification is in high demand for 2025</div>
+              </div>
+            </div>
           </CardContent>
         </Card>
       )}
