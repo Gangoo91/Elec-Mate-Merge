@@ -65,9 +65,9 @@ const GroupedPortfolioOverview: React.FC<GroupedPortfolioOverviewProps> = ({
 
   return (
     <div className="space-y-4">
-      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 place-items-center">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {groups.map((group) => (
-          <Card key={group.id} className="w-full max-w-sm hover:shadow-md transition-shadow">
+          <Card key={group.id} className="w-full hover:shadow-md transition-shadow">
             <CardHeader className="pb-3">
               <div className="flex flex-col items-center gap-3">
                 <Badge variant={getCompetencyBadgeVariant(group.competencyLevel)}>
@@ -77,10 +77,10 @@ const GroupedPortfolioOverview: React.FC<GroupedPortfolioOverviewProps> = ({
                   <div className="text-elec-yellow">
                     {getIcon(group.icon)}
                   </div>
-                  <CardTitle className="text-lg">{group.name}</CardTitle>
+                  <CardTitle className="text-lg leading-tight">{group.name}</CardTitle>
                 </div>
               </div>
-              <CardDescription className="text-sm text-center">
+              <CardDescription className="text-sm text-center mt-2">
                 {group.description}
               </CardDescription>
             </CardHeader>
@@ -125,18 +125,18 @@ const GroupedPortfolioOverview: React.FC<GroupedPortfolioOverviewProps> = ({
                     return (
                       <div 
                         key={category.id}
-                        className="flex items-center justify-between p-2 bg-muted rounded text-sm"
+                        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 bg-muted rounded text-sm"
                       >
-                        <div className="flex items-center gap-2">
-                          <Badge variant="outline">
+                        <div className="flex items-center justify-center sm:justify-start">
+                          <Badge variant="outline" className="text-xs">
                             {category.name}
                           </Badge>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center justify-between sm:justify-end gap-3">
                           <span className="text-xs text-muted-foreground">
                             {completed}/{category.requiredEntries}
                           </span>
-                          <div className="w-16">
+                          <div className="w-20">
                             <Progress value={progress} className="h-1" />
                           </div>
                         </div>
@@ -150,7 +150,7 @@ const GroupedPortfolioOverview: React.FC<GroupedPortfolioOverviewProps> = ({
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="w-full"
+                  className="w-full mt-2"
                   onClick={() => onGroupSelect(group.id)}
                 >
                   View Group Details
