@@ -7,35 +7,35 @@ const TestEquipmentTab = () => {
     {
       name: "Voltage indicator (2-pole type)",
       description: "Proving dead before work - essential safety tool",
-      priceRange: "£15-30",
+      priceRange: "£18-38",
       priority: "essential" as const,
       ukStandard: "GS38 compliant"
     },
     {
       name: "Proving unit for voltage indicator",
       description: "Test your tester before every use",
-      priceRange: "£20-40",
+      priceRange: "£25-50",
       priority: "essential" as const,
       ukStandard: "Must match indicator"
     },
     {
       name: "Continuity tester (buzzer type)",
       description: "Basic continuity checks during installation",
-      priceRange: "£10-25",
+      priceRange: "£12-32",
       priority: "essential" as const,
       ukStandard: "Low voltage output"
     },
     {
       name: "Socket tester (13A plug-in type)",
       description: "Quick checks of domestic socket wiring",
-      priceRange: "£8-20",
+      priceRange: "£10-25",
       priority: "recommended" as const,
       ukStandard: "BS 1363 compliant"
     },
     {
       name: "Test leads with fused probes",
       description: "Safe connection to electrical systems",
-      priceRange: "£15-35",
+      priceRange: "£18-45",
       priority: "essential" as const,
       ukStandard: "GS38 specification"
     }
@@ -45,35 +45,35 @@ const TestEquipmentTab = () => {
     {
       name: "Multifunction installation tester",
       description: "Professional testing for certification work",
-      priceRange: "£400-1200",
+      priceRange: "£500-1500",
       priority: "essential" as const,
       ukStandard: "18th Edition compliant"
     },
     {
       name: "Earth loop impedance tester",
       description: "Ze and Zs measurements for safety verification",
-      priceRange: "£300-800",
+      priceRange: "£375-985",
       priority: "essential" as const,
       ukStandard: "BS 7671 compliant"
     },
     {
       name: "RCD tester (all types)",
       description: "Test 30mA, 100mA, and 300mA RCDs",
-      priceRange: "£200-500",
+      priceRange: "£250-625",
       priority: "essential" as const,
       ukStandard: "Type A, AC, F testing"
     },
     {
       name: "Insulation resistance tester",
       description: "500V and 1000V insulation testing",
-      priceRange: "£150-400",
+      priceRange: "£185-485",
       priority: "essential" as const,
       ukStandard: "BS 7671 Part 6"
     },
     {
       name: "Professional test lead set",
       description: "Various probes and adaptors for all tests",
-      priceRange: "£80-150",
+      priceRange: "£95-185",
       priority: "recommended" as const,
       ukStandard: "CAT III rated"
     }
@@ -128,7 +128,7 @@ const TestEquipmentTab = () => {
             Uncalibrated equipment can give false readings, compromising safety and invalidating test results.
           </p>
           <p>
-            <strong>Investment Strategy:</strong> Basic equipment: £100-150. Advanced equipment: £1000-2000. 
+             <strong>Investment Strategy:</strong> Basic equipment: £125-185. Advanced equipment: £1250-2485. 
             Consider finance options or employer schemes for expensive items.
           </p>
         </div>

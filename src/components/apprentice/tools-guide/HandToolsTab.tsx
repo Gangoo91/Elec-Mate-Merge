@@ -7,28 +7,28 @@ const HandToolsTab = () => {
     {
       name: "Flared terminal screwdriver (2.5mm & 4mm)",
       description: "Essential for electrical terminal work",
-      priceRange: "£8-15 each",
+      priceRange: "£10-18 each",
       priority: "essential" as const,
       ukStandard: "VDE certified"
     },
     {
       name: "Pozidriv (PZ1 & PZ2)",
       description: "Most common screw type in UK electrical work",
-      priceRange: "£6-12 each",
+      priceRange: "£8-15 each",
       priority: "essential" as const,
       ukStandard: "BS EN 60900"
     },
     {
       name: "Phillips (PH1 & PH2)",
       description: "Still used in some applications",
-      priceRange: "£6-12 each",
+      priceRange: "£8-15 each",
       priority: "recommended" as const,
       ukStandard: "BS EN 60900"
     },
     {
       name: "Standard flat-head set (3mm, 5mm, 8mm)",
       description: "Various sizes for different applications",
-      priceRange: "£15-25 set",
+      priceRange: "£18-32 set",
       priority: "essential" as const,
       ukStandard: "VDE 1000V"
     }
@@ -38,35 +38,35 @@ const HandToolsTab = () => {
     {
       name: "Combination pliers (160-180mm)",
       description: "Gripping, cutting, and bending wire",
-      priceRange: "£15-30",
+      priceRange: "£18-38",
       priority: "essential" as const,
       ukStandard: "BS EN 60900"
     },
     {
       name: "Side cutters (160mm)",
       description: "Clean cuts on cables up to 4mm²",
-      priceRange: "£12-25",
+      priceRange: "£15-32",
       priority: "essential" as const,
       ukStandard: "VDE certified"
     },
     {
       name: "Long nose pliers (200mm)",
       description: "Precision work in tight spaces",
-      priceRange: "£10-20",
+      priceRange: "£12-25",
       priority: "essential" as const,
       ukStandard: "Insulated to 1000V"
     },
     {
       name: "Wire strippers with crimping function",
       description: "Strip and crimp various cable sizes",
-      priceRange: "£20-40",
+      priceRange: "£25-50",
       priority: "essential" as const,
       ukStandard: "0.5-6mm² capacity"
     },
     {
       name: "Insulated cable knife",
       description: "Safe stripping of cable sheaths",
-      priceRange: "£8-15",
+      priceRange: "£10-18",
       priority: "essential" as const,
       ukStandard: "Retractable blade"
     }
@@ -76,25 +76,25 @@ const HandToolsTab = () => {
     {
       name: "Adjustable wrench (200-250mm)",
       description: "Various bolt sizes on electrical equipment",
-      priceRange: "£12-25",
+      priceRange: "£15-32",
       priority: "essential" as const
     },
     {
       name: "Combination spanners (8-17mm set)",
       description: "Earth bonding and equipment installation",
-      priceRange: "£25-45",
+      priceRange: "£30-55",
       priority: "recommended" as const
     },
     {
       name: "Metric hexagon key set",
       description: "Modern electrical equipment fasteners",
-      priceRange: "£8-15",
+      priceRange: "£10-18",
       priority: "recommended" as const
     },
     {
       name: "Conduit box spanner set",
       description: "20mm, 25mm, 32mm conduit connections",
-      priceRange: "£15-30",
+      priceRange: "£18-38",
       priority: "optional" as const,
       ukStandard: "BS 4568 conduit"
     }
@@ -104,32 +104,32 @@ const HandToolsTab = () => {
     {
       name: "Tape measure (5m minimum)",
       description: "Cable runs and spacing measurements",
-      priceRange: "£8-15",
+      priceRange: "£10-18",
       priority: "essential" as const,
       ukStandard: "Class II accuracy"
     },
     {
       name: "Spirit level (600mm minimum)",
       description: "Level installation of equipment",
-      priceRange: "£15-30",
+      priceRange: "£18-38",
       priority: "essential" as const
     },
     {
       name: "Steel rule (300mm)",
       description: "Precise measurements and marking",
-      priceRange: "£5-10",
+      priceRange: "£6-12",
       priority: "recommended" as const
     },
     {
       name: "Cable measuring wheel",
       description: "Long cable run measurements",
-      priceRange: "£25-50",
+      priceRange: "£30-65",
       priority: "optional" as const
     },
     {
       name: "Marking tools (pencil & permanent marker)",
       description: "Clear marking for cutting and installation",
-      priceRange: "£3-8",
+      priceRange: "£4-10",
       priority: "essential" as const
     }
   ];
@@ -193,7 +193,7 @@ const HandToolsTab = () => {
             Look for VDE certification and the BSI Kitemark on safety equipment.
           </p>
           <p>
-            <strong>Budget Expectations:</strong> A basic hand tool kit should cost £150-300. Spread purchases over your first year, 
+            <strong>Budget Expectations:</strong> A basic hand tool kit should cost £180-380. Spread purchases over your first year, 
             prioritising essential items first. Many suppliers offer apprentice discounts - always ask!
           </p>
           <p>

@@ -25,16 +25,16 @@ const ToolCard = ({ title, icon, description, items, apprenticeTip, ukConsiderat
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case "essential": return "bg-red-500/20 text-red-400 border-red-500/30";
-      case "recommended": return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
+      case "recommended": return "bg-amber-500/20 text-amber-400 border-amber-500/30";
       case "optional": return "bg-green-500/20 text-green-400 border-green-500/30";
-      default: return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      default: return "bg-muted/20 text-muted-foreground border-muted/30";
     }
   };
 
   return (
     <Card className="border-elec-yellow/20 bg-elec-gray h-full">
-      <CardHeader>
-        <div className="flex items-center gap-3 mb-2">
+      <CardHeader className="text-center">
+        <div className="flex flex-col items-center gap-3 mb-2">
           {icon}
           <CardTitle className="text-elec-yellow text-lg">{title}</CardTitle>
         </div>
@@ -45,14 +45,14 @@ const ToolCard = ({ title, icon, description, items, apprenticeTip, ukConsiderat
         <div className="space-y-3">
           {items.map((item, index) => (
             <div key={index} className="border border-elec-yellow/30 rounded-lg p-3">
-              <div className="flex items-start justify-between mb-2">
-                <h4 className="font-medium text-white text-sm">{item.name}</h4>
+              <div className="flex justify-center mb-2">
                 <Badge className={getPriorityColor(item.priority)} variant="outline">
                   {item.priority}
                 </Badge>
               </div>
-              <p className="text-xs text-muted-foreground mb-2">{item.description}</p>
-              <div className="flex items-center justify-between text-xs">
+              <h4 className="font-medium text-white text-sm text-center mb-2">{item.name}</h4>
+              <p className="text-xs text-muted-foreground mb-3 text-center">{item.description}</p>
+              <div className="flex items-center justify-between text-xs border-t border-elec-yellow/20 pt-2">
                 <span className="text-elec-yellow font-medium">{item.priceRange}</span>
                 {item.ukStandard && (
                   <span className="text-blue-300">{item.ukStandard}</span>

@@ -7,34 +7,34 @@ const PowerToolsTab = () => {
     {
       name: "18V cordless drill/driver",
       description: "Essential for most electrical installation work",
-      priceRange: "£80-200",
+      priceRange: "£95-250",
       priority: "essential" as const,
       ukStandard: "Two-speed gearbox"
     },
     {
       name: "Lithium-ion batteries (2x minimum)",
       description: "One charging whilst one in use",
-      priceRange: "£30-60 each",
+      priceRange: "£38-75 each",
       priority: "essential" as const,
       ukStandard: "3.0Ah+ capacity"
     },
     {
       name: "Fast charger (1-hour type)",
       description: "Minimise downtime with quick charging",
-      priceRange: "£40-80",
+      priceRange: "£50-95",
       priority: "recommended" as const
     },
     {
       name: "HSS drill bit set (1-13mm)",
       description: "High-speed steel for metalwork",
-      priceRange: "£15-30",
+      priceRange: "£18-38",
       priority: "essential" as const,
       ukStandard: "Cobalt tipped preferred"
     },
     {
       name: "Screwdriver bit set with holder",
       description: "PZ1, PZ2, PH1, PH2, flat bits with magnetic holder",
-      priceRange: "£10-25",
+      priceRange: "£12-32",
       priority: "essential" as const
     }
   ];
@@ -43,34 +43,34 @@ const PowerToolsTab = () => {
     {
       name: "LED inspection torch (rechargeable)",
       description: "Essential for fault-finding and dark areas",
-      priceRange: "£15-40",
+      priceRange: "£18-50",
       priority: "essential" as const,
       ukStandard: "1000+ lumens"
     },
     {
       name: "Telescopic inspection mirror",
       description: "See behind panels and in tight spaces",
-      priceRange: "£8-20",
+      priceRange: "£10-25",
       priority: "recommended" as const
     },
     {
       name: "Magnetic pick-up tool (telescopic)",
       description: "Retrieve dropped screws and small parts",
-      priceRange: "£5-15",
+      priceRange: "£6-18",
       priority: "recommended" as const,
       ukStandard: "4.5kg lift capacity"
     },
     {
       name: "Cable fishing rods (fiberglass)",
       description: "Pull cables through conduit and voids",
-      priceRange: "£20-50",
+      priceRange: "£25-65",
       priority: "optional" as const,
       ukStandard: "10m+ length"
     },
     {
       name: "Digital borescope/inspection camera",
       description: "Advanced inspections in inaccessible areas",
-      priceRange: "£50-200",
+      priceRange: "£65-250",
       priority: "optional" as const,
       ukStandard: "5mm+ cable diameter"
     }
@@ -80,27 +80,27 @@ const PowerToolsTab = () => {
     {
       name: "Angle grinder (115mm)",
       description: "Cutting trunking, conduit, and metalwork",
-      priceRange: "£40-100",
+      priceRange: "£50-125",
       priority: "optional" as const,
       ukStandard: "Safety guard essential"
     },
     {
       name: "SDS drill (corded)",
       description: "Heavy-duty drilling in masonry",
-      priceRange: "£60-150",
+      priceRange: "£75-185",
       priority: "optional" as const,
       ukStandard: "3-function minimum"
     },
     {
       name: "Reciprocating saw",
       description: "Cutting in tight spaces and demolition work",
-      priceRange: "£50-120",
+      priceRange: "£65-150",
       priority: "optional" as const
     },
     {
       name: "Cable puller/winch",
       description: "Heavy cable installation in long runs",
-      priceRange: "£100-300",
+      priceRange: "£125-375",
       priority: "optional" as const,
       ukStandard: "1000kg+ capacity"
     }
@@ -174,7 +174,7 @@ const PowerToolsTab = () => {
         <h3 className="text-lg font-medium text-green-300 mb-2">Investment Timeline for Apprentices</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div>
-            <h4 className="font-medium text-green-200 mb-2">Year 1-2: Basics (£150-250)</h4>
+            <h4 className="font-medium text-green-200 mb-2">Year 1-2: Basics (£185-320)</h4>
             <ul className="space-y-1 text-muted-foreground">
               <li>• Cordless drill with 2 batteries</li>
               <li>• LED torch</li>
@@ -183,7 +183,7 @@ const PowerToolsTab = () => {
             </ul>
           </div>
           <div>
-            <h4 className="font-medium text-green-200 mb-2">Year 3-4: Expansion (£200-400)</h4>
+            <h4 className="font-medium text-green-200 mb-2">Year 3-4: Expansion (£250-485)</h4>
             <ul className="space-y-1 text-muted-foreground">
               <li>• Additional batteries and faster charger</li>
               <li>• More comprehensive bit sets</li>
