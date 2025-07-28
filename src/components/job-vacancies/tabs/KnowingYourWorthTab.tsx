@@ -420,6 +420,21 @@ const KnowingYourWorthTab = () => {
                   <SelectItem value="canterbury">Canterbury</SelectItem>
                   <SelectItem value="chester">Chester</SelectItem>
                   <SelectItem value="warrington">Warrington</SelectItem>
+                  <SelectItem value="whitehaven">Whitehaven</SelectItem>
+                  <SelectItem value="workington">Workington</SelectItem>
+                  <SelectItem value="carlisle">Carlisle</SelectItem>
+                  <SelectItem value="barrow-in-furness">Barrow-in-Furness</SelectItem>
+                  <SelectItem value="kendal">Kendal</SelectItem>
+                  <SelectItem value="penrith">Penrith</SelectItem>
+                  <SelectItem value="ulverston">Ulverston</SelectItem>
+                  <SelectItem value="keswick">Keswick</SelectItem>
+                  <SelectItem value="cockermouth">Cockermouth</SelectItem>
+                  <SelectItem value="wigton">Wigton</SelectItem>
+                  <SelectItem value="maryport">Maryport</SelectItem>
+                  <SelectItem value="cleator-moor">Cleator Moor</SelectItem>
+                  <SelectItem value="egremont">Egremont</SelectItem>
+                  <SelectItem value="windermere">Windermere</SelectItem>
+                  <SelectItem value="ambleside">Ambleside</SelectItem>
                 </SelectContent>
               </Select>
             </div>
