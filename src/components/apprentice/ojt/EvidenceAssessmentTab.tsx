@@ -328,52 +328,44 @@ const EvidenceAssessmentTab = () => {
       {/* Summary Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card className="border-elec-yellow/20 bg-elec-dark">
-          <CardContent className="p-4">
-            <div className="flex flex-col items-center text-center space-y-2">
-              <FileText className="h-6 w-6 text-elec-yellow" />
-              <div>
-                <p className="text-sm text-muted-foreground">Total Evidence</p>
-                <p className="text-2xl font-bold text-elec-yellow">{evidenceItems.length}</p>
-              </div>
+          <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[100px]">
+            <FileText className="h-6 w-6 text-elec-yellow mb-3" />
+            <div className="space-y-1">
+              <p className="text-xs text-muted-foreground leading-tight">Total Evidence</p>
+              <p className="text-xl sm:text-2xl font-bold text-elec-yellow">{evidenceItems.length}</p>
             </div>
           </CardContent>
         </Card>
         <Card className="border-elec-yellow/20 bg-elec-dark">
-          <CardContent className="p-4">
-            <div className="flex flex-col items-center text-center space-y-2">
-              <CheckCircle className="h-6 w-6 text-green-400" />
-              <div>
-                <p className="text-sm text-muted-foreground">Portfolio Linked</p>
-                <p className="text-2xl font-bold text-green-400">
-                  {evidenceItems.filter(item => item.portfolio_linked).length}
-                </p>
-              </div>
+          <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[100px]">
+            <CheckCircle className="h-6 w-6 text-green-400 mb-3" />
+            <div className="space-y-1">
+              <p className="text-xs text-muted-foreground leading-tight">Portfolio Linked</p>
+              <p className="text-xl sm:text-2xl font-bold text-green-400">
+                {evidenceItems.filter(item => item.portfolio_linked).length}
+              </p>
             </div>
           </CardContent>
         </Card>
         <Card className="border-elec-yellow/20 bg-elec-dark">
-          <CardContent className="p-4">
-            <div className="flex flex-col items-center text-center space-y-2">
-              <Clock className="h-6 w-6 text-purple-400" />
-              <div>
-                <p className="text-sm text-muted-foreground">Total Hours</p>
-                <p className="text-2xl font-bold text-purple-400">
-                  {Math.round(evidenceItems.reduce((sum, item) => sum + (item.time_spent || 0), 0) / 60)}h
-                </p>
-              </div>
+          <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[100px]">
+            <Clock className="h-6 w-6 text-purple-400 mb-3" />
+            <div className="space-y-1">
+              <p className="text-xs text-muted-foreground leading-tight">Total Hours</p>
+              <p className="text-xl sm:text-2xl font-bold text-purple-400">
+                {Math.round(evidenceItems.reduce((sum, item) => sum + (item.time_spent || 0), 0) / 60)}h
+              </p>
             </div>
           </CardContent>
         </Card>
         <Card className="border-elec-yellow/20 bg-elec-dark">
-          <CardContent className="p-4">
-            <div className="flex flex-col items-center text-center space-y-2">
-              <Tag className="h-6 w-6 text-blue-400" />
-              <div>
-                <p className="text-sm text-muted-foreground">Unique Skills</p>
-                <p className="text-2xl font-bold text-blue-400">
-                  {new Set(evidenceItems.flatMap(item => item.tags || [])).size}
-                </p>
-              </div>
+          <CardContent className="p-4 flex flex-col items-center justify-center text-center min-h-[100px]">
+            <Tag className="h-6 w-6 text-blue-400 mb-3" />
+            <div className="space-y-1">
+              <p className="text-xs text-muted-foreground leading-tight">Unique Skills</p>
+              <p className="text-xl sm:text-2xl font-bold text-blue-400">
+                {new Set(evidenceItems.flatMap(item => item.tags || [])).size}
+              </p>
             </div>
           </CardContent>
         </Card>
