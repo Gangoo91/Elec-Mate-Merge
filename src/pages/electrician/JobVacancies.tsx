@@ -1,12 +1,13 @@
 
 import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import JobVacancyHeader from "@/components/job-vacancies/JobVacancyHeader";
 import BasicJobSearch from "@/components/job-vacancies/BasicJobSearch";
 import CVBuilderBox from "@/components/electrician-tools/CVBuilderBox";
 import InterviewGuidanceTab from "@/components/job-vacancies/tabs/InterviewGuidanceTab";
 import KnowingYourWorthTab from "@/components/job-vacancies/tabs/KnowingYourWorthTab";
 import { useJobListings } from "@/hooks/job-vacancies/useJobListings";
+import { Search, MessageCircle, PoundSterling } from "lucide-react";
 
 // Define a consistent JobListing interface to avoid type conflicts
 export interface JobListing {
@@ -31,48 +32,42 @@ const JobVacancies = () => {
     <div className="space-y-6 animate-fade-in">
       <JobVacancyHeader />
 
-      <Tabs defaultValue="job-search" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 bg-elec-gray border-elec-yellow/20">
-          <TabsTrigger 
-            value="job-search" 
-            className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
-          >
-            Job Search
-          </TabsTrigger>
-          <TabsTrigger 
-            value="interview-guidance"
-            className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
-          >
-            Interview Guidance
-          </TabsTrigger>
-          <TabsTrigger 
-            value="knowing-your-worth"
-            className="data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
-          >
-            Know Your Worth
-          </TabsTrigger>
-        </TabsList>
+      <DropdownTabs
+        defaultValue="job-search"
+        placeholder="Select section"
+        tabs={[
+          {
+            value: "job-search",
+            label: "Job Search",
+            icon: Search,
+            content: (
+              <div className="space-y-6">
+                {/* CV Builder - Full width at top */}
+                <div className="w-full">
+                  <CVBuilderBox />
+                </div>
 
-        <TabsContent value="job-search" className="space-y-6 mt-6">
-          {/* CV Builder - Full width at top */}
-          <div className="w-full">
-            <CVBuilderBox />
-          </div>
-
-          {/* Basic Job Search - Simplified version */}
-          <div className="w-full">
-            <BasicJobSearch />
-          </div>
-        </TabsContent>
-
-        <TabsContent value="interview-guidance" className="mt-6">
-          <InterviewGuidanceTab />
-        </TabsContent>
-
-        <TabsContent value="knowing-your-worth" className="mt-6">
-          <KnowingYourWorthTab />
-        </TabsContent>
-      </Tabs>
+                {/* Basic Job Search - Simplified version */}
+                <div className="w-full">
+                  <BasicJobSearch />
+                </div>
+              </div>
+            )
+          },
+          {
+            value: "interview-guidance",
+            label: "Interview Guidance",
+            icon: MessageCircle,
+            content: <InterviewGuidanceTab />
+          },
+          {
+            value: "knowing-your-worth",
+            label: "Know Your Worth",
+            icon: PoundSterling,
+            content: <KnowingYourWorthTab />
+          }
+        ]}
+      />
     </div>
   );
 };
