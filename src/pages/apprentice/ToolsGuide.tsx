@@ -16,7 +16,7 @@ const ToolsGuide = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-gray to-elec-dark">
-      <div className="container mx-auto px-2 sm:px-6 py-4 sm:py-6 space-y-6 animate-fade-in max-w-7xl">
+      <div className="w-full px-1 sm:container sm:mx-auto sm:px-6 py-4 sm:py-6 space-y-6 animate-fade-in sm:max-w-7xl">
         {/* Header */}
         <div className="space-y-4">
           <div className="flex justify-start">

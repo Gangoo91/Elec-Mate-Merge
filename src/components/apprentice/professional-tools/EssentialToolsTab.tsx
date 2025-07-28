@@ -148,7 +148,7 @@ const EssentialToolsTab = () => {
         ]}
         defaultValue="hand-tools"
         placeholder="Select tool category"
-        triggerClassName="w-full max-w-sm mx-auto"
+        triggerClassName="w-full mx-1 sm:max-w-sm sm:mx-auto"
       />
 
       {/* Apprentice Progression Timeline */}
