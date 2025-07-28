@@ -16,6 +16,7 @@ import CompetencyLevelView from '@/components/portfolio/CompetencyLevelView';
 import { useUltraFastPortfolio } from '@/hooks/portfolio/useUltraFastPortfolio';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
 import { UltraFastLoadingState } from '@/components/portfolio/UltraFastLoadingState';
+import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
 
 // Memoized components for performance
 const MemoizedStatsCard = memo(({ 
@@ -201,29 +202,6 @@ const PortfolioManager = () => {
         </Button>
       </div>
 
-      {/* Quick Stats - Memoized for performance */}
-      {analytics && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <MemoizedStatsCard
-            icon={FileText}
-            label="Total Entries"
-            value={analytics.totalEntries}
-            color="text-elec-yellow"
-          />
-          <MemoizedStatsCard
-            icon={Target}
-            label="Completed"
-            value={analytics.completedEntries}
-            color="text-green-400"
-          />
-          <MemoizedStatsCard
-            icon={TrendingUp}
-            label="Time Logged"
-            value={`${Math.round(analytics.totalTimeSpent / 60)}h`}
-            color="text-purple-400"
-          />
-        </div>
-      )}
 
       {/* Main Content Tabs */}
       <DropdownTabs
