@@ -153,11 +153,12 @@ const EvidenceAssessmentTab = () => {
               Upload Evidence
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl bg-elec-gray border-elec-yellow/20">
-            <DialogHeader>
+          <DialogContent className="max-w-2xl w-[95vw] max-h-[90vh] bg-elec-gray border-elec-yellow/20 overflow-y-auto">
+            <DialogHeader className="sticky top-0 bg-elec-gray pb-4 border-b border-elec-yellow/20">
               <DialogTitle className="text-elec-light">Upload Training Evidence</DialogTitle>
             </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="overflow-y-auto max-h-[calc(90vh-120px)] pb-4">
+              <form onSubmit={handleSubmit} className="space-y-6 pt-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <MobileInputWrapper
                   label="Evidence Title"
@@ -295,7 +296,8 @@ const EvidenceAssessmentTab = () => {
                   {isUploading ? "Uploading..." : "Upload Evidence"}
                 </Button>
               </div>
-            </form>
+              </form>
+            </div>
           </DialogContent>
         </Dialog>
       </div>
