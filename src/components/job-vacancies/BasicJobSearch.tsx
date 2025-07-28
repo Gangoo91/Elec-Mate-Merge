@@ -168,47 +168,51 @@ const BasicJobSearch = () => {
   return (
     <div className="space-y-6">
       {/* Search Form */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-white">
-            <Search className="h-5 w-5 text-elec-yellow" />
+      <Card className="border-2 border-yellow-400/30 bg-gradient-to-br from-gray-900 to-gray-800 shadow-xl">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-3 text-white text-xl">
+            <div className="p-2 bg-yellow-400 rounded-lg">
+              <Search className="h-5 w-5 text-black" />
+            </div>
             Job Search
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="md:col-span-1">
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 gap-4">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-yellow-400">Job Title / Keywords</label>
               <Input
                 placeholder="e.g. electrician, maintenance, testing..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                className="bg-elec-gray border-elec-yellow/20 text-white placeholder:text-gray-400"
+                className="h-12 bg-gray-800 border-2 border-yellow-400/30 text-white placeholder:text-gray-400 focus:border-yellow-400 transition-colors rounded-lg"
               />
             </div>
             
-            <div className="md:col-span-1 relative">
+            <div className="space-y-2 relative">
+              <label className="text-sm font-medium text-yellow-400">Location</label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <MapPin className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-yellow-400" />
                 <Input
                   placeholder="Location (UK)"
                   value={location}
                   onChange={(e) => handleLocationChange(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  className="pl-10 bg-elec-gray border-elec-yellow/20 text-white placeholder:text-gray-400"
+                  className="h-12 pl-12 bg-gray-800 border-2 border-yellow-400/30 text-white placeholder:text-gray-400 focus:border-yellow-400 transition-colors rounded-lg"
                 />
               </div>
               
               {/* Location Suggestions */}
               {showLocationSuggestions && (
-                <div className="absolute z-10 w-full mt-1 bg-elec-gray border border-elec-yellow/20 rounded-md shadow-lg">
+                <div className="absolute z-10 w-full mt-1 bg-gray-800 border-2 border-yellow-400/30 rounded-lg shadow-xl">
                   {locationSuggestions.map((suggestion, index) => (
                     <button
                       key={index}
-                      className="w-full text-left px-3 py-2 hover:bg-elec-yellow/10 text-sm text-white"
+                      className="w-full text-left px-4 py-3 hover:bg-yellow-400/10 text-sm text-white border-b border-gray-700 last:border-b-0 first:rounded-t-lg last:rounded-b-lg transition-colors"
                       onClick={() => selectLocationSuggestion(suggestion)}
                     >
-                      <MapPin className="inline h-3 w-3 mr-2 text-gray-400" />
+                      <MapPin className="inline h-4 w-4 mr-3 text-yellow-400" />
                       {suggestion}
                     </button>
                   ))}
@@ -216,20 +220,20 @@ const BasicJobSearch = () => {
               )}
             </div>
 
-            <div>
+            <div className="pt-2">
               <Button 
                 onClick={handleSearch} 
                 disabled={loading}
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/90 w-full font-medium"
+                className="h-12 bg-yellow-400 text-black hover:bg-yellow-500 w-full font-semibold text-lg rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 {loading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className="mr-3 h-5 w-5 animate-spin" />
                     Searching...
                   </>
                 ) : (
                   <>
-                    <Search className="mr-2 h-4 w-4" />
+                    <Search className="mr-3 h-5 w-5" />
                     Search
                   </>
                 )}

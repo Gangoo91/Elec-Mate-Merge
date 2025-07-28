@@ -71,7 +71,7 @@ serve(async (req) => {
     const data = await response.json();
     console.log(`Retrieved ${data.totalResults} jobs from API`);
     
-    // Map Reed API response to our job listings format without mentioning source
+    // Don't do server-side location filtering - let Reed API handle it and return all results
     const jobs = data.results.map(job => ({
       id: job.jobId.toString(),
       title: job.jobTitle,
@@ -90,6 +90,8 @@ serve(async (req) => {
       expires_at: job.expirationDate || null,
       is_remote: job.isRemote || false
     }));
+
+    console.log(`✅ Returning ${jobs.length} jobs from Reed API`);
     
     return new Response(
       JSON.stringify({ 
