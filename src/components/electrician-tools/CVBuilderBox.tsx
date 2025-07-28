@@ -58,8 +58,10 @@ const CVBuilderBox = () => {
                   Smart CV Wizard
                 </Button>
               </DialogTrigger>
-              <DialogContent className="max-w-7xl max-h-[90vh] overflow-y-auto">
-                <CVBuilder />
+              <DialogContent className="w-[95vw] max-w-4xl h-[90vh] max-h-[90vh] overflow-hidden p-0">
+                <div className="h-full overflow-y-auto">
+                  <CVBuilder />
+                </div>
               </DialogContent>
             </Dialog>
             
