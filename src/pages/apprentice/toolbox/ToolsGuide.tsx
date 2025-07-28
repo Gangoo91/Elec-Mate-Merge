@@ -57,31 +57,36 @@ const ToolsGuide = () => {
         </Alert>
       </div>
 
-      <div className="w-full">
-        <div className="pb-6 px-4 sm:px-6">
-          <div className="flex items-center gap-2 justify-center sm:justify-start mb-6">
-            <Wrench className="h-6 w-6 sm:h-7 sm:w-7 text-elec-yellow" />
-            <h2 className="text-elec-yellow text-xl sm:text-2xl text-center sm:text-left font-bold">Professional Tool Categories</h2>
+      <div className="w-full bg-gradient-to-b from-elec-gray/50 to-elec-dark py-8">
+        <div className="px-4 sm:px-6 mb-6">
+          <div className="flex items-center gap-3 justify-center sm:justify-start">
+            <Wrench className="h-6 w-6 text-elec-yellow" />
+            <h2 className="text-elec-yellow text-xl sm:text-2xl font-bold">Professional Tool Categories</h2>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 sm:gap-4 sm:px-4">
-          {toolCategories.map((category, index) => (
-            <div key={index} className="border-2 border-elec-yellow/30 bg-elec-gray p-6 text-center hover:bg-elec-card transition-all duration-300">
-              <h4 className="font-bold text-white mb-3 text-lg">{category.name}</h4>
-              <div className="text-base text-elec-yellow mb-4 font-medium">{category.count}</div>
-              <Badge 
-                variant="outline" 
-                className={`mb-4 text-sm font-bold px-3 py-1 ${
-                  category.priority === 'Critical' ? 'border-red-500/60 text-red-300 bg-red-500/10' :
-                  category.priority === 'High' ? 'border-orange-500/60 text-orange-300 bg-orange-500/10' :
-                  'border-blue-500/60 text-blue-300 bg-blue-500/10'
-                }`}
-              >
-                {category.priority} Priority
-              </Badge>
-              <p className="text-base font-bold text-elec-yellow bg-elec-yellow/10 rounded-lg py-2 px-3">{category.cost}</p>
-            </div>
-          ))}
+        
+        <div className="px-2 sm:px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            {toolCategories.map((category, index) => (
+              <div key={index} className="bg-elec-card border border-elec-yellow/20 rounded-lg p-5 text-center hover:border-elec-yellow/40 transition-all duration-300 shadow-sm">
+                <h4 className="font-semibold text-white mb-3 text-base sm:text-lg">{category.name}</h4>
+                <p className="text-sm text-elec-yellow mb-3 font-medium">{category.count}</p>
+                <Badge 
+                  variant="outline" 
+                  className={`mb-3 text-xs ${
+                    category.priority === 'Critical' ? 'border-red-500/50 text-red-400 bg-red-500/5' :
+                    category.priority === 'High' ? 'border-orange-500/50 text-orange-400 bg-orange-500/5' :
+                    'border-blue-500/50 text-blue-400 bg-blue-500/5'
+                  }`}
+                >
+                  {category.priority} Priority
+                </Badge>
+                <div className="text-sm font-semibold text-elec-yellow bg-elec-yellow/5 border border-elec-yellow/20 rounded py-2 px-3">
+                  {category.cost}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
