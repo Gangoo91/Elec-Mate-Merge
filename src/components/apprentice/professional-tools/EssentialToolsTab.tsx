@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { DropdownTabs } from "@/components/ui/dropdown-tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Wrench, Zap, Shield, Eye, AlertTriangle, Info, BookOpen } from "lucide-react";
 import HandToolsTab from "@/components/apprentice/tools-guide/HandToolsTab";
 import PowerToolsTab from "@/components/apprentice/tools-guide/PowerToolsTab";
@@ -118,38 +118,31 @@ const EssentialToolsTab = () => {
         </AlertDescription>
       </Alert>
 
-      {/* Tool Category Dropdown */}
-      <DropdownTabs
-        tabs={[
-          {
-            value: "hand-tools",
-            label: "Hand Tools",
-            icon: Wrench,
-            content: <HandToolsTab />
-          },
-          {
-            value: "power-tools", 
-            label: "Power Tools",
-            icon: Zap,
-            content: <PowerToolsTab />
-          },
-          {
-            value: "test-equipment",
-            label: "Test Equipment", 
-            icon: Eye,
-            content: <TestEquipmentTab />
-          },
-          {
-            value: "ppe",
-            label: "PPE & Safety",
-            icon: Shield,
-            content: <PPETab />
-          }
-        ]}
-        defaultValue="hand-tools"
-        placeholder="Select tool category"
-        triggerClassName="w-full mx-1 sm:max-w-sm sm:mx-auto"
-      />
+      {/* Detailed Tool Category Tabs */}
+      <Tabs defaultValue="hand-tools" className="w-full">
+        <TabsList className="grid w-full grid-cols-4">
+          <TabsTrigger value="hand-tools">Hand Tools</TabsTrigger>
+          <TabsTrigger value="power-tools">Power Tools</TabsTrigger>
+          <TabsTrigger value="test-equipment">Test Equipment</TabsTrigger>
+          <TabsTrigger value="ppe">PPE & Safety</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="hand-tools">
+          <HandToolsTab />
+        </TabsContent>
+
+        <TabsContent value="power-tools">
+          <PowerToolsTab />
+        </TabsContent>
+
+        <TabsContent value="test-equipment">
+          <TestEquipmentTab />
+        </TabsContent>
+
+        <TabsContent value="ppe">
+          <PPETab />
+        </TabsContent>
+      </Tabs>
 
       {/* Apprentice Progression Timeline */}
       <Card className="border-blue-500/20 bg-blue-500/10">

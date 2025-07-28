@@ -238,41 +238,41 @@ const DailyAITipsTab = () => {
   return (
     <div className="space-y-6">
       <Card className="border-elec-yellow/50 bg-gradient-to-br from-elec-yellow/10 to-orange-500/10">
-        <CardHeader className="pb-3">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <CardTitle className="text-elec-yellow flex items-center gap-2 text-lg">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-elec-yellow flex items-center gap-2">
               <Lightbulb className="h-5 w-5" />
               {currentTips.title}
             </CardTitle>
-            <Button onClick={handleNewTips} variant="outline" size="sm" className="w-full sm:w-auto">
+            <Button onClick={handleNewTips} variant="outline" size="sm">
               <RefreshCw className="h-4 w-4 mr-2" />
               New Tips
             </Button>
           </div>
-          <p className="text-xs sm:text-sm text-muted-foreground mt-2">
+          <p className="text-sm text-muted-foreground">
             Practical, actionable insights to accelerate your electrical skills and knowledge
           </p>
         </CardHeader>
-        <CardContent className="p-4 sm:p-6">
+        <CardContent>
           <div className="grid grid-cols-1 gap-4">
             {currentTips.tips.map((tip, index) => (
               <Card key={index} className="border-elec-gray/30">
                 <CardContent className="p-4">
-                  <div className="flex flex-col sm:flex-row sm:items-start gap-3">
-                    <tip.icon className={`h-5 w-5 flex-shrink-0 ${getCategoryColor(tip.category)} sm:mt-1`} />
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
-                        <Badge variant="outline" className={`${getCategoryColor(tip.category)} text-xs`}>
+                  <div className="flex items-start gap-3">
+                    <tip.icon className={`h-5 w-5 mt-1 ${getCategoryColor(tip.category)}`} />
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Badge variant="outline" className={getCategoryColor(tip.category)}>
                           {tip.category}
                         </Badge>
-                        <Badge className={`${getDifficultyColor(tip.difficulty)} text-xs`}>
+                        <Badge className={getDifficultyColor(tip.difficulty)}>
                           {tip.difficulty}
                         </Badge>
                       </div>
-                      <p className="text-sm leading-relaxed mb-3 text-foreground">{tip.tip}</p>
+                      <p className="text-sm leading-relaxed mb-3">{tip.tip}</p>
                       <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-3">
                         <h5 className="font-medium text-elec-yellow mb-1 text-xs">Action Step</h5>
-                        <p className="text-xs text-muted-foreground leading-relaxed">{tip.actionable}</p>
+                        <p className="text-xs text-muted-foreground">{tip.actionable}</p>
                       </div>
                     </div>
                   </div>
@@ -283,25 +283,25 @@ const DailyAITipsTab = () => {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
               <Clock className="h-5 w-5" />
               Learning Progress
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">Tips learned today</span>
                 <span className="font-medium">3</span>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">Actions completed</span>
                 <span className="font-medium">2/3</span>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between">
                 <span className="text-sm text-muted-foreground">This week's focus</span>
                 <span className="font-medium text-sm">Safety & Testing</span>
               </div>
@@ -310,15 +310,15 @@ const DailyAITipsTab = () => {
         </Card>
 
         <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-base sm:text-lg flex items-center gap-2">
+          <CardHeader>
+            <CardTitle className="text-lg flex items-center gap-2">
               <Target className="h-5 w-5" />
               Skill Development
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-center">
-              <div className="text-2xl sm:text-3xl font-bold text-elec-yellow mb-2">12</div>
+              <div className="text-3xl font-bold text-elec-yellow mb-2">12</div>
               <p className="text-sm text-muted-foreground mb-1">days learning streak</p>
               <p className="text-xs text-muted-foreground">
                 Complete action steps to maintain your streak!
@@ -329,18 +329,18 @@ const DailyAITipsTab = () => {
       </div>
 
       <Card className="border-elec-gray/30">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base sm:text-lg">🎯 Weekly Challenge</CardTitle>
+        <CardHeader>
+          <CardTitle className="text-lg">🎯 Weekly Challenge</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
+          <p className="text-sm text-muted-foreground mb-3">
             This week's challenge: Complete one action step from each category (Safety, Testing, Practical).
             Share your progress with your supervisor or mentor for feedback.
           </p>
-          <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2">
-            <Badge variant="outline" className="text-red-500 justify-center sm:justify-start">Safety: 1/1</Badge>
-            <Badge variant="outline" className="text-purple-500 justify-center sm:justify-start">Testing: 0/1</Badge>
-            <Badge variant="outline" className="text-blue-500 justify-center sm:justify-start">Practical: 1/1</Badge>
+          <div className="flex flex-wrap gap-2">
+            <Badge variant="outline" className="text-red-500">Safety: 1/1</Badge>
+            <Badge variant="outline" className="text-purple-500">Testing: 0/1</Badge>
+            <Badge variant="outline" className="text-blue-500">Practical: 1/1</Badge>
           </div>
         </CardContent>
       </Card>
