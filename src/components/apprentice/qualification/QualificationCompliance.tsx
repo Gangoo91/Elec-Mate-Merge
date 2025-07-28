@@ -79,7 +79,8 @@ const QualificationCompliance = () => {
               <div className="text-2xl font-bold text-orange-400">{inProgressCategories}</div>
               <p className="text-xs text-elec-light/70 leading-tight">In Progress</p>
             </div>
-            <div className="text-center space-y-3">
+            <div className="text-center space-y-2">
+              <AlertCircle className="h-5 w-5 text-red-400 mx-auto" />
               <div className="text-2xl font-bold text-red-400">{notStartedCategories}</div>
               <p className="text-xs text-elec-light/70 leading-tight">Not Started</p>
             </div>
