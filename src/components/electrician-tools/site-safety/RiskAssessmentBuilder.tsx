@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { AlertTriangle, Plus, Save, Eye } from "lucide-react";
+import { AlertTriangle, Plus, Save, Eye, X, Edit3, Shield } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Textarea } from "@/components/ui/textarea";
 
 interface RiskFactor {
   id: string;
@@ -20,6 +21,7 @@ interface RiskFactor {
 
 const RiskAssessmentBuilder = () => {
   const [riskFactors, setRiskFactors] = useState<RiskFactor[]>([]);
+  const [showAddForm, setShowAddForm] = useState(false);
   const [currentRisk, setCurrentRisk] = useState<Partial<RiskFactor>>({
     category: "",
     description: "",
@@ -70,6 +72,7 @@ const RiskAssessmentBuilder = () => {
       severity: 1,
       controlMeasures: []
     });
+    setShowAddForm(false); // Hide form after adding
   };
 
   const removeRiskFactor = (id: string) => {
@@ -89,130 +92,194 @@ const RiskAssessmentBuilder = () => {
 
   return (
     <div className="space-y-6">
-      {/* Risk Statistics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="border-blue-500/30">
+      {/* Page Header with Description */}
+      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
+        <CardHeader>
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
+            <Shield className="h-5 w-5" />
+            Risk Assessment Builder
+          </CardTitle>
+          <p className="text-sm text-muted-foreground">
+            Build comprehensive risk assessments for electrical work using the 5x5 risk matrix methodology
+          </p>
+        </CardHeader>
+      </Card>
+
+      {/* Risk Statistics - Mobile Optimized */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <Card className="border-blue-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-blue-400">{stats.total}</div>
-            <div className="text-sm text-muted-foreground">Total Risks</div>
+            <div className="text-xl sm:text-2xl font-bold text-blue-400">{stats.total}</div>
+            <div className="text-xs sm:text-sm text-muted-foreground">Total Risks</div>
           </CardContent>
         </Card>
-        <Card className="border-red-500/30">
+        <Card className="border-red-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-red-400">{stats.high}</div>
-            <div className="text-sm text-muted-foreground">High Risk</div>
+            <div className="text-xl sm:text-2xl font-bold text-red-400">{stats.high}</div>
+            <div className="text-xs sm:text-sm text-muted-foreground">High Risk</div>
           </CardContent>
         </Card>
-        <Card className="border-yellow-500/30">
+        <Card className="border-yellow-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-yellow-400">{stats.medium}</div>
-            <div className="text-sm text-muted-foreground">Medium Risk</div>
+            <div className="text-xl sm:text-2xl font-bold text-yellow-400">{stats.medium}</div>
+            <div className="text-xs sm:text-sm text-muted-foreground">Medium Risk</div>
           </CardContent>
         </Card>
-        <Card className="border-green-500/30">
+        <Card className="border-green-500/30 bg-elec-gray/50 hover:bg-elec-gray/70 transition-colors">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-green-400">{stats.low}</div>
-            <div className="text-sm text-muted-foreground">Low Risk</div>
+            <div className="text-xl sm:text-2xl font-bold text-green-400">{stats.low}</div>
+            <div className="text-xs sm:text-sm text-muted-foreground">Low Risk</div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Add New Risk */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <Plus className="h-5 w-5" />
-            Add Risk Factor
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="category">Risk Category</Label>
-              <Select 
-                value={currentRisk.category} 
-                onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, category: value }))}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {riskCategories.map(category => (
-                    <SelectItem key={category} value={category}>{category}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="description">Risk Description</Label>
-              <Input
-                id="description"
-                value={currentRisk.description || ""}
-                onChange={(e) => setCurrentRisk(prev => ({ ...prev, description: e.target.value }))}
-                placeholder="Describe the specific risk"
-              />
-            </div>
-            <div>
-              <Label htmlFor="likelihood">Likelihood (1-5)</Label>
-              <Select 
-                value={currentRisk.likelihood?.toString()} 
-                onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, likelihood: parseInt(value) }))}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select likelihood" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1">1 - Very Unlikely</SelectItem>
-                  <SelectItem value="2">2 - Unlikely</SelectItem>
-                  <SelectItem value="3">3 - Possible</SelectItem>
-                  <SelectItem value="4">4 - Likely</SelectItem>
-                  <SelectItem value="5">5 - Very Likely</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="severity">Severity (1-5)</Label>
-              <Select 
-                value={currentRisk.severity?.toString()} 
-                onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, severity: parseInt(value) }))}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select severity" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1">1 - Negligible</SelectItem>
-                  <SelectItem value="2">2 - Minor</SelectItem>
-                  <SelectItem value="3">3 - Moderate</SelectItem>
-                  <SelectItem value="4">4 - Major</SelectItem>
-                  <SelectItem value="5">5 - Catastrophic</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          
-          {currentRisk.likelihood && currentRisk.severity && (
-            <div className="p-4 bg-elec-dark rounded-lg">
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground">Risk Level:</span>
-                <Badge className={calculateRiskLevel(currentRisk.likelihood, currentRisk.severity).color}>
-                  {calculateRiskLevel(currentRisk.likelihood, currentRisk.severity).level}
-                </Badge>
-                <span className="text-sm text-muted-foreground">
-                  (Score: {currentRisk.likelihood * currentRisk.severity})
-                </span>
-              </div>
-            </div>
-          )}
+      {/* Add Risk Button */}
+      {!showAddForm && (
+        <Card className="border-elec-yellow/20 bg-elec-gray/60">
+          <CardContent className="p-6">
+            <Button 
+              onClick={() => setShowAddForm(true)}
+              className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12"
+            >
+              <Plus className="h-5 w-5 mr-2" />
+              Add New Risk Factor
+            </Button>
+          </CardContent>
+        </Card>
+      )}
 
-          <Button onClick={addRiskFactor} className="w-full">
-            <Plus className="h-4 w-4 mr-2" />
-            Add Risk Factor
-          </Button>
-        </CardContent>
-      </Card>
+      {/* Add New Risk Form - Progressive Disclosure */}
+      {showAddForm && (
+        <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-elec-yellow flex items-center gap-2">
+                <Edit3 className="h-5 w-5" />
+                Add Risk Factor
+              </CardTitle>
+              <Button
+                onClick={() => setShowAddForm(false)}
+                size="sm"
+                variant="outline"
+                className="border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            {/* Form Fields - Stacked on Mobile */}
+            <div className="space-y-4">
+              {/* Risk Category */}
+              <div>
+                <Label htmlFor="category" className="text-white text-sm font-medium">Risk Category</Label>
+                <Select 
+                  value={currentRisk.category} 
+                  onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, category: value }))}
+                >
+                  <SelectTrigger className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
+                    <SelectValue placeholder="Select risk category" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                    {riskCategories.map(category => (
+                      <SelectItem key={category} value={category}>{category}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Risk Description */}
+              <div>
+                <Label htmlFor="description" className="text-white text-sm font-medium">Risk Description</Label>
+                <Textarea
+                  id="description"
+                  value={currentRisk.description || ""}
+                  onChange={(e) => setCurrentRisk(prev => ({ ...prev, description: e.target.value }))}
+                  placeholder="Describe the specific risk in detail..."
+                  className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50 min-h-[80px]"
+                />
+              </div>
+
+              {/* Likelihood and Severity - Side by Side on Larger Screens */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="likelihood" className="text-white text-sm font-medium">Likelihood (1-5)</Label>
+                  <Select 
+                    value={currentRisk.likelihood?.toString()} 
+                    onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, likelihood: parseInt(value) }))}
+                  >
+                    <SelectTrigger className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
+                      <SelectValue placeholder="Select likelihood" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                      <SelectItem value="1">1 - Very Unlikely</SelectItem>
+                      <SelectItem value="2">2 - Unlikely</SelectItem>
+                      <SelectItem value="3">3 - Possible</SelectItem>
+                      <SelectItem value="4">4 - Likely</SelectItem>
+                      <SelectItem value="5">5 - Very Likely</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="severity" className="text-white text-sm font-medium">Severity (1-5)</Label>
+                  <Select 
+                    value={currentRisk.severity?.toString()} 
+                    onValueChange={(value) => setCurrentRisk(prev => ({ ...prev, severity: parseInt(value) }))}
+                  >
+                    <SelectTrigger className="mt-2 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
+                      <SelectValue placeholder="Select severity" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-elec-dark border-elec-yellow/20">
+                      <SelectItem value="1">1 - Negligible</SelectItem>
+                      <SelectItem value="2">2 - Minor</SelectItem>
+                      <SelectItem value="3">3 - Moderate</SelectItem>
+                      <SelectItem value="4">4 - Major</SelectItem>
+                      <SelectItem value="5">5 - Catastrophic</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Risk Level Preview */}
+              {currentRisk.likelihood && currentRisk.severity && (
+                <div className="p-4 bg-elec-dark/50 rounded-lg border border-elec-yellow/20">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                    <span className="text-sm text-muted-foreground">Risk Level:</span>
+                    <Badge className={`${calculateRiskLevel(currentRisk.likelihood, currentRisk.severity).color} text-white`}>
+                      {calculateRiskLevel(currentRisk.likelihood, currentRisk.severity).level}
+                    </Badge>
+                    <span className="text-sm text-muted-foreground">
+                      (Score: {currentRisk.likelihood * currentRisk.severity}/25)
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3">
+              <Button 
+                onClick={addRiskFactor} 
+                className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                disabled={!currentRisk.category || !currentRisk.description}
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Risk Factor
+              </Button>
+              <Button
+                onClick={() => setShowAddForm(false)}
+                variant="outline"
+                className="border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10"
+              >
+                Cancel
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Risk Factors List */}
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-elec-gray/80 backdrop-blur-sm">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <AlertTriangle className="h-5 w-5" />
@@ -221,36 +288,64 @@ const RiskAssessmentBuilder = () => {
         </CardHeader>
         <CardContent>
           {riskFactors.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
-              No risk factors identified yet. Add your first risk factor above.
+            <div className="text-center py-12">
+              <AlertTriangle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <p className="text-muted-foreground mb-2">No risk factors identified yet</p>
+              <p className="text-sm text-muted-foreground">Add your first risk factor to begin the assessment</p>
             </div>
           ) : (
             <div className="space-y-4">
               {riskFactors.map((risk) => {
                 const riskLevel = calculateRiskLevel(risk.likelihood, risk.severity);
                 return (
-                  <Card key={risk.id} className="border-elec-yellow/30">
+                  <Card key={risk.id} className="border-elec-yellow/30 bg-elec-gray/40 hover:bg-elec-gray/60 transition-colors">
                     <CardContent className="p-4">
-                      <div className="flex justify-between items-start mb-3">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
-                            <Badge variant="outline">{risk.category}</Badge>
-                            <Badge className={riskLevel.color}>{risk.riskLevel}</Badge>
+                      {/* Mobile-Optimized Layout */}
+                      <div className="space-y-3">
+                        {/* Header Row */}
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1 space-y-2">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <Badge 
+                                variant="outline" 
+                                className="border-elec-yellow/30 text-muted-foreground text-xs"
+                              >
+                                {risk.category}
+                              </Badge>
+                              <Badge className={`${riskLevel.color} text-white text-xs`}>
+                                {risk.riskLevel}
+                              </Badge>
+                            </div>
+                            <p className="text-sm sm:text-base font-medium text-white leading-relaxed">
+                              {risk.description}
+                            </p>
                           </div>
-                          <p className="text-sm font-medium mb-2">{risk.description}</p>
-                          <div className="flex gap-4 text-xs text-muted-foreground">
-                            <span>Likelihood: {risk.likelihood}/5</span>
-                            <span>Severity: {risk.severity}/5</span>
-                            <span>Score: {risk.likelihood * risk.severity}</span>
+                          <Button
+                            onClick={() => removeRiskFactor(risk.id)}
+                            size="sm"
+                            variant="outline"
+                            className="border-red-500/30 text-red-400 hover:bg-red-500/10 flex-shrink-0"
+                          >
+                            <X className="h-4 w-4 sm:mr-1" />
+                            <span className="hidden sm:inline">Remove</span>
+                          </Button>
+                        </div>
+
+                        {/* Risk Metrics */}
+                        <div className="grid grid-cols-3 gap-4 p-3 bg-elec-dark/30 rounded-lg">
+                          <div className="text-center">
+                            <div className="text-sm font-medium text-muted-foreground">Likelihood</div>
+                            <div className="text-lg font-bold text-white">{risk.likelihood}/5</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-sm font-medium text-muted-foreground">Severity</div>
+                            <div className="text-lg font-bold text-white">{risk.severity}/5</div>
+                          </div>
+                          <div className="text-center">
+                            <div className="text-sm font-medium text-muted-foreground">Score</div>
+                            <div className="text-lg font-bold text-elec-yellow">{risk.likelihood * risk.severity}</div>
                           </div>
                         </div>
-                        <Button
-                          onClick={() => removeRiskFactor(risk.id)}
-                          size="sm"
-                          variant="outline"
-                        >
-                          Remove
-                        </Button>
                       </div>
                     </CardContent>
                   </Card>
@@ -261,18 +356,82 @@ const RiskAssessmentBuilder = () => {
         </CardContent>
       </Card>
 
+      {/* Action Buttons - Only show when risks exist */}
       {riskFactors.length > 0 && (
-        <div className="flex gap-4">
-          <Button className="flex-1">
-            <Save className="h-4 w-4 mr-2" />
-            Save Assessment
-          </Button>
-          <Button variant="outline">
-            <Eye className="h-4 w-4 mr-2" />
-            Preview Report
-          </Button>
-        </div>
+        <Card className="border-elec-yellow/20 bg-elec-gray/60">
+          <CardContent className="p-4">
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button className="flex-1 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 h-12">
+                <Save className="h-4 w-4 mr-2" />
+                Save Assessment
+              </Button>
+              <Button 
+                variant="outline" 
+                className="flex-1 border-elec-yellow/30 text-muted-foreground hover:bg-elec-yellow/10 h-12"
+              >
+                <Eye className="h-4 w-4 mr-2" />
+                Preview Report
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       )}
+
+      {/* Safety Best Practices - Bottom Section */}
+      <Card className="border-green-500/30 bg-green-500/5">
+        <CardHeader>
+          <CardTitle className="text-green-300 flex items-center gap-2 text-lg">
+            <Shield className="h-5 w-5" />
+            Safety Best Practices
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 text-sm">
+            <div>
+              <h4 className="font-medium text-green-300 mb-3">Risk Assessment Process:</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400 mt-1">•</span>
+                  Identify all potential hazards on site
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400 mt-1">•</span>
+                  Assess likelihood and severity objectively
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400 mt-1">•</span>
+                  Prioritise high-risk items first
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400 mt-1">•</span>
+                  Review assessments regularly
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium text-green-300 mb-3">UK Compliance:</h4>
+              <ul className="space-y-2 text-muted-foreground">
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400 mt-1">•</span>
+                  Follow CDM Regulations 2015
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400 mt-1">•</span>
+                  Comply with BS 7671 requirements
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400 mt-1">•</span>
+                  Document all risk assessments
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400 mt-1">•</span>
+                  Share with all team members
+                </li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
