@@ -1,45 +1,17 @@
 
-import { useState } from "react";
-import { Brain, ArrowLeft, Sparkles } from "lucide-react";
+import { Brain, ArrowLeft, Sparkles, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { toolOptions } from "@/components/electrician-tools/ai-tools/constants";
-import AIAssistant from "@/components/electrician-tools/ai-tools/AIAssistant";
-import VisualAnalysis from "@/components/electrician-tools/ai-tools/VisualAnalysis";
-import ReportWriter from "@/components/electrician-tools/ai-tools/ReportWriter";
-import RegulationsAssistant from "@/components/electrician-tools/ai-tools/RegulationsAssistant";
-import CircuitDesigner from "@/components/electrician-tools/ai-tools/CircuitDesigner";
 
 const AITooling = () => {
-  const [activeTool, setActiveTool] = useState("assistant");
-
-  const renderContent = () => {
-    switch (activeTool) {
-      case "assistant":
-        return <AIAssistant />;
-      case "visual":
-        return <VisualAnalysis />;
-      case "reports":
-        return <ReportWriter />;
-      case "regulations":
-        return <RegulationsAssistant />;
-      case "circuit":
-        return <CircuitDesigner />;
-      default:
-        return <AIAssistant />;
-    }
-  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-elec-dark via-elec-gray to-elec-dark">
+    <div className="min-h-screen bg-elec-dark">
       {/* Header Section */}
-      <div className="relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-gradient-to-r from-elec-yellow/10 via-transparent to-elec-yellow/5" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,193,7,0.1),transparent_70%)]" />
-        
-        <div className="relative px-4 py-8 md:py-12">
+      <div className="border-b border-elec-gray/20">
+        <div className="px-4 py-6 md:py-8">
           <div className="max-w-7xl mx-auto">
             {/* Navigation */}
             <div className="flex items-center justify-between mb-8">
@@ -62,46 +34,59 @@ const AITooling = () => {
 
             {/* Hero Section */}
             <div className="text-center mb-12">
-              <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-elec-yellow to-yellow-400 rounded-2xl mb-6 shadow-lg shadow-elec-yellow/20">
-                <Brain className="h-10 w-10 text-elec-dark" />
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl mb-6">
+                <Brain className="h-8 w-8 text-elec-yellow" />
               </div>
               
-              <h1 className="text-4xl md:text-6xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-elec-yellow via-yellow-400 to-elec-yellow bg-clip-text text-transparent">
-                  AI Tooling Suite
-                </span>
+              <h1 className="text-3xl md:text-4xl font-bold text-elec-light mb-4">
+                AI Tooling Suite
               </h1>
               
-              <p className="text-lg md:text-xl text-elec-light/80 max-w-2xl mx-auto leading-relaxed">
-                Revolutionise your electrical work with intelligent AI assistants designed specifically for UK electricians and BS 7671 compliance.
+              <p className="text-lg text-elec-light/70 max-w-2xl mx-auto">
+                Professional AI tools designed specifically for UK electricians and BS 7671 compliance
               </p>
-            </div>
-
-            {/* Tool Selection */}
-            <div className="mb-8">
-              <DropdownTabs
-                tabs={toolOptions.map(tool => ({
-                  value: tool.value,
-                  label: tool.label,
-                  icon: tool.icon,
-                  content: renderContent()
-                }))}
-                defaultValue={activeTool}
-                onValueChange={setActiveTool}
-                placeholder="Select an AI tool"
-                className="max-w-4xl mx-auto"
-                triggerClassName="w-full max-w-md mx-auto bg-elec-gray/50 backdrop-blur-sm border-elec-yellow/20 hover:border-elec-yellow/40 text-elec-light"
-              />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Content Section */}
-      <div className="px-4 pb-12">
+      {/* Tools Grid */}
+      <div className="px-4 py-12">
         <div className="max-w-6xl mx-auto">
-          <div className="animate-fade-in">
-            {renderContent()}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {toolOptions.map((tool) => {
+              const IconComponent = tool.icon;
+              return (
+                <Card 
+                  key={tool.value} 
+                  className="bg-elec-gray/50 border-elec-gray/30 hover:border-elec-yellow/40 transition-all duration-200 group cursor-pointer"
+                >
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg flex items-center justify-center group-hover:bg-elec-yellow/20 transition-colors">
+                        <IconComponent className="h-5 w-5 text-elec-yellow" />
+                      </div>
+                      <CardTitle className="text-lg text-elec-light group-hover:text-elec-yellow transition-colors">
+                        {tool.label}
+                      </CardTitle>
+                    </div>
+                    <CardDescription className="text-elec-light/60 text-sm leading-relaxed">
+                      {tool.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <Link to={`/electrician-tools/ai-tooling/${tool.value}`}>
+                      <Button 
+                        className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium group-hover:shadow-lg group-hover:shadow-elec-yellow/20 transition-all"
+                      >
+                        Open Tool
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </div>

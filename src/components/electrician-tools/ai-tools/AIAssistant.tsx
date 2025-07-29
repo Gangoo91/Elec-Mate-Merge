@@ -68,44 +68,29 @@ const AIAssistant = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/80 to-elec-card/60 backdrop-blur-sm shadow-xl">
-        <CardHeader className="bg-gradient-to-r from-elec-yellow/10 to-transparent">
-          <CardTitle className="text-2xl flex items-center gap-3">
-            <div className="p-2 bg-elec-yellow/20 rounded-lg">
-              <Brain className="h-6 w-6 text-elec-yellow" />
+      <Card className="border-elec-gray/30 bg-elec-gray/50 shadow-xl">
+        <CardHeader>
+          <CardTitle className="text-2xl flex items-center gap-3 text-elec-light">
+            <div className="w-10 h-10 bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg flex items-center justify-center">
+              <Brain className="h-5 w-5 text-elec-yellow" />
             </div>
-            ElectricalMate AI Assistant
+            AI Assistant
           </CardTitle>
           <CardDescription className="text-elec-light/70 text-base">
-            Your personal AI assistant for electrical queries and advice based on UK standards
+            Get expert electrical guidance and BS 7671 advice from your AI assistant
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6 p-6">
-          {/* Quick Tips */}
-          <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg p-4">
-            <div className="flex items-start gap-3">
-              <Lightbulb className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <div>
-                <h4 className="font-medium text-elec-yellow mb-2">Ask about:</h4>
-                <div className="text-sm text-elec-light/80 space-y-1">
-                  <p>• UK regulations and BS 7671 compliance</p>
-                  <p>• Cable sizing and load calculations</p>
-                  <p>• Installation best practices and troubleshooting</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Example Queries */}
-          <div className="space-y-3">
-            <h4 className="font-medium text-elec-light">Try these examples:</h4>
-            <div className="flex flex-wrap gap-2">
+        <CardContent className="space-y-6">
+          {/* Example Questions */}
+          <div className="space-y-4">
+            <h4 className="font-medium text-elec-light">Example questions to get started:</h4>
+            <div className="grid grid-cols-1 gap-2">
               {exampleQueries.map((query, index) => (
                 <Button
                   key={index}
                   variant="outline"
                   size="sm"
-                  className="text-xs border-elec-yellow/30 text-elec-light/80 hover:bg-elec-yellow/10 hover:border-elec-yellow/50"
+                  className="text-xs border-elec-yellow/30 text-elec-light/80 hover:bg-elec-yellow/10 hover:border-elec-yellow/50 h-auto py-3 px-4 text-left justify-start"
                   onClick={() => setPrompt(query)}
                 >
                   {query}
@@ -117,26 +102,26 @@ const AIAssistant = () => {
           {/* Input Area */}
           <div className="space-y-4">
             <Textarea
-              placeholder="e.g., What's the recommended cable size for a 32A circuit with 25m run length according to BS 7671?"
+              placeholder="Ask me anything about electrical work, BS 7671 regulations, safety requirements, calculations, or best practices..."
               className="min-h-[120px] bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/40 text-elec-light placeholder:text-elec-light/50 resize-none"
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
             />
             
             <Button 
-              className="w-full bg-gradient-to-r from-elec-yellow to-yellow-400 hover:from-elec-yellow/90 hover:to-yellow-400/90 text-elec-dark font-semibold py-3 shadow-lg shadow-elec-yellow/20" 
+              className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium py-3" 
               onClick={handleAIQuery} 
               disabled={isLoading}
             >
               {isLoading ? (
                 <>
                   <Loader className="h-5 w-5 mr-2 animate-spin" /> 
-                  Generating Response...
+                  Getting Answer...
                 </>
               ) : (
                 <>
-                  <Send className="h-5 w-5 mr-2" />
-                  Ask ElectricalMate
+                  <Brain className="h-5 w-5 mr-2" />
+                  Ask Assistant
                 </>
               )}
             </Button>
@@ -144,39 +129,46 @@ const AIAssistant = () => {
 
           {/* Loading State */}
           {isLoading && (
-            <div className="mt-6 p-6 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
+            <div className="p-6 bg-elec-dark/30 rounded-lg border border-elec-yellow/20">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-8 h-8 bg-elec-yellow/20 rounded-full flex items-center justify-center">
                   <Brain className="h-4 w-4 text-elec-yellow" />
                 </div>
-                <Skeleton className="h-6 w-40" />
+                <span className="text-elec-light font-medium">AI Assistant is thinking...</span>
               </div>
               <div className="space-y-3">
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-3/4" />
-                <Skeleton className="h-4 w-5/6" />
+                <Skeleton className="h-4 w-full bg-elec-gray/50" />
+                <Skeleton className="h-4 w-3/4 bg-elec-gray/50" />
+                <Skeleton className="h-4 w-5/6 bg-elec-gray/50" />
               </div>
             </div>
           )}
 
           {/* AI Response */}
           {aiResponse && !isLoading && (
-            <div className="mt-6 p-6 bg-gradient-to-br from-elec-dark/60 to-elec-dark/80 rounded-lg border border-elec-yellow/20">
+            <div className="p-6 bg-elec-dark/30 rounded-lg border border-elec-yellow/20">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-8 h-8 bg-elec-yellow/20 rounded-full flex items-center justify-center">
                   <Brain className="h-4 w-4 text-elec-yellow" />
                 </div>
-                <h3 className="text-lg font-semibold text-elec-yellow">ElectricalMate Response</h3>
+                <h3 className="text-lg font-medium text-elec-light">Response</h3>
               </div>
+              
               <div className="prose prose-invert max-w-none">
                 <div className="text-sm text-elec-light/90 whitespace-pre-wrap leading-relaxed">
                   {aiResponse.split('\n').map((line, index) => (
-                    <p key={index} className={
-                      line.startsWith('#') ? 'text-elec-yellow font-semibold mt-4 mb-2' : 
-                      line.startsWith('•') || line.startsWith('-') ? 'text-elec-light/80 ml-4 my-1' :
-                      'my-2'
-                    }>
+                    <p 
+                      key={index}
+                      className={
+                        line.match(/^(ANSWER|EXPLANATION|REQUIREMENTS|CALCULATION|REFERENCE):/) ?
+                        'text-elec-yellow font-semibold text-base mt-6 mb-3 first:mt-0' :
+                        line.endsWith(':') && line.length < 50 ?
+                        'font-medium text-green-400 mt-4 mb-2' :
+                        line.startsWith('•') || line.startsWith('-') ?
+                        'text-elec-light/80 ml-4 my-1' :
+                        'my-2'
+                      }
+                    >
                       {line}
                     </p>
                   ))}

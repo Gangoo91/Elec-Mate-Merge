@@ -28,12 +28,22 @@ import FinancialTools from "@/pages/electrician-tools/FinancialTools";
 import CareerProgression from "@/pages/electrician/CareerProgression";
 import SiteSafety from "@/pages/electrician-tools/SiteSafety";
 import EnhancedTestingGrid from "@/components/inspection-testing/schedule-of-results/EnhancedTestingGrid";
+import AssistantPage from "@/pages/electrician-tools/ai-tools/AssistantPage";
+import VisualAnalysisPage from "@/pages/electrician-tools/ai-tools/VisualAnalysisPage";
+import ReportWriterPage from "@/pages/electrician-tools/ai-tools/ReportWriterPage";
+import RegulationsPage from "@/pages/electrician-tools/ai-tools/RegulationsPage";
+import CircuitDesignerPage from "@/pages/electrician-tools/ai-tools/CircuitDesignerPage";
 
 const ElectricianRoutes = () => (
   <Routes>
     <Route index element={<ProjectManagement />} />
     <Route path="admin" element={<Admin />} />
     <Route path="ai-tooling" element={<AITooling />} />
+    <Route path="ai-tooling/assistant" element={<AssistantPage />} />
+    <Route path="ai-tooling/visual" element={<VisualAnalysisPage />} />
+    <Route path="ai-tooling/reports" element={<ReportWriterPage />} />
+    <Route path="ai-tooling/regulations" element={<RegulationsPage />} />
+    <Route path="ai-tooling/circuit" element={<CircuitDesignerPage />} />
     <Route path="business-management" element={<BusinessManagement />} />
     <Route path="compliance" element={<ComplianceManager />} />
     <Route path="calculations" element={<Calculations />} />
