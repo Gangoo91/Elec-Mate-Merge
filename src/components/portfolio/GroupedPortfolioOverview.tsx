@@ -127,7 +127,7 @@ const GroupedPortfolioOverview: React.FC<GroupedPortfolioOverviewProps> = ({
                         key={category.id}
                         className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 bg-muted rounded text-sm"
                       >
-                        <div className="flex items-center justify-center sm:justify-start">
+                        <div className="flex items-center justify-start">
                           <Badge variant="outline" className="text-xs">
                             {category.name}
                           </Badge>
