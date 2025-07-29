@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Brain, Loader, Send, Lightbulb, Search, BookOpen } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -83,81 +82,89 @@ const AIAssistant = () => {
   };
 
   const exampleQueries = [
-    "What's the cable size for a 32A circuit over 25m?",
-    "RCD requirements for domestic installations", 
-    "How to test an EICR circuit safely?",
-    "Earthing requirements for TT systems",
-    "Cable calculations for ring circuits",
-    "Isolation switch requirements"
+    "RCD bathroom requirements",
+    "Cable sizing formula", 
+    "Testing sequence",
+    "Zs values for MCBs",
+    "Bonding conductor sizes",
+    "IP rating requirements"
   ];
 
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-gray/30 bg-elec-gray/50 shadow-xl">
-        <CardHeader>
-          <CardTitle className="text-2xl flex items-center gap-3 text-elec-light">
-            <div className="w-10 h-10 bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg flex items-center justify-center">
-              <Brain className="h-5 w-5 text-elec-yellow" />
-            </div>
-            AI Assistant
-          </CardTitle>
-          <CardDescription className="text-elec-light/70 text-base">
-            Get expert electrical guidance and BS 7671 advice from your AI assistant
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="text-center space-y-4">
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-500/20 rounded-2xl mb-4">
+          <Brain className="h-8 w-8 text-purple-400" />
+        </div>
+        <h1 className="text-3xl font-bold text-elec-light">AI Assistant</h1>
+        <p className="text-elec-light/70 text-lg max-w-2xl mx-auto">
+          Ask questions about BS7671 electrical regulations in plain English. Get instant answers
+          with relevant regulations, practical guidance, and safety tips.
+        </p>
+      </div>
+
+      {/* Main Search Card */}
+      <Card className="bg-gradient-to-br from-purple-900/50 to-purple-800/30 border-purple-500/30 shadow-2xl max-w-4xl mx-auto">
+        <CardHeader className="text-center pb-6">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Brain className="h-6 w-6 text-purple-400" />
+            <CardTitle className="text-2xl text-white">AI Assistant</CardTitle>
+          </div>
+          <CardDescription className="text-purple-100/80 text-base">
+            Ask about electrical regulations, testing procedures, or installation requirements:
           </CardDescription>
         </CardHeader>
+        
         <CardContent className="space-y-6">
-          {/* Example Questions */}
-          <div className="space-y-4">
-            <h4 className="font-medium text-elec-light">Example questions to get started:</h4>
-            <div className="grid grid-cols-1 gap-2">
-              {exampleQueries.map((query, index) => (
-                <Button
-                  key={index}
-                  variant="outline"
-                  size="sm"
-                  className="text-xs border-elec-yellow/30 text-elec-light/80 hover:bg-elec-yellow/10 hover:border-elec-yellow/50 h-auto py-3 px-4 text-left justify-start"
-                  onClick={() => setPrompt(query)}
-                >
-                  {query}
-                </Button>
-              ))}
-            </div>
-          </div>
-
           {/* Input Area */}
           <div className="space-y-4">
             <Textarea
               placeholder="Ask me anything about electrical work, BS 7671 regulations, safety requirements, calculations, or best practices..."
-              className="min-h-[120px] bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/40 text-elec-light placeholder:text-elec-light/50 resize-none"
+              className="min-h-[100px] bg-elec-dark/50 border-purple-400/30 focus:border-purple-400 text-elec-light placeholder:text-elec-light/60 resize-none text-base"
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
             />
             
-            <Button 
-              className="w-full bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-medium py-3" 
-              onClick={handleAIQuery} 
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <Loader className="h-5 w-5 mr-2 animate-spin" /> 
-                  Getting Answer...
-                </>
-              ) : (
-                <>
-                  <Brain className="h-5 w-5 mr-2" />
-                  Ask Assistant
-                </>
-              )}
-            </Button>
+            <div className="flex gap-3">
+              <Button 
+                className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 h-12" 
+                onClick={handleAIQuery} 
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader className="h-5 w-5 mr-2 animate-spin" /> 
+                    Searching...
+                  </>
+                ) : (
+                  <>
+                    <Search className="h-5 w-5 mr-2" />
+                    Search
+                  </>
+                )}
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="border-purple-400/30 text-purple-300 hover:bg-purple-500/10 px-6 h-12"
+                onClick={() => {
+                  setPrompt("");
+                  setAnalysisResult("");
+                  setRegulationsResult("");
+                }}
+              >
+                Clear
+              </Button>
+            </div>
           </div>
 
           {/* Loading State */}
           {isLoading && (
-            <div className="p-6 bg-elec-dark/30 rounded-lg border border-elec-yellow/20">
+            <div className="p-6 bg-purple-900/30 rounded-lg border border-purple-500/20">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-elec-yellow/20 rounded-full flex items-center justify-center">
-                  <Brain className="h-4 w-4 text-elec-yellow" />
+                <div className="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center">
+                  <Brain className="h-4 w-4 text-purple-400" />
                 </div>
                 <span className="text-elec-light font-medium">AI Assistant is thinking...</span>
               </div>
@@ -169,15 +176,32 @@ const AIAssistant = () => {
             </div>
           )}
 
+          {/* Example Questions */}
+          <div className="space-y-4">
+            <h4 className="font-medium text-purple-200">Try these questions:</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {exampleQueries.map((query, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  size="sm"
+                  className="border-purple-400/20 text-purple-200/90 hover:bg-purple-500/10 hover:border-purple-400/40 h-auto py-3 px-4 text-left justify-start text-sm"
+                  onClick={() => setPrompt(query)}
+                >
+                  {query}
+                </Button>
+              ))}
+            </div>
+          </div>
         </CardContent>
       </Card>
 
       {/* Results Grid */}
       {(analysisResult || regulationsResult) && !isLoading && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-6xl mx-auto">
           {/* Analysis Section */}
           {analysisResult && (
-            <Card className="border-elec-gray/30 bg-elec-gray/50">
+            <Card className="border-green-500/30 bg-green-900/20">
               <CardHeader className="pb-4">
                 <CardTitle className="text-lg flex items-center gap-3 text-elec-light">
                   <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
@@ -196,7 +220,7 @@ const AIAssistant = () => {
                           line.match(/^(CALCULATION|SIZING|ASSESSMENT|ANALYSIS|RECOMMENDATION):/) ?
                           'text-green-400 font-semibold text-base mt-4 mb-2 first:mt-0' :
                           line.endsWith(':') && line.length < 50 ?
-                          'font-medium text-blue-400 mt-3 mb-1' :
+                          'font-medium text-green-300 mt-3 mb-1' :
                           line.startsWith('•') || line.startsWith('-') ?
                           'text-elec-light/80 ml-4 my-1' :
                           line.trim() === '' ? 'my-2' :
@@ -214,7 +238,7 @@ const AIAssistant = () => {
 
           {/* Relevant Regulations */}
           {regulationsResult && (
-            <Card className="border-elec-gray/30 bg-elec-gray/50">
+            <Card className="border-blue-500/30 bg-blue-900/20">
               <CardHeader className="pb-4">
                 <CardTitle className="text-lg flex items-center gap-3 text-elec-light">
                   <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
@@ -233,7 +257,7 @@ const AIAssistant = () => {
                           line.match(/^(Regulation|BS 7671|IET|Section)/i) ?
                           'text-blue-400 font-semibold text-base mt-4 mb-2 first:mt-0' :
                           line.match(/^\d{3}\.\d/) ?
-                          'text-elec-yellow font-medium mt-3 mb-1' :
+                          'text-purple-400 font-medium mt-3 mb-1' :
                           line.endsWith(':') && line.length < 50 ?
                           'font-medium text-blue-300 mt-3 mb-1' :
                           line.startsWith('•') || line.startsWith('-') ?
