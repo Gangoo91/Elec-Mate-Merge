@@ -88,9 +88,9 @@ const PortfolioExportDialog = ({ entries }: PortfolioExportDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="gap-2">
-          <Download className="h-4 w-4" />
-          Export Portfolio
+        <Button variant="outline" className="gap-1.5 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10 text-sm" size="sm">
+          <Download className="h-3.5 w-3.5" />
+          Export
         </Button>
       </DialogTrigger>
       

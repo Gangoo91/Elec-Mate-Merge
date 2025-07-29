@@ -173,33 +173,33 @@ const PortfolioManager = () => {
       <QualificationSelector />
 
       {/* Quick Actions */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-wrap gap-2 sm:gap-3">
         <Button 
           onClick={() => setShowAddForm(true)}
           disabled={isAddingEntry}
-          className="flex items-center gap-2 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
-          size="lg"
+          className="flex items-center gap-1.5 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 text-sm"
+          size="sm"
         >
-          <Plus className="h-4 w-4" />
-          {isAddingEntry ? 'Adding...' : 'Add Portfolio Entry'}
+          <Plus className="h-3.5 w-3.5" />
+          {isAddingEntry ? 'Adding...' : 'Add Entry'}
         </Button>
         <Button 
           onClick={handleChangeCourse}
           variant="outline"
-          className="flex items-center gap-2 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
-          size="lg"
+          className="flex items-center gap-1.5 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10 text-sm"
+          size="sm"
         >
-          <RefreshCw className="h-4 w-4" />
-          Clear Course Selection
+          <RefreshCw className="h-3.5 w-3.5" />
+          Clear Selection
         </Button>
         <PortfolioExportDialog entries={entries} />
         <Button 
           onClick={refresh}
           variant="outline"
-          className="flex items-center gap-2 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
+          className="flex items-center gap-1.5 border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10 text-sm"
           size="sm"
         >
-          <RefreshCw className="h-4 w-4" />
+          <RefreshCw className="h-3.5 w-3.5" />
           Refresh
         </Button>
       </div>
