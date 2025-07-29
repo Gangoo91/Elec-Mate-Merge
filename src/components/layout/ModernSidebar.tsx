@@ -42,7 +42,7 @@ const ModernSidebar = () => {
   return (
     <Sidebar 
       collapsible="icon" 
-      className="bg-elec-gray border-r border-elec-yellow/20 group-data-[collapsible=icon]:w-12 md:group-data-[collapsible=icon]:w-14"
+      className="bg-elec-gray border-r border-elec-yellow/20 md:group-data-[collapsible=icon]:w-14"
     >
       <SidebarHeader className="border-b border-elec-yellow/20 bg-elec-gray">
         <div className={cn(
@@ -82,7 +82,7 @@ const ModernSidebar = () => {
                       tooltip={isCollapsed ? item.name : undefined}
                       className={cn(
                         "transition-all duration-200 hover:bg-elec-yellow/10 hover:text-elec-yellow",
-                        "group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:p-1",
+                        "md:group-data-[collapsible=icon]:justify-center md:group-data-[collapsible=icon]:w-8 md:group-data-[collapsible=icon]:h-8 md:group-data-[collapsible=icon]:p-1",
                         isActive && "!bg-elec-yellow !text-elec-dark font-semibold hover:!bg-elec-yellow/90"
                       )}
                     >
@@ -101,6 +101,13 @@ const ModernSidebar = () => {
                             {item.name}
                           </span>
                         )}
+                        {/* Show text on mobile even when collapsed */}
+                        <span className={cn(
+                          "md:hidden transition-all duration-200 text-xs",
+                          isActive ? "text-elec-dark" : "text-white"
+                        )}>
+                          {item.name}
+                        </span>
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
