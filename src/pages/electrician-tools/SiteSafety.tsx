@@ -3,7 +3,8 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Shield, FileText, AlertTriangle, Camera, Users, ClipboardCheck, Wrench, Phone } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ArrowLeft, Shield, FileText, AlertTriangle, Camera, Users, ClipboardCheck, Wrench, Phone, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import BackButton from "@/components/common/BackButton";
 import RAMSGenerator from "@/components/electrician-tools/site-safety/RAMSGenerator";
@@ -25,6 +26,23 @@ const SiteSafety = () => {
     { label: "Near Miss Reports", value: "3", color: "text-yellow-400" },
     { label: "Safety Equipment Items", value: "45", color: "text-purple-400" }
   ];
+
+  const tabOptions = [
+    { value: "rams", label: "RAMS Generator", icon: FileText },
+    { value: "risk-assessment", label: "Risk Assessment", icon: AlertTriangle },
+    { value: "method-statement", label: "Method Statement", icon: ClipboardCheck },
+    { value: "hazard-database", label: "Hazard Database", icon: Shield },
+    { value: "photo-docs", label: "Photo Documentation", icon: Camera },
+    { value: "team-briefing", label: "Team Briefing", icon: Users },
+    { value: "near-miss", label: "Near Miss Reports", icon: AlertTriangle },
+    { value: "equipment", label: "Safety Equipment", icon: Wrench },
+    { value: "emergency", label: "Emergency Procedures", icon: Phone }
+  ];
+
+  const getCurrentTabLabel = () => {
+    const currentTab = tabOptions.find(tab => tab.value === activeTab);
+    return currentTab ? currentTab.label : "Select Tool";
+  };
 
   return (
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
@@ -50,43 +68,71 @@ const SiteSafety = () => {
       </div>
 
       <Tabs defaultValue="rams" value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 lg:grid-cols-9 gap-1">
-          <TabsTrigger value="rams" className="flex items-center gap-1 text-xs">
-            <FileText className="h-3 w-3" />
-            <span className="hidden sm:inline">RAMS</span>
-          </TabsTrigger>
-          <TabsTrigger value="risk-assessment" className="flex items-center gap-1 text-xs">
-            <AlertTriangle className="h-3 w-3" />
-            <span className="hidden sm:inline">Risk</span>
-          </TabsTrigger>
-          <TabsTrigger value="method-statement" className="flex items-center gap-1 text-xs">
-            <ClipboardCheck className="h-3 w-3" />
-            <span className="hidden sm:inline">Method</span>
-          </TabsTrigger>
-          <TabsTrigger value="hazard-database" className="flex items-center gap-1 text-xs">
-            <Shield className="h-3 w-3" />
-            <span className="hidden sm:inline">Hazards</span>
-          </TabsTrigger>
-          <TabsTrigger value="photo-docs" className="flex items-center gap-1 text-xs">
-            <Camera className="h-3 w-3" />
-            <span className="hidden sm:inline">Photos</span>
-          </TabsTrigger>
-          <TabsTrigger value="team-briefing" className="flex items-center gap-1 text-xs">
-            <Users className="h-3 w-3" />
-            <span className="hidden sm:inline">Briefing</span>
-          </TabsTrigger>
-          <TabsTrigger value="near-miss" className="flex items-center gap-1 text-xs">
-            <AlertTriangle className="h-3 w-3" />
-            <span className="hidden sm:inline">Near Miss</span>
-          </TabsTrigger>
-          <TabsTrigger value="equipment" className="flex items-center gap-1 text-xs">
-            <Wrench className="h-3 w-3" />
-            <span className="hidden sm:inline">Equipment</span>
-          </TabsTrigger>
-          <TabsTrigger value="emergency" className="flex items-center gap-1 text-xs">
-            <Phone className="h-3 w-3" />
-            <span className="hidden sm:inline">Emergency</span>
-          </TabsTrigger>
+        {/* Mobile Dropdown */}
+        <div className="lg:hidden mb-6">
+          <Select value={activeTab} onValueChange={setActiveTab}>
+            <SelectTrigger className="w-full bg-background/80 backdrop-blur-sm border-elec-yellow/20 z-50">
+              <div className="flex items-center gap-3">
+                {(() => {
+                  const currentTab = tabOptions.find(tab => tab.value === activeTab);
+                  const IconComponent = currentTab?.icon || FileText;
+                  return (
+                    <>
+                      <IconComponent className="h-4 w-4 text-elec-yellow" />
+                      <SelectValue placeholder="Select a safety tool" />
+                    </>
+                  );
+                })()}
+              </div>
+            </SelectTrigger>
+            <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
+              {tabOptions.map((tab) => {
+                const IconComponent = tab.icon;
+                return (
+                  <SelectItem key={tab.value} value={tab.value} className="cursor-pointer">
+                    <div className="flex items-center gap-3">
+                      <IconComponent className="h-4 w-4" />
+                      <span>{tab.label}</span>
+                    </div>
+                  </SelectItem>
+                );
+              })}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Desktop Tabs */}
+        <TabsList className="hidden lg:grid w-full grid-cols-5 gap-2 h-auto p-1">
+          {tabOptions.slice(0, 5).map((tab) => {
+            const IconComponent = tab.icon;
+            return (
+              <TabsTrigger 
+                key={tab.value} 
+                value={tab.value} 
+                className="flex items-center gap-2 py-3 px-4 text-sm"
+              >
+                <IconComponent className="h-4 w-4" />
+                <span>{tab.label}</span>
+              </TabsTrigger>
+            );
+          })}
+        </TabsList>
+
+        {/* Second row for desktop */}
+        <TabsList className="hidden lg:grid w-full grid-cols-4 gap-2 h-auto p-1 mt-2">
+          {tabOptions.slice(5).map((tab) => {
+            const IconComponent = tab.icon;
+            return (
+              <TabsTrigger 
+                key={tab.value} 
+                value={tab.value} 
+                className="flex items-center gap-2 py-3 px-4 text-sm"
+              >
+                <IconComponent className="h-4 w-4" />
+                <span>{tab.label}</span>
+              </TabsTrigger>
+            );
+          })}
         </TabsList>
 
         <TabsContent value="rams" className="mt-6">
