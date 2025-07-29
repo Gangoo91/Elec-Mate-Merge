@@ -17,6 +17,7 @@ import { useUltraFastPortfolio } from '@/hooks/portfolio/useUltraFastPortfolio';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
 import { UltraFastLoadingState } from '@/components/portfolio/UltraFastLoadingState';
 import { useTimeEntries } from '@/hooks/time-tracking/useTimeEntries';
+import PortfolioExportDialog from '@/components/apprentice/portfolio/PortfolioExportDialog';
 
 // Memoized components for performance
 const MemoizedStatsCard = memo(({ 
@@ -191,6 +192,7 @@ const PortfolioManager = () => {
           <RefreshCw className="h-4 w-4" />
           Clear Course Selection
         </Button>
+        <PortfolioExportDialog entries={entries} />
         <Button 
           onClick={refresh}
           variant="outline"
