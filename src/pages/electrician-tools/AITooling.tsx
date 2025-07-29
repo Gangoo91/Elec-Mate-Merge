@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Brain, Image, FileText, Book, Zap, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -11,7 +11,32 @@ import RegulationsAssistant from "@/components/electrician-tools/ai-tools/Regula
 import CircuitDesigner from "@/components/electrician-tools/ai-tools/CircuitDesigner";
 
 const AITooling = () => {
-  const [activeTab, setActiveTab] = useState("assistant");
+  const [activeTool, setActiveTool] = useState("assistant");
+
+  const toolOptions = [
+    { value: "assistant", label: "AI Assistant", icon: Brain },
+    { value: "visual", label: "Visual Analysis", icon: Image },
+    { value: "reports", label: "Report Writer", icon: FileText },
+    { value: "regulations", label: "Regulations", icon: Book },
+    { value: "circuit", label: "Circuit Design", icon: Zap }
+  ];
+
+  const renderContent = () => {
+    switch (activeTool) {
+      case "assistant":
+        return <AIAssistant />;
+      case "visual":
+        return <VisualAnalysis />;
+      case "reports":
+        return <ReportWriter />;
+      case "regulations":
+        return <RegulationsAssistant />;
+      case "circuit":
+        return <CircuitDesigner />;
+      default:
+        return <AIAssistant />;
+    }
+  };
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -33,55 +58,43 @@ const AITooling = () => {
         </div>
       </div>
 
-      <Tabs defaultValue="assistant" value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-5 mb-6">
-          <TabsTrigger value="assistant" className="flex items-center gap-2">
-            <Brain className="h-4 w-4" />
-            <span className="hidden sm:inline">AI Assistant</span>
-            <span className="inline sm:hidden">Assistant</span>
-          </TabsTrigger>
-          <TabsTrigger value="visual" className="flex items-center gap-2">
-            <Image className="h-4 w-4" />
-            <span className="hidden sm:inline">Visual Analysis</span>
-            <span className="inline sm:hidden">Visual</span>
-          </TabsTrigger>
-          <TabsTrigger value="reports" className="flex items-center gap-2">
-            <FileText className="h-4 w-4" />
-            <span className="hidden sm:inline">Report Writer</span>
-            <span className="inline sm:hidden">Reports</span>
-          </TabsTrigger>
-          <TabsTrigger value="regulations" className="flex items-center gap-2">
-            <Book className="h-4 w-4" />
-            <span className="hidden sm:inline">Regulations</span>
-            <span className="inline sm:hidden">Regs</span>
-          </TabsTrigger>
-          <TabsTrigger value="circuit" className="flex items-center gap-2">
-            <Zap className="h-4 w-4" />
-            <span className="hidden sm:inline">Circuit Design</span>
-            <span className="inline sm:hidden">Circuits</span>
-          </TabsTrigger>
-        </TabsList>
+      {/* AI Tool Selector Dropdown */}
+      <div className="mb-6">
+        <Select value={activeTool} onValueChange={setActiveTool}>
+          <SelectTrigger className="w-full max-w-md mx-auto bg-background/80 backdrop-blur-sm border-elec-yellow/20">
+            <div className="flex items-center gap-3">
+              {(() => {
+                const currentTool = toolOptions.find(tool => tool.value === activeTool);
+                const IconComponent = currentTool?.icon || Brain;
+                return (
+                  <>
+                    <IconComponent className="h-4 w-4 text-elec-yellow" />
+                    <SelectValue placeholder="Select an AI tool" />
+                  </>
+                );
+              })()}
+            </div>
+          </SelectTrigger>
+          <SelectContent className="bg-background/95 backdrop-blur-sm border-elec-yellow/20 z-50">
+            {toolOptions.map((tool) => {
+              const IconComponent = tool.icon;
+              return (
+                <SelectItem key={tool.value} value={tool.value} className="cursor-pointer">
+                  <div className="flex items-center gap-3">
+                    <IconComponent className="h-4 w-4" />
+                    <span>{tool.label}</span>
+                  </div>
+                </SelectItem>
+              );
+            })}
+          </SelectContent>
+        </Select>
+      </div>
 
-        <TabsContent value="assistant">
-          <AIAssistant />
-        </TabsContent>
-
-        <TabsContent value="visual">
-          <VisualAnalysis />
-        </TabsContent>
-
-        <TabsContent value="reports">
-          <ReportWriter />
-        </TabsContent>
-
-        <TabsContent value="regulations">
-          <RegulationsAssistant />
-        </TabsContent>
-
-        <TabsContent value="circuit">
-          <CircuitDesigner />
-        </TabsContent>
-      </Tabs>
+      {/* Content Area */}
+      <div className="mt-6">
+        {renderContent()}
+      </div>
     </div>
   );
 };
