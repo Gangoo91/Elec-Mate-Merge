@@ -24,7 +24,7 @@ import { Button } from "@/components/ui/button";
 const ModernSidebar = () => {
   const { profile, isTrialActive, isSubscribed, subscriptionTier } = useAuth();
   const location = useLocation();
-  const { state } = useSidebar();
+  const { state, isMobile, setOpenMobile } = useSidebar();
   const [searchQuery] = useState("");
   
   const userRole = profile?.role || "visitor";
@@ -86,7 +86,9 @@ const ModernSidebar = () => {
                         isActive && "!bg-elec-yellow !text-elec-dark font-semibold hover:!bg-elec-yellow/90"
                       )}
                     >
-                      <Link to={item.path} className="flex items-center gap-3 w-full">
+                      <Link to={item.path} className="flex items-center gap-3 w-full" onClick={() => {
+                        if (isMobile) setOpenMobile(false);
+                      }}>
                         <div className={cn(
                           "transition-all duration-200",
                           isActive ? "text-elec-dark" : "text-white"
