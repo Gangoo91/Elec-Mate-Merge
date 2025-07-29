@@ -44,12 +44,26 @@ const AIAssistant = () => {
         throw new Error(data.error);
       }
       
-      // Parse structured response
-      if (data.analysis) {
+      // Handle both structured and regular responses
+      if (data.analysis && data.regulations) {
+        // Structured response
         setAnalysisResult(data.analysis);
-      }
-      if (data.regulations) {
         setRegulationsResult(data.regulations);
+      } else if (data.response) {
+        // Fallback to regular response - split into sections
+        const response = data.response;
+        const sections = response.split(/(?=REGULATIONS?:|ANALYSIS:|TECHNICAL|COMPLIANCE)/i);
+        
+        if (sections.length > 1) {
+          setAnalysisResult(sections[0].trim());
+          setRegulationsResult(sections.slice(1).join('\n').trim());
+        } else {
+          // Single response - put in analysis section
+          setAnalysisResult(response);
+          setRegulationsResult("See analysis section for regulation details.");
+        }
+      } else {
+        throw new Error("No valid response received from AI");
       }
       
       toast({
