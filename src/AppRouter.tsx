@@ -4,7 +4,7 @@ import LandingPage from "@/pages/LandingPage";
 import Index from "@/pages/Index";
 import SignIn from "@/pages/auth/SignIn";
 import SignUp from "@/pages/auth/SignUp";
-import Layout from "@/components/layout/Layout";
+import ModernLayout from "@/components/layout/ModernLayout";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import Dashboard from "@/pages/Dashboard";
 import Profile from "@/pages/Profile";
@@ -38,7 +38,7 @@ const AppRouter = () => {
       {/* Main Protected Routes */}
       <Route path="/" element={
         <ProtectedRoute>
-          <Layout />
+          <ModernLayout />
         </ProtectedRoute>
       }>
         <Route path="dashboard" element={<Dashboard />} />
