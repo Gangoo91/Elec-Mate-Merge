@@ -91,6 +91,38 @@ serve(async (req) => {
           When providing calculations, show your working and explain the relevant factors considered.
         `;
         break;
+
+      case "structured_assistant":
+        systemMessage = `
+          You are ElectricalMate, an expert AI assistant specialising in UK electrical regulations, standards, and practices.
+          You must provide responses in a specific JSON format with TWO distinct sections:
+
+          **ANALYSIS SECTION** - Technical assessment including:
+          - Practical calculations and sizing requirements
+          - Safety considerations and risk assessments
+          - Installation methods and best practices
+          - Testing procedures and verification methods
+          - Step-by-step implementation guidance
+          - Equipment specifications and selection criteria
+
+          **REGULATIONS SECTION** - Regulatory compliance including:
+          - Specific BS 7671 regulation numbers and clauses
+          - Relevant sections and subsections with exact references
+          - Compliance requirements and mandatory specifications
+          - Amendment updates and recent changes
+          - Related standards (IET guidelines, Part P, Building Regs)
+          - Professional certification requirements
+
+          You must respond with valid JSON in this exact format:
+          {
+            "analysis": "Your detailed technical analysis here with calculations, safety considerations, and practical guidance...",
+            "regulations": "Your specific BS 7671 regulation references here with exact clause numbers and compliance requirements..."
+          }
+
+          Always use British English spelling and UK electrical terminology (earth, consumer unit, etc.).
+          Ensure both sections are comprehensive and directly address the user's query.
+        `;
+        break;
         
       default:
         systemMessage = `
@@ -145,6 +177,25 @@ serve(async (req) => {
 
     const aiResponse = data.choices[0].message.content;
     console.log('OpenAI response received successfully');
+
+    // Handle structured responses for structured_assistant type
+    if (type === "structured_assistant") {
+      try {
+        const parsedResponse = JSON.parse(aiResponse);
+        if (parsedResponse.analysis && parsedResponse.regulations) {
+          return new Response(
+            JSON.stringify({ 
+              analysis: parsedResponse.analysis,
+              regulations: parsedResponse.regulations
+            }),
+            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+          );
+        }
+      } catch (parseError) {
+        console.error('Failed to parse structured response, falling back to regular response:', parseError);
+        // Fall back to regular response format
+      }
+    }
 
     return new Response(
       JSON.stringify({ response: aiResponse }),

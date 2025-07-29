@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Brain, Loader, Send, Lightbulb } from "lucide-react";
+import { Brain, Loader, Send, Lightbulb, Search, BookOpen } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,7 +10,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const AIAssistant = () => {
   const [prompt, setPrompt] = useState("");
-  const [aiResponse, setAiResponse] = useState("");
+  const [analysisResult, setAnalysisResult] = useState("");
+  const [regulationsResult, setRegulationsResult] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleAIQuery = async () => {
@@ -24,13 +25,14 @@ const AIAssistant = () => {
     }
     
     setIsLoading(true);
-    setAiResponse("");
+    setAnalysisResult("");
+    setRegulationsResult("");
     
     try {
       const { data, error } = await supabase.functions.invoke('electrician-ai-assistant', {
         body: { 
           prompt: prompt,
-          type: "general" 
+          type: "structured_assistant" 
         },
       });
       
@@ -42,11 +44,17 @@ const AIAssistant = () => {
         throw new Error(data.error);
       }
       
-      setAiResponse(data.response);
+      // Parse structured response
+      if (data.analysis) {
+        setAnalysisResult(data.analysis);
+      }
+      if (data.regulations) {
+        setRegulationsResult(data.regulations);
+      }
       
       toast({
-        title: "Response Generated",
-        description: "AI has provided an answer to your query.",
+        title: "Analysis Complete",
+        description: "AI has provided detailed analysis and regulation guidance.",
       });
     } catch (error) {
       console.error('AI Query Error:', error);
@@ -62,8 +70,11 @@ const AIAssistant = () => {
 
   const exampleQueries = [
     "What's the cable size for a 32A circuit over 25m?",
-    "RCD requirements for domestic installations",
-    "How to test an EICR circuit safely?"
+    "RCD requirements for domestic installations", 
+    "How to test an EICR circuit safely?",
+    "Earthing requirements for TT systems",
+    "Cable calculations for ring circuits",
+    "Isolation switch requirements"
   ];
 
   return (
@@ -144,40 +155,89 @@ const AIAssistant = () => {
             </div>
           )}
 
-          {/* AI Response */}
-          {aiResponse && !isLoading && (
-            <div className="p-6 bg-elec-dark/30 rounded-lg border border-elec-yellow/20">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-elec-yellow/20 rounded-full flex items-center justify-center">
-                  <Brain className="h-4 w-4 text-elec-yellow" />
-                </div>
-                <h3 className="text-lg font-medium text-elec-light">Response</h3>
-              </div>
-              
-              <div className="prose prose-invert max-w-none">
-                <div className="text-sm text-elec-light/90 whitespace-pre-wrap leading-relaxed">
-                  {aiResponse.split('\n').map((line, index) => (
-                    <p 
-                      key={index}
-                      className={
-                        line.match(/^(ANSWER|EXPLANATION|REQUIREMENTS|CALCULATION|REFERENCE):/) ?
-                        'text-elec-yellow font-semibold text-base mt-6 mb-3 first:mt-0' :
-                        line.endsWith(':') && line.length < 50 ?
-                        'font-medium text-green-400 mt-4 mb-2' :
-                        line.startsWith('•') || line.startsWith('-') ?
-                        'text-elec-light/80 ml-4 my-1' :
-                        'my-2'
-                      }
-                    >
-                      {line}
-                    </p>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
         </CardContent>
       </Card>
+
+      {/* Results Grid */}
+      {(analysisResult || regulationsResult) && !isLoading && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Analysis Section */}
+          {analysisResult && (
+            <Card className="border-elec-gray/30 bg-elec-gray/50">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-lg flex items-center gap-3 text-elec-light">
+                  <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center">
+                    <Search className="h-4 w-4 text-green-400" />
+                  </div>
+                  Analysis
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="prose prose-invert max-w-none">
+                  <div className="text-sm text-elec-light/90 whitespace-pre-wrap leading-relaxed">
+                    {analysisResult.split('\n').map((line, index) => (
+                      <p 
+                        key={index}
+                        className={
+                          line.match(/^(CALCULATION|SIZING|ASSESSMENT|ANALYSIS|RECOMMENDATION):/) ?
+                          'text-green-400 font-semibold text-base mt-4 mb-2 first:mt-0' :
+                          line.endsWith(':') && line.length < 50 ?
+                          'font-medium text-blue-400 mt-3 mb-1' :
+                          line.startsWith('•') || line.startsWith('-') ?
+                          'text-elec-light/80 ml-4 my-1' :
+                          line.trim() === '' ? 'my-2' :
+                          'my-1'
+                        }
+                      >
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Relevant Regulations */}
+          {regulationsResult && (
+            <Card className="border-elec-gray/30 bg-elec-gray/50">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-lg flex items-center gap-3 text-elec-light">
+                  <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center">
+                    <BookOpen className="h-4 w-4 text-blue-400" />
+                  </div>
+                  Relevant Regulations
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="prose prose-invert max-w-none">
+                  <div className="text-sm text-elec-light/90 whitespace-pre-wrap leading-relaxed">
+                    {regulationsResult.split('\n').map((line, index) => (
+                      <p 
+                        key={index}
+                        className={
+                          line.match(/^(Regulation|BS 7671|IET|Section)/i) ?
+                          'text-blue-400 font-semibold text-base mt-4 mb-2 first:mt-0' :
+                          line.match(/^\d{3}\.\d/) ?
+                          'text-elec-yellow font-medium mt-3 mb-1' :
+                          line.endsWith(':') && line.length < 50 ?
+                          'font-medium text-blue-300 mt-3 mb-1' :
+                          line.startsWith('•') || line.startsWith('-') ?
+                          'text-elec-light/80 ml-4 my-1' :
+                          line.trim() === '' ? 'my-2' :
+                          'my-1'
+                        }
+                      >
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      )}
     </div>
   );
 };
