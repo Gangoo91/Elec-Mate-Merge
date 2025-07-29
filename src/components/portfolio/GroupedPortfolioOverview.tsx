@@ -67,7 +67,7 @@ const GroupedPortfolioOverview: React.FC<GroupedPortfolioOverviewProps> = ({
     <div className="space-y-4">
       <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {groups.map((group) => (
-          <Card key={group.id} className="w-full hover:shadow-md transition-shadow">
+          <Card key={group.id} className="w-full h-full flex flex-col hover:shadow-md transition-shadow">
             <CardHeader className="pb-3">
               <div className="flex flex-col items-center gap-3">
                 <Badge variant={getCompetencyBadgeVariant(group.competencyLevel)}>
@@ -84,78 +84,82 @@ const GroupedPortfolioOverview: React.FC<GroupedPortfolioOverviewProps> = ({
                 {group.description}
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <div className="flex justify-between text-sm mb-2">
-                  <span>Progress</span>
-                  <span>{group.progressPercentage}%</span>
+            <CardContent className="flex-grow flex flex-col">
+              <div className="space-y-4 flex-grow">
+                <div>
+                  <div className="flex justify-between text-sm mb-2">
+                    <span>Progress</span>
+                    <span>{group.progressPercentage}%</span>
+                  </div>
+                  <Progress value={group.progressPercentage} className="h-2" />
                 </div>
-                <Progress value={group.progressPercentage} className="h-2" />
+
+                <div className="flex justify-between items-center text-sm text-muted-foreground">
+                  <span>Completed: {group.totalCompleted}</span>
+                  <span>Required: {group.totalRequired}</span>
+                </div>
               </div>
 
-              <div className="flex justify-between text-sm text-muted-foreground">
-                <span>Completed: {group.totalCompleted}</span>
-                <span>Required: {group.totalRequired}</span>
-              </div>
+              <div className="mt-4 space-y-2">
+                <Collapsible 
+                  open={expandedGroups.has(group.id)}
+                  onOpenChange={() => toggleGroup(group.id)}
+                >
+                  <CollapsibleTrigger asChild>
+                    <Button variant="ghost" size="sm" className="w-full justify-between">
+                      View Categories ({group.categories.length})
+                      {expandedGroups.has(group.id) ? (
+                        <ChevronDown className="h-4 w-4" />
+                      ) : (
+                        <ChevronRight className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className="space-y-2 mt-2">
+                    {group.categories.map((category) => {
+                      const categoryEntries = getEntriesByGroup(group.id).filter(
+                        entry => entry.category.id === category.id
+                      );
+                      const completed = categoryEntries.filter(e => e.status === 'completed').length;
+                      const progress = category.requiredEntries > 0 
+                        ? Math.round((completed / category.requiredEntries) * 100) 
+                        : 0;
 
-              <Collapsible 
-                open={expandedGroups.has(group.id)}
-                onOpenChange={() => toggleGroup(group.id)}
-              >
-                <CollapsibleTrigger asChild>
-                  <Button variant="ghost" size="sm" className="w-full justify-between">
-                    View Categories ({group.categories.length})
-                    {expandedGroups.has(group.id) ? (
-                      <ChevronDown className="h-4 w-4" />
-                    ) : (
-                      <ChevronRight className="h-4 w-4" />
-                    )}
-                  </Button>
-                </CollapsibleTrigger>
-                <CollapsibleContent className="space-y-2 mt-2">
-                  {group.categories.map((category) => {
-                    const categoryEntries = getEntriesByGroup(group.id).filter(
-                      entry => entry.category.id === category.id
-                    );
-                    const completed = categoryEntries.filter(e => e.status === 'completed').length;
-                    const progress = category.requiredEntries > 0 
-                      ? Math.round((completed / category.requiredEntries) * 100) 
-                      : 0;
-
-                    return (
-                      <div 
-                        key={category.id}
-                        className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 bg-muted rounded text-sm"
-                      >
-                        <div className="flex items-center justify-start">
-                          <Badge variant="outline" className="text-xs">
-                            {category.name}
-                          </Badge>
-                        </div>
-                        <div className="flex items-center justify-between sm:justify-end gap-3">
-                          <span className="text-xs text-muted-foreground">
-                            {completed}/{category.requiredEntries}
-                          </span>
-                          <div className="w-20">
-                            <Progress value={progress} className="h-1" />
+                      return (
+                        <div 
+                          key={category.id}
+                          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 bg-muted rounded text-sm"
+                        >
+                          <div className="flex items-center justify-start">
+                            <Badge variant="outline" className="text-xs">
+                              {category.name}
+                            </Badge>
+                          </div>
+                          <div className="flex items-center justify-between sm:justify-end gap-3">
+                            <span className="text-xs text-muted-foreground">
+                              {completed}/{category.requiredEntries}
+                            </span>
+                            <div className="w-20">
+                              <Progress value={progress} className="h-1" />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </CollapsibleContent>
-              </Collapsible>
+                      );
+                    })}
+                  </CollapsibleContent>
+                </Collapsible>
 
-              {onGroupSelect && (
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="w-full mt-2"
-                  onClick={() => onGroupSelect(group.id)}
-                >
-                  View Group Details
-                </Button>
-              )}
+                {onGroupSelect && (
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full"
+                    onClick={() => onGroupSelect(group.id)}
+                  >
+                    View Group Details
+                  </Button>
+                )}
+              </div>
             </CardContent>
           </Card>
         ))}
