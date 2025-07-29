@@ -93,7 +93,7 @@ const AIAssistant = () => {
 
   return (
     <div className="min-h-screen bg-neutral-900 text-white">
-      <div className="w-full max-w-7xl mx-auto p-2 sm:p-4 lg:p-6 space-y-3 sm:space-y-6 lg:space-y-8">
+      <div className="max-w-6xl mx-auto p-3 sm:p-6 space-y-4 sm:space-y-8">
         {/* Hero Section */}
         <div className="text-center space-y-4 sm:space-y-6">
           <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500/30 to-purple-600/30 rounded-2xl border border-purple-400/30">
@@ -109,7 +109,7 @@ const AIAssistant = () => {
         </div>
 
         {/* AI Search Interface Component */}
-        <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 w-full max-w-6xl mx-auto">
+        <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600 max-w-5xl mx-auto">
           <CardHeader className="p-4 sm:p-6">
             <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
               <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400" />
@@ -201,7 +201,7 @@ const AIAssistant = () => {
 
         {/* Results Grid */}
         {(analysisResult || regulationsResult) && !isLoading && showResults && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3 lg:gap-4 w-full max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 max-w-6xl mx-auto">
             {/* Analysis Section */}
             {analysisResult && (
               <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
@@ -281,7 +281,7 @@ const AIAssistant = () => {
         )}
 
         {/* Benefits Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 lg:gap-4 w-full max-w-7xl mx-auto mt-6 sm:mt-8 lg:mt-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 max-w-6xl mx-auto mt-8 sm:mt-12">
           <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-neutral-600">
             <CardContent className="p-3 sm:p-4">
               <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
