@@ -28,7 +28,7 @@ const Dashboard = () => {
   const userName = profile?.full_name || profile?.username || userData.name;
 
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in px-4 md:px-6">
+    <div className="space-y-4 md:space-y-6 animate-fade-in">
       <Card className="bg-elec-gray border border-elec-yellow/20 rounded-lg p-4 md:p-6">
         <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-start md:items-center">
           <div className="flex-1 w-full">

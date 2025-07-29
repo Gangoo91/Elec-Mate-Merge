@@ -36,7 +36,7 @@ const Layout = () => {
         <main className="flex-1 relative pb-4 md:pb-0 pt-16 overflow-x-hidden">
           <div className={cn(
             "py-4 md:py-8 overflow-x-hidden",
-            isMobile ? "px-2 max-w-full" : "container mx-auto px-4 md:px-6 lg:px-8 max-w-7xl"
+            isMobile ? "px-2 max-w-full" : "px-4 md:px-6 lg:px-8 w-full"
           )}>
             <Outlet />
           </div>
