@@ -28,7 +28,7 @@ const Layout = () => {
       <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
 
       <div className={cn("flex flex-col flex-1 relative overflow-hidden", 
-        isMobile ? "w-full" : "md:ml-56"
+        isMobile ? "w-full" : "md:ml-64"
       )}>
         {/* Header with mobile menu toggle */}
         <Header toggleSidebar={toggleSidebar} />

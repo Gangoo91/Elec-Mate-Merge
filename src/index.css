@@ -86,18 +86,16 @@
     --elec-dark: 0 0% 7%;
     --elec-light: 210 40% 98%;
     --elec-gray: 0 0% 16%;
-    --elec-gray-light: 0 0% 20%;
     --elec-yellow: 47 100% 50%;
     --elec-card: 0 0% 10%;
     
-    /* Sidebar colors for dark mode */
-    --sidebar-background: 0 0% 16%;
-    --sidebar-foreground: 210 40% 98%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 47 100% 50%;
-    --sidebar-primary-foreground: 0 0% 7%;
-    --sidebar-accent: 0 0% 20%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 47 100% 50% / 0.2;
+    --sidebar-primary-foreground: 240 5.9% 10%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 47 100% 50%;
   }
 }

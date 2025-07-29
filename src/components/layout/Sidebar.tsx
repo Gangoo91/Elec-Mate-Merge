@@ -58,7 +58,7 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 flex w-56 flex-col bg-elec-gray border-r border-elec-yellow/20 transition-transform duration-300 ease-in-out",
+          "fixed inset-y-0 left-0 z-50 flex w-64 flex-col bg-elec-gray border-r border-elec-yellow/20 transition-transform duration-300 ease-in-out",
           "md:relative md:translate-x-0 md:z-auto",
           open ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}
