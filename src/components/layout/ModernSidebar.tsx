@@ -25,17 +25,15 @@ const ModernSidebar = () => {
   const { profile, isTrialActive, isSubscribed, subscriptionTier } = useAuth();
   const location = useLocation();
   const { state } = useSidebar();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery] = useState("");
   
   const userRole = profile?.role || "visitor";
   const isCollapsed = state === "collapsed";
 
-  // Filter items based on user role and search query
-  const filteredItems = mainNavItems.filter((item) => {
-    const roleMatch = item.roles.includes(userRole);
-    const searchMatch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
-    return roleMatch && searchMatch;
-  });
+  // Filter items based on user role
+  const filteredItems = mainNavItems.filter((item) => 
+    item.roles.includes(userRole)
+  );
 
   const isItemActive = (item: NavItem) => {
     return location.pathname === item.path || location.pathname.startsWith(`${item.path}/`);
@@ -63,20 +61,6 @@ const ModernSidebar = () => {
             </Link>
           )}
         </div>
-        
-        {!isCollapsed && (
-          <div className="px-2 pb-2">
-            <div className="relative">
-              <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-              <SidebarInput
-                placeholder="Search navigation..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-8 bg-elec-gray-light border-elec-yellow/20 text-white placeholder:text-gray-400 focus:border-elec-yellow"
-              />
-            </div>
-          </div>
-        )}
       </SidebarHeader>
 
       <SidebarContent className="bg-elec-gray">
