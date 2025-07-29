@@ -33,7 +33,7 @@ const setCachedData = <T,>(key: string, data: T): void => {
 };
 
 // Phase 2: Optimized parallel data loading
-const loadAllPortfolioData = async (userId: string) => {
+const loadAllPortfolioData = async (userId: string, qualificationId: string) => {
   const [portfolioResponse, qualificationsResponse, categoriesResponse, complianceResponse] = await Promise.all([
     supabase
       .from('portfolio_items')
@@ -60,7 +60,8 @@ const loadAllPortfolioData = async (userId: string) => {
     
     supabase
       .from('qualification_categories')
-      .select('*'),
+      .select('*')
+      .eq('qualification_id', qualificationId),
     
     supabase
       .from('qualification_compliance')
@@ -167,7 +168,7 @@ export const useUltraFastPortfolio = () => {
   // Phase 2: Parallel data loading with React Query
   const { data: portfolioData, isLoading, error } = useQuery({
     queryKey: ['ultra-fast-portfolio', user?.id, userSelection?.qualification_id],
-    queryFn: () => loadAllPortfolioData(user!.id),
+    queryFn: () => loadAllPortfolioData(user!.id, userSelection!.qualification_id),
     enabled: !!user?.id && !!userSelection,
     staleTime: 1000 * 60 * 2, // 2 minutes cache
     refetchOnWindowFocus: false,
@@ -181,7 +182,7 @@ export const useUltraFastPortfolio = () => {
     }
   }, [portfolioData]);
 
-  // Clear cached data when no qualification is selected
+  // Clear cached data when no qualification is selected or when qualification changes
   useEffect(() => {
     if (!userSelection) {
       setInstantData({
@@ -198,8 +199,17 @@ export const useUltraFastPortfolio = () => {
           console.warn('Failed to clear cache:', error);
         }
       });
+    } else {
+      // Force refresh when qualification changes
+      Object.values(CACHE_KEYS).forEach(key => {
+        try {
+          sessionStorage.removeItem(key);
+        } catch (error) {
+          console.warn('Failed to clear cache:', error);
+        }
+      });
     }
-  }, [userSelection]);
+  }, [userSelection?.qualification_id]);
 
   // Phase 3: Memoized processing of portfolio data
   const processedData = useMemo(() => {
