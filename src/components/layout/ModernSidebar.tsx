@@ -99,7 +99,7 @@ const ModernSidebar = () => {
                       className={cn(
                         "transition-all duration-200 hover:bg-elec-yellow/10 hover:text-elec-yellow",
                         "group-data-[collapsible=icon]:justify-center",
-                        isActive && "bg-elec-yellow text-elec-dark font-semibold hover:bg-elec-yellow/90"
+                        isActive && "!bg-elec-yellow !text-elec-dark font-semibold hover:!bg-elec-yellow/90"
                       )}
                     >
                       <Link to={item.path} className="flex items-center gap-3 w-full">
