@@ -103,21 +103,23 @@ const BusinessPlanningTab = () => {
         {planningSteps.map((step, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-elec-yellow">
-                {step.icon}
-                {step.title}
-                <Badge variant="outline" className="ml-auto text-xs">
+              <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 text-elec-yellow">
+                <div className="flex items-center gap-2">
+                  {step.icon}
+                  {step.title}
+                </div>
+                <Badge variant="outline" className="text-xs sm:ml-auto self-start">
                   {step.timeframe}
                 </Badge>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground mb-4">{step.description}</p>
-              <div className="grid md:grid-cols-2 gap-2">
+              <p className="text-muted-foreground mb-4 leading-relaxed">{step.description}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {step.points.map((point, pointIndex) => (
-                  <div key={pointIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <Badge variant="outline" className="mt-0.5 h-2 w-2 rounded-full p-0 border-elec-yellow/50 bg-elec-yellow/20" />
-                    {point}
+                  <div key={pointIndex} className="flex items-start gap-2 text-sm text-muted-foreground p-2 rounded-lg bg-elec-dark/30">
+                    <Badge variant="outline" className="mt-0.5 h-2 w-2 rounded-full p-0 border-elec-yellow/50 bg-elec-yellow/20 flex-shrink-0" />
+                    <span className="leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -128,7 +130,7 @@ const BusinessPlanningTab = () => {
 
       <BusinessPlanTemplate />
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {marketResearchTips.map((section, index) => (
           <Card key={index} className="border-purple-500/50 bg-purple-500/10">
             <CardHeader>
@@ -138,11 +140,11 @@ const BusinessPlanningTab = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ul className="space-y-2">
+              <ul className="space-y-3">
                 {section.tips.map((tip, tipIndex) => (
-                  <li key={tipIndex} className="flex items-start gap-2 text-sm text-purple-200">
+                  <li key={tipIndex} className="flex items-start gap-2 text-sm text-purple-200 p-2 rounded-lg bg-purple-500/5">
                     <Lightbulb className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                    {tip}
+                    <span className="leading-relaxed">{tip}</span>
                   </li>
                 ))}
               </ul>
@@ -159,10 +161,10 @@ const BusinessPlanningTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <h4 className="font-semibold text-green-200 mb-3">Essential Planning Tasks</h4>
-              <ul className="space-y-2 text-sm">
+              <h4 className="font-semibold text-green-200 mb-4">Essential Planning Tasks</h4>
+              <ul className="space-y-3 text-sm">
                 {[
                   "Complete market research in target area",
                   "Define service offerings and pricing",
@@ -171,16 +173,16 @@ const BusinessPlanningTab = () => {
                   "Plan marketing and customer acquisition",
                   "Set revenue and growth targets"
                 ].map((task, index) => (
-                  <li key={index} className="flex items-center gap-2 text-green-200">
-                    <div className="h-2 w-2 bg-green-400 rounded-full" />
-                    {task}
+                  <li key={index} className="flex items-start gap-2 text-green-200 p-2 rounded-lg bg-green-500/5">
+                    <div className="h-2 w-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                    <span className="leading-relaxed">{task}</span>
                   </li>
                 ))}
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-green-200 mb-3">Success Metrics</h4>
-              <ul className="space-y-2 text-sm">
+              <h4 className="font-semibold text-green-200 mb-4">Success Metrics</h4>
+              <ul className="space-y-3 text-sm">
                 {[
                   "Monthly revenue targets",
                   "Customer acquisition goals",
@@ -189,9 +191,9 @@ const BusinessPlanningTab = () => {
                   "Service quality benchmarks",
                   "Business growth milestones"
                 ].map((metric, index) => (
-                  <li key={index} className="flex items-center gap-2 text-green-200">
-                    <div className="h-2 w-2 bg-green-400 rounded-full" />
-                    {metric}
+                  <li key={index} className="flex items-start gap-2 text-green-200 p-2 rounded-lg bg-green-500/5">
+                    <div className="h-2 w-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                    <span className="leading-relaxed">{metric}</span>
                   </li>
                 ))}
               </ul>
