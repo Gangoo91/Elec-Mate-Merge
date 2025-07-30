@@ -103,21 +103,25 @@ const ToolsGuidanceTab = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           {businessTemplates.map((template, index) => (
-            <div key={index} className="flex items-center justify-between p-4 bg-elec-dark/30 rounded-lg">
-              <div className="flex-1">
-                <h4 className="font-medium text-white">{template.name}</h4>
-                <p className="text-sm text-muted-foreground">{template.description}</p>
-                <div className="flex items-center gap-2 mt-2">
-                  <Badge variant="outline" className="text-xs">{template.type}</Badge>
+            <div key={index} className="p-4 bg-elec-dark/30 rounded-lg border border-elec-yellow/10">
+              <div className="flex flex-col gap-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1">
+                    <h4 className="font-medium text-white">{template.name}</h4>
+                    <p className="text-sm text-muted-foreground mt-1">{template.description}</p>
+                  </div>
+                  <Button size="sm" className="flex-shrink-0">
+                    <Download className="h-4 w-4 mr-1" />
+                    Download
+                  </Button>
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  <Badge variant="outline" className="text-xs border-elec-yellow/50 text-elec-yellow bg-elec-yellow/10">{template.type}</Badge>
                   <span className="text-xs text-muted-foreground">{template.size}</span>
                   <span className="text-xs text-muted-foreground">★ {template.rating}</span>
                   <span className="text-xs text-muted-foreground">{template.downloads} downloads</span>
                 </div>
               </div>
-              <Button size="sm" className="ml-4">
-                <Download className="h-4 w-4 mr-1" />
-                Download
-              </Button>
             </div>
           ))}
         </CardContent>
@@ -133,22 +137,24 @@ const ToolsGuidanceTab = () => {
         <CardContent className="space-y-4">
           {digitalTools.map((tool, index) => (
             <div key={index} className="p-4 bg-blue-500/5 rounded-lg border border-blue-500/20">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <h4 className="font-medium text-white">{tool.name}</h4>
-                  <p className="text-sm text-muted-foreground mb-3">{tool.description}</p>
-                  <div className="grid grid-cols-2 gap-2">
-                    {tool.features.map((feature, featureIndex) => (
-                      <div key={featureIndex} className="flex items-center gap-1 text-xs text-blue-200">
-                        <CheckCircle className="h-3 w-3" />
-                        {feature}
-                      </div>
-                    ))}
+              <div className="flex flex-col gap-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1">
+                    <h4 className="font-medium text-white">{tool.name}</h4>
+                    <p className="text-sm text-muted-foreground mt-1">{tool.description}</p>
+                  </div>
+                  <div className="flex flex-col items-end gap-2">
+                    <Badge className="bg-blue-500/20 text-blue-300 border-blue-400/30">{tool.type}</Badge>
+                    <Button size="sm">Launch</Button>
                   </div>
                 </div>
-                <div className="ml-4">
-                  <Badge className="bg-blue-500/20 text-blue-300">{tool.type}</Badge>
-                  <Button size="sm" className="ml-2">Launch</Button>
+                <div className="space-y-2">
+                  {tool.features.map((feature, featureIndex) => (
+                    <div key={featureIndex} className="flex items-start gap-2 text-xs text-blue-200">
+                      <CheckCircle className="h-3 w-3 flex-shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -166,31 +172,31 @@ const ToolsGuidanceTab = () => {
         <CardContent className="space-y-4">
           {softwareRecommendations.map((software, index) => (
             <div key={index} className="p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-start justify-between gap-3">
                     <h4 className="font-medium text-white">{software.name}</h4>
                     {software.ukSpecific && (
-                      <Badge variant="outline" className="text-xs text-purple-300 border-purple-400/30">
+                      <Badge variant="outline" className="text-xs text-purple-300 border-purple-400/30 bg-purple-500/10 flex-shrink-0">
                         UK Specific
                       </Badge>
                     )}
                   </div>
-                  <div className="flex items-center gap-4 mb-3">
-                    <Badge className="bg-purple-500/20 text-purple-300">{software.category}</Badge>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Badge className="bg-purple-500/20 text-purple-300 border-purple-400/30">{software.category}</Badge>
                     <span className="text-sm font-medium text-purple-200">{software.price}</span>
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    {software.features.map((feature, featureIndex) => (
-                      <div key={featureIndex} className="flex items-center gap-1 text-xs text-purple-200">
-                        <CheckCircle className="h-3 w-3" />
-                        {feature}
-                      </div>
-                    ))}
-                  </div>
                 </div>
-                <Button variant="outline" size="sm">
-                  <ExternalLink className="h-4 w-4 mr-1" />
+                <div className="space-y-2">
+                  {software.features.map((feature, featureIndex) => (
+                    <div key={featureIndex} className="flex items-start gap-2 text-xs text-purple-200">
+                      <CheckCircle className="h-3 w-3 flex-shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                <Button variant="outline" size="sm" className="w-full">
+                  <ExternalLink className="h-4 w-4 mr-2" />
                   Learn More
                 </Button>
               </div>

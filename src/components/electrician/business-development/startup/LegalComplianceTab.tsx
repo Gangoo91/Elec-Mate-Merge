@@ -135,23 +135,23 @@ const LegalComplianceTab = () => {
         {legalRequirements.map((section, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
-              <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 text-elec-yellow">
-                <div className="flex items-center gap-2">
+              <CardTitle className="text-elec-yellow">
+                <div className="flex items-center gap-2 mb-3">
                   {section.icon}
                   {section.category}
                 </div>
-                <div className="flex gap-2 sm:ml-auto">
+                <div className="flex flex-wrap gap-2">
                   <Badge 
                     variant="outline" 
                     className={`text-xs ${
                       section.priority === 'essential' 
-                        ? 'border-red-400/50 text-red-300' 
-                        : 'border-yellow-400/50 text-yellow-300'
+                        ? 'border-red-400/50 text-red-300 bg-red-500/10' 
+                        : 'border-yellow-400/50 text-yellow-300 bg-yellow-500/10'
                     }`}
                   >
                     {section.priority}
                   </Badge>
-                  <Badge variant="outline" className="text-xs">
+                  <Badge variant="outline" className="text-xs border-elec-yellow/50 text-elec-yellow bg-elec-yellow/10">
                     <Clock className="h-3 w-3 mr-1" />
                     {section.timeframe}
                   </Badge>
@@ -159,10 +159,10 @@ const LegalComplianceTab = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="space-y-3">
                 {section.items.map((item, itemIndex) => (
-                  <div key={itemIndex} className="flex items-start gap-2 text-sm text-muted-foreground p-2 rounded-lg bg-elec-dark/30">
-                    <Badge variant="outline" className="mt-0.5 h-2 w-2 rounded-full p-0 border-elec-yellow/50 bg-elec-yellow/20 flex-shrink-0" />
+                  <div key={itemIndex} className="flex items-start gap-3 text-sm text-muted-foreground p-3 rounded-lg bg-elec-dark/30 border border-elec-yellow/10">
+                    <div className="mt-1 h-2 w-2 rounded-full bg-elec-yellow/60 flex-shrink-0" />
                     <span className="leading-relaxed">{item}</span>
                   </div>
                 ))}
@@ -180,27 +180,27 @@ const LegalComplianceTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {complianceSteps.map((item, index) => (
-              <div key={index} className="flex flex-col sm:flex-row sm:items-center gap-3 p-4 bg-blue-500/5 rounded-lg">
-                <div className="flex items-center gap-3 flex-1">
+              <div key={index} className="p-4 bg-blue-500/5 rounded-lg border border-blue-500/20">
+                <div className="flex items-center gap-3 mb-3">
                   <div className="flex-shrink-0 w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
                     <span className="text-blue-300 font-medium text-sm">{item.step}</span>
                   </div>
-                  <span className="text-blue-200 font-medium">{item.title}</span>
+                  <span className="text-blue-200 font-medium flex-1">{item.title}</span>
                 </div>
-                <div className="flex gap-2 ml-11 sm:ml-0">
-                  <Badge variant="outline" className="text-blue-300 border-blue-400/30">
+                <div className="flex flex-wrap gap-2 ml-11">
+                  <Badge variant="outline" className="text-blue-300 border-blue-400/30 bg-blue-500/10">
                     {item.cost}
                   </Badge>
                   <Badge 
                     variant="outline" 
                     className={`text-xs ${
                       item.status === 'essential' 
-                        ? 'border-red-400/50 text-red-300' 
+                        ? 'border-red-400/50 text-red-300 bg-red-500/10' 
                         : item.status === 'important'
-                        ? 'border-yellow-400/50 text-yellow-300'
-                        : 'border-green-400/50 text-green-300'
+                        ? 'border-yellow-400/50 text-yellow-300 bg-yellow-500/10'
+                        : 'border-green-400/50 text-green-300 bg-green-500/10'
                     }`}
                   >
                     {item.status}
@@ -220,17 +220,19 @@ const LegalComplianceTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="space-y-4 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
             {insuranceTypes.map((insurance, index) => (
               <div key={index} className="p-4 bg-green-500/5 rounded-lg border border-green-500/20">
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-                  <h4 className="font-medium text-white">{insurance.type}</h4>
-                  <Badge className={insurance.required ? "bg-red-500/20 text-red-300" : "bg-yellow-500/20 text-yellow-300"}>
-                    {insurance.required ? "Required" : "Recommended"}
-                  </Badge>
+                <div className="flex flex-col gap-2 mb-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-medium text-white">{insurance.type}</h4>
+                    <Badge className={insurance.required ? "bg-red-500/20 text-red-300 border-red-400/30" : "bg-yellow-500/20 text-yellow-300 border-yellow-400/30"}>
+                      {insurance.required ? "Required" : "Recommended"}
+                    </Badge>
+                  </div>
                 </div>
                 <p className="text-sm text-muted-foreground mb-3 leading-relaxed">{insurance.description}</p>
-                <Badge variant="outline" className="text-green-300 border-green-400/30">
+                <Badge variant="outline" className="text-green-300 border-green-400/30 bg-green-500/10">
                   {insurance.coverage}
                 </Badge>
               </div>
@@ -247,28 +249,28 @@ const LegalComplianceTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="space-y-6">
             {regulatoryBodies.map((body, index) => (
               <div key={index} className="p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
-                  <div className="flex-1">
+                <div className="flex flex-col gap-3 mb-4">
+                  <div className="flex items-start justify-between gap-3">
                     <h4 className="font-medium text-white">{body.name}</h4>
-                    <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{body.description}</p>
+                    <Badge className="bg-purple-500/20 text-purple-300 border-purple-400/30 flex-shrink-0">
+                      {body.cost}
+                    </Badge>
                   </div>
-                  <Badge className="bg-purple-500/20 text-purple-300 self-start">
-                    {body.cost}
-                  </Badge>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{body.description}</p>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4">
+                <div className="space-y-2 mb-4">
                   {body.benefits.map((benefit, benefitIndex) => (
-                    <div key={benefitIndex} className="flex items-center gap-2 text-sm text-purple-200">
-                      <CheckCircle className="h-3 w-3 flex-shrink-0" />
+                    <div key={benefitIndex} className="flex items-start gap-2 text-sm text-purple-200">
+                      <CheckCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
                       <span>{benefit}</span>
                     </div>
                   ))}
                 </div>
-                <Button variant="outline" size="sm" className="mt-4 w-full sm:w-auto">
-                  <ExternalLink className="h-4 w-4 mr-1" />
+                <Button variant="outline" size="sm" className="w-full">
+                  <ExternalLink className="h-4 w-4 mr-2" />
                   Learn More
                 </Button>
               </div>
