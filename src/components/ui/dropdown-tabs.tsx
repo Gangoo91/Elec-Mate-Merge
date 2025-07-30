@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { LucideIcon } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export interface DropdownTab {
   value: string;
@@ -23,10 +24,11 @@ export const DropdownTabs: React.FC<DropdownTabsProps> = ({
   defaultValue,
   placeholder = "Select option",
   className = "",
-  triggerClassName = "w-[280px] md:w-[320px]",
+  triggerClassName,
   onValueChange
 }) => {
   const [activeTab, setActiveTab] = useState(defaultValue || tabs[0]?.value || "");
+  const isMobile = useIsMobile();
 
   const handleValueChange = (value: string) => {
     setActiveTab(value);
@@ -35,11 +37,16 @@ export const DropdownTabs: React.FC<DropdownTabsProps> = ({
 
   const activeTabData = tabs.find(tab => tab.value === activeTab);
 
+  // Mobile-optimized trigger styling
+  const defaultTriggerClassName = isMobile 
+    ? "w-full max-w-sm h-12 text-base" 
+    : "w-[280px] md:w-[320px]";
+
   return (
     <div className={`w-full space-y-6 ${className}`}>
-      <div className="flex justify-center">
+      <div className={`flex ${isMobile ? 'px-4' : 'justify-center'}`}>
         <Select value={activeTab} onValueChange={handleValueChange}>
-          <SelectTrigger className={triggerClassName}>
+          <SelectTrigger className={triggerClassName || defaultTriggerClassName}>
             <SelectValue placeholder={placeholder}>
               <div className="flex items-center gap-2">
                 {(() => {
@@ -47,22 +54,34 @@ export const DropdownTabs: React.FC<DropdownTabsProps> = ({
                   const IconComponent = currentTab?.icon;
                   return (
                     <>
-                      {IconComponent && <IconComponent className="h-4 w-4" />}
-                      {currentTab?.label}
+                      {IconComponent && (
+                        <IconComponent className={`${isMobile ? 'h-5 w-5' : 'h-4 w-4'}`} />
+                      )}
+                      <span className={isMobile ? 'text-base font-medium' : ''}>
+                        {currentTab?.label}
+                      </span>
                     </>
                   );
                 })()}
               </div>
             </SelectValue>
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className={isMobile ? 'w-[calc(100vw-2rem)]' : ''}>
             {tabs.map((tab) => {
               const IconComponent = tab.icon;
               return (
-                <SelectItem key={tab.value} value={tab.value}>
+                <SelectItem 
+                  key={tab.value} 
+                  value={tab.value}
+                  className={isMobile ? 'h-12 px-4' : ''}
+                >
                   <div className="flex items-center gap-2">
-                    {IconComponent && <IconComponent className="h-4 w-4" />}
-                    {tab.label}
+                    {IconComponent && (
+                      <IconComponent className={`${isMobile ? 'h-5 w-5' : 'h-4 w-4'}`} />
+                    )}
+                    <span className={isMobile ? 'text-base' : ''}>
+                      {tab.label}
+                    </span>
                   </div>
                 </SelectItem>
               );
@@ -71,7 +90,7 @@ export const DropdownTabs: React.FC<DropdownTabsProps> = ({
         </Select>
       </div>
 
-      <div className="w-full animate-fade-in">
+      <div className={`w-full animate-fade-in ${isMobile ? 'px-4' : ''}`}>
         {activeTabData?.content}
       </div>
     </div>
