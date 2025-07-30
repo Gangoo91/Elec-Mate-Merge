@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { GraduationCap, ArrowLeft, Users, FileText, BookOpen, Phone, Calculator, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -13,7 +13,7 @@ import InteractiveToolsTab from "@/components/electrician/business-development/a
 
 const BusinessApprentices = () => {
   return (
-    <div className="max-w-6xl mx-auto space-y-8 animate-fade-in">
+    <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6">
       <div className="flex items-center gap-2">
         <Link to="/electrician/business-development">
           <Button variant="ghost" size="sm" className="gap-1">
@@ -23,9 +23,9 @@ const BusinessApprentices = () => {
         </Link>
       </div>
 
-      <div className="flex flex-col items-center justify-center mb-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">Apprentice Onboarding & Management</h1>
-        <p className="text-muted-foreground text-center max-w-2xl mb-4">
+      <div className="text-center space-y-4 px-4">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Apprentice Onboarding & Management</h1>
+        <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base">
           Complete guide to recruiting, training, and supporting apprentices in your electrical contracting business
         </p>
       </div>
@@ -38,75 +38,66 @@ const BusinessApprentices = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="text-center p-4 bg-elec-dark/50 rounded-lg">
-              <div className="text-2xl font-bold text-blue-400 mb-2">£3,000</div>
-              <div className="text-sm text-muted-foreground">Annual government incentive per apprentice</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+            <div className="text-center p-3 sm:p-4 bg-elec-dark/50 rounded-lg">
+              <div className="text-xl sm:text-2xl font-bold text-blue-400 mb-2">£3,000</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Annual government incentive per apprentice</div>
             </div>
-            <div className="text-center p-4 bg-elec-dark/50 rounded-lg">
-              <div className="text-2xl font-bold text-green-400 mb-2">85%</div>
-              <div className="text-sm text-muted-foreground">Retention rate for well-managed apprentices</div>
+            <div className="text-center p-3 sm:p-4 bg-elec-dark/50 rounded-lg">
+              <div className="text-xl sm:text-2xl font-bold text-green-400 mb-2">85%</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Retention rate for well-managed apprentices</div>
             </div>
-            <div className="text-center p-4 bg-elec-dark/50 rounded-lg">
-              <div className="text-2xl font-bold text-purple-400 mb-2">4 Years</div>
-              <div className="text-sm text-muted-foreground">Time to develop a fully qualified electrician</div>
+            <div className="text-center p-3 sm:p-4 bg-elec-dark/50 rounded-lg sm:col-span-2 lg:col-span-1">
+              <div className="text-xl sm:text-2xl font-bold text-purple-400 mb-2">4 Years</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Time to develop a fully qualified electrician</div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Tabs defaultValue="recruitment" className="w-full">
-        <TabsList className="grid w-full grid-cols-6 h-auto p-1">
-          <TabsTrigger value="recruitment" className="flex items-center gap-2 p-3">
-            <Users className="h-4 w-4" />
-            <span className="hidden sm:inline">Recruitment</span>
-          </TabsTrigger>
-          <TabsTrigger value="legal" className="flex items-center gap-2 p-3">
-            <FileText className="h-4 w-4" />
-            <span className="hidden sm:inline">Legal</span>
-          </TabsTrigger>
-          <TabsTrigger value="training" className="flex items-center gap-2 p-3">
-            <BookOpen className="h-4 w-4" />
-            <span className="hidden sm:inline">Training</span>
-          </TabsTrigger>
-          <TabsTrigger value="support" className="flex items-center gap-2 p-3">
-            <Phone className="h-4 w-4" />
-            <span className="hidden sm:inline">Support</span>
-          </TabsTrigger>
-          <TabsTrigger value="assessment" className="flex items-center gap-2 p-3">
-            <GraduationCap className="h-4 w-4" />
-            <span className="hidden sm:inline">Assessment</span>
-          </TabsTrigger>
-          <TabsTrigger value="tools" className="flex items-center gap-2 p-3">
-            <Calculator className="h-4 w-4" />
-            <span className="hidden sm:inline">Tools</span>
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="recruitment">
-          <RecruitmentTab />
-        </TabsContent>
-
-        <TabsContent value="legal">
-          <LegalRequirementsTab />
-        </TabsContent>
-
-        <TabsContent value="training">
-          <TrainingDevelopmentTab />
-        </TabsContent>
-
-        <TabsContent value="support">
-          <SupportResourcesTab />
-        </TabsContent>
-
-        <TabsContent value="assessment">
-          <AssessmentProgressTab />
-        </TabsContent>
-
-        <TabsContent value="tools">
-          <InteractiveToolsTab />
-        </TabsContent>
-      </Tabs>
+      <DropdownTabs
+        defaultValue="recruitment"
+        placeholder="Select apprentice management topic..."
+        className="w-full"
+        tabs={[
+          {
+            value: "recruitment",
+            label: "Recruitment & Selection",
+            icon: Users,
+            content: <RecruitmentTab />
+          },
+          {
+            value: "legal",
+            label: "Legal Requirements",
+            icon: FileText,
+            content: <LegalRequirementsTab />
+          },
+          {
+            value: "training",
+            label: "Training & Development",
+            icon: BookOpen,
+            content: <TrainingDevelopmentTab />
+          },
+          {
+            value: "support",
+            label: "Support & Resources",
+            icon: Phone,
+            content: <SupportResourcesTab />
+          },
+          {
+            value: "assessment",
+            label: "Assessment & Progress",
+            icon: GraduationCap,
+            content: <AssessmentProgressTab />
+          },
+          {
+            value: "tools",
+            label: "Interactive Tools",
+            icon: Calculator,
+            content: <InteractiveToolsTab />
+          }
+        ]}
+      />
 
       <Card className="border-green-500/50 bg-green-500/10">
         <CardHeader>
@@ -116,18 +107,18 @@ const BusinessApprentices = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-muted-foreground mb-4 text-sm sm:text-base">
             Managing apprentices successfully requires ongoing support and guidance. Don't hesitate to reach out 
             for help with recruitment challenges, training issues, or legal compliance questions.
           </p>
-          <div className="flex flex-wrap gap-3">
-            <Button variant="outline" size="sm" className="border-elec-yellow/30">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+            <Button variant="outline" size="sm" className="border-elec-yellow/30 w-full sm:w-auto">
               Contact CITB for Support
             </Button>
-            <Button variant="outline" size="sm" className="border-blue-500/30">
+            <Button variant="outline" size="sm" className="border-blue-500/30 w-full sm:w-auto">
               Find Local Training Providers
             </Button>
-            <Button variant="outline" size="sm" className="border-green-500/30">
+            <Button variant="outline" size="sm" className="border-green-500/30 w-full sm:w-auto">
               Access Government Resources
             </Button>
           </div>
