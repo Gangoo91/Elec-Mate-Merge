@@ -2,7 +2,7 @@
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Calculator, Shield, Phone, Lightbulb, Heart } from "lucide-react";
 import BusinessPlanningTab from "./BusinessPlanningTab";
 import LegalComplianceTab from "./LegalComplianceTab";
@@ -20,42 +20,36 @@ const EnhancedStartupTabs = () => {
         <BackButton customUrl="/electrician/business-development" label="Back to Business Development" />
       </div>
 
-      <Tabs defaultValue="planning" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="planning" className="flex items-center gap-2">
-            <Calculator className="h-4 w-4" />
-            Business Planning
-          </TabsTrigger>
-          <TabsTrigger value="legal" className="flex items-center gap-2">
-            <Shield className="h-4 w-4" />
-            Legal & Compliance
-          </TabsTrigger>
-          <TabsTrigger value="support" className="flex items-center gap-2">
-            <Phone className="h-4 w-4" />
-            Support & Resources
-          </TabsTrigger>
-          <TabsTrigger value="tools" className="flex items-center gap-2">
-            <Lightbulb className="h-4 w-4" />
-            Tools & Operations
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="planning">
-          <BusinessPlanningTab />
-        </TabsContent>
-
-        <TabsContent value="legal">
-          <LegalComplianceTab />
-        </TabsContent>
-
-        <TabsContent value="support">
-          <SupportResourcesTab />
-        </TabsContent>
-
-        <TabsContent value="tools">
-          <ToolsGuidanceTab />
-        </TabsContent>
-      </Tabs>
+      <DropdownTabs
+        defaultValue="planning"
+        placeholder="Select a section"
+        tabs={[
+          {
+            value: "planning",
+            label: "Business Planning",
+            icon: Calculator,
+            content: <BusinessPlanningTab />
+          },
+          {
+            value: "legal",
+            label: "Legal & Compliance",
+            icon: Shield,
+            content: <LegalComplianceTab />
+          },
+          {
+            value: "support",
+            label: "Support & Resources",
+            icon: Phone,
+            content: <SupportResourcesTab />
+          },
+          {
+            value: "tools",
+            label: "Tools & Operations",
+            icon: Lightbulb,
+            content: <ToolsGuidanceTab />
+          }
+        ]}
+      />
 
       <Card className="border-green-500/50 bg-green-500/10">
         <CardHeader>
