@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -147,374 +146,419 @@ const RecruitmentTab = () => {
       </Alert>
 
       <Accordion type="multiple" defaultValue={["financial-planning"]} className="space-y-4">
-        <AccordionItem value="financial-planning" className="border border-elec-yellow/20 rounded-lg bg-elec-gray px-6">
-          <AccordionTrigger className="text-elec-yellow hover:text-elec-yellow/80">
-            <div className="flex items-center gap-2">
-              <PoundSterling className="h-5 w-5" />
-              Financial Planning & Investment Analysis
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="space-y-6 pt-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="text-elec-yellow flex items-center gap-2">
-                    <PoundSterling className="h-5 w-5" />
-                    Investment & Cost Analysis
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {costBreakdown.map((item, index) => (
-                      <div key={index} className={`p-4 rounded-lg ${item.highlight ? 'bg-elec-yellow/20 border border-elec-yellow/30' : 'bg-elec-dark/50 border border-gray-700/50'}`}>
-                        <div className={`flex flex-col ${item.highlight ? 'items-center text-center' : ''} space-y-3`}>
-                          <h5 className={`font-medium text-lg ${item.highlight ? 'text-elec-yellow' : 'text-white'}`}>{item.item}</h5>
-                          <p className={`text-sm text-muted-foreground ${item.highlight ? 'max-w-md' : ''}`}>{item.description}</p>
-                          <div className="flex justify-center">
-                            <Badge className={item.highlight 
-                              ? "bg-elec-yellow/30 text-elec-yellow text-xl px-6 py-2 font-bold" 
-                              : "bg-blue-500/30 text-blue-300 text-base px-4 py-2"
-                            }>
-                              {item.cost}
-                            </Badge>
+        <AccordionItem value="financial-planning" className="border-0">
+          <div className="border border-green-500/30 rounded-lg bg-green-500/5 overflow-hidden">
+            <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-green-500/10 transition-colors">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-green-500/20">
+                  <PoundSterling className="h-5 w-5 text-green-400" />
+                </div>
+                <div className="text-left">
+                  <div className="text-lg font-semibold text-green-400">Financial Planning & Investment Analysis</div>
+                  <div className="text-sm text-green-300/80">Calculate costs and revenue projections</div>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-6 pb-6">
+              <div className="space-y-6 pt-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <Card className="border-elec-yellow/20 bg-elec-gray">
+                    <CardHeader>
+                      <CardTitle className="text-elec-yellow flex items-center gap-2">
+                        <PoundSterling className="h-5 w-5" />
+                        Investment & Cost Analysis
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        {costBreakdown.map((item, index) => (
+                          <div key={index} className={`p-4 rounded-lg ${item.highlight ? 'bg-elec-yellow/20 border border-elec-yellow/30' : 'bg-elec-dark/50 border border-gray-700/50'}`}>
+                            <div className={`flex flex-col ${item.highlight ? 'items-center text-center' : ''} space-y-3`}>
+                              <h5 className={`font-medium text-lg ${item.highlight ? 'text-elec-yellow' : 'text-white'}`}>{item.item}</h5>
+                              <p className={`text-sm text-muted-foreground ${item.highlight ? 'max-w-md' : ''}`}>{item.description}</p>
+                              <div className="flex justify-center">
+                                <Badge className={item.highlight 
+                                  ? "bg-elec-yellow/30 text-elec-yellow text-xl px-6 py-2 font-bold" 
+                                  : "bg-blue-500/30 text-blue-300 text-base px-4 py-2"
+                                }>
+                                  {item.cost}
+                                </Badge>
+                              </div>
+                              <p className="text-xs text-gray-400">{item.calculation}</p>
+                            </div>
                           </div>
-                          <p className="text-xs text-gray-400">{item.calculation}</p>
-                        </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+                    </CardContent>
+                  </Card>
 
-              <Card className="border-green-500/20 bg-green-500/10">
-                <CardHeader>
-                  <CardTitle className="text-green-400 flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5" />
-                    Government Incentives
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {governmentIncentives.map((item, index) => (
-                      <div key={index} className="flex flex-col space-y-3 p-3 bg-green-500/5 border border-green-500/20 rounded-lg">
-                        <div>
-                          <h5 className="font-medium text-green-300">{item.incentive}</h5>
-                          <p className="text-xs text-green-200">{item.eligibility}</p>
-                        </div>
-                        <div className="flex justify-center">
-                          <Badge className="bg-green-500/30 text-green-400">
-                            {item.amount}
-                          </Badge>
-                        </div>
+                  <Card className="border-green-500/20 bg-green-500/10">
+                    <CardHeader>
+                      <CardTitle className="text-green-400 flex items-center gap-2">
+                        <TrendingUp className="h-5 w-5" />
+                        Government Incentives
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {governmentIncentives.map((item, index) => (
+                          <div key={index} className="flex flex-col space-y-3 p-3 bg-green-500/5 border border-green-500/20 rounded-lg">
+                            <div>
+                              <h5 className="font-medium text-green-300">{item.incentive}</h5>
+                              <p className="text-xs text-green-200">{item.eligibility}</p>
+                            </div>
+                            <div className="flex justify-center">
+                              <Badge className="bg-green-500/30 text-green-400">
+                                {item.amount}
+                              </Badge>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
+                    </CardContent>
+                  </Card>
+                </div>
 
-            <Card className="border-blue-500/20 bg-blue-500/10">
-              <CardHeader>
-                <CardTitle className="text-blue-400 flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5" />
-                  Salary Progression Timeline
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {salaryProgression.map((stage, index) => (
-                    <div key={index} className="flex flex-col space-y-3 p-3 bg-blue-500/5 border border-blue-500/20 rounded-lg">
+                <Card className="border-blue-500/20 bg-blue-500/10">
+                  <CardHeader>
+                    <CardTitle className="text-blue-400 flex items-center gap-2">
+                      <TrendingUp className="h-5 w-5" />
+                      Salary Progression Timeline
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {salaryProgression.map((stage, index) => (
+                        <div key={index} className="flex flex-col space-y-3 p-3 bg-blue-500/5 border border-blue-500/20 rounded-lg">
+                          <div>
+                            <h5 className="font-medium text-blue-300">{stage.year}</h5>
+                            <p className="text-sm text-blue-200">{stage.notes}</p>
+                          </div>
+                          <div className="flex flex-col space-y-1">
+                            <div className="font-medium text-blue-400">{stage.wage}</div>
+                            <div className="text-xs text-blue-300">{stage.annual}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </AccordionContent>
+          </div>
+        </AccordionItem>
+
+        <AccordionItem value="job-posting" className="border-0">
+          <div className="border border-blue-500/30 rounded-lg bg-blue-500/5 overflow-hidden">
+            <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-blue-500/10 transition-colors">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-blue-500/20">
+                  <FileText className="h-5 w-5 text-blue-400" />
+                </div>
+                <div className="text-left">
+                  <div className="text-lg font-semibold text-blue-400">Job Posting & Requirements</div>
+                  <div className="text-sm text-blue-300/80">Create effective job advertisements</div>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-6 pb-6">
+              <div className="space-y-6 pt-4">
+                <Card className="border-elec-yellow/20 bg-elec-gray">
+                  <CardHeader>
+                    <CardTitle className="text-elec-yellow flex items-center gap-2">
+                      <FileText className="h-5 w-5" />
+                      Job Posting Template
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
                       <div>
-                        <h5 className="font-medium text-blue-300">{stage.year}</h5>
-                        <p className="text-sm text-blue-200">{stage.notes}</p>
+                        <h4 className="font-semibold text-white mb-2">{jobPostingTemplate.title}</h4>
+                        <p className="text-muted-foreground mb-3">{jobPostingTemplate.overview}</p>
                       </div>
-                      <div className="flex flex-col space-y-1">
-                        <div className="font-medium text-blue-400">{stage.wage}</div>
-                        <div className="text-xs text-blue-300">{stage.annual}</div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                          <h5 className="font-medium text-blue-400 mb-2">What We Offer</h5>
+                          <ul className="space-y-1">
+                            {jobPostingTemplate.keyPoints.map((point, index) => (
+                              <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                                <div className="w-1 h-1 bg-blue-400 rounded-full mt-2" />
+                                {point}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div>
+                          <h5 className="font-medium text-amber-400 mb-2">Requirements</h5>
+                          <ul className="space-y-1">
+                            {jobPostingTemplate.requirements.map((req, index) => (
+                              <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                                <div className="w-1 h-1 bg-amber-400 rounded-full mt-2" />
+                                {req}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div>
+                          <h5 className="font-medium text-green-400 mb-2">Benefits</h5>
+                          <ul className="space-y-1">
+                            {jobPostingTemplate.benefits.map((benefit, index) => (
+                              <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                                <div className="w-1 h-1 bg-green-400 rounded-full mt-2" />
+                                {benefit}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </AccordionContent>
+                  </CardContent>
+                </Card>
+              </div>
+            </AccordionContent>
+          </div>
         </AccordionItem>
 
-        <AccordionItem value="job-posting" className="border border-elec-yellow/20 rounded-lg bg-elec-gray px-6">
-          <AccordionTrigger className="text-elec-yellow hover:text-elec-yellow/80">
-            <div className="flex items-center gap-2">
-              <FileText className="h-5 w-5" />
-              Job Posting & Requirements
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="space-y-6 pt-4">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="text-elec-yellow flex items-center gap-2">
-                  <FileText className="h-5 w-5" />
-                  Job Posting Template
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold text-white mb-2">{jobPostingTemplate.title}</h4>
-                    <p className="text-muted-foreground mb-3">{jobPostingTemplate.overview}</p>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                      <h5 className="font-medium text-blue-400 mb-2">What We Offer</h5>
-                      <ul className="space-y-1">
-                        {jobPostingTemplate.keyPoints.map((point, index) => (
-                          <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
-                            <div className="w-1 h-1 bg-blue-400 rounded-full mt-2" />
-                            {point}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h5 className="font-medium text-amber-400 mb-2">Requirements</h5>
-                      <ul className="space-y-1">
-                        {jobPostingTemplate.requirements.map((req, index) => (
-                          <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
-                            <div className="w-1 h-1 bg-amber-400 rounded-full mt-2" />
-                            {req}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div>
-                      <h5 className="font-medium text-green-400 mb-2">Benefits</h5>
-                      <ul className="space-y-1">
-                        {jobPostingTemplate.benefits.map((benefit, index) => (
-                          <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
-                            <div className="w-1 h-1 bg-green-400 rounded-full mt-2" />
-                            {benefit}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
+        <AccordionItem value="recruitment-channels" className="border-0">
+          <div className="border border-purple-500/30 rounded-lg bg-purple-500/5 overflow-hidden">
+            <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-purple-500/10 transition-colors">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-purple-500/20">
+                  <Users className="h-5 w-5 text-purple-400" />
                 </div>
-              </CardContent>
-            </Card>
-          </AccordionContent>
-        </AccordionItem>
-
-        <AccordionItem value="recruitment-channels" className="border border-elec-yellow/20 rounded-lg bg-elec-gray px-6">
-          <AccordionTrigger className="text-elec-yellow hover:text-elec-yellow/80">
-            <div className="flex items-center gap-2">
-              <Users className="h-5 w-5" />
-              Recruitment Channels & Performance
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="space-y-6 pt-4">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <div className="flex items-center gap-2">
-                  <Users className="h-5 w-5 text-elec-yellow" />
-                  <CardTitle className="text-elec-yellow">Recruitment Channels & Performance</CardTitle>
+                <div className="text-left">
+                  <div className="text-lg font-semibold text-purple-400">Recruitment Channels & Performance</div>
+                  <div className="text-sm text-purple-300/80">Research and marketing guidance</div>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {recruitmentChannels.map((channel, index) => (
-                    <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                      <div className="mb-3">
-                        <h5 className="font-medium text-white">{channel.name}</h5>
-                      </div>
-                      <div className="space-y-3 text-sm">
-                        <div className="flex flex-col space-y-1">
-                          <span className="text-muted-foreground">Type:</span>
-                          <span className="text-white">{channel.type}</span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-6 pb-6">
+              <div className="space-y-6 pt-4">
+                <Card className="border-elec-yellow/20 bg-elec-gray">
+                  <CardHeader>
+                    <div className="flex items-center gap-2">
+                      <Users className="h-5 w-5 text-elec-yellow" />
+                      <CardTitle className="text-elec-yellow">Recruitment Channels & Performance</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {recruitmentChannels.map((channel, index) => (
+                        <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
+                          <div className="mb-3">
+                            <h5 className="font-medium text-white">{channel.name}</h5>
+                          </div>
+                          <div className="space-y-3 text-sm">
+                            <div className="flex flex-col space-y-1">
+                              <span className="text-muted-foreground">Type:</span>
+                              <span className="text-white">{channel.type}</span>
+                            </div>
+                            <div className="flex flex-col space-y-1">
+                              <span className="text-muted-foreground">Cost:</span>
+                              <span className="text-elec-yellow">{channel.cost}</span>
+                            </div>
+                            <div className="flex flex-col space-y-1">
+                              <span className="text-muted-foreground">Avg Applications:</span>
+                              <span className="text-white">{channel.avgApplications}</span>
+                            </div>
+                            <div className="flex flex-col space-y-1">
+                              <span className="text-muted-foreground">Time to Fill:</span>
+                              <span className="text-white">{channel.timeToFill}</span>
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex flex-col space-y-1">
-                          <span className="text-muted-foreground">Cost:</span>
-                          <span className="text-elec-yellow">{channel.cost}</span>
+                      ))}
+                    </div>
+
+                    <div className="mt-6 bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                      <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
+                        <Target className="h-4 w-4" />
+                        Partnership Strategy
+                      </h4>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        Build long-term relationships with local colleges and schools. Offer work experience placements, 
+                        career talks, and sponsor events to become a preferred employer for quality candidates.
+                      </p>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                          <h5 className="text-sm font-medium text-blue-300 mb-1">Local Colleges</h5>
+                          <ul className="text-xs text-muted-foreground space-y-1">
+                            <li>• Offer guest lectures on industry practices</li>
+                            <li>• Provide work experience placements</li>
+                            <li>• Sponsor equipment or facilities</li>
+                          </ul>
                         </div>
-                        <div className="flex flex-col space-y-1">
-                          <span className="text-muted-foreground">Avg Applications:</span>
-                          <span className="text-white">{channel.avgApplications}</span>
-                        </div>
-                        <div className="flex flex-col space-y-1">
-                          <span className="text-muted-foreground">Time to Fill:</span>
-                          <span className="text-white">{channel.timeToFill}</span>
+                        <div>
+                          <h5 className="text-sm font-medium text-blue-300 mb-1">Secondary Schools</h5>
+                          <ul className="text-xs text-muted-foreground space-y-1">
+                            <li>• Participate in careers fairs</li>
+                            <li>• Offer site visits and demonstrations</li>
+                            <li>• Support STEM education initiatives</li>
+                          </ul>
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
-
-                <div className="mt-6 bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
-                  <h4 className="font-semibold text-blue-400 mb-2 flex items-center gap-2">
-                    <Target className="h-4 w-4" />
-                    Partnership Strategy
-                  </h4>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Build long-term relationships with local colleges and schools. Offer work experience placements, 
-                    career talks, and sponsor events to become a preferred employer for quality candidates.
-                  </p>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div>
-                      <h5 className="text-sm font-medium text-blue-300 mb-1">Local Colleges</h5>
-                      <ul className="text-xs text-muted-foreground space-y-1">
-                        <li>• Offer guest lectures on industry practices</li>
-                        <li>• Provide work experience placements</li>
-                        <li>• Sponsor equipment or facilities</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h5 className="text-sm font-medium text-blue-300 mb-1">Secondary Schools</h5>
-                      <ul className="text-xs text-muted-foreground space-y-1">
-                        <li>• Participate in careers fairs</li>
-                        <li>• Offer site visits and demonstrations</li>
-                        <li>• Support STEM education initiatives</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </AccordionContent>
+                  </CardContent>
+                </Card>
+              </div>
+            </AccordionContent>
+          </div>
         </AccordionItem>
 
-        <AccordionItem value="selection-process" className="border border-elec-yellow/20 rounded-lg bg-elec-gray px-6">
-          <AccordionTrigger className="text-elec-yellow hover:text-elec-yellow/80">
-            <div className="flex items-center gap-2">
-              <Search className="h-5 w-5" />
-              Selection Process & Interview Guidelines
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="space-y-6 pt-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="border-elec-yellow/20 bg-elec-gray">
-                <CardHeader>
-                  <CardTitle className="text-elec-yellow flex items-center gap-2">
-                    <Search className="h-5 w-5" />
-                    Interview Best Practices
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="font-semibold text-white mb-3">Essential Interview Questions</h4>
-                      <div className="space-y-2">
-                        {interviewQuestions.map((question, index) => (
-                          <div key={index} className="flex items-start gap-2 p-2 bg-elec-dark/50 rounded">
-                            <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                            <span className="text-sm text-muted-foreground">{question}</span>
+        <AccordionItem value="selection-process" className="border-0">
+          <div className="border border-amber-500/30 rounded-lg bg-amber-500/5 overflow-hidden">
+            <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-amber-500/10 transition-colors">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-amber-500/20">
+                  <Search className="h-5 w-5 text-amber-400" />
+                </div>
+                <div className="text-left">
+                  <div className="text-lg font-semibold text-amber-400">Selection Process & Interview Guidelines</div>
+                  <div className="text-sm text-amber-300/80">Track your progress and set goals</div>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-6 pb-6">
+              <div className="space-y-6 pt-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <Card className="border-elec-yellow/20 bg-elec-gray">
+                    <CardHeader>
+                      <CardTitle className="text-elec-yellow flex items-center gap-2">
+                        <Search className="h-5 w-5" />
+                        Interview Best Practices
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div>
+                          <h4 className="font-semibold text-white mb-3">Essential Interview Questions</h4>
+                          <div className="space-y-2">
+                            {interviewQuestions.map((question, index) => (
+                              <div key={index} className="flex items-start gap-2 p-2 bg-elec-dark/50 rounded">
+                                <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                                <span className="text-sm text-muted-foreground">{question}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
+                          <h5 className="font-medium text-green-400 mb-2">What to Look For</h5>
+                          <ul className="text-sm text-muted-foreground space-y-1">
+                            <li>• Genuine interest in the trade</li>
+                            <li>• Willingness to learn and take direction</li>
+                            <li>• Good communication skills</li>
+                            <li>• Practical problem-solving ability</li>
+                            <li>• Reliability and punctuality</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="border-red-500/20 bg-red-500/10">
+                    <CardHeader>
+                      <CardTitle className="text-red-400 flex items-center gap-2">
+                        <AlertCircle className="h-5 w-5" />
+                        Warning Signs to Avoid
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {redFlags.map((flag, index) => (
+                          <div key={index} className="flex items-start gap-2 p-2 bg-red-500/5 border border-red-500/20 rounded">
+                            <AlertCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
+                            <span className="text-sm text-red-200">{flag}</span>
                           </div>
                         ))}
                       </div>
-                    </div>
 
-                    <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
-                      <h5 className="font-medium text-green-400 mb-2">What to Look For</h5>
-                      <ul className="text-sm text-muted-foreground space-y-1">
-                        <li>• Genuine interest in the trade</li>
-                        <li>• Willingness to learn and take direction</li>
-                        <li>• Good communication skills</li>
-                        <li>• Practical problem-solving ability</li>
-                        <li>• Reliability and punctuality</li>
-                      </ul>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="border-red-500/20 bg-red-500/10">
-                <CardHeader>
-                  <CardTitle className="text-red-400 flex items-center gap-2">
-                    <AlertCircle className="h-5 w-5" />
-                    Warning Signs to Avoid
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {redFlags.map((flag, index) => (
-                      <div key={index} className="flex items-start gap-2 p-2 bg-red-500/5 border border-red-500/20 rounded">
-                        <AlertCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                        <span className="text-sm text-red-200">{flag}</span>
+                      <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                        <h5 className="font-medium text-amber-400 mb-2">Remember</h5>
+                        <p className="text-sm text-amber-200">
+                          A poor apprentice hire can cost you thousands in wasted training, reduced productivity, 
+                          and potential safety issues. Take time to select the right candidate.
+                        </p>
                       </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
-                    <h5 className="font-medium text-amber-400 mb-2">Remember</h5>
-                    <p className="text-sm text-amber-200">
-                      A poor apprentice hire can cost you thousands in wasted training, reduced productivity, 
-                      and potential safety issues. Take time to select the right candidate.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </AccordionContent>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            </AccordionContent>
+          </div>
         </AccordionItem>
 
-        <AccordionItem value="timeline-resources" className="border border-elec-yellow/20 rounded-lg bg-elec-gray px-6">
-          <AccordionTrigger className="text-elec-yellow hover:text-elec-yellow/80">
-            <div className="flex items-center gap-2">
-              <Calendar className="h-5 w-5" />
-              Timeline & Resources
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="space-y-6 pt-4">
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardHeader>
-                <CardTitle className="text-elec-yellow">Useful Recruitment Resources</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <Button variant="outline" className="h-auto p-4 flex-col gap-2 border-elec-yellow/30">
-                    <ExternalLink className="h-5 w-5 text-elec-yellow" />
-                    <span className="font-medium">Gov.uk Apprenticeships</span>
-                    <span className="text-xs text-muted-foreground">Official recruitment portal</span>
-                  </Button>
-                  <Button variant="outline" className="h-auto p-4 flex-col gap-2 border-blue-500/30">
-                    <ExternalLink className="h-5 w-5 text-blue-400" />
-                    <span className="font-medium">CITB Careers Hub</span>
-                    <span className="text-xs text-muted-foreground">Industry career resources</span>
-                  </Button>
-                  <Button variant="outline" className="h-auto p-4 flex-col gap-2 border-green-500/30">
-                    <ExternalLink className="h-5 w-5 text-green-400" />
-                    <span className="font-medium">Local College Finder</span>
-                    <span className="text-xs text-muted-foreground">Find training partners</span>
-                  </Button>
+        <AccordionItem value="timeline-resources" className="border-0">
+          <div className="border border-orange-500/30 rounded-lg bg-orange-500/5 overflow-hidden">
+            <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-orange-500/10 transition-colors">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-orange-500/20">
+                  <Calendar className="h-5 w-5 text-orange-400" />
                 </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-cyan-500/20 bg-cyan-500/10">
-              <CardHeader>
-                <CardTitle className="text-cyan-400 flex items-center gap-2">
-                  <Calendar className="h-5 w-5" />
-                  Recruitment Timeline & Checklist
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {timelineChecklist.map((phase, index) => (
-                    <div key={index} className="p-4 bg-cyan-500/5 border border-cyan-500/20 rounded-lg">
-                      <h5 className="font-medium text-cyan-300 mb-2">{phase.phase}</h5>
-                      <ul className="space-y-1">
-                        {phase.tasks.map((task, taskIndex) => (
-                          <li key={taskIndex} className="flex items-start gap-2 text-sm text-cyan-200">
-                            <Clock className="h-3 w-3 mt-1 flex-shrink-0" />
-                            {task}
-                          </li>
-                        ))}
-                      </ul>
+                <div className="text-left">
+                  <div className="text-lg font-semibold text-orange-400">Timeline & Resources</div>
+                  <div className="text-sm text-orange-300/80">Step-by-step business setup guides</div>
+                </div>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-6 pb-6">
+              <div className="space-y-6 pt-4">
+                <Card className="border-elec-yellow/20 bg-elec-gray">
+                  <CardHeader>
+                    <CardTitle className="text-elec-yellow">Useful Recruitment Resources</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <Button variant="outline" className="h-auto p-4 flex-col gap-2 border-elec-yellow/30">
+                        <ExternalLink className="h-5 w-5 text-elec-yellow" />
+                        <span className="font-medium">Gov.uk Apprenticeships</span>
+                        <span className="text-xs text-muted-foreground">Official recruitment portal</span>
+                      </Button>
+                      <Button variant="outline" className="h-auto p-4 flex-col gap-2 border-blue-500/30">
+                        <ExternalLink className="h-5 w-5 text-blue-400" />
+                        <span className="font-medium">CITB Careers Hub</span>
+                        <span className="text-xs text-muted-foreground">Industry career resources</span>
+                      </Button>
+                      <Button variant="outline" className="h-auto p-4 flex-col gap-2 border-green-500/30">
+                        <ExternalLink className="h-5 w-5 text-green-400" />
+                        <span className="font-medium">Local College Finder</span>
+                        <span className="text-xs text-muted-foreground">Find training partners</span>
+                      </Button>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </AccordionContent>
+                  </CardContent>
+                </Card>
+
+                <Card className="border-cyan-500/20 bg-cyan-500/10">
+                  <CardHeader>
+                    <CardTitle className="text-cyan-400 flex items-center gap-2">
+                      <Calendar className="h-5 w-5" />
+                      Recruitment Timeline & Checklist
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      {timelineChecklist.map((phase, index) => (
+                        <div key={index} className="p-4 bg-cyan-500/5 border border-cyan-500/20 rounded-lg">
+                          <h5 className="font-medium text-cyan-300 mb-2">{phase.phase}</h5>
+                          <ul className="space-y-1">
+                            {phase.tasks.map((task, taskIndex) => (
+                              <li key={taskIndex} className="flex items-start gap-2 text-sm text-cyan-200">
+                                <Clock className="h-3 w-3 mt-1 flex-shrink-0" />
+                                {task}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </AccordionContent>
+          </div>
         </AccordionItem>
       </Accordion>
 
