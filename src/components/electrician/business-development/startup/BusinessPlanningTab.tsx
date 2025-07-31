@@ -90,37 +90,45 @@ const BusinessPlanningTab = () => {
       <PracticalGuidance />
 
       <Card className="border-blue-500/50 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
-            <Target className="h-5 w-5" />
+        <CardHeader className="px-4 md:px-6">
+          <CardTitle className="text-blue-300 flex items-center gap-2 text-lg md:text-xl">
+            <Target className="h-5 w-5 md:h-6 md:w-6" />
             Step-by-Step Implementation Guides
           </CardTitle>
-          <p className="text-blue-200 text-sm">
+          <p className="text-blue-200 text-sm md:text-base">
             Detailed, actionable guides for every aspect of starting your electrical business
           </p>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
+        <CardContent className="px-4 md:px-6">
+          <div className="space-y-4 md:space-y-6">
             {planningSteps.map((step, index) => (
               <Card key={index} className="border-elec-yellow/20 bg-elec-gray w-full">
-                <CardHeader className="pb-4">
-                  <div className="flex flex-col space-y-3">
-                    <div className="flex items-center gap-3">
-                      {step.icon}
-                      <h3 className="text-lg md:text-xl font-semibold text-elec-yellow">{step.title}</h3>
+                <CardHeader className="pb-3 md:pb-4 px-4 md:px-6">
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0 mt-1">
+                        {step.icon}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-base md:text-lg lg:text-xl font-semibold text-elec-yellow leading-tight break-words">
+                          {step.title}
+                        </h3>
+                      </div>
                     </div>
-                    <Badge variant="outline" className="text-xs self-start px-3 py-1">
+                    <Badge variant="outline" className="text-xs px-2 py-1 self-start">
                       {step.timeframe}
                     </Badge>
                   </div>
                 </CardHeader>
-                <CardContent className="pt-0">
-                  <p className="text-muted-foreground mb-6 leading-relaxed text-sm md:text-base">{step.description}</p>
-                  <div className="space-y-4">
+                <CardContent className="pt-0 px-4 md:px-6 pb-4 md:pb-6">
+                  <p className="text-muted-foreground mb-4 md:mb-6 leading-relaxed text-sm md:text-base">
+                    {step.description}
+                  </p>
+                  <div className="space-y-3 md:space-y-4">
                     {step.points.map((point, pointIndex) => (
-                      <div key={pointIndex} className="flex items-start gap-3 text-sm text-muted-foreground p-4 rounded-lg bg-elec-dark/30 w-full">
+                      <div key={pointIndex} className="flex items-start gap-3 text-sm md:text-base text-muted-foreground p-3 md:p-4 rounded-lg bg-elec-dark/30 w-full">
                         <Badge variant="outline" className="mt-1 h-2 w-2 rounded-full p-0 border-elec-yellow/50 bg-elec-yellow/20 flex-shrink-0" />
-                        <span className="leading-relaxed flex-1">{point}</span>
+                        <span className="leading-relaxed flex-1 break-words">{point}</span>
                       </div>
                     ))}
                   </div>
