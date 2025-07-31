@@ -15,8 +15,6 @@ const LegalRequirementsTab = () => {
       icon: <FileText className="h-5 w-5" />,
       requirements: [
         "Written statement of employment terms within 2 months of start date",
-        "Apprentice minimum wage compliance (£6.40/hour for first year)",
-        "National minimum wage after first year (age-dependent rates apply)",
         "28 days annual leave including bank holidays (pro-rata for part-time)",
         "Employer liability insurance coverage (minimum £5 million)",
         "Health and safety training documentation and records",
@@ -76,10 +74,31 @@ const LegalRequirementsTab = () => {
     }
   ];
 
+  const wageObligations = [
+    { 
+      item: "Apprentice Minimum Wage", 
+      rate: "£6.40/hour", 
+      condition: "First year or under 19", 
+      additional: "Applies regardless of age in first year",
+      priority: "high"
+    },
+    { 
+      item: "National Minimum Wage 18-20", 
+      rate: "£8.60/hour", 
+      condition: "After first year, aged 18-20", 
+      additional: "Must be paid from day 1 of second year",
+      priority: "high"
+    },
+    { 
+      item: "National Minimum Wage 21+", 
+      rate: "£11.44/hour", 
+      condition: "After first year, aged 21+", 
+      additional: "Updated April 2024 rates apply",
+      priority: "high"
+    }
+  ];
+
   const payrollConsiderations = [
-    { item: "Apprentice Minimum Wage", rate: "£6.40/hour", condition: "First year or under 19", additional: "Applies regardless of age in first year" },
-    { item: "National Minimum Wage 18-20", rate: "£8.60/hour", condition: "After first year, aged 18-20", additional: "Must be paid from day 1 of second year" },
-    { item: "National Minimum Wage 21+", rate: "£10.42/hour", condition: "After first year, aged 21+", additional: "Higher rate reflects experience and age" },
     { item: "Apprenticeship Levy", rate: "0.5% of payroll", condition: "If annual payroll >£3m", additional: "Offset against apprenticeship training costs" },
     { item: "Employer National Insurance", rate: "13.8%", condition: "On earnings >£175/week", additional: "Class 1 NI contributions required" },
     { item: "Auto-enrolment Pension", rate: "3% minimum", condition: "Employer contribution", additional: "Employee contributes 5% minimum total 8%" }
@@ -150,6 +169,33 @@ const LegalRequirementsTab = () => {
         </Card>
 
         <MobileAccordion type="single" collapsible className="space-y-2">
+          {/* Wage Obligations - Top Priority */}
+          <MobileAccordionItem value="wages">
+            <MobileAccordionTrigger icon={<PoundSterling className="h-5 w-5" />}>
+              Wage Obligations
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-amber-500/10">
+              <div className="p-4 space-y-4">
+                {wageObligations.map((wage, index) => (
+                  <div key={index} className="p-4 border border-amber-500/30 rounded-lg bg-amber-500/5">
+                    <div className="flex flex-col gap-3">
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-semibold text-amber-200 text-sm">{wage.item}</h4>
+                        <Badge className="bg-amber-500/30 text-amber-100 font-bold text-sm px-3 py-1">
+                          {wage.rate}
+                        </Badge>
+                      </div>
+                      <div className="space-y-2">
+                        <p className="text-sm text-amber-200/80 font-medium">{wage.condition}</p>
+                        <p className="text-xs text-amber-300/70 italic leading-relaxed">{wage.additional}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
           {legalRequirements.map((section, index) => (
             <MobileAccordionItem key={index} value={`item-${index}`}>
               <MobileAccordionTrigger icon={section.icon}>
@@ -169,8 +215,8 @@ const LegalRequirementsTab = () => {
           ))}
 
           <MobileAccordionItem value="payroll">
-            <MobileAccordionTrigger icon={<PoundSterling className="h-5 w-5" />}>
-              Payroll & Financial Obligations
+            <MobileAccordionTrigger icon={<Calculator className="h-5 w-5" />}>
+              Additional Payroll Considerations
             </MobileAccordionTrigger>
             <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-elec-gray">
               <div className="p-4 space-y-4">
@@ -319,6 +365,36 @@ const LegalRequirementsTab = () => {
                 <div>
                   <h4 className="font-medium text-blue-300">{item.action}</h4>
                   <p className="text-sm text-blue-200">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Wage Obligations - Top Priority for Desktop */}
+      <Card className="border-amber-500/30 bg-amber-500/10">
+        <CardHeader>
+          <CardTitle className="text-amber-300 flex items-center gap-2">
+            <PoundSterling className="h-5 w-5" />
+            Wage Obligations
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {wageObligations.map((wage, index) => (
+              <div key={index} className="p-4 border border-amber-500/30 rounded-lg bg-amber-500/5">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="font-semibold text-amber-200 text-sm">{wage.item}</h4>
+                    <Badge className="bg-amber-500/30 text-amber-100 font-bold text-lg px-3 py-1">
+                      {wage.rate}
+                    </Badge>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-sm text-amber-200/90 font-medium">{wage.condition}</p>
+                    <p className="text-xs text-amber-300/80 italic leading-relaxed">{wage.additional}</p>
+                  </div>
                 </div>
               </div>
             ))}
