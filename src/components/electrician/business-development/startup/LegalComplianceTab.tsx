@@ -539,16 +539,20 @@ const LegalComplianceTab = () => {
             </div>
           </div>
           
-          <div className="mt-4 space-y-2">
+          <div className="mt-4 space-y-3">
             <h4 className="font-semibold text-green-200">Cost Breakdown:</h4>
-            {costCalculator.map((item, index) => (
-              <div key={index} className="flex justify-between items-center text-sm">
-                <span className="text-green-300">{item.item}</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-green-200">£{item.minCost.toLocaleString()} - £{item.maxCost.toLocaleString()}</span>
+            {costCalculator
+              .sort((a, b) => a.priority === 'Essential' ? -1 : 1)
+              .map((item, index) => (
+              <div key={index} className="p-3 border border-green-500/20 rounded-lg bg-green-500/5">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-green-300 font-medium">{item.item}</span>
                   <Badge variant="outline" className={`text-xs ${item.priority === 'Essential' ? 'border-red-400/50 text-red-300' : 'border-yellow-400/50 text-yellow-300'}`}>
                     {item.priority}
                   </Badge>
+                </div>
+                <div className="text-green-200 font-semibold">
+                  £{item.minCost.toLocaleString()} - £{item.maxCost.toLocaleString()}
                 </div>
               </div>
             ))}
