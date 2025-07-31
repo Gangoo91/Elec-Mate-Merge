@@ -299,14 +299,14 @@ const UKMarketIntelligence = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-0 space-y-3">
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="flex flex-col">
+                  <div className="space-y-2">
+                    <div className="text-center">
                       <span className="text-xs text-orange-300">Hourly Rate:</span>
-                      <span className="font-semibold text-orange-200">{region.hourlyRate}</span>
+                      <div className="font-semibold text-orange-200">{region.hourlyRate}</div>
                     </div>
-                    <div className="flex flex-col">
+                    <div className="text-center">
                       <span className="text-xs text-orange-300">Day Rate:</span>
-                      <span className="font-semibold text-orange-200">{region.dailyRate}</span>
+                      <div className="font-semibold text-orange-200">{region.dailyRate}</div>
                     </div>
                   </div>
                   
