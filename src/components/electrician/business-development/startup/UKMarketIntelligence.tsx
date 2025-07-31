@@ -45,37 +45,78 @@ const UKMarketIntelligence = () => {
     {
       sector: "Renewable Energy",
       description: "Solar panel installations and EV charging points are booming",
-      growth: "Expanding",
       requirements: ["G99 certification", "MCS accreditation", "Battery storage knowledge"],
-      averageJob: "£3,500-18,000"
+      jobBreakdown: {
+        basic: "£3,500-6,000",
+        standard: "£8,000-12,000", 
+        premium: "£15,000-18,000"
+      },
+      jobTypes: [
+        "Domestic solar PV: £3,500-6,000",
+        "Commercial solar: £8,000-15,000",
+        "Battery storage add-on: £2,500-4,000",
+        "EV charging point: £800-1,500"
+      ]
     },
     {
       sector: "Smart Home Technology",
       description: "Home automation and smart electrical systems gaining popularity",
-      growth: "Growing",
       requirements: ["Data cabling expertise", "Network understanding", "Smart device integration"],
-      averageJob: "£800-4,500"
+      jobBreakdown: {
+        basic: "£800-1,500",
+        standard: "£2,000-3,500",
+        premium: "£4,000-4,500"
+      },
+      jobTypes: [
+        "Basic home automation: £800-1,500",
+        "Full smart home setup: £2,500-4,500",
+        "Security system integration: £1,200-2,800"
+      ]
     },
     {
       sector: "Commercial Maintenance",
       description: "Ongoing maintenance contracts provide steady income",
-      growth: "Stable",
       requirements: ["EICR qualifications", "PAT testing", "Emergency response capability"],
-      averageJob: "£300-1,200/month"
+      jobBreakdown: {
+        basic: "£300-500/month",
+        standard: "£600-900/month",
+        premium: "£1,000-1,200/month"
+      },
+      jobTypes: [
+        "Small office contracts: £300-500/month",
+        "Medium business: £600-900/month",
+        "Large commercial: £1,000+/month"
+      ]
     },
     {
       sector: "New Build Housing",
       description: "Continued housing development across the UK",
-      growth: "Regional",
       requirements: ["First fix expertise", "Second fix skills", "Building regs knowledge"],
-      averageJob: "£3,200-12,000"
+      jobBreakdown: {
+        basic: "£3,200-5,000",
+        standard: "£6,000-9,000",
+        premium: "£10,000-12,000"
+      },
+      jobTypes: [
+        "2-bed house rewire: £3,200-5,000",
+        "4-bed house full electrical: £6,000-9,000",
+        "Luxury home installation: £10,000-12,000"
+      ]
     },
     {
       sector: "Emergency Call-Outs",
       description: "High-value emergency electrical services",
-      growth: "Consistent",
       requirements: ["24/7 availability", "Quick response capability", "Diagnostic skills"],
-      averageJob: "£150-500/call"
+      jobBreakdown: {
+        basic: "£150-250/call",
+        standard: "£280-350/call",
+        premium: "£400-500/call"
+      },
+      jobTypes: [
+        "Basic fault finding: £150-250",
+        "Emergency repairs: £280-350",
+        "Out-of-hours premium: £400-500"
+      ]
     }
   ];
 
@@ -185,19 +226,11 @@ const UKMarketIntelligence = () => {
             {opportunities.map((opportunity, index) => (
               <Card key={index} className="bg-green-500/20 border-green-400/30">
                 <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-green-200 text-lg">{opportunity.sector}</CardTitle>
-                    <Badge 
-                      variant="outline" 
-                      className="border-green-400/40 text-green-300"
-                    >
-                      {opportunity.growth} Growth
-                    </Badge>
-                  </div>
+                  <CardTitle className="text-green-200 text-lg">{opportunity.sector}</CardTitle>
                   <p className="text-green-300 text-sm">{opportunity.description}</p>
                 </CardHeader>
                 <CardContent className="pt-0">
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     <div>
                       <p className="text-xs font-semibold text-green-200 mb-1">Key Requirements:</p>
                       <div className="flex flex-wrap gap-1">
@@ -208,9 +241,35 @@ const UKMarketIntelligence = () => {
                         ))}
                       </div>
                     </div>
-                    <div className="flex items-center justify-between pt-2 border-t border-green-500/20">
-                      <span className="text-xs text-green-300">Average Job Value:</span>
-                      <span className="font-semibold text-green-200">{opportunity.averageJob}</span>
+                    
+                    <div className="border-t border-green-500/20 pt-3">
+                      <p className="text-xs font-semibold text-green-200 mb-2">Job Value Breakdown:</p>
+                      <div className="grid grid-cols-3 gap-2 mb-3">
+                        <div className="text-center">
+                          <p className="text-xs text-green-300">Basic</p>
+                          <p className="font-semibold text-green-200 text-sm">{opportunity.jobBreakdown.basic}</p>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-xs text-green-300">Standard</p>
+                          <p className="font-semibold text-green-200 text-sm">{opportunity.jobBreakdown.standard}</p>
+                        </div>
+                        <div className="text-center">
+                          <p className="text-xs text-green-300">Premium</p>
+                          <p className="font-semibold text-green-200 text-sm">{opportunity.jobBreakdown.premium}</p>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <p className="text-xs font-semibold text-green-200 mb-1">Typical Jobs:</p>
+                        <ul className="space-y-1">
+                          {opportunity.jobTypes.map((jobType, idx) => (
+                            <li key={idx} className="text-xs text-green-300 flex items-start gap-1">
+                              <span className="w-1 h-1 bg-green-400 rounded-full mt-1.5 flex-shrink-0" />
+                              {jobType}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
