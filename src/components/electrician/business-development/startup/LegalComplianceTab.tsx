@@ -92,8 +92,8 @@ const LegalComplianceTab = () => {
           details: "City & Guilds 2365, EAL, or equivalent. Foundation for all electrical work in the UK.",
           cost: "£2,000-£4,000",
           links: [
-            { text: "City & Guilds Electrical Courses", url: "https://www.cityandguilds.com/qualifications-and-apprenticeships/building-services-and-utilities/electrical-installation" },
-            { text: "Find Training Providers", url: "https://www.gov.uk/government/publications/electrical-safety-training-providers" }
+            { text: "City & Guilds Courses", url: "https://www.cityandguilds.com/qualifications-and-apprenticeships/building-services-and-utilities/electrical-installation" },
+            { text: "Training Providers", url: "https://www.gov.uk/government/publications/electrical-safety-training-providers" }
           ]
         },
         {
