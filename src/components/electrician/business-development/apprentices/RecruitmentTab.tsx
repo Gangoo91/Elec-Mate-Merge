@@ -188,31 +188,29 @@ const RecruitmentTab = () => {
                     </div>
                   </div>
 
-                  <Card className="border-green-500/20 bg-green-500/10">
-                    <CardHeader>
-                      <CardTitle className="text-green-400 flex items-center gap-2">
+                  <div className="space-y-6">
+                    <div className="mb-4">
+                      <h3 className="text-green-400 text-xl font-semibold flex items-center gap-2 mb-2">
                         <TrendingUp className="h-5 w-5" />
                         Government Incentives
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-3">
-                        {governmentIncentives.map((item, index) => (
-                          <div key={index} className="flex flex-col space-y-3 p-3 bg-green-500/5 border border-green-500/20 rounded-lg">
-                            <div>
-                              <h5 className="font-medium text-green-300">{item.incentive}</h5>
-                              <p className="text-xs text-green-200">{item.eligibility}</p>
-                            </div>
-                            <div className="flex justify-center">
-                              <Badge className="bg-green-500/30 text-green-400">
-                                {item.amount}
-                              </Badge>
-                            </div>
+                      </h3>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {governmentIncentives.map((item, index) => (
+                        <div key={index} className="flex flex-col space-y-3">
+                          <div>
+                            <h5 className="font-medium text-green-300">{item.incentive}</h5>
+                            <p className="text-xs text-green-200">{item.eligibility}</p>
                           </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
+                          <div className="flex justify-center">
+                            <Badge className="bg-green-500/30 text-green-400">
+                              {item.amount}
+                            </Badge>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
 
                 <Card className="border-blue-500/20 bg-blue-500/10">
