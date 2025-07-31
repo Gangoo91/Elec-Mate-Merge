@@ -164,8 +164,8 @@ const RecruitmentTab = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <div className="space-y-6">
                     <div className="mb-4">
-                      <h3 className="text-elec-yellow text-xl font-semibold flex items-center gap-2 mb-2">
-                        <PoundSterling className="h-5 w-5" />
+                      <h3 className="text-elec-yellow text-xl font-semibold flex flex-col items-center gap-2 mb-2">
+                        <PoundSterling className="h-6 w-6" />
                         Investment & Cost Analysis
                       </h3>
                     </div>
@@ -190,8 +190,8 @@ const RecruitmentTab = () => {
 
                   <div className="space-y-6">
                     <div className="mb-4">
-                      <h3 className="text-green-400 text-xl font-semibold flex items-center gap-2 mb-2">
-                        <TrendingUp className="h-5 w-5" />
+                      <h3 className="text-green-400 text-xl font-semibold flex flex-col items-center gap-2 mb-2">
+                        <TrendingUp className="h-6 w-6" />
                         Government Incentives
                       </h3>
                     </div>
@@ -215,8 +215,8 @@ const RecruitmentTab = () => {
 
                 <div className="space-y-6">
                   <div className="mb-4">
-                    <h3 className="text-blue-400 text-xl font-semibold flex items-center gap-2 mb-2">
-                      <TrendingUp className="h-5 w-5" />
+                    <h3 className="text-blue-400 text-xl font-semibold flex flex-col items-center gap-2 mb-2">
+                      <TrendingUp className="h-6 w-6" />
                       Salary Progression Timeline
                     </h3>
                   </div>
@@ -257,8 +257,8 @@ const RecruitmentTab = () => {
               <div className="space-y-6 pt-4">
                 <div className="space-y-6">
                   <div className="mb-4">
-                    <h3 className="text-elec-yellow text-xl font-semibold flex items-center gap-2 mb-2">
-                      <FileText className="h-5 w-5" />
+                    <h3 className="text-elec-yellow text-xl font-semibold flex flex-col items-center gap-2 mb-2">
+                      <FileText className="h-6 w-6" />
                       Job Posting Template
                     </h3>
                   </div>
@@ -329,8 +329,8 @@ const RecruitmentTab = () => {
               <div className="space-y-6 pt-4">
                 <div className="space-y-6">
                   <div className="mb-4">
-                    <h3 className="text-elec-yellow text-xl font-semibold flex items-center gap-2 mb-2">
-                      <Users className="h-5 w-5" />
+                    <h3 className="text-elec-yellow text-xl font-semibold flex flex-col items-center gap-2 mb-2">
+                      <Users className="h-6 w-6" />
                       Recruitment Channels & Performance
                     </h3>
                   </div>
@@ -414,8 +414,8 @@ const RecruitmentTab = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <div className="space-y-6">
                     <div className="mb-4">
-                      <h3 className="text-elec-yellow text-xl font-semibold flex items-center gap-2 mb-2">
-                        <Search className="h-5 w-5" />
+                      <h3 className="text-elec-yellow text-xl font-semibold flex flex-col items-center gap-2 mb-2">
+                        <Search className="h-6 w-6" />
                         Interview Best Practices
                       </h3>
                     </div>
@@ -447,8 +447,8 @@ const RecruitmentTab = () => {
 
                   <div className="space-y-6">
                     <div className="mb-4">
-                      <h3 className="text-red-400 text-xl font-semibold flex items-center gap-2 mb-2">
-                        <AlertCircle className="h-5 w-5" />
+                      <h3 className="text-red-400 text-xl font-semibold flex flex-col items-center gap-2 mb-2">
+                        <AlertCircle className="h-6 w-6" />
                         Warning Signs to Avoid
                       </h3>
                     </div>
@@ -492,8 +492,8 @@ const RecruitmentTab = () => {
               <div className="space-y-6 pt-4">
                 <div className="space-y-6">
                   <div className="mb-4">
-                    <h3 className="text-elec-yellow text-xl font-semibold flex items-center gap-2 mb-2">
-                      <ExternalLink className="h-5 w-5" />
+                    <h3 className="text-elec-yellow text-xl font-semibold flex flex-col items-center gap-2 mb-2">
+                      <ExternalLink className="h-6 w-6" />
                       Useful Recruitment Resources
                     </h3>
                   </div>
@@ -518,8 +518,8 @@ const RecruitmentTab = () => {
 
                 <div className="space-y-6">
                   <div className="mb-4">
-                    <h3 className="text-cyan-400 text-xl font-semibold flex items-center gap-2 mb-2">
-                      <Calendar className="h-5 w-5" />
+                    <h3 className="text-cyan-400 text-xl font-semibold flex flex-col items-center gap-2 mb-2">
+                      <Calendar className="h-6 w-6" />
                       Recruitment Timeline & Checklist
                     </h3>
                   </div>
