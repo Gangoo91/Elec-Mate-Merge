@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { DropdownTabs } from "@/components/ui/dropdown-tabs";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { GraduationCap, ArrowLeft, Users, FileText, BookOpen, Phone, Calculator, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -55,49 +55,79 @@ const BusinessApprentices = () => {
         </CardContent>
       </Card>
 
-      <DropdownTabs
-        defaultValue="recruitment"
-        placeholder="Select apprentice management topic..."
-        className="w-full"
-        tabs={[
-          {
-            value: "recruitment",
-            label: "Recruitment & Selection",
-            icon: Users,
-            content: <RecruitmentTab />
-          },
-          {
-            value: "legal",
-            label: "Legal Requirements",
-            icon: FileText,
-            content: <LegalRequirementsTab />
-          },
-          {
-            value: "training",
-            label: "Training & Development",
-            icon: BookOpen,
-            content: <TrainingDevelopmentTab />
-          },
-          {
-            value: "support",
-            label: "Support & Resources",
-            icon: Phone,
-            content: <SupportResourcesTab />
-          },
-          {
-            value: "assessment",
-            label: "Assessment & Progress",
-            icon: GraduationCap,
-            content: <AssessmentProgressTab />
-          },
-          {
-            value: "tools",
-            label: "Interactive Tools",
-            icon: Calculator,
-            content: <InteractiveToolsTab />
-          }
-        ]}
-      />
+      <Accordion type="single" collapsible defaultValue="recruitment" className="space-y-4">
+        <AccordionItem value="recruitment" className="border border-elec-yellow/20 bg-elec-gray rounded-lg px-6">
+          <AccordionTrigger className="hover:no-underline py-4">
+            <div className="flex items-center gap-3 text-left">
+              <Users className="h-5 w-5 text-elec-yellow" />
+              <span className="text-lg font-medium text-white">Recruitment & Selection</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pb-6">
+            <RecruitmentTab />
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="legal" className="border border-elec-yellow/20 bg-elec-gray rounded-lg px-6">
+          <AccordionTrigger className="hover:no-underline py-4">
+            <div className="flex items-center gap-3 text-left">
+              <FileText className="h-5 w-5 text-elec-yellow" />
+              <span className="text-lg font-medium text-white">Legal Requirements</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pb-6">
+            <LegalRequirementsTab />
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="training" className="border border-elec-yellow/20 bg-elec-gray rounded-lg px-6">
+          <AccordionTrigger className="hover:no-underline py-4">
+            <div className="flex items-center gap-3 text-left">
+              <BookOpen className="h-5 w-5 text-elec-yellow" />
+              <span className="text-lg font-medium text-white">Training & Development</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pb-6">
+            <TrainingDevelopmentTab />
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="support" className="border border-elec-yellow/20 bg-elec-gray rounded-lg px-6">
+          <AccordionTrigger className="hover:no-underline py-4">
+            <div className="flex items-center gap-3 text-left">
+              <Phone className="h-5 w-5 text-elec-yellow" />
+              <span className="text-lg font-medium text-white">Support & Resources</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pb-6">
+            <SupportResourcesTab />
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="assessment" className="border border-elec-yellow/20 bg-elec-gray rounded-lg px-6">
+          <AccordionTrigger className="hover:no-underline py-4">
+            <div className="flex items-center gap-3 text-left">
+              <GraduationCap className="h-5 w-5 text-elec-yellow" />
+              <span className="text-lg font-medium text-white">Assessment & Progress</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pb-6">
+            <AssessmentProgressTab />
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem value="tools" className="border border-elec-yellow/20 bg-elec-gray rounded-lg px-6">
+          <AccordionTrigger className="hover:no-underline py-4">
+            <div className="flex items-center gap-3 text-left">
+              <Calculator className="h-5 w-5 text-elec-yellow" />
+              <span className="text-lg font-medium text-white">Interactive Tools</span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="pb-6">
+            <InteractiveToolsTab />
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
       <Card className="border-green-500/50 bg-green-500/10">
         <CardHeader>
