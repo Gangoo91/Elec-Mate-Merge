@@ -619,7 +619,7 @@ const LegalComplianceTab = () => {
       </Alert>
 
       {/* Interactive Cost Calculator */}
-      <Card className="border-green-500/50 bg-green-500/10">
+      <Card className="border-green-500/50 bg-green-500/10" id="cost-calculator">
         <CardHeader>
           <CardTitle className="text-green-300 flex items-center gap-2">
             <Calculator className="h-5 w-5" />
