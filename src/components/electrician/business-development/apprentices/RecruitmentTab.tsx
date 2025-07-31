@@ -313,15 +313,15 @@ const RecruitmentTab = () => {
         </AccordionItem>
 
         <AccordionItem value="recruitment-channels" className="border-0">
-          <div className="border border-purple-500/30 rounded-lg bg-purple-500/5 overflow-hidden">
-            <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-purple-500/10 transition-colors">
+          <div className="border border-pink-500/30 rounded-lg bg-pink-500/5 overflow-hidden">
+            <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-pink-500/10 transition-colors">
               <div className="flex flex-col items-center gap-3">
-                <div className="p-2 rounded-lg bg-purple-500/20">
-                  <Users className="h-6 w-6 text-purple-400" />
+                <div className="p-2 rounded-lg bg-pink-500/20">
+                  <Users className="h-6 w-6 text-pink-400" />
                 </div>
                 <div className="text-center">
-                  <div className="text-lg font-semibold text-purple-400">Recruitment Channels & Performance</div>
-                  <div className="text-sm text-purple-300/80">Research and marketing guidance</div>
+                  <div className="text-lg font-semibold text-pink-400">Recruitment Channels & Performance</div>
+                  <div className="text-sm text-pink-300/80">Research and marketing guidance</div>
                 </div>
               </div>
             </AccordionTrigger>
@@ -476,15 +476,15 @@ const RecruitmentTab = () => {
         </AccordionItem>
 
         <AccordionItem value="timeline-resources" className="border-0">
-          <div className="border border-orange-500/30 rounded-lg bg-orange-500/5 overflow-hidden">
-            <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-orange-500/10 transition-colors">
+          <div className="border border-violet-500/30 rounded-lg bg-violet-500/5 overflow-hidden">
+            <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-violet-500/10 transition-colors">
               <div className="flex flex-col items-center gap-3">
-                <div className="p-2 rounded-lg bg-orange-500/20">
-                  <Calendar className="h-6 w-6 text-orange-400" />
+                <div className="p-2 rounded-lg bg-violet-500/20">
+                  <Calendar className="h-6 w-6 text-violet-400" />
                 </div>
                 <div className="text-center">
-                  <div className="text-lg font-semibold text-orange-400">Timeline & Resources</div>
-                  <div className="text-sm text-orange-300/80">Step-by-step business setup guides</div>
+                  <div className="text-lg font-semibold text-violet-400">Timeline & Resources</div>
+                  <div className="text-sm text-violet-300/80">Step-by-step business setup guides</div>
                 </div>
               </div>
             </AccordionTrigger>
