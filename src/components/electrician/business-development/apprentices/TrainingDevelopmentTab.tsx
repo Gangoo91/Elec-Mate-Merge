@@ -70,8 +70,8 @@ const TrainingDevelopmentTab = () => {
       offSiteTraining: [
         "Electrical theory fundamentals and core principles",
         "Health and safety regulations (CDM 2015, HASAWA)",
-        "Basic electrical calculations and mathematical formulae",
-        "Wiring regulations introduction (BS 7671 18th Edition basics)",
+        "Basic electrical calculations and mathematical formulae", 
+        "Wiring regulations study (BS 7671 18th Edition 2018)",
         "Technical drawing interpretation and basic sketching",
         "Functional skills development (English and Mathematics)",
         "Industry history and career pathway exploration"
@@ -498,16 +498,16 @@ const TrainingDevelopmentTab = () => {
               <div className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-4 space-y-6">
                 {trainingPhases.map((phase, index) => (
                   <div key={index} className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h4 className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
+                    <div className="text-center space-y-2">
+                      <Badge className="bg-elec-yellow/20 text-elec-yellow text-sm px-3 py-1">
+                        {phase.period}
+                      </Badge>
+                      <h4 className="text-lg font-semibold text-elec-yellow flex items-center justify-center gap-2">
                         <BookOpen className="h-5 w-5" />
                         {phase.phase}
                       </h4>
-                      <Badge className="bg-elec-yellow/20 text-elec-yellow">
-                        {phase.period}
-                      </Badge>
+                      <p className="text-sm text-muted-foreground text-center">{phase.focus}</p>
                     </div>
-                    <p className="text-sm text-muted-foreground">{phase.focus}</p>
                     
                     <div className="space-y-4">
                       <div>
@@ -884,16 +884,16 @@ const TrainingDevelopmentTab = () => {
               <div className="space-y-6 pt-4">
                 {trainingPhases.map((phase, index) => (
                   <div key={index} className="p-6 border border-elec-yellow/20 bg-elec-gray rounded-lg">
-                    <div className="flex items-center justify-between mb-4">
-                      <h4 className="text-xl font-semibold text-elec-yellow flex items-center gap-2">
+                    <div className="text-center space-y-3 mb-6">
+                      <Badge className="bg-elec-yellow/20 text-elec-yellow text-base px-4 py-2">
+                        {phase.period}
+                      </Badge>
+                      <h4 className="text-xl font-semibold text-elec-yellow flex items-center justify-center gap-2">
                         <BookOpen className="h-5 w-5" />
                         {phase.phase}
                       </h4>
-                      <Badge className="bg-elec-yellow/20 text-elec-yellow">
-                        {phase.period}
-                      </Badge>
+                      <p className="text-sm text-muted-foreground max-w-2xl mx-auto">{phase.focus}</p>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-6">{phase.focus}</p>
                     
                     <div className="space-y-6">
                       <div>
