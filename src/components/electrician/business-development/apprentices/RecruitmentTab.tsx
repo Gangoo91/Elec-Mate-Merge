@@ -162,33 +162,31 @@ const RecruitmentTab = () => {
             <AccordionContent className="px-6 pb-6">
               <div className="space-y-6 pt-4">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <Card className="border-elec-yellow/20 bg-elec-gray">
-                    <CardHeader>
-                      <CardTitle className="text-elec-yellow flex items-center gap-2">
+                  <div className="space-y-6">
+                    <div className="mb-4">
+                      <h3 className="text-elec-yellow text-xl font-semibold flex items-center gap-2 mb-2">
                         <PoundSterling className="h-5 w-5" />
                         Investment & Cost Analysis
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-4">
-                        {costBreakdown.map((item, index) => (
-                          <div key={index} className={`flex flex-col ${item.highlight ? 'items-center text-center' : ''} space-y-3`}>
-                            <h5 className={`font-medium text-lg ${item.highlight ? 'text-elec-yellow' : 'text-white'}`}>{item.item}</h5>
-                            <p className={`text-sm text-muted-foreground ${item.highlight ? 'max-w-md' : ''}`}>{item.description}</p>
-                            <div className="flex justify-center">
-                              <Badge className={item.highlight 
-                                ? "bg-elec-yellow/30 text-elec-yellow text-xl px-6 py-2 font-bold" 
-                                : "bg-blue-500/30 text-blue-300 text-base px-4 py-2"
-                              }>
-                                {item.cost}
-                              </Badge>
-                            </div>
-                            <p className="text-xs text-gray-400">{item.calculation}</p>
+                      </h3>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {costBreakdown.map((item, index) => (
+                        <div key={index} className={`flex flex-col ${item.highlight ? 'items-center text-center' : ''} space-y-3`}>
+                          <h5 className={`font-medium text-lg ${item.highlight ? 'text-elec-yellow' : 'text-white'}`}>{item.item}</h5>
+                          <p className={`text-sm text-muted-foreground ${item.highlight ? 'max-w-md' : ''}`}>{item.description}</p>
+                          <div className="flex justify-center">
+                            <Badge className={item.highlight 
+                              ? "bg-elec-yellow/30 text-elec-yellow text-xl px-6 py-2 font-bold" 
+                              : "bg-blue-500/30 text-blue-300 text-base px-4 py-2"
+                            }>
+                              {item.cost}
+                            </Badge>
                           </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
+                          <p className="text-xs text-gray-400">{item.calculation}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
 
                   <Card className="border-green-500/20 bg-green-500/10">
                     <CardHeader>
