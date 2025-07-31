@@ -157,12 +157,15 @@ const RecruitmentTab = () => {
             <div className="space-y-4">
               {costBreakdown.map((item, index) => (
                 <div key={index} className={`p-4 rounded-lg ${item.highlight ? 'bg-elec-yellow/20 border border-elec-yellow/30' : 'bg-elec-dark/50 border border-gray-700/50'}`}>
-                  <div className="flex flex-col space-y-2">
-                    <h5 className={`font-medium ${item.highlight ? 'text-elec-yellow' : 'text-white'}`}>{item.item}</h5>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
+                  <div className={`flex flex-col ${item.highlight ? 'items-center text-center' : ''} space-y-3`}>
+                    <h5 className={`font-medium text-lg ${item.highlight ? 'text-elec-yellow' : 'text-white'}`}>{item.item}</h5>
+                    <p className={`text-sm text-muted-foreground ${item.highlight ? 'max-w-md' : ''}`}>{item.description}</p>
                     <p className="text-xs text-gray-400">{item.calculation}</p>
-                    <div className="flex justify-end">
-                      <Badge className={item.highlight ? "bg-elec-yellow/30 text-elec-yellow text-lg px-3 py-1" : "bg-blue-500/30 text-blue-300 text-base px-3 py-1"}>
+                    <div className={`${item.highlight ? 'mt-4' : 'flex justify-end'}`}>
+                      <Badge className={item.highlight 
+                        ? "bg-elec-yellow/30 text-elec-yellow text-xl px-6 py-2 font-bold" 
+                        : "bg-blue-500/30 text-blue-300 text-base px-3 py-1"
+                      }>
                         {item.cost}
                       </Badge>
                     </div>
