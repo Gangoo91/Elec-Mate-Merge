@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
 import { Shield, FileText, CheckCircle, AlertTriangle, ExternalLink, Scale, Clock, Building, Users, PoundSterling, Zap, BookOpen, Award, Phone, Calculator } from "lucide-react";
 import { useState } from "react";
@@ -35,6 +36,7 @@ const LegalComplianceTab = () => {
   });
 
   const [customCosts, setCustomCosts] = useState<{[key: string]: {min: number, max: number}}>({});
+  const [selectedRequirement, setSelectedRequirement] = useState<string>("");
   const legalRequirements = [
     {
       category: "Business Registration & Structure",
@@ -627,66 +629,94 @@ const LegalComplianceTab = () => {
           </div>
           
           <div className="space-y-4">
-            <h4 className="font-semibold text-green-200">Select Your Requirements:</h4>
-            {costCalculator.map((item, index) => {
-              const isSelected = selectedCosts[item.item];
-              const custom = customCosts[item.item];
-              const displayMinCost = custom?.min ?? item.minCost;
-              const displayMaxCost = custom?.max ?? item.maxCost;
+            <h4 className="font-semibold text-green-200">Add/Manage Requirements:</h4>
+            
+            <div className="space-y-3">
+              <Select value={selectedRequirement} onValueChange={setSelectedRequirement}>
+                <SelectTrigger className="bg-green-500/10 border-green-500/30 text-green-100">
+                  <SelectValue placeholder="Select a requirement to add or manage" />
+                </SelectTrigger>
+                <SelectContent className="bg-elec-gray border-green-500/30">
+                  {costCalculator.map((item, index) => (
+                    <SelectItem 
+                      key={index} 
+                      value={item.item}
+                      className="text-green-100 focus:bg-green-500/20 focus:text-green-100"
+                    >
+                      <div className="flex justify-between items-center w-full">
+                        <span>{item.item}</span>
+                        <span className="text-xs text-green-300 ml-2">
+                          £{item.minCost.toLocaleString()} - £{item.maxCost.toLocaleString()}
+                        </span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               
-              return (
-                <div key={index} className={`p-4 border rounded-lg transition-all ${
-                  isSelected 
-                    ? 'border-green-500/40 bg-green-500/10' 
-                    : 'border-green-500/20 bg-green-500/5'
-                }`}>
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex items-center gap-3">
+              {selectedRequirement && (
+                <div className="p-4 border border-green-500/30 rounded-lg bg-green-500/10">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="font-medium text-green-200">{selectedRequirement}</span>
+                    <label className="flex items-center gap-2">
                       <input
                         type="checkbox"
-                        checked={isSelected}
-                        onChange={() => toggleCostItem(item.item)}
+                        checked={selectedCosts[selectedRequirement] || false}
+                        onChange={() => toggleCostItem(selectedRequirement)}
                         className="w-4 h-4 rounded border-green-500/30 bg-green-500/10 text-green-400 focus:ring-green-400 focus:ring-2"
                       />
-                      <span className={`font-medium ${isSelected ? 'text-green-200' : 'text-green-400'}`}>
-                        {item.item}
-                      </span>
-                    </div>
+                      <span className="text-sm text-green-300">Include in calculation</span>
+                    </label>
                   </div>
                   
-                  {isSelected && (
-                    <div className="mt-3 pt-3 border-t border-green-500/20">
-                      <div className="space-y-3">
-                        <div>
-                          <label className="text-xs text-green-300 block mb-1">Min Cost (£)</label>
-                          <Input
-                            type="number"
-                            value={displayMinCost}
-                            onChange={(e) => updateCustomCost(item.item, 'min', parseInt(e.target.value) || 0)}
-                            className="bg-green-500/10 border-green-500/30 text-green-100 h-8"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-xs text-green-300 block mb-1">Max Cost (£)</label>
-                          <Input
-                            type="number"
-                            value={displayMaxCost}
-                            onChange={(e) => updateCustomCost(item.item, 'max', parseInt(e.target.value) || 0)}
-                            className="bg-green-500/10 border-green-500/30 text-green-100 h-8"
-                          />
-                        </div>
+                  {selectedCosts[selectedRequirement] && (
+                    <div className="space-y-3 pt-3 border-t border-green-500/20">
+                      <div>
+                        <label className="text-xs text-green-300 block mb-1">Min Cost (£)</label>
+                        <Input
+                          type="number"
+                          value={customCosts[selectedRequirement]?.min ?? (costCalculator.find(item => item.item === selectedRequirement)?.minCost || 0)}
+                          onChange={(e) => updateCustomCost(selectedRequirement, 'min', parseInt(e.target.value) || 0)}
+                          className="bg-green-500/10 border-green-500/30 text-green-100 h-8"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs text-green-300 block mb-1">Max Cost (£)</label>
+                        <Input
+                          type="number"
+                          value={customCosts[selectedRequirement]?.max ?? (costCalculator.find(item => item.item === selectedRequirement)?.maxCost || 0)}
+                          onChange={(e) => updateCustomCost(selectedRequirement, 'max', parseInt(e.target.value) || 0)}
+                          className="bg-green-500/10 border-green-500/30 text-green-100 h-8"
+                        />
                       </div>
                     </div>
                   )}
-                  
-                  {!isSelected && (
-                    <div className="text-green-400 text-sm">
-                      £{item.minCost.toLocaleString()} - £{item.maxCost.toLocaleString()}
-                    </div>
-                  )}
                 </div>
-              );
-            })}
+              )}
+              
+              <div className="mt-4 p-3 bg-green-500/10 rounded border border-green-500/20">
+                <h5 className="font-medium text-green-300 mb-2">Currently Selected Items:</h5>
+                <div className="flex flex-wrap gap-2">
+                  {Object.entries(selectedCosts)
+                    .filter(([_, isSelected]) => isSelected)
+                    .map(([itemName]) => (
+                      <Badge 
+                        key={itemName} 
+                        variant="outline" 
+                        className="text-green-300 border-green-400/50 bg-green-500/20 text-xs"
+                      >
+                        {itemName}
+                        <button 
+                          onClick={() => toggleCostItem(itemName)}
+                          className="ml-2 hover:text-red-300"
+                        >
+                          ×
+                        </button>
+                      </Badge>
+                    ))}
+                </div>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>
