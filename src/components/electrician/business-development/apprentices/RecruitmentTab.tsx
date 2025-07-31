@@ -160,15 +160,15 @@ const RecruitmentTab = () => {
                   <div className={`flex flex-col ${item.highlight ? 'items-center text-center' : ''} space-y-3`}>
                     <h5 className={`font-medium text-lg ${item.highlight ? 'text-elec-yellow' : 'text-white'}`}>{item.item}</h5>
                     <p className={`text-sm text-muted-foreground ${item.highlight ? 'max-w-md' : ''}`}>{item.description}</p>
-                    <p className="text-xs text-gray-400">{item.calculation}</p>
-                    <div className={`${item.highlight ? 'mt-4' : 'flex justify-end'}`}>
+                    <div className="flex justify-center">
                       <Badge className={item.highlight 
                         ? "bg-elec-yellow/30 text-elec-yellow text-xl px-6 py-2 font-bold" 
-                        : "bg-blue-500/30 text-blue-300 text-base px-3 py-1"
+                        : "bg-blue-500/30 text-blue-300 text-base px-4 py-2"
                       }>
                         {item.cost}
                       </Badge>
                     </div>
+                    <p className="text-xs text-gray-400">{item.calculation}</p>
                   </div>
                 </div>
               ))}
