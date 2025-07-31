@@ -462,8 +462,8 @@ const TrainingDevelopmentTab = () => {
               <div className="text-xs text-blue-300/80">Cost Analysis</div>
             </MobileAccordionTrigger>
             <MobileAccordionContent>
-              <div className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                <h3 className="text-lg font-semibold text-elec-yellow mb-4">Annual Training Investment Breakdown</h3>
+               <div className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                 <h3 className="text-lg font-semibold text-elec-yellow mb-4 text-center">Annual Training Investment Breakdown</h3>
                 {trainingInvestment.map((item, index) => (
                   <div key={index} className={`p-4 rounded-lg border ${item.highlight ? 'bg-elec-yellow/20 border-elec-yellow/30' : 'bg-elec-dark/50 border-gray-700/50'}`}>
                     <div className={`space-y-3 ${item.highlight ? 'text-center' : ''}`}>
@@ -627,23 +627,18 @@ const TrainingDevelopmentTab = () => {
                               {level.badge}
                             </Badge>
                           </div>
-                          <div className="space-y-2">
-                            {level.competencies.slice(0, 2).map((competency, compIndex) => (
-                              <div key={compIndex} className={`flex items-start gap-2 text-sm ${
-                                level.color === 'red' ? 'text-red-300' :
-                                level.color === 'amber' ? 'text-amber-300' :
-                                'text-green-300'
-                              }`}>
-                                <CheckCircle className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                                {competency}
-                              </div>
-                            ))}
-                            {level.competencies.length > 2 && (
-                              <div className="text-xs text-gray-400 italic">
-                                +{level.competencies.length - 2} more competencies
-                              </div>
-                            )}
-                          </div>
+                         <div className="space-y-2">
+                           {level.competencies.map((competency, compIndex) => (
+                             <div key={compIndex} className={`flex items-start gap-2 text-sm ${
+                               level.color === 'red' ? 'text-red-300' :
+                               level.color === 'amber' ? 'text-amber-300' :
+                               'text-green-300'
+                             }`}>
+                               <CheckCircle className="h-3 w-3 mt-0.5 flex-shrink-0" />
+                               {competency}
+                             </div>
+                           ))}
+                         </div>
                         </div>
                       ))}
                     </div>
@@ -732,13 +727,13 @@ const TrainingDevelopmentTab = () => {
               <div className="text-xs text-amber-300/80">Milestones</div>
             </MobileAccordionTrigger>
             <MobileAccordionContent>
-              <div className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                {progressTracking.map((milestone, index) => (
-                  <div key={index} className="p-4 border border-amber-500/20 bg-amber-500/10 rounded-lg">
-                    <div className="flex items-center justify-between mb-3">
-                      <h4 className="text-lg font-medium text-amber-400">{milestone.milestone}</h4>
-                      <Badge className="bg-amber-500/20 text-amber-300">{milestone.timeframe}</Badge>
-                    </div>
+               <div className="bg-elec-gray border-x border-b border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                 {progressTracking.map((milestone, index) => (
+                   <div key={index} className="p-4 border border-amber-500/20 bg-amber-500/10 rounded-lg">
+                     <div className="text-center space-y-2 mb-4">
+                       <Badge className="bg-amber-500/20 text-amber-300">{milestone.timeframe}</Badge>
+                       <h4 className="text-lg font-medium text-amber-400">{milestone.milestone}</h4>
+                     </div>
                     <div className="space-y-3">
                       <div>
                         <h5 className="font-medium text-amber-300 mb-2 text-sm">Requirements:</h5>
@@ -836,13 +831,13 @@ const TrainingDevelopmentTab = () => {
                 </div>
               </div>
             </AccordionTrigger>
-            <AccordionContent className="px-6 pb-6">
-              <div className="space-y-6 pt-4">
-                <div className="space-y-4">
-                  <h3 className="text-xl font-semibold text-elec-yellow flex items-center gap-2">
-                    <BarChart className="h-5 w-5" />
-                    Annual Training Investment Breakdown
-                  </h3>
+             <AccordionContent className="px-6 pb-6">
+               <div className="space-y-6 pt-4">
+                 <div className="space-y-4">
+                   <h3 className="text-xl font-semibold text-elec-yellow flex items-center justify-center gap-2">
+                     <BarChart className="h-5 w-5" />
+                     Annual Training Investment Breakdown
+                   </h3>
                   {trainingInvestment.map((item, index) => (
                     <div key={index} className={`p-4 rounded-lg border ${item.highlight ? 'bg-elec-yellow/20 border-elec-yellow/30' : 'bg-elec-dark/50 border-gray-700/50'}`}>
                       <div className={`flex flex-col ${item.highlight ? 'items-center text-center' : ''} space-y-3`}>
@@ -987,10 +982,12 @@ const TrainingDevelopmentTab = () => {
             </AccordionTrigger>
             <AccordionContent className="px-6 pb-6">
               <div className="space-y-6 pt-4">
-                {skillsMatrix.map((category, catIndex) => (
-                  <div key={catIndex} className="p-6 border border-elec-yellow/20 bg-elec-gray rounded-lg">
-                    <h4 className="text-xl font-semibold text-elec-yellow mb-2">{category.category}</h4>
-                    <p className="text-sm text-muted-foreground mb-6">{category.description}</p>
+                 {skillsMatrix.map((category, catIndex) => (
+                   <div key={catIndex} className="p-6 border border-elec-yellow/20 bg-elec-gray rounded-lg">
+                     <div className="text-center mb-6">
+                       <h4 className="text-xl font-semibold text-elec-yellow mb-2">{category.category}</h4>
+                       <p className="text-sm text-muted-foreground max-w-2xl mx-auto">{category.description}</p>
+                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {category.levels.map((level, levelIndex) => (
                         <div key={levelIndex} className={`p-4 rounded-lg border ${
@@ -1044,13 +1041,15 @@ const TrainingDevelopmentTab = () => {
             </AccordionTrigger>
             <AccordionContent className="px-6 pb-6">
               <div className="space-y-4 pt-4">
-                {trainingMethods.map((method, index) => (
-                  <div key={index} className="p-6 border border-elec-yellow/20 bg-elec-gray rounded-lg">
-                    <h4 className="text-xl font-semibold text-elec-yellow flex items-center gap-2 mb-2">
-                      <Brain className="h-5 w-5" />
-                      {method.method}
-                    </h4>
-                    <p className="text-sm text-muted-foreground mb-6">{method.description}</p>
+                 {trainingMethods.map((method, index) => (
+                   <div key={index} className="p-6 border border-elec-yellow/20 bg-elec-gray rounded-lg">
+                     <div className="text-center mb-6">
+                       <h4 className="text-xl font-semibold text-elec-yellow flex items-center justify-center gap-2 mb-2">
+                         <Brain className="h-5 w-5" />
+                         {method.method}
+                       </h4>
+                       <p className="text-sm text-muted-foreground max-w-2xl mx-auto">{method.description}</p>
+                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                       <div>
                         <h5 className="font-medium text-green-400 mb-3">Key Benefits</h5>
@@ -1106,13 +1105,13 @@ const TrainingDevelopmentTab = () => {
             </AccordionTrigger>
             <AccordionContent className="px-6 pb-6">
               <div className="space-y-4 pt-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {progressTracking.map((milestone, index) => (
-                    <div key={index} className="p-4 border border-amber-500/20 bg-amber-500/10 rounded-lg">
-                      <div className="flex items-center justify-between mb-3">
-                        <h4 className="text-lg font-medium text-amber-400">{milestone.milestone}</h4>
-                        <Badge className="bg-amber-500/20 text-amber-300">{milestone.timeframe}</Badge>
-                      </div>
+                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                   {progressTracking.map((milestone, index) => (
+                     <div key={index} className="p-4 border border-amber-500/20 bg-amber-500/10 rounded-lg">
+                       <div className="text-center space-y-2 mb-4">
+                         <Badge className="bg-amber-500/20 text-amber-300">{milestone.timeframe}</Badge>
+                         <h4 className="text-lg font-medium text-amber-400">{milestone.milestone}</h4>
+                       </div>
                       <div className="space-y-3">
                         <div>
                           <h5 className="font-medium text-amber-300 mb-2 text-sm">Requirements:</h5>
@@ -1153,13 +1152,15 @@ const TrainingDevelopmentTab = () => {
             </AccordionTrigger>
             <AccordionContent className="px-6 pb-6">
               <div className="space-y-6 pt-4">
-                {mentorshipGuidelines.map((guideline, index) => (
-                  <div key={index} className="p-6 border border-elec-yellow/20 bg-elec-gray rounded-lg">
-                    <h4 className="text-xl font-semibold text-elec-yellow flex items-center gap-2 mb-2">
-                      <Lightbulb className="h-5 w-5" />
-                      {guideline.principle}
-                    </h4>
-                    <p className="text-sm text-muted-foreground mb-4">{guideline.description}</p>
+                 {mentorshipGuidelines.map((guideline, index) => (
+                   <div key={index} className="p-6 border border-elec-yellow/20 bg-elec-gray rounded-lg">
+                     <div className="text-center mb-6">
+                       <h4 className="text-xl font-semibold text-elec-yellow flex items-center justify-center gap-2 mb-2">
+                         <Lightbulb className="h-5 w-5" />
+                         {guideline.principle}
+                       </h4>
+                       <p className="text-sm text-muted-foreground max-w-2xl mx-auto">{guideline.description}</p>
+                     </div>
                     <div>
                       <h5 className="font-medium text-indigo-400 mb-3">Implementation Strategies:</h5>
                       <ul className="space-y-2">
