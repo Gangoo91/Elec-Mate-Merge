@@ -3,7 +3,7 @@ import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
-import { Calculator, Shield, Phone, Heart } from "lucide-react";
+import { Heart } from "lucide-react";
 import BusinessPlanningTab from "./BusinessPlanningTab";
 import LegalComplianceTab from "./LegalComplianceTab";
 import SupportResourcesTab from "./SupportResourcesTab";
@@ -27,21 +27,18 @@ const EnhancedStartupTabs = () => {
           {
             value: "planning",
             label: "Business Planning",
-            icon: Calculator,
             content: <BusinessPlanningTab />
           },
           {
             value: "legal",
             label: "Legal & Compliance",
-            icon: Shield,
             content: <LegalComplianceTab />
           },
           {
             value: "support",
             label: "Support & Resources",
-            icon: Phone,
             content: <SupportResourcesTab />
-          },
+          }
         ]}
       />
 
