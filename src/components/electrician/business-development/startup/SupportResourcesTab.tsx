@@ -331,14 +331,9 @@ const SupportResourcesTab = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           {industryEvents.map((event, index) => (
-            <div key={index} className="p-4 border border-cyan-500/20 rounded-lg bg-cyan-500/5 space-y-2">
-              <div className="flex items-center justify-between">
-                <h4 className="font-medium text-white">{event.name}</h4>
-                <Badge variant="outline" className="text-cyan-300 border-cyan-400/30">
-                  {event.type}
-                </Badge>
-              </div>
-              <p className="text-sm text-cyan-200">{event.frequency}</p>
+            <div key={index} className="p-4 border border-cyan-500/20 rounded-lg bg-cyan-500/5 space-y-3">
+              <h4 className="font-semibold text-white text-lg">{event.name}</h4>
+              <p className="text-cyan-200">{event.frequency}</p>
               <div className="flex flex-wrap gap-1">
                 {event.benefits.map((benefit, benefitIndex) => (
                   <Badge key={benefitIndex} variant="outline" className="text-cyan-400 border-cyan-400/30 text-xs">
