@@ -3,11 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Calculator, TrendingUp, BarChart3, Target, PoundSterling, Users, MapPin, Lightbulb } from "lucide-react";
-import BusinessModelCanvas from "./BusinessModelCanvas";
 import UKMarketIntelligence from "./UKMarketIntelligence";
 import InteractiveFinancialPlanner from "./InteractiveFinancialPlanner";
 import PracticalGuidance from "./PracticalGuidance";
-import BusinessPlanTemplate from "./BusinessPlanTemplate";
 
 const BusinessPlanningTab = () => {
   const planningSteps = [
@@ -101,48 +99,57 @@ const BusinessPlanningTab = () => {
 
       <UKMarketIntelligence />
 
-      <BusinessModelCanvas />
-
       <InteractiveFinancialPlanner />
 
       <PracticalGuidance />
 
-      <div className="grid gap-6">
-        {planningSteps.map((step, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="flex flex-col sm:flex-row sm:items-center gap-2 text-elec-yellow">
-                <div className="flex items-center gap-2">
-                  {step.icon}
-                  {step.title}
-                </div>
-                <Badge variant="outline" className="text-xs sm:ml-auto self-start">
-                  {step.timeframe}
-                </Badge>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground mb-4 leading-relaxed">{step.description}</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {step.points.map((point, pointIndex) => (
-                  <div key={pointIndex} className="flex items-start gap-2 text-sm text-muted-foreground p-2 rounded-lg bg-elec-dark/30">
-                    <Badge variant="outline" className="mt-0.5 h-2 w-2 rounded-full p-0 border-elec-yellow/50 bg-elec-yellow/20 flex-shrink-0" />
-                    <span className="leading-relaxed">{point}</span>
+      <Card className="border-blue-500/50 bg-blue-500/10">
+        <CardHeader>
+          <CardTitle className="text-blue-300 flex items-center gap-2">
+            <Target className="h-5 w-5" />
+            Step-by-Step Implementation Guides
+          </CardTitle>
+          <p className="text-blue-200 text-sm">
+            Detailed, actionable guides for every aspect of starting your electrical business
+          </p>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4 md:gap-6">
+            {planningSteps.map((step, index) => (
+              <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+                <CardHeader>
+                  <CardTitle className="flex flex-col gap-2 text-elec-yellow">
+                    <div className="flex items-center gap-2">
+                      {step.icon}
+                      <span className="text-base md:text-lg">{step.title}</span>
+                    </div>
+                    <Badge variant="outline" className="text-xs self-start">
+                      {step.timeframe}
+                    </Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground mb-4 leading-relaxed text-sm md:text-base">{step.description}</p>
+                  <div className="space-y-3">
+                    {step.points.map((point, pointIndex) => (
+                      <div key={pointIndex} className="flex items-start gap-2 text-sm text-muted-foreground p-3 rounded-lg bg-elec-dark/30">
+                        <Badge variant="outline" className="mt-0.5 h-2 w-2 rounded-full p-0 border-elec-yellow/50 bg-elec-yellow/20 flex-shrink-0" />
+                        <span className="leading-relaxed">{point}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
-      <BusinessPlanTemplate />
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid gap-6 md:grid-cols-2">
         {marketResearchTips.map((section, index) => (
           <Card key={index} className="border-purple-500/50 bg-purple-500/10">
             <CardHeader>
-              <CardTitle className="text-purple-300 flex items-center gap-2">
+              <CardTitle className="text-purple-300 flex items-center gap-2 text-base md:text-lg">
                 <Users className="h-5 w-5" />
                 {section.title}
               </CardTitle>
@@ -150,7 +157,7 @@ const BusinessPlanningTab = () => {
             <CardContent>
               <ul className="space-y-3">
                 {section.tips.map((tip, tipIndex) => (
-                  <li key={tipIndex} className="flex items-start gap-2 text-sm text-purple-200 p-2 rounded-lg bg-purple-500/5">
+                  <li key={tipIndex} className="flex items-start gap-2 text-sm text-purple-200 p-3 rounded-lg bg-purple-500/5">
                     <Lightbulb className="h-3 w-3 mt-0.5 flex-shrink-0" />
                     <span className="leading-relaxed">{tip}</span>
                   </li>
@@ -169,9 +176,9 @@ const BusinessPlanningTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid gap-6 md:grid-cols-2">
             <div>
-              <h4 className="font-semibold text-green-200 mb-4">Essential Planning Tasks</h4>
+              <h4 className="font-semibold text-green-200 mb-4 text-base md:text-lg">Essential Planning Tasks</h4>
               <ul className="space-y-3 text-sm">
                 {[
                   "Complete market research in target area",
@@ -181,7 +188,7 @@ const BusinessPlanningTab = () => {
                   "Plan marketing and customer acquisition",
                   "Set revenue and growth targets"
                 ].map((task, index) => (
-                  <li key={index} className="flex items-start gap-2 text-green-200 p-2 rounded-lg bg-green-500/5">
+                  <li key={index} className="flex items-start gap-2 text-green-200 p-3 rounded-lg bg-green-500/5">
                     <div className="h-2 w-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
                     <span className="leading-relaxed">{task}</span>
                   </li>
@@ -189,7 +196,7 @@ const BusinessPlanningTab = () => {
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-green-200 mb-4">Success Metrics</h4>
+              <h4 className="font-semibold text-green-200 mb-4 text-base md:text-lg">Success Metrics</h4>
               <ul className="space-y-3 text-sm">
                 {[
                   "Monthly revenue targets",
@@ -199,7 +206,7 @@ const BusinessPlanningTab = () => {
                   "Service quality benchmarks",
                   "Business growth milestones"
                 ].map((metric, index) => (
-                  <li key={index} className="flex items-start gap-2 text-green-200 p-2 rounded-lg bg-green-500/5">
+                  <li key={index} className="flex items-start gap-2 text-green-200 p-3 rounded-lg bg-green-500/5">
                     <div className="h-2 w-2 bg-green-400 rounded-full mt-2 flex-shrink-0" />
                     <span className="leading-relaxed">{metric}</span>
                   </li>
