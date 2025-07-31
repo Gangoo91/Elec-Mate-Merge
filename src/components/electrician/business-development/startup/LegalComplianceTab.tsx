@@ -697,6 +697,17 @@ const LegalComplianceTab = () => {
                     );
                   })}
                 </div>
+                
+                {/* Navigation back to totals */}
+                <div className="p-4 border-t border-green-500/20">
+                  <Button 
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                    className="w-full bg-green-500/20 hover:bg-green-500/30 text-green-300 border border-green-500/30"
+                  >
+                    <Calculator className="h-4 w-4 mr-2" />
+                    View Total Calculation (£{totalMinCost.toLocaleString()} - £{totalMaxCost.toLocaleString()})
+                  </Button>
+                </div>
               </MobileAccordionContent>
             </MobileAccordionItem>
           </MobileAccordion>
