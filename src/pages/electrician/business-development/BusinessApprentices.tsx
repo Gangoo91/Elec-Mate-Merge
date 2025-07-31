@@ -113,13 +113,13 @@ const BusinessApprentices = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
             <Button variant="outline" size="sm" className="border-elec-yellow/30 w-full sm:w-auto">
-              Contact CITB for Support
+              CITB Support
             </Button>
             <Button variant="outline" size="sm" className="border-blue-500/30 w-full sm:w-auto">
-              Find Local Training Providers
+              Local Training Providers
             </Button>
             <Button variant="outline" size="sm" className="border-green-500/30 w-full sm:w-auto">
-              Access Government Resources
+              Government Resources
             </Button>
           </div>
         </CardContent>
