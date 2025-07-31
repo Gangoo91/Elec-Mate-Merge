@@ -702,10 +702,18 @@ const LegalComplianceTab = () => {
                 <div className="p-4 border-t border-green-500/20">
                   <Button 
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                    className="w-full bg-green-500/20 hover:bg-green-500/30 text-green-300 border border-green-500/30"
+                    className="w-full bg-green-500/20 hover:bg-green-500/30 text-green-300 border border-green-500/30 h-auto py-3"
                   >
-                    <Calculator className="h-4 w-4 mr-2" />
-                    View Total Calculation (£{totalMinCost.toLocaleString()} - £{totalMaxCost.toLocaleString()})
+                    <div className="flex flex-col items-center gap-1">
+                      <div className="flex items-center gap-2">
+                        <Calculator className="h-4 w-4" />
+                        <span>View Total Calculation</span>
+                      </div>
+                      <div className="text-xs">
+                        <div>Min: £{totalMinCost.toLocaleString()}</div>
+                        <div>Max: £{totalMaxCost.toLocaleString()}</div>
+                      </div>
+                    </div>
                   </Button>
                 </div>
               </MobileAccordionContent>
