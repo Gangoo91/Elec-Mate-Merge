@@ -28,18 +28,18 @@ const MobileAccordionTrigger = React.forwardRef<
     <AccordionPrimitive.Trigger
       ref={ref}
       className={cn(
-        "flex flex-1 items-center justify-between py-4 px-4 text-sm font-medium transition-all hover:underline",
+        "flex flex-1 items-center justify-center py-4 px-4 text-sm font-medium transition-all hover:underline relative",
         "bg-elec-dark/50 border border-elec-yellow/20 rounded-t-lg [&[data-state=open]]:rounded-b-none",
         "touch-manipulation min-h-[48px]", // Minimum touch target size
         className
       )}
       {...props}
     >
-      <div className="flex items-center gap-2">
+      <div className="flex flex-col items-center gap-2 text-center w-full">
         {icon}
         {children}
       </div>
-      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 [&[data-state=open]]:rotate-180" />
+      <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 [&[data-state=open]]:rotate-180 absolute right-4" />
     </AccordionPrimitive.Trigger>
   </AccordionPrimitive.Header>
 ));
