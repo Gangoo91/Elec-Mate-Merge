@@ -572,33 +572,32 @@ const LegalComplianceTab = () => {
   return (
     <div className="space-y-4">
       <Alert className="border-red-500/50 bg-red-500/10">
-        <AlertTriangle className="h-4 w-4 text-red-400" />
         <AlertDescription className="text-red-200">
-          <div className="space-y-4">
-            <div className="text-center">
+          <div className="space-y-4 text-center">
+            <div>
               <p className="font-semibold text-lg mb-2">Legal compliance is mandatory before starting electrical work.</p>
               <p className="text-red-300 font-medium">Non-compliance can result in:</p>
             </div>
             <div className="space-y-3">
-              <div className="flex items-start gap-3">
-                <span className="text-red-400 font-bold mt-0.5">•</span>
-                <span className="text-sm leading-relaxed">Unlimited fines for serious safety breaches</span>
+              <div className="text-center">
+                <span className="text-red-400 font-bold">•</span>
+                <span className="text-sm leading-relaxed ml-2">Unlimited fines for serious safety breaches</span>
               </div>
-              <div className="flex items-start gap-3">
-                <span className="text-red-400 font-bold mt-0.5">•</span>
-                <span className="text-sm leading-relaxed">Up to 2 years imprisonment for gross negligence</span>
+              <div className="text-center">
+                <span className="text-red-400 font-bold">•</span>
+                <span className="text-sm leading-relaxed ml-2">Up to 2 years imprisonment for gross negligence</span>
               </div>
-              <div className="flex items-start gap-3">
-                <span className="text-red-400 font-bold mt-0.5">•</span>
-                <span className="text-sm leading-relaxed">Insurance claims being invalidated</span>
+              <div className="text-center">
+                <span className="text-red-400 font-bold">•</span>
+                <span className="text-sm leading-relaxed ml-2">Insurance claims being invalidated</span>
               </div>
-              <div className="flex items-start gap-3">
-                <span className="text-red-400 font-bold mt-0.5">•</span>
-                <span className="text-sm leading-relaxed">Prohibition from working in the electrical industry</span>
+              <div className="text-center">
+                <span className="text-red-400 font-bold">•</span>
+                <span className="text-sm leading-relaxed ml-2">Prohibition from working in the electrical industry</span>
               </div>
-              <div className="flex items-start gap-3">
-                <span className="text-red-400 font-bold mt-0.5">•</span>
-                <span className="text-sm leading-relaxed">Personal liability for accidents and damages</span>
+              <div className="text-center">
+                <span className="text-red-400 font-bold">•</span>
+                <span className="text-sm leading-relaxed ml-2">Personal liability for accidents and damages</span>
               </div>
             </div>
           </div>
