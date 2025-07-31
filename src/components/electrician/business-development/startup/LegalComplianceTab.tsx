@@ -771,24 +771,24 @@ const LegalComplianceTab = () => {
           <MobileAccordionContent>
             <div className="space-y-4 p-4">
               {regionalDifferences.map((region, index) => (
-                <div key={index} className="border border-border rounded-lg p-4">
-                  <h4 className="font-semibold text-primary mb-3">{region.region}</h4>
+                <div key={index} className="border border-border rounded-lg p-4 bg-elec-gray">
+                  <h4 className="font-semibold text-primary mb-3 text-center">{region.region}</h4>
                   <div className="grid gap-3">
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Part P:</span>
-                      <span className="text-sm text-foreground">{region.partP}</span>
+                    <div className="grid grid-cols-2 gap-2">
+                      <span className="text-sm text-muted-foreground text-left">Part P:</span>
+                      <span className="text-sm text-foreground text-right">{region.partP}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Building Regs:</span>
-                      <span className="text-sm text-foreground">{region.buildingRegs}</span>
+                    <div className="grid grid-cols-2 gap-2">
+                      <span className="text-sm text-muted-foreground text-left">Building Regs:</span>
+                      <span className="text-sm text-foreground text-right">{region.buildingRegs}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Main Schemes:</span>
-                      <span className="text-sm text-foreground">{region.schemes}</span>
+                    <div className="grid grid-cols-2 gap-2">
+                      <span className="text-sm text-muted-foreground text-left">Main Schemes:</span>
+                      <span className="text-sm text-foreground text-right">{region.schemes}</span>
                     </div>
                   </div>
                   <div className="mt-3 p-2 bg-yellow-500/10 rounded border border-yellow-500/20">
-                    <p className="text-sm text-yellow-300">{region.notes}</p>
+                    <p className="text-sm text-yellow-300 text-center">{region.notes}</p>
                   </div>
                 </div>
               ))}
