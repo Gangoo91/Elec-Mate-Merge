@@ -186,14 +186,16 @@ const RecruitmentTab = () => {
           <CardContent>
             <div className="space-y-3">
               {governmentIncentives.map((item, index) => (
-                <div key={index} className="flex justify-between items-center p-3 bg-green-500/5 border border-green-500/20 rounded-lg">
+                <div key={index} className="flex flex-col space-y-3 p-3 bg-green-500/5 border border-green-500/20 rounded-lg">
                   <div>
                     <h5 className="font-medium text-green-300">{item.incentive}</h5>
                     <p className="text-xs text-green-200">{item.eligibility}</p>
                   </div>
-                  <Badge className="bg-green-500/30 text-green-400">
-                    {item.amount}
-                  </Badge>
+                  <div className="flex justify-center">
+                    <Badge className="bg-green-500/30 text-green-400">
+                      {item.amount}
+                    </Badge>
+                  </div>
                 </div>
               ))}
             </div>
@@ -211,12 +213,12 @@ const RecruitmentTab = () => {
         <CardContent>
           <div className="space-y-3">
             {salaryProgression.map((stage, index) => (
-              <div key={index} className="flex items-center justify-between p-3 bg-blue-500/5 border border-blue-500/20 rounded-lg">
-                <div className="flex-1">
+              <div key={index} className="flex flex-col space-y-3 p-3 bg-blue-500/5 border border-blue-500/20 rounded-lg">
+                <div>
                   <h5 className="font-medium text-blue-300">{stage.year}</h5>
                   <p className="text-sm text-blue-200">{stage.notes}</p>
                 </div>
-                <div className="text-right">
+                <div className="flex flex-col space-y-1">
                   <div className="font-medium text-blue-400">{stage.wage}</div>
                   <div className="text-xs text-blue-300">{stage.annual}</div>
                 </div>
@@ -302,20 +304,20 @@ const RecruitmentTab = () => {
                     {channel.effectiveness}
                   </Badge>
                 </div>
-                <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
+                <div className="space-y-3 text-sm">
+                  <div className="flex flex-col space-y-1">
                     <span className="text-muted-foreground">Type:</span>
                     <span className="text-white">{channel.type}</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex flex-col space-y-1">
                     <span className="text-muted-foreground">Cost:</span>
                     <span className="text-elec-yellow">{channel.cost}</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex flex-col space-y-1">
                     <span className="text-muted-foreground">Avg Applications:</span>
                     <span className="text-white">{channel.avgApplications}</span>
                   </div>
-                  <div className="flex justify-between">
+                  <div className="flex flex-col space-y-1">
                     <span className="text-muted-foreground">Time to Fill:</span>
                     <span className="text-white">{channel.timeToFill}</span>
                   </div>
