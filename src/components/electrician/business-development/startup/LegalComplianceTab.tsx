@@ -1022,23 +1022,20 @@ const LegalComplianceTab = () => {
             <MobileAccordionContent>
               <div className="space-y-6 p-4">
                 {section.detailedSteps.map((step, stepIndex) => (
-                  <div key={stepIndex} className="border border-border rounded-lg p-4">
-                    <div className="flex justify-between items-start mb-3">
-                      <h4 className="font-semibold text-primary">{step.title}</h4>
-                      <Badge variant="outline" className="text-green-300 border-green-400/30 bg-green-500/10">
-                        {step.cost}
-                      </Badge>
+                  <div key={stepIndex} className="border border-border rounded-lg p-4 bg-elec-gray">
+                    <div className="text-center mb-3">
+                      <h4 className="font-semibold text-primary text-lg">{step.title}</h4>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{step.details}</p>
-                    <div className="space-y-2">
-                      <h5 className="font-medium text-sm text-primary">Useful Links:</h5>
-                      <div className="flex flex-wrap gap-2">
+                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed text-center">{step.details}</p>
+                    <div className="space-y-3">
+                      <h5 className="font-medium text-sm text-primary text-center">Useful Links:</h5>
+                      <div className="grid grid-cols-1 gap-2">
                         {step.links.map((link, linkIndex) => (
                           <Button 
                             key={linkIndex} 
                             variant="outline" 
                             size="sm" 
-                            className="h-8 text-xs"
+                            className="h-8 text-xs w-full justify-center"
                             onClick={() => window.open(link.url, '_blank')}
                           >
                             <ExternalLink className="h-3 w-3 mr-1" />
@@ -1057,17 +1054,30 @@ const LegalComplianceTab = () => {
 
       {/* Legal Disclaimer */}
       <Alert className="border-yellow-500/50 bg-yellow-500/10">
-        <BookOpen className="h-4 w-4 text-yellow-400" />
         <AlertDescription className="text-yellow-200">
-          <div className="space-y-2">
-            <p className="font-semibold">Legal Disclaimer</p>
-            <p className="text-sm">This information is for guidance only and should not be considered as legal advice. Requirements may vary by location and circumstances. Always consult with qualified professionals including:</p>
-            <ul className="list-disc list-inside space-y-1 text-sm">
-              <li>Qualified solicitors for legal structure advice</li>
-              <li>Chartered accountants for tax and VAT guidance</li>
-              <li>Insurance brokers for appropriate coverage</li>
-              <li>Your chosen competent person scheme for technical requirements</li>
-            </ul>
+          <div className="space-y-4 text-center">
+            <div>
+              <p className="font-semibold text-lg mb-2">Legal Disclaimer</p>
+              <p className="text-sm">This information is for guidance only and should not be considered as legal advice. Requirements may vary by location and circumstances. Always consult with qualified professionals including:</p>
+            </div>
+            <div className="space-y-3">
+              <div className="text-center">
+                <span className="text-yellow-400 font-bold">•</span>
+                <span className="text-sm leading-relaxed ml-2">Qualified solicitors for legal structure advice</span>
+              </div>
+              <div className="text-center">
+                <span className="text-yellow-400 font-bold">•</span>
+                <span className="text-sm leading-relaxed ml-2">Chartered accountants for tax and VAT guidance</span>
+              </div>
+              <div className="text-center">
+                <span className="text-yellow-400 font-bold">•</span>
+                <span className="text-sm leading-relaxed ml-2">Insurance brokers for appropriate coverage</span>
+              </div>
+              <div className="text-center">
+                <span className="text-yellow-400 font-bold">•</span>
+                <span className="text-sm leading-relaxed ml-2">Your chosen competent person scheme for technical requirements</span>
+              </div>
+            </div>
             <p className="text-sm">Regulations change frequently - always verify current requirements with official sources.</p>
           </div>
         </AlertDescription>
