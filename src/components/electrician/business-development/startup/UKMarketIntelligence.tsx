@@ -12,9 +12,9 @@ const UKMarketIntelligence = () => {
       trend: "+4.1% YoY"
     },
     {
-      title: "Skilled Electricians Demand",
-      value: "Very High",
-      subtitle: "Critical labour shortage",
+      title: "Skilled Electricians Shortage",
+      value: "Critical",
+      subtitle: "Labour shortage continues",
       icon: <Users className="h-5 w-5" />,
       trend: "Accelerating"
     },
@@ -45,14 +45,14 @@ const UKMarketIntelligence = () => {
     {
       sector: "Renewable Energy",
       description: "Solar panel installations and EV charging points are booming",
-      growth: "Very High",
+      growth: "Expanding",
       requirements: ["G99 certification", "MCS accreditation", "Battery storage knowledge"],
       averageJob: "£3,500-18,000"
     },
     {
       sector: "Smart Home Technology",
       description: "Home automation and smart electrical systems gaining popularity",
-      growth: "High",
+      growth: "Growing",
       requirements: ["Data cabling expertise", "Network understanding", "Smart device integration"],
       averageJob: "£800-4,500"
     },
@@ -235,11 +235,8 @@ const UKMarketIntelligence = () => {
             {regionalInsights.map((region, index) => (
               <Card key={index} className="bg-orange-500/20 border-orange-400/30">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-orange-200 flex items-center justify-between">
+                  <CardTitle className="text-orange-200">
                     {region.region}
-                    <Badge variant="outline" className="border-orange-400/40 text-orange-300">
-                      {region.demand} Demand
-                    </Badge>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-0 space-y-3">

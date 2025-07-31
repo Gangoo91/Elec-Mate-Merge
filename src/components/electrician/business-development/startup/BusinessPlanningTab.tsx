@@ -24,20 +24,6 @@ const BusinessPlanningTab = () => {
       timeframe: "2-3 weeks"
     },
     {
-      title: "Business Model Development",
-      icon: <Target className="h-5 w-5" />,
-      description: "Define your service offerings and pricing strategy",
-      points: [
-        "Choose your specialisation (domestic, commercial, or mixed)",
-        "Decide on service types (installations, repairs, testing, emergency)",
-        "Develop pricing structures and profit margins",
-        "Plan for seasonal variations and cash flow",
-        "Consider value-added services (smart home, renewables)",
-        "Define your unique selling proposition"
-      ],
-      timeframe: "1-2 weeks"
-    },
-    {
       title: "Financial Planning & Projections",
       icon: <PoundSterling className="h-5 w-5" />,
       description: "Calculate startup costs and project future income",

@@ -302,34 +302,34 @@ const InteractiveFinancialPlanner = () => {
                   <div className="space-y-3">
                     <h4 className="font-semibold text-emerald-200">Financial Health Indicators</h4>
                     <div className="space-y-2">
-                      <div className="flex items-center justify-between p-2 bg-emerald-500/20 rounded">
-                        <span className="text-emerald-200">Current Profit Margin</span>
+                      <div className="flex flex-col gap-2 p-4 bg-emerald-500/20 rounded">
                         <Badge 
                           variant="outline" 
-                          className={`${profitMargin >= growthTargets.targetProfitMargin ? 'border-green-400 text-green-300' : 'border-orange-400 text-orange-300'}`}
+                          className={`self-start ${profitMargin >= growthTargets.targetProfitMargin ? 'border-green-400 text-green-300' : 'border-orange-400 text-orange-300'}`}
                         >
                           {profitMargin.toFixed(1)}% 
                           {profitMargin >= growthTargets.targetProfitMargin ? ' ✓' : ' ⚠️'}
                         </Badge>
+                        <span className="text-emerald-200">Current Profit Margin</span>
                       </div>
-                      <div className="flex items-center justify-between p-2 bg-emerald-500/20 rounded">
-                        <span className="text-emerald-200">Break-Even Period</span>
+                      <div className="flex flex-col gap-2 p-4 bg-emerald-500/20 rounded">
                         <Badge 
                           variant="outline" 
-                          className={`${breakEvenMonths <= 12 ? 'border-green-400 text-green-300' : 'border-orange-400 text-orange-300'}`}
+                          className={`self-start ${breakEvenMonths <= 12 ? 'border-green-400 text-green-300' : 'border-orange-400 text-orange-300'}`}
                         >
                           {breakEvenMonths.toFixed(1)} months
                           {breakEvenMonths <= 12 ? ' ✓' : ' ⚠️'}
                         </Badge>
+                        <span className="text-emerald-200">Break-Even Period</span>
                       </div>
-                      <div className="flex items-center justify-between p-2 bg-emerald-500/20 rounded">
-                        <span className="text-emerald-200">Cash Flow Runway</span>
+                      <div className="flex flex-col gap-2 p-4 bg-emerald-500/20 rounded">
                         <Badge 
                           variant="outline" 
-                          className="border-emerald-400 text-emerald-300"
+                          className="self-start border-emerald-400 text-emerald-300"
                         >
                           {startupCosts.workingCapital > 0 ? `${(startupCosts.workingCapital / totalMonthlyExpenses).toFixed(1)} months` : 'Not set'}
                         </Badge>
+                        <span className="text-emerald-200">Cash Flow Runway</span>
                       </div>
                     </div>
                   </div>
