@@ -149,11 +149,11 @@ const RecruitmentTab = () => {
         <AccordionItem value="financial-planning" className="border-0">
           <div className="border border-green-500/30 rounded-lg bg-green-500/5 overflow-hidden">
             <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-green-500/10 transition-colors">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col items-center gap-3">
                 <div className="p-2 rounded-lg bg-green-500/20">
-                  <PoundSterling className="h-5 w-5 text-green-400" />
+                  <PoundSterling className="h-6 w-6 text-green-400" />
                 </div>
-                <div className="text-left">
+                <div className="text-center">
                   <div className="text-lg font-semibold text-green-400">Financial Planning & Investment Analysis</div>
                   <div className="text-sm text-green-300/80">Calculate costs and revenue projections</div>
                 </div>
@@ -243,11 +243,11 @@ const RecruitmentTab = () => {
         <AccordionItem value="job-posting" className="border-0">
           <div className="border border-blue-500/30 rounded-lg bg-blue-500/5 overflow-hidden">
             <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-blue-500/10 transition-colors">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col items-center gap-3">
                 <div className="p-2 rounded-lg bg-blue-500/20">
-                  <FileText className="h-5 w-5 text-blue-400" />
+                  <FileText className="h-6 w-6 text-blue-400" />
                 </div>
-                <div className="text-left">
+                <div className="text-center">
                   <div className="text-lg font-semibold text-blue-400">Job Posting & Requirements</div>
                   <div className="text-sm text-blue-300/80">Create effective job advertisements</div>
                 </div>
@@ -315,11 +315,11 @@ const RecruitmentTab = () => {
         <AccordionItem value="recruitment-channels" className="border-0">
           <div className="border border-purple-500/30 rounded-lg bg-purple-500/5 overflow-hidden">
             <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-purple-500/10 transition-colors">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col items-center gap-3">
                 <div className="p-2 rounded-lg bg-purple-500/20">
-                  <Users className="h-5 w-5 text-purple-400" />
+                  <Users className="h-6 w-6 text-purple-400" />
                 </div>
-                <div className="text-left">
+                <div className="text-center">
                   <div className="text-lg font-semibold text-purple-400">Recruitment Channels & Performance</div>
                   <div className="text-sm text-purple-300/80">Research and marketing guidance</div>
                 </div>
@@ -399,11 +399,11 @@ const RecruitmentTab = () => {
         <AccordionItem value="selection-process" className="border-0">
           <div className="border border-amber-500/30 rounded-lg bg-amber-500/5 overflow-hidden">
             <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-amber-500/10 transition-colors">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col items-center gap-3">
                 <div className="p-2 rounded-lg bg-amber-500/20">
-                  <Search className="h-5 w-5 text-amber-400" />
+                  <Search className="h-6 w-6 text-amber-400" />
                 </div>
-                <div className="text-left">
+                <div className="text-center">
                   <div className="text-lg font-semibold text-amber-400">Selection Process & Interview Guidelines</div>
                   <div className="text-sm text-amber-300/80">Track your progress and set goals</div>
                 </div>
@@ -478,11 +478,11 @@ const RecruitmentTab = () => {
         <AccordionItem value="timeline-resources" className="border-0">
           <div className="border border-orange-500/30 rounded-lg bg-orange-500/5 overflow-hidden">
             <AccordionTrigger className="px-6 py-4 hover:no-underline hover:bg-orange-500/10 transition-colors">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col items-center gap-3">
                 <div className="p-2 rounded-lg bg-orange-500/20">
-                  <Calendar className="h-5 w-5 text-orange-400" />
+                  <Calendar className="h-6 w-6 text-orange-400" />
                 </div>
-                <div className="text-left">
+                <div className="text-center">
                   <div className="text-lg font-semibold text-orange-400">Timeline & Resources</div>
                   <div className="text-sm text-orange-300/80">Step-by-step business setup guides</div>
                 </div>
@@ -545,13 +545,6 @@ const RecruitmentTab = () => {
         </AccordionItem>
       </Accordion>
 
-      <Alert className="border-amber-500/50 bg-amber-500/10">
-        <TrendingUp className="h-4 w-4 text-amber-400" />
-        <AlertDescription className="text-amber-200">
-          <strong>2025 Update:</strong> These figures reflect the latest apprentice minimum wage increases and government incentives. 
-          Remember to factor in regional variations and industry-specific requirements when budgeting for apprentice recruitment.
-        </AlertDescription>
-      </Alert>
     </div>
   );
 };
