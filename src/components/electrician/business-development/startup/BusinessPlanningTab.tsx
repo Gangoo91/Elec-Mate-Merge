@@ -76,7 +76,7 @@ const BusinessPlanningTab = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <Alert className="border-blue-500/50 bg-blue-500/10">
         <Calculator className="h-4 w-4 text-blue-400" />
         <AlertDescription className="text-blue-200">
@@ -85,7 +85,6 @@ const BusinessPlanningTab = () => {
       </Alert>
 
       <MobileAccordion type="single" collapsible className="space-y-4">
-        
         {/* Market Research & Intelligence */}
         <MobileAccordionItem value="market-research">
           <MobileAccordionTrigger 
@@ -256,7 +255,6 @@ const BusinessPlanningTab = () => {
             </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
-
       </MobileAccordion>
     </div>
   );
