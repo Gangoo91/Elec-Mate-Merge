@@ -518,7 +518,7 @@ const RecruitmentTab = () => {
 
                 <div className="space-y-6">
                   <div className="mb-4">
-                    <h3 className="text-cyan-400 text-xl font-semibold flex flex-col items-center gap-2 mb-2">
+                    <h3 className="text-indigo-400 text-xl font-semibold flex flex-col items-center gap-2 mb-2">
                       <Calendar className="h-6 w-6" />
                       Recruitment Timeline & Checklist
                     </h3>
@@ -526,10 +526,10 @@ const RecruitmentTab = () => {
                   <div className="space-y-4">
                     {timelineChecklist.map((phase, index) => (
                       <div key={index} className="space-y-2">
-                        <h5 className="font-medium text-cyan-300 mb-2">{phase.phase}</h5>
+                        <h5 className="font-medium text-indigo-300 mb-2">{phase.phase}</h5>
                         <ul className="space-y-1">
                           {phase.tasks.map((task, taskIndex) => (
-                            <li key={taskIndex} className="flex items-start gap-2 text-sm text-cyan-200">
+                            <li key={taskIndex} className="flex items-start gap-2 text-sm text-indigo-200">
                               <Clock className="h-3 w-3 mt-1 flex-shrink-0" />
                               {task}
                             </li>
