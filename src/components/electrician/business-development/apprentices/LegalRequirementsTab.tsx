@@ -148,25 +148,6 @@ const LegalRequirementsTab = () => {
           </AlertDescription>
         </Alert>
 
-        {/* Quick Actions for Mobile */}
-        <Card className="border-blue-500/20 bg-blue-500/10">
-          <CardHeader>
-            <CardTitle className="text-blue-400 text-lg">Quick Actions</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {quickActionItems.map((item, index) => (
-                <div key={index} className="flex items-center gap-3 p-3 bg-blue-500/5 border border-blue-500/30 rounded-lg">
-                  {item.icon}
-                  <div>
-                    <h4 className="font-medium text-blue-300">{item.action}</h4>
-                    <p className="text-xs text-blue-200">{item.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
 
         <MobileAccordion type="single" collapsible className="space-y-2">
           {/* Wage Obligations - Top Priority */}
@@ -343,28 +324,6 @@ const LegalRequirementsTab = () => {
         </AlertDescription>
       </Alert>
 
-      {/* Quick Actions for Desktop */}
-      <Card className="border-blue-500/20 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
-            <FileCheck className="h-5 w-5" />
-            Quick Actions
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {quickActionItems.map((item, index) => (
-              <div key={index} className="flex items-center gap-3 p-4 bg-blue-500/5 border border-blue-500/30 rounded-lg cursor-pointer hover:bg-blue-500/10 transition-colors">
-                {item.icon}
-                <div>
-                  <h4 className="font-medium text-blue-300">{item.action}</h4>
-                  <p className="text-sm text-blue-200">{item.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
 
       {/* Wage Obligations - Top Priority for Desktop */}
       <Card className="border-amber-500/30 bg-amber-500/10">
