@@ -108,7 +108,7 @@ const InteractiveFinancialPlanner = () => {
               icon: PoundSterling,
               content: (
                 <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-3">
                     {Object.entries({
                       tools: "Professional Tools & Equipment",
                       vehicle: "Van Purchase/Lease Deposit",
@@ -119,7 +119,7 @@ const InteractiveFinancialPlanner = () => {
                       other: "Other Setup Costs"
                     }).map(([key, label]) => (
                       <div key={key} className="space-y-1">
-                        <Label className="text-emerald-200">{label}</Label>
+                        <Label className="text-emerald-200 text-sm">{label}</Label>
                         <Input
                           type="number"
                           value={startupCosts[key as keyof typeof startupCosts]}
@@ -129,9 +129,11 @@ const InteractiveFinancialPlanner = () => {
                       </div>
                     ))}
                   </div>
-                  <div className="text-center p-6 bg-emerald-500/20 rounded-lg border border-emerald-400/30">
-                    <h4 className="font-semibold text-emerald-200 mb-3">Total Startup Investment</h4>
-                    <p className="text-3xl font-bold text-emerald-100">£{totalStartupCosts.toLocaleString()}</p>
+                  <div className="mt-6 mx-auto max-w-sm">
+                    <div className="text-center p-4 bg-emerald-500/20 rounded-lg border border-emerald-400/30">
+                      <h4 className="font-semibold text-emerald-200 text-sm mb-2">Total Startup Investment</h4>
+                      <p className="text-2xl font-bold text-emerald-100">£{totalStartupCosts.toLocaleString()}</p>
+                    </div>
                   </div>
                 </div>
               )
