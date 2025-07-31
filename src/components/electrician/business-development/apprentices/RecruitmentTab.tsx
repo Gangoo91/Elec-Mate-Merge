@@ -294,15 +294,8 @@ const RecruitmentTab = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {recruitmentChannels.map((channel, index) => (
               <div key={index} className="border border-elec-yellow/20 rounded-lg p-4">
-                <div className="flex justify-between items-start mb-3">
+                <div className="mb-3">
                   <h5 className="font-medium text-white">{channel.name}</h5>
-                  <Badge className={
-                    channel.effectiveness === "Very High" ? "bg-green-500/20 text-green-400" :
-                    channel.effectiveness === "High" ? "bg-blue-500/20 text-blue-400" :
-                    "bg-amber-500/20 text-amber-400"
-                  }>
-                    {channel.effectiveness}
-                  </Badge>
                 </div>
                 <div className="space-y-3 text-sm">
                   <div className="flex flex-col space-y-1">
