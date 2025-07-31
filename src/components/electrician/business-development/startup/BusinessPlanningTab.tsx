@@ -1,10 +1,12 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Calculator, TrendingUp, BarChart3, Target, PoundSterling, Users, MapPin, Lightbulb } from "lucide-react";
-import BusinessCostCalculator from "./BusinessCostCalculator";
+import BusinessModelCanvas from "./BusinessModelCanvas";
+import UKMarketIntelligence from "./UKMarketIntelligence";
+import InteractiveFinancialPlanner from "./InteractiveFinancialPlanner";
+import PracticalGuidance from "./PracticalGuidance";
 import BusinessPlanTemplate from "./BusinessPlanTemplate";
 
 const BusinessPlanningTab = () => {
@@ -93,11 +95,17 @@ const BusinessPlanningTab = () => {
       <Alert className="border-blue-500/50 bg-blue-500/10">
         <Calculator className="h-4 w-4 text-blue-400" />
         <AlertDescription className="text-blue-200">
-          Proper planning is the foundation of business success. Use these tools and guides to create a comprehensive business plan.
+          Comprehensive business planning toolkit for UK electrical contractors. Use these interactive tools and resources to build a successful electrical business.
         </AlertDescription>
       </Alert>
 
-      <BusinessCostCalculator />
+      <UKMarketIntelligence />
+
+      <BusinessModelCanvas />
+
+      <InteractiveFinancialPlanner />
+
+      <PracticalGuidance />
 
       <div className="grid gap-6">
         {planningSteps.map((step, index) => (

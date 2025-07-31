@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { FileText, Download, Edit } from "lucide-react";
+import { FileText } from "lucide-react";
 
 const BusinessPlanTemplate = () => {
   const [businessDetails, setBusinessDetails] = useState({
@@ -26,10 +26,6 @@ const BusinessPlanTemplate = () => {
     }));
   };
 
-  const generatePlan = () => {
-    console.log("Generating business plan with:", businessDetails);
-    // This would integrate with a PDF generation service
-  };
 
   return (
     <Card className="border-green-500/50 bg-green-500/10">
@@ -115,15 +111,10 @@ const BusinessPlanTemplate = () => {
           </div>
         </div>
 
-        <div className="flex gap-2 pt-4 border-t border-green-500/20">
-          <Button onClick={generatePlan} className="bg-green-600 hover:bg-green-700">
-            <Edit className="h-4 w-4 mr-1" />
-            Generate Plan
-          </Button>
-          <Button variant="outline">
-            <Download className="h-4 w-4 mr-1" />
-            Download Template
-          </Button>
+        <div className="pt-4 border-t border-green-500/20 text-center">
+          <p className="text-green-200 text-sm">
+            Use this template to structure your business plan. Each section helps you think through important aspects of your electrical business.
+          </p>
         </div>
       </CardContent>
     </Card>

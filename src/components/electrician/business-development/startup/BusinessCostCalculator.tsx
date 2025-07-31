@@ -147,14 +147,10 @@ const BusinessCostCalculator = () => {
           </div>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex justify-center">
           <Button onClick={resetCalculator} variant="outline" size="sm">
             <RefreshCw className="h-4 w-4 mr-1" />
-            Reset
-          </Button>
-          <Button variant="outline" size="sm">
-            <Download className="h-4 w-4 mr-1" />
-            Export Results
+            Reset Calculator
           </Button>
         </div>
       </CardContent>
