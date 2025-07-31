@@ -217,7 +217,7 @@ const LegalRequirementsTab = () => {
             <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-elec-gray">
                <div className="p-4 space-y-4">
                 {payrollConsiderations.map((item, index) => (
-                  <div key={index} className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-dark/30">
+                  <div key={index} className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-gray">
                     <div className="flex flex-col items-center text-center space-y-3">
                       <Badge className="bg-elec-yellow/30 text-elec-yellow font-bold text-sm px-3 py-1">
                         {item.rate}
