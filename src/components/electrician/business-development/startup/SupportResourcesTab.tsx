@@ -228,27 +228,27 @@ const SupportResourcesTab = () => {
             Online Resources
           </CardTitle>
         </CardHeader>
-        <CardContent className="grid gap-4 md:grid-cols-2">
+        <CardContent className="space-y-4">
           {onlineResources.map((resource, index) => (
-            <div key={index} className="p-4 border border-green-500/20 rounded-lg bg-green-500/5 space-y-3">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <h4 className="font-medium text-white">{resource.name}</h4>
-                  <Badge variant="outline" className="text-green-300 border-green-400/30 text-xs">
+            <div key={index} className="p-4 border border-green-500/20 rounded-lg bg-green-500/5">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h4 className="font-semibold text-white text-lg">{resource.name}</h4>
+                  <Badge variant="outline" className="text-green-300 border-green-400/30">
                     {resource.category}
                   </Badge>
                 </div>
-                <p className="text-sm text-muted-foreground">{resource.description}</p>
+                <p className="text-muted-foreground">{resource.description}</p>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="w-full border-green-500/30 text-green-300 hover:bg-green-500/20"
+                  onClick={() => window.open(resource.url, '_blank')}
+                >
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Visit
+                </Button>
               </div>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="w-full border-green-500/30 text-green-300 hover:bg-green-500/20"
-                onClick={() => window.open(resource.url, '_blank')}
-              >
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Visit
-              </Button>
             </div>
           ))}
         </CardContent>
