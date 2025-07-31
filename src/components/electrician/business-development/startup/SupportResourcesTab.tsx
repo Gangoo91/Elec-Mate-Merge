@@ -29,23 +29,63 @@ const SupportResourcesTab = () => {
   const onlineResources = [
     {
       name: "GOV.UK Business Support",
-      url: "gov.uk/browse/business",
-      description: "Official government guidance for starting a business"
+      url: "https://www.gov.uk/browse/business",
+      description: "Official government guidance for starting a business",
+      category: "Government"
     },
     {
       name: "NICEIC Business Resources",
-      url: "niceic.com/business-support",
-      description: "Industry-specific guidance and support"
+      url: "https://www.niceic.com/business-support",
+      description: "Industry-specific guidance and support",
+      category: "Industry Body"
+    },
+    {
+      name: "NAPIT Business Support",
+      url: "https://www.napit.org.uk/business-support",
+      description: "Competent person scheme with business guidance",
+      category: "Industry Body"
     },
     {
       name: "Electrical Contractors' Association",
-      url: "eca.co.uk",
-      description: "Industry body with resources and networking"
+      url: "https://www.eca.co.uk",
+      description: "Industry body with resources and networking",
+      category: "Industry Body"
     },
     {
       name: "FSB (Federation of Small Businesses)",
-      url: "fsb.org.uk",
-      description: "Support, advice and protection for small businesses"
+      url: "https://www.fsb.org.uk",
+      description: "Support, advice and protection for small businesses",
+      category: "Business Support"
+    },
+    {
+      name: "British Electrotechnical & Allied Manufacturers Association",
+      url: "https://www.beama.org.uk",
+      description: "Industry standards and technical resources",
+      category: "Industry Body"
+    },
+    {
+      name: "Health & Safety Executive (HSE)",
+      url: "https://www.hse.gov.uk/electricity",
+      description: "Electrical safety regulations and guidance",
+      category: "Safety"
+    },
+    {
+      name: "IET Wiring Regulations",
+      url: "https://electrical.theiet.org/wiring-regulations",
+      description: "BS 7671 wiring regulations and updates",
+      category: "Standards"
+    },
+    {
+      name: "Companies House",
+      url: "https://www.gov.uk/government/organisations/companies-house",
+      description: "Register your company and file annual returns",
+      category: "Government"
+    },
+    {
+      name: "HMRC Business Support",
+      url: "https://www.gov.uk/government/organisations/hm-revenue-customs/contact/new-employer-enquiries",
+      description: "Tax guidance for new business owners",
+      category: "Government"
     }
   ];
 
@@ -53,17 +93,68 @@ const SupportResourcesTab = () => {
     {
       name: "SCORE Mentorship",
       description: "Free business mentoring for entrepreneurs",
-      benefits: ["One-on-one guidance", "Industry expertise", "Business plan review"]
+      benefits: ["One-on-one guidance", "Industry expertise", "Business plan review"],
+      url: "https://www.score.org"
     },
     {
       name: "Prince's Trust Enterprise",
       description: "Support for young entrepreneurs (18-30)",
-      benefits: ["Funding opportunities", "Mentoring", "Business training"]
+      benefits: ["Funding opportunities", "Mentoring", "Business training"],
+      url: "https://www.princes-trust.org.uk/support-our-work/programmes/enterprise"
     },
     {
       name: "Local Enterprise Partnerships",
       description: "Regional business support networks",
-      benefits: ["Local market insights", "Networking events", "Grant opportunities"]
+      benefits: ["Local market insights", "Networking events", "Grant opportunities"],
+      url: "https://www.lepnetwork.net"
+    },
+    {
+      name: "Business Mentors Alliance",
+      description: "Industry-specific mentoring for electrical contractors",
+      benefits: ["Technical guidance", "Business development", "Client acquisition"],
+      url: "https://www.businessmentorsalliance.org"
+    }
+  ];
+
+  const trainingProviders = [
+    {
+      name: "City & Guilds",
+      speciality: "Electrical qualifications and apprenticeships",
+      courses: ["Level 3 Electrical Installation", "18th Edition", "Testing & Inspection"],
+      url: "https://www.cityandguilds.com"
+    },
+    {
+      name: "EAL Awards",
+      speciality: "Vocational qualifications in electrical engineering",
+      courses: ["Electrical Installation", "Renewable Energy", "Smart Technology"],
+      url: "https://www.eal.org.uk"
+    },
+    {
+      name: "NICEIC Training",
+      speciality: "Industry-specific courses and updates",
+      courses: ["Part P Training", "Solar PV", "EV Charging Points"],
+      url: "https://www.niceic.com/training"
+    }
+  ];
+
+  const industryEvents = [
+    {
+      name: "Electrical Safety First Annual Conference",
+      type: "Safety & Standards",
+      frequency: "Annual - September",
+      benefits: ["Latest safety updates", "Networking", "CPD points"]
+    },
+    {
+      name: "IET Electrical Exhibition",
+      type: "Technology & Innovation",
+      frequency: "Biennial - March",
+      benefits: ["New technologies", "Product demos", "Technical seminars"]
+    },
+    {
+      name: "Local Electrical Trade Shows",
+      type: "Regional Networking",
+      frequency: "Various dates",
+      benefits: ["Supplier connections", "Local market insights", "Cost comparisons"]
     }
   ];
 
@@ -137,15 +228,25 @@ const SupportResourcesTab = () => {
             Online Resources
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="grid gap-4 md:grid-cols-2">
           {onlineResources.map((resource, index) => (
-            <div key={index} className="flex items-center justify-between">
-              <div>
-                <h4 className="font-medium text-white">{resource.name}</h4>
+            <div key={index} className="p-4 border border-green-500/20 rounded-lg bg-green-500/5 space-y-3">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <h4 className="font-medium text-white">{resource.name}</h4>
+                  <Badge variant="outline" className="text-green-300 border-green-400/30 text-xs">
+                    {resource.category}
+                  </Badge>
+                </div>
                 <p className="text-sm text-muted-foreground">{resource.description}</p>
               </div>
-              <Button variant="outline" size="sm">
-                <ExternalLink className="h-4 w-4 mr-1" />
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full border-green-500/30 text-green-300 hover:bg-green-500/20"
+                onClick={() => window.open(resource.url, '_blank')}
+              >
+                <ExternalLink className="h-4 w-4 mr-2" />
                 Visit
               </Button>
             </div>
@@ -160,14 +261,92 @@ const SupportResourcesTab = () => {
             Mentorship & Networking
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="grid gap-4 md:grid-cols-2">
           {mentorshipPrograms.map((program, index) => (
-            <div key={index} className="space-y-2">
-              <h4 className="font-medium text-white">{program.name}</h4>
-              <p className="text-sm text-muted-foreground">{program.description}</p>
+            <div key={index} className="p-4 border border-purple-500/20 rounded-lg bg-purple-500/5 space-y-3">
+              <div className="space-y-2">
+                <h4 className="font-medium text-white">{program.name}</h4>
+                <p className="text-sm text-muted-foreground">{program.description}</p>
+                <div className="flex flex-wrap gap-1">
+                  {program.benefits.map((benefit, benefitIndex) => (
+                    <Badge key={benefitIndex} variant="outline" className="text-purple-300 border-purple-400/30 text-xs">
+                      {benefit}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full border-purple-500/30 text-purple-300 hover:bg-purple-500/20"
+                onClick={() => window.open(program.url, '_blank')}
+              >
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Visit
+              </Button>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      <Card className="border-amber-500/50 bg-amber-500/10">
+        <CardHeader>
+          <CardTitle className="text-amber-300 flex items-center gap-2">
+            <BookOpen className="h-5 w-5" />
+            Training Providers
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-4 md:grid-cols-1 lg:grid-cols-3">
+          {trainingProviders.map((provider, index) => (
+            <div key={index} className="p-4 border border-amber-500/20 rounded-lg bg-amber-500/5 space-y-3">
+              <div className="space-y-2">
+                <h4 className="font-medium text-white">{provider.name}</h4>
+                <p className="text-sm text-muted-foreground">{provider.speciality}</p>
+                <div className="space-y-1">
+                  <h5 className="text-xs font-medium text-amber-300">Popular Courses:</h5>
+                  <div className="flex flex-wrap gap-1">
+                    {provider.courses.map((course, courseIndex) => (
+                      <Badge key={courseIndex} variant="outline" className="text-amber-400 border-amber-400/30 text-xs">
+                        {course}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full border-amber-500/30 text-amber-300 hover:bg-amber-500/20"
+                onClick={() => window.open(provider.url, '_blank')}
+              >
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Visit
+              </Button>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      <Card className="border-cyan-500/50 bg-cyan-500/10">
+        <CardHeader>
+          <CardTitle className="text-cyan-300 flex items-center gap-2">
+            <Users className="h-5 w-5" />
+            Industry Events & Networking
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {industryEvents.map((event, index) => (
+            <div key={index} className="p-4 border border-cyan-500/20 rounded-lg bg-cyan-500/5 space-y-2">
+              <div className="flex items-center justify-between">
+                <h4 className="font-medium text-white">{event.name}</h4>
+                <Badge variant="outline" className="text-cyan-300 border-cyan-400/30">
+                  {event.type}
+                </Badge>
+              </div>
+              <p className="text-sm text-cyan-200">{event.frequency}</p>
               <div className="flex flex-wrap gap-1">
-                {program.benefits.map((benefit, benefitIndex) => (
-                  <Badge key={benefitIndex} variant="outline" className="text-purple-300 border-purple-400/30">
+                {event.benefits.map((benefit, benefitIndex) => (
+                  <Badge key={benefitIndex} variant="outline" className="text-cyan-400 border-cyan-400/30 text-xs">
                     {benefit}
                   </Badge>
                 ))}
