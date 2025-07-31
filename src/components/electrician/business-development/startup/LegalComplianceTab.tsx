@@ -1001,10 +1001,10 @@ const LegalComplianceTab = () => {
                   : 'border-yellow-500/50 bg-yellow-500/10 text-yellow-300'
               }`}
             >
-              <div className="flex flex-col items-start">
-                <span className="font-semibold">{section.category}</span>
-                <span className="text-xs opacity-80">{section.description}</span>
-                <div className="flex gap-2 mt-1">
+              <div className="flex flex-col items-center text-center w-full">
+                <span className="font-semibold text-lg mb-1">{section.category}</span>
+                <span className="text-sm opacity-80 mb-3">{section.description}</span>
+                <div className="flex gap-2 justify-center">
                   <Badge variant="outline" className={`text-xs ${
                     section.priority === 'essential' 
                       ? 'border-red-400/50 text-red-300 bg-red-500/10' 
