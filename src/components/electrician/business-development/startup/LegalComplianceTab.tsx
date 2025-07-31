@@ -287,28 +287,28 @@ const LegalComplianceTab = () => {
   ];
 
   const costCalculator = [
-    { item: "Level 3 Qualification", minCost: 2000, maxCost: 4000, priority: "Essential" },
-    { item: "18th Edition", minCost: 300, maxCost: 500, priority: "Essential" },
-    { item: "Testing & Inspection", minCost: 800, maxCost: 1200, priority: "Essential" },
-    { item: "Scheme Membership", minCost: 300, maxCost: 800, priority: "Essential" },
-    { item: "Public Liability Insurance", minCost: 800, maxCost: 2500, priority: "Essential" },
-    { item: "Professional Indemnity", minCost: 300, maxCost: 800, priority: "Recommended" },
-    { item: "Company Registration", minCost: 12, maxCost: 100, priority: "Essential" },
-    { item: "Business Bank Account", minCost: 0, maxCost: 180, priority: "Essential" },
-    { item: "Basic Tool Kit", minCost: 1500, maxCost: 5000, priority: "Essential" },
-    { item: "Multimeter & Test Equipment", minCost: 500, maxCost: 2000, priority: "Essential" },
-    { item: "Van/Transport", minCost: 8000, maxCost: 25000, priority: "Essential" },
-    { item: "Van Insurance", minCost: 800, maxCost: 2000, priority: "Essential" },
-    { item: "Tool Insurance", minCost: 200, maxCost: 600, priority: "Recommended" },
-    { item: "Mobile Phone & Plan", minCost: 200, maxCost: 600, priority: "Essential" },
-    { item: "Laptop/Tablet for Certificates", minCost: 300, maxCost: 1200, priority: "Essential" },
-    { item: "Marketing & Website", minCost: 500, maxCost: 3000, priority: "Recommended" },
-    { item: "Accountancy Software", minCost: 100, maxCost: 500, priority: "Recommended" },
-    { item: "Initial Marketing Budget", minCost: 500, maxCost: 2000, priority: "Recommended" },
-    { item: "Emergency Fund (3 months)", minCost: 3000, maxCost: 8000, priority: "Recommended" },
-    { item: "Uniforms & PPE", minCost: 200, maxCost: 800, priority: "Essential" },
-    { item: "Office Setup (Home)", minCost: 500, maxCost: 2000, priority: "Recommended" },
-    { item: "Certificate Books & Stationery", minCost: 100, maxCost: 300, priority: "Essential" }
+    { item: "Level 3 Qualification", minCost: 2000, maxCost: 4000, priority: "Essential", timeframe: "One-time" },
+    { item: "18th Edition", minCost: 300, maxCost: 500, priority: "Essential", timeframe: "One-time" },
+    { item: "Testing & Inspection", minCost: 800, maxCost: 1200, priority: "Essential", timeframe: "One-time" },
+    { item: "Scheme Membership", minCost: 300, maxCost: 800, priority: "Essential", timeframe: "Annual" },
+    { item: "Public Liability Insurance", minCost: 800, maxCost: 2500, priority: "Essential", timeframe: "Annual" },
+    { item: "Professional Indemnity", minCost: 300, maxCost: 800, priority: "Recommended", timeframe: "Annual" },
+    { item: "Company Registration", minCost: 12, maxCost: 100, priority: "Essential", timeframe: "One-time" },
+    { item: "Business Bank Account", minCost: 0, maxCost: 180, priority: "Essential", timeframe: "Annual" },
+    { item: "Basic Tool Kit", minCost: 1500, maxCost: 5000, priority: "Essential", timeframe: "One-time" },
+    { item: "Multimeter & Test Equipment", minCost: 500, maxCost: 2000, priority: "Essential", timeframe: "One-time" },
+    { item: "Van/Transport", minCost: 8000, maxCost: 25000, priority: "Essential", timeframe: "One-time" },
+    { item: "Van Insurance", minCost: 800, maxCost: 2000, priority: "Essential", timeframe: "Annual" },
+    { item: "Tool Insurance", minCost: 200, maxCost: 600, priority: "Recommended", timeframe: "Annual" },
+    { item: "Mobile Phone & Plan", minCost: 200, maxCost: 600, priority: "Essential", timeframe: "Annual" },
+    { item: "Laptop/Tablet for Certificates", minCost: 300, maxCost: 1200, priority: "Essential", timeframe: "One-time" },
+    { item: "Marketing & Website", minCost: 500, maxCost: 3000, priority: "Recommended", timeframe: "One-time" },
+    { item: "Accountancy Software", minCost: 100, maxCost: 500, priority: "Recommended", timeframe: "Annual" },
+    { item: "Initial Marketing Budget", minCost: 500, maxCost: 2000, priority: "Recommended", timeframe: "One-time" },
+    { item: "Emergency Fund (3 months)", minCost: 3000, maxCost: 8000, priority: "Recommended", timeframe: "One-time" },
+    { item: "Uniforms & PPE", minCost: 200, maxCost: 800, priority: "Essential", timeframe: "One-time" },
+    { item: "Office Setup (Home)", minCost: 500, maxCost: 2000, priority: "Recommended", timeframe: "One-time" },
+    { item: "Certificate Books & Stationery", minCost: 100, maxCost: 300, priority: "Essential", timeframe: "One-time" }
   ];
 
   const calculateSelectedCosts = () => {
@@ -317,14 +317,28 @@ const LegalComplianceTab = () => {
         const custom = customCosts[item.item];
         const minCost = custom?.min ?? item.minCost;
         const maxCost = custom?.max ?? item.maxCost;
-        totals.min += minCost;
-        totals.max += maxCost;
+        
+        if (item.timeframe === "One-time") {
+          totals.oneTime.min += minCost;
+          totals.oneTime.max += maxCost;
+        } else {
+          totals.annual.min += minCost;
+          totals.annual.max += maxCost;
+        }
+        
+        totals.total.min += minCost;
+        totals.total.max += maxCost;
       }
       return totals;
-    }, { min: 0, max: 0 });
+    }, { 
+      oneTime: { min: 0, max: 0 }, 
+      annual: { min: 0, max: 0 }, 
+      total: { min: 0, max: 0 } 
+    });
   };
 
-  const { min: totalMinCost, max: totalMaxCost } = calculateSelectedCosts();
+  const costs = calculateSelectedCosts();
+  const { total: { min: totalMinCost, max: totalMaxCost } } = costs;
 
   const toggleCostItem = (itemName: string) => {
     setSelectedCosts(prev => ({
@@ -613,16 +627,21 @@ const LegalComplianceTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid md:grid-cols-2 gap-4 mb-6">
-            <div className="p-4 bg-green-500/20 rounded-lg border border-green-500/30">
-              <h4 className="font-semibold text-green-200 mb-2">Your Minimum Cost</h4>
-              <p className="text-2xl font-bold text-green-100">£{totalMinCost.toLocaleString()}</p>
-              <p className="text-sm text-green-300">Selected items - minimum</p>
+          <div className="grid md:grid-cols-3 gap-4 mb-6">
+            <div className="p-4 bg-blue-500/20 rounded-lg border border-blue-500/30">
+              <h4 className="font-semibold text-blue-200 mb-2">One-time Costs</h4>
+              <p className="text-xl font-bold text-blue-100">£{costs.oneTime.min.toLocaleString()} - £{costs.oneTime.max.toLocaleString()}</p>
+              <p className="text-sm text-blue-300">Initial setup expenses</p>
+            </div>
+            <div className="p-4 bg-amber-500/20 rounded-lg border border-amber-500/30">
+              <h4 className="font-semibold text-amber-200 mb-2">Annual Costs</h4>
+              <p className="text-xl font-bold text-amber-100">£{costs.annual.min.toLocaleString()} - £{costs.annual.max.toLocaleString()}</p>
+              <p className="text-sm text-amber-300">Yearly recurring expenses</p>
             </div>
             <div className="p-4 bg-green-500/20 rounded-lg border border-green-500/30">
-              <h4 className="font-semibold text-green-200 mb-2">Your Maximum Cost</h4>
-              <p className="text-2xl font-bold text-green-100">£{totalMaxCost.toLocaleString()}</p>
-              <p className="text-sm text-green-300">Selected items - maximum</p>
+              <h4 className="font-semibold text-green-200 mb-2">Total First Year</h4>
+              <p className="text-xl font-bold text-green-100">£{totalMinCost.toLocaleString()} - £{totalMaxCost.toLocaleString()}</p>
+              <p className="text-sm text-green-300">Combined first year cost</p>
             </div>
           </div>
           
@@ -661,6 +680,9 @@ const LegalComplianceTab = () => {
                           <span className={`font-medium text-center ${isSelected ? 'text-green-200' : 'text-green-400'}`}>
                             {item.item}
                           </span>
+                          <span className={`text-xs text-center ${isSelected ? 'text-green-300' : 'text-green-500'}`}>
+                            {item.timeframe}
+                          </span>
                         </div>
                         
                         {isSelected && (
@@ -689,8 +711,13 @@ const LegalComplianceTab = () => {
                         )}
                         
                         {!isSelected && (
-                          <div className="text-green-400 text-sm">
-                            £{item.minCost.toLocaleString()} - £{item.maxCost.toLocaleString()}
+                          <div className="text-center">
+                            <div className="text-green-400 text-sm">
+                              £{item.minCost.toLocaleString()} - £{item.maxCost.toLocaleString()}
+                            </div>
+                            <div className="text-green-500 text-xs">
+                              {item.timeframe}
+                            </div>
                           </div>
                         )}
                       </div>
@@ -701,19 +728,10 @@ const LegalComplianceTab = () => {
                 {/* Navigation back to totals */}
                 <div className="p-4 border-t border-green-500/20">
                   <Button 
-                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                    className="w-full bg-green-500/20 hover:bg-green-500/30 text-green-300 border border-green-500/30 h-auto py-3"
+                    onClick={() => document.getElementById('cost-calculator')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="w-full bg-green-500/20 hover:bg-green-500/30 text-green-300 border border-green-500/30 h-auto py-2"
                   >
-                    <div className="flex flex-col items-center gap-1">
-                      <div className="flex items-center gap-2">
-                        <Calculator className="h-4 w-4" />
-                        <span>View Total Calculation</span>
-                      </div>
-                      <div className="text-xs">
-                        <div>Min: £{totalMinCost.toLocaleString()}</div>
-                        <div>Max: £{totalMaxCost.toLocaleString()}</div>
-                      </div>
-                    </div>
+                    View Totals
                   </Button>
                 </div>
               </MobileAccordionContent>
