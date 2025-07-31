@@ -245,16 +245,16 @@ const UKMarketIntelligence = () => {
                     <div className="border-t border-green-500/20 pt-3">
                       <p className="text-xs font-semibold text-green-200 mb-2">Job Value Breakdown:</p>
                       <div className="space-y-2 mb-3">
-                        <div className="flex justify-between items-center p-2 bg-green-500/10 rounded border border-green-500/20">
-                          <p className="text-xs text-green-300">Basic</p>
+                        <div className="text-center p-2 bg-green-500/10 rounded border border-green-500/20">
+                          <p className="text-xs text-green-300 mb-1">Basic</p>
                           <p className="font-semibold text-green-200 text-sm">{opportunity.jobBreakdown.basic}</p>
                         </div>
-                        <div className="flex justify-between items-center p-2 bg-green-500/10 rounded border border-green-500/20">
-                          <p className="text-xs text-green-300">Standard</p>
+                        <div className="text-center p-2 bg-green-500/10 rounded border border-green-500/20">
+                          <p className="text-xs text-green-300 mb-1">Standard</p>
                           <p className="font-semibold text-green-200 text-sm">{opportunity.jobBreakdown.standard}</p>
                         </div>
-                        <div className="flex justify-between items-center p-2 bg-green-500/10 rounded border border-green-500/20">
-                          <p className="text-xs text-green-300">Premium</p>
+                        <div className="text-center p-2 bg-green-500/10 rounded border border-green-500/20">
+                          <p className="text-xs text-green-300 mb-1">Premium</p>
                           <p className="font-semibold text-green-200 text-sm">{opportunity.jobBreakdown.premium}</p>
                         </div>
                       </div>
