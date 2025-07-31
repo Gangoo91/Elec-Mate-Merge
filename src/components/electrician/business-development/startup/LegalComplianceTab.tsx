@@ -272,6 +272,232 @@ const LegalComplianceTab = () => {
   const totalMinCost = costCalculator.filter(item => item.priority === "Essential").reduce((sum, item) => sum + item.minCost, 0);
   const totalMaxCost = costCalculator.filter(item => item.priority === "Essential").reduce((sum, item) => sum + item.maxCost, 0);
 
+  const qualificationPathways = [
+    {
+      route: "Traditional Apprenticeship",
+      duration: "3-4 years",
+      description: "Combination of workplace learning and college study",
+      pros: ["Earn while you learn", "Comprehensive experience", "Industry recognition"],
+      cons: ["Long duration", "Lower initial wages"],
+      suitability: "School leavers, career changers with time"
+    },
+    {
+      route: "Adult Training Course",
+      duration: "6-18 months",
+      description: "Intensive college-based training programs",
+      pros: ["Faster qualification", "Focused learning", "Modern facilities"],
+      cons: ["High upfront costs", "Limited practical experience", "No income during training"],
+      suitability: "Career changers, mature students"
+    },
+    {
+      route: "Distance Learning + Assessment",
+      duration: "12-24 months",
+      description: "Online study with practical assessments",
+      pros: ["Flexible timing", "Study while working", "Lower costs"],
+      cons: ["Requires self-discipline", "Limited practical guidance", "Less networking"],
+      suitability: "Working professionals, geographically remote"
+    }
+  ];
+
+  const regionalDifferences = [
+    {
+      region: "England",
+      partP: "Mandatory for domestic electrical work",
+      buildingRegs: "Part P of Building Regulations",
+      schemes: "NICEIC, NAPIT, ELECSA, STROMA",
+      notes: "Strictest enforcement, highest scheme costs"
+    },
+    {
+      region: "Wales", 
+      partP: "Mandatory for domestic electrical work",
+      buildingRegs: "Part P of Building Regulations",
+      schemes: "NICEIC, NAPIT, ELECSA, STROMA",
+      notes: "Same as England but some Welsh language requirements"
+    },
+    {
+      region: "Scotland",
+      partP: "Not applicable",
+      buildingRegs: "Building Standards - Section 4",
+      schemes: "SELECT, NICEIC, NAPIT",
+      notes: "Different building standards, SELECT scheme preferred"
+    },
+    {
+      region: "Northern Ireland",
+      partP: "Not applicable", 
+      buildingRegs: "Building Regulations NI",
+      schemes: "NICEIC, NAPIT",
+      notes: "Separate jurisdiction, different regulations"
+    }
+  ];
+
+  const commonMistakes = [
+    {
+      mistake: "Working without proper certification",
+      consequence: "Unlimited fines, prosecution, insurance invalidation",
+      howToAvoid: "Complete all qualifications before starting work",
+      realCost: "£10,000+ in fines + legal costs"
+    },
+    {
+      mistake: "Not registering for VAT when required",
+      consequence: "Penalties up to 100% of VAT owed",
+      howToAvoid: "Monitor turnover, register when approaching £85k",
+      realCost: "£17,000+ in penalties for £85k turnover"
+    },
+    {
+      mistake: "Inadequate insurance coverage",
+      consequence: "Personal liability for claims, business closure",
+      howToAvoid: "Get minimum £2M public liability, professional indemnity",
+      realCost: "Unlimited personal liability"
+    },
+    {
+      mistake: "Poor record keeping",
+      consequence: "HMRC penalties, unable to prove compliance",
+      howToAvoid: "Digital records, cloud backup, 6+ years retention",
+      realCost: "£3,000+ in penalties + time costs"
+    },
+    {
+      mistake: "Not updating qualifications",
+      consequence: "Loss of competent person status, unable to certify work",
+      howToAvoid: "Set calendar reminders for renewal dates",
+      realCost: "Loss of income + re-qualification costs"
+    }
+  ];
+
+  const implementationTimeline = [
+    {
+      phase: "Preparation Phase",
+      duration: "2-6 months",
+      tasks: [
+        "Research qualification requirements",
+        "Choose training provider",
+        "Apply for funding if available",
+        "Begin Level 3 course",
+        "Start building emergency fund"
+      ]
+    },
+    {
+      phase: "Qualification Phase", 
+      duration: "6-18 months",
+      tasks: [
+        "Complete Level 3 electrical installation",
+        "Pass 18th Edition exam",
+        "Complete testing & inspection (2391)",
+        "Gain practical experience",
+        "Build portfolio of work"
+      ]
+    },
+    {
+      phase: "Business Setup Phase",
+      duration: "2-4 weeks",
+      tasks: [
+        "Choose business structure",
+        "Register with Companies House/HMRC",
+        "Open business bank account",
+        "Get insurance quotes and coverage",
+        "Apply for competent person scheme"
+      ]
+    },
+    {
+      phase: "Launch Phase",
+      duration: "1-2 weeks",
+      tasks: [
+        "Final scheme assessment",
+        "Register for VAT if needed",
+        "Set up accounting systems",
+        "Create certificates and documentation",
+        "Begin marketing and networking"
+      ]
+    }
+  ];
+
+  const ongoingCompliance = [
+    {
+      requirement: "18th Edition Updates",
+      frequency: "Every 3-5 years",
+      cost: "£300-£500",
+      consequence: "Cannot certify new work",
+      reminder: "Set 2-year advance reminder"
+    },
+    {
+      requirement: "Scheme Membership Renewal",
+      frequency: "Annual",
+      cost: "£300-£800",
+      consequence: "Loss of competent person status",
+      reminder: "Auto-renew to avoid lapses"
+    },
+    {
+      requirement: "Insurance Renewal",
+      frequency: "Annual",
+      cost: "£800-£3,000",
+      consequence: "Uninsured work, personal liability",
+      reminder: "Review and compare 2 months before expiry"
+    },
+    {
+      requirement: "CPD Training",
+      frequency: "Ongoing (min 20 hours/year)",
+      cost: "£200-£1,000",
+      consequence: "Scheme membership issues",
+      reminder: "Track hours monthly"
+    },
+    {
+      requirement: "Tax Returns",
+      frequency: "Annual (by 31 Jan)",
+      cost: "£300-£1,500 (accountant)",
+      consequence: "HMRC penalties starting at £100",
+      reminder: "Prepare by December"
+    }
+  ];
+
+  const documentTemplates = [
+    {
+      document: "Risk Assessment Template",
+      description: "Standard electrical work risk assessment",
+      format: "PDF/Word",
+      link: "https://www.hse.gov.uk/electricity/information/risk.htm"
+    },
+    {
+      document: "Method Statement Template", 
+      description: "Safe working procedures for electrical tasks",
+      format: "PDF/Word",
+      link: "https://www.hse.gov.uk/construction/cdm/2015/method-statements.htm"
+    },
+    {
+      document: "COSHH Assessment Forms",
+      description: "Chemical/material safety assessments",
+      format: "PDF/Excel",
+      link: "https://www.hse.gov.uk/coshh/basics/assessment.htm"
+    },
+    {
+      document: "Electrical Certificate Templates",
+      description: "EIC, EICR, Minor Works certificates",
+      format: "Carbonless books",
+      link: "https://www.niceic.com/certificates"
+    }
+  ];
+
+  const frequentlyAskedQuestions = [
+    {
+      question: "Can I start work while still training?",
+      answer: "No. You must complete all qualifications and gain competent person status before working unsupervised on electrical installations. Working without proper certification is illegal and dangerous."
+    },
+    {
+      question: "Do I need Part P registration for all electrical work?",
+      answer: "Part P only applies to domestic electrical work in England and Wales. Commercial work doesn't require Part P, but you still need proper qualifications and scheme membership."
+    },
+    {
+      question: "What happens if I don't renew my scheme membership?",
+      answer: "You immediately lose competent person status and cannot self-certify electrical work. You'll need to use local authority building control for all jobs, which is expensive and time-consuming."
+    },
+    {
+      question: "Can I be a sole trader and still get public liability insurance?",
+      answer: "Yes. Business structure doesn't affect insurance availability. However, as a sole trader, you have unlimited personal liability, making insurance even more important."
+    },
+    {
+      question: "How often do regulations change?",
+      answer: "BS 7671 (Wiring Regulations) updates every 3-5 years with amendments in between. Building regulations and safety standards can change annually. Stay subscribed to industry updates."
+    }
+  ];
+
   return (
     <div className="space-y-4">
       <Alert className="border-red-500/50 bg-red-500/10">
@@ -353,6 +579,283 @@ const LegalComplianceTab = () => {
       </Card>
 
       <MobileAccordion type="single" collapsible className="space-y-4">
+        {/* Qualification Pathways */}
+        <MobileAccordionItem value="qualification-pathways">
+          <MobileAccordionTrigger 
+            icon={<BookOpen className="h-5 w-5 text-blue-400" />}
+            className="border-blue-500/50 bg-blue-500/10 text-blue-300"
+          >
+            <div className="flex flex-col items-start">
+              <span className="font-semibold">Qualification Pathways</span>
+              <span className="text-xs opacity-80">Different routes to becoming qualified</span>
+            </div>
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="space-y-6 p-4">
+              {qualificationPathways.map((pathway, index) => (
+                <div key={index} className="border border-border rounded-lg p-4">
+                  <div className="flex justify-between items-start mb-3">
+                    <h4 className="font-semibold text-primary">{pathway.route}</h4>
+                    <Badge variant="outline" className="text-blue-300 border-blue-400/30 bg-blue-500/10">
+                      {pathway.duration}
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-4">{pathway.description}</p>
+                  
+                  <div className="grid md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <h5 className="font-medium text-green-300 mb-2">Pros:</h5>
+                      <ul className="space-y-1">
+                        {pathway.pros.map((pro, proIndex) => (
+                          <li key={proIndex} className="text-sm text-green-200 flex items-start gap-2">
+                            <CheckCircle className="h-3 w-3 mt-1 flex-shrink-0" />
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-medium text-red-300 mb-2">Cons:</h5>
+                      <ul className="space-y-1">
+                        {pathway.cons.map((con, conIndex) => (
+                          <li key={conIndex} className="text-sm text-red-200 flex items-start gap-2">
+                            <AlertTriangle className="h-3 w-3 mt-1 flex-shrink-0" />
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div className="p-3 bg-primary/10 rounded border border-primary/20">
+                    <p className="text-sm text-primary">
+                      <strong>Best for:</strong> {pathway.suitability}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        {/* Regional Differences */}
+        <MobileAccordionItem value="regional-differences">
+          <MobileAccordionTrigger 
+            icon={<Users className="h-5 w-5 text-purple-400" />}
+            className="border-purple-500/50 bg-purple-500/10 text-purple-300"
+          >
+            <div className="flex flex-col items-start">
+              <span className="font-semibold">Regional Differences</span>
+              <span className="text-xs opacity-80">UK regulations vary by country</span>
+            </div>
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="space-y-4 p-4">
+              {regionalDifferences.map((region, index) => (
+                <div key={index} className="border border-border rounded-lg p-4">
+                  <h4 className="font-semibold text-primary mb-3">{region.region}</h4>
+                  <div className="grid gap-3">
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">Part P:</span>
+                      <span className="text-sm text-foreground">{region.partP}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">Building Regs:</span>
+                      <span className="text-sm text-foreground">{region.buildingRegs}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-sm text-muted-foreground">Main Schemes:</span>
+                      <span className="text-sm text-foreground">{region.schemes}</span>
+                    </div>
+                  </div>
+                  <div className="mt-3 p-2 bg-yellow-500/10 rounded border border-yellow-500/20">
+                    <p className="text-sm text-yellow-300">{region.notes}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        {/* Common Mistakes to Avoid */}
+        <MobileAccordionItem value="common-mistakes">
+          <MobileAccordionTrigger 
+            icon={<AlertTriangle className="h-5 w-5 text-red-400" />}
+            className="border-red-500/50 bg-red-500/10 text-red-300"
+          >
+            <div className="flex flex-col items-start">
+              <span className="font-semibold">Common Mistakes to Avoid</span>
+              <span className="text-xs opacity-80">Learn from others' costly errors</span>
+            </div>
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="space-y-4 p-4">
+              {commonMistakes.map((mistake, index) => (
+                <div key={index} className="border border-red-500/30 rounded-lg p-4 bg-red-500/5">
+                  <h4 className="font-semibold text-red-300 mb-2">{mistake.mistake}</h4>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-red-500/10 rounded border border-red-500/20">
+                      <p className="text-sm text-red-200">
+                        <strong>Consequence:</strong> {mistake.consequence}
+                      </p>
+                    </div>
+                    <div className="p-3 bg-green-500/10 rounded border border-green-500/20">
+                      <p className="text-sm text-green-200">
+                        <strong>How to avoid:</strong> {mistake.howToAvoid}
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-muted-foreground">Potential cost:</span>
+                      <Badge variant="outline" className="text-red-300 border-red-400/30 bg-red-500/10">
+                        {mistake.realCost}
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        {/* Implementation Timeline */}
+        <MobileAccordionItem value="implementation-timeline">
+          <MobileAccordionTrigger 
+            icon={<Clock className="h-5 w-5 text-orange-400" />}
+            className="border-orange-500/50 bg-orange-500/10 text-orange-300"
+          >
+            <div className="flex flex-col items-start">
+              <span className="font-semibold">Implementation Timeline</span>
+              <span className="text-xs opacity-80">Step-by-step roadmap to compliance</span>
+            </div>
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="space-y-6 p-4">
+              {implementationTimeline.map((phase, index) => (
+                <div key={index} className="border border-border rounded-lg p-4">
+                  <div className="flex justify-between items-start mb-3">
+                    <h4 className="font-semibold text-primary">{phase.phase}</h4>
+                    <Badge variant="outline" className="text-orange-300 border-orange-400/30 bg-orange-500/10">
+                      {phase.duration}
+                    </Badge>
+                  </div>
+                  <ul className="space-y-2">
+                    {phase.tasks.map((task, taskIndex) => (
+                      <li key={taskIndex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center text-xs font-bold text-primary mt-0.5 flex-shrink-0">
+                          {taskIndex + 1}
+                        </div>
+                        {task}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        {/* Ongoing Compliance Requirements */}
+        <MobileAccordionItem value="ongoing-compliance">
+          <MobileAccordionTrigger 
+            icon={<Scale className="h-5 w-5 text-indigo-400" />}
+            className="border-indigo-500/50 bg-indigo-500/10 text-indigo-300"
+          >
+            <div className="flex flex-col items-start">
+              <span className="font-semibold">Ongoing Compliance Requirements</span>
+              <span className="text-xs opacity-80">Annual renewals and updates</span>
+            </div>
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="space-y-4 p-4">
+              {ongoingCompliance.map((requirement, index) => (
+                <div key={index} className="border border-border rounded-lg p-4">
+                  <div className="flex justify-between items-start mb-3">
+                    <h4 className="font-semibold text-primary">{requirement.requirement}</h4>
+                    <div className="text-right">
+                      <Badge variant="outline" className="text-indigo-300 border-indigo-400/30 bg-indigo-500/10 mb-1">
+                        {requirement.frequency}
+                      </Badge>
+                      <p className="text-xs text-muted-foreground">{requirement.cost}</p>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="p-2 bg-red-500/10 rounded border border-red-500/20">
+                      <p className="text-sm text-red-200">
+                        <strong>If missed:</strong> {requirement.consequence}
+                      </p>
+                    </div>
+                    <div className="p-2 bg-blue-500/10 rounded border border-blue-500/20">
+                      <p className="text-sm text-blue-200">
+                        <strong>Reminder tip:</strong> {requirement.reminder}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        {/* Document Templates & Resources */}
+        <MobileAccordionItem value="document-templates">
+          <MobileAccordionTrigger 
+            icon={<FileText className="h-5 w-5 text-teal-400" />}
+            className="border-teal-500/50 bg-teal-500/10 text-teal-300"
+          >
+            <div className="flex flex-col items-start">
+              <span className="font-semibold">Document Templates & Resources</span>
+              <span className="text-xs opacity-80">Free templates and forms</span>
+            </div>
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="space-y-4 p-4">
+              {documentTemplates.map((doc, index) => (
+                <div key={index} className="border border-border rounded-lg p-4">
+                  <div className="flex justify-between items-start mb-3">
+                    <h4 className="font-semibold text-primary">{doc.document}</h4>
+                    <Badge variant="outline" className="text-teal-300 border-teal-400/30 bg-teal-500/10">
+                      {doc.format}
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-3">{doc.description}</p>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full"
+                    onClick={() => window.open(doc.link, '_blank')}
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    Download Template
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        {/* Frequently Asked Questions */}
+        <MobileAccordionItem value="faq">
+          <MobileAccordionTrigger 
+            icon={<BookOpen className="h-5 w-5 text-cyan-400" />}
+            className="border-cyan-500/50 bg-cyan-500/10 text-cyan-300"
+          >
+            <div className="flex flex-col items-start">
+              <span className="font-semibold">Frequently Asked Questions</span>
+              <span className="text-xs opacity-80">Common queries answered</span>
+            </div>
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="space-y-4 p-4">
+              {frequentlyAskedQuestions.map((faq, index) => (
+                <div key={index} className="border border-border rounded-lg p-4">
+                  <h4 className="font-semibold text-primary mb-3">{faq.question}</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
         {legalRequirements.map((section, index) => (
           <MobileAccordionItem key={index} value={`legal-${index}`}>
             <MobileAccordionTrigger 
