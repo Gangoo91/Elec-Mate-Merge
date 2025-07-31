@@ -129,8 +129,8 @@ const InteractiveFinancialPlanner = () => {
                       </div>
                     ))}
                   </div>
-                  <div className="text-center p-4 bg-emerald-500/20 rounded-lg">
-                    <h4 className="font-semibold text-emerald-200">Total Startup Investment</h4>
+                  <div className="text-center p-6 bg-emerald-500/20 rounded-lg border border-emerald-400/30">
+                    <h4 className="font-semibold text-emerald-200 mb-3">Total Startup Investment</h4>
                     <p className="text-3xl font-bold text-emerald-100">£{totalStartupCosts.toLocaleString()}</p>
                   </div>
                 </div>
