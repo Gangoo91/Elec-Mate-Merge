@@ -103,24 +103,20 @@ const BusinessPlanningTab = () => {
           <div className="space-y-4 md:space-y-6">
             {planningSteps.map((step, index) => (
               <Card key={index} className="border-elec-yellow/20 bg-elec-gray w-full">
-                <CardHeader className="pb-3 md:pb-4 px-4 md:px-6">
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 mt-1">
-                        {step.icon}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-base md:text-lg lg:text-xl font-semibold text-elec-yellow leading-tight break-words">
-                          {step.title}
-                        </h3>
-                      </div>
+                <CardHeader className="pb-3 md:pb-4 px-4 md:px-6 text-center">
+                  <div className="space-y-3 flex flex-col items-center">
+                    <div className="flex justify-center">
+                      {step.icon}
                     </div>
-                    <Badge variant="outline" className="text-xs px-2 py-1 self-start">
+                    <h3 className="text-base md:text-lg lg:text-xl font-semibold text-elec-yellow leading-tight break-words">
+                      {step.title}
+                    </h3>
+                    <Badge variant="outline" className="text-xs px-2 py-1">
                       {step.timeframe}
                     </Badge>
                   </div>
                 </CardHeader>
-                <CardContent className="pt-0 px-4 md:px-6 pb-4 md:pb-6">
+                <CardContent className="pt-0 px-4 md:px-6 pb-4 md:pb-6 text-center">
                   <p className="text-muted-foreground mb-4 md:mb-6 leading-relaxed text-sm md:text-base">
                     {step.description}
                   </p>
