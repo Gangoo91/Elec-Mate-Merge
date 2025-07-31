@@ -232,12 +232,7 @@ const SupportResourcesTab = () => {
           {onlineResources.map((resource, index) => (
             <div key={index} className="p-4 border border-green-500/20 rounded-lg bg-green-500/5">
               <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-semibold text-white text-lg">{resource.name}</h4>
-                  <Badge variant="outline" className="text-green-300 border-green-400/30">
-                    {resource.category}
-                  </Badge>
-                </div>
+                <h4 className="font-semibold text-white text-lg">{resource.name}</h4>
                 <p className="text-muted-foreground">{resource.description}</p>
                 <Button 
                   variant="outline" 
