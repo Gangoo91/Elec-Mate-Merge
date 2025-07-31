@@ -3,36 +3,97 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Shield, FileText, CheckCircle, AlertTriangle, ExternalLink, Scale, Clock } from "lucide-react";
+import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
+import { Shield, FileText, CheckCircle, AlertTriangle, ExternalLink, Scale, Clock, Building, Users, PoundSterling, Zap, BookOpen, Award, Phone } from "lucide-react";
 
 const LegalComplianceTab = () => {
   const legalRequirements = [
     {
       category: "Business Registration & Structure",
-      icon: <FileText className="h-5 w-5" />,
+      icon: <Building className="h-5 w-5" />,
       priority: "essential",
       timeframe: "1-2 weeks",
-      items: [
-        "Choose business structure (sole trader vs limited company)",
-        "Register business name with Companies House",
-        "Set up dedicated business bank account",
-        "Register for VAT if turnover exceeds £85,000",
-        "Obtain business insurance (public liability £2M minimum)",
-        "Register as employer if hiring staff"
+      description: "Establish your business legally and set up proper financial structures",
+      detailedSteps: [
+        {
+          title: "Choose Business Structure",
+          details: "Sole trader: Simple setup, personal liability, pay income tax. Limited company: More complex, limited liability, pay corporation tax.",
+          cost: "£12-£100",
+          links: [
+            { text: "GOV.UK Business Structures Guide", url: "https://www.gov.uk/set-up-business" },
+            { text: "Companies House Registration", url: "https://www.gov.uk/government/organisations/companies-house" }
+          ]
+        },
+        {
+          title: "Register with HMRC",
+          details: "Register for self-employment (sole trader) or corporation tax (limited company). Must be done within 3 months of starting business.",
+          cost: "Free",
+          links: [
+            { text: "Register as Self-Employed", url: "https://www.gov.uk/register-for-self-assessment" },
+            { text: "Register a Company for Tax", url: "https://www.gov.uk/register-company-corporation-tax" }
+          ]
+        },
+        {
+          title: "Business Bank Account",
+          details: "Separate business and personal finances. Required for limited companies, recommended for sole traders.",
+          cost: "£0-£15/month",
+          links: [
+            { text: "Compare Business Accounts", url: "https://www.which.co.uk/money/banking/current-accounts/business-current-accounts" }
+          ]
+        },
+        {
+          title: "VAT Registration",
+          details: "Mandatory if turnover exceeds £85,000. Can register voluntarily to reclaim VAT on business purchases.",
+          cost: "Free",
+          links: [
+            { text: "VAT Registration", url: "https://www.gov.uk/vat-registration" },
+            { text: "VAT Calculator", url: "https://www.gov.uk/vat-rates" }
+          ]
+        }
       ]
     },
     {
       category: "Professional Qualifications & Certifications",
-      icon: <CheckCircle className="h-5 w-5" />,
+      icon: <Award className="h-5 w-5" />,
       priority: "essential",
       timeframe: "Ongoing",
-      items: [
-        "Level 3 electrical installation qualification",
-        "18th Edition Wiring Regulations (BS 7671)",
-        "Testing and inspection certification (2391)",
-        "Part P Building Regulations compliance",
-        "First Aid at Work certification",
-        "Continuing Professional Development (CPD) hours"
+      description: "Essential qualifications to work legally as an electrician in the UK",
+      detailedSteps: [
+        {
+          title: "Level 3 Electrical Installation",
+          details: "City & Guilds 2365, EAL, or equivalent. Foundation for all electrical work in the UK.",
+          cost: "£2,000-£4,000",
+          links: [
+            { text: "City & Guilds Electrical Courses", url: "https://www.cityandguilds.com/qualifications-and-apprenticeships/building-services-and-utilities/electrical-installation" },
+            { text: "Find Training Providers", url: "https://www.gov.uk/government/publications/electrical-safety-training-providers" }
+          ]
+        },
+        {
+          title: "18th Edition IET Wiring Regulations (BS 7671)",
+          details: "Updated every 3-5 years. Current edition essential for all electrical work. Amendment 2 is the latest.",
+          cost: "£300-£500",
+          links: [
+            { text: "IET 18th Edition", url: "https://electrical.theiet.org/wiring-regulations/" },
+            { text: "Book Training Course", url: "https://electrical.theiet.org/wiring-regulations/courses/" }
+          ]
+        },
+        {
+          title: "Inspection & Testing (2391)",
+          details: "Essential for testing electrical installations. Required for Part P work and certification.",
+          cost: "£800-£1,200",
+          links: [
+            { text: "2391 Course Providers", url: "https://www.cityandguilds.com/qualifications-and-apprenticeships/building-services-and-utilities/electrical-installation/2391" }
+          ]
+        },
+        {
+          title: "Part P Building Regulations",
+          details: "Legal requirement for domestic electrical work in England and Wales. Need competent person registration.",
+          cost: "£400-£800/year",
+          links: [
+            { text: "Part P Explained", url: "https://www.gov.uk/building-regulations-approval" },
+            { text: "Competent Person Schemes", url: "https://www.gov.uk/competent-person-scheme-current-schemes-and-how-schemes-are-authorised" }
+          ]
+        }
       ]
     },
     {
@@ -40,13 +101,77 @@ const LegalComplianceTab = () => {
       icon: <Shield className="h-5 w-5" />,
       priority: "essential",
       timeframe: "2-4 weeks",
-      items: [
-        "NICEIC, NAPIT, or ELECSA registration",
-        "Competent Person Scheme membership",
-        "JIB electrician registration (optional)",
-        "TrustMark certification for domestic work",
-        "Local authority notifications and approvals",
-        "Trade association membership (ECA, SELECT)"
+      description: "Join recognised schemes for credibility and compliance",
+      detailedSteps: [
+        {
+          title: "Choose Your Scheme",
+          details: "NICEIC, NAPIT, ELECSA, or STROMA. Each offers Part P registration and industry recognition.",
+          cost: "£300-£800/year",
+          links: [
+            { text: "NICEIC", url: "https://www.niceic.com/" },
+            { text: "NAPIT", url: "https://www.napit.org.uk/" },
+            { text: "ELECSA", url: "https://www.elecsa.co.uk/" },
+            { text: "STROMA", url: "https://www.stroma.com/" }
+          ]
+        },
+        {
+          title: "Assessment Process",
+          details: "Technical assessment, portfolio review, and ongoing monitoring. Usually takes 2-4 weeks.",
+          cost: "Included in membership",
+          links: [
+            { text: "NICEIC Assessment", url: "https://www.niceic.com/find-a-contractor/approved-contractor-scheme/assessment-process" }
+          ]
+        },
+        {
+          title: "TrustMark Registration",
+          details: "Government-endorsed quality scheme. Recommended for domestic work and customer trust.",
+          cost: "£300-£500/year",
+          links: [
+            { text: "TrustMark", url: "https://www.trustmark.org.uk/" }
+          ]
+        }
+      ]
+    },
+    {
+      category: "Insurance Requirements",
+      icon: <Shield className="h-5 w-5" />,
+      priority: "essential",
+      timeframe: "1 week",
+      description: "Comprehensive insurance coverage for electrical work",
+      detailedSteps: [
+        {
+          title: "Public Liability Insurance",
+          details: "Minimum £2M coverage. Essential for all electrical work. Covers damage to third-party property and injury claims.",
+          cost: "£800-£2,500/year",
+          links: [
+            { text: "Simply Business", url: "https://www.simplybusiness.co.uk/public-liability-insurance/" },
+            { text: "Checkatrade Insurance", url: "https://www.checkatrade.com/trades/business-insurance/" }
+          ]
+        },
+        {
+          title: "Professional Indemnity",
+          details: "Covers errors in design or advice. £250K-£1M coverage recommended for electrical design work.",
+          cost: "£300-£800/year",
+          links: [
+            { text: "Professional Indemnity Guide", url: "https://www.simplybusiness.co.uk/professional-indemnity-insurance/" }
+          ]
+        },
+        {
+          title: "Employers' Liability",
+          details: "Legal requirement if you employ staff. Minimum £10M coverage. £5M fine for non-compliance.",
+          cost: "£500-£1,500/year",
+          links: [
+            { text: "Employers' Liability Info", url: "https://www.hse.gov.uk/insurance/employers-liability.htm" }
+          ]
+        },
+        {
+          title: "Tool Insurance",
+          details: "Covers theft and damage to tools and equipment. Many policies include cover away from home.",
+          cost: "£200-£600/year",
+          links: [
+            { text: "Tool Insurance Comparison", url: "https://www.simplybusiness.co.uk/tools-insurance/" }
+          ]
+        }
       ]
     },
     {
@@ -54,230 +179,261 @@ const LegalComplianceTab = () => {
       icon: <AlertTriangle className="h-5 w-5" />,
       priority: "essential",
       timeframe: "1 week",
-      items: [
-        "Risk assessment procedures and documentation",
-        "Method statements for common electrical work",
-        "COSHH assessments for materials and chemicals",
-        "Accident reporting and RIDDOR compliance",
-        "Equipment inspection and PAT testing schedules",
-        "Safe working procedures and toolbox talks"
+      description: "Legal H&S requirements for electrical contractors",
+      detailedSteps: [
+        {
+          title: "Risk Assessments",
+          details: "Legal requirement under Management of Health and Safety at Work Regulations. Must be written if 5+ employees.",
+          cost: "Time investment",
+          links: [
+            { text: "HSE Risk Assessment", url: "https://www.hse.gov.uk/simple-health-safety/risk/" },
+            { text: "Electrical Risk Templates", url: "https://www.hse.gov.uk/electricity/information/risk.htm" }
+          ]
+        },
+        {
+          title: "Method Statements",
+          details: "Written procedures for high-risk electrical work. Required for many commercial contracts.",
+          cost: "Time investment",
+          links: [
+            { text: "Method Statement Guide", url: "https://www.hse.gov.uk/construction/cdm/2015/method-statements.htm" }
+          ]
+        },
+        {
+          title: "COSHH Assessments",
+          details: "Required for hazardous substances. Many electrical materials require COSHH assessment.",
+          cost: "Time investment",
+          links: [
+            { text: "COSHH Regulations", url: "https://www.hse.gov.uk/coshh/" }
+          ]
+        }
+      ]
+    },
+    {
+      category: "Data Protection & Documentation",
+      icon: <FileText className="h-5 w-5" />,
+      priority: "important",
+      timeframe: "1-2 weeks",
+      description: "GDPR compliance and proper documentation systems",
+      detailedSteps: [
+        {
+          title: "GDPR Compliance",
+          details: "If you store customer data electronically or on paper, you must comply with GDPR. Includes customer contact details, site information.",
+          cost: "Time investment",
+          links: [
+            { text: "ICO GDPR Guide", url: "https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-protection-regulation-gdpr/" },
+            { text: "Small Business GDPR", url: "https://ico.org.uk/for-organisations/sme-web-hub/" }
+          ]
+        },
+        {
+          title: "Electrical Certification",
+          details: "Must issue correct certificates for all electrical work. Keep copies for minimum 6 years.",
+          cost: "Certificate books £30-£50",
+          links: [
+            { text: "NICEIC Certificates", url: "https://www.niceic.com/certificates" },
+            { text: "Certificate Requirements", url: "https://electrical.theiet.org/wiring-matters/years/2018/95-april-2018/certification/" }
+          ]
+        }
       ]
     }
   ];
 
-  const complianceSteps = [
-    { step: "1", title: "Obtain Required Qualifications", status: "essential", cost: "£1,000-£3,000" },
-    { step: "2", title: "Register Business Structure", status: "essential", cost: "£12-£100" },
-    { step: "3", title: "Get Professional Insurance", status: "essential", cost: "£800-£2,500/year" },
-    { step: "4", title: "Join Competent Person Scheme", status: "essential", cost: "£400-£800/year" },
-    { step: "5", title: "Set Up Tax and VAT Registration", status: "important", cost: "Free" },
-    { step: "6", title: "Obtain Additional Certifications", status: "recommended", cost: "£200-£500" }
-  ];
-
-  const insuranceTypes = [
+  const emergencyContacts = [
     {
-      type: "Public Liability",
-      coverage: "£2,000,000 minimum",
-      description: "Covers damage to third party property and injury claims",
-      required: true
+      organisation: "HSE Emergency",
+      contact: "0151 922 9235",
+      purpose: "Report serious accidents/incidents",
+      hours: "24/7"
     },
     {
-      type: "Employers' Liability",
-      coverage: "£10,000,000 minimum",
-      description: "Required if you employ staff, covers workplace injuries",
-      required: false
+      organisation: "Electrical Safety First",
+      contact: "020 3463 5100",
+      purpose: "Technical guidance and safety advice",
+      hours: "9am-5pm weekdays"
     },
     {
-      type: "Professional Indemnity",
-      coverage: "£250,000 - £1,000,000",
-      description: "Covers errors in design or advice leading to financial loss",
-      required: false
-    },
-    {
-      type: "Tool Insurance",
-      coverage: "Value of tools",
-      description: "Covers theft and damage to tools and equipment",
-      required: false
+      organisation: "Local Building Control",
+      contact: "Contact your local council",
+      purpose: "Building regulations advice",
+      hours: "Office hours"
     }
   ];
 
-  const regulatoryBodies = [
-    {
-      name: "NICEIC",
-      description: "National Inspection Council for Electrical Installation Contracting",
-      benefits: ["Industry recognition", "Technical support", "Marketing materials", "Certification schemes"],
-      cost: "£400-£800/year"
-    },
-    {
-      name: "NAPIT",
-      description: "National Association of Professional Inspectors and Testers",
-      benefits: ["Competent person schemes", "Training courses", "Technical helpline", "Business support"],
-      cost: "£350-£700/year"
-    },
-    {
-      name: "ELECSA",
-      description: "Electrical Contractors' Association Certification",
-      benefits: ["Part P registration", "Quality assurance", "Dispute resolution", "Technical guidance"],
-      cost: "£300-£600/year"
-    }
+  const costCalculator = [
+    { item: "Level 3 Qualification", minCost: 2000, maxCost: 4000, priority: "Essential" },
+    { item: "18th Edition", minCost: 300, maxCost: 500, priority: "Essential" },
+    { item: "Testing & Inspection", minCost: 800, maxCost: 1200, priority: "Essential" },
+    { item: "Scheme Membership", minCost: 300, maxCost: 800, priority: "Essential" },
+    { item: "Public Liability Insurance", minCost: 800, maxCost: 2500, priority: "Essential" },
+    { item: "Professional Indemnity", minCost: 300, maxCost: 800, priority: "Recommended" },
+    { item: "Company Registration", minCost: 12, maxCost: 100, priority: "Essential" },
+    { item: "Business Bank Account", minCost: 0, maxCost: 180, priority: "Essential" }
   ];
+
+  const totalMinCost = costCalculator.filter(item => item.priority === "Essential").reduce((sum, item) => sum + item.minCost, 0);
+  const totalMaxCost = costCalculator.filter(item => item.priority === "Essential").reduce((sum, item) => sum + item.maxCost, 0);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <Alert className="border-red-500/50 bg-red-500/10">
         <AlertTriangle className="h-4 w-4 text-red-400" />
         <AlertDescription className="text-red-200">
-          Legal compliance is mandatory before starting electrical work. Non-compliance can result in fines, prosecution, and insurance invalidation.
+          <div className="space-y-2">
+            <p className="font-semibold">Legal compliance is mandatory before starting electrical work.</p>
+            <p>Non-compliance can result in:</p>
+            <ul className="list-disc list-inside space-y-1 text-sm">
+              <li>Unlimited fines for serious safety breaches</li>
+              <li>Up to 2 years imprisonment for gross negligence</li>
+              <li>Insurance claims being invalidated</li>
+              <li>Prohibition from working in the electrical industry</li>
+              <li>Personal liability for accidents and damages</li>
+            </ul>
+          </div>
         </AlertDescription>
       </Alert>
 
-      <div className="grid gap-6">
-        {legalRequirements.map((section, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader>
-              <CardTitle className="text-elec-yellow">
-                <div className="flex items-center gap-2 mb-3">
-                  {section.icon}
-                  {section.category}
+      {/* Cost Summary */}
+      <Card className="border-green-500/50 bg-green-500/10">
+        <CardHeader>
+          <CardTitle className="text-green-300 flex items-center gap-2">
+            <PoundSterling className="h-5 w-5" />
+            Essential Setup Costs Summary
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="p-4 bg-green-500/20 rounded-lg border border-green-500/30">
+              <h4 className="font-semibold text-green-200 mb-2">Minimum Essential Costs</h4>
+              <p className="text-2xl font-bold text-green-100">£{totalMinCost.toLocaleString()}</p>
+              <p className="text-sm text-green-300">Basic setup to start legally</p>
+            </div>
+            <div className="p-4 bg-green-500/20 rounded-lg border border-green-500/30">
+              <h4 className="font-semibold text-green-200 mb-2">Comprehensive Setup</h4>
+              <p className="text-2xl font-bold text-green-100">£{totalMaxCost.toLocaleString()}</p>
+              <p className="text-sm text-green-300">Full professional setup</p>
+            </div>
+          </div>
+          
+          <div className="mt-4 space-y-2">
+            <h4 className="font-semibold text-green-200">Cost Breakdown:</h4>
+            {costCalculator.map((item, index) => (
+              <div key={index} className="flex justify-between items-center text-sm">
+                <span className="text-green-300">{item.item}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-green-200">£{item.minCost.toLocaleString()} - £{item.maxCost.toLocaleString()}</span>
+                  <Badge variant="outline" className={`text-xs ${item.priority === 'Essential' ? 'border-red-400/50 text-red-300' : 'border-yellow-400/50 text-yellow-300'}`}>
+                    {item.priority}
+                  </Badge>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  <Badge 
-                    variant="outline" 
-                    className={`text-xs ${
-                      section.priority === 'essential' 
-                        ? 'border-red-400/50 text-red-300 bg-red-500/10' 
-                        : 'border-yellow-400/50 text-yellow-300 bg-yellow-500/10'
-                    }`}
-                  >
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Emergency Contacts */}
+      <Card className="border-red-500/50 bg-red-500/10">
+        <CardHeader>
+          <CardTitle className="text-red-300 flex items-center gap-2">
+            <Phone className="h-5 w-5" />
+            Emergency & Support Contacts
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-2 gap-4">
+            {emergencyContacts.map((contact, index) => (
+              <div key={index} className="p-4 bg-red-500/20 rounded-lg border border-red-500/30">
+                <h4 className="font-semibold text-red-200">{contact.organisation}</h4>
+                <p className="text-red-100 font-mono">{contact.contact}</p>
+                <p className="text-sm text-red-300">{contact.purpose}</p>
+                <p className="text-xs text-red-400">{contact.hours}</p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <MobileAccordion type="single" collapsible className="space-y-4">
+        {legalRequirements.map((section, index) => (
+          <MobileAccordionItem key={index} value={`legal-${index}`}>
+            <MobileAccordionTrigger 
+              icon={section.icon}
+              className={`${
+                section.priority === 'essential' 
+                  ? 'border-red-500/50 bg-red-500/10 text-red-300' 
+                  : 'border-yellow-500/50 bg-yellow-500/10 text-yellow-300'
+              }`}
+            >
+              <div className="flex flex-col items-start">
+                <span className="font-semibold">{section.category}</span>
+                <span className="text-xs opacity-80">{section.description}</span>
+                <div className="flex gap-2 mt-1">
+                  <Badge variant="outline" className={`text-xs ${
+                    section.priority === 'essential' 
+                      ? 'border-red-400/50 text-red-300 bg-red-500/10' 
+                      : 'border-yellow-400/50 text-yellow-300 bg-yellow-500/10'
+                  }`}>
                     {section.priority}
                   </Badge>
-                  <Badge variant="outline" className="text-xs border-elec-yellow/50 text-elec-yellow bg-elec-yellow/10">
+                  <Badge variant="outline" className="text-xs border-primary/50 text-primary bg-primary/10">
                     <Clock className="h-3 w-3 mr-1" />
                     {section.timeframe}
                   </Badge>
                 </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {section.items.map((item, itemIndex) => (
-                  <div key={itemIndex} className="flex items-start gap-3 text-sm text-muted-foreground p-3 rounded-lg bg-elec-dark/30 border border-elec-yellow/10">
-                    <div className="mt-1 h-2 w-2 rounded-full bg-elec-yellow/60 flex-shrink-0" />
-                    <span className="leading-relaxed">{item}</span>
+              </div>
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="space-y-6 p-4">
+                {section.detailedSteps.map((step, stepIndex) => (
+                  <div key={stepIndex} className="border border-border rounded-lg p-4">
+                    <div className="flex justify-between items-start mb-3">
+                      <h4 className="font-semibold text-primary">{step.title}</h4>
+                      <Badge variant="outline" className="text-green-300 border-green-400/30 bg-green-500/10">
+                        {step.cost}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{step.details}</p>
+                    <div className="space-y-2">
+                      <h5 className="font-medium text-sm text-primary">Useful Links:</h5>
+                      <div className="flex flex-wrap gap-2">
+                        {step.links.map((link, linkIndex) => (
+                          <Button 
+                            key={linkIndex} 
+                            variant="outline" 
+                            size="sm" 
+                            className="h-8 text-xs"
+                            onClick={() => window.open(link.url, '_blank')}
+                          >
+                            <ExternalLink className="h-3 w-3 mr-1" />
+                            {link.text}
+                          </Button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
-            </CardContent>
-          </Card>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
         ))}
-      </div>
+      </MobileAccordion>
 
-      <Card className="border-blue-500/50 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
-            <CheckCircle className="h-5 w-5" />
-            Compliance Checklist & Costs
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {complianceSteps.map((item, index) => (
-              <div key={index} className="p-4 bg-blue-500/5 rounded-lg border border-blue-500/20">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="flex-shrink-0 w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center">
-                    <span className="text-blue-300 font-medium text-sm">{item.step}</span>
-                  </div>
-                  <span className="text-blue-200 font-medium flex-1">{item.title}</span>
-                </div>
-                <div className="flex flex-wrap gap-2 ml-11">
-                  <Badge variant="outline" className="text-blue-300 border-blue-400/30 bg-blue-500/10">
-                    {item.cost}
-                  </Badge>
-                  <Badge 
-                    variant="outline" 
-                    className={`text-xs ${
-                      item.status === 'essential' 
-                        ? 'border-red-400/50 text-red-300 bg-red-500/10' 
-                        : item.status === 'important'
-                        ? 'border-yellow-400/50 text-yellow-300 bg-yellow-500/10'
-                        : 'border-green-400/50 text-green-300 bg-green-500/10'
-                    }`}
-                  >
-                    {item.status}
-                  </Badge>
-                </div>
-              </div>
-            ))}
+      {/* Legal Disclaimer */}
+      <Alert className="border-yellow-500/50 bg-yellow-500/10">
+        <BookOpen className="h-4 w-4 text-yellow-400" />
+        <AlertDescription className="text-yellow-200">
+          <div className="space-y-2">
+            <p className="font-semibold">Legal Disclaimer</p>
+            <p className="text-sm">This information is for guidance only and should not be considered as legal advice. Requirements may vary by location and circumstances. Always consult with qualified professionals including:</p>
+            <ul className="list-disc list-inside space-y-1 text-sm">
+              <li>Qualified solicitors for legal structure advice</li>
+              <li>Chartered accountants for tax and VAT guidance</li>
+              <li>Insurance brokers for appropriate coverage</li>
+              <li>Your chosen competent person scheme for technical requirements</li>
+            </ul>
+            <p className="text-sm">Regulations change frequently - always verify current requirements with official sources.</p>
           </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-green-500/50 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
-            <Shield className="h-5 w-5" />
-            Insurance Requirements
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4 lg:grid lg:grid-cols-2 lg:gap-4 lg:space-y-0">
-            {insuranceTypes.map((insurance, index) => (
-              <div key={index} className="p-4 bg-green-500/5 rounded-lg border border-green-500/20">
-                <div className="flex flex-col gap-2 mb-3">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-medium text-white">{insurance.type}</h4>
-                    <Badge className={insurance.required ? "bg-red-500/20 text-red-300 border-red-400/30" : "bg-yellow-500/20 text-yellow-300 border-yellow-400/30"}>
-                      {insurance.required ? "Required" : "Recommended"}
-                    </Badge>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground mb-3 leading-relaxed">{insurance.description}</p>
-                <Badge variant="outline" className="text-green-300 border-green-400/30 bg-green-500/10">
-                  {insurance.coverage}
-                </Badge>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-purple-500/50 bg-purple-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-300 flex items-center gap-2">
-            <Scale className="h-5 w-5" />
-            Regulatory Bodies & Schemes
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {regulatoryBodies.map((body, index) => (
-              <div key={index} className="p-4 bg-purple-500/5 rounded-lg border border-purple-500/20">
-                <div className="flex flex-col gap-3 mb-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <h4 className="font-medium text-white">{body.name}</h4>
-                    <Badge className="bg-purple-500/20 text-purple-300 border-purple-400/30 flex-shrink-0">
-                      {body.cost}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{body.description}</p>
-                </div>
-                <div className="space-y-2 mb-4">
-                  {body.benefits.map((benefit, benefitIndex) => (
-                    <div key={benefitIndex} className="flex items-start gap-2 text-sm text-purple-200">
-                      <CheckCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
-                      <span>{benefit}</span>
-                    </div>
-                  ))}
-                </div>
-                <Button variant="outline" size="sm" className="w-full">
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Learn More
-                </Button>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+        </AlertDescription>
+      </Alert>
     </div>
   );
 };
