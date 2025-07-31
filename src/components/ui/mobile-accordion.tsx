@@ -12,7 +12,7 @@ const MobileAccordionItem = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AccordionPrimitive.Item
     ref={ref}
-    className={cn("border-b border-elec-yellow/20", className)}
+    className={cn("", className)}
     {...props}
   />
 ));
@@ -54,10 +54,7 @@ const MobileAccordionContent = React.forwardRef<
     className="overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
     {...props}
   >
-    <div className={cn(
-      "border-l border-r border-b border-elec-yellow/20 rounded-b-lg bg-elec-dark p-4",
-      className
-    )}>
+    <div className={cn("p-0", className)}>
       {children}
     </div>
   </AccordionPrimitive.Content>
