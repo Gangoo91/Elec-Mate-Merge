@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Users, Search, Target, CheckCircle, AlertCircle, ExternalLink, Calculator, PoundSterling, FileText, TrendingUp } from "lucide-react";
+import { Users, Search, Target, CheckCircle, AlertCircle, ExternalLink, Calculator, PoundSterling, FileText, TrendingUp, Calendar, Shield, Clock } from "lucide-react";
 
 const RecruitmentTab = () => {
   const recruitmentChannels = [
@@ -20,8 +20,8 @@ const RecruitmentTab = () => {
     overview: "Join our growing electrical contracting business and train to become a qualified electrician",
     keyPoints: [
       "4-year apprenticeship programme leading to Level 3 qualification",
-      "Starting wage: £6.40/hour (apprentice minimum wage)",
-      "Progression to £15-18/hour upon qualification",
+      "Starting wage: £7.00/hour (2025 apprentice minimum wage)",
+      "Progression to £18-25/hour upon qualification",
       "20% college training, 80% hands-on experience",
       "Full support from experienced mentors",
       "Opportunity for further specialisation and career advancement"
@@ -45,20 +45,57 @@ const RecruitmentTab = () => {
   };
 
   const costBreakdown = [
-    { item: "Apprentice Annual Salary (Year 1)", cost: "£13,312", calculation: "£6.40 × 40 hours × 52 weeks" },
-    { item: "Employer NI & Pension", cost: "£1,330", calculation: "~10% of gross salary" },
-    { item: "Training Provider Fees", cost: "£0-1,500", calculation: "Often government funded" },
-    { item: "Equipment & PPE", cost: "£800-1,200", calculation: "Tools, uniform, safety equipment" },
-    { item: "Administrative Costs", cost: "£500-800", calculation: "Documentation, assessments" },
-    { item: "Total Year 1 Investment", cost: "£15,942-17,142", calculation: "All inclusive costs", highlight: true }
+    { 
+      item: "Apprentice Annual Salary (Year 1)", 
+      cost: "£14,560", 
+      calculation: "£7.00 × 40 hours × 52 weeks",
+      description: "2025 apprentice minimum wage rate"
+    },
+    { 
+      item: "Employer NI & Pension", 
+      cost: "£1,820", 
+      calculation: "~12.5% of gross salary",
+      description: "National Insurance + minimum 3% pension contribution"
+    },
+    { 
+      item: "Training Provider Fees", 
+      cost: "£0-2,000", 
+      calculation: "Often 95-100% government funded",
+      description: "Levy funds or government co-investment"
+    },
+    { 
+      item: "Equipment & PPE", 
+      cost: "£1,200-1,800", 
+      calculation: "Tools, uniform, safety equipment",
+      description: "Initial tool allowance and safety gear"
+    },
+    { 
+      item: "Administrative & Assessment", 
+      cost: "£600-1,000", 
+      calculation: "Documentation, EPA, assessments",
+      description: "End-point assessment and admin costs"
+    },
+    { 
+      item: "Vehicle & Fuel Allowance", 
+      cost: "£2,400-3,600", 
+      calculation: "£200-300 per month",
+      description: "Travel costs or company vehicle provision"
+    },
+    { 
+      item: "Total Year 1 Investment", 
+      cost: "£20,580-23,780", 
+      calculation: "All inclusive realistic costs", 
+      highlight: true,
+      description: "Complete first-year investment per apprentice"
+    }
   ];
 
   const salaryProgression = [
-    { year: "Year 1", wage: "£6.40/hour", annual: "£13,312", notes: "Apprentice minimum wage" },
-    { year: "Year 2", wage: "£8.60-10.42/hour", annual: "£17,888-21,674", notes: "National minimum wage (age dependent)" },
-    { year: "Year 3", wage: "£10.42-12.00/hour", annual: "£21,674-24,960", notes: "Progressing skills" },
-    { year: "Year 4", wage: "£12.00-15.00/hour", annual: "£24,960-31,200", notes: "Near qualification" },
-    { year: "Post-Qualification", wage: "£15.00-22.00/hour", annual: "£31,200-45,760", notes: "Qualified electrician" }
+    { year: "Year 1", wage: "£7.00/hour", annual: "£14,560", notes: "2025 apprentice minimum wage" },
+    { year: "Year 2", wage: "£11.44-12.21/hour", annual: "£23,795-25,397", notes: "National minimum wage (age dependent)" },
+    { year: "Year 3", wage: "£12.21-14.00/hour", annual: "£25,397-29,120", notes: "Progressing skills and competency" },
+    { year: "Year 4", wage: "£14.00-18.00/hour", annual: "£29,120-37,440", notes: "Near qualification, increased responsibility" },
+    { year: "Post-Qualification", wage: "£18.00-25.00/hour", annual: "£37,440-52,000", notes: "Fully qualified electrician - 2025 rates" }
   ];
 
   const interviewQuestions = [
@@ -84,11 +121,27 @@ const RecruitmentTab = () => {
   ];
 
   const governmentIncentives = [
-    { incentive: "16-18 Year Old Apprentice", amount: "£3,000", eligibility: "Per apprentice hired aged 16-18" },
-    { incentive: "19-24 Year Old Apprentice", amount: "£1,500", eligibility: "Per apprentice hired aged 19-24" },
+    { incentive: "16-18 Year Old Apprentice", amount: "£3,000", eligibility: "Per apprentice hired aged 16-18 (2025)" },
+    { incentive: "19-24 Year Old Apprentice", amount: "£1,500", eligibility: "Per apprentice hired aged 19-24 (2025)" },
     { incentive: "Care Leaver Support", amount: "£1,000", eligibility: "Additional support for care leavers" },
+    { incentive: "Small Employer Support", amount: "£1,000", eligibility: "Employers with <50 employees (2025)" },
     { incentive: "100% Training Funding", amount: "Up to £27,000", eligibility: "For apprentices aged 16-18" },
     { incentive: "95% Training Funding", amount: "Various", eligibility: "Small employers (<50 staff)" }
+  ];
+
+  const timelineChecklist = [
+    { phase: "Pre-Recruitment (2-4 weeks)", tasks: ["Define role requirements", "Prepare job description", "Set up application process", "Contact training providers"] },
+    { phase: "Active Recruitment (4-6 weeks)", tasks: ["Post job adverts", "Review applications", "Conduct initial screenings", "Schedule interviews"] },
+    { phase: "Selection Process (2-3 weeks)", tasks: ["Conduct interviews", "Skills assessments", "Reference checks", "Make offer"] },
+    { phase: "Pre-Start Setup (2-4 weeks)", tasks: ["Complete paperwork", "Arrange training provider", "Prepare workspace", "Order equipment/PPE"] }
+  ];
+
+  const legalConsiderations = [
+    { requirement: "Apprenticeship Agreement", description: "Written agreement covering terms, training plan, and progression pathway", importance: "Legal requirement" },
+    { requirement: "Training Plan", description: "Detailed plan of on/off-job training with learning objectives and assessment criteria", importance: "Ofsted requirement" },
+    { requirement: "End-Point Assessment", description: "Independent assessment of apprentice competency at programme completion", importance: "Qualification requirement" },
+    { requirement: "20% Off-Job Training", description: "Minimum 20% of working time must be dedicated to learning and development", importance: "Funding requirement" },
+    { requirement: "Minimum Wage Compliance", description: "Must pay apprentice minimum wage for first year, then age-appropriate minimum wage", importance: "Legal requirement" }
   ];
 
   return (
@@ -109,16 +162,19 @@ const RecruitmentTab = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
+            <div className="space-y-4">
               {costBreakdown.map((item, index) => (
-                <div key={index} className={`flex justify-between items-center p-3 rounded-lg ${item.highlight ? 'bg-elec-yellow/20 border border-elec-yellow/30' : 'bg-elec-dark/50'}`}>
-                  <div>
+                <div key={index} className={`p-4 rounded-lg ${item.highlight ? 'bg-elec-yellow/20 border border-elec-yellow/30' : 'bg-elec-dark/50 border border-gray-700/50'}`}>
+                  <div className="flex flex-col space-y-2">
                     <h5 className={`font-medium ${item.highlight ? 'text-elec-yellow' : 'text-white'}`}>{item.item}</h5>
-                    <p className="text-xs text-muted-foreground">{item.calculation}</p>
+                    <p className="text-sm text-muted-foreground">{item.description}</p>
+                    <p className="text-xs text-gray-400">{item.calculation}</p>
+                    <div className="flex justify-end">
+                      <Badge className={item.highlight ? "bg-elec-yellow/30 text-elec-yellow text-lg px-3 py-1" : "bg-blue-500/30 text-blue-300 text-base px-3 py-1"}>
+                        {item.cost}
+                      </Badge>
+                    </div>
                   </div>
-                  <Badge className={item.highlight ? "bg-elec-yellow/30 text-elec-yellow" : "bg-blue-500/20 text-blue-400"}>
-                    {item.cost}
-                  </Badge>
                 </div>
               ))}
             </div>
@@ -392,6 +448,70 @@ const RecruitmentTab = () => {
           </div>
         </CardContent>
       </Card>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card className="border-cyan-500/20 bg-cyan-500/10">
+          <CardHeader>
+            <CardTitle className="text-cyan-400 flex items-center gap-2">
+              <Calendar className="h-5 w-5" />
+              Recruitment Timeline & Checklist
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {timelineChecklist.map((phase, index) => (
+                <div key={index} className="p-4 bg-cyan-500/5 border border-cyan-500/20 rounded-lg">
+                  <h5 className="font-medium text-cyan-300 mb-2">{phase.phase}</h5>
+                  <ul className="space-y-1">
+                    {phase.tasks.map((task, taskIndex) => (
+                      <li key={taskIndex} className="flex items-start gap-2 text-sm text-cyan-200">
+                        <Clock className="h-3 w-3 mt-1 flex-shrink-0" />
+                        {task}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-purple-500/20 bg-purple-500/10">
+          <CardHeader>
+            <CardTitle className="text-purple-400 flex items-center gap-2">
+              <Shield className="h-5 w-5" />
+              Legal Requirements & Compliance
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {legalConsiderations.map((item, index) => (
+                <div key={index} className="p-3 bg-purple-500/5 border border-purple-500/20 rounded-lg">
+                  <div className="flex justify-between items-start mb-2">
+                    <h5 className="font-medium text-purple-300">{item.requirement}</h5>
+                    <Badge className={
+                      item.importance === "Legal requirement" ? "bg-red-500/30 text-red-400" :
+                      item.importance === "Funding requirement" ? "bg-amber-500/30 text-amber-400" :
+                      "bg-blue-500/30 text-blue-400"
+                    }>
+                      {item.importance}
+                    </Badge>
+                  </div>
+                  <p className="text-sm text-purple-200">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <Alert className="border-amber-500/50 bg-amber-500/10">
+        <TrendingUp className="h-4 w-4 text-amber-400" />
+        <AlertDescription className="text-amber-200">
+          <strong>2025 Update:</strong> These figures reflect the latest apprentice minimum wage increases and government incentives. 
+          Remember to factor in regional variations and industry-specific requirements when budgeting for apprentice recruitment.
+        </AlertDescription>
+      </Alert>
     </div>
   );
 };
