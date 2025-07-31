@@ -215,19 +215,17 @@ const LegalRequirementsTab = () => {
               Additional Payroll Considerations
             </MobileAccordionTrigger>
             <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-elec-gray">
-              <div className="p-4 space-y-4">
+               <div className="p-4 space-y-4">
                 {payrollConsiderations.map((item, index) => (
-                  <div key={index} className="p-3 border border-elec-yellow/20 rounded-lg bg-elec-dark/30">
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex-1">
-                        <h4 className="font-medium text-white text-sm">{item.item}</h4>
-                        <p className="text-xs text-muted-foreground">{item.condition}</p>
-                      </div>
-                      <Badge className="bg-elec-yellow/20 text-elec-yellow font-semibold text-xs ml-2">
+                  <div key={index} className="p-4 border border-elec-yellow/20 rounded-lg bg-elec-dark/30">
+                    <div className="flex flex-col items-center text-center space-y-3">
+                      <Badge className="bg-elec-yellow/30 text-elec-yellow font-bold text-sm px-3 py-1">
                         {item.rate}
                       </Badge>
+                      <h4 className="font-semibold text-white text-sm">{item.item}</h4>
+                      <p className="text-xs text-muted-foreground">{item.condition}</p>
+                      <p className="text-xs text-blue-300/70 italic leading-relaxed">{item.additional}</p>
                     </div>
-                    <p className="text-xs text-blue-300 italic">{item.additional}</p>
                   </div>
                 ))}
               </div>
