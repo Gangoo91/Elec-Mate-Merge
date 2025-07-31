@@ -3,10 +3,24 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Input } from "@/components/ui/input";
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
-import { Shield, FileText, CheckCircle, AlertTriangle, ExternalLink, Scale, Clock, Building, Users, PoundSterling, Zap, BookOpen, Award, Phone } from "lucide-react";
+import { Shield, FileText, CheckCircle, AlertTriangle, ExternalLink, Scale, Clock, Building, Users, PoundSterling, Zap, BookOpen, Award, Phone, Calculator } from "lucide-react";
+import { useState } from "react";
 
 const LegalComplianceTab = () => {
+  const [selectedCosts, setSelectedCosts] = useState<{[key: string]: boolean}>({
+    "Level 3 Qualification": true,
+    "18th Edition": true,
+    "Testing & Inspection": true,
+    "Scheme Membership": true,
+    "Public Liability Insurance": true,
+    "Professional Indemnity": false,
+    "Company Registration": true,
+    "Business Bank Account": true
+  });
+
+  const [customCosts, setCustomCosts] = useState<{[key: string]: {min: number, max: number}}>({});
   const legalRequirements = [
     {
       category: "Business Registration & Structure",
@@ -269,8 +283,37 @@ const LegalComplianceTab = () => {
     { item: "Business Bank Account", minCost: 0, maxCost: 180, priority: "Essential" }
   ];
 
-  const totalMinCost = costCalculator.filter(item => item.priority === "Essential").reduce((sum, item) => sum + item.minCost, 0);
-  const totalMaxCost = costCalculator.filter(item => item.priority === "Essential").reduce((sum, item) => sum + item.maxCost, 0);
+  const calculateSelectedCosts = () => {
+    return costCalculator.reduce((totals, item) => {
+      if (selectedCosts[item.item]) {
+        const custom = customCosts[item.item];
+        const minCost = custom?.min ?? item.minCost;
+        const maxCost = custom?.max ?? item.maxCost;
+        totals.min += minCost;
+        totals.max += maxCost;
+      }
+      return totals;
+    }, { min: 0, max: 0 });
+  };
+
+  const { min: totalMinCost, max: totalMaxCost } = calculateSelectedCosts();
+
+  const toggleCostItem = (itemName: string) => {
+    setSelectedCosts(prev => ({
+      ...prev,
+      [itemName]: !prev[itemName]
+    }));
+  };
+
+  const updateCustomCost = (itemName: string, type: 'min' | 'max', value: number) => {
+    setCustomCosts(prev => ({
+      ...prev,
+      [itemName]: {
+        ...prev[itemName],
+        [type]: value
+      }
+    }));
+  };
 
   const qualificationPathways = [
     {
@@ -517,45 +560,89 @@ const LegalComplianceTab = () => {
         </AlertDescription>
       </Alert>
 
-      {/* Cost Summary */}
+      {/* Interactive Cost Calculator */}
       <Card className="border-green-500/50 bg-green-500/10">
         <CardHeader>
           <CardTitle className="text-green-300 flex items-center gap-2">
-            <PoundSterling className="h-5 w-5" />
-            Essential Setup Costs Summary
+            <Calculator className="h-5 w-5" />
+            Interactive Cost Calculator
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-2 gap-4 mb-6">
             <div className="p-4 bg-green-500/20 rounded-lg border border-green-500/30">
-              <h4 className="font-semibold text-green-200 mb-2">Minimum Essential Costs</h4>
+              <h4 className="font-semibold text-green-200 mb-2">Your Minimum Cost</h4>
               <p className="text-2xl font-bold text-green-100">£{totalMinCost.toLocaleString()}</p>
-              <p className="text-sm text-green-300">Basic setup to start legally</p>
+              <p className="text-sm text-green-300">Selected items - minimum</p>
             </div>
             <div className="p-4 bg-green-500/20 rounded-lg border border-green-500/30">
-              <h4 className="font-semibold text-green-200 mb-2">Comprehensive Setup</h4>
+              <h4 className="font-semibold text-green-200 mb-2">Your Maximum Cost</h4>
               <p className="text-2xl font-bold text-green-100">£{totalMaxCost.toLocaleString()}</p>
-              <p className="text-sm text-green-300">Full professional setup</p>
+              <p className="text-sm text-green-300">Selected items - maximum</p>
             </div>
           </div>
           
-          <div className="mt-4 space-y-3">
-            <h4 className="font-semibold text-green-200">Cost Breakdown:</h4>
-            {costCalculator
-              .sort((a, b) => a.priority === 'Essential' ? -1 : 1)
-              .map((item, index) => (
-              <div key={index} className="p-3 border border-green-500/20 rounded-lg bg-green-500/5">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-green-300 font-medium">{item.item}</span>
-                  <Badge variant="outline" className={`text-xs ${item.priority === 'Essential' ? 'border-red-400/50 text-red-300' : 'border-yellow-400/50 text-yellow-300'}`}>
-                    {item.priority}
-                  </Badge>
+          <div className="space-y-4">
+            <h4 className="font-semibold text-green-200">Select Your Requirements:</h4>
+            {costCalculator.map((item, index) => {
+              const isSelected = selectedCosts[item.item];
+              const custom = customCosts[item.item];
+              const displayMinCost = custom?.min ?? item.minCost;
+              const displayMaxCost = custom?.max ?? item.maxCost;
+              
+              return (
+                <div key={index} className={`p-4 border rounded-lg transition-all ${
+                  isSelected 
+                    ? 'border-green-500/40 bg-green-500/10' 
+                    : 'border-green-500/20 bg-green-500/5'
+                }`}>
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleCostItem(item.item)}
+                        className="w-4 h-4 rounded border-green-500/30 bg-green-500/10 text-green-400 focus:ring-green-400 focus:ring-2"
+                      />
+                      <span className={`font-medium ${isSelected ? 'text-green-200' : 'text-green-400'}`}>
+                        {item.item}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {isSelected && (
+                    <div className="mt-3 pt-3 border-t border-green-500/20">
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="text-xs text-green-300 block mb-1">Min Cost (£)</label>
+                          <Input
+                            type="number"
+                            value={displayMinCost}
+                            onChange={(e) => updateCustomCost(item.item, 'min', parseInt(e.target.value) || 0)}
+                            className="bg-green-500/10 border-green-500/30 text-green-100 h-8"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-xs text-green-300 block mb-1">Max Cost (£)</label>
+                          <Input
+                            type="number"
+                            value={displayMaxCost}
+                            onChange={(e) => updateCustomCost(item.item, 'max', parseInt(e.target.value) || 0)}
+                            className="bg-green-500/10 border-green-500/30 text-green-100 h-8"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {!isSelected && (
+                    <div className="text-green-400 text-sm">
+                      £{item.minCost.toLocaleString()} - £{item.maxCost.toLocaleString()}
+                    </div>
+                  )}
                 </div>
-                <div className="text-green-200 font-semibold">
-                  £{item.minCost.toLocaleString()} - £{item.maxCost.toLocaleString()}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </CardContent>
       </Card>
