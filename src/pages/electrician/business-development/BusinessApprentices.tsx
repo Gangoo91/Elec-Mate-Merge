@@ -1,6 +1,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { DropdownTabs } from "@/components/ui/dropdown-tabs";
+import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
 import { GraduationCap, ArrowLeft, Users, FileText, BookOpen, Phone, Calculator, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -55,49 +55,85 @@ const BusinessApprentices = () => {
         </CardContent>
       </Card>
 
-      <DropdownTabs
-        defaultValue="recruitment"
-        placeholder="Select apprentice management topic..."
-        className="w-full"
-        tabs={[
-          {
-            value: "recruitment",
-            label: "Recruitment & Selection",
-            icon: Users,
-            content: <RecruitmentTab />
-          },
-          {
-            value: "legal",
-            label: "Legal Requirements",
-            icon: FileText,
-            content: <LegalRequirementsTab />
-          },
-          {
-            value: "training",
-            label: "Training & Development",
-            icon: BookOpen,
-            content: <TrainingDevelopmentTab />
-          },
-          {
-            value: "support",
-            label: "Support & Resources",
-            icon: Phone,
-            content: <SupportResourcesTab />
-          },
-          {
-            value: "assessment",
-            label: "Assessment & Progress",
-            icon: GraduationCap,
-            content: <AssessmentProgressTab />
-          },
-          {
-            value: "tools",
-            label: "Interactive Tools",
-            icon: Calculator,
-            content: <InteractiveToolsTab />
-          }
-        ]}
-      />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+        <MobileAccordion type="single" collapsible className="w-full">
+          <MobileAccordionItem value="recruitment">
+            <MobileAccordionTrigger icon={<Users className="h-5 w-5" />}>
+              Recruitment & Selection
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-b-lg p-4">
+                <RecruitmentTab />
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+        </MobileAccordion>
+
+        <MobileAccordion type="single" collapsible className="w-full">
+          <MobileAccordionItem value="legal">
+            <MobileAccordionTrigger icon={<FileText className="h-5 w-5" />}>
+              Legal Requirements
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-b-lg p-4">
+                <LegalRequirementsTab />
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+        </MobileAccordion>
+
+        <MobileAccordion type="single" collapsible className="w-full">
+          <MobileAccordionItem value="training">
+            <MobileAccordionTrigger icon={<BookOpen className="h-5 w-5" />}>
+              Training & Development
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-b-lg p-4">
+                <TrainingDevelopmentTab />
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+        </MobileAccordion>
+
+        <MobileAccordion type="single" collapsible className="w-full">
+          <MobileAccordionItem value="support">
+            <MobileAccordionTrigger icon={<Phone className="h-5 w-5" />}>
+              Support & Resources
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-b-lg p-4">
+                <SupportResourcesTab />
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+        </MobileAccordion>
+
+        <MobileAccordion type="single" collapsible className="w-full">
+          <MobileAccordionItem value="assessment">
+            <MobileAccordionTrigger icon={<GraduationCap className="h-5 w-5" />}>
+              Assessment & Progress
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-b-lg p-4">
+                <AssessmentProgressTab />
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+        </MobileAccordion>
+
+        <MobileAccordion type="single" collapsible className="w-full">
+          <MobileAccordionItem value="tools">
+            <MobileAccordionTrigger icon={<Calculator className="h-5 w-5" />}>
+              Interactive Tools
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-dark/30 border border-elec-yellow/20 rounded-b-lg p-4">
+                <InteractiveToolsTab />
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+        </MobileAccordion>
+      </div>
 
       <Card className="border-green-500/50 bg-green-500/10">
         <CardHeader>
