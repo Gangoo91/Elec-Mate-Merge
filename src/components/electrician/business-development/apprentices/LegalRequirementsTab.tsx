@@ -178,17 +178,13 @@ const LegalRequirementsTab = () => {
               <div className="p-4 space-y-4">
                 {wageObligations.map((wage, index) => (
                   <div key={index} className="p-4 border border-amber-500/30 rounded-lg bg-amber-500/5">
-                    <div className="flex flex-col gap-3">
-                      <div className="flex items-center justify-between">
-                        <h4 className="font-semibold text-amber-200 text-sm">{wage.item}</h4>
-                        <Badge className="bg-amber-500/30 text-amber-100 font-bold text-sm px-3 py-1">
-                          {wage.rate}
-                        </Badge>
-                      </div>
-                      <div className="space-y-2">
-                        <p className="text-sm text-amber-200/80 font-medium">{wage.condition}</p>
-                        <p className="text-xs text-amber-300/70 italic leading-relaxed">{wage.additional}</p>
-                      </div>
+                    <div className="text-center space-y-3">
+                      <h4 className="font-semibold text-amber-200 text-sm">{wage.item}</h4>
+                      <Badge className="bg-amber-500/30 text-amber-100 font-bold text-lg px-4 py-2 text-center block w-fit mx-auto">
+                        {wage.rate}
+                      </Badge>
+                      <p className="text-sm text-amber-200/80 font-medium">{wage.condition}</p>
+                      <p className="text-xs text-amber-300/70 italic leading-relaxed">{wage.additional}</p>
                     </div>
                   </div>
                 ))}
