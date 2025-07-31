@@ -17,7 +17,21 @@ const LegalComplianceTab = () => {
     "Public Liability Insurance": true,
     "Professional Indemnity": false,
     "Company Registration": true,
-    "Business Bank Account": true
+    "Business Bank Account": true,
+    "Basic Tool Kit": true,
+    "Multimeter & Test Equipment": true,
+    "Van/Transport": true,
+    "Van Insurance": true,
+    "Tool Insurance": false,
+    "Mobile Phone & Plan": true,
+    "Laptop/Tablet for Certificates": true,
+    "Marketing & Website": false,
+    "Accountancy Software": false,
+    "Initial Marketing Budget": false,
+    "Emergency Fund (3 months)": false,
+    "Uniforms & PPE": true,
+    "Office Setup (Home)": false,
+    "Certificate Books & Stationery": true
   });
 
   const [customCosts, setCustomCosts] = useState<{[key: string]: {min: number, max: number}}>({});
@@ -280,7 +294,21 @@ const LegalComplianceTab = () => {
     { item: "Public Liability Insurance", minCost: 800, maxCost: 2500, priority: "Essential" },
     { item: "Professional Indemnity", minCost: 300, maxCost: 800, priority: "Recommended" },
     { item: "Company Registration", minCost: 12, maxCost: 100, priority: "Essential" },
-    { item: "Business Bank Account", minCost: 0, maxCost: 180, priority: "Essential" }
+    { item: "Business Bank Account", minCost: 0, maxCost: 180, priority: "Essential" },
+    { item: "Basic Tool Kit", minCost: 1500, maxCost: 5000, priority: "Essential" },
+    { item: "Multimeter & Test Equipment", minCost: 500, maxCost: 2000, priority: "Essential" },
+    { item: "Van/Transport", minCost: 8000, maxCost: 25000, priority: "Essential" },
+    { item: "Van Insurance", minCost: 800, maxCost: 2000, priority: "Essential" },
+    { item: "Tool Insurance", minCost: 200, maxCost: 600, priority: "Recommended" },
+    { item: "Mobile Phone & Plan", minCost: 200, maxCost: 600, priority: "Essential" },
+    { item: "Laptop/Tablet for Certificates", minCost: 300, maxCost: 1200, priority: "Essential" },
+    { item: "Marketing & Website", minCost: 500, maxCost: 3000, priority: "Recommended" },
+    { item: "Accountancy Software", minCost: 100, maxCost: 500, priority: "Recommended" },
+    { item: "Initial Marketing Budget", minCost: 500, maxCost: 2000, priority: "Recommended" },
+    { item: "Emergency Fund (3 months)", minCost: 3000, maxCost: 8000, priority: "Recommended" },
+    { item: "Uniforms & PPE", minCost: 200, maxCost: 800, priority: "Essential" },
+    { item: "Office Setup (Home)", minCost: 500, maxCost: 2000, priority: "Recommended" },
+    { item: "Certificate Books & Stationery", minCost: 100, maxCost: 300, priority: "Essential" }
   ];
 
   const calculateSelectedCosts = () => {
@@ -612,7 +640,7 @@ const LegalComplianceTab = () => {
                   
                   {isSelected && (
                     <div className="mt-3 pt-3 border-t border-green-500/20">
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-3">
                         <div>
                           <label className="text-xs text-green-300 block mb-1">Min Cost (£)</label>
                           <Input
