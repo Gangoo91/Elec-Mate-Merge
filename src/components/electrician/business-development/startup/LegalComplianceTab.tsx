@@ -651,18 +651,16 @@ const LegalComplianceTab = () => {
                           ? 'border-green-500/40 bg-green-500/10' 
                           : 'border-green-500/20 bg-green-500/5'
                       }`}>
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="flex items-center gap-3">
-                            <input
-                              type="checkbox"
-                              checked={isSelected}
-                              onChange={() => toggleCostItem(item.item)}
-                              className="w-4 h-4 rounded border-green-500/30 bg-green-500/10 text-green-400 focus:ring-green-400 focus:ring-2"
-                            />
-                            <span className={`font-medium ${isSelected ? 'text-green-200' : 'text-green-400'}`}>
-                              {item.item}
-                            </span>
-                          </div>
+                        <div className="flex flex-col items-center gap-3">
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={() => toggleCostItem(item.item)}
+                            className="w-4 h-4 rounded border-green-500/30 bg-green-500/10 text-green-400 focus:ring-green-400 focus:ring-2"
+                          />
+                          <span className={`font-medium text-center ${isSelected ? 'text-green-200' : 'text-green-400'}`}>
+                            {item.item}
+                          </span>
                         </div>
                         
                         {isSelected && (
