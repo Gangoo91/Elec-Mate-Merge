@@ -136,14 +136,6 @@ const RecruitmentTab = () => {
     { phase: "Pre-Start Setup (2-4 weeks)", tasks: ["Complete paperwork", "Arrange training provider", "Prepare workspace", "Order equipment/PPE"] }
   ];
 
-  const legalConsiderations = [
-    { requirement: "Apprenticeship Agreement", description: "Written agreement covering terms, training plan, and progression pathway", importance: "Legal requirement" },
-    { requirement: "Training Plan", description: "Detailed plan of on/off-job training with learning objectives and assessment criteria", importance: "Ofsted requirement" },
-    { requirement: "End-Point Assessment", description: "Independent assessment of apprentice competency at programme completion", importance: "Qualification requirement" },
-    { requirement: "20% Off-Job Training", description: "Minimum 20% of working time must be dedicated to learning and development", importance: "Funding requirement" },
-    { requirement: "Minimum Wage Compliance", description: "Must pay apprentice minimum wage for first year, then age-appropriate minimum wage", importance: "Legal requirement" }
-  ];
-
   return (
     <div className="space-y-6">
       <Alert className="border-green-500/50 bg-green-500/10">
@@ -449,61 +441,31 @@ const RecruitmentTab = () => {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-cyan-500/20 bg-cyan-500/10">
-          <CardHeader>
-            <CardTitle className="text-cyan-400 flex items-center gap-2">
-              <Calendar className="h-5 w-5" />
-              Recruitment Timeline & Checklist
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {timelineChecklist.map((phase, index) => (
-                <div key={index} className="p-4 bg-cyan-500/5 border border-cyan-500/20 rounded-lg">
-                  <h5 className="font-medium text-cyan-300 mb-2">{phase.phase}</h5>
-                  <ul className="space-y-1">
-                    {phase.tasks.map((task, taskIndex) => (
-                      <li key={taskIndex} className="flex items-start gap-2 text-sm text-cyan-200">
-                        <Clock className="h-3 w-3 mt-1 flex-shrink-0" />
-                        {task}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-purple-500/20 bg-purple-500/10">
-          <CardHeader>
-            <CardTitle className="text-purple-400 flex items-center gap-2">
-              <Shield className="h-5 w-5" />
-              Legal Requirements & Compliance
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {legalConsiderations.map((item, index) => (
-                <div key={index} className="p-3 bg-purple-500/5 border border-purple-500/20 rounded-lg">
-                  <div className="flex justify-between items-start mb-2">
-                    <h5 className="font-medium text-purple-300">{item.requirement}</h5>
-                    <Badge className={
-                      item.importance === "Legal requirement" ? "bg-red-500/30 text-red-400" :
-                      item.importance === "Funding requirement" ? "bg-amber-500/30 text-amber-400" :
-                      "bg-blue-500/30 text-blue-400"
-                    }>
-                      {item.importance}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-purple-200">{item.description}</p>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <Card className="border-cyan-500/20 bg-cyan-500/10">
+        <CardHeader>
+          <CardTitle className="text-cyan-400 flex items-center gap-2">
+            <Calendar className="h-5 w-5" />
+            Recruitment Timeline & Checklist
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {timelineChecklist.map((phase, index) => (
+              <div key={index} className="p-4 bg-cyan-500/5 border border-cyan-500/20 rounded-lg">
+                <h5 className="font-medium text-cyan-300 mb-2">{phase.phase}</h5>
+                <ul className="space-y-1">
+                  {phase.tasks.map((task, taskIndex) => (
+                    <li key={taskIndex} className="flex items-start gap-2 text-sm text-cyan-200">
+                      <Clock className="h-3 w-3 mt-1 flex-shrink-0" />
+                      {task}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
       <Alert className="border-amber-500/50 bg-amber-500/10">
         <TrendingUp className="h-4 w-4 text-amber-400" />
