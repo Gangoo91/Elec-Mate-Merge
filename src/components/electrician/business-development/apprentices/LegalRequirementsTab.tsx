@@ -2,9 +2,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { FileText, Shield, Clock, PoundSterling, AlertTriangle, Calculator, Users, Book, CheckCircle } from "lucide-react";
+import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { FileText, Shield, Clock, PoundSterling, AlertTriangle, Calculator, Users, Book, CheckCircle, Download, Calendar, FileCheck } from "lucide-react";
 
 const LegalRequirementsTab = () => {
+  const isMobile = useIsMobile();
+
   const legalRequirements = [
     {
       category: "Employment Law",
@@ -109,6 +113,185 @@ const LegalRequirementsTab = () => {
     { region: "Northern Ireland", levy: "Same as England", funding: "Department for Economy", notes: "Separate apprenticeship system" }
   ];
 
+  const quickActionItems = [
+    { action: "Download Legal Checklist", icon: <Download className="h-4 w-4" />, description: "Complete compliance checklist template" },
+    { action: "Set Compliance Calendar", icon: <Calendar className="h-4 w-4" />, description: "Schedule regular review dates" },
+    { action: "Document Templates", icon: <FileCheck className="h-4 w-4" />, description: "Access required legal forms" }
+  ];
+
+  if (isMobile) {
+    return (
+      <div className="space-y-4">
+        <Alert className="border-amber-500/30 bg-amber-500/10">
+          <AlertTriangle className="h-4 w-4 text-amber-400" />
+          <AlertDescription className="text-amber-200">
+            <strong>Critical:</strong> Legal requirements are strictly enforced. Non-compliance can result in significant penalties and funding withdrawal.
+          </AlertDescription>
+        </Alert>
+
+        {/* Quick Actions for Mobile */}
+        <Card className="border-blue-500/20 bg-blue-500/10">
+          <CardHeader>
+            <CardTitle className="text-blue-400 text-lg">Quick Actions</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {quickActionItems.map((item, index) => (
+                <div key={index} className="flex items-center gap-3 p-3 bg-blue-500/5 border border-blue-500/30 rounded-lg">
+                  {item.icon}
+                  <div>
+                    <h4 className="font-medium text-blue-300">{item.action}</h4>
+                    <p className="text-xs text-blue-200">{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <MobileAccordion type="single" collapsible className="space-y-2">
+          {legalRequirements.map((section, index) => (
+            <MobileAccordionItem key={index} value={`item-${index}`}>
+              <MobileAccordionTrigger icon={section.icon}>
+                {section.category}
+              </MobileAccordionTrigger>
+              <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-elec-gray">
+                <div className="p-4 space-y-3">
+                  {section.requirements.map((req, reqIndex) => (
+                    <div key={reqIndex} className="flex items-start gap-3 p-3 bg-elec-dark/50 rounded-lg border border-elec-yellow/10">
+                      <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-muted-foreground leading-relaxed">{req}</span>
+                    </div>
+                  ))}
+                </div>
+              </MobileAccordionContent>
+            </MobileAccordionItem>
+          ))}
+
+          <MobileAccordionItem value="payroll">
+            <MobileAccordionTrigger icon={<PoundSterling className="h-5 w-5" />}>
+              Payroll & Financial Obligations
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-elec-gray">
+              <div className="p-4 space-y-4">
+                {payrollConsiderations.map((item, index) => (
+                  <div key={index} className="p-3 border border-elec-yellow/20 rounded-lg bg-elec-dark/30">
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex-1">
+                        <h4 className="font-medium text-white text-sm">{item.item}</h4>
+                        <p className="text-xs text-muted-foreground">{item.condition}</p>
+                      </div>
+                      <Badge className="bg-elec-yellow/20 text-elec-yellow font-semibold text-xs ml-2">
+                        {item.rate}
+                      </Badge>
+                    </div>
+                    <p className="text-xs text-blue-300 italic">{item.additional}</p>
+                  </div>
+                ))}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="incentives">
+            <MobileAccordionTrigger icon={<Calculator className="h-5 w-5" />}>
+              Government Incentives
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-green-500/10">
+              <div className="p-4 space-y-4">
+                {governmentIncentives.map((incentive, index) => (
+                  <div key={index} className="p-3 bg-green-500/5 border border-green-500/30 rounded-lg">
+                    <div className="flex items-start justify-between mb-2">
+                      <h4 className="font-semibold text-green-300 text-sm flex-1">{incentive.incentive}</h4>
+                      <Badge className="bg-green-500/20 text-green-400 text-xs ml-2">{incentive.amount}</Badge>
+                    </div>
+                    <p className="text-xs text-green-200 mb-2">{incentive.description}</p>
+                    <p className="text-xs text-green-300 italic">{incentive.eligibility}</p>
+                  </div>
+                ))}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="timeline">
+            <MobileAccordionTrigger icon={<Clock className="h-5 w-5" />}>
+              Compliance Timeline
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-blue-500/10">
+              <div className="p-4 space-y-4">
+                {complianceTimeline.map((phase, index) => (
+                  <div key={index} className="border-l-2 border-blue-500/30 pl-3 space-y-2">
+                    <div className="flex flex-col gap-1">
+                      <h4 className="font-medium text-blue-300 text-sm">{phase.phase}</h4>
+                      <Badge variant="outline" className="text-blue-400 border-blue-500/30 text-xs self-start">
+                        {phase.timeframe}
+                      </Badge>
+                    </div>
+                    <div className="space-y-2">
+                      {phase.tasks.map((task, taskIndex) => (
+                        <div key={taskIndex} className="flex items-start gap-2 text-sm text-blue-200">
+                          <CheckCircle className="h-3 w-3 text-blue-400 mt-0.5 flex-shrink-0" />
+                          <span className="text-xs leading-relaxed">{task}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="penalties">
+            <MobileAccordionTrigger icon={<AlertTriangle className="h-5 w-5" />}>
+              Legal Penalties
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-red-500/10">
+              <div className="p-4 space-y-4">
+                {legalPenalties.map((penalty, index) => (
+                  <div key={index} className="p-3 bg-red-500/5 border border-red-500/30 rounded-lg">
+                    <div className="flex flex-col gap-2 mb-2">
+                      <h4 className="font-semibold text-red-300 text-sm">{penalty.violation}</h4>
+                      <Badge className="bg-red-500/20 text-red-400 text-xs self-start">{penalty.penalty}</Badge>
+                    </div>
+                    <p className="text-xs text-red-200">{penalty.description}</p>
+                  </div>
+                ))}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="regional">
+            <MobileAccordionTrigger icon={<Users className="h-5 w-5" />}>
+              Regional Variations
+            </MobileAccordionTrigger>
+            <MobileAccordionContent className="border-x border-b border-elec-yellow/20 rounded-b-lg bg-purple-500/10">
+              <div className="p-4 space-y-4">
+                {regionalVariations.map((region, index) => (
+                  <div key={index} className="p-3 bg-purple-500/5 border border-purple-500/30 rounded-lg">
+                    <h4 className="font-semibold text-purple-300 mb-2 text-sm">{region.region}</h4>
+                    <div className="space-y-1 text-xs">
+                      <p className="text-purple-200"><strong>Levy:</strong> {region.levy}</p>
+                      <p className="text-purple-200"><strong>Funding:</strong> {region.funding}</p>
+                      <p className="text-xs text-purple-300 italic">{region.notes}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+        </MobileAccordion>
+
+        <Alert className="border-green-500/50 bg-green-500/10">
+          <CheckCircle className="h-4 w-4 text-green-400" />
+          <AlertDescription className="text-green-200 text-sm">
+            <strong>Best Practice:</strong> Maintain a comprehensive compliance checklist and review monthly. 
+            Appoint a dedicated person for apprenticeship compliance in larger organisations.
+          </AlertDescription>
+        </Alert>
+      </div>
+    );
+  }
+
+  // Desktop view remains the same but with enhanced grid layouts
   return (
     <div className="space-y-6">
       <Alert className="border-amber-500/30 bg-amber-500/10">
@@ -120,7 +303,30 @@ const LegalRequirementsTab = () => {
         </AlertDescription>
       </Alert>
 
-      <div className="space-y-4">
+      {/* Quick Actions for Desktop */}
+      <Card className="border-blue-500/20 bg-blue-500/10">
+        <CardHeader>
+          <CardTitle className="text-blue-400 flex items-center gap-2">
+            <FileCheck className="h-5 w-5" />
+            Quick Actions
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {quickActionItems.map((item, index) => (
+              <div key={index} className="flex items-center gap-3 p-4 bg-blue-500/5 border border-blue-500/30 rounded-lg cursor-pointer hover:bg-blue-500/10 transition-colors">
+                {item.icon}
+                <div>
+                  <h4 className="font-medium text-blue-300">{item.action}</h4>
+                  <p className="text-sm text-blue-200">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {legalRequirements.map((section, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
             <CardHeader>
@@ -130,7 +336,7 @@ const LegalRequirementsTab = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="space-y-3">
                 {section.requirements.map((req, reqIndex) => (
                   <div key={reqIndex} className="flex items-start gap-2 p-3 bg-elec-dark/50 rounded-lg border border-elec-yellow/10">
                     <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
@@ -143,55 +349,57 @@ const LegalRequirementsTab = () => {
         ))}
       </div>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <PoundSterling className="h-5 w-5" />
-            Detailed Payroll & Financial Obligations
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {payrollConsiderations.map((item, index) => (
-              <div key={index} className="flex flex-col gap-2 p-4 border border-elec-yellow/20 rounded-lg">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="font-medium text-white">{item.item}</h4>
-                    <p className="text-sm text-muted-foreground">{item.condition}</p>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card className="border-elec-yellow/20 bg-elec-gray">
+          <CardHeader>
+            <CardTitle className="text-elec-yellow flex items-center gap-2">
+              <PoundSterling className="h-5 w-5" />
+              Detailed Payroll & Financial Obligations
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {payrollConsiderations.map((item, index) => (
+                <div key={index} className="flex flex-col gap-2 p-4 border border-elec-yellow/20 rounded-lg">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="font-medium text-white">{item.item}</h4>
+                      <p className="text-sm text-muted-foreground">{item.condition}</p>
+                    </div>
+                    <Badge className="bg-elec-yellow/20 text-elec-yellow font-semibold">
+                      {item.rate}
+                    </Badge>
                   </div>
-                  <Badge className="bg-elec-yellow/20 text-elec-yellow font-semibold">
-                    {item.rate}
-                  </Badge>
+                  <p className="text-xs text-blue-300 italic">{item.additional}</p>
                 </div>
-                <p className="text-xs text-blue-300 italic">{item.additional}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
-      <Card className="border-green-500/20 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-400 flex items-center gap-2">
-            <Calculator className="h-5 w-5" />
-            Government Incentives & Financial Support
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {governmentIncentives.map((incentive, index) => (
-              <div key={index} className="p-4 bg-green-500/5 border border-green-500/30 rounded-lg">
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-semibold text-green-300">{incentive.incentive}</h4>
-                  <Badge className="bg-green-500/20 text-green-400">{incentive.amount}</Badge>
+        <Card className="border-green-500/20 bg-green-500/10">
+          <CardHeader>
+            <CardTitle className="text-green-400 flex items-center gap-2">
+              <Calculator className="h-5 w-5" />
+              Government Incentives & Financial Support
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {governmentIncentives.map((incentive, index) => (
+                <div key={index} className="p-4 bg-green-500/5 border border-green-500/30 rounded-lg">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-semibold text-green-300">{incentive.incentive}</h4>
+                    <Badge className="bg-green-500/20 text-green-400">{incentive.amount}</Badge>
+                  </div>
+                  <p className="text-sm text-green-200 mb-2">{incentive.description}</p>
+                  <p className="text-xs text-green-300 italic">{incentive.eligibility}</p>
                 </div>
-                <p className="text-sm text-green-200 mb-2">{incentive.description}</p>
-                <p className="text-xs text-green-300 italic">{incentive.eligibility}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       <Card className="border-blue-500/20 bg-blue-500/10">
         <CardHeader>
@@ -201,7 +409,7 @@ const LegalRequirementsTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {complianceTimeline.map((phase, index) => (
               <div key={index} className="border-l-2 border-blue-500/30 pl-4 space-y-2">
                 <div className="flex items-center justify-between">
@@ -210,7 +418,7 @@ const LegalRequirementsTab = () => {
                     {phase.timeframe}
                   </Badge>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <div className="space-y-2">
                   {phase.tasks.map((task, taskIndex) => (
                     <div key={taskIndex} className="flex items-center gap-2 text-sm text-blue-200">
                       <CheckCircle className="h-3 w-3 text-blue-400" />
@@ -224,50 +432,52 @@ const LegalRequirementsTab = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-red-500/20 bg-red-500/10">
-        <CardHeader>
-          <CardTitle className="text-red-400 flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5" />
-            Legal Penalties & Enforcement Actions
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {legalPenalties.map((penalty, index) => (
-              <div key={index} className="p-4 bg-red-500/5 border border-red-500/30 rounded-lg">
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-semibold text-red-300">{penalty.violation}</h4>
-                  <Badge className="bg-red-500/20 text-red-400">{penalty.penalty}</Badge>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card className="border-red-500/20 bg-red-500/10">
+          <CardHeader>
+            <CardTitle className="text-red-400 flex items-center gap-2">
+              <AlertTriangle className="h-5 w-5" />
+              Legal Penalties & Enforcement Actions
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {legalPenalties.map((penalty, index) => (
+                <div key={index} className="p-4 bg-red-500/5 border border-red-500/30 rounded-lg">
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-semibold text-red-300">{penalty.violation}</h4>
+                    <Badge className="bg-red-500/20 text-red-400">{penalty.penalty}</Badge>
+                  </div>
+                  <p className="text-sm text-red-200">{penalty.description}</p>
                 </div>
-                <p className="text-sm text-red-200">{penalty.description}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
-      <Card className="border-purple-500/20 bg-purple-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-400 flex items-center gap-2">
-            <Users className="h-5 w-5" />
-            Regional Variations & Requirements
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {regionalVariations.map((region, index) => (
-              <div key={index} className="p-4 bg-purple-500/5 border border-purple-500/30 rounded-lg">
-                <h4 className="font-semibold text-purple-300 mb-2">{region.region}</h4>
-                <div className="space-y-1 text-sm">
-                  <p className="text-purple-200"><strong>Levy:</strong> {region.levy}</p>
-                  <p className="text-purple-200"><strong>Funding:</strong> {region.funding}</p>
-                  <p className="text-xs text-purple-300 italic">{region.notes}</p>
+        <Card className="border-purple-500/20 bg-purple-500/10">
+          <CardHeader>
+            <CardTitle className="text-purple-400 flex items-center gap-2">
+              <Users className="h-5 w-5" />
+              Regional Variations & Requirements
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {regionalVariations.map((region, index) => (
+                <div key={index} className="p-4 bg-purple-500/5 border border-purple-500/30 rounded-lg">
+                  <h4 className="font-semibold text-purple-300 mb-2">{region.region}</h4>
+                  <div className="space-y-1 text-sm">
+                    <p className="text-purple-200"><strong>Levy:</strong> {region.levy}</p>
+                    <p className="text-purple-200"><strong>Funding:</strong> {region.funding}</p>
+                    <p className="text-xs text-purple-300 italic">{region.notes}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
       <Alert className="border-green-500/50 bg-green-500/10">
         <CheckCircle className="h-4 w-4 text-green-400" />
