@@ -16,14 +16,14 @@ const BusinessCustomers = () => {
       {/* Hero Section */}
       <div className="bg-elec-gray rounded-lg p-8 text-center space-y-6">
         <div className="flex items-center justify-center gap-4">
-          <Zap className="h-8 w-8 text-elec-yellow" />
+          <Target className="h-8 w-8 text-elec-yellow" />
           <h1 className="text-4xl md:text-5xl font-bold text-white">
-            Starting an Electrical Business
+            Customer Acquisition for Electricians
           </h1>
         </div>
         
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          Your complete guide to establishing and growing a successful electrical contracting business in the UK
+          Building a solid customer base requires both strategy and consistency. This comprehensive guide offers proven methods for UK electrical contractors to attract, convert and retain valuable customers.
         </p>
         
         <Link to="/electrician/business-development">
