@@ -359,8 +359,8 @@ const BusinessPlanningTab = () => {
                 </ul>
               </div>
               
-              <div className="border border-orange-500/20 rounded-lg p-3 space-y-3">
-                <h4 className={`font-medium text-orange-300 ${isMobile ? 'text-sm' : 'text-base'}`}>Success Milestones</h4>
+              <div className="space-y-4">
+                <h4 className={`font-medium text-orange-300 ${isMobile ? 'text-sm' : 'text-base'} mb-3`}>Success Milestones</h4>
                 <div className="space-y-3">
                   {[
                     { milestone: "First month revenue target", target: "£3,000-5,000" },
@@ -370,12 +370,12 @@ const BusinessPlanningTab = () => {
                     { milestone: "Profit margin target", target: "25-35% gross margin" },
                     { milestone: "Growth milestone", target: "First employee/subcontractor" }
                   ].map((item, index) => (
-                    <div key={index} className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-3">
-                      <div className={`flex ${isMobile ? 'flex-col space-y-2' : 'items-center justify-between'}`}>
-                        <span className={`${isMobile ? 'text-sm font-medium' : 'text-sm'} text-orange-200 ${isMobile ? 'leading-relaxed' : ''}`}>
+                    <div key={index} className={`${isMobile ? 'text-center py-3' : 'flex items-center justify-between py-2'}`}>
+                      <div className={`${isMobile ? 'space-y-2' : ''}`}>
+                        <div className={`${isMobile ? 'text-sm font-medium' : 'text-sm'} text-orange-200 ${isMobile ? 'leading-relaxed' : ''}`}>
                           {item.milestone}
-                        </span>
-                        <Badge variant="outline" className={`text-orange-300 border-orange-400/30 ${isMobile ? 'text-sm self-start' : 'text-sm'} font-medium`}>
+                        </div>
+                        <Badge variant="outline" className={`text-orange-300 border-orange-400/30 ${isMobile ? 'text-sm' : 'text-sm'} font-medium ${isMobile ? 'inline-block' : ''}`}>
                           {item.target}
                         </Badge>
                       </div>
