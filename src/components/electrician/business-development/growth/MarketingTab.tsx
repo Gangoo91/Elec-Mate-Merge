@@ -835,6 +835,120 @@ export const MarketingTab = () => {
                       </div>
                     </div>
                   </div>
+
+                  <div className="bg-cyan-500/10 border border-cyan-500/20 rounded-lg p-4 space-y-3">
+                    <h4 className={`font-semibold text-cyan-300 flex items-center gap-2 ${isMobile ? 'text-sm' : 'text-base'}`}>
+                      <PoundSterling className="h-4 w-4" />
+                      Hiring Marketing Support
+                    </h4>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100 mb-3`}>
+                      Where to find and what to expect when hiring marketing professionals
+                    </p>
+                    
+                    <div className="space-y-4">
+                      <div className="bg-cyan-500/5 rounded-lg p-3 space-y-2">
+                        <h5 className={`font-medium text-cyan-200 ${isMobile ? 'text-xs' : 'text-sm'}`}>Freelance Social Media Managers</h5>
+                        <div className={`grid gap-2 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
+                          <div>
+                            <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100 font-medium`}>Where to find:</p>
+                            <ul className="space-y-1 mt-1">
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Upwork, Fiverr, PeoplePerHour</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Local Facebook business groups</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• LinkedIn freelancer networks</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Local marketing students</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100 font-medium`}>Expected costs:</p>
+                            <ul className="space-y-1 mt-1">
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• £300-800/month basic management</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• £15-40/hour project rates</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• £50-150 per content package</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• £200-500 website setup</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-cyan-500/5 rounded-lg p-3 space-y-2">
+                        <h5 className={`font-medium text-cyan-200 ${isMobile ? 'text-xs' : 'text-sm'}`}>Digital Marketing Agencies</h5>
+                        <div className={`grid gap-2 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
+                          <div>
+                            <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100 font-medium`}>Where to find:</p>
+                            <ul className="space-y-1 mt-1">
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Google "trade marketing agency UK"</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Chamber of Commerce directories</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Electrical trade publications</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Local business networking events</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100 font-medium`}>Expected costs:</p>
+                            <ul className="space-y-1 mt-1">
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• £800-2,500/month retainer</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• £2,000-8,000 website build</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• 15-20% of ad spend management</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• £500-1,500 strategy consultation</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-cyan-500/5 rounded-lg p-3 space-y-2">
+                        <h5 className={`font-medium text-cyan-200 ${isMobile ? 'text-xs' : 'text-sm'}`}>Part-time Marketing Assistant</h5>
+                        <div className={`grid gap-2 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
+                          <div>
+                            <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100 font-medium`}>Where to find:</p>
+                            <ul className="space-y-1 mt-1">
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Indeed, Reed, Totaljobs</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Local college marketing courses</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Apprenticeship programmes</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Local job centres</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100 font-medium`}>Expected costs:</p>
+                            <ul className="space-y-1 mt-1">
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• £10-18/hour depending on experience</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• 8-16 hours/week commitment</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• £400-1,200/month salary cost</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Training investment required</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-cyan-500/5 rounded-lg p-3 space-y-2">
+                        <h5 className={`font-medium text-cyan-200 ${isMobile ? 'text-xs' : 'text-sm'}`}>What to Look For When Hiring</h5>
+                        <div className={`grid gap-3 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}>
+                          <div>
+                            <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100 font-medium mb-1`}>Essential Skills:</p>
+                            <ul className="space-y-1">
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Trade industry knowledge</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Local market understanding</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Portfolio of trade clients</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100 font-medium mb-1`}>Platform Experience:</p>
+                            <ul className="space-y-1">
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Google My Business</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Facebook & Instagram</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Google Ads experience</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100 font-medium mb-1`}>Red Flags:</p>
+                            <ul className="space-y-1">
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Guaranteed rankings</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• No clear reporting</li>
+                              <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-cyan-100`}>• Upfront large payments</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
