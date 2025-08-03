@@ -530,7 +530,7 @@ export const GrowthStrategiesTab = () => {
           </MobileAccordionItem>
         ))}
         <MobileAccordionItem value="growth-framework">
-          <MobileAccordionTrigger icon={<Lightbulb className="h-5 w-5 text-elec-yellow" />}>
+          <MobileAccordionTrigger icon={<Lightbulb className="h-5 w-5 text-orange-400" />}>
             Growth Success Framework
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -583,7 +583,7 @@ export const GrowthStrategiesTab = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="industry-benchmarks">
-          <MobileAccordionTrigger icon={<BarChart3 className="h-5 w-5 text-elec-yellow" />}>
+          <MobileAccordionTrigger icon={<BarChart3 className="h-5 w-5 text-cyan-400" />}>
             Industry Benchmarks & Performance Standards
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -626,7 +626,7 @@ export const GrowthStrategiesTab = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="competitive-advantages">
-          <MobileAccordionTrigger icon={<Crown className="h-5 w-5 text-elec-yellow" />}>
+          <MobileAccordionTrigger icon={<Crown className="h-5 w-5 text-amber-400" />}>
             Competitive Advantage Strategies
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -680,7 +680,7 @@ export const GrowthStrategiesTab = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="performance-measurement">
-          <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-elec-yellow" />}>
+          <MobileAccordionTrigger icon={<Target className="h-5 w-5 text-emerald-400" />}>
             Performance Measurement Framework
           </MobileAccordionTrigger>
           <MobileAccordionContent>
@@ -718,7 +718,7 @@ export const GrowthStrategiesTab = () => {
         </MobileAccordionItem>
 
         <MobileAccordionItem value="action-plan">
-          <MobileAccordionTrigger icon={<CheckCircle className="h-5 w-5 text-elec-yellow" />}>
+          <MobileAccordionTrigger icon={<CheckCircle className="h-5 w-5 text-pink-400" />}>
             30-Day Growth Action Plan
           </MobileAccordionTrigger>
           <MobileAccordionContent>
