@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { 
@@ -20,263 +21,170 @@ import {
   BookOpen,
   Settings,
   Award,
-  Wrench
+  Wrench,
+  Calculator,
+  PoundSterling,
+  BarChart3
 } from "lucide-react";
 
 export const ServiceDiversificationTab = () => {
   const isMobile = useIsMobile();
 
-  // Header metrics for business expansion opportunities
-  const headerMetrics = [
+  // Service diversification metrics matching the Pricing Strategies pattern
+  const diversificationMetrics = [
     {
-      title: "Market Size",
-      value: "£12.8B",
-      subtitle: "UK electrical services market",
-      icon: TrendingUp,
-      change: "+8.2% annually"
+      metric: "Market Opportunities",
+      data: "6 high-growth sectors identified",
+      icon: <Target className="h-5 w-5 text-elec-yellow" />,
+      detail: "Ready for immediate expansion potential"
     },
     {
-      title: "Growth Sectors",
-      value: "6",
-      subtitle: "High-opportunity areas",
-      icon: Target,
-      change: "Ready for expansion"
+      metric: "Investment Range",
+      data: "£1K-15K per specialisation",
+      icon: <PoundSterling className="h-5 w-5 text-blue-400" />,
+      detail: "Including training, equipment and certification"
     },
     {
-      title: "ROI Timeline",
-      value: "6-18",
-      subtitle: "Months to profitability",
-      icon: Calendar,
-      change: "Varies by sector"
+      metric: "ROI Timeline",
+      data: "6-18 months to profitability",
+      icon: <TrendingUp className="h-5 w-5 text-green-400" />,
+      detail: "Varies by sector complexity and market entry"
     },
     {
-      title: "Investment Range",
-      value: "£1K-15K",
-      subtitle: "Initial capital required",
-      icon: DollarSign,
-      change: "Per specialisation"
+      metric: "Revenue Potential",
+      data: "£50-200k additional annually",
+      icon: <BarChart3 className="h-5 w-5 text-purple-400" />,
+      detail: "Through strategic service diversification"
     }
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Header Metrics */}
-      <div className={`grid gap-4 ${isMobile ? 'grid-cols-2' : 'grid-cols-2 lg:grid-cols-4'}`}>
-        {headerMetrics.map((metric, index) => (
-          <Card key={index} className="bg-elec-gray/30 border-elec-yellow/20">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.title}</p>
-                  <p className={`${isMobile ? 'text-lg' : 'text-2xl'} font-bold text-elec-yellow`}>{metric.value}</p>
-                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.subtitle}</p>
-                </div>
-                <metric.icon className={`${isMobile ? 'h-6 w-6' : 'h-8 w-8'} text-elec-yellow`} />
-              </div>
-              <div className="mt-2">
-                <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-400`}>{metric.change}</p>
-              </div>
-            </CardContent>
+    <div className="space-y-4">
+      <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
+        <TrendingUp className="h-4 w-4 text-elec-yellow" />
+        <AlertDescription className="text-elec-yellow">
+          Strategic service diversification can increase annual revenue by £50-200k while reducing dependency on single service areas.
+        </AlertDescription>
+      </Alert>
+
+      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}>
+        {diversificationMetrics.map((metric, index) => (
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
+            <div className="text-center space-y-2">
+              {metric.icon}
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
+            </div>
           </Card>
         ))}
       </div>
 
-      {/* Main Diversification Sections */}
-      <MobileAccordion type="single" collapsible className="space-y-4">
+      <MobileAccordion type="single" collapsible className="space-y-2">
         
-        {/* Smart Home Technology */}
         <MobileAccordionItem value="smart-home">
-          <MobileAccordionTrigger 
-            icon={<Home className={`${isMobile ? 'h-5 w-5' : 'h-6 w-6'} text-blue-400`} />}
-            className="bg-elec-gray/30 border-blue-400/20"
-          >
-            <span className={`${isMobile ? 'text-sm' : 'text-base'} font-medium`}>Smart Home Technology</span>
-            <div className="flex gap-1 mt-1">
-              <Badge variant="secondary" className={`${isMobile ? 'text-xs px-1.5 py-0.5' : 'text-xs'} bg-green-500/20 text-green-400`}>Very High Demand</Badge>
-              <Badge variant="secondary" className={`${isMobile ? 'text-xs px-1.5 py-0.5' : 'text-xs'} bg-blue-500/20 text-blue-400`}>High Profit</Badge>
-            </div>
+          <MobileAccordionTrigger icon={<Home className="h-5 w-5 text-blue-400" />}>
+            Smart Home Technology Services
           </MobileAccordionTrigger>
           <MobileAccordionContent>
-            <Card className="bg-elec-gray/20 border-blue-400/20">
-              <CardContent className="p-4 space-y-4">
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Smart Home Technology Services</h4>
+                    <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                      6-12 months implementation
+                    </Badge>
+                  </div>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>Expanding into smart home technology installation and automation services</p>
+                </div>
+
+                <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}>
+                  <div className="flex items-center gap-2">
+                    <Calculator className="h-4 w-4 text-muted-foreground" />
+                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>£2,000-3,000 investment</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>25-40% premium pricing</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Shield className="h-4 w-4 text-muted-foreground" />
+                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>Medium risk, high reward</span>
+                  </div>
+                </div>
                 
-                {/* Market Analysis */}
-                <div className="space-y-3">
-                  <h4 className={`font-semibold text-blue-400 ${isMobile ? 'text-sm' : 'text-base'} flex items-center gap-2`}>
-                    <TrendingUp className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-                    Market Analysis
-                  </h4>
-                  <div className={`grid gap-3 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
-                    <div className="space-y-2">
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-blue-300`}>Market Size</p>
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>£2.1B UK smart home market, growing 25% annually</p>
-                    </div>
-                    <div className="space-y-2">
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-blue-300`}>Customer Demand</p>
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>67% of UK homes plan smart upgrades by 2026</p>
-                    </div>
-                  </div>
+                <div>
+                  <h5 className={`font-medium text-blue-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Components</h5>
+                  <ul className="space-y-1">
+                    <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}>
+                      <CheckCircle className="h-3 w-3 text-green-400" />
+                      Smart lighting systems installation
+                    </li>
+                    <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}>
+                      <CheckCircle className="h-3 w-3 text-green-400" />
+                      Home automation hub setup
+                    </li>
+                    <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}>
+                      <CheckCircle className="h-3 w-3 text-green-400" />
+                      Security system wiring
+                    </li>
+                    <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}>
+                      <CheckCircle className="h-3 w-3 text-green-400" />
+                      Network infrastructure setup
+                    </li>
+                  </ul>
                 </div>
 
-                {/* Services & Revenue */}
-                <div className="space-y-3">
-                  <h4 className={`font-semibold text-blue-400 ${isMobile ? 'text-sm' : 'text-base'} flex items-center gap-2`}>
-                    <Wrench className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-                    Services & Revenue Models
-                  </h4>
-                  <div className="space-y-3">
-                    <div className="bg-blue-500/5 rounded-lg p-3">
-                      <div className={`grid gap-3 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
-                        <div>
-                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-blue-300 mb-2`}>Installation Services</p>
-                          <ul className="space-y-1">
-                            <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}>
-                              <CheckCircle className="h-3 w-3 text-green-400" />
-                              Smart lighting systems (£300-800)
-                            </li>
-                            <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}>
-                              <CheckCircle className="h-3 w-3 text-green-400" />
-                              Home automation hubs (£500-1,200)
-                            </li>
-                            <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}>
-                              <CheckCircle className="h-3 w-3 text-green-400" />
-                              Security system wiring (£800-2,000)
-                            </li>
-                          </ul>
-                        </div>
-                        <div>
-                          <p className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-blue-300 mb-2`}>Ongoing Services</p>
-                          <ul className="space-y-1">
-                            <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}>
-                              <CheckCircle className="h-3 w-3 text-green-400" />
-                              System maintenance (£150/visit)
-                            </li>
-                            <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}>
-                              <CheckCircle className="h-3 w-3 text-green-400" />
-                              Device upgrades (£200-500)
-                            </li>
-                            <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}>
-                              <CheckCircle className="h-3 w-3 text-green-400" />
-                              Technical support (£50/hour)
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Implementation Timeline */}
-                <div className="space-y-3">
-                  <h4 className={`font-semibold text-blue-400 ${isMobile ? 'text-sm' : 'text-base'} flex items-center gap-2`}>
-                    <Calendar className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-                    Implementation Timeline
-                  </h4>
+                <div>
+                  <h5 className={`font-medium text-blue-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Implementation Steps</h5>
                   <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-bold text-blue-400`}>1</span>
-                      </div>
+                    <div className="flex items-start gap-2">
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-bold text-blue-400 mt-1`}>1.</span>
                       <div>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>Months 1-2: Training & Certification</p>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>Smart home installer courses, manufacturer certifications</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>Training & Certification (Months 1-2)</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>Complete smart home installer courses and manufacturer certifications</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center">
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-bold text-blue-400`}>2</span>
-                      </div>
+                    <div className="flex items-start gap-2">
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-bold text-blue-400 mt-1`}>2.</span>
                       <div>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>Months 3-4: Tool Investment & Practice</p>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>Purchase testing equipment, practice installations</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>Tool Investment (Months 3-4)</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>Purchase specialised testing equipment and practice installations</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center">
-                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-bold text-green-400`}>3</span>
-                      </div>
+                    <div className="flex items-start gap-2">
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-bold text-green-400 mt-1`}>3.</span>
                       <div>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>Months 5-6: Market Entry</p>
-                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>Begin offering services, build portfolio</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium`}>Market Entry (Months 5-6)</p>
+                        <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>Begin offering services and build portfolio of completed projects</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Investment & Certifications */}
-                <div className="space-y-3">
-                  <h4 className={`font-semibold text-blue-400 ${isMobile ? 'text-sm' : 'text-base'} flex items-center gap-2`}>
-                    <DollarSign className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-                    Investment & Certifications
-                  </h4>
-                  <div className={`grid gap-3 ${isMobile ? 'grid-cols-1' : 'grid-cols-2'}`}>
-                    <div className="space-y-2">
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-blue-300`}>Initial Investment</p>
-                      <ul className="space-y-1">
-                        <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>• Training courses: £800-1,200</li>
-                        <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>• Test equipment: £500-800</li>
-                        <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>• Sample devices: £700-1,000</li>
-                        <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground font-medium text-blue-300`}>Total: £2,000-3,000</li>
-                      </ul>
-                    </div>
-                    <div className="space-y-2">
-                      <p className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-blue-300`}>Required Certifications</p>
-                      <ul className="space-y-1">
-                        <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>• ECS Card (if not held)</li>
-                        <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>• Manufacturer certifications</li>
-                        <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>• Data protection training</li>
-                        <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>• Network installation skills</li>
-                      </ul>
-                    </div>
-                  </div>
+                <div>
+                  <h5 className={`font-medium text-blue-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>UK Specific Considerations (2025)</h5>
+                  <ul className="space-y-1">
+                    <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}>
+                      <AlertTriangle className="h-3 w-3 text-orange-400" />
+                      Building Regulations Part P compliance for new circuits
+                    </li>
+                    <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}>
+                      <AlertTriangle className="h-3 w-3 text-orange-400" />
+                      GDPR data protection requirements for connected devices
+                    </li>
+                    <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}>
+                      <AlertTriangle className="h-3 w-3 text-orange-400" />
+                      Rapidly evolving technology standards and compatibility
+                    </li>
+                    <li className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-center gap-2`}>
+                      <AlertTriangle className="h-3 w-3 text-orange-400" />
+                      Insurance coverage for smart home installation work
+                    </li>
+                  </ul>
                 </div>
-
-                {/* UK Regulations */}
-                <div className="space-y-3">
-                  <h4 className={`font-semibold text-blue-400 ${isMobile ? 'text-sm' : 'text-base'} flex items-center gap-2`}>
-                    <Shield className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-                    UK Regulations & Compliance
-                  </h4>
-                  <div className="bg-blue-500/5 rounded-lg p-3 space-y-2">
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
-                      • <strong className="text-blue-300">Building Regulations Part P:</strong> Notifiable work for new circuits
-                    </p>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
-                      • <strong className="text-blue-300">GDPR Compliance:</strong> Data protection for connected devices
-                    </p>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
-                      • <strong className="text-blue-300">BS 7671:</strong> Wiring regulations for electrical installations
-                    </p>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
-                      • <strong className="text-blue-300">Product Safety:</strong> CE marking and conformity requirements
-                    </p>
-                  </div>
-                </div>
-
-                {/* Risk Mitigation */}
-                <div className="space-y-3">
-                  <h4 className={`font-semibold text-orange-400 ${isMobile ? 'text-sm' : 'text-base'} flex items-center gap-2`}>
-                    <AlertTriangle className={`${isMobile ? 'h-4 w-4' : 'h-5 w-5'}`} />
-                    Risk Mitigation
-                  </h4>
-                  <div className="bg-orange-500/5 rounded-lg p-3 space-y-2">
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
-                      • Start with simple lighting systems before complex automation
-                    </p>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
-                      • Partner with established smart home retailers initially
-                    </p>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
-                      • Ensure comprehensive insurance covers smart home work
-                    </p>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
-                      • Stay updated with rapidly changing technology standards
-                    </p>
-                  </div>
-                </div>
-
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </MobileAccordionContent>
         </MobileAccordionItem>
 
