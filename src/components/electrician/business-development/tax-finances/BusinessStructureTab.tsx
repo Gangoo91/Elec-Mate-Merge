@@ -32,30 +32,6 @@ const BusinessStructureTab = () => {
       data: "Limited company advantage",
       icon: <Shield className="h-5 w-5 text-orange-400" />,
       detail: "Personal assets protected from business debts"
-    },
-    {
-      metric: "VAT Registration",
-      data: "£90,000 threshold",
-      icon: <FileCheck className="h-5 w-5 text-yellow-400" />,
-      detail: "Annual turnover limit before mandatory VAT registration"
-    },
-    {
-      metric: "Setup Costs",
-      data: "£12 to £500",
-      icon: <FileText className="h-5 w-5 text-red-400" />,
-      detail: "From sole trader registration to limited company formation"
-    },
-    {
-      metric: "Annual Compliance",
-      data: "£300 to £2,000",
-      icon: <Scale className="h-5 w-5 text-cyan-400" />,
-      detail: "Estimated annual accounting and compliance costs"
-    },
-    {
-      metric: "IR35 Impact",
-      data: "Limited company affected",
-      icon: <Building className="h-5 w-5 text-pink-400" />,
-      detail: "Off-payroll working rules for contract work"
     }
   ];
 
@@ -68,7 +44,7 @@ const BusinessStructureTab = () => {
         </AlertDescription>
       </Alert>
 
-      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-4 xl:grid-cols-8'}`}>
+      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}>
         {structureMetrics.map((metric, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
