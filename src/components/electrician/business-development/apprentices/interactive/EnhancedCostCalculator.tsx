@@ -200,7 +200,7 @@ const EnhancedCostCalculator = () => {
               size="lg"
             >
               <Calculator className="h-5 w-5 mr-2" />
-              Calculate Advanced Costs & ROI
+              Calculate
             </Button>
           </div>
 
