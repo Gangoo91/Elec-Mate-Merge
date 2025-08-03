@@ -30,7 +30,19 @@ import {
   FileCheck,
   Eye,
   Scale,
-  Siren
+  Siren,
+  TrendingDown,
+  Award,
+  Heart,
+  Network,
+  Crown,
+  Briefcase,
+  BookOpen,
+  Timer,
+  DollarSign,
+  Percent,
+  LineChart,
+  Star
 } from "lucide-react";
 
 export const GrowthStrategiesTab = () => {
@@ -322,6 +334,93 @@ export const GrowthStrategiesTab = () => {
     }
   ];
 
+  const industryBenchmarks = [
+    {
+      category: "Financial Performance",
+      benchmarks: [
+        { metric: "Gross Profit Margin", target: "35-50%", current: "UK average 42%" },
+        { metric: "Net Profit Margin", target: "8-15%", current: "UK average 11%" },
+        { metric: "Revenue per Employee", target: "£80-120k", current: "Industry £95k" },
+        { metric: "Annual Revenue Growth", target: "15-25%", current: "Top performers 22%" }
+      ]
+    },
+    {
+      category: "Operational Efficiency",
+      benchmarks: [
+        { metric: "Job Completion Rate", target: "95%+", current: "Best practice 98%" },
+        { metric: "Customer Retention", target: "85%+", current: "Industry leaders 92%" },
+        { metric: "Average Job Value", target: "£500-1,500", current: "UK commercial £850" },
+        { metric: "Quote-to-Win Rate", target: "60%+", current: "Top tier 75%" }
+      ]
+    }
+  ];
+
+  const competitiveAdvantages = [
+    {
+      title: "Specialisation Excellence",
+      description: "Develop expertise in high-demand niche areas",
+      advantages: [
+        "Smart home automation and IoT systems",
+        "Commercial renewable energy installations",
+        "Emergency call-out and rapid response services",
+        "Industrial maintenance and breakdown specialists"
+      ],
+      impact: "Premium pricing 20-40% above standard rates"
+    },
+    {
+      title: "Technology Integration",
+      description: "Leverage cutting-edge tools for competitive edge",
+      advantages: [
+        "Drone inspections and thermal imaging",
+        "Advanced testing equipment and diagnostics",
+        "Real-time project tracking and customer updates",
+        "Predictive maintenance using IoT sensors"
+      ],
+      impact: "Efficiency gains 25-35% and reduced callbacks"
+    },
+    {
+      title: "Customer Experience Excellence",
+      description: "Superior service delivery and customer relationships",
+      advantages: [
+        "24/7 customer support and emergency response",
+        "Transparent pricing and project communication",
+        "Quality guarantees and comprehensive warranties",
+        "Proactive maintenance and system optimisation"
+      ],
+      impact: "Customer lifetime value increase 150-200%"
+    }
+  ];
+
+  const performanceMetrics = [
+    {
+      category: "Revenue Metrics",
+      kpis: [
+        "Monthly recurring revenue (MRR) from maintenance contracts",
+        "Average customer lifetime value (CLV)",
+        "Revenue per project and profit margins",
+        "New customer acquisition cost (CAC)"
+      ]
+    },
+    {
+      category: "Operational Metrics",
+      kpis: [
+        "Project completion time vs estimates",
+        "First-time fix rates and callback frequency",
+        "Team utilisation rates and productivity",
+        "Equipment downtime and maintenance costs"
+      ]
+    },
+    {
+      category: "Customer Metrics",
+      kpis: [
+        "Net Promoter Score (NPS) and satisfaction ratings",
+        "Customer retention and churn rates",
+        "Referral rates and word-of-mouth growth",
+        "Response time to enquiries and complaints"
+      ]
+    }
+  ];
+
   return (
     <div className="space-y-4">
       <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
@@ -473,6 +572,202 @@ export const GrowthStrategiesTab = () => {
                 <div className="flex items-center gap-2 text-sm">
                   <Settings className="h-4 w-4 text-blue-400" />
                   <span>Systematic operations and processes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Industry Benchmarks Section */}
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/20 to-elec-gray/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <BarChart3 className="h-5 w-5 text-elec-yellow" />
+            Industry Benchmarks & Performance Standards
+          </CardTitle>
+          <CardDescription>
+            Compare your business performance against UK electrical industry standards
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-6 md:grid-cols-2">
+            {industryBenchmarks.map((category, categoryIndex) => (
+              <div key={categoryIndex} className="space-y-4">
+                <h4 className="font-semibold text-elec-yellow">{category.category}</h4>
+                <div className="space-y-3">
+                  {category.benchmarks.map((benchmark, benchmarkIndex) => (
+                    <div key={benchmarkIndex} className="border border-blue-500/20 rounded-lg p-3">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className={`font-medium text-white ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                          {benchmark.metric}
+                        </span>
+                        <Badge variant="outline" className="text-green-300 border-green-400/30">
+                          {benchmark.target}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <LineChart className="h-4 w-4 text-muted-foreground" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                          {benchmark.current}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Competitive Advantages Section */}
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/20 to-elec-gray/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Crown className="h-5 w-5 text-elec-yellow" />
+            Competitive Advantage Strategies
+          </CardTitle>
+          <CardDescription>
+            Differentiate your business and command premium pricing
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {competitiveAdvantages.map((advantage, advantageIndex) => (
+              <div key={advantageIndex} className="border border-purple-500/20 rounded-lg p-4 space-y-3">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h4 className={`font-semibold text-purple-300 ${isMobile ? 'text-sm' : 'text-base'}`}>
+                      {advantage.title}
+                    </h4>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground mt-1`}>
+                      {advantage.description}
+                    </p>
+                  </div>
+                  <Badge variant="outline" className="text-purple-300 border-purple-400/30 ml-2">
+                    <Star className="h-3 w-3 mr-1" />
+                    Premium
+                  </Badge>
+                </div>
+                
+                <div className="grid gap-2">
+                  {advantage.advantages.map((item, itemIndex) => (
+                    <div key={itemIndex} className="flex items-center gap-2">
+                      <Award className="h-3 w-3 text-purple-400 shrink-0" />
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>
+                        {item}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="flex items-center gap-2 pt-2 border-t border-purple-500/20">
+                  <TrendingUp className="h-4 w-4 text-green-400" />
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-300 font-medium`}>
+                    Impact: {advantage.impact}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Performance Measurement Section */}
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/20 to-elec-gray/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Target className="h-5 w-5 text-elec-yellow" />
+            Performance Measurement Framework
+          </CardTitle>
+          <CardDescription>
+            Key performance indicators to track business growth and success
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-6 md:grid-cols-3">
+            {performanceMetrics.map((metricCategory, categoryIndex) => (
+              <div key={categoryIndex} className="space-y-4">
+                <h4 className="font-semibold text-elec-yellow flex items-center gap-2">
+                  {metricCategory.category === "Revenue Metrics" && <PoundSterling className="h-4 w-4" />}
+                  {metricCategory.category === "Operational Metrics" && <Settings className="h-4 w-4" />}
+                  {metricCategory.category === "Customer Metrics" && <Heart className="h-4 w-4" />}
+                  {metricCategory.category}
+                </h4>
+                <div className="space-y-2">
+                  {metricCategory.kpis.map((kpi, kpiIndex) => (
+                    <div key={kpiIndex} className="flex items-start gap-2 p-2 bg-elec-gray/30 rounded-lg">
+                      <CheckCircle className="h-3 w-3 text-green-400 shrink-0 mt-0.5" />
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        {kpi}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quick Action Checklist */}
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/20 to-elec-gray/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <CheckCircle className="h-5 w-5 text-elec-yellow" />
+            30-Day Growth Action Plan
+          </CardTitle>
+          <CardDescription>
+            Immediate steps to accelerate your business growth
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-3">
+              <h4 className="font-semibold text-green-300">Week 1-2: Foundation</h4>
+              <div className="space-y-2">
+                <div className="flex items-start gap-2">
+                  <Timer className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Complete comprehensive business performance audit
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Calculator className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Analyse current financial metrics and cash flow
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Target className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Set SMART growth targets for next 6-12 months
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="font-semibold text-blue-300">Week 3-4: Implementation</h4>
+              <div className="space-y-2">
+                <div className="flex items-start gap-2">
+                  <Users className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Assess team capacity and identify skill gaps
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <MapPin className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Research market expansion opportunities
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Smartphone className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Implement digital tools for efficiency gains
+                  </span>
                 </div>
               </div>
             </div>
