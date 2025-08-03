@@ -1,9 +1,12 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { DropdownTabs } from "@/components/ui/dropdown-tabs";
-import { GraduationCap, ArrowLeft, Users, FileText, BookOpen, Phone, Calculator, Heart } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { GraduationCap, ArrowLeft, Users, FileText, BookOpen, Phone, Calculator, Heart, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { useState } from "react";
 import RecruitmentTab from "@/components/electrician/business-development/apprentices/RecruitmentTab";
 import LegalRequirementsTab from "@/components/electrician/business-development/apprentices/LegalRequirementsTab";
 import TrainingDevelopmentTab from "@/components/electrician/business-development/apprentices/TrainingDevelopmentTab";
@@ -12,6 +15,22 @@ import AssessmentProgressTab from "@/components/electrician/business-development
 import InteractiveToolsTab from "@/components/electrician/business-development/apprentices/InteractiveToolsTab";
 
 const BusinessApprentices = () => {
+  const [activeTab, setActiveTab] = useState("recruitment");
+  const isMobile = useIsMobile();
+
+  // Function to get tab display name
+  const getTabDisplayName = (tabValue: string) => {
+    switch (tabValue) {
+      case "recruitment": return "Recruitment & Selection";
+      case "legal": return "Legal Requirements";
+      case "training": return "Training & Development";
+      case "support": return "Support & Resources";
+      case "assessment": return "Assessment & Progress";
+      case "tools": return "Interactive Tools";
+      default: return tabValue;
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8 animate-fade-in px-4 sm:px-6">
       <div className="flex items-center gap-2">
@@ -55,49 +74,97 @@ const BusinessApprentices = () => {
         </CardContent>
       </Card>
 
-      <DropdownTabs
-        defaultValue="recruitment"
-        placeholder="Select apprentice management topic..."
-        className="w-full"
-        tabs={[
-          {
-            value: "recruitment",
-            label: "Recruitment & Selection",
-            icon: Users,
-            content: <RecruitmentTab />
-          },
-          {
-            value: "legal",
-            label: "Legal Requirements",
-            icon: FileText,
-            content: <LegalRequirementsTab />
-          },
-          {
-            value: "training",
-            label: "Training & Development",
-            icon: BookOpen,
-            content: <TrainingDevelopmentTab />
-          },
-          {
-            value: "support",
-            label: "Support & Resources",
-            icon: Phone,
-            content: <SupportResourcesTab />
-          },
-          {
-            value: "assessment",
-            label: "Assessment & Progress",
-            icon: GraduationCap,
-            content: <AssessmentProgressTab />
-          },
-          {
-            value: "tools",
-            label: "Interactive Tools",
-            icon: Calculator,
-            content: <InteractiveToolsTab />
-          }
-        ]}
-      />
+      <Tabs defaultValue={activeTab} value={activeTab} onValueChange={setActiveTab}>
+        {isMobile ? (
+          <div className="mb-4 bg-elec-dark rounded-md p-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="w-full justify-between bg-transparent text-white">
+                  {getTabDisplayName(activeTab)}
+                  <ChevronDown className="h-4 w-4 ml-2" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="center" className="w-full min-w-[300px] bg-elec-dark border-elec-gray/40">
+                <DropdownMenuItem onClick={() => setActiveTab("recruitment")} className="justify-center">
+                  <Users className="h-4 w-4 mr-2" />
+                  Recruitment & Selection
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setActiveTab("legal")} className="justify-center">
+                  <FileText className="h-4 w-4 mr-2" />
+                  Legal Requirements
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setActiveTab("training")} className="justify-center">
+                  <BookOpen className="h-4 w-4 mr-2" />
+                  Training & Development
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setActiveTab("support")} className="justify-center">
+                  <Phone className="h-4 w-4 mr-2" />
+                  Support & Resources
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setActiveTab("assessment")} className="justify-center">
+                  <GraduationCap className="h-4 w-4 mr-2" />
+                  Assessment & Progress
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setActiveTab("tools")} className="justify-center">
+                  <Calculator className="h-4 w-4 mr-2" />
+                  Interactive Tools
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        ) : (
+          <TabsList className="mb-4 bg-elec-dark w-full grid grid-cols-6">
+            <TabsTrigger value="recruitment" className="flex items-center gap-1 text-xs lg:text-sm">
+              <Users className="h-4 w-4" />
+              <span className="hidden sm:inline">Recruitment</span>
+            </TabsTrigger>
+            <TabsTrigger value="legal" className="flex items-center gap-1 text-xs lg:text-sm">
+              <FileText className="h-4 w-4" />
+              <span className="hidden sm:inline">Legal</span>
+            </TabsTrigger>
+            <TabsTrigger value="training" className="flex items-center gap-1 text-xs lg:text-sm">
+              <BookOpen className="h-4 w-4" />
+              <span className="hidden sm:inline">Training</span>
+            </TabsTrigger>
+            <TabsTrigger value="support" className="flex items-center gap-1 text-xs lg:text-sm">
+              <Phone className="h-4 w-4" />
+              <span className="hidden sm:inline">Support</span>
+            </TabsTrigger>
+            <TabsTrigger value="assessment" className="flex items-center gap-1 text-xs lg:text-sm">
+              <GraduationCap className="h-4 w-4" />
+              <span className="hidden sm:inline">Assessment</span>
+            </TabsTrigger>
+            <TabsTrigger value="tools" className="flex items-center gap-1 text-xs lg:text-sm">
+              <Calculator className="h-4 w-4" />
+              <span className="hidden sm:inline">Tools</span>
+            </TabsTrigger>
+          </TabsList>
+        )}
+        
+        <TabsContent value="recruitment">
+          <RecruitmentTab />
+        </TabsContent>
+        
+        <TabsContent value="legal">
+          <LegalRequirementsTab />
+        </TabsContent>
+        
+        <TabsContent value="training">
+          <TrainingDevelopmentTab />
+        </TabsContent>
+        
+        <TabsContent value="support">
+          <SupportResourcesTab />
+        </TabsContent>
+        
+        <TabsContent value="assessment">
+          <AssessmentProgressTab />
+        </TabsContent>
+        
+        <TabsContent value="tools">
+          <InteractiveToolsTab />
+        </TabsContent>
+      </Tabs>
 
       <Card className="border-green-500/50 bg-green-500/10">
         <CardHeader>
