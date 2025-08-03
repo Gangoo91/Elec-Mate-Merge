@@ -418,10 +418,7 @@ const ManagementTab = () => {
                   onClick={() => window.open('https://www.hse.gov.uk/managing/', '_blank')}
                 >
                   <Shield className="h-4 w-4 mr-3 text-green-400 flex-shrink-0" />
-                  <div className="text-left flex-1 min-w-0">
-                    <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white truncate`}>HSE Management Guide</div>
-                    <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground break-words`}>Health and safety management guidance</div>
-                  </div>
+                  <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white`}>HSE Management Guide</div>
                 </Button>
 
                 <Button 
@@ -430,10 +427,7 @@ const ManagementTab = () => {
                   onClick={() => window.open('https://www.cipd.co.uk/knowledge/fundamentals/people/performance', '_blank')}
                 >
                   <Target className="h-4 w-4 mr-3 text-blue-400 flex-shrink-0" />
-                  <div className="text-left flex-1 min-w-0">
-                    <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white truncate`}>Performance Management</div>
-                    <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground break-words`}>CIPD performance management best practices</div>
-                  </div>
+                  <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white`}>Performance Management</div>
                 </Button>
 
                 <Button 
@@ -442,10 +436,7 @@ const ManagementTab = () => {
                   onClick={() => window.open('https://www.gov.uk/disciplinary-procedures-and-action', '_blank')}
                 >
                   <FileText className="h-4 w-4 mr-3 text-purple-400 flex-shrink-0" />
-                  <div className="text-left flex-1 min-w-0">
-                    <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white truncate`}>Disciplinary Procedures</div>
-                    <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground break-words`}>Government guidance on disciplinary processes</div>
-                  </div>
+                  <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white`}>Disciplinary Procedures</div>
                 </Button>
               </div>
 

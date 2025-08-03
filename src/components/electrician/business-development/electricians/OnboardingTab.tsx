@@ -377,10 +377,7 @@ const OnboardingTab = () => {
                   onClick={() => window.open('https://www.gov.uk/employment-contracts-and-conditions', '_blank')}
                 >
                   <FileText className="h-4 w-4 mr-3 text-green-400 flex-shrink-0" />
-                  <div className="text-left flex-1 min-w-0">
-                    <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white truncate`}>Employment Contract Templates</div>
-                    <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground break-words`}>Government guidance and templates</div>
-                  </div>
+                  <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white`}>Employment Contract Templates</div>
                 </Button>
 
                 <Button 
@@ -389,10 +386,7 @@ const OnboardingTab = () => {
                   onClick={() => window.open('https://www.hse.gov.uk/construction/safetytopics/electrical.htm', '_blank')}
                 >
                   <Shield className="h-4 w-4 mr-3 text-blue-400 flex-shrink-0" />
-                  <div className="text-left flex-1 min-w-0">
-                    <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white truncate`}>HSE Electrical Safety</div>
-                    <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground break-words`}>Health and safety induction resources</div>
-                  </div>
+                  <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white`}>HSE Electrical Safety</div>
                 </Button>
 
                 <Button 
@@ -401,10 +395,7 @@ const OnboardingTab = () => {
                   onClick={() => window.open('https://www.cipd.co.uk/knowledge/fundamentals/people/induction', '_blank')}
                 >
                   <UserPlus className="h-4 w-4 mr-3 text-purple-400 flex-shrink-0" />
-                  <div className="text-left flex-1 min-w-0">
-                    <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white truncate`}>CIPD Induction Guide</div>
-                    <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground break-words`}>Professional onboarding best practices</div>
-                  </div>
+                  <div className={`${isMobile ? 'text-sm' : 'text-base'} text-white`}>CIPD Induction Guide</div>
                 </Button>
               </div>
 
