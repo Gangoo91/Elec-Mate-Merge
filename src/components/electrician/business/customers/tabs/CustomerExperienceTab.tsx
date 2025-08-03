@@ -63,33 +63,45 @@ const CustomerExperienceTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
-                Consistent professional standards ensure every customer interaction reflects your commitment to quality and service excellence.
+              <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-blue-400 mb-2">Strategy Overview</h4>
+                <p className="text-sm text-slate-200">Consistent professional standards ensure every customer interaction reflects your commitment to quality and service excellence, building trust and credibility from first contact.</p>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-elec-yellow">Appearance & Presentation</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• Clean, branded uniforms or workwear</li>
-                    <li>• Professional ID badges clearly visible</li>
-                    <li>• Well-maintained vehicles and equipment</li>
-                    <li>• Personal grooming and hygiene standards</li>
-                    <li>• Protective shoe covers for customer homes</li>
-                    <li>• Company literature and business cards</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-elec-yellow">Work Site Behaviour</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• Respect for customer property</li>
-                    <li>• Use of dust sheets and protective covers</li>
-                    <li>• Daily cleanup and completion tidying</li>
-                    <li>• No smoking on customer premises</li>
-                    <li>• Professional language at all times</li>
-                    <li>• Appropriate mobile phone etiquette</li>
-                  </ul>
-                </div>
+              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-emerald-400 mb-3">Professional Appearance Standards</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li>• Clean, branded uniforms or workwear with company logo and contact details</li>
+                  <li>• Professional ID badges clearly visible with current certifications displayed</li>
+                  <li>• Well-maintained vehicles and modern testing equipment</li>
+                  <li>• Personal grooming and hygiene standards appropriate for customer homes</li>
+                  <li>• Protective shoe covers and dust sheets for customer property protection</li>
+                  <li>• Professional business cards and branded paperwork ready for distribution</li>
+                </ul>
+              </div>
+
+              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-amber-400 mb-3">Professional Conduct Guidelines</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li>• Treat customer property with utmost respect and care</li>
+                  <li>• Use dust sheets and protective covers for all work areas</li>
+                  <li>• Complete daily cleanup and thorough completion tidying</li>
+                  <li>• Maintain professional language and courteous demeanour at all times</li>
+                  <li>• Follow appropriate mobile phone etiquette - answer calls professionally</li>
+                  <li>• No smoking, drinking, or inappropriate behaviour on customer premises</li>
+                </ul>
+              </div>
+
+              <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-purple-400 mb-3">Quality Presentation Benefits</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li>• Increases customer confidence and willingness to pay premium rates</li>
+                  <li>• Generates positive word-of-mouth referrals and online reviews</li>
+                  <li>• Differentiates your service from less professional competitors</li>
+                  <li>• Builds long-term customer relationships and repeat business opportunities</li>
+                  <li>• Supports higher pricing and premium service positioning</li>
+                  <li>• Reduces customer complaints and service recovery incidents</li>
+                </ul>
               </div>
             </div>
           </MobileAccordionContent>
@@ -101,44 +113,45 @@ const CustomerExperienceTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
-                Clear, timely communication throughout the service process builds trust and prevents misunderstandings.
+              <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-blue-400 mb-2">Communication Strategy</h4>
+                <p className="text-sm text-slate-200">Clear, timely communication throughout the service process builds trust, prevents misunderstandings, and demonstrates professionalism at every customer touchpoint.</p>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-elec-yellow">Pre-Work Communication</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• Confirm appointment 24 hours ahead</li>
-                    <li>• Provide arrival time window</li>
-                    <li>• Explain what work will involve</li>
-                    <li>• List any customer preparations needed</li>
-                    <li>• Share electrician's contact details</li>
-                    <li>• Weather contingency planning</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-elec-yellow">During Work Communication</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• Explain work being undertaken</li>
-                    <li>• Discuss any changes or discoveries</li>
-                    <li>• Provide regular progress updates</li>
-                    <li>• Address customer questions promptly</li>
-                    <li>• Notify immediately of any delays</li>
-                    <li>• Seek approval for variations</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-elec-yellow">Post-Work Communication</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• Walkthrough completed work</li>
-                    <li>• Explain safety features installed</li>
-                    <li>• Provide operating instructions</li>
-                    <li>• Leave contact details for queries</li>
-                    <li>• Follow up within 48 hours</li>
-                    <li>• Schedule any maintenance reminders</li>
-                  </ul>
-                </div>
+              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-emerald-400 mb-3">Pre-Work Communication Protocol</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li>• Confirm appointment 24 hours ahead with SMS and phone call</li>
+                  <li>• Provide specific arrival time window (not just "morning" or "afternoon")</li>
+                  <li>• Explain clearly what work will involve and expected duration</li>
+                  <li>• List any customer preparations needed (access, power isolation, pets)</li>
+                  <li>• Share assigned electrician's direct contact details</li>
+                  <li>• Discuss weather contingency planning for external work</li>
+                </ul>
+              </div>
+
+              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-amber-400 mb-3">On-Site Communication Excellence</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li>• Explain work being undertaken in clear, non-technical language</li>
+                  <li>• Discuss any unexpected discoveries or necessary changes immediately</li>
+                  <li>• Provide regular progress updates, especially for multi-day jobs</li>
+                  <li>• Address customer questions promptly and thoroughly</li>
+                  <li>• Notify immediately of any delays with revised completion times</li>
+                  <li>• Seek written approval for any variations or additional work</li>
+                </ul>
+              </div>
+
+              <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-purple-400 mb-3">Post-Completion Follow-Up</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li>• Conduct comprehensive walkthrough of all completed work</li>
+                  <li>• Explain safety features and new systems installed</li>
+                  <li>• Provide clear operating instructions and maintenance advice</li>
+                  <li>• Leave contact details for any future queries or concerns</li>
+                  <li>• Follow up within 48 hours to ensure complete satisfaction</li>
+                  <li>• Schedule maintenance reminders and future service opportunities</li>
+                </ul>
               </div>
             </div>
           </MobileAccordionContent>
@@ -150,33 +163,45 @@ const CustomerExperienceTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
-                Maintaining high technical standards and compliance ensures customer safety and builds long-term trust.
+              <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-blue-400 mb-2">Quality Strategy</h4>
+                <p className="text-sm text-slate-200">Maintaining high technical standards and compliance ensures customer safety, builds long-term trust, and demonstrates professional competence in all electrical work.</p>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-elec-yellow">Technical Standards</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• BS7671:2018+A2:2022 compliance</li>
-                    <li>• Proper testing and inspection procedures</li>
-                    <li>• Electrical Installation Certificates</li>
-                    <li>• Part P Building Regulations compliance</li>
-                    <li>• Safe isolation procedures</li>
-                    <li>• RCD protection implementation</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-elec-yellow">Documentation Package</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• Installation certificates provided</li>
-                    <li>• Test results documented</li>
-                    <li>• Warranty information included</li>
-                    <li>• Safety instructions explained</li>
-                    <li>• Maintenance recommendations</li>
-                    <li>• Emergency contact information</li>
-                  </ul>
-                </div>
+              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-emerald-400 mb-3">Technical Compliance Standards</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li>• BS7671:2018+A2:2022 (18th Edition Wiring Regulations) full compliance</li>
+                  <li>• Proper testing and inspection procedures with calibrated equipment</li>
+                  <li>• Electrical Installation Certificates completed accurately and promptly</li>
+                  <li>• Part P Building Regulations compliance for all notifiable work</li>
+                  <li>• Safe isolation procedures following approved code of practice</li>
+                  <li>• RCD protection implementation according to current standards</li>
+                </ul>
+              </div>
+
+              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-amber-400 mb-3">Documentation Excellence</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li>• Complete installation certificates provided same day</li>
+                  <li>• Comprehensive test results documented with explanations</li>
+                  <li>• Warranty information included with terms clearly explained</li>
+                  <li>• Safety instructions explained verbally and in writing</li>
+                  <li>• Maintenance recommendations with scheduling suggestions</li>
+                  <li>• Emergency contact information for urgent call-outs</li>
+                </ul>
+              </div>
+
+              <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-purple-400 mb-3">Quality Assurance Benefits</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li>• Reduces liability and insurance claims through proper compliance</li>
+                  <li>• Builds customer confidence in technical competence</li>
+                  <li>• Prevents call-backs and remedial work costs</li>
+                  <li>• Supports premium pricing for certified quality work</li>
+                  <li>• Creates competitive advantage over non-compliant competitors</li>
+                  <li>• Establishes professional reputation and referral generation</li>
+                </ul>
               </div>
             </div>
           </MobileAccordionContent>
@@ -188,33 +213,45 @@ const CustomerExperienceTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
-                Systematic feedback collection and service recovery processes ensure continuous improvement and customer satisfaction.
+              <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-blue-400 mb-2">Feedback Strategy</h4>
+                <p className="text-sm text-slate-200">Systematic feedback collection and service recovery processes ensure continuous improvement, customer satisfaction, and long-term business growth through customer insights.</p>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-elec-yellow">Feedback Collection</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• Immediate verbal feedback at completion</li>
-                    <li>• Quick satisfaction survey forms</li>
-                    <li>• Follow-up email surveys within 48 hours</li>
-                    <li>• Phone check-in after one week</li>
-                    <li>• Online review requests</li>
-                    <li>• Annual customer satisfaction surveys</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-elec-yellow">Service Recovery Process</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• Listen actively to understand concerns</li>
-                    <li>• Apologise and take responsibility</li>
-                    <li>• Resolve issues quickly and thoroughly</li>
-                    <li>• Follow up to ensure satisfaction</li>
-                    <li>• Implement process improvements</li>
-                    <li>• Document lessons learned</li>
-                  </ul>
-                </div>
+              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-emerald-400 mb-3">Comprehensive Feedback Collection</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li>• Immediate verbal feedback at job completion with satisfaction rating</li>
+                  <li>• Quick satisfaction survey forms left with customers</li>
+                  <li>• Follow-up email surveys within 48 hours with detailed questions</li>
+                  <li>• Phone check-in after one week to address any concerns</li>
+                  <li>• Online review requests with direct links to Google and Trustpilot</li>
+                  <li>• Annual customer satisfaction surveys for relationship management</li>
+                </ul>
+              </div>
+
+              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-amber-400 mb-3">Service Recovery Excellence</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li>• Listen actively to understand concerns without defensive responses</li>
+                  <li>• Apologise sincerely and take full responsibility for any issues</li>
+                  <li>• Resolve issues quickly and thoroughly, exceeding expectations</li>
+                  <li>• Follow up personally to ensure complete satisfaction</li>
+                  <li>• Implement process improvements based on feedback</li>
+                  <li>• Document lessons learned and share with team for training</li>
+                </ul>
+              </div>
+
+              <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-purple-400 mb-3">Continuous Improvement Impact</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li>• Identifies service gaps before they become widespread issues</li>
+                  <li>• Builds customer loyalty through demonstration of care</li>
+                  <li>• Provides testimonials and case studies for marketing</li>
+                  <li>• Improves team performance through specific feedback insights</li>
+                  <li>• Reduces negative reviews through proactive issue resolution</li>
+                  <li>• Creates competitive advantage through superior customer service</li>
+                </ul>
               </div>
             </div>
           </MobileAccordionContent>
@@ -226,58 +263,45 @@ const CustomerExperienceTab = () => {
           </MobileAccordionTrigger>
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-              <div className="text-sm text-muted-foreground">
-                Leveraging digital tools and platforms to enhance customer convenience, communication, and overall service experience.
+              <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-blue-400 mb-2">Digital Strategy</h4>
+                <p className="text-sm text-slate-200">Leveraging digital tools and platforms to enhance customer convenience, streamline communication, and create a superior service experience that differentiates your electrical business.</p>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-elec-yellow">Digital Service Tools</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• Online booking system with real-time availability</li>
-                    <li>• Customer portal for appointment tracking</li>
-                    <li>• Digital invoicing and payment options</li>
-                    <li>• Electronic certificates and warranties</li>
-                    <li>• Photo documentation of completed work</li>
-                    <li>• QR codes for service manuals and support</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-elec-yellow">Communication Channels</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• SMS notifications for appointments</li>
-                    <li>• WhatsApp Business for quick queries</li>
-                    <li>• Email progress updates with photos</li>
-                    <li>• Live chat on website for support</li>
-                    <li>• Video calls for remote consultations</li>
-                    <li>• Social media for customer service</li>
-                  </ul>
-                </div>
+              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-emerald-400 mb-3">Digital Service Platform</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li>• Online booking system with real-time availability and instant confirmation</li>
+                  <li>• Customer portal for appointment tracking and service history access</li>
+                  <li>• Digital invoicing and multiple payment options (card, bank transfer, mobile)</li>
+                  <li>• Electronic certificates and warranties with secure cloud storage</li>
+                  <li>• Photo documentation of completed work with before/after comparisons</li>
+                  <li>• QR codes linking to service manuals, support guides, and contact information</li>
+                </ul>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-elec-yellow">Customer Self-Service</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• Online FAQ and troubleshooting guides</li>
-                    <li>• Emergency contact information portal</li>
-                    <li>• Service history and documentation access</li>
-                    <li>• Maintenance reminder sign-ups</li>
-                    <li>• Review and testimonial platforms</li>
-                    <li>• Energy efficiency advice resources</li>
-                  </ul>
-                </div>
-                <div className="space-y-3">
-                  <h4 className="font-semibold text-elec-yellow">Data & Analytics</h4>
-                  <ul className="space-y-2 text-sm">
-                    <li>• Customer satisfaction tracking</li>
-                    <li>• Service performance metrics</li>
-                    <li>• Response time monitoring</li>
-                    <li>• Digital feedback collection</li>
-                    <li>• Personalised service recommendations</li>
-                    <li>• Predictive maintenance scheduling</li>
-                  </ul>
-                </div>
+              <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-amber-400 mb-3">Multi-Channel Communication</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li>• SMS notifications for appointment confirmations and arrival updates</li>
+                  <li>• WhatsApp Business for quick queries and emergency contact</li>
+                  <li>• Email progress updates with photos and completion reports</li>
+                  <li>• Live chat on website for immediate support and quotes</li>
+                  <li>• Video calls for remote consultations and technical assessments</li>
+                  <li>• Social media channels for customer service and community engagement</li>
+                </ul>
+              </div>
+
+              <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
+                <h4 className="font-semibold text-purple-400 mb-3">Customer Self-Service & Analytics</h4>
+                <ul className="space-y-2 text-sm text-slate-200">
+                  <li>• Comprehensive online FAQ and electrical troubleshooting guides</li>
+                  <li>• Emergency contact information portal with 24/7 availability</li>
+                  <li>• Customer satisfaction tracking with automated survey systems</li>
+                  <li>• Service performance metrics and response time monitoring</li>
+                  <li>• Personalised service recommendations based on property history</li>
+                  <li>• Predictive maintenance scheduling with automatic reminder systems</li>
+                </ul>
               </div>
             </div>
           </MobileAccordionContent>
