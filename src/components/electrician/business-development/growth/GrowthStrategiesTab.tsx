@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
-import { useMobileEnhanced } from "@/hooks/use-mobile-enhanced";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { 
   TrendingUp, 
   Target, 
@@ -29,551 +29,396 @@ import {
 } from "lucide-react";
 
 export const GrowthStrategiesTab = () => {
-  const { isMobile } = useMobileEnhanced();
+  const isMobile = useIsMobile();
 
+  // Growth metrics matching the pattern from other tabs
   const growthMetrics = [
-    { metric: "Annual Revenue Growth", target: "15-25%", industry: "12%", status: "good" },
-    { metric: "Customer Acquisition Rate", target: "8-12/month", industry: "6/month", status: "excellent" },
-    { metric: "Employee Productivity", target: "£180k/employee", industry: "£150k", status: "good" },
-    { metric: "Profit Margin", target: "18-25%", industry: "15%", status: "target" }
-  ];
-
-  const getMetricStatusColor = (status: string) => {
-    switch (status) {
-      case "excellent": return "success";
-      case "good": return "gold";
-      case "target": return "yellow";
-      default: return "outline";
+    {
+      metric: "Revenue Growth Target",
+      data: "15-25% annually sustainable",
+      icon: <TrendingUp className="h-5 w-5 text-elec-yellow" />,
+      detail: "With strategic planning and market expansion"
+    },
+    {
+      metric: "Market Expansion ROI",
+      data: "150-300% return on investment",
+      icon: <MapPin className="h-5 w-5 text-blue-400" />,
+      detail: "Geographic and service diversification benefits"
+    },
+    {
+      metric: "Team Scaling Efficiency",
+      data: "200-400% productivity increase",
+      icon: <Users className="h-5 w-5 text-green-400" />,
+      detail: "Strategic workforce development and training"
+    },
+    {
+      metric: "Business Value Growth",
+      data: "£50-200k annual value increase",
+      icon: <Building className="h-5 w-5 text-purple-400" />,
+      detail: "Systematic business development approach"
     }
-  };
+  ];
 
   const growthStrategies = [
     {
       id: "market-expansion",
       title: "Market Expansion Strategy",
-      icon: <MapPin className="h-5 w-5" />,
-      color: "bg-blue-500/10 border-blue-500/20",
-      description: "Expand into new geographical areas and market segments",
       timeline: "6-18 months",
-      investment: "£15,000 - £50,000",
-      roi: "150-300%",
-      riskLevel: "Medium",
+      description: "Expand into new geographical areas and market segments for sustainable revenue growth",
       components: [
-        "Market Research & Analysis",
-        "Geographic Expansion Planning", 
-        "Service Diversification",
-        "Customer Segmentation",
-        "Competitive Positioning"
+        "Market research and competitive analysis",
+        "Geographic expansion planning",
+        "Service diversification strategy",
+        "Customer segmentation and targeting",
+        "Local partnership development"
       ],
       implementation: [
         {
-          phase: "Research Phase (1-2 months)",
+          phase: "Research & Analysis (1-2 months)",
           tasks: [
-            "Analyse local market demand and competition",
-            "Identify underserved geographical areas",
-            "Research commercial vs domestic opportunities",
-            "Assess rural and urban market potential"
+            "Analyse local market demand and competition levels",
+            "Identify underserved geographical areas within 50-mile radius",
+            "Research commercial vs domestic market opportunities",
+            "Assess rural vs urban market potential and accessibility"
           ]
         },
         {
-          phase: "Planning Phase (2-3 months)",
+          phase: "Strategic Planning (2-3 months)",
           tasks: [
-            "Develop expansion strategy and timeline",
-            "Calculate investment requirements",
-            "Plan marketing and brand presence",
-            "Establish local partnerships"
+            "Develop comprehensive expansion strategy and timeline",
+            "Calculate investment requirements and expected ROI",
+            "Plan targeted marketing campaigns and brand presence",
+            "Establish local business partnerships and referral networks"
           ]
         },
         {
-          phase: "Implementation Phase (3-12 months)",
+          phase: "Market Entry (3-12 months)",
           tasks: [
-            "Launch targeted marketing campaigns",
-            "Establish local business relationships",
-            "Hire or relocate staff to new areas",
-            "Monitor performance and adjust strategy"
+            "Launch targeted digital marketing campaigns",
+            "Establish local business relationships and networking",
+            "Hire or relocate qualified staff to new areas",
+            "Monitor performance metrics and adjust strategy accordingly"
           ]
         }
       ],
       ukSpecific2025: [
-        "Post-Brexit opportunities in domestic manufacturing",
-        "Green energy infrastructure development",
-        "Rural broadband and EV charging networks",
-        "Government infrastructure investment programmes"
+        "Post-Brexit domestic manufacturing growth opportunities",
+        "Government green energy infrastructure development programmes",
+        "Rural broadband and EV charging network expansion",
+        "Levelling Up investment in regional infrastructure projects"
       ],
-      successMetrics: [
-        "New customer acquisition in target areas",
-        "Revenue growth from new markets",
-        "Market share increase",
-        "Brand recognition improvement"
-      ],
-      tips: [
-        "Start with adjacent geographical areas to minimise risk",
-        "Partner with local businesses for faster market entry",
-        "Leverage digital marketing for cost-effective reach",
-        "Focus on one new market segment at a time"
-      ]
+      investment: "£15,000-50,000 initial investment",
+      roi: "150-300% expected return",
+      riskLevel: "Medium risk with proper planning"
     },
     {
       id: "team-scaling",
-      title: "Strategic Team Scaling",
-      icon: <Users className="h-5 w-5" />,
-      color: "bg-green-500/10 border-green-500/20",
-      description: "Build and scale your workforce strategically for sustainable growth",
+      title: "Strategic Team Development",
       timeline: "3-24 months",
-      investment: "£25,000 - £100,000",
-      roi: "200-400%",
-      riskLevel: "Medium-High",
+      description: "Build and scale your workforce strategically for sustainable business growth",
       components: [
-        "Recruitment Strategy",
-        "Training & Development",
-        "Team Structure Design",
-        "Performance Management",
-        "Retention Planning"
+        "Strategic recruitment planning",
+        "Comprehensive training programmes",
+        "Performance management systems",
+        "Career progression pathways",
+        "Retention and motivation strategies"
       ],
       implementation: [
         {
-          phase: "Planning Phase (1-2 months)",
+          phase: "Workforce Assessment (1-2 months)",
           tasks: [
-            "Assess current team capacity and skills",
-            "Identify future workforce requirements",
-            "Design optimal team structure",
-            "Develop recruitment and training plans"
+            "Assess current team capacity, skills, and performance levels",
+            "Identify future workforce requirements for growth targets",
+            "Design optimal team structure and reporting lines",
+            "Develop recruitment, training, and retention strategies"
           ]
         },
         {
-          phase: "Recruitment Phase (2-6 months)",
+          phase: "Strategic Recruitment (2-6 months)",
           tasks: [
-            "Recruit qualified electricians and apprentices",
-            "Establish subcontractor partnerships",
-            "Hire specialist roles (project managers, admin)",
-            "Implement robust onboarding processes"
+            "Recruit qualified electricians and skilled apprentices",
+            "Establish reliable subcontractor partnership networks",
+            "Hire specialist roles (project managers, admin support)",
+            "Implement comprehensive onboarding and training processes"
           ]
         },
         {
-          phase: "Development Phase (Ongoing)",
+          phase: "Team Development (Ongoing)",
           tasks: [
-            "Provide continuous skills training",
-            "Implement performance management systems",
-            "Develop career progression pathways",
-            "Focus on employee retention strategies"
+            "Provide continuous skills training and certification updates",
+            "Implement robust performance management systems",
+            "Develop clear career progression and advancement pathways",
+            "Focus on employee retention through competitive packages"
           ]
         }
       ],
       ukSpecific2025: [
-        "Apprenticeship Levy utilisation for training",
-        "Skills shortage in renewable energy sectors",
-        "EU worker availability post-Brexit",
-        "Government skills development programmes"
+        "Apprenticeship Levy utilisation for cost-effective training",
+        "Skills shortage opportunities in renewable energy sectors",
+        "Post-Brexit skilled worker availability changes",
+        "Government skills development and retraining programmes"
       ],
-      successMetrics: [
-        "Employee retention rate (target: >85%)",
-        "Productivity per employee increase",
-        "Skills assessment scores improvement",
-        "Project delivery timeline adherence"
-      ],
-      tips: [
-        "Invest heavily in apprenticeship programmes",
-        "Create clear career progression pathways",
-        "Offer competitive packages including benefits",
-        "Build a strong company culture and values"
-      ]
+      investment: "£25,000-100,000 workforce investment",
+      roi: "200-400% productivity return",
+      riskLevel: "Medium-high with proper management"
     },
     {
-      id: "business-structure",
-      title: "Business Structure Optimisation",
-      icon: <Building className="h-5 w-5" />,
-      color: "bg-purple-500/10 border-purple-500/20",
-      description: "Optimise your business model and structure for efficient growth",
+      id: "digital-transformation",
+      title: "Digital Business Transformation",
       timeline: "3-12 months",
-      investment: "£10,000 - £30,000",
-      roi: "250-500%",
-      riskLevel: "Low-Medium",
+      description: "Modernise operations with digital tools and smart technology integration",
       components: [
-        "Legal Structure Review",
-        "Process Systematisation",
-        "Technology Integration",
-        "Quality Management",
-        "Financial Optimisation"
+        "Digital project management systems",
+        "Customer relationship management (CRM)",
+        "Mobile workforce management",
+        "Smart technology integration",
+        "Online presence and marketing"
       ],
       implementation: [
         {
-          phase: "Assessment Phase (1-2 months)",
+          phase: "Digital Assessment (1-2 months)",
           tasks: [
-            "Review current business structure and processes",
-            "Identify inefficiencies and bottlenecks",
-            "Assess technology and system requirements",
-            "Evaluate legal and tax implications"
+            "Evaluate current digital capabilities and system gaps",
+            "Identify key areas for digital transformation impact",
+            "Research and select appropriate technology solutions",
+            "Plan implementation timeline and training requirements"
           ]
         },
         {
-          phase: "Design Phase (1-3 months)",
+          phase: "System Implementation (2-6 months)",
           tasks: [
-            "Design optimised business processes",
-            "Select and implement business systems",
-            "Establish quality management procedures",
-            "Create standard operating procedures"
+            "Implement project management and CRM systems",
+            "Set up mobile workforce management tools",
+            "Integrate smart technology offerings for customers",
+            "Develop professional online presence and digital marketing"
           ]
         },
         {
-          phase: "Implementation Phase (2-6 months)",
+          phase: "Optimisation (Ongoing)",
           tasks: [
-            "Implement new systems and processes",
-            "Train team on new procedures",
-            "Monitor and refine operations",
-            "Measure efficiency improvements"
+            "Train team on new digital tools and processes",
+            "Monitor system performance and efficiency gains",
+            "Continuously improve digital customer experience",
+            "Stay updated with emerging technology trends"
           ]
         }
       ],
       ukSpecific2025: [
-        "IR35 compliance for contractor relationships",
-        "Making Tax Digital requirements",
-        "GDPR compliance for customer data",
-        "Construction Industry Scheme (CIS) optimisation"
+        "Smart home technology adoption surge post-pandemic",
+        "Government Digital Skills Support Scheme access",
+        "Making Tax Digital compliance requirements",
+        "Cybersecurity grant funding for small businesses"
       ],
-      successMetrics: [
-        "Process efficiency improvement (target: 20-30%)",
-        "Customer satisfaction scores",
-        "Employee productivity metrics",
-        "Profit margin improvement"
-      ],
-      tips: [
-        "Consider incorporation for tax efficiency",
-        "Implement project management software",
-        "Standardise all key business processes",
-        "Regular process reviews and improvements"
-      ]
+      investment: "£10,000-30,000 technology investment",
+      roi: "250-500% efficiency return",
+      riskLevel: "Low-medium with proper planning"
     },
     {
       id: "financial-growth",
       title: "Financial Growth Strategy",
-      icon: <DollarSign className="h-5 w-5" />,
-      color: "bg-yellow-500/10 border-yellow-500/20",
-      description: "Strategic financial planning and investment for sustainable growth",
       timeline: "6-36 months",
-      investment: "£20,000 - £150,000",
-      roi: "180-350%",
-      riskLevel: "Medium",
+      description: "Strategic financial planning and investment for sustainable business expansion",
       components: [
-        "Financial Planning",
-        "Investment Strategy",
-        "Cash Flow Management",
-        "Funding Options",
-        "Risk Management"
+        "Cash flow optimisation",
+        "Investment strategy development",
+        "Revenue stream diversification",
+        "Cost management systems",
+        "Growth funding solutions"
       ],
       implementation: [
         {
-          phase: "Financial Assessment (1-2 months)",
+          phase: "Financial Health Assessment (1-2 months)",
           tasks: [
-            "Comprehensive financial health review",
-            "Cash flow analysis and forecasting",
-            "Investment requirement calculation",
-            "Risk assessment and mitigation planning"
+            "Comprehensive financial review and cash flow analysis",
+            "Identify investment opportunities and funding requirements",
+            "Assess current profitability and cost structure efficiency",
+            "Develop risk management and contingency planning"
           ]
         },
         {
-          phase: "Funding & Investment (2-6 months)",
+          phase: "Growth Investment (2-6 months)",
           tasks: [
-            "Explore funding options (loans, grants, investors)",
-            "Implement financial management systems",
-            "Establish business credit facilities",
-            "Create investment allocation strategy"
+            "Secure appropriate funding (loans, grants, investment)",
+            "Implement robust financial management and tracking systems",
+            "Establish business credit facilities and relationships",
+            "Create strategic investment allocation and monitoring"
           ]
         },
         {
-          phase: "Growth Execution (6-24 months)",
+          phase: "Financial Execution (6-24 months)",
           tasks: [
-            "Execute strategic investments",
-            "Monitor financial performance",
-            "Adjust strategy based on results",
-            "Prepare for next growth phase"
+            "Execute strategic investments according to plan",
+            "Monitor financial performance against growth targets",
+            "Adjust strategy based on market conditions and results",
+            "Prepare financial foundation for next growth phase"
           ]
         }
       ],
       ukSpecific2025: [
-        "Government green energy grants and incentives",
-        "Business rates relief opportunities",
-        "R&D tax credits for innovation",
-        "Export finance support post-Brexit"
+        "Green energy grants and renewable incentive schemes",
+        "Business rates relief and government support programmes",
+        "R&D tax credits for innovation and technology adoption",
+        "Export finance support for international expansion opportunities"
       ],
-      successMetrics: [
-        "Revenue growth rate",
-        "Profit margin improvement",
-        "Cash flow stability",
-        "Return on investment (ROI)"
-      ],
-      tips: [
-        "Maintain 3-6 months cash flow reserves",
-        "Diversify revenue streams to reduce risk",
-        "Regular financial reviews and forecasting",
-        "Consider professional financial advice"
-      ]
+      investment: "£20,000-150,000 capital investment",
+      roi: "180-350% financial return",
+      riskLevel: "Medium with professional guidance"
     }
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Growth Metrics Dashboard */}
-      <Card className="border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <BarChart3 className="h-5 w-5 text-elec-yellow" />
-            Growth Metrics Dashboard
-          </CardTitle>
-          <CardDescription>
-            Key performance indicators for electrical business growth in 2025
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {growthMetrics.map((metric, index) => (
-              <div key={index} className="p-4 bg-elec-gray/20 rounded-lg space-y-3">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-medium text-sm">{metric.metric}</h4>
-                  <Badge variant={getMetricStatusColor(metric.status)} className="text-xs">
-                    {metric.status}
-                  </Badge>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-xs">
-                    <span className="text-muted-foreground">Target:</span>
-                    <span className="font-medium text-elec-yellow">{metric.target}</span>
+    <div className="space-y-4">
+      <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
+        <TrendingUp className="h-4 w-4 text-elec-yellow" />
+        <AlertDescription className="text-elec-yellow">
+          Strategic growth planning can increase business value by 200-400% over 2-3 years with proper execution.
+        </AlertDescription>
+      </Alert>
+
+      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}>
+        {growthMetrics.map((metric, index) => (
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
+            <div className="text-center space-y-2">
+              {metric.icon}
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      <MobileAccordion type="single" collapsible className="space-y-2">
+        {growthStrategies.map((strategy) => (
+          <MobileAccordionItem key={strategy.id} value={strategy.id}>
+            <MobileAccordionTrigger icon={
+              strategy.id === "market-expansion" ? <MapPin className="h-5 w-5 text-blue-400" /> :
+              strategy.id === "team-scaling" ? <Users className="h-5 w-5 text-green-400" /> :
+              strategy.id === "digital-transformation" ? <Smartphone className="h-5 w-5 text-purple-400" /> :
+              <DollarSign className="h-5 w-5 text-yellow-400" />
+            }>
+              {strategy.title}
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.title}</h4>
+                      <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                        {strategy.timeline}
+                      </Badge>
+                    </div>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{strategy.description}</p>
                   </div>
-                  <div className="flex justify-between text-xs">
-                    <span className="text-muted-foreground">Industry Avg:</span>
-                    <span>{metric.industry}</span>
+
+                  <div className="grid gap-4 md:grid-cols-3">
+                    <div className="flex items-center gap-2">
+                      <Calculator className="h-4 w-4 text-muted-foreground" />
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>{strategy.investment}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>{strategy.roi}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Shield className="h-4 w-4 text-muted-foreground" />
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>{strategy.riskLevel}</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h5 className={`font-medium text-blue-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Components</h5>
+                    <ul className="space-y-1">
+                      {strategy.components.map((component, compIndex) => (
+                        <li key={compIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-center gap-1`}>
+                          <CheckCircle className="h-3 w-3 text-green-400 shrink-0" />
+                          {component}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h5 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Implementation Timeline</h5>
+                    <div className="space-y-3">
+                      {strategy.implementation.map((phase, phaseIndex) => (
+                        <div key={phaseIndex} className="border-l-2 border-elec-yellow/30 pl-3 space-y-1">
+                          <h6 className={`font-medium text-elec-yellow ${isMobile ? 'text-xs' : 'text-sm'}`}>{phase.phase}</h6>
+                          <ul className="space-y-0.5">
+                            {phase.tasks.map((task, taskIndex) => (
+                              <li key={taskIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-start gap-1`}>
+                                <div className="w-1 h-1 bg-muted-foreground rounded-full mt-2 shrink-0" />
+                                {task}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h5 className={`font-medium text-yellow-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>UK Market Opportunities 2025</h5>
+                    <ul className="space-y-1">
+                      {strategy.ukSpecific2025.map((opportunity, oppIndex) => (
+                        <li key={oppIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-yellow-200 flex items-center gap-1`}>
+                          <Zap className="h-3 w-3 text-elec-yellow shrink-0" />
+                          {opportunity}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+        ))}
+      </MobileAccordion>
 
-      {/* Strategic Growth Frameworks */}
-      <Card className="border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Target className="h-5 w-5 text-elec-yellow" />
-            Strategic Growth Frameworks
-          </CardTitle>
-          <CardDescription>
-            Comprehensive strategies for scaling your electrical contracting business
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="p-0">
-          <MobileAccordion type="single" collapsible className="w-full">
-            {growthStrategies.map((strategy) => (
-              <MobileAccordionItem key={strategy.id} value={strategy.id}>
-                <MobileAccordionTrigger 
-                  icon={strategy.icon}
-                  className={`${strategy.color} hover:${strategy.color.replace('/10', '/20')}`}
-                >
-                  <div className="text-left">
-                    <div className="font-semibold">{strategy.title}</div>
-                    <div className="text-xs text-muted-foreground mt-1">
-                      {strategy.timeline} • ROI: {strategy.roi}
-                    </div>
-                  </div>
-                </MobileAccordionTrigger>
-                
-                <MobileAccordionContent>
-                  <div className="p-6 space-y-6 bg-background/50">
-                    {/* Strategy Overview */}
-                    <div className="space-y-4">
-                      <p className="text-muted-foreground">{strategy.description}</p>
-                      
-                      <div className="grid gap-4 md:grid-cols-3">
-                        <div className="flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm">Timeline: {strategy.timeline}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Calculator className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm">Investment: {strategy.investment}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                          <span className="text-sm">Expected ROI: {strategy.roi}</span>
-                        </div>
-                      </div>
-
-                      <Alert>
-                        <AlertTriangle className="h-4 w-4" />
-                        <AlertDescription>
-                          Risk Level: <strong>{strategy.riskLevel}</strong> - Proper planning and phased implementation recommended
-                        </AlertDescription>
-                      </Alert>
-                    </div>
-
-                    {/* Key Components */}
-                    <div className="space-y-3">
-                      <h4 className="font-semibold flex items-center gap-2">
-                        <Settings className="h-4 w-4" />
-                        Key Components
-                      </h4>
-                      <div className="grid gap-2 md:grid-cols-2">
-                        {strategy.components.map((component, index) => (
-                          <div key={index} className="flex items-center gap-2 p-2 bg-elec-gray/20 rounded">
-                            <CheckCircle className="h-3 w-3 text-elec-yellow shrink-0" />
-                            <span className="text-sm">{component}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Implementation Timeline */}
-                    <div className="space-y-3">
-                      <h4 className="font-semibold flex items-center gap-2">
-                        <Calendar className="h-4 w-4" />
-                        Implementation Timeline
-                      </h4>
-                      <div className="space-y-4">
-                        {strategy.implementation.map((phase, index) => (
-                          <div key={index} className="border-l-2 border-elec-yellow/30 pl-4 space-y-2">
-                            <h5 className="font-medium text-elec-yellow">{phase.phase}</h5>
-                            <div className="space-y-1">
-                              {phase.tasks.map((task, taskIndex) => (
-                                <div key={taskIndex} className="flex items-start gap-2 text-sm">
-                                  <div className="w-1 h-1 bg-muted-foreground rounded-full mt-2 shrink-0" />
-                                  <span>{task}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* UK-Specific 2025 Opportunities */}
-                    <div className="space-y-3">
-                      <h4 className="font-semibold flex items-center gap-2">
-                        <Globe className="h-4 w-4" />
-                        UK Market Opportunities 2025
-                      </h4>
-                      <div className="grid gap-2 md:grid-cols-2">
-                        {strategy.ukSpecific2025.map((opportunity, index) => (
-                          <div key={index} className="flex items-center gap-2 p-2 bg-blue-500/10 rounded">
-                            <Zap className="h-3 w-3 text-blue-500 shrink-0" />
-                            <span className="text-sm">{opportunity}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Success Metrics */}
-                    <div className="space-y-3">
-                      <h4 className="font-semibold flex items-center gap-2">
-                        <BarChart3 className="h-4 w-4" />
-                        Success Metrics
-                      </h4>
-                      <div className="grid gap-2 md:grid-cols-2">
-                        {strategy.successMetrics.map((metric, index) => (
-                          <div key={index} className="flex items-center gap-2 p-2 bg-green-500/10 rounded">
-                            <UserCheck className="h-3 w-3 text-green-500 shrink-0" />
-                            <span className="text-sm">{metric}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Success Tips */}
-                    <div className="space-y-3">
-                      <h4 className="font-semibold flex items-center gap-2">
-                        <Lightbulb className="h-4 w-4" />
-                        Success Tips
-                      </h4>
-                      <div className="space-y-2">
-                        {strategy.tips.map((tip, index) => (
-                          <div key={index} className="flex items-start gap-2 p-3 bg-yellow-500/10 rounded">
-                            <Lightbulb className="h-4 w-4 text-yellow-500 shrink-0 mt-0.5" />
-                            <span className="text-sm">{tip}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </MobileAccordionContent>
-              </MobileAccordionItem>
-            ))}
-          </MobileAccordion>
-        </CardContent>
-      </Card>
-
-      {/* 2025 UK Market Insights */}
       <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/20 to-elec-gray/10">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Globe className="h-5 w-5 text-elec-yellow" />
-            2025 UK Market Insights
+            <Lightbulb className="h-5 w-5 text-elec-yellow" />
+            Growth Success Framework
           </CardTitle>
-          <CardDescription>
-            Key trends and opportunities shaping the electrical industry
-          </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-6 md:grid-cols-2">
-            <div className="space-y-4">
-              <h4 className="font-semibold flex items-center gap-2">
-                <Leaf className="h-4 w-4 text-green-500" />
-                Sustainability & Green Energy
-              </h4>
-              <div className="space-y-2 text-sm">
-                <p>• Heat pump installations growing 300% annually</p>
-                <p>• EV charging infrastructure expansion</p>
-                <p>• Solar panel integration opportunities</p>
-                <p>• Energy storage system installations</p>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-3">
+              <h4 className="font-semibold text-green-300">Essential Prerequisites</h4>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <PiggyBank className="h-4 w-4 text-green-400" />
+                  <span>3-6 months operating capital reserve</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <FileText className="h-4 w-4 text-green-400" />
+                  <span>Updated insurance and compliance documentation</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <UserCheck className="h-4 w-4 text-green-400" />
+                  <span>Stable team performance and capacity</span>
+                </div>
               </div>
             </div>
             
-            <div className="space-y-4">
-              <h4 className="font-semibold flex items-center gap-2">
-                <Smartphone className="h-4 w-4 text-blue-500" />
-                Digital Transformation
-              </h4>
-              <div className="space-y-2 text-sm">
-                <p>• Smart home automation systems</p>
-                <p>• IoT device installation and maintenance</p>
-                <p>• Digital project management tools</p>
-                <p>• Online customer service platforms</p>
+            <div className="space-y-3">
+              <h4 className="font-semibold text-blue-300">Success Indicators</h4>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <BarChart3 className="h-4 w-4 text-blue-400" />
+                  <span>15%+ annual revenue growth</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Target className="h-4 w-4 text-blue-400" />
+                  <span>85%+ customer retention rate</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Settings className="h-4 w-4 text-blue-400" />
+                  <span>Systematic operations and processes</span>
+                </div>
               </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Growth Phase Assessment */}
-      <Card className="border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Shield className="h-5 w-5 text-elec-yellow" />
-            Business Growth Assessment
-          </CardTitle>
-          <CardDescription>
-            Evaluate your current position and plan your next growth phase
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <Alert>
-              <PiggyBank className="h-4 w-4" />
-              <AlertDescription>
-                <strong>Financial Health Check:</strong> Ensure 3-6 months operating capital before major expansion
-              </AlertDescription>
-            </Alert>
-            
-            <Alert>
-              <FileText className="h-4 w-4" />
-              <AlertDescription>
-                <strong>Documentation Review:</strong> Update contracts, insurance, and compliance records before scaling
-              </AlertDescription>
-            </Alert>
-            
-            <Alert>
-              <Users className="h-4 w-4" />
-              <AlertDescription>
-                <strong>Team Capacity:</strong> Assess current workload and team efficiency before expansion
-              </AlertDescription>
-            </Alert>
           </div>
         </CardContent>
       </Card>
