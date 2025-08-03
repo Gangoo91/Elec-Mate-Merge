@@ -198,22 +198,22 @@ const DigitalSkillsAnalyser = () => {
       </div>
 
       {/* Question Category */}
-      <div className="text-center mb-4">
-        <h3 className="text-blue-300 text-lg font-bold mb-2">
+      <div className="text-center mb-3">
+        <h3 className="text-blue-300 text-base font-bold mb-1">
           {skillsQuestions[currentQuestion].category}
         </h3>
-        <p className="text-white text-sm leading-relaxed">
+        <p className="text-white text-xs leading-snug">
           {skillsQuestions[currentQuestion].question}
         </p>
       </div>
       
       {/* Answer Options */}
-      <div className="space-y-2">
+      <div className="space-y-1.5">
         {skillsQuestions[currentQuestion].options.map((option, index) => (
           <Button
             key={index}
             variant="outline"
-            className="w-full justify-center p-3 text-sm font-medium border-blue-500/30 hover:bg-blue-500/20 hover:border-blue-400/50 transition-all duration-200"
+            className="w-full justify-center py-2 px-3 text-xs font-medium border-blue-500/30 hover:bg-blue-500/20 hover:border-blue-400/50 transition-all duration-200 h-auto min-h-[2rem]"
             onClick={() => handleAnswer(option.score)}
           >
             <span className="text-center leading-tight">{option.text}</span>
