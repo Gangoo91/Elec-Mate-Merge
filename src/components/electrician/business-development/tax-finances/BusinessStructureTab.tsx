@@ -40,10 +40,22 @@ const BusinessStructureTab = () => {
       detail: "Annual turnover limit before mandatory VAT registration"
     },
     {
-      metric: "Administrative Burden",
-      data: "Limited company requires more",
+      metric: "Setup Costs",
+      data: "£12 to £500",
       icon: <FileText className="h-5 w-5 text-red-400" />,
-      detail: "Annual accounts, CT600, Companies House filing"
+      detail: "From sole trader registration to limited company formation"
+    },
+    {
+      metric: "Annual Compliance",
+      data: "£300 to £2,000",
+      icon: <Scale className="h-5 w-5 text-cyan-400" />,
+      detail: "Estimated annual accounting and compliance costs"
+    },
+    {
+      metric: "IR35 Impact",
+      data: "Limited company affected",
+      icon: <Building className="h-5 w-5 text-pink-400" />,
+      detail: "Off-payroll working rules for contract work"
     }
   ];
 
@@ -56,7 +68,7 @@ const BusinessStructureTab = () => {
         </AlertDescription>
       </Alert>
 
-      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-3 xl:grid-cols-6'}`}>
+      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-4 xl:grid-cols-8'}`}>
         {structureMetrics.map((metric, index) => (
           <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
             <div className="text-center space-y-2">
@@ -76,33 +88,37 @@ const BusinessStructureTab = () => {
           <MobileAccordionContent>
             <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <div className="text-sm text-muted-foreground">
-                The simplest business structure for individual electricians - easy to set up with complete control over business decisions.
+                The simplest and most popular business structure for individual electricians starting their trade business in the UK.
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
                     <h4 className="font-semibold text-blue-400 mb-2">Strategy Overview</h4>
-                    <p className="text-sm">Ideal for new electricians with straightforward business needs and annual profits under £50,000.</p>
+                    <p className="text-sm">Perfect for new electricians with straightforward business needs, annual profits under £50,000, and those who want immediate trading capability with minimal paperwork.</p>
                   </div>
                   
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
                     <h4 className="font-semibold text-green-400 mb-2">Implementation Timeline</h4>
                     <ul className="text-sm space-y-1">
-                      <li>• Day 1: Register for Self Assessment</li>
-                      <li>• Week 1: Set up business bank account</li>
-                      <li>• Week 2: Arrange business insurance</li>
-                      <li>• Ongoing: Keep records for tax returns</li>
+                      <li>• Day 1: Register for Self Assessment with HMRC</li>
+                      <li>• Week 1: Open dedicated business bank account</li>
+                      <li>• Week 2: Arrange public liability insurance (minimum £2m)</li>
+                      <li>• Week 3: Set up basic bookkeeping system</li>
+                      <li>• Ongoing: Maintain records for annual tax returns</li>
+                      <li>• Monthly: Track income, expenses, and mileage</li>
                     </ul>
                   </div>
                   
                   <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
                     <h4 className="font-semibold text-orange-400 mb-2">Business Benefits</h4>
                     <ul className="text-sm space-y-1">
-                      <li>• Quick and easy setup</li>
-                      <li>• Complete business control</li>
-                      <li>• All profits belong to you</li>
-                      <li>• Simple tax obligations</li>
+                      <li>• Quick setup - can start trading immediately</li>
+                      <li>• Complete control over business decisions</li>
+                      <li>• All profits belong to you after tax</li>
+                      <li>• Simple tax obligations and reporting</li>
+                      <li>• Flexibility to work for multiple clients</li>
+                      <li>• No requirement for separate business premises</li>
                     </ul>
                   </div>
                 </div>
@@ -111,31 +127,36 @@ const BusinessStructureTab = () => {
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
                     <h4 className="font-semibold text-purple-400 mb-2">Key Features & Requirements</h4>
                     <ul className="text-sm space-y-1">
-                      <li>• Self Assessment tax returns</li>
-                      <li>• National Insurance contributions</li>
-                      <li>• Personal liability for debts</li>
-                      <li>• Simple accounting requirements</li>
-                      <li>• No Companies House registration</li>
+                      <li>• Annual Self Assessment tax return by 31st January</li>
+                      <li>• National Insurance contributions (Class 2 and 4)</li>
+                      <li>• Unlimited personal liability for business debts</li>
+                      <li>• Simple record keeping - receipts and invoices</li>
+                      <li>• No Companies House registration required</li>
+                      <li>• VAT registration if turnover exceeds £90,000</li>
                     </ul>
                   </div>
                   
                   <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
                     <h4 className="font-semibold text-yellow-400 mb-2">Tax Considerations</h4>
                     <ul className="text-sm space-y-1">
-                      <li>• Income tax: 20%, 40%, or 45%</li>
+                      <li>• Income tax: 20%, 40%, or 45% on profit bands</li>
                       <li>• Class 2 NI: £3.45/week if profits &gt;£6,515</li>
                       <li>• Class 4 NI: 9% on profits £12,570-£50,270</li>
-                      <li>• Personal allowance: £12,570</li>
+                      <li>• Personal allowance: £12,570 (2024/25)</li>
+                      <li>• Can claim business expenses against income</li>
+                      <li>• Higher rate threshold: £50,270</li>
                     </ul>
                   </div>
                   
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
                     <h4 className="font-semibold text-red-400 mb-2">Success Metrics/KPIs</h4>
                     <ul className="text-sm space-y-1">
-                      <li>• Annual profit threshold: Under £50k</li>
-                      <li>• Tax efficiency: Monitor vs limited company</li>
-                      <li>• Personal liability exposure</li>
+                      <li>• Annual profit threshold: Monitor under £50k</li>
+                      <li>• Tax efficiency: Compare with limited company annually</li>
+                      <li>• Personal liability exposure assessment</li>
                       <li>• Administrative time: &lt;2 hours/month</li>
+                      <li>• Business growth rate: Track for structure review</li>
+                      <li>• Client diversity: Avoid over-dependence</li>
                     </ul>
                   </div>
                 </div>
@@ -361,6 +382,164 @@ const BusinessStructureTab = () => {
                       <li>• Liability protection level</li>
                       <li>• Administrative burden management</li>
                       <li>• Structure change readiness</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="llp">
+          <MobileAccordionTrigger icon={<Shield className="h-5 w-5 text-orange-400" />}>
+            Limited Liability Partnership (LLP)
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              <div className="text-sm text-muted-foreground">
+                A hybrid structure combining partnership flexibility with limited liability protection - ideal for professional electrical partnerships.
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
+                    <h4 className="font-semibold text-blue-400 mb-2">Strategy Overview</h4>
+                    <p className="text-sm">Perfect for established electrical partnerships requiring liability protection whilst maintaining tax transparency and operational flexibility.</p>
+                  </div>
+                  
+                  <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
+                    <h4 className="font-semibold text-green-400 mb-2">Implementation Timeline</h4>
+                    <ul className="text-sm space-y-1">
+                      <li>• Week 1-2: LLP agreement drafting with solicitor</li>
+                      <li>• Week 3: Companies House registration (£20 fee)</li>
+                      <li>• Week 4: Business bank account and insurance</li>
+                      <li>• Month 2: HMRC registration and accounting setup</li>
+                      <li>• Ongoing: Annual confirmation statements</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
+                    <h4 className="font-semibold text-orange-400 mb-2">Business Benefits</h4>
+                    <ul className="text-sm space-y-1">
+                      <li>• Limited liability protection for all members</li>
+                      <li>• Flexible management and profit sharing</li>
+                      <li>• Professional credibility and standing</li>
+                      <li>• Tax transparency - no double taxation</li>
+                      <li>• Suitable for professional electrical firms</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
+                    <h4 className="font-semibold text-purple-400 mb-2">Key Features & Requirements</h4>
+                    <ul className="text-sm space-y-1">
+                      <li>• Minimum 2 designated members required</li>
+                      <li>• Annual confirmation statement to Companies House</li>
+                      <li>• LLP agreement defines roles and responsibilities</li>
+                      <li>• Members not liable for other members&apos; debts</li>
+                      <li>• Must display LLP status on documentation</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
+                    <h4 className="font-semibold text-yellow-400 mb-2">Tax Considerations</h4>
+                    <ul className="text-sm space-y-1">
+                      <li>• Members taxed as if self-employed</li>
+                      <li>• No corporation tax on LLP profits</li>
+                      <li>• Each member pays income tax on their share</li>
+                      <li>• Class 2 and 4 National Insurance applicable</li>
+                      <li>• Partnership return required annually</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
+                    <h4 className="font-semibold text-red-400 mb-2">Success Metrics/KPIs</h4>
+                    <ul className="text-sm space-y-1">
+                      <li>• Member satisfaction with profit allocation</li>
+                      <li>• Liability protection effectiveness</li>
+                      <li>• Administrative costs vs benefits</li>
+                      <li>• Professional service delivery standards</li>
+                      <li>• Client retention and growth rates</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
+
+        <MobileAccordionItem value="comparison-tool">
+          <MobileAccordionTrigger icon={<TrendingUp className="h-5 w-5 text-cyan-400" />}>
+            Business Structure Comparison
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+              <div className="text-sm text-muted-foreground">
+                Comprehensive side-by-side comparison of all business structures to help UK electricians make informed decisions.
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/20">
+                    <h4 className="font-semibold text-blue-400 mb-2">Strategy Overview</h4>
+                    <p className="text-sm">Compare liability, tax efficiency, setup costs, and administrative requirements across all structure types for electrical contractors.</p>
+                  </div>
+                  
+                  <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/20">
+                    <h4 className="font-semibold text-green-400 mb-2">Implementation Timeline</h4>
+                    <ul className="text-sm space-y-1">
+                      <li>• Week 1: Current situation analysis</li>
+                      <li>• Week 2: 3-5 year business projection</li>
+                      <li>• Week 3: Tax calculation comparison</li>
+                      <li>• Week 4: Professional consultation if needed</li>
+                      <li>• Decision: Choose optimal structure</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-orange-500/10 p-3 rounded-lg border border-orange-500/20">
+                    <h4 className="font-semibold text-orange-400 mb-2">Business Benefits</h4>
+                    <ul className="text-sm space-y-1">
+                      <li>• Optimal tax efficiency selection</li>
+                      <li>• Appropriate liability protection level</li>
+                      <li>• Informed decision making</li>
+                      <li>• Future-proofed business planning</li>
+                      <li>• Professional advisory guidance</li>
+                    </ul>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/20">
+                    <h4 className="font-semibold text-purple-400 mb-2">Key Features & Requirements</h4>
+                    <ul className="text-sm space-y-1">
+                      <li>• Setup cost comparison (£12 to £500+)</li>
+                      <li>• Annual compliance cost analysis</li>
+                      <li>• Tax efficiency at different profit levels</li>
+                      <li>• Liability protection assessment</li>
+                      <li>• Administrative burden evaluation</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-yellow-500/10 p-3 rounded-lg border border-yellow-500/20">
+                    <h4 className="font-semibold text-yellow-400 mb-2">Tax Considerations</h4>
+                    <ul className="text-sm space-y-1">
+                      <li>• Sole trader: Simple but higher tax on growth</li>
+                      <li>• Limited company: Complex but tax efficient</li>
+                      <li>• Partnership: Shared but joint liability</li>
+                      <li>• LLP: Protected but professional costs</li>
+                      <li>• Consider IR35 implications for contractors</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/20">
+                    <h4 className="font-semibold text-red-400 mb-2">Success Metrics/KPIs</h4>
+                    <ul className="text-sm space-y-1">
+                      <li>• Annual tax savings achieved</li>
+                      <li>• Compliance burden vs business size</li>
+                      <li>• Liability protection adequacy</li>
+                      <li>• Structure flexibility for growth</li>
+                      <li>• Professional service access</li>
                     </ul>
                   </div>
                 </div>
