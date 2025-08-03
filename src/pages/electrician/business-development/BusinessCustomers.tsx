@@ -14,9 +14,9 @@ const BusinessCustomers = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Hero Section */}
-      <div className="bg-elec-gray rounded-lg p-8 text-center space-y-6">
+      <div className="bg-elec-dark rounded-lg py-12 px-8 text-center space-y-6">
         <div className="flex items-center justify-center gap-4">
-          <Target className="h-8 w-8 text-elec-yellow" />
+          <Zap className="h-8 w-8 text-elec-yellow" />
           <h1 className="text-4xl md:text-5xl font-bold text-white">
             Customer Acquisition for Electricians
           </h1>
