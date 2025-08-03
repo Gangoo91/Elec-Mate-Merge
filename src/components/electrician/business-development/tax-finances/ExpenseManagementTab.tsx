@@ -278,7 +278,7 @@ const ExpenseManagementTab = () => {
     },
     {
       title: "Professional Services",
-      icon: <Receipt className="h-5 w-5 text-yellow-400" />,
+      icon: <PoundSterling className="h-5 w-5 text-yellow-400" />,
       cards: [
         {
           title: "Strategy Overview",
@@ -562,7 +562,7 @@ const ExpenseManagementTab = () => {
               icon={section.icon}
               className="text-left hover:bg-elec-gray/50 p-4 rounded-lg border border-elec-yellow/20"
             >
-              <span className="text-elec-yellow font-semibold">{section.title}</span>
+              <span className="text-white font-semibold">{section.title}</span>
             </MobileAccordionTrigger>
             <MobileAccordionContent className="space-y-3 pt-4">
               <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
