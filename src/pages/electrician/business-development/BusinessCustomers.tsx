@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -20,89 +19,125 @@ const BusinessCustomers = () => {
 
   const getTabDisplayName = (value: string) => {
     const tabNames = {
-      "market-research": "Market Research & Targeting",
-      "digital-marketing": "Digital Marketing Strategies",
-      "traditional-marketing": "Traditional Marketing & Networking", 
-      "lead-generation": "Lead Generation & Conversion",
-      "customer-experience": "Customer Experience & Service",
+      "market-research": "Market Research",
+      "digital-marketing": "Digital Marketing",
+      "traditional-marketing": "Traditional Marketing", 
+      "lead-generation": "Lead Generation",
+      "customer-experience": "Customer Experience",
       "retention-growth": "Retention & Growth"
     };
     return tabNames[value as keyof typeof tabNames] || value;
   };
 
   return (
-    <div className="space-y-6 animate-fade-in pb-12">
-      <BusinessCustomersHeader />
-      
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        {isMobile ? (
-          <div className="mb-6">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="w-full justify-between">
-                  {getTabDisplayName(activeTab)}
-                  <ChevronDown className="ml-2 h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-full bg-background border border-border">
-                <DropdownMenuItem onClick={() => setActiveTab("market-research")}>
-                  Market Research & Targeting
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setActiveTab("digital-marketing")}>
-                  Digital Marketing Strategies
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setActiveTab("traditional-marketing")}>
-                  Traditional Marketing & Networking
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setActiveTab("lead-generation")}>
-                  Lead Generation & Conversion
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setActiveTab("customer-experience")}>
-                  Customer Experience & Service
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setActiveTab("retention-growth")}>
+    <div className="min-h-screen bg-background space-y-6 animate-fade-in pb-12">
+      <div className="space-y-6">
+        <BusinessCustomersHeader />
+        
+        <div className="bg-card/30 backdrop-blur border border-elec-yellow/20 rounded-lg p-6">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            {isMobile ? (
+              <div className="mb-6">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="w-full justify-between bg-card/50 border border-elec-yellow/20 hover:bg-elec-yellow/10">
+                      {getTabDisplayName(activeTab)}
+                      <ChevronDown className="ml-2 h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-full bg-card border border-elec-yellow/20">
+                    <DropdownMenuItem onClick={() => setActiveTab("market-research")}>
+                      Market Research
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setActiveTab("digital-marketing")}>
+                      Digital Marketing
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setActiveTab("traditional-marketing")}>
+                      Traditional Marketing
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setActiveTab("lead-generation")}>
+                      Lead Generation
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setActiveTab("customer-experience")}>
+                      Customer Experience
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setActiveTab("retention-growth")}>
+                      Retention & Growth
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            ) : (
+              <TabsList className="grid w-full grid-cols-6 bg-card/50 border border-elec-yellow/20 mb-6">
+                <TabsTrigger 
+                  value="market-research" 
+                  className="text-xs sm:text-sm data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow"
+                >
+                  Market Research
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="digital-marketing" 
+                  className="text-xs sm:text-sm data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow"
+                >
+                  Digital Marketing
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="traditional-marketing" 
+                  className="text-xs sm:text-sm data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow"
+                >
+                  Traditional Marketing
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="lead-generation" 
+                  className="text-xs sm:text-sm data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow"
+                >
+                  Lead Generation
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="customer-experience" 
+                  className="text-xs sm:text-sm data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow"
+                >
+                  Customer Experience
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="retention-growth" 
+                  className="text-xs sm:text-sm data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow"
+                >
                   Retention & Growth
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        ) : (
-          <TabsList className="grid w-full grid-cols-6 mb-6">
-            <TabsTrigger value="market-research" className="text-xs">Market Research</TabsTrigger>
-            <TabsTrigger value="digital-marketing" className="text-xs">Digital Marketing</TabsTrigger>
-            <TabsTrigger value="traditional-marketing" className="text-xs">Traditional Marketing</TabsTrigger>
-            <TabsTrigger value="lead-generation" className="text-xs">Lead Generation</TabsTrigger>
-            <TabsTrigger value="customer-experience" className="text-xs">Customer Experience</TabsTrigger>
-            <TabsTrigger value="retention-growth" className="text-xs">Retention & Growth</TabsTrigger>
-          </TabsList>
-        )}
+                </TabsTrigger>
+              </TabsList>
+            )}
 
-        <TabsContent value="market-research">
-          <MarketResearchTab />
-        </TabsContent>
+            <div className="mt-6">
+              <TabsContent value="market-research" className="mt-0">
+                <MarketResearchTab />
+              </TabsContent>
 
-        <TabsContent value="digital-marketing">
-          <DigitalMarketingTab />
-        </TabsContent>
+              <TabsContent value="digital-marketing" className="mt-0">
+                <DigitalMarketingTab />
+              </TabsContent>
 
-        <TabsContent value="traditional-marketing">
-          <TraditionalMarketingTab />
-        </TabsContent>
+              <TabsContent value="traditional-marketing" className="mt-0">
+                <TraditionalMarketingTab />
+              </TabsContent>
 
-        <TabsContent value="lead-generation">
-          <LeadGenerationTab />
-        </TabsContent>
+              <TabsContent value="lead-generation" className="mt-0">
+                <LeadGenerationTab />
+              </TabsContent>
 
-        <TabsContent value="customer-experience">
-          <CustomerExperienceTab />
-        </TabsContent>
+              <TabsContent value="customer-experience" className="mt-0">
+                <CustomerExperienceTab />
+              </TabsContent>
 
-        <TabsContent value="retention-growth">
-          <RetentionGrowthTab />
-        </TabsContent>
-      </Tabs>
-      
-      <SaveToFavouritesButton />
+              <TabsContent value="retention-growth" className="mt-0">
+                <RetentionGrowthTab />
+              </TabsContent>
+            </div>
+          </Tabs>
+        </div>
+
+        <SaveToFavouritesButton />
+      </div>
     </div>
   );
 };
