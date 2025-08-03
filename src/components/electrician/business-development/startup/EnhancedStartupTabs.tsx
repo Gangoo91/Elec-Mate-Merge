@@ -1,7 +1,7 @@
 
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DropdownTabs } from "@/components/ui/dropdown-tabs";
 import { Heart, TrendingUp, Scale, Users } from "lucide-react";
 import BusinessPlanningTab from "./BusinessPlanningTab";
 import LegalComplianceTab from "./LegalComplianceTab";
@@ -22,34 +22,30 @@ const EnhancedStartupTabs = () => {
         <BackButton customUrl="/electrician/business-development" label="Back to Business Development" />
       </div>
 
-      <Tabs defaultValue="planning" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="planning" className="flex items-center gap-2">
-            <TrendingUp className="h-4 w-4" />
-            Business Planning
-          </TabsTrigger>
-          <TabsTrigger value="legal" className="flex items-center gap-2">
-            <Scale className="h-4 w-4" />
-            Legal & Compliance
-          </TabsTrigger>
-          <TabsTrigger value="support" className="flex items-center gap-2">
-            <Users className="h-4 w-4" />
-            Support & Resources
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="planning">
-          <BusinessPlanningTab />
-        </TabsContent>
-
-        <TabsContent value="legal">
-          <LegalComplianceTab />
-        </TabsContent>
-
-        <TabsContent value="support">
-          <SupportResourcesTab />
-        </TabsContent>
-      </Tabs>
+      <DropdownTabs
+        defaultValue="planning"
+        placeholder="Select a section"
+        tabs={[
+          {
+            value: "planning",
+            label: "Business Planning",
+            icon: TrendingUp,
+            content: <BusinessPlanningTab />
+          },
+          {
+            value: "legal",
+            label: "Legal & Compliance",
+            icon: Scale,
+            content: <LegalComplianceTab />
+          },
+          {
+            value: "support",
+            label: "Support & Resources",
+            icon: Users,
+            content: <SupportResourcesTab />
+          }
+        ]}
+      />
 
       <Card className="border-green-500/50 bg-green-500/10">
         <CardHeader>
