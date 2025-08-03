@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownTabs } from "@/components/ui/dropdown-tabs";
-import { Target, TrendingUp, Users, Search, Monitor, Megaphone, ArrowLeft } from "lucide-react";
+import { Target, TrendingUp, Users, Search, Monitor, Megaphone, ArrowLeft, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import MarketResearchTab from "@/components/electrician/business/customers/tabs/MarketResearchTab";
@@ -16,14 +16,14 @@ const BusinessCustomers = () => {
       {/* Hero Section */}
       <div className="bg-elec-gray rounded-lg p-8 text-center space-y-6">
         <div className="flex items-center justify-center gap-4">
-          <Target className="h-8 w-8 text-elec-yellow" />
+          <Zap className="h-8 w-8 text-elec-yellow" />
           <h1 className="text-4xl md:text-5xl font-bold text-white">
-            Customer Acquisition for Electricians
+            Starting an Electrical Business
           </h1>
         </div>
         
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          Building a solid customer base requires both strategy and consistency. This comprehensive guide offers proven methods for UK electrical contractors to attract, convert and retain valuable customers.
+          Your complete guide to establishing and growing a successful electrical contracting business in the UK
         </p>
         
         <Link to="/electrician/business-development">
