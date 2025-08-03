@@ -238,27 +238,27 @@ const RetentionTab = () => {
                         {framework.timeline}
                       </Badge>
                     </div>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{framework.description}</p>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground text-left`}>{framework.description}</p>
                   </div>
 
-                  <div>
+                  <div className="text-left">
                     <h5 className={`font-medium text-blue-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Implementation Components</h5>
                     <ul className="space-y-1">
                       {framework.components.map((component, compIndex) => (
-                        <li key={compIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-center gap-1`}>
-                          <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                          {component}
+                        <li key={compIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-start gap-2 text-left`}>
+                          <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0 mt-0.5" />
+                          <span>{component}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="bg-green-500/10 border border-green-500/30 rounded p-2">
+                  <div className="bg-green-500/10 border border-green-500/30 rounded p-2 text-left">
                     <h5 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Business Impact</h5>
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{framework.employerBenefit}</p>
                   </div>
 
-                  <div>
+                  <div className="text-left">
                     <h5 className={`font-medium text-purple-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Success Indicators</h5>
                     <div className="flex flex-wrap gap-1">
                       {framework.kpis.map((kpi, kpiIndex) => (
