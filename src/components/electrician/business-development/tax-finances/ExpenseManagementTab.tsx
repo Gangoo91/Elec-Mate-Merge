@@ -47,75 +47,75 @@ const ExpenseManagementTab = () => {
       icon: <Car className="h-5 w-5" />,
       cards: [
         {
-          title: "Business Mileage",
+          title: "Strategy Overview",
           color: "blue",
           items: [
-            "45p per mile (first 10,000 miles annually)",
-            "25p per mile (over 10,000 miles)",
-            "Keep detailed mileage log with dates",
-            "Record start/end locations and purpose",
-            "Include return journeys to base",
-            "Separate business from personal use"
+            "Vehicle expenses are typically the largest deductible cost for electrical contractors",
+            "Choose between simplified mileage rates or actual cost method",
+            "Maintain clear distinction between business and personal use",
+            "Consider capital allowances for vehicle purchases",
+            "Optimize tax relief through proper documentation",
+            "Plan vehicle replacement to maximize allowances"
           ]
         },
         {
-          title: "Vehicle Running Costs",
+          title: "Implementation Timeline",
           color: "green", 
           items: [
-            "Fuel for business journeys only",
-            "Insurance (business use class)",
-            "MOT, servicing, and repairs",
-            "Vehicle tax and registration",
-            "Breakdown cover and AA membership",
-            "Commercial vehicle license fees"
+            "Day 1: Set up mileage tracking system (digital or manual)",
+            "Week 1: Establish receipt collection process for fuel/expenses",
+            "Week 2: Configure business bank account for vehicle costs",
+            "Month 1: Review insurance policy for business use coverage",
+            "Quarterly: Reconcile mileage logs with fuel receipts",
+            "Annually: Calculate actual vs simplified method comparison"
           ]
         },
         {
-          title: "Parking & Travel",
+          title: "Business Benefits",
           color: "orange",
           items: [
-            "Customer site parking fees",
-            "Congestion and toll charges",
-            "Public transport for site visits",
-            "Hotel accommodation when necessary",
-            "Subsistence during long jobs",
-            "Travel to training courses"
+            "Significant tax relief on legitimate business travel",
+            "45p per mile rate often exceeds actual costs",
+            "Simplified record keeping with mileage method",
+            "Capital allowances available on vehicle purchases",
+            "Running costs fully deductible when business use",
+            "Professional image through branded vehicle signage"
           ]
         },
         {
-          title: "Van Purchase/Lease",
+          title: "Key Features & Requirements",
           color: "purple",
           items: [
-            "Vehicle depreciation (if purchased)",
-            "Monthly lease or hire payments",
-            "Initial deposit payments",
-            "Vehicle modifications for trade use",
-            "Racking and storage systems",
-            "Sign writing and branding costs"
+            "Mileage rate: 45p first 10,000 miles, 25p thereafter",
+            "Business use insurance classification essential",
+            "Detailed journey logs with purpose and destinations",
+            "Cannot claim both mileage and actual costs",
+            "Parking, tolls, and congestion charges separately claimable",
+            "Van modifications and racking systems allowable"
           ]
         },
         {
-          title: "Record Keeping",
+          title: "Tax Considerations",
           color: "yellow",
           items: [
-            "Digital mileage tracking apps",
-            "Fuel receipt collection system",
-            "Service and maintenance records",
-            "Insurance certificate copies",
-            "Business vs personal usage split",
-            "Annual mileage reconciliation"
+            "Mileage allowance relief reduces taxable profit",
+            "Annual Investment Allowance available on vehicle purchases",
+            "Private use benefit-in-kind charges may apply",
+            "VAT recovery possible on fuel for business use",
+            "Capital gains implications on vehicle disposal",
+            "Choose optimal timing for vehicle purchases (year-end)"
           ]
         },
         {
-          title: "Common Mistakes",
+          title: "Success Metrics/KPIs",
           color: "red",
           items: [
-            "Claiming personal/commuting mileage",
-            "Missing fuel receipts for evidence",
-            "Incorrect business use percentage",
-            "Not updating insurance for business use",
-            "Claiming both mileage and actual costs",
-            "Poor documentation of journey purposes"
+            "Vehicle cost as percentage of turnover: Target <15%",
+            "Mileage claim accuracy: 100% business journey verification",
+            "Documentation compliance: Complete records for 6 years",
+            "Tax relief optimization: Compare methods annually",
+            "Fuel efficiency monitoring: Track mpg improvements",
+            "Insurance claims: Maintain clean business driving record"
           ]
         }
       ]
@@ -125,75 +125,75 @@ const ExpenseManagementTab = () => {
       icon: <Wrench className="h-5 w-5" />,
       cards: [
         {
-          title: "Hand Tools",
+          title: "Strategy Overview",
           color: "blue",
           items: [
-            "Screwdrivers, spanners, and pliers",
-            "Wire strippers and crimping tools",
-            "Voltage testers and multimeters",
-            "Socket sets and allen keys",
-            "Torque wrenches for terminals",
-            "Specialist electrical hand tools"
+            "Tool expenses are second largest after vehicles for electrical contractors",
+            "Investment in quality tools improves efficiency and safety",
+            "Balance between capital purchases and ongoing consumables",
+            "Annual Investment Allowance available for tool purchases",
+            "Consider tool hire vs purchase for specialist equipment",
+            "Professional testing equipment essential for BS7671 compliance"
           ]
         },
         {
-          title: "Power Tools",
+          title: "Implementation Timeline",
           color: "green",
           items: [
-            "Drills and SDS hammers",
-            "Angle grinders and cutting discs", 
-            "Jigsaw and reciprocating saws",
-            "Cordless drivers and impacts",
-            "Cable pulling equipment",
-            "Conduit bending machines"
+            "Day 1: Create tool inventory with purchase dates and values",
+            "Week 1: Set up tool insurance policy and documentation",
+            "Week 2: Establish supplier accounts for trade discounts",
+            "Month 1: Implement tool tracking and maintenance system",
+            "Quarterly: Review tool condition and replacement needs",
+            "Annually: Update insurance valuations and depreciation"
           ]
         },
         {
-          title: "Testing Equipment",
+          title: "Business Benefits",
           color: "orange",
           items: [
-            "Installation testers (17th/18th edition)",
-            "PAT testing equipment",
-            "Insulation resistance testers",
-            "Earth fault loop impedance testers",
-            "RCD testers and proving units",
-            "Calibration certificates annually"
+            "100% tax relief on tools purchased for business use",
+            "Annual Investment Allowance covers most tool purchases",
+            "Quality tools reduce job completion times",
+            "Professional image with quality equipment",
+            "Reduced liability through compliant testing equipment",
+            "Trade discounts available through electrical wholesalers"
           ]
         },
         {
-          title: "Consumables",
+          title: "Key Features & Requirements",
           color: "purple",
           items: [
-            "Cable and flex of various sizes",
-            "Switches, sockets, and accessories",
-            "Screws, rawl plugs, and fixings",
-            "Cable ties and marking labels",
-            "Junction boxes and connectors",
-            "Fuses, MCBs, and RCDs"
+            "Must be used wholly and exclusively for business",
+            "Receipts required for all tool purchases",
+            "Installation testers must meet BS7671 18th Edition",
+            "Annual calibration certificates for testing equipment",
+            "Tool theft insurance recommended (minimum £10,000)",
+            "Consumables fully deductible as revenue expenses"
           ]
         },
         {
-          title: "Storage & Organisation",
+          title: "Tax Considerations",
           color: "yellow",
           items: [
-            "Tool bags and storage cases",
-            "Van racking and drawer systems",
-            "Parts bins and component storage",
-            "Tool security and locks",
-            "Workshop storage solutions",
-            "Inventory management systems"
+            "Annual Investment Allowance: 100% first year relief",
+            "Capital vs revenue distinction for accounting",
+            "VAT recovery on business tool purchases",
+            "Plant and machinery allowances for expensive equipment",
+            "Pool depreciation at 18% for items over £1,000",
+            "Timing purchases for optimal tax relief"
           ]
         },
         {
-          title: "Maintenance & Insurance",
+          title: "Success Metrics/KPIs",
           color: "red",
           items: [
-            "Annual tool insurance policies",
-            "Equipment repair and servicing",
-            "Battery replacements and chargers",
-            "Tool theft and loss coverage",
-            "Professional indemnity for testing",
-            "Equipment depreciation schedules"
+            "Tool cost per job: Monitor efficiency improvements",
+            "Insurance claims ratio: Target zero theft/damage",
+            "Calibration compliance: 100% up-to-date certificates",
+            "Tool utilisation: Track return on investment",
+            "Replacement cycle: Optimise based on usage patterns",
+            "Total tool value: Maintain appropriate insurance cover"
           ]
         }
       ]
@@ -203,75 +203,75 @@ const ExpenseManagementTab = () => {
       icon: <Home className="h-5 w-5" />,
       cards: [
         {
-          title: "Simplified Expenses",
+          title: "Strategy Overview",
           color: "blue",
           items: [
-            "£6 per week for 25+ hours use",
-            "£4 per week for 101-200 hours/month",
-            "£2 per week for 51-100 hours/month",
-            "No receipts required for this method",
-            "Covers heating, lighting, and utilities",
-            "Cannot claim other home office costs"
+            "Home office expenses provide valuable tax relief for electrical contractors",
+            "Choose between simplified flat rate or actual cost method",
+            "Simplified method often more advantageous for small offices",
+            "Actual cost method better for larger dedicated office spaces",
+            "Essential for administrative work and customer communications",
+            "Must be used regularly and exclusively for business"
           ]
         },
         {
-          title: "Actual Cost Method",
+          title: "Implementation Timeline",
           color: "green",
           items: [
-            "Calculate office area percentage",
-            "Proportion of utility bills",
-            "Home insurance business use",
-            "Council tax business rates",
-            "Mortgage interest (if applicable)",
-            "Cleaning and maintenance costs"
+            "Day 1: Measure office space and calculate business use percentage",
+            "Week 1: Set up time tracking for home office usage",
+            "Week 2: Separate business communications from personal",
+            "Month 1: Review utility bills and establish baseline costs",
+            "Quarterly: Track actual vs simplified method benefits",
+            "Annually: Review space usage and optimize method choice"
           ]
         },
         {
-          title: "Office Equipment",
+          title: "Business Benefits",
           color: "orange",
           items: [
-            "Computer and laptop purchases",
-            "Printer, scanner, and consumables",
-            "Office furniture and chairs",
-            "Filing systems and storage",
-            "Lighting and electrical equipment",
-            "Safety equipment and signage"
+            "Significant tax relief on home running costs",
+            "Professional work environment for customer communications",
+            "Reduced overhead compared to external office space",
+            "Flexibility to work during non-standard hours",
+            "Improved work-life balance and efficiency",
+            "Lower business premises insurance costs"
           ]
         },
         {
-          title: "Communication Costs",
+          title: "Key Features & Requirements",
           color: "purple",
           items: [
-            "Business telephone line rental",
-            "Mobile phone contracts and calls",
-            "Internet broadband packages",
-            "Professional answering services",
-            "Video conferencing subscriptions",
-            "Business communication apps"
+            "Simplified method: £6/week for 25+ hours usage",
+            "Regular and exclusive business use essential",
+            "Actual cost method requires detailed records",
+            "Business use percentage calculation needed",
+            "Cannot claim both methods simultaneously",
+            "Office equipment 100% deductible if business only"
           ]
         },
         {
-          title: "Software & Subscriptions",
+          title: "Tax Considerations",
           color: "yellow",
           items: [
-            "Design and calculation software",
-            "Accounting and invoicing systems",
-            "Cloud storage and backup services",
-            "Professional development courses",
-            "Trade publication subscriptions",
-            "Online training platforms"
+            "Home office allowance reduces taxable profit",
+            "No Capital Gains Tax implications with simplified method",
+            "Actual costs may trigger CGT on property disposal",
+            "VAT recovery possible on office equipment",
+            "Annual Investment Allowance on office equipment",
+            "Communication costs fully deductible"
           ]
         },
         {
-          title: "Documentation Requirements",
+          title: "Success Metrics/KPIs",
           color: "red",
           items: [
-            "Floor area measurements and plans",
-            "Time logs for home office use",
-            "Utility bill copies and calculations",
-            "Equipment purchase receipts",
-            "Home insurance policy details",
-            "Business use percentage records"
+            "Office usage hours: Minimum 25 hours/week for £6 rate",
+            "Documentation compliance: Complete usage logs",
+            "Cost comparison: Simplified vs actual method annually",
+            "Space efficiency: Optimize business use percentage",
+            "Equipment productivity: Track technology improvements",
+            "Communication costs: Monitor as percentage of turnover"
           ]
         }
       ]
@@ -281,75 +281,75 @@ const ExpenseManagementTab = () => {
       icon: <Receipt className="h-5 w-5" />,
       cards: [
         {
-          title: "Accounting & Legal",
+          title: "Strategy Overview",
           color: "blue",
           items: [
-            "Annual accountancy fees",
-            "Bookkeeping and payroll services",
-            "Tax advice and planning",
-            "Legal consultation and contracts",
-            "Debt collection services",
-            "Employment law advice"
+            "Professional services ensure legal compliance and business protection",
+            "Insurance premiums are essential business expenses",
+            "Training costs maintain professional competence and certifications",
+            "Professional advice prevents costly mistakes and penalties",
+            "Marketing expenses build customer base and reputation",
+            "Banking services facilitate professional business operations"
           ]
         },
         {
-          title: "Insurance Premiums",
+          title: "Implementation Timeline",
           color: "green",
           items: [
-            "Public liability insurance",
-            "Professional indemnity cover",
-            "Employers' liability insurance",
-            "Tool and equipment insurance",
-            "Motor trade insurance",
-            "Income protection policies"
+            "Day 1: Arrange essential insurance policies (liability, indemnity)",
+            "Week 1: Set up business banking with appropriate facilities",
+            "Week 2: Register with professional bodies and schemes",
+            "Month 1: Establish relationships with accountant and solicitor",
+            "Quarterly: Review insurance coverage and professional needs",
+            "Annually: Update training, certifications and marketing strategy"
           ]
         },
         {
-          title: "Training & Certification",
+          title: "Business Benefits",
           color: "orange",
           items: [
-            "18th Edition course updates",
-            "Part P certification costs",
-            "PAT testing qualifications",
-            "Health and safety training",
-            "Manufacturer product training",
-            "CPD and continuing education"
+            "100% tax relief on legitimate professional service costs",
+            "Legal protection through appropriate insurance coverage",
+            "Professional credibility through memberships and training",
+            "Expert advice prevents expensive compliance failures",
+            "Marketing investment generates new customer acquisition",
+            "Efficient banking services improve cash flow management"
           ]
         },
         {
-          title: "Professional Memberships",
+          title: "Key Features & Requirements",
           color: "purple",
           items: [
-            "Trade association membership",
-            "Professional body registration",
-            "Competent person scheme fees",
-            "Industry certification renewals",
-            "Union membership subscriptions",
-            "Networking group participation"
+            "Public liability insurance minimum £2 million essential",
+            "Professional indemnity recommended for electrical testing",
+            "18th Edition certification mandatory for electrical work",
+            "Competent Person Scheme membership required for notification",
+            "Annual accounts preparation for limited companies",
+            "Marketing expenses must be wholly for business purpose"
           ]
         },
         {
-          title: "Banking & Finance",
+          title: "Tax Considerations",
           color: "yellow",
           items: [
-            "Business bank account charges",
-            "Card machine rental and fees",
-            "Loan interest on business borrowing",
-            "Overdraft fees and charges",
-            "Currency exchange costs",
-            "Financial advisory services"
+            "Insurance premiums fully deductible business expenses",
+            "Training costs allowable if maintaining existing skills",
+            "Professional fees reduce taxable profit",
+            "Bank charges and loan interest fully deductible",
+            "Marketing costs spread if benefiting multiple years",
+            "Legal fees deductible if relating to business matters"
           ]
         },
         {
-          title: "Marketing & Advertising",
+          title: "Success Metrics/KPIs",
           color: "red",
           items: [
-            "Website design and hosting",
-            "Online advertising campaigns",
-            "Business cards and stationery",
-            "Vehicle signage and branding",
-            "Trade directory listings",
-            "Photography and promotional materials"
+            "Insurance cost as percentage of turnover: Target <3%",
+            "Professional service ROI: Measure advice value vs cost",
+            "Training compliance: Maintain 100% certification currency",
+            "Banking efficiency: Minimize fees through relationship management",
+            "Marketing effectiveness: Track customer acquisition cost",
+            "Professional network: Build valuable industry relationships"
           ]
         }
       ]
@@ -359,75 +359,75 @@ const ExpenseManagementTab = () => {
       icon: <Smartphone className="h-5 w-5" />,
       cards: [
         {
-          title: "Expense Tracking Apps",
+          title: "Strategy Overview",
           color: "blue",
           items: [
-            "QuickBooks Self-Employed",
-            "Xero expense management",
-            "Receipt Bank photo capture",
-            "Sage Business Cloud Expenses",
-            "FreeAgent mobile app",
-            "Expensify for business travel"
+            "Digital systems eliminate manual record keeping errors",
+            "Real-time expense tracking improves cash flow visibility",
+            "Automated categorisation saves time and improves accuracy",
+            "Cloud-based systems provide secure backup and accessibility",
+            "Integration reduces duplicate data entry across systems",
+            "Professional reporting enhances tax preparation efficiency"
           ]
         },
         {
-          title: "Mileage Tracking",
+          title: "Implementation Timeline",
           color: "green",
           items: [
-            "MileIQ automatic tracking",
-            "TripLog GPS recording",
-            "Everlance business mileage",
-            "SherpaShare expense tracker",
-            "Manual logbook alternatives",
-            "Integration with accounting software"
+            "Week 1: Research and select appropriate expense tracking app",
+            "Week 2: Set up bank feeds and automated categorisation",
+            "Week 3: Configure mileage tracking and GPS systems",
+            "Month 1: Train on receipt capture and document storage",
+            "Month 2: Integrate with existing accounting software",
+            "Ongoing: Regular system maintenance and updates"
           ]
         },
         {
-          title: "Banking Integration",
+          title: "Business Benefits",
           color: "orange",
           items: [
-            "Open Banking connections",
-            "Automatic transaction categorisation",
-            "Bank feed reconciliation",
-            "Real-time expense monitoring",
-            "Duplicate transaction detection",
-            "Multi-account consolidation"
+            "Significant time savings on expense administration",
+            "Improved accuracy and reduced risk of HMRC queries",
+            "Real-time business performance visibility",
+            "Enhanced professional image with digital processes",
+            "Better cash flow management through timely tracking",
+            "Simplified tax return preparation and compliance"
           ]
         },
         {
-          title: "Invoice Management",
+          title: "Key Features & Requirements",
           color: "purple",
           items: [
-            "Digital invoice processing",
-            "Supplier payment tracking",
-            "Purchase order systems",
-            "Approval workflow setup",
-            "Budget monitoring alerts",
-            "Cost centre allocation"
+            "Receipt capture through smartphone camera essential",
+            "GPS-based mileage tracking for accurate records",
+            "Bank feed integration for automated transaction import",
+            "VAT-ready categorisation for quarterly returns",
+            "Secure cloud storage with encryption",
+            "Export capabilities for accountant collaboration"
           ]
         },
         {
-          title: "Cloud Storage",
+          title: "Tax Considerations",
           color: "yellow",
           items: [
-            "Receipt and document backup",
-            "Searchable expense archives",
-            "Team collaboration features",
-            "Version control systems",
-            "Automatic data synchronisation",
-            "Secure data encryption"
+            "Software subscriptions fully deductible business expenses",
+            "Digital records acceptable for HMRC compliance",
+            "Must maintain backup systems for data security",
+            "Automatic categorisation improves expense claim accuracy",
+            "Real-time tracking prevents missed expense opportunities",
+            "Professional reporting supports tax investigation defence"
           ]
         },
         {
-          title: "Reporting Features",
+          title: "Success Metrics/KPIs",
           color: "red",
           items: [
-            "Real-time expense dashboards",
-            "Tax year summary reports",
-            "Category breakdown analysis",
-            "Profit and loss integration",
-            "Budget vs actual comparisons",
-            "Custom reporting templates"
+            "Time savings: Target 75% reduction in manual processing",
+            "Accuracy improvement: Aim for 99%+ expense categorisation",
+            "Compliance rate: 100% receipts captured within 24 hours",
+            "Cost-benefit: Software cost under 1% of total expenses",
+            "User adoption: Daily system usage by all team members",
+            "Integration efficiency: Seamless data flow between systems"
           ]
         }
       ]
@@ -437,75 +437,75 @@ const ExpenseManagementTab = () => {
       icon: <Calculator className="h-5 w-5" />,
       cards: [
         {
-          title: "Annual Allowances",
+          title: "Strategy Overview",
           color: "blue",
           items: [
-            "£1,000 trading allowance benefit",
-            "Annual Investment Allowance limits",
-            "Capital allowances on equipment",
-            "Research and development credits",
-            "Energy efficiency incentives",
-            "Electric vehicle benefits"
+            "Strategic expense timing maximizes tax relief benefits",
+            "Annual allowances provide 100% first-year relief opportunities",
+            "Proper business structure selection optimizes overall tax efficiency",
+            "Professional advice ensures compliance and identifies opportunities",
+            "Regular reviews prevent missed allowances and deadline penalties",
+            "Long-term planning balances cash flow with tax optimization"
           ]
         },
         {
-          title: "Timing Strategies",
+          title: "Implementation Timeline",
           color: "green",
           items: [
-            "Year-end equipment purchases",
-            "Expense timing optimisation",
-            "Income smoothing techniques",
-            "Capital vs revenue expenditure",
-            "Pre-payment of annual costs",
-            "Seasonal cash flow planning"
+            "April: Annual review of allowances and tax rates changes",
+            "Monthly: Monitor cumulative expenses against allowances",
+            "September: Begin year-end tax planning with accountant",
+            "December: Execute year-end purchase strategies",
+            "January: Ensure all expenses properly documented",
+            "March: Final reconciliation before tax year end"
           ]
         },
         {
-          title: "Business Structure",
+          title: "Business Benefits",
           color: "orange",
           items: [
-            "Sole trader vs limited company",
-            "IR35 compliance considerations",
-            "Dividend vs salary optimisation",
-            "Pension contribution strategies",
-            "Capital gains planning",
-            "Inheritance tax mitigation"
+            "Significant tax savings through strategic expense timing",
+            "Improved cash flow through optimized allowance utilization",
+            "Reduced compliance risk through professional guidance",
+            "Enhanced business efficiency through structured planning",
+            "Better financial control through regular monitoring",
+            "Competitive advantage through lower effective tax rates"
           ]
         },
         {
-          title: "Record Organisation",
+          title: "Key Features & Requirements",
           color: "purple",
           items: [
-            "Monthly expense reconciliation",
-            "Quarterly VAT preparation",
-            "Annual accounts readiness",
-            "Audit trail maintenance",
-            "Document retention policies",
-            "Digital backup strategies"
+            "Annual Investment Allowance currently £1 million limit",
+            "Trading allowance £1,000 for qualifying small businesses",
+            "Capital vs revenue expenditure classification crucial",
+            "Timing of payments affects tax year allocation",
+            "Professional advice essential for complex situations",
+            "Complete documentation required for all claims"
           ]
         },
         {
-          title: "Professional Advice",
+          title: "Tax Considerations",
           color: "yellow",
           items: [
-            "Regular accountant consultations",
-            "Tax planning meetings",
-            "Business structure reviews",
-            "Compliance health checks",
-            "Investment opportunity analysis",
-            "Risk assessment procedures"
+            "Annual Investment Allowance provides 100% relief in year 1",
+            "Capital allowances pool at 18% for equipment over £1,000",
+            "Revenue expenses deductible in full in year incurred",
+            "Timing of payment determines tax year allocation",
+            "Pre-payment strategies can accelerate relief",
+            "Business structure affects available allowances and rates"
           ]
         },
         {
-          title: "Common Pitfalls",
+          title: "Success Metrics/KPIs",
           color: "red",
           items: [
-            "Mixed business/personal expenses",
-            "Inadequate documentation",
-            "Missing deadline penalties",
-            "Incorrect expense categorisation",
-            "Overlooked allowable costs",
-            "Poor cash flow management"
+            "Effective tax rate: Monitor year-on-year improvements",
+            "Allowance utilisation: Target 100% of available reliefs",
+            "Professional advice ROI: Tax savings vs advisory costs",
+            "Compliance score: Zero penalties or interest charges",
+            "Planning horizon: Maintain 3-year tax strategy",
+            "Documentation quality: Pass any HMRC review"
           ]
         }
       ]
