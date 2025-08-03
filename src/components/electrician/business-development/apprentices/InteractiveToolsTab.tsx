@@ -16,7 +16,7 @@ import {
   Zap
 } from "lucide-react";
 import EnhancedCostCalculator from "./interactive/EnhancedCostCalculator";
-import DigitalSkillsAnalyzer from "./interactive/DigitalSkillsAnalyzer";
+import DigitalSkillsAnalyser from "./interactive/DigitalSkillsAnalyser";
 import TrainingScheduleOptimizer from "./interactive/TrainingScheduleOptimizer";
 import ComplianceChecker from "./interactive/ComplianceChecker";
 
@@ -92,11 +92,11 @@ const InteractiveToolsTab = () => {
 
           <MobileAccordionItem value="skills">
             <MobileAccordionTrigger icon={<Brain className="h-5 w-5 text-blue-400" />}>
-              Skills Gap Analyzer
+              Skills Gap Analyser
             </MobileAccordionTrigger>
             <MobileAccordionContent>
               <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4">
-                <DigitalSkillsAnalyzer />
+                <DigitalSkillsAnalyser />
               </div>
             </MobileAccordionContent>
           </MobileAccordionItem>
@@ -185,7 +185,7 @@ const InteractiveToolsTab = () => {
         <EnhancedCostCalculator />
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <DigitalSkillsAnalyzer />
+          <DigitalSkillsAnalyser />
           <TrainingScheduleOptimizer />
         </div>
         

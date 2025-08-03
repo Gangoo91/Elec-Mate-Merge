@@ -1,11 +1,11 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Brain, CheckCircle, AlertTriangle, Target } from "lucide-react";
 import { useState } from "react";
 
-const DigitalSkillsAnalyzer = () => {
+const DigitalSkillsAnalyser = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [isComplete, setIsComplete] = useState(false);
@@ -112,122 +112,116 @@ const DigitalSkillsAnalyzer = () => {
     const results = calculateResults();
     
     return (
-      <Card className="border-blue-500/20 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
+      <div className="space-y-6">
+        <div className="border-blue-500/20 bg-blue-500/10 rounded-lg p-4">
+          <div className="flex items-center gap-2 text-blue-400 text-lg font-semibold mb-6">
             <Brain className="h-5 w-5" />
             Skills Gap Analysis Results
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {/* Overall Score */}
-            <div className="text-center">
-              <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg ${results.level.bg}`}>
-                <Target className={`h-5 w-5 ${results.level.color}`} />
-                <span className={`text-lg font-bold ${results.level.color}`}>
-                  {results.level.text} Level
-                </span>
-              </div>
-              <div className="mt-2">
-                <Progress value={results.percentage} className="w-full" />
-                <div className="text-sm text-muted-foreground mt-1">
-                  {results.totalScore}/{results.maxScore} points ({results.percentage.toFixed(0)}%)
-                </div>
-              </div>
-            </div>
-
-            {/* Recommendation */}
-            <div className="p-4 bg-elec-gray border border-elec-yellow/20 rounded-lg">
-              <h4 className="font-semibold text-white mb-2">Recommendation</h4>
-              <p className="text-muted-foreground">{results.recommendation}</p>
-            </div>
-
-            {/* Training Focus Areas */}
-            <div>
-              <h4 className="font-semibold text-white mb-3">Recommended Training Focus</h4>
-              <div className="flex flex-wrap gap-2">
-                {results.trainingFocus.map((focus, index) => (
-                  <Badge key={index} variant="outline" className="text-blue-300 border-blue-400/30">
-                    {focus}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-
-            {/* Individual Category Breakdown */}
-            <div>
-              <h4 className="font-semibold text-white mb-3">Category Breakdown</h4>
-              <div className="space-y-3">
-                {skillsQuestions.map((question, index) => (
-                  <div key={index} className="flex justify-between items-center p-3 bg-elec-dark/50 rounded">
-                    <span className="text-white">{question.category}</span>
-                    <div className="flex items-center gap-2">
-                      <Progress value={((answers[index] || 0) / 4) * 100} className="w-20" />
-                      <span className="text-sm text-muted-foreground">{answers[index] || 0}/4</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <Button onClick={resetAnalyzer} variant="outline" className="w-full">
-              Analyze Another Candidate
-            </Button>
           </div>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  return (
-    <Card className="border-blue-500/20 bg-blue-500/10">
-      <CardHeader>
-        <CardTitle className="text-blue-400 flex items-center gap-2">
-          <Brain className="h-5 w-5" />
-          Digital Skills Gap Analyzer
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {/* Progress */}
-          <div className="flex justify-between items-center">
-            <span className="text-sm text-blue-200">
-              Question {currentQuestion + 1} of {skillsQuestions.length}
-            </span>
-            <Progress value={((currentQuestion) / skillsQuestions.length) * 100} className="w-32" />
+          
+          {/* Overall Score */}
+          <div className="text-center mb-6">
+            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg ${results.level.bg}`}>
+              <Target className={`h-5 w-5 ${results.level.color}`} />
+              <span className={`text-lg font-bold ${results.level.color}`}>
+                {results.level.text} Level
+              </span>
+            </div>
+            <div className="mt-2">
+              <Progress value={results.percentage} className="w-full" />
+              <div className="text-sm text-muted-foreground mt-1">
+                {results.totalScore}/{results.maxScore} points ({results.percentage.toFixed(0)}%)
+              </div>
+            </div>
           </div>
 
-          {/* Question */}
-          <div className="p-4 bg-elec-gray border border-blue-500/20 rounded-lg">
-            <h4 className="font-semibold text-blue-300 mb-2">
-              {skillsQuestions[currentQuestion].category}
-            </h4>
-            <p className="text-white mb-4">
-              {skillsQuestions[currentQuestion].question}
-            </p>
-            
-            <div className="space-y-2">
-              {skillsQuestions[currentQuestion].options.map((option, index) => (
-                <Button
-                  key={index}
-                  variant="outline"
-                  className="w-full justify-start border-blue-500/30 hover:bg-blue-500/20"
-                  onClick={() => handleAnswer(option.score)}
-                >
-                  {option.text}
-                </Button>
+          {/* Recommendation */}
+          <div className="p-4 bg-elec-gray border border-elec-yellow/20 rounded-lg mb-6">
+            <h4 className="font-semibold text-white mb-2">Recommendation</h4>
+            <p className="text-muted-foreground">{results.recommendation}</p>
+          </div>
+
+          {/* Training Focus Areas */}
+          <div className="mb-6">
+            <h4 className="font-semibold text-white mb-3">Recommended Training Focus</h4>
+            <div className="flex flex-wrap gap-2">
+              {results.trainingFocus.map((focus, index) => (
+                <Badge key={index} variant="outline" className="text-blue-300 border-blue-400/30">
+                  {focus}
+                </Badge>
               ))}
             </div>
           </div>
 
-          <div className="text-sm text-blue-200">
-            This assessment helps identify training priorities and development needs for new apprentices.
+          {/* Individual Category Breakdown */}
+          <div className="mb-6">
+            <h4 className="font-semibold text-white mb-3">Category Breakdown</h4>
+            <div className="space-y-3">
+              {skillsQuestions.map((question, index) => (
+                <div key={index} className="flex justify-between items-center p-3 bg-elec-dark/50 rounded">
+                  <span className="text-white">{question.category}</span>
+                  <div className="flex items-center gap-2">
+                    <Progress value={((answers[index] || 0) / 4) * 100} className="w-20" />
+                    <span className="text-sm text-muted-foreground">{answers[index] || 0}/4</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <Button onClick={resetAnalyzer} variant="outline" className="w-full">
+            Analyze Another Candidate
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="border-blue-500/20 bg-blue-500/10 rounded-lg p-4">
+        <div className="flex items-center gap-2 text-blue-400 text-lg font-semibold mb-4">
+          <Brain className="h-5 w-5" />
+          Digital Skills Gap Analyser
+        </div>
+        
+        {/* Progress */}
+        <div className="flex justify-between items-center mb-4">
+          <span className="text-sm text-blue-200">
+            Question {currentQuestion + 1} of {skillsQuestions.length}
+          </span>
+          <Progress value={((currentQuestion) / skillsQuestions.length) * 100} className="w-32" />
+        </div>
+
+        {/* Question */}
+        <div className="p-4 bg-elec-gray border border-blue-500/20 rounded-lg">
+          <h4 className="font-semibold text-blue-300 mb-2">
+            {skillsQuestions[currentQuestion].category}
+          </h4>
+          <p className="text-white mb-4">
+            {skillsQuestions[currentQuestion].question}
+          </p>
+          
+          <div className="space-y-2">
+            {skillsQuestions[currentQuestion].options.map((option, index) => (
+              <Button
+                key={index}
+                variant="outline"
+                className="w-full justify-start border-blue-500/30 hover:bg-blue-500/20"
+                onClick={() => handleAnswer(option.score)}
+              >
+                {option.text}
+              </Button>
+            ))}
           </div>
         </div>
-      </CardContent>
-    </Card>
+
+        <div className="text-sm text-blue-200 mt-4">
+          This assessment helps identify training priorities and development needs for new apprentices.
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default DigitalSkillsAnalyzer;
+export default DigitalSkillsAnalyser;
