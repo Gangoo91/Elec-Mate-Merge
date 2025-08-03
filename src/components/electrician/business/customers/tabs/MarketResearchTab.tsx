@@ -113,8 +113,8 @@ const MarketResearchTab = () => {
               <div className="space-y-4">
                 <h4 className="font-semibold text-elec-yellow">SWOT Analysis</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 bg-green-500/10 border border-green-500/20 rounded">
-                    <h5 className="font-medium text-green-600 mb-2">Strengths</h5>
+                  <div className="p-4 bg-elec-yellow/10 border border-elec-yellow/20 rounded">
+                    <h5 className="font-medium text-elec-yellow mb-2">Strengths</h5>
                     <ul className="text-sm space-y-1">
                       <li>• Qualified electricians</li>
                       <li>• Local knowledge</li>
@@ -122,8 +122,8 @@ const MarketResearchTab = () => {
                       <li>• Customer relationships</li>
                     </ul>
                   </div>
-                  <div className="p-4 bg-red-500/10 border border-red-500/20 rounded">
-                    <h5 className="font-medium text-red-600 mb-2">Weaknesses</h5>
+                  <div className="p-4 bg-elec-yellow/10 border border-elec-yellow/20 rounded">
+                    <h5 className="font-medium text-elec-yellow mb-2">Weaknesses</h5>
                     <ul className="text-sm space-y-1">
                       <li>• Limited marketing budget</li>
                       <li>• Small team capacity</li>
@@ -131,8 +131,8 @@ const MarketResearchTab = () => {
                       <li>• Online presence</li>
                     </ul>
                   </div>
-                  <div className="p-4 bg-blue-500/10 border border-blue-500/20 rounded">
-                    <h5 className="font-medium text-blue-600 mb-2">Opportunities</h5>
+                  <div className="p-4 bg-elec-yellow/10 border border-elec-yellow/20 rounded">
+                    <h5 className="font-medium text-elec-yellow mb-2">Opportunities</h5>
                     <ul className="text-sm space-y-1">
                       <li>• EV charging installations</li>
                       <li>• Smart home technology</li>
@@ -140,8 +140,8 @@ const MarketResearchTab = () => {
                       <li>• New housing developments</li>
                     </ul>
                   </div>
-                  <div className="p-4 bg-orange-500/10 border border-orange-500/20 rounded">
-                    <h5 className="font-medium text-orange-600 mb-2">Threats</h5>
+                  <div className="p-4 bg-elec-yellow/10 border border-elec-yellow/20 rounded">
+                    <h5 className="font-medium text-elec-yellow mb-2">Threats</h5>
                     <ul className="text-sm space-y-1">
                       <li>• Large competitor entry</li>
                       <li>• Economic downturn</li>

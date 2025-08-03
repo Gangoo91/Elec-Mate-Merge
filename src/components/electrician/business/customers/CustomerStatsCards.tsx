@@ -38,7 +38,7 @@ const CustomerStatsCards = () => {
       {stats.map((stat, index) => {
         const IconComponent = stat.icon;
         return (
-          <Card key={index} className="bg-card/50 border-elec-yellow/20">
+          <Card key={index} className="bg-elec-gray border-elec-yellow/20">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">
                 {stat.title}
@@ -46,12 +46,12 @@ const CustomerStatsCards = () => {
               <IconComponent className="h-4 w-4 text-elec-yellow" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-foreground">{stat.value}</div>
+              <div className="text-2xl font-bold text-elec-yellow">{stat.value}</div>
               <div className="flex items-center justify-between mt-1">
                 <p className="text-xs text-muted-foreground">
                   {stat.description}
                 </p>
-                <span className="text-xs text-green-400">{stat.trend}</span>
+                <span className="text-xs text-elec-yellow">{stat.trend}</span>
               </div>
             </CardContent>
           </Card>

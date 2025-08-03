@@ -71,9 +71,9 @@ const BusinessCustomers = () => {
         ]}
       />
 
-      <Card className="border-green-500/50 bg-green-500/10">
+      <Card className="border-elec-yellow/20 bg-elec-yellow/5">
         <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
+          <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Target className="h-5 w-5" />
             Success Tip
           </CardTitle>
