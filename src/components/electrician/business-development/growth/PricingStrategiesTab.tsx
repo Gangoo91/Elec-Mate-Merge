@@ -410,18 +410,18 @@ export const PricingStrategiesTab = () => {
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{strategy.description}</p>
                   </div>
 
-                  <div className="grid gap-4 md:grid-cols-3">
+                  <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}>
                     <div className="flex items-center gap-2">
                       <Calculator className="h-4 w-4 text-muted-foreground" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>{strategy.investment}</span>
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{strategy.investment}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>{strategy.roi}</span>
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{strategy.roi}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Shield className="h-4 w-4 text-muted-foreground" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>{strategy.riskLevel}</span>
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{strategy.riskLevel}</span>
                     </div>
                   </div>
 
