@@ -59,7 +59,7 @@ const CashFlowTab = () => {
   const cashFlowSections = [
     {
       title: "Invoice & Payment Management",
-      icon: <Receipt className="h-5 w-5 text-blue-400" />,
+      icon: <PoundSterling className="h-5 w-5 text-blue-400" />,
       cards: [
         {
           title: "Strategy Overview",
