@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { 
   TrendingUp, 
   Calendar, 
@@ -26,11 +27,33 @@ import {
 } from "lucide-react";
 
 const CashFlowTab = () => {
+  const isMobile = useIsMobile();
+  
   const metrics = [
-    { label: "Target Reserve Fund", value: "6 months", icon: <PiggyBank className="h-4 w-4" /> },
-    { label: "Payment Terms", value: "14 days", icon: <Calendar className="h-4 w-4" /> },
-    { label: "Cash Conversion", value: "21 days", icon: <TrendingUp className="h-4 w-4" /> },
-    { label: "Emergency Buffer", value: "£15,000", icon: <Shield className="h-4 w-4" /> }
+    {
+      metric: "Target Reserve Fund",
+      data: "6 months",
+      icon: <PiggyBank className="h-5 w-5 text-yellow-400" />,
+      detail: "Operating expenses emergency reserve target"
+    },
+    {
+      metric: "Payment Terms", 
+      data: "14 days",
+      icon: <Calendar className="h-5 w-5 text-blue-400" />,
+      detail: "Standard invoice payment terms for cash flow"
+    },
+    {
+      metric: "Cash Conversion",
+      data: "21 days", 
+      icon: <TrendingUp className="h-5 w-5 text-green-400" />,
+      detail: "Average days from invoice to cash received"
+    },
+    {
+      metric: "Emergency Buffer",
+      data: "£15,000",
+      icon: <Shield className="h-5 w-5 text-orange-400" />,
+      detail: "Immediate access emergency fund target"
+    }
   ];
 
   const cashFlowSections = [
@@ -498,14 +521,14 @@ const CashFlowTab = () => {
       </Alert>
 
       {/* Metrics Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}>
         {metrics.map((metric, index) => (
-          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="text-elec-yellow">{metric.icon}</div>
-              <span className="text-xs text-muted-foreground font-medium">{metric.label}</span>
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
+            <div className="text-center space-y-2">
+              {metric.icon}
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
             </div>
-            <div className="text-lg font-bold text-white">{metric.value}</div>
           </Card>
         ))}
       </div>
