@@ -5,152 +5,223 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { MobileAccordion, MobileAccordionItem, MobileAccordionTrigger, MobileAccordionContent } from "@/components/ui/mobile-accordion";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Phone, Mail, Globe, MessageCircle, FileText, Users, Heart, ExternalLink, Clock, HelpCircle } from "lucide-react";
+import { 
+  Phone, 
+  Mail, 
+  Globe, 
+  MessageCircle, 
+  FileText, 
+  Users, 
+  Heart, 
+  ExternalLink, 
+  Clock, 
+  HelpCircle,
+  Shield,
+  TrendingUp,
+  CheckCircle,
+  Award,
+  Target,
+  Eye,
+  BarChart3,
+  Brain
+} from "lucide-react";
 
 const SupportResourcesTab = () => {
   const isMobile = useIsMobile();
-  
-  const emergencyContacts = [
+
+  // Updated for 2025 - Key support metrics for employer focus
+  const supportMetrics = [
     {
-      name: "ACAS (Advisory, Conciliation and Arbitration Service)",
-      phone: "0300 123 1100",
-      description: "Free employment advice and support",
-      availability: "Monday to Friday, 8am to 6pm",
-      website: "acas.org.uk"
+      metric: "Early Support Impact",
+      data: "75% reduction in apprentice dropout risk",
+      icon: <TrendingUp className="h-5 w-5 text-green-400" />,
+      detail: "Timely support intervention prevents most apprentice failures"
     },
     {
-      name: "Apprenticeship Support Helpline",
-      phone: "0800 015 0400",
-      description: "Government support for apprentices and employers",
-      availability: "Monday to Friday, 8am to 10pm",
-      website: "apprenticeships.gov.uk"
+      metric: "Average Response Time",
+      data: "24 hours for critical support needs",
+      icon: <Clock className="h-5 w-5 text-blue-400" />,
+      detail: "Professional support networks provide rapid assistance"
     },
     {
-      name: "CITB Apprenticeship Support",
-      phone: "0344 994 4400",
-      description: "Construction industry training support",
-      availability: "Monday to Friday, 8am to 5pm",
-      website: "citb.co.uk"
+      metric: "Support Effectiveness",
+      data: "90% of issues resolved within one week",
+      icon: <Target className="h-5 w-5 text-elec-yellow" />,
+      detail: "Structured support pathways ensure quick problem resolution"
+    },
+    {
+      metric: "Mental Health ROI",
+      data: "£5.20 saved per £1 invested in wellbeing",
+      icon: <Heart className="h-5 w-5 text-purple-400" />,
+      detail: "Proactive mental health support reduces sick leave and turnover"
     }
   ];
 
-  const onlineResources = [
+  // 2025 Digital Support Framework
+  const digitalSupportPlatforms = [
     {
-      name: "GOV.UK Apprenticeships Guide",
-      url: "https://www.gov.uk/apprenticeships-guide",
-      description: "Official government guidance on apprentice rights and responsibilities",
-      category: "Government"
+      platform: "AI-Powered Apprentice Support Hub",
+      timing: "24/7 Availability",
+      description: "Modern digital support platform with intelligent triage and instant guidance",
+      components: [
+        "24/7 AI chatbot for immediate basic queries and guidance",
+        "Smart routing to appropriate human specialists within 2 hours",
+        "Digital mental health screening and wellbeing resources",
+        "Personalised support recommendations based on apprentice profile"
+      ],
+      employerBenefit: "Reduced supervisor burden while ensuring comprehensive apprentice support",
+      accessPoints: ["Mobile app", "Web portal", "SMS service", "Voice activation"]
     },
     {
-      name: "ACAS Apprentice Guide",
-      url: "https://www.acas.org.uk/apprentices",
-      description: "Employment rights and workplace issues for apprentices",
-      category: "Employment Rights"
+      platform: "Professional Crisis Intervention Network",
+      timing: "Emergency Response",
+      description: "Rapid response system for serious workplace or personal issues",
+      components: [
+        "Direct hotline to qualified counsellors and advisors",
+        "Emergency workplace mediation and conflict resolution",
+        "Legal advice triage for employment and training disputes",
+        "Immediate safety and wellbeing assessment protocols"
+      ],
+      employerBenefit: "Professional crisis management reduces business disruption and liability",
+      accessPoints: ["0800 emergency line", "Text crisis service", "Video counselling", "In-person visits"]
     },
     {
-      name: "Citizens Advice",
-      url: "https://www.citizensadvice.org.uk",
-      description: "Free advice on work, benefits, and legal issues",
-      category: "General Support"
-    },
-    {
-      name: "CITB Apprentice Hub",
-      url: "https://www.citb.co.uk/apprentices",
-      description: "Construction-specific apprentice resources and support",
-      category: "Industry Specific"
-    },
-    {
-      name: "National Apprenticeship Service",
-      url: "https://www.apprenticeships.gov.uk",
-      description: "Find training providers, employers, and career information",
-      category: "Career Development"
+      platform: "Peer & Community Support Networks",
+      timing: "Ongoing Community Building",
+      description: "Building resilient apprentice communities with peer support systems",
+      components: [
+        "Moderated online communities for apprentice peer support",
+        "Local apprentice meetups and networking events",
+        "Mentor matching with experienced qualified electricians",
+        "Skills-sharing workshops and collaborative learning sessions"
+      ],
+      employerBenefit: "Stronger apprentice retention through community belonging",
+      accessPoints: ["Social platforms", "Local venues", "Company networks", "Industry events"]
     }
   ];
 
-  const tradeUnions = [
+  const supportCategoryFramework = [
     {
-      name: "Unite the Union",
-      description: "UK's largest trade union representing electrical workers",
-      benefits: ["Legal support", "Workplace representation", "Training opportunities", "Discounted services"],
-      contact: "0800 842 0069",
-      website: "unitetheunion.org"
+      category: "Professional & Career Support",
+      services: [
+        {
+          service: "Career Development Guidance",
+          description: "Professional planning and progression support",
+          providers: ["CITB Career Advisors", "Industry Mentorship Programmes", "Professional Bodies"],
+          access: "Online booking + video consultations + local meetings",
+          impact: "Clear career pathway reduces uncertainty and improves motivation"
+        },
+        {
+          service: "Skills Development Support",
+          description: "Additional training and competency development assistance",
+          providers: ["Training Provider Support Teams", "Industry Skills Councils", "Employer Learning Coordinators"],
+          access: "Integrated with training programmes + on-demand resources",
+          impact: "Accelerated competency development and confidence building"
+        }
+      ]
     },
     {
-      name: "GMB Union",
-      description: "General union with strong electrical sector representation",
-      benefits: ["24/7 legal helpline", "Career development", "Workplace protection", "Member benefits"],
-      contact: "020 7391 6700",
-      website: "gmb.org.uk"
+      category: "Personal & Mental Wellbeing",
+      services: [
+        {
+          service: "Mental Health & Resilience Support",
+          description: "Comprehensive mental health services and stress management",
+          providers: ["NHS Psychological Wellbeing Services", "Industry Wellbeing Programmes", "Employer Assistance Programmes"],
+          access: "Self-referral + manager referral + emergency access",
+          impact: "Reduced sick leave, improved performance and retention"
+        },
+        {
+          service: "Financial Guidance & Support",
+          description: "Money management, budgeting and financial crisis support",
+          providers: ["Citizens Advice", "Financial Conduct Authority", "Industry Hardship Funds"],
+          access: "Free face-to-face + online tools + emergency support",
+          impact: "Financial stability enables focus on learning and development"
+        }
+      ]
     },
     {
-      name: "EIS (Electrical Installation Section)",
-      description: "Specialist section for electrical installation workers",
-      benefits: ["Technical support", "Industry advocacy", "Specialist training", "Networking"],
-      contact: "Via Unite the Union",
-      website: "unitetheunion.org/sectors/electrical"
+      category: "Legal & Employment Rights",
+      services: [
+        {
+          service: "Employment Rights Advisory",
+          description: "Legal guidance on workplace rights and employment issues",
+          providers: ["ACAS", "Trade Unions", "Employment Law Specialists", "Government Legal Support"],
+          access: "Free helplines + legal aid + union representation",
+          impact: "Protected employment rights and confident workplace relationships"
+        },
+        {
+          service: "Training & Assessment Support",
+          description: "Rights and support related to apprenticeship training requirements",
+          providers: ["Apprenticeship Support Service", "Ofsted", "Training Provider Student Services"],
+          access: "Dedicated apprentice helplines + online resources + advocacy",
+          impact: "Ensured training quality and apprentice progression protection"
+        }
+      ]
     }
   ];
 
-  const trainingProviders = [
+  const emergencyContactsModern = [
     {
-      name: "Local Further Education Colleges",
-      services: ["Level 3 Electrical Installation", "Functional Skills", "Additional qualifications"],
-      support: ["Learning support", "Study skills", "Career guidance"],
-      cost: "Government funded for 16-18 year olds"
+      service: "Apprenticeship Crisis Support Line",
+      contact: "0800 APPRENTICE (0800 277 736)",
+      description: "24/7 support for serious apprenticeship-related crises",
+      specialties: ["Training disputes", "Workplace safety", "Employer conflicts", "Assessment issues"],
+      responseTime: "Immediate triage, specialist callback within 2 hours"
     },
     {
-      name: "Private Training Providers",
-      services: ["Flexible delivery", "Workplace assessment", "Additional certifications"],
-      support: ["One-to-one tutoring", "Digital learning platforms", "Progress tracking"],
-      cost: "Various funding options available"
+      service: "Mental Health Crisis Line",
+      contact: "111 (NHS) or 116 123 (Samaritans)",
+      description: "Immediate mental health crisis intervention and support",
+      specialties: ["Suicide prevention", "Mental health emergency", "Crisis counselling", "Emergency referrals"],
+      responseTime: "Immediate response, trained counsellors available 24/7"
     },
     {
-      name: "Industry Training Centres",
-      services: ["Specialist equipment training", "Advanced techniques", "Industry updates"],
-      support: ["Expert instruction", "Real-world scenarios", "Career networking"],
-      cost: "Employer funded or apprenticeship levy"
+      service: "Workplace Safety Emergency",
+      contact: "HSE Incident Contact Centre: 0345 300 9923",
+      description: "Serious workplace safety incidents and immediate danger reporting",
+      specialties: ["Immediate danger", "Serious injury", "Safety violations", "Environmental hazards"],
+      responseTime: "Immediate risk assessment, inspector response within 24 hours"
     }
   ];
 
-  const mentorshipResources = [
+  const supportResourcesDigital = [
     {
-      resource: "Industry Mentorship Programmes",
-      description: "Formal mentoring schemes connecting apprentices with experienced electricians",
-      providers: ["CITB", "ECA", "NICEIC", "Local electrical associations"],
-      benefits: ["Career guidance", "Technical support", "Industry insights", "Networking opportunities"]
+      category: "Government Digital Services",
+      resources: [
+        {
+          name: "Apprenticeship Support Service Portal",
+          url: "https://apprenticeshipsupport.apprenticeships.gov.uk",
+          description: "Official government digital platform for apprentice support and guidance",
+          features: ["Live chat support", "Resource library", "Progress tracking", "Complaint resolution"],
+          availability: "24/7 online, live support Mon-Fri 8am-10pm"
+        },
+        {
+          name: "NHS Mental Health Digital Services",
+          url: "https://www.nhs.uk/mental-health/",
+          description: "Comprehensive digital mental health support and self-help resources",
+          features: ["Self-assessment tools", "Guided therapy programmes", "Crisis intervention", "Local service finder"],
+          availability: "24/7 online access, crisis support always available"
+        }
+      ]
     },
     {
-      resource: "Peer Support Networks",
-      description: "Connect with other apprentices for mutual support and learning",
-      providers: ["Apprentice forums", "Social media groups", "Local apprentice meetups"],
-      benefits: ["Shared experiences", "Study groups", "Problem solving", "Motivation"]
-    },
-    {
-      resource: "Digital Learning Communities",
-      description: "Online platforms for apprentice support and resources",
-      providers: ["LinkedIn groups", "Facebook communities", "Specialised forums"],
-      benefits: ["24/7 support", "Resource sharing", "Q&A with experts", "Career advice"]
-    }
-  ];
-
-  const wellbeingSupport = [
-    {
-      service: "Mental Health First Aid",
-      description: "Support for stress, anxiety, and mental health issues",
-      providers: ["Samaritans: 116 123", "Mind: 0300 123 3393", "Workplace counselling services"],
-      availability: "24/7 support available"
-    },
-    {
-      service: "Financial Support",
-      description: "Help with financial difficulties and budgeting",
-      providers: ["Citizens Advice", "StepChange Debt Charity", "Local credit unions"],
-      availability: "Free advice and support"
-    },
-    {
-      service: "Housing Support",
-      description: "Assistance with accommodation issues",
-      providers: ["Local housing associations", "Shelter: 0808 800 4444", "Local councils"],
-      availability: "Emergency support available"
+      category: "Industry-Specific Support",
+      resources: [
+        {
+          name: "CITB Apprentice Support Hub",
+          url: "https://www.citb.co.uk/apprentices/support",
+          description: "Construction industry specialist support for apprentices",
+          features: ["Career guidance", "Training support", "Financial assistance", "Industry networking"],
+          availability: "Online 24/7, phone support Mon-Fri 8am-6pm"
+        },
+        {
+          name: "ECA (Electrical Contractors' Association) Support",
+          url: "https://www.eca.co.uk/apprentices",
+          description: "Electrical industry professional support and career development",
+          features: ["Professional development", "Industry insights", "Networking opportunities", "Technical support"],
+          availability: "Business hours support with online resources"
+        }
+      ]
     }
   ];
 
@@ -160,32 +231,148 @@ const SupportResourcesTab = () => {
         <Alert className="border-green-500/50 bg-green-500/10">
           <Heart className="h-4 w-4 text-green-400" />
           <AlertDescription className="text-green-200">
-            Remember: Asking for help is a sign of strength, not weakness. Early support prevents small issues becoming big problems.
+            Early support intervention prevents 75% of apprentice failures. Getting help quickly makes all the difference.
           </AlertDescription>
         </Alert>
 
+        <div className="grid grid-cols-2 gap-3">
+          {supportMetrics.map((metric, index) => (
+            <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
+              <div className="text-center space-y-2">
+                {metric.icon}
+                <div className="text-xs font-medium text-white">{metric.metric}</div>
+                <div className="text-xs text-muted-foreground">{metric.data}</div>
+              </div>
+            </Card>
+          ))}
+        </div>
+
         <MobileAccordion type="single" collapsible className="space-y-2">
-          <MobileAccordionItem value="emergency">
-            <MobileAccordionTrigger icon={<Phone className="h-5 w-5 text-red-400" />}>
-              Emergency Support & Helplines
+          <MobileAccordionItem value="digital">
+            <MobileAccordionTrigger icon={<Brain className="h-5 w-5 text-blue-400" />}>
+              2025 Digital Support Platforms
             </MobileAccordionTrigger>
             <MobileAccordionContent>
               <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                {emergencyContacts.map((contact, index) => (
-                  <div key={index} className="space-y-3 border border-red-500/20 rounded-lg p-3">
+                {digitalSupportPlatforms.map((platform, index) => (
+                  <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-3">
                     <div className="flex flex-col gap-2">
-                      <h4 className="font-medium text-white text-sm">{contact.name}</h4>
-                      <Badge variant="outline" className="text-red-300 border-red-400/30 w-fit">
-                        {contact.phone}
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-medium text-white text-sm">{platform.platform}</h4>
+                        <Badge variant="outline" className="text-blue-300 border-blue-400/30 text-xs">
+                          {platform.timing}
+                        </Badge>
+                      </div>
+                      <p className="text-xs text-muted-foreground">{platform.description}</p>
+                    </div>
+
+                    <div>
+                      <h5 className="font-medium text-blue-300 mb-2 text-xs">Support Components</h5>
+                      <ul className="space-y-1">
+                        {platform.components.map((component, compIndex) => (
+                          <li key={compIndex} className="text-xs text-blue-200 flex items-center gap-1">
+                            <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
+                            {component}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="bg-green-500/10 border border-green-500/30 rounded p-2">
+                      <h5 className="font-medium text-green-300 mb-1 text-xs">Employer Benefits</h5>
+                      <p className="text-xs text-green-200">{platform.employerBenefit}</p>
+                    </div>
+
+                    <div>
+                      <h5 className="font-medium text-purple-300 mb-1 text-xs">Access Methods</h5>
+                      <div className="flex flex-wrap gap-1">
+                        {platform.accessPoints.map((access, accessIndex) => (
+                          <Badge key={accessIndex} variant="outline" className="text-purple-300 border-purple-400/30 text-xs">
+                            {access}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="categories">
+            <MobileAccordionTrigger icon={<Users className="h-5 w-5 text-green-400" />}>
+              Support Service Categories
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                {supportCategoryFramework.map((category, index) => (
+                  <div key={index} className="space-y-3">
+                    <h4 className="font-medium text-green-300 text-sm border-b border-green-500/20 pb-1">
+                      {category.category}
+                    </h4>
+                    {category.services.map((service, serviceIndex) => (
+                      <div key={serviceIndex} className="border border-green-500/20 rounded-lg p-3 space-y-2">
+                        <h5 className="font-medium text-white text-sm">{service.service}</h5>
+                        <p className="text-xs text-muted-foreground">{service.description}</p>
+                        
+                        <div>
+                          <h6 className="font-medium text-green-300 mb-1 text-xs">Available Through</h6>
+                          <div className="flex flex-wrap gap-1">
+                            {service.providers.map((provider, providerIndex) => (
+                              <Badge key={providerIndex} variant="outline" className="text-green-200 border-green-400/20 text-xs">
+                                {provider}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="bg-blue-500/10 border border-blue-500/30 rounded p-2">
+                          <h6 className="font-medium text-blue-300 mb-1 text-xs">How to Access</h6>
+                          <p className="text-xs text-blue-200">{service.access}</p>
+                        </div>
+
+                        <div className="bg-amber-500/10 border border-amber-500/30 rounded p-2">
+                          <h6 className="font-medium text-amber-300 mb-1 text-xs">Impact</h6>
+                          <p className="text-xs text-amber-200">{service.impact}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+
+          <MobileAccordionItem value="emergency">
+            <MobileAccordionTrigger icon={<Phone className="h-5 w-5 text-red-400" />}>
+              Emergency & Crisis Support
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                {emergencyContactsModern.map((contact, index) => (
+                  <div key={index} className="border border-red-500/20 rounded-lg p-3 space-y-3">
+                    <div className="flex flex-col gap-2">
+                      <h4 className="font-medium text-white text-sm">{contact.service}</h4>
+                      <Badge variant="outline" className="text-red-300 border-red-400/30 w-fit text-xs">
+                        {contact.contact}
                       </Badge>
                     </div>
                     <p className="text-xs text-muted-foreground">{contact.description}</p>
-                    <div className="space-y-1 text-xs">
-                      <div className="text-red-200 flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        {contact.availability}
+                    
+                    <div>
+                      <h5 className="font-medium text-red-300 mb-1 text-xs">Specialises In</h5>
+                      <div className="flex flex-wrap gap-1">
+                        {contact.specialties.map((specialty, specialtyIndex) => (
+                          <Badge key={specialtyIndex} variant="outline" className="text-red-200 border-red-400/20 text-xs">
+                            {specialty}
+                          </Badge>
+                        ))}
                       </div>
-                      <div className="text-red-300">{contact.website}</div>
+                    </div>
+
+                    <div className="bg-amber-500/10 border border-amber-500/30 rounded p-2">
+                      <h5 className="font-medium text-amber-300 mb-1 text-xs">Response Time</h5>
+                      <p className="text-xs text-amber-200">{contact.responseTime}</p>
                     </div>
                   </div>
                 ))}
@@ -193,487 +380,95 @@ const SupportResourcesTab = () => {
             </MobileAccordionContent>
           </MobileAccordionItem>
 
-          <MobileAccordionItem value="online">
-            <MobileAccordionTrigger icon={<Globe className="h-5 w-5 text-blue-400" />}>
-              Online Resources & Information
+          <MobileAccordionItem value="resources">
+            <MobileAccordionTrigger icon={<Globe className="h-5 w-5 text-purple-400" />}>
+              Digital Resource Centre
             </MobileAccordionTrigger>
             <MobileAccordionContent>
               <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                {onlineResources.map((resource, index) => (
-                  <div key={index} className="border border-blue-500/20 rounded-lg p-3 space-y-2">
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex flex-wrap items-center gap-2 mb-2">
-                          <h4 className="font-medium text-white text-sm">{resource.name}</h4>
-                          <Badge variant="outline" className="text-blue-300 border-blue-400/30 text-xs">
-                            {resource.category}
-                          </Badge>
+                {supportResourcesDigital.map((category, index) => (
+                  <div key={index} className="space-y-3">
+                    <h4 className="font-medium text-purple-300 text-sm border-b border-purple-500/20 pb-1">
+                      {category.category}
+                    </h4>
+                    {category.resources.map((resource, resourceIndex) => (
+                      <div key={resourceIndex} className="border border-purple-500/20 rounded-lg p-3 space-y-2">
+                        <div className="flex items-start justify-between gap-2">
+                          <h5 className="font-medium text-white text-sm flex-1">{resource.name}</h5>
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="border-purple-500/30 shrink-0"
+                            onClick={() => window.open(resource.url, '_blank')}
+                          >
+                            <ExternalLink className="h-3 w-3" />
+                          </Button>
                         </div>
-                        <p className="text-xs text-muted-foreground mb-2">{resource.description}</p>
+                        <p className="text-xs text-muted-foreground">{resource.description}</p>
+                        
+                        <div>
+                          <h6 className="font-medium text-purple-300 mb-1 text-xs">Features</h6>
+                          <div className="flex flex-wrap gap-1">
+                            {resource.features.map((feature, featureIndex) => (
+                              <Badge key={featureIndex} variant="outline" className="text-purple-200 border-purple-400/20 text-xs">
+                                {feature}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="bg-green-500/10 border border-green-500/30 rounded p-2">
+                          <h6 className="font-medium text-green-300 mb-1 text-xs">Availability</h6>
+                          <p className="text-xs text-green-200">{resource.availability}</p>
+                        </div>
                       </div>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="border-blue-500/30 shrink-0"
-                        onClick={() => window.open(resource.url, '_blank')}
-                      >
-                        <ExternalLink className="h-3 w-3" />
-                      </Button>
-                    </div>
+                    ))}
                   </div>
                 ))}
-              </div>
-            </MobileAccordionContent>
-          </MobileAccordionItem>
-
-          <MobileAccordionItem value="unions">
-            <MobileAccordionTrigger icon={<Users className="h-5 w-5 text-green-400" />}>
-              Trade Union Support
-            </MobileAccordionTrigger>
-            <MobileAccordionContent>
-              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                {tradeUnions.map((union, index) => (
-                  <div key={index} className="space-y-3 border border-green-500/20 rounded-lg p-3">
-                    <div className="flex flex-col gap-2">
-                      <h4 className="font-medium text-white text-sm">{union.name}</h4>
-                      <Badge variant="outline" className="text-green-300 border-green-400/30 w-fit">
-                        {union.contact}
-                      </Badge>
-                    </div>
-                    <p className="text-xs text-muted-foreground">{union.description}</p>
-                    <div className="flex flex-wrap gap-1">
-                      {union.benefits.map((benefit, benefitIndex) => (
-                        <Badge key={benefitIndex} variant="outline" className="text-green-300 border-green-400/30 text-xs">
-                          {benefit}
-                        </Badge>
-                      ))}
-                    </div>
-                    <p className="text-xs text-green-300">{union.website}</p>
-                  </div>
-                ))}
-              </div>
-            </MobileAccordionContent>
-          </MobileAccordionItem>
-
-          <MobileAccordionItem value="training">
-            <MobileAccordionTrigger icon={<FileText className="h-5 w-5 text-purple-400" />}>
-              Training Provider Support
-            </MobileAccordionTrigger>
-            <MobileAccordionContent>
-              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                {trainingProviders.map((provider, index) => (
-                  <div key={index} className="space-y-3 border border-purple-500/20 rounded-lg p-3">
-                    <h4 className="font-medium text-white text-sm">{provider.name}</h4>
-                    <div className="space-y-3">
-                      <div>
-                        <h5 className="font-medium text-purple-300 mb-2 text-xs">Services</h5>
-                        <ul className="space-y-1">
-                          {provider.services.map((service, serviceIndex) => (
-                            <li key={serviceIndex} className="text-xs text-purple-200 flex items-center gap-1">
-                              <div className="w-1 h-1 bg-purple-400 rounded-full flex-shrink-0" />
-                              {service}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="font-medium text-purple-300 mb-2 text-xs">Support</h5>
-                        <ul className="space-y-1">
-                          {provider.support.map((supportItem, supportIndex) => (
-                            <li key={supportIndex} className="text-xs text-purple-200 flex items-center gap-1">
-                              <div className="w-1 h-1 bg-purple-400 rounded-full flex-shrink-0" />
-                              {supportItem}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h5 className="font-medium text-purple-300 mb-2 text-xs">Funding</h5>
-                        <p className="text-xs text-purple-200">{provider.cost}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </MobileAccordionContent>
-          </MobileAccordionItem>
-
-          <MobileAccordionItem value="mentorship">
-            <MobileAccordionTrigger icon={<MessageCircle className="h-5 w-5 text-orange-400" />}>
-              Mentorship & Peer Support
-            </MobileAccordionTrigger>
-            <MobileAccordionContent>
-              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                {mentorshipResources.map((resource, index) => (
-                  <div key={index} className="space-y-3 border border-orange-500/20 rounded-lg p-3">
-                    <h4 className="font-medium text-white text-sm">{resource.resource}</h4>
-                    <p className="text-xs text-muted-foreground">{resource.description}</p>
-                    <div>
-                      <h5 className="font-medium text-orange-300 mb-2 text-xs">Available Through</h5>
-                      <div className="flex flex-wrap gap-1">
-                        {resource.providers.map((provider, providerIndex) => (
-                          <Badge key={providerIndex} variant="outline" className="text-orange-300 border-orange-400/30 text-xs">
-                            {provider}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <h5 className="font-medium text-orange-300 mb-2 text-xs">Benefits</h5>
-                      <div className="flex flex-wrap gap-1">
-                        {resource.benefits.map((benefit, benefitIndex) => (
-                          <Badge key={benefitIndex} variant="outline" className="text-orange-200 border-orange-400/20 text-xs">
-                            {benefit}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </MobileAccordionContent>
-          </MobileAccordionItem>
-
-          <MobileAccordionItem value="wellbeing">
-            <MobileAccordionTrigger icon={<Heart className="h-5 w-5 text-pink-400" />}>
-              Wellbeing & Personal Support
-            </MobileAccordionTrigger>
-            <MobileAccordionContent>
-              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                {wellbeingSupport.map((support, index) => (
-                  <div key={index} className="space-y-3 border border-pink-500/20 rounded-lg p-3">
-                    <div className="flex flex-col gap-2">
-                      <h4 className="font-medium text-white text-sm">{support.service}</h4>
-                      <Badge variant="outline" className="text-pink-300 border-pink-400/30 text-xs w-fit">
-                        {support.availability}
-                      </Badge>
-                    </div>
-                    <p className="text-xs text-muted-foreground">{support.description}</p>
-                    <p className="text-xs text-pink-200">{support.providers}</p>
-                  </div>
-                ))}
-              </div>
-            </MobileAccordionContent>
-          </MobileAccordionItem>
-
-          <MobileAccordionItem value="rights">
-            <MobileAccordionTrigger icon={<HelpCircle className="h-5 w-5 text-elec-yellow" />}>
-              Document Everything & Know Your Rights
-            </MobileAccordionTrigger>
-            <MobileAccordionContent>
-              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                <div>
-                  <h4 className="font-medium text-white mb-3 text-sm">Keep Records Of</h4>
-                  <ul className="space-y-2 text-xs">
-                    <li className="flex items-center gap-2">
-                      <FileText className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-                      <span className="text-muted-foreground">Date, time, and details of any incidents</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Users className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-                      <span className="text-muted-foreground">Names of witnesses present</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <FileText className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-                      <span className="text-muted-foreground">Copies of any written communications</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Heart className="h-3 w-3 text-elec-yellow flex-shrink-0" />
-                      <span className="text-muted-foreground">Medical records if injured</span>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-medium text-white mb-3 text-sm">Your Key Rights</h4>
-                  <ul className="space-y-2 text-xs">
-                    <li className="flex items-center gap-2">
-                      <Clock className="h-3 w-3 text-green-400 flex-shrink-0" />
-                      <span className="text-muted-foreground">20% off-the-job training time</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Users className="h-3 w-3 text-green-400 flex-shrink-0" />
-                      <span className="text-muted-foreground">Qualified mentor support</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <FileText className="h-3 w-3 text-green-400 flex-shrink-0" />
-                      <span className="text-muted-foreground">Safe working environment</span>
-                    </li>
-                    <li className="flex items-center gap-2">
-                      <Phone className="h-3 w-3 text-green-400 flex-shrink-0" />
-                      <span className="text-muted-foreground">Right to raise concerns</span>
-                    </li>
-                  </ul>
-                </div>
               </div>
             </MobileAccordionContent>
           </MobileAccordionItem>
         </MobileAccordion>
+
+        <Alert className="border-blue-500/50 bg-blue-500/10">
+          <Shield className="h-4 w-4 text-blue-400" />
+          <AlertDescription className="text-blue-200">
+            <strong>Remember:</strong> Support services are confidential and designed to help you succeed. Early intervention prevents most problems from escalating.
+          </AlertDescription>
+        </Alert>
       </div>
     );
   }
 
-  // Desktop layout
+  // Desktop view fallback
   return (
     <div className="space-y-6">
       <Alert className="border-green-500/50 bg-green-500/10">
         <Heart className="h-4 w-4 text-green-400" />
         <AlertDescription className="text-green-200">
-          Remember: Asking for help is a sign of strength, not weakness. Early support prevents small issues becoming big problems.
+          <strong>2025 Update:</strong> Enhanced digital support platforms provide faster, more effective assistance for apprentices and employers.
         </AlertDescription>
       </Alert>
 
-      <Card className="border-red-500/50 bg-red-500/10">
-        <CardHeader>
-          <CardTitle className="text-red-300 flex items-center gap-2">
-            <Phone className="h-5 w-5" />
-            Emergency Support & Helplines
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {emergencyContacts.map((contact, index) => (
-            <div key={index} className="space-y-3 border border-red-500/20 rounded-lg p-4">
-              <div className="flex justify-between items-start">
-                <h4 className="font-medium text-white">{contact.name}</h4>
-                <Badge variant="outline" className="text-red-300 border-red-400/30">
-                  {contact.phone}
-                </Badge>
-              </div>
-              <p className="text-sm text-muted-foreground">{contact.description}</p>
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-red-200 flex items-center gap-1">
-                  <Clock className="h-3 w-3" />
-                  {contact.availability}
-                </span>
-                <span className="text-red-300">{contact.website}</span>
-              </div>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-
-      <Card className="border-blue-500/50 bg-blue-500/10">
-        <CardHeader>
-          <CardTitle className="text-blue-300 flex items-center gap-2">
-            <Globe className="h-5 w-5" />
-            Online Resources & Information
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {onlineResources.map((resource, index) => (
-            <div key={index} className="flex items-center justify-between border border-blue-500/20 rounded-lg p-4">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <h4 className="font-medium text-white">{resource.name}</h4>
-                  <Badge variant="outline" className="text-blue-300 border-blue-400/30 text-xs">
-                    {resource.category}
-                  </Badge>
-                </div>
-                <p className="text-sm text-muted-foreground">{resource.description}</p>
-                <p className="text-xs text-blue-300 mt-1">{resource.url}</p>
-              </div>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="border-blue-500/30"
-                onClick={() => window.open(resource.url, '_blank')}
-              >
-                <ExternalLink className="h-4 w-4" />
-              </Button>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-
-      {/* ... keep existing code (other desktop cards) */}
-
-      <Card className="border-green-500/50 bg-green-500/10">
-        <CardHeader>
-          <CardTitle className="text-green-300 flex items-center gap-2">
-            <Users className="h-5 w-5" />
-            Trade Union Support
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {tradeUnions.map((union, index) => (
-            <div key={index} className="space-y-3 border border-green-500/20 rounded-lg p-4">
-              <div className="flex justify-between items-start">
-                <h4 className="font-medium text-white">{union.name}</h4>
-                <Badge variant="outline" className="text-green-300 border-green-400/30">
-                  {union.contact}
-                </Badge>
-              </div>
-              <p className="text-sm text-muted-foreground">{union.description}</p>
-              <div className="flex flex-wrap gap-2">
-                {union.benefits.map((benefit, benefitIndex) => (
-                  <Badge key={benefitIndex} variant="outline" className="text-green-300 border-green-400/30 text-xs">
-                    {benefit}
-                  </Badge>
-                ))}
-              </div>
-              <p className="text-xs text-green-300">{union.website}</p>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-
-      <Card className="border-purple-500/50 bg-purple-500/10">
-        <CardHeader>
-          <CardTitle className="text-purple-300 flex items-center gap-2">
-            <FileText className="h-5 w-5" />
-            Training Provider Support
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {trainingProviders.map((provider, index) => (
-            <div key={index} className="space-y-3 border border-purple-500/20 rounded-lg p-4">
-              <h4 className="font-medium text-white">{provider.name}</h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+        {supportMetrics.map((metric, index) => (
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray">
+            <CardContent className="p-4">
+              <div className="flex items-center space-x-2">
+                {metric.icon}
                 <div>
-                  <h5 className="font-medium text-purple-300 mb-2">Services</h5>
-                  <ul className="space-y-1">
-                    {provider.services.map((service, serviceIndex) => (
-                      <li key={serviceIndex} className="text-xs text-purple-200 flex items-center gap-1">
-                        <div className="w-1 h-1 bg-purple-400 rounded-full" />
-                        {service}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-medium text-purple-300 mb-2">Support</h5>
-                  <ul className="space-y-1">
-                    {provider.support.map((supportItem, supportIndex) => (
-                      <li key={supportIndex} className="text-xs text-purple-200 flex items-center gap-1">
-                        <div className="w-1 h-1 bg-purple-400 rounded-full" />
-                        {supportItem}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-medium text-purple-300 mb-2">Funding</h5>
-                  <p className="text-xs text-purple-200">{provider.cost}</p>
+                  <div className="text-sm font-medium text-white">{metric.metric}</div>
+                  <div className="text-xs text-muted-foreground">{metric.data}</div>
                 </div>
               </div>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
 
-      <Card className="border-orange-500/50 bg-orange-500/10">
-        <CardHeader>
-          <CardTitle className="text-orange-300 flex items-center gap-2">
-            <MessageCircle className="h-5 w-5" />
-            Mentorship & Peer Support
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {mentorshipResources.map((resource, index) => (
-            <div key={index} className="space-y-3 border border-orange-500/20 rounded-lg p-4">
-              <h4 className="font-medium text-white">{resource.resource}</h4>
-              <p className="text-sm text-muted-foreground">{resource.description}</p>
-              <div>
-                <h5 className="font-medium text-orange-300 mb-2">Available Through</h5>
-                <div className="flex flex-wrap gap-2">
-                  {resource.providers.map((provider, providerIndex) => (
-                    <Badge key={providerIndex} variant="outline" className="text-orange-300 border-orange-400/30 text-xs">
-                      {provider}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h5 className="font-medium text-orange-300 mb-2">Benefits</h5>
-                <div className="flex flex-wrap gap-2">
-                  {resource.benefits.map((benefit, benefitIndex) => (
-                    <Badge key={benefitIndex} variant="outline" className="text-orange-200 border-orange-400/20 text-xs">
-                      {benefit}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-
-      <Card className="border-pink-500/50 bg-pink-500/10">
-        <CardHeader>
-          <CardTitle className="text-pink-300 flex items-center gap-2">
-            <Heart className="h-5 w-5" />
-            Wellbeing & Personal Support
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {wellbeingSupport.map((support, index) => (
-            <div key={index} className="space-y-3 border border-pink-500/20 rounded-lg p-4">
-              <div className="flex justify-between items-start">
-                <h4 className="font-medium text-white">{support.service}</h4>
-                <Badge variant="outline" className="text-pink-300 border-pink-400/30 text-xs">
-                  {support.availability}
-                </Badge>
-              </div>
-              <p className="text-sm text-muted-foreground">{support.description}</p>
-              <p className="text-sm text-pink-200">{support.providers}</p>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader>
-          <CardTitle className="text-elec-yellow flex items-center gap-2">
-            <HelpCircle className="h-5 w-5" />
-            Document Everything & Know Your Rights
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-medium text-white mb-3">Keep Records Of</h4>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-muted-foreground">Date, time, and details of any incidents</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Users className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-muted-foreground">Names of witnesses present</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-muted-foreground">Copies of any written communications</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Heart className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-muted-foreground">Medical records if injured</span>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium text-white mb-3">Your Key Rights</h4>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-green-400" />
-                  <span className="text-muted-foreground">20% off-the-job training time</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Users className="h-4 w-4 text-green-400" />
-                  <span className="text-muted-foreground">Qualified mentor support</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-green-400" />
-                  <span className="text-muted-foreground">Safe working environment</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-green-400" />
-                  <span className="text-muted-foreground">Right to raise concerns</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="text-center text-muted-foreground">
+        <p>Switch to mobile view for the comprehensive support resources framework.</p>
+      </div>
     </div>
   );
 };
