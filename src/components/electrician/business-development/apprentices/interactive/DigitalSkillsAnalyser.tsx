@@ -178,47 +178,52 @@ const DigitalSkillsAnalyser = () => {
   }
 
   return (
-    <div className="space-y-4">
-      <div className="border-blue-500/20 bg-blue-500/10 rounded-lg p-4">
-        <div className="flex items-center gap-2 text-blue-400 text-lg font-semibold mb-4">
-          <Brain className="h-5 w-5" />
-          Digital Skills Gap Analyser
-        </div>
-        
-        {/* Progress */}
-        <div className="flex justify-between items-center mb-4">
-          <span className="text-sm text-blue-200">
-            Question {currentQuestion + 1} of {skillsQuestions.length}
+    <div className="space-y-6">
+      <div className="flex items-center gap-2 text-blue-400 text-xl font-semibold mb-6">
+        <Brain className="h-6 w-6" />
+        Digital Skills Gap Analyser
+      </div>
+      
+      {/* Progress */}
+      <div className="flex justify-between items-center mb-6">
+        <span className="text-blue-200 font-medium">
+          Question {currentQuestion + 1} of {skillsQuestions.length}
+        </span>
+        <div className="flex items-center gap-3">
+          <Progress value={((currentQuestion) / skillsQuestions.length) * 100} className="w-40" />
+          <span className="text-sm text-blue-300 font-medium">
+            {Math.round(((currentQuestion) / skillsQuestions.length) * 100)}%
           </span>
-          <Progress value={((currentQuestion) / skillsQuestions.length) * 100} className="w-32" />
         </div>
+      </div>
 
-        {/* Question */}
-        <div className="p-4 bg-elec-gray border border-blue-500/20 rounded-lg">
-          <h4 className="font-semibold text-blue-300 mb-2">
-            {skillsQuestions[currentQuestion].category}
-          </h4>
-          <p className="text-white mb-4">
-            {skillsQuestions[currentQuestion].question}
-          </p>
-          
-          <div className="space-y-2">
-            {skillsQuestions[currentQuestion].options.map((option, index) => (
-              <Button
-                key={index}
-                variant="outline"
-                className="w-full justify-start border-blue-500/30 hover:bg-blue-500/20"
-                onClick={() => handleAnswer(option.score)}
-              >
-                {option.text}
-              </Button>
-            ))}
-          </div>
-        </div>
+      {/* Question Category */}
+      <div className="text-center mb-6">
+        <h3 className="text-blue-300 text-2xl font-bold mb-2">
+          {skillsQuestions[currentQuestion].category}
+        </h3>
+        <p className="text-white text-lg leading-relaxed max-w-2xl mx-auto">
+          {skillsQuestions[currentQuestion].question}
+        </p>
+      </div>
+      
+      {/* Answer Options */}
+      <div className="grid gap-4 max-w-2xl mx-auto">
+        {skillsQuestions[currentQuestion].options.map((option, index) => (
+          <Button
+            key={index}
+            variant="outline"
+            size="lg"
+            className="w-full justify-center p-6 text-base font-medium border-blue-500/30 hover:bg-blue-500/20 hover:border-blue-400/50 transition-all duration-200"
+            onClick={() => handleAnswer(option.score)}
+          >
+            {option.text}
+          </Button>
+        ))}
+      </div>
 
-        <div className="text-sm text-blue-200 mt-4">
-          This assessment helps identify training priorities and development needs for new apprentices.
-        </div>
+      <div className="text-center text-blue-200 mt-8 max-w-2xl mx-auto">
+        This assessment helps identify training priorities and development needs for new apprentices.
       </div>
     </div>
   );
