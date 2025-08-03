@@ -399,47 +399,45 @@ export const OperationsTab = () => {
             </MobileAccordionTrigger>
             <MobileAccordionContent>
               <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-                <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
-                  <div className="flex flex-col gap-2">
-                    <div className="flex items-center justify-between">
-                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{system.title}</h4>
-                      <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
-                        {system.timeline}
-                      </Badge>
-                    </div>
-                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{system.description}</p>
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{system.title}</h4>
+                    <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                      {system.timeline}
+                    </Badge>
                   </div>
+                  <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{system.description}</p>
+                </div>
 
-                  <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}>
-                    <div className="flex items-center gap-2">
-                      <DollarSign className="h-4 w-4 text-muted-foreground" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{system.investment}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <TrendingUp className="h-4 w-4 text-muted-foreground" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{system.roi}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Shield className="h-4 w-4 text-muted-foreground" />
-                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{system.riskLevel}</span>
-                    </div>
+                <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}>
+                  <div className="flex items-center gap-2">
+                    <DollarSign className="h-4 w-4 text-muted-foreground" />
+                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{system.investment}</span>
                   </div>
-
-                  <div>
-                    <h5 className={`font-medium text-blue-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Components</h5>
-                    <ul className="space-y-1">
-                      {system.components.map((component, compIndex) => (
-                        <li key={compIndex} className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
-                          <CheckCircle className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-green-400 mt-0.5 shrink-0`} />
-                          {component}
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="flex items-center gap-2">
+                    <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{system.roi}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Shield className="h-4 w-4 text-muted-foreground" />
+                    <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{system.riskLevel}</span>
                   </div>
                 </div>
 
-                <div className="border border-green-500/20 rounded-lg p-3 space-y-3">
-                  <h5 className={`font-medium text-green-300 ${isMobile ? 'text-xs' : 'text-sm'}`}>Implementation Phases</h5>
+                <div>
+                  <h5 className={`font-medium text-blue-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Components</h5>
+                  <ul className="space-y-1">
+                    {system.components.map((component, compIndex) => (
+                      <li key={compIndex} className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                        <CheckCircle className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-green-400 mt-0.5 shrink-0`} />
+                        {component}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h5 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Implementation Phases</h5>
                   <div className="space-y-3">
                     {system.implementation.map((phase, phaseIndex) => (
                       <div key={phaseIndex} className="space-y-2">
@@ -457,8 +455,8 @@ export const OperationsTab = () => {
                   </div>
                 </div>
 
-                <div className="border border-yellow-500/20 rounded-lg p-3 space-y-3">
-                  <h5 className={`font-medium text-yellow-300 ${isMobile ? 'text-xs' : 'text-sm'}`}>UK Market Considerations (2025)</h5>
+                <div>
+                  <h5 className={`font-medium text-yellow-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>UK Market Considerations (2025)</h5>
                   <ul className="space-y-1">
                     {system.ukSpecific2025.map((consideration, considerationIndex) => (
                       <li key={considerationIndex} className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
@@ -474,12 +472,11 @@ export const OperationsTab = () => {
         ))}
 
         <MobileAccordionItem value="operational-benchmarks">
-        <MobileAccordionTrigger icon={<BarChart3 className="h-5 w-5 text-orange-400" />}>
-          Operational Benchmarks
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-            <div className="border border-orange-500/20 rounded-lg p-3 space-y-3">
+          <MobileAccordionTrigger icon={<BarChart3 className="h-5 w-5 text-orange-400" />}>
+            Operational Benchmarks
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Performance Benchmarks</h4>
               <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
                 Industry-standard metrics to track operational improvements and business growth
@@ -487,7 +484,7 @@ export const OperationsTab = () => {
               
               <div className="space-y-4">
                 {operationalBenchmarks.map((category, index) => (
-                  <div key={index} className="border border-orange-400/20 rounded-lg p-3">
+                  <div key={index}>
                     <h5 className={`font-medium text-orange-300 mb-3 ${isMobile ? 'text-xs' : 'text-sm'}`}>{category.category}</h5>
                     <div className="space-y-2">
                       {category.benchmarks.map((benchmark, bIndex) => (
@@ -503,17 +500,15 @@ export const OperationsTab = () => {
                 ))}
               </div>
             </div>
-          </div>
-        </MobileAccordionContent>
-      </MobileAccordionItem>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
 
-      <MobileAccordionItem value="scaling-advantages">
-        <MobileAccordionTrigger icon={<Award className="h-5 w-5 text-green-400" />}>
-          Scaling Advantages
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-            <div className="border border-green-500/20 rounded-lg p-3 space-y-3">
+        <MobileAccordionItem value="scaling-advantages">
+          <MobileAccordionTrigger icon={<Award className="h-5 w-5 text-green-400" />}>
+            Scaling Advantages
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Growth Through Operations</h4>
               <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
                 Strategic operational advantages that enable sustainable business scaling
@@ -521,7 +516,7 @@ export const OperationsTab = () => {
               
               <div className="space-y-4">
                 {scalingAdvantages.map((advantage, index) => (
-                  <div key={index} className="border border-green-400/20 rounded-lg p-3 space-y-3">
+                  <div key={index} className="space-y-3">
                     <h5 className={`font-medium text-green-300 ${isMobile ? 'text-xs' : 'text-sm'}`}>{advantage.title}</h5>
                     <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{advantage.description}</p>
                     
@@ -537,7 +532,7 @@ export const OperationsTab = () => {
                       </ul>
                     </div>
                     
-                    <div className="bg-green-500/10 rounded p-3 border border-green-400/20">
+                    <div className="bg-green-500/10 rounded p-3">
                       <h6 className={`font-medium text-green-300 mb-1 ${isMobile ? 'text-xs' : 'text-sm'}`}>Business Impact</h6>
                       <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-200`}>{advantage.impact}</p>
                     </div>
@@ -545,17 +540,15 @@ export const OperationsTab = () => {
                 ))}
               </div>
             </div>
-          </div>
-        </MobileAccordionContent>
-      </MobileAccordionItem>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
 
-      <MobileAccordionItem value="performance-metrics">
-        <MobileAccordionTrigger icon={<LineChart className="h-5 w-5 text-purple-400" />}>
-          Performance Monitoring & KPIs
-        </MobileAccordionTrigger>
-        <MobileAccordionContent>
-          <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
-            <div className="border border-purple-500/20 rounded-lg p-3 space-y-3">
+        <MobileAccordionItem value="performance-metrics">
+          <MobileAccordionTrigger icon={<LineChart className="h-5 w-5 text-purple-400" />}>
+            Performance Monitoring & KPIs
+          </MobileAccordionTrigger>
+          <MobileAccordionContent>
+            <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
               <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>Key Performance Indicators</h4>
               <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
                 Essential metrics to monitor operational performance and drive continuous improvement
@@ -563,7 +556,7 @@ export const OperationsTab = () => {
               
               <div className="space-y-4">
                 {performanceMetrics.map((category, index) => (
-                  <div key={index} className="border border-purple-400/20 rounded-lg p-3">
+                  <div key={index}>
                     <h5 className={`font-medium text-purple-300 mb-3 ${isMobile ? 'text-xs' : 'text-sm'}`}>{category.category}</h5>
                     <ul className="space-y-2">
                       {category.kpis.map((kpi, kpiIndex) => (
@@ -577,9 +570,8 @@ export const OperationsTab = () => {
                 ))}
               </div>
             </div>
-          </div>
-        </MobileAccordionContent>
-      </MobileAccordionItem>
+          </MobileAccordionContent>
+        </MobileAccordionItem>
       </MobileAccordion>
     </div>
   );
