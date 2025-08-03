@@ -25,7 +25,12 @@ import {
   PiggyBank,
   FileText,
   UserCheck,
-  Settings
+  Settings,
+  ShieldCheck,
+  FileCheck,
+  Eye,
+  Scale,
+  Siren
 } from "lucide-react";
 
 export const GrowthStrategiesTab = () => {
@@ -263,6 +268,57 @@ export const GrowthStrategiesTab = () => {
       investment: "£20,000-150,000 capital investment",
       roi: "180-350% financial return",
       riskLevel: "Medium with professional guidance"
+    },
+    {
+      id: "risk-management",
+      title: "Risk Management & Mitigation Strategies",
+      timeline: "1-6 months",
+      description: "Comprehensive risk assessment and mitigation framework to protect and strengthen your business",
+      components: [
+        "Business risk assessment framework",
+        "Crisis management planning",
+        "Insurance and protection strategies",
+        "Legal and compliance risk management",
+        "UK-specific risk factors for 2025"
+      ],
+      implementation: [
+        {
+          phase: "Risk Assessment (1-2 months)",
+          tasks: [
+            "Conduct comprehensive business risk audit and vulnerability analysis",
+            "Identify operational, financial, legal, and market-based risks",
+            "Assess current insurance coverage and protection gaps",
+            "Evaluate compliance status with BS7671 18th edition requirements"
+          ]
+        },
+        {
+          phase: "Protection Strategy Development (1-2 months)",
+          tasks: [
+            "Design comprehensive risk mitigation strategies and protocols",
+            "Update insurance policies to match current business scale",
+            "Develop crisis management procedures and emergency protocols",
+            "Create legal compliance monitoring and update systems"
+          ]
+        },
+        {
+          phase: "Implementation & Monitoring (2-6 months)",
+          tasks: [
+            "Implement risk monitoring systems and regular review processes",
+            "Train team on emergency procedures and risk awareness",
+            "Establish quarterly risk assessment and strategy reviews",
+            "Monitor regulatory changes and update compliance accordingly"
+          ]
+        }
+      ],
+      ukSpecific2025: [
+        "Brexit-related trade and supply chain disruption mitigation",
+        "Building Safety Act compliance and new regulations",
+        "Economic uncertainty and inflation protection strategies",
+        "Skills shortage and labour market risk management"
+      ],
+      investment: "£2,000-10,000 protection investment",
+      roi: "300-500% risk reduction value",
+      riskLevel: "Essential for business protection"
     }
   ];
 
@@ -294,6 +350,7 @@ export const GrowthStrategiesTab = () => {
               strategy.id === "market-expansion" ? <MapPin className="h-5 w-5 text-blue-400" /> :
               strategy.id === "team-scaling" ? <Users className="h-5 w-5 text-green-400" /> :
               strategy.id === "digital-transformation" ? <Smartphone className="h-5 w-5 text-purple-400" /> :
+              strategy.id === "risk-management" ? <ShieldCheck className="h-5 w-5 text-red-400" /> :
               <PoundSterling className="h-5 w-5 text-yellow-400" />
             }>
               {strategy.title}
