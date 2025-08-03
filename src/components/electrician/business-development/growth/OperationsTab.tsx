@@ -1,248 +1,541 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Settings, Clock, FileText, Truck, Shield, Smartphone } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { 
+  Settings, 
+  Clock, 
+  FileText, 
+  Truck, 
+  Shield, 
+  Smartphone,
+  TrendingUp,
+  Users,
+  BarChart3,
+  CheckCircle,
+  Cog,
+  Database,
+  Network,
+  Brain,
+  Target,
+  AlertTriangle,
+  Calendar,
+  Timer,
+  Zap,
+  Building,
+  MapPin,
+  Eye,
+  Briefcase,
+  LineChart,
+  Star,
+  Crown,
+  Award,
+  Scale,
+  Wrench,
+  Lightbulb,
+  BookOpen,
+  DollarSign,
+  Percent,
+  ShieldCheck
+} from "lucide-react";
 
 export const OperationsTab = () => {
+  const isMobile = useIsMobile();
+
+  // Operations metrics matching the Growth Strategies pattern
+  const operationsMetrics = [
+    {
+      metric: "Efficiency Gain",
+      data: "25-40% time savings",
+      icon: <Timer className="h-5 w-5 text-elec-yellow" />,
+      detail: "Through digital systems and process automation"
+    },
+    {
+      metric: "Revenue Impact",
+      data: "£15-30k annual increase",
+      icon: <TrendingUp className="h-5 w-5 text-blue-400" />,
+      detail: "From improved operational efficiency"
+    },
+    {
+      metric: "Customer Satisfaction",
+      data: "85-95% satisfaction rate",
+      icon: <Star className="h-5 w-5 text-green-400" />,
+      detail: "Through streamlined service delivery"
+    },
+    {
+      metric: "Cost Reduction",
+      data: "10-20% operational savings",
+      icon: <DollarSign className="h-5 w-5 text-purple-400" />,
+      detail: "From optimised processes and waste reduction"
+    }
+  ];
+
   const operationalSystems = [
     {
-      system: "Job Management",
-      description: "Streamline job scheduling and tracking",
-      icon: <Clock className="h-5 w-5" />,
-      tools: ["Digital scheduling systems", "Customer management CRM", "Mobile job tracking", "Time and materials tracking"],
-      benefits: ["Improved efficiency", "Better customer service", "Accurate job costing", "Professional appearance"]
+      id: "digital-workflow-system",
+      title: "Digital Workflow Management",
+      timeline: "2-4 months to implement",
+      description: "Comprehensive digital transformation of core business processes for maximum efficiency",
+      components: [
+        "Job scheduling and dispatch system",
+        "Customer relationship management (CRM)",
+        "Digital forms and documentation",
+        "Real-time progress tracking",
+        "Automated invoicing and payments"
+      ],
+      implementation: [
+        {
+          phase: "System Selection & Setup (3-4 weeks)",
+          tasks: [
+            "Evaluate and select appropriate business management software",
+            "Configure system for electrical contracting workflows",
+            "Import customer data and historical job information",
+            "Set up user accounts and permissions for team members"
+          ]
+        },
+        {
+          phase: "Process Digitisation (4-6 weeks)",
+          tasks: [
+            "Create digital job templates for common electrical work",
+            "Develop standard operating procedures within the system",
+            "Set up automated workflows for quotes, scheduling, and invoicing",
+            "Integrate payment processing and customer communication tools"
+          ]
+        },
+        {
+          phase: "Team Training & Rollout (4-6 weeks)",
+          tasks: [
+            "Train all team members on new digital processes",
+            "Gradually transition from paper-based to digital workflows",
+            "Monitor adoption and provide ongoing support",
+            "Optimise processes based on real-world usage and feedback"
+          ]
+        }
+      ],
+      ukSpecific2025: [
+        "GDPR compliance features for customer data protection",
+        "Integration with UK banking systems for direct debits",
+        "VAT reporting functionality for Making Tax Digital compliance",
+        "Building Safety Act documentation and compliance tracking"
+      ],
+      investment: "£3,000-8,000 for software and implementation",
+      roi: "25-40% efficiency improvement",
+      riskLevel: "Low risk with proven technology solutions"
     },
     {
-      system: "Documentation & Compliance",
-      description: "Maintain proper records and certifications",
-      icon: <FileText className="h-5 w-5" />,
-      tools: ["Digital certificates", "Test result software", "Compliance checklists", "Photo documentation"],
-      benefits: ["Legal compliance", "Professional credibility", "Quality assurance", "Audit trail"]
+      id: "mobile-field-operations",
+      title: "Mobile Field Operations Platform",
+      timeline: "1-3 months implementation",
+      description: "Equip field teams with mobile technology for real-time job management and customer service",
+      components: [
+        "Mobile job management apps",
+        "Digital testing and certification tools",
+        "Photo documentation and reporting",
+        "GPS tracking and route optimisation",
+        "Customer communication portal"
+      ],
+      implementation: [
+        {
+          phase: "Mobile Infrastructure Setup (2-3 weeks)",
+          tasks: [
+            "Select and procure appropriate mobile devices and accessories",
+            "Set up mobile data plans and device management systems",
+            "Install and configure field management applications",
+            "Create secure access to company systems and customer data"
+          ]
+        },
+        {
+          phase: "Digital Tools Integration (3-4 weeks)",
+          tasks: [
+            "Integrate electrical testing equipment with mobile devices",
+            "Set up digital certificate generation and storage systems",
+            "Configure customer communication and photo sharing tools",
+            "Implement GPS tracking and route optimisation features"
+          ]
+        },
+        {
+          phase: "Field Team Deployment (4-6 weeks)",
+          tasks: [
+            "Train technicians on mobile app usage and best practices",
+            "Implement standardised job documentation procedures",
+            "Monitor field adoption and troubleshoot technical issues",
+            "Gather feedback and refine mobile workflows for optimal efficiency"
+          ]
+        }
+      ],
+      ukSpecific2025: [
+        "4G/5G network coverage considerations for remote areas",
+        "Offline functionality for areas with poor signal coverage",
+        "Integration with UK electrical testing standards and regulations",
+        "Emergency contact systems for lone worker safety compliance"
+      ],
+      investment: "£2,000-5,000 for devices and applications",
+      roi: "20-35% productivity increase",
+      riskLevel: "Low risk with immediate practical benefits"
     },
     {
-      system: "Vehicle & Equipment Management",
-      description: "Optimise mobile workshop efficiency",
-      icon: <Truck className="h-5 w-5" />,
-      tools: ["Van stock management", "Tool tracking systems", "Route optimisation", "Equipment maintenance logs"],
-      benefits: ["Reduced travel time", "Better stock control", "Professional image", "Cost savings"]
+      id: "inventory-supply-chain",
+      title: "Smart Inventory & Supply Chain Management",
+      timeline: "2-5 months full implementation",
+      description: "Optimise stock management and supplier relationships for reduced costs and improved service",
+      components: [
+        "Automated inventory tracking systems",
+        "Supplier integration and ordering",
+        "Van stock management and optimisation",
+        "Predictive analytics for demand forecasting",
+        "Cost tracking and procurement optimisation"
+      ],
+      implementation: [
+        {
+          phase: "Inventory System Implementation (4-6 weeks)",
+          tasks: [
+            "Install barcode or RFID tracking systems for all stock items",
+            "Set up automated reorder points and supplier integration",
+            "Configure van stock management and mobile inventory updates",
+            "Implement cost tracking and margin analysis for all materials"
+          ]
+        },
+        {
+          phase: "Supplier Integration (4-6 weeks)",
+          tasks: [
+            "Negotiate improved terms with key electrical suppliers",
+            "Set up electronic ordering and delivery scheduling systems",
+            "Implement supplier performance tracking and evaluation",
+            "Develop backup supplier relationships for critical components"
+          ]
+        },
+        {
+          phase: "Optimisation & Analytics (6-8 weeks)",
+          tasks: [
+            "Implement predictive analytics for seasonal demand patterns",
+            "Optimise van stock levels based on job type analysis",
+            "Monitor and reduce waste through better inventory management",
+            "Develop KPIs for procurement efficiency and cost reduction"
+          ]
+        }
+      ],
+      ukSpecific2025: [
+        "Brexit-related supply chain disruption mitigation strategies",
+        "Local supplier preference for reduced carbon footprint",
+        "Energy-efficient product sourcing for sustainability compliance",
+        "Integration with UK wholesaler electronic ordering systems"
+      ],
+      investment: "£5,000-12,000 for systems and integration",
+      roi: "15-25% inventory cost reduction",
+      riskLevel: "Medium risk requiring careful supplier management"
     },
     {
-      system: "Safety Management",
-      description: "Ensure safety compliance and risk management",
-      icon: <Shield className="h-5 w-5" />,
-      tools: ["Risk assessment templates", "Safety method statements", "Incident reporting", "Training records"],
-      benefits: ["Legal compliance", "Insurance benefits", "Worker safety", "Professional reputation"]
+      id: "quality-compliance-system",
+      title: "Quality Assurance & Compliance Management",
+      timeline: "3-6 months comprehensive setup",
+      description: "Systematic approach to quality control, safety compliance, and regulatory adherence",
+      components: [
+        "Digital quality control checklists",
+        "Compliance tracking and reporting",
+        "Safety management systems",
+        "Training and certification management",
+        "Audit trail and documentation"
+      ],
+      implementation: [
+        {
+          phase: "Compliance Framework Development (4-6 weeks)",
+          tasks: [
+            "Document all regulatory requirements and industry standards",
+            "Create digital checklists for BS 7671 and building regulations compliance",
+            "Develop quality control procedures for all service categories",
+            "Set up training tracking and certification management systems"
+          ]
+        },
+        {
+          phase: "Safety System Implementation (6-8 weeks)",
+          tasks: [
+            "Implement risk assessment and method statement templates",
+            "Set up incident reporting and investigation procedures",
+            "Create safety training programmes and competency tracking",
+            "Develop emergency response and communication protocols"
+          ]
+        },
+        {
+          phase: "Continuous Improvement (8-12 weeks)",
+          tasks: [
+            "Monitor quality metrics and customer feedback systems",
+            "Implement corrective action and improvement processes",
+            "Regular compliance audits and system updates",
+            "Benchmark performance against industry standards and best practices"
+          ]
+        }
+      ],
+      ukSpecific2025: [
+        "Building Safety Act compliance and golden thread documentation",
+        "Competent Person Scheme requirements and updates",
+        "Health and Safety Executive regulatory changes",
+        "Professional development requirements for electrical qualifications"
+      ],
+      investment: "£3,000-7,000 for systems and training",
+      roi: "Risk reduction and insurance savings",
+      riskLevel: "Low risk with essential compliance benefits"
     }
   ];
 
-  const digitalTools = [
+  const operationalBenchmarks = [
     {
-      category: "Job Management Software",
-      examples: ["ServiceM8", "Housecall Pro", "FieldEdge", "BigChange"],
-      cost: "£30-100/month",
-      features: "Scheduling, invoicing, customer management, GPS tracking"
+      category: "Service Delivery Metrics",
+      benchmarks: [
+        { metric: "Job Completion Time", target: "15-25% reduction", current: "Through optimised processes" },
+        { metric: "First-Time Fix Rate", target: "85-95%", current: "With proper van stock management" },
+        { metric: "Customer Response Time", target: "Within 2 hours", current: "For non-emergency enquiries" },
+        { metric: "Quote Turnaround", target: "Same day delivery", current: "For standard electrical work" }
+      ]
     },
     {
-      category: "Electrical Testing Apps",
-      examples: ["Megger Smart PAT", "Socket & See", "Kewtech EZ PAT", "Fluke Connect"],
-      cost: "£20-50/month",
-      features: "Digital test certificates, cloud storage, automatic calculations"
-    },
-    {
-      category: "Accounting Software",
-      examples: ["Xero", "QuickBooks", "FreeAgent", "Sage"],
-      cost: "£15-40/month",
-      features: "Invoicing, expense tracking, VAT returns, financial reporting"
-    },
-    {
-      category: "Communication Tools",
-      examples: ["WhatsApp Business", "Microsoft Teams", "Slack", "Google Workspace"],
-      cost: "£0-15/month",
-      features: "Customer communication, team coordination, file sharing"
+      category: "Operational Efficiency",
+      benchmarks: [
+        { metric: "Travel Time Optimisation", target: "20-30% reduction", current: "Through route planning" },
+        { metric: "Administrative Time", target: "50% reduction", current: "Via digital automation" },
+        { metric: "Stock Accuracy", target: "95%+ accuracy", current: "With digital tracking systems" },
+        { metric: "Documentation Speed", target: "70% faster", current: "Using digital certificates" }
+      ]
     }
   ];
 
-  const processImprovements = [
+  const scalingAdvantages = [
     {
-      area: "Quote Process",
-      current: "Handwritten estimates, manual calculations",
-      improved: "Digital templates, automatic calculations, instant delivery",
-      benefit: "Faster response, fewer errors, professional appearance"
+      title: "Technology-Enabled Growth",
+      description: "Leverage digital systems to scale operations without proportional cost increases",
+      advantages: [
+        "Cloud-based systems accessible from anywhere",
+        "Automated scheduling and resource allocation",
+        "Real-time performance monitoring and analytics",
+        "Seamless communication between office and field teams"
+      ],
+      impact: "Support 2-3x business growth with minimal admin overhead"
     },
     {
-      area: "Job Documentation",
-      current: "Paper certificates, manual filing",
-      improved: "Digital certificates, cloud storage, automatic backups",
-      benefit: "Better organisation, quick retrieval, legal compliance"
+      title: "Process Standardisation Benefits",
+      description: "Create consistent, repeatable processes that enable reliable service delivery",
+      advantages: [
+        "Standardised job procedures and quality checklists",
+        "Consistent pricing and quotation processes",
+        "Uniform customer communication and service levels",
+        "Systematic training and competency development"
+      ],
+      impact: "Improved service quality and reduced training time for new staff"
     },
     {
-      area: "Customer Communication",
-      current: "Phone calls, text messages",
-      improved: "Automated updates, photo sharing, digital reports",
-      benefit: "Better service, reduced queries, professional image"
-    },
-    {
-      area: "Stock Management",
-      current: "Manual inventory, van searches",
-      improved: "Digital tracking, reorder alerts, supplier integration",
-      benefit: "Less waste, faster jobs, improved cash flow"
+      title: "Data-Driven Decision Making",
+      description: "Use operational data and analytics to make informed business decisions",
+      advantages: [
+        "Real-time visibility of job profitability and performance",
+        "Predictive analytics for maintenance and inventory needs",
+        "Customer behaviour analysis for service improvement",
+        "Financial reporting and cash flow forecasting"
+      ],
+      impact: "15-25% improvement in operational decision making accuracy"
     }
   ];
 
-  const scalingTips = [
-    "Standardise processes before expanding",
-    "Invest in training for all team members",
-    "Use technology to reduce administrative burden",
-    "Develop clear procedures for quality control",
-    "Create systems that work without your direct involvement",
-    "Plan for seasonal variations in workload"
+  const performanceMetrics = [
+    {
+      category: "Operational Efficiency",
+      kpis: [
+        "Job completion time and first-time fix rates",
+        "Travel time optimisation and route efficiency",
+        "Administrative time reduction and automation benefits",
+        "Resource utilisation and capacity management"
+      ]
+    },
+    {
+      category: "Customer Service Quality",
+      kpis: [
+        "Response time to customer enquiries and emergencies",
+        "Customer satisfaction scores and feedback analysis",
+        "Service delivery consistency and quality metrics",
+        "Communication effectiveness and transparency"
+      ]
+    },
+    {
+      category: "Financial Performance",
+      kpis: [
+        "Operational cost reduction and efficiency savings",
+        "Inventory turnover and stock management effectiveness",
+        "Profit margin improvement through better processes",
+        "Return on investment for operational improvements"
+      ]
+    }
   ];
 
   return (
-    <div className="space-y-6">
-      <Card className="border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Settings className="h-5 w-5 text-elec-yellow" />
-            Operational Systems for Growth
-          </CardTitle>
-          <CardDescription>
-            Essential systems and processes to support business expansion
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-6">
-            {operationalSystems.map((system, index) => (
-              <Card key={index} className="bg-elec-gray/30">
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    {system.icon}
-                    {system.system}
-                  </CardTitle>
-                  <CardDescription>{system.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div>
-                      <h5 className="font-medium mb-2">Key Tools</h5>
-                      <div className="space-y-2">
-                        {system.tools.map((tool, i) => (
-                          <div key={i} className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full" />
-                            <span className="text-sm">{tool}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <h5 className="font-medium mb-2">Benefits</h5>
-                      <div className="space-y-2">
-                        {system.benefits.map((benefit, i) => (
-                          <div key={i} className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 bg-green-400 rounded-full" />
-                            <span className="text-sm">{benefit}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+    <div className="space-y-4">
+      <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
+        <Settings className="h-4 w-4 text-elec-yellow" />
+        <AlertDescription className="text-elec-yellow">
+          Systematic operational improvements can increase efficiency by 25-40% while reducing costs and improving customer satisfaction.
+        </AlertDescription>
+      </Alert>
 
-      <Card className="border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Smartphone className="h-5 w-5 text-elec-yellow" />
-            Digital Tools & Software (2025)
-          </CardTitle>
-          <CardDescription>
-            Technology solutions to streamline your electrical business operations
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 md:grid-cols-2">
-            {digitalTools.map((tool, index) => (
-              <Card key={index} className="bg-elec-gray/20">
-                <CardHeader className="pb-3">
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-base">{tool.category}</CardTitle>
-                    <Badge variant="outline">{tool.cost}</Badge>
+      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}>
+        {operationsMetrics.map((metric, index) => (
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
+            <div className="text-center space-y-2">
+              {metric.icon}
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      <MobileAccordion type="single" collapsible className="space-y-2">
+        {operationalSystems.map((system) => (
+          <MobileAccordionItem key={system.id} value={system.id}>
+            <MobileAccordionTrigger icon={
+              system.id === "digital-workflow-system" ? <Cog className="h-5 w-5 text-blue-400" /> :
+              system.id === "mobile-field-operations" ? <Smartphone className="h-5 w-5 text-green-400" /> :
+              system.id === "inventory-supply-chain" ? <Database className="h-5 w-5 text-purple-400" /> :
+              <ShieldCheck className="h-5 w-5 text-yellow-400" />
+            }>
+              {system.title}
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{system.title}</h4>
+                      <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                        {system.timeline}
+                      </Badge>
+                    </div>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{system.description}</p>
                   </div>
-                </CardHeader>
-                <CardContent>
+
+                  <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-3'}`}>
+                    <div className="flex items-center gap-2">
+                      <DollarSign className="h-4 w-4 text-muted-foreground" />
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{system.investment}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{system.roi}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Shield className="h-4 w-4 text-muted-foreground" />
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{system.riskLevel}</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h5 className={`font-medium text-blue-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Components</h5>
+                    <ul className="space-y-1">
+                      {system.components.map((component, compIndex) => (
+                        <li key={compIndex} className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                          <CheckCircle className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-green-400 mt-0.5 shrink-0`} />
+                          {component}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="border border-green-500/20 rounded-lg p-3 space-y-3">
+                  <h5 className={`font-medium text-green-300 ${isMobile ? 'text-xs' : 'text-sm'}`}>Implementation Phases</h5>
                   <div className="space-y-3">
-                    <div>
-                      <h6 className="text-sm font-medium text-elec-yellow">Popular Options</h6>
-                      <p className="text-sm text-muted-foreground">{tool.examples}</p>
-                    </div>
-                    <div>
-                      <h6 className="text-sm font-medium text-elec-yellow">Key Features</h6>
-                      <p className="text-sm text-muted-foreground">{tool.features}</p>
-                    </div>
+                    {system.implementation.map((phase, phaseIndex) => (
+                      <div key={phaseIndex} className="space-y-2">
+                        <h6 className={`font-medium text-white ${isMobile ? 'text-xs' : 'text-sm'}`}>{phase.phase}</h6>
+                        <ul className="space-y-1">
+                          {phase.tasks.map((task, taskIndex) => (
+                            <li key={taskIndex} className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                              <Target className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-elec-yellow mt-0.5 shrink-0`} />
+                              {task}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+                </div>
 
-      <Card className="border-elec-yellow/20">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5 text-elec-yellow" />
-            Process Improvement Opportunities
-          </CardTitle>
-          <CardDescription>
-            Transform manual processes for better efficiency and growth
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+                <div className="border border-yellow-500/20 rounded-lg p-3 space-y-3">
+                  <h5 className={`font-medium text-yellow-300 ${isMobile ? 'text-xs' : 'text-sm'}`}>UK Market Considerations (2025)</h5>
+                  <ul className="space-y-1">
+                    {system.ukSpecific2025.map((consideration, considerationIndex) => (
+                      <li key={considerationIndex} className={`flex items-start gap-2 ${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                        <MapPin className={`${isMobile ? 'h-3 w-3' : 'h-4 w-4'} text-yellow-400 mt-0.5 shrink-0`} />
+                        {consideration}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+        ))}
+      </MobileAccordion>
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <Card className="border-elec-yellow/20 bg-elec-gray/50 p-4">
+          <h4 className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
+            <BarChart3 className="h-4 w-4" />
+            Operational Benchmarks
+          </h4>
           <div className="space-y-4">
-            {processImprovements.map((process, index) => (
-              <Card key={index} className="bg-elec-gray/20">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base">{process.area}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-4 md:grid-cols-3">
-                    <div>
-                      <h6 className="text-sm font-medium text-red-400">Current State</h6>
-                      <p className="text-sm text-muted-foreground">{process.current}</p>
+            {operationalBenchmarks.map((category, index) => (
+              <div key={index}>
+                <h5 className="text-sm font-medium text-white mb-2">{category.category}</h5>
+                <div className="space-y-2">
+                  {category.benchmarks.map((benchmark, bIndex) => (
+                    <div key={bIndex} className="flex justify-between text-xs">
+                      <span className="text-muted-foreground">{benchmark.metric}</span>
+                      <span className="text-blue-300">{benchmark.target}</span>
                     </div>
-                    <div>
-                      <h6 className="text-sm font-medium text-green-400">Improved State</h6>
-                      <p className="text-sm text-muted-foreground">{process.improved}</p>
-                    </div>
-                    <div>
-                      <h6 className="text-sm font-medium text-elec-yellow">Business Benefit</h6>
-                      <p className="text-sm text-muted-foreground">{process.benefit}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-elec-yellow/20 bg-elec-gray/30">
-        <CardHeader>
-          <CardTitle className="text-lg">Scaling Your Operations</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-3 md:grid-cols-2">
-            {scalingTips.map((tip, index) => (
-              <div key={index} className="flex items-start gap-2">
-                <Settings className="h-4 w-4 text-elec-yellow mt-0.5 shrink-0" />
-                <span className="text-sm">{tip}</span>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
-        </CardContent>
+        </Card>
+
+        <Card className="border-elec-yellow/20 bg-elec-gray/50 p-4">
+          <h4 className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
+            <Award className="h-4 w-4" />
+            Scaling Advantages
+          </h4>
+          <div className="space-y-3">
+            {scalingAdvantages.map((advantage, index) => (
+              <div key={index} className="space-y-2">
+                <h5 className="text-sm font-medium text-white">{advantage.title}</h5>
+                <p className="text-xs text-muted-foreground">{advantage.description}</p>
+                <div className="text-xs text-blue-300 bg-blue-500/10 rounded p-2">
+                  {advantage.impact}
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </div>
+
+      <Card className="border-elec-yellow/20 bg-elec-gray/50 p-4">
+        <h4 className="font-medium text-elec-yellow mb-3 flex items-center gap-2">
+          <LineChart className="h-4 w-4" />
+          Performance Monitoring & KPIs
+        </h4>
+        <div className="grid gap-4 md:grid-cols-3">
+          {performanceMetrics.map((category, index) => (
+            <div key={index}>
+              <h5 className="text-sm font-medium text-white mb-2">{category.category}</h5>
+              <ul className="space-y-1">
+                {category.kpis.map((kpi, kpiIndex) => (
+                  <li key={kpiIndex} className="flex items-start gap-2 text-xs text-muted-foreground">
+                    <Zap className="h-3 w-3 text-elec-yellow mt-0.5 shrink-0" />
+                    {kpi}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </Card>
     </div>
   );
