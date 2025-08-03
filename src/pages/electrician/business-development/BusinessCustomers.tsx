@@ -14,14 +14,7 @@ const BusinessCustomers = () => {
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Hero Section */}
-      <div className="bg-elec-dark rounded-lg py-12 px-8 text-center space-y-6">
-        <div className="flex items-center justify-center gap-4">
-          <Zap className="h-8 w-8 text-elec-yellow" />
-          <h1 className="text-2xl md:text-3xl font-bold text-white">
-            Customer Acquisition for Electricians
-          </h1>
-        </div>
-        
+      <div className="bg-elec-dark rounded-lg py-8 px-8 text-center space-y-6">
         <p className="text-base text-muted-foreground max-w-3xl mx-auto">
           Building a solid customer base requires both strategy and consistency. This comprehensive guide offers proven methods for UK electrical contractors to attract, convert and retain valuable customers.
         </p>
