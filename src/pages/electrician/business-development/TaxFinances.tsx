@@ -2,60 +2,78 @@
 import BackButton from "@/components/common/BackButton";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Calculator, FileText, PoundSterling, TrendingUp, AlertTriangle, BookOpen } from "lucide-react";
+import { Calculator, FileText, PoundSterling, TrendingUp, AlertTriangle, BookOpen, Clock, Shield, PiggyBank } from "lucide-react";
+import { DropdownTabs, DropdownTab } from "@/components/ui/dropdown-tabs";
 import BusinessStructureTab from "@/components/electrician/business-development/tax-finances/BusinessStructureTab";
 import ExpenseManagementTab from "@/components/electrician/business-development/tax-finances/ExpenseManagementTab";
 import CashFlowTab from "@/components/electrician/business-development/tax-finances/CashFlowTab";
 import VATComplianceTab from "@/components/electrician/business-development/tax-finances/VATComplianceTab";
+import TaxPlanningTab from "@/components/electrician/business-development/tax-finances/TaxPlanningTab";
+import InsuranceProtectionTab from "@/components/electrician/business-development/tax-finances/InsuranceProtectionTab";
+import RetirementPensionsTab from "@/components/electrician/business-development/tax-finances/RetirementPensionsTab";
 
 const TaxFinances = () => {
+  const tabs: DropdownTab[] = [
+    {
+      value: "structure",
+      label: "Business Structure",
+      icon: FileText,
+      content: <BusinessStructureTab />
+    },
+    {
+      value: "expenses",
+      label: "Expense Management",
+      icon: Calculator,
+      content: <ExpenseManagementTab />
+    },
+    {
+      value: "cashflow",
+      label: "Cash Flow Management",
+      icon: TrendingUp,
+      content: <CashFlowTab />
+    },
+    {
+      value: "vat",
+      label: "VAT & HMRC Compliance",
+      icon: PoundSterling,
+      content: <VATComplianceTab />
+    },
+    {
+      value: "tax-planning",
+      label: "Tax Planning & Deadlines",
+      icon: Clock,
+      content: <TaxPlanningTab />
+    },
+    {
+      value: "insurance",
+      label: "Insurance & Protection",
+      icon: Shield,
+      content: <InsuranceProtectionTab />
+    },
+    {
+      value: "retirement",
+      label: "Retirement & Pensions",
+      icon: PiggyBank,
+      content: <RetirementPensionsTab />
+    }
+  ];
+
   return (
     <div className="max-w-6xl mx-auto space-y-6 md:space-y-8 animate-fade-in px-4 md:px-0">
       <div className="flex flex-col items-center justify-center text-center mb-6">
         <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-4">Tax & Finances</h1>
         <p className="text-muted-foreground text-center max-w-2xl mb-4 text-sm md:text-base leading-relaxed">
-          Essential financial management and tax guidance for electrical contractors in the UK
+          Comprehensive financial management and tax guidance for electrical contractors in the UK
         </p>
         <BackButton customUrl="/electrician/business-development" label="Back to Business Development" />
       </div>
 
-      <Tabs defaultValue="structure" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 h-auto">
-          <TabsTrigger value="structure" className="flex flex-col md:flex-row items-center gap-1 md:gap-2 p-2 md:p-3 text-xs md:text-sm">
-            <FileText className="h-4 w-4" />
-            <span className="text-center">Structure</span>
-          </TabsTrigger>
-          <TabsTrigger value="expenses" className="flex flex-col md:flex-row items-center gap-1 md:gap-2 p-2 md:p-3 text-xs md:text-sm">
-            <Calculator className="h-4 w-4" />
-            <span className="text-center">Expenses</span>
-          </TabsTrigger>
-          <TabsTrigger value="cashflow" className="flex flex-col md:flex-row items-center gap-1 md:gap-2 p-2 md:p-3 text-xs md:text-sm">
-            <TrendingUp className="h-4 w-4" />
-            <span className="text-center">Cash Flow</span>
-          </TabsTrigger>
-          <TabsTrigger value="vat" className="flex flex-col md:flex-row items-center gap-1 md:gap-2 p-2 md:p-3 text-xs md:text-sm">
-            <PoundSterling className="h-4 w-4" />
-            <span className="text-center">VAT & HMRC</span>
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="structure" className="mt-6">
-          <BusinessStructureTab />
-        </TabsContent>
-
-        <TabsContent value="expenses" className="mt-6">
-          <ExpenseManagementTab />
-        </TabsContent>
-
-        <TabsContent value="cashflow" className="mt-6">
-          <CashFlowTab />
-        </TabsContent>
-
-        <TabsContent value="vat" className="mt-6">
-          <VATComplianceTab />
-        </TabsContent>
-      </Tabs>
+      <DropdownTabs 
+        tabs={tabs} 
+        defaultValue="structure"
+        placeholder="Select a financial topic"
+        className="mb-8"
+      />
 
       <Card className="border-orange-500/50 bg-orange-500/10">
         <CardHeader>
