@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, Repeat, TrendingUp, Calendar, Gift, Users } from "lucide-react";
+import { Heart, Repeat, TrendingUp, Calendar, Gift, Users, BarChart3 } from "lucide-react";
+import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
 
 const RetentionGrowthTab = () => {
   return (

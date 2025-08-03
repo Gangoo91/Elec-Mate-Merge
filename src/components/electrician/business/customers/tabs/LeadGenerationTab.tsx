@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Phone, Mail, MessageCircle, Clock, Target, CheckCircle } from "lucide-react";
+import { Phone, Mail, MessageCircle, Clock, Target, CheckCircle, Users, FileText } from "lucide-react";
+import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
 
 const LeadGenerationTab = () => {
   return (

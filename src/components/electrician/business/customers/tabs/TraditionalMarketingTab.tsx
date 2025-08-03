@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Handshake, Car, Newspaper, Users, Megaphone, MapPin } from "lucide-react";
+import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
 
 const TraditionalMarketingTab = () => {
   return (

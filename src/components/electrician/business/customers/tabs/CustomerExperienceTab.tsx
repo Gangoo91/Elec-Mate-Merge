@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, Shield, Clock, Users, MessageSquare, Award } from "lucide-react";
+import { Star, Shield, Clock, Users, MessageSquare, Award, AlertTriangle } from "lucide-react";
+import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
 
 const CustomerExperienceTab = () => {
   return (
