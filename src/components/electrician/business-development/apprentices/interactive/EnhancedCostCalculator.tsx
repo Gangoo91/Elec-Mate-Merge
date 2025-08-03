@@ -113,79 +113,94 @@ const EnhancedCostCalculator = () => {
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <CardTitle className="text-elec-yellow flex items-center gap-2">
-          <Calculator className="h-5 w-5" />
+    <Card className="border-elec-yellow/20 bg-elec-gray/50 backdrop-blur-sm">
+      <CardHeader className="text-center">
+        <CardTitle className="text-elec-yellow flex items-center justify-center gap-3 text-xl md:text-2xl">
+          <Calculator className="h-6 w-6" />
           2025 Advanced Apprenticeship Cost Calculator
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="space-y-6">
+        <div className="space-y-8">
           {/* Input Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div>
-              <Label htmlFor="age-range">Apprentice Age Range</Label>
-              <Select value={apprenticeAge} onValueChange={setApprenticeAge}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select age range" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="16-18">16-18 years</SelectItem>
-                  <SelectItem value="19-24">19-24 years</SelectItem>
-                  <SelectItem value="25+">25+ years</SelectItem>
-                </SelectContent>
-              </Select>
+          <div className="bg-elec-dark/30 p-6 rounded-lg border border-elec-yellow/10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="age-range" className="text-white font-medium">
+                  Apprentice Age Range
+                </Label>
+                <Select value={apprenticeAge} onValueChange={setApprenticeAge}>
+                  <SelectTrigger className="h-12 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
+                    <SelectValue placeholder="Select age range..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="16-18">16-18 years</SelectItem>
+                    <SelectItem value="19-24">19-24 years</SelectItem>
+                    <SelectItem value="25+">25+ years</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="business-size" className="text-white font-medium">
+                  Business Size
+                </Label>
+                <Select value={businessSize} onValueChange={setBusinessSize}>
+                  <SelectTrigger className="h-12 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
+                    <SelectValue placeholder="Select business size..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="small">Small (under 50 employees)</SelectItem>
+                    <SelectItem value="medium">Medium (50-250 employees)</SelectItem>
+                    <SelectItem value="large">Large (over 250 employees)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="region" className="text-white font-medium">
+                  Region
+                </Label>
+                <Select value={region} onValueChange={setRegion}>
+                  <SelectTrigger className="h-12 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50">
+                    <SelectValue placeholder="Select region..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="london">London</SelectItem>
+                    <SelectItem value="southeast">South East</SelectItem>
+                    <SelectItem value="southwest">South West</SelectItem>
+                    <SelectItem value="midlands">Midlands</SelectItem>
+                    <SelectItem value="north">North England</SelectItem>
+                    <SelectItem value="scotland">Scotland</SelectItem>
+                    <SelectItem value="wales">Wales</SelectItem>
+                    <SelectItem value="ni">Northern Ireland</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="apprentices" className="text-white font-medium">
+                  Number of Apprentices
+                </Label>
+                <Input
+                  type="number"
+                  min="1"
+                  max="20"
+                  value={numberOfApprentices}
+                  onChange={(e) => setNumberOfApprentices(parseInt(e.target.value) || 1)}
+                  placeholder="1"
+                  className="h-12 bg-elec-dark/50 border-elec-yellow/20 focus:border-elec-yellow/50"
+                />
+              </div>
             </div>
 
-            <div>
-              <Label htmlFor="business-size">Business Size</Label>
-              <Select value={businessSize} onValueChange={setBusinessSize}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select business size" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="small">Small (under 50 employees)</SelectItem>
-                  <SelectItem value="medium">Medium (50-250 employees)</SelectItem>
-                  <SelectItem value="large">Large (over 250 employees)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label htmlFor="region">Region</Label>
-              <Select value={region} onValueChange={setRegion}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select region" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="london">London</SelectItem>
-                  <SelectItem value="southeast">South East</SelectItem>
-                  <SelectItem value="southwest">South West</SelectItem>
-                  <SelectItem value="midlands">Midlands</SelectItem>
-                  <SelectItem value="north">North England</SelectItem>
-                  <SelectItem value="scotland">Scotland</SelectItem>
-                  <SelectItem value="wales">Wales</SelectItem>
-                  <SelectItem value="ni">Northern Ireland</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div>
-              <Label htmlFor="apprentices">Number of Apprentices</Label>
-              <Input
-                type="number"
-                min="1"
-                max="20"
-                value={numberOfApprentices}
-                onChange={(e) => setNumberOfApprentices(parseInt(e.target.value) || 1)}
-                placeholder="1"
-              />
-            </div>
-
-            <div className="md:col-span-2 lg:col-span-2">
-              <Button onClick={calculateComprehensiveCosts} className="w-full">
-                <Calculator className="h-4 w-4 mr-2" />
+            <div className="mt-6">
+              <Button 
+                onClick={calculateComprehensiveCosts} 
+                className="w-full h-12 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 font-semibold"
+                size="lg"
+              >
+                <Calculator className="h-5 w-5 mr-2" />
                 Calculate Advanced Costs & ROI
               </Button>
             </div>
