@@ -1,11 +1,8 @@
-import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { MobileAccordion, MobileAccordionContent, MobileAccordionItem, MobileAccordionTrigger } from "@/components/ui/mobile-accordion";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { 
   PoundSterling, 
   Calculator, 
@@ -19,319 +16,659 @@ import {
   BarChart3,
   Zap,
   Shield,
-  CheckCircle2,
+  CheckCircle,
   Brain,
   Calendar,
-  Plus
+  Plus,
+  MapPin,
+  Building,
+  Smartphone,
+  Eye,
+  Scale,
+  Award,
+  Heart,
+  Settings,
+  Timer,
+  LineChart,
+  Star,
+  Crown,
+  Briefcase,
+  BookOpen,
+  DollarSign,
+  Percent,
+  Network,
+  ShieldCheck
 } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 export const PricingStrategiesTab = () => {
   const isMobile = useIsMobile();
-  
-  // Calculator state
-  const [laborRate, setLaborRate] = useState(45);
-  const [materialCost, setMaterialCost] = useState(100);
-  const [travelTime, setTravelTime] = useState(0.5);
-  const [jobDuration, setJobDuration] = useState(4);
-  const [overheadPercentage, setOverheadPercentage] = useState(20);
-  const [profitMargin, setProfitMargin] = useState(25);
-  const [jobComplexity, setJobComplexity] = useState(1);
-  const [emergencyPremium, setEmergencyPremium] = useState(0);
-  const [discount, setDiscount] = useState(0);
 
-  // Key metrics data for cards
-  const keyMetrics = [
+  // Pricing metrics matching the Growth Strategies pattern
+  const pricingMetrics = [
     {
-      title: "Average Startup Cost",
-      value: "£15,000-35,000",
-      description: "initial investment",
-      icon: PoundSterling,
-      color: "text-blue-400"
+      metric: "Average Hourly Rate",
+      data: "£45-65/hour nationally",
+      icon: <PoundSterling className="h-5 w-5 text-elec-yellow" />,
+      detail: "With regional variations and specialisation premiums"
     },
     {
-      title: "Break-even Timeline", 
-      value: "6-12 months",
-      description: "with proper planning",
-      icon: Clock,
-      color: "text-yellow-400"
+      metric: "Profit Margin Target",
+      data: "25-35% sustainable margin",
+      icon: <Target className="h-5 w-5 text-blue-400" />,
+      detail: "Including overheads and competitive positioning"
     },
     {
-      title: "Market Success Rate",
-      value: "85% survival",
-      description: "with business plan",
-      icon: Target,
-      color: "text-green-400"
+      metric: "Quote Win Rate",
+      data: "65-75% conversion target",
+      icon: <TrendingUp className="h-5 w-5 text-green-400" />,
+      detail: "Balanced pricing for optimal success rates"
     },
     {
-      title: "Average Monthly Revenue",
-      value: "£8,000-15,000",
-      description: "in Year 1",
-      icon: TrendingUp,
-      color: "text-purple-400"
+      metric: "Revenue Growth",
+      data: "£80-150k annual increase",
+      icon: <BarChart3 className="h-5 w-5 text-purple-400" />,
+      detail: "Through strategic pricing optimisation"
     }
   ];
 
-  // Calculate total quote
-  const calculateQuote = () => {
-    const baseLaborCost = laborRate * jobDuration;
-    const travelCost = laborRate * travelTime;
-    const complexityMultiplier = jobComplexity;
-    const adjustedLaborCost = (baseLaborCost + travelCost) * complexityMultiplier;
-    const adjustedMaterialCost = materialCost * complexityMultiplier;
-    
-    const subtotal = adjustedLaborCost + adjustedMaterialCost;
-    const overheadCost = subtotal * (overheadPercentage / 100);
-    const subtotalWithOverhead = subtotal + overheadCost;
-    const profitAmount = subtotalWithOverhead * (profitMargin / 100);
-    const baseTotal = subtotalWithOverhead + profitAmount;
-    
-    const emergencyAmount = baseTotal * (emergencyPremium / 100);
-    const totalWithPremium = baseTotal + emergencyAmount;
-    const discountAmount = totalWithPremium * (discount / 100);
-    const finalTotal = totalWithPremium - discountAmount;
-    
-    return {
-      laborCost: adjustedLaborCost,
-      materialCost: adjustedMaterialCost,
-      overheadCost,
-      profitAmount,
-      emergencyAmount,
-      discountAmount,
-      finalTotal
-    };
-  };
-
-  const quote = calculateQuote();
-
-  const accordionSections = [
+  const pricingStrategies = [
     {
-      id: "market-research",
-      title: "Market Research & Analysis",
-      icon: <BarChart3 className="h-4 w-4" />,
-      content: (
-        <div className="space-y-6">
-          <Card className="bg-elec-gray/20">
-            <CardHeader>
-              <CardTitle className="text-base">Local Market Analysis</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid gap-4 md:grid-cols-2">
-                <div>
-                  <h5 className="font-medium mb-2 text-sm text-elec-yellow">Research Areas</h5>
-                  <ul className="space-y-1">
-                    {[
-                      "Local competitor pricing structures",
-                      "Average job values in your area",
-                      "Customer price sensitivity analysis",
-                      "Seasonal demand patterns"
-                    ].map((item, i) => (
-                      <li key={i} className="text-sm text-muted-foreground flex items-center gap-2">
-                        <CheckCircle2 className="h-3 w-3 text-green-400" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-medium mb-2 text-sm text-elec-yellow">Data Sources</h5>
-                  <ul className="space-y-1">
-                    {[
-                      "Checkatrade & MyBuilder quotes",
-                      "Local trade associations",
-                      "Customer surveys & feedback",
-                      "Industry reports & benchmarks"
-                    ].map((item, i) => (
-                      <li key={i} className="text-sm text-muted-foreground flex items-center gap-2">
-                        <CheckCircle2 className="h-3 w-3 text-green-400" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-elec-gray/20">
-            <CardHeader>
-              <CardTitle className="text-base">Competitive Analysis Framework</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {[
-                  { phase: "Identify Competitors", tasks: "Map 5-10 local electricians", timeline: "Week 1" },
-                  { phase: "Price Research", tasks: "Gather quotes for standard jobs", timeline: "Week 2" },
-                  { phase: "Service Analysis", tasks: "Compare service offerings", timeline: "Week 3" },
-                  { phase: "Positioning", tasks: "Define your competitive advantage", timeline: "Week 4" }
-                ].map((item, index) => (
-                  <div key={index} className="flex justify-between items-center p-3 bg-elec-gray/30 rounded">
-                    <div>
-                      <div className="font-medium text-sm">{item.phase}</div>
-                      <div className="text-xs text-muted-foreground">{item.tasks}</div>
-                    </div>
-                    <Badge variant="outline" className="text-xs">{item.timeline}</Badge>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )
+      id: "cost-plus-strategy",
+      title: "Cost-Plus Pricing Strategy",
+      timeline: "1-3 months to implement",
+      description: "Build sustainable pricing based on true costs plus desired profit margin",
+      components: [
+        "Complete cost analysis and breakdown",
+        "Overhead calculation and allocation",
+        "Profit margin determination",
+        "Pricing calculator development",
+        "Quote template standardisation"
+      ],
+      implementation: [
+        {
+          phase: "Cost Analysis (2-4 weeks)",
+          tasks: [
+            "Calculate hourly labour costs including NI, pension, and benefits",
+            "Determine vehicle costs per mile including depreciation",
+            "Assess tool and equipment depreciation and maintenance costs",
+            "Calculate overhead allocation (insurance, rent, admin, marketing)"
+          ]
+        },
+        {
+          phase: "Pricing Structure Development (2-4 weeks)",
+          tasks: [
+            "Set profit margin targets based on business goals and market position",
+            "Create pricing tiers for different service complexities",
+            "Develop emergency and out-of-hours pricing premiums",
+            "Build quote calculator with all cost components included"
+          ]
+        },
+        {
+          phase: "Implementation & Testing (4-8 weeks)",
+          tasks: [
+            "Apply new pricing to 10-20 quotes and monitor results",
+            "Train team on cost justification and value communication",
+            "Refine pricing based on customer feedback and win rates",
+            "Document pricing policies and create customer-facing explanations"
+          ]
+        }
+      ],
+      ukSpecific2025: [
+        "National Insurance increase impact on labour costs",
+        "Fuel cost volatility affecting travel pricing",
+        "Material cost inflation requiring quarterly reviews",
+        "Apprenticeship Levy considerations in pricing structure"
+      ],
+      investment: "£2,000-5,000 for systems and training",
+      roi: "10-25% margin improvement",
+      riskLevel: "Low risk with predictable outcomes"
     },
     {
-      id: "financial-planning",
-      title: "Financial Planning & Investment", 
-      icon: <PoundSterling className="h-4 w-4" />,
-      content: (
-        <div className="space-y-6">
-          <Card className="bg-elec-gray/20">
-            <CardHeader>
-              <CardTitle className="text-base">Startup Cost Breakdown</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {[
-                  { category: "Initial Equipment", low: "£8,000", high: "£15,000", items: "Tools, van equipment, testing instruments" },
-                  { category: "Vehicle Costs", low: "£3,000", high: "£8,000", items: "Van purchase/lease, insurance, signage" },
-                  { category: "Certifications", low: "£2,000", high: "£4,000", items: "18th Edition, inspection training, Part P" },
-                  { category: "Business Setup", low: "£1,500", high: "£3,000", items: "Insurance, registration, marketing" },
-                  { category: "Working Capital", low: "£2,500", high: "£5,000", items: "Materials stock, 3-month expenses" }
-                ].map((item, index) => (
-                  <div key={index} className="p-3 bg-elec-gray/30 rounded">
-                    <div className="flex justify-between items-start mb-2">
-                      <div className="font-medium text-sm">{item.category}</div>
-                      <div className="text-right">
-                        <div className="text-sm font-bold text-elec-yellow">{item.low} - {item.high}</div>
-                      </div>
-                    </div>
-                    <div className="text-xs text-muted-foreground">{item.items}</div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+      id: "value-based-pricing",
+      title: "Value-Based Pricing Strategy",
+      timeline: "3-6 months to master",
+      description: "Price based on customer value received rather than just costs incurred",
+      components: [
+        "Customer value assessment techniques",
+        "Benefit quantification methods",
+        "Premium service positioning",
+        "Value communication skills",
+        "Customer education strategies"
+      ],
+      implementation: [
+        {
+          phase: "Value Analysis (4-6 weeks)",
+          tasks: [
+            "Identify unique value propositions and competitive advantages",
+            "Quantify customer benefits (safety, compliance, efficiency, reliability)",
+            "Research customer willingness to pay for premium services",
+            "Develop value-based service packages and offerings"
+          ]
+        },
+        {
+          phase: "Sales Process Development (6-8 weeks)",
+          tasks: [
+            "Train team on consultative selling and value communication",
+            "Create benefit-focused marketing materials and case studies",
+            "Develop ROI calculators for customers showing value delivered",
+            "Implement customer feedback systems to validate value perception"
+          ]
+        },
+        {
+          phase: "Market Testing (8-12 weeks)",
+          tasks: [
+            "Test value-based pricing with selected customer segments",
+            "Monitor customer response and adjust value communication",
+            "Document successful value propositions and refine messaging",
+            "Scale successful approaches across all customer interactions"
+          ]
+        }
+      ],
+      ukSpecific2025: [
+        "Building Safety Act compliance creating additional value",
+        "Energy efficiency requirements driving premium service demand",
+        "Smart home technology adoption creating value opportunities",
+        "Post-pandemic safety and reliability concerns increasing value perception"
+      ],
+      investment: "£5,000-15,000 for training and materials",
+      roi: "20-50% price premium potential",
+      riskLevel: "Medium risk requiring sales skills development"
+    },
+    {
+      id: "dynamic-pricing",
+      title: "Dynamic Pricing Strategy",
+      timeline: "2-4 months implementation",
+      description: "Adjust pricing based on demand, urgency, and market conditions",
+      components: [
+        "Demand forecasting systems",
+        "Urgency-based pricing tiers",
+        "Seasonal pricing adjustments",
+        "Market monitoring tools",
+        "Automated pricing triggers"
+      ],
+      implementation: [
+        {
+          phase: "Market Analysis (3-4 weeks)",
+          tasks: [
+            "Analyse historical demand patterns and seasonal variations",
+            "Identify peak and off-peak periods for different services",
+            "Research competitor pricing patterns and market responses",
+            "Map customer urgency levels to willingness to pay premiums"
+          ]
+        },
+        {
+          phase: "System Development (4-6 weeks)",
+          tasks: [
+            "Create dynamic pricing matrix based on demand and urgency",
+            "Implement booking system with real-time pricing adjustments",
+            "Develop clear pricing communication for customers",
+            "Set up monitoring systems for pricing effectiveness tracking"
+          ]
+        },
+        {
+          phase: "Optimisation (6-8 weeks)",
+          tasks: [
+            "Monitor pricing performance and customer acceptance rates",
+            "Adjust pricing triggers based on actual demand patterns",
+            "Train customer service team on pricing explanation techniques",
+            "Refine pricing model based on profitability and market feedback"
+          ]
+        }
+      ],
+      ukSpecific2025: [
+        "Winter heating system failures creating emergency demand spikes",
+        "Summer solar installation peak season opportunities",
+        "Economic uncertainty affecting customer price sensitivity",
+        "Supply chain disruptions creating material cost volatility"
+      ],
+      investment: "£3,000-8,000 for systems and software",
+      roi: "15-30% revenue optimisation",
+      riskLevel: "Medium risk requiring careful customer communication"
+    },
+    {
+      id: "competitive-pricing",
+      title: "Competitive Pricing Intelligence",
+      timeline: "Ongoing monthly process",
+      description: "Strategic pricing based on comprehensive market intelligence and positioning",
+      components: [
+        "Competitor pricing monitoring",
+        "Market positioning analysis",
+        "Service differentiation strategies",
+        "Price point optimisation",
+        "Competitive advantage identification"
+      ],
+      implementation: [
+        {
+          phase: "Market Intelligence (2-3 weeks)",
+          tasks: [
+            "Map all direct competitors within 25-mile radius",
+            "Gather pricing data through mystery shopping and quote requests",
+            "Analyse competitor service offerings and value propositions",
+            "Identify market gaps and pricing opportunities"
+          ]
+        },
+        {
+          phase: "Positioning Strategy (3-4 weeks)",
+          tasks: [
+            "Define unique market position relative to competitors",
+            "Determine optimal pricing strategy (premium, competitive, value)",
+            "Develop competitive response strategies and pricing flexibility",
+            "Create differentiation strategies to justify pricing position"
+          ]
+        },
+        {
+          phase: "Monitoring & Adjustment (Ongoing)",
+          tasks: [
+            "Monitor competitor pricing changes and market responses",
+            "Adjust pricing strategy based on competitive landscape shifts",
+            "Track win/loss rates against specific competitors",
+            "Continuously refine competitive positioning and messaging"
+          ]
+        }
+      ],
+      ukSpecific2025: [
+        "Brexit-related labour shortages affecting competitor capacity",
+        "Regional price variations due to economic disparities",
+        "New technology adoption creating competitive advantages",
+        "Government grants affecting competitor pricing strategies"
+      ],
+      investment: "£1,000-3,000 for research and monitoring tools",
+      roi: "10-20% market share improvement",
+      riskLevel: "Low risk with regular monitoring required"
+    }
+  ];
 
-          <Card className="bg-elec-gray/20">
-            <CardHeader>
-              <CardTitle className="text-base">Financial Projections</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4 md:grid-cols-2">
-                <div>
-                  <h5 className="font-medium mb-3 text-sm text-elec-yellow">Year 1 Targets</h5>
-                  <div className="space-y-2">
-                    {[
-                      { metric: "Monthly Revenue", target: "£8,000 - £15,000" },
-                      { metric: "Jobs per Month", target: "15 - 25 jobs" },
-                      { metric: "Average Job Value", target: "£450 - £650" },
-                      { metric: "Profit Margin", target: "25% - 35%" }
-                    ].map((item, i) => (
-                      <div key={i} className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">{item.metric}:</span>
-                        <span className="font-medium">{item.target}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <h5 className="font-medium mb-3 text-sm text-elec-yellow">Growth Milestones</h5>
-                  <div className="space-y-2">
-                    {[
-                      { milestone: "Break-even Point", timeframe: "6-8 months" },
-                      { milestone: "First Employee", timeframe: "12-15 months" },
-                      { milestone: "Van Replacement", timeframe: "18-24 months" },
-                      { milestone: "Business Premises", timeframe: "24-30 months" }
-                    ].map((item, i) => (
-                      <div key={i} className="flex justify-between text-sm">
-                        <span className="text-muted-foreground">{item.milestone}:</span>
-                        <span className="font-medium">{item.timeframe}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+  const pricingBenchmarks = [
+    {
+      category: "Regional Pricing Standards",
+      benchmarks: [
+        { metric: "London Premium", target: "+25-35%", current: "£65-85/hour average" },
+        { metric: "South East", target: "+15-25%", current: "£55-70/hour average" },
+        { metric: "Northern England", target: "Baseline", current: "£40-55/hour average" },
+        { metric: "Rural Areas", target: "-10-20%", current: "£35-45/hour average" }
+      ]
+    },
+    {
+      category: "Service Type Premiums",
+      benchmarks: [
+        { metric: "Emergency Call-out", target: "+50-100%", current: "£75-120/hour typical" },
+        { metric: "Commercial Work", target: "+20-40%", current: "£55-80/hour average" },
+        { metric: "Specialist Installation", target: "+30-60%", current: "£60-90/hour range" },
+        { metric: "Maintenance Contracts", target: "10-20% discount", current: "£35-50/hour ongoing" }
+      ]
+    }
+  ];
 
-          <Card className="bg-elec-yellow/10 border-elec-yellow/30">
-            <CardHeader>
-              <CardTitle className="text-base text-elec-yellow">Financial Health Checklist</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-3 md:grid-cols-2">
-                {[
-                  "Track daily cash flow",
-                  "Maintain 3-month expense buffer",
-                  "Invoice immediately after completion",
-                  "Set aside 25% for tax obligations",
-                  "Review pricing quarterly",
-                  "Monitor profit margins monthly"
-                ].map((action, index) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-elec-yellow" />
-                    <span className="text-sm">{action}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )
+  const competitiveAdvantages = [
+    {
+      title: "Specialisation Premium",
+      description: "Command higher rates through expertise and niche positioning",
+      advantages: [
+        "Smart home automation and IoT systems installation",
+        "Commercial renewable energy and EV charging systems", 
+        "Emergency electrical services and rapid response",
+        "Industrial maintenance and breakdown specialists"
+      ],
+      impact: "Premium pricing 25-50% above general electrical work"
+    },
+    {
+      title: "Service Excellence Differentiation",
+      description: "Justify premium pricing through superior service delivery",
+      advantages: [
+        "Comprehensive warranties and satisfaction guarantees",
+        "Real-time project updates and transparent communication",
+        "Professional certifications and continuing education",
+        "24/7 customer support and emergency availability"
+      ],
+      impact: "Customer retention increase 40-60% and referral growth"
+    },
+    {
+      title: "Technology-Enhanced Services",
+      description: "Use technology to deliver superior value and efficiency",
+      advantages: [
+        "Thermal imaging and advanced diagnostic equipment",
+        "Digital project management and customer portals",
+        "Drone inspections for high-access electrical work",
+        "IoT monitoring and predictive maintenance services"
+      ],
+      impact: "Efficiency gains 20-35% enabling competitive pricing"
+    }
+  ];
+
+  const performanceMetrics = [
+    {
+      category: "Pricing Performance",
+      kpis: [
+        "Quote-to-job conversion rates by price range",
+        "Average job value and profit margin trends",
+        "Customer price objection frequency and responses",
+        "Pricing strategy ROI and revenue impact measurement"
+      ]
+    },
+    {
+      category: "Market Position",
+      kpis: [
+        "Competitive pricing position and market share",
+        "Premium service uptake and customer satisfaction",
+        "Brand perception and value proposition effectiveness",
+        "Customer lifetime value and repeat business rates"
+      ]
+    },
+    {
+      category: "Financial Health",
+      kpis: [
+        "Gross profit margin stability and improvement",
+        "Cash flow impact of pricing strategy changes",
+        "Working capital efficiency and payment terms",
+        "Cost structure optimisation and overhead allocation"
+      ]
     }
   ];
 
   return (
-    <div className="space-y-6">
-      {/* Key Metrics Grid - 2x2 layout matching screenshot */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {keyMetrics.map((metric, index) => (
-          <Card key={index} className="bg-elec-gray border border-elec-yellow/20">
-            <CardContent className="p-6">
-              <div className="flex flex-col items-center text-center space-y-3">
-                <metric.icon className={`h-8 w-8 ${metric.color}`} />
-                <div>
-                  <h3 className="text-lg font-semibold text-white mb-2">{metric.title}</h3>
-                  <div className="text-2xl font-bold text-white mb-1">{metric.value}</div>
-                  <div className="text-sm text-muted-foreground">{metric.description}</div>
-                </div>
-              </div>
-            </CardContent>
+    <div className="space-y-4">
+      <Alert className="border-elec-yellow/50 bg-elec-yellow/10">
+        <TrendingUp className="h-4 w-4 text-elec-yellow" />
+        <AlertDescription className="text-elec-yellow">
+          Strategic pricing optimisation can increase profit margins by 15-35% while maintaining competitive market position.
+        </AlertDescription>
+      </Alert>
+
+      <div className={`grid gap-3 ${isMobile ? 'grid-cols-2' : 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'}`}>
+        {pricingMetrics.map((metric, index) => (
+          <Card key={index} className="border-elec-yellow/20 bg-elec-gray p-3">
+            <div className="text-center space-y-2">
+              {metric.icon}
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>{metric.metric}</div>
+              <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{metric.data}</div>
+            </div>
           </Card>
         ))}
       </div>
 
-      {/* Mobile Accordion / Desktop Cards */}
-      {isMobile ? (
-        <MobileAccordion type="single" collapsible className="space-y-2">
-          {accordionSections.map((section) => (
-            <MobileAccordionItem key={section.id} value={section.id}>
-              <MobileAccordionTrigger icon={section.icon}>
-                {section.title}
-              </MobileAccordionTrigger>
-              <MobileAccordionContent>
-                {section.content}
-              </MobileAccordionContent>
-            </MobileAccordionItem>
-          ))}
-        </MobileAccordion>
-      ) : (
-        <div className="space-y-4">
-          {accordionSections.map((section) => (
-            <Card key={section.id} className="bg-elec-gray border border-elec-yellow/20">
-              <CardHeader className="pb-2">
-                <CardTitle className="flex items-center justify-center gap-2 text-center">
-                  {section.icon}
-                  {section.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {section.content}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
+      <MobileAccordion type="single" collapsible className="space-y-2">
+        {pricingStrategies.map((strategy) => (
+          <MobileAccordionItem key={strategy.id} value={strategy.id}>
+            <MobileAccordionTrigger icon={
+              strategy.id === "cost-plus-strategy" ? <Calculator className="h-5 w-5 text-blue-400" /> :
+              strategy.id === "value-based-pricing" ? <Target className="h-5 w-5 text-green-400" /> :
+              strategy.id === "dynamic-pricing" ? <TrendingUp className="h-5 w-5 text-purple-400" /> :
+              <Eye className="h-5 w-5 text-yellow-400" />
+            }>
+              {strategy.title}
+            </MobileAccordionTrigger>
+            <MobileAccordionContent>
+              <div className="bg-elec-gray border border-elec-yellow/20 rounded-b-lg p-4 space-y-4">
+                <div className="border border-blue-500/20 rounded-lg p-3 space-y-3">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <h4 className={`font-medium text-white ${isMobile ? 'text-sm' : 'text-base'}`}>{strategy.title}</h4>
+                      <Badge variant="outline" className={`text-blue-300 border-blue-400/30 ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                        {strategy.timeline}
+                      </Badge>
+                    </div>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>{strategy.description}</p>
+                  </div>
+
+                  <div className="grid gap-4 md:grid-cols-3">
+                    <div className="flex items-center gap-2">
+                      <Calculator className="h-4 w-4 text-muted-foreground" />
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>{strategy.investment}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="h-4 w-4 text-muted-foreground" />
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>{strategy.roi}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Shield className="h-4 w-4 text-muted-foreground" />
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>{strategy.riskLevel}</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h5 className={`font-medium text-blue-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Key Components</h5>
+                    <ul className="space-y-1">
+                      {strategy.components.map((component, compIndex) => (
+                        <li key={compIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-blue-200 flex items-center gap-1`}>
+                          <CheckCircle className="h-3 w-3 text-green-400 shrink-0" />
+                          {component}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h5 className={`font-medium text-green-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>Implementation Timeline</h5>
+                    <div className="space-y-3">
+                      {strategy.implementation.map((phase, phaseIndex) => (
+                        <div key={phaseIndex} className="border-l-2 border-elec-yellow/30 pl-3 space-y-1">
+                          <h6 className={`font-medium text-elec-yellow ${isMobile ? 'text-xs' : 'text-sm'}`}>{phase.phase}</h6>
+                          <ul className="space-y-0.5">
+                            {phase.tasks.map((task, taskIndex) => (
+                              <li key={taskIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground flex items-start gap-1`}>
+                                <div className="w-1 h-1 bg-muted-foreground rounded-full mt-2 shrink-0" />
+                                {task}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h5 className={`font-medium text-yellow-300 mb-2 ${isMobile ? 'text-xs' : 'text-sm'}`}>UK Market Opportunities 2025</h5>
+                    <ul className="space-y-1">
+                      {strategy.ukSpecific2025.map((opportunity, oppIndex) => (
+                        <li key={oppIndex} className={`${isMobile ? 'text-xs' : 'text-sm'} text-yellow-200 flex items-center gap-1`}>
+                          <Zap className="h-3 w-3 text-elec-yellow shrink-0" />
+                          {opportunity}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </MobileAccordionContent>
+          </MobileAccordionItem>
+        ))}
+      </MobileAccordion>
+
+      {/* Pricing Benchmarks Section */}
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/20 to-elec-gray/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <BarChart3 className="h-5 w-5 text-elec-yellow" />
+            UK Pricing Benchmarks & Regional Standards
+          </CardTitle>
+          <CardDescription>
+            Compare your pricing against current UK electrical industry standards
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-6 md:grid-cols-2">
+            {pricingBenchmarks.map((category, categoryIndex) => (
+              <div key={categoryIndex} className="space-y-4">
+                <h4 className="font-semibold text-elec-yellow">{category.category}</h4>
+                <div className="space-y-3">
+                  {category.benchmarks.map((benchmark, benchmarkIndex) => (
+                    <div key={benchmarkIndex} className="border border-blue-500/20 rounded-lg p-3">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className={`font-medium text-white ${isMobile ? 'text-xs' : 'text-sm'}`}>
+                          {benchmark.metric}
+                        </span>
+                        <Badge variant="outline" className="text-green-300 border-green-400/30">
+                          {benchmark.target}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <LineChart className="h-4 w-4 text-muted-foreground" />
+                        <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground`}>
+                          {benchmark.current}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Competitive Advantages Section */}
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/20 to-elec-gray/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Crown className="h-5 w-5 text-elec-yellow" />
+            Pricing Competitive Advantages
+          </CardTitle>
+          <CardDescription>
+            Strategies to justify premium pricing and differentiate your services
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {competitiveAdvantages.map((advantage, advantageIndex) => (
+              <div key={advantageIndex} className="border border-purple-500/20 rounded-lg p-4 space-y-3">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h4 className={`font-semibold text-purple-300 ${isMobile ? 'text-sm' : 'text-base'}`}>
+                      {advantage.title}
+                    </h4>
+                    <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-muted-foreground mt-1`}>
+                      {advantage.description}
+                    </p>
+                  </div>
+                  <Badge variant="outline" className="text-purple-300 border-purple-400/30 ml-2">
+                    <Star className="h-3 w-3 mr-1" />
+                    Premium
+                  </Badge>
+                </div>
+                
+                <div className="grid gap-2">
+                  {advantage.advantages.map((item, itemIndex) => (
+                    <div key={itemIndex} className="flex items-center gap-2">
+                      <Award className="h-3 w-3 text-purple-400 shrink-0" />
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-purple-200`}>
+                        {item}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="flex items-center gap-2 pt-2 border-t border-purple-500/20">
+                  <TrendingUp className="h-4 w-4 text-green-400" />
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-green-300 font-medium`}>
+                    Impact: {advantage.impact}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Performance Measurement Section */}
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/20 to-elec-gray/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Target className="h-5 w-5 text-elec-yellow" />
+            Pricing Performance Measurement
+          </CardTitle>
+          <CardDescription>
+            Key metrics to track pricing strategy success and optimisation
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-6 md:grid-cols-3">
+            {performanceMetrics.map((metricCategory, categoryIndex) => (
+              <div key={categoryIndex} className="space-y-4">
+                <h4 className="font-semibold text-elec-yellow flex items-center gap-2">
+                  {metricCategory.category === "Pricing Performance" && <PoundSterling className="h-4 w-4" />}
+                  {metricCategory.category === "Market Position" && <Eye className="h-4 w-4" />}
+                  {metricCategory.category === "Financial Health" && <Heart className="h-4 w-4" />}
+                  {metricCategory.category}
+                </h4>
+                <div className="space-y-2">
+                  {metricCategory.kpis.map((kpi, kpiIndex) => (
+                    <div key={kpiIndex} className="flex items-start gap-2 p-2 bg-elec-gray/30 rounded-lg">
+                      <CheckCircle className="h-3 w-3 text-green-400 shrink-0 mt-0.5" />
+                      <span className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>
+                        {kpi}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* 30-Day Pricing Action Plan */}
+      <Card className="border-elec-yellow/20 bg-gradient-to-br from-elec-gray/20 to-elec-gray/10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <CheckCircle className="h-5 w-5 text-elec-yellow" />
+            30-Day Pricing Optimisation Plan
+          </CardTitle>
+          <CardDescription>
+            Immediate steps to improve your pricing strategy and profitability
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-3">
+              <h4 className="font-semibold text-green-300">Week 1-2: Analysis & Foundation</h4>
+              <div className="space-y-2">
+                <div className="flex items-start gap-2">
+                  <Timer className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Complete comprehensive cost analysis and overhead calculation
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Calculator className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Research competitor pricing and market positioning
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Target className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Set profit margin targets and pricing objectives
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="font-semibold text-blue-300">Week 3-4: Implementation & Testing</h4>
+              <div className="space-y-2">
+                <div className="flex items-start gap-2">
+                  <Settings className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Implement new pricing structure and quote templates
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Users className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Train team on value communication and pricing justification
+                  </span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <BarChart3 className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
+                  <span className={`${isMobile ? 'text-xs' : 'text-sm'}`}>
+                    Monitor quote success rates and customer feedback
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
