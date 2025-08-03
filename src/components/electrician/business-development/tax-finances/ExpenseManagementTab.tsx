@@ -44,7 +44,7 @@ const ExpenseManagementTab = () => {
   const expenseSections = [
     {
       title: "Vehicle & Travel Expenses",
-      icon: <Car className="h-5 w-5" />,
+      icon: <Car className="h-5 w-5 text-purple-400" />,
       cards: [
         {
           title: "Strategy Overview",
@@ -122,7 +122,7 @@ const ExpenseManagementTab = () => {
     },
     {
       title: "Tools & Equipment",
-      icon: <Wrench className="h-5 w-5" />,
+      icon: <Wrench className="h-5 w-5 text-blue-400" />,
       cards: [
         {
           title: "Strategy Overview",
@@ -200,7 +200,7 @@ const ExpenseManagementTab = () => {
     },
     {
       title: "Home Office Costs",
-      icon: <Home className="h-5 w-5" />,
+      icon: <Home className="h-5 w-5 text-green-400" />,
       cards: [
         {
           title: "Strategy Overview",
@@ -278,7 +278,7 @@ const ExpenseManagementTab = () => {
     },
     {
       title: "Professional Services",
-      icon: <Receipt className="h-5 w-5" />,
+      icon: <Receipt className="h-5 w-5 text-yellow-400" />,
       cards: [
         {
           title: "Strategy Overview",
@@ -356,7 +356,7 @@ const ExpenseManagementTab = () => {
     },
     {
       title: "Digital Tracking Systems",
-      icon: <Smartphone className="h-5 w-5" />,
+      icon: <Smartphone className="h-5 w-5 text-red-400" />,
       cards: [
         {
           title: "Strategy Overview",
@@ -434,7 +434,7 @@ const ExpenseManagementTab = () => {
     },
     {
       title: "Tax Optimisation Strategies",
-      icon: <Calculator className="h-5 w-5" />,
+      icon: <Calculator className="h-5 w-5 text-orange-400" />,
       cards: [
         {
           title: "Strategy Overview",
